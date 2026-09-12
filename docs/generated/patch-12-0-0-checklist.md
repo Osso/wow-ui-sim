@@ -2582,7 +2582,7 @@
 2582. [best-effort] `changed:C_Reputation.GetFactionParagonInfo` — behavioral
 2583. [best-effort] `changed:C_Reputation.IsFactionParagon` — provenance-only
 2584. [best-effort] `changed:C_SpecializationInfo.GetSpecializationInfo` — behavioral
-2585. [evidence-required] `changed:C_Timer.After` — unsafe
+2585. [best-effort] `changed:C_Timer.After` — behavioral
 2586. [best-effort] `changed:C_Timer.NewTicker` — behavioral
 2587. [best-effort] `changed:C_Timer.NewTimer` — behavioral
 2588. [evidence-required] `changed:C_TooltipInfo.GetRecipeResultItem` — unsafe

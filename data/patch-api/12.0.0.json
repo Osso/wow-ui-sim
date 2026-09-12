@@ -73,7 +73,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the AbbreviateConfig table proxy, method dispatch, per-instance fields, and tostring/read-only behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -114,7 +114,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides GetAbbreviateNumberData method dispatch and per-instance stored-data reads.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -155,7 +155,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides SetAbbreviateNumberData method dispatch and per-instance stored-data writes.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -29370,7 +29370,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the CreateAbbreviateConfig factory and AbbreviateConfig table proxy with method dispatch, per-instance fields, and tostring/read-only behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -29411,7 +29411,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -88256,7 +88256,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -88296,7 +88296,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -88336,7 +88336,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -88376,7 +88376,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -88547,7 +88547,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
           "summary": "Current temporary AbbreviateConfig proxy stores generic table data and does not establish the exact NumberAbbrevData structure contract."
         },
         {
@@ -88583,7 +88583,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.abbreviation publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88612,7 +88612,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.abbreviationIsGlobal publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88641,7 +88641,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.breakpoint publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88670,7 +88670,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.fractionDivisor publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88699,7 +88699,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.significandDivisor publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88727,7 +88727,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
           "summary": "Current temporary AbbreviateConfig proxy stores generic options data and does not establish the exact NumberAbbrevOptions structure contract."
         },
         {
@@ -88763,7 +88763,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.breakpointData publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88792,7 +88792,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.config publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -88821,7 +88821,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.locale publication or number-abbreviation semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91421,7 +91421,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91474,7 +91474,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91527,7 +91527,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary UnitHealPredictionCalculator proxy stores and returns the local damage-absorb clamp mode.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -91564,7 +91564,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored totalDamageAbsorbs field plus a false flag; this generic field/default behavior is not authoritative.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91593,7 +91593,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored heal-absorb clamp mode or a generic default; exact retail mode mapping/default semantics are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91622,7 +91622,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored heal-absorb mode or a generic default; exact retail mode mapping/default semantics are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91651,7 +91651,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored totalHealAbsorbs field plus a false flag; this generic field/default behavior is not authoritative.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91680,7 +91680,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored incoming-heal clamp mode or a generic default; exact retail mode mapping/default semantics are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91709,7 +91709,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored overflow percentage or a generic default; exact retail default/range/secret semantics are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91738,7 +91738,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91791,7 +91791,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91844,7 +91844,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91897,7 +91897,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy resets local modes, overflow, predicted fields, maximum-health mode, and a secret flag; reset scope/order/defaults are not authoritative.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -91926,7 +91926,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -91979,7 +91979,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy stores the supplied local heal-absorb clamp mode without establishing accepted modes, validation, or retail semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92008,7 +92008,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy stores the supplied local heal-absorb mode without establishing accepted modes, validation, or retail semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92037,7 +92037,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy stores the supplied local incoming-heal clamp mode without establishing accepted modes, validation, or retail semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92066,7 +92066,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy stores the supplied local overflow percentage without establishing accepted range, validation, or secret semantics.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92095,7 +92095,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy copies a selected local predicted-value subset; exact payload fields, missing-field behavior, secret values, and prediction integration are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92124,7 +92124,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy delegates to its local Reset implementation; exact default values, reset scope, and lifecycle semantics are not established.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         }
       ],
       "tests": [],
@@ -92153,7 +92153,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -92206,7 +92206,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -92259,7 +92259,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -92312,7 +92312,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current detailed heal-prediction payload publishes a numeric default of 0; focused test asserts the field alongside the existing health/incoming-heal payload.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -92390,7 +92390,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -92443,7 +92443,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "source",
@@ -98752,7 +98752,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
           "summary": "Current temporary proxy factory creates AbbreviateConfig objects with tested getter/setter state, per-instance fields, read-only method keys, and tostring labels."
         },
         {
@@ -98793,7 +98793,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
           "summary": "The examined temporary proxy-object factory surface contains no FrameAPITooltip construction or method registration; this scoped inspection does not claim exhaustive source absence, and generated documentation presence is not runtime behavior."
         }
       ],
@@ -98977,7 +98977,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
           "summary": "Current temporary proxy factory creates UnitHealPredictionCalculator objects with tested reset, clamp-mode, maximum-health, predicted-value, and tostring state."
         },
         {
@@ -100374,7 +100374,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -101373,8 +101373,8 @@
       "id": "changed:C_Timer.After",
       "symbol": "C_Timer.After",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -101393,22 +101393,27 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "The temporary proxy path adds container coercion around C_Timer.After, but exact callback, scheduling, lifecycle, and edge semantics remain unproven.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "summary": "After uses a distinct no-argument invoker rather than the ticker proxy invoker. Existing callback-container representation, captured function and cancellation check remain; timer-engine code is unchanged.",
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
           "reference": "tests/missing_apis.rs",
-          "summary": "The only focused-looking C_Timer.After test, test_c_timer_after, is ignored with `C_Timer not implemented`; no focused executable behavioral proof exists.",
-          "source_hash": "6f897d48301157d1f6bd3d1dd11c72a828bec0a39c83673e2d54de51497e1a5e"
+          "summary": "Normal timer processing proves ordinary function and callback-container After calls return no values, defer zero-delay invocation, deliver once with zero callback arguments and do not repeat. NewTimer/NewTicker controls retain one equal-but-raw-distinct container proxy with shared fields and finite ticker iterations.",
+          "source_hash": "6d42cdaf65e6117c74332a9bad3ae74c0323205b6d62f64f62670e8f541eddaa"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/missing_apis.rs::timer_after_plain_callback_is_deferred_once_without_arguments",
+        "tests/missing_apis.rs::timer_after_container_callback_is_deferred_once_without_arguments",
+        "tests/missing_apis.rs::timer_after_new_timer_control_receives_handle_proxy",
+        "tests/missing_apis.rs::timer_after_new_ticker_control_receives_handle_proxy_per_tick"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1e069b03b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "No focused executable proof exists. Callback/lifecycle semantics require a correct modeled implementation and executable behavioral proof; exact scheduling, lifecycle, GC, and edge semantics remain unproven, and no approval can close this row."
+      "notes": "Four focused tests pass on simulator retail12.0.0; later-profile verification pending. Normal timer processing proves ordinary function and callback-container After calls return no values, defer zero-delay invocation, deliver once with zero callback arguments and do not repeat. NewTimer/NewTicker controls retain one equal-but-raw-distinct container proxy with shared fields and finite ticker iterations. Cached TimerCallback declarations specify no callback arguments; historical12.0.0 source establishes callback-type change and no outputs, not argument arity. Native historical callback/container identity, coercion, exact timing, cancellation edges, lifecycle/GC and unmodified consumer behavior remain unverified."
     },
     {
       "id": "changed:C_Timer.NewTicker",
@@ -101435,7 +101440,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "The current temporary proxy factory accepts plain functions or userdata containers, returns the callback container from NewTicker, binds each timer handle, and cancels all handles backed by a container.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
@@ -101481,7 +101486,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "The current temporary proxy factory coerces plain functions or userdata containers, binds NewTimer handles to the container, and passes a proxy sharing container state.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
         },
         {
           "kind": "test",
