@@ -2244,7 +2244,7 @@
 2244. [evidence-required] `added:LuaCurveObjectBase` — unsafe
 2245. [evidence-required] `added:LuaCurveObjectBase.GetType` — unsafe
 2246. [evidence-required] `added:LuaCurveObjectBase.HasSecretValues` — unsafe
-2247. [evidence-required] `added:LuaCurveObjectBase.SetType` — unsafe
+2247. [best-effort] `added:LuaCurveObjectBase.SetType` — behavioral
 2248. [best-effort] `added:LuaDurationObject` — behavioral
 2249. [best-effort] `added:LuaDurationObject.Assign` — behavioral
 2250. [best-effort] `added:LuaDurationObject.Copy` — behavioral

@@ -87470,8 +87470,8 @@
       "id": "added:LuaCurveObjectBase.SetType",
       "symbol": "LuaCurveObjectBase.SetType",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87486,14 +87486,22 @@
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
           "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::color_curve_copy_returns_userdata",
+          "summary": "On color curves with red/blue endpoints, switching Step to Linear changes midpoint RGBA from (1, 0, 0, 0.25) to (0.5, 0, 0.5, 0.5); switching back restores Step, while a copy retains its independently selected mode.",
+          "source_hash": "4a2b01f1ff461d83e5d65ea682a65f8f63379254989d56d9e3a0ed79a7b7bc74"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::color_curve_copy_returns_userdata"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "77310f806",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Existing ordinary color-curve simulator assertions only; no source/test change. Scalar SetType behavior, other modes, the complete native base interface, identity, custom fields, ordering, extrapolation, coercion/errors, security, lifecycle, and real consumers remain unverified."
     },
     {
       "id": "added:LuaDurationObject",
