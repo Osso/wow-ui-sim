@@ -1,8 +1,6 @@
 //! Native forbidden-aspect state and XML declarations.
 
-#[cfg(feature = "retail-12-1-0")]
-use crate::lua_api::methods::borrow_state;
-use crate::lua_api::methods::{borrow_state_mut, table_get};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -19,6 +17,48 @@ pub(crate) fn stored_forbidden_aspects(state: &LuaState, frame_id: u64) -> LuaRe
         .get(frame_id)
         .ok_or_else(|| runtime_error("forbidden-aspect object does not exist"))?;
     Ok(frame.forbidden_aspects)
+}
+
+/// Modeled restriction on a Lua operation; no caller-taint exemption is inferred.
+pub(crate) fn ensure_forbidden_aspect_absent(
+    state: &mut LuaState,
+    frame_id: u64,
+    aspect_name: &str,
+    method_name: &str,
+) -> LuaResult<()> {
+    let mask = borrow_state(state)?
+        .widgets
+        .get(frame_id)
+        .map_or(0, |frame| frame.forbidden_aspects);
+    if mask == 0 {
+        return Ok(());
+    }
+    let aspect = resolve_aspect(state, aspect_name)?;
+    if mask & aspect != 0 {
+        return Err(runtime_error(format!(
+            "{method_name}: forbidden aspect {aspect_name} disallows this operation"
+        )));
+    }
+    Ok(())
+}
+
+/// Read effective propagation without rewriting the caller's stored preference.
+pub(crate) fn read_keyboard_input_propagation(
+    state: &mut LuaState,
+    frame_id: u64,
+) -> LuaResult<bool> {
+    let (requested, mask) = {
+        let sim = borrow_state(state)?;
+        let Some(frame) = sim.widgets.get(frame_id) else {
+            return Ok(false);
+        };
+        (frame.propagate_keyboard_input, frame.forbidden_aspects)
+    };
+    if requested || mask == 0 {
+        return Ok(requested);
+    }
+    let aspect = resolve_aspect(state, "AlwaysPropagateInput")?;
+    Ok(mask & aspect != 0)
 }
 
 pub(crate) fn add_forbidden_aspects(

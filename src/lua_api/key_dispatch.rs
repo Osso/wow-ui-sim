@@ -203,21 +203,20 @@ impl WowLuaEnv {
         self.fire_on_key_down(frame_id, key)
     }
 
-    /// Fire OnKeyDown on a frame; if `propagate_keyboard_input` is set, walk
-    /// up the parent chain.
+    /// Fire OnKeyDown, then follow the effective propagation policy up the parent chain.
     fn fire_on_key_down(&self, frame_id: u64, key: &str) -> Result<()> {
         let key_val = {
             let mut lua = self.lua.borrow_mut();
             create_string(lua.state_mut(), key)
         };
         self.fire_script_handler(frame_id, "OnKeyDown", vec![key_val])?;
-        let propagate = self
-            .state
-            .borrow()
-            .widgets
-            .get(frame_id)
-            .map(|f| f.propagate_keyboard_input)
-            .unwrap_or(false);
+        let propagate = {
+            let mut lua = self.lua.borrow_mut();
+            super::frame::methods::forbidden_aspects::read_keyboard_input_propagation(
+                lua.state_mut(),
+                frame_id,
+            )?
+        };
         if propagate {
             let parent = self
                 .state

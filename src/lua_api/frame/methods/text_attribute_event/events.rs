@@ -3,6 +3,9 @@
 mod mouse_implied;
 mod script_binding_args;
 
+use super::super::forbidden_aspects::{
+    ensure_forbidden_aspect_absent, read_keyboard_input_propagation,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, val_to_string};
 use crate::lua_api::script_helpers::{
     ScriptBinding, get_script_binding as get_rilua_script_binding,
@@ -20,6 +23,7 @@ use script_binding_args as binding_args;
 
 pub(super) fn register_event(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "RegisterEvent")?;
     let Some(event) = val_to_string(state, stack_val(state, 2)) else {
         return Err(runtime_error("RegisterEvent: event name required"));
     };
@@ -36,6 +40,7 @@ fn insert_registered_event_checked(state: &mut LuaState, id: u64, event: &str) -
 }
 pub(super) fn register_unit_event(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "RegisterUnitEvent")?;
     let Some(event) = val_to_string(state, stack_val(state, 2)) else {
         state.push(Val::Bool(false));
         return Ok(1);
@@ -62,6 +67,7 @@ pub(super) fn register_unit_event(state: &mut LuaState) -> LuaResult<u32> {
 }
 pub(super) fn unregister_event(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "UnregisterEvent")?;
     let Some(event) = val_to_string(state, stack_val(state, 2)) else {
         state.push(Val::Bool(false));
         return Ok(1);
@@ -122,6 +128,7 @@ fn ensure_registerable_event(state: &mut LuaState, id: u64, event: &str) -> LuaR
 }
 pub(super) fn unregister_all_events(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "UnregisterAllEvents")?;
     {
         let mut sim = borrow_state_mut(state)?;
         sim.widgets.unregister_all_event_listeners(id);
@@ -131,6 +138,7 @@ pub(super) fn unregister_all_events(state: &mut LuaState) -> LuaResult<u32> {
 }
 pub(super) fn register_all_events(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "RegisterAllEvents")?;
     {
         let mut sim = borrow_state_mut(state)?;
         sim.widgets.register_all_event_listener(id);
@@ -157,6 +165,7 @@ fn frame_has_registered_event(frame: &crate::widget::Frame, event: &str) -> bool
 }
 pub(super) fn register_event_callback(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "RegisterEventCallback")?;
     let Some(event) = val_to_string(state, stack_val(state, 2)) else {
         state.push(Val::Bool(false));
         return Ok(1);
@@ -183,6 +192,7 @@ pub(super) fn register_event_callback(state: &mut LuaState) -> LuaResult<u32> {
 }
 pub(super) fn register_unit_event_callback(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "RegisterUnitEventCallback")?;
     let Some(event) = val_to_string(state, stack_val(state, 2)) else {
         state.push(Val::Bool(false));
         return Ok(1);
@@ -207,6 +217,14 @@ pub(super) fn set_propagate_keyboard_input(state: &mut LuaState) -> LuaResult<u3
     let id = frame_id_from_stack(state, 1)?;
     // TODO: combat lockdown check
     let propagate = matches!(stack_val(state, 2), Val::Bool(b) if b);
+    if !propagate {
+        ensure_forbidden_aspect_absent(
+            state,
+            id,
+            "AlwaysPropagateInput",
+            "SetPropagateKeyboardInput",
+        )?;
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut(id) {
         f.propagate_keyboard_input = propagate;
@@ -216,14 +234,8 @@ pub(super) fn set_propagate_keyboard_input(state: &mut LuaState) -> LuaResult<u3
 
 pub(super) fn get_propagate_keyboard_input(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let sim = borrow_state(state)?;
-    let val = sim
-        .widgets
-        .get(id)
-        .map(|f| f.propagate_keyboard_input)
-        .unwrap_or(false);
-    drop(sim);
-    state.push(Val::Bool(val));
+    let propagate = read_keyboard_input_propagation(state, id)?;
+    state.push(Val::Bool(propagate));
     Ok(1)
 }
 
