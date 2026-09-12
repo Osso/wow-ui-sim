@@ -15,10 +15,10 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 
 ### Copy and assignment
 
-- [ ] `Copy` must return one independent duration with the source's configured start, base duration, and rate; subsequent timing changes on either object must not affect the other.
-- [ ] `Assign(other)` must transfer configured timing into the existing receiver and return no values; self-assignment must leave state unchanged.
-- [ ] Copy the optional clock reference, not the clock object. Clock advancement is shared; rebinding either duration is independent. An unbound source clears the receiver's previous clock binding.
-- [ ] Preserve receiver identity and custom fields during assignment. Reject missing or non-duration sources before changing receiver state.
+- [x] `Copy` returns one independent duration with the source's configured start, base duration, and rate; later timing changes on either object do not affect the other.
+- [x] `Assign(other)` transfers configured timing into the existing receiver and returns no values; self-assignment leaves state unchanged.
+- [x] Copy the optional clock reference, not the clock object. Clock advancement is shared; rebinding either duration is independent. An unbound source clears the receiver's previous clock binding.
+- [x] Preserve receiver identity and custom fields during assignment. Reject missing or non-duration sources before changing receiver state.
 
 Cached `LuaDurationObjectAPIDocumentation.lua` describes copying a duration and assigning another duration into the receiver. Clock-reference handling, custom-field retention, and validation above are simulator policies, not native historical-client evidence. Only modeled timing and clock state transfer; arbitrary source fields are not part of duration state.
 
@@ -46,10 +46,10 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 
 ## Tests asserting this spec
 
-- `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances; percentage boundary/rewind, zero-span, invalid modifier, invalid clock, and seven pending Copy/Assign simulator-policy cases.
+- `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances; percentage boundary/rewind, zero-span, invalid modifier, invalid clock, and seven Copy/Assign simulator-policy cases.
 - Existing `tests/cooldown_widget.rs` and duration-text-binding tests: bounded consumer regression checks; these do not establish native core formulas.
 
-Focused proof at `24fe9d746` and `/tmp/verify-duration-percent-ledger.json` passes all seven `duration_core::` tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7. The first Copy/Assign GREEN attempt at `19416ff84` did not compile: `/tmp/duration-copy-green-ledger.json` records E0308 before tests ran. `acb86ceda` corrects that mutability mismatch; focused retry and independent verification remain pending. It also records `cargo fmt --check`, default `cargo check`, default `wow-sim`/`wow-cli` build, and no-addons/no-saved-vars startup `lua-errors` as exit 0; startup reported `[]`. This proves ordinary simulator policies only. Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
+Focused proof at `24fe9d746` and `/tmp/verify-duration-percent-ledger.json` passes all seven `duration_core::` tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7. The first Copy/Assign GREEN attempt at `19416ff84` did not compile: `/tmp/duration-copy-green-ledger.json` records E0308 before tests ran. `acb86ceda` corrects that mutability mismatch; `/tmp/duration-copy-green-retry-ledger.json` retains durable output for all seven Copy/Assign cases passing. Its post-execution wrapper lost the numeric exit code, so independent verification remains pending. It also records `cargo fmt --check`, default `cargo check`, default `wow-sim`/`wow-cli` build, and no-addons/no-saved-vars startup `lua-errors` as exit 0; startup reported `[]`. This proves ordinary simulator policies only. Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
 
 ## Cooldown zero-duration option
 
