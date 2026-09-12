@@ -43,7 +43,13 @@ local function scenario(options)
     _G.Ptr125RemainingProbeDB = nil
     _G.UnitHealth = function() return options.noSecrets and 100 or health end
     _G.UnitPower = function() return options.noSecrets and 10 or health end
-    _G.C_UnitAuras = { GetAuraDataByIndex = function()
+    _G.C_UnitAuras = { GetAuraDataByIndex = function(unit, index, filter)
+        if options.missingAuras then
+            if unit == "player" and filter == "HELPFUL" and index == 2 then
+                return { expirationTime = 123 }
+            end
+            if unit ~= "target" or filter ~= "HELPFUL" or index ~= 2 then return nil end
+        end
         return { expirationTime = options.noSecrets and 123 or clock }
     end }
     _G.rawset = function(t, key, value)
@@ -185,6 +191,16 @@ local function scenario(options)
             end
         end
     end
+    if options.missingAuras then
+        local later = labels["secrets:sample:aura:target:HELPFUL:2:expirationTime"]
+        assert(later and later.ok and later.results[1].secret == true,
+            "missing auras prevented discovery of a later secret timestamp")
+        for _, observation in ipairs(run.observations) do
+            if observation.label:match("^secrets:sample:aura:.*:expirationTime$") then
+                assert(observation.ok, "missing aura generated an expirationTime error")
+            end
+        end
+    end
     if options.noSecrets or options.missingClassifier then assert(calls.seeds == 0) end
     if options.blockSeed or options.dropSeed then assert(calls.predicates == 0) end
     if calls.maps > 0 then
@@ -225,6 +241,7 @@ local function scenario(options)
     scenarios = scenarios + 1
 end
 
+scenario({ missingAuras = true })
 scenario({ swallowErrors = true, failedCleanup = true })
 scenario({ swallowErrors = true, failCleanupOnce = true })
 scenario({ noWrapper = true, failedCleanup = true })
