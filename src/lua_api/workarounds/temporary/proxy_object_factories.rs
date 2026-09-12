@@ -272,7 +272,7 @@ if rawget(C_FunctionContainers, "CreateCallback") == nil then
 
   -- Real-WoW C_Timer contract (verified on retail 12.0.7 via
   -- docs/addons/TimerCallbackProbe): a ticker IS a FunctionContainer.
-  -- C_Timer.After/NewTimer/NewTicker accept either a plain function or a
+  -- C_Timer.NewTimer/NewTicker accept either a plain function or a
   -- FunctionContainer as the callback, and NewTimer/NewTicker return the
   -- callback container itself. Feeding a returned ticker back into another
   -- C_Timer.New* call therefore reuses the same callback object, while each
@@ -329,9 +329,20 @@ if rawget(C_FunctionContainers, "CreateCallback") == nil then
       end
     end
 
+    -- TimerCallback (After) has no arguments; TickerCallback receives a proxy.
+    local function makeAfterInvoker(container)
+      local fn = container._callback
+      return function()
+        if container._cancelled then
+          return
+        end
+        return fn()
+      end
+    end
+
     function C_Timer.After(seconds, callback)
       local container = asContainer(callback, "After")
-      return rawAfter(seconds, makeInvoker(container))
+      return rawAfter(seconds, makeAfterInvoker(container))
     end
 
     function C_Timer.NewTimer(seconds, callback)
