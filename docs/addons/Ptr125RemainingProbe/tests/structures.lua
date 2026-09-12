@@ -118,8 +118,13 @@ local function fixture(options)
     if options.missingTimer then _G.C_Timer = nil end
     assert(loadfile(root .. "/Core.lua"))("Ptr125RemainingProbe", Probe)
     assert(loadfile(root .. "/Structures.lua"))("Ptr125RemainingProbe", Probe)
-    assert(type(Probe.actions.structures) == "function")
-    local run = Probe.run("structures")
+    assert(loadfile(root .. "/Secrets.lua"))("Ptr125RemainingProbe", Probe)
+    _G.SlashCmdList = {}
+    assert(loadfile(root .. "/Main.lua"))("Ptr125RemainingProbe", Probe)
+    assert(Ptr125RemainingProbeDB == nil, "loading modules must not run probes")
+    SlashCmdList.PTR125REMAININGPROBE("structures")
+    local run = Ptr125RemainingProbeDB.runs[1]
+    assert(run and run.kind == "structures")
     local function assert_redacted(value, seen)
         assert(not objects[value], "owned object persisted")
         local kind = type(value)
