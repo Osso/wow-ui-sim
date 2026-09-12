@@ -351,3 +351,119 @@ fn event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged() {
         assert(ordinaryCalls == 1 and unitCalls == 1)
     "#).expect("zero-mask callback listeners retain their public FireEvent delivery boundary");
 }
+
+#[test]
+fn scripted_focus_aspect_rejects_click_before_checkbutton_or_handler_changes() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local restricted = CreateFrame('CheckButton')
+        restricted:SetChecked(false)
+        local restrictedCalls = 0
+        restricted:SetScript('OnClick', function() restrictedCalls = restrictedCalls + 1 end)
+        restricted:AddForbiddenAspects(Enum.ForbiddenAspect.ScriptedInput)
+        local ok, err = pcall(restricted.Click, restricted)
+        assert(not ok and type(err) == 'string', 'ScriptedInput must reject Click')
+        assert(not restricted:GetChecked(), 'rejected click must not toggle checked state')
+        assert(restrictedCalls == 0, 'rejected click must not invoke OnClick')
+
+        local ordinary = CreateFrame('CheckButton')
+        ordinary:SetChecked(false)
+        local ordinaryCalls = 0
+        ordinary:SetScript('OnClick', function() ordinaryCalls = ordinaryCalls + 1 end)
+        ordinary:Click()
+        assert(ordinary:GetChecked() and ordinaryCalls == 1)
+    "#).expect("scripted click rejection is atomic and an unrestricted click still works");
+}
+
+#[test]
+fn scripted_focus_aspect_preserves_focus_and_cursor_while_engine_typing_continues() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        ScriptedFocusBox = CreateFrame('EditBox')
+        ScriptedOtherBox = CreateFrame('EditBox')
+        ScriptedFocusBox:SetText('ab')
+        ScriptedFocusBox:SetCursorPosition(2)
+        ScriptedFocusBox:SetFocus()
+        local aspect = Enum.ForbiddenAspect.ScriptedInput
+        ScriptedFocusBox:AddForbiddenAspects(aspect)
+        ScriptedOtherBox:AddForbiddenAspects(aspect)
+        local operations = {
+            {'SetFocus', ScriptedOtherBox},
+            {'ClearFocus', ScriptedFocusBox},
+            {'SetCursorPosition', ScriptedFocusBox, 0},
+        }
+        local accepted = {}
+        for _, operation in ipairs(operations) do
+            local receiver = operation[2]
+            local ok, err = pcall(receiver[operation[1]], receiver, unpack(operation, 3))
+            if ok then
+                accepted[#accepted + 1] = operation[1]
+            else
+                assert(type(err) == 'string')
+            end
+        end
+        assert(#accepted == 0, 'ScriptedInput accepted: ' .. table.concat(accepted, ', '))
+        assert(ScriptedFocusBox:HasFocus() and not ScriptedOtherBox:HasFocus())
+        assert(ScriptedFocusBox:GetCursorPosition() == 2)
+        assert(ScriptedFocusBox:GetText() == 'ab')
+    "#).expect("focus and cursor mutations are rejected without changing ownership or text");
+    env.send_key_press("X", Some("x")).unwrap();
+    env.exec(r#"
+        assert(ScriptedFocusBox:GetText() == 'abx')
+        assert(ScriptedFocusBox:GetCursorPosition() == 3)
+        assert(ScriptedFocusBox:HasFocus() and not ScriptedOtherBox:HasFocus())
+        assert(ScriptedOtherBox:GetText() == '')
+    "#).expect("engine keyboard input bypasses the Lua scripted-input mutations");
+}
+
+#[test]
+fn scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        QueryFocusBox = CreateFrame('EditBox')
+        QueryIdleBox = CreateFrame('EditBox')
+        QueryFocusBox:SetText('ab')
+        QueryFocusBox:SetCursorPosition(1)
+        QueryFocusBox:SetFocus()
+        assert(QueryFocusBox:HasFocus() and not QueryIdleBox:HasFocus())
+        for _, box in ipairs({QueryFocusBox, QueryIdleBox}) do
+            box:AddForbiddenAspects(Enum.ForbiddenAspect.QueryFocus)
+            local ok, err = pcall(box.HasFocus, box)
+            assert(not ok and type(err) == 'string', 'QueryFocus must reject HasFocus')
+        end
+        assert(QueryFocusBox:GetCursorPosition() == 1)
+        assert(QueryFocusBox:GetText() == 'ab')
+    "#).expect("focus queries reject both focused and unfocused restricted receivers");
+    env.send_key_press("X", Some("x")).unwrap();
+    env.exec(r#"
+        assert(QueryFocusBox:GetText() == 'axb')
+        assert(QueryFocusBox:GetCursorPosition() == 2)
+        assert(QueryIdleBox:GetText() == '')
+        assert(not pcall(QueryFocusBox.HasFocus, QueryFocusBox))
+    "#).expect("query rejection does not clear focus or block engine typing");
+}
+
+#[test]
+fn scripted_focus_aspect_unrestricted_focus_mutations_and_queries_still_work() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        PlainFocusFirst = CreateFrame('EditBox')
+        PlainFocusSecond = CreateFrame('EditBox')
+        PlainFocusFirst:SetText('ab')
+        PlainFocusFirst:SetCursorPosition(1)
+        PlainFocusFirst:SetFocus()
+        assert(PlainFocusFirst:HasFocus() and not PlainFocusSecond:HasFocus())
+        assert(PlainFocusFirst:GetCursorPosition() == 1)
+        PlainFocusSecond:SetFocus()
+        assert(not PlainFocusFirst:HasFocus() and PlainFocusSecond:HasFocus())
+        PlainFocusSecond:ClearFocus()
+        assert(not PlainFocusFirst:HasFocus() and not PlainFocusSecond:HasFocus())
+        PlainFocusFirst:SetFocus()
+    "#).expect("unrestricted focus ownership, clearing, cursor mutation, and queries work");
+    env.send_key_press("X", Some("x")).unwrap();
+    env.exec(r#"
+        assert(PlainFocusFirst:GetText() == 'axb')
+        assert(PlainFocusFirst:GetCursorPosition() == 2)
+        assert(PlainFocusFirst:HasFocus() and not PlainFocusSecond:HasFocus())
+    "#).expect("unrestricted engine typing retains the current focus owner");
+}
