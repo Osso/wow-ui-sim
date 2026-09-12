@@ -4,7 +4,7 @@ Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRai
 
 ## Model
 
-`SimState.unit_raid_target_icons` maps a resolved unit GUID to icon indices 1–8. `SetRaidTarget` resolves the unit first, then accepts integral finite indices 0–8: 0 clears the resolved unit; 1–8 assigns the icon. Assignment removes the target's prior icon and any prior owner of the requested icon. Valid calls synchronously dispatch one zero-payload `RAID_TARGET_UPDATE` after mutation, including repeated assignments. No event is queued for later delivery.
+`SimState.unit_raid_target_icons` maps a resolved unit GUID to icon indices 1–8. `SetRaidTarget` resolves the unit first, then accepts integral finite indices 0–8: 0 clears the resolved unit; 1–8 assigns the icon. Assignment removes the target's prior icon and any prior owner of the requested icon. Valid calls record one zero-payload `RAID_TARGET_UPDATE` and synchronously dispatch one notification after mutation, including repeated assignments. Draining records does not automatically dispatch callbacks.
 
 `GetRaidTargetIndex` resolves the same unit snapshot and returns its index or nil. Missing or unknown units keep the legacy no-op/nil boundary. Valid units with missing, invalid, fractional, nonfinite, or out-of-range indices fail before mutation or dispatch.
 
