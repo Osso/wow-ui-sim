@@ -10,7 +10,7 @@
 
 ## Proof boundary
 
-`tests/userdata_proxy.rs` covers handle types, copying, secure option identity, numeric and color interpolation, and forged-table rejection. `tests/duration_text_binding_copy.rs` exercises the real `CustomAuraButton` provider initializer and its internal `securecopy(options)` before assigning a duration color curve.
+`tests/userdata_proxy.rs` covers handle types, copying, secure option identity, numeric and color interpolation, and forged-table rejection. At `77310f806`, the existing scalar and color `Copy` tests prove one distinct userdata return, copied values, independent later point mutation, and independent interpolation-mode changes. The color fixture observes point counts `0 → 1 → 2 → 0`, copied `Step` configuration, and independent `Linear`/`Step` changes. `/tmp/curve-copy-development-ledger.json` records 2/2 focused retail-12.0.0 cases passing; independent later-profile and metadata verification remain pending. `tests/duration_text_binding_copy.rs` exercises the real `CustomAuraButton` provider initializer and its internal `securecopy(options)` before assigning a duration color curve.
 
 The test-only commit reproduces the actual processor rejection, not merely a type mismatch. Targeted GREEN passed 9/9 in `/tmp/pi-curve-userdata-green.*`; actual addon/SavedVariables startup then returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`.
 
