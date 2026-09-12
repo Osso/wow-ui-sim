@@ -1,6 +1,79 @@
 use super::*;
 
 #[test]
+fn forbidden_aspect_mouse_editbox_focus_and_typing_survive_scripted_rejections() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+        AspectClickedBox = CreateFrame('EditBox', nil, UIParent)
+        AspectOtherBox = CreateFrame('EditBox', nil, UIParent)
+        AspectClickedBox:SetSize(100, 100)
+        AspectClickedBox:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 100, -100)
+        AspectClickedBox:SetFrameStrata('TOOLTIP')
+        AspectClickedBox:EnableMouse(true)
+        AspectClickedBox:SetAutoFocus(false)
+        AspectOtherBox:SetAutoFocus(false)
+        AspectClickedBox:SetText('ab')
+        AspectClickedBox:SetCursorPosition(2)
+        AspectClickedBox:ClearFocus()
+        AspectOtherBox:ClearFocus()
+        AspectFocusGained, AspectFocusLost = 0, 0
+        AspectClickedBox:SetScript('OnEditFocusGained', function()
+            AspectFocusGained = AspectFocusGained + 1
+        end)
+        AspectClickedBox:SetScript('OnEditFocusLost', function()
+            AspectFocusLost = AspectFocusLost + 1
+        end)
+        AspectClickedBox:AddForbiddenAspects(Enum.ForbiddenAspect.ScriptedInput)
+        AspectOtherBox:AddForbiddenAspects(Enum.ForbiddenAspect.ScriptedInput)
+        assert(not AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
+    "#,
+        )
+        .expect("create unfocused restricted editboxes");
+    rebuild_hittable_cache(&app);
+    let cursor = Point::new(150.0, 150.0);
+    let _ = app.update(Message::CanvasEvent(CanvasMessage::MouseMove(cursor)));
+    app.handle_mouse_down(cursor);
+    app.handle_mouse_up(cursor);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+        assert(AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
+        assert(AspectFocusGained == 1 and AspectFocusLost == 0)
+        assert(AspectClickedBox:GetCursorPosition() == 2)
+        assert(not pcall(AspectOtherBox.SetFocus, AspectOtherBox))
+        assert(not pcall(AspectClickedBox.ClearFocus, AspectClickedBox))
+        assert(not pcall(AspectClickedBox.SetCursorPosition, AspectClickedBox, 0))
+        assert(AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
+        assert(AspectClickedBox:GetCursorPosition() == 2)
+        assert(AspectClickedBox:GetText() == 'ab')
+        assert(AspectFocusGained == 1 and AspectFocusLost == 0)
+    "#,
+        )
+        .expect("GUI click acquires focus and rejected scripts preserve it and the cursor");
+    let _ = app.update(Message::KeyPress(
+        "X".to_string(),
+        Some("x".to_string()),
+        std::time::Instant::now(),
+    ));
+    app.env
+        .borrow()
+        .exec(
+            r#"
+        assert(AspectClickedBox:GetText() == 'abx')
+        assert(AspectClickedBox:GetCursorPosition() == 3)
+        assert(AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
+        assert(AspectOtherBox:GetText() == '')
+        assert(AspectFocusGained == 1 and AspectFocusLost == 0)
+    "#,
+        )
+        .expect("GUI keyboard text reaches the mouse-focused restricted editbox");
+}
+
+#[test]
 fn forbidden_aspect_mouse_scripted_click_rejects_lua_but_preserves_physical_click() {
     let mut app = build_test_app(ScreenKind::Game);
     app.env
