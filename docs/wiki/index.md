@@ -662,6 +662,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
 | [[casc-asset-cache]] | CASC cache layers (FDID resolution sqlite, BLP byte cache, Blizzard UI source cache, in-memory texture cache), measured timings, failure modes |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs modeled from ChrSpecialization.db2 (`SpecInfo.mastery_spell_ids`); backs `C_SpecializationInfo.GetSpecializationMasterySpells` and the Character sheet Mastery tooltip |
+| [[duration-core]] | Existing Lua table-proxy duration timing state, manual-clock queries, explicit simulator formulas, and separate native/consumer boundaries |
 
 ## investigations/
 
