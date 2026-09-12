@@ -42,4 +42,4 @@ A pre-change fixture exposed an unrelated producer difference: public `FireEvent
 
 ## Out of scope
 
-Secret values, caller-taint/security enforcement, VM changes, native error wording and timing, other forbidden aspects, mouse propagation, `OnKeyUp`, and changing keybinding/EditBox priority. This policy does not establish universal input propagation or Blizzard-private caller privileges.
+Secret values, caller-taint/security enforcement, VM changes, native error wording and timing, mouse propagation, `OnKeyUp`, and changing keybinding/EditBox priority. This policy does not establish universal input propagation or Blizzard-private caller privileges. The separately scoped, still-unproven `ScriptedInput` and `QueryFocus` method policy is specified in [forbidden-aspect scripted input and focus queries](forbidden-aspect-scripted-input-query-focus.md).

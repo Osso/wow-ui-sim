@@ -1,0 +1,47 @@
+# Forbidden-aspect scripted input and focus queries
+
+Patch 12.1 PTR generated API declarations annotate exactly six methods with `ChecksForbiddenAspects`. This specification defines the next simulator policy slice. All requirements remain unchecked until runtime proof.
+
+## Source annotation evidence
+
+Cached PTR `Blizzard_APIDocumentationGenerated` declarations establish only these bindings:
+
+- `SimpleButtonAPIDocumentation.lua:42-45` — `Button:Click` checks `ScriptedInput`.
+- `SimpleEditBoxAPIDocumentation.lua:20-22`, `646-650`, and `668-670` — `EditBox:ClearFocus`, `SetCursorPosition`, and `SetFocus` check `ScriptedInput`.
+- `SimpleEditBoxAPIDocumentation.lua:408-410` — `EditBox:HasFocus` checks `QueryFocus`.
+- `SimpleScriptRegionAPIDocumentation.lua:469-471` — `Region:IsMouseMotionFocus` checks `QueryFocus`.
+
+The same source does not annotate `Region:IsMouseOver`; no global focus query is included in this slice.
+
+## What it must do
+
+### Uniform policy assumption
+
+- [ ] Apply all six gates uniformly, without caller-taint, caller-identity, or privileged-caller exceptions. This is a simulator policy assumption, not native security conformance.
+- [ ] Reject a gated method when its receiver carries the relevant aspect, including an inherited aspect.
+- [ ] Reject before any state mutation, click-depth transition, cursor change, focus-script callback, or click callback.
+- [ ] Preserve ordinary validation, return values, state changes, and callbacks for zero-mask receivers and receivers without the relevant aspect.
+
+### `ScriptedInput`
+
+- [ ] Reject `Button:Click` before button state changes and `OnClick` runs.
+- [ ] Reject `EditBox:SetFocus` and `EditBox:ClearFocus` before focused-frame, per-frame focus, visual, or focus-script changes.
+- [ ] Reject `EditBox:SetCursorPosition` before cursor state changes.
+- [ ] Preserve physical GUI mouse clicking, edit-box click-to-focus, keyboard delivery, and their existing callbacks; this gate restricts only the annotated script methods.
+- [ ] Preserve unannotated text methods and their ordinary behavior.
+
+### `QueryFocus`
+
+- [ ] Reject `EditBox:HasFocus` and `Region:IsMouseMotionFocus` before returning focus or hover state.
+- [ ] Leave global focus queries and `Region:IsMouseOver` unchanged because this slice has no local source annotation for them.
+
+## Proof required
+
+- [ ] Focused tests demonstrate each annotated method rejects atomically, with observable state and callback non-mutation.
+- [ ] Focused tests demonstrate unaffected physical GUI mouse/keyboard paths and unannotated methods remain available.
+- [ ] Focused tests cover inherited masks and ordinary zero-mask controls.
+- [ ] Earlier-profile controls establish that the new policy does not alter pre-12.1 behavior.
+
+## Out of scope
+
+Native error wording/timing, native authority or taint semantics, secrets, VM/rilua changes, other forbidden aspects, global focus APIs, `IsMouseOver`, and text-method restrictions.
