@@ -9,6 +9,14 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+// Explicit consumption of these tests' zero-payload events, not an automatic tick.
+fn dispatch_queued_test_events(env: &WowLuaEnv) {
+    let events = env.state().borrow_mut().events.drain();
+    for event in events {
+        env.fire_event(&event.name).unwrap();
+    }
+}
+
 // ── TargetUnit ────────────────────────────────────────────────────────────────
 
 #[test]
@@ -496,14 +504,8 @@ fn raid_target_icons_reject_invalid_indices_without_side_effects() {
         assert(not pcall(SetRaidTarget, 'player', nil))
         assert(raidIconEvents == 0)
     "#).unwrap();
-    assert!(
-        !env.state()
-            .borrow()
-            .events
-            .pending()
-            .iter()
-            .any(|event| event.name == "RAID_TARGET_UPDATE")
-    );
+    dispatch_queued_test_events(&env);
+    assert_eq!(env.eval::<i64>("return raidIconEvents").unwrap(), 0);
 }
 
 #[test]
@@ -535,12 +537,6 @@ fn raid_target_icons_notify_once_after_mutation_without_queued_duplicate() {
     "#,
     )
     .unwrap();
-    assert!(
-        !env.state()
-            .borrow()
-            .events
-            .pending()
-            .iter()
-            .any(|event| event.name == "RAID_TARGET_UPDATE")
-    );
+    dispatch_queued_test_events(&env);
+    assert_eq!(env.eval::<i64>("return raidIconEvents").unwrap(), 3);
 }
