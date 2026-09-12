@@ -95,7 +95,8 @@ assert(position.FIRST_FRAME_RENDERED < position.settled)
 #[test]
 fn strict_removal_timing_retires_after_world_handlers_without_rewrapping() {
     let env = WowLuaEnv::new().expect("initialize environment");
-    env.exec(OBSERVE_LIFECYCLE).expect("install lifecycle observer");
+    env.exec(OBSERVE_LIFECYCLE)
+        .expect("install lifecycle observer");
     let _fixture = load_timing_fixture(&env);
     env.apply_post_load_workarounds();
     env.exec("StrictTiming.observe('post-load')")
