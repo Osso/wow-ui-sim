@@ -2136,7 +2136,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot cross-flavor contamination: the only PTR definition is in `Mists/UIParent.lua`, loaded exclusively by `Blizzard_UIParent_Mists.toc`; PTR tests verify absence during initialization, post-load compatibility, and settled mainline startup.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2467,7 +2467,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot/runtime mismatch: no definition exists in the local PTR Blizzard sources; focused PTR runtime test loads `Blizzard_AuctionHouseUI` and verifies the wrapper remains absent rather than inventing behavior.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2514,7 +2514,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as reversed-name snapshot mismatch: PTR defines `BlackMarketFrame_Hide` with panel-hide and close-sound behavior, not `HideBlackMarketFrame`; focused PTR test explicitly loads `Blizzard_BlackMarketUI`, verifies the authoritative helper, and confirms the reversed wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2546,7 +2546,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot/runtime mismatch: no definition exists in local PTR Blizzard Lua sources; focused PTR test loads `Blizzard_GarrisonUI` with its LoD dependencies and verifies the wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2578,7 +2578,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot/runtime mismatch: no definition exists in local PTR Blizzard Lua sources; focused PTR test loads `Blizzard_GarrisonUI` with its LoD dependencies and verifies the wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2625,7 +2625,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot/runtime mismatch: no definition exists in local PTR Blizzard Lua sources; focused PTR test explicitly loads `Blizzard_GuildBankUI` and verifies the wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2687,7 +2687,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as reversed-name snapshot mismatch: PTR defines and uses `ItemUpgradeFrame_Hide`, not `HideItemUpgradeFrame`; focused PTR test explicitly loads `Blizzard_ItemUpgradeUI` and verifies the reversed wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -2719,7 +2719,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "Classified as snapshot/runtime mismatch: recursive local PTR source scan finds no definition; focused PTR test loads the required ProfessionsTemplates/AuctionHouse dependencies plus `Blizzard_ProfessionsCustomerOrders`, verifies the frame exists, and confirms the wrapper remains absent.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -3066,7 +3066,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "PTR UIParent exports the helper as the global `GetSmoothProgressChange`, not `InterpolatorUtil.GetSmoothProgressChange`; focused PTR runtime proof verifies the namespace member remains absent while the global computes the expected smooth progress value.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
@@ -5817,7 +5817,7 @@
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/blizzard-ui-files/ptr.txt",
+          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
           "summary": "PTR UIParent still exports `GetSmoothProgressChange` globally; focused PTR runtime proof verifies it remains a function and returns 70 for the representative (100, 0, 100, 1) input.",
           "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
         }
