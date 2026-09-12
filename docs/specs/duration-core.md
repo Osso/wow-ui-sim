@@ -63,6 +63,6 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 
 ## Out of scope
 
-- Curve evaluation and rendering behavior remain outside this slice; no curve-evaluation features are added. Native copy/assignment identity, clock, coercion/error, custom-field, and lifecycle/GC semantics remain unverified.
+- Curve evaluation is specified separately in [duration curve evaluation](duration-curve-evaluation.md); rendering remains outside this slice. Native copy/assignment identity, clock, coercion/error, custom-field, and lifecycle/GC semantics remain unverified.
 - Secret values, taint, protected/forbidden calls, and immutable proxy internals: not inferred from ordinary numeric behavior.
 - Consumer redesign or changes to duration-text-binding identity: preserve current proxy representation.

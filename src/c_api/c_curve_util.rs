@@ -158,7 +158,22 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn evaluate_curve_value(
+    state: &mut rilua::vm::state::LuaState,
+    curve: rilua::Val,
+    value: f64,
+) -> rilua::LuaResult<rilua::Val> {
+    use crate::lua_api::methods::{call_function_state, create_string};
+    let is_curve = is_curve_object(state, curve, "LuaCurveObject")
+        || is_curve_object(state, curve, "LuaColorCurveObject");
+    if !is_curve {
+        return Err(rilua::runtime_error("expected LuaCurveObjectBase"));
+    }
+    let key = create_string(state, "Evaluate");
+    let evaluate = state.gettable(curve, key)?;
+    call_function_state(state, evaluate, &[curve, rilua::Val::Num(value)])
+}
+
 pub(crate) fn is_curve_object(
     state: &mut rilua::vm::state::LuaState,
     value: rilua::Val,

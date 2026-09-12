@@ -241,6 +241,22 @@ fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn evaluate_with_curve(state: &mut LuaState, getter: &str) -> LuaResult<u32> {
+    use crate::lua_api::methods::{call_function_state, create_string};
+    let object = super::require_duration(state, 1)?;
+    let curve = stack_val(state, 2);
+    let modifier = stack_val(state, 3);
+    let key = create_string(state, getter);
+    let method = state.gettable(object, key)?;
+    let value = call_function_state(state, method, &[object, modifier])?;
+    let Val::Num(value) = value else {
+        return Err(rilua::runtime_error("duration query must return a number"));
+    };
+    let result = crate::c_api::c_curve_util::evaluate_curve_value(state, curve, value)?;
+    state.push(result);
+    Ok(1)
+}
+
 pub(super) fn register(state: &mut LuaState, methods: Val) {
     let methods_to_install: &[(&str, rilua::RustFn)] = &[
         ("SetTimeFromStart", |s| set_time(s, false)),
@@ -255,6 +271,18 @@ pub(super) fn register(state: &mut LuaState, methods: Val) {
         ("GetRemainingDuration", |s| query(s, Query::Remaining)),
         ("GetElapsedPercent", |s| query(s, Query::ElapsedPercent)),
         ("GetRemainingPercent", |s| query(s, Query::RemainingPercent)),
+        ("EvaluateElapsedDuration", |s| {
+            evaluate_with_curve(s, "GetElapsedDuration")
+        }),
+        ("EvaluateRemainingDuration", |s| {
+            evaluate_with_curve(s, "GetRemainingDuration")
+        }),
+        ("EvaluateElapsedPercent", |s| {
+            evaluate_with_curve(s, "GetElapsedPercent")
+        }),
+        ("EvaluateRemainingPercent", |s| {
+            evaluate_with_curve(s, "GetRemainingPercent")
+        }),
         ("GetModRate", |s| query(s, Query::Rate)),
         ("GetClockTime", |s| query(s, Query::Clock)),
         ("IsZero", |s| query(s, Query::Zero)),

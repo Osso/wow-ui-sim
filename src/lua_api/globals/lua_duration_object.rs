@@ -367,11 +367,6 @@ fn m_copy(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn m_evaluate_zero(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
-    Ok(1)
-}
-
 fn m_get_clock(state: &mut LuaState) -> LuaResult<u32> {
     let object = crate::lua_bridge::stack_val(state, 1);
     let clock = table_get(state, object, "clock");
@@ -462,7 +457,6 @@ fn ensure_metatable(state: &mut LuaState) {
 fn build_methods_table(state: &mut LuaState) -> Val {
     let methods = create_table(state);
     install_lifecycle_methods(state, methods);
-    install_zero_methods(state, methods);
     install_query_methods(state, methods);
     core::register(state, methods);
     methods
@@ -514,17 +508,6 @@ fn install_method(
 ) {
     let closure = make_closure(state, closure_name, func);
     table_set_static(state, methods, key, closure);
-}
-
-fn install_zero_methods(state: &mut LuaState, methods: Val) {
-    for key in [
-        "EvaluateElapsedDuration",
-        "EvaluateElapsedPercent",
-        "EvaluateRemainingDuration",
-        "EvaluateRemainingPercent",
-    ] {
-        install_method(state, methods, key, key, m_evaluate_zero);
-    }
 }
 
 /// Wrap a `RustFn` in a `Closure::Rust` and return it as a `Val::Function`.
