@@ -11,6 +11,21 @@
 //! - `runtime_subsystems` — text helpers, scroll scripts, C_Texture/atlas,
 //!   animation runtime, gamepad cursor, unit state, popup/tooltip frames.
 
+macro_rules! current_retail_ptr_test_modules {
+    ($($module:item)*) => {
+        $(
+            #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+            $module
+        )*
+    };
+}
+
+current_retail_ptr_test_modules! {
+    mod patch_12_1_5_housing_result_enums;
+    mod patch_12_1_5_intl_normalization;
+    mod patch_12_1_5_weather_type_enums;
+}
+
 mod account_state_flags;
 mod caa_constants;
 mod combat_log_object;
@@ -32,7 +47,6 @@ mod patch_12_1_5_cooldown_thresholds;
 mod patch_12_1_5_create_frame_options;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_fragment_id_enums;
-mod patch_12_1_5_housing_result_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_breaks;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
@@ -45,7 +59,6 @@ mod patch_12_1_5_intl_collation;
 mod patch_12_1_5_intl_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_length;
-mod patch_12_1_5_intl_normalization;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_plurals;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
@@ -75,7 +88,6 @@ mod patch_12_1_5_training_grounds;
 mod patch_12_1_5_transmog_illusion_flags;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_weather;
-mod patch_12_1_5_weather_type_enums;
 
 macro_rules! active_retail_12_0_0_test_modules {
     ($($module:item)*) => {
