@@ -35,7 +35,7 @@ The simulator also provides safe 12.0.7 additive probes for API names that can b
 - `C_UIFileAsset.GetFileID`, `IsKnownFile`, `IsLooseFile` (now best-effort modeled from the bundled limited listfile)
 - `GetEventCPUUsage`, `GetFunctionCPUUsage`, `GetScriptCPUUsage` (now provided by the shared performance-metric defaults module)
 - secure pending callback getters/setters: button, ping off-screen, toggle run (now Rust-backed through the shared PingSecure callback table; callback storage only, not real secure-execution enforcement)
-- `GameTooltip_AddMoneyLine` (now provided by the shared formatting defaults; best-effort formats copper through the simulator money formatter before adding the tooltip line)
+- `GameTooltip_AddMoneyLine` — bootstrap ownership was removed at `8097a844c`: cached `Blizzard_GameTooltip` owns this helper after normal addon loading. The removed prefix-text shim was incompatible with its boolean color argument and formatter. Focused loaded-consumer proof is pending; do not treat the deleted startup bridge as evidence. See [[tooltip-money-line]].
 - `ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED` registration under `retail-12-0-7`
 
 Already-existing coverage from prior work included `C_Container.CalculateTotalNumberOfFreeBagSlots`, `C_DelvesUI.GetWorldTierDifficultyForActivePlayer`, `C_PingSecure.SetPendingPingOffScreenCallback`, and `URL_TEXTURE_REQUEST_RESULT` registration.
@@ -52,7 +52,7 @@ Key implementation locations:
 - `src/c_api/c_ping_secure.rs` — Rust-backed PingSecure namespace callbacks plus the 12.0.7 secure pending button/ping/toggle getter/setter globals, all using the shared callback table.
 - `src/lua_api/globals/lua_duration_object.rs` — Rust-backed `C_DurationUtil.CreateDuration`, `CreateManualClock`, current-time/default duration object surface, and best-effort duration-object clock/lifecycle methods.
 - `src/lua_api/globals/missing_surface/encounter_events.rs` — Rust-backed `C_EncounterTimeline.GetEventColor` bridge over the existing encounter-event color state.
-- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — shared formatting helpers, including `GetMoneyString` and the gated `GameTooltip_AddMoneyLine` best-effort helper.
+- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — shared formatting helpers; it intentionally does not define the addon-owned `GameTooltip_AddMoneyLine` global.
 - `src/lua_api/workarounds/temporary/performance_metric_defaults.rs` — shared CPU/framerate/download metric defaults, including 12.0.7 CPU usage probes.
 - `src/c_api/duration_text_binding.rs` — table-backed `CreateDurationTextBinding` model, including [configuration assignment/copy](../../specs/duration-text-binding.md); existing best-effort formatting limits remain.
 - `src/lua_api/workarounds/mod.rs`, `src/lua_api/workarounds/temporary/mod.rs` — bootstrap registration.
