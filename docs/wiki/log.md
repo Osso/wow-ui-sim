@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Strengthen curve copy evidence
 
-`77310f806` strengthens existing scalar/color curve-copy fixtures. `/tmp/curve-copy-development-ledger.json` records 2/2 retail-12.0.0 cases: copied scalar points remain independent after clearing/rebuilding either curve; copied color points and `Step` configuration remain independent from later `Linear`/`Step` and point mutations. The color fixture observes counts `0 → 1 → 2 → 0`. This is ordinary simulator proof only; independent later-profile/metadata verification and native/security/GC/consumer semantics remain open. See [curve objects](../../specs/curve-objects.md).
+`77310f806` strengthens existing scalar/color curve-copy fixtures. `/tmp/curve-copy-development-ledger.json` records 2/2 retail-12.0.0 cases: copied scalar points remain independent after clearing/rebuilding either curve; copied color points and `Step` configuration remain independent from later `Linear`/`Step` and point mutations. The color fixture observes counts `0 → 1 → 2 → 0`. `e463e77f3` narrows both existing Copy records to those fixtures and credits `LuaColorCurveObject.GetPointCount`; committed classification is `2272 / 1136 / 2`. This is ordinary simulator proof only; independent later-profile/metadata verification and native/security/GC/consumer semantics remain open. See [curve objects](../../specs/curve-objects.md).
 
 ## [2026-09-12] audit | Credit existing duration-curve integration assertions
 
