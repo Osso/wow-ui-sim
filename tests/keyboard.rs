@@ -189,6 +189,96 @@ fn test_propagate_keyboard_input_stops_without_flag() {
     );
 }
 
+#[cfg(feature = "retail-12-1-0")]
+fn create_forced_propagation_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        SetBinding('F24')
+        PropagationOrder = {}
+        PropagationParent = CreateFrame('Frame', nil, UIParent)
+        PropagationParent:SetScript('OnKeyDown', function(_, key)
+            table.insert(PropagationOrder, 'parent:' .. key)
+        end)
+        function CreatePropagationChild()
+            PropagationChild = CreateFrame('Frame', nil, PropagationParent)
+            PropagationChild:EnableKeyboard(true)
+            PropagationChild:Show()
+            PropagationChild:SetFocus()
+            PropagationChild:SetScript('OnKeyDown', function(_, key)
+                table.insert(PropagationOrder, 'child:' .. key)
+            end)
+        end
+        "#,
+    )
+    .unwrap();
+    env
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn assert_forced_key_route(env: &WowLuaEnv) {
+    env.send_key_press("F24", None).unwrap();
+    let order: String = env.eval("return table.concat(PropagationOrder, ',')").unwrap();
+    assert_eq!(order, "child:F24,parent:F24");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn always_propagate_input_forces_state_and_rejects_disabling() {
+    let env = create_forced_propagation_env();
+    env.exec(
+        r#"
+        CreatePropagationChild()
+        PropagationChild:SetPropagateKeyboardInput(false)
+        assert(not PropagationChild:GetPropagateKeyboardInput())
+        PropagationChild:AddForbiddenAspects(Enum.ForbiddenAspect.AlwaysPropagateInput)
+        assert(PropagationChild:GetPropagateKeyboardInput(), 'aspect must override stored false')
+        assert(not pcall(PropagationChild.SetPropagateKeyboardInput, PropagationChild, false))
+        assert(PropagationChild:GetPropagateKeyboardInput(), 'rejected disable must preserve propagation')
+        PropagationChild:SetPropagateKeyboardInput(true)
+        assert(PropagationChild:GetPropagateKeyboardInput())
+        "#,
+    )
+    .unwrap();
+    assert_forced_key_route(&env);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn always_propagate_input_inherited_by_new_child_forces_key_route() {
+    let env = create_forced_propagation_env();
+    env.exec(
+        r#"
+        PropagationParent:AddForbiddenAspects(Enum.ForbiddenAspect.AlwaysPropagateInput)
+        CreatePropagationChild()
+        assert(PropagationChild:GetPropagateKeyboardInput(), 'new child must inherit forced propagation')
+        assert(not pcall(PropagationChild.SetPropagateKeyboardInput, PropagationChild, false))
+        assert(PropagationChild:GetPropagateKeyboardInput())
+        "#,
+    )
+    .unwrap();
+    assert_forced_key_route(&env);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn always_propagate_input_added_during_handler_applies_to_current_key() {
+    let env = create_forced_propagation_env();
+    env.exec(
+        r#"
+        CreatePropagationChild()
+        assert(not PropagationChild:GetPropagateKeyboardInput())
+        PropagationChild:SetScript('OnKeyDown', function(self, key)
+            table.insert(PropagationOrder, 'child:' .. key)
+            self:AddForbiddenAspects(Enum.ForbiddenAspect.AlwaysPropagateInput)
+        end)
+        "#,
+    )
+    .unwrap();
+    assert_forced_key_route(&env);
+    assert!(env.eval::<bool>("return PropagationChild:GetPropagateKeyboardInput()").unwrap());
+}
+
 // --- EditBox special handler tests ---
 
 #[test]
