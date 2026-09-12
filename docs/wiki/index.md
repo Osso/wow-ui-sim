@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit modeled 12.1 event and keyboard restrictions
+
+`5125e2407` adds two explicit simulator policies: `EventRegistrations` rejects all seven Lua registration mutations before state changes, while `AlwaysPropagateInput` forces effective keyboard parent routing and rejects disabling. Existing registered delivery, zero-mask behavior, key order, caller-taint neutrality, and inherited/handler-added masks have focused proof. Native security, caller authority, mouse/other input routes, error wording, and timing remain unverified. Current behavior totals: 38 best-effort / 16 evidence-required. See [policy spec](../specs/forbidden-aspect-event-input.md) and [[patch-12-1-api-audit]].
+
 ## [2026-09-12] audit | Preserve patch 12.1 historical cache input
 
 `6572d7b0e` snapshots the original PTR file list at `data/patch-api/sources/12.1.0-ptr-cache-manifest.txt` for the 12.1 behavior and FrameXML audits. Current runtime `data/blizzard-ui-files/ptr.txt` remains unchanged for PTR 12.1.5. This preserves source provenance only; it is not a historical runtime or native proof. See [[patch-12-1-api-audit]].

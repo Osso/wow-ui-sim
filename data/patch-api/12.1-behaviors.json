@@ -252,7 +252,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime enforcement for trusted script execution is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
         }
       ],
       "tests": [],
@@ -274,7 +274,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime layout-script enforcement is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
         }
       ],
       "tests": [],
@@ -287,45 +287,133 @@
       "id": "changed:Patch12_1.ForbiddenAspects.EventRegistrations",
       "symbol": "Patch12_1.ForbiddenAspects.EventRegistrations",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Forbidden Aspects",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
-          "summary": "Aspect masks, inheritance, and queries exist; EventRegistrations enforcement is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/forbidden-aspect-event-input.md",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "f95476d304f76fe96aa4ea44fc502371aede056323fee07f9758e58ded67b9d0"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_all_mutations_without_caller_exception",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "b1f9165d0fa41e848f98f181b7c6903c723ca0ce5432b16d0c8ff00b51f71570"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_existing_listener_delivery",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "b1f9165d0fa41e848f98f181b7c6903c723ca0ce5432b16d0c8ff00b51f71570"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_callbacks_when_replacement_is_rejected",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "b1f9165d0fa41e848f98f181b7c6903c723ca0ce5432b16d0c8ff00b51f71570"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "b1f9165d0fa41e848f98f181b7c6903c723ca0ce5432b16d0c8ff00b51f71570"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged",
+          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "b1f9165d0fa41e848f98f181b7c6903c723ca0ce5432b16d0c8ff00b51f71570"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_all_mutations_without_caller_exception",
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_existing_listener_delivery",
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_callbacks_when_replacement_is_rejected",
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged",
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5125e2407",
       "approval_id": null,
-      "notes": "Aspect masks, inheritance, and queries exist; EventRegistrations enforcement is unknown."
+      "notes": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified."
     },
     {
       "id": "changed:Patch12_1.ForbiddenAspects.AlwaysPropagateInput",
       "symbol": "Patch12_1.ForbiddenAspects.AlwaysPropagateInput",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Forbidden Aspects",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
-          "summary": "Aspect masks, inheritance, and queries exist; AlwaysPropagateInput enforcement is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/key_dispatch.rs",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "87c0c13a18c2764c44b5bc46551a5b1265f0466f8b53f03a9c48043058984ecc"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/forbidden-aspect-event-input.md",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "f95476d304f76fe96aa4ea44fc502371aede056323fee07f9758e58ded67b9d0"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/keyboard.rs::always_propagate_input_forces_state_and_rejects_disabling",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/keyboard.rs::always_propagate_input_inherited_by_new_child_forces_key_route",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/keyboard.rs::always_propagate_input_added_during_handler_applies_to_current_key",
+          "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
+          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/keyboard.rs::always_propagate_input_forces_state_and_rejects_disabling",
+        "tests/keyboard.rs::always_propagate_input_inherited_by_new_child_forces_key_route",
+        "tests/keyboard.rs::always_propagate_input_added_during_handler_applies_to_current_key"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5125e2407",
       "approval_id": null,
-      "notes": "Aspect masks, inheritance, and queries exist; AlwaysPropagateInput enforcement is unknown."
+      "notes": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified."
     },
     {
       "id": "changed:Patch12_1.ForbiddenAspects.ScriptedInput",
@@ -340,7 +428,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; ScriptedInput enforcement is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
         }
       ],
       "tests": [],
@@ -362,7 +450,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; QueryFocus enforcement is unknown.",
-          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
+          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
         }
       ],
       "tests": [],

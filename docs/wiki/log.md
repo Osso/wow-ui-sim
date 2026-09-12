@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit modeled 12.1 event and keyboard restrictions
+
+`5125e2407` moves `ForbiddenAspects.EventRegistrations` and `AlwaysPropagateInput` to bounded best-effort. Event registration mutations reject before listener/callback/index changes and preserve existing delivery; effective keyboard propagation is forced by direct, inherited, or handler-added masks, and disabling rejects without state loss. These are caller-taint-neutral simulator policies, not native security/routing/error/timing claims. Focused retail tests: five event cases and three keyboard cases passed. Current register: 38 best-effort / 16 evidence-required. See [policy spec](../specs/forbidden-aspect-event-input.md) and [[patch-12-1-api-audit]].
+
 ## [2026-09-12] audit | Preserve patch 12.1 historical cache input
 
 `6572d7b0e` preserves the original PTR 12.1 file list in `data/patch-api/sources/12.1.0-ptr-cache-manifest.txt`; both 12.1 manifests point to that immutable audit input. Runtime `data/blizzard-ui-files/ptr.txt` remains current-PTR data. This is provenance preservation, not native historical execution. See [[patch-12-1-api-audit]].

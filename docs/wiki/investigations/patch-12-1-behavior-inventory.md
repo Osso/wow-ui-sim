@@ -5,8 +5,8 @@ Non-FrameXML behavioral fidelity register. Family names group rows; status and e
 - **Source:** `data/patch-api/sources/12.1-behaviors.json`
 - **Source SHA-256:** `9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f`
 - **Target:** PTR build `12.1.0`
-- **Rows:** 54 changed behavioral boundaries — 0 implemented, 36 best-effort, 18 evidence-required, 0 exception-requested, 0 untriaged
-- **Resolution split:** 36 behavioral, 18 unsafe; no exception rows
+- **Rows:** 54 changed behavioral boundaries — 0 implemented, 38 best-effort, 16 evidence-required, 0 exception-requested, 0 untriaged
+- **Resolution split:** 38 behavioral, 16 unsafe; no exception rows
 
 The three new best-effort credits use simulator tests, not native captures: [duration-binding representation](../../specs/duration-text-binding.md) and [strict-removal timing](../../specs/strict-removal-timing.md). The frozen source register retains the original fidelity objectives; bounded modeled policies do not establish those objectives' native equivalence. Native probe preparation alone changes no disposition.
 
@@ -24,8 +24,8 @@ The three new best-effort credits use simulator tests, not native captures: [dur
 | `Patch12_1.PrivateScriptObjects.SecureDelegateEnforcement` | evidence-required  | unsafe  | Private Script Objects | changed | Public delegates invoke permitted private behavior without exposing private receiver state. |
 | `Patch12_1.ForbiddenAspects.UntrustedScriptExecution` | evidence-required  | unsafe  | Forbidden Aspects | changed | Operations requiring trusted script execution reject insecure callers. |
 | `Patch12_1.ForbiddenAspects.UntrustedLayoutScriptExecution` | evidence-required  | unsafe  | Forbidden Aspects | changed | Layout-script operations reject insecure callers lacking the required aspect. |
-| `Patch12_1.ForbiddenAspects.EventRegistrations` | evidence-required  | unsafe  | Forbidden Aspects | changed | Event registration operations enforce the EventRegistrations aspect restriction. |
-| `Patch12_1.ForbiddenAspects.AlwaysPropagateInput` | evidence-required  | unsafe  | Forbidden Aspects | changed | Input propagation changes enforce the AlwaysPropagateInput aspect restriction. |
+| `Patch12_1.ForbiddenAspects.EventRegistrations` | best-effort  | behavioral  | Forbidden Aspects | changed | Modeled policy rejects seven Lua registration mutations atomically; existing listeners, queries, and delivery remain usable. Native security is unproven. |
+| `Patch12_1.ForbiddenAspects.AlwaysPropagateInput` | best-effort  | behavioral  | Forbidden Aspects | changed | Modeled policy forces effective keyboard parent propagation and rejects disabling; native routing and security are unproven. |
 | `Patch12_1.ForbiddenAspects.ScriptedInput` | evidence-required  | unsafe  | Forbidden Aspects | changed | Scripted-input operations enforce the ScriptedInput aspect restriction. |
 | `Patch12_1.ForbiddenAspects.QueryFocus` | evidence-required  | unsafe  | Forbidden Aspects | changed | Focus-query operations enforce the QueryFocus aspect restriction. |
 | `Patch12_1.AuraContainer.CreationTypes` | best-effort  | behavioral  | AuraContainer | changed | AuraContainer, AuraButton, and ManagedAuraContainer can be created with compatible object types. |
@@ -73,8 +73,6 @@ Open behavior gaps:
 
 - `Patch12_1.ForbiddenAspects.UntrustedScriptExecution`
 - `Patch12_1.ForbiddenAspects.UntrustedLayoutScriptExecution`
-- `Patch12_1.ForbiddenAspects.EventRegistrations`
-- `Patch12_1.ForbiddenAspects.AlwaysPropagateInput`
 - `Patch12_1.ForbiddenAspects.ScriptedInput`
 - `Patch12_1.ForbiddenAspects.QueryFocus`
 
@@ -85,8 +83,8 @@ Probe installation, execution, or manual observations are not evidence captures 
 ## Machine state totals
 
 - implemented: 0
-- best-effort: 36
-- evidence-required: 18
+- best-effort: 38
+- evidence-required: 16
 - exception-requested: 0
 - untriaged: 0
 

@@ -6,16 +6,16 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 
 ### Event registration — modeled policy
 
-- [ ] Reject `RegisterEvent`, `RegisterUnitEvent`, `RegisterAllEvents`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEvent`, and `UnregisterAllEvents` when the receiver has `EventRegistrations`.
-- [ ] Reject before changing membership, unit filters, all-event listeners, callback storage, or dispatch indexes. Existing registrations and callbacks continue to deliver events; queries remain available.
-- [ ] Apply the restriction uniformly, without a caller-taint exemption. Unrestricted frames retain existing validation, return values, registration, and delivery behavior. Engine-owned cleanup is not a Lua registration mutation.
+- [x] Reject `RegisterEvent`, `RegisterUnitEvent`, `RegisterAllEvents`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEvent`, and `UnregisterAllEvents` when the receiver has `EventRegistrations`.
+- [x] Reject before changing membership, unit filters, all-event listeners, callback storage, or dispatch indexes. Existing registrations and callbacks continue to deliver events; queries remain available.
+- [x] Apply the restriction uniformly, without a caller-taint exemption. Unrestricted frames retain existing validation, return values, registration, and delivery behavior. Engine-owned cleanup is not a Lua registration mutation.
 
 ### Keyboard propagation — modeled policy
 
-- [ ] A frame carrying `AlwaysPropagateInput` reports effective keyboard propagation as true, including an inherited mask and a mask added after propagation was disabled.
-- [ ] Reject disabling propagation on such a frame without changing state; explicitly enabling it remains allowed.
-- [ ] The existing parent-chain `OnKeyDown` dispatcher uses effective propagation after the handler returns, including a mask added by that handler.
-- [ ] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
+- [x] A frame carrying `AlwaysPropagateInput` reports effective keyboard propagation as true, including an inherited mask and a mask added after propagation was disabled.
+- [x] Reject disabling propagation on such a frame without changing state; explicitly enabling it remains allowed.
+- [x] The existing parent-chain `OnKeyDown` dispatcher uses effective propagation after the handler returns, including a mask added by that handler.
+- [x] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
 
 ## How it works
 
@@ -35,7 +35,7 @@ Focused grouped integration tests exercise registration outcomes and real event 
 
 ## Known gaps (current cycle)
 
-- [ ] Focused behavioral, startup, and independent verification pending.
+- [ ] Native routing, caller authority, error wording, and security equivalence remain unverified.
 
 ## Out of scope
 

@@ -10,8 +10,8 @@
 10. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.SecureDelegateEnforcement` — unsafe
 11. [evidence-required] `changed:Patch12_1.ForbiddenAspects.UntrustedScriptExecution` — unsafe
 12. [evidence-required] `changed:Patch12_1.ForbiddenAspects.UntrustedLayoutScriptExecution` — unsafe
-13. [evidence-required] `changed:Patch12_1.ForbiddenAspects.EventRegistrations` — unsafe
-14. [evidence-required] `changed:Patch12_1.ForbiddenAspects.AlwaysPropagateInput` — unsafe
+13. [best-effort] `changed:Patch12_1.ForbiddenAspects.EventRegistrations` — behavioral
+14. [best-effort] `changed:Patch12_1.ForbiddenAspects.AlwaysPropagateInput` — behavioral
 15. [evidence-required] `changed:Patch12_1.ForbiddenAspects.ScriptedInput` — unsafe
 16. [evidence-required] `changed:Patch12_1.ForbiddenAspects.QueryFocus` — unsafe
 17. [best-effort] `changed:Patch12_1.AuraContainer.CreationTypes` — behavioral
