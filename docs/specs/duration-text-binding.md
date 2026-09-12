@@ -12,8 +12,8 @@
 
 ### Best-effort representation policy
 
-- [ ] Binding handles are userdata: `rawget` and `rawset` reject them. Retained handles remain usable and preserve identity through explicit collection.
-- [ ] A copied binding retains its duration, clock, font-string, formatter, and color-curve references after caller references and the source binding are released. Mutating a shared resource remains observable through the retained copy.
+- [x] Binding handles are userdata: `rawget` and `rawset` reject them. Retained handles remain usable and preserve identity through explicit collection.
+- [x] A copied binding retains its duration, clock, font-string, formatter, and color-curve references after caller references and the source binding are released. Mutating a shared resource remains observable through the retained copy.
 
 These are simulator policies, not claims about native object layout or garbage collection. Configuration is independently owned by each binding; external resource handles remain shared. Existing assignment/copy tests cover configuration independence and receiver validation.
 
@@ -35,6 +35,8 @@ These are simulator policies, not claims about native object layout or garbage c
 - `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior.
 
 ## Known gaps (current cycle)
+
+The representation-retention test passed on `client-retail` at `9a8189612` (one focused integration test). This proves the chosen handle/reference policy only; the existing copy/configuration tests were not rerun for this slice.
 
 Focused proof at `92675f08d`: all six assignment/copy cases passed in `/tmp/pi-aura-followup-green.*`, including the actual `CustomAuraButton` initializer and secure-option copy. The earlier failed table-backed identity boundary is retained in `/tmp/pi-aura-three-models-green.*`; the source-backed userdata handle fixes it without accepting forgeable table markers.
 
