@@ -1,6 +1,6 @@
 # PTR 12.1.5 remaining-contract probe
 
-**Installed and captured once on desktop PTR; rerun pending after the absent-aura fix.** The first non-secret structure capture matched pinned build `12.1.5.69594`; its exact artifact and interpretation live in [the PTR audit](../../wiki/investigations/patch-12-1-5-api-audit.md#native-structure-capture-not-an-audit-upgrade). `secrets` is deferred, not native conformance. Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until reviewed native results justify a specific upgrade.
+**Installed and captured once on desktop PTR; secrets work is deferred.** The first non-secret structure capture matched pinned build `12.1.5.69594`; its exact artifact and interpretation live in [the PTR audit](../../wiki/investigations/patch-12-1-5-api-audit.md#native-structure-capture-not-an-audit-upgrade). `secrets` is deferred, not native conformance. Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until reviewed native results justify a specific upgrade.
 
 Target: **12.1.5.69594**, interface **120105**. Every run records available `GetBuildInfo()` fields and marks the pinned-build match `true`, `false`, or `unknown` when build metadata is unavailable. Results from another or unknown build are not pinned-build proof.
 
@@ -17,7 +17,7 @@ Target: **12.1.5.69594**, interface **120105**. Every run records available `Get
 
 1. The probe is installed at `C:/World of Warcraft/_xptr_/Interface/AddOns/Ptr125RemainingProbe/` on the desktop PTR. To reinstall it from the repository root, run `python3 docs/addons/Ptr125RemainingProbe/deploy.sh`.
 2. Enable the addon and run `/ptr125probe structures`.
-3. Run `/ptr125probe secrets`. Repeat only when your normal player/target state supplies suitable secret values; the addon does not target, cast, enter combat, or modify auras.
+3. Skip `/ptr125probe secrets` while secrets work is deferred. The current native secret-key insertion attempt can display an error; its wrapper repair is also deferred.
 4. Run `/ptr125probe status`. Later, when safe, `/reload` or log out to flush SavedVariables.
 5. Retain `WTF/Account/<ACCOUNT>/SavedVariables/Ptr125RemainingProbe.lua` with the capture conditions. Review it locally before sharing or committing it.
 
