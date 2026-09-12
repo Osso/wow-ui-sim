@@ -1,3 +1,7 @@
+## [2026-09-12] test infrastructure | Gate current-profile helpers from historical library builds
+
+`cf08fa330` gates three existing 12.1.5 test modules in `wow_api_globals/mod.rs` to current retail/PTR. The functions were already profile-gated, but unconditional module inclusion prevented the retail 12.0.0 `--lib` target from compiling because a HousingResult helper referenced PTR-only `crate::ptr`. This changes test compilation only; pending 12.0.0 stale-evidence proof is not claimed as rerun. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Record bounded 12.0.0 paragon and specialization proof
 
 `dc346a706` adds a sixth explicitly seeded paragon storage return; `9a8c05992` resolves the pinned seventh specialization `classID` against existing records. Focused paragon and specialization proof passed, including unchanged cached CooldownViewer cross-class output. Independent proof at `9a8c05992` passed 29/29 grouped 12.0.7 cases, 12/12 historical admin controls, and 10/10 Mists controls; format/check/build/readability and current-retail startup (`[]`) passed. Two rows gain bounded best-effort credit (2242 / 1166 / 2 exceptions). Native storage/validation, Journeys sixth-return consumption, and clean historical UI loading remain unproven; historical loader errors are retained in the proof ledger. See [paragon storage](../../specs/faction-paragon-storage-level.md), [specialization class selection](../../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
