@@ -94,4 +94,60 @@ local unknownBuild = Probe.run("fixture")
 assert(unknownBuild.matchesPinnedBuild == "unknown")
 assert(unknownBuild.client.version == nil and unknownBuild.client.build == nil)
 assert_serializable(Ptr125RemainingProbeDB, {})
-io.write("Core recording/redaction/cleanup/build-tag/CLI fixtures passed\n")
+_G.canaccessvalue = function(value) return value ~= secret end
+local uiErrors = 0
+local insideWrapper = false
+_G.securecallfunction = function(fn, ...)
+    insideWrapper = true
+    local returned = Probe.pack(pcall(fn, ...))
+    insideWrapper = false
+    if not returned[1] then
+        uiErrors = uiErrors + 1
+        return
+    end
+    return unpack(returned, 2, returned.n)
+end
+
+local wrappedRun = { observations = {} }
+local successInside = false
+local success = Probe.capture(wrappedRun, "wrapped tuple", "securecallfunction", function(...)
+    successInside = insideWrapper
+    local args = Probe.pack(...)
+    assert(args.n == 3 and args[1] == "argument" and args[2] == nil and args[3] == 7)
+    return nil, "public", nil, 7, nil
+end, Probe.pack("argument", nil, 7), true)
+assert(successInside, "successful callback ran outside secure wrapper")
+assert(success.n == 6 and success[1] == true and success[2] == nil)
+assert(success[3] == "public" and success[4] == nil and success[5] == 7 and success[6] == nil)
+local tuple = wrappedRun.observations[1]
+assert(tuple.ok and tuple.returnCount == 5 and #tuple.results == 5)
+assert(tuple.results[1].kind == "nil" and tuple.results[2].value == "public")
+assert(tuple.results[3].kind == "nil" and tuple.results[4].value == 7)
+assert(tuple.results[5].kind == "nil")
+assert(uiErrors == 0)
+
+local rejection = "attempted to perform indexed assignment on a table that cannot be indexed with secret keys"
+local rejectedInside = false
+local rejected = Probe.capture(wrappedRun, "wrapped rejected key", "securecallfunction", function()
+    rejectedInside = insideWrapper
+    error(rejection, 0)
+end, Probe.pack(), true)
+local secretInside = false
+local secretFailure = Probe.capture(wrappedRun, "wrapped secret error", "securecallfunction", function()
+    secretInside = insideWrapper
+    error(secret, 0)
+end, Probe.pack(), true)
+assert(rejectedInside and secretInside, "failing callback ran outside secure wrapper")
+assert(uiErrors == 0, "callback errors escaped to the secure wrapper UI handler")
+assert(rejected.n == 2 and rejected[1] == false and rejected[2] == rejection)
+local rejectedRow = wrappedRun.observations[2]
+assert(rejectedRow.ok == false and #rejectedRow.results == 0)
+assert(rejectedRow.error.kind == "string" and rejectedRow.error.value == rejection)
+assert(rejectedRow.error.secret == false and rejectedRow.error.accessible == true)
+assert(secretFailure.n == 2 and secretFailure[1] == false and secretFailure[2] == secret)
+local secretRow = wrappedRun.observations[3]
+assert(secretRow.ok == false and #secretRow.results == 0)
+assert(secretRow.error.secret == true and secretRow.error.accessible == false)
+assert(secretRow.error.value == nil)
+assert_serializable(wrappedRun, {})
+io.write("Core recording/redaction/cleanup/build-tag/CLI/wrapper fixtures passed\n")
