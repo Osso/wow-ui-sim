@@ -6,7 +6,7 @@ Commit `aae5996eb` replaces four `LuaDurationObject` constant-zero evaluation st
 
 `/tmp/duration-curve-red-ledger.json` records ten focused 12.0.0 cases failing before the change: all four scalar methods returned zero, color results were numeric zero, and modifier, clock, missing-curve, live-curve, and unsupported-interpolation errors were suppressed by the stub.
 
-The tests use existing scalar and color curve models, concrete timing boundaries, live point changes, invalid inputs, and existing interpolation errors. GREEN and independent verification are pending.
+The tests use existing scalar and color curve models, concrete timing boundaries, live point changes, invalid inputs, and existing interpolation errors. `/tmp/duration-curve-green-ledger.json` records 10/10 passing on retail 12.0.0 at `aae5996eb`; independent verification remains pending.
 
 Cached documentation names the return `LuaCurveEvaluatedResult`; cached scalar and color curve declarations respectively return a number and a ColorMixin value. This does not establish a separate result-object representation.
 
