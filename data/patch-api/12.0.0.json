@@ -125870,14 +125870,14 @@
         {
           "kind": "runtime",
           "reference": "patch-tests/patch_12_1/legacy_compat.rs",
-          "summary": "Focused full-LoD compatibility proof checks publication and the limited behavior claimed for this global.",
+          "summary": "Focused PTR full-LoD compatibility proof checks publication and the limited behavior claimed for this global; it does not establish historical 12.0.0 runtime behavior.",
           "source_hash": "2a1b042e2335d102fc05e877dbddeb8e0aa20fc6204baf263c998b67e4784aa7"
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Compatibility helper applies the tested portrait circular mask without duplicates.",
-          "source_hash": "f73b2d7eeb34a231955c6cfbc2a5914e4fb89704726544fc7ff65d02c055a9b4"
+          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
         }
       ],
       "tests": [
@@ -125894,7 +125894,7 @@
       "commit": "abba2bd2ac1a2d996ec5dedf1ca9d6532a02628d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Compatibility claim is limited to the tested portrait circular mask and no duplicate mask on repeat; broader portrait semantics are not claimed."
+      "notes": "Compatibility claim is limited to the tested portrait circular mask and no duplicate mask on repeat; broader portrait semantics are not claimed. Evidence renewal reuses the passing PTR compatibility test at 7b1a04f77647ef30e827e853200dc02bf2876730 with unchanged helper and test sources. The asserted flavor remains PTR, not historical 12.0.0."
     },
     {
       "id": "removed:SetRaidTargetProtected",
@@ -134061,14 +134061,14 @@
         {
           "kind": "runtime",
           "reference": "patch-tests/patch_12_1/legacy_compat.rs",
-          "summary": "Focused full-LoD compatibility proof checks publication and the limited behavior claimed for this global.",
+          "summary": "Focused PTR full-LoD compatibility proof checks publication and the limited behavior claimed for this global; it does not establish historical 12.0.0 runtime behavior.",
           "source_hash": "2a1b042e2335d102fc05e877dbddeb8e0aa20fc6204baf263c998b67e4784aa7"
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Runtime compatibility helper supports the tested default and custom trim characters.",
-          "source_hash": "f73b2d7eeb34a231955c6cfbc2a5914e4fb89704726544fc7ff65d02c055a9b4"
+          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
         }
       ],
       "tests": [
@@ -134085,7 +134085,7 @@
       "commit": "abba2bd2ac1a2d996ec5dedf1ca9d6532a02628d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Compatibility claim is limited to the tested default and custom-character trimming behavior; broader string semantics are not claimed."
+      "notes": "Compatibility claim is limited to the tested default and custom-character trimming behavior; broader string semantics are not claimed. Evidence renewal reuses the passing PTR compatibility test at 7b1a04f77647ef30e827e853200dc02bf2876730 with unchanged helper and test sources. The asserted flavor remains PTR, not historical 12.0.0."
     },
     {
       "id": "removed:trackQuestSorting",
