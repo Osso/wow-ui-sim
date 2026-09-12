@@ -333,6 +333,16 @@ fn raid_target_icons_update_real_blizzard_target_frame_consumer() {
             &["Blizzard_UnitFrame"],
             &[],
             |env, _loaded| {
+                // Exercise the complete Lua consumer, not historical XML construction.
+                let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(
+                    std::path::Path::new(env!("CARGO_MANIFEST_DIR")),
+                );
+                let source = std::fs::read_to_string(
+                    addons.join("Blizzard_UnitFrame/Mainline/TargetFrame.lua"),
+                )
+                .expect("cached Blizzard TargetFrame Lua consumer");
+                env.exec(&source)
+                    .expect("unmodified TargetFrame Lua consumer loads");
                 env.exec(
                     r#"
                     assert(type(TargetFrameMixin.OnEvent) == "function")
