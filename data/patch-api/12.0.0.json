@@ -86860,9 +86860,9 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0",
-          "summary": "Current temporary curve proxy creates related color-curve objects but does not establish the exact LuaColorCurvePoint structure contract."
+          "reference": "src/c_api/c_curve_util.rs",
+          "source_hash": "b0dc8eae87c9f4bff6bcaff8884cfda096cd90e009d2f9ba1fe5abf31b170edc",
+          "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior."
         },
         {
           "kind": "source",
@@ -86895,9 +86895,9 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current implementation does not provide authoritative focused proof for LuaColorCurvePoint.x; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "reference": "src/c_api/c_curve_util.rs",
+          "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
+          "source_hash": "b0dc8eae87c9f4bff6bcaff8884cfda096cd90e009d2f9ba1fe5abf31b170edc"
         }
       ],
       "tests": [],
@@ -86924,9 +86924,9 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current implementation does not provide authoritative focused proof for LuaColorCurvePoint.y; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "5a61a95b3211e005800bc8e275224a481dcd9ef8b24c3135b526e64d2c13f4e0"
+          "reference": "src/c_api/c_curve_util.rs",
+          "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
+          "source_hash": "b0dc8eae87c9f4bff6bcaff8884cfda096cd90e009d2f9ba1fe5abf31b170edc"
         }
       ],
       "tests": [],
@@ -91036,7 +91036,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434",
-          "summary": "Duration objects exist, but no channel-duration producer is registered."
+          "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
           "kind": "source",
@@ -91149,7 +91149,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434",
-          "summary": "Duration objects exist, but no empowered-channel producer is registered."
+          "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
           "kind": "source",
