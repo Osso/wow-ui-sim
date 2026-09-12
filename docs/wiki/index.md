@@ -1,6 +1,6 @@
 ## [2026-09-12] investigation | Build spell cooldown duration objects from modeled state
 
-`f1535023c` establishes four retail 12.0.0 spell-duration RED cases (0/4): generic nil results instead of modeled duration snapshots. `14e5f8e46` preserves observed Mists nil behavior; `0e47eae2f` gates a real producer to retail 12.0.0+ and reuses existing identifier lookup, spell/GCD interval selection, and duration construction. GREEN and audit credit are pending. Native and consumer semantics remain open. See [spell cooldown duration](../specs/spell-cooldown-duration.md).
+`f1535023c` establishes four retail 12.0.0 spell-duration RED cases (0/4): generic nil results instead of modeled duration snapshots. `14e5f8e46` preserves observed Mists nil behavior; `0e47eae2f` gates a real producer to retail 12.0.0+ and reuses existing identifier lookup, spell/GCD interval selection, and duration construction. `/tmp/verify-spell-cooldown-duration-ledger.json` passes 32/32 on retail 12.0.0/12.0.5/12.0.7 and 29/29 on Mists; format, default check/build, startup `[]`, validators, readability, and 14,813 evidence references pass. The sole new credit reaches `2275 / 1133 / 2`. Native and consumer semantics remain open. See [spell cooldown duration](../specs/spell-cooldown-duration.md).
 
 ## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
 

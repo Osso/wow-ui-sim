@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] On retail 12.0.0+, resolve numeric identifiers and seeded case-insensitive aliases through the same identifier model as `GetSpellIDForSpellIdentifier`.
-- [ ] Snapshot the existing spell/GCD selector's interval into a duration with rate 1 and the runtime clock, consistently with numeric `GetSpellCooldown` results.
-- [ ] Return zero timing for an inactive numeric identifier and nil for an unresolved string alias; these are explicit simulator policies.
-- [ ] Keep an earlier object's configured interval unchanged after cooldown or alias updates; new queries reflect current state.
-- [ ] Preserve the earlier-profile nil result rather than installing the new producer there.
+- [x] On retail 12.0.0+, resolve numeric identifiers and seeded case-insensitive aliases through the same identifier model as `GetSpellIDForSpellIdentifier`.
+- [x] Snapshot the existing spell/GCD selector's interval into a duration with rate 1 and the runtime clock, consistently with numeric `GetSpellCooldown` results.
+- [x] Return zero timing for an inactive numeric identifier and nil for an unresolved string alias; these are explicit simulator policies.
+- [x] Keep an earlier object's configured interval unchanged after cooldown or alias updates; new queries reflect current state.
+- [x] Preserve the earlier-profile nil result rather than installing the new producer there.
 
 ## How it works
 
@@ -25,7 +25,7 @@
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes.rs::get_spell_cooldown_duration_*`: active timing/clock bounds, aliases/snapshots, later-ending GCD, inactive/unresolved identifiers and earlier-profile control. Initial retail RED: four failures because calls returned nil. An initial absence assertion was rejected by the observed Mists runtime; earlier profiles expose the generic nil-returning namespace method. Corrected control and GREEN verification pending.
+`tests/cooldown_probes.rs::get_spell_cooldown_duration_*`: active timing/clock bounds, aliases/snapshots, later-ending GCD, inactive/unresolved identifiers and earlier-profile control. Initial retail RED: four failures because calls returned nil. An initial absence assertion was rejected by the observed Mists runtime; earlier profiles expose the generic nil-returning namespace method. `/tmp/verify-spell-cooldown-duration-ledger.json` passes 32/32 on retail 12.0.0, 12.0.5, and 12.0.7, and 29/29 on Mists. Format, default check/build, startup `[]`, validators, readability, and all 14,813 evidence references pass. Historical warnings remain 6/6/1/6; default checks have none. This proves ordinary simulator behavior only.
 
 Existing `tests/c_spell_flyout_probes.rs` covers shared identifier lookup. Existing action duration cases cover the moved construction path.
 
