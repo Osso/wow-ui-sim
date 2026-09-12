@@ -317,6 +317,98 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
     assert_eq!(second, "Beta");
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn raid_target_icons_update_real_blizzard_target_frame_consumer() {
+    crate::common::with_timeout(90, || {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
+            &["Blizzard_UnitFrame"],
+            &[],
+            |env, _loaded| {
+                env.exec(
+                    r#"
+                    assert(type(TargetFrameMixin.OnEvent) == "function")
+                    assert(type(TargetFrameMixin.UpdateRaidTargetIcon) == "function")
+                    A_Admin.SetEnemyPool({name="IconAlpha"}, {name="IconBeta"})
+                    TargetUnit("enemy1")
+                    local firstGuid = UnitGUID("target")
+
+                    local frame = CreateFrame("Frame", nil, UIParent)
+                    Mixin(frame, TargetFrameMixin)
+                    frame.unit = "target"
+                    frame.TargetFrameContent = CreateFrame("Frame", nil, frame)
+                    local content = frame.TargetFrameContent
+                    content.TargetFrameContentContextual = CreateFrame("Frame", nil, content)
+                    local contextual = content.TargetFrameContentContextual
+                    contextual.RaidTargetIcon = contextual:CreateTexture(nil, "OVERLAY")
+                    local icon = contextual.RaidTargetIcon
+                    icon:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons")
+                    frame:SetScript("OnEvent", TargetFrameMixin.OnEvent)
+                    frame:RegisterEvent("RAID_TARGET_UPDATE")
+
+                    local observed = {}
+                    frame:HookScript("OnEvent", function(self, event)
+                        assert(event == "RAID_TARGET_UPDATE")
+                        observed[#observed + 1] = {
+                            index = GetRaidTargetIndex(self.unit),
+                            shown = icon:IsShown(),
+                            coords = {icon:GetTexCoord()},
+                        }
+                    end)
+                    local function assert_icon(index, eventCount)
+                        assert(#observed == eventCount, "missing or duplicate icon event")
+                        local last = observed[eventCount]
+                        assert(last.index == index, "event saw stale unit state")
+                        assert(last.shown == (index ~= nil), "vendor icon visibility")
+                        assert(GetRaidTargetIndex("target") == index)
+                        assert(icon:IsShown() == (index ~= nil))
+                        if index then
+                            local expected = index == 1
+                                and {0, 0, 0, 0.25, 0.25, 0, 0.25, 0.25}
+                                or {0.75, 0.25, 0.75, 0.5, 1, 0.25, 1, 0.5}
+                            assert(#last.coords == 8)
+                            for i, value in ipairs(expected) do
+                                assert(last.coords[i] == value, "vendor sprite coordinate " .. i)
+                            end
+                        end
+                    end
+
+                    SetRaidTarget("target", 1)
+                    assert_icon(1, 1)
+                    SetRaidTarget("target", 8)
+                    assert_icon(8, 2)
+                    SetRaidTarget("target", 0)
+                    assert_icon(nil, 3)
+
+                    SetRaidTargetIcon("target", 1)
+                    assert_icon(1, 4)
+                    SetRaidTargetIcon("target", 1)
+                    assert_icon(nil, 5)
+                    SetRaidTarget("target", 8)
+                    assert_icon(8, 6)
+
+                    TargetUnit("enemy2")
+                    assert(UnitGUID("target") ~= firstGuid, "fixture needs distinct identities")
+                    frame:UpdateRaidTargetIcon()
+                    assert(GetRaidTargetIndex("target") == nil and not icon:IsShown())
+                    SetRaidTarget("target", 1)
+                    assert_icon(1, 7)
+                    TargetUnit("enemy1")
+                    assert(UnitGUID("target") == firstGuid)
+                    frame:UpdateRaidTargetIcon()
+                    assert(GetRaidTargetIndex("target") == 8 and icon:IsShown())
+                    local coords = {icon:GetTexCoord()}
+                    assert(coords[1] == 0.75 and coords[2] == 0.25)
+                    assert(coords[7] == 1 and coords[8] == 0.5)
+                    frame:UnregisterAllEvents()
+                    "#,
+                )
+                .expect("real TargetFrame event handler consumes assigned unit raid icons");
+            },
+        );
+    });
+}
+
 #[test]
 fn raid_target_icons_assign_move_replace_and_clear() {
     let env = env();
