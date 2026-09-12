@@ -1,3 +1,7 @@
+## [2026-09-12] investigation | Separate After and ticker callback arguments
+
+`1e069b03b` changes only simulator callback dispatch: shared `makeInvoker` still captures the callback, checks cancellation, and supplies a proxy for `NewTimer`/`NewTicker`; `After` now uses a dedicated invoker with the same capture/cancellation behavior and zero callback arguments. Cached timer declarations distinguish `TimerCallback` (After, no arguments) from `TickerCallback` (NewTimer/NewTicker, one argument). The real-client TimerCallbackProbe captured NewTicker only, so its container/iteration evidence does not establish After acceptance, arguments, return behavior, cancellation, scheduling, or lifecycle. `/tmp/timer-after-red-ledger.json` is 2/4 before the change; GREEN remains pending. See [[timer-after-callback-dispatch]].
+
 ## [2026-09-12] audit | Credit nonzero duration defaults transition
 
 `5f7d70fe6` adds one 12.0.0 test for `SetToDefaults` from nonzero configured timing and a bound manual clock. `44e8055e3` credits only that row, moving the register to `2260 / 1148 / 2`; 20 existing duration-test hashes renew across two manifests. `/tmp/verify-duration-defaults-ledger.json` records 8/8 duration-core tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; format/readability pass, production check/build/startup proof is unchanged and reused, and both affected validators pass with fresh hashes. Native reset/clock/coercion/error/identity/security and consumer behavior remain open. See [[patch-12-0-0-api-audit]] and [[duration-core]].

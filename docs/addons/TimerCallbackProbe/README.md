@@ -32,9 +32,10 @@ integration and scheduling behavior:
    independent ("state not shared").
 
 This test does **not** exist in Wowless's own suite, and Wowless only *models*
-the behavior — neither is live-client proof. The historical simulator divergence
-is retained below; the only way to establish retail behavior is to probe the live
-client.
+the behavior — neither is live-client proof. This probe exercises `NewTicker`,
+not `After`; its capture cannot establish `After` callback acceptance, arguments,
+or lifecycle. The historical simulator divergence is retained below; the only way
+to establish retail behavior is to probe the live client.
 
 ## What wow-ui-sim does (current model)
 
@@ -44,6 +45,9 @@ The current simulator models the container path:
   via `()`, and exposes `:Invoke`, `:Cancel`, and `:IsCancelled`.
 - `C_Timer.NewTimer` and `C_Timer.NewTicker` accept a function or container and
   return the callback container; a plain function is wrapped in a fresh container.
+- The simulator's `C_Timer.After` wrapper accepts its existing ordinary callback
+  forms and dispatches no callback arguments. This is simulator behavior, not a
+  result captured by this probe.
 - Timer registrations keep independent iteration state, and container
   cancellation cancels the registrations it backs.
 
@@ -132,7 +136,7 @@ plainFunction (control):
 > retail-ground-truth test `Interface/AddOns/FcTest`. Don't read this row as
 > "retail lacks Invoke".
 
-On retail:
+On retail, for the `NewTicker` path this probe exercised:
 
 - `C_FunctionContainers.CreateCallback(fn)` returns a **userdata** cancelable
   object with `:Cancel`, `:IsCancelled`, and `:Invoke` methods, a protected
@@ -147,6 +151,10 @@ On retail:
   That is exactly what "state not shared" verifies.
 - A plain-function callback is wrapped into a container too
   (`plainTickerEqualsFn = false`).
+
+The capture does **not** establish `After` behavior. Cached timer API documentation
+labels `After`'s callback as `TimerCallback` (no arguments), while `NewTimer` and
+`NewTicker` use `TickerCallback` (one callback argument).
 
 The historical simulator capture diverged on every container-related point:
 
@@ -168,9 +176,9 @@ identity). This matches `FcTest` and the retail capture:
   `:Invoke`/`:Cancel`/`:IsCancelled`, read-only methods, per-instance fields,
   rejects C functions (via `debug.getinfo(...).what=="C"`). `:Invoke` calls the
   wrapped function and **returns nothing**.
-- `C_Timer.After/NewTimer/NewTicker` accept a function **or** a container; a plain
-  function is wrapped in a fresh container.
-- `NewTimer`/`NewTicker` **return the callback container** (a returned ticker can
+- `C_Timer.NewTicker` accepts a function **or** a container; a plain function is
+  wrapped in a fresh container.
+- `NewTicker` **returns the callback container** (a returned ticker can
   be fed back in); per-registration iteration count is independent.
 - A fired callback receives a **proxy** of the container: `proxy == handle` (via
   `__eq`) yet a distinct raw table key, sharing the handle's fields.
