@@ -1,6 +1,6 @@
 # PTR 12.1.5 remaining-contract probe
 
-**Installed in the desktop PTR addon directory; not executed in WoW.** Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until captured results are reviewed.
+**Installed and captured once on desktop PTR; rerun pending after the absent-aura fix.** The first capture matched pinned build `12.1.5.69594`; `secrets` was inconclusive, not native conformance. Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until reviewed native results justify a specific upgrade.
 
 Target: **12.1.5.69594**, interface **120105**. Every run records available `GetBuildInfo()` fields and marks the pinned-build match `true`, `false`, or `unknown` when build metadata is unavailable. Results from another or unknown build are not pinned-build proof.
 
@@ -32,6 +32,8 @@ No tests run automatically on login. Commands are `structures`, `secrets`, and `
 - No `forceinsecure`, secure-environment writes, global error-handler replacement, protected gameplay actions, security bypass, or throttling/VM work is included.
 
 The two XML templates are probe-owned controls. Their dimensions let the capture distinguish a processed `templateName` from an ignored argument. Compare a candidate table-form call only when its matching positional control succeeds. The clock must be a verified public, accessible, finite number before deadline arithmetic. A populated-map return shape is inspected only after `HasSignal` and `GetSignalTime` confirm the scheduled key and time; a successful call alone is insufficient. No generated-documentation structure is fabricated as a global.
+
+The first capture recorded `matchesPinnedBuild = true`. `secrets` completed but remained inconclusive: native secret-key insertion was rejected; the `securecallfunction` insertion returned without error but `next` found no key; and no secret aura expiration timestamp was observed. It also recorded nine handled absent-aura dereference errors. Commit `d48aa95da` now skips aura records unless they are public, accessible tables. Reload and rerun `secrets` before treating that guard as resolved in the native client. No popup text has been independently captured.
 
 For clean captures, record which other addons were enabled; they may wrap APIs. This probe does not change addon settings. If cleanup cannot confirm an empty map, the run records that limitation and retries once; reload after saving when safe.
 
