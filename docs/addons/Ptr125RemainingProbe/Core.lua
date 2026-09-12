@@ -108,8 +108,12 @@ local function metadata(run)
         run.client.interface = Probe.describe(values[5], true).value
     end
     run.target = { version = "12.1.5", build = "69594", interface = 120105 }
-    run.matchesPinnedBuild = run.client.version == run.target.version
-        and run.client.build == run.target.build and run.client.interface == run.target.interface
+    if run.client.version == nil or run.client.build == nil or run.client.interface == nil then
+        run.matchesPinnedBuild = "unknown"
+    else
+        run.matchesPinnedBuild = run.client.version == run.target.version
+            and run.client.build == run.target.build and run.client.interface == run.target.interface
+    end
     Probe.capture(run, "GetLocale", "direct", GetLocale, Probe.pack(), true)
     Probe.capture(run, "timestamp", "direct", time, Probe.pack(), true)
     Probe.capture(run, "issecure:direct", "direct", issecure, Probe.pack(), true)
@@ -127,8 +131,8 @@ function Probe.run(kind)
     clean_run(run)
     db.runs[#db.runs + 1] = run
     print("Ptr125RemainingProbe: recorded " .. kind .. " run " .. #db.runs .. " (" .. run.status .. ")")
-    if not run.matchesPinnedBuild then
-        print("Ptr125RemainingProbe: build differs from pinned target; results are not pinned-build proof")
+    if run.matchesPinnedBuild ~= true then
+        print("Ptr125RemainingProbe: pinned build not confirmed; results are not pinned-build proof")
     end
     return run
 end
