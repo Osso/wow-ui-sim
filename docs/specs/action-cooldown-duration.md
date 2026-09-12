@@ -22,10 +22,11 @@
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes.rs::get_action_cooldown_duration_*` covers active state, runtime clock bounds, later-ending GCD, snapshot independence, and empty/inactive/expired state. Initial RED at `8afb0edfd`: three failures and one passing zero-state control; GREEN at `eb9383afb`: 4/4, exit 0 in `/tmp/action-cooldown-duration-green-ledger.json`. Independent verification remains pending.
+`tests/cooldown_probes.rs::get_action_cooldown_duration_*` covers active state, runtime clock bounds, later-ending GCD, snapshot independence, and empty/inactive/expired state. Initial RED at `8afb0edfd`: three failures and one passing zero-state control; GREEN at `eb9383afb`: 4/4, exit 0 in `/tmp/action-cooldown-duration-green-ledger.json`. `/tmp/verify-action-cooldown-duration-ledger.json` reuses that matching 12.0.0 proof and records 14/14 on 12.0.5, 12.0.7, and Mists, plus format, readability, binaries, startup `[]`, metadata validation, and 14,808 fresh references. The import-only correction `6987cbf21` removes a new warning, but its final warning-free default `cargo check` is blocked by ENOSPC; no final completion claim follows.
 
 ## Known gaps (current cycle)
 
+- [ ] Restore host disk space and rerun warning-free default `cargo check` after `6987cbf21`; the prior attempt failed while writing `target/debug/deps/rmetaGftK7m/full.rmeta` with ENOSPC.
 - [ ] Native snapshot/lifetime, invalid-slot/coercion/error, GCD and identity semantics remain unverified.
 - [ ] No direct cached Blizzard consumer was found; API-state tests do not establish real-consumer acceptance.
 

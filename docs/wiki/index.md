@@ -1,6 +1,6 @@
 ## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
 
-`eb9383afb` changes `C_ActionBar.GetActionCooldownDuration` from an ignored-slot default to a query-time snapshot of the existing action-slot spell/GCD cooldown interval. The shared C API producer is intentionally separate from Lua namespace registration. Empty/inactive/expired modeled state remains zero; native input, lifecycle, security, and consumer semantics remain unproven pending GREEN and independent verification. [Action cooldown duration](../specs/action-cooldown-duration.md).
+`eb9383afb` changes `C_ActionBar.GetActionCooldownDuration` from an ignored-slot default to a query-time snapshot of the existing action-slot spell/GCD cooldown interval. `/tmp/verify-action-cooldown-duration-ledger.json` reuses 12.0.0 4/4 and records 14/14 on 12.0.5, 12.0.7, and Mists; metadata totals are `2274 / 1134 / 2`. The import-only correction `6987cbf21` needs a warning-free default `cargo check`, blocked by ENOSPC. Empty/inactive/expired modeled state remains zero; native input, lifecycle, security, and consumer semantics remain unproven. [Action cooldown duration](../specs/action-cooldown-duration.md).
 
 ## [2026-09-12] investigation | Separate After and ticker callback arguments
 
