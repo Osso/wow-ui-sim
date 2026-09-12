@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] On retail 12.0.0 and later, a known explicit class ID selects the requested one-based specialization within that class, returning the existing ten outputs.
-- [ ] Missing or nil class ID preserves the current-player path, including existing active-specialization fallback for an invalid requested index.
-- [ ] Explicit invalid class or specialization index returns `(0, nil, nil, nil, nil, nil, 0, nil, 0, true)` rather than selecting the player's class. Positive integral class/index validation and using the pinned default-shaped tuple for invalid selections are bounded simulator policy, not native error claims.
-- [ ] Queries leave player class and active specialization unchanged.
-- [ ] The unmodified cached `CooldownViewerUtil.GetClassAndSpecTagText` produces `Mage - Arcane` for tag `81` and `Paladin - Holy` for tag `21` when the player is a Paladin.
+- [x] On retail 12.0.0 and later, a known explicit class ID selects the requested one-based specialization within that class, returning the existing ten outputs.
+- [x] Missing or nil class ID preserves the current-player path, including existing active-specialization fallback for an invalid requested index.
+- [x] Explicit invalid class or specialization index returns `(0, nil, nil, nil, nil, nil, 0, nil, 0, true)` rather than selecting the player's class. Positive integral class/index validation and using the pinned default-shaped tuple for invalid selections are bounded simulator policy, not native error claims.
+- [x] Queries leave player class and active specialization unchanged.
+- [x] The unmodified cached `CooldownViewerUtil.GetClassAndSpecTagText` produces `Mage - Arcane` for tag `81` and `Paladin - Holy` for tag `21` when the player is a Paladin.
 - [ ] Profiles without the retail 12.0.0 epoch retain their existing player-class selection behavior.
 
 ## How it works
@@ -26,7 +26,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Focused GREEN and independent verification remain pending.
+- [ ] Independent verification remains pending.
 - [ ] Non-retail control execution remains pending.
 
 ## Out of scope

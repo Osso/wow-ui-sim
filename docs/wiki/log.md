@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Record bounded 12.0.0 paragon and specialization proof
+
+`dc346a706` adds a sixth explicitly seeded paragon storage return; `9a8c05992` resolves the pinned seventh specialization `classID` against existing records. Focused paragon and specialization proof passed, including unchanged cached CooldownViewer cross-class output. Native storage/validation semantics, Journeys sixth-return consumption, independent verification, and earlier-profile controls remain unproven. No audit rows changed. See [paragon storage](../../specs/faction-paragon-storage-level.md), [specialization class selection](../../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Clarify 12.0.5 same-size transition blocker
 
 `ScaleEventProbe.SameSizeDuplicatePair` remains evidence-required/impossible. Retained live data already captures dimensions and ordered pairs; the missing fact is a production maximize/restore/fullscreen transition input. The simulator receives only draw-time `iced::Size` and ignores equal sizes, while pinned iced 0.14.0 / winit 0.30.12 provide no ordered mode-transition notification. Polling mode/maximize state or firing an admin event would be an approximation, not a fidelity fix. The 12.0.5 register remains 33 best-effort, 4 evidence-required, and 1 provenance exception. See [[patch-12-0-5-api-audit]].

@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Retail 12.0.0 and later return exactly six values for a seeded faction: current value, threshold, reward quest ID, pending reward flag, low-level flag, and storage level.
-- [ ] Preserve numeric types for returns 1–3 and 6 and boolean types for returns 4–5; preserve existing first-five values.
-- [ ] Return the explicitly seeded integer storage level, including nonzero values; reflect updates independently per faction without deriving storage from current reputation.
-- [ ] Return zero values for an unknown faction.
+- [x] Retail 12.0.0 and later return exactly six values for a seeded faction: current value, threshold, reward quest ID, pending reward flag, low-level flag, and storage level.
+- [x] Preserve numeric types for returns 1–3 and 6 and boolean types for returns 4–5; preserve existing first-five values.
+- [x] Return the explicitly seeded integer storage level, including nonzero values; reflect updates independently per faction without deriving storage from current reputation.
+- [x] Return zero values for an unknown faction.
 - [ ] Profiles without the retail 12.0.0 API epoch retain exactly five values.
 
 ## How it works
