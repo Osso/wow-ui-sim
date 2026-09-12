@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Reconcile unsafe source-context provenance
 
-`5e8fc3902` renews 536 stale unsafe source references across 476 evidence-required rows without changing classifications, tests, assertions, commits, pins, or behavioral credit. Twenty-four curve references move from the obsolete generic proxy to `src/c_api/c_curve_util.rs`; duration evidence now identifies the actual Lua table proxy. Two historical legacy compatibility references remain stale because their PTR-only test does not establish historical claims. Classification remains **2244 best-effort / 1164 evidence-required / 2 exceptions**. Manifest validation is pending; the audit remains open. See [[patch-12-0-0-api-audit]].
+`5e8fc3902` renews 536 stale unsafe source references across 476 evidence-required rows without changing classifications, tests, assertions, commits, pins, or behavioral credit. Twenty-four curve references move from the obsolete generic proxy to `src/c_api/c_curve_util.rs`; duration evidence now identifies the actual Lua table proxy. The final two legacy references assert PTR scope, not historical behavior, and are undergoing scoped renewal from unchanged PTR proof. Classification remains **2244 best-effort / 1164 evidence-required / 2 exceptions**. Zero stale references is a candidate pending manifest validation; the audit remains open. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Credit bounded unit icons and sprite cells
 

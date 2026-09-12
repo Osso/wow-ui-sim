@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
-`5e8fc3902` renews 536 unsafe source references across 476 evidence-required rows as source provenance only. Twenty-four curve references now point to `src/c_api/c_curve_util.rs`; no status, behavior, test, assertion, or source-pin credit changes. Totals remain `2244 / 1164 / 2`; two historical legacy references remain stale and manifest validation is pending. See [[patch-12-0-0-api-audit]].
+`5e8fc3902` renews 536 unsafe source references across 476 evidence-required rows as source provenance only. Twenty-four curve references now point to `src/c_api/c_curve_util.rs`; no status, behavior, test, assertion, or source-pin credit changes. Totals remain `2244 / 1164 / 2`; scoped PTR-only renewal of the final two PTR-asserted legacy references is in progress, leaving zero stale references as a candidate pending manifest validation. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
 
