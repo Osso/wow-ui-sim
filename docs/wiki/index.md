@@ -666,13 +666,14 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
 | [[casc-asset-cache]] | CASC cache layers (FDID resolution sqlite, BLP byte cache, Blizzard UI source cache, in-memory texture cache), measured timings, failure modes |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs modeled from ChrSpecialization.db2 (`SpecInfo.mastery_spell_ids`); backs `C_SpecializationInfo.GetSpecializationMasterySpells` and the Character sheet Mastery tooltip |
-| [[duration-core]] | Existing Lua table-proxy duration timing state, manual-clock queries, explicit simulator formulas, and separate native/consumer boundaries |
+| [[duration-core]] | Existing Lua table-proxy duration timing state, manual-clock queries, Copy/Assign policy, curve-evaluation reuse, explicit simulator formulas, and separate native/consumer boundaries |
 
 ## investigations/
 
 | Page | Summary |
 |------|---------|
-| [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 2218 best-effort, 1190 evidence-required, 2 exception-requested, and 0 untriaged rows (3410 total). Latest resolved slice: ten combat-log producer/API occurrences proven only for exact synchronous notifications, payload shape, bounded state mutation, and repeated explicit calls under `6bcd6ded2`. |
+| [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 3410 rows with current status and proof boundaries recorded per slice; duration curve-evaluation implementation is pending GREEN and independent proof. |
+| [[duration-curve-evaluation]] | Four duration curve-evaluation methods now reuse modeled getters and existing scalar/color curves; RED evidence is recorded, while GREEN and independent proof remain pending. |
 | [[patch-12-0-5-api-audit]] | 12.0.5 probe-driven audit: 33 best-effort rows; 4 behavior gaps are evidence-required; 1 provenance-only exception-requested row is approved |
 | [[patch-12-0-5-probe-inventory]] | 38-row 12.0.5 probe register: 33 best-effort, 4 evidence-required, 1 approved provenance-only exception-requested, 0 untriaged |
 | [[patch-12-0-7-api-audit]] | 12.0.7 occurrence audit: 131 named rows classified as 29 implemented, 101 best-effort, and one repository-scope-authorized impossible 3D-model exception; explicit simulator-only `ENCOUNTER_END` status input has fourteen 12.0.7 admin cases and twelve 12.0.5 controls passing, while restricted unit-token, taint, native payload, and widget secret/aspect limits remain documented per row |
