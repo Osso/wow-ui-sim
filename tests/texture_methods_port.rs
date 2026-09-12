@@ -261,16 +261,91 @@ fn test_set_visuals_no_op() {
 }
 
 // ---------------------------------------------------------------------------
-// 9. SetSpriteSheetCell — no-op stub
+// 9. SetSpriteSheetCell — bounded normalized cell mapping
 // ---------------------------------------------------------------------------
 
 #[test]
-fn test_set_sprite_sheet_cell_no_op() {
+fn test_sprite_sheet_cell_maps_and_replaces_coordinates() {
     let env = env();
     env.exec(
         r#"
-        local tex = CreateFrame("Frame"):CreateTexture()
-        tex:SetSpriteSheetCell(0, 0, 64, 64)
+        local tex = CreateFrame('Frame'):CreateTexture()
+        local cases = {
+            {1, 4, 4, {0, 0, 0, .25, .25, 0, .25, .25}},
+            {8, 4, 4, {.75, .25, .75, .5, 1, .25, 1, .5}},
+            {3, 3, 2, {0, 1/3, 0, 2/3, .5, 1/3, .5, 2/3}},
+            {6, 3, 2, {.5, 2/3, .5, 1, 1, 2/3, 1, 1}},
+            {1e20, 1, 1e20, {1, 0, 1, 1, 1, 0, 1, 1}},
+        }
+        for _, case in ipairs(cases) do
+            tex:SetTexCoord(.1, .2, .3, .4, .5, .6, .7, .8)
+            assert(select('#', tex:SetSpriteSheetCell(case[1], case[2], case[3])) == 0)
+            local actual = {tex:GetTexCoord()}
+            assert(#actual == 8)
+            for i, expected in ipairs(case[4]) do
+                assert(math.abs(actual[i] - expected) < 1e-7,
+                    'cell ' .. case[1] .. ' coordinate ' .. i .. ': ' .. actual[i])
+            end
+        end
+        tex:SetSpriteSheetCell(1, 4, 4, nil, nil)
+        local actual = {tex:GetTexCoord()}
+        local expected = {0, 0, 0, .25, .25, 0, .25, .25}
+        for i, value in ipairs(expected) do assert(actual[i] == value) end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn test_sprite_sheet_cell_rejects_invalid_inputs_atomically() {
+    let env = env();
+    env.exec(
+        r#"
+        local tex = CreateFrame('Frame'):CreateTexture()
+        tex:SetTexCoord(0, .125, .25, .375, .5, .625, .75, 1)
+        local before = {tex:GetTexCoord()}
+        local function reject(...)
+            assert(not pcall(tex.SetSpriteSheetCell, tex, ...), 'invalid input accepted')
+            local after = {tex:GetTexCoord()}
+            assert(#after == 8)
+            for i, value in ipairs(before) do assert(after[i] == value, 'mutation on error') end
+        end
+        reject()
+        reject(1)
+        reject(1, 4)
+        reject(nil, 4, 4)
+        reject(1, nil, 4)
+        reject(1, 4, nil)
+        local invalid = {false, true, '4', {}, function() end, 0, -1, 1.5,
+            0/0, math.huge, -math.huge}
+        for _, value in ipairs(invalid) do
+            reject(value, 4, 4)
+            reject(1, value, 4)
+            reject(1, 4, value)
+        end
+        reject(17, 4, 4)
+        reject(7, 3, 2)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn test_sprite_sheet_cell_rejects_unmodeled_optional_dimensions() {
+    let env = env();
+    env.exec(
+        r#"
+        local tex = CreateFrame('Frame'):CreateTexture()
+        tex:SetTexCoord(.125, .875, .25, .75)
+        local before = {tex:GetTexCoord()}
+        for _, value in ipairs({0, 16, false, '16', {}, math.huge}) do
+            for _, args in ipairs({{1, 4, 4, value}, {1, 4, 4, nil, value}}) do
+                local ok, err = pcall(tex.SetSpriteSheetCell, tex, unpack(args, 1, 5))
+                assert(not ok and string.find(err, 'unmodeled', 1, true))
+                local after = {tex:GetTexCoord()}
+                for i, expected in ipairs(before) do assert(after[i] == expected) end
+            end
+        end
         "#,
     )
     .unwrap();
