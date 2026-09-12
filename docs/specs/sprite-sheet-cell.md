@@ -8,7 +8,7 @@
 - [x] Require finite positive integer rows/columns and an integer cell in `1..rows*columns`, without arbitrary grid-size caps. Use existing floating-point texture-coordinate precision.
 - [x] Reject malformed, missing, nonfinite, fractional, and out-of-range inputs before coordinate mutation.
 - [x] Accept absent/nil optional dimensions; reject any nonnil `cellWidth` or `cellHeight` explicitly as unmodeled before mutation.
-- [ ] Use the same atlas remapping and visual invalidation path as rectangular `SetTexCoord`, without modifying vendor code.
+- [x] Use the same atlas remapping and visual invalidation path as rectangular `SetTexCoord`, without modifying vendor code.
 
 ## How it works
 
@@ -25,11 +25,16 @@
 - `tests/texture_methods_port.rs` — cells 1/8 on 4x4, nonsquare 3x2 including the final cell, replacement, return arity, invalid-input atomicity, and optional-dimension rejection.
 - `tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer` — unmodified Blizzard Lua icon consumer, visibility, coordinates, and toggle behavior; not historical XML construction.
 
+## Verification (current cycle)
+
+- [x] Historical 12.0.0 development proof: three primitive tests and one original-Lua raid-icon consumer passed. The corrected record side effect was then proven separately by two tests.
+- [x] Independent proof: corrected record plus consumer cases passed 3/3 on 12.0.7; earlier 12.0.5/12.0.7 51-case and Mists unaffected assertions are reused only where their source/test bytes were unchanged. Formatting, check, build, and current standalone startup (`[]`) freshly passed; no new readability finding was reported.
+- [x] Source inspection confirms `SetSpriteSheetCell` applies the shared rectangular coordinate path, including atlas remapping and visual invalidation.
+
 ## Known gaps (current cycle)
 
-- Historical 12.0.0 development proof at `3abcd7fc7`: three primitive tests passed, followed by the exact Blizzard raid-icon consumer test (1/1). Ledger: `/tmp/sprite-sheet-cell-dev-ledger.json`. Historical loader errors remain; this is not clean XML/addon-loading proof.
-- [ ] Parent final verification, including readability and applicable checks.
 - [ ] Optional dimension semantics lack evidence and remain unsupported.
+- [ ] Historical XML construction fails on unsupported `AuraContainer`; original-Lua consumer proof is not clean addon/UI loading proof.
 
 ## Out of scope
 

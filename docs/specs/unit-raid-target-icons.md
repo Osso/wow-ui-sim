@@ -25,10 +25,15 @@
 
 - `tests/targeting_verbs.rs` — assignment/moving/replacement/clearing, alias identity/isolation, invalid input, callback-visible state, and preserved queued records consumed through the public drain API without re-dispatch; existing targeting controls remain intact.
 
+## Verification (current cycle)
+
+- [x] Historical 12.0.0 development proof: 23 core icon tests, three sprite tests, and one original-Lua consumer test passed; two restored-record tests passed separately after `5bc5cdb6f`.
+- [x] Independent proof: corrected record plus consumer cases passed 3/3 on 12.0.7 and record cases 2/2 on Mists. Earlier 12.0.5/12.0.7 51-case and Mists ordinary-control evidence is reused only for assertions unaffected by restored queue records.
+- [x] Original `TargetFrame.lua` consumer proof observes icon visibility, coordinates, and the loaded vendor toggle. Historical consumer closure emitted 71 known Lua-error headers; current standalone startup remains `[]` and is a distinct proof boundary.
+
 ## Known gaps (current cycle)
 
-- [ ] Independent final verification of restored queue recording. Prior icon/sprite/profile proof does not establish the restored event side effects; the two corrected event tests have separate development evidence in `/tmp/raid-icon-event-records-ledger.json`.
-- [ ] Actual unmodified Blizzard consumer proof, arranged separately by the parent.
+- [ ] Historical XML construction still fails on unsupported `AuraContainer`; this is not clean addon/UI loading proof.
 
 ## Out of scope
 

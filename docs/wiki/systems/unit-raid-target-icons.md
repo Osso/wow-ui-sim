@@ -1,6 +1,6 @@
 # Unit raid-target icons
 
-Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `b269650ae` credits bounded best-effort `SetRaidTarget` behavior and expands existing `GetRaidTargetIndex` credit; independent verification remains active.
+Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `b269650ae` credits bounded best-effort `SetRaidTarget` behavior and expands existing `GetRaidTargetIndex` credit. The final runtime is `5bc5cdb6f`; metadata `8d1ad818c` remains unchanged through documentation commit `9a2892eec`.
 
 ## Model
 
@@ -13,6 +13,12 @@ Targeting snapshots now reuse `unit_misc::guid_for_unit` for player and party GU
 ## Vendor interaction
 
 Retail `TargetFrameMixin:UpdateRaidTargetIcon()` reads `GetRaidTargetIndex(self.unit)`, calls `Texture:SetSpriteSheetCell(index, 4, 4)`, and shows or hides its texture on `RAID_TARGET_UPDATE`. Focused proof loaded the complete unmodified `Mainline/TargetFrame.lua`, dispatched the event, and observed cells 1 and 8 plus the vendor toggle wrapper. The normal historical XML path still aborts on unsupported `AuraContainer`, so this proves the Lua consumer boundary only—not XML construction, clean addon loading, or full UI integration. Loaded Blizzard Lua replaces the simulator's standalone `SetRaidTargetIcon` alias with a toggle wrapper: selecting the already selected icon calls `SetRaidTarget(unit, 0)`. The simulator does not overwrite that vendor behavior.
+
+## Verification
+
+Historical 12.0.0 development proof passed 23 core icon tests, three sprite tests, and one original-Lua consumer test; two corrected queued-record tests were run separately after `5bc5cdb6f`. Independent proof passed corrected record plus consumer cases 3/3 on 12.0.7 and record cases 2/2 on Mists. The earlier 12.0.5/12.0.7 51-case runs and Mists ordinary controls are reused only for assertions unaffected by restored queue records. Fresh format, check, build, and current standalone startup (`[]`) passed. No new readability issue was found; the `state.rs` length threshold was pre-existing.
+
+Historical consumer closures still emit 71 known Lua-error headers, unchanged from the earlier consumer proof. Current consumer closures have their own known errors and do not alter the standalone-startup result.
 
 ## Boundaries
 
