@@ -1,3 +1,7 @@
+## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
+
+`eb9383afb` replaces `C_ActionBar.GetActionCooldownDuration`'s ignored-slot default duration producer with a shared action-slot cooldown lookup and query-time duration snapshot. The C API producer lives in `src/c_api/c_action_bar.rs`; it reuses the existing spell/GCD interval selection rather than introducing parallel cooldown state. Empty, inactive, and expired modeled slots retain zero timing; native invalid inputs, `ignoreGCD`, rates, identity/lifecycle, secrets/security, and consumer behavior remain open. GREEN and audit credit remain pending. See [action cooldown duration](../../specs/action-cooldown-duration.md).
+
 ## [2026-09-12] audit | Credit tested color curve mode switching
 
 `3d804b9c5` credits `LuaCurveObjectBase.SetType` only for the unchanged color `Step`/`Linear` switching and copied-curve isolation asserted by `color_curve_copy_returns_userdata` at `77310f806`. `/tmp/verify-curve-settype-ledger.json` passes the metadata gate: exactly one credit and test reference, zero hash renewals, 14,803 fresh evidence references, and exact checklist/inventory matching. It reuses 2/2 proof on retail 12.0.0, 12.0.5, and 12.0.7 without Cargo reruns; format, readability, and unchanged production proof remain valid. Totals: `2273 / 1135 / 2`. Scalar modes, `GetType`, native base/interface semantics, coercion, ordering, extrapolation, lifecycle, security, and consumers remain open. See [curve objects](../../specs/curve-objects.md).

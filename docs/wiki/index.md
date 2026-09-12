@@ -1,3 +1,7 @@
+## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
+
+`eb9383afb` changes `C_ActionBar.GetActionCooldownDuration` from an ignored-slot default to a query-time snapshot of the existing action-slot spell/GCD cooldown interval. The shared C API producer is intentionally separate from Lua namespace registration. Empty/inactive/expired modeled state remains zero; native input, lifecycle, security, and consumer semantics remain unproven pending GREEN and independent verification. [Action cooldown duration](../specs/action-cooldown-duration.md).
+
 ## [2026-09-12] investigation | Separate After and ticker callback arguments
 
 `1e069b03b` gives `C_Timer.After` a dedicated simulator invoker: it retains callback capture and cancellation suppression but passes no ticker proxy. Four 12.0.0 development cases pass; later-profile and independent verification remain pending. Cached declarations distinguish `TimerCallback` (After, zero arguments) from `TickerCallback` (NewTimer/NewTicker, one argument). `TimerCallbackProbe` captured only NewTicker behavior, so it does not establish After acceptance or lifecycle. [[timer-after-callback-dispatch]]
