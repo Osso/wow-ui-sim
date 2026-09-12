@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Resolve an assigned action slot through its spell cooldown and active GCD, selecting the existing model's later-ending interval, consistently with `C_ActionBar.GetActionCooldown`.
-- [ ] Return a duration object with the selected start, duration, and rate `1`; elapsed and remaining queries use the simulator clock.
-- [ ] Return zero timing for empty valid slots or assigned slots without an active cooldown/GCD.
-- [ ] Snapshot timing at query time: later slot/cooldown changes affect a new query, not the earlier object's configured interval.
+- [x] Resolve an assigned action slot through its spell cooldown and active GCD, selecting the existing model's later-ending interval, consistently with `C_ActionBar.GetActionCooldown`.
+- [x] Return a duration object with the selected start, duration, and rate `1`; elapsed and remaining queries use the simulator clock.
+- [x] Return zero timing for empty valid slots or assigned slots without an active cooldown/GCD.
+- [x] Snapshot timing at query time: later slot/cooldown changes affect a new query, not the earlier object's configured interval.
 
 ## How it works
 
@@ -22,7 +22,7 @@
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes.rs::get_action_cooldown_duration_*` covers active state, runtime clock bounds, later-ending GCD, snapshot independence, and empty/inactive/expired state. Initial RED at `8afb0edfd`: three failures and one passing zero-state control. Independent verification pending.
+`tests/cooldown_probes.rs::get_action_cooldown_duration_*` covers active state, runtime clock bounds, later-ending GCD, snapshot independence, and empty/inactive/expired state. Initial RED at `8afb0edfd`: three failures and one passing zero-state control; GREEN at `eb9383afb`: 4/4, exit 0 in `/tmp/action-cooldown-duration-green-ledger.json`. Independent verification remains pending.
 
 ## Known gaps (current cycle)
 

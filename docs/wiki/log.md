@@ -1,6 +1,6 @@
 ## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
 
-`eb9383afb` replaces `C_ActionBar.GetActionCooldownDuration`'s ignored-slot default duration producer with a shared action-slot cooldown lookup and query-time duration snapshot. The C API producer lives in `src/c_api/c_action_bar.rs`; it reuses the existing spell/GCD interval selection rather than introducing parallel cooldown state. Empty, inactive, and expired modeled slots retain zero timing; native invalid inputs, `ignoreGCD`, rates, identity/lifecycle, secrets/security, and consumer behavior remain open. GREEN and audit credit remain pending. See [action cooldown duration](../../specs/action-cooldown-duration.md).
+`eb9383afb` replaces `C_ActionBar.GetActionCooldownDuration`'s ignored-slot default duration producer with a shared action-slot cooldown lookup and query-time duration snapshot. The C API producer lives in `src/c_api/c_action_bar.rs`; it reuses the existing spell/GCD interval selection rather than introducing parallel cooldown state. Empty, inactive, and expired modeled slots retain zero timing; native invalid inputs, `ignoreGCD`, rates, identity/lifecycle, secrets/security, and consumer behavior remain open. `/tmp/action-cooldown-duration-green-ledger.json` records 4/4 focused GREEN cases, exit 0; `3fefc56a1` credits the row. Expected totals are `2274 / 1134 / 2`, pending independent verification. See [action cooldown duration](../../specs/action-cooldown-duration.md).
 
 ## [2026-09-12] audit | Credit tested color curve mode switching
 
