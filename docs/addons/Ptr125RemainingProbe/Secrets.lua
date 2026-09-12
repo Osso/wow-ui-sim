@@ -33,7 +33,7 @@ local function sample_clock(run, check)
             for index = 1, 3 do
                 local label = "sample:aura:" .. unit .. ":" .. filter .. ":" .. index
                 local aura = capture(run, label, "direct", getter, unit, index, filter)
-                if aura[1] then
+                if aura[1] and Probe.is_public(aura[2], "table") then
                     local clock = capture(run, label .. ":expirationTime", "direct", function()
                         return aura[2].expirationTime
                     end)
