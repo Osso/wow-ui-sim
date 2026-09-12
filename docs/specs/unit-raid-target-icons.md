@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Assign integer indices 1–8, replace an existing assignment, and clear with 0. Each unit has at most one icon; each icon belongs to at most one unit. Assigning an occupied icon removes its prior assignment.
-- [ ] Key assignments by resolved GUID. Target/focus aliases share assignments; switching target does not transfer icons. Player and party targeting snapshots use the existing `UnitGUID` identity convention, including nearest-friend selection.
-- [ ] Return exactly one number or nil from the getter and no results from the setter. Nil/unknown units are unmarked and their setters remain no-ops, without validating the icon argument.
-- [ ] Reject missing, non-number, nonfinite, fractional, or out-of-range indices for valid units before mutation or notification.
-- [ ] Dispatch one zero-payload synchronous `RAID_TARGET_UPDATE` after every valid explicit call, including repeated same-index calls. Callbacks see updated state; the event is not additionally queued for duplicate delivery.
+- [x] Assign integer indices 1–8, replace an existing assignment, and clear with 0. Each unit has at most one icon; each icon belongs to at most one unit. Assigning an occupied icon removes its prior assignment.
+- [x] Key assignments by resolved GUID. Target/focus aliases share assignments; switching target does not transfer icons. Player and party targeting snapshots use the existing `UnitGUID` identity convention, including nearest-friend selection.
+- [x] Return exactly one number or nil from the getter and no results from the setter. Nil/unknown units are unmarked and their setters remain no-ops, without validating the icon argument.
+- [x] Reject missing, non-number, nonfinite, fractional, or out-of-range indices for valid units before mutation or notification.
+- [x] Dispatch one zero-payload synchronous `RAID_TARGET_UPDATE` after every valid explicit call, including repeated same-index calls. Callbacks see updated state; the event is not additionally queued for duplicate delivery.
 
 ## How it works
 
@@ -27,7 +27,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted development GREEN proof and independent final verification.
+- [ ] Independent final verification. Historical 12.0.0 development proof passed all 23 standalone targeting cases, including four new icon cases; the separate consumer fixture failed during setup before reaching icon assertions.
 - [ ] Actual unmodified Blizzard consumer proof, arranged separately by the parent.
 
 ## Out of scope
