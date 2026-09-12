@@ -19175,19 +19175,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused manual-clock proof advances a bound clock and observes duration state before, during, after, and after rewind. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19218,19 +19218,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused manual-clock proof rewinds a bound clock and observes duration state return to active. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19261,19 +19261,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes elapsed duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19304,19 +19304,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes remaining duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19347,19 +19347,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes total duration and the modeled BaseTime modifier. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19390,19 +19390,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
           "summary": "Focused duration proof configures an interval from its end and observes endpoints, remaining time, reset, and validation atomicity. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
@@ -19433,19 +19433,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof configures start, duration, and rate and observes endpoints plus state queries. Proof commit 5149f5d46.",
-          "source_hash": "190f29f986eca02ffc2fcfb12f798351eb907c8b8d27a9f3d83ee2a41600276b"
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
       "tests": [
