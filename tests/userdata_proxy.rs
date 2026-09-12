@@ -9,6 +9,47 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+// Explicit simulator projection policy, not native identity or security conformance.
+#[test]
+fn forbidden_partition_interns_isolated_private_views() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateFrame("Frame")
+        local second = CreateFrame("Frame")
+        local firstPrivate = GetForbiddenObjectTable(first)
+        local secondPrivate = GetForbiddenObjectTable(second)
+        assert(firstPrivate ~= first and secondPrivate ~= second,
+            "public and private projections remain distinct")
+        assert(firstPrivate ~= secondPrivate, "each frame owns a distinct private view")
+        assert(GetForbiddenObjectTable(first) == firstPrivate,
+            "repeated public projection returns the interned view")
+        assert(GetForbiddenObjectTable(firstPrivate) == firstPrivate,
+            "private projection is idempotent")
+
+        firstPrivate.value = "first-private"
+        secondPrivate.value = "second-private"
+        firstPrivate.readValue = function(self) return self.value end
+        secondPrivate.readValue = function(self) return self.value end
+        assert(first.value == nil and second.value == nil)
+        assert(first.readValue == nil and second.readValue == nil)
+
+        first.value = "first-public"
+        first.readValue = function(self) return "public:" .. self.value end
+        assert(first:readValue() == "public:first-public")
+        assert(firstPrivate:readValue() == "first-private",
+            "public assignments cannot replace private fields or methods")
+        assert(secondPrivate:readValue() == "second-private",
+            "private fields remain independent between frames")
+        firstPrivate.value = "first-updated"
+        assert(GetForbiddenObjectTable(first):readValue() == "first-updated")
+        assert(secondPrivate:readValue() == "second-private")
+        assert(first:readValue() == "public:first-public")
+        "#,
+    )
+    .expect("simulator private projections are interned and isolate per-frame fields");
+}
+
 #[test]
 fn forbidden_partition_preserves_native_parent_identity() {
     let env = WowLuaEnv::new().unwrap();
