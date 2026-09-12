@@ -6632,7 +6632,7 @@
       "commit": "977d30276",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Ordinary-value simulator policy only. Retail 12.0.0 development proof passed all 32 userdata_proxy cases including five new selector tests. Later-retail and earlier-profile controls remain pending. Secret values/taint, native coercion/errors, channel ranges, output identity, and unmodified consumer behavior remain unverified."
+      "notes": "Ordinary-value simulator policy only. Retail 12.0.0 development proof passed all 32 userdata_proxy cases including five new selector tests. Independent controls passed 5/5 on 12.0.5, 5/5 on 12.0.7, and 1/1 on Mists; current-retail startup was clean. Proof: /tmp/verify-curve-boolean-ledger.json. Secret values/taint, native coercion/errors, channel ranges, output identity, and unmodified consumer behavior remain unverified."
     },
     {
       "id": "added:C_CurveUtil.EvaluateColorValueFromBoolean",
@@ -6671,7 +6671,7 @@
       "commit": "977d30276",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Ordinary-value simulator policy only. Retail 12.0.0 development proof passed all 32 userdata_proxy cases including five new selector tests. Later-retail and earlier-profile controls remain pending. Secret values/taint, native coercion/errors, channel ranges, output identity, and unmodified consumer behavior remain unverified."
+      "notes": "Ordinary-value simulator policy only. Retail 12.0.0 development proof passed all 32 userdata_proxy cases including five new selector tests. Independent controls passed 5/5 on 12.0.5, 5/5 on 12.0.7, and 1/1 on Mists; current-retail startup was clean. Proof: /tmp/verify-curve-boolean-ledger.json. Secret values/taint, native coercion/errors, channel ranges, output identity, and unmodified consumer behavior remain unverified."
     },
     {
       "id": "added:C_CurveUtil.EvaluateGameCurve",

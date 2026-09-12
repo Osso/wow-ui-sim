@@ -4,7 +4,7 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 
 ## What it must do
 
-- [ ] Publish both selectors on retail 12.0.0 and later, without adding them to earlier client profiles.
+- [x] Publish both selectors on retail 12.0.0 and later, without adding them to earlier client profiles (Mists preservation control).
 - [x] `EvaluateColorFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding RGBA value and returns a ColorMixin-compatible color without mutating inputs.
 - [x] `EvaluateColorValueFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding numeric component, including zero.
 - [x] Simulator policy: return a fresh color so later result mutations do not alter input colors. Native identity/copy behavior is unverified.
@@ -21,7 +21,7 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 
 ## Tests asserting this spec
 
-- `tests/userdata_proxy.rs` — five `curve_boolean_*` cases passed on 12.0.0 with all 27 existing cases in that grouped module at `977d30276` (32/32). Earlier-profile and later-retail controls remain pending.
+- `tests/userdata_proxy.rs` — five `curve_boolean_*` cases passed on 12.0.0 with all 27 existing cases in that grouped module at `977d30276` (32/32). Independent controls passed 5/5 on 12.0.5, 5/5 on 12.0.7, and 1/1 on Mists. Format/check/build and current-retail startup passed; historical-profile warnings are pre-existing. Proof: `/tmp/verify-curve-boolean-ledger.json`, code/metadata at `be38a2c52`.
 
 ## Known gaps (current cycle)
 
