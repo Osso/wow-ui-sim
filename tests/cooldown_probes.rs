@@ -223,15 +223,20 @@ fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
 
 #[cfg(not(feature = "retail-12-0-0"))]
 #[test]
-fn get_spell_cooldown_duration_is_absent_before_retail_12_0_0() {
+fn get_spell_cooldown_duration_keeps_pre_retail_12_0_0_nil_result() {
     let env = env();
-    let absent: bool = env
-        .eval("return C_Spell.GetSpellCooldownDuration == nil")
-        .unwrap();
-    assert!(
-        absent,
-        "spell duration API must remain absent before retail 12.0.0"
+    let now = env.state().borrow().start_time.elapsed().as_secs_f64();
+    env.state().borrow_mut().spell_cooldowns.insert(
+        12345,
+        SpellCooldownState {
+            start: now,
+            duration: 30.0,
+        },
     );
+    let unchanged: bool = env
+        .eval("return C_Spell.GetSpellCooldownDuration(12345) == nil")
+        .unwrap();
+    assert!(unchanged, "preserve the earlier-profile nil result");
 }
 
 // ── GetActionCooldown ─────────────────────────────────────────────────────────
