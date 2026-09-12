@@ -5,6 +5,8 @@
 //! point in admin.rs imports these as pub(super) and weaves
 //! them into the A_Admin TableBuilder chain.
 
+mod unit_status;
+
 use crate::lua_api::globals::admin::opt_string_stack;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state_mut;
@@ -21,17 +23,17 @@ pub(super) fn simulate_boss_kill(state: &mut LuaState) -> LuaResult<u32> {
     let difficulty_id = i32::from_stack(state, 3)?;
     let group_size = i32::from_stack(state, 4)?;
     let name_val = crate::lua_api::methods::create_string(state, &name);
-    dispatch_event_now(
-        state,
-        "ENCOUNTER_END",
-        &[
-            Val::Num(encounter_id as f64),
-            name_val,
-            Val::Num(difficulty_id as f64),
-            Val::Num(group_size as f64),
-            Val::Num(1.0),
-        ],
-    )?;
+    let mut payload = vec![
+        Val::Num(encounter_id as f64),
+        name_val,
+        Val::Num(difficulty_id as f64),
+        Val::Num(group_size as f64),
+        Val::Num(1.0),
+    ];
+    if cfg!(feature = "retail-12-0-7") {
+        payload.push(unit_status::copy_status_input(state)?);
+    }
+    dispatch_encounter_end(state, &payload)?;
     let name_val = crate::lua_api::methods::create_string(state, &name);
     dispatch_event_now(
         state,
@@ -39,6 +41,18 @@ pub(super) fn simulate_boss_kill(state: &mut LuaState) -> LuaResult<u32> {
         &[Val::Num(encounter_id as f64), name_val],
     )?;
     Ok(0)
+}
+
+fn dispatch_encounter_end(state: &mut LuaState, payload: &[Val]) -> LuaResult<()> {
+    // Keep the copied status list alive across every listener, including callbacks
+    // which collect garbage before a later listener receives the snapshot.
+    let saved_top = state.top;
+    for value in payload {
+        state.push(*value);
+    }
+    let result = dispatch_event_now(state, "ENCOUNTER_END", payload);
+    state.top = saved_top;
+    result
 }
 
 pub(super) fn start_loot_roll(state: &mut LuaState) -> LuaResult<u32> {
