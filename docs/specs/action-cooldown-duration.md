@@ -1,0 +1,34 @@
+# Action cooldown duration
+
+`C_ActionBar.GetActionCooldownDuration(actionID)` exposes existing simulator action-slot cooldown state as a duration object. Its pinned 12.0.0 declaration promises a duration object; the mappings below are simulator policies, not native-client evidence.
+
+## What it must do
+
+- [ ] Resolve an assigned action slot through its spell cooldown and active GCD, selecting the existing model's later-ending interval, consistently with `C_ActionBar.GetActionCooldown`.
+- [ ] Return a duration object with the selected start, duration, and rate `1`; elapsed and remaining queries use the simulator clock.
+- [ ] Return zero timing for empty valid slots or assigned slots without an active cooldown/GCD.
+- [ ] Snapshot timing at query time: later slot/cooldown changes affect a new query, not the earlier object's configured interval.
+
+## How it works
+
+- [Duration core](duration-core.md)
+- [12.0.0 audit](../wiki/investigations/patch-12-0-0-api-audit.md)
+
+## Implementation inventory
+
+- `src/c_api/c_action_bar.rs`: shared action cooldown lookup and duration-object producer.
+- `src/lua_api/globals/action_bar_api.rs`: existing namespace registration owner and spell/GCD interval selection.
+- `src/lua_api/globals/lua_duration_object.rs`: duration factory and registered setters/queries.
+
+## Tests asserting this spec
+
+`tests/cooldown_probes.rs::get_action_cooldown_duration_*` covers active state, runtime clock bounds, later-ending GCD, snapshot independence, and empty/inactive/expired state. Initial RED at `8afb0edfd`: three failures and one passing zero-state control. Independent verification pending.
+
+## Known gaps (current cycle)
+
+- [ ] Native snapshot/lifetime, invalid-slot/coercion/error, GCD and identity semantics remain unverified.
+- [ ] No direct cached Blizzard consumer was found; API-state tests do not establish real-consumer acceptance.
+
+## Out of scope
+
+- Later `ignoreGCD` option, secrets/security, item/charge/loss-of-control producers, non-default rates, and cooldown-engine redesign.

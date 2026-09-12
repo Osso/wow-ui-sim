@@ -4,6 +4,7 @@ mod registration;
 pub use registration::register_all;
 
 use crate::Result;
+use crate::c_api::c_action_bar::{get_action_cooldown_duration, read_action_cooldown};
 use crate::lua_api::SimState;
 use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
 use crate::lua_api::methods::{
@@ -337,13 +338,6 @@ fn get_action_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_action_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = stack_val(state, 1);
-    let duration = new_duration_object_value(state);
-    state.push(duration);
-    Ok(1)
-}
-
 fn get_action_loss_of_control_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     let duration = new_duration_object_value(state);
@@ -467,14 +461,7 @@ fn is_current_action(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_action_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = stack_slot(state);
-    let (start, duration) = {
-        let sim = borrow_state(state)?;
-        let now = sim.start_time.elapsed().as_secs_f64();
-        slot.and_then(|slot| sim.action_bars.get(&slot).copied())
-            .map(|spell_id| spell_cooldown_times(&sim, spell_id, now))
-            .unwrap_or((0.0, 0.0))
-    };
+    let (start, duration) = read_action_cooldown(state)?;
     let info = create_table_with_capacity(state, ACTION_COOLDOWN_HASH_FIELDS);
     table_set(state, info, "startTime", Val::Num(start));
     table_set(state, info, "duration", Val::Num(duration));

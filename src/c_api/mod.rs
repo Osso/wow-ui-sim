@@ -5,6 +5,7 @@
 
 pub mod action_macros;
 pub mod c_account_services;
+pub(crate) mod c_action_bar;
 pub mod c_addon_profiler;
 pub mod c_addons;
 pub mod c_allied_races;
