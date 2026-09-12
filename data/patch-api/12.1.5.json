@@ -19187,7 +19187,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused manual-clock proof advances a bound clock and observes duration state before, during, after, and after rewind. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19230,7 +19230,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused manual-clock proof rewinds a bound clock and observes duration state return to active. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19273,7 +19273,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes elapsed duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19316,7 +19316,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes remaining duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19359,7 +19359,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof observes total duration and the modeled BaseTime modifier. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19402,7 +19402,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
           "summary": "Focused duration proof configures an interval from its end and observes endpoints, remaining time, reset, and validation atomicity. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -19445,7 +19445,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
           "summary": "Focused duration proof configures start, duration, and rate and observes endpoints plus state queries. Proof commit 5149f5d46.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [

@@ -2266,7 +2266,7 @@
 2266. [best-effort] `added:LuaDurationObject.SetTimeFromEnd` — behavioral
 2267. [best-effort] `added:LuaDurationObject.SetTimeFromStart` — behavioral
 2268. [best-effort] `added:LuaDurationObject.SetTimeSpan` — behavioral
-2269. [evidence-required] `added:LuaDurationObject.SetToDefaults` — unsafe
+2269. [best-effort] `added:LuaDurationObject.SetToDefaults` — behavioral
 2270. [best-effort] `added:LuaFunctionContainer` — behavioral
 2271. [best-effort] `added:LuaFunctionContainer.Cancel` — behavioral
 2272. [best-effort] `added:LuaFunctionContainer.Invoke` — behavioral

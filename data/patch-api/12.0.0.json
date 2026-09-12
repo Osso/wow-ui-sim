@@ -8263,7 +8263,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified."
         }
       ],
@@ -87691,7 +87691,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted."
         }
       ],
@@ -87732,7 +87732,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -87771,7 +87771,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30."
         }
       ],
@@ -87810,7 +87810,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
         }
       ],
@@ -87849,7 +87849,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero."
         }
       ],
@@ -87890,7 +87890,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
       "tests": [
@@ -87929,7 +87929,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10."
         }
       ],
@@ -87968,7 +87968,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero."
         }
       ],
@@ -88073,7 +88073,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12."
         }
       ],
@@ -88111,7 +88111,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged."
         }
       ],
@@ -88148,7 +88148,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed."
         }
       ],
@@ -88187,7 +88187,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5",
           "summary": "Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged."
         }
       ],
@@ -88204,8 +88204,8 @@
       "id": "added:LuaDurationObject.SetToDefaults",
       "symbol": "LuaDurationObject.SetToDefaults",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -88217,17 +88217,25 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "summary": "Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics.",
+          "source_hash": "8a0e548b895a10965790546600bba7b9523fc54a25dffc457bb4975c267d15f5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_set_to_defaults_clears_configured_timing_and_clock"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5f7d70fe6",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing runtime unchanged; dedicated nonzero-to-default coverage added. Retail12.0.0 development duration group passes8/8; later-profile verification pending. Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics. Native clock, identity, coercion, errors and secret/taint semantics remain unverified."
     },
     {
       "id": "added:LuaFunctionContainer",
