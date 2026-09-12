@@ -8,6 +8,8 @@
 
 `cf08fa330` gates three 12.1.5-only test modules—HousingResult PTR overlay, ICU normalization, and WeatherType—behind current-retail/PTR profiles. Their test functions were already profile-gated, but unconditional module inclusion made the historical 12.0.0 library target reference `crate::ptr`, which is not compiled there. This restores historical test-target compilation only; it does not alter runtime publication, source provenance, audit classifications, or establish the pending stale-evidence retry.
 
+`093371db9` restores later-epoch reachability for `test_later_retail_encounter_event_flags_values`. Its module was nested in the exact-12.0.0 registry despite its module-level `retail-12-0-0` gate permitting later retail epochs; the test itself requires `retail-12-0-5`, making the combined gates unreachable. The module now registers outside the exact-12.0.0 group, while its 12.0.0 assertions remain individually excluded later. This is test wiring only: focused later-epoch proof remains pending, with no runtime, audit-credit, or native-behavior claim.
+
 ### Existing evidence drift
 
 The current audit integration found 1,522 stale evidence hashes on files outside this batch. They were already stale before these paragon/class-selection changes and remain unchanged rather than silently treating refreshed hashes as new behavioral proof. Whole-manifest validation remains pending reconciliation; the two bounded credits above do not close this audit.

@@ -1,3 +1,7 @@
+## [2026-09-12] test infrastructure | Restore later EncounterEventFlags test reachability
+
+`093371db9` moves `patch_12_0_0_small_enums` outside the exact-12.0.0 test-module registry. Its module gate permits later retail epochs, but its later `EncounterEventFlags` control requires `retail-12-0-5`; the enclosing registry had excluded that configuration, so the control could not run. The 12.0.0-only assertions remain individually gated. Test wiring only: focused later-epoch proof remains pending; no runtime, audit, or native claim changes. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] test infrastructure | Gate current-profile helpers from historical library builds
 
 `cf08fa330` gates three existing 12.1.5 test modules in `wow_api_globals/mod.rs` to current retail/PTR. The functions were already profile-gated, but unconditional module inclusion prevented the retail 12.0.0 `--lib` target from compiling because a HousingResult helper referenced PTR-only `crate::ptr`. This changes test compilation only; pending 12.0.0 stale-evidence proof is not claimed as rerun. See [[patch-12-0-0-api-audit]].
