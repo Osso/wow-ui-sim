@@ -419,45 +419,125 @@
       "id": "changed:Patch12_1.ForbiddenAspects.ScriptedInput",
       "symbol": "Patch12_1.ForbiddenAspects.ScriptedInput",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Forbidden Aspects",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "8b3d445cfedcca4deb149c335191cbc724c54e7cc02547b3ba55e13c610e15c7"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/editbox.rs",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "ff809402e0323cb12121afd92f9b4d3e1144b17c5b631870df4ff949fb865802"
+        },
+        {
+          "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
-          "summary": "Aspect masks, inheritance, and queries exist; ScriptedInput enforcement is unknown.",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
           "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/forbidden-aspect-scripted-input-query-focus.md",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "54fad8899c65e8a81281957da9af018f425444ba38e6922856b1c9dfcf3e7e9b"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_rejects_click_before_checkbutton_or_handler_changes",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_preserves_focus_and_cursor_while_engine_typing_continues",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_scripted_click_rejects_lua_but_preserves_physical_click",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_editbox_focus_and_typing_survive_scripted_rejections",
+          "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_rejects_click_before_checkbutton_or_handler_changes",
+        "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_preserves_focus_and_cursor_while_engine_typing_continues",
+        "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_scripted_click_rejects_lua_but_preserves_physical_click",
+        "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_editbox_focus_and_typing_survive_scripted_rejections"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7d4ff6e8d",
       "approval_id": null,
-      "notes": "Aspect masks, inheritance, and queries exist; ScriptedInput enforcement is unknown."
+      "notes": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified."
     },
     {
       "id": "changed:Patch12_1.ForbiddenAspects.QueryFocus",
       "symbol": "Patch12_1.ForbiddenAspects.QueryFocus",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Forbidden Aspects",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/editbox.rs",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "ff809402e0323cb12121afd92f9b4d3e1144b17c5b631870df4ff949fb865802"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/core_state/region.rs",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "36d847e716f4b9a56de99e20e4a213e5362c6bea02d735e74d5893135ea4c212"
+        },
+        {
+          "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
-          "summary": "Aspect masks, inheritance, and queries exist; QueryFocus enforcement is unknown.",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
           "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/forbidden-aspect-scripted-input-query-focus.md",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "54fad8899c65e8a81281957da9af018f425444ba38e6922856b1c9dfcf3e7e9b"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_query_focus_rejects_only_annotated_query",
+          "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
+          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus",
+        "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_query_focus_rejects_only_annotated_query"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7d4ff6e8d",
       "approval_id": null,
-      "notes": "Aspect masks, inheritance, and queries exist; QueryFocus enforcement is unknown."
+      "notes": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified."
     },
     {
       "id": "changed:Patch12_1.AuraContainer.CreationTypes",

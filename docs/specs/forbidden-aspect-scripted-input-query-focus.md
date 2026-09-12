@@ -40,7 +40,9 @@ The same source does not annotate `Region:IsMouseOver`; no global focus query is
 - [x] Focused tests demonstrate each annotated method rejects atomically, with observable state and callback non-mutation.
 - [x] Focused tests demonstrate unaffected physical GUI mouse/keyboard paths and unannotated methods remain available.
 - [x] Focused tests cover ordinary zero-mask controls.
-- [ ] Earlier-profile controls establish that the new policy does not alter pre-12.1 behavior.
+- [x] Four earlier-12.0.7 focus/click controls pass with the changed runtime.
+
+Seven retail tests cover the six gates and actual GUI/keyboard input. Independent verification also passed formatting, retail checking, and PTR build. The earlier-profile build reports unused `CastInfoSnapshot.delay_time`; its regression status remains unestablished.
 
 ## Out of scope
 
