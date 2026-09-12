@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Credit tested color curve mode switching
 
-`3d804b9c5` credits `LuaCurveObjectBase.SetType` only for the unchanged color `Step`/`Linear` switching and copied-curve isolation asserted by `color_curve_copy_returns_userdata` at `77310f806`. `/tmp/verify-curve-copy-ledger.json` provides reusable 2/2 12.0.0 and fresh 2/2 12.0.5/12.0.7 proof; the current metadata gate remains pending. Expected totals: `2273 / 1135 / 2`. Scalar modes, `GetType`, native base/interface semantics, coercion, ordering, extrapolation, lifecycle, security, and consumers remain open. See [curve objects](../../specs/curve-objects.md).
+`3d804b9c5` credits `LuaCurveObjectBase.SetType` only for the unchanged color `Step`/`Linear` switching and copied-curve isolation asserted by `color_curve_copy_returns_userdata` at `77310f806`. `/tmp/verify-curve-settype-ledger.json` passes the metadata gate: exactly one credit and test reference, zero hash renewals, 14,803 fresh evidence references, and exact checklist/inventory matching. It reuses 2/2 proof on retail 12.0.0, 12.0.5, and 12.0.7 without Cargo reruns; format, readability, and unchanged production proof remain valid. Totals: `2273 / 1135 / 2`. Scalar modes, `GetType`, native base/interface semantics, coercion, ordering, extrapolation, lifecycle, security, and consumers remain open. See [curve objects](../../specs/curve-objects.md).
 
 ## [2026-09-12] audit | Strengthen curve copy evidence
 
