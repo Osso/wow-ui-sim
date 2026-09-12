@@ -17837,7 +17837,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
-          "summary": "Registers the modeled duration producer for retail12.0.0+, sharing identifier resolution with GetSpellIDForSpellIdentifier and using existing spell/GCD interval selection.",
+          "summary": "Registers the modeled duration producer for retail 12.0.0+, sharing identifier resolution with GetSpellIDForSpellIdentifier and using existing spell/GCD interval selection.",
           "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         },
         {
@@ -17869,36 +17869,6 @@
           "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
           "summary": "Inactive numeric identifiers yield zero timing while unresolved strings yield nil under the explicit simulator policy."
-        },
-        {
-          "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae",
-          "summary": "Shared action/spell duration construction calls the existing validated SetTimeFromStart setter on a fresh duration object."
-        },
-        {
-          "kind": "test",
-          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Active numeric spell duration matches cooldown start/span/rate and runtime elapsed/remaining bounds."
-        },
-        {
-          "kind": "test",
-          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_resolves_alias_and_snapshots_state",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Seeded string aliases resolve case variants; changed alias/cooldown state affects later queries while earlier duration timing remains unchanged."
-        },
-        {
-          "kind": "test",
-          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Duration start/span follows the same later-ending GCD as the existing spell cooldown table."
-        },
-        {
-          "kind": "test",
-          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Inactive numeric identifiers produce zero timing with rate1; unresolved string aliases produce nil under the explicit simulator policy."
         }
       ],
       "tests": [
@@ -17911,7 +17881,7 @@
       "commit": "0e47eae2f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail12.0.0+ ordinary simulator policy uses the existing numeric/seeded-alias identifier model and spell/GCD interval selection. A fresh duration snapshots timing with rate1 and runtime clock; inactive numeric identifiers yield zero timing and unresolved aliases yield nil. Native identifier/unknown-spell/arity/GCD/identity/lifecycle/security, real consumers and later ignoreGCD remain unverified. Earlier-profile generic nil-result behavior is preserved, not claimed as native absence."
+      "notes": "Retail 12.0.0+ ordinary simulator policy uses the existing numeric/seeded-alias identifier model and spell/GCD interval selection. A fresh duration snapshots timing with rate 1 and runtime clock; inactive numeric identifiers yield zero timing and unresolved aliases yield nil. Native identifier/unknown-spell/arity/GCD/identity/lifecycle/security, real consumers and later ignoreGCD remain unverified. Earlier-profile generic nil-result behavior is preserved, not claimed as native absence."
     },
     {
       "id": "added:C_Spell.GetSpellDisplayCount",
