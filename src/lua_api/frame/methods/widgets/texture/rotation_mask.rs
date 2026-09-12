@@ -153,10 +153,51 @@ pub(super) fn set_visuals(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // ---------------------------------------------------------------------------
-// SetSpriteSheetCell — no-op stub (not implemented on master)
+// SetSpriteSheetCell — bounded, one-based row-major normalized UV mapping
 // ---------------------------------------------------------------------------
 
+fn positive_sprite_integer(value: Val, name: &str) -> LuaResult<f64> {
+    match value {
+        Val::Num(number) if number.is_finite() && number > 0.0 && number.fract() == 0.0 => {
+            Ok(number)
+        }
+        _ => Err(rilua::runtime_error(&format!(
+            "SetSpriteSheetCell: {name} must be a finite positive integer"
+        ))),
+    }
+}
+
+fn read_sprite_sheet_rect(state: &LuaState) -> LuaResult<[f32; 4]> {
+    if !matches!(stack_val(state, 5), Val::Nil) || !matches!(stack_val(state, 6), Val::Nil) {
+        return Err(rilua::runtime_error(
+            "SetSpriteSheetCell: nonnil cellWidth/cellHeight are unmodeled",
+        ));
+    }
+    let cell = positive_sprite_integer(stack_val(state, 2), "cell")?;
+    let rows = positive_sprite_integer(stack_val(state, 3), "numRows")?;
+    let columns = positive_sprite_integer(stack_val(state, 4), "numColumns")?;
+    if cell > rows * columns {
+        return Err(rilua::runtime_error(
+            "SetSpriteSheetCell: cell exceeds grid",
+        ));
+    }
+    let remainder = cell % columns;
+    let column_end = if remainder == 0.0 { columns } else { remainder };
+    let row_end = (cell / columns).ceil();
+    Ok([
+        ((column_end - 1.0) / columns) as f32,
+        (column_end / columns) as f32,
+        ((row_end - 1.0) / rows) as f32,
+        (row_end / rows) as f32,
+    ])
+}
+
 pub(super) fn set_sprite_sheet_cell(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = frame_id_from_stack(state, 1);
+    let id = frame_id_from_stack(state, 1)?;
+    let rect = read_sprite_sheet_rect(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        super::coords::apply_rect_tex_coords(frame, rect);
+    }
     Ok(0)
 }

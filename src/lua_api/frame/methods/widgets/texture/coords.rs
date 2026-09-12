@@ -59,7 +59,7 @@ pub(super) fn set_tex_coord(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Rect form `(ULx, LRx, ULy, LRy)`. Atlas remapping is applied when the
 /// frame has an active atlas slot, otherwise the values pass through.
-fn apply_rect_tex_coords(frame: &mut crate::widget::Frame, rect: [f32; 4]) {
+pub(super) fn apply_rect_tex_coords(frame: &mut crate::widget::Frame, rect: [f32; 4]) {
     frame.tex_coords = Some(remap_tex_coords(
         frame.atlas_tex_coords,
         rect[0],
