@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
+
+`977d30276` adds retail-12.0.0+ ordinary `C_CurveUtil.EvaluateColorFromBoolean` and `EvaluateColorValueFromBoolean`. The declared API signatures support only ordinary selection here: fresh ColorMixin output and both-argument validation are explicit simulator policies; secrets, coercion, native identity, exact errors, and direct Blizzard-consumer proof remain open. Five test cases were RED before implementation; GREEN verification is pending. See [boolean color selection](../specs/boolean-color-selection.md) and [curve objects](../specs/curve-objects.md).
+
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
 `5e8fc3902` + `a9da1cf7f` renew 538 stale references across 478 rows: 536 unsafe source-context references without behavioral credit, plus two explicitly PTR-scoped legacy compatibility references backed by unchanged PTR proof. Corrections through `9aa6f7ada` move 27 curve references to related implementation and remove unsupported source claims. Totals remain **2244 / 1164 / 2**. Independent metadata verification and canonical validation passed for all 3410 rows, with zero stale hashes; native compatibility remains unproven where previously open. Older entries retain commit-time counts. See [[patch-12-0-0-api-audit]].

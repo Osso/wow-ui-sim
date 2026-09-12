@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
+
+`977d30276` installs the two 12.0.0 `C_CurveUtil` boolean selectors behind the retail-12.0.0 feature gate. Ordinary color selection returns a fresh ColorMixin table; component selection returns the selected number; both candidate arguments are validated before selection. These are simulator policies, not native identity/coercion/security evidence. The five behavioral tests were RED at `7e2d48ae8`; GREEN and audit credit remain pending. See [boolean color selection](../specs/boolean-color-selection.md).
+
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
 `5e8fc3902` + `a9da1cf7f` reconcile all 538 stale references across 478 rows: 536 unsafe source-context references and two legacy rows with explicit PTR assertions backed by unchanged PTR proof. Corrections through `9aa6f7ada` bring related curve references to 27 and remove false duration-clock, point-structure, and producer-absence claims. No status, behavior, test, assertion, or source-pin credit changes; totals remain `2244 / 1164 / 2`. Independent metadata verification and canonical validation passed: 3410 rows, exact checklist/inventory, zero stale hashes. Older entries record commit-time state; compatibility gaps remain open. See [[patch-12-0-0-api-audit]].

@@ -20,4 +20,4 @@ This slice does not claim complete native curve semantics. Numeric non-linear mo
 
 ## Implementation
 
-`src/c_api/c_curve_util.rs` owns curve userdata and private backing state. The previous table factories are removed from the temporary proxy factory module. See [aura option processing](aura-container-options.md) and [duration binding](duration-text-binding.md).
+`src/c_api/c_curve_util.rs` owns curve userdata, private backing state, and the separately scoped ordinary [boolean color selectors](boolean-color-selection.md). The previous table factories are removed from the temporary proxy factory module. See [aura option processing](aura-container-options.md) and [duration binding](duration-text-binding.md).
