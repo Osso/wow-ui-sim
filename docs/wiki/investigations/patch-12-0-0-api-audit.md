@@ -1,3 +1,9 @@
+## [2026-09-12] investigation | Credit bounded `C_Timer.After` dispatch
+
+`1e069b03b` gives `C_Timer.After` a dedicated no-argument invoker while retaining callback capture and cancellation suppression. `a1c187d2f` credits exactly `changed:C_Timer.After` as bounded best-effort and renews 53 existing references across 52 rows, moving the retail 12.0.0 register to **2261 best-effort / 1147 evidence-required / 2 exceptions**. `/tmp/timer-after-green-ledger.json` records four development cases passing on retail 12.0.0: ordinary function and callback-container `After` calls return no values, defer zero-delay invocation, call once with zero injected arguments, and do not repeat. `NewTimer` and finite `NewTicker` are controls for their own proxy-argument behavior, not native `After` capture.
+
+Later-profile and independent verification remain pending. Cached declarations distinguish zero-argument `TimerCallback` from one-argument ticker callbacks, but historical 12.0.0 source establishes a callback-type change and no outputs, not callback arity. Native callback/container identity, coercion, exact timing, cancellation edges, lifecycle/GC, and unmodified consumer behavior remain unverified. See [[timer-after-callback-dispatch]].
+
 ## [2026-09-12] investigation | Credit existing ordinary duration timing assertions
 
 `fb6149683` credits eleven existing duration rows from concrete `tests/duration_core.rs` assertions: `C_DurationUtil.GetCurrentTime`; `LuaDurationObject` start/end/rate, total/elapsed/remaining duration queries; `Reset`; and `SetTimeFromStart`, `SetTimeFromEnd`, and `SetTimeSpan`. `e26ebc464` narrows two summaries to the assertions actually exercised. `/tmp/verify-duration-existing-final-ledger.json` passes metadata follow-up: 3410 rows, **2259 best-effort / 1149 evidence-required / 2 exceptions**, zero stale hashes, and matching reused seven-case duration proof.

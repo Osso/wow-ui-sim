@@ -1,6 +1,6 @@
 ## [2026-09-12] investigation | Separate After and ticker callback arguments
 
-`1e069b03b` gives `C_Timer.After` a dedicated simulator invoker: it retains callback capture and cancellation suppression but passes no ticker proxy. The cached timer declarations distinguish `TimerCallback` (After, zero arguments) from `TickerCallback` (NewTimer/NewTicker, one argument). `TimerCallbackProbe` captured only NewTicker behavior, so it does not establish After acceptance or lifecycle. RED is 2/4 before the runtime change; GREEN remains pending. [[timer-after-callback-dispatch]]
+`1e069b03b` gives `C_Timer.After` a dedicated simulator invoker: it retains callback capture and cancellation suppression but passes no ticker proxy. Four 12.0.0 development cases pass; later-profile and independent verification remain pending. Cached declarations distinguish `TimerCallback` (After, zero arguments) from `TickerCallback` (NewTimer/NewTicker, one argument). `TimerCallbackProbe` captured only NewTicker behavior, so it does not establish After acceptance or lifecycle. [[timer-after-callback-dispatch]]
 
 ## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
 

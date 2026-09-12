@@ -1,6 +1,6 @@
 # Timer After callback dispatch
 
-`C_Timer.After` used the ticker callback invoker, so its callback received a container proxy. Commit `1e069b03b` separates the simulator dispatch paths; GREEN verification remains pending.
+`C_Timer.After` used the ticker callback invoker, so its callback received a container proxy. Commit `1e069b03b` separates the simulator dispatch paths. Development GREEN passed; later-profile and independent verification remain pending.
 
 ## Evidence boundary
 
@@ -16,15 +16,20 @@ The existing shared `makeInvoker` remains for `NewTimer` and `NewTicker`; it cap
 
 The timer engine, queue timing, cancellation model, callback representation, and GC behavior are unchanged. This is a dispatch-argument correction only.
 
+## Development proof
+
+`/tmp/timer-after-green-ledger.json` records four 12.0.0 development cases passing: ordinary function and callback-container calls return no values, defer zero-delay invocation, invoke once with zero injected callback arguments, and do not repeat. `NewTimer` and finite `NewTicker` controls retain their own proxy-argument behavior; they are not native `After` capture.
+
 ## Open boundaries
 
-GREEN is pending. Native `After` callback-container acceptance, exact delay boundaries, callback identity, return behavior beyond the checked-in no-output signature, cancellation edges, scheduling, and GC/lifecycle semantics remain unproven.
+Later-profile and independent verification remain pending. Native `After` callback-container acceptance, exact delay boundaries, callback identity, return behavior beyond the checked-in no-output signature, cancellation edges, scheduling, and GC/lifecycle semantics remain unproven.
 
 ## Sources
 
 - [Timer After callback spec](../../specs/timer-after-callback.md) — scoped contract and implementation inventory.
 - [TimerCallbackProbe](../../addons/TimerCallbackProbe/README.md) — live-client NewTicker capture and its explicit limits.
 - `/tmp/timer-after-red-ledger.json` — pre-fix behavioral failure record.
+- `/tmp/timer-after-green-ledger.json` — 12.0.0 development proof; not independent verification.
 
 ## See Also
 
