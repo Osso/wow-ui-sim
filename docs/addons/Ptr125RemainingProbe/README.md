@@ -31,7 +31,7 @@ No tests run automatically on login. Commands are `structures`, `secrets`, and `
 - Missing APIs, missing secret sources, denied fixture construction, and inaccessible results remain unavailable/inconclusive—not successful conformance tests. Native wrappers may handle errors internally; inspect the resulting fixture, not just the call status.
 - No `forceinsecure`, secure-environment writes, global error-handler replacement, protected gameplay actions, security bypass, or throttling/VM work is included.
 
-The two XML templates are probe-owned controls. Their dimensions let the capture distinguish a processed `templateName` from an ignored argument. Compare a candidate table-form call only when its matching positional control succeeds. A failed scheduling control makes populated-map return-shape results inconclusive. No generated-documentation structure is fabricated as a global.
+The two XML templates are probe-owned controls. Their dimensions let the capture distinguish a processed `templateName` from an ignored argument. Compare a candidate table-form call only when its matching positional control succeeds. The clock must be a verified public, accessible, finite number before deadline arithmetic. A populated-map return shape is inspected only after `HasSignal` and `GetSignalTime` confirm the scheduled key and time; a successful call alone is insufficient. No generated-documentation structure is fabricated as a global.
 
 For clean captures, record which other addons were enabled; they may wrap APIs. This probe does not change addon settings. If cleanup cannot confirm an empty map, the run records that limitation and retries once; reload after saving when safe.
 
