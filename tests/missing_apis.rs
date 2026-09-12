@@ -43,23 +43,131 @@ fn test_slash_command_registration() {
     // env.execute_slash_command("/mycommand test");
 }
 
-/// C_Timer.After is used for delayed execution.
+/// TimerCallback has no arguments; zero delay still waits for timer processing.
 #[test]
-#[ignore = "C_Timer not implemented"]
-fn test_c_timer_after() {
+fn timer_after_plain_callback_is_deferred_once_without_arguments() {
     let env = WowLuaEnv::new().unwrap();
-
     env.exec(
         r#"
-        _G.timerFired = false
-        C_Timer.After(0.1, function()
-            _G.timerFired = true
-        end)
+        local calls = 0
+        timerAfter = { calls = 0, nargs = -1 }
+        local function callback(...)
+            calls = calls + 1
+            timerAfter.calls = calls
+            timerAfter.nargs = select('#', ...)
+        end
+        assert(select('#', C_Timer.After(0, callback)) == 0)
+        assert(timerAfter.calls == 0)
         "#,
     )
     .unwrap();
 
-    // Would need to advance time/tick the timer system
+    assert_eq!(env.process_timers().unwrap(), 1);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    let (calls, nargs): (i32, i32) = env
+        .eval("return timerAfter.calls, timerAfter.nargs")
+        .unwrap();
+    assert_eq!(calls, 1, "After must invoke the captured closure once");
+    assert_eq!(nargs, 0, "After must not inject a callback argument");
+}
+
+#[test]
+fn timer_after_container_callback_is_deferred_once_without_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local calls = 0
+        timerAfter = { calls = 0, nargs = -1 }
+        timerAfter.container = C_FunctionContainers.CreateCallback(function(...)
+            calls = calls + 1
+            timerAfter.calls = calls
+            timerAfter.nargs = select('#', ...)
+        end)
+        assert(type(timerAfter.container) == 'userdata')
+        assert(select('#', C_Timer.After(0, timerAfter.container)) == 0)
+        assert(timerAfter.calls == 0)
+        "#,
+    )
+    .unwrap();
+
+    assert_eq!(env.process_timers().unwrap(), 1);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    let (calls, nargs): (i32, i32) = env
+        .eval("return timerAfter.calls, timerAfter.nargs")
+        .unwrap();
+    assert_eq!(calls, 1, "After must invoke the container's closure once");
+    assert_eq!(nargs, 0, "After must not inject a container proxy");
+}
+
+/// TickerCallback retains its one-proxy argument, unlike After's TimerCallback.
+#[test]
+fn timer_after_new_timer_control_receives_handle_proxy() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        timerControl = { calls = 0 }
+        local handle
+        handle = C_Timer.NewTimer(0, function(...)
+            timerControl.calls = timerControl.calls + 1
+            timerControl.nargs = select('#', ...)
+            timerControl.proxy = ...
+        end)
+        handle.marker = 'new-timer'
+        timerControl.handle = handle
+        assert(type(handle) == 'userdata' and timerControl.calls == 0)
+        "#,
+    )
+    .unwrap();
+
+    assert_eq!(env.process_timers().unwrap(), 1);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    env.exec(
+        r#"
+        local result = timerControl
+        assert(result.calls == 1 and result.nargs == 1)
+        assert(result.proxy == result.handle)
+        assert(({[result.handle] = true})[result.proxy] == nil)
+        assert(result.proxy.marker == 'new-timer')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn timer_after_new_ticker_control_receives_handle_proxy_per_tick() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        tickerControl = { calls = 0, arguments = {}, proxies = {} }
+        tickerControl.handle = C_Timer.NewTicker(0, function(...)
+            local result = tickerControl
+            result.calls = result.calls + 1
+            result.arguments[result.calls] = select('#', ...)
+            result.proxies[result.calls] = ...
+        end, 2)
+        tickerControl.handle.marker = 'new-ticker'
+        assert(type(tickerControl.handle) == 'userdata' and tickerControl.calls == 0)
+        "#,
+    )
+    .unwrap();
+
+    assert_eq!(env.process_timers().unwrap(), 1);
+    assert_eq!(env.eval::<i32>("return tickerControl.calls").unwrap(), 1);
+    assert_eq!(env.process_timers().unwrap(), 1);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    env.exec(
+        r#"
+        local result = tickerControl
+        assert(result.calls == 2)
+        for i = 1, 2 do
+            assert(result.arguments[i] == 1)
+            assert(result.proxies[i] == result.handle)
+            assert(({[result.handle] = true})[result.proxies[i]] == nil)
+            assert(result.proxies[i].marker == 'new-ticker')
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 /// Game API functions that need mocking.
