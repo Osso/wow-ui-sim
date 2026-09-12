@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
-`5e8fc3902` renews 536 unsafe source references across 476 rows as provenance only, with 24 curve references moved to their current source owner. No classification or behavioral credit changes; totals remain **2244 / 1164 / 2**. A scoped PTR-only renewal is in progress for the final two PTR-asserted legacy references; zero stale references is a candidate pending manifest validation. See [[patch-12-0-0-api-audit]].
+`5e8fc3902` + `a9da1cf7f` renew 538 stale references across 478 rows: 536 unsafe source-context references without behavioral credit, plus two explicitly PTR-scoped legacy compatibility references backed by unchanged PTR proof. Twenty-four curve references move to the related userdata implementation; named helpers absent from its method set remain unproven. Totals remain **2244 / 1164 / 2**. The validator passed at `a9da1cf7f` (3410 rows), but `585755955` then corrects an unrelated false constant-zero duration-clock summary; final metadata verification remains pending. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
 

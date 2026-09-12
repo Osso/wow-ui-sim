@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
-`5e8fc3902` renews 536 unsafe source references across 476 evidence-required rows as source provenance only. Twenty-four curve references now point to `src/c_api/c_curve_util.rs`; no status, behavior, test, assertion, or source-pin credit changes. Totals remain `2244 / 1164 / 2`; scoped PTR-only renewal of the final two PTR-asserted legacy references is in progress, leaving zero stale references as a candidate pending manifest validation. See [[patch-12-0-0-api-audit]].
+`5e8fc3902` + `a9da1cf7f` reconcile all 538 stale references across 478 rows: 536 unsafe source-context references and two legacy rows with explicit PTR assertions backed by unchanged PTR proof. Twenty-four curve references now cite the related userdata implementation; no status, behavior, test, assertion, or source-pin credit changes. Totals remain `2244 / 1164 / 2`. Canonical validation passed at `a9da1cf7f` for 3410 rows; `585755955` then corrects a false constant-zero claim for `C_DurationUtil.GetCurrentTime`, so final metadata verification is pending. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
 
