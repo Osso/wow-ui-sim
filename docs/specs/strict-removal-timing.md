@@ -4,11 +4,11 @@ The simulator keeps selected compatibility publications available for addon load
 
 ## What it must do
 
-- [ ] Preserve actually published compatibility globals, namespace methods, constants, and CVar callable identities from initialization through addon loading, post-load workarounds, and every first `PLAYER_ENTERING_WORLD` handler.
-- [ ] Retire selected publications after those handlers return and before later startup events; later startup cleanup must not wrap CVar functions again.
-- [ ] Hide retired CVars case-insensitively through global/default/namespace getters without changing unrelated CVar values.
-- [ ] Preserve wrapper identities and retired publications across repeated cleanup and subsequent world-entry events.
-- [ ] Reject `BATTLETAG_INVITE_SHOW` registration outside Blizzard addon loading, including before retirement. Its loader-only exception is separate from post-event publication cleanup.
+- [x] Preserve actually published compatibility globals, namespace methods, constants, and CVar callable identities from initialization through addon loading, post-load workarounds, and every first `PLAYER_ENTERING_WORLD` handler.
+- [x] Retire selected publications after those handlers return and before later startup events; later startup cleanup must not wrap CVar functions again.
+- [x] Hide retired CVars case-insensitively through global/default/namespace getters without changing unrelated CVar values.
+- [x] Preserve wrapper identities and retired publications across repeated cleanup and subsequent world-entry events.
+- [x] Reject `BATTLETAG_INVITE_SHOW` registration outside Blizzard addon loading, including before retirement. Its loader-only exception is separate from post-event publication cleanup.
 
 ## How it works
 
@@ -30,7 +30,7 @@ The simulator keeps selected compatibility publications available for addon load
 
 ## Known gaps (current cycle)
 
-- [ ] Run the focused lifecycle test and record its exact revision and outcome.
+Focused PTR development proof passed at `960877d1c`: `cargo test --no-default-features --features sound,gui,client-ptr --test patch_12_1_audit strict_removal_timing_retires_after_world_handlers_without_rewrapping -- --nocapture` — one passed, exit 0. The test exercises existing behavior; no production change or manufactured failing test was needed. Independent integration verification remains with the parent audit.
 
 ## Out of scope
 
