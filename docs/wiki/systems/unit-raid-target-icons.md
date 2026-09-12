@@ -1,6 +1,6 @@
 # Unit raid-target icons
 
-Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `104cb6fc9` added the model; focused GREEN and independent verification remain pending.
+Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `104cb6fc9` added the model; focused historical development proof passed. Independent verification and audit classification remain pending.
 
 ## Model
 
@@ -12,11 +12,11 @@ Targeting snapshots now reuse `unit_misc::guid_for_unit` for player and party GU
 
 ## Vendor interaction
 
-Retail `TargetFrameMixin:UpdateRaidTargetIcon()` reads `GetRaidTargetIndex(self.unit)`, sets the target-icon sprite cell, and shows or hides its texture on `RAID_TARGET_UPDATE`. Loaded Blizzard Lua replaces the simulator's standalone `SetRaidTargetIcon` alias with a toggle wrapper: selecting the already selected icon calls `SetRaidTarget(unit, 0)`. The simulator does not overwrite that vendor behavior.
+Retail `TargetFrameMixin:UpdateRaidTargetIcon()` reads `GetRaidTargetIndex(self.unit)`, calls `Texture:SetSpriteSheetCell(index, 4, 4)`, and shows or hides its texture on `RAID_TARGET_UPDATE`. Focused proof loaded the complete unmodified `Mainline/TargetFrame.lua`, dispatched the event, and observed cells 1 and 8 plus the vendor toggle wrapper. The normal historical XML path still aborts on unsupported `AuraContainer`, so this proves the Lua consumer boundary only—not XML construction, clean addon loading, or full UI integration. Loaded Blizzard Lua replaces the simulator's standalone `SetRaidTargetIcon` alias with a toggle wrapper: selecting the already selected icon calls `SetRaidTarget(unit, 0)`. The simulator does not overwrite that vendor behavior.
 
 ## Boundaries
 
-The index mapping, one-icon-per-unit/one-unit-per-icon invariant, validation, notification timing, and repeated-call notification are explicit simulator policies. They are not native permission, group/combat eligibility, lifecycle, coalescing, error-wording, or persistence claims.
+The index mapping, one-icon-per-unit/one-unit-per-icon invariant, validation, notification timing, repeated-call notification, and sprite-sheet row-major indexing are explicit simulator policies. `SetSpriteSheetCell` supports only the observed three-argument grid form; nonnil optional `cellWidth`/`cellHeight` are explicitly unsupported. These are not native permission, group/combat eligibility, lifecycle, coalescing, error-wording, persistence, optional-dimension, or pixel-cropping claims.
 
 World-marker APIs—including `PlaceRaidMarker`, `ClearRaidMarker`, `IsRaidMarkerActive`, and `RemoveRaidTargets`—are separate and unchanged.
 
@@ -29,5 +29,6 @@ World-marker APIs—including `PlaceRaidMarker`, `ClearRaidMarker`, `IsRaidMarke
 
 ## See Also
 
-- [[patch-12-0-0-api-audit]] — audit classification remains unchanged pending proof.
+- [sprite-sheet cell contract](../../specs/sprite-sheet-cell.md) — bounded coordinate model used by the consumer.
+- [[patch-12-0-0-api-audit]] — audit classification remains unchanged pending independent verification.
 - [[patch-api-audit-manifest]] — manifest evidence rules.

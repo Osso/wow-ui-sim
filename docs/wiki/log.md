@@ -1,6 +1,6 @@
-## [2026-09-12] system | Add unit raid-target icon state pending proof
+## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
 
-`104cb6fc9` introduces simulator-only GUID-keyed unit raid-target icons for `SetRaidTarget` and `GetRaidTargetIndex`, aligns player/party targeting snapshots with the existing `UnitGUID` helper, and synchronously dispatches one post-mutation `RAID_TARGET_UPDATE`. The standalone alias differs from loaded Blizzard's toggle wrapper; world markers and native permission/lifecycle behavior remain excluded. Focused GREEN, consumer proof, and audit classification are pending. See [[unit-raid-target-icons]] and [[patch-12-0-0-api-audit]].
+`104cb6fc9` adds simulator-only GUID-keyed unit raid-target icons, aligns player/party targeting snapshots with existing `UnitGUID`, and synchronously dispatches post-mutation `RAID_TARGET_UPDATE`. `3abcd7fc7` supplies the previously missing bounded row-major sprite-cell coordinates used by original Blizzard `TargetFrame.lua`. Focused historical development proof passed 23 icon tests, two queue-consumption controls, three primitive tests, and one direct original-Lua consumer test. Historical `TargetFrame.xml` still fails on unsupported `AuraContainer`; no XML/full-addon/clean-loader claim follows. Nonnil optional sprite dimensions are explicitly unsupported. Audit classification and independent verification remain pending. See [[unit-raid-target-icons]], [sprite cells](../specs/sprite-sheet-cell.md), and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
 
