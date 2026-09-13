@@ -18926,8 +18926,8 @@
       "id": "added:C_StringUtil.EscapeLuaFormatString",
       "symbol": "C_StringUtil.EscapeLuaFormatString",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -18954,17 +18954,17 @@
         "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
       ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a5a6aa54",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
+      "notes": "Best-effort behavioral evidence covers the tested byte-preserving percent escape, empty string, embedded NUL, UTF-8, and raw-byte cases. Exact return arity, invalid-argument/coercion, native 12.0.0 epoch, taint/secret, and consumer semantics remain unproven."
     },
     {
       "id": "added:C_StringUtil.EscapeLuaPatterns",
       "symbol": "C_StringUtil.EscapeLuaPatterns",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -18991,10 +18991,10 @@
         "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
       ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a5a6aa54",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
+      "notes": "Best-effort behavioral evidence covers the tested byte-preserving Lua pattern-character escape, empty string, and raw-byte cases. Exact return arity, invalid-argument/coercion, native 12.0.0 epoch, taint/secret, and consumer semantics remain unproven."
     },
     {
       "id": "added:C_StringUtil.EscapeQuotedCodes",
@@ -19182,8 +19182,8 @@
       "id": "added:C_StringUtil.WrapString",
       "symbol": "C_StringUtil.WrapString",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -19210,10 +19210,10 @@
         "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
       ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a5a6aa54",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
+      "notes": "Best-effort behavioral evidence covers tested nonempty wrapping with optional affixes, empty infix, embedded NUL, UTF-8, and raw bytes. Exact return arity, invalid-argument/coercion, native 12.0.0 epoch, taint/secret, and consumer semantics remain unproven."
     },
     {
       "id": "added:C_TaskQuest.GetQuestUIWidgetSetByType",

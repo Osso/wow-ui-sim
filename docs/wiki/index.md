@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
+
+Existing `6a5a6aa54` coverage credits `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` only for tested byte-preserving transformations, empty input, and optional affixes. Return arity, coercion, native 12.0.0 epoch, taint/secret, and consumer behavior remain open. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Store predicted heal values
 
 `SetPredictedValues` has bounded temporary-proxy storage proof for six modeled fields, zero returns, snapshots, replacement, and instance isolation. Verification records retail 12.0.0 3/3 reused and 16/16 each on 12.0.5, 12.0.7, and Mists; one credit, three references, 90 renewals, and 14,863 fresh hashes at **2297 / 1111 / 2**. Native structure/calculation/security semantics remain open. See [[patch-12-0-0-api-audit]].

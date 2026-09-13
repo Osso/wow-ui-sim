@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
+
+Classified `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` as best-effort behavioral from `6a5a6aa54` and `tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes`. Credit covers tested byte transformations, empty inputs, and optional affixes; return arity, coercion, native epoch, taint/secret, and consumers remain unproven.
+
 ## [2026-09-13] audit | Store predicted heal values
 
 `be2aae3db` characterizes `UnitHealPredictionCalculator.SetPredictedValues` as six-field temporary-proxy storage with exact zero returns, snapshots, replacement, and instance isolation. Verification at `0104813a7` reuses retail 12.0.0 3/3 and records 16/16 each on retail 12.0.5, 12.0.7, and Mists; format/readability/validators and unchanged production proof pass. One credit, three references, 90 renewals, 14,863 fresh hashes, totals **2297 / 1111 / 2**. Ledger: `/tmp/verify-heal-predicted-values-ledger.json`. Native structure, calculations, reset/defaults, validation, identity, security, lifecycle, and consumers remain unverified.
