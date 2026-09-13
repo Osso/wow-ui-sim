@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Correct contaminated 12.0.0 inventory notes
+
+Historical `0dea0ce9f3` copied the InitiativeRewardFlags note onto 1,634 unrelated inventory rows. Each was restored from the matching 12.0.0 manifest row note; four legitimate InitiativeRewardFlags rows remain unchanged. Documentation only: no runtime proof, credits, classifications, validators, or generators changed.
+
 ## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
 `e04c44803` and `5d23c606b` establish four test-first `C_StringUtil.RemoveContiguousSpaces` cases: RED is 0/4. `8de0d6e6c` adds retail-12.0.0-gated byte-level truncation; development GREEN is 4/4. Independent proof at `e1f7fd2a5` passes retail 6/6 each on 12.0.0/12.0.5/12.0.7; Mists 1/1 is only an existing old-helper-absence control, not new API availability. `36dce310d` is an equivalent readability-only predicate naming change with fresh fmt/check; profile/build/startup proof is reused explicitly. Metadata: one credit, four references, 12 initial plus nine follow-up hash-only renewals, 14,872 fresh hashes, zero stale, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native validation proof. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md).

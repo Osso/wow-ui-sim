@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Correct 12.0.0 inventory notes
+
+Replaced 1,634 table notes corrupted by historical `0dea0ce9f3` with their matching manifest row notes. This is a metadata-only documentation correction: classifications, evidence, runtime behavior, and credits were not reverified or changed. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
 `C_StringUtil.RemoveContiguousSpaces` has bounded ASCII-space-cap evidence: retail 6/6 each on 12.0.0/12.0.5/12.0.7, with one Mists old-helper-absence control that does not establish this API's availability. Metadata records one credit, four references, 12 initial plus nine follow-up hash-only renewals, 14,872 fresh hashes, zero stale, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native evidence. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
