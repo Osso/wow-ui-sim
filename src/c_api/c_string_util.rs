@@ -48,6 +48,13 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "RemoveContiguousSpaces",
         c_string_util_remove_contiguous_spaces,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        c_string_util_ref,
+        "TruncateWhenZero",
+        c_string_util_truncate_when_zero,
+    )?;
     #[cfg(feature = "retail-12-1-0")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     set_global_val(state, "C_StringUtil", c_string_util);
@@ -114,6 +121,26 @@ fn c_string_util_remove_contiguous_spaces(state: &mut LuaState) -> LuaResult<u32
     let max_spaces = limit.min(input.len() as f64) as usize;
     let trimmed = truncate_ascii_space_runs(&input, max_spaces);
     let result = create_string_bytes(state, &trimmed);
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn c_string_util_truncate_when_zero(state: &mut LuaState) -> LuaResult<u32> {
+    // Strict numeric validation is simulator policy, not native conformance.
+    let Val::Num(number) = stack_val(state, 1) else {
+        return Err(runtime_error("TruncateWhenZero expects a number"));
+    };
+    if !number.is_finite() {
+        return Err(runtime_error("TruncateWhenZero expects a finite number"));
+    }
+    let integer = number.floor();
+    let text = if integer == 0.0 {
+        String::new()
+    } else {
+        format!("{integer:.0}")
+    };
+    let result = create_string(state, &text);
     state.push(result);
     Ok(1)
 }
