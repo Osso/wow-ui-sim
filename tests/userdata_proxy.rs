@@ -614,6 +614,96 @@ fn heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_in
 }
 
 #[test]
+fn heal_prediction_set_predicted_values_stores_all_fields() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local calculator = CreateUnitHealPredictionCalculator()
+        local values = {
+            health = 137, healthMax = 991,
+            totalDamageAbsorbs = 23, totalHealAbsorbs = 41,
+            totalIncomingHeals = 79, totalIncomingHealsFromHealer = 53,
+        }
+        assert(select('#', calculator:SetPredictedValues(values)) == 0)
+        local stored = calculator:GetPredictedValues()
+        for field, expected in pairs(values) do
+            assert(stored[field] == expected, field)
+        end
+        assert(calculator:GetCurrentHealth() == 137)
+        assert(calculator:GetMaximumHealth() == 991)
+        "#,
+    )
+    .expect("predicted values store all six fields with zero setter returns");
+}
+
+#[test]
+fn heal_prediction_set_predicted_values_snapshots_input_and_output() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        -- Snapshot isolation is a simulator policy, not a native identity claim.
+        local calculator = CreateUnitHealPredictionCalculator()
+        local values = {
+            health = 137, healthMax = 991,
+            totalDamageAbsorbs = 23, totalHealAbsorbs = 41,
+            totalIncomingHeals = 79, totalIncomingHealsFromHealer = 53,
+        }
+        calculator:SetPredictedValues(values)
+        for field, value in pairs(values) do
+            values[field] = value + 1000
+        end
+        local output = calculator:GetPredictedValues()
+        assert(output.health == 137 and output.healthMax == 991)
+        assert(output.totalDamageAbsorbs == 23 and output.totalHealAbsorbs == 41)
+        assert(output.totalIncomingHeals == 79 and output.totalIncomingHealsFromHealer == 53)
+        for field, value in pairs(output) do
+            output[field] = value + 2000
+        end
+        local stored = calculator:GetPredictedValues()
+        assert(stored.health == 137 and stored.healthMax == 991)
+        assert(stored.totalDamageAbsorbs == 23 and stored.totalHealAbsorbs == 41)
+        assert(stored.totalIncomingHeals == 79 and stored.totalIncomingHealsFromHealer == 53)
+        assert(calculator:GetCurrentHealth() == 137)
+        assert(calculator:GetMaximumHealth() == 991)
+        "#,
+    )
+    .expect("input and output mutations leave stored predicted values unchanged");
+}
+
+#[test]
+fn heal_prediction_set_predicted_values_replaces_without_changing_other_instance() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateUnitHealPredictionCalculator()
+        local second = CreateUnitHealPredictionCalculator()
+        local original = {
+            health = 137, healthMax = 991,
+            totalDamageAbsorbs = 23, totalHealAbsorbs = 41,
+            totalIncomingHeals = 79, totalIncomingHealsFromHealer = 53,
+        }
+        first:SetPredictedValues(original)
+        second:SetPredictedValues(original)
+        local replacement = {
+            health = 251, healthMax = 1201,
+            totalDamageAbsorbs = 37, totalHealAbsorbs = 61,
+            totalIncomingHeals = 109, totalIncomingHealsFromHealer = 83,
+        }
+        assert(select('#', first:SetPredictedValues(replacement)) == 0)
+        local firstValues = first:GetPredictedValues()
+        local secondValues = second:GetPredictedValues()
+        for field, expected in pairs(replacement) do
+            assert(firstValues[field] == expected, field)
+            assert(secondValues[field] == original[field], field)
+        end
+        assert(first:GetCurrentHealth() == 251 and first:GetMaximumHealth() == 1201)
+        assert(second:GetCurrentHealth() == 137 and second:GetMaximumHealth() == 991)
+        "#,
+    )
+    .expect("replacement changes every predicted field only on its calculator");
+}
+
+#[test]
 fn heal_prediction_maximum_health_methods_read_predicted_health_max() {
     let env = WowLuaEnv::new().unwrap();
     let max_health: i64 = env
