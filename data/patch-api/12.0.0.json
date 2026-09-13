@@ -18946,7 +18946,7 @@
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
-          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "summary": "Existing fixture asserts percent doubling, empty strings, UTF-8, embedded NUL and raw bytes. No wrapping, return-arity, live-client or historical-epoch proof.",
           "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
@@ -18983,7 +18983,7 @@
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
-          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "summary": "Existing fixture asserts escaping Lua pattern punctuation, unchanged plain text, empty strings and raw bytes including embedded NUL. No UTF-8-specific, wrapping, return-arity, live-client or historical-epoch proof.",
           "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
