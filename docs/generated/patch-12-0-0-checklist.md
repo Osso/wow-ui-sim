@@ -2348,7 +2348,7 @@
 2348. [best-effort] `added:UnitHealPredictionCalculator` — behavioral
 2349. [best-effort] `added:UnitHealPredictionCalculator.GetDamageAbsorbClampMode` — behavioral
 2350. [evidence-required] `added:UnitHealPredictionCalculator.GetDamageAbsorbs` — unsafe
-2351. [evidence-required] `added:UnitHealPredictionCalculator.GetHealAbsorbClampMode` — unsafe
+2351. [best-effort] `added:UnitHealPredictionCalculator.GetHealAbsorbClampMode` — behavioral
 2352. [evidence-required] `added:UnitHealPredictionCalculator.GetHealAbsorbMode` — unsafe
 2353. [evidence-required] `added:UnitHealPredictionCalculator.GetHealAbsorbs` — unsafe
 2354. [evidence-required] `added:UnitHealPredictionCalculator.GetIncomingHealClampMode` — unsafe
@@ -2358,7 +2358,7 @@
 2358. [best-effort] `added:UnitHealPredictionCalculator.HasSecretValues` — behavioral
 2359. [evidence-required] `added:UnitHealPredictionCalculator.Reset` — unsafe
 2360. [best-effort] `added:UnitHealPredictionCalculator.SetDamageAbsorbClampMode` — behavioral
-2361. [evidence-required] `added:UnitHealPredictionCalculator.SetHealAbsorbClampMode` — unsafe
+2361. [best-effort] `added:UnitHealPredictionCalculator.SetHealAbsorbClampMode` — behavioral
 2362. [evidence-required] `added:UnitHealPredictionCalculator.SetHealAbsorbMode` — unsafe
 2363. [evidence-required] `added:UnitHealPredictionCalculator.SetIncomingHealClampMode` — unsafe
 2364. [evidence-required] `added:UnitHealPredictionCalculator.SetIncomingHealOverflowPercent` — unsafe

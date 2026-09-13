@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Bound heal-absorb clamp configuration
+
+`7c3a6beb7` adds two focused existing-behavior cases for `UnitHealPredictionCalculator.GetHealAbsorbClampMode` and `SetHealAbsorbClampMode`: explicit `MaximumHealth`/`CurrentHealth` transitions, exact getter/setter arity, and instance-local configuration. This is a temporary-proxy stored-state contract only; defaults/reset, validation/coercion, absorb calculations, native identity/security/lifecycle, and consumers remain open. Metadata verification is pending.
+
 ## [2026-09-12] audit | Unpack modeled color-curve evaluation
 
 `c8c6afbc5` adds four RED cases (0/4) for absent `EvaluateUnpacked`; `bab9d8ab4` returns exactly four numeric RGBA channels from existing color evaluation (development GREEN 4/4). Empty, single-point, Linear interior, and Step interior numeric cases are simulator policies, not native proof. Verification at `a0750de45` reuses runtime proof: 50/50 each retail 12.0.0/12.0.5/12.0.7 and 46/46 Mists; default gates, startup and readability pass. Corrected metadata has 108 renewals, four test references, 14,844 fresh hashes and totals **2288 / 1120 / 2**. Native interpolation/extrapolation, coercion/errors, identity, secrets/security, and consumers remain open. See [curve objects](../specs/curve-objects.md).
