@@ -2371,7 +2371,7 @@
 2371. [evidence-required] `added:UnitHealPredictionValues.totalHealAbsorbs` — unsafe
 2372. [best-effort] `added:UnitHealPredictionValues.totalIncomingHeals` — behavioral
 2373. [best-effort] `added:UnitHealPredictionValues.totalIncomingHealsFromHealer` — behavioral
-2374. [evidence-required] `added:UnitHealthMissing` — unsafe
+2374. [best-effort] `added:UnitHealthMissing` — behavioral
 2375. [evidence-required] `added:UnitHealthPercent` — unsafe
 2376. [best-effort] `added:UnitIsHumanPlayer` — behavioral
 2377. [evidence-required] `added:UnitIsLieutenant` — unsafe

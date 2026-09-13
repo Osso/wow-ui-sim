@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Model missing unit health
+
+`ec5363a18` RED 0/2 and `ab204a8cb` GREEN 2/2 establish one bounded `UnitHealthMissing` credit: player/target current/max difference, later vital-state changes, exact one numeric return, query non-mutation, and explicit `usePredicted=false`. Metadata updates changed references and records **2304 / 1104 / 2**. Prediction, other tokens, native validation/security, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved; independent verification pending. See [Missing unit health](../specs/unit-health-missing.md).
+
 ## [2026-09-13] audit | Bound TruncateWhenZero formatting
 
 `b8032c876` RED and `cfdd647c4` GREEN 3/3 establish one bounded `C_StringUtil.TruncateWhenZero` credit: ordinary finite nonnegative round-down/zero-empty results, one-string arity, call independence, and explicit simulator-policy rejection. Metadata renews 16 changed-path hashes, adds one test reference, and records **2303 / 1105 / 2**. Native coercion/error detail, negative/extreme/locale behavior, secret/security, historical availability, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved; no Mists proof claimed. Independent bounded PASS at `c6bc7f9d0`: retail 12.0.0 reuses unchanged GREEN 3/3; retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Fmt/check/default build/startup `[]` and readability pass; existing warnings are 6/1/profile and default none. Ledger: `/tmp/verify-truncate-when-zero-ledger.json`.
