@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Stage contiguous ASCII-space truncation
+## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
-`e04c44803` and `5d23c606b` establish four test-first `C_StringUtil.RemoveContiguousSpaces` cases: RED is 0/4. `8de0d6e6c` adds retail-12.0.0-gated byte-level truncation. Documentation records only staged behavior; spec requirements remain unchecked until GREEN and independent verification. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md).
+`e04c44803` and `5d23c606b` establish four test-first `C_StringUtil.RemoveContiguousSpaces` cases: RED is 0/4. `8de0d6e6c` adds retail-12.0.0-gated byte-level truncation and development GREEN is 4/4. `12a72e38c` credits one bounded row with four references and 12 renewals; independent verification remains pending. Invalid-limit rejection is simulator policy, not native validation proof. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md).
 
 ## [2026-09-13] audit | Extract creature IDs from shared GUID parsing
 

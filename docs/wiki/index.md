@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Implement contiguous ASCII-space truncation pending GREEN
+## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
-`8de0d6e6c` adds the retail-12.0.0-gated `C_StringUtil.RemoveContiguousSpaces` byte transformation after four test-first cases were RED 0/4. ASCII-space cap behavior and strict invalid-limit rejection await GREEN and independent proof; invalid-limit rejection is simulator policy, not native evidence. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
+`8de0d6e6c` adds retail-12.0.0-gated `C_StringUtil.RemoveContiguousSpaces`; four test-first cases move from RED 0/4 to development GREEN 4/4. `12a72e38c` credits bounded ASCII-space caps and byte preservation: one credit, four references, 12 renewals, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native evidence; independent verification remains pending. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] system | Share creature GUID identifier parsing
 

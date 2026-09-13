@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Retail 12.0.0+ returns one string with each ASCII-space run capped at the requested count; tests cover limits 0, 1, and 2, including boundary runs.
-- [ ] Preserve other bytes, including tabs, newlines, NUL, UTF-8 and invalid UTF-8; preserve empty and space-free strings.
-- [ ] Reject missing, nonnumeric, negative, fractional, and nonfinite limits as explicit simulator policy, not native validation proof.
+- [x] Retail 12.0.0+ returns one string with each ASCII-space run capped at the requested count; tests cover limits 0, 1, and 2, including boundary runs.
+- [x] Preserve other bytes, including tabs, newlines, NUL, UTF-8 and invalid UTF-8; preserve empty and space-free strings.
+- [x] Reject missing, nonnumeric, negative, fractional, and nonfinite limits as explicit simulator policy, not native validation proof.
 
 ## How it works
 
@@ -22,7 +22,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent profile, production and provenance verification pending.
+- [ ] Independent profile, production and provenance verification pending; development GREEN is 4/4 at `8de0d6e6c`.
 
 ## Out of scope
 
