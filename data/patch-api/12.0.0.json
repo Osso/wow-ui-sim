@@ -86918,7 +86918,7 @@
       "commit": "bab9d8ab4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Color-only unpacked outputs. Development RED is 0/4 because the method was absent; runtime/test verification is pending. Empty, single-point, Linear interior and Step interior numeric values are simulator policies. Native interpolation/extrapolation, ordering, coercion/errors, identity, secrets/security and consumers remain unverified."
+      "notes": "Color-only unpacked outputs. Development RED is 0/4 because the method was absent; development GREEN is 4/4 at bab9d8ab4. Independent verification is pending. Empty, single-point, Linear interior and Step interior numeric values are simulator policies. Native interpolation/extrapolation, ordering, coercion/errors, identity, secrets/security and consumers remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.GetPoint",
