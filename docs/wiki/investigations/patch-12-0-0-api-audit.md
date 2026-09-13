@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Replace stored color-curve points
+
+Tests `717d67f53` reproduce missing color `SetPoints` (RED 0/3); `388b59457` replaces existing point state (retail 12.0.0 GREEN 3/3). Tests assert zero returns, populated/empty replacement, input array/record/color mutation isolation, evaluation and Copy independence. Replacement/order/copy semantics are simulator policies. Provisional totals: **2287 / 1121 / 2**, three test references and 105 provenance renewals. Independent verification pending. Invalid inputs, native/security/structure semantics and scalar/vector methods remain open. See [curve objects](../../specs/curve-objects.md).
+
 ## [2026-09-12] audit | Remove stored color-curve points
 
 Tests `84d091201` reproduce missing color `RemovePoint` (RED 0/3); `17bad77a3` mutates existing point state (retail 12.0.0 GREEN 3/3). Tests assert zero returns, first/middle/last removal, compact order/count, empty state, changed evaluation and Copy independence. Valid one-based indexing and compaction are simulator assumptions. Verified totals: **2286 / 1122 / 2**, three test references and 102 provenance renewals. Independent verification at `2eb91714c` passes grouped userdata tests 43/43 each retail 12.0.0/12.0.5/12.0.7 and 39/39 Mists; format/default check/build, startup `[]`, readability, both validators and 14,837 evidence hashes pass. Ledger: `/tmp/verify-color-curve-remove-point-ledger.json`. Invalid indices, coercion/errors, native/security/structure semantics remain open. See [curve objects](../../specs/curve-objects.md).
