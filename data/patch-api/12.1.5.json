@@ -20621,7 +20621,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -20688,7 +20688,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -20755,7 +20755,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -20810,7 +20810,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -20884,7 +20884,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -20957,7 +20957,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -21030,7 +21030,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
         },
         {
@@ -21085,7 +21085,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -21141,7 +21141,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -21486,7 +21486,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
@@ -21549,7 +21549,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
@@ -21612,7 +21612,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
@@ -21675,7 +21675,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
@@ -21738,7 +21738,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
@@ -21801,7 +21801,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "source_hash": "cc3ba5d7fd6d9e6a57f0a2ddf5afab2bd29961baac486fa09d5c036004f9d473",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
