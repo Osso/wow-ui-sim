@@ -127,6 +127,80 @@ fn c_string_util_remove_contiguous_spaces_rejects_invalid_limits() {
         .expect("simulator policy rejects missing, nonnumeric, nonfinite and nonintegral limits");
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_truncate_when_zero_formats_nonnegative_numbers() {
+    env()
+        .eval::<()>(
+            r#"
+            local cases = {
+                {value = 0, expected = ""},
+                {value = 0.1, expected = ""},
+                {value = 0.99, expected = ""},
+                {value = 1, expected = "1"},
+                {value = 1.9, expected = "1"},
+                {value = 2.1, expected = "2"},
+                {value = 2.99, expected = "2"},
+                {value = 10.75, expected = "10"},
+            }
+            for _, case in ipairs(cases) do
+                assert(select('#', C_StringUtil.TruncateWhenZero(case.value)) == 1)
+                local actual = C_StringUtil.TruncateWhenZero(case.value)
+                assert(type(actual) == 'string' and actual == case.expected,
+                    "unexpected text for " .. tostring(case.value))
+            end
+            "#,
+        )
+        .expect("nonnegative values round down, returning empty text for zero integers");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_truncate_when_zero_calls_are_independent() {
+    env()
+        .eval::<()>(
+            r#"
+            local inputs = {10.75, 0.99, 2.99, 0, 1.9, 0.1, 10.75}
+            local expected = {"10", "", "2", "", "1", "", "10"}
+            local results = {}
+            for index, value in ipairs(inputs) do
+                assert(select('#', C_StringUtil.TruncateWhenZero(value)) == 1)
+                results[index] = C_StringUtil.TruncateWhenZero(value)
+            end
+            for index, text in ipairs(expected) do
+                assert(type(results[index]) == 'string' and results[index] == text,
+                    "result changed across calls at index " .. tostring(index))
+            end
+            "#,
+        )
+        .expect("alternating zero and populated results remain independent across calls");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_truncate_when_zero_rejects_invalid_numbers() {
+    env()
+        .eval::<()>(
+            r#"
+            -- Explicit simulator policy, not native validation or coercion proof.
+            local cases = {
+                {name = "numeric string", value = "1"},
+                {name = "boolean", value = false},
+                {name = "table", value = {}},
+                {name = "NaN", value = 0 / 0},
+                {name = "positive infinity", value = math.huge},
+                {name = "negative infinity", value = -math.huge},
+            }
+            for _, case in ipairs(cases) do
+                assert(not pcall(C_StringUtil.TruncateWhenZero, case.value),
+                    "invalid number accepted: " .. case.name)
+            end
+            assert(not pcall(C_StringUtil.TruncateWhenZero), "missing number accepted")
+            "#,
+        )
+        .expect("simulator policy rejects missing, nonnumeric and nonfinite numbers");
+}
+
 #[cfg(not(any(feature = "profile-retail", feature = "client-ptr")))]
 #[test]
 fn non_retail_profiles_do_not_publish_retail_string_helpers() {
