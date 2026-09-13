@@ -22,7 +22,7 @@
 
 ## Tests asserting this spec
 
-- `tests/widget_methods_colorselect.rs`: five `statusbar_fill_style_*` tests. RED at `557036636`: 2/5 pass, three fail on string returns, lost instance state, and accepted invalid inputs. Runtime `3c8264198` reaches development GREEN 25/25 in the grouped module (five focused tests plus 20 controls). Independent verification pending.
+- `tests/widget_methods_colorselect.rs`: five `statusbar_fill_style_*` tests. RED at `557036636`: 2/5 pass, three fail on string returns, lost instance state, and accepted invalid inputs. Runtime `3c8264198` reaches development GREEN 25/25 in the grouped module (five focused tests plus 20 controls). Independent bounded PASS at `e6db367b9`: unchanged retail 12.0.0 GREEN 25/25 reused by exact hash; retail 12.0.5 and 12.0.7 freshly pass 25/25 each. Formatter, check, default build, startup `[]`, validator, and readability pass.
 
 ## Known gaps (current cycle)
 
