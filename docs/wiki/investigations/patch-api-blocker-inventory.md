@@ -53,7 +53,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 The JSON records each source manifest's SHA-256 and exact row keys. On refresh, compare all six committed manifests: every `evidence-required` row must occur once, other statuses must not appear, literal gap text and evidence references must match, and every protocol must resolve. Reassess explicit cases rather than inferring semantics from keywords. Keep manifest classifications unchanged unless separate behavioral evidence justifies credit.
 
-Inventory consistency verification is pending. Runtime tests from preceding slices are unchanged and need no rerun for this documentation-only snapshot.
+Independent consistency verification at `19b2a4920` passed: six committed manifest hashes unchanged from `88ccc385a`; all 1,121 keys occur exactly once with matching literal notes and distinct reference sets; protocol counts and links resolve. Repeated reference paths are deduplicated in 39 rows without losing distinct references. Proof: `/tmp/verify-patch-api-blocker-inventory-ledger.json`. Representative semantic checks do not establish all native contracts. Runtime tests from preceding slices are unchanged and were not rerun.
 
 ## Sources
 

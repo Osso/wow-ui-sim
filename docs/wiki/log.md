@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Inventory remaining evidence dependencies
 
-User-selected documentation phase: [blocker inventory](investigations/patch-api-blocker-inventory.md) maps 1,121 evidence-required rows to literal gaps and proposed probes. Counts cover all six manifests; no runtime, credit, or deployment change. Mixed security obligations remain separated from ordinary behavior, and unestablished producer/input details remain probe-design blockers. Consistency verification pending.
+User-selected documentation phase: [blocker inventory](investigations/patch-api-blocker-inventory.md) maps 1,121 evidence-required rows to literal gaps and proposed probes. Counts cover all six manifests; no runtime, credit, or deployment change. Mixed security obligations remain separated from ordinary behavior, and unestablished producer/input details remain probe-design blockers. Independent consistency verification passed at `19b2a4920`: exact committed manifest hashes, all 1,121 keys once, literal notes/distinct references, protocol counts and links. See inventory page for proof limits.
 
 ## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 
