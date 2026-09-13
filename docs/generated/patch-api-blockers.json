@@ -8885,7 +8885,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
       ],
-      "probe_plan": "remaining-objects-crafting-structures"
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8991,7 +8991,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9004,7 +9004,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9017,7 +9017,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9030,7 +9030,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9043,7 +9043,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9056,7 +9056,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9069,7 +9069,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9082,7 +9082,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9095,7 +9095,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9108,7 +9108,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9121,7 +9121,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9134,7 +9134,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
       ],
-      "probe_plan": "remaining-objects-global-strings"
+      "probe_plan": "remaining-objects-global-error-codes"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -17565,60 +17565,59 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_BattleNet": {
-      "dependency": "Native Battle.net account/friend state and login/connection fixtures",
+      "dependency": "Retained or explicitly approved isolated messaging fixture with gameAccountID/bnetAccountID and custom-status state; real recipients are not test fixtures.",
       "observations": [
-        "Capture friend/account queries for logged-out, unavailable, online and offline states; preserve nil/error/boolean distinctions.",
-        "Trigger one friend/account state transition and record event/query ordering only if a producer is identified."
+        "Capture SendGameData(gameAccountID, prefix, data) result enum, SendWhisper(bnetAccountID, text) success and SetCustomMessage(text) success/state outcomes from safe retained evidence.",
+        "Do not substitute friend/account queries or send real messages to acquire missing proof; execution needs explicit approval."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative account/friend producer or platform session fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_CharacterServices": {
-      "dependency": "Native character-service availability and token/service fixture",
+      "dependency": "Authoritative AssignFCMDistribution signature and free-character-move distribution/account/realm/character fixture; pinned value metadata is null.",
       "observations": [
-        "Query availability and service options under a controlled eligible/ineligible account; record exact structures and nil/error behavior.",
-        "Separate service catalog publication from actual purchase/rename/move mutation and persistence."
+        "Identify exact assignment inputs/results and whether a validation-only path exists before any invocation. Retain account/realm/character effects as unknown; catalog availability queries do not establish distribution assignment."
       ],
       "ready_to_execute": false,
-      "design_gap": "No service entitlement/account fixture or producer.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_ChatInfo": {
-      "dependency": "Native chat channel/configuration state and controlled message/channel fixture",
+      "dependency": "Observed emote producer/target fixture and chat-lockdown state; ordinary emote observations must not be equated with enforcement.",
       "observations": [
-        "Capture channel lookup, restrictions and message-type results for known, unknown and invalid channels.",
-        "Trigger one controlled channel/message transition if a producer exists; preserve payload and ordering without inventing chat policy."
+        "Capture PerformEmote(emoteName, targetName?, suppressMoveError?) success and CancelEmote effects with repeated/cancelled-state controls.",
+        "Separately capture InChatMessagingLockdown isRestricted and nullable lockdownReason from an identified restriction-state fixture; enforcement remains deferred."
       ],
       "ready_to_execute": false,
-      "design_gap": "No complete chat channel producer or native policy capture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_CombatText": {
-      "dependency": "Native combat-text configuration and event producer",
+      "dependency": "Active-unit selection producer and an actual combat-text event payload; current-event return shape remains unestablished.",
       "observations": [
-        "Query each configuration value before/after a single supported combat-text setting transition; record types/defaults and invalid behavior.",
-        "Use a real combat-text event only to establish payload/ordering; do not infer rendering from API values."
+        "Capture SetActiveUnit/GetActiveUnit with known and unknown unit fixtures and repeated selection.",
+        "Establish GetCurrentEventInfo producer and exact tuple during a real event versus no-event control; generic combat-text configuration values do not establish the payload."
       ],
       "ready_to_execute": false,
-      "design_gap": "No modeled combat-text configuration/event producer.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_Commentator": {
-      "dependency": "Native spectator/commentator session with active match/player fixtures",
+      "dependency": "Actual commentator combat-event producer; pinned GetCombatEventInfo result contract is incomplete.",
       "observations": [
-        "Capture available commentator modes/players and selection state for empty and active sessions.",
-        "Change one selection and record return values/events; distinguish spectator-only state from ordinary player APIs."
+        "Establish exact GetCombatEventInfo return shape, event identity and timing from a populated capture. Spectator selection/progression does not supply this payload."
       ],
       "ready_to_execute": false,
-      "design_gap": "No commentator session or match producer.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_CooldownViewer": {
       "dependency": "Native cooldown-viewer layout/data producer with tracked spell/item entries",
       "observations": [
         "Capture tracked/empty entry lists and one add/remove/update transition, including IDs and ordering.",
-        "Separate viewer catalog from cooldown timing and rendering; query invalid IDs independently."
+        "Separate viewer catalog from cooldown timing and rendering; query invalid IDs independently.",
+        "Capture GetValidAlertTypes(cooldownID) from observed cooldown-to-alert mappings, preserving the CooldownViewerAlertEventType enum array. Keep category/cooldownID structure observations distinct from this query."
       ],
       "ready_to_execute": false,
       "design_gap": "Current simulator lacks populated viewer layout producer.",
@@ -17635,13 +17634,13 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_DelvesUI": {
-      "dependency": "Native Delves run/progress/tutorial state with a populated account/session fixture",
+      "dependency": "Known companion lock-policy and companion-to-trait-tree mappings.",
       "observations": [
-        "Capture available activities, rewards/progress and tutorial state before/after one run transition.",
-        "Separate seeded UI defaults from server-backed IDs, currencies and persistence."
+        "Capture GetLockedTextForCompanion(companionID?) text for omitted/known/unknown companion fixtures.",
+        "Capture IsTraitTreeForCompanion(traitTreeID) boolean for known matching/nonmatching tree mappings; run rewards/progression cannot substitute for these predicates."
       ],
       "ready_to_execute": false,
-      "design_gap": "No Delves service producer or populated fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_GameRules": {
@@ -17668,30 +17667,30 @@
       "dependency": "Native housing placement/customization session with controlled decor and target fixtures",
       "observations": [
         "Enter/exit the matching placement or customization mode and capture selected target, flags, preview and mutation results.",
-        "Repeat no-op and cancel transitions; keep protected transfer/security rows separate from ordinary UI state."
+        "Repeat no-op and cancel transitions; keep protected transfer/security rows separate from ordinary UI state.",
+        "For removed HousingLevelInfo, identify actual producer/publication or documentation-only identity and compare base/target populated shapes and load phases. IsModeDisabledForPreviewState behavior cannot establish this removed structure."
       ],
       "ready_to_execute": false,
       "design_gap": "No controllable housing mode/decor producer or populated fixture.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_Item": {
-      "dependency": "Native item database with known item, quality, subclass and container fixtures",
+      "dependency": "Supported itemInfo strings and known binding classifications from an authoritative item fixture.",
       "observations": [
-        "Query known, missing and invalid item IDs; capture complete returned structure and nil/error distinctions.",
-        "Compare item metadata with actual container/equipment state; do not infer source/ownership from static item info."
+        "Capture IsItemBindToAccount(itemInfo) boolean results for known and unknown item-info strings. Numeric item-ID arguments and item-structure outputs are not the pinned contract."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative item database/consumer fixture for these rows.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_LFGList": {
-      "dependency": "Native group-search listing/application fixture with controlled roles and filters",
+      "dependency": "Known LFG creation-data and returned entry producers with general-playstyle selection.",
       "observations": [
-        "Capture listing/search results for empty and populated queues, preserving IDs, status and timestamps.",
-        "Create one application/listing transition only in a safe test context; separate service state from UI rendering and account identity."
+        "Capture LFGEntryGeneralPlaystyle in LfgListingCreateData.generalPlaystyle and returned LfgEntryData.generalPlaystyle; compare omitted/default declaration and explicitly selected values as separate observations.",
+        "Establish creation-to-entry mapping without publishing a real listing; use retained or approved safe fixtures."
       ],
       "ready_to_execute": false,
-      "design_gap": "No populated LFG service producer or safe native fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_LimitedInput": {
@@ -17705,13 +17704,12 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_NamePlate": {
-      "dependency": "Native nameplate manager with visible friendly/hostile unit fixtures",
+      "dependency": "Authoritative GetNamePlateSize/SetNamePlateSize argument/return declarations and a 2D size-state fixture; pinned value metadata is null.",
       "observations": [
-        "Capture manager queries for no-nameplate, friendly and hostile units, including replacement CVar state.",
-        "Observe one show/hide/update transition and separate unit classification from rendering geometry."
+        "First establish exact size signature and affected receiver/state. Only then compare size getter/setter observations and geometry; do not import a different nameplate-manager API shape."
       ],
       "ready_to_execute": false,
-      "design_gap": "No complete nameplate producer or native case/replacement capture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_Ping": {
@@ -17725,13 +17723,12 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_QuestInfoSystem": {
-      "dependency": "Native quest/task database with accepted, completed and unavailable quest fixtures",
+      "dependency": "Known quest favor reward and cycle-cap fixture with authoritative numeric amounts.",
       "observations": [
-        "Query known/unknown quest IDs and capture full returned structures, objective progress and nil/error cases.",
-        "Trigger one accepted/completed transition only with a real producer; separate static quest metadata from player progress."
+        "Capture GetQuestLogRewardFavor(questID, clampFavorToCycleCap?) with omitted/false/true cap control and record numeric amount; do not expect a quest structure."
       ],
       "ready_to_execute": false,
-      "design_gap": "No populated quest/task producer with controlled lifecycle.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_QuestLog": {
@@ -17745,13 +17742,13 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_SettingsUtil": {
-      "dependency": "Native settings registry with declared setting definitions and account/character scopes",
+      "dependency": "Settings load-notification boundary and panel/category/element navigation fixture.",
       "observations": [
-        "Capture known setting metadata/value/default and invalid-key behavior; change one non-destructive setting and requery.",
-        "Separate registration/publication from persistence and UI consumer behavior."
+        "Capture NotifySettingsLoaded timing/repetition and observable notification effects.",
+        "Capture OpenSettingsPanel with omitted and known category ID/element-name arguments; record navigation/scroll effects rather than generic setting get/set state."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative settings registry fixture or scope/persistence capture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_Sound": {
@@ -17775,23 +17772,21 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_TaskQuest": {
-      "dependency": "Native quest/task database with accepted, completed and unavailable quest fixtures",
+      "dependency": "Known quest-to-widget-set mapping for MapIconUIWidgetSetType variants.",
       "observations": [
-        "Query known/unknown quest IDs and capture full returned structures, objective progress and nil/error cases.",
-        "Trigger one accepted/completed transition only with a real producer; separate static quest metadata from player progress."
+        "Capture GetQuestUIWidgetSetByType(questID, type), preserving numeric widgetSet versus no-result arity for known/unknown mappings; do not invent a returned quest structure."
       ],
       "ready_to_execute": false,
-      "design_gap": "No populated quest/task producer with controlled lifecycle.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_TooltipComparison": {
-      "dependency": "Native item comparison tooltip builder with paired item/location fixtures",
+      "dependency": "comparisonItem table, actual GameTooltip receiver and optional anchorFrame fixture.",
       "observations": [
-        "Build comparisons for empty, one-item and two-item inputs; capture line structures, ordering and nil/error behavior.",
-        "Keep tooltip text/rendering and secret item data separate from ordinary structure shape."
+        "Capture CompareItem effects on the supplied tooltip and anchor placement, preserving its zero-return contract. Reading resultant lines is a separate observation, not a returned comparison structure."
       ],
       "ready_to_execute": false,
-      "design_gap": "No paired item comparison producer or consumer fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_TradeSkillUI": {
@@ -17815,23 +17810,22 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_Tutorial": {
-      "dependency": "Native tutorial definition/progress state with resettable account/profile fixture",
+      "dependency": "Actual tutorial combat-event producer; pinned GetCombatEventInfo result contract is incomplete.",
       "observations": [
-        "Capture tutorial availability/state for unseen, shown, completed and reset entries.",
-        "Record reset/acknowledge transitions and persistence separately from UI display/rendering."
+        "Establish exact GetCombatEventInfo return shape and timing from a populated event capture. Tutorial completion/reset is not a substitute for this query."
       ],
       "ready_to_execute": false,
-      "design_gap": "No tutorial progression producer or resettable native fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-misc-C_PerksActivities": {
-      "dependency": "Native perks activity service with populated activity/requirement/reward fixture",
+      "dependency": "Actual PerksActivityCriteria/PerksActivityRequirement producer or authoritative evidence that the names denote documentation-only structures, plus base/target captures.",
       "observations": [
-        "Capture activity requirement and reward structures for active, completed, unavailable and empty states.",
-        "Separate seeded dashboard values from service requests, progression, account ownership and persistence."
+        "Resolve both removed structure identities and relevant LoD publication separately from populated replacement records.",
+        "Capture old versus replacement shape on real activity data before claiming removal; an active reward query alone does not establish the old type boundary."
       ],
       "ready_to_execute": false,
-      "design_gap": "No populated perks activity producer or account fixture.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-spells-actionbar": {
@@ -17938,20 +17932,11 @@
       "dependency": "Populated house/exterior producer with owned level, option lists and transitions.",
       "observations": [
         "Capture HouseLevelInfo budgets and exterior option structures for empty, owned, locked and selected states.",
-        "Change one level/exterior input and observe selected fields, lock reasons, refresh and isolation."
+        "Change one level/exterior input and observe selected fields, lock reasons, refresh and isolation.",
+        "For HousingDecorInstanceInfo.isRefundable capture the boolean on a real decor instance with known refundable/non-refundable state. Crafting/reagent quality and quantity are not the producer for this field."
       ],
       "ready_to_execute": false,
       "design_gap": "Current options/levels are seeded or placeholders without authoritative producer.",
-      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
-    },
-    "remaining-objects-global-strings": {
-      "dependency": "Native target-build global-string publication and load-phase capture.",
-      "observations": [
-        "Evaluate each named LE_GAME_ERR global at clean startup and after relevant Blizzard/LoD loads; record raw presence, type and bytes.",
-        "Compare replacement globals and failed loads; keep localization/consumer semantics separate."
-      ],
-      "ready_to_execute": false,
-      "design_gap": "No authoritative native publication/load-phase capture.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-objects-curves": {
@@ -18006,13 +17991,13 @@
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-objects-mapvalues": {
-      "dependency": "Pinned mapvalues contract plus deterministic tables/functions and native error behavior.",
+      "dependency": "Pinned callback plus strided values/returns contract and native Lua packing/error capture.",
       "observations": [
-        "Probe empty, scalar-keyed and array-like tables with deterministic transform; record key preservation, order and mutation/identity.",
-        "Capture nil/invalid callback, nested values and zero-entry cases."
+        "Call mapvalues with func followed by zero, multiple and nil-containing values; preserve callback argument count, callback multiple returns/errors and output count/order/packing.",
+        "Do not assume a table-map API, key preservation or table mutation semantics from the function name."
       ],
       "ready_to_execute": false,
-      "design_gap": "Current fallback and signature do not establish key/order/identity/error semantics.",
+      "design_gap": "The exact operation-specific fixture or complete native contract above remains missing; prior namespace-level assumptions do not establish it.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     },
     "remaining-objects-raid-markers": {
@@ -18114,6 +18099,16 @@
       ],
       "design_gap": "Window backend supplies no demonstrated transition signal for this case; concrete platform input evidence is needed before event behavior can be modeled.",
       "ready_to_execute": false
+    },
+    "remaining-objects-global-error-codes": {
+      "dependency": "Pinned numeric LE_GAME_ERR code declarations and native base/target load-phase publication capture.",
+      "observations": [
+        "Record exact numeric value/type for each linked LE_GAME_ERR global before/after relevant loads; compare to the pinned code declaration without treating it as localized text.",
+        "Any separately resolved message string/localization belongs to a different observation and cannot substitute for numeric error-code evidence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native numeric code publication and timing remain unverified; these rows are not string constants.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     }
   },
   "probe_plan_scope": "Every unresolved row links to a family-specific or literal-source plan. Plans identify evidence dependencies and proposed observations, not executable fixtures, fresh native semantics or audit completion.",
