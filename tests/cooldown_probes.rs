@@ -73,6 +73,39 @@ fn cooldown_set_paused_isolates_instances() {
 
 #[cfg(feature = "retail-12-0-0")]
 #[test]
+fn cooldown_set_paused_preserves_model_scene_pause_state() {
+    env()
+        .eval::<()>(
+            r#"
+        local scene = CreateFrame("ModelScene")
+        local cooldown = CreateFrame("Cooldown")
+        cooldown:Resume()
+        scene:SetPaused(true)
+        assert(scene:GetPaused() == true)
+        assert(cooldown:IsPaused() == false)
+        scene:SetPaused(false)
+        assert(scene:GetPaused() == false)
+        assert(cooldown:IsPaused() == false)
+
+        cooldown:SetPaused(true)
+        assert(cooldown:IsPaused() == true)
+        assert(scene:GetPaused() == false)
+        scene:SetPaused(true)
+        assert(scene:GetPaused() == true)
+        assert(cooldown:IsPaused() == true)
+        cooldown:SetPaused(false)
+        assert(cooldown:IsPaused() == false)
+        assert(scene:GetPaused() == true)
+        scene:SetPaused(false)
+        assert(scene:GetPaused() == false)
+        assert(cooldown:IsPaused() == false)
+    "#,
+        )
+        .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
 fn cooldown_set_paused_preserves_immediate_cooldown_times() {
     env()
         .eval::<()>(
