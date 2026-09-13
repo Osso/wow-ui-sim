@@ -4,6 +4,8 @@ mod formatting;
 mod metrics;
 mod simple_html;
 mod style;
+#[cfg(feature = "retail-12-0-0")]
+pub(super) use style::{get_scale_animation_mode, set_scale_animation_mode};
 
 pub(super) use formatting::{
     apply_default_text, get_font, get_font_height, get_font_object, get_unbounded_string_width,

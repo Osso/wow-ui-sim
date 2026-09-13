@@ -191,6 +191,7 @@ pub struct Frame {
     pub max_lines: u32,
     /// Text scale factor (for FontString widgets).
     pub text_scale: f64,
+    pub font_string_scale_animation_mode: u8,
     /// Normal texture path (for Button widgets).
     pub normal_texture: Option<String>,
     /// Normal texture UV coords (left, right, top, bottom) for atlas-based buttons.

@@ -320,6 +320,21 @@ fn register_text_wrapping(state: &mut LuaState, table: GcRef<Table>) -> LuaResul
 }
 
 fn register_text_scaling(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        table_set_rust_fn_static(
+            state,
+            table,
+            "GetScaleAnimationMode",
+            text::get_scale_animation_mode,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table,
+            "SetScaleAnimationMode",
+            text::set_scale_animation_mode,
+        )?;
+    }
     table_set_rust_fn_static(state, table, "GetTextScale", text::get_text_scale)?;
     table_set_rust_fn_static(state, table, "SetTextScale", text::set_text_scale)?;
     table_set_rust_fn_static(state, table, "SetTextToFit", text::set_text_to_fit)?;

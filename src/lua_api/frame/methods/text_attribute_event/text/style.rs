@@ -375,6 +375,39 @@ pub(crate) fn can_non_space_wrap(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn set_scale_animation_mode(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    // Simulator validation policy; native coercion is unverified.
+    let mode = match stack_val(state, 2) {
+        Val::Num(value) if value == 0.0 || value == 1.0 => value as u8,
+        _ => {
+            return Err(rilua::runtime_error(
+                "FontStringScaleAnimationMode (0 or 1) expected",
+            ));
+        }
+    };
+    let mut sim = borrow_state_mut(state)?;
+    let frame = sim
+        .widgets
+        .get_mut(id)
+        .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?;
+    frame.font_string_scale_animation_mode = mode;
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn get_scale_animation_mode(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let sim = borrow_state(state)?;
+    let frame = sim
+        .widgets
+        .get(id)
+        .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?;
+    state.push(Val::Num(frame.font_string_scale_animation_mode as f64));
+    Ok(1)
+}
+
 pub(crate) fn get_text_scale(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     state.push(Val::Num(frame_text_scale_value(state, id)));
