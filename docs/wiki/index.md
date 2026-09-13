@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Bound TruncateWhenZero formatting
 
-`C_StringUtil.TruncateWhenZero` gains one bounded 12.0.0 credit from focused GREEN 3/3: ordinary finite nonnegative floor/zero-empty formatting, exact one-string arity, alternating-call independence, and explicit simulator-policy invalid rejection. **2303 / 1105 / 2**. Native coercion, negative/extreme and locale formatting, secret/security, lifecycle, and consumer behavior remain open; no Mists claim is made. See [Truncate when zero](../specs/truncate-when-zero.md) and [[patch-12-0-0-api-audit]].
+`C_StringUtil.TruncateWhenZero` gains one bounded 12.0.0 credit from focused GREEN 3/3: ordinary finite nonnegative floor/zero-empty formatting, exact one-string arity, alternating-call independence, and explicit simulator-policy invalid rejection. **2303 / 1105 / 2**. Native coercion, negative/extreme and locale formatting, secret/security, lifecycle, and consumer behavior remain open; no Mists claim is made. Independent bounded PASS at `c6bc7f9d0`: reused unchanged retail 12.0.0 GREEN 3/3, fresh retail 12.0.5/12.0.7 3/3 each; fmt/check/default build/startup `[]` and readability pass. Existing warnings: 6/1/profile; default none. See [Truncate when zero](../specs/truncate-when-zero.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Correct 12.0.0 inventory notes
 

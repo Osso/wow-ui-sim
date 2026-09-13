@@ -19,7 +19,7 @@
 
 ## Tests asserting this spec
 
-- `tests/c_api_surface.rs`: three `c_string_util_truncate_when_zero_*` tests; RED 0/3 at `b8032c876`; GREEN 3/3 at `cfdd647c4`. Independent verification pending.
+- `tests/c_api_surface.rs`: three `c_string_util_truncate_when_zero_*` tests; RED 0/3 at `b8032c876`; GREEN 3/3 at `cfdd647c4`. Independent bounded PASS at `c6bc7f9d0`: retail 12.0.0 reuses that unchanged GREEN (3/3), and retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Formatter, check, default build, and startup Lua errors (`[]`) pass; readability passes. Retail 12.0.5 repeats six existing warnings, 12.0.7 one existing warning, and default check/build none. Metadata has 14,873 fresh hashes, zero stale, 16 renewals, and **2303 / 1105 / 2**. The eight Mists AccountStore failures were not rerun or fixed.
 
 ## Known gaps (current cycle)
 
