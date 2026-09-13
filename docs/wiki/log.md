@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Unpack modeled color-curve evaluation
+
+`c8c6afbc5` adds four RED cases (0/4) for absent `EvaluateUnpacked`; `bab9d8ab4` returns exactly four numeric RGBA channels from existing color evaluation (development GREEN 4/4). Empty, single-point, Linear interior, and Step interior numeric cases are simulator policies, not native proof. Only this row gains credit: **2288 / 1120 / 2**, four test references and 82 provenance renewals. Independent verification is pending. Native interpolation/extrapolation, coercion/errors, identity, secrets/security, and consumers remain open. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Replace stored color-curve points
 
 Tests `717d67f53` reproduce missing color `SetPoints` (RED 0/3); `388b59457` replaces existing point state (retail 12.0.0 GREEN 3/3). Tests assert zero returns, populated/empty replacement, input array/record/color mutation isolation, evaluation and Copy independence. Replacement/order/copy semantics are simulator policies. Verified totals: **2287 / 1121 / 2**, three test references and 105 provenance renewals. Independent verification at `3addffb4e` passes grouped userdata tests 46/46 each retail 12.0.0/12.0.5/12.0.7 and 42/42 Mists; format/default check/build, startup `[]`, readability, both validators and 14,840 evidence hashes pass. Ledger: `/tmp/verify-color-curve-set-points-ledger.json`. Invalid inputs, native/security/structure semantics and scalar/vector methods remain open. See [curve objects](../specs/curve-objects.md).

@@ -79,7 +79,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -120,7 +120,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -161,7 +161,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -6651,13 +6651,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the CreateColorCurve factory and LuaColorCurveObject userdata shape.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateColorCurve returns a userdata exposing Evaluate.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -6688,13 +6688,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the CreateCurve factory and LuaCurveObject userdata shape.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateCurve returns a userdata exposing AddPoint and Evaluate.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -6725,13 +6725,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Ordinary boolean selection returns a fresh ColorMixin-compatible color from the chosen numeric RGBA inputs without mutation. Copy identity and both-branch validation are simulator policies.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Concrete true/false selection, ordinary invalid-input rejection, and input preservation; color tests also assert independent RGBA/ColorMixin output. No native or secret conformance is inferred.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -6764,13 +6764,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Ordinary boolean selection returns the chosen numeric color component, including zero. Strict boolean and both-branch numeric validation are simulator policies.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Concrete true/false selection, ordinary invalid-input rejection, and input preservation; color tests also assert independent RGBA/ColorMixin output. No native or secret conformance is inferred.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -6803,7 +6803,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module installs CreateCurve/CreateColorCurve and object methods; it does not define this named namespace helper. This is related source context, not implementation or native-contract evidence for the helper.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -8338,7 +8338,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies the factory result is a table exposing duration methods.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -29544,7 +29544,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -29591,7 +29591,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -86694,13 +86694,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the LuaColorCurveObject userdata and generic curve method dispatch.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateColorCurve returns a userdata exposing Evaluate.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -86731,7 +86731,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86768,7 +86768,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86805,7 +86805,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation copies points into a new LuaColorCurveObject userdata.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86842,7 +86842,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86866,8 +86866,8 @@
       "id": "added:LuaColorCurveObject.EvaluateUnpacked",
       "symbol": "LuaColorCurveObject.EvaluateUnpacked",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -86880,16 +86880,45 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "summary": "Color-only EvaluateUnpacked evaluates existing color-curve state, then returns its r, g, b and a channels as four values. Numeric evaluation behavior is a simulator policy.",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_empty",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
+          "summary": "Empty color curve returns exactly four numeric zero channels; return arity and numeric channels are bounded simulator behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_single_point",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
+          "summary": "One stored color point returns exactly its four numeric RGBA channels."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_linear_interior",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
+          "summary": "Linear interior evaluation returns exactly four interpolated numeric RGBA channels."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_step_interior",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
+          "summary": "Step interior evaluation returns exactly four numeric preceding-point RGBA channels."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_empty",
+        "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_single_point",
+        "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_linear_interior",
+        "tests/userdata_proxy.rs::color_curve_evaluate_unpacked_step_interior"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "bab9d8ab4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Color-only unpacked outputs. Development RED is 0/4 because the method was absent; runtime/test verification is pending. Empty, single-point, Linear interior and Step interior numeric values are simulator policies. Native interpolation/extrapolation, ordering, coercion/errors, identity, secrets/security and consumers remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.GetPoint",
@@ -86910,7 +86939,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Color-only GetPoint reads existing point state and copies the point record and RGBA color. One-based ordinary indexing, missing-index nil, and independent outputs are simulator policies; no scalar vector or native identity claim.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86961,7 +86990,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -86998,7 +87027,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Color-only GetPoints returns a fresh array of copied point records and RGBA colors from existing state; insertion order and snapshot independence are simulator policies, not native proof.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87049,7 +87078,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Color-only RemovePoint mutates existing point storage with no return values. Valid one-based indices and compacted order are simulator policies.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87100,7 +87129,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Color-only SetPoints replaces existing point storage with copied records/RGBA colors and zero outputs. Valid input order, replacement/empty behavior and input copies are simulator policies.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87151,7 +87180,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87179,13 +87208,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior."
         },
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata_proxy evidence for LuaColorCurvePoint covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -87215,7 +87244,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87244,7 +87273,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87273,25 +87302,25 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the LuaCurveObject userdata, method dispatch, per-instance fields, and tostring.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateCurve returns a userdata exposing AddPoint and Evaluate.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies per-instance field storage.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies the LuaCurveObject tostring prefix.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87324,13 +87353,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation appends scalar x/y points to the curve userdata.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies scalar AddPoint insertion and linear interpolation.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87361,7 +87390,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87398,7 +87427,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation copies scalar points into a new LuaCurveObject userdata.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87435,13 +87464,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation linearly interpolates scalar curve points.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies scalar AddPoint insertion and linear interpolation.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87472,7 +87501,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87501,13 +87530,13 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation returns the stored scalar point count.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies Copy returns a userdata with the copied point count.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87538,7 +87567,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87567,7 +87596,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87596,7 +87625,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87625,7 +87654,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87654,7 +87683,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87683,7 +87712,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Shared getter returns the existing scalar/color curveType state. Native base-interface identity, coercion, errors and secrecy remain unverified.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87727,7 +87756,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         }
       ],
       "tests": [],
@@ -87756,7 +87785,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d"
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2"
         },
         {
           "kind": "test",
@@ -87799,7 +87828,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies table/method shape, default-zero behavior, per-instance fields, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88435,7 +88464,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies IsZero on a newly created duration object.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88660,7 +88689,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88700,7 +88729,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88740,7 +88769,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88780,7 +88809,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -88951,7 +88980,7 @@
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata_proxy evidence for NumberAbbrevData covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -89131,7 +89160,7 @@
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata_proxy evidence for NumberAbbrevOptions covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -91831,7 +91860,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -91884,7 +91913,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -91931,7 +91960,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused heal_prediction_set_get_roundtrip test reads the initial mode, sets mode 3, and reads the stored mode back.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -92148,7 +92177,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92201,7 +92230,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92254,7 +92283,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92336,7 +92365,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92563,7 +92592,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92616,7 +92645,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92669,7 +92698,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92800,7 +92829,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -92853,7 +92882,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
@@ -99156,7 +99185,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata-proxy tests verify AbbreviateConfig table/method shape, data round-trip, per-instance fields, read-only keys, and tostring prefix."
         }
       ],
@@ -99220,13 +99249,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2",
           "summary": "Current curve implementation creates LuaColorCurveObject instances through the shared curve methods; tested behavior covers userdata/Evaluate shape and copy shape."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata-proxy tests verify LuaColorCurveObject userdata/Evaluate shape and that copying a populated color curve returns a userdata."
         }
       ],
@@ -99258,13 +99287,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2",
           "summary": "Current curve implementation creates LuaCurveObject instances with shared point insertion, scalar evaluation, copy, and per-instance field behavior."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata-proxy tests verify LuaCurveObject userdata/method shape, scalar interpolation, copy shape/count, per-instance fields, and tostring prefix."
         }
       ],
@@ -99299,7 +99328,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "6d89b57727e5ad5ec352dedb06e4a6a0646e62146dc1707953e988809191a50d",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made."
         }
       ],
@@ -99334,7 +99363,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata-proxy tests verify LuaDurationObject table/method shape, default-zero state, per-instance fields, and tostring prefix."
         },
         {
@@ -99381,7 +99410,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Focused userdata-proxy tests verify UnitHealPredictionCalculator table/method shape, damage-absorb clamp-mode round-trip, maximum-health calculation, and tostring prefix."
         },
         {
@@ -100778,7 +100807,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
