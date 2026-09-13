@@ -1,12 +1,11 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-13",
-  "source_revision": "88ccc385a",
   "scope": "Snapshot of evidence-required rows only; proposed probe protocols, not runnable tests or fresh semantic verification of every manifest note. Exceptions and best-effort residual gaps remain outside this row inventory. No new compatibility credit.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "e16c690c1b97a53bcd5f0e62401535cd1f4408b2692597fd4f915a28d0d4f790",
+      "sha256": "c57c8029e82edccb461e98986b76c8eaac7bd58e761cb8a001ba882f1ba77496",
       "rows": 1095
     },
     {
@@ -11242,7 +11241,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "changed:StatusBar",
       "owner": "uiobject",
-      "missing_evidence": "Evidence required: focused StatusBar proof must create a widget, verify numeric Enum.StatusBarFillStyle round-trip through SetFillStyle/GetFillStyle, removed reverseFill/rotatesTexture behavior, initial state, invalid inputs, types, errors, and observable state. No rendering, interpolation, timer, or consumer semantics are claimed.",
+      "missing_evidence": "Evidence required: the pinned StatusBar definition changes fillStyle from stringenum STANDARD to numeric Enum.StatusBarFillStyle with declared init 0; reverseFill and rotatesTexture remain unchanged in both definitions, so no removal claim is supported. Explicit numeric state round-trips have bounded proof under the GetFillStyle/SetFillStyle rows; native initial-state, validation/coercion, errors, and broader UI-object contract remain unverified. No rendering, interpolation, timer, or consumer semantics are claimed.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -16976,5 +16975,14 @@
       "execution_limits": "Read-only proposed capture; no bypass of secret/inaccessible values, account mutation or runtime execution is authorized."
     }
   },
-  "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
+  "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility.",
+  "source_corrections": [
+    {
+      "row": "changed:StatusBar",
+      "manifest": "data/patch-api/12.0.0.json",
+      "basis": "Pinned 12.0.0 register before/after retain reverseFill and rotatesTexture; only fillStyle type/init changes.",
+      "effect": "Corrected false removal note; no status, credit or runtime change."
+    }
+  ],
+  "source_baseline_revision": "88ccc385a"
 }

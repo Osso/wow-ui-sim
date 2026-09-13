@@ -110663,7 +110663,7 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: focused StatusBar proof must create a widget, verify numeric Enum.StatusBarFillStyle round-trip through SetFillStyle/GetFillStyle, removed reverseFill/rotatesTexture behavior, initial state, invalid inputs, types, errors, and observable state. No rendering, interpolation, timer, or consumer semantics are claimed."
+      "notes": "Evidence required: the pinned StatusBar definition changes fillStyle from stringenum STANDARD to numeric Enum.StatusBarFillStyle with declared init 0; reverseFill and rotatesTexture remain unchanged in both definitions, so no removal claim is supported. Explicit numeric state round-trips have bounded proof under the GetFillStyle/SetFillStyle rows; native initial-state, validation/coercion, errors, and broader UI-object contract remain unverified. No rendering, interpolation, timer, or consumer semantics are claimed."
     },
     {
       "id": "changed:StatusBar.GetFillStyle",
