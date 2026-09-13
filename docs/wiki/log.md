@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Document default string trimming mismatch
+
+Pinned 12.0.0 docs specify space/CR/LF/tab defaults. `a3ce6850b` records RED 4/6 from VT/FF boundaries against bootstrap `%s`; `0d648ebde` changes runtime default bytes. GREEN, independent verification, and audit credit remain pending. See [String trimming](../specs/string-trim.md).
+
 ## [2026-09-13] audit | Model missing unit power
 
 `65873915e` RED 0/3 and `c2d838c75` GREEN 3/3 establish one bounded `UnitPowerMissing` credit: primary player/target and tested player power type 9 current/max difference, later power changes, exact one numeric return, query non-mutation, and explicit `unmodified=false`. Metadata records **2305 / 1103 / 2**. Independent bounded PASS at `07e950b89`: retail 12.0.0 reuses unchanged GREEN 3/3; retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Formatter, check, default build, startup `[]`, and readability pass; existing warnings are 6/1/profile and default none. The exact-byte archive scan finds 14,873 fresh hashes, zero stale/missing, and 58 renewals. Other tokens/power types, `unmodified=true`, native validation/security, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved. Ledger: `/tmp/verify-unit-power-missing-ledger.json`. See [Missing unit power](../specs/unit-power-missing.md).

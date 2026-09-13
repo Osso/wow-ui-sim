@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Correct default string trimming bytes
+
+Pinned 12.0.0 docs limit `string.trim` defaults to space/CR/LF/tab. Tests `a3ce6850b` are RED 4/6 because VT/FF boundaries reveal the bootstrap `%s` mismatch; runtime `0d648ebde` is awaiting GREEN and independent proof. No credit claimed. See [String trimming](../specs/string-trim.md) and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Model missing unit power
 
 `UnitPowerMissing` gains one bounded 12.0.0 credit: player/target primary plus tested player power type 9 max-minus-current numeric results, mutation response, query non-mutation, one return, and explicit `unmodified=false`. **2305 / 1103 / 2**. Independent bounded PASS at `07e950b89`: reused unchanged retail 12.0.0 GREEN 3/3, fresh retail 12.0.5/12.0.7 3/3 each; fmt/check/default build/startup `[]` and readability pass. Existing warnings: 6/1/profile; default none. The exact-byte archive scan found 14,873 fresh hashes, zero stale/missing, and 58 renewals. Other tokens/power types, `unmodified=true`, security/native validation, lifecycle, and consumer behavior remain open; no Mists claim is made. See [Missing unit power](../specs/unit-power-missing.md) and [[patch-12-0-0-api-audit]].
