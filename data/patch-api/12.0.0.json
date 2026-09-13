@@ -84606,8 +84606,8 @@
       "id": "added:FontString.GetScaleAnimationMode",
       "symbol": "FontString.GetScaleAnimationMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -84620,29 +84620,64 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/mod.rs",
-          "source_hash": "cd242c5c0b4cbc64ffdd55fecc7d1facd9285fa2b21489dd155ddcdef94ce066",
-          "summary": "The inspected registration surface for FontString.GetScaleAnimationMode contains no named method registration; that absence does not prove native publication, signature, behavior, or removal semantics."
+          "source_hash": "24673449d0aafd36f6699b3c095ff45cab13ee94c7a2162a9a0ff0bca3dc7650",
+          "summary": "Historical registration-surface observation superseded by explicit-mode implementation and tests at 3b3877603; broader native/publication semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/mod.rs",
           "source_hash": "36e77e7826070848506c6228ab7a299a5ef97c546a421be488b1e06b8bf133bd",
-          "summary": "The inspected registration surface for FontString.GetScaleAnimationMode contains no named method registration; that absence does not prove native publication, signature, behavior, or removal semantics."
+          "summary": "Historical registration-surface observation superseded by explicit-mode implementation and tests at 3b3877603; broader native/publication semantics remain unproven."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/frame/methods/text_attribute_event/text/style.rs",
+          "source_hash": "219df80a5d8e0a3c3175d700e29e37f7ab4ed33c53150d1eae699aa7ead11d36",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_numeric_enum_values",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_explicit_roundtrip",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_instance_isolation",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_return_arities",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_numeric_enum_values",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_explicit_roundtrip",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_instance_isolation",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_return_arities"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3b3877603f2eee7b9dd3cad1e99b0bcc28cf3aab",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: no matching simulator implementation or focused test was found. Exact return-value/default behavior, FontStringScaleAnimationMode mapping, validation, persistence, animation, layout, rendering, and edge semantics require authoritative evidence or a correct model/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
     },
     {
       "id": "added:FontString.SetScaleAnimationMode",
       "symbol": "FontString.SetScaleAnimationMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -84655,22 +84690,57 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/mod.rs",
-          "source_hash": "cd242c5c0b4cbc64ffdd55fecc7d1facd9285fa2b21489dd155ddcdef94ce066",
-          "summary": "The inspected registration surface for FontString.SetScaleAnimationMode contains no named method registration; that absence does not prove native publication, signature, behavior, or removal semantics."
+          "source_hash": "24673449d0aafd36f6699b3c095ff45cab13ee94c7a2162a9a0ff0bca3dc7650",
+          "summary": "Historical registration-surface observation superseded by explicit-mode implementation and tests at 3b3877603; broader native/publication semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/mod.rs",
           "source_hash": "36e77e7826070848506c6228ab7a299a5ef97c546a421be488b1e06b8bf133bd",
-          "summary": "The inspected registration surface for FontString.SetScaleAnimationMode contains no named method registration; that absence does not prove native publication, signature, behavior, or removal semantics."
+          "summary": "Historical registration-surface observation superseded by explicit-mode implementation and tests at 3b3877603; broader native/publication semantics remain unproven."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/frame/methods/text_attribute_event/text/style.rs",
+          "source_hash": "219df80a5d8e0a3c3175d700e29e37f7ab4ed33c53150d1eae699aa7ead11d36",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_numeric_enum_values",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_explicit_roundtrip",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_instance_isolation",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_return_arities",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
+          "summary": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_numeric_enum_values",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_explicit_roundtrip",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_instance_isolation",
+        "tests/widget_methods_colorselect.rs::test_fontstring_scale_mode_return_arities"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3b3877603f2eee7b9dd3cad1e99b0bcc28cf3aab",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: no matching simulator implementation or focused test was found. Accepted modes, validation/errors, state persistence, animation behavior, layout/render effects, and edge semantics require authoritative evidence or a correct model/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Bounded best-effort: explicitly-set numeric FontSize=0/Vertex=1 roundtrips, getter one numeric return, setter zero returns, and per-FontString instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each at 3b3877603; fmt/check/build/startup/readability passed. Native behavior, defaults, invalid inputs/validation/coercion, animation, layout, rendering, earlier-profile availability, and secret enforcement remain unproven."
     },
     {
       "id": "added:Frame.IsIgnoringChildrenForBounds",
@@ -86749,25 +86819,25 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         }
       ],
@@ -89669,25 +89739,25 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         }
       ],
@@ -90806,7 +90876,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [
@@ -90843,7 +90913,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [
@@ -90886,7 +90956,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [
@@ -90923,7 +90993,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [
@@ -90966,7 +91036,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [
@@ -99655,7 +99725,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Focused StatusBar test verifies the exact LuaDurationObject table identity and per-instance field round-trip through SetTimerDuration/GetTimerDuration."
         }
       ],
@@ -109502,7 +109572,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/text.rs",
-          "source_hash": "ae628de726915e32c5a4c1472e9d0395c7a9253b1e9a546c900bcc6b911d90c2",
+          "source_hash": "db69fa37ac4ec58931960a1e84090bb9440d45407c26ea91194fd07af95bc3c6",
           "summary": "Current GameTooltip SetText handling clears stored tooltip lines and inserts the supplied text as the first line."
         },
         {
@@ -110577,13 +110647,13 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "88dc75cdba62234d535d134332f4a3dfd0b0c98d98ad571a24d2970ce0c982cd",
+          "source_hash": "9c66514402af729c8a9aa76a2e6d8acf7a0a38df91b4f62b6f607922ba3f3568",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
@@ -110624,13 +110694,13 @@
         {
           "kind": "source",
           "reference": "src/widget/frame.rs",
-          "source_hash": "88dc75cdba62234d535d134332f4a3dfd0b0c98d98ad571a24d2970ce0c982cd",
+          "source_hash": "9c66514402af729c8a9aa76a2e6d8acf7a0a38df91b4f62b6f607922ba3f3568",
           "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
@@ -110671,7 +110741,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df",
           "summary": "Focused test stores values before two range changes and verifies stored ranges plus upper and lower current-value clamping."
         }
       ],
@@ -110709,7 +110779,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies immediate value 0.25, Smooth target 0.75, target-facing GetValue, displayed GetInterpolatedValue, and snap completion.",
-          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
+          "source_hash": "6d178451470cb772acc832ba1154efdca2fc9f1765052f592b1de16ba62322df"
         }
       ],
       "tests": [

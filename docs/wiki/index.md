@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Pending FontString scale-mode proof
+## [2026-09-13] audit | Credit bounded FontString scale-mode state
 
-`04724701e` stores explicitly-set FontString mode `0`/`1`; `fc24b8e4f` records RED 1/4. Pending proof covers explicit state only: no credit or totals change. Animation, rendering, layout, defaults, native validation, and earlier-profile availability remain unproven. See [FontString scale animation mode](../specs/fontstring-scale-animation-mode.md) and [[patch-12-0-0-api-audit]].
+Independent proof at `3b3877603` passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Exact runtime/test and saved-output hashes matched before metadata credit. Two bounded Get/Set credits cover only explicitly-set numeric 0/1, getter-one/setter-zero arity, and per-FontString isolation. Totals: **2312 / 1096 / 2**. Across six manifests, 26 existing references renew hashes and ten evidence references are added. Native/default/invalid-input behavior, animation/layout/rendering, and earlier-profile availability remain unproven. Main owns final metadata validation; broad audit and eight unresolved Mists AccountStore failures remain open. See [spec](../specs/fontstring-scale-animation-mode.md).
 
 ## [2026-09-13] audit | Credit ordinary boolean vertex-color state
 

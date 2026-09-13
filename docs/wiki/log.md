@@ -4,9 +4,9 @@ Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects co
 
 Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Final bounded metadata verification at `2c8bca6da` reuses exact runtime bytes, passes the validator, and records 14,887 fresh hashes, zero stale hashes, 13 renewals, and nine evidence additions. Broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [[patch-12-0-0-api-audit]].
 
-## [2026-09-13] audit | Record pending FontString scale-mode proof
+## [2026-09-13] audit | Credit bounded FontString scale-mode state
 
-Read the scale-mode spec and implementation. `04724701e` has per-FontString stored numeric `0`/`1` state and retail-12.0.0 registration; `fc24b8e4f` is RED 1/4. Recorded pending proof only: no credits or totals changed. Animation, rendering, layout, defaults, native validation/coercion/errors, and earlier-profile availability remain unproven.
+Independent proof at `3b3877603` passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Exact runtime/test and saved-output hashes matched before metadata credit. Two bounded Get/Set credits cover only explicitly-set numeric 0/1, getter-one/setter-zero arity, and per-FontString isolation. Totals: **2312 / 1096 / 2**. Across six manifests, 26 existing references renew hashes and ten evidence references are added. Native/default/invalid-input behavior, animation/layout/rendering, and earlier-profile availability remain unproven. Main owns final metadata validation; broad audit and eight unresolved Mists AccountStore failures remain open. See [spec](../specs/fontstring-scale-animation-mode.md).
 
 ## [2026-09-13] audit | Model numeric StatusBar fill-style state
 

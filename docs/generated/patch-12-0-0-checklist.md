@@ -2147,8 +2147,8 @@
 2147. [evidence-required] `added:ExpansionDisplayInfo.glueCreditsSoundKit` — unsafe
 2148. [evidence-required] `added:ExpansionDisplayInfo.glueMusicSoundKit` — unsafe
 2149. [evidence-required] `added:FACTION_STANDING_CHANGED` — unsafe
-2150. [evidence-required] `added:FontString.GetScaleAnimationMode` — unsafe
-2151. [evidence-required] `added:FontString.SetScaleAnimationMode` — unsafe
+2150. [best-effort] `added:FontString.GetScaleAnimationMode` — behavioral
+2151. [best-effort] `added:FontString.SetScaleAnimationMode` — behavioral
 2152. [best-effort] `added:Frame.IsIgnoringChildrenForBounds` — behavioral
 2153. [best-effort] `added:Frame.RegisterEventCallback` — behavioral
 2154. [best-effort] `added:Frame.RegisterUnitEventCallback` — behavioral
