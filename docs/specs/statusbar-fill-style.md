@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Publish Standard=0, StandardNoRangeFill=1, Center=2, Reverse=3.
-- [ ] Round-trip each explicitly set style as exactly one number; setter returns zero values.
-- [ ] Preserve independent styles across two instances and later changes.
-- [ ] Simulator validation policy: reject non-numbers, non-integral/nonfinite values, and numbers outside 0..3 before changing prior valid state. Native coercion/error behavior remains unverified.
+- [x] Publish Standard=0, StandardNoRangeFill=1, Center=2, Reverse=3.
+- [x] Round-trip each explicitly set style as exactly one number; setter returns zero values.
+- [x] Preserve independent styles across two instances and later changes.
+- [x] Simulator validation policy: reject non-numbers, non-integral/nonfinite values, and numbers outside 0..3 before changing prior valid state. Native coercion/error behavior remains unverified.
 
 ## How it works
 
@@ -22,7 +22,7 @@
 
 ## Tests asserting this spec
 
-- `tests/widget_methods_colorselect.rs`: five `statusbar_fill_style_*` tests. RED at `557036636`: 2/5 pass, three fail on string returns, lost instance state, and accepted invalid inputs. Existing method-resolution control now uses the documented numeric enum instead of an unsupported string. GREEN and independent verification pending.
+- `tests/widget_methods_colorselect.rs`: five `statusbar_fill_style_*` tests. RED at `557036636`: 2/5 pass, three fail on string returns, lost instance state, and accepted invalid inputs. Runtime `3c8264198` reaches development GREEN 25/25 in the grouped module (five focused tests plus 20 controls). Independent verification pending.
 
 ## Known gaps (current cycle)
 

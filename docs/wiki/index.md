@@ -4,7 +4,7 @@
 
 ## [2026-09-13] audit | Model numeric StatusBar fill-style state
 
-`557036636` records a retail-12.0.0-gated RED 2/5 for `StatusBar:SetFillStyle`/`GetFillStyle`: numeric enum round trips return legacy strings, state is not read per instance, and invalid inputs are accepted. `3c8264198` replaces the `Frame` string with a `u8` numeric field, exposes stored per-instance state, and adds strict simulator-policy validation. GREEN and independent proof remain pending; rendering does not consume fill style, and no statusbar-wide/native claim is made. See [StatusBar fill-style state](../specs/statusbar-fill-style.md) and [[patch-12-0-0-api-audit]].
+`557036636` records a retail-12.0.0-gated RED 2/5 for `StatusBar:SetFillStyle`/`GetFillStyle`: numeric enum round trips return legacy strings, state is not read per instance, and invalid inputs are accepted. `3c8264198` replaces the `Frame` string with a `u8` numeric field, exposes stored per-instance state, and adds strict simulator-policy validation. Development GREEN is 25/25 in the grouped module (five focused tests plus 20 controls); independent proof and metadata credit remain pending. Rendering does not consume fill style, and no statusbar-wide/native claim is made. See [StatusBar fill-style state](../specs/statusbar-fill-style.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Model missing unit power
 
