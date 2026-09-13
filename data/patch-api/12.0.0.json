@@ -86811,7 +86811,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_copy_returns_userdata",
           "summary": "One distinct color curve handle preserves configured colors and Step mode; Linear/Step changes and point rebuilding on either handle leave the other's explicit RGBA outputs and point counts unchanged.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -86944,19 +86944,19 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_point_returns_ordered_points_and_missing_nil",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Ordinary fractional x/RGBA points, one return including missing-index nil, independent returned records/colors with unchanged evaluation, and retrieval after Copy/Clear/reuse. Best-effort storage semantics, not native indexing/identity/coercion/security proof."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_point_returns_independent_point_and_color_snapshots",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Ordinary fractional x/RGBA points, one return including missing-index nil, independent returned records/colors with unchanged evaluation, and retrieval after Copy/Clear/reuse. Best-effort storage semantics, not native indexing/identity/coercion/security proof."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_point_copy_survives_original_clear",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Ordinary fractional x/RGBA points, one return including missing-index nil, independent returned records/colors with unchanged evaluation, and retrieval after Copy/Clear/reuse. Best-effort storage semantics, not native indexing/identity/coercion/security proof."
         }
       ],
@@ -86996,7 +86996,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_copy_returns_userdata",
           "summary": "New color curves report 0 points, then 1 and 2 after insertion, then 0 after clearing; copied and source point counts remain independent during rebuilding.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87032,19 +87032,19 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_returns_one_ordered_collection",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "One array return for empty and populated curves; fractional x/RGBA values in stored insertion order. Ordering is a simulator policy, not native proof."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_isolates_collection_point_and_color_mutation",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Mutating a returned array, point and RGBA color leaves separate query snapshots and midpoint evaluation unchanged. Fresh output is a simulator policy."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_snapshots_survive_copy_clear_and_reuse",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Returned collections retain fractional point/color values after independent source and copied-curve ClearPoints and reuse. Native lifecycle semantics remain unverified."
         }
       ],
@@ -87083,19 +87083,19 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_remove_point_compacts_first_middle_and_last",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Valid first/middle/last one-based removal returns zero values and compacts remaining fractional x/RGBA points and count. Indexing and compaction are simulator policies."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_remove_point_last_leaves_empty_curve",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Removing the sole configured color point returns zero values and leaves zero count, empty collection and absent single point."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_remove_point_updates_evaluation_independently_of_copy",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Middle removal changes midpoint RGBA evaluation while a copied curve retains its point and evaluation; subsequent copy removal leaves source points unchanged. Zero returns are asserted."
         }
       ],
@@ -87134,19 +87134,19 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_set_points_replaces_and_empty_clears",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Populated input replaces prior points in configured order with fractional x/RGBA values; empty input clears count/queries. Both calls return zero values. Replacement/order/empty behavior are simulator policies."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_set_points_copies_input_array_records_and_colors",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Input array, record and RGBA mutations leave stored points and midpoint evaluation unchanged. Zero outputs and copied input snapshots are tested simulator policies."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_set_points_keeps_copy_replacements_independent",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb",
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618",
           "summary": "Replacing original and copied curve point sets independently preserves the other curve values/evaluation; each call returns zero values."
         }
       ],
@@ -87433,7 +87433,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::curve_object_copy_returns_userdata",
           "summary": "One distinct scalar curve handle preserves midpoint 15; rebuilding the source changes only it to 40, then rebuilding the copy changes only it to 80, with independent point counts.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87718,13 +87718,13 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::curve_get_type_scalar_tracks_mode_and_copy_independence",
           "summary": "One numeric return: default Linear (0), Step (1)/Linear transitions, copied mode and independent later source/copy changes. Simulator mode storage only; interpolation semantics are not established.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::curve_get_type_color_tracks_mode_and_copy_independence",
           "summary": "One numeric return: default Linear (0), Step (1)/Linear transitions, copied mode and independent later source/copy changes. Simulator mode storage only; interpolation semantics are not established.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
@@ -87791,7 +87791,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_copy_returns_userdata",
           "summary": "On color curves with red/blue endpoints, switching Step to Linear changes midpoint RGBA from (1, 0, 0, 0.25) to (0.5, 0, 0.5, 0.5); switching back restores Step, while a copy retains its independently selected mode.",
-          "source_hash": "3cc7ee44b9ccf1f70c4d9e7c5379dbb982a657b7681e0fcc8d210172bb1af8cb"
+          "source_hash": "5f58ac19ae0a74f94dd87cf8d81042af62cd1d8025dfbed3db51dbed75828618"
         }
       ],
       "tests": [
