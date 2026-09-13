@@ -2362,7 +2362,7 @@
 2362. [best-effort] `added:UnitHealPredictionCalculator.SetHealAbsorbMode` — behavioral
 2363. [best-effort] `added:UnitHealPredictionCalculator.SetIncomingHealClampMode` — behavioral
 2364. [best-effort] `added:UnitHealPredictionCalculator.SetIncomingHealOverflowPercent` — behavioral
-2365. [evidence-required] `added:UnitHealPredictionCalculator.SetPredictedValues` — unsafe
+2365. [best-effort] `added:UnitHealPredictionCalculator.SetPredictedValues` — behavioral
 2366. [evidence-required] `added:UnitHealPredictionCalculator.SetToDefaults` — unsafe
 2367. [best-effort] `added:UnitHealPredictionValues` — behavioral
 2368. [best-effort] `added:UnitHealPredictionValues.health` — behavioral

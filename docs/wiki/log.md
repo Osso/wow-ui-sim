@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Store predicted heal values
+
+`be2aae3db` characterizes `UnitHealPredictionCalculator.SetPredictedValues` as six-field temporary-proxy storage with exact zero returns, snapshots, replacement, and instance isolation. Native structure, calculations, reset/defaults, validation, identity, security, lifecycle, and consumers remain unverified; metadata/docs verification is pending.
+
 ## [2026-09-13] audit | Characterize remaining heal configuration
 
 `88f578128` adds six focused configuration tests for `UnitHealPredictionCalculator.Get/SetHealAbsorbMode`, `Get/SetIncomingHealClampMode`, and `Get/SetIncomingHealOverflowPercent`. Published enum values plus explicit numeric `0`, `0.5`, and `1.5` round-trip through per-instance stored state; getters return one numeric value and setters return zero values. Accepted ranges are simulator observations, not native numeric contracts. Six rows gain bounded credit with twelve test references. Final verification at `a5f438b65` records 78 renewals (70 in 12.0.0, 8 in 12.1-behaviors), 14,860 fresh hashes, totals **2296 / 1112 / 2**, reused retail 12.0.0 6/6, and fresh 13/13 each on retail 12.0.5, 12.0.7, and Mists; all gates pass. Ledger: `/tmp/verify-heal-configuration-reconciled-ledger.json`. Native defaults/reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain open.
