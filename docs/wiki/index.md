@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
-`8de0d6e6c` adds retail-12.0.0-gated `C_StringUtil.RemoveContiguousSpaces`; four test-first cases move from RED 0/4 to development GREEN 4/4. `12a72e38c` credits bounded ASCII-space caps and byte preservation: one credit, four references, 12 renewals, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native evidence; independent verification remains pending. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
+`C_StringUtil.RemoveContiguousSpaces` has bounded ASCII-space-cap evidence: retail 6/6 each on 12.0.0/12.0.5/12.0.7, with one Mists old-helper-absence control that does not establish this API's availability. Metadata records one credit, four references, 12 initial plus nine follow-up hash-only renewals, 14,872 fresh hashes, zero stale, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native evidence. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] system | Share creature GUID identifier parsing
 

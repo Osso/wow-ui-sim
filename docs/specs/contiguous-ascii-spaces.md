@@ -22,7 +22,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent profile, production and provenance verification pending; development GREEN is 4/4 at `8de0d6e6c`.
+- [ ] Native coercion, validation/error details, taint/secrets, historical availability, and consumer behavior remain unproven. Independent bounded verification passed at `e1f7fd2a5`: retail 6/6 each on 12.0.0, 12.0.5, and 12.0.7; Mists 1/1 covers only existing helper absence, not this API's availability. The readability-only `36dce310d` names an equivalent positive validation predicate; postchange fmt/check are fresh, while profile/build/startup proof is explicitly reused on that equivalence.
 
 ## Out of scope
 
