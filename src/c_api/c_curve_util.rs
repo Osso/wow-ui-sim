@@ -111,6 +111,13 @@ local function make_factory(kind, isColor)
     install_object_access(prototype, methods, state)
     install_curve_methods(methods, state, create, isColor)
     if isColor then
+        function methods:SetPoints(points)
+            local replacement = {}
+            for index, point in ipairs(points) do
+                replacement[index] = {x=point.x, y=copy_value(point.y, true)}
+            end
+            state(self).points = replacement
+        end
         function methods:RemovePoint(index)
             -- Best-effort: valid one-based indices compact stored points.
             table.remove(state(self).points, index)
