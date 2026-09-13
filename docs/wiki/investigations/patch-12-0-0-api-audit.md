@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Expose scalar/color curve mode getter
+
+`11cacdf20` reproduces absent `GetType` on both curve kinds (0/2); `e0f6ba163` reads existing per-object mode state (retail 12.0.0 GREEN 2/2). Tests cover a single numeric return, default Linear, Step/Linear changes, and independent copied mode state. Only the getter gains best-effort credit: **2282 / 1126 / 2**. Ninety-four existing references renew changed-file hashes without expanding their claims. Independent profile, metadata, and regression verification is pending. Native identity, coercion/errors, secrets, lifecycle, consumers and unsupported interpolation remain open. See [curve objects](../../specs/curve-objects.md).
+
 ## [2026-09-12] audit | Bound self-buff classifier evidence
 
 Direct simulator fixtures classify seeded spell 1272138 as true, spell 116 as false, and unknown ID 999999999 as false. This establishes only the modeled implicit_target classifier for these cases; native hasSelfEffectsOnly, effect or metadata completeness, coercion, security, and consumer semantics remain unproven. Runtime and tests are unchanged. Three existing test references add one bounded credit (2281 best-effort / 1127 evidence-required / 2 exceptions); `/tmp/verify-self-buff-ledger.json` passes 3/3 each on retail 12.0.0/12.0.5/12.0.7, canonical validation, all 14,825 hashes, and exact checklist/inventory matching. Historical-profile warnings remain 6/6/1; unchanged format/check/production proof is reused.
