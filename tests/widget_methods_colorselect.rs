@@ -739,6 +739,70 @@ fn test_statusbar_desaturation_methods_share_persisted_state() {
     );
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_fontstring_scale_mode_numeric_enum_values() {
+    let env = WowLuaEnv::new().unwrap();
+    let values: (f64, f64) = env
+        .eval("return Enum.FontStringScaleAnimationMode.FontSize, Enum.FontStringScaleAnimationMode.Vertex")
+        .unwrap();
+    assert_eq!(values, (0.0, 1.0));
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_fontstring_scale_mode_explicit_roundtrip() {
+    let env = WowLuaEnv::new().unwrap();
+    env.eval::<()>(
+        r#"
+        local text = UIParent:CreateFontString()
+        for _, mode in ipairs({0, 1, 0}) do
+            text:SetScaleAnimationMode(mode)
+            assert(text:GetScaleAnimationMode() == mode, "explicit scale mode must roundtrip")
+        end
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_fontstring_scale_mode_instance_isolation() {
+    let env = WowLuaEnv::new().unwrap();
+    env.eval::<()>(
+        r#"
+        local first = UIParent:CreateFontString()
+        local second = UIParent:CreateFontString()
+        first:SetScaleAnimationMode(0)
+        second:SetScaleAnimationMode(1)
+        assert(first:GetScaleAnimationMode() == 0)
+        assert(second:GetScaleAnimationMode() == 1)
+        first:SetScaleAnimationMode(1)
+        second:SetScaleAnimationMode(0)
+        assert(first:GetScaleAnimationMode() == 1)
+        assert(second:GetScaleAnimationMode() == 0)
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_fontstring_scale_mode_return_arities() {
+    let env = WowLuaEnv::new().unwrap();
+    env.eval::<()>(
+        r#"
+        local text = UIParent:CreateFontString()
+        for _, mode in ipairs({0, 1}) do
+            assert(select('#', text:SetScaleAnimationMode(mode)) == 0, "setter returns no values")
+            assert(select('#', text:GetScaleAnimationMode()) == 1, "getter returns one value")
+            assert(type(text:GetScaleAnimationMode()) == 'number', "getter returns a number")
+        end
+    "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn test_statusbar_timer_duration_round_trips_duration_object() {
     let env = WowLuaEnv::new().unwrap();
