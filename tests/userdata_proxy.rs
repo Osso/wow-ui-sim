@@ -790,6 +790,86 @@ fn curve_object_tostring() {
 }
 
 #[test]
+fn color_curve_get_point_returns_ordered_points_and_missing_nil() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'GetPoint returns one value')
+            return ...
+        end
+        local curve = C_CurveUtil.CreateColorCurve()
+        -- One-based indexing and missing-index nil are simulator policies.
+        assert(one_result(curve:GetPoint(1)) == nil)
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        curve:AddPoint(0.75, CreateColor(0.875, 0.5, 0.25, 1))
+        local first = one_result(curve:GetPoint(1))
+        local second = one_result(curve:GetPoint(2))
+        assert(first.x == 0.25 and second.x == 0.75)
+        assert(first.y.r == 0.125 and first.y.g == 0.25)
+        assert(first.y.b == 0.5 and first.y.a == 0.75)
+        assert(second.y.r == 0.875 and second.y.g == 0.5)
+        assert(second.y.b == 0.25 and second.y.a == 1)
+        assert(one_result(curve:GetPoint(3)) == nil)
+        "#,
+    )
+    .expect("color point lookup preserves configured order and channels");
+}
+
+#[test]
+fn color_curve_get_point_returns_independent_point_and_color_snapshots() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        curve:AddPoint(0.75, CreateColor(0.875, 0.5, 0.25, 1))
+        local first = curve:GetPoint(1)
+        local other = curve:GetPoint(1)
+        -- Fresh output is a simulator policy, not native identity proof.
+        assert(not rawequal(first, other) and not rawequal(first.y, other.y))
+        first.x = 9
+        first.y:SetRGBA(1, 1, 1, 1)
+        assert(other.x == 0.25)
+        assert(other.y.r == 0.125 and other.y.g == 0.25)
+        assert(other.y.b == 0.5 and other.y.a == 0.75)
+        local later = curve:GetPoint(1)
+        assert(later.x == 0.25)
+        assert(later.y.r == 0.125 and later.y.g == 0.25)
+        assert(later.y.b == 0.5 and later.y.a == 0.75)
+        local r, g, b, a = curve:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and g == 0.375 and b == 0.375 and a == 0.875)
+        "#,
+    )
+    .expect("mutating returned point and color leaves curve evaluation unchanged");
+}
+
+#[test]
+fn color_curve_get_point_copy_survives_original_clear() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        curve:AddPoint(0.75, CreateColor(0.875, 0.5, 0.25, 1))
+        local copy = curve:Copy()
+        curve:ClearPoints()
+        assert(curve:GetPoint(1) == nil and curve:GetPoint(2) == nil)
+        local first, second = copy:GetPoint(1), copy:GetPoint(2)
+        assert(first.x == 0.25 and second.x == 0.75)
+        assert(first.y.r == 0.125 and first.y.g == 0.25)
+        assert(first.y.b == 0.5 and first.y.a == 0.75)
+        assert(second.y.r == 0.875 and second.y.g == 0.5)
+        assert(second.y.b == 0.25 and second.y.a == 1)
+        curve:AddPoint(0.5, CreateColor(1, 0, 0, 1))
+        assert(copy:GetPoint(1).x == 0.25 and copy:GetPoint(2).x == 0.75)
+        assert(curve:GetPoint(1).x == 0.5 and curve:GetPoint(2) == nil)
+        "#,
+    )
+    .expect("copied point retrieval remains independent after original clear and reuse");
+}
+
+#[test]
 fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_eval): (String, bool) = env
