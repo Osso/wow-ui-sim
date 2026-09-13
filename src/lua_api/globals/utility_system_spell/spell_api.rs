@@ -146,6 +146,16 @@ fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn unit_power_missing(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    let vitals = lookup_unit_vitals(state, &unit);
+    let power = requested_power_values(state, &unit, &vitals);
+    // Unmodified resource scaling is unmodeled, as in UnitPower/UnitPowerMax.
+    state.push(Val::Num(power.max as f64 - power.current as f64));
+    Ok(1)
+}
+
 fn unit_power_percent(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -405,6 +415,8 @@ pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;
     LuaApiMut::register_function(lua, "UnitPower", unit_power)?;
     LuaApiMut::register_function(lua, "UnitPowerMax", unit_power_max)?;
+    #[cfg(feature = "retail-12-0-0")]
+    LuaApiMut::register_function(lua, "UnitPowerMissing", unit_power_missing)?;
     LuaApiMut::register_function(lua, "UnitPowerPercent", unit_power_percent)?;
     LuaApiMut::register_function(lua, "UnitPowerBarID", unit_power_bar_id)?;
     LuaApiMut::register_function(lua, "UnitPowerType", unit_power_type)?;
