@@ -16874,7 +16874,8 @@
       "observations": [
         "Read each Get* default before mutation and record exact type/arity; call corresponding Set* with one valid value then read back, and test a second setting for instance/global scope.",
         "Use invalid enum/range and repeated writes only where the pinned contract names validation; record errors rather than inventing them.",
-        "Call SpeakText with a minimal text fixture separately from stored settings; capture return/notification behavior only if the target contract exposes it."
+        "Call SpeakText with a minimal text fixture separately from stored settings; capture return/notification behavior only if the target contract exposes it.",
+        "Record IsEnabled under an identified enabled/disabled input; if no enable-state producer is known, retain that exact blocker. Capture each Set* return/success result separately from getter roundtrip state."
       ],
       "ready_to_execute": false,
       "design_gap": "No authoritative combat-audio settings fixture, enum-value corpus, or producer-backed scope/persistence behavior; simulator registration alone is insufficient.",
@@ -16885,7 +16886,8 @@
       "observations": [
         "Toggle SetFilteredEventsEnabled and read AreFilteredEventsEnabled around one real filter-settings transition; capture event callbacks and unchanged-state control.",
         "Set/GetEntryRetentionTime and Get/SetMessageLimit around populated entries; distinguish stored setting from actual retention/limit enforcement.",
-        "Evaluate DoesObjectMatchFilter with representative combat objects and the exact filter configuration; do not equate placeholder booleans with native matching."
+        "Capture DoesObjectMatchFilter(mask, flags) with observed CombatLogObject enum mask/flags pairs; preserve both numeric inputs and the returned boolean. A populated combat-object table is not the pinned argument contract.",
+        "Keep IsCombatLogRestricted query/state observations separate from filter settings. Identify the restriction-state/caller-context fixture; authority enforcement remains deferred rather than inferred from a constant or matcher output."
       ],
       "ready_to_execute": false,
       "design_gap": "Current combat-log model has notification stubs/partial state but no authoritative filter matcher, retention lifecycle, message-limit producer, or populated native entry fixture.",
@@ -16904,7 +16906,7 @@
     "combat-crafting-tradeskill_recraft_and_enchant": {
       "dependency": "Real profession recipe/recraft producer with reagent and enchant inputs; Populated current recipe, item, quality and recraft-limit state",
       "observations": [
-        "Call GetEnchantItems with a recipe/item fixture and capture item structures, ordering, empty and invalid recipe behavior.",
+        "Call GetEnchantItems(recipeID, craftingReagents?) with known recipe and optional CraftingReagentInfo input arrays; capture exact returned string[] values/order, empty results and invalid-input outcomes. Returned strings are not item structures.",
         "Call IsRecraftReagentValid and RecraftLimitCategoryValid before/after one valid, invalid, missing and limit-exceeded reagent; compare returned booleans/errors to actual validation state.",
         "Call GetRecraftRemovalWarnings with a populated recraft removal and record warning entries, replaced reagent identity, ordering and no-warning control; distinguish empty result from no producer."
       ],
@@ -16936,7 +16938,7 @@
     "combat-crafting-crafting_quality": {
       "dependency": "Populated CraftingQualityInfo producer from a real quality/crafting result; Recipe/item quality fixture with icon variants and update lifecycle",
       "observations": [
-        "Capture CraftingQualityInfo from an actual quality result and record barBackground/barFill/barHighlight, quality, icon, iconAppear, iconChat, iconDissolve, iconInventory, iconMixed and iconSmall presence/types/values.",
+        "Capture CraftingQualityInfo from an actual quality result and record barBackground/barBackgroundCap/barFill/barHighlight, quality, icon, iconAppear, iconChat, iconDissolve, iconInventory, iconMixed and iconSmall presence/types/values.",
         "Compare no-quality, each quality level and changed recipe/item inputs; record nested relationships, icon identity, updates, events and empty/error cases.",
         "Trace one Blizzard consumer for each field only after producer values are populated; do not use action-bar or support-type declarations as equivalence proof."
       ],
