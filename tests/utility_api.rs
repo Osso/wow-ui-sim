@@ -9,6 +9,123 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn assert_string_trim_default_cases(cases: &str) {
+    let result: String = env()
+        .eval(&format!(
+            r#"
+            local failures = {{}}
+            local cases = {cases}
+            for _, name in ipairs({{"string.trim", "strtrim"}}) do
+                local trim = string.trim
+                if name == "strtrim" then trim = strtrim end
+                assert(type(trim) == "function", name .. " not published")
+                for index, case in ipairs(cases) do
+                    for mode = 1, 2 do
+                        local actual
+                        if mode == 1 then actual = trim(case[1])
+                        else actual = trim(case[1], nil) end
+                        if actual ~= case[2] then
+                            failures[#failures + 1] = string.format(
+                                "%s case %d %s: expected %q, got %q",
+                                name, index, mode == 1 and "omitted" or "nil",
+                                case[2], tostring(actual))
+                        end
+                    end
+                end
+            end
+            return table.concat(failures, "\n")
+            "#,
+        ))
+        .unwrap();
+    assert_eq!(result, "");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn test_string_trim_default_four_bytes_and_embedded_whitespace() {
+    assert_string_trim_default_cases(
+        r#"{
+            {" hello ", "hello"},
+            {"\rhello\r", "hello"},
+            {"\nhello\n", "hello"},
+            {"\thello\t", "hello"},
+            {" \r\n\thello\t\n\r ", "hello"},
+            {" \r\n\t", ""},
+            {"", ""},
+            {" \tleft \r\n\t\011\012 right\n ", "left \r\n\t\011\012 right"},
+        }"#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn test_string_trim_default_preserves_edge_vertical_tab_and_form_feed() {
+    assert_string_trim_default_cases(
+        r#"{
+            {"\011hello\011", "\011hello\011"},
+            {"\012hello\012", "\012hello\012"},
+            {"\011\012", "\011\012"},
+        }"#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn test_string_trim_default_stops_at_vertical_tab_and_form_feed() {
+    assert_string_trim_default_cases(
+        r#"{
+            {" \r\n\t\011 hello \011\t\n\r ", "\011 hello \011"},
+            {" \r\n\t\012 hello \012\t\n\r ", "\012 hello \012"},
+            {"\011 \thello\r\n ", "\011 \thello"},
+            {" \r\nhello\t \012", "hello\t \012"},
+        }"#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn test_string_trim_custom_character_set_control() {
+    env()
+        .eval::<()>(
+            r#"
+        assert(type(string.trim) == "function")
+        assert(type(strtrim) == "function")
+        for _, trim in ipairs({string.trim, strtrim}) do
+            assert(trim("xyhelloyx", "xy") == "hello")
+            assert(trim("xy hello yx", "xy") == " hello ")
+            assert(trim("xyhexyl loyx", "xy") == "hexyl lo")
+            assert(trim(" \txy\n ", "") == " \txy\n ")
+        end
+        "#,
+        )
+        .unwrap();
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn test_string_trim_one_string_return_control() {
+    env()
+        .eval::<()>(
+            r#"
+        assert(type(string.trim) == "function")
+        assert(type(strtrim) == "function")
+        local function check(...)
+            assert(select('#', ...) == 1)
+            assert(type((...)) == "string")
+        end
+        for _, trim in ipairs({string.trim, strtrim}) do
+            check(trim(" hello "))
+            check(trim(" hello ", nil))
+            check(trim("xyhelloyx", "xy"))
+            check(trim(" \r\n\t"))
+            check(trim("", ""))
+        end
+        "#,
+        )
+        .unwrap();
+}
+
 // ============================================================================
 // strsplit
 // ============================================================================
