@@ -105,7 +105,8 @@ fn c_string_util_remove_contiguous_spaces(state: &mut LuaState) -> LuaResult<u32
         ));
     };
     // Simulator policy; native invalid-limit validation remains unverified.
-    if !limit.is_finite() || limit < 0.0 || limit.fract() != 0.0 {
+    let valid_limit = limit.is_finite() && limit >= 0.0 && limit.fract() == 0.0;
+    if !valid_limit {
         return Err(runtime_error(
             "maxAllowedSpaces must be a finite nonnegative integer",
         ));
