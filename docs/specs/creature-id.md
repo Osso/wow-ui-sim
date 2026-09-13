@@ -6,7 +6,7 @@
 
 - [x] Retail 12.0.0+ returns exactly one numeric identifier for the tested Creature GUIDs.
 - [x] Player GUIDs and empty strings return exactly one nil under the existing simulator parser policy.
-- [ ] Legacy `UnitCreatureID` and existing creature namespace helpers retain their behavior.
+- [x] Legacy `UnitCreatureID` and the relevant creature namespace helpers retain their behavior in the bounded verification matrix.
 
 ## How it works
 
@@ -25,7 +25,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent profile and legacy regression verification.
+- [ ] Mists broad `creature` filter remains blocked: 8 unrelated AccountStore setup failures at `tests/common/mod.rs:183` cannot find a compatible `Blizzard_Colors` TOC. The relevant 18 namespace helpers and legacy `UnitCreatureID` pass; retail-gated new tests do not run on Mists.
 
 ## Out of scope
 

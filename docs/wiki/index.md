@@ -1,6 +1,6 @@
 ## [2026-09-13] system | Share creature GUID identifier parsing
 
-[[creature-guid-identifiers]] records the retail 12.0.0+ `C_CreatureInfo.GetCreatureID` bridge to the legacy `UnitCreatureID` parser, bounded GUID forms, and excluded native semantics. See [Creature GUID identifiers](../specs/creature-id.md).
+[[creature-guid-identifiers]] records the retail 12.0.0+ `C_CreatureInfo.GetCreatureID` bridge to the legacy `UnitCreatureID` parser, bounded GUID forms, and excluded native semantics. Retail `creature` verification passes 44/44 on each 12.0.0/12.0.5/12.0.7; Mists broad coverage is blocked by eight unrelated AccountStore setup failures, not treated as baseline proof. See [Creature GUID identifiers](../specs/creature-id.md).
 
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 

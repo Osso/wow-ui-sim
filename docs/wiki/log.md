@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Extract creature IDs from shared GUID parsing
 
-`63c91f0b4` reproduces absent `C_CreatureInfo.GetCreatureID`; `aff45e594` exposes the unchanged shared parser now owned by `src/c_api/c_creature_info.rs`. GREEN is 3/3: two Creature GUID numeric IDs and exact-one nil results for Player/empty controls. The bounded credit excludes malformed/alternate GUIDs, coercion/errors, native identity/database semantics, secret arguments, lifecycle, and consumers. See [[creature-guid-identifiers]] and [Creature GUID identifiers](../specs/creature-id.md).
+`63c91f0b4` reproduces absent `C_CreatureInfo.GetCreatureID`; `aff45e594` exposes the unchanged shared parser now owned by `src/c_api/c_creature_info.rs`. GREEN is 3/3: two Creature GUID numeric IDs and exact-one nil results for Player/empty controls. Retail `creature` verification is 44/44 each on 12.0.0/12.0.5/12.0.7. Mists broad `creature` is 33/41 because eight unrelated AccountStore tests fail setup at `tests/common/mod.rs:183` without a compatible `Blizzard_Colors` TOC; relevant helper and legacy checks pass, but this is not an overall Mists proof. Metadata: one credit, three refs, 11 renewals, 14,868 fresh hashes, **2301 / 1107 / 2**. See [[creature-guid-identifiers]] and [Creature GUID identifiers](../specs/creature-id.md).
 
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 
