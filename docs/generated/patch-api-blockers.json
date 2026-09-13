@@ -8225,7 +8225,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-001"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8454,7 +8455,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-002"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8660,7 +8662,8 @@
         "src/lua_api/env_init/mod.rs",
         "src/mists/compat_bootstrap.lua",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-003"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8998,7 +9001,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-004"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9136,7 +9140,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-005"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9152,7 +9157,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-006"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9180,7 +9186,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-007"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9207,7 +9214,8 @@
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
         "src/event/valid_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-008"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9222,7 +9230,8 @@
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
         "src/event/valid_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-009"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9235,7 +9244,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-010"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9251,7 +9261,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-011"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9267,7 +9278,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-012"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9283,7 +9295,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-013"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9299,7 +9312,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-014"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9315,7 +9329,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-015"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9331,7 +9346,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-016"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9346,7 +9362,8 @@
         "src/lua_api/globals/admin_zone_economy.rs",
         "tests/mouse_probes.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-017"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9360,7 +9377,8 @@
         "docs/wow-client-diff/WowDiscovery.lua",
         "src/lua_api/env_init/enums.rs",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "literal-018"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9373,7 +9391,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-019"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9386,7 +9405,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-020"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9399,7 +9419,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-021"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9412,7 +9433,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-022"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9426,7 +9448,8 @@
         "src/lua_api/frame/methods/misc/secret.rs",
         "src/loader/tests/frame_state.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-023"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9441,7 +9464,8 @@
         "src/lua_server.rs",
         "src/iced_app/mouse_tests.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-024"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9454,7 +9478,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/real/mouse_probes.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-025"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9468,7 +9493,8 @@
         "docs/wow-client-diff/WowDiscovery.lua",
         "src/lua_api/globals/real/mouse_probes.rs",
         "src/lua_api/globals/admin_zone_economy.rs"
-      ]
+      ],
+      "probe_plan": "literal-026"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9483,7 +9509,8 @@
         "src/lua_api/globals/real/mouse_probes.rs",
         "src/iced_app/mouse.rs",
         "src/iced_app/mouse_tests.rs"
-      ]
+      ],
+      "probe_plan": "literal-027"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9523,7 +9550,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-028"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9539,7 +9567,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-029"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9555,7 +9584,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-030"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9571,7 +9601,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-031"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9587,7 +9618,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-032"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9663,7 +9695,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-033"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9679,7 +9712,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-034"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9695,7 +9729,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-035"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9711,7 +9746,8 @@
         "src/event/mod.rs",
         "src/widget/registry/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-036"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9751,7 +9787,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-037"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9778,7 +9815,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_stats.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-038"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9791,7 +9829,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_stats.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-039"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9853,7 +9892,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "tests/admin_health_power_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-040"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9867,7 +9907,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "tests/admin_health_power_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-041"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9880,7 +9921,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-042"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9893,7 +9935,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-043"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9907,7 +9950,8 @@
         "src/lua_api/globals/unit_probes.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-044"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9920,7 +9964,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-045"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9934,7 +9979,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "tests/admin_health_power_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-046"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10001,7 +10047,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-047"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10016,7 +10063,8 @@
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
         "src/event/valid_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-048"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10031,7 +10079,8 @@
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
         "src/event/valid_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-049"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10048,7 +10097,8 @@
         "src/lua_api/globals/transmog_outfit_info.rs",
         "tests/transmog_outfit_info.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-050"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10063,7 +10113,8 @@
         "src/event/valid_events.rs",
         "src/event/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-051"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10078,7 +10129,8 @@
         "src/event/valid_events.rs",
         "src/event/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-052"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10095,7 +10147,8 @@
         "src/lua_api/workarounds/temporary/transmog_outfit_slot_defaults.rs",
         "tests/transmog_outfit_info.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-053"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10112,7 +10165,8 @@
         "src/lua_api/globals/transmog_outfit_info.rs",
         "tests/transmog_outfit_info.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-054"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10128,7 +10182,8 @@
         "src/event/mod.rs",
         "src/lua_api/workarounds/temporary/transmog_outfit_slot_defaults.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-055"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10143,7 +10198,8 @@
         "src/event/valid_events.rs",
         "src/event/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-056"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10159,7 +10215,8 @@
         "data/lua/taint_stubs.lua",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-057"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10175,7 +10232,8 @@
         "data/lua/taint_stubs.lua",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-058"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10191,7 +10249,8 @@
         "data/lua/taint_stubs.lua",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-059"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10207,7 +10266,8 @@
         "data/lua/taint_stubs.lua",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-060"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10219,7 +10279,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-061"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10233,7 +10294,8 @@
         "src/event/valid_events.rs",
         "src/event/valid_events_c.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-062"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10247,7 +10309,8 @@
         "src/event/valid_events.rs",
         "src/event/valid_events_c.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-063"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10261,7 +10324,8 @@
         "src/lua_api/globals/security/value_access.rs",
         "data/lua/taint_stubs.lua",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-064"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10276,7 +10340,8 @@
         "src/lua_api/globals/security/secret_values.rs",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-065"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10291,7 +10356,8 @@
         "src/lua_api/globals/security/secret_values.rs",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-066"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10415,7 +10481,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-067"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10473,7 +10540,8 @@
         "src/c_api/item_spell/c_item.rs",
         "src/c_api/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-069"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10487,7 +10555,8 @@
         "src/c_api/item_spell/c_item.rs",
         "src/loader/tests/wow_api_item.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-070"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10501,7 +10570,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/c_api/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-071"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10514,7 +10584,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-072"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10527,7 +10598,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-073"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10540,7 +10612,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-074"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10553,7 +10626,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-075"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10566,7 +10640,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-076"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10985,7 +11060,8 @@
         "src/lua_api/globals/missing_surface/voice_chat.rs",
         "src/loader/tests/wow_api_globals/startup_globals.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-077"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11378,7 +11454,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_c.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-078"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11518,7 +11595,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-084"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11531,7 +11609,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-085"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11544,7 +11623,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-086"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11557,7 +11637,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-087"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11570,7 +11651,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-088"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11595,7 +11677,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-089"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11607,7 +11690,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs"
-      ]
+      ],
+      "probe_plan": "literal-090"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11634,7 +11718,8 @@
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "src/lua_api/workarounds/temporary/perks_program_defaults.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-091"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11648,7 +11733,8 @@
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "src/lua_api/workarounds/temporary/perks_program_defaults.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-092"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11954,7 +12040,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/crafting.rs"
-      ]
+      ],
+      "probe_plan": "literal-093"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11966,7 +12053,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/crafting.rs"
-      ]
+      ],
+      "probe_plan": "literal-094"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11978,7 +12066,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/crafting.rs"
-      ]
+      ],
+      "probe_plan": "literal-095"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11990,7 +12079,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/crafting.rs"
-      ]
+      ],
+      "probe_plan": "literal-096"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13336,7 +13426,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-097"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13350,7 +13441,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-098"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13364,7 +13456,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-099"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13378,7 +13471,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-100"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14980,6 +15074,852 @@
       "ready_to_execute": false,
       "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
       "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "literal-001": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declares a zero-argument numeric global, but the simulator has no Retail publication or backing implementation; the required probe must establish callable publication and numeric return without guessing a value. Required probe: Full-LoD probe: assert(type(GetCollapsingStarCost) == \"function\"); local cost = GetCollapsingStarCost(); assert(type(cost) == \"number\")."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-002": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds a numeric structure field, but the simulator only has temporary fixture data; the required probe must use an authoritative producer-backed returned object. Required probe: Full-LoD producer-backed probe: obtain C_HouseExterior.GetHouseExteriorTypeOptions(), assert each returned option is a table and type(option.houseExteriorTypeID) == \"number\"; do not treat the temporary fixture as retail contract proof."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-003": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declares a zero-argument boolean global, but only a Mists-only false shim exists; the required Retail probe must establish callable publication, boolean result, and backing state. Required probe: Retail full-LoD probe: assert(type(IsRaidMarkerSystemEnabled) == \"function\"); local enabled = IsRaidMarkerSystemEnabled(); assert(type(enabled) == \"boolean\"); establish and assert the backing raid-marker enablement state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-004": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds an array of RegularReagentInfo, but no simulator producer or typed structure is observable; the required probe must obtain a real returned order object and nested typed entries. Required probe: Full-LoD producer probe: obtain a NewCraftingOrderInfo table; assert type(order.reagentInfos) == \"table\"; for each info assert type(info) == \"table\" and type(info.reagent) == \"table\"."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-005": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds PARTY_KILL with attackerGUID: string, targetGUID: string; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for PARTY_KILL, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (attackerGUID: string, targetGUID: string)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-006": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds PLAYER_TARGET_DIED with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for PLAYER_TARGET_DIED, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-007": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE with signature: string; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (signature: string)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-008": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics. Required probe: Full-LoD global callback probe: register a callback for an event, inject/produce the event, assert boolean registration and callback delivery, then unregister through the matching global API and assert no later invocation; do not substitute Frame methods."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-009": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail declares a global unit-filtered callback API, while the simulator fallback is inert and does not register, filter, or invoke callbacks. Frame:RegisterUnitEventCallback is separate. Required probe: Full-LoD global unit-callback probe: register a callback, inject matching and nonmatching unit events, assert only matching delivery and callback arguments, then unregister and assert no later invocation; do not substitute Frame methods."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-010": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds a CraftingReagent-typed field, but no simulator producer or structure publication is observable; the required probe must obtain a real returned object. Required probe: Full-LoD producer probe: obtain a RegularReagentInfo table; assert type(info.reagent) == \"table\" for its typed CraftingReagent field."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-011": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-012": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-013": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SETTINGS_PANEL_OPEN with openToCategoryID: number?, scrollToElementName: string?; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SETTINGS_PANEL_OPEN, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (openToCategoryID: number?, scrollToElementName: string?)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-014": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SET_SEEN_PRODUCTS with productIds: number[]; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SET_SEEN_PRODUCTS, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (productIds: number[])."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-015": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SHOW_JOURNEYS_UI with factionID: number; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SHOW_JOURNEYS_UI, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (factionID: number)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-016": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds SHOW_NEW_PRODUCT_NOTIFICATION with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for SHOW_NEW_PRODUCT_NOTIFICATION, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-017": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a public two-number cursor setter. The simulator has GetCursorPosition and an admin-only state setter, but no public setter or proven coordinate mutation contract. Required probe: Full-LoD cursor probe: call SetCursorPosition(x, y), then observe the public GetCursorPosition() result and coordinate conversion; assert the supported mutation rather than only symbol existence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-018": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a table-security mutation API. The simulator publishes neither the function nor the TableSecurityOption enum/backing table-security state; no guessed no-op is justified. Required probe: Full-LoD table-security probe: call SetTableSecurityOption(table, Enum.TableSecurityOption value) and observe the supported security/taint API proving the selected state; symbol existence or a no-op is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-019": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a boolean no-return cloak setter. The simulator publishes no global or modeled cloak state; the separate removed docs-extra row is not evidence for this added API. Required probe: Full-LoD state probe: call ShowCloak(true) and false, then observe a supported cloak-visibility query/state and assert each setter changes that state; no inert setter is sufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-020": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a boolean no-return helm setter. The simulator publishes no global or modeled helm state; the separate removed docs-extra row is not evidence for this added API. Required probe: Full-LoD state probe: call ShowHelm(true) and false, then observe a supported helm-visibility query/state and assert each setter changes that state; no inert setter is sufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-021": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a zero-argument boolean cloak query. The simulator publishes no global or modeled cloak state; the separate removed docs-extra row is not evidence for this added API. Required probe: Full-LoD state probe: assert ShowingCloak() returns a boolean and changes consistently after supported ShowCloak(true/false) transitions; no guessed constant is sufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-022": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a zero-argument boolean helm query. The simulator publishes no global or modeled helm state; the separate removed docs-extra row is not evidence for this added API. Required probe: Full-LoD state probe: assert ShowingHelm() returns a boolean and changes consistently after supported ShowHelm(true/false) transitions; no guessed constant is sufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-023": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "The simulator publishes this method but currently maps it to local secret-value state. Retail anchoring relationships, propagation, taint, and edge semantics remain unproven. Required probe: Full-LoD anchoring-secret probe: establish anchored and unanchored regions with secret/non-secret values, then assert IsAnchoringSecret() against observed retail anchor-chain behavior; the current secret-value shortcut is not sufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-024": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a one-string no-return mouse-click injector. The simulator has external mouse-click paths but no public Lua global or proven button-specific script dispatch. Required probe: Full-LoD input probe: SimulateMouseClick(button) must update button/input state and dispatch the correct target-frame mouse/click handlers through the supported input path; external CLI/GUI click helpers are not equivalent."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-025": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a one-string no-return mouse-down injector. The simulator has internal physical mouse handling but no public Lua global or proven simulated button/script dispatch. Required probe: Full-LoD input probe: SimulateMouseDown(button) must update IsMouseButtonDown and dispatch the matching target-frame OnMouseDown behavior; internal physical input handling is not equivalent."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-026": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a one-string no-return mouse-up injector. The simulator lacks the public release operation and resulting button/script dispatch; admin cursor state is not equivalent. Required probe: Full-LoD input probe: establish a pressed button, call SimulateMouseUp(button), assert IsMouseButtonDown is false, and verify target-frame OnMouseUp/click dispatch; no public release path currently proves this."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-027": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a numeric no-return wheel injector. Physical wheel dispatch exists internally, but the simulator lacks the public Lua global and proven injection path. Required probe: Full-LoD input probe: enable mouse-wheel handling, call SimulateMouseWheel(delta), and assert the target frame receives OnMouseWheel with the numeric delta through the public path."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-028": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds TOOLTIP_SHOW_ITEM_COMPARISON with comparisonItem: table, tooltip: GameTooltip, anchorFrame: Frame?; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD callback-event probe: register through the callback-event path, trigger an actual item-comparison transition, assert exact callback arity and type(comparisonItem) == \"table\", type(tooltip) == \"table\", and anchorFrame == nil or type(anchorFrame) == \"table\"."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-029": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds TRAINING_GROUNDS_ENABLED_STATUS_UPDATED with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for TRAINING_GROUNDS_ENABLED_STATUS_UPDATED, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-030": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds TRANSMOG_CUSTOM_SETS_CHANGED with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for TRANSMOG_CUSTOM_SETS_CHANGED, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-031": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds TRANSMOG_DISPLAYED_OUTFIT_CHANGED with no declared payload; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for TRANSMOG_DISPLAYED_OUTFIT_CHANGED, trigger the real producer transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-032": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds TUTORIAL_COMBAT_EVENT with no declared payload; restricted event; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD restricted-event probe: register the event, trigger the supported tutorial/combat transition, assert exact zero payload arity and delivery, and verify restricted-event access behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-033": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds UNIT_DIED with unitGUID: string; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for UNIT_DIED, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (unitGUID: string)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-034": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds UNIT_LOOT with unitGUID: string, hasLoot: boolean; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for UNIT_LOOT, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (unitGUID: string, hasLoot: boolean)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-035": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds UNIT_SPELL_DIMINISH_CATEGORY_STATE_UPDATED with unitTarget: unit, trackerInfo: table; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for UNIT_SPELL_DIMINISH_CATEGORY_STATE_UPDATED, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (unitTarget: unit, trackerInfo: table)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-036": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds UPDATE_BULLETIN_BOARD_MEMBER_TYPE with player: string, residentType: Enum.ResidentType; runtime registration/list presence exists but producer, dispatch, and payload delivery remain unmodeled or unproven. Claims are bounded to declaration and registerability; no spontaneous firing, ordering, lifecycle, or payload semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame for UPDATE_BULLETIN_BOARD_MEMBER_TYPE, trigger the real producer transition, assert handler delivery with exact declared payload types/arity (player: string, residentType: Enum.ResidentType)."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-037": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. UnitClass and GUID helpers exist, but no GUID-to-class lookup or UnitClassFromGUID publication exists. Required probe: Full-LoD probe: assert(type(UnitClassFromGUID) == \"function\"); obtain a supported GUID and assert three return types string/string/number; assert an unknown GUID returns no values."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-038": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No empowered-cast stage model or UnitEmpoweredStageDurations publication exists; placeholder arrays are not evidence. Required probe: Full-LoD probe: assert(type(UnitEmpoweredStageDurations) == \"function\"); assert inactive result is nil or a table; with an empowered cast assert every returned element is a duration object."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-039": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No empowered-cast stage model or UnitEmpoweredStagePercentages publication exists; placeholder arrays are not evidence. Required probe: Full-LoD probe: assert(type(UnitEmpoweredStagePercentages) == \"function\"); assert inactive result is nil or a table; with an empowered cast assert numeric stage percentages and includeHoldAtMaxTime behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-040": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Temporary prediction structures publish totalHealAbsorbs as numeric zero; adjacent synthetic tests do not establish retail heal-absorb state, updates, secrets, or lifecycle. Required probe: Full-LoD returned-object probe: obtain UnitHealPredictionValues; assert type(totalHealAbsorbs) == \"number\" and default semantics, then exercise heal-absorb transitions independently from totalDamageAbsorbs."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-041": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and optional predicted/curve behavior; existing numeric tests do not prove the declared contract. Required probe: Full-LoD probe: assert(type(UnitHealthPercent) == \"function\"); assert the declared table result, predicted/curve handling, and supported/unknown-unit behavior with controlled state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-042": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No UnitIsLieutenant publication or lieutenant-state model exists; related unit classification APIs are not equivalent. Required probe: Full-LoD probe: assert(type(UnitIsLieutenant) == \"function\"); assert boolean results for known lieutenant/non-lieutenant units and unknown-unit behavior from producer-backed state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-043": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No UnitIsMinion publication or minion-state model exists; UnitClassification does not establish minion semantics. Required probe: Full-LoD probe: assert(type(UnitIsMinion) == \"function\"); assert boolean results for known minion/non-minion and unknown units from producer-backed state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-044": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No UnitIsNPCAsPlayer publication or NPC-as-player classification model exists; UnitIsPlayer is not equivalent. Required probe: Full-LoD probe: assert(type(UnitIsNPCAsPlayer) == \"function\"); cover player, NPC, unknown, and nil unit inputs with authoritative boolean results."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-045": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. GUID helpers exist, but no GUID-to-name mapping or UnitNameFromGUID publication exists. Required probe: Full-LoD probe: assert(type(UnitNameFromGUID) == \"function\"); supported GUID returns string/string, while an unknown GUID returns no values."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-046": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and power-type/unmodified/curve behavior; existing tests do not prove the declared contract. Required probe: Full-LoD probe: assert(type(UnitPowerPercent) == \"function\"); establish table result, power-type selection, denominator, unmodified/curve handling, and unknown-unit behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-047": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No UnitThreatLeadSituation publication or threat-lead state exists; temporary threat helpers return inert defaults and are not equivalent. Required probe: Full-LoD probe: assert(type(UnitThreatLeadSituation) == \"function\"); cover controlled lead/non-lead threat states and unknown mob GUIDs, asserting nil or number."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-048": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry. Required probe: Full-LoD callback probe: register a global callback, prove one invocation, unregister the same callback, inject the event again, and assert post-unregister non-invocation; Frame methods are not interchangeable."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-049": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail adds a three-argument global unit-callback removal API. The simulator exposes only an inert fallback with no global registry, unit filtering, or invocation semantics. Required probe: Full-LoD callback probe: register a unit callback, prove matching-unit invocation, unregister it, inject matching and nonmatching unit events, and assert no callback after removal; Frame methods are not interchangeable."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-050": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_CHANGED (no declared payload); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Temporary transmog getter/state tests do not prove event firing, timing, ordering, or lifecycle. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger the real viewed-outfit transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-051": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_SECONDARY_SLOTS_CHANGED (no declared payload); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Registration and adjacent transmog state do not prove producer-backed firing or payload behavior. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger a viewed-outfit secondary-slot transition, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-052": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_SITUATIONS_CHANGED (no declared payload); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Viewed-outfit getters and temporary situation state do not prove event firing or lifecycle. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger a viewed-outfit situation change, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-053": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_SLOT_REFRESH (no declared payload); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Transmog method presence does not prove slot-refresh production or event delivery. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger a supported viewed-outfit slot refresh, assert handler delivery and exact zero payload arity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-054": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_SLOT_SAVE_SUCCESS (slot: Enum.TransmogOutfitSlot, type: Enum.TransmogType, option: Enum.TransmogOutfitSlotOption); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Temporary viewed-outfit APIs and getter tests do not prove slot-save firing or payload semantics. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger a slot save, assert handler delivery and numeric slot/type/option payloads."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-055": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED (slot: Enum.TransmogOutfitSlot, weaponOption: Enum.TransmogOutfitSlotOption); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Registration and temporary transmog state do not prove weapon-option event production or delivery. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger a weapon-option change, assert handler delivery and numeric slot/weaponOption payloads."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-056": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail 12.0.0 adds VOICE_CHAT_TTS_PLAYBACK_BOOKMARK (utteranceID: number, bookmarkName: string); runtime registration exists but producer-backed firing and exact delivery remain unmodeled or unproven. Registration does not prove TTS producer, timing, ordering, or payload delivery. Claims are bounded to declaration and current registerability; no firing, timing, ordering, lifecycle, or transmog/TTS semantics are claimed. Required probe: Full-LoD producer-backed probe: register a frame, trigger supported TTS bookmark playback, assert handler delivery with numeric utteranceID and string bookmarkName."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-057": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Current simulator behavior is local, missing, or permissive and does not establish complete retail secret, taint, protected-value, propagation, or access-control semantics. Required probe: Full-LoD probe: assert(type(canaccessallvalues) == 'function'); cover zero arguments, clean primitives, direct taint, mixed values, nested tables, and propagated/protected values; assert each result against authoritative retail behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-058": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Current simulator behavior is local, missing, or permissive and does not establish complete retail secret, taint, protected-value, propagation, or access-control semantics. Required probe: Full-LoD probe: assert(type(canaccesssecrets) == 'function'); assert(type(canaccesssecrets()) == 'boolean'); exercise every supported access-policy state and assert the returned capability flag."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-059": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Current simulator behavior is local, missing, or permissive and does not establish complete retail secret, taint, protected-value, propagation, or access-control semantics. Required probe: Full-LoD probe: assert(type(canaccesstable) == 'function'); cover clean tables, direct and nested secret values, mixed contents, non-table inputs, and precedence against any permissive fallback."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-060": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Current simulator behavior is local, missing, or permissive and does not establish complete retail secret, taint, protected-value, propagation, or access-control semantics. Required probe: Full-LoD probe: assert(type(canaccessvalue) == 'function'); cover primitives, direct taint, propagated/nested values, protected values, and edge arguments against authoritative retail behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-061": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required: source/provenance and checked-in runtime evidence do not establish full-LoD publication, firing, payload, restriction, or consumer semantics; the exact full-LoD probe is required. Required probe: Full-LoD probe: namespace-safe access must establish C_CombatLogInternal and GetCurrentEventInfo presence, return arity, and value behavior; adjacent C_CombatLog APIs are not proof."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-062": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required: source/provenance and checked-in runtime evidence do not establish full-LoD publication, firing, payload, restriction, or consumer semantics; the exact full-LoD probe is required. Required probe: Full-LoD restricted callback probe: register the event, trigger an actual filter-settings transition, assert restricted access, callback delivery, and type(filterSettings) == 'table'."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-063": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required: source/provenance and checked-in runtime evidence do not establish full-LoD publication, firing, payload, restriction, or consumer semantics; the exact full-LoD probe is required. Required probe: Full-LoD restricted callback probe: register the event, trigger an actual combat-log refilter transition, assert restricted access, zero-argument delivery, and callback behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-064": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Current simulator behavior is local, missing, or permissive and does not establish complete retail secret, taint, protected-value, propagation, or access-control semantics. Required probe: Full-LoD probe: assert(type(dropsecretaccess) == 'function'); establish a secret-access state, call dropsecretaccess(), and prove an observable access-policy state mutation with the supported API."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-065": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Unsafe: hasanysecretvalues is not published by the current runtime. Required full-LoD/state-backed probes must establish publication and boolean behavior for zero arguments, nil/primitives, direct and nested secret values, mixed values, tainted/propagated/protected values, and return type. No alias or permissive fallback is claimed."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-066": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Unsafe: issecrettable is not published by the current runtime. Required full-LoD/state-backed probes must establish callable boolean publication for non-table inputs, empty tables, direct secret values, nested secret values, mixed tables, propagated/tainted/protected values, and return type. Do not alias canaccesstable or claim equivalence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-067": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: string.concat is absent and legacy strconcat is not proof of equivalence. Full-LoD/state-backed probe must establish publication, callable type, zero/multiple arguments, nil/non-string coercion, unsupported values, result count/type, and error behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-069": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail changes errorCode from number to Enum.TransmogOutfitSlotError; C_Item.CanItemTransmogAppearance is not published and no item-location/transmog eligibility state is modeled. Required full-LoD/state-backed probe must establish publication, exact returns/types, valid and invalid locations, missing items, invalid arguments, and error-code behavior. Claims are bounded to the source type change and current API gap; no transmog semantics are claimed. Required probe: Full-LoD/state-backed probe: assert(type(C_Item.CanItemTransmogAppearance) == \"function\"); call with valid, empty, and invalid ItemLocation values; assert exactly two returns, boolean canTransmog, numeric errorCode, and Enum.TransmogOutfitSlotError[errorCode] ~= nil; record invalid types and missing-item behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-070": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail adds an 18th itemDescription string output; current C_Item.GetItemInfo returns the legacy 17-value shape from static item data and has no description field. Required full-LoD/state-backed probe must establish exact arity/types for known and unknown items, item links and numeric IDs, and invalid/missing inputs. Claims are bounded to output shape; no description content or item-loading semantics are claimed. Required probe: Full-LoD/state-backed probe: call C_Item.GetItemInfo for known, unknown, numeric-ID, and item-link inputs; assert exact 18-result count and validate all output types, including final itemDescription string, plus nil/missing behavior and invalid-input return/error behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-071": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail changes flags from generic number to UIItemInteractionFlags; no C_ItemInteraction structure publication, field schema, or backing model is established. Required full-LoD/state-backed probe must establish namespace/method publication, real interaction states, exact bitmask combinations, nil versus zero, transitions, reset behavior, invalid calls, and return shape. Claims are bounded to the declared field type; no item-interaction semantics are claimed. Required probe: Full-LoD/state-backed probe: assert C_ItemInteraction and GetItemInteractionInfo publication; obtain real interaction info, assert flags is nil or number, then verify every documented UIItemInteractionFlags bit across real states, empty/populated transitions, reset/close, invalid calls, and exact field presence versus zero."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-072": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail adds optional generalPlaystyle input while retaining a boolean result; the simulator does not publish the method or model prebuilt-title matching/listing state. Required full-LoD/state-backed probe must establish publication, exact arity/types, valid and invalid IDs, optional enum handling, title matches/mismatches, repeats, and errors. Claims are bounded to the added input and current API gap; no LFG title semantics are claimed. Required probe: Full-LoD/state-backed probe: assert C_LFGList.DoesEntryTitleMatchPrebuiltTitle is callable; invoke valid and invalid activity/group IDs with nil, valid, and wrong-type playstyle/generalPlaystyle values; assert one boolean return and verify title matches/mismatches and errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-073": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail adds generalPlaystyle input; runtime returns hard-coded labels, ignores activityInfo, and does not establish exact retail mapping or validation. Required full-LoD/state-backed probe must cover every enum value, activity-dependent output, legacy fallback, nil/invalid inputs, malformed data, exact arity, and errors. Claims are bounded to the added input and current mapping gap; no LFG consumer semantics are claimed. Required probe: Full-LoD/state-backed probe: call GetPlaystyleString for every general-playstyle value with valid activity data, then nil/invalid legacy and general values and malformed activity data; assert one string return and compare exact retail labels, fallback, and error behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-074": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail adds optional generalPlaystyle input; SetEntryTitle is not published and no listing-title/playstyle mutation state is modeled. Required full-LoD/state-backed probe must establish publication, zero returns, valid mutation, events, optional values, invalid IDs/types, repeats, absent listings, and errors. Claims are bounded to the added input and current API gap; no LFG listing semantics are claimed. Required probe: Full-LoD/state-backed probe: assert C_LFGList.SetEntryTitle is callable; invoke a valid listing with nil and each playstyle/generalPlaystyle combination, assert zero returns, verify title/playstyle state and events, then cover invalid IDs/types, repeats, absent listings, and errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-075": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail changes criteriaList elements from C_PerksActivities.PerksActivityCriteria to CriteriaRequiredValue; temporary runtime state returns arbitrary seeded tables and does not model the schema, element structure, nullability, ordering, or real activity backing. Required full-LoD/state-backed probe must establish those fields across empty/populated and invalid activity states. Claims are bounded to the element-structure change; no criteria semantics are claimed. Required probe: Full-LoD/state-backed probe: obtain a real activity info table, assert criteriaList is nil or table, validate every element as a CriteriaRequiredValue against live fields/types/order, and cover empty/populated lists, invalid IDs, repeated retrieval, and activity transitions."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-076": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail changes requirementsList elements from PerksActivityRequirement to CriteriaRequirement; temporary runtime state returns arbitrary seeded tables and does not model either schema or producer-backed field behavior. Required full-LoD/state-backed probe must establish element fields, presence, ordering, empty/populated behavior, invalid IDs, and transitions. Claims are bounded to the element-structure change; no requirement semantics are claimed. Required probe: Full-LoD/state-backed probe: obtain a real activity info table, assert requirementsList is nil or table, validate every element as a CriteriaRequirement against live fields/types/order, and cover empty/populated lists, malformed/unknown IDs, repeated retrieval, and activity transitions."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-077": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail replaces destination with rate and volume and adds optional boolean overlap; current permissive/no-op voice surface does not enforce the new signature or model speech/TTS state. Required full-LoD/state-backed probe must establish exact inputs, default overlap, zero returns, validation, repeats, overlap behavior, TTS state/events, and errors. Claims are bounded to the signature change and current no-op gap; no speech semantics are claimed. Required probe: Full-LoD/state-backed probe: assert C_VoiceChat.SpeakText is callable and returns zero values; call new signature with omitted/default and explicit overlap, valid/invalid voice IDs, rates, volumes, wrong types, repeats, overlap/TTS state, and exact errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-078": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: 12.0.0 changes the event from exactly three arguments `(status, utteranceID, destination)` to exactly two `(utteranceID, status)`, removing destination with no nullable third slot. Current runtime only registers the event and has no producer. Full-LoD/state-backed probe: trigger a real TTS failure through the producer and assert exactly two event arguments `(utteranceID:number, status:VoiceTtsStatusCode)` with no third/destination slot; cover repeated/invalid requests, timing, registration, producer delivery, and errors. Claims are bounded to event declaration and required producer proof; no TTS lifecycle semantics are claimed."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-084": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source removal and separate HouseLevelInfo addition are known, but runtime structure identity and field publication are unmodeled. Required probe: Required runtime probe: rawget the observable old C_HousingDecor.HousingLevelInfo field and replacement HouseLevelInfo field, proving old absence and numeric replacement publication; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-085": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source removal and separate HouseLevelInfo addition are known, but runtime structure identity and field publication are unmodeled. Required probe: Required runtime probe: rawget the observable old C_HousingDecor.HousingLevelInfo field and replacement HouseLevelInfo field, proving old absence and numeric replacement publication; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-086": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source removal and separate HouseLevelInfo addition are known, but runtime structure identity and field publication are unmodeled. Required probe: Required runtime probe: rawget the observable old C_HousingDecor.HousingLevelInfo field and replacement HouseLevelInfo field, proving old absence and numeric replacement publication; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-087": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source removal and separate HouseLevelInfo addition are known, but runtime structure identity and field publication are unmodeled. Required probe: Required runtime probe: rawget the observable old C_HousingDecor.HousingLevelInfo field and replacement HouseLevelInfo field, proving old absence and numeric replacement publication; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-088": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source removal and separate HouseLevelInfo addition are known, but runtime structure identity and field publication are unmodeled. Required probe: Required runtime probe: rawget the observable old C_HousingDecor.HousingLevelInfo field and replacement HouseLevelInfo field, proving old absence and numeric replacement publication; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-089": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes numeric field PerksActivityCriteria.criteriaID, but the temporary runtime workaround does not model observable criteria structures. Require a runtime object probe before behavioral closure; make no replacement or lifecycle claim. Required probe: Required runtime probe: obtain an observable PerksActivityCriteria object and use namespace-safe access to establish whether criteriaID is absent and whether any replacement field/object is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-090": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes numeric field PerksActivityCriteria.requiredValue, but the temporary runtime workaround does not model observable criteria structures. Require a runtime object probe before behavioral closure; make no replacement or lifecycle claim. Required probe: Required runtime probe: obtain an observable PerksActivityCriteria object and use namespace-safe access to establish whether requiredValue is absent and whether any replacement field/object is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-091": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail removes the boolean field; no populated producer or replacement semantics are proven. Claims exclude requirement production, consumers, mutation, persistence, UI, and lifecycle. Required probe: local info = C_PerksActivities.GetPerksActivityInfo(KNOWN_ACTIVITY_ID); assert(info == nil or type(info) == \"table\"); inspect each populated requirement and assert rawget(requirement, \"completed\") == nil; verify sibling fields, types, nullability, invalid IDs, and errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-092": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Retail removes the field; no producer population or replacement field semantics are proven. Claims exclude requirement-text rendering, consumers, mutation, persistence, UI, and lifecycle. Required probe: populate a realistic activity through the actual producer; locate a returned requirement and assert requirement.requirementText == nil; verify sibling fields, types, nullability, invalid IDs, and errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-093": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source records removal of the numeric field, but current runtime structure and replacement publication are unmodeled. Claims remain bounded to source removal. Required probe: Required runtime probe: obtain an observable CraftingItemSlotModification object, assert itemID is absent, and characterize any replacement field or structure before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-094": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source records structure-field removal, but runtime object shape and replacement publication are unmodeled. Claims remain bounded to source removal. Required probe: Required runtime probe: obtain an observable CraftingOrderReagentInfo object, assert reagent is absent, and characterize any reagentInfo/replacement structure separately."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-095": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source records removal of the numeric field, but current runtime structure and replacement publication are unmodeled. Claims remain bounded to source removal. Required probe: Required runtime probe: obtain an observable CraftingReagentInfo object, assert itemID is absent, and characterize any replacement field or structure before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-096": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: source records removal of the numeric field, but current runtime structure and replacement publication are unmodeled. Claims remain bounded to source removal. Required probe: Required runtime probe: obtain an observable CraftingResourceReturnInfo object, assert itemID is absent, and characterize any reagent/replacement field or structure separately."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-097": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this misspelled NeighbordhoodInitiativeCategory row, but no full-LoD runtime absence or corrected replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.NeighbordhoodInitiativeCategory.Current is absent and whether a corrected NeighborhoodInitiativeCategory/Meta replacement is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-098": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this misspelled NeighbordhoodInitiativeCategory row, but no full-LoD runtime absence or corrected replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.NeighbordhoodInitiativeCategory.Legacy is absent and whether a corrected NeighborhoodInitiativeCategory/Meta replacement is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-099": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this misspelled NeighbordhoodInitiativeCategory row, but no full-LoD runtime absence or corrected replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.NeighbordhoodInitiativeCategoryMeta.MaxValue is absent and whether a corrected NeighborhoodInitiativeCategory/Meta replacement is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-100": {
+      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this misspelled NeighbordhoodInitiativeCategory row, but no full-LoD runtime absence or corrected replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.NeighbordhoodInitiativeCategoryMeta.MinValue is absent and whether a corrected NeighborhoodInitiativeCategory/Meta replacement is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
+      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
