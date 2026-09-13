@@ -155,6 +155,57 @@ fn test_set_player_health_full() {
     assert_eq!(max, 100000);
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_missing_player_tracks_health_without_mutation() {
+    env()
+        .eval::<()>(
+            r##"
+            local function check(current, maximum, expected)
+                A_Admin.SetPlayerHealth(current, maximum)
+                assert(UnitHealth("player") == current)
+                assert(UnitHealthMax("player") == maximum)
+                local missing = UnitHealthMissing("player", false)
+                assert(type(missing) == "number", "missing health must be numeric")
+                assert(missing == expected, "unexpected player missing health")
+                assert(select("#", UnitHealthMissing("player", false)) == 1)
+                assert(UnitHealth("player") == current, "query changed current health")
+                assert(UnitHealthMax("player") == maximum, "query changed maximum health")
+            end
+            check(10000, 10000, 0)
+            check(3500, 10000, 6500)
+            check(7200, 12000, 4800)
+            "##,
+        )
+        .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_missing_target_tracks_health_without_mutation() {
+    env()
+        .eval::<()>(
+            r##"
+            A_Admin.SetTarget("Boss", 63, 1, true)
+            local function check(current, maximum, expected)
+                A_Admin.SetTargetHealth(current, maximum)
+                assert(UnitHealth("target") == current)
+                assert(UnitHealthMax("target") == maximum)
+                local missing = UnitHealthMissing("target", false)
+                assert(type(missing) == "number", "missing health must be numeric")
+                assert(missing == expected, "unexpected target missing health")
+                assert(select("#", UnitHealthMissing("target", false)) == 1)
+                assert(UnitHealth("target") == current, "query changed current health")
+                assert(UnitHealthMax("target") == maximum, "query changed maximum health")
+            end
+            check(80000, 80000, 0)
+            check(27500, 80000, 52500)
+            check(61000, 95000, 34000)
+            "##,
+        )
+        .unwrap();
+}
+
 // ============================================================================
 // SetPlayerPower
 // ============================================================================
