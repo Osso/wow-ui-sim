@@ -1,3 +1,7 @@
+## [2026-09-13] system | Share creature GUID identifier parsing
+
+[[creature-guid-identifiers]] records the retail 12.0.0+ `C_CreatureInfo.GetCreatureID` bridge to the legacy `UnitCreatureID` parser, bounded GUID forms, and excluded native semantics. See [Creature GUID identifiers](../specs/creature-id.md).
+
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 
 Existing `6a5a6aa54` coverage credits percent and pattern byte transformations separately; `WrapString` covers only optional affixes, empty infix, embedded NUL, and raw bytes. Return arity, coercion, native 12.0.0 epoch, taint/secret, and consumer behavior remain open. See [[patch-12-0-0-api-audit]].

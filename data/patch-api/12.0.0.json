@@ -6607,8 +6607,8 @@
       "id": "added:C_CreatureInfo.GetCreatureID",
       "symbol": "C_CreatureInfo.GetCreatureID",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -6620,17 +6620,51 @@
         },
         {
           "kind": "source",
+          "reference": "src/c_api/c_creature_info.rs",
+          "summary": "C API owns the existing simulator Creature GUID parser and returns its numeric ID or nil; no creature database is consulted.",
+          "source_hash": "05d1eb17b66b8643afd5beb20c0f27dc374f65d680bd3aa5cfee381de73f96b1"
+        },
+        {
+          "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/creature_info.rs",
-          "summary": "Current C_CreatureInfo registration omits GetCreatureID and has no creature-GUID parsing or creature identity backing model.",
-          "source_hash": "2898607aba754988b4c6d1d1f0c96b7356025913aa42866f0d27c7cb2dc8c7a3"
+          "summary": "The existing C_CreatureInfo namespace registers the retail-12.0.0 method without replacing its other helpers.",
+          "source_hash": "8087537e14cdb9708ca47cb9a511010499b22946cb200b48f416cc4621bfb8bf"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/unit_misc.rs",
+          "summary": "Legacy UnitCreatureID reuses the same C API parser, preserving its established unit-token behavior.",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_system_api.rs::test_c_creature_info_get_creature_id_returns_numeric_ids",
+          "summary": "Two concrete Creature GUIDs return their numeric ID with exactly one result.",
+          "source_hash": "4298a1003573351f4daed1d6981a98e1f7cea9dd76c73081c9b85bd16eec9916"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_system_api.rs::test_c_creature_info_get_creature_id_player_guid_returns_nil",
+          "summary": "A Player GUID returns exactly one nil through the shared parser policy.",
+          "source_hash": "4298a1003573351f4daed1d6981a98e1f7cea9dd76c73081c9b85bd16eec9916"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_system_api.rs::test_c_creature_info_get_creature_id_empty_guid_returns_nil",
+          "summary": "An empty string returns exactly one nil through the shared parser policy.",
+          "source_hash": "4298a1003573351f4daed1d6981a98e1f7cea9dd76c73081c9b85bd16eec9916"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_system_api.rs::test_c_creature_info_get_creature_id_returns_numeric_ids",
+        "tests/c_system_api.rs::test_c_creature_info_get_creature_id_player_guid_returns_nil",
+        "tests/c_system_api.rs::test_c_creature_info_get_creature_id_empty_guid_returns_nil"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aff45e594",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: GetCreatureID is absent, and no creature-GUID parser, identity table, valid/non-creature distinction, or nullable result behavior is modeled."
+      "notes": "Best-effort behavior covers the listed simulator Creature GUID forms, numeric IDs, and one-result nil controls. Existing parser rules for malformed or alternate GUIDs, coercion/errors, native identity/database semantics, secret arguments, lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:C_CurveUtil.CreateColorCurve",
@@ -91652,7 +91686,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -91688,7 +91722,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "Current modeled GUID resolution returns numeric creature ID 0 for the configured creature target and nil for the player GUID.",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5"
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93"
         },
         {
           "kind": "test",
@@ -93177,7 +93211,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -93212,7 +93246,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -93319,7 +93353,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -93576,7 +93610,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -101023,7 +101057,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "f48dce2fac8fe3757d3cd41a233cb3dd50a3831ea722b543c6247b2c0fcd0aa4",
+          "source_hash": "081a5342a74cad494ce99fd8e003a219974f434d27d9e6f5f71a6e082a175e95",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -101117,7 +101151,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "f48dce2fac8fe3757d3cd41a233cb3dd50a3831ea722b543c6247b2c0fcd0aa4",
+          "source_hash": "081a5342a74cad494ce99fd8e003a219974f434d27d9e6f5f71a6e082a175e95",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -111528,7 +111562,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Existing unit_misc publishes UnitGUID and related unit helpers, but the named GUID/class, GUID/name, lieutenant, minion, and threat-lead APIs/state are absent; do not infer equivalence."
         },
         {
@@ -111564,7 +111598,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5",
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93",
           "summary": "Current simulator runtime implementation/publication for UnitIsUnit."
         },
         {

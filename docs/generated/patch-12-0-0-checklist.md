@@ -187,7 +187,7 @@
 187. [evidence-required] `added:C_CooldownViewer.CooldownViewerCooldown.category` — unsafe
 188. [evidence-required] `added:C_CooldownViewer.CooldownViewerCooldown.cooldownID` — unsafe
 189. [evidence-required] `added:C_CooldownViewer.GetValidAlertTypes` — unsafe
-190. [evidence-required] `added:C_CreatureInfo.GetCreatureID` — unsafe
+190. [best-effort] `added:C_CreatureInfo.GetCreatureID` — behavioral
 191. [best-effort] `added:C_CurveUtil.CreateColorCurve` — behavioral
 192. [best-effort] `added:C_CurveUtil.CreateCurve` — behavioral
 193. [best-effort] `added:C_CurveUtil.EvaluateColorFromBoolean` — behavioral

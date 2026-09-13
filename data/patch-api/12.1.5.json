@@ -21198,7 +21198,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "The interruption actor uses the existing player UnitGUID resolver rather than target state or a fabricated enemy identity.",
-          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5"
+          "source_hash": "f394f583e6346b340bfbc963bd559e33f7ef841b48a67686481be0d1ec066a93"
         },
         {
           "kind": "source",

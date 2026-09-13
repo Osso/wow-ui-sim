@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [ ] Retail 12.0.0+ returns exactly one numeric identifier for the tested Creature GUIDs.
-- [ ] Player GUIDs and empty strings return exactly one nil under the existing simulator parser policy.
+- [x] Retail 12.0.0+ returns exactly one numeric identifier for the tested Creature GUIDs.
+- [x] Player GUIDs and empty strings return exactly one nil under the existing simulator parser policy.
 - [ ] Legacy `UnitCreatureID` and existing creature namespace helpers retain their behavior.
 
 ## How it works

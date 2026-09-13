@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Extract creature IDs from shared GUID parsing
+
+`63c91f0b4` reproduces absent `C_CreatureInfo.GetCreatureID`; `aff45e594` exposes the unchanged shared parser now owned by `src/c_api/c_creature_info.rs`. GREEN is 3/3: two Creature GUID numeric IDs and exact-one nil results for Player/empty controls. The bounded credit excludes malformed/alternate GUIDs, coercion/errors, native identity/database semantics, secret arguments, lifecycle, and consumers. See [[creature-guid-identifiers]] and [Creature GUID identifiers](../specs/creature-id.md).
+
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 
 Classified `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` as best-effort behavioral from `6a5a6aa54` and `tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes`. The escaping methods cover their tested byte transformations; `WrapString` covers optional affixes, empty infix, embedded NUL, and raw bytes. Return arity, coercion, native epoch, taint/secret, and consumers remain unproven.

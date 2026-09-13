@@ -1,0 +1,18 @@
+# Creature GUID identifiers
+
+`C_CreatureInfo.GetCreatureID` and legacy `UnitCreatureID` share one parser for simulator Creature GUID strings.
+
+## Behavior
+
+`src/c_api/c_creature_info.rs` splits a GUID on `-`, requires the `Creature` prefix, then parses the existing sixth segment policy as an integer. `GetCreatureID` exposes that result only on retail 12.0.0+; `UnitCreatureID` reuses it for unit-derived GUIDs.
+
+Focused tests cover two Creature IDs and exact-one nil results for Player and empty inputs. Malformed or alternate GUIDs, coercion/errors, native identity/database behavior, secret arguments, lifecycle, and consumers are unverified.
+
+## Sources
+
+- [Creature GUID identifier spec](../../specs/creature-id.md) — required bounded behavior.
+- [12.0.0 API audit](../investigations/patch-12-0-0-api-audit.md) — audit evidence boundary.
+
+## See Also
+
+- [[patch-12-0-0-api-audit]] — 12.0.0 audit status.
