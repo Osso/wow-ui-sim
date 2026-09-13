@@ -17,7 +17,9 @@ fn assert_close(actual: f64, expected: f64) {
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn cooldown_set_paused_updates_is_paused() {
-    env().eval::<()>(r#"
+    env()
+        .eval::<()>(
+            r#"
         local cooldown = CreateFrame("Cooldown")
         cooldown:Resume()
         assert(cooldown:IsPaused() == false)
@@ -29,23 +31,31 @@ fn cooldown_set_paused_updates_is_paused() {
         assert(cooldown:IsPaused() == true)
         cooldown:SetPaused(false)
         assert(cooldown:IsPaused() == false)
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn cooldown_set_paused_returns_zero_values() {
-    env().eval::<()>(r#"
+    env()
+        .eval::<()>(
+            r#"
         local cooldown = CreateFrame("Cooldown")
-        assert(select("#", cooldown:SetPaused(true)) == 0)
-        assert(select("#", cooldown:SetPaused(false)) == 0)
-    "#).unwrap();
+        assert(select('#', cooldown:SetPaused(true)) == 0)
+        assert(select('#', cooldown:SetPaused(false)) == 0)
+    "#,
+        )
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn cooldown_set_paused_isolates_instances() {
-    env().eval::<()>(r#"
+    env()
+        .eval::<()>(
+            r#"
         local first, second = CreateFrame("Cooldown"), CreateFrame("Cooldown")
         first:Resume()
         second:Resume()
@@ -56,13 +66,17 @@ fn cooldown_set_paused_isolates_instances() {
         first:SetPaused(false)
         assert(first:IsPaused() == false)
         assert(second:IsPaused() == true)
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn cooldown_set_paused_preserves_immediate_cooldown_times() {
-    env().eval::<()>(r#"
+    env()
+        .eval::<()>(
+            r#"
         local cooldown = CreateFrame("Cooldown")
         local start = GetTime()
         cooldown:SetCooldown(start, 60)
@@ -75,7 +89,9 @@ fn cooldown_set_paused_preserves_immediate_cooldown_times() {
         cooldown:SetPaused(false)
         local resumedStart, resumedDuration = cooldown:GetCooldownTimes()
         assert(resumedStart == beforeStart and resumedDuration == beforeDuration)
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 // ── GetSpellCooldown ──────────────────────────────────────────────────────────
