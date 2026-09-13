@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Document default string trimming mismatch
 
-Pinned 12.0.0 docs specify space/CR/LF/tab defaults. `a3ce6850b` records RED 4/6 from VT/FF boundaries against bootstrap `%s`; `0d648ebde` changes runtime default bytes and reaches development GREEN 6/6. The focused run repeats six existing warnings; independent verification and audit credit remain pending. See [String trimming](../specs/string-trim.md).
+`string.trim` gains one bounded credit for four-byte defaults, VT/FF preservation/stopping, interior/empty cases, explicit-nil simulator policy, both names, explicit `xy`/empty controls, and one-string returns: **2306 / 1102 / 2**. `a3ce6850b` RED 4/6 exposed bootstrap `%s`; `0d648ebde` reaches GREEN 6/6. Independent bounded PASS at `1c3cc302d`: exact-hash 12.0.0 reuse 6/6; fresh 12.0.5/12.0.7 6/6 each; fmt/check/default build/startup `[]`, validator, and readability pass. Existing warnings are 6/1/profile, default none; committed exact-byte scan finds 14,874 fresh hashes, zero stale, six renewals. Native coercion/errors, arbitrary custom sets, security, full-LoD, lifecycle, Mists, and consumer semantics remain open; broad audit remains open. Ledger: `/tmp/verify-string-trim-ledger.json`. See [String trimming](../specs/string-trim.md).
 
 ## [2026-09-13] audit | Model missing unit power
 

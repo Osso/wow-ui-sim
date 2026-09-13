@@ -20,7 +20,7 @@
 
 ## Tests asserting this spec
 
-- `tests/utility_api.rs`: five focused `test_string_trim_*` cases plus the existing alias control. Test commit `a3ce6850b` reports RED 4/6 overall: both VT/FF boundaries fail; remaining controls pass. Runtime `0d648ebde` reaches development GREEN 6/6; independent verification remains pending.
+- `tests/utility_api.rs`: five focused `test_string_trim_*` cases plus the existing alias control. Test commit `a3ce6850b` reports RED 4/6 overall: both VT/FF boundaries fail; remaining controls pass. Runtime `0d648ebde` reaches development GREEN 6/6. Independent bounded PASS at `1c3cc302d`: unchanged retail 12.0.0 GREEN 6/6 reused by exact hash; retail 12.0.5 and 12.0.7 freshly pass 6/6 each. Fmt/check/default build/startup `[]`, validator, and readability pass; warnings are existing 6/1/profile and none on default commands. Ledger: `/tmp/verify-string-trim-ledger.json`.
 
 ## Known gaps (current cycle)
 

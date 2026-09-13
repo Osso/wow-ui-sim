@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Correct default string trimming bytes
 
-Pinned 12.0.0 docs limit `string.trim` defaults to space/CR/LF/tab. Tests `a3ce6850b` are RED 4/6 because VT/FF boundaries reveal the bootstrap `%s` mismatch; runtime `0d648ebde` reaches development GREEN 6/6. Independent proof and credit remain pending. See [String trimming](../specs/string-trim.md) and [[patch-12-0-0-api-audit]].
+`string.trim` gains one bounded 12.0.0 credit for four-byte defaults, VT/FF preservation and stopping, interior/empty cases, explicit-nil simulator policy, both published names, explicit `xy`/empty controls, and one-string returns. **2306 / 1102 / 2**. Independent bounded PASS at `1c3cc302d`: unchanged retail 12.0.0 GREEN 6/6 reused by exact hash; retail 12.0.5/12.0.7 fresh 6/6 each; fmt/check/default build/startup `[]`, validator, and readability pass. Existing warnings: 6/1/profile; default none. The committed exact-byte scan found 14,874 fresh hashes, zero stale, and six renewals. Native coercion/errors, arbitrary custom byte sets, security, full-LoD consumers, lifecycle, and Mists behavior remain open; the broad audit remains open. See [String trimming](../specs/string-trim.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Model missing unit power
 
