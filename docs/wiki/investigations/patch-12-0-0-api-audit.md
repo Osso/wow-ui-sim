@@ -2,7 +2,7 @@
 
 Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
 
-Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Metadata renews 13 existing references across all manifests and adds nine evidence references. Final integration/provenance validation remains pending with main; broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [Boolean color selection](../../specs/boolean-color-selection.md).
+Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Final bounded metadata verification at `2c8bca6da` reuses exact runtime bytes, passes the validator, and records 14,887 fresh hashes, zero stale hashes, 13 renewals, and nine evidence additions. Broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [Boolean color selection](../../specs/boolean-color-selection.md).
 
 ## [2026-09-13] audit | Model numeric StatusBar fill-style state
 
