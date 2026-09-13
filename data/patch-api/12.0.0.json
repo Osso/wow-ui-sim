@@ -2135,13 +2135,13 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "The namespace duration field equals the seeded spell span 30, with an independent Rust expected-value assertion."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "The namespace duration field equals the later-ending GCD span 60, with an independent Rust expected-value assertion."
         }
       ],
@@ -2208,7 +2208,7 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "The active-spell namespace modRate field equals the duration rate, independently asserted to be 1; non-default rates are not modeled or proven."
         }
       ],
@@ -2245,13 +2245,13 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "The namespace startTime field equals the seeded spell start (now-5), with an independent Rust expected-value assertion."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "The namespace startTime field equals the later-ending GCD start (now-2), with an independent Rust expected-value assertion."
         }
       ],
@@ -2443,13 +2443,13 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Direct namespace info startTime/duration match independently asserted seeded spell start (now-5) and span 30; modRate matches the independently asserted rate 1."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Direct namespace info startTime/duration match independently asserted later-ending GCD start (now-2) and span 60; no GCD modRate assertion is made."
         }
       ],
@@ -2499,25 +2499,25 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Active spell-slot duration matches cooldown start/span/rate and runtime-clock elapsed/remaining bounds."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_snapshots_slot_and_spell_state",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Changing spell cooldown state and reassigning a slot changes a new query while the earlier duration retains its configured interval."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "An active later-ending GCD supplies the same start/span as existing action cooldown info."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_empty_inactive_and_expired_are_zero",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Valid empty, assigned-inactive, and expired slots yield a non-null duration with zero start/span/end and rate 1."
         }
       ],
@@ -17959,25 +17959,25 @@
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Active numeric spell state yields a duration whose start/span/rate match C_Spell.GetSpellCooldown and whose elapsed/remaining values follow the runtime clock."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_resolves_alias_and_snapshots_state",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Seeded case-insensitive aliases resolve; later alias/cooldown updates affect a new query while the earlier duration keeps its configured interval."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "An active later-ending GCD supplies the same start/span as C_Spell.GetSpellCooldown."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias",
-          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
           "summary": "Inactive numeric identifiers yield zero timing while unresolved strings yield nil under the explicit simulator policy."
         }
       ],
@@ -28734,8 +28734,8 @@
       "id": "added:Cooldown.SetPaused",
       "symbol": "Cooldown.SetPaused",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -28749,21 +28749,63 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
           "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
-          "summary": "Current cooldown module is the adjacent source owner for Cooldown.SetPaused; it models selected timing/display state but does not establish the named native method contract."
+          "summary": "Existing cooldown timing and Pause/Resume state provide the backing state and immediate timing controls; SetPaused dispatch is implemented in model/model_scene.rs."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/mod.rs",
           "source_hash": "36e77e7826070848506c6228ab7a299a5ef97c546a421be488b1e06b8bf133bd",
-          "summary": "The inspected registration surface for Cooldown.SetPaused contains no named method registration; that absence does not prove native publication, signature, behavior, or removal semantics."
+          "summary": "Historical registration inspection was incomplete: widgets/model.rs registers shared SetPaused; runtime 218ba9977 fixes receiver dispatch in model/model_scene.rs. Native publication remains unproven."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/frame/methods/widgets/model/model_scene.rs",
+          "source_hash": "3444dd4cd4ded52e1968330e07480c82f3adb9b488b9aa598e6663b77f4d3388",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::cooldown_set_paused_updates_is_paused",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::cooldown_set_paused_returns_zero_values",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::cooldown_set_paused_isolates_instances",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::cooldown_set_paused_preserves_model_scene_pause_state",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::cooldown_set_paused_preserves_immediate_cooldown_times",
+          "source_hash": "42c5cacbc680585bd23d284d59c692cdd5ab86b6cddc32fed7704f87d1c135b1",
+          "summary": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::cooldown_set_paused_updates_is_paused",
+        "tests/cooldown_probes.rs::cooldown_set_paused_returns_zero_values",
+        "tests/cooldown_probes.rs::cooldown_set_paused_isolates_instances",
+        "tests/cooldown_probes.rs::cooldown_set_paused_preserves_model_scene_pause_state",
+        "tests/cooldown_probes.rs::cooldown_set_paused_preserves_immediate_cooldown_times"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "218ba9977",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: current simulator evidence covers Pause/Resume, not SetPaused. Exact pause-state setter behavior, interaction with active cooldowns, lifecycle, events, rendering, validation, and invalid-input semantics require authoritative evidence or a correct model/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven."
     },
     {
       "id": "added:CraftingItemSlotModification.reagent",

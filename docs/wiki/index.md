@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Pending Cooldown.SetPaused proof
+## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 
-Runtime `218ba9977` corrects shared `SetPaused` dispatch: a Cooldown receiver updates its existing paused state, while a ModelScene receiver retains model paused state. Tests through `34f3cf876` cover ordinary true/false state, isolation, zero returns, immediate timing preservation, and the ModelScene control. No manifest credit or totals change pending independent proof. Native clock behavior, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven. See [Cooldown paused state](../specs/cooldown-paused-state.md) and [[patch-12-0-0-api-audit]].
+Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime 218ba9977 corrects shared SetPaused dispatch in model/model_scene.rs; this was not missing registration. Independent proof at 34f3cf876 passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven. Independent proof at `34f3cf876`: 5/5 each on retail 12.0.0/12.0.5/12.0.7; fmt/check/build/startup (`[]`)/readability passed. One bounded credit; totals **2313 / 1095 / 2**. Final metadata integration/provenance validation remains with main.
 
 ## [2026-09-13] audit | Credit bounded FontString scale-mode state
 

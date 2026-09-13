@@ -854,7 +854,7 @@
 854. [best-effort] `added:Cooldown.GetCountdownFontString` — behavioral
 855. [best-effort] `added:Cooldown.SetCooldownFromDurationObject` — behavioral
 856. [best-effort] `added:Cooldown.SetCooldownFromExpirationTime` — behavioral
-857. [evidence-required] `added:Cooldown.SetPaused` — unsafe
+857. [best-effort] `added:Cooldown.SetPaused` — behavioral
 858. [evidence-required] `added:CraftingItemSlotModification.reagent` — unsafe
 859. [evidence-required] `added:CraftingOrderReagentInfo.reagentInfo` — unsafe
 860. [best-effort] `added:CraftingQualityInfo` — provenance-only
