@@ -51,7 +51,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**474 rows now link to 125 plans** in the JSON: 380 rows use 31 family-specific plans, and 94 rows preserve explicit probe requirements already written in their manifest notes. The other **647 rows retain routing protocols only**; extraction of a source requirement does not count as fresh semantic validation. All 125 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**538 rows now link to 189 plans** in the JSON: 380 rows use 31 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. The other **583 rows retain routing protocols only**; extraction of a source requirement does not count as fresh semantic validation. All 189 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|

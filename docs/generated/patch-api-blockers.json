@@ -10497,7 +10497,8 @@
         "src/event/valid_events_a.rs",
         "src/event/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-1"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10512,7 +10513,8 @@
         "src/event/valid_events_a.rs",
         "src/lua_api/loader_env.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-2"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11413,7 +11415,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_misc.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-3"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13486,7 +13489,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-4"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13537,7 +13541,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-5"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13551,7 +13556,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-6"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13565,7 +13571,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-7"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13579,7 +13586,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-8"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13593,7 +13601,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-9"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13607,7 +13616,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-10"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13621,7 +13631,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-11"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13635,7 +13646,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-12"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13649,7 +13661,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-13"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13663,7 +13676,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-14"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13677,7 +13691,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-15"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13691,7 +13706,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-16"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13705,7 +13721,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-17"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13719,7 +13736,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-18"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13733,7 +13751,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-19"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13747,7 +13766,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-20"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13761,7 +13781,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-21"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13775,7 +13796,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-22"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13789,7 +13811,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-23"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13803,7 +13826,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-24"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13817,7 +13841,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-25"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13831,7 +13856,8 @@
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-26"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13844,7 +13870,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-27"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13858,7 +13885,8 @@
         "src/event/valid_events.rs",
         "src/event/valid_events_b.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-28"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13938,7 +13966,8 @@
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "docs/wow-api-functions.txt"
-      ]
+      ],
+      "probe_plan": "literal-followup-29"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13952,7 +13981,8 @@
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "docs/wow-api-functions.txt"
-      ]
+      ],
+      "probe_plan": "literal-followup-30"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13966,7 +13996,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-31"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13980,7 +14011,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-32"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13994,7 +14026,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-33"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14008,7 +14041,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-34"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14022,7 +14056,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-35"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14036,7 +14071,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-36"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14050,7 +14086,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-37"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14064,7 +14101,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-38"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14078,7 +14116,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-39"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14092,7 +14131,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-40"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14106,7 +14146,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-41"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14120,7 +14161,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-42"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14134,7 +14176,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-43"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14148,7 +14191,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-44"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14162,7 +14206,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-45"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14176,7 +14221,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-46"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14190,7 +14236,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-47"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14204,7 +14251,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-48"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14218,7 +14266,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-49"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14232,7 +14281,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-50"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14246,7 +14296,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-51"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14260,7 +14311,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-52"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14274,7 +14326,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-53"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14288,7 +14341,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-54"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14302,7 +14356,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-55"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14316,7 +14371,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-56"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14330,7 +14386,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-57"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14344,7 +14401,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-58"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14358,7 +14416,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-59"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14372,7 +14431,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-60"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14386,7 +14446,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-61"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14400,7 +14461,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-62"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14414,7 +14476,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-63"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14428,7 +14491,8 @@
         "src/cvars.yaml",
         "src/cvars.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "literal-followup-64"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -15920,6 +15984,582 @@
       "ready_to_execute": false,
       "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
       "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+    },
+    "literal-followup-1": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: declaration metadata is modeled, but producer-backed payload, restricted delivery, ordinary registration behavior, callback delivery, and precedence remain unproven. Required full-LoD probe covers registration rejection, callback registration/delivery, producer transitions, exact payload count/types/order, restricted context, callback versus OnEvent precedence, and manual/generic dispatch."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-2": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: runtime classification exists and generic dispatch forwards supplied arguments, but producer-backed payload, restricted delivery, ordinary registration behavior, callback delivery, and precedence remain unproven. Required full-LoD probe covers registration rejection, callback registration/delivery, producer transitions, exact payload count/types/order, restricted context, callback versus OnEvent precedence, and manual/generic dispatch."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-3": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: 12.0.0 changes the input from string to unit while retaining two string outputs. Current runtime string-resolves names, uses constant `SimRealm`, and lacks full unit validation/state semantics. Full-LoD probe: call with valid unit, unknown unit, invalid unit values, and wrong argument types; assert exactly two string-or-nil results in order, exact server-name behavior, unknown-unit results, return counts, and errors. Claims are bounded to input/output publication and state proof; no server-name or unit identity semantics are claimed."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-4": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this misspelled NeighbordhoodInitiativeCategory row, but no full-LoD runtime absence or corrected replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.NeighbordhoodInitiativeCategoryMeta.NumValues is absent and whether a corrected NeighborhoodInitiativeCategory/Meta replacement is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-5": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-6": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-7": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-8": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-9": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-10": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this ReportStorageProvider row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe: establish whether Enum.ReportStorageProvider and Enum.ReportStorageProviderMeta are absent, including this row, and whether any replacement namespace is published; source-text absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-11": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-12": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-13": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-14": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-15": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-16": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-17": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-18": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-19": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-20": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this VoiceTtsDestination row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Required full-LoD namespace-safe Lua probe must establish the removed namespace/member or metadata row is absent after loading and check any replacement namespace before behavioral closure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-21": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-22": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-23": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-24": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-25": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-26": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Evidence-required/unsafe: retail 12.0.0 source removes this WMOExteriorID member or metadata row, but no full-LoD runtime absence or replacement proof exists. Require namespace-safe probes before behavioral closure; claims remain bounded to source removal only. Required probe: Full-LoD namespace-safe probe must establish that Enum.WMOExteriorID and Enum.WMOExteriorIDMeta are absent after loading, and check for any replacement namespace; source absence alone is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-27": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail removes the event and former payload; live rejection, producer delivery, replacement events, and nudge lifecycle remain unproven. Required probe: create a frame; assert pcall(frame.RegisterEvent, frame, \"HOUSING_DECOR_NUDGE_STATUS_CHANGED\") fails; exercise real housing nudge enable/disable transitions and assert no legacy event fires across repeats and unrelated housing changes."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-28": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail removes the event and former payload; producer lifecycle, delivery timing, replacement events, and spell-learning semantics remain unproven. Required probe: create a frame; assert pcall(frame.RegisterEvent, frame, \"LEARNED_SPELL_IN_TAB\") fails; trigger a real spell-learning transition and assert no legacy event delivery; probe repeated registration, C_EventUtils.IsEventValid, manual dispatch, and related transitions."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-29": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Source-only removal evidence is bounded to the docs-extra entry; full-LoD proof is required before claiming runtime absence or replacement behavior. Required probe: Required full-LoD probe: establish whether the removed docs.extra_apis.ShowingCloak entry is observable; probe the separate added ShowingCloak global independently and do not infer one contract from the other."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-30": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Source-only removal evidence is bounded to the docs-extra entry; full-LoD proof is required before claiming runtime absence or replacement behavior. Required probe: Required full-LoD probe: establish whether the removed docs.extra_apis.ShowingHelm entry is observable; probe the separate added ShowingHelm global independently and do not infer one contract from the other."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-31": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_BaseOrbScale. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_BaseOrbScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_BaseOrbScale\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_BaseOrbScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_BaseOrbScale\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-32": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_BaseRingScale. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_BaseRingScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_BaseRingScale\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_BaseRingScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_BaseRingScale\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-33": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_DistScaleMax. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_DistScaleMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_DistScaleMax\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_DistScaleMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_DistScaleMax\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-34": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_DistScaleMin. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_DistScaleMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_DistScaleMin\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_DistScaleMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_DistScaleMin\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-35": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_HighlightDefault. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_HighlightDefault\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightDefault\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_HighlightDefault\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightDefault\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-36": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_HighlightDragging. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_HighlightDragging\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightDragging\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_HighlightDragging\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightDragging\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-37": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_HighlightHovered. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_HighlightHovered\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightHovered\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_HighlightHovered\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightHovered\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-38": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_HighlightKeybind. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_HighlightKeybind\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightKeybind\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_HighlightKeybind\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightKeybind\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-39": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_HighlightSelected. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_HighlightSelected\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightSelected\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_HighlightSelected\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_HighlightSelected\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-40": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_OrbPosOffset. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_OrbPosOffset\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_OrbPosOffset\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_OrbPosOffset\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_OrbPosOffset\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-41": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_ScaleDistanceMax. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_ScaleDistanceMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_ScaleDistanceMax\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_ScaleDistanceMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_ScaleDistanceMax\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-42": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_ScaleDistanceMin. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_ScaleDistanceMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_ScaleDistanceMin\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_ScaleDistanceMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_ScaleDistanceMin\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-43": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_SnapDegrees. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_SnapDegrees\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_SnapDegrees\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_SnapDegrees\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_SnapDegrees\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-44": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_TextMode. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_TextMode\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_TextMode\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_TextMode\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_TextMode\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-45": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_XRayCheckerSize. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_XRayCheckerSize\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayCheckerSize\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_XRayCheckerSize\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayCheckerSize\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-46": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_XRayDarkAlpha. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_XRayDarkAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayDarkAlpha\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_XRayDarkAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayDarkAlpha\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-47": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Rotation_XRayLightAlpha. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Rotation_XRayLightAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayLightAlpha\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Rotation_XRayLightAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Rotation_XRayLightAlpha\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-48": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_BaseArrowHeadScale. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_BaseArrowHeadScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseArrowHeadScale\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_BaseArrowHeadScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseArrowHeadScale\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-49": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_BaseArrowStemScale. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_BaseArrowStemScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseArrowStemScale\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_BaseArrowStemScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseArrowStemScale\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-50": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_BaseCubeScale. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_BaseCubeScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseCubeScale\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_BaseCubeScale\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_BaseCubeScale\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-51": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_DistScaleMax. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_DistScaleMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_DistScaleMax\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_DistScaleMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_DistScaleMax\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-52": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_DistScaleMin. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_DistScaleMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_DistScaleMin\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_DistScaleMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_DistScaleMin\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-53": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_HighlightDefault. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_HighlightDefault\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightDefault\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_HighlightDefault\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightDefault\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-54": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_HighlightDragging. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_HighlightDragging\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightDragging\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_HighlightDragging\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightDragging\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-55": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_HighlightHovered. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_HighlightHovered\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightHovered\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_HighlightHovered\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightHovered\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-56": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_HighlightKeybind. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_HighlightKeybind\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightKeybind\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_HighlightKeybind\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightKeybind\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-57": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_HighlightSelected. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_HighlightSelected\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightSelected\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_HighlightSelected\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_HighlightSelected\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-58": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_MaxDistanceFromCamera. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_MaxDistanceFromCamera\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_MaxDistanceFromCamera\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_MaxDistanceFromCamera\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_MaxDistanceFromCamera\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-59": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_Padding. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_Padding\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_Padding\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_Padding\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_Padding\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-60": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_ScaleDistanceMax. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_ScaleDistanceMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_ScaleDistanceMax\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_ScaleDistanceMax\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_ScaleDistanceMax\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-61": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_ScaleDistanceMin. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_ScaleDistanceMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_ScaleDistanceMin\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_ScaleDistanceMin\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_ScaleDistanceMin\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-62": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_XRayCheckerSize. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_XRayCheckerSize\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayCheckerSize\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_XRayCheckerSize\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayCheckerSize\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-63": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_XRayDarkAlpha. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_XRayDarkAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayDarkAlpha\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_XRayDarkAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayDarkAlpha\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "literal-followup-64": {
+      "dependency": "Obtain the exact populated object, supported input or native load-phase capture named in the linked source requirement before testing it.",
+      "observations": [
+        "Retail 12.0.0 removes housingExpertGizmos_Translation_XRayLightAlpha. Checked-in defaults omit the name, but public getter absence is unproven. Required full-LoD assertion: GetCVar(\"housingExpertGizmos_Translation_XRayLightAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayLightAlpha\") == nil. No housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Required probe: GetCVar(\"housingExpertGizmos_Translation_XRayLightAlpha\") == nil and GetCVarDefault(\"housingExpertGizmos_Translation_XRayLightAlpha\") == nil; full-LoD getter-absence proof required."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
+      "basis": "Verbatim linked-row manifest note; no sentence splitting."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
