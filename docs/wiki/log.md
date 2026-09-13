@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending Cooldown.SetPaused proof
+
+Tests through `34f3cf876` expose the shared-handler failure boundary for `Cooldown:SetPaused`: ordinary paused state and isolation fail before the fix, while return arity and immediate timing preservation have their own controls. The suite also proves its control case: `ModelScene:SetPaused` still round-trips through `GetPaused()` independently. Runtime `218ba9977` dispatches Cooldown receivers to existing `cooldown_paused` state rather than overwriting model state. This is pending independent proof: no manifest credit or totals change. Native pause-clock behavior, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint enforcement remain unproven. See [Cooldown paused state](../specs/cooldown-paused-state.md) and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Credit ordinary boolean vertex-color state
 
 Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.

@@ -11,7 +11,7 @@ Pinned `FrameAPICooldownDocumentation.lua` declares `SetPaused(bool)` with no re
 
 ## Evidence
 
-Focused tests in the existing grouped integration target reached RED 2/4: state and isolation failed while arity and immediate timing preservation passed. The shared method registry resolves `SetPaused` to the ModelScene handler, which previously wrote only model state. Runtime correction dispatches Cooldown receivers to their existing paused field. Post-change proof pending.
+Tests through `34f3cf876` reproduce the shared-dispatch boundary: cooldown state and isolation fail before the correction, while zero return arity and immediate timing preservation are separately observed. They also control that `ModelScene:SetPaused` continues to update `GetPaused()` independently. Runtime `218ba9977` routes Cooldown receivers through the existing `cooldown_paused` state while retaining ModelScene state handling. Post-change proof is pending; this is not audit credit.
 
 ## Gaps
 

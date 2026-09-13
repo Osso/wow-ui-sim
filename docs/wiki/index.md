@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending Cooldown.SetPaused proof
+
+Runtime `218ba9977` corrects shared `SetPaused` dispatch: a Cooldown receiver updates its existing paused state, while a ModelScene receiver retains model paused state. Tests through `34f3cf876` cover ordinary true/false state, isolation, zero returns, immediate timing preservation, and the ModelScene control. No manifest credit or totals change pending independent proof. Native clock behavior, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven. See [Cooldown paused state](../specs/cooldown-paused-state.md) and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Credit bounded FontString scale-mode state
 
 Independent proof at `3b3877603` reuses exact bytes and passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Final metadata validation at `88e4998ee` passes the validator with 14,897 fresh hashes, zero stale hashes, 26 renewals, and ten additions across six manifests. Two bounded Get/Set credits cover only explicitly-set numeric 0/1, getter-one/setter-zero arity, and per-FontString isolation; totals: **2312 / 1096 / 2**. Native/default/invalid-input behavior, animation/layout/rendering, and earlier-profile availability remain unproven. Broad audit and eight unresolved Mists AccountStore failures remain open. See [spec](../specs/fontstring-scale-animation-mode.md).
