@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending FontString scale-mode proof
+
+`04724701e` stores explicitly-set `Enum.FontStringScaleAnimationMode` values `0` and `1` on each FontString, and registers the getters/setters only under retail 12.0.0. Tests `fc24b8e4f` record RED 1/4 because the setter was absent before that implementation. Pending independent proof is limited to explicit 0/1 state: no credit or totals change. Animation, rendering, layout, defaults, native validation/coercion/errors, and earlier-profile availability remain unproven.
+
 ## [2026-09-13] audit | Credit ordinary boolean vertex-color state
 
 Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
