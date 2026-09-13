@@ -15,7 +15,7 @@ Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled()
 
 `tests/housing.rs`, committed through `220897051`: RED 2/4; arity and unrelated housing-service preservation passed, while explicit false and environment isolation failed at the unchanged true getter. Runtime `3839f707f` adds per-environment state in `src/c_api/c_housing/basic_mode.rs`. Independent proof at `3839f707f` passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Historical warnings remain 6/6/1. Ledger: `/tmp/verify-housing-freeplace-ledger.json`.
 
-Separately, the current-default simulator loaded unmodified `HousingFramesUtil.SetFreePlaceEnabled`; false/true/false forwarding and zero returns passed with its debug source identified. This is not native WoW, historical-profile consumer or full-LoD proof. Metadata awards exactly two bounded credits; final metadata/inventory verification remains with main.
+Separately, current-default loaded unmodified `HousingFramesUtil.SetFreePlaceEnabled` forwarded false/true/false and returned zero values, with its debug source identified. This is not native WoW, historical-profile consumer or full-LoD proof. Correction-only metadata verification at `804a6b073` awards exactly two bounded credits: 14,917 fresh hashes, zero stale, 139 renewals and 14 additions; totals **2315 / 1093 / 2**. The 1,119-row blocker snapshot retains 282 plans, 281 unchanged from before this credit.
 
 ## Gaps
 
