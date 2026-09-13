@@ -399,12 +399,14 @@ pub(crate) fn set_scale_animation_mode(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) fn get_scale_animation_mode(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let sim = borrow_state(state)?;
-    let frame = sim
-        .widgets
-        .get(id)
-        .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?;
-    state.push(Val::Num(frame.font_string_scale_animation_mode as f64));
+    let mode = {
+        let sim = borrow_state(state)?;
+        sim.widgets
+            .get(id)
+            .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?
+            .font_string_scale_animation_mode
+    };
+    state.push(Val::Num(mode as f64));
     Ok(1)
 }
 
