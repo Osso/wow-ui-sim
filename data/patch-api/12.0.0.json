@@ -18975,7 +18975,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.EscapeLuaFormatString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         },
         {
           "kind": "test",
@@ -19012,7 +19012,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.EscapeLuaPatterns only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         },
         {
           "kind": "test",
@@ -19049,7 +19049,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model publishes EscapeQuotedCodes and doubles pipe characters in the returned string.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         },
         {
           "kind": "test",
@@ -19086,7 +19086,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.FloorToNearestString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         }
       ],
       "tests": [],
@@ -19115,7 +19115,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Retail 12.0.0-gated namespace registration calls a byte-preserving ASCII-space run cap and returns one string. Strict invalid-limit validation is simulator policy, not native proof.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         },
         {
           "kind": "test",
@@ -19173,7 +19173,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.RoundToNearestString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         }
       ],
       "tests": [],
@@ -19202,7 +19202,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.StripHyperlinks only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         }
       ],
       "tests": [],
@@ -19231,7 +19231,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.TruncateWhenZero only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         }
       ],
       "tests": [],
@@ -19260,7 +19260,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.WrapString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+          "source_hash": "34abe26e93c605b54130778b5ab34e817501672c81155973676eb803b794575e"
         },
         {
           "kind": "test",
