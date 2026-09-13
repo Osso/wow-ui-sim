@@ -881,8 +881,6 @@ C_HousingBasicMode = __wow_merge_namespace(C_HousingBasicMode, {
   SetGridSnapEnabled = __wow_noop,
   IsGridVisible = function() return false end,
   SetGridVisible = __wow_noop,
-  IsFreePlaceEnabled = function() return true end,
-  SetFreePlaceEnabled = __wow_noop,
 })
 C_HousingExpertMode = __wow_merge_namespace(C_HousingExpertMode, {
   IsDecorSelected = function() return C_HousingDecor.IsDecorSelected() end,

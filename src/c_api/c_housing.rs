@@ -7,6 +7,9 @@
 //! housing/favor state, and blueprint import/export calls produce simulator
 //! share codes that can be round-tripped in tests.
 
+#[cfg(feature = "retail-12-0-0")]
+mod basic_mode;
+
 use crate::c_api::helpers::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_api::methods::{
@@ -37,6 +40,8 @@ const BLUEPRINT_TYPE_HOUSE: i32 = 1;
 const BLUEPRINT_TYPE_ROOM: i32 = 2;
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    basic_mode::register(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;
     let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
     let house_editor = ensure_namespace(state, "C_HouseEditor")?;
