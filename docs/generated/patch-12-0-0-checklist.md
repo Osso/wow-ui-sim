@@ -566,7 +566,7 @@
 566. [best-effort] `added:C_StringUtil.EscapeLuaPatterns` — behavioral
 567. [best-effort] `added:C_StringUtil.EscapeQuotedCodes` — behavioral
 568. [evidence-required] `added:C_StringUtil.FloorToNearestString` — unsafe
-569. [evidence-required] `added:C_StringUtil.RemoveContiguousSpaces` — unsafe
+569. [best-effort] `added:C_StringUtil.RemoveContiguousSpaces` — behavioral
 570. [evidence-required] `added:C_StringUtil.RoundToNearestString` — unsafe
 571. [evidence-required] `added:C_StringUtil.StripHyperlinks` — unsafe
 572. [evidence-required] `added:C_StringUtil.TruncateWhenZero` — unsafe

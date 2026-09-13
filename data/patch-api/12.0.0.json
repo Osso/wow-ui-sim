@@ -18975,13 +18975,13 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.EscapeLuaFormatString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         },
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
           "summary": "Existing fixture asserts percent doubling, empty strings, UTF-8, embedded NUL and raw bytes. No wrapping, return-arity, live-client or historical-epoch proof.",
-          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
         }
       ],
       "tests": [
@@ -19012,13 +19012,13 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.EscapeLuaPatterns only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         },
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
           "summary": "Existing fixture asserts escaping Lua pattern punctuation, unchanged plain text, empty strings and raw bytes including embedded NUL. No UTF-8-specific, wrapping, return-arity, live-client or historical-epoch proof.",
-          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
         }
       ],
       "tests": [
@@ -19049,7 +19049,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model publishes EscapeQuotedCodes and doubles pipe characters in the returned string.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         },
         {
           "kind": "test",
@@ -19086,7 +19086,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.FloorToNearestString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         }
       ],
       "tests": [],
@@ -19100,8 +19100,8 @@
       "id": "added:C_StringUtil.RemoveContiguousSpaces",
       "symbol": "C_StringUtil.RemoveContiguousSpaces",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -19114,16 +19114,45 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil source is the owner for C_StringUtil.RemoveContiguousSpaces only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "summary": "Retail 12.0.0-gated namespace registration calls a byte-preserving ASCII-space run cap and returns one string. Strict invalid-limit validation is simulator policy, not native proof.",
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "ASCII-space runs at leading, interior and trailing positions are capped at limits 0, 1 and 2, with exactly one string result.",
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Tabs, newlines, NUL, UTF-8 and invalid UTF-8 bytes are preserved at limits 0, 1 and 2, with exactly one string result.",
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Empty and ASCII-space-free inputs remain unchanged at limits 0, 1 and 2, with exactly one string result.",
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Simulator policy rejects missing, nonnumeric, negative, fractional and nonfinite limits; this does not establish native validation or coercion semantics.",
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_api_surface.rs::c_string_util_remove_contiguous_spaces_limits_runs",
+        "tests/c_api_surface.rs::c_string_util_remove_contiguous_spaces_preserves_other_bytes",
+        "tests/c_api_surface.rs::c_string_util_remove_contiguous_spaces_keeps_empty_and_space_free_strings",
+        "tests/c_api_surface.rs::c_string_util_remove_contiguous_spaces_rejects_invalid_limits"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8de0d6e6c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_StringUtil model does not publish the function; authoritative semantics or a correct implementation are required, and no approval can close the row."
+      "notes": "Best-effort behavioral evidence covers ASCII-space byte run caps at limits 0/1/2, boundary runs, empty and space-free strings, preservation of other bytes, and one string return. Invalid-limit rejection is explicit simulator policy only. Native coercion, validation/error details, taint/secrets, historical runtime availability and consumer semantics remain unproven."
     },
     {
       "id": "added:C_StringUtil.RoundToNearestString",
@@ -19144,7 +19173,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.RoundToNearestString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         }
       ],
       "tests": [],
@@ -19173,7 +19202,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.StripHyperlinks only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         }
       ],
       "tests": [],
@@ -19202,7 +19231,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.TruncateWhenZero only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         }
       ],
       "tests": [],
@@ -19231,13 +19260,13 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil source is the owner for C_StringUtil.WrapString only where registered; implementation presence or absence does not establish native edge-case conformance, coercion, or lifecycle semantics.",
-          "source_hash": "bed22696f233c2a19a6adfdb4ee4cbba336f4f37026c5f059b38294a4f817e98"
+          "source_hash": "4fc8d3e893e386d7f5483ae60ae38a79b7d3becfbc50e58f0da6a53aa7c4175c"
         },
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
           "summary": "Current retail integration test asserts optional affixes, empty infix, embedded NUL, and raw-byte wrapping. Not live-client or historical-epoch proof.",
-          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
+          "source_hash": "df7c24ab93e4950ceffb0208cef1e5f02d1b9de781f95ad842526f2d43286ca3"
         }
       ],
       "tests": [
