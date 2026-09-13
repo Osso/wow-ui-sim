@@ -35,6 +35,71 @@ fn c_string_util_escapes_bytes_and_wraps_nonempty_infixes() {
     .expect("C_StringUtil must escape exact bytes and wrap only nonempty infixes");
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_remove_contiguous_spaces_limits_runs() {
+    env()
+        .eval::<()>(
+            r#"
+            local text = "   alpha  beta gamma    "
+            local cases = {
+                {limit = 0, expected = "alphabetagamma"},
+                {limit = 1, expected = " alpha beta gamma "},
+                {limit = 2, expected = "  alpha  beta gamma  "},
+            }
+            for _, case in ipairs(cases) do
+                assert(select('#', C_StringUtil.RemoveContiguousSpaces(text, case.limit)) == 1)
+                local actual = C_StringUtil.RemoveContiguousSpaces(text, case.limit)
+                assert(type(actual) == 'string' and actual == case.expected)
+            end
+            "#,
+        )
+        .expect("ASCII space runs at every position truncate to the requested limit");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_remove_contiguous_spaces_preserves_other_bytes() {
+    env()
+        .eval::<()>(
+            r#"
+            local rawByte = string.char(255)
+            local unicodeText = "café" .. string.char(194, 160)
+            local text = rawByte .. "  " .. unicodeText .. "\t  \n  \0  " .. rawByte
+            local cases = {
+                {limit = 0, expected = rawByte .. unicodeText .. "\t\n\0" .. rawByte},
+                {limit = 1, expected = rawByte .. " " .. unicodeText .. "\t \n \0 " .. rawByte},
+                {limit = 2, expected = text},
+            }
+            for _, case in ipairs(cases) do
+                assert(select('#', C_StringUtil.RemoveContiguousSpaces(text, case.limit)) == 1)
+                local actual = C_StringUtil.RemoveContiguousSpaces(text, case.limit)
+                assert(type(actual) == 'string' and actual == case.expected)
+            end
+            "#,
+        )
+        .expect("only ASCII spaces change, preserving whitespace, NUL, UTF-8 and raw bytes");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_remove_contiguous_spaces_keeps_empty_and_space_free_strings() {
+    env()
+        .eval::<()>(
+            r#"
+            local inputs = {"", "plain", "\t\n\0café" .. string.char(255)}
+            for _, text in ipairs(inputs) do
+                for _, limit in ipairs({0, 1, 2}) do
+                    assert(select('#', C_StringUtil.RemoveContiguousSpaces(text, limit)) == 1)
+                    local actual = C_StringUtil.RemoveContiguousSpaces(text, limit)
+                    assert(type(actual) == 'string' and actual == text)
+                end
+            end
+            "#,
+        )
+        .expect("empty and ASCII-space-free strings remain unchanged at every tested limit");
+}
+
 #[cfg(not(any(feature = "profile-retail", feature = "client-ptr")))]
 #[test]
 fn non_retail_profiles_do_not_publish_retail_string_helpers() {
