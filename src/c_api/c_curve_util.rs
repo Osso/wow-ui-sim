@@ -77,6 +77,7 @@ local function install_curve_methods(methods, state, create, isColor)
     end
     function methods:ClearPoints() state(self).points = {} end
     function methods:SetType(value) state(self).curveType = value or 0 end
+    function methods:GetType() return state(self).curveType end
     function methods:GetPointCount() return #state(self).points end
     function methods:Copy()
         local s = state(self)
