@@ -5164,7 +5164,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5177,7 +5178,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5190,7 +5192,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5203,7 +5206,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5216,7 +5220,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5229,7 +5234,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5242,7 +5248,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5255,7 +5262,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5268,7 +5276,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5281,7 +5290,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5294,7 +5304,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5307,7 +5318,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_custom_sets"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5320,7 +5332,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5333,7 +5346,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5346,7 +5360,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5359,7 +5374,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5372,7 +5388,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5385,7 +5402,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5398,7 +5416,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5411,7 +5430,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5424,7 +5444,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5437,7 +5458,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5449,7 +5471,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5461,7 +5484,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5473,7 +5497,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5485,7 +5510,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5497,7 +5523,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5509,7 +5536,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5521,7 +5549,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5533,7 +5562,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5545,7 +5575,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5557,7 +5588,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5569,7 +5601,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5581,7 +5614,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5593,7 +5627,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5605,7 +5640,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5617,7 +5653,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5629,7 +5666,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5641,7 +5679,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5653,7 +5692,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5665,7 +5705,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5677,7 +5718,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5689,7 +5731,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5701,7 +5744,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5713,7 +5757,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5725,7 +5770,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5737,7 +5783,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5749,7 +5796,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5761,7 +5809,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5773,7 +5822,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5785,7 +5835,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5797,7 +5848,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5809,7 +5861,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5821,7 +5874,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5833,7 +5887,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5845,7 +5900,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5857,7 +5913,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5869,7 +5926,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5881,7 +5939,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5893,7 +5952,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5905,7 +5965,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5917,7 +5978,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5929,7 +5991,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5941,7 +6004,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5953,7 +6017,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5965,7 +6030,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5977,7 +6043,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5989,7 +6056,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6001,7 +6069,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6013,7 +6082,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6025,7 +6095,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6037,7 +6108,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6049,7 +6121,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6061,7 +6134,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6073,7 +6147,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6085,7 +6160,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6097,7 +6173,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6109,7 +6186,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6121,7 +6199,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6133,7 +6212,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6145,7 +6225,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6157,7 +6238,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6169,7 +6251,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6181,7 +6264,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6193,7 +6277,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6205,7 +6290,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6217,7 +6303,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6229,7 +6316,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6241,7 +6329,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6253,7 +6342,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6265,7 +6355,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6277,7 +6368,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6289,7 +6381,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6301,7 +6394,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6313,7 +6407,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6325,7 +6420,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6337,7 +6433,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6349,7 +6446,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6361,7 +6459,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6373,7 +6472,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6385,7 +6485,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6397,7 +6498,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6409,7 +6511,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6421,7 +6524,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6433,7 +6537,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6445,7 +6550,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6457,7 +6563,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6469,7 +6576,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6481,7 +6589,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6493,7 +6602,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6505,7 +6615,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6517,7 +6628,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6529,7 +6641,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6541,7 +6654,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6553,7 +6667,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6565,7 +6680,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6577,7 +6693,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6589,7 +6706,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6601,7 +6719,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6613,7 +6732,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6625,7 +6745,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6637,7 +6758,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6649,7 +6771,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6661,7 +6784,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6673,7 +6797,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6685,7 +6810,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6697,7 +6823,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6709,7 +6836,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6721,7 +6849,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6733,7 +6862,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6745,7 +6875,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6757,7 +6888,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6769,7 +6901,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6781,7 +6914,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6793,7 +6927,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6805,7 +6940,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6817,7 +6953,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
-      ]
+      ],
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6830,7 +6967,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6843,7 +6981,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6856,7 +6995,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6869,7 +7009,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6882,7 +7023,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6895,7 +7037,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/transmog_sets_defaults.rs",
         "tests/blizzard_transmog_loads.rs"
-      ]
+      ],
+      "probe_plan": "sets_catalog_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10511,7 +10654,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog_collection.rs",
         "src/lua_api/state_types/collections.rs"
-      ]
+      ],
+      "probe_plan": "collection_appearance_info"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14453,6 +14597,66 @@
       ],
       "ready_to_execute": false,
       "design_gap": "No public entry producer/consumer established; generated structure declaration alone is not one."
+    },
+    "outfit_slot_state": {
+      "dependency": "Native or correct modeled outfit-slot producer with an equipped/viewed outfit, inventory-slot mapping, pending transmog mutation, and linked/secondary slot fixtures. Current simulator only provides temporary defaults in src/lua_api/workarounds/temporary/transmog_outfit_slot_defaults.rs; no authoritative appearance/outfit state catalog exists.",
+      "observations": [
+        "Capture GetViewedOutfitSlotInfo/GetAllSlotLocationInfo/GetLinkedSlotInfo and slot-group structures for empty, equipped, viewed, pending, secondary, and invalid slots.",
+        "Change one slot appearance and one pending sheathe/transmog input; record transmogID, texture, display/error/warning fields, collectionType, primary/secondary linkage and exact return arity.",
+        "Separate appearance selection from equipped outfit display and from persisted outfit identity; record before/after reload or UI transition if persistence is claimed."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated native fixture or modeled producer establishes slot appearance, outfit linkage, warning, texture, or pending-state semantics."
+    },
+    "outfit_catalog_state": {
+      "dependency": "Native outfit catalog fixture or modeled source that produces active/currently-viewed IDs, outfit entries, limits, names, situations, and usable/locked state. Temporary defaults expose placeholders only.",
+      "observations": [
+        "Enumerate GetOutfitsInfo/GetOutfitInfo/GetActiveOutfitID/GetCurrentlyViewedOutfitID and compare empty, selected, locked, disabled, event, and renamed outfits.",
+        "Change active/viewed outfit and situation enablement; capture entry identity, names/icons, situation categories/groups/options, ordering and duplicate behavior.",
+        "Distinguish catalog metadata from displayed appearance state and from persistence across reload/logout; capture unavailable/invalid IDs separately."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative outfit catalog producer, populated fixture, ordering/default contract, or persistence semantics."
+    },
+    "outfit_actions_costs": {
+      "dependency": "Native transmog UI action flow with valid item/slot inputs and currency/cost state, or a complete simulator transaction model. Current methods are temporary compatibility defaults and do not prove cost or commit semantics.",
+      "observations": [
+        "Invoke SetPendingTransmog/SetOutfitToSet/SetOutfitToCustomSet/CommitAndApplyAllPending/Clear/Revert/Change/Pickup with one controlled slot or outfit; record mutations, return values, and event ordering.",
+        "Capture GetPendingTransmogCost/GetNextOutfitCost/IsUsableDiscountAvailable before and after one change, with insufficient-currency and no-op controls.",
+        "Separate appearance/outfit mutation from catalog membership, cost calculation/payment, persistence, and native protected/security behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No controllable native transaction producer or cost/currency fixture; action success, rollback, payment, and persistence are unmodeled."
+    },
+    "collection_custom_sets": {
+      "dependency": "Native wardrobe custom-set producer with populated appearance IDs/items, hyperlink serialization, name validation, max-set limits, and persistence; current src/lua_api/globals/missing_surface/transmog_collection.rs is partial and seeded.",
+      "observations": [
+        "Create, modify, rename, delete and list one custom set; capture returned IDs, item transmog-info list, hyperlink roundtrip, names, max count and invalid-name/source outcomes.",
+        "Compare empty, duplicate, deleted, reordered and persisted sets; record whether changes affect outfit state or only catalog storage.",
+        "Use an actual item/transmog-info producer and distinguish custom-set catalog identity from appearance collection and outfit application."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative custom-set fixture, hyperlink format contract, validation/order rules, persistence boundary, or producer/consumer wiring."
+    },
+    "collection_appearance_info": {
+      "dependency": "Populated wardrobe appearance source producer with item appearance, source type, collection status, icon/link, subclass/category and illusion capability. Current WorldState.transmog_appearances is seeded/partial.",
+      "observations": [
+        "Query GetAppearanceSourceInfo for known collected, uncollected, invalid, item, illusion and custom-source IDs; capture exact structure fields and nil/error behavior.",
+        "Change collection state through the native producer or reload fixture; compare returned source identity, links, icon/category, canHaveIllusion and isCollected.",
+        "Keep appearance catalog state separate from outfit display, custom-set storage, cost, and persistence; record consumer calls that rely on each field."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete appearance-source catalog or authoritative producer establishes changed structure semantics, lifecycle, validation, hyperlinks, or persistence."
+    },
+    "sets_catalog_filters": {
+      "dependency": "Native transmog-set catalog and filter UI state with populated base/variant sets, preceding-variant relationships, collection/usable flags, and controllable filter mutations. Current transmog_sets_defaults.rs returns empty/default placeholders.",
+      "observations": [
+        "Capture GetAvailableSets/GetBaseSets/GetAllSets/GetUsableSets/GetSetInfo/GetSetPrimaryAppearances for populated, empty, variant and invalid IDs; record ordering, grantAsPrecedingVariant and collection effects.",
+        "Read and mutate GetSetsFilter/SetSetsFilter/SetDefaultSetsFilters/IsUsingDefaultSetsFilters; capture checked/default values, reset/idempotence, events and persistence.",
+        "Separate set catalog/variant relationships from individual appearance collection, outfit application, and cost/payment."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated set catalog producer, variant fixture, filter-state model, ordering/default contract, or persistence/event evidence."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
