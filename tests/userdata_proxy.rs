@@ -829,7 +829,7 @@ fn color_curve_get_point_returns_independent_point_and_color_snapshots() {
         -- Fresh output is a simulator policy, not native identity proof.
         assert(not rawequal(first, other) and not rawequal(first.y, other.y))
         first.x = 9
-        first.y:SetRGBA(1, 1, 1, 1)
+        first.y.r, first.y.g, first.y.b, first.y.a = 1, 1, 1, 1
         assert(other.x == 0.25)
         assert(other.y.r == 0.125 and other.y.g == 0.25)
         assert(other.y.b == 0.5 and other.y.a == 0.75)
