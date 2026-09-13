@@ -285,6 +285,54 @@ fn test_c_texture_get_filename_from_file_data_id_nil() {
     assert!(is_nil);
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_c_creature_info_get_creature_id_returns_numeric_ids() {
+    env()
+        .eval::<()>(
+            r#"
+            local cases = {
+                {guid = "Creature-0-0-0-0-448-000001", id = 448},
+                {guid = "Creature-0-0-0-0-17306-000002", id = 17306},
+            }
+            for _, case in ipairs(cases) do
+                assert(select('#', C_CreatureInfo.GetCreatureID(case.guid)) == 1)
+                local actual = C_CreatureInfo.GetCreatureID(case.guid)
+                assert(type(actual) == "number" and actual == case.id)
+            end
+            "#,
+        )
+        .expect("Creature GUIDs return exactly one numeric creature ID");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_c_creature_info_get_creature_id_player_guid_returns_nil() {
+    env()
+        .eval::<()>(
+            r#"
+            local guid = "Player-1-00000001"
+            assert(select('#', C_CreatureInfo.GetCreatureID(guid)) == 1)
+            assert(C_CreatureInfo.GetCreatureID(guid) == nil)
+            "#,
+        )
+        .expect("existing parser policy returns exactly one nil for a Player GUID");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_c_creature_info_get_creature_id_empty_guid_returns_nil() {
+    env()
+        .eval::<()>(
+            r#"
+            -- Existing simulator parser policy, not native validation proof.
+            assert(select('#', C_CreatureInfo.GetCreatureID("")) == 1)
+            assert(C_CreatureInfo.GetCreatureID("") == nil)
+            "#,
+        )
+        .expect("existing parser policy returns exactly one nil for an empty GUID");
+}
+
 // ============================================================================
 // C_CreatureInfo - GetClassInfo
 // ============================================================================
