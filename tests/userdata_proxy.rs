@@ -1028,6 +1028,82 @@ fn color_curve_remove_point_updates_evaluation_independently_of_copy() {
 }
 
 #[test]
+fn color_curve_set_points_replaces_and_empty_clears() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(9, CreateColor(1, 1, 1, 1))
+        -- Stored input order is a simulator valid-input policy.
+        assert(select('#', curve:SetPoints({
+            {x=0.75, y=CreateColor(0.875, 0.5, 0.25, 1)},
+            {x=0.25, y=CreateColor(0.125, 0.25, 0.5, 0.75)},
+        })) == 0)
+        local points = curve:GetPoints()
+        assert(curve:GetPointCount() == 2 and #points == 2)
+        assert(points[1].x == 0.75 and points[2].x == 0.25)
+        local r, g, b, a = points[1].y:GetRGBA()
+        assert(r == 0.875 and g == 0.5 and b == 0.25 and a == 1)
+        r, g, b, a = points[2].y:GetRGBA()
+        assert(r == 0.125 and g == 0.25 and b == 0.5 and a == 0.75)
+        assert(select('#', curve:SetPoints({})) == 0)
+        assert(curve:GetPointCount() == 0 and next(curve:GetPoints()) == nil)
+        assert(curve:GetPoint(1) == nil)
+        "#,
+    )
+    .expect("color point replacement preserves configured order and empty clears");
+}
+
+#[test]
+fn color_curve_set_points_copies_input_array_records_and_colors() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        local first = {x=0.25, y=CreateColor(0.125, 0.25, 0.5, 0.75)}
+        local color = first.y
+        local input = {first, {x=0.75, y=CreateColor(0.875, 0.5, 0.25, 1)}}
+        assert(select('#', curve:SetPoints(input)) == 0)
+        -- Input copying is a simulator valid-input policy, not native proof.
+        first.x = 9
+        color.r, color.g, color.b, color.a = 1, 1, 1, 0
+        first.y = CreateColor(0, 0, 0, 0)
+        input[1], input[2] = nil, nil
+        input[3] = {x=10, y=CreateColor(1, 1, 1, 1)}
+        local points = curve:GetPoints()
+        assert(#points == 2 and points[3] == nil)
+        assert(points[1].x == 0.25 and points[2].x == 0.75)
+        local r, g, b, a = points[1].y:GetRGBA()
+        assert(r == 0.125 and g == 0.25 and b == 0.5 and a == 0.75)
+        r, g, b, a = curve:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and g == 0.375 and b == 0.375 and a == 0.875)
+        "#,
+    )
+    .expect("input mutations leave stored color points and evaluation unchanged");
+}
+
+#[test]
+fn color_curve_set_points_keeps_copy_replacements_independent() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        assert(select('#', curve:SetPoints({{x=0.25, y=CreateColor(1, 0, 0, 1)}})) == 0)
+        local copy = curve:Copy()
+        assert(select('#', curve:SetPoints({{x=0.5, y=CreateColor(0, 1, 0, 1)}})) == 0)
+        assert(copy:GetPointCount() == 1 and copy:GetPoint(1).x == 0.25)
+        assert(copy:Evaluate(0.25).r == 1 and copy:Evaluate(0.25).g == 0)
+        assert(select('#', copy:SetPoints({{x=0.75, y=CreateColor(0, 0, 1, 0.5)}})) == 0)
+        assert(curve:GetPointCount() == 1 and curve:GetPoint(1).x == 0.5)
+        assert(curve:Evaluate(0.5).g == 1 and curve:Evaluate(0.5).b == 0)
+        assert(copy:GetPoint(1).x == 0.75 and copy:Evaluate(0.75).b == 1)
+        assert(copy:Evaluate(0.75).a == 0.5)
+        "#,
+    )
+    .expect("replacing either copied curve leaves the other unchanged");
+}
+
+#[test]
 fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_eval): (String, bool) = env
