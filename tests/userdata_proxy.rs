@@ -495,6 +495,125 @@ fn heal_prediction_heal_absorb_clamp_instances_are_independent() {
 }
 
 #[test]
+fn heal_prediction_configuration_heal_absorb_mode_roundtrip() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local hp = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitHealAbsorbMode
+        for _, mode in ipairs({modes.Total, modes.ReducedByIncomingHeals, modes.Total}) do
+            assert(select('#', hp:SetHealAbsorbMode(mode)) == 0)
+            assert(select('#', hp:GetHealAbsorbMode()) == 1)
+            local actual = hp:GetHealAbsorbMode()
+            assert(type(actual) == 'number' and actual == mode)
+        end
+        "#,
+    )
+    .expect("explicit heal absorb processing modes roundtrip with exact return counts");
+}
+
+#[test]
+fn heal_prediction_configuration_heal_absorb_mode_instances_are_independent() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateUnitHealPredictionCalculator()
+        local second = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitHealAbsorbMode
+        first:SetHealAbsorbMode(modes.Total)
+        second:SetHealAbsorbMode(modes.ReducedByIncomingHeals)
+        assert(first:GetHealAbsorbMode() == modes.Total)
+        assert(second:GetHealAbsorbMode() == modes.ReducedByIncomingHeals)
+
+        first:SetHealAbsorbMode(modes.ReducedByIncomingHeals)
+        second:SetHealAbsorbMode(modes.Total)
+        assert(first:GetHealAbsorbMode() == modes.ReducedByIncomingHeals)
+        assert(second:GetHealAbsorbMode() == modes.Total)
+        "#,
+    )
+    .expect("heal absorb processing mode changes remain local to each calculator");
+}
+
+#[test]
+fn heal_prediction_configuration_incoming_heal_clamp_mode_roundtrip() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local hp = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitIncomingHealClampMode
+        for _, mode in ipairs({modes.MaximumHealth, modes.MissingHealth, modes.MaximumHealth}) do
+            assert(select('#', hp:SetIncomingHealClampMode(mode)) == 0)
+            assert(select('#', hp:GetIncomingHealClampMode()) == 1)
+            local actual = hp:GetIncomingHealClampMode()
+            assert(type(actual) == 'number' and actual == mode)
+        end
+        "#,
+    )
+    .expect("explicit incoming heal clamp modes roundtrip with exact return counts");
+}
+
+#[test]
+fn heal_prediction_configuration_incoming_heal_clamp_mode_instances_are_independent() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateUnitHealPredictionCalculator()
+        local second = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitIncomingHealClampMode
+        first:SetIncomingHealClampMode(modes.MaximumHealth)
+        second:SetIncomingHealClampMode(modes.MissingHealth)
+        assert(first:GetIncomingHealClampMode() == modes.MaximumHealth)
+        assert(second:GetIncomingHealClampMode() == modes.MissingHealth)
+
+        first:SetIncomingHealClampMode(modes.MissingHealth)
+        second:SetIncomingHealClampMode(modes.MaximumHealth)
+        assert(first:GetIncomingHealClampMode() == modes.MissingHealth)
+        assert(second:GetIncomingHealClampMode() == modes.MaximumHealth)
+        "#,
+    )
+    .expect("incoming heal clamp mode changes remain local to each calculator");
+}
+
+#[test]
+fn heal_prediction_configuration_incoming_heal_overflow_percent_roundtrip() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local hp = CreateUnitHealPredictionCalculator()
+        -- Characterize stored numeric state, not native accepted ranges.
+        for _, percent in ipairs({1.5, 0, 0.5, 1.5, 0}) do
+            assert(select('#', hp:SetIncomingHealOverflowPercent(percent)) == 0)
+            assert(select('#', hp:GetIncomingHealOverflowPercent()) == 1)
+            local actual = hp:GetIncomingHealOverflowPercent()
+            assert(type(actual) == 'number' and actual == percent)
+        end
+        "#,
+    )
+    .expect("explicit overflow percentages including zero roundtrip with exact return counts");
+}
+
+#[test]
+fn heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_independent() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateUnitHealPredictionCalculator()
+        local second = CreateUnitHealPredictionCalculator()
+        first:SetIncomingHealOverflowPercent(1.5)
+        second:SetIncomingHealOverflowPercent(0)
+        assert(first:GetIncomingHealOverflowPercent() == 1.5)
+        assert(second:GetIncomingHealOverflowPercent() == 0)
+
+        first:SetIncomingHealOverflowPercent(0.5)
+        second:SetIncomingHealOverflowPercent(1.5)
+        assert(first:GetIncomingHealOverflowPercent() == 0.5)
+        assert(second:GetIncomingHealOverflowPercent() == 1.5)
+        "#,
+    )
+    .expect("stored overflow percentage changes remain local to each calculator");
+}
+
+#[test]
 fn heal_prediction_maximum_health_methods_read_predicted_health_max() {
     let env = WowLuaEnv::new().unwrap();
     let max_health: i64 = env
