@@ -111,6 +111,10 @@ local function make_factory(kind, isColor)
     install_object_access(prototype, methods, state)
     install_curve_methods(methods, state, create, isColor)
     if isColor then
+        function methods:EvaluateUnpacked(x)
+            local color = evaluate_curve(state(self), x, true)
+            return color.r, color.g, color.b, color.a
+        end
         function methods:SetPoints(points)
             local replacement = {}
             for index, point in ipairs(points) do
