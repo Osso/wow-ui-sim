@@ -129,21 +129,13 @@ fn unit_creature_id(state: &mut LuaState) -> LuaResult<u32> {
         let Ok(sim) = borrow_state(state) else {
             return Ok(0);
         };
-        creature_id_from_guid(&guid_for_unit(&sim, &unit))
+        crate::c_api::c_creature_info::creature_id_from_guid(&guid_for_unit(&sim, &unit))
     };
     match creature_id {
         Some(id) => state.push(Val::Num(id as f64)),
         None => state.push(Val::Nil),
     }
     Ok(1)
-}
-
-fn creature_id_from_guid(guid: &str) -> Option<i32> {
-    let mut parts = guid.split('-');
-    if parts.next()? != "Creature" {
-        return None;
-    }
-    parts.nth(4)?.parse().ok()
 }
 
 #[cfg(feature = "retail-12-1-5")]

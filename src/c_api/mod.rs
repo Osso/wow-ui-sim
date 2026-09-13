@@ -25,6 +25,7 @@ pub mod c_catalog_shop;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 pub mod c_chromie_time;
+pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_death_recap;
