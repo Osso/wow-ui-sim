@@ -110,6 +110,14 @@ local function make_factory(kind, isColor)
     end
     install_object_access(prototype, methods, state)
     install_curve_methods(methods, state, create, isColor)
+    if isColor then
+        function methods:GetPoint(index)
+            -- Best-effort: one-based lookup and independent output snapshots.
+            local point = state(self).points[index]
+            if not point then return nil end
+            return {x=point.x, y=copy_value(point.y, true)}
+        end
+    end
     return create
 end
 
