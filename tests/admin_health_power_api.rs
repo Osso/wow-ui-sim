@@ -260,6 +260,91 @@ fn test_set_player_power_both_values() {
     assert_eq!(max, 80000);
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_missing_player_primary_tracks_pool_without_mutation() {
+    env()
+        .eval::<()>(
+            r##"
+            local function check(current, maximum, expected)
+                A_Admin.SetPlayerPower(current, maximum, 0)
+                assert(UnitPower("player") == current)
+                assert(UnitPowerMax("player") == maximum)
+                local missing = UnitPowerMissing("player", nil, false)
+                assert(type(missing) == "number")
+                assert(missing == expected, "unexpected player missing power")
+                assert(select("#", UnitPowerMissing("player", nil, false)) == 1)
+                assert(UnitPowerMissing("player", 0, false) == expected)
+                assert(UnitPower("player") == current, "query changed current power")
+                assert(UnitPowerMax("player") == maximum, "query changed maximum power")
+            end
+            check(3000, 8000, 5000)
+            check(6000, 8000, 2000)
+            check(6000, 10000, 4000)
+            check(10000, 10000, 0)
+            "##,
+        )
+        .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_missing_target_primary_tracks_pool_without_mutation() {
+    env()
+        .eval::<()>(
+            r##"
+            A_Admin.SetTarget("Power Dummy", 63, 1, true)
+            local function check(current, maximum, expected)
+                A_Admin.SetTargetPower(current, maximum, 0)
+                assert(UnitPower("target") == current)
+                assert(UnitPowerMax("target") == maximum)
+                local missing = UnitPowerMissing("target", nil, false)
+                assert(type(missing) == "number")
+                assert(missing == expected, "unexpected target missing power")
+                assert(select("#", UnitPowerMissing("target", nil, false)) == 1)
+                assert(UnitPowerMissing("target", 0, false) == expected)
+                assert(UnitPower("target") == current, "query changed current power")
+                assert(UnitPowerMax("target") == maximum, "query changed maximum power")
+            end
+            check(1200, 5000, 3800)
+            check(3500, 5000, 1500)
+            check(3500, 7000, 3500)
+            check(7000, 7000, 0)
+            "##,
+        )
+        .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_missing_player_secondary_preserves_primary_pool() {
+    env()
+        .eval::<()>(
+            r##"
+            A_Admin.SetPlayerPower(42000, 90000, 0)
+            local function check(current, maximum, expected)
+                A_Admin.SetPlayerPower(current, maximum, 9)
+                assert(UnitPower("player", 9) == current)
+                assert(UnitPowerMax("player", 9) == maximum)
+                local missing = UnitPowerMissing("player", 9, false)
+                assert(type(missing) == "number")
+                assert(missing == expected, "unexpected secondary missing power")
+                assert(select("#", UnitPowerMissing("player", 9, false)) == 1)
+                assert(UnitPower("player", 9) == current, "query changed secondary power")
+                assert(UnitPowerMax("player", 9) == maximum, "query changed secondary maximum")
+                assert(UnitPower("player") == 42000, "query changed primary power")
+                assert(UnitPowerMax("player") == 90000, "query changed primary maximum")
+                assert(UnitPowerType("player") == 0, "query changed primary power type")
+            end
+            check(2, 5, 3)
+            check(4, 5, 1)
+            check(4, 6, 2)
+            check(6, 6, 0)
+            "##,
+        )
+        .unwrap();
+}
+
 #[test]
 fn unit_power_percent_uses_current_over_max_power() {
     let env = env();
