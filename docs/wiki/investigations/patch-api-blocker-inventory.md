@@ -18,7 +18,7 @@ Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retai
 ## How to use a row
 
 1. Resolve `(manifest, id)` and read `missing_evidence` with `basis_references`. Notes are copied from the manifest, not newly established native facts.
-2. Follow `probe_protocol` into the shared protocol definition for the next observation and its dependency. Protocols propose acquisition methods; they are not executable test specifications.
+2. Follow `probe_plan` when present for row-specific observations, dependencies and remaining design gaps; otherwise use `probe_protocol` as routing only. Neither is an executable test specification.
 3. Establish concrete inputs, producer/consumer and target build before writing assertions. If these are absent, record that probe-design blocker rather than inventing values.
 4. Separate ordinary behavior from secret/security/VM obligations before execution. A mixed row is not wholly excluded merely because its notes mention secrets.
 5. Capture observations, then reassess only the demonstrated scope. Native absence, simulator state, rendering and lifecycle remain distinct proof levels.
@@ -48,6 +48,24 @@ The removal queue includes **192 enum/constant/CVar rows**. Local full-LoD simul
 | Store population capture | 1 | Existing capture never called the missing entry point. Find a build/state with callable population; observe non-secret UI state separately from protection. |
 
 These explicit deferrals are **not an exhaustive count of security-related rows**. Earlier inventory drafts incorrectly treated all `C_` rows mentioning secrets as excluded and routed region parameters through timed-map probes; neither inference is retained.
+
+## Concrete probe-design follow-up
+
+**35 rows now link to 13 narrower plans** in the JSON. The other **1,086 rows retain routing protocols only**; complete key coverage does not mean complete probe design. All 13 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+
+| Plan family | Concrete distinction to capture |
+|---|---|
+| Cast/channel identities | Preserve nil tuple positions; compare castID and castBarID across consecutive/replaced casts without aliasing identities. |
+| Unit realm/base sex | Same-realm versus cross-realm return values; displayed versus base sex across a real disguise fixture. |
+| Numeric formatting/markup | Signed tie-boundary outputs and locale; isolated markup plus all 32 combinations of the five preservation flags. |
+| Action charges/aura time | Populated producer transitions, recharge/refresh/removal and exact field relationships; no zero/default-table credit. |
+| CVar/Perks/math publication | Compare both CVar spellings read-only; distinguish raw/ordinary lookup and base/target load phases from native removal proof. |
+| Crafting fields | Identify a real populated structure producer before asserting a removed key; unrelated internal itemID tables are not substitutes. |
+| PTR region/map structures | Find an actual consuming/exposing API; global nil or scalar key/time returns do not imply a missing public constructor. |
+
+Two investigation suggestions were rejected: mutating the CVar is unnecessary for the recorded getter case-sensitivity gap, and later cached cast/action signatures cannot replace the pinned 12.0.0 contract. Security enforcement remains deferred even when an ordinary producer observation is possible.
+
+The 35-row refinement requires independent source/consistency verification; the prior proof below covers the unchanged baseline inventory only.
 
 ## Refresh and verification
 

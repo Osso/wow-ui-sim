@@ -202,7 +202,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -214,7 +215,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -226,7 +228,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -238,7 +241,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -250,7 +254,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -288,7 +293,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -301,7 +307,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -314,7 +321,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "action-counts-and-charges"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4891,7 +4899,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_string_util.rs"
-      ]
+      ],
+      "probe_plan": "numeric-formatting"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4903,7 +4912,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_string_util.rs"
-      ]
+      ],
+      "probe_plan": "numeric-formatting"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4915,7 +4925,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_string_util.rs"
-      ]
+      ],
+      "probe_plan": "hyperlink-preservation"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7161,7 +7172,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "aura-time-and-dispel"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7187,7 +7199,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "aura-time-and-dispel"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7200,7 +7213,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "aura-time-and-dispel"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7213,7 +7227,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "aura-time-and-dispel"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7226,7 +7241,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "aura-time-and-dispel"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9594,7 +9610,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_probes.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "unit-base-sex"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10953,7 +10970,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "cast-identities"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10966,7 +10984,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "cast-identities"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10992,7 +11011,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/group_queries.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "unit-name-realm"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11005,7 +11025,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/group_queries.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "unit-name-realm"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13038,7 +13059,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "perks-alias-removal"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13409,7 +13431,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "crafting-removed-fields"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13421,7 +13444,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "crafting-removed-fields"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13979,7 +14003,8 @@
         "src/lua_api/env_init/mod.rs",
         "Cargo.lock",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "lua-math-publication"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13994,7 +14019,8 @@
         "src/loader/tests/frame_interaction.rs",
         "Cargo.lock",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "lua-math-publication"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14009,7 +14035,8 @@
         "src/cvars.rs",
         "src/lua_api/globals/set_cvar_verb.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "cvar-case-rename"
     },
     {
       "manifest": "data/patch-api/12.0.5-probes.json",
@@ -14196,7 +14223,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "region-params-consumer"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14207,7 +14235,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "region-params-consumer"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14218,7 +14247,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "region-params-consumer"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14229,7 +14259,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "region-params-consumer"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14240,7 +14271,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "region-params-consumer"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14273,7 +14305,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "timed-entry-exposure"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14284,7 +14317,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "timed-entry-exposure"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -14295,7 +14329,131 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "timed-entry-exposure"
     }
-  ]
+  ],
+  "probe_plans": {
+    "cast-identities": {
+      "dependency": "Matching native 12.0.0 cast/channel capture with controllable player casts, an observable non-player channel, and empowered/non-empowered channels. Existing simulator cast_id does not establish native castBarID identity.",
+      "observations": [
+        "Capture select(\"#\", ...) and every positional result, retaining nil positions, during an active cast/channel and after completion/cancellation. Use the pinned 12.0.0 source contract, not a later cache signature.",
+        "Record consecutive and replaced casts with exact castID and castBarID values; compare identity stability without assuming they alias. Capture no-cast, unknown-unit and non-player cases separately.",
+        "For channels record empowerment flag and stage count. Unknown input coercion/errors are observations, not invented expectations."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native build/session and controllable spell/unit fixtures not supplied."
+    },
+    "unit-name-realm": {
+      "dependency": "Native same-realm and cross-realm unit fixtures on the target build.",
+      "observations": [
+        "Capture both positional results and exact return count for player, same-realm party, cross-realm party, unknown and invalid unit tokens.",
+        "Distinguish nil from empty string and explicit realm text. Do not replace the current result with SimRealm merely because generated documentation declares a string."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative same-realm capture or cross-realm party fixture."
+    },
+    "unit-base-sex": {
+      "dependency": "Native unit whose displayed sex changes under a known disguise while base identity remains stable; producer fixture not identified.",
+      "observations": [
+        "Record UnitSexBase and UnitSex for the same unit before, during and after disguise; retain enum values and return counts.",
+        "Capture ordinary and unknown unit controls separately. Do not alias UnitSexBase to UnitSex based on an unchanged ordinary player."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Disguise fixture and exact native base-versus-display distinction remain unknown."
+    },
+    "numeric-formatting": {
+      "dependency": "Native target-build access to each helper, with recorded locale.",
+      "observations": [
+        "Capture exact string bytes and return counts for -2.5, -1.5, -0.5, 0, 0.5, 1.5, 2.5, plus values immediately below/above ties and whole numbers.",
+        "Compare positive/negative fractional inputs and large finite magnitudes; record locale differences separately. Never infer rounding direction or grouping from the function name."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native rounding/formatting output corpus absent."
+    },
+    "hyperlink-preservation": {
+      "dependency": "Pinned five-flag signature and native markup output corpus; no local result is authoritative.",
+      "observations": [
+        "Use separate fixtures for hyperlink brackets, color escapes, newlines, atlas escapes and texture escapes; record default output, each single flag, then all 32 boolean combinations.",
+        "Include ordinary text, adjacent markup and truncated/unbalanced markup. Record exact input/output bytes and errors instead of asserting a guessed malformed-input policy."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native capture needed to establish flag interactions and malformed-input semantics."
+    },
+    "action-counts-and-charges": {
+      "dependency": "Target-build action slots containing an ordinary spell, a multi-charge spell, a stackable consumable and an empty slot; actual action/recharge producer required.",
+      "observations": [
+        "Record slot identity and exact GetActionDisplayCount/GetActionCharges/GetActionChargeDuration results before use, immediately after use, during recharge and after restoration. Query only methods applicable to each row.",
+        "For stackable consumables compare stack changes against displayed counts; for charges compare current/max values, start, duration and mod-rate relationships without equating display count to charges.",
+        "Record empty/non-charge/invalid-slot behavior separately. Use the 12.0.0 ActionBarChargeInfo contract; a later SpellChargeInfo signature is not evidence of the same shape."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Authoritative populated action fixtures and recharge transitions absent; zero/default tables are insufficient. Secret fields/enforcement remain deferred."
+    },
+    "aura-time-and-dispel": {
+      "dependency": "Native aura producer with spell/instance identity, one finite-duration aura, one non-expiring aura, refresh/removal transitions, and distinguishable dispel types.",
+      "observations": [
+        "Query the applicable duration/base-duration/refresh-extension/expiration APIs immediately after application, after elapsed time, after refresh and after removal. Capture optional spellID variants separately.",
+        "Record whether duration objects update or snapshot state; do not infer identity or clock policy from the return type.",
+        "For GetAuraDispelTypeColor supply a color curve with distinct channel values for candidate dispel IDs and compare observed aura type/color pairs; do not assume a dispel-ID mapping."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/refresh fixtures or dispel-ID mapping; secret values are not part of this ordinary-value plan."
+    },
+    "cvar-case-rename": {
+      "dependency": "Matching native 12.0.0 CVar getter/default capture. Current simulator lowercases keys, conflating NPCs and Npcs.",
+      "observations": [
+        "In the same load phase query GetCVar and GetCVarDefault for both nameplateShowFriendlyNPCs and nameplateShowFriendlyNpcs; preserve nil/string/error distinctions.",
+        "Repeat after relevant addon/LoD loads, recording failed loads. Compare both spellings without SetCVar or persistence mutation; mutation is unnecessary to establish the recorded getter case-sensitivity gap."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native case sensitivity/equivalence unproven; old-name absence must not be assumed."
+    },
+    "perks-alias-removal": {
+      "dependency": "Base/target native captures plus addon/load-phase inventory. Existing simulator startup test covers replacement value and old-key raw absence only.",
+      "observations": [
+        "Record namespace type, raw and ordinary lookup of UnusedPerksVendorCategoryRefundUnused and RefundUnused, plus current numeric values before/after relevant LoD loads.",
+        "Compare base and target captures for reintroduction or dynamic publication; keep observed lookup absence distinct from semantic equivalence of names sharing value 24."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Historical/native publication and alias evidence absent."
+    },
+    "lua-math-publication": {
+      "dependency": "Native Lua environment on the pinned target build, without third-party addon mutation.",
+      "observations": [
+        "Record type(math), rawget(math,\"pi\") and rawget(math,\"huge\"), ordinary lookups and return types before and after explicit Blizzard/LoD loading.",
+        "If present, record numeric behavior separately. Retained rilua standard-library values and register removal labels alone prove neither native presence nor native absence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native standard-library publication capture absent; do not remove Lua constants from static omission."
+    },
+    "crafting-removed-fields": {
+      "dependency": "An identified native producer of populated NewCraftingOrderInfo or RegularReagentInfo, with real order/reagent fixtures; an invented table cannot prove field removal.",
+      "observations": [
+        "First locate the exact producing or consuming call; record populated structure keys and sibling values before querying the removed field named by the row.",
+        "Compare populated and empty/missing cases, repeated reagent entries and producer errors. Do not label another itemID-bearing internal table as RegularReagentInfo."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Exact populated producer invocation and fixtures not identified. Relevant LoD loads help expose producers but do not replace populated-state evidence."
+    },
+    "region-params-consumer": {
+      "dependency": "Matching PTR constructor accepting CreateRegionParams. Existing probe found no global object; positional creation worked while attempted table calls failed.",
+      "observations": [
+        "Locate a documented consuming call before retrying argument shapes; preserve existing failure capture.",
+        "If a consumer exists, vary name, drawLayer, templateName and subLevel individually and record observable region properties. Global nil does not prove the generated structure is a missing public constructor."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No confirmed callable consumer. Do not synthesize a global CreateRegionParams object."
+    },
+    "timed-entry-exposure": {
+      "dependency": "Matching PTR API exposing an actual TimedSignalMapEntry; existing GetNextSignal capture returns scalar key/time values.",
+      "observations": [
+        "Inspect pinned map method contracts and capture populated/empty return arity/types. Distinguish scalar pairs from table/userdata entries.",
+        "Only if an entry is exposed, capture key/time values and compare time with GetTime-clock observations. Do not invent entry identity or constructor availability."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No public entry producer/consumer established; generated structure declaration alone is not one."
+    }
+  },
+  "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
 }

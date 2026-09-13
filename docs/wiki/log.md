@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Refine concrete blocker probes
+
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) adds 13 observation plans for 35 rows, distinguishing cast identities, realm/base-sex fixtures, formatting/markup, populated action/aura transitions, publication and PTR structure exposure. Remaining 1,086 rows still need concrete design. No native outcomes, runtime changes or credits; refinement verification pending.
+
 ## [2026-09-13] audit | Inventory remaining evidence dependencies
 
 User-selected documentation phase: [blocker inventory](investigations/patch-api-blocker-inventory.md) maps 1,121 evidence-required rows to literal gaps and proposed probes. Counts cover all six manifests; no runtime, credit, or deployment change. Mixed security obligations remain separated from ordinary behavior, and unestablished producer/input details remain probe-design blockers. Independent consistency verification passed at `19b2a4920`: exact committed manifest hashes, all 1,121 keys once, literal notes/distinct references, protocol counts and links. See inventory page for proof limits.
