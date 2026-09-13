@@ -73,7 +73,7 @@
 73. [best-effort] `added:C_ActionBar.GetActionTexture` — behavioral
 74. [evidence-required] `added:C_ActionBar.GetActionUseCount` — unsafe
 75. [best-effort] `added:C_ActionBar.GetBonusBarIndex` — behavioral
-76. [evidence-required] `added:C_ActionBar.GetBonusBarOffset` — unsafe
+76. [best-effort] `added:C_ActionBar.GetBonusBarOffset` — behavioral
 77. [evidence-required] `added:C_ActionBar.GetExtraBarIndex` — unsafe
 78. [evidence-required] `added:C_ActionBar.GetMultiCastBarIndex` — unsafe
 79. [best-effort] `added:C_ActionBar.GetOverrideBarIndex` — behavioral

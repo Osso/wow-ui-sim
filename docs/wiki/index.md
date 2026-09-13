@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Bound existing bonus-bar offset fixture
+
+Existing `26f4b9608` fixture injects bonus index `11` and asserts namespace/global offset values `5`. Only this relation gains best-effort credit: **2283 / 1125 / 2**; one test reference, no source/test changes or hash renewals. Focused profile verification is pending. Lower bounds, return cardinality, native paging/lifecycle/precedence and security remain unverified. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Expose scalar/color curve mode getter
 
 `11cacdf20` reproduces absent `GetType` on both curve kinds (0/2); `e0f6ba163` reads existing per-object mode state (retail 12.0.0 GREEN 2/2). Tests cover a single numeric return, default Linear, Step/Linear changes, and independent copied mode state. Only the getter gains best-effort credit: **2282 / 1126 / 2**. Ninety-four existing references renew changed-file hashes without expanding their claims. Independent verification at `b241590df` passes: grouped userdata tests 34/34 each retail 12.0.0/12.0.5/12.0.7 and 30/30 Mists; format/default check/build, startup `[]`, readability, both validators, and 14,827 evidence hashes pass. Ledger: `/tmp/verify-curve-get-type-ledger.json`. Native identity, coercion/errors, secrets, lifecycle, consumers and unsupported interpolation remain open. See [curve objects](../specs/curve-objects.md).

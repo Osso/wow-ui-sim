@@ -2798,8 +2798,8 @@
       "id": "added:C_ActionBar.GetBonusBarOffset",
       "symbol": "C_ActionBar.GetBonusBarOffset",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -2813,21 +2813,29 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
-          "summary": "Current C_ActionBar implementation publishes this query through action_bar_api.rs; the value is constant or derived compatibility behavior and is not covered by a focused direct test."
+          "summary": "The namespace getter dynamically reads GetBonusBarIndex and computes a nonnegative offset from six main pages. Existing fixture checks only index 11 producing offset 5; no lower-bound or native paging claim."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api/registration.rs",
           "source_hash": "1fce6600c8fe9ab8c0330e799c5c14dfdd4ce0c0ffc84fc6ff21b982ad2337cc",
           "summary": "Current C_ActionBar registration binds GetBonusBarOffset to its Rust implementation in the namespace method table."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_actionbar_api.rs::test_bonus_bar_offset_tracks_bonus_bar_index_above_main_pages",
+          "source_hash": "d96032d423c6e3a05003b7d7ada1834bbf0eea8b186d4fd6d51fe2d860ae9722",
+          "summary": "With C_ActionBar.GetBonusBarIndex replaced by a function returning 11, namespace and legacy GetBonusBarOffset values both equal 5. Assignment truncates extra returns, so return cardinality is not proved."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/admin_actionbar_api.rs::test_bonus_bar_offset_tracks_bonus_bar_index_above_main_pages"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "26f4b9608",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current GetBonusBarOffset behavior is derived compatibility behavior without focused direct proof; authoritative semantics or a correct model/test are required, and no approval can close the row."
+      "notes": "Existing simulator fixture only: injected bonus index 11 yields namespace/global offset 5. Independent focused profile verification pending. Lower-bound behavior, native paging, actual bonus-state lifecycle, precedence, invalid inputs, return cardinality and security remain unverified."
     },
     {
       "id": "added:C_ActionBar.GetExtraBarIndex",
