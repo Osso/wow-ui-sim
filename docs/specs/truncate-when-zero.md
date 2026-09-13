@@ -19,7 +19,7 @@
 
 ## Tests asserting this spec
 
-- `tests/c_api_surface.rs`: three `c_string_util_truncate_when_zero_*` tests; RED at `b8032c876`, GREEN and independent verification pending.
+- `tests/c_api_surface.rs`: three `c_string_util_truncate_when_zero_*` tests; RED 0/3 at `b8032c876`; GREEN 3/3 at `cfdd647c4`. Independent verification pending.
 
 ## Known gaps (current cycle)
 
