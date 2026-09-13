@@ -18,7 +18,7 @@
 
 ## Tests asserting this spec
 
-- `tests/admin_health_power_api.rs`: three `unit_power_missing_*` tests; RED 0/3 at `65873915e`; GREEN 3/3 at `c2d838c75`. Independent proof pending.
+- `tests/admin_health_power_api.rs`: three `unit_power_missing_*` tests; RED 0/3 at `65873915e`; GREEN 3/3 at `c2d838c75`. Independent bounded PASS at `07e950b89`: unchanged retail 12.0.0 GREEN 3/3 reused; retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Fmt/check/default build/startup `[]` and readability pass.
 
 ## Known gaps (current cycle)
 
