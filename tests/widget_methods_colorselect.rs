@@ -2,6 +2,124 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn statusbar_fill_style_enum_numeric_values() {
+    WowLuaEnv::new()
+        .unwrap()
+        .exec(
+            r#"
+            local styles = Enum.StatusBarFillStyle
+            for name, expected in pairs({Standard = 0, StandardNoRangeFill = 1, Center = 2, Reverse = 3}) do
+                assert(type(styles[name]) == "number", name .. " must be numeric")
+                assert(styles[name] == expected, name .. " has wrong enum value")
+            end
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn statusbar_fill_style_numeric_roundtrip_and_getter_arity() {
+    let failures: String = WowLuaEnv::new()
+        .unwrap()
+        .eval(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            local failures = {}
+            local function check(expected, ...)
+                local actual = ...
+                if select('#', ...) ~= 1 or type(actual) ~= "number" or actual ~= expected then
+                    failures[#failures + 1] = string.format(
+                        "style %d: expected one numeric return, got %d returns, %s %s",
+                        expected, select('#', ...), type(actual), tostring(actual))
+                end
+            end
+            for _, name in ipairs({"Standard", "StandardNoRangeFill", "Center", "Reverse"}) do
+                local style = Enum.StatusBarFillStyle[name]
+                bar:SetFillStyle(style)
+                check(style, bar:GetFillStyle())
+            end
+            return table.concat(failures, "\n")
+            "#,
+        )
+        .unwrap();
+    assert_eq!(failures, "");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn statusbar_fill_style_setter_returns_zero_values() {
+    WowLuaEnv::new()
+        .unwrap()
+        .exec(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            for _, name in ipairs({"Standard", "StandardNoRangeFill", "Center", "Reverse"}) do
+                assert(select('#', bar:SetFillStyle(Enum.StatusBarFillStyle[name])) == 0,
+                    name .. " setter must return zero values")
+            end
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn statusbar_fill_style_later_mutation_and_instance_isolation() {
+    WowLuaEnv::new()
+        .unwrap()
+        .exec(
+            r#"
+            local first = CreateFrame("StatusBar")
+            local second = CreateFrame("StatusBar")
+            local styles = Enum.StatusBarFillStyle
+            first:SetFillStyle(styles.Center)
+            second:SetFillStyle(styles.Reverse)
+            assert(first:GetFillStyle() == styles.Center, "first explicitly set style lost")
+            assert(second:GetFillStyle() == styles.Reverse, "second explicitly set style lost")
+            first:SetFillStyle(styles.StandardNoRangeFill)
+            assert(first:GetFillStyle() == styles.StandardNoRangeFill, "first mutation lost")
+            assert(second:GetFillStyle() == styles.Reverse, "first mutation changed second")
+            second:SetFillStyle(styles.Standard)
+            assert(second:GetFillStyle() == styles.Standard, "second mutation lost")
+            assert(first:GetFillStyle() == styles.StandardNoRangeFill, "second mutation changed first")
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn statusbar_fill_style_strict_numeric_validation_simulator_policy() {
+    let failures: String = WowLuaEnv::new()
+        .unwrap()
+        .eval(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            local failures = {}
+            local cases = {
+                {"nil", nil}, {"legacy string", "REVERSE"}, {"numeric string", "2"},
+                {"boolean", true}, {"table", {}}, {"negative", -1}, {"above range", 4},
+                {"fraction", 1.5}, {"NaN", 0/0}, {"infinity", math.huge},
+            }
+            for _, case in ipairs(cases) do
+                bar:SetFillStyle(Enum.StatusBarFillStyle.Center)
+                local accepted = pcall(function() bar:SetFillStyle(case[2]) end)
+                if accepted then
+                    failures[#failures + 1] = case[1] .. " accepted against simulator policy"
+                elseif bar:GetFillStyle() ~= Enum.StatusBarFillStyle.Center then
+                    failures[#failures + 1] = case[1] .. " rejection changed prior valid style"
+                end
+            end
+            return table.concat(failures, "\n")
+            "#,
+        )
+        .unwrap();
+    assert_eq!(failures, "");
+}
+
 // ============================================================================
 // ColorSelect: SetColorRGB / GetColorRGB
 // ============================================================================
