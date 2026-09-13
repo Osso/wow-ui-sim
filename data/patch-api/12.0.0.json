@@ -87004,19 +87004,19 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_returns_one_ordered_collection",
           "source_hash": "714d50b7eeb8c4eac71f91b57fb6718469427f78850a793fab687cef651e1591",
-          "summary": "One array return for empty/populated curves, fractional values and stored order, output mutation isolation with unchanged evaluation, and Copy/Clear/reuse snapshots. Simulator assumptions, not native ordering or identity proof."
+          "summary": "One array return for empty and populated curves; fractional x/RGBA values in stored insertion order. Ordering is a simulator policy, not native proof."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_isolates_collection_point_and_color_mutation",
           "source_hash": "714d50b7eeb8c4eac71f91b57fb6718469427f78850a793fab687cef651e1591",
-          "summary": "One array return for empty/populated curves, fractional values and stored order, output mutation isolation with unchanged evaluation, and Copy/Clear/reuse snapshots. Simulator assumptions, not native ordering or identity proof."
+          "summary": "Mutating a returned array, point and RGBA color leaves separate query snapshots and midpoint evaluation unchanged. Fresh output is a simulator policy."
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::color_curve_get_points_snapshots_survive_copy_clear_and_reuse",
           "source_hash": "714d50b7eeb8c4eac71f91b57fb6718469427f78850a793fab687cef651e1591",
-          "summary": "One array return for empty/populated curves, fractional values and stored order, output mutation isolation with unchanged evaluation, and Copy/Clear/reuse snapshots. Simulator assumptions, not native ordering or identity proof."
+          "summary": "Returned collections retain fractional point/color values after independent source and copied-curve ClearPoints and reuse. Native lifecycle semantics remain unverified."
         }
       ],
       "tests": [
