@@ -2,6 +2,92 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "retail-12-0-0")]
+fn check_vertex_boolean_behavior(body: &str) {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame")
+        regions = {parent:CreateTexture(), parent:CreateFontString()}
+        yes = CreateColor(0.125, 0.25, 0.5, 0.75)
+        no = CreateColor(0.875, 0.625, 0.375, 0.25)
+        function assertColor(region, color)
+            local r, g, b, a = region:GetVertexColor()
+            assert(r == color.r and g == color.g and b == color.b and a == color.a,
+                "selected RGBA differs")
+        end
+        "#,
+    )
+    .unwrap();
+    env.exec(body).unwrap();
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn vertex_boolean_selects_both_rgba_branches() {
+    check_vertex_boolean_behavior(
+        r#"
+        for _, region in ipairs(regions) do
+            region:SetVertexColorFromBoolean(true, yes, no)
+            assertColor(region, yes)
+            region:SetVertexColorFromBoolean(false, yes, no)
+            assertColor(region, no)
+        end
+        "#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn vertex_boolean_returns_zero_values() {
+    check_vertex_boolean_behavior(
+        r#"
+        for _, region in ipairs(regions) do
+            assert(select('#', region:SetVertexColorFromBoolean(true, yes, no)) == 0)
+            assert(select('#', region:SetVertexColorFromBoolean(false, yes, no)) == 0)
+        end
+        "#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn vertex_boolean_preserves_input_colors() {
+    check_vertex_boolean_behavior(
+        r#"
+        for _, region in ipairs(regions) do
+            for _, condition in ipairs({true, false}) do
+                region:SetVertexColorFromBoolean(condition, yes, no)
+                assert(yes.r == 0.125 and yes.g == 0.25 and yes.b == 0.5 and yes.a == 0.75)
+                assert(no.r == 0.875 and no.g == 0.625 and no.b == 0.375 and no.a == 0.25)
+            end
+        end
+        "#,
+    );
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn vertex_boolean_isolates_region_instances() {
+    check_vertex_boolean_behavior(
+        r#"
+        local parent = CreateFrame("Frame")
+        local peers = {parent:CreateTexture(), parent:CreateFontString()}
+        for index, region in ipairs(regions) do
+            local peer = peers[index]
+            peer:SetVertexColor(0.5, 0.25, 0.125, 1)
+            region:SetVertexColorFromBoolean(true, yes, no)
+            assertColor(peer, {r=0.5, g=0.25, b=0.125, a=1})
+            peer:SetVertexColorFromBoolean(false, yes, no)
+            assertColor(region, yes)
+            assertColor(peer, no)
+            region:SetVertexColorFromBoolean(false, yes, no)
+            assertColor(peer, no)
+        end
+        "#,
+    );
+}
+
 #[test]
 #[cfg(feature = "retail-12-0-0")]
 fn statusbar_fill_style_enum_numeric_values() {
