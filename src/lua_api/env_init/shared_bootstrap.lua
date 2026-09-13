@@ -876,7 +876,7 @@ if strtrim == nil then
   function strtrim(value, chars)
     value = tostring(value or "")
     if chars == nil then
-      return (value:gsub("^%s+", ""):gsub("%s+$", ""))
+      return (value:gsub("^[ \r\n\t]+", ""):gsub("[ \r\n\t]+$", ""))
     end
 
     local escapedChars = __wow_escape_trim_chars(chars)
