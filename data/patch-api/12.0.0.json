@@ -87079,7 +87079,7 @@
       "commit": "17bad77a3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Color removal only. Retail 12.0.0 RED 0/3 and GREEN 3/3; independent verification pending. Valid one-based indexing/compaction are simulator assumptions. Invalid indices, coercion/errors, scalar/vector methods, complete structures, native semantics, secrets/security and consumers remain unverified."
+      "notes": "Color removal only. Retail 12.0.0 RED 0/3 and GREEN 3/3; independent grouped userdata verification passes 43/43 each retail 12.0.0/12.0.5/12.0.7 and 39/39 Mists; /tmp/verify-color-curve-remove-point-ledger.json records default gates and metadata proof. Valid one-based indexing/compaction are simulator assumptions. Invalid indices, coercion/errors, scalar/vector methods, complete structures, native semantics, secrets/security and consumers remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.SetPoints",
