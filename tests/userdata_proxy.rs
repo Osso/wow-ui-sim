@@ -1103,6 +1103,78 @@ fn color_curve_set_points_keeps_copy_replacements_independent() {
     .expect("replacing either copied curve leaves the other unchanged");
 }
 
+// Numeric expectations below are simulator policies, not native numeric proof.
+#[test]
+fn color_curve_evaluate_unpacked_empty() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        assert(select('#', curve:EvaluateUnpacked(0.375)) == 4)
+        local r, g, b, a = curve:EvaluateUnpacked(0.375)
+        assert(type(r) == 'number' and type(g) == 'number')
+        assert(type(b) == 'number' and type(a) == 'number')
+        assert(r == 0 and g == 0 and b == 0 and a == 0)
+        "#,
+    )
+    .expect("empty color curve returns exactly four numeric zero channels");
+}
+
+#[test]
+fn color_curve_evaluate_unpacked_single_point() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.375, CreateColor(0.125, 0.25, 0.5, 0.875))
+        assert(select('#', curve:EvaluateUnpacked(0.375)) == 4)
+        local r, g, b, a = curve:EvaluateUnpacked(0.375)
+        assert(type(r) == 'number' and type(g) == 'number')
+        assert(type(b) == 'number' and type(a) == 'number')
+        assert(r == 0.125 and g == 0.25 and b == 0.5 and a == 0.875)
+        "#,
+    )
+    .expect("single color point returns exactly four numeric RGBA channels");
+}
+
+#[test]
+fn color_curve_evaluate_unpacked_linear_interior() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:SetType(Enum.LuaCurveType.Linear)
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.875))
+        curve:AddPoint(0.75, CreateColor(0.625, 0.75, 0.25, 0.5))
+        assert(select('#', curve:EvaluateUnpacked(0.375)) == 4)
+        local r, g, b, a = curve:EvaluateUnpacked(0.375)
+        assert(type(r) == 'number' and type(g) == 'number')
+        assert(type(b) == 'number' and type(a) == 'number')
+        assert(r == 0.25 and g == 0.375 and b == 0.4375 and a == 0.78125)
+        "#,
+    )
+    .expect("linear interior returns exactly four interpolated numeric RGBA channels");
+}
+
+#[test]
+fn color_curve_evaluate_unpacked_step_interior() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:SetType(Enum.LuaCurveType.Step)
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.875))
+        curve:AddPoint(0.75, CreateColor(0.625, 0.75, 0.25, 0.5))
+        assert(select('#', curve:EvaluateUnpacked(0.375)) == 4)
+        local r, g, b, a = curve:EvaluateUnpacked(0.375)
+        assert(type(r) == 'number' and type(g) == 'number')
+        assert(type(b) == 'number' and type(a) == 'number')
+        assert(r == 0.125 and g == 0.25 and b == 0.5 and a == 0.875)
+        "#,
+    )
+    .expect("Step interior returns exactly four numeric left-point RGBA channels");
+}
+
 #[test]
 fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
