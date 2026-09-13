@@ -57,13 +57,13 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 |---|---|
 | Cast/channel identities | Preserve nil tuple positions; compare castID and castBarID across consecutive/replaced casts without aliasing identities. |
 | Unit realm/base sex | Same-realm versus cross-realm return values; displayed versus base sex across a real disguise fixture. |
-| Numeric formatting/markup | Signed tie-boundary outputs and locale; isolated markup plus all 32 combinations of the five preservation flags. |
+| Numeric formatting/markup | Signed tie-boundary outputs and locale; isolated markup plus all 16 combinations of four pinned 12.0.0 controls, including stripNewlines. A later fifth control needs separate build proof. |
 | Action charges/aura time | Populated producer transitions, recharge/refresh/removal and exact field relationships; no zero/default-table credit. |
 | CVar/Perks/math publication | Compare both CVar spellings read-only; distinguish raw/ordinary lookup and base/target load phases from native removal proof. |
 | Crafting fields | Identify a real populated structure producer before asserting a removed key; unrelated internal itemID tables are not substitutes. |
 | PTR region/map structures | Find an actual consuming/exposing API; global nil or scalar key/time returns do not imply a missing public constructor. |
 
-Two investigation suggestions were rejected: mutating the CVar is unnecessary for the recorded getter case-sensitivity gap, and later cached cast/action signatures cannot replace the pinned 12.0.0 contract. Security enforcement remains deferred even when an ordinary producer observation is possible.
+Investigation suggestions rejected: mutating the CVar is unnecessary for the recorded getter case-sensitivity gap; later cached cast/action signatures cannot replace the pinned 12.0.0 contract; a fifth cached StripHyperlinks control cannot expand the four-control 12.0.0 matrix without target-build evidence. Security enforcement remains deferred even when an ordinary producer observation is possible.
 
 The 35-row refinement requires independent source/consistency verification; the prior proof below covers the unchanged baseline inventory only.
 

@@ -14372,10 +14372,10 @@
       "design_gap": "Native rounding/formatting output corpus absent."
     },
     "hyperlink-preservation": {
-      "dependency": "Pinned five-flag signature and native markup output corpus; no local result is authoritative.",
+      "dependency": "Pinned 12.0.0 register lists maintainColor, maintainBrackets, stripNewlines and maintainAtlases. Later cached documentation adds a fifth control; target-build availability must be captured separately.",
       "observations": [
-        "Use separate fixtures for hyperlink brackets, color escapes, newlines, atlas escapes and texture escapes; record default output, each single flag, then all 32 boolean combinations.",
-        "Include ordinary text, adjacent markup and truncated/unbalanced markup. Record exact input/output bytes and errors instead of asserting a guessed malformed-input policy."
+        "Use separate fixtures for hyperlink brackets, color escapes, newlines and atlas escapes; record default output, each single flag, then all 16 combinations of the four pinned 12.0.0 controls. Preserve stripNewlines polarity rather than calling every flag a preservation switch.",
+        "Include ordinary text, adjacent markup, texture escapes and truncated/unbalanced markup. Record exact input/output bytes and errors. Probe fifth-control behavior only on a separately identified build; do not import a later signature into 12.0.0."
       ],
       "ready_to_execute": false,
       "design_gap": "Native capture needed to establish flag interactions and malformed-input semantics."
