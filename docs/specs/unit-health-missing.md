@@ -18,7 +18,7 @@
 
 ## Tests asserting this spec
 
-- `tests/admin_health_power_api.rs`: two `unit_health_missing_*` tests. RED 0/2 at `ec5363a18`; GREEN and independent proof pending.
+- `tests/admin_health_power_api.rs`: two `unit_health_missing_*` tests. RED 0/2 at `ec5363a18`; GREEN 2/2 at `ab204a8cb`. Independent proof pending.
 
 ## Known gaps (current cycle)
 
