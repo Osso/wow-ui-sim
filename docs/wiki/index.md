@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 
-Existing `6a5a6aa54` coverage credits `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` only for tested byte-preserving transformations, empty input, and optional affixes. Return arity, coercion, native 12.0.0 epoch, taint/secret, and consumer behavior remain open. See [[patch-12-0-0-api-audit]].
+Existing `6a5a6aa54` coverage credits percent and pattern byte transformations separately; `WrapString` covers only optional affixes, empty infix, embedded NUL, and raw bytes. Return arity, coercion, native 12.0.0 epoch, taint/secret, and consumer behavior remain open. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Store predicted heal values
 

@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
 
-Classified `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` as best-effort behavioral from `6a5a6aa54` and `tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes`. Credit covers tested byte transformations, empty inputs, and optional affixes; return arity, coercion, native epoch, taint/secret, and consumers remain unproven.
+Classified `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` as best-effort behavioral from `6a5a6aa54` and `tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes`. The escaping methods cover their tested byte transformations; `WrapString` covers optional affixes, empty infix, embedded NUL, and raw bytes. Return arity, coercion, native epoch, taint/secret, and consumers remain unproven.
 
 ## [2026-09-13] audit | Store predicted heal values
 

@@ -19202,7 +19202,7 @@
         {
           "kind": "test",
           "reference": "tests/c_api_surface.rs",
-          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "summary": "Current retail integration test asserts optional affixes, empty infix, embedded NUL, and raw-byte wrapping. Not live-client or historical-epoch proof.",
           "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
@@ -19213,7 +19213,7 @@
       "commit": "6a5a6aa54",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence covers tested nonempty wrapping with optional affixes, empty infix, embedded NUL, UTF-8, and raw bytes. Exact return arity, invalid-argument/coercion, native 12.0.0 epoch, taint/secret, and consumer semantics remain unproven."
+      "notes": "Best-effort behavioral evidence covers tested nonempty wrapping with optional affixes, empty infix, embedded NUL, and raw bytes. Exact return arity, invalid-argument/coercion, native 12.0.0 epoch, taint/secret, and consumer semantics remain unproven."
     },
     {
       "id": "added:C_TaskQuest.GetQuestUIWidgetSetByType",
