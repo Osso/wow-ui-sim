@@ -18,7 +18,7 @@
 
 ## Tests asserting this spec
 
-- `tests/admin_health_power_api.rs`: two `unit_health_missing_*` tests. RED 0/2 at `ec5363a18`; GREEN 2/2 at `ab204a8cb`. Independent proof pending.
+- `tests/admin_health_power_api.rs`: two `unit_health_missing_*` tests. RED 0/2 at `ec5363a18`; GREEN 2/2 at `ab204a8cb`; independent bounded PASS at `ca6798aa5`. Retail 12.0.0 reuses unchanged GREEN; retail 12.0.5 and 12.0.7 freshly pass 2/2 each. Formatter, check, default build, startup Lua errors (`[]`), and readability pass. Ledger: `/tmp/verify-unit-health-missing-ledger.json`.
 
 ## Known gaps (current cycle)
 
