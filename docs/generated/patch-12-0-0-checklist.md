@@ -569,7 +569,7 @@
 569. [best-effort] `added:C_StringUtil.RemoveContiguousSpaces` — behavioral
 570. [evidence-required] `added:C_StringUtil.RoundToNearestString` — unsafe
 571. [evidence-required] `added:C_StringUtil.StripHyperlinks` — unsafe
-572. [evidence-required] `added:C_StringUtil.TruncateWhenZero` — unsafe
+572. [best-effort] `added:C_StringUtil.TruncateWhenZero` — behavioral
 573. [best-effort] `added:C_StringUtil.WrapString` — behavioral
 574. [evidence-required] `added:C_TaskQuest.GetQuestUIWidgetSetByType` — unsafe
 575. [evidence-required] `added:C_TooltipComparison.CompareItem` — unsafe

@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Bound TruncateWhenZero formatting
+
+`b8032c876` RED and `cfdd647c4` GREEN 3/3 establish one bounded `C_StringUtil.TruncateWhenZero` credit: ordinary finite nonnegative round-down/zero-empty results, one-string arity, call independence, and explicit simulator-policy rejection. Metadata renews 16 changed-path hashes, adds one test reference, and records **2303 / 1105 / 2**. Native coercion/error detail, negative/extreme/locale behavior, secret/security, historical availability, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved; no Mists proof claimed.
+
 ## [2026-09-13] audit | Correct contaminated 12.0.0 inventory notes
 
 Corrected 1,634 remaining unrelated inventory notes copied by historical `0dea0ce9f3`. Each was restored from the matching 12.0.0 manifest row note; four legitimate InitiativeRewardFlags rows remain unchanged. Documentation only: no runtime proof, credits, classifications, validators, or generators changed.
