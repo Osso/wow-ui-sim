@@ -2835,7 +2835,7 @@
       "commit": "26f4b9608",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Existing simulator fixture only: injected bonus index 11 yields namespace/global offset 5. Independent focused profile verification pending. Lower-bound behavior, native paging, actual bonus-state lifecycle, precedence, invalid inputs, return cardinality and security remain unverified."
+      "notes": "Existing simulator fixture only: injected bonus index 11 yields namespace/global offset 5. Independent grouped action-bar proof passes 9/9 each retail 12.0.0/12.0.5/12.0.7, with metadata validation recorded in /tmp/verify-bonus-offset-ledger.json. Lower-bound behavior, native paging, actual bonus-state lifecycle, precedence, invalid inputs, return cardinality and security remain unverified."
     },
     {
       "id": "added:C_ActionBar.GetExtraBarIndex",

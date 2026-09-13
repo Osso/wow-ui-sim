@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Bound existing bonus-bar offset fixture
 
-Existing `26f4b9608` fixture injects bonus index `11` and asserts namespace/global offset values `5`. Only this relation gains best-effort credit: **2283 / 1125 / 2**; one test reference, no source/test changes or hash renewals. Focused profile verification is pending. Lower bounds, return cardinality, native paging/lifecycle/precedence and security remain unverified. See [[patch-12-0-0-api-audit]].
+Existing `26f4b9608` fixture injects bonus index `11` and asserts namespace/global offset values `5`. Only this relation gains best-effort credit: **2283 / 1125 / 2**; one test reference, no source/test changes or hash renewals. Verification at `3e0790f23` passes 9/9 grouped action-bar tests on each retail 12.0.0/12.0.5/12.0.7 profile, plus validator/checklist/inventory and 14,828 fresh hashes; unchanged default gates reused. Ledger: `/tmp/verify-bonus-offset-ledger.json`. Lower bounds, return cardinality, native paging/lifecycle/precedence and security remain unverified. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Expose scalar/color curve mode getter
 
