@@ -870,6 +870,94 @@ fn color_curve_get_point_copy_survives_original_clear() {
 }
 
 #[test]
+fn color_curve_get_points_returns_one_ordered_collection() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local function one_table(...)
+            assert(select('#', ...) == 1, 'GetPoints returns one value')
+            local result = ...
+            assert(type(result) == 'table')
+            return result
+        end
+        local curve = C_CurveUtil.CreateColorCurve()
+        assert(next(one_table(curve:GetPoints())) == nil)
+        -- Insertion order is a simulator policy, not native ordering proof.
+        curve:AddPoint(0.75, CreateColor(0.875, 0.5, 0.25, 1))
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        local points = one_table(curve:GetPoints())
+        assert(#points == 2 and points[3] == nil)
+        assert(points[1].x == 0.75 and points[2].x == 0.25)
+        assert(points[1].y.r == 0.875 and points[1].y.g == 0.5)
+        assert(points[1].y.b == 0.25 and points[1].y.a == 1)
+        assert(points[2].y.r == 0.125 and points[2].y.g == 0.25)
+        assert(points[2].y.b == 0.5 and points[2].y.a == 0.75)
+        "#,
+    )
+    .expect("color collection query returns one table in configured order");
+}
+
+#[test]
+fn color_curve_get_points_isolates_collection_point_and_color_mutation() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        curve:AddPoint(0.75, CreateColor(0.875, 0.5, 0.25, 1))
+        local points, other = curve:GetPoints(), curve:GetPoints()
+        -- Fresh output snapshots are a simulator policy.
+        points[1].x = 9
+        points[1].y.r, points[1].y.g = 1, 1
+        points[1].y.b, points[1].y.a = 1, 0
+        points[2] = nil
+        points[3] = {x=10, y=CreateColor(1, 1, 1, 1)}
+        local later = curve:GetPoints()
+        for _, snapshot in ipairs({other, later}) do
+            assert(#snapshot == 2 and snapshot[3] == nil)
+            assert(snapshot[1].x == 0.25 and snapshot[2].x == 0.75)
+            assert(snapshot[1].y.r == 0.125 and snapshot[1].y.g == 0.25)
+            assert(snapshot[1].y.b == 0.5 and snapshot[1].y.a == 0.75)
+        end
+        local r, g, b, a = curve:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and g == 0.375 and b == 0.375 and a == 0.875)
+        "#,
+    )
+    .expect("returned collection mutations leave snapshots and evaluation unchanged");
+}
+
+#[test]
+fn color_curve_get_points_snapshots_survive_copy_clear_and_reuse() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.25, CreateColor(0.125, 0.25, 0.5, 0.75))
+        local copy = curve:Copy()
+        local snapshot = curve:GetPoints()
+        curve:ClearPoints()
+        assert(next(curve:GetPoints()) == nil)
+        curve:AddPoint(0.75, CreateColor(1, 0, 0, 1))
+        local copied = copy:GetPoints()
+        assert(#copied == 1 and copied[1].x == 0.25)
+        copy:ClearPoints()
+        assert(next(copy:GetPoints()) == nil)
+        copy:AddPoint(0.5, CreateColor(0, 1, 0, 1))
+        for _, points in ipairs({snapshot, copied}) do
+            assert(#points == 1 and points[1].x == 0.25)
+            assert(points[1].y.r == 0.125 and points[1].y.g == 0.25)
+            assert(points[1].y.b == 0.5 and points[1].y.a == 0.75)
+        end
+        assert(curve:GetPoints()[1].x == 0.75)
+        assert(copy:GetPoints()[1].x == 0.5)
+        assert(curve:GetPoints()[1].y.r == 1)
+        assert(copy:GetPoints()[1].y.g == 1)
+        "#,
+    )
+    .expect("collection snapshots survive independent curve clear and reuse");
+}
+
+#[test]
 fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_eval): (String, bool) = env
