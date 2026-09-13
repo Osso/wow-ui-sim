@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Correct default string trimming bytes
 
-Pinned 12.0.0 docs limit `string.trim` defaults to space/CR/LF/tab. Tests `a3ce6850b` are RED 4/6 because VT/FF boundaries reveal the bootstrap `%s` mismatch; runtime `0d648ebde` is awaiting GREEN and independent proof. No credit claimed. See [String trimming](../specs/string-trim.md) and [[patch-12-0-0-api-audit]].
+Pinned 12.0.0 docs limit `string.trim` defaults to space/CR/LF/tab. Tests `a3ce6850b` are RED 4/6 because VT/FF boundaries reveal the bootstrap `%s` mismatch; runtime `0d648ebde` reaches development GREEN 6/6. Independent proof and credit remain pending. See [String trimming](../specs/string-trim.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Model missing unit power
 

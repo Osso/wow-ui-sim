@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Correct default string trimming bytes
 
-The pinned 12.0.0 documentation defines `string.trim` default bytes as space, CR, LF, and tab. Test commit `a3ce6850b` records RED 4/6: VT and FF boundary cases expose the bootstrap default `%s` mismatch; four non-default controls pass. Runtime commit `0d648ebde` replaces that default character class, but GREEN and independent verification remain pending. No audit credit, metadata, or checklist status changes. Native coercion/errors, security, arbitrary custom-byte semantics, profile availability, lifecycle, and consumer behavior remain unproven. See [String trimming](../../specs/string-trim.md).
+The pinned 12.0.0 documentation defines `string.trim` default bytes as space, CR, LF, and tab. Test commit `a3ce6850b` records RED 4/6: VT and FF boundary cases expose the bootstrap default `%s` mismatch; four non-default controls pass. Runtime commit `0d648ebde` replaces that default character class and reaches development GREEN 6/6. Independent verification remains pending; the focused run repeats six existing warnings. No audit credit, metadata, or checklist status changes. Native coercion/errors, security, arbitrary custom-byte semantics, profile availability, lifecycle, and consumer behavior remain unproven. See [String trimming](../../specs/string-trim.md).
 
 ## [2026-09-13] audit | Model missing unit power
 

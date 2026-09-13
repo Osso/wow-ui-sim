@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Document default string trimming mismatch
 
-Pinned 12.0.0 docs specify space/CR/LF/tab defaults. `a3ce6850b` records RED 4/6 from VT/FF boundaries against bootstrap `%s`; `0d648ebde` changes runtime default bytes. GREEN, independent verification, and audit credit remain pending. See [String trimming](../specs/string-trim.md).
+Pinned 12.0.0 docs specify space/CR/LF/tab defaults. `a3ce6850b` records RED 4/6 from VT/FF boundaries against bootstrap `%s`; `0d648ebde` changes runtime default bytes and reaches development GREEN 6/6. The focused run repeats six existing warnings; independent verification and audit credit remain pending. See [String trimming](../specs/string-trim.md).
 
 ## [2026-09-13] audit | Model missing unit power
 

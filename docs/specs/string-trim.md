@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Omitted characters trim space/CR/LF/tab only; VT/FF stop trimming and remain intact.
-- [ ] Preserve interior bytes, including whitespace; handle empty and all-default-whitespace strings.
-- [ ] Preserve existing explicit `nil` default behavior and global `strtrim` alias behavior as simulator compatibility, not independently established native contracts.
-- [ ] Explicit `xy` removes only those edge bytes; an empty character set leaves the string unchanged.
-- [ ] Return exactly one string for the tested default, nil, custom, and empty cases.
+- [x] Omitted characters trim space/CR/LF/tab only; VT/FF stop trimming and remain intact.
+- [x] Preserve interior bytes, including whitespace; handle empty and all-default-whitespace strings.
+- [x] Preserve existing explicit `nil` default behavior and global `strtrim` alias behavior as simulator compatibility, not independently established native contracts.
+- [x] Explicit `xy` removes only those edge bytes; an empty character set leaves the string unchanged.
+- [x] Return exactly one string for the tested default, nil, custom, and empty cases.
 
 ## How it works
 
@@ -20,7 +20,7 @@
 
 ## Tests asserting this spec
 
-- `tests/utility_api.rs`: five focused `test_string_trim_*` cases plus the existing alias control. Test commit `a3ce6850b` reports RED 4/6 overall: both VT/FF boundaries fail; remaining controls pass. GREEN and independent verification pending.
+- `tests/utility_api.rs`: five focused `test_string_trim_*` cases plus the existing alias control. Test commit `a3ce6850b` reports RED 4/6 overall: both VT/FF boundaries fail; remaining controls pass. Runtime `0d648ebde` reaches development GREEN 6/6; independent verification remains pending.
 
 ## Known gaps (current cycle)
 
