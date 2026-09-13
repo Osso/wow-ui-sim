@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Remaining evidence inventory
+
+[Blocker inventory](investigations/patch-api-blocker-inventory.md): 1,121 evidence-required rows across six manifests, with literal gaps, source references and proposed acquisition protocols. No new credits; semantic/probe readiness is not inferred from structural coverage.
+
 ## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 
 Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime `218ba9977` corrects shared `SetPaused` dispatch in `model/model_scene.rs`; this was not missing registration. Exact-byte proof reuse at `37caff416` confirms 5/5 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup (`[]`)/readability and validator PASS. Metadata records 14,903 fresh hashes, zero stale, 15 renewals, six additions, and one credit; totals **2313 / 1095 / 2**. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven. Broad audit remains open. See [spec](../specs/cooldown-paused-state.md).
