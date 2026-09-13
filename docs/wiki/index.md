@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending C_CombatLog setting state
+
+Five existing-behavior tests initially pass 5/5 on retail 12.0.0 at `7bd7f10ca`; they cover only explicit boolean/numeric setting storage, arity, independence and environment isolation. No runtime change or credit pending independent proof. [Spec](../specs/combat-log-setting-state.md).
+
 ## [2026-09-13] audit | Credit bounded housing free-place state
 
 Runtime `3839f707f`, tests `220897051`: independent ordinary-state proof passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Exactly two credits cover explicit boolean/repeated writes, getter-one/setter-zero arity, environment isolation and unrelated housing-service preservation. Separately, current-default loaded `HousingFramesUtil` forwards false/true/false with zero returns; not native or historical-profile/full-LoD proof. Correction-only metadata verification at `804a6b073` records 14,917 fresh hashes, zero stale, 139 renewals and 14 additions; totals **2315 / 1093 / 2**. The 1,119-row snapshot retains 282 plans, 281 unchanged from before the credits. Validator output has 3,410 matching rows and empty stderr, but its exit status was not retained; no rerun. Native/default/reset/lifecycle/persistence, placement/rendering/events, validation, earlier-profile and security behavior remain unproven. Proof: `/tmp/verify-housing-freeplace-ledger.json`; metadata: `/tmp/verify-housing-freeplace-metadata-corrected-ledger.json`.
