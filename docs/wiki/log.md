@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Retrieve stored color-curve points
+
+`6b7bd754f` reproduces missing color `GetPoint` (0/3); `d2e29052f` implements existing-state retrieval and `3c5ecaefa` corrects fixture mutation (final retail 12.0.0 GREEN 3/3). One-based indexing, missing-index nil and fresh point/color output are simulator assumptions. Tests cover fractional x/RGBA values, return count, output mutation isolation, and Copy/Clear/reuse. Only the getter gains credit: **2284 / 1124 / 2**, three test references and 96 provenance renewals. Independent verification pending. Scalar vector queries, full point-structure contracts, invalid-input/coercion/errors, secrets, native identity and consumers remain open. See [curve objects](../specs/curve-objects.md).
+
 ## [2026-09-12] audit | Bound existing bonus-bar offset fixture
 
 Existing `26f4b9608` fixture injects bonus index `11` and asserts namespace/global offset values `5`. Only this relation gains best-effort credit: **2283 / 1125 / 2**; one test reference, no source/test changes or hash renewals. Verification at `3e0790f23` passes 9/9 grouped action-bar tests on each retail 12.0.0/12.0.5/12.0.7 profile, plus validator/checklist/inventory and 14,828 fresh hashes; unchanged default gates reused. Ledger: `/tmp/verify-bonus-offset-ledger.json`. Lower bounds, return cardinality, native paging/lifecycle/precedence and security remain unverified. See [[patch-12-0-0-api-audit]].
