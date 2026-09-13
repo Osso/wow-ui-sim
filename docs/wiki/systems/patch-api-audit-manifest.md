@@ -453,6 +453,8 @@ Current 12.1 FrameXML totals are **1 implemented, 431 best-effort, 0 evidence-re
 
 Normal manifest validation recomputes:
 
+Resolve evidence references by their parsed JSON `reference` path, independent of key order, and renew every changed-file hash across every manifest; the order-dependent replacement that missed 34 references required a correction.
+
 - raw patch-list and Blizzard cache-manifest SHA-256 values;
 - every resolved row's evidence-file SHA-256;
 - focused test file and exact named `#[test]` definition existence;
