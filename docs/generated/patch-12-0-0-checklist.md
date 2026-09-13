@@ -2379,7 +2379,7 @@
 2379. [evidence-required] `added:UnitIsNPCAsPlayer` — unsafe
 2380. [best-effort] `added:UnitIsSpellTarget` — behavioral
 2381. [evidence-required] `added:UnitNameFromGUID` — unsafe
-2382. [evidence-required] `added:UnitPowerMissing` — unsafe
+2382. [best-effort] `added:UnitPowerMissing` — behavioral
 2383. [evidence-required] `added:UnitPowerPercent` — unsafe
 2384. [evidence-required] `added:UnitSexBase` — unsafe
 2385. [evidence-required] `added:UnitShouldDisplaySpellTargetName` — unsafe

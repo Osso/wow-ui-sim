@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Model missing unit power
+
+`UnitPowerMissing` gains one bounded 12.0.0 credit: player/target primary plus tested player power type 9 max-minus-current numeric results, mutation response, query non-mutation, one return, and explicit `unmodified=false`. **2305 / 1103 / 2**. Other tokens/power types, `unmodified=true`, security/native validation, lifecycle, and consumer behavior remain open; no Mists claim is made. See [Missing unit power](../specs/unit-power-missing.md) and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] audit | Model missing unit health
 
 `UnitHealthMissing` gains one bounded 12.0.0 credit: player/target max-minus-current numeric results, mutation response, query non-mutation, one return, and explicit `usePredicted=false`. **2304 / 1104 / 2**. Independent bounded PASS at `ca6798aa5`: reused unchanged retail 12.0.0 GREEN 2/2, fresh retail 12.0.5/12.0.7 2/2 each; fmt/check/default build/startup `[]` and readability pass. Existing warnings: 6/1/profile; default none. Prediction, other tokens, security/native validation, lifecycle, and consumer behavior remain open; no Mists claim is made. See [Missing unit health](../specs/unit-health-missing.md) and [[patch-12-0-0-api-audit]].
