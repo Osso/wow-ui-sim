@@ -111,6 +111,14 @@ local function make_factory(kind, isColor)
     install_object_access(prototype, methods, state)
     install_curve_methods(methods, state, create, isColor)
     if isColor then
+        function methods:GetPoints()
+            -- Best-effort: insertion order and independent output snapshots.
+            local points = {}
+            for index, point in ipairs(state(self).points) do
+                points[index] = {x=point.x, y=copy_value(point.y, true)}
+            end
+            return points
+        end
         function methods:GetPoint(index)
             -- Best-effort: one-based lookup and independent output snapshots.
             local point = state(self).points[index]
