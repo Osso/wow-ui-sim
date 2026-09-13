@@ -958,6 +958,76 @@ fn color_curve_get_points_snapshots_survive_copy_clear_and_reuse() {
 }
 
 #[test]
+fn color_curve_remove_point_compacts_first_middle_and_last() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        -- Valid one-based indices are a simulator policy, not native proof.
+        for removed = 1, 3 do
+            local curve = C_CurveUtil.CreateColorCurve()
+            for index = 1, 3 do
+                curve:AddPoint(index / 4, CreateColor(index / 4, 0.5, 0.75, 1))
+            end
+            assert(select('#', curve:RemovePoint(removed)) == 0)
+            assert(curve:GetPointCount() == 2)
+            local points = curve:GetPoints()
+            assert(#points == 2 and points[3] == nil)
+            local remaining = 1
+            for original = 1, 3 do
+                if original ~= removed then
+                    assert(points[remaining].x == original / 4)
+                    local r, g, b, a = points[remaining].y:GetRGBA()
+                    assert(r == original / 4 and g == 0.5 and b == 0.75 and a == 1)
+                    remaining = remaining + 1
+                end
+            end
+        end
+        "#,
+    )
+    .expect("valid color point removal compacts remaining points without returns");
+}
+
+#[test]
+fn color_curve_remove_point_last_leaves_empty_curve() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0.25, CreateColor(0.5, 0.25, 0.75, 1))
+        assert(select('#', curve:RemovePoint(1)) == 0)
+        assert(curve:GetPointCount() == 0)
+        assert(next(curve:GetPoints()) == nil)
+        assert(curve:GetPoint(1) == nil)
+        "#,
+    )
+    .expect("removing the sole color point leaves an empty curve");
+}
+
+#[test]
+fn color_curve_remove_point_updates_evaluation_independently_of_copy() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0, CreateColor(0, 0, 0, 0))
+        curve:AddPoint(0.5, CreateColor(1, 0, 1, 0))
+        curve:AddPoint(1, CreateColor(1, 1, 1, 1))
+        local copy = curve:Copy()
+        assert(select('#', curve:RemovePoint(2)) == 0)
+        local r, g, b, a = curve:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and g == 0.5 and b == 0.5 and a == 0.5)
+        assert(copy:GetPointCount() == 3 and copy:GetPoint(2).x == 0.5)
+        r, g, b, a = copy:Evaluate(0.5):GetRGBA()
+        assert(r == 1 and g == 0 and b == 1 and a == 0)
+        assert(select('#', copy:RemovePoint(1)) == 0)
+        assert(curve:GetPointCount() == 2 and curve:GetPoint(1).x == 0)
+        assert(copy:GetPointCount() == 2 and copy:GetPoint(1).x == 0.5)
+        "#,
+    )
+    .expect("middle removal changes evaluation without mutating a copied curve");
+}
+
+#[test]
 fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_eval): (String, bool) = env
