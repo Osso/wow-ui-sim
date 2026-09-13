@@ -89,7 +89,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "src/lua_api/workarounds/temporary/restricted_actions_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-restriction_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -101,7 +102,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -113,7 +115,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -126,7 +129,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-catalog_commerce"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -139,7 +143,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-catalog_commerce"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -152,7 +157,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-catalog_commerce"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -165,7 +171,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-catalog_commerce"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -177,7 +184,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-loot_commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -189,7 +197,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-loot_commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -266,7 +275,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -279,7 +289,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -334,7 +345,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -347,7 +359,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -360,7 +373,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -373,7 +387,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -386,7 +401,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -399,7 +415,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -412,7 +429,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -425,7 +443,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -438,7 +457,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -451,7 +471,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -464,7 +485,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -477,7 +499,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -490,7 +513,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -503,7 +527,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -516,7 +541,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -529,7 +555,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -542,7 +569,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/globals/action_bar_api/registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-actionbar"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -554,7 +582,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_battle_net.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_BattleNet"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -566,7 +595,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_battle_net.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_BattleNet"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -578,7 +608,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_battle_net.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_BattleNet"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -876,7 +907,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_character_services.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CharacterServices"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -888,7 +920,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/c_chat_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_ChatInfo"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -900,7 +933,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/c_chat_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_ChatInfo"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -912,7 +946,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/c_chat_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_ChatInfo"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1275,7 +1310,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CombatText"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1287,7 +1323,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CombatText"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1299,7 +1336,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CombatText"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1311,7 +1349,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/inert_global_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1323,7 +1362,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/cooldown_viewer_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CooldownViewer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1335,7 +1375,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/cooldown_viewer_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CooldownViewer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1347,7 +1388,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/cooldown_viewer_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CooldownViewer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1359,7 +1401,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_CurveUtil"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1426,7 +1469,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/delves_ui.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_DelvesUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1438,7 +1482,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/delves_ui.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_DelvesUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2413,7 +2458,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/game_rules.rs",
         "src/lua_api/workarounds/temporary/game_rules_namespace_fallback.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_GameRules"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2778,7 +2824,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_HousingCustomizeMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2790,7 +2837,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_HousingDecor"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2846,7 +2894,8 @@
         "src/c_api/item_spell/c_item.rs",
         "data/items.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Item"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2859,7 +2908,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list/catalog.rs",
         "tests/lfg_categories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_LFGList"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2873,7 +2923,8 @@
         "src/lua_api/globals/lfg_list.rs",
         "src/lua_api/state_types/collections.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_LFGList"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2886,7 +2937,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_LimitedInput"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3025,7 +3077,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_NamePlate"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3037,7 +3090,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_NamePlate"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3998,7 +4052,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/ping_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Ping"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4333,7 +4388,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/quest_surface/register.rs",
         "tests/c_quest_log_rewards.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_QuestInfoSystem"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4346,7 +4402,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/quest_log.rs",
         "src/lua_api/sim_substates/quest_log.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_QuestLog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4359,7 +4416,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/restricted_actions_defaults.rs",
         "tests/c_restricted_actions_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-restricted-actions-public-state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4372,7 +4430,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/restricted_actions_defaults.rs",
         "tests/c_restricted_actions_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-restricted-actions-public-state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4385,7 +4444,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/restricted_actions_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-security-restricted-actions-public-state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4397,7 +4457,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4409,7 +4470,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4421,7 +4483,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4433,7 +4496,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4445,7 +4509,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4457,7 +4522,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4469,7 +4535,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4481,7 +4548,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4493,7 +4561,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4505,7 +4574,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4517,7 +4587,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4529,7 +4600,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4541,7 +4613,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4553,7 +4626,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4565,7 +4639,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4577,7 +4652,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4589,7 +4665,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4601,7 +4678,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4613,7 +4691,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4625,7 +4704,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4637,7 +4717,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4649,7 +4730,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4661,7 +4743,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secrecy-policy-queries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4674,7 +4757,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/secure_transfer_state.rs",
         "tests/secure_transfer.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-transfer-transaction"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4687,7 +4771,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/secure_transfer_state.rs",
         "tests/secure_transfer.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-transfer-transaction"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4700,7 +4785,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/secure_transfer_state.rs",
         "tests/secure_transfer.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-transfer-transaction"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4713,7 +4799,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/secure_transfer_state.rs",
         "tests/secure_transfer.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-transfer-transaction"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4726,7 +4813,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/secure_transfer_state.rs",
         "tests/secure_transfer.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-transfer-transaction"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4739,7 +4827,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/settings_surface_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_SettingsUtil"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4752,7 +4841,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/settings_surface_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_SettingsUtil"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4764,7 +4854,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/sound_driver_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Sound"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4776,7 +4867,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_duration"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4788,7 +4880,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4800,7 +4893,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_duration"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4812,7 +4906,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4824,7 +4919,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4836,7 +4932,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4848,7 +4945,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4860,7 +4958,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4872,7 +4971,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4884,7 +4984,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spell_metadata"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4897,7 +4998,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/workarounds/temporary/legacy_spell_globals.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4910,7 +5012,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/workarounds/temporary/legacy_spell_globals.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4923,7 +5026,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/workarounds/temporary/legacy_spell_globals.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4936,7 +5040,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4949,7 +5054,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4962,7 +5068,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "remaining-spells-spellbook"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4974,7 +5081,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4986,7 +5094,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4998,7 +5107,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5010,7 +5120,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5022,7 +5133,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5034,7 +5146,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5046,7 +5159,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5058,7 +5172,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5070,7 +5185,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5082,7 +5198,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5094,7 +5211,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5106,7 +5224,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5118,7 +5237,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5130,7 +5250,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell_diminish.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-diminish"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5143,7 +5264,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_stable_info.rs",
         "tests/blizzard_stable_ui_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_StableInfo"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5197,7 +5319,8 @@
         "src/lua_api/globals/quest_surface/task_quest.rs",
         "src/lua_api/globals/quest_surface/data.rs",
         "tests/blizzard_ui/blizzard_adventuremap/behavior_quest_dialog_refresh_details_branches_on_widgets_and_rewards.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TaskQuest"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5210,7 +5333,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "tests/blizzard_shared_xml_game_loads.rs",
         "tests/tooltip_hover.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TooltipComparison"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5250,7 +5374,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TradeSkillUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5263,7 +5388,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TradeSkillUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5276,7 +5402,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TradeSkillUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5289,7 +5416,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_TradeSkillUI"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5301,7 +5429,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5313,7 +5442,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5325,7 +5455,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5337,7 +5468,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5349,7 +5481,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5361,7 +5494,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5373,7 +5507,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5385,7 +5520,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5397,7 +5533,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5409,7 +5546,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7309,7 +7447,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/tutorial.rs",
         "tests/tutorial_api.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Tutorial"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7577,7 +7716,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-auras"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7604,7 +7744,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-auras"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7673,7 +7814,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-auras"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7686,7 +7828,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7698,7 +7841,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7772,7 +7916,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7786,7 +7931,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7980,7 +8126,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7994,7 +8141,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8008,7 +8156,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8022,7 +8171,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8036,7 +8186,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8050,7 +8201,8 @@
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-criteria-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8064,7 +8216,8 @@
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-criteria-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8078,7 +8231,8 @@
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-criteria-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8092,7 +8246,8 @@
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-criteria-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8105,7 +8260,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_damage_meter_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-combat_damage_meter"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8118,7 +8274,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_damage_meter_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-combat_damage_meter"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8131,7 +8288,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_damage_meter_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-combat_damage_meter"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8144,7 +8302,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8157,7 +8316,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8170,7 +8330,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8183,7 +8344,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8196,7 +8358,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8209,7 +8372,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8222,7 +8386,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8235,7 +8400,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8248,7 +8414,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_timeline_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_timeline"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8261,7 +8428,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs",
         "tests/blizzard_encounter_warnings_loads.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-encounter_warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8273,7 +8441,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/client_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-expansion-audio"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8285,7 +8454,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/client_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-expansion-audio"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8297,7 +8467,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/client_info_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-expansion-audio"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8309,7 +8480,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_a.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-loot_commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8336,7 +8508,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_exterior_fixture"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8349,7 +8522,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8362,7 +8536,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8375,7 +8550,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8388,7 +8564,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8401,7 +8578,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8414,7 +8592,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8427,7 +8606,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_exterior_fixture"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8440,7 +8620,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_preview"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8453,7 +8634,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_exterior_fixture"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8466,7 +8648,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_exterior_fixture"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8479,7 +8662,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-housing_exterior_fixture"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8491,7 +8675,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8503,7 +8688,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8515,7 +8701,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8527,7 +8714,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8539,7 +8727,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8565,7 +8754,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8577,7 +8767,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8589,7 +8780,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8601,7 +8793,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8613,7 +8806,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8625,7 +8819,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8637,7 +8832,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8649,7 +8845,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8661,7 +8858,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8673,7 +8871,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-housing-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8685,7 +8884,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-crafting-structures"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8697,7 +8897,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8709,7 +8910,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8721,7 +8923,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8733,7 +8936,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8745,7 +8949,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8772,7 +8977,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-loot_commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8784,7 +8990,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8796,7 +9003,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8808,7 +9016,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8820,7 +9029,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8832,7 +9042,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8844,7 +9055,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8856,7 +9068,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8868,7 +9081,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8880,7 +9094,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8892,7 +9107,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8904,7 +9120,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8916,7 +9133,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_constants.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-global-strings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8928,7 +9146,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8941,7 +9160,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs",
         "tests/userdata_proxy.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8953,7 +9173,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8965,7 +9186,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8977,7 +9199,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -8989,7 +9212,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9001,7 +9225,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9013,7 +9238,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9025,7 +9251,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9037,7 +9264,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-curves"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9049,7 +9277,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9061,7 +9290,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lua_duration_object.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9073,7 +9303,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-loot_commentator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9085,7 +9316,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/event/valid_events_b.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-initiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9112,7 +9344,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
         "tests/userdata_proxy.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9124,7 +9357,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9136,7 +9370,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9148,7 +9383,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9160,7 +9396,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9172,7 +9409,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9185,7 +9423,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
         "tests/userdata_proxy.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9197,7 +9436,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9209,7 +9449,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9221,7 +9462,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-number-abbrev"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9296,7 +9538,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9619,7 +9862,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-spell-cooldown-structure"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9631,7 +9875,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_spell.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-spell-cooldown-structure"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9728,7 +9973,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9740,7 +9986,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9752,7 +9999,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9764,7 +10012,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9776,7 +10025,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secret-object-method-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9857,7 +10107,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-durations"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9871,7 +10122,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "src/lua_api/globals/lua_duration_object.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-durations"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9899,7 +10151,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "src/lua_api/globals/lua_duration_object.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-durations"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9939,7 +10192,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-heal-calculator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9951,7 +10205,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-heal-calculator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9963,7 +10218,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-heal-calculator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -9975,7 +10231,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-heal-calculator"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10104,7 +10361,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-unit-target"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10117,7 +10375,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/combat_verbs.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-unit-target"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10131,7 +10390,8 @@
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "src/lua_api/workarounds/temporary/spell_target_defaults.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-unit-target"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10483,7 +10743,8 @@
         "src/lua_api/env_init/shared_bootstrap.lua",
         "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-mapvalues"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10752,7 +11013,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10764,7 +11026,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10776,7 +11039,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10788,7 +11052,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10800,7 +11065,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10812,7 +11078,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10824,7 +11091,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10836,7 +11104,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10848,7 +11117,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10860,7 +11130,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10872,7 +11143,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10884,7 +11156,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10896,7 +11169,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10908,7 +11182,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10920,7 +11195,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_ping_secure.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-secure-ping-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11016,7 +11292,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_Transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11043,7 +11320,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/auras.rs",
         "src/lua_api/workarounds/temporary/unit_auras_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-spells-auras"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11055,7 +11333,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11067,7 +11346,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11079,7 +11359,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11091,7 +11372,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11103,7 +11385,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11115,7 +11398,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11127,7 +11411,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11139,7 +11424,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11151,7 +11437,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-private-aura-public-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11179,7 +11466,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/targeting_verbs.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-raid-markers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11193,7 +11481,8 @@
         "src/lua_api/globals/targeting_verbs.rs",
         "src/lua_api/globals/register.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-raid-markers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11207,7 +11496,8 @@
         "src/mists/compat_bootstrap.lua",
         "src/lua_api/globals/targeting_verbs.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-raid-markers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11221,7 +11511,8 @@
         "src/lua_api/globals/targeting_verbs.rs",
         "src/lua_api/globals/register.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-raid-markers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11235,7 +11526,8 @@
         "src/lua_api/globals/targeting_verbs.rs",
         "src/lua_api/globals/register.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-objects-raid-markers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11263,7 +11555,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-transmog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11278,7 +11571,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11293,7 +11587,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11308,7 +11603,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11323,7 +11619,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11338,7 +11635,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11353,7 +11651,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11368,7 +11667,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11383,7 +11683,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11398,7 +11699,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11413,7 +11715,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11428,7 +11731,8 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11445,7 +11749,8 @@
         "docs/wow-client-diff/WowDiscovery.lua",
         "src/lua_api/globals/combat_verbs.rs",
         "src/lua_api/globals/missing_surface/profession_crafting.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11461,7 +11766,8 @@
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "src/iced_app/casting.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11477,7 +11783,8 @@
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "src/iced_app/casting.rs"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-spellcast"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11576,7 +11883,8 @@
         "src/lua_api/env_events.rs",
         "src/lua_api/globals/missing_surface/voice_chat.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-tts"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11591,7 +11899,8 @@
         "src/lua_api/env_events.rs",
         "src/lua_api/globals/missing_surface/voice_chat.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "remaining-events-event-tts"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11688,7 +11997,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_HousingDecor"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11771,7 +12081,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "src/lua_api/workarounds/temporary/perks_program_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_PerksActivities"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11810,7 +12121,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
         "src/lua_api/workarounds/temporary/perks_program_defaults.rs"
-      ]
+      ],
+      "probe_plan": "remaining-misc-C_PerksActivities"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11936,7 +12248,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-combat-removal"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11948,7 +12261,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-combat-removal"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14162,7 +14476,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "remaining-objects-clip"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14810,7 +15125,8 @@
       "scope": "non-secret observation only; enforcement excluded",
       "basis_references": [
         "data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
-      ]
+      ],
+      "probe_plan": "remaining-security-forbidden-store-observation"
     },
     {
       "manifest": "data/patch-api/12.0.5-probes.json",
@@ -14821,7 +15137,8 @@
       "scope": "deferred-security",
       "basis_references": [
         "data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
-      ]
+      ],
+      "probe_plan": "remaining-security-forbidden-store-observation"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14832,7 +15149,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/globals/auras.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14843,7 +15161,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/globals/auras.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14854,7 +15173,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/globals/auras.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14865,7 +15185,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/globals/auras.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14876,7 +15197,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "docs/wiki/systems/xml-template-system.md"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14887,7 +15209,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "docs/wiki/systems/xml-template-system.md"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14898,7 +15221,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "docs/wiki/systems/xml-template-system.md"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14909,7 +15233,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "docs/wiki/systems/xml-template-system.md"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14920,7 +15245,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/frame/methods/forbidden_aspects.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14931,7 +15257,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/frame/methods/forbidden_aspects.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14942,7 +15269,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "patch-tests/patch_12_1/aura_container.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1-behaviors.json",
@@ -14953,7 +15281,8 @@
       "scope": "deferred-security: explicit manifest owner/boundary",
       "basis_references": [
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -15024,7 +15353,8 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -15035,7 +15365,8 @@
       "scope": "deferred-security",
       "basis_references": [
         "data/patch-api/sources/12.1.5-register.json"
-      ]
+      ],
+      "probe_plan": "remaining-security-later-secret-behaviors"
     },
     {
       "manifest": "data/patch-api/12.1.5.json",
@@ -16975,6 +17306,731 @@
       "design_gap": "No authoritative native old/new publication matrix or semantic alias evidence. Source pairs and simulator omission cannot substitute for it.",
       "ready_to_execute": false,
       "execution_limits": "Read-only proposed capture; no bypass of secret/inaccessible values, account mutation or runtime execution is authorized."
+    },
+    "remaining-events-event-restriction_state": {
+      "dependency": "restricted-actions transition producer; native/UI state query and event source",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-catalog_commerce": {
+      "dependency": "catalog/shop product, refund or currency transaction producer; secure purchase transaction semantics deferred",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-loot_commentator": {
+      "dependency": "corresponding chat/commentator/faction/loot/nameplate producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-combat_damage_meter": {
+      "dependency": "damage-meter session/update/reset producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-encounter_state": {
+      "dependency": "encounter instance lifecycle producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-encounter_timeline": {
+      "dependency": "encounter timeline object and layout producer with controllable event transitions",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-encounter_warning": {
+      "dependency": "live encounter warning or edit-mode warning producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-housing_exterior_fixture": {
+      "dependency": "housing exterior/fixture mutation and response producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-housing_preview": {
+      "dependency": "housing preview/placement/refund producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-initiative": {
+      "dependency": "neighborhood initiative/task producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-transmog": {
+      "dependency": "transmog outfit/slot mutation or save producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-spellcast": {
+      "dependency": "spell cast/channel/empower lifecycle producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-events-event-tts": {
+      "dependency": "voice-chat TTS producer",
+      "observations": [
+        "Read the linked manifest payload notes and cited source/register references; registration or caller-supplied dispatch is not producer proof.",
+        "Identify the exact native/UI/simulator trigger for this family, then perform one transition and an unchanged-state control.",
+        "Capture event argument count, positional types/values, delivery timing, ordering, repeated-transition behavior and lifecycle boundaries; preserve nil positions and errors instead of guessing.",
+        "If the trigger or producer is unavailable, record that lookup failure and retain the row unresolved. Secret/protected transaction semantics remain deferred."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative producer/fixture currently establishes the family trigger, payload values, ordering or duplicate policy.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-restricted-actions-public-state": {
+      "dependency": "A modeled addon-restriction state producer and authoritative restriction transition/query capture; enforcement is a separate deferred boundary.",
+      "observations": [
+        "Identify the public state getter/transition producer for restriction type and state before testing CheckAllowProtectedFunctions.",
+        "Capture state changes, event ordering and duplicate behavior independently from secure-call allow/deny outcomes.",
+        "Do not infer policy from the existing constant state-0 fallback or treat it as a transition producer."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No public transition producer or populated restriction fixture; protected-call enforcement remains deferred.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-secrecy-policy-queries": {
+      "dependency": "Authoritative secrecy-policy outputs plus caller/taint context and object/value authority model.",
+      "observations": [
+        "Capture each C_Secrets query on the pinned target with secure/tainted callers and representative action, aura, cooldown, power, unit and cast inputs.",
+        "Record exact return values/types and whether policy depends on object state, caller, unit or API family; keep public producer behavior separate from policy result.",
+        "Do not implement constants or permissive defaults; no enforcement execution is proposed in this inventory."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Simulator has no authoritative secrecy lattice or complete caller/object policy model; native outputs and transitions are unavailable.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-secure-transfer-transaction": {
+      "dependency": "Protected housing transaction producer, valid currency/product fixture and secure caller context.",
+      "observations": [
+        "Capture cost/product lookup before and after a real transaction preparation; record nil/error/result arity without assuming success.",
+        "Capture cancel, complete and failed/insufficient-currency paths with transaction identity and event ordering.",
+        "Separate ordinary product/cost state from protected authorization and taint outcomes; no enforcement implementation is proposed."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated transaction producer or authoritative secure result/error contract.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-private-aura-public-producer": {
+      "dependency": "Private-aura producer with anchor/callback lifecycle and caller-sensitive visibility.",
+      "observations": [
+        "Capture private aura creation/removal/update for an authorized object and record callback order, anchor identity and payload shape.",
+        "Compare public aura access, private access and invalid instance IDs without assuming secret fields are readable.",
+        "Keep ordinary public aura producer gaps separate from private/secret visibility and enforcement."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current private-aura state is partial/permissive; no authoritative producer or caller/object authority matrix.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-secret-object-method-boundary": {
+      "dependency": "Authoritative object/value secret-aspect model plus secure and tainted caller contexts.",
+      "observations": [
+        "For each object method, capture return/error behavior on ordinary and secret values, preserving object identity and aspect state.",
+        "Probe inheritance/propagation only where the pinned row names it; do not infer generic behavior across UIObject, Region, LuaDurationObject and curve objects.",
+        "No permissive fallback or enforcement change is proposed; this plan records the missing boundary only."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Secret aspects, object partitions and caller authority are not fully modeled; native error and return semantics are unavailable.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-secure-ping-lifecycle": {
+      "dependency": "Ping receiver/world-ping producer, callback lifecycle and protected caller context.",
+      "observations": [
+        "Capture target receiver/world ping lookup, pending clear and send operations around a real ping transition.",
+        "Record callback registration, invocation order, arguments, cooldown and screen-clamp state separately; retain no-op/invalid-target controls.",
+        "Defer secure caller allow/deny and secret payload interpretation; do not synthesize ping receivers."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete ping producer/callback fixture or authoritative protected behavior.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-forbidden-store-observation": {
+      "dependency": "Authoritative Store dropdown population entry point and descendant tree fixture; protection enforcement remains separate.",
+      "observations": [
+        "If StoreDropdown:SetDropdown exists, capture row creation/reuse, labels, checks, callbacks and reopening with a real data set.",
+        "Separately inspect descendant forbidden/protected flags and record whether the retained capture exposes them; do not use missing entry points as negative evidence.",
+        "Keep ordinary population observations distinct from forbidden/secure enforcement."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Retained capture lacks callable population and descendant scan; no ordinary Store producer fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-security-later-secret-behaviors": {
+      "dependency": "Authoritative 12.1/12.1.5 secret/private/forbidden caller matrix and matching producer objects.",
+      "observations": [
+        "Capture addon versus Blizzard callers for secret aura fields/events and private script storage; retain exact errors, nils and payload tuples.",
+        "Probe forbidden-aspect script/layout execution and secret-table predicates only with approved security scope; compare trusted and untrusted contexts.",
+        "Separate declaration-only CreateRegion/TimedSignal rows from these enforcement behaviors; no execution is proposed here."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Later captures lack caller-sensitive producer fixtures and native enforcement results; scope defers security implementation.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_BattleNet": {
+      "dependency": "Native Battle.net account/friend state and login/connection fixtures",
+      "observations": [
+        "Capture friend/account queries for logged-out, unavailable, online and offline states; preserve nil/error/boolean distinctions.",
+        "Trigger one friend/account state transition and record event/query ordering only if a producer is identified."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative account/friend producer or platform session fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_CharacterServices": {
+      "dependency": "Native character-service availability and token/service fixture",
+      "observations": [
+        "Query availability and service options under a controlled eligible/ineligible account; record exact structures and nil/error behavior.",
+        "Separate service catalog publication from actual purchase/rename/move mutation and persistence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No service entitlement/account fixture or producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_ChatInfo": {
+      "dependency": "Native chat channel/configuration state and controlled message/channel fixture",
+      "observations": [
+        "Capture channel lookup, restrictions and message-type results for known, unknown and invalid channels.",
+        "Trigger one controlled channel/message transition if a producer exists; preserve payload and ordering without inventing chat policy."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete chat channel producer or native policy capture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_CombatText": {
+      "dependency": "Native combat-text configuration and event producer",
+      "observations": [
+        "Query each configuration value before/after a single supported combat-text setting transition; record types/defaults and invalid behavior.",
+        "Use a real combat-text event only to establish payload/ordering; do not infer rendering from API values."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No modeled combat-text configuration/event producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Commentator": {
+      "dependency": "Native spectator/commentator session with active match/player fixtures",
+      "observations": [
+        "Capture available commentator modes/players and selection state for empty and active sessions.",
+        "Change one selection and record return values/events; distinguish spectator-only state from ordinary player APIs."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No commentator session or match producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_CooldownViewer": {
+      "dependency": "Native cooldown-viewer layout/data producer with tracked spell/item entries",
+      "observations": [
+        "Capture tracked/empty entry lists and one add/remove/update transition, including IDs and ordering.",
+        "Separate viewer catalog from cooldown timing and rendering; query invalid IDs independently."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current simulator lacks populated viewer layout producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_CurveUtil": {
+      "dependency": "Authoritative game-curve ID table and native evaluation corpus",
+      "observations": [
+        "For each supported curve ID capture known x values, interpolation/clamping and unknown-ID behavior.",
+        "Keep game-curve evaluation separate from already credited boolean selectors and curve-object state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No curve-ID mapping or evaluation semantics.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_DelvesUI": {
+      "dependency": "Native Delves run/progress/tutorial state with a populated account/session fixture",
+      "observations": [
+        "Capture available activities, rewards/progress and tutorial state before/after one run transition.",
+        "Separate seeded UI defaults from server-backed IDs, currencies and persistence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No Delves service producer or populated fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_GameRules": {
+      "dependency": "Native ruleset/region/feature configuration for target client",
+      "observations": [
+        "Capture each rule query across at least two known rulesets or feature states and an unknown/default control.",
+        "Record publication and value type separately from gameplay consumers."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative ruleset fixture or producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_HousingCustomizeMode": {
+      "dependency": "Native housing placement/customization session with controlled decor and target fixtures",
+      "observations": [
+        "Enter/exit the matching placement or customization mode and capture selected target, flags, preview and mutation results.",
+        "Repeat no-op and cancel transitions; keep protected transfer/security rows separate from ordinary UI state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No controllable housing mode/decor producer or populated fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_HousingDecor": {
+      "dependency": "Native housing placement/customization session with controlled decor and target fixtures",
+      "observations": [
+        "Enter/exit the matching placement or customization mode and capture selected target, flags, preview and mutation results.",
+        "Repeat no-op and cancel transitions; keep protected transfer/security rows separate from ordinary UI state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No controllable housing mode/decor producer or populated fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Item": {
+      "dependency": "Native item database with known item, quality, subclass and container fixtures",
+      "observations": [
+        "Query known, missing and invalid item IDs; capture complete returned structure and nil/error distinctions.",
+        "Compare item metadata with actual container/equipment state; do not infer source/ownership from static item info."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative item database/consumer fixture for these rows.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_LFGList": {
+      "dependency": "Native group-search listing/application fixture with controlled roles and filters",
+      "observations": [
+        "Capture listing/search results for empty and populated queues, preserving IDs, status and timestamps.",
+        "Create one application/listing transition only in a safe test context; separate service state from UI rendering and account identity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated LFG service producer or safe native fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_LimitedInput": {
+      "dependency": "Native limited-input mode and input-device state",
+      "observations": [
+        "Capture enabled/disabled state and one input transition under the target client; record errors and event order.",
+        "Do not enable host devices or kernel services; use existing safe input fixtures only."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No simulator model or safe native input-state fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_NamePlate": {
+      "dependency": "Native nameplate manager with visible friendly/hostile unit fixtures",
+      "observations": [
+        "Capture manager queries for no-nameplate, friendly and hostile units, including replacement CVar state.",
+        "Observe one show/hide/update transition and separate unit classification from rendering geometry."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete nameplate producer or native case/replacement capture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Ping": {
+      "dependency": "Native world-ping producer with controlled map/receiver and callback state",
+      "observations": [
+        "Issue one supported ping through a safe UI action and capture query/callback payload, cooldown and duplicate behavior.",
+        "Separate ordinary ping state from C_PingSecure protected operations."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No world-ping producer or callback fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_QuestInfoSystem": {
+      "dependency": "Native quest/task database with accepted, completed and unavailable quest fixtures",
+      "observations": [
+        "Query known/unknown quest IDs and capture full returned structures, objective progress and nil/error cases.",
+        "Trigger one accepted/completed transition only with a real producer; separate static quest metadata from player progress."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated quest/task producer with controlled lifecycle.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_QuestLog": {
+      "dependency": "Native quest/task database with accepted, completed and unavailable quest fixtures",
+      "observations": [
+        "Query known/unknown quest IDs and capture full returned structures, objective progress and nil/error cases.",
+        "Trigger one accepted/completed transition only with a real producer; separate static quest metadata from player progress."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated quest/task producer with controlled lifecycle.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_SettingsUtil": {
+      "dependency": "Native settings registry with declared setting definitions and account/character scopes",
+      "observations": [
+        "Capture known setting metadata/value/default and invalid-key behavior; change one non-destructive setting and requery.",
+        "Separate registration/publication from persistence and UI consumer behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative settings registry fixture or scope/persistence capture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Sound": {
+      "dependency": "Native sound kit/channel registry and safe playback fixture",
+      "observations": [
+        "Capture known/unknown sound kit lookups and return values without assuming filesystem or audio rendering.",
+        "If playback is safe, record handle/lifecycle and stop behavior separately from actual audio output."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete sound registry or playback lifecycle model.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_StableInfo": {
+      "dependency": "Native stable/pet roster with populated slots and controlled selection",
+      "observations": [
+        "Capture empty/populated stable slots and selected pet info, preserving IDs/types and invalid-slot behavior.",
+        "Separate roster publication from summon/mutation/persistence transitions."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No stable roster producer or populated fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_TaskQuest": {
+      "dependency": "Native quest/task database with accepted, completed and unavailable quest fixtures",
+      "observations": [
+        "Query known/unknown quest IDs and capture full returned structures, objective progress and nil/error cases.",
+        "Trigger one accepted/completed transition only with a real producer; separate static quest metadata from player progress."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated quest/task producer with controlled lifecycle.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_TooltipComparison": {
+      "dependency": "Native item comparison tooltip builder with paired item/location fixtures",
+      "observations": [
+        "Build comparisons for empty, one-item and two-item inputs; capture line structures, ordering and nil/error behavior.",
+        "Keep tooltip text/rendering and secret item data separate from ordinary structure shape."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No paired item comparison producer or consumer fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_TradeSkillUI": {
+      "dependency": "Native tradeskill recipe/crafting-order service with known recipe and reagent fixtures",
+      "observations": [
+        "Capture recipe search/info and order/reagent structures for known, unknown and unavailable recipes.",
+        "Separate static recipe metadata from live craft/order mutation, costs, cooldowns and persistence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated tradeskill service producer or order fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Transmog": {
+      "dependency": "Native transmog service/session with populated collection and appearance fixtures",
+      "observations": [
+        "Capture the exact transmog query rows for empty, collected, uncollected and invalid appearance/slot IDs.",
+        "Separate appearance collection, outfit display, costs and protected commits; use the dedicated transmog plans for collection/outfit families."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Remaining C_Transmog rows lack a populated service producer; overlapping outfit/catalog plans do not prove these symbols.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_Tutorial": {
+      "dependency": "Native tutorial definition/progress state with resettable account/profile fixture",
+      "observations": [
+        "Capture tutorial availability/state for unseen, shown, completed and reset entries.",
+        "Record reset/acknowledge transitions and persistence separately from UI display/rendering."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No tutorial progression producer or resettable native fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-misc-C_PerksActivities": {
+      "dependency": "Native perks activity service with populated activity/requirement/reward fixture",
+      "observations": [
+        "Capture activity requirement and reward structures for active, completed, unavailable and empty states.",
+        "Separate seeded dashboard values from service requests, progression, account ownership and persistence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated perks activity producer or account fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-actionbar": {
+      "dependency": "action-slot producer with item/spell/macro/range/resource fixtures; native empty/invalid and button lifecycle observations",
+      "observations": [
+        "Capture each pending action API on known spell, item, stackable, equipped, empty and invalid slots.",
+        "Vary target/range/resource/topology and registration inputs one at a time; record arity, booleans, counts, text, indices, cooldown fields and callback/refresh effects."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current action state is partial/constants; charge, resource, topology and cooldown-frame producers are absent.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-spell_duration": {
+      "dependency": "native spell/LoC duration producers with active, refreshed, expired and invalid fixtures",
+      "observations": [
+        "Capture duration-object APIs across active/absent/expired and refresh/replacement transitions; compare object time queries.",
+        "Keep spell charge, spellbook-slot and loss-of-control producers distinct."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No producer-backed charge or loss-of-control duration lifecycle exists.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-spell_metadata": {
+      "dependency": "authoritative spell catalog and known/unknown/rank/override fixtures",
+      "observations": [
+        "Capture pending C_Spell metadata and predicate APIs for ordinary, consumable, defensive, priority, crowd-control, important and unknown spells.",
+        "Record exact nil/false/number/table results across rank and override transitions; do not classify from implicit target or existence alone."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current spell database lacks authoritative classifications and several methods are unregistered.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-spellbook": {
+      "dependency": "populated spellbook slot/bank catalog with base/override/flyout relationships",
+      "observations": [
+        "Capture mapping APIs for base, override, flyout, unknown and replaced IDs.",
+        "Capture slot duration APIs across valid/invalid slots, bank values and cooldown/charge/LoC transitions."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current spellbook state does not establish mapping or slot duration producers.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-diminish": {
+      "dependency": "authoritative diminish ruleset/category catalog and active tracker producer",
+      "observations": [
+        "Capture category lists/info/support/tracking by ruleset and unknown category.",
+        "Induce real diminishing-return applications and capture tracker fields through refresh/expiry."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current eight-category fixture is static and lacks authoritative ruleset/tracker behavior.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-spells-auras": {
+      "dependency": "authoritative aura producer with player/target mutation, filters and instance lifecycle",
+      "observations": [
+        "Apply, refresh and remove defensive, dispellable and ordinary auras; capture enumeration, IDs and display counts.",
+        "Compare ordering, maxCount, invalid instances and unchanged controls; keep private aura behavior separate."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Seeded lookup does not establish enumeration, classification or lifecycle.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-number-abbrev": {
+      "dependency": "Native locale/config fixture and populated NumberAbbrevOptions/Data.",
+      "observations": [
+        "Probe signed values around each breakpoint, zero, exact integers and large finite values; record exact strings.",
+        "Vary locale/config/breakpointData and abbreviationIsGlobal; preserve field types and errors."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative breakpoint/config producer or output corpus.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-crafting-structures": {
+      "dependency": "Populated crafting/reagent producer and replacement-field contract.",
+      "observations": [
+        "Capture populated slot, reagent, variable-quantity and resource-return structures; record nested keys/types/nullability.",
+        "Vary quality/quantity/resource inputs and compare reagent/reagentInfo fields, empty and failure cases."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No simulator-backed populated producer or authoritative field relationships.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-criteria-structures": {
+      "dependency": "Active criteria producer with incomplete/completed objectives and localized text.",
+      "observations": [
+        "Capture CriteriaRequiredValue and CriteriaRequirement in active, completed, missing and invalid states.",
+        "Advance one criterion and observe snapshot mutation/event ordering; distinguish nil from empty text."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No producer-backed criteria fixture or text contract.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-expansion-audio": {
+      "dependency": "Expansion display producer with populated glue sound-kit metadata.",
+      "observations": [
+        "Capture ExpansionDisplayInfo for entries with and without ambiance, credits and music kits; record exact file-ID or nil values.",
+        "Compare expansion selection/loading transitions and missing-kit behavior without inferring playback semantics."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated expansion display producer or audio-kit fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-housing-structures": {
+      "dependency": "Populated house/exterior producer with owned level, option lists and transitions.",
+      "observations": [
+        "Capture HouseLevelInfo budgets and exterior option structures for empty, owned, locked and selected states.",
+        "Change one level/exterior input and observe selected fields, lock reasons, refresh and isolation."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current options/levels are seeded or placeholders without authoritative producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-global-strings": {
+      "dependency": "Native target-build global-string publication and load-phase capture.",
+      "observations": [
+        "Evaluate each named LE_GAME_ERR global at clean startup and after relevant Blizzard/LoD loads; record raw presence, type and bytes.",
+        "Compare replacement globals and failed loads; keep localization/consumer semantics separate."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative native publication/load-phase capture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-curves": {
+      "dependency": "Existing curve userdata plus native point/default contract; populated point inputs required.",
+      "observations": [
+        "Create numeric and color curves, set distinct points, then capture GetPoint/GetPoints order, copies, empty/missing behavior and arity.",
+        "Remove a point and call SetToDefaults; compare remaining points, duplicate coordinates and object identity.",
+        "Color points must capture complete RGBA separately; do not infer coercion from Lua table representation."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Native ordering, duplicate, missing-point and reset/default semantics unavailable.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-spell-cooldown-structure": {
+      "dependency": "Populated spell cooldown producer with GCD and start-recovery transitions.",
+      "observations": [
+        "Capture SpellCooldownInfo during no cooldown, active GCD and active start recovery; record isOnGCD and timeUntilEndOfStartRecovery with exact types.",
+        "Compare spell-specific cooldown and GCD transitions, zero/absent fields and elapsed-time updates without assuming relationship."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No producer-backed GCD/start-recovery fixture or native field semantics.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-durations": {
+      "dependency": "Active native cast/channel/empower producer and controllable clock.",
+      "observations": [
+        "Capture each Unit*Duration object during active, completed, interrupted and absent states; record methods and arity.",
+        "Advance time and determine tracking versus snapshot behavior without assuming from type name."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No corresponding producer-backed globals or lifecycle fixture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-heal-calculator": {
+      "dependency": "Real unit heal-prediction producer with populated heal/damage absorbs and calculator lifecycle.",
+      "observations": [
+        "Capture GetHealAbsorbs/GetDamageAbsorbs before/after predicted heal and damage-absorb transitions, then Reset/SetToDefaults.",
+        "Compare zero, populated, repeated and invalid-unit cases and exact return values."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Temporary local fields have no populated producer or native reset/default contract.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-unit-target": {
+      "dependency": "Active targeted spell cast with target name/class metadata and valid/unknown units.",
+      "observations": [
+        "Capture UnitShouldDisplaySpellTargetName, UnitSpellTargetName and UnitSpellTargetClass during targeted, untargeted, self and post-cast states.",
+        "Record nil versus empty string, exact arity and cast replacement behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No cast-target/display producer or model.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-mapvalues": {
+      "dependency": "Pinned mapvalues contract plus deterministic tables/functions and native error behavior.",
+      "observations": [
+        "Probe empty, scalar-keyed and array-like tables with deterministic transform; record key preservation, order and mutation/identity.",
+        "Capture nil/invalid callback, nested values and zero-entry cases."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current fallback and signature do not establish key/order/identity/error semantics.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-raid-markers": {
+      "dependency": "Real raid-marker unit producer with permissions, occupied markers and event state.",
+      "observations": [
+        "Exercise marker placement/clear/removal and CanBeRaidTarget across eligible, ineligible, duplicate and invalid units/IDs.",
+        "Record returns, state transitions and event ordering; separate permission errors from no-op results."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No producer-backed marker occupancy/permission model.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-combat-removal": {
+      "dependency": "Native full-LoD combat-log publication and replacement API capture.",
+      "observations": [
+        "Query removed CombatLogAdvanceEntry and CombatLogSetCurrentEntry before/after relevant loads and record errors.",
+        "Exercise current replacement APIs separately; do not infer equivalence from simulator omission."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative removal timing or replacement-equivalence capture.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "remaining-objects-clip": {
+      "dependency": "Populated transmog pending producer and replacement fields across edit lifecycle.",
+      "observations": [
+        "Capture pending state before/during/after slot edit and inspect removed fields versus replacements.",
+        "Compare empty/cancelled/committed edits and load phases; distinguish field absence from producer absence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated pending-transmog producer.",
+      "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility.",
