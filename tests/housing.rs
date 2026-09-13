@@ -32,9 +32,9 @@ mod freeplace_tests {
         env.exec(
             r#"
             for _, enabled in ipairs({true, false}) do
-                assert(select("#", C_HousingBasicMode.SetFreePlaceEnabled(enabled)) == 0,
+                assert(select('#', C_HousingBasicMode.SetFreePlaceEnabled(enabled)) == 0,
                     "free-place setter must return zero values")
-                assert(select("#", C_HousingBasicMode.IsFreePlaceEnabled()) == 1,
+                assert(select('#', C_HousingBasicMode.IsFreePlaceEnabled()) == 1,
                     "free-place getter must return one value")
                 assert(type(C_HousingBasicMode.IsFreePlaceEnabled()) == "boolean",
                     "free-place getter must return a boolean")
@@ -55,12 +55,16 @@ mod freeplace_tests {
             .exec("C_HousingBasicMode.SetFreePlaceEnabled(true)")
             .unwrap();
 
-        assert!(!first
-            .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
-            .unwrap());
-        assert!(second
-            .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
-            .unwrap());
+        assert!(
+            !first
+                .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
+                .unwrap()
+        );
+        assert!(
+            second
+                .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
+                .unwrap()
+        );
 
         first
             .exec("C_HousingBasicMode.SetFreePlaceEnabled(true)")
@@ -68,12 +72,16 @@ mod freeplace_tests {
         second
             .exec("C_HousingBasicMode.SetFreePlaceEnabled(false)")
             .unwrap();
-        assert!(first
-            .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
-            .unwrap());
-        assert!(!second
-            .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
-            .unwrap());
+        assert!(
+            first
+                .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
+                .unwrap()
+        );
+        assert!(
+            !second
+                .eval::<bool>("return C_HousingBasicMode.IsFreePlaceEnabled()")
+                .unwrap()
+        );
     }
 
     #[test]
