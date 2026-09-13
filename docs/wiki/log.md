@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Retrieve color-curve point collections
 
-Tests `4fae6e8af` reproduce missing color `GetPoints` (RED 0/3); `ba2d6e2a0` returns one array of copied existing-state points (retail 12.0.0 GREEN 3/3). Stored order and fresh array/record/color snapshots are simulator assumptions. Mutation isolation and Copy/Clear/reuse are covered. Provisional totals: **2285 / 1123 / 2**, three new test references, 99 provenance renewals. Independent verification pending. Scalar/vector queries, complete point structures and native semantics remain open. See [curve objects](../specs/curve-objects.md).
+Tests `4fae6e8af` reproduce missing color `GetPoints` (RED 0/3); `ba2d6e2a0` returns one array of copied existing-state points (retail 12.0.0 GREEN 3/3). Stored order and fresh array/record/color snapshots are simulator assumptions. Mutation isolation and Copy/Clear/reuse are covered. Verified totals: **2285 / 1123 / 2**, three new test references, 99 provenance renewals. Independent verification at `221869fde` passes grouped userdata tests 40/40 each retail 12.0.0/12.0.5/12.0.7 and 36/36 Mists; format/default check/build, startup with zero Lua errors, readability, both validators and 14,834 evidence hashes pass. Ledger: `/tmp/verify-color-curve-get-points-ledger.json`. Scalar/vector queries, complete point structures and native semantics remain open. See [curve objects](../specs/curve-objects.md).
 
 ## [2026-09-12] audit | Retrieve stored color-curve points
 

@@ -87028,7 +87028,7 @@
       "commit": "ba2d6e2a0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Color collection query only. Retail 12.0.0 development RED 0/3 and GREEN 3/3; independent verification pending. Stored insertion order and fresh array/record/color snapshots are simulator policies. Scalar/vector queries, complete point structures, coercion/errors, secrets/security, native identity and consumers remain unverified."
+      "notes": "Color collection query only. Retail 12.0.0 development RED 0/3 and GREEN 3/3; independent grouped userdata verification passes 40/40 each retail 12.0.0/12.0.5/12.0.7 and 36/36 Mists; /tmp/verify-color-curve-get-points-ledger.json records default gates and metadata proof. Stored insertion order and fresh array/record/color snapshots are simulator policies. Scalar/vector queries, complete point structures, coercion/errors, secrets/security, native identity and consumers remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.RemovePoint",
