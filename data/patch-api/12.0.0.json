@@ -11330,34 +11330,34 @@
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+          "reference": "tests/housing.rs::housing_freeplace_explicit_and_repeated_toggles",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Explicit true/false writes and repeated toggles return the last assigned boolean."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+          "reference": "tests/housing.rs::housing_freeplace_getter_and_setter_return_arity",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Getter returns exactly one boolean; setter returns zero values for explicit true and false."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+          "reference": "tests/housing.rs::housing_freeplace_isolates_lua_environments",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Two WowLuaEnv instances retain independent state across both write directions."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state",
+          "reference": "tests/housing.rs::housing_freeplace_preserves_housing_service_state",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Free-place writes preserve explicit unrelated housing-service availability."
         }
       ],
       "tests": [
-        "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state"
+        "tests/housing.rs::housing_freeplace_explicit_and_repeated_toggles",
+        "tests/housing.rs::housing_freeplace_getter_and_setter_return_arity",
+        "tests/housing.rs::housing_freeplace_isolates_lua_environments",
+        "tests/housing.rs::housing_freeplace_preserves_housing_service_state"
       ],
       "assertions": [],
       "commit": "3839f707f",
@@ -11406,34 +11406,34 @@
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+          "reference": "tests/housing.rs::housing_freeplace_explicit_and_repeated_toggles",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Explicit true/false writes and repeated toggles return the last assigned boolean."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+          "reference": "tests/housing.rs::housing_freeplace_getter_and_setter_return_arity",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Getter returns exactly one boolean; setter returns zero values for explicit true and false."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+          "reference": "tests/housing.rs::housing_freeplace_isolates_lua_environments",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Two WowLuaEnv instances retain independent state across both write directions."
         },
         {
           "kind": "test",
-          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state",
+          "reference": "tests/housing.rs::housing_freeplace_preserves_housing_service_state",
           "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
           "summary": "Free-place writes preserve explicit unrelated housing-service availability."
         }
       ],
       "tests": [
-        "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
-        "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state"
+        "tests/housing.rs::housing_freeplace_explicit_and_repeated_toggles",
+        "tests/housing.rs::housing_freeplace_getter_and_setter_return_arity",
+        "tests/housing.rs::housing_freeplace_isolates_lua_environments",
+        "tests/housing.rs::housing_freeplace_preserves_housing_service_state"
       ],
       "assertions": [],
       "commit": "3839f707f",

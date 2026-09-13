@@ -5,7 +5,7 @@
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "547d8e7740b7ee37d13140dcb5e8969d3fd20347ae5c7e58f12d610c9a8a09ef",
+      "sha256": "387be801f2b4432bb4eaa8dfa45b83087cc896350e8ca3253a3215a0b3c9cab2",
       "rows": 1093
     },
     {
