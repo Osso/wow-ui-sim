@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Remaining evidence inventory
 
-[Blocker inventory](investigations/patch-api-blocker-inventory.md): 1,121 evidence-required rows across six manifests, with literal gaps, source references and proposed acquisition protocols. No new credits; semantic/probe readiness is not inferred from structural coverage.
+[Blocker inventory](investigations/patch-api-blocker-inventory.md): all 1,121 unresolved rows link to 282 evidence plans across six manifests. Independent coverage, provenance and source-alignment checks pass; missing fixtures and native contracts remain explicit. No new credits or executable-readiness claim.
 
 ## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 

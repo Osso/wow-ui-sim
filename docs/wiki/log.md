@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Link all remaining occurrences to evidence plans
 
-[Blocker inventory](investigations/patch-api-blocker-inventory.md) now links all 1,121 unresolved rows to 282 plans: 124 family plans cover 963 rows; 158 plans preserve explicit source requirements. Every plan retains missing fixtures/contracts and is non-executable. Source checks corrected family routing, argument/output shapes and the false StatusBar removal claim. Final integration verification pending; no behavior credits or runtime changes.
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) now links all 1,121 unresolved rows to 282 plans: 124 family plans cover 963 rows; 158 plans preserve explicit source requirements. Every plan retains missing fixtures/contracts and is non-executable. Source checks corrected family routing, argument/output shapes and the false StatusBar removal claim. Independent final verification passed at `8cae7bfdf`: exact 1,121-row/282-plan coverage, 14,903 fresh hashes/zero stale, validator exit 0 and source-alignment corrections. Native behavior and executable readiness remain unproven; no behavior credits or runtime changes.
 
 ## [2026-09-13] audit | Correct StatusBar source interpretation
 
