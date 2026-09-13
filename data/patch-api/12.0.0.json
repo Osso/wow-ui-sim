@@ -1553,7 +1553,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current CatalogShop compatibility state returns placeholder refundable-decor data and does not model refresh/event production.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -1588,7 +1588,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current CatalogShop compatibility state has no virtual-currency string state or success-event producer; refresh is a no-op.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -1623,7 +1623,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current CatalogShop compatibility state has no virtual-currency failure state or failure-event producer; refresh is a no-op.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4377,7 +4377,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseIndividualProductResult.entitlementId; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4406,7 +4406,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseIndividualProductResult.externalTransactionId; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4435,7 +4435,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseIndividualProductResult.parentProductId; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4464,7 +4464,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseIndividualProductResult.recordId; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4493,7 +4493,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseIndividualProductResult.status; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4522,7 +4522,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.BulkPurchaseProducts; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4551,7 +4551,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.CatalogShopCategoryInfo.showPersistentRefundButton; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4580,7 +4580,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.CatalogShopProductInfo.consumableQuantity; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4609,7 +4609,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.ConfirmHousingPurchase; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4638,7 +4638,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.GetFirstCategoryByProductID; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4667,7 +4667,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.GetNewProducts; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4696,7 +4696,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.GetProductIDsForCategory; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4725,7 +4725,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.GetRefundableDecors; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4754,7 +4754,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.GetVirtualCurrencyBalance; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4783,7 +4783,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state publishes HasNewProducts as constant false.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -4820,7 +4820,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.OpenCatalogShopInteractionFromHouse; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4849,7 +4849,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.OpenCatalogShopInteractionFromShop; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4878,7 +4878,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.RefreshRefundableDecors; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4907,7 +4907,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.RefreshVirtualCurrencyBalance; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4960,7 +4960,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.RefundableDecorInfo.decorGUID; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -4989,7 +4989,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.RefundableDecorInfo.standaloneDecorProductID; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -5018,7 +5018,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.RefundableDecorInfo.timeRemainingSeconds; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -5047,7 +5047,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary CatalogShop compatibility state is absent, no-op, incomplete, or seeded for C_CatalogShop.StartHousingVCPurchaseConfirmation; authoritative producer/state semantics are unmodeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -10982,7 +10982,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary housing state publishes the getter from seeded selected exterior type ID and name fields.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11019,7 +11019,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary C_HouseExterior surface omits GetFixtureDebugInfoForGUID and has no GUID-indexed fixture-debug backing model.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11048,7 +11048,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary housing state publishes seeded selectedSize 3 with Medium and Large size option records.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11085,7 +11085,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary housing state publishes selectedExteriorType 1 with Sunspire Cottage and Sunspire Manor option records.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11122,7 +11122,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary implementation returns nil and has no hovered-fixture debug payload or backing state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11151,7 +11151,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary C_HouseExterior surface omits GetSelectedFixtureDebugInfo and has no selected-fixture debug payload or backing state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11180,7 +11180,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary setter is a no-op and does not update the selectedSize exposed by GetHouseExteriorSizeOptions.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11209,7 +11209,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary setter is a no-op and does not update selectedExteriorType or its displayed name.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11238,7 +11238,7 @@
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
           "summary": "Current Rust C_Housing model backs housing service state but does not register or model housing-market-shop availability.",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f"
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e"
         },
         {
           "kind": "source",
@@ -11273,7 +11273,7 @@
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
           "summary": "Current Rust C_Housing model does not register OnHouseFinderClickPlot or model selected-plot interaction side effects.",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f"
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e"
         },
         {
           "kind": "source",
@@ -11293,8 +11293,8 @@
       "id": "added:C_HousingBasicMode.IsFreePlaceEnabled",
       "symbol": "C_HousingBasicMode.IsFreePlaceEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -11307,23 +11307,70 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
-          "summary": "Current temporary implementation hardcodes true while paired SetFreePlaceEnabled is a no-op, so no mutable free-placement state is modeled.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "summary": "Former hardcoded-true getter and no-op setter removed; C API housing state now owns the ordinary methods.",
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_housing/basic_mode.rs",
+          "source_hash": "cd7ac07e3c0a53927bad3472eb0c1d7d2114260682b4b4cb605d15c23eb94cd3",
+          "summary": "Modeled IsFreePlaceEnabled/SetFreePlaceEnabled read and write per-environment housing state."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_housing.rs",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
+          "summary": "Registers basic-mode methods under the retail-12-0-0 feature gate."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state/support_types.rs",
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737",
+          "summary": "HousingState stores free_place_disabled; its initial policy is not native-default proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Explicit true/false writes and repeated toggles return the last assigned boolean."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Getter returns exactly one boolean; setter returns zero values for explicit true and false."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Two WowLuaEnv instances retain independent state across both write directions."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Free-place writes preserve explicit unrelated housing-service availability."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3839f707f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: hardcoded true and a no-op setter do not establish default, setter/getter state transitions, reset/isolation, persistence, or exact free-placement semantics."
+      "notes": "Bounded best-effort: explicit ordinary boolean state and repeated writes, getter-one/setter-zero arity, independent WowLuaEnv state and unrelated housing-service preservation. Runtime 3839f707f; tests 220897051; independent proof passes 4/4 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Separately, current-default loaded HousingFramesUtil forwarding passes; this is not native or historical-profile/full-LoD consumer proof. Native/default/reset/lifecycle/persistence, placement/collision/rendering/events, validation/coercion, earlier-profile availability and secret/taint behavior remain unproven."
     },
     {
       "id": "added:C_HousingBasicMode.SetFreePlaceEnabled",
       "symbol": "C_HousingBasicMode.SetFreePlaceEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -11336,16 +11383,63 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
-          "summary": "Current temporary setter is a no-op while the paired getter is hardcoded true, so no mutable free-placement state exists.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "summary": "Former hardcoded-true getter and no-op setter removed; C API housing state now owns the ordinary methods.",
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_housing/basic_mode.rs",
+          "source_hash": "cd7ac07e3c0a53927bad3472eb0c1d7d2114260682b4b4cb605d15c23eb94cd3",
+          "summary": "Modeled IsFreePlaceEnabled/SetFreePlaceEnabled read and write per-environment housing state."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_housing.rs",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
+          "summary": "Registers basic-mode methods under the retail-12-0-0 feature gate."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state/support_types.rs",
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737",
+          "summary": "HousingState stores free_place_disabled; its initial policy is not native-default proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Explicit true/false writes and repeated toggles return the last assigned boolean."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Getter returns exactly one boolean; setter returns zero values for explicit true and false."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Two WowLuaEnv instances retain independent state across both write directions."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state",
+          "source_hash": "1911819118604bf9d6dacbff20510d00326122f570ce41c6129728019da2d2a5",
+          "summary": "Free-place writes preserve explicit unrelated housing-service availability."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/housing.rs::freeplace_tests::housing_freeplace_explicit_and_repeated_toggles",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_getter_and_setter_return_arity",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_isolates_lua_environments",
+        "tests/housing.rs::freeplace_tests::housing_freeplace_preserves_housing_service_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3839f707f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: the no-op setter cannot establish initial state, true/false transitions, getter round-trip, reset/isolation, persistence, or exact free-placement semantics."
+      "notes": "Bounded best-effort: explicit ordinary boolean state and repeated writes, getter-one/setter-zero arity, independent WowLuaEnv state and unrelated housing-service preservation. Runtime 3839f707f; tests 220897051; independent proof passes 4/4 each on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup ([])/readability. Separately, current-default loaded HousingFramesUtil forwarding passes; this is not native or historical-profile/full-LoD consumer proof. Native/default/reset/lifecycle/persistence, placement/collision/rendering/events, validation/coercion, earlier-profile availability and secret/taint behavior remain unproven."
     },
     {
       "id": "added:C_HousingBasicMode.StartPlacingPreviewDecor",
@@ -11366,7 +11460,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary method is a no-op with no preview-placement, decor-record, bundle-product, validation, request, or event state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11395,7 +11489,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary method is a no-op and does not remove or update preview-cart decor state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11424,7 +11518,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary catalog state returns cloned seeded bundle 5001 data and tracks wasViewed through HousingMarketActionViewBundle.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11461,7 +11555,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary catalog surface publishes GetCartSizeLimit as the seeded numeric constant 20.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11498,7 +11592,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary implementation ignores both arguments and always returns nil without refund-timestamp state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11527,7 +11621,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary implementation hardcodes true instead of deriving from featured catalog state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11556,7 +11650,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary seeded bundle 5001 publishes canPreview = true through GetBundleInfo cloning.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11593,7 +11687,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current seeded bundle publishes originalPrice = nil and has no original-pricing or discount model.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11622,7 +11716,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current catalog entry payloads omit dyeIDs and expose only an unrelated empty dyeSlots table without dye-ID backing state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11651,7 +11745,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Seeded catalog entry payloads 1001 and 1002 publish isUniqueTrophy = false through catalog entry getters.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11688,7 +11782,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Seeded catalog entry 1001 publishes numeric itemID 1001 through catalog entry getters.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -11749,7 +11843,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish bundleCatalogShopProductID field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11778,7 +11872,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish decorGUID field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11807,7 +11901,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish decorID field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11836,7 +11930,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish icon field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11865,7 +11959,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish id field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11894,7 +11988,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish isBundleChild field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11923,7 +12017,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish isBundleParent field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11952,7 +12046,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish name field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -11981,7 +12075,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish price field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12010,7 +12104,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish productID field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12039,7 +12133,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing catalog state has no typed HousingPreviewItemData producer and does not establish salePrice field semantics.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12068,7 +12162,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary preview-cart map defaults unknown GUIDs to false and is shared with setter and promotion methods.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12105,7 +12199,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary implementation returns true and marks the preview GUID visible while ignoring decorID.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12142,7 +12236,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary method is a no-op with no refund request/list state or HOUSING_REFUND_LIST_UPDATED event lifecycle.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12171,7 +12265,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary implementation stores normalized boolean state observable through IsPreviewCartItemShown.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12208,7 +12302,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current C_HousingCustomizeMode surface omits this method and has no exterior-door hover/hit-test state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12237,7 +12331,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary decor state sets its preview boolean true, consumed by IsPreviewState and GetNumPreviewDecor.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12274,7 +12368,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary decor state clears its preview boolean, consumed by IsPreviewState and GetNumPreviewDecor.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12311,7 +12405,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary implementation derives numeric 0/1 from a preview boolean rather than an actual decor collection.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12348,7 +12442,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary implementation ignores mode and always returns false without mode-availability state.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -12377,7 +12471,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Temporary implementation returns the preview boolean changed by EnterPreviewState and ExitPreviewState.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -12923,7 +13017,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has name and unlock_description fields but no description field or authoritative description state.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -12958,7 +13052,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has no highlights collection or typed RenownHighlightInfo state.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -12993,7 +13087,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has no nullable player companion ID or major-faction companion association.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -13028,7 +13122,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no MajorFactionRenownRewardInfo payload model or nullable reward type field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -13093,7 +13187,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no RenownHighlightInfo payload model or description field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -13128,7 +13222,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain RenownLevelInfo.level for a different structure, but no RenownHighlightInfo model or highlight level field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -13163,7 +13257,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no RenownHighlightInfo payload model or title field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "source",
@@ -16829,7 +16923,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "FactionParagonInfo provides the modeled too_low_level_for_paragon state used by the API.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -28832,7 +28926,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -28873,7 +28967,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -28938,7 +29032,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -28979,7 +29073,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29020,7 +29114,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29061,7 +29155,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29102,7 +29196,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29143,7 +29237,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29184,7 +29278,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29225,7 +29319,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29266,7 +29360,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29307,7 +29401,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29348,7 +29442,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29389,7 +29483,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29430,7 +29524,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29471,7 +29565,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29512,7 +29606,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29577,7 +29671,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -29618,7 +29712,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
+          "source_hash": "ab62a5e5223cf2b82e4128860fff7a2ed51a2c3024a2c073d246df2fbf670737"
         },
         {
           "kind": "test",
@@ -85069,7 +85163,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSE_EXTERIOR_TYPE_UNLOCKED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85104,7 +85198,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_DECOR_ADD_TO_PREVIEW_LIST producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85139,7 +85233,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_DECOR_FREE_PLACE_STATUS_CHANGED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85174,7 +85268,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_DECOR_PREVIEW_LIST_REMOVE_FROM_WORLD producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85209,7 +85303,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_DECOR_PREVIEW_LIST_UPDATED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85244,7 +85338,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_DECOR_PREVIEW_STATE_CHANGED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85279,7 +85373,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_EXPERT_MODE_PLACEMENT_FLAGS_UPDATED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85314,7 +85408,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_FIXTURE_UNLOCKED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85349,7 +85443,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_REFUND_LIST_UPDATED producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85384,7 +85478,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_SET_EXTERIOR_HOUSE_SIZE_RESPONSE producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85419,7 +85513,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_SET_EXTERIOR_HOUSE_TYPE_RESPONSE producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85454,7 +85548,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Examined temporary housing state does not provide authoritative HOUSING_SET_FIXTURE_RESPONSE producer, payload, timing, or lifecycle proof.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85507,7 +85601,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorSizeOption.isLocked; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85536,7 +85630,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorSizeOption.name; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85565,7 +85659,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorSizeOption.size; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85618,7 +85712,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorSizeOptionsInfo.options; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85647,7 +85741,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorSizeOptionsInfo.selectedSize; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85699,7 +85793,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa",
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6",
           "summary": "Temporary fixture publication exposes numeric IDs, but it is not an authoritative retail producer."
         },
         {
@@ -85735,7 +85829,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorTypeOption.isLocked; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85764,7 +85858,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorTypeOption.lockReasonString; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85793,7 +85887,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorTypeOption.name; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85846,7 +85940,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorTypeOptionsInfo.options; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85875,7 +85969,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseExteriorTypeOptionsInfo.selectedExteriorType; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85928,7 +86022,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseLevelInfo.exteriorDecorPlacementBudget; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85957,7 +86051,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseLevelInfo.exteriorFixtureBudget; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -85986,7 +86080,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseLevelInfo.interiorDecorPlacementBudget; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -86015,7 +86109,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseLevelInfo.level; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -86044,7 +86138,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HouseLevelInfo.roomPlacementBudget; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -86073,7 +86167,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current temporary housing data does not provide authoritative focused proof for HousingDecorInstanceInfo.isRefundable; fields are absent, fixed placeholders, or fixture-backed values.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         }
       ],
       "tests": [],
@@ -114102,7 +114196,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
           "summary": "Current simulator source no longer publishes C_CatalogShop.OpenCatalogShopInteraction; the prior compatibility publication was removed where applicable.",
-          "source_hash": "961fece2838bee33bad828a406052d1daae422f28f167b892855c0e0890ca9fa"
+          "source_hash": "28fc09d30e94056fd5bc674aa02f8a96ba5d751ba34b356d776babb523ee57b6"
         },
         {
           "kind": "test",
@@ -114200,7 +114294,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing API registration models housing namespaces and methods but does not establish InvalidPlacementInfo structure removal or replacement semantics."
         },
         {
@@ -114235,7 +114329,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not establish InvalidPlacementInfo field removal, replacement structure, or runtime object shape."
         },
         {
@@ -114270,7 +114364,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not establish InvalidPlacementInfo field removal, replacement structure, or runtime object shape."
         },
         {
@@ -114305,7 +114399,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not establish InvalidPlacementInfo field removal, replacement structure, or runtime object shape."
         },
         {
@@ -114340,7 +114434,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not establish InvalidPlacementInfo field removal, replacement structure, or runtime object shape."
         },
         {
@@ -114375,7 +114469,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not establish InvalidPlacementInfo field removal, replacement structure, or runtime object shape."
         },
         {
@@ -114546,7 +114640,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing API registration models housing namespaces and methods but does not establish HousingLevelInfo removal or replacement semantics."
         },
         {
@@ -114581,7 +114675,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not model the old or replacement housing-level object shape for this field."
         },
         {
@@ -114616,7 +114710,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not model the old or replacement housing-level object shape for this field."
         },
         {
@@ -114651,7 +114745,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not model the old or replacement housing-level object shape for this field."
         },
         {
@@ -114686,7 +114780,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not model the old or replacement housing-level object shape for this field."
         },
         {
@@ -114721,7 +114815,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_housing.rs",
-          "source_hash": "483707bf45bfa04ee9a654c02c0b358f6a5e1d745888ebf1f7726be589d1673f",
+          "source_hash": "c85bd8dd18fd9ae681bca9f99c799b5f765bef1e9a4ca3fd7e9dbcd1ce32fd9e",
           "summary": "Current C_Housing registration does not model the old or replacement housing-level object shape for this field."
         },
         {

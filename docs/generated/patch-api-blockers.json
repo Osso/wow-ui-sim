@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-13",
-  "scope": "Snapshot of evidence-required rows only; proposed probe protocols, not runnable tests or fresh semantic verification of every manifest note. Exceptions and best-effort residual gaps remain outside this row inventory. No new compatibility credit.",
+  "scope": "Snapshot of evidence-required rows only; proposed plans are not executable fixtures or fresh native semantic proof. Exceptions and best-effort residual gaps remain outside this row inventory. The refresh reflects two separately credited housing free-place state rows; snapshot membership awards no additional credit.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "c57c8029e82edccb461e98986b76c8eaac7bd58e761cb8a001ba882f1ba77496",
-      "rows": 1095
+      "sha256": "547d8e7740b7ee37d13140dcb5e8969d3fd20347ae5c7e58f12d610c9a8a09ef",
+      "rows": 1093
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1121,
+  "total": 1119,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -2553,32 +2553,6 @@
         "src/lua_api/globals/housing.rs"
       ],
       "probe_plan": "housing-C_Housing"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_HousingBasicMode.IsFreePlaceEnabled",
-      "owner": "api",
-      "missing_evidence": "Evidence required: hardcoded true and a no-op setter do not establish default, setter/getter state transitions, reset/isolation, persistence, or exact free-placement semantics.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ],
-      "probe_plan": "housing-C_HousingBasicMode"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_HousingBasicMode.SetFreePlaceEnabled",
-      "owner": "api",
-      "missing_evidence": "Evidence required: the no-op setter cannot establish initial state, true/false transitions, getter round-trip, reset/isolation, persistence, or exact free-placement semantics.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ],
-      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -15659,14 +15633,13 @@
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "housing-C_HousingBasicMode": {
-      "dependency": "Controlled placement fixture with decor/bundle identity, free-place state, and a real invalid-placement result producer; current setters/no-ops do not establish transitions.",
+      "dependency": "Controlled preview-placement fixture with observed decor/bundle identity and a populated invalid-placement result producer. Implemented free-place boolean state does not establish placement behavior.",
       "observations": [
-        "For free-place methods record initial getter and explicit true/false transitions on the same fixture, plus a separate fixture control; do not infer native defaults or persistence.",
         "For StartPlacingPreviewDecor observe selected decor/bundle before and after entry, cancel/repeat outcomes and request/event ordering using a known preview item.",
         "For removed InvalidPlacementInfo/fields first obtain a populated invalid-placement result and inspect its shape; separately record namespace lookup and LoD phase. Missing globals alone do not prove removal of a returned structure."
       ],
       "ready_to_execute": false,
-      "design_gap": "Exact placement producer/input fixture and invalid-result replacement shape absent. IsNudgeEnabled/SetNudgeEnabled removals are not pending rows here.",
+      "design_gap": "Preview-placement producer/request lifecycle and invalid-result replacement shape remain unproven. Free-place boolean state is separately credited; its native default/reset/placement semantics remain unproven outside these remaining rows.",
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "timeline-lifecycle": {
@@ -18120,5 +18093,15 @@
       "effect": "Corrected false removal note; no status, credit or runtime change."
     }
   ],
-  "source_baseline_revision": "88ccc385a"
+  "source_baseline_revision": "88ccc385a",
+  "refresh": {
+    "scope": "housing free-place metadata integration; final metadata verification pending",
+    "runtime_commit": "3839f707f",
+    "proof": "/tmp/verify-housing-freeplace-ledger.json",
+    "removed_credited_rows": [
+      "added:C_HousingBasicMode.IsFreePlaceEnabled",
+      "added:C_HousingBasicMode.SetFreePlaceEnabled"
+    ],
+    "prior_inventory_proof": "8cae7bfdf; reusable only for unchanged rows/plans, not this metadata refresh"
+  }
 }

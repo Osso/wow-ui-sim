@@ -1,10 +1,10 @@
-## [2026-09-13] audit | Pending housing free-place state proof
+## [2026-09-13] audit | Credit bounded housing free-place state
 
-`220897051` tests reached RED 2/4 against the hardcoded-true/no-op surface. Runtime `3839f707f` models only explicit per-environment boolean state. Pending independent proof covers true/false/repeated writes, getter-one/setter-zero arity, environment isolation and unrelated housing state; no credit or totals change. Native default/reset/lifecycle, placement/rendering, events, validation and security remain unproven. [Spec](../specs/housing-free-place-state.md).
+Runtime `3839f707f`, tests `220897051`: independent ordinary-state proof passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Exactly two credits cover explicit boolean/repeated writes, getter-one/setter-zero arity, environment isolation and unrelated housing-service preservation. Separately, current-default loaded `HousingFramesUtil` forwarding passes; not native or historical-profile/full-LoD proof. Totals **2315 / 1093 / 2**; 139 existing references renewed, 14 added across six scanned manifests. Blocker snapshot now has 1,119 rows; only the two credited rows were removed and the remaining basic-mode plan retains placement/InvalidPlacementInfo gaps. Final metadata verification remains with main. Native/default/reset/lifecycle/persistence, placement/rendering/events, validation, earlier-profile and security behavior remain unproven. Proof: `/tmp/verify-housing-freeplace-ledger.json`; metadata ledger: `/tmp/housing-freeplace-metadata-ledger.json`.
 
 ## [2026-09-13] audit | Remaining evidence inventory
 
-[Blocker inventory](investigations/patch-api-blocker-inventory.md): all 1,121 unresolved rows link to 282 evidence plans across six manifests. Independent coverage, provenance and source-alignment checks pass; missing fixtures and native contracts remain explicit. No new credits or executable-readiness claim.
+[Blocker inventory](investigations/patch-api-blocker-inventory.md): 1,119 unresolved rows link to 282 plans after the two housing free-place credits. Prior 1,121-row proof is historical and reusable only for unchanged rows/plans; final refresh verification remains with main. Missing fixtures/native contracts stay explicit; no executable-readiness claim.
 
 ## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 

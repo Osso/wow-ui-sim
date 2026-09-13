@@ -331,8 +331,8 @@
 331. [evidence-required] `added:C_HouseExterior.SetHouseExteriorType` — unsafe
 332. [evidence-required] `added:C_Housing.IsHousingMarketShopEnabled` — unsafe
 333. [evidence-required] `added:C_Housing.OnHouseFinderClickPlot` — unsafe
-334. [evidence-required] `added:C_HousingBasicMode.IsFreePlaceEnabled` — unsafe
-335. [evidence-required] `added:C_HousingBasicMode.SetFreePlaceEnabled` — unsafe
+334. [best-effort] `added:C_HousingBasicMode.IsFreePlaceEnabled` — behavioral
+335. [best-effort] `added:C_HousingBasicMode.SetFreePlaceEnabled` — behavioral
 336. [evidence-required] `added:C_HousingBasicMode.StartPlacingPreviewDecor` — unsafe
 337. [evidence-required] `added:C_HousingCatalog.DeletePreviewCartDecor` — unsafe
 338. [best-effort] `added:C_HousingCatalog.GetBundleInfo` — behavioral

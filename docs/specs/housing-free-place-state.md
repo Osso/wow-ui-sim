@@ -1,6 +1,6 @@
 # Housing free-place state
 
-Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled() -> boolean` and `SetFreePlaceEnabled(boolean)` with no returns. Unmodified housing controllers and the standard binding contain the matching query/set call path; their execution is not proof in this slice.
+Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled() -> boolean` and `SetFreePlaceEnabled(boolean)` with no returns. Unmodified housing controllers and the standard binding contain the matching query/set call path. Loaded-consumer proof is separately scoped below.
 
 ## Contract
 
@@ -13,8 +13,10 @@ Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled()
 
 ## Evidence
 
-`tests/housing.rs`, committed through `220897051`: RED 2/4; arity and unrelated housing-service preservation passed, while explicit false and environment isolation failed at the unchanged true getter. Runtime `3839f707f` adds per-environment state in `src/c_api/c_housing/basic_mode.rs`. Independent post-change proof is pending.
+`tests/housing.rs`, committed through `220897051`: RED 2/4; arity and unrelated housing-service preservation passed, while explicit false and environment isolation failed at the unchanged true getter. Runtime `3839f707f` adds per-environment state in `src/c_api/c_housing/basic_mode.rs`. Independent proof at `3839f707f` passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Historical warnings remain 6/6/1. Ledger: `/tmp/verify-housing-freeplace-ledger.json`.
+
+Separately, the current-default simulator loaded unmodified `HousingFramesUtil.SetFreePlaceEnabled`; false/true/false forwarding and zero returns passed with its debug source identified. This is not native WoW, historical-profile consumer or full-LoD proof. Metadata awards exactly two bounded credits; final metadata/inventory verification remains with main.
 
 ## Gaps
 
-No placement, collision, rendering, persistence, reset/lifecycle or event-order behavior is established. Unmodified consumer source supports the toggle contract; API-level tests do not establish execution of the loaded UI consumer. Native validation, earlier-profile availability and secret/taint enforcement remain unproven.
+No placement, collision, rendering, persistence, reset/lifecycle or event-order behavior is established. The separate current-default forwarder check does not establish placement-controller or keybinding execution, native behavior, or 12.0.0/12.0.5/12.0.7 loaded UI consumers. Native validation, earlier-profile availability and secret/taint enforcement remain unproven.
