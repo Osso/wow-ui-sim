@@ -100,6 +100,33 @@ fn c_string_util_remove_contiguous_spaces_keeps_empty_and_space_free_strings() {
         .expect("empty and ASCII-space-free strings remain unchanged at every tested limit");
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn c_string_util_remove_contiguous_spaces_rejects_invalid_limits() {
+    env()
+        .eval::<()>(
+            r#"
+            -- Explicit simulator validation policy, not native coercion/range proof.
+            local cases = {
+                {name = "negative", value = -1},
+                {name = "fractional", value = 0.5},
+                {name = "NaN", value = 0 / 0},
+                {name = "positive infinity", value = math.huge},
+                {name = "negative infinity", value = -math.huge},
+                {name = "numeric string", value = "1"},
+                {name = "boolean", value = false},
+                {name = "table", value = {}},
+            }
+            for _, case in ipairs(cases) do
+                local success = pcall(C_StringUtil.RemoveContiguousSpaces, " a  b ", case.value)
+                assert(not success, "invalid limit accepted: " .. case.name)
+            end
+            assert(not pcall(C_StringUtil.RemoveContiguousSpaces, " a  b "), "missing limit accepted")
+            "#,
+        )
+        .expect("simulator policy rejects missing, nonnumeric, nonfinite and nonintegral limits");
+}
+
 #[cfg(not(any(feature = "profile-retail", feature = "client-ptr")))]
 #[test]
 fn non_retail_profiles_do_not_publish_retail_string_helpers() {
