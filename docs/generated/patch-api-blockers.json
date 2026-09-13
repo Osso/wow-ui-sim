@@ -11961,7 +11961,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11973,7 +11974,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11985,7 +11987,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11997,7 +12000,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12009,7 +12013,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12021,7 +12026,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12033,7 +12039,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12045,7 +12052,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12057,7 +12065,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12069,7 +12078,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12081,7 +12091,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12093,7 +12104,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12105,7 +12117,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12117,7 +12130,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12129,7 +12143,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12141,7 +12156,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/constants_values.lua"
-      ]
+      ],
+      "probe_plan": "housing-constant-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12205,7 +12221,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12217,7 +12234,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12229,7 +12247,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12241,7 +12260,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12253,7 +12273,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12265,7 +12286,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12277,7 +12299,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12289,7 +12312,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12301,7 +12325,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12313,7 +12338,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12325,7 +12351,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12337,7 +12364,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12349,7 +12377,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12361,7 +12390,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12373,7 +12403,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12385,7 +12416,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12397,7 +12429,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12409,7 +12442,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12421,7 +12455,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12433,7 +12468,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12445,7 +12481,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12457,7 +12494,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12469,7 +12507,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12481,7 +12520,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12493,7 +12533,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12505,7 +12546,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12517,7 +12559,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12529,7 +12572,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12541,7 +12585,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12553,7 +12598,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12565,7 +12611,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12577,7 +12624,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12589,7 +12637,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12601,7 +12650,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12613,7 +12663,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12625,7 +12676,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12637,7 +12689,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12649,7 +12702,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12661,7 +12715,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12673,7 +12728,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12685,7 +12741,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12697,7 +12754,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12709,7 +12767,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12721,7 +12780,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12733,7 +12793,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12745,7 +12806,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12757,7 +12819,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12769,7 +12832,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12781,7 +12845,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12793,7 +12858,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12805,7 +12871,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12817,7 +12884,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12829,7 +12897,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12841,7 +12910,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12853,7 +12923,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12865,7 +12936,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12877,7 +12949,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12889,7 +12962,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12901,7 +12975,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12913,7 +12988,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12925,7 +13001,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12937,7 +13014,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12949,7 +13027,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12961,7 +13040,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12973,7 +13053,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12985,7 +13066,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -12997,7 +13079,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13009,7 +13092,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13021,7 +13105,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13033,7 +13118,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13045,7 +13131,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13057,7 +13144,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13069,7 +13157,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13081,7 +13170,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13093,7 +13183,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13105,7 +13196,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13117,7 +13209,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13129,7 +13222,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13141,7 +13235,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13153,7 +13248,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13165,7 +13261,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13177,7 +13274,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13189,7 +13287,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13201,7 +13300,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13213,7 +13313,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13225,7 +13326,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13237,7 +13339,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13249,7 +13352,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13261,7 +13365,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13273,7 +13378,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13285,7 +13391,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13297,7 +13404,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13309,7 +13417,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13321,7 +13430,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "account-enum-load-phases"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13333,7 +13443,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13345,7 +13456,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13357,7 +13469,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13369,7 +13482,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13381,7 +13495,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13393,7 +13508,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13405,7 +13521,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13417,7 +13534,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13429,7 +13547,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13441,7 +13560,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13453,7 +13573,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13465,7 +13586,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13477,7 +13599,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13489,7 +13612,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13501,7 +13625,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13513,7 +13638,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13525,7 +13651,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13625,7 +13752,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -13637,7 +13765,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua"
-      ]
+      ],
+      "probe_plan": "enum-old-new-members"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -16815,6 +16944,36 @@
       "ready_to_execute": false,
       "design_gap": "Tests reference the structure but no runtime producer populates these fields; synthetic tables or related action-bar implementations cannot establish native values, lifecycle or persistence.",
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "account-enum-load-phases": {
+      "dependency": "Native base/target captures at account initialization, character login and completed relevant addon/LoD loading; record readiness and failed loads instead of assuming all account data is available.",
+      "observations": [
+        "For each linked AccountStateLoadedFlags/CreateAllAccountData member, resolve the namespace safely, record parent existence/type, raw member lookup, ordinary lookup and accessible key enumeration at each phase.",
+        "Compare snapshots before/after account-data readiness and between pinned builds. A missing parent, inaccessible value or failed load is a distinct observation, not proof that the member was removed. Preserve historical value/replacement questions from each row."
+      ],
+      "design_gap": "No phase-complete native account-enum capture or authoritative dynamic-publication/replacement evidence; simulator bootstrap omission is only local evidence.",
+      "ready_to_execute": false,
+      "execution_limits": "Read-only proposed capture; no bypass of secret/inaccessible values, account mutation or runtime execution is authorized."
+    },
+    "housing-constant-load-phases": {
+      "dependency": "Native base/target Constants.HousingCatalogConsts snapshots plus housing catalog addon/LoD inventory and load results.",
+      "observations": [
+        "Resolve Constants and HousingCatalogConsts separately, then record raw/ordinary lookup for each exact linked HOUSING_CATALOG_* key without substituting zero or absent parent as member absence.",
+        "Capture the namespace key set before/after relevant housing loads and compare pinned builds. Keep replacement values and catalog behavior outside a lookup-only conclusion."
+      ],
+      "design_gap": "The current simulator omits these keys, but no native full-runtime/load-order snapshot establishes the same absence or dynamic publication.",
+      "ready_to_execute": false,
+      "execution_limits": "Read-only proposed capture; no bypass of secret/inaccessible values, account mutation or runtime execution is authorized."
+    },
+    "enum-old-new-members": {
+      "dependency": "Pinned removed-member and any corresponding added-member declarations, plus native base/target namespace captures with complete relevant load phases.",
+      "observations": [
+        "For the exact enum/member in each row, record parent namespace type, raw/ordinary lookup, accessible enumeration and observed numeric value. If source metadata pairs a replacement, record that exact new name independently.",
+        "Compare old/new presence across builds and relevant addon loads. Shared numeric values do not establish aliases, replacement behavior or historical removal timing; retain those unknowns explicitly."
+      ],
+      "design_gap": "No authoritative native old/new publication matrix or semantic alias evidence. Source pairs and simulator omission cannot substitute for it.",
+      "ready_to_execute": false,
+      "execution_limits": "Read-only proposed capture; no bypass of secret/inaccessible values, account mutation or runtime execution is authorized."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
