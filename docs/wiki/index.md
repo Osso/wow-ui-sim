@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Implement contiguous ASCII-space truncation pending GREEN
+
+`8de0d6e6c` adds the retail-12.0.0-gated `C_StringUtil.RemoveContiguousSpaces` byte transformation after four test-first cases were RED 0/4. ASCII-space cap behavior and strict invalid-limit rejection await GREEN and independent proof; invalid-limit rejection is simulator policy, not native evidence. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md) and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-13] system | Share creature GUID identifier parsing
 
 [[creature-guid-identifiers]] records the retail 12.0.0+ `C_CreatureInfo.GetCreatureID` bridge to the legacy `UnitCreatureID` parser, bounded GUID forms, and excluded native semantics. Retail `creature` verification passes 44/44 on each 12.0.0/12.0.5/12.0.7; Mists broad coverage is blocked by eight unrelated AccountStore setup failures, not treated as baseline proof. See [Creature GUID identifiers](../specs/creature-id.md).
