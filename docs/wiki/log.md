@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Refine concrete blocker probes
 
-[Blocker inventory](investigations/patch-api-blocker-inventory.md) adds 13 observation plans for 35 rows, distinguishing cast identities, realm/base-sex fixtures, formatting/markup, populated action/aura transitions, publication and PTR structure exposure. Remaining 1,086 rows still need concrete design. No native outcomes, runtime changes or credits; refinement verification pending.
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) adds 13 observation plans for 35 rows, distinguishing cast identities, realm/base-sex fixtures, formatting/markup, populated action/aura transitions, publication and PTR structure exposure. Remaining 1,086 rows still need concrete design. No native outcomes, runtime changes or credits. Independent refinement proof passed at `747017217`; the 12.0.0 hyperlink matrix was corrected to four controls/16 combinations, keeping later fifth-control applicability separate.
 
 ## [2026-09-13] audit | Inventory remaining evidence dependencies
 

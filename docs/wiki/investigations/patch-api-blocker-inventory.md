@@ -65,7 +65,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 Investigation suggestions rejected: mutating the CVar is unnecessary for the recorded getter case-sensitivity gap; later cached cast/action signatures cannot replace the pinned 12.0.0 contract; a fifth cached StripHyperlinks control cannot expand the four-control 12.0.0 matrix without target-build evidence. Security enforcement remains deferred even when an ordinary producer observation is possible.
 
-The 35-row refinement requires independent source/consistency verification; the prior proof below covers the unchanged baseline inventory only.
+Independent refinement verification passed at `747017217` after correcting the four-control hyperlink matrix. Proof: `/tmp/verify-blocker-probe-plans-ledger.json` and `/tmp/verify-blocker-probe-plans-corrected-ledger.json`. The 35 links/13 plans and unchanged six-manifest baseline were checked; source review supports the selected dependencies, not runtime availability or all remaining semantic contracts.
 
 ## Refresh and verification
 
