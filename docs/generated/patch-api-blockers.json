@@ -9509,7 +9509,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/private_aura_state.rs"
-      ]
+      ],
+      "probe_plan": "private-aura-border-scale"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10729,7 +10730,8 @@
         "src/lua_api/globals/security/secret_values.rs",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "secret-global-boundaries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10756,7 +10758,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/proxy_object_factories.rs"
-      ]
+      ],
+      "probe_plan": "script-documentation-object-identity"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10768,7 +10771,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_curve_util.rs"
-      ]
+      ],
+      "probe_plan": "script-documentation-object-identity"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10783,7 +10787,8 @@
         "data/lua/taint_stubs.lua",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "secret-global-boundaries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10797,7 +10802,8 @@
         "src/lua_api/globals/security/secret_values.rs",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "secret-global-boundaries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10811,7 +10817,8 @@
         "src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
         "tests/runtime_bootstrap_boundaries.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "secret-global-boundaries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10826,7 +10833,8 @@
         "src/lua_api/globals/security/mod.rs",
         "tests/security_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "securecallmethod-boundaries"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11540,7 +11548,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/widgets/statusbar.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "statusbar-uiobject-contract"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14491,7 +14500,8 @@
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "docs/wow-api-functions.txt"
-      ]
+      ],
+      "probe_plan": "show-cloak-helm-docs-removal"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14505,7 +14515,8 @@
         "src/lua_api/env_init/enums.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
         "docs/wow-api-functions.txt"
-      ]
+      ],
+      "probe_plan": "show-cloak-helm-docs-removal"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -15103,7 +15114,8 @@
       "scope": "deferred-security",
       "basis_references": [
         "data/patch-api/evidence/12.0.5/ProtectedRetailProbe.lua"
-      ]
+      ],
+      "probe_plan": "retained-store-forbidden-boundary"
     },
     {
       "manifest": "data/patch-api/12.0.5-probes.json",
@@ -15114,7 +15126,8 @@
       "scope": "non-secret observation only; enforcement excluded",
       "basis_references": [
         "docs/wiki/investigations/display-size-ui-scale-events.md"
-      ]
+      ],
+      "probe_plan": "same-size-window-signal"
     },
     {
       "manifest": "data/patch-api/12.0.5-probes.json",
@@ -18031,9 +18044,79 @@
       "ready_to_execute": false,
       "design_gap": "No populated pending-transmog producer.",
       "execution_limits": "Inventory only: source/fixture acquisition is not authorization to execute native actions, purchases, account mutations, security enforcement or simulator changes. Observe unknown outcomes; do not manufacture a producer or assert guessed behavior."
+    },
+    "private-aura-border-scale": {
+      "dependency": "Exact PrivateAuraIconInfo producer/consumer and whether borderScale is an input option or returned field; ordinary icon configuration fixture with omitted and explicit numeric values.",
+      "observations": [
+        "Locate the API consuming/producing PrivateAuraIconInfo, then retain omitted/nil versus numeric borderScale and corresponding accessible icon state. Record default/transition/consumer observations only when actually exposed.",
+        "Keep ordinary numeric configuration distinct from private-aura visibility/authority enforcement; do not bypass inaccessible fields or infer visual scaling from field type."
+      ],
+      "design_gap": "No focused producer/consumer fixture establishes this optional numeric field or its authoritative values.",
+      "ready_to_execute": false
+    },
+    "script-documentation-object-identity": {
+      "dependency": "Authoritative mapping from FrameAPITooltip/LuaCurveObjectBaseAPI documentation names to actual constructed objects and registered method contracts.",
+      "observations": [
+        "Identify the real construction/factory path before using the documentation name as a runtime type or global. Capture object identity, exposed method set and creation/lifetime observations on the correct receiver.",
+        "For curve-base evidence preserve existing userdata-backed curve proof but identify what the named base contract additionally requires. For tooltip evidence first establish receiver/construction rather than inventing CreateFrame arguments."
+      ],
+      "design_gap": "Generated script-object names alone do not prove runtime construction or full method semantics; secret/coercion/error boundaries remain unverified.",
+      "ready_to_execute": false
+    },
+    "secret-global-boundaries": {
+      "dependency": "Separately authorized secret-value/VM boundary evidence; ordinary Lua values are insufficient fixtures for wrapping, unwrapping, scrubbing or detection semantics.",
+      "observations": [
+        "Retain exact unknown boundary for issecretvalue, secretwrap, secretunwrap and scrubsecretvalues: identity/type, argument/return shape, accessibility and caller context. No enforcement implementation or secret-value probing in this phase."
+      ],
+      "design_gap": "Security/VM semantics deferred; no authorized native secret-value corpus or simulator enforcement proof is available.",
+      "ready_to_execute": false
+    },
+    "securecallmethod-boundaries": {
+      "dependency": "Receiver/method-lookup fixture for ordinary dispatch plus separately authorized native taint/security boundary evidence.",
+      "observations": [
+        "Retain existing ordinary dispatch proof; identify missing receiver/name validation, direct versus __index method resolution, self/argument ordering, zero/multiple returns and error observations for the exact API.",
+        "Keep native secure-boundary behavior explicitly deferred. Ordinary permissive dispatch cannot establish taint preservation or authority."
+      ],
+      "design_gap": "Complete native lookup/error/caller-authority behavior remains unverified; this documentation phase does not execute secure probes.",
+      "ready_to_execute": false
+    },
+    "statusbar-uiobject-contract": {
+      "dependency": "Pinned before/after StatusBar definition and existing bounded GetFillStyle/SetFillStyle proof; native default/validation capture on a freshly created widget remains missing.",
+      "observations": [
+        "Reuse existing explicit numeric fill-style roundtrip evidence without rerunning it. Compare declared fillStyle enum/init with a native fresh-widget GetFillStyle capture, preserving returned type/value as an observation.",
+        "Capture native invalid-input/coercion/error behavior and unchanged-state controls only with identified fixtures. reverseFill and rotatesTexture remain in both pinned definitions and require no removal probe."
+      ],
+      "design_gap": "UI-object-level native initial-state and validation behavior remains unproven; bounded method state is not complete native conformance.",
+      "ready_to_execute": false
+    },
+    "show-cloak-helm-docs-removal": {
+      "dependency": "Native base/target global publication capture and relevant Blizzard/LoD load inventory for ShowCloak and ShowHelm.",
+      "observations": [
+        "Resolve the actual global names ShowCloak/ShowHelm, not docs.extra_apis as a Lua namespace. Record raw/ordinary callability before/after relevant loads and compare pinned builds.",
+        "If a replacement path is observed, document it separately; do not toggle account appearance or infer replacement semantics merely from old-name absence."
+      ],
+      "design_gap": "The docs-extra removal record is source provenance only; full native publication/replacement behavior remains absent.",
+      "ready_to_execute": false
+    },
+    "retained-store-forbidden-boundary": {
+      "dependency": "Retained SecureStore capture plus separately authorized forbidden/secure receiver semantics; current phase excludes enforcement.",
+      "observations": [
+        "Preserve the observed forbidden retained frames, absent legacy setters and IsProtected error separately from simulator normal-return behavior. No new native invocation or permissive fix is authorized."
+      ],
+      "design_gap": "Exact forbidden/caller behavior is a deferred security boundary, not ordinary getter availability.",
+      "ready_to_execute": false
+    },
+    "same-size-window-signal": {
+      "dependency": "Actual ordered maximize/restore/fullscreen transition input independent of canvas dimensions, plus native event capture for the same transitions.",
+      "observations": [
+        "Compare a same-size maximize/restore transition with unchanged-window control while recording explicit mode transition identity and ordered scale events.",
+        "Retain current boundary failure: equal dimensions do not identify a transition. Do not synthesize duplicate events or equate sampled dimensions with a missing signal."
+      ],
+      "design_gap": "Window backend supplies no demonstrated transition signal for this case; concrete platform input evidence is needed before event behavior can be modeled.",
+      "ready_to_execute": false
     }
   },
-  "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility.",
+  "probe_plan_scope": "Every unresolved row links to a family-specific or literal-source plan. Plans identify evidence dependencies and proposed observations, not executable fixtures, fresh native semantics or audit completion.",
   "source_corrections": [
     {
       "row": "changed:StatusBar",

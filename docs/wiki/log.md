@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Link all remaining occurrences to evidence plans
+
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) now links all 1,121 unresolved rows to 282 plans: 124 family plans cover 963 rows; 158 plans preserve explicit source requirements. Every plan retains missing fixtures/contracts and is non-executable. Source checks corrected family routing, argument/output shapes and the false StatusBar removal claim. Final integration verification pending; no behavior credits or runtime changes.
+
 ## [2026-09-13] audit | Correct StatusBar source interpretation
 
 Pinned before/after fields retain `reverseFill` and `rotatesTexture`; their removal was incorrectly asserted in the unresolved widget note. Corrected manifest, occurrence inventory and [blocker snapshot](investigations/patch-api-blocker-inventory.md), retaining all statuses/credits and existing bounded fill-style proof. No runtime change.
