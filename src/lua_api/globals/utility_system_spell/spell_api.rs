@@ -108,6 +108,16 @@ fn unit_health_max(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn unit_health_missing(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    let vitals = lookup_unit_vitals(state, &unit);
+    // Prediction state is unmodeled; usePredicted shares the current-health view.
+    let missing = vitals.health_max as f64 - vitals.health as f64;
+    state.push(Val::Num(missing));
+    Ok(1)
+}
+
 fn unit_health_percent(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -390,6 +400,8 @@ pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     crate::lua_api::channeling::register_queries(lua)?;
     LuaApiMut::register_function(lua, "UnitHealth", unit_health)?;
     LuaApiMut::register_function(lua, "UnitHealthMax", unit_health_max)?;
+    #[cfg(feature = "retail-12-0-0")]
+    LuaApiMut::register_function(lua, "UnitHealthMissing", unit_health_missing)?;
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;
     LuaApiMut::register_function(lua, "UnitPower", unit_power)?;
     LuaApiMut::register_function(lua, "UnitPowerMax", unit_power_max)?;
