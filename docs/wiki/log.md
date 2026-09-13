@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending housing free-place state proof
+
+Tests `220897051` reached RED 2/4 at the real boundary: explicit false and environment isolation fail because the temporary global getter is always true and setter is no-op. Runtime `3839f707f` adds per-environment ordinary boolean housing state and removes those fallbacks. Pending proof is limited to explicit transitions, arity, isolation and unrelated housing state. No manifest credit/totals change. Native defaults, reset/lifecycle, persistence, placement/collision/rendering, events, validation/coercion, earlier profiles and security remain unproven; source consumers were not executed.
+
 ## [2026-09-13] audit | Link all remaining occurrences to evidence plans
 
 [Blocker inventory](investigations/patch-api-blocker-inventory.md) now links all 1,121 unresolved rows to 282 plans: 124 family plans cover 963 rows; 158 plans preserve explicit source requirements. Every plan retains missing fixtures/contracts and is non-executable. Source checks corrected family routing, argument/output shapes and the false StatusBar removal claim. Independent final verification passed at `8cae7bfdf`: exact 1,121-row/282-plan coverage, 14,903 fresh hashes/zero stale, validator exit 0 and source-alignment corrections. Native behavior and executable readiness remain unproven; no behavior credits or runtime changes.

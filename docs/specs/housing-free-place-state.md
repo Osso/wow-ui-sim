@@ -1,6 +1,6 @@
 # Housing free-place state
 
-Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled() -> boolean` and `SetFreePlaceEnabled(boolean)` with no returns. Unmodified housing controllers and the standard binding toggle query/set this state.
+Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled() -> boolean` and `SetFreePlaceEnabled(boolean)` with no returns. Unmodified housing controllers and the standard binding contain the matching query/set call path; their execution is not proof in this slice.
 
 ## Contract
 
@@ -13,7 +13,7 @@ Pinned retail 12.0.0 signatures declare `C_HousingBasicMode.IsFreePlaceEnabled()
 
 ## Evidence
 
-`tests/housing.rs`, committed through `220897051`: RED 2/4; arity and existing housing-service preservation passed, while explicit false and environment isolation failed at the unchanged true getter. Runtime implementation is in `src/c_api/c_housing/basic_mode.rs`. Post-change proof pending.
+`tests/housing.rs`, committed through `220897051`: RED 2/4; arity and unrelated housing-service preservation passed, while explicit false and environment isolation failed at the unchanged true getter. Runtime `3839f707f` adds per-environment state in `src/c_api/c_housing/basic_mode.rs`. Independent post-change proof is pending.
 
 ## Gaps
 

@@ -1,3 +1,7 @@
+## [2026-09-13] audit | Pending housing free-place state proof
+
+`220897051` tests reached RED 2/4 against the hardcoded-true/no-op surface. Runtime `3839f707f` models only explicit per-environment boolean state. Pending independent proof covers true/false/repeated writes, getter-one/setter-zero arity, environment isolation and unrelated housing state; no credit or totals change. Native default/reset/lifecycle, placement/rendering, events, validation and security remain unproven. [Spec](../specs/housing-free-place-state.md).
+
 ## [2026-09-13] audit | Remaining evidence inventory
 
 [Blocker inventory](investigations/patch-api-blocker-inventory.md): all 1,121 unresolved rows link to 282 evidence plans across six manifests. Independent coverage, provenance and source-alignment checks pass; missing fixtures and native contracts remain explicit. No new credits or executable-readiness claim.
