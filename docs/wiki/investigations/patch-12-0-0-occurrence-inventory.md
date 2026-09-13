@@ -116,7 +116,7 @@ The bounded 12.0.0 `C_CombatLogSecure` slice classifies exactly nine added secur
 - **Source:** `data/patch-api/sources/12.0.0-register.json`
 - **Source SHA-256:** `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`
 - **Boundary:** retail 11.2.7 build 65299 → final explicit retail 12.0.0 build 65727
-- **Rows:** 3410 total — 0 implemented, 885 best-effort, 786 evidence-required, 2 exception-requested, 1737 untriaged
+- **Rows:** 3410 total — 0 implemented, 2306 best-effort, 1102 evidence-required, 2 exception-requested, 0 untriaged
 - **Directions:** 2554 added, 313 changed, 543 removed
 - **Limit:** no historical 12.0.0 FrameXML tree or live SavedVariables capture is claimed.
 
@@ -2987,7 +2987,7 @@ Source occurrence objects preserve optional typed `before`/`after` JSON payloads
 | `petJournalTypeFilters` | best-effort | cvar | changed | Retail 12.0.0 publishes exact CVar/default string '0' through both public getters; focused proof is commit 8b64275a8; startup getter/default publication only; no Pet Journal/filter, spell-overlay, tracker/rendering, mutation, persistence, consumer, or lifecycle semantics. |
 | `scrub` | best-effort | api | changed | Provenance-only: the 12.0.0 metadata removes inaccurate scrub information. No behavior, argument, return, secret-value, taint, producer, consumer, mutation, persistence, or lifecycle semantics are claimed. |
 | `spellActivationOverlayOpacity` | best-effort | cvar | changed | Retail 12.0.0 publishes exact CVar/default string '0.650000' through both public getters; focused proof is commit 8b64275a8; startup getter/default publication only; no Pet Journal/filter, spell-overlay, tracker/rendering, mutation, persistence, consumer, or lifecycle semantics. |
-| `string.trim` | evidence-required | api | changed | Evidence required: focused/full-LoD proof must cover custom characters, default trimming, wrong-type inputs, return type/value, errors, and publication. The bootstrap alias is not behavior proof; no string, consumer, mutation, persistence, producer, UI, or lifecycle semantics are claimed. |
+| `string.trim` | best-effort | api | changed | Best-effort behavioral evidence covers four-byte defaults (space, CR, LF, tab), edge VT/FF preservation and stopping, unchanged interior bytes, empty/all-default-whitespace input, explicit nil as simulator policy, string.trim and strtrim publication, explicit xy and empty-character controls, and exactly one string return. Wrong-type inputs, coercion/errors, native/security/full-LoD behavior, general custom-byte semantics, lifecycle, and consumer semantics remain unproven. |
 | `superTrackerDist` | best-effort | cvar | changed | Retail 12.0.0 publishes exact CVar/default string '0.750000' through both public getters; focused proof is commit 8b64275a8; startup getter/default publication only; no Pet Journal/filter, spell-overlay, tracker/rendering, mutation, persistence, consumer, or lifecycle semantics. |
 | `typedef.TickerCallback` | best-effort | typedef | changed | Provenance-only: no runtime behavior claimed. |
 | `typedef.TimerCallback` | best-effort | typedef | changed | Provenance-only: no runtime behavior claimed. |

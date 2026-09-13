@@ -126,7 +126,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
         },
         {
           "kind": "source",
@@ -203,7 +203,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
         },
         {
           "kind": "source",

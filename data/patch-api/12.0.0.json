@@ -97891,7 +97891,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Shared bootstrap installs Lua compatibility helpers and wrappers; this source context does not establish native semantics, security, lifecycle, or consumer behavior.",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
         },
         {
           "kind": "source",
@@ -113578,8 +113578,8 @@
       "id": "changed:string.trim",
       "symbol": "string.trim",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -113592,7 +113592,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b",
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819",
           "summary": "Shared bootstrap installs Lua compatibility helpers and wrappers; this source context does not establish native semantics, security, lifecycle, or consumer behavior."
         },
         {
@@ -113600,14 +113600,27 @@
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
           "summary": "Independent discovery records the changed string.trim contract."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/utility_api.rs",
+          "source_hash": "d81db513e4be2e0b48b4a401da128668e7fadffa618ebf6ce7192a4fe6631585",
+          "summary": "Focused retail-12.0.0 grouped tests: RED 4/6 at a3ce6850b, GREEN 6/6 at 0d648ebde (five new tests and existing alias control). Covers four-byte defaults, VT/FF preservation/stopping, interior/empty/all-default-whitespace cases, explicit nil simulator policy, both published names, explicit xy/empty-character controls, and exactly one string return; no general custom-byte, wrong-type, coercion, native, security, or full-LoD proof."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/utility_api.rs::test_string_trim_default_four_bytes_and_embedded_whitespace",
+        "tests/utility_api.rs::test_string_trim_default_preserves_edge_vertical_tab_and_form_feed",
+        "tests/utility_api.rs::test_string_trim_default_stops_at_vertical_tab_and_form_feed",
+        "tests/utility_api.rs::test_string_trim_custom_character_set_control",
+        "tests/utility_api.rs::test_string_trim_one_string_return_control",
+        "tests/utility_api.rs::test_string_trim_alias"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0d648ebde",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: focused/full-LoD proof must cover custom characters, default trimming, wrong-type inputs, return type/value, errors, and publication. The bootstrap alias is not behavior proof; no string, consumer, mutation, persistence, producer, UI, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence covers four-byte defaults (space, CR, LF, tab), edge VT/FF preservation and stopping, unchanged interior bytes, empty/all-default-whitespace input, explicit nil as simulator policy, string.trim and strtrim publication, explicit xy and empty-character controls, and exactly one string return. Wrong-type inputs, coercion/errors, native/security/full-LoD behavior, general custom-byte semantics, lifecycle, and consumer semantics remain unproven."
     },
     {
       "id": "changed:superTrackerDist",
@@ -126686,7 +126699,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Compatibility helper applies the tested portrait circular mask without duplicates.",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
         }
       ],
       "tests": [
@@ -134877,7 +134890,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Runtime compatibility helper supports the tested default and custom trim characters.",
-          "source_hash": "663d703930a33b71201533812f9ab398e4910d8bd92034342e06e839e32d2e1b"
+          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
         }
       ],
       "tests": [

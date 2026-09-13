@@ -2861,7 +2861,7 @@
 2861. [best-effort] `changed:petJournalTypeFilters` — behavioral
 2862. [best-effort] `changed:scrub` — provenance-only
 2863. [best-effort] `changed:spellActivationOverlayOpacity` — behavioral
-2864. [evidence-required] `changed:string.trim` — unsafe
+2864. [best-effort] `changed:string.trim` — behavioral
 2865. [best-effort] `changed:superTrackerDist` — behavioral
 2866. [best-effort] `changed:typedef.TickerCallback` — provenance-only
 2867. [best-effort] `changed:typedef.TimerCallback` — provenance-only
