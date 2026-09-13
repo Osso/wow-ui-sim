@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Bound heal-absorb clamp configuration
 
-`7c3a6beb7` adds two focused existing-behavior cases for `UnitHealPredictionCalculator.GetHealAbsorbClampMode` and `SetHealAbsorbClampMode`: explicit `MaximumHealth`/`CurrentHealth` transitions, exact getter/setter arity, and instance-local configuration. This is a temporary-proxy stored-state contract only; defaults/reset, validation/coercion, absorb calculations, native identity/security/lifecycle, and consumers remain open. Metadata verification is pending.
+`7c3a6beb7` adds two focused existing-behavior cases for `UnitHealPredictionCalculator.GetHealAbsorbClampMode` and `SetHealAbsorbClampMode`: explicit `MaximumHealth`/`CurrentHealth` transitions, exact getter/setter arity, and instance-local configuration. Verification at `846c7759c` reuses retail 12.0.0 2/2 and records 7/7 on retail 12.0.5, 12.0.7, and Mists; format/readability/validators and unchanged check proof pass. Two credits, four references, 74 renewals, 14,848 fresh hashes, totals **2290 / 1118 / 2**. Defaults/reset, validation/coercion, absorb calculations, native identity/security/lifecycle, and consumers remain open.
 
 ## [2026-09-12] audit | Unpack modeled color-curve evaluation
 
