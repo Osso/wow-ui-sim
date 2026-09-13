@@ -1907,7 +1907,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1920,7 +1920,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2037,7 +2037,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2050,7 +2050,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2063,7 +2063,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2089,7 +2089,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2102,7 +2102,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2115,7 +2115,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
       ],
-      "probe_plan": "timeline-colors-icons"
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5913,7 +5913,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5926,7 +5926,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5952,7 +5952,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5965,7 +5965,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5991,7 +5991,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6147,7 +6147,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6160,7 +6160,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6173,7 +6173,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6186,7 +6186,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6225,7 +6225,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_actions_costs"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6303,7 +6303,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6446,7 +6446,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6459,7 +6459,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6472,7 +6472,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6485,7 +6485,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6498,7 +6498,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6511,7 +6511,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6524,7 +6524,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6706,7 +6706,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6719,7 +6719,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6732,7 +6732,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6745,7 +6745,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6758,7 +6758,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6771,7 +6771,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6784,7 +6784,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -6797,7 +6797,7 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
-      "probe_plan": "sets_catalog_filters"
+      "probe_plan": "outfit_slot_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -15072,7 +15072,8 @@
       "observations": [
         "Capture GetViewedOutfitSlotInfo/GetAllSlotLocationInfo/GetLinkedSlotInfo and slot-group structures for empty, equipped, viewed, pending, secondary, and invalid slots.",
         "Change one slot appearance and one pending sheathe/transmog input; record transmogID, texture, display/error/warning fields, collectionType, primary/secondary linkage and exact return arity.",
-        "Separate appearance selection from equipped outfit display and from persisted outfit identity; record before/after reload or UI transition if persistence is claimed."
+        "Separate appearance selection from equipped outfit display and from persisted outfit identity; record before/after reload or UI transition if persistence is claimed.",
+        "Observe IMAID-to-effective-category and collection-type-to-default-illusion mappings, unassigned slot atlas/display-atlas queries, and populated weapon collection/option records. Record unknown inputs; do not infer IDs or atlas names from slot labels."
       ],
       "ready_to_execute": false,
       "design_gap": "No populated native fixture or modeled producer establishes slot appearance, outfit linkage, warning, texture, or pending-state semantics."
@@ -15082,7 +15083,8 @@
       "observations": [
         "Enumerate GetOutfitsInfo/GetOutfitInfo/GetActiveOutfitID/GetCurrentlyViewedOutfitID and compare empty, selected, locked, disabled, event, and renamed outfits.",
         "Change active/viewed outfit and situation enablement; capture entry identity, names/icons, situation categories/groups/options, ordering and duplicate behavior.",
-        "Distinguish catalog metadata from displayed appearance state and from persistence across reload/logout; capture unavailable/invalid IDs separately."
+        "Distinguish catalog metadata from displayed appearance state and from persistence across reload/logout; capture unavailable/invalid IDs separately.",
+        "Capture source-specific maximum/unlocked counts, usable/total limits, UI situation category/options and IsValidTransmogOutfitName results using observed source IDs and representative names. Observe complete TransmogOutfitEntryInfo fields together; no inferred capacity or validation policy."
       ],
       "ready_to_execute": false,
       "design_gap": "No authoritative outfit catalog producer, populated fixture, ordering/default contract, or persistence semantics."
@@ -15092,7 +15094,8 @@
       "observations": [
         "Invoke SetPendingTransmog/SetOutfitToSet/SetOutfitToCustomSet/CommitAndApplyAllPending/Clear/Revert/Change/Pickup with one controlled slot or outfit; record mutations, return values, and event ordering.",
         "Capture GetPendingTransmogCost/GetNextOutfitCost/IsUsableDiscountAvailable before and after one change, with insufficient-currency and no-op controls.",
-        "Separate appearance/outfit mutation from catalog membership, cost calculation/payment, persistence, and native protected/security behavior."
+        "Separate appearance/outfit mutation from catalog membership, cost calculation/payment, persistence, and native protected/security behavior.",
+        "Compare HasPendingOutfitTransmogs before a pending edit, after the edit and after a captured clear/revert transition."
       ],
       "ready_to_execute": false,
       "design_gap": "No controllable native transaction producer or cost/currency fixture; action success, rollback, payment, and persistence are unmodeled."
@@ -15140,15 +15143,15 @@
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "housing-C_CatalogShop": {
-      "dependency": "CatalogShop API documentation and source register for removed OpenCatalogShopInteraction plus result structures; Authoritative shop transaction producer; current housing_catalog_state is explicitly incomplete/seeded; Catalog product entitlement/transaction fixture",
+      "dependency": "Safe retained or explicitly approved catalog/service fixture covering house/shop interaction entry points, product/category membership, refundable decor records and currency-code balances. No real purchase or protected transaction is authorized.",
       "observations": [
-        "Probe namespace publication/removal timing across startup and post-load LoD.",
-        "Obtain one successful and one failed individual/bulk purchase result from native fixture or pinned capture.",
-        "Record status, recordId, entitlementId, parentProductId, externalTransactionId, and ordering; test nil/empty and repeated purchase isolation.",
-        "Keep removal claim separate from result-structure behavior."
+        "Capture OpenCatalogShopInteractionFromHouse/FromShop with known context; compare session identity and repeated-call/refresh ordering without assuming seeded IDs are native.",
+        "Capture GetFirstCategoryByProductID, GetProductIDsForCategory and GetNewProducts for populated, unknown and refreshed records; include category refund-button and product consumableQuantity fields.",
+        "Observe GetRefundableDecors filtering/timeRemainingSeconds and RefreshRefundableDecors completion, plus GetVirtualCurrencyBalance nullable-string results by currency code and RefreshVirtualCurrencyBalance ordering.",
+        "Use only existing safe captures for bulk/confirmation purchase results, status and transaction/entitlement/product IDs. Missing purchase evidence remains blocked; do not initiate payment/account changes to fill it."
       ],
       "ready_to_execute": false,
-      "design_gap": "catalog products and prices; entitlement/account ownership state; transaction result producer with success/failure statuses; native OpenCatalogShopInteraction removal capture",
+      "design_gap": "Catalog/category/refund/balance producers and context-specific session/purchase result captures absent. Already-resolved OpenCatalogShopInteraction removal is not part of these pending rows.",
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "housing-C_HouseExterior": {
@@ -15173,15 +15176,14 @@
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "housing-C_Housing": {
-      "dependency": "Pinned C_Housing docs/source register for RequestHouseFinderNeighborhoodData and related structures; House-finder service producer with neighborhood list/detail payloads; Existing HOUSING_SIM_NEIGHBORHOODS preload and request shim are placeholders",
+      "dependency": "Market-shop availability state, house-finder plot selection producer with numeric plotID, and neighborhood request fixtures with GUID/name strings.",
       "observations": [
-        "Capture request arguments, return arity, and completion event for valid/invalid GUID/name.",
-        "Fixture multiple neighborhoods with distinct GUID/name/map IDs, empty result, duplicate request, and replacement detail.",
-        "Verify callback payload shape, ordering, errors/result codes, and isolation; compare GetUIMapIDForNeighborhood against producer state.",
-        "Credit only observed request behavior; do not promote preload placeholders."
+        "Record IsHousingMarketShopEnabled under observed enabled/disabled service conditions; an invented constant is not availability evidence.",
+        "Observe OnHouseFinderClickPlot with a known numeric plotID, a repeated selection and unknown plot; capture selected-plot/request/event side effects without treating GUID/name as its arguments.",
+        "Capture RequestHouseFinderNeighborhoodData with known and unknown GUID/name string pairs; record returned/requested data identity and completion ordering, distinguishing string validation from selection behavior."
       ],
       "ready_to_execute": false,
-      "design_gap": "authoritative neighborhood list/detail producer; request completion/error events; map-ID mapping source; invalid/missing neighborhood behavior",
+      "design_gap": "Availability inputs, concrete plot fixture and neighborhood response producer remain unestablished; unrelated map-query coverage cannot stand in for these three rows.",
       "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
     },
     "housing-C_HousingBasicMode": {
@@ -15198,10 +15200,11 @@
     "timeline-lifecycle": {
       "dependency": "Requires a populated timeline fixture and a controllable monotonic clock; AddScriptEvent must produce IDs consumed by state/time/cancel APIs.",
       "observations": [
-        "Obtain an authoritative custom-event fixture with observed IDs and duration; capture add→list/info/state→pause/resume→elapsed/remaining/timer→finish/cancel, capturing event-removal timing and invalid-ID behavior; do not infer from placeholder queries."
+        "Obtain an authoritative custom-event fixture with observed IDs and duration; capture add→list/info/state→pause/resume→elapsed/remaining/timer→finish/cancel, capturing event-removal timing and invalid-ID behavior; do not infer from placeholder queries.",
+        "Record GetCurrentTime at controlled clock observations; compare GetEventCountBySource and any/active/paused/blocked predicates before event creation, during active/paused/blocked states and after removal. Separately capture feature availability/enabled under an identified policy transition; do not infer flags from event count."
       ],
       "ready_to_execute": false,
-      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "design_gap": "Missing target-build clock/event-source/state fixture and feature-policy transition inputs; predicate and count relationships require observation, not color overrides.",
       "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
     },
     "timeline-edit-mode": {
@@ -15216,7 +15219,8 @@
     "timeline-colors-icons": {
       "dependency": "Requires populated event IDs plus native color/icon consumers; color secrecy and override-trigger semantics are explicit unknowns.",
       "observations": [
-        "For known custom and encounter-produced IDs capture default color, each overrideTrigger, SetEventIconTextures effects, copy/identity behavior, invalid IDs,; defer tainted/untainted access enforcement; no color defaults or secret handling may be invented."
+        "For known custom and encounter-produced IDs capture default color, each overrideTrigger, SetEventIconTextures effects, copy/identity behavior, invalid IDs,; defer tainted/untainted access enforcement; no color defaults or secret handling may be invented.",
+        "Capture complete EncounterTimelineEventInfo for a real event: id, duration, source, spell ID/name, severity, approximation/max-queue fields and icon fields, then observe SetEventIconTextures. Do not infer non-icon metadata from a color query."
       ],
       "ready_to_execute": false,
       "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
