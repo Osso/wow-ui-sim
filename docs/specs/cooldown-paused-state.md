@@ -11,7 +11,7 @@ Pinned `FrameAPICooldownDocumentation.lua` declares `SetPaused(bool)` with no re
 
 ## Evidence
 
-Tests through `34f3cf876` reproduce the shared-dispatch boundary: cooldown state and isolation fail before the correction, while zero return arity and immediate timing preservation are separately observed. They also control that `ModelScene:SetPaused` continues to update `GetPaused()` independently. Runtime `218ba9977` routes Cooldown receivers through the existing `cooldown_paused` state while retaining ModelScene state handling. Independent proof at `34f3cf876`: 5/5 each on retail 12.0.0/12.0.5/12.0.7; fmt/check/build/startup (`[]`)/readability passed. One bounded credit; totals **2313 / 1095 / 2**. Final metadata integration/provenance validation remains with main.
+Tests through `34f3cf876` reproduce the shared-dispatch boundary: cooldown state and isolation fail before the correction, while zero return arity and immediate timing preservation are separately observed. They also control that `ModelScene:SetPaused` continues to update `GetPaused()` independently. Runtime `218ba9977` routes Cooldown receivers through the existing `cooldown_paused` state while retaining ModelScene state handling. Independent proof at `34f3cf876` passes 5/5 each on retail 12.0.0/12.0.5/12.0.7; fmt/check/build/startup (`[]`)/readability passed. Final metadata verification at `37caff416` reuses exact bytes, validates all 3,410 rows, and records 14,903 fresh hashes, zero stale, 15 renewals, and six additions. One bounded credit; totals **2313 / 1095 / 2**.
 
 ## Gaps
 
