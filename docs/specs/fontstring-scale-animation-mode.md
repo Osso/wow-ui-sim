@@ -11,7 +11,7 @@ Pinned `SimpleFontStringAPIDocumentation.lua` declares Get/SetScaleAnimationMode
 
 ## Proof
 
-`tests/widget_methods_colorselect.rs`: four focused tests, committed `fc24b8e4f`, RED 1/4 (enum values passed; missing setter blocked other assertions). Independent proof at `3b3877603` passes 4/4 each on 12.0.0/12.0.5/12.0.7; fmt/check/build/startup (`[]`)/readability passed. Ledger: `/tmp/verify-fontstring-scale-mode-fixed-ledger.json`. Metadata credits only the explicitly-set state contract; final metadata validation remains with main.
+`tests/widget_methods_colorselect.rs`: four focused tests, committed `fc24b8e4f`, RED 1/4 (enum values passed; missing setter blocked other assertions). Independent proof reuses exact bytes and passes 4/4 each on 12.0.0/12.0.5/12.0.7; fmt/check/build/startup (`[]`)/readability passed. Final metadata validation at `88e4998ee` passes the validator with 14,897 fresh hashes, zero stale hashes, 26 renewals, and ten additions; two credits update totals to **2312 / 1096 / 2**. Ledger: `/tmp/verify-fontstring-scale-mode-metadata-ledger.json`.
 
 ## Gaps
 
