@@ -189,7 +189,7 @@ macro_rules! frame_defaults {
             statusbar_texture_path: None,
             statusbar_bar_id: None,
             statusbar_desaturation: 0.0,
-            statusbar_fill_style: "STANDARD".to_string(),
+            statusbar_fill_style: 0,
             statusbar_reverse_fill: false,
             statusbar_orientation: "HORIZONTAL".to_string(),
 

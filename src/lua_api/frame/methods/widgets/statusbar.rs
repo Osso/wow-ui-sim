@@ -1,9 +1,9 @@
 //! StatusBar widget methods.
 
-use super::shared::{opt_f32, opt_string, rgba_from_stack, val_to_bool, val_to_f64};
+use super::shared::{opt_f32, rgba_from_stack, val_to_bool, val_to_f64};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, extract_frame_id, frame_id_from_stack,
-    frame_ref, get_or_create_frame_fields, sync_child_to_rilua, table_get_static, table_set_static,
+    borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref,
+    get_or_create_frame_fields, sync_child_to_rilua, table_get_static, table_set_static,
     val_to_string,
 };
 use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn};
@@ -238,17 +238,34 @@ pub(super) fn get_status_bar_texture(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_fill_style(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let style = opt_string(state, 2).unwrap_or_else(|| "STANDARD".to_string());
+    let style = match stack_val(state, 2) {
+        Val::Num(value) if (0.0..=3.0).contains(&value) && value.fract() == 0.0 => value as u8,
+        _ => {
+            return Err(rilua::runtime_error(
+                "SetFillStyle requires a numeric StatusBarFillStyle (0..3)",
+            ));
+        }
+    };
     let mut sim = borrow_state_mut(state)?;
-    if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.statusbar_fill_style = style;
-    }
+    let frame = sim
+        .widgets
+        .get_mut_visual(id)
+        .ok_or_else(|| rilua::runtime_error("StatusBar frame no longer exists"))?;
+    frame.statusbar_fill_style = style;
     Ok(0)
 }
 
 pub(super) fn get_fill_style(state: &mut LuaState) -> LuaResult<u32> {
-    let val = create_string(state, "STANDARD");
-    val.into_stack(state)
+    let id = frame_id_from_stack(state, 1)?;
+    let style = {
+        let sim = borrow_state(state)?;
+        sim.widgets
+            .get(id)
+            .ok_or_else(|| rilua::runtime_error("StatusBar frame no longer exists"))?
+            .statusbar_fill_style
+    };
+    state.push(Val::Num(f64::from(style)));
+    Ok(1)
 }
 
 pub(super) fn set_reverse_fill(state: &mut LuaState) -> LuaResult<u32> {

@@ -447,7 +447,7 @@ fn test_statusbar_texture_and_color_methods_still_resolve() {
         local sb = CreateFrame("StatusBar", "TestStatusBarMethods", UIParent)
         sb:SetStatusBarTexture("Interface\\Buttons\\WHITE8X8")
         sb:SetStatusBarColor(0.1, 0.2, 0.3, 0.4)
-        sb:SetFillStyle("REVERSE")
+        sb:SetFillStyle(Enum.StatusBarFillStyle.Reverse)
     "#,
     )
     .unwrap();

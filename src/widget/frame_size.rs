@@ -30,7 +30,6 @@ impl Frame {
             + self.minimap_string_bytes()
             + option_string_bytes(&self.statusbar_texture_path)
             + self.slider_orientation.capacity()
-            + self.statusbar_fill_style.capacity()
             + self.statusbar_orientation.capacity()
             + self.editbox_input_language.capacity()
     }

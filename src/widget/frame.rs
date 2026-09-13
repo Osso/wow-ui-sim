@@ -373,8 +373,8 @@ pub struct Frame {
     pub statusbar_bar_id: Option<u64>,
     /// StatusBar desaturation amount in the normalized 0..1 range.
     pub statusbar_desaturation: f64,
-    /// StatusBar fill style ("STANDARD", "CENTER", etc.).
-    pub statusbar_fill_style: String,
+    /// Numeric Enum.StatusBarFillStyle value (0..3).
+    pub statusbar_fill_style: u8,
     /// Whether statusbar fills in reverse.
     pub statusbar_reverse_fill: bool,
     /// StatusBar orientation ("HORIZONTAL" or "VERTICAL").
