@@ -4,6 +4,132 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "retail-12-0-0")]
+mod combatlog_settings_tests {
+    use super::{WowLuaEnv, env};
+
+    fn read_settings(env: &WowLuaEnv) -> (bool, i64) {
+        env.eval(
+            "return C_CombatLog.AreFilteredEventsEnabled(), C_CombatLog.GetEntryRetentionTime()",
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn combatlog_settings_filtered_events_roundtrip() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, enabled in ipairs({true, false, false, true, true, false}) do
+                C_CombatLog.SetFilteredEventsEnabled(enabled)
+                assert(C_CombatLog.AreFilteredEventsEnabled() == enabled,
+                    "filtered-events setting differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_settings_retention_roundtrip() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, retention in ipairs({120, 240, 240, 120, 120, 240}) do
+                C_CombatLog.SetEntryRetentionTime(retention)
+                assert(C_CombatLog.GetEntryRetentionTime() == retention,
+                    "retention setting differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_settings_return_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, retention in ipairs({120, 240}) do
+                local enabled = index == 1
+                assert(select('#', C_CombatLog.SetFilteredEventsEnabled(enabled)) == 0,
+                    "filtered-events setter must return zero values")
+                assert(select('#', C_CombatLog.SetEntryRetentionTime(retention)) == 0,
+                    "retention setter must return zero values")
+                assert(select('#', C_CombatLog.AreFilteredEventsEnabled()) == 1,
+                    "filtered-events getter must return one value")
+                assert(type(C_CombatLog.AreFilteredEventsEnabled()) == "boolean",
+                    "filtered-events getter must return a boolean")
+                assert(select('#', C_CombatLog.GetEntryRetentionTime()) == 1,
+                    "retention getter must return one value")
+                assert(type(C_CombatLog.GetEntryRetentionTime()) == "number",
+                    "retention getter must return a number")
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_settings_are_independent() {
+        let env = env();
+        env.exec(
+            r#"
+            C_CombatLog.SetFilteredEventsEnabled(false)
+            C_CombatLog.SetEntryRetentionTime(120)
+            C_CombatLog.SetFilteredEventsEnabled(true)
+            assert(C_CombatLog.GetEntryRetentionTime() == 120,
+                "enabling filtered events changed retention")
+            C_CombatLog.SetEntryRetentionTime(240)
+            assert(C_CombatLog.AreFilteredEventsEnabled() == true,
+                "changing retention disabled filtered events")
+            C_CombatLog.SetFilteredEventsEnabled(false)
+            assert(C_CombatLog.GetEntryRetentionTime() == 240,
+                "disabling filtered events changed retention")
+            C_CombatLog.SetEntryRetentionTime(120)
+            assert(C_CombatLog.AreFilteredEventsEnabled() == false,
+                "changing retention enabled filtered events")
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_settings_isolate_lua_environments() {
+        let first = env();
+        first
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(true); C_CombatLog.SetEntryRetentionTime(120)",
+            )
+            .unwrap();
+        let second = env();
+        second
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(false); C_CombatLog.SetEntryRetentionTime(240)",
+            )
+            .unwrap();
+
+        assert_eq!(read_settings(&first), (true, 120));
+        assert_eq!(read_settings(&second), (false, 240));
+
+        first
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(false); C_CombatLog.SetEntryRetentionTime(240)",
+            )
+            .unwrap();
+        assert_eq!(read_settings(&first), (false, 240));
+        assert_eq!(read_settings(&second), (false, 240));
+
+        second
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(true); C_CombatLog.SetEntryRetentionTime(120)",
+            )
+            .unwrap();
+        assert_eq!(read_settings(&first), (false, 240));
+        assert_eq!(read_settings(&second), (true, 120));
+    }
+}
+
 #[test]
 fn perks_activities_remove_tracked_updates_state() {
     let env = env();
