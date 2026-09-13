@@ -925,7 +925,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -937,7 +938,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -949,7 +951,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -961,7 +964,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -973,7 +977,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -985,7 +990,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -997,7 +1003,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1009,7 +1016,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1021,7 +1029,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1033,7 +1042,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1045,7 +1055,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1057,7 +1068,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/register.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_audio_settings"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1069,7 +1081,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1081,7 +1094,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1093,7 +1107,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1105,7 +1120,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1117,7 +1133,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1129,7 +1146,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1141,7 +1159,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_state_and_filters"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1153,7 +1172,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1165,7 +1185,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1177,7 +1198,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1189,7 +1211,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1201,7 +1224,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1213,7 +1237,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1225,7 +1250,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1237,7 +1263,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-combat_log_secure_deferred"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2873,7 +2900,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2886,7 +2914,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2899,7 +2928,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2913,7 +2943,8 @@
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs",
         "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2926,7 +2957,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2939,7 +2971,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2952,7 +2985,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state/support_types.rs",
         "src/c_api/c_major_factions.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2965,7 +2999,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs",
         "tests/c_small_namespaces_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2978,7 +3013,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs",
         "tests/c_major_faction_display_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-major-faction-journey"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3014,7 +3050,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "services-nameplate-hit-test"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3026,7 +3063,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "services-nameplate-hit-test"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3038,7 +3076,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "services-nameplate-hit-test"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3050,7 +3089,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/permanent_shims/c_nameplate.rs"
-      ]
+      ],
+      "probe_plan": "services-nameplate-hit-test"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3972,7 +4012,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3985,7 +4026,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3998,7 +4040,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4011,7 +4054,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4024,7 +4068,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4037,7 +4082,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4050,7 +4096,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4063,7 +4110,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4076,7 +4124,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4089,7 +4138,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4102,7 +4152,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4115,7 +4166,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4128,7 +4180,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4141,7 +4194,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4154,7 +4208,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4167,7 +4222,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4180,7 +4236,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/pvp_probes.rs",
         "tests/pvp_info.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4193,7 +4250,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4206,7 +4264,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4219,7 +4278,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4232,7 +4292,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4245,7 +4306,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -4258,7 +4320,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/state_types/character_world.rs",
         "src/lua_api/globals/pvp_probes.rs"
-      ]
+      ],
+      "probe_plan": "services-pvp-training-grounds"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5160,7 +5223,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/tooltip_info/mod.rs"
-      ]
+      ],
+      "probe_plan": "services-tooltip-producers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -5173,7 +5237,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/tooltip_info/probes.rs",
         "src/loader/tests/wow_api_tooltip.rs"
-      ]
+      ],
+      "probe_plan": "services-tooltip-producers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7259,7 +7324,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7273,7 +7339,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7287,7 +7354,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7301,7 +7369,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7315,7 +7384,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7329,7 +7399,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7343,7 +7414,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7357,7 +7429,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7371,7 +7444,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7385,7 +7459,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7399,7 +7474,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7413,7 +7489,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7427,7 +7504,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7441,7 +7519,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7455,7 +7534,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7469,7 +7549,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7483,7 +7564,8 @@
         "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
         "src/lua_api/workarounds/temporary/ui_widget_manager_defaults.rs",
         "tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_widget_container_registers_widget_set.rs"
-      ]
+      ],
+      "probe_plan": "services-uiwidget-prey-hunt"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7631,7 +7713,8 @@
         "src/lua_api/globals/state_backed_queries.rs",
         "src/lua_api/state_types/collections.rs",
         "tests/admin_vault_api.rs"
-      ]
+      ],
+      "probe_plan": "services-weekly-reward-tiers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7645,7 +7728,8 @@
         "src/lua_api/globals/state_backed_queries.rs",
         "src/lua_api/state_types/collections.rs",
         "tests/admin_vault_api.rs"
-      ]
+      ],
+      "probe_plan": "services-weekly-reward-tiers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7659,7 +7743,8 @@
         "src/lua_api/globals/state_backed_queries.rs",
         "src/lua_api/state_types/collections.rs",
         "tests/admin_vault_api.rs"
-      ]
+      ],
+      "probe_plan": "services-weekly-reward-tiers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7673,7 +7758,8 @@
         "src/lua_api/globals/state_backed_queries.rs",
         "src/lua_api/state_types/collections.rs",
         "tests/admin_vault_api.rs"
-      ]
+      ],
+      "probe_plan": "services-weekly-reward-tiers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7715,7 +7801,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7729,7 +7816,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7743,7 +7831,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7757,7 +7846,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7771,7 +7861,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7785,7 +7876,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7799,7 +7891,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7813,7 +7906,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7827,7 +7921,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7841,7 +7936,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7855,7 +7951,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -7869,7 +7966,8 @@
         "src/lua_api/globals/action_bar_api.rs",
         "src/lua_api/state/support_types.rs",
         "tests/c_crafting_orders_probes.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-crafting_quality"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10836,7 +10934,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/tooltip_info/probes.rs",
         "src/loader/tests/wow_api_tooltip.rs"
-      ]
+      ],
+      "probe_plan": "services-tooltip-producers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10849,7 +10948,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/tooltip_info/probes.rs",
         "src/loader/tests/wow_api_tooltip.rs"
-      ]
+      ],
+      "probe_plan": "services-tooltip-producers"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10862,7 +10962,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_recraft_and_enchant"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10875,7 +10976,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_recraft_and_enchant"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10888,7 +10990,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_recraft_and_enchant"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10901,7 +11004,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_recraft_and_enchant"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11750,7 +11854,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_removed_methods"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11763,7 +11868,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_removed_methods"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11776,7 +11882,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/professions.rs",
         "src/lua_api/globals/missing_surface/professions/professions_registration.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-tradeskill_removed_methods"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11789,7 +11896,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "patch-tests/patch_12_1/strict_removals.rs",
         "src/lua_api/globals/missing_surface/transmog.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-transmog_removed_surface"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11802,7 +11910,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs",
         "patch-tests/patch_12_1/strict_removals.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-transmog_removed_surface"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11815,7 +11924,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/transmog.rs",
         "patch-tests/patch_12_1/strict_removals.rs"
-      ]
+      ],
+      "probe_plan": "combat-crafting-transmog_removed_surface"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -16560,6 +16670,147 @@
       "ready_to_execute": false,
       "design_gap": "Source-specified probe; concrete fixture or invocation still requires evidence. This extraction is not fresh native semantic verification.",
       "basis": "Verbatim linked-row manifest note; no sentence splitting."
+    },
+    "services-major-faction-journey": {
+      "dependency": "populated major-faction service data; renown reward/highlight producer; faction-specific journey policy fixture",
+      "observations": [
+        "GetMajorFactionData for factions with description, highlights and optional player companion; compare empty/unknown IDs.",
+        "Capture renown reward records/highlights with ordering, levels, titles, descriptions and rewardType; distinguish highlight level from ordinary renown level.",
+        "Call ShouldDisplayMajorFactionAsJourney and ShouldUseJourneyRewardTrack across factions and policy transitions; constant false is not a positive/negative-case contract."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current faction state omits fields and reward query is empty; no populated policy producer or faction fixture.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "services-nameplate-hit-test": {
+      "dependency": "nameplate frame producer; 2D hit-test geometry/state subsystem; native simplified-mode transition fixture",
+      "observations": [
+        "SetNamePlateHitTestFrame with a real nameplate/candidate frame; capture replacement, clearing and per-nameplate isolation.",
+        "SetNamePlateHitTestInsets vary each inset; GetNamePlateHitTestInsets preserve return arity/order and defaults across changes.",
+        "SetNamePlateSimplified across a real mode transition, repeated calls and rendering/hit-test consumers; signature shim is insufficient."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No modeled nameplate geometry, hit-test state or simplified-mode producer; native semantics/defaults absent.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "services-pvp-training-grounds": {
+      "dependency": "C_PvP training-ground service producer; native battleground/reward fixtures; player eligibility and match lifecycle",
+      "observations": [
+        "AreTrainingGroundsEnabled/CanPlayerUseTrainingGroundsUI require configured service state; current constants do not establish eligibility.",
+        "GetTrainingGrounds/GetRandomTrainingGroundRewards/GetBattlegroundInfo need populated training-ground and reward records, including IDs, descriptions, limits and flags.",
+        "JoinTrainingGround/JoinRandomTrainingGround need a real queue/join transition and completion/error events; HasMatchStarted and HasRandomTrainingGroundWinToday need the same session/account state."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No populated training-ground catalog, player eligibility fixture, queue transition or reward producer; static defaults cannot establish payloads or lifecycle.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "services-tooltip-producers": {
+      "dependency": "native tooltip data producer for outfit/aura/recipe; populated outfit, aura and crafting-order fixtures; reagent/recraft/quality state",
+      "observations": [
+        "GetOutfit with valid outfit source and complete tooltip payload; compare unknown IDs and source-resolution failures.",
+        "GetUnitAuraByAuraInstanceID for player/non-player units, filters, valid/missing instances and current aura fields; player-only empty fallback is not evidence.",
+        "GetRecipeResultItem and GetRecipeResultItemForOrder varying reagentInfos, orderID, recraft, level and quality against populated recipe/order; record tooltip lines and crafted-stat changes."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No complete outfit/aura producer or recipe/order quality fixture; static tooltip output ignores changed inputs.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "services-uiwidget-prey-hunt": {
+      "dependency": "PreyHunt UI widget producer; active widget container/update stream; enum/animation/texture metadata fixture",
+      "observations": [
+        "GetPreyHuntProgressWidgetVisualizationInfo must be captured while a prey-hunt widget is populated, then after progress/shown/animation updates.",
+        "Record complete structure fields together, preserving absent versus zero/false and enum values; correlate order, scale, texture kit and model-scene layer with widget updates.",
+        "Generic widget-container registration does not produce this visualization payload or establish refresh/persistence."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No runtime PreyHunt producer or populated visualization fixture; temporary defaults are not field evidence.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "services-weekly-reward-tiers": {
+      "dependency": "vault activity producer with tier records; shared-difficulty and threshold aggregation state; weekly refresh/completion fixture",
+      "observations": [
+        "Capture GetSortedProgressForActivity for empty, single-tier and multi-tier activities, retaining threshold type and exact ordering.",
+        "Record activityTierID, difficulty and numPoints alongside existing activity progress; compare shared-difficulty aggregation and duplicate tiers.",
+        "Repeat before/after weekly refresh or completion when available; do not infer tier fields from flat progress rows."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Vault model has no tier sorting, shared difficulty or points-per-tier producer; existing admin vault fixtures are insufficient.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-combat_audio_settings": {
+      "dependency": "C_CombatAudioAlert setting producer and pinned enum/option values; A controlled audio-alert configuration context; audio playback need not be asserted for getter/setter state",
+      "observations": [
+        "Read each Get* default before mutation and record exact type/arity; call corresponding Set* with one valid value then read back, and test a second setting for instance/global scope.",
+        "Use invalid enum/range and repeated writes only where the pinned contract names validation; record errors rather than inventing them.",
+        "Call SpeakText with a minimal text fixture separately from stored settings; capture return/notification behavior only if the target contract exposes it."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "No authoritative combat-audio settings fixture, enum-value corpus, or producer-backed scope/persistence behavior; simulator registration alone is insufficient.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-combat_log_state_and_filters": {
+      "dependency": "C_CombatLog filter/session producer; A populated combat-log entry stream or authoritative filter settings fixture",
+      "observations": [
+        "Toggle SetFilteredEventsEnabled and read AreFilteredEventsEnabled around one real filter-settings transition; capture event callbacks and unchanged-state control.",
+        "Set/GetEntryRetentionTime and Get/SetMessageLimit around populated entries; distinguish stored setting from actual retention/limit enforcement.",
+        "Evaluate DoesObjectMatchFilter with representative combat objects and the exact filter configuration; do not equate placeholder booleans with native matching."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current combat-log model has notification stubs/partial state but no authoritative filter matcher, retention lifecycle, message-limit producer, or populated native entry fixture.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-combat_log_secure_deferred": {
+      "dependency": "Secret/secure combat-log caller context; Native or approved taint/security authority model; Populated current-entry cursor",
+      "observations": [
+        "Keep Add/ClearEventFilters, cursor navigation, current-entry/event info and restricted-state results separate from ordinary C_CombatLog settings.",
+        "Only a separately authorized secure probe may compare secure/tainted callers, entry visibility, filter mutation and error/result behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "C_CombatLogSecure methods require secure/private entry and caller semantics excluded by current scope; no permissive placeholder or ordinary credit is appropriate.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-tradeskill_recraft_and_enchant": {
+      "dependency": "Real profession recipe/recraft producer with reagent and enchant inputs; Populated current recipe, item, quality and recraft-limit state",
+      "observations": [
+        "Call GetEnchantItems with a recipe/item fixture and capture item structures, ordering, empty and invalid recipe behavior.",
+        "Call IsRecraftReagentValid and RecraftLimitCategoryValid before/after one valid, invalid, missing and limit-exceeded reagent; compare returned booleans/errors to actual validation state.",
+        "Call GetRecraftRemovalWarnings with a populated recraft removal and record warning entries, replaced reagent identity, ordering and no-warning control; distinguish empty result from no producer."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current professions registration omits two methods and returns empty/true placeholders for others; no populated native recraft/enchant producer or replacement-reagent fixture.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-tradeskill_removed_methods": {
+      "dependency": "Native 12.0.0 profession client and complete relevant LoD load inventory; A recipe/reagent producer to distinguish removed method from unavailable subsystem",
+      "observations": [
+        "After each relevant addon/LoD load, inspect exact removed method keys with rawget and callability; record whether a replacement method exists.",
+        "Exercise a populated recipe only when the producer is available; compare old method rejection/absence with replacement output, without claiming semantic equivalence from names."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current absence from professions registration is not runtime/full-LoD removal proof; no authoritative populated producer or replacement mapping is available.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-transmog_removed_surface": {
+      "dependency": "Complete native/full-LoD transmog load inventory; Retained replacement methods and, for warning structure rows, a populated apply-warning producer",
+      "observations": [
+        "At each load phase inspect every removed C_Transmog/C_TransmogCollection key and retained replacement callability; record old-key absence separately from behavior.",
+        "For TransmogApplyWarningInfo and itemLink/text, obtain a populated warning array before asserting key absence, typed shape, replacement identity or lifecycle.",
+        "Keep current strict-removal token checks as auxiliary evidence only; source/method absence is not native removal timing proof."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Current simulator proves neither full-LoD removal timing nor populated warning-array semantics; native load history and producer fixtures are missing.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
+    },
+    "combat-crafting-crafting_quality": {
+      "dependency": "Populated CraftingQualityInfo producer from a real quality/crafting result; Recipe/item quality fixture with icon variants and update lifecycle",
+      "observations": [
+        "Capture CraftingQualityInfo from an actual quality result and record barBackground/barFill/barHighlight, quality, icon, iconAppear, iconChat, iconDissolve, iconInventory, iconMixed and iconSmall presence/types/values.",
+        "Compare no-quality, each quality level and changed recipe/item inputs; record nested relationships, icon identity, updates, events and empty/error cases.",
+        "Trace one Blizzard consumer for each field only after producer values are populated; do not use action-bar or support-type declarations as equivalence proof."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Tests reference the structure but no runtime producer populates these fields; synthetic tables or related action-bar implementations cannot establish native values, lifecycle or persistence.",
+      "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
