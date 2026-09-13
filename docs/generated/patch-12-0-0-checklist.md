@@ -2796,8 +2796,8 @@
 2796. [evidence-required] `changed:RemoveRaidTargets` — unsafe
 2797. [best-effort] `changed:SetRaidTarget` — behavioral
 2798. [evidence-required] `changed:StatusBar` — unsafe
-2799. [evidence-required] `changed:StatusBar.GetFillStyle` — unsafe
-2800. [evidence-required] `changed:StatusBar.SetFillStyle` — unsafe
+2799. [best-effort] `changed:StatusBar.GetFillStyle` — behavioral
+2800. [best-effort] `changed:StatusBar.SetFillStyle` — behavioral
 2801. [best-effort] `changed:StatusBar.SetMinMaxValues` — behavioral
 2802. [best-effort] `changed:StatusBar.SetValue` — behavioral
 2803. [evidence-required] `changed:TRANSMOG_OUTFITS_CHANGED` — unsafe

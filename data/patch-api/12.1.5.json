@@ -18700,7 +18700,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "source_hash": "029646ceb2643b7515d0c0a5732027f1f9c6b555076a9339d900fc0f4a10659f",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -18743,7 +18743,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "source_hash": "029646ceb2643b7515d0c0a5732027f1f9c6b555076a9339d900fc0f4a10659f",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {
@@ -19094,7 +19094,7 @@
         {
           "kind": "source",
           "reference": "src/widget/frame_defaults.rs",
-          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "source_hash": "029646ceb2643b7515d0c0a5732027f1f9c6b555076a9339d900fc0f4a10659f",
           "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
         },
         {

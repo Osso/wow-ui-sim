@@ -90730,7 +90730,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
           "summary": "Current StatusBar methods return the stored displayed interpolation value, report target presence, and snap the displayed value to the target.",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c"
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b"
         },
         {
           "kind": "source",
@@ -90742,7 +90742,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
@@ -90773,13 +90773,13 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
           "summary": "Current Rust StatusBar methods store and retrieve the exact duration object identity.",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c"
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b"
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
@@ -90810,7 +90810,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
           "summary": "Current StatusBar methods return the stored displayed interpolation value, report target presence, and snap the displayed value to the target.",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c"
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b"
         },
         {
           "kind": "source",
@@ -90822,7 +90822,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
@@ -90853,13 +90853,13 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
           "summary": "Current Rust StatusBar methods store and retrieve the exact duration object identity.",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c"
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b"
         },
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
@@ -90890,7 +90890,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
           "summary": "Current StatusBar methods return the stored displayed interpolation value, report target presence, and snap the displayed value to the target.",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c"
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b"
         },
         {
           "kind": "source",
@@ -90902,7 +90902,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
@@ -99591,7 +99591,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b",
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
           "summary": "Focused StatusBar test verifies the exact LuaDurationObject table identity and per-instance field round-trip through SetTimerDuration/GetTimerDuration."
         }
       ],
@@ -110472,7 +110472,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c",
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b",
           "summary": "Current StatusBar stores fill style as a string, returns constant STANDARD from GetFillStyle, retains reverseFill storage, and exposes rotatesTexture as false; changed state semantics are unproven."
         },
         {
@@ -110493,8 +110493,8 @@
       "id": "changed:StatusBar.GetFillStyle",
       "symbol": "StatusBar.GetFillStyle",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -110507,23 +110507,41 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c",
-          "summary": "Current GetFillStyle returns constant STANDARD instead of reading the stored fill-style state, so a nonstandard setter/getter round-trip is not established."
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b",
+          "summary": "Pre-fix observation, superseded by runtime 3c8264198: Current GetFillStyle returns constant STANDARD instead of reading the stored fill-style state, so a nonstandard setter/getter round-trip is not established."
+        },
+        {
+          "kind": "source",
+          "reference": "src/widget/frame.rs",
+          "source_hash": "88dc75cdba62234d535d134332f4a3dfd0b0c98d98ad571a24d2970ce0c982cd",
+          "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs",
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_enum_numeric_values",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_numeric_roundtrip_and_getter_arity",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_setter_returns_zero_values",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_later_mutation_and_instance_isolation",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_strict_numeric_validation_simulator_policy"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3c82641989075aa9643fc9e0d8e05b60f06bbf2e",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: current GetFillStyle returns constant STANDARD and does not establish the stored nonstandard style. Exact accepted styles, validation, state round-trip, rendering, and edge semantics require authoritative evidence or a correct implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Best-effort behavioral evidence covers numeric Enum.StatusBarFillStyle values 0..3, explicitly set round-trips, exactly one numeric getter return, zero setter returns, later mutations, and per-instance isolation. Strict numeric invalid-input rejection without changing prior valid state is NONNATIVE simulator policy. Initial defaults, rendering, zero-range behavior, interpolation, legacy reverse-fill interaction, native validation/coercion/errors, security, full-LoD consumers, and lifecycle semantics remain unproven."
     },
     {
       "id": "changed:StatusBar.SetFillStyle",
       "symbol": "StatusBar.SetFillStyle",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -110536,16 +110554,34 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/statusbar.rs",
-          "source_hash": "f24c8850d33b949e610b3dc124253990c8083c91a745d36d0a073b24c17c9b5c",
-          "summary": "Current SetFillStyle stores the supplied style, but GetFillStyle returns constant STANDARD and no public nonstandard round-trip is established."
+          "source_hash": "9cbd022004ff36a9a56d088386d8d3f03a3348189dcde502082388e36797ac9b",
+          "summary": "Pre-fix observation, superseded by runtime 3c8264198: Current SetFillStyle stores the supplied style, but GetFillStyle returns constant STANDARD and no public nonstandard round-trip is established."
+        },
+        {
+          "kind": "source",
+          "reference": "src/widget/frame.rs",
+          "source_hash": "88dc75cdba62234d535d134332f4a3dfd0b0c98d98ad571a24d2970ce0c982cd",
+          "summary": "Frame.statusbar_fill_style is numeric u8 state (0..3); getter reads this instance state. This does not establish rendering or initial-default semantics."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs",
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_enum_numeric_values",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_numeric_roundtrip_and_getter_arity",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_setter_returns_zero_values",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_later_mutation_and_instance_isolation",
+        "tests/widget_methods_colorselect.rs::statusbar_fill_style_strict_numeric_validation_simulator_policy"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3c82641989075aa9643fc9e0d8e05b60f06bbf2e",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: current SetFillStyle stores a value but its public round-trip is broken by GetFillStyle returning constant STANDARD. Exact accepted styles, validation, state, rendering, and edge semantics require authoritative evidence or a correct implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Best-effort behavioral evidence covers numeric Enum.StatusBarFillStyle values 0..3, explicitly set round-trips, exactly one numeric getter return, zero setter returns, later mutations, and per-instance isolation. Strict numeric invalid-input rejection without changing prior valid state is NONNATIVE simulator policy. Initial defaults, rendering, zero-range behavior, interpolation, legacy reverse-fill interaction, native validation/coercion/errors, security, full-LoD consumers, and lifecycle semantics remain unproven."
     },
     {
       "id": "changed:StatusBar.SetMinMaxValues",
@@ -110571,7 +110607,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b",
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
           "summary": "Focused test stores values before two range changes and verifies stored ranges plus upper and lower current-value clamping."
         }
       ],
@@ -110609,7 +110645,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies immediate value 0.25, Smooth target 0.75, target-facing GetValue, displayed GetInterpolatedValue, and snap completion.",
-          "source_hash": "2d583549d6f0c49b3bfc9b1cce1f4fb35200ce46f8afb40bc320abfa4b2a1b7b"
+          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
         }
       ],
       "tests": [
