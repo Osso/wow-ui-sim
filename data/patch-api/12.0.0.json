@@ -87610,7 +87610,7 @@
       "commit": "e0f6ba163",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Bounded ordinary scalar/color getter behavior; retail 12.0.0 development RED 0/2 and GREEN 2/2. Independent profile verification pending. Native base-interface identity, invalid-input/coercion/errors, secrets, lifecycle, real consumers and unsupported interpolation remain unverified."
+      "notes": "Bounded ordinary scalar/color getter behavior; retail 12.0.0 development RED 0/2 and GREEN 2/2. Independent grouped userdata verification passed 34/34 each retail 12.0.0/12.0.5/12.0.7 and 30/30 Mists; /tmp/verify-curve-get-type-ledger.json records format/check/build/startup, metadata and readability proof. Native base-interface identity, invalid-input/coercion/errors, secrets, lifecycle, real consumers and unsupported interpolation remain unverified."
     },
     {
       "id": "added:LuaCurveObjectBase.HasSecretValues",

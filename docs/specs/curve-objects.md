@@ -16,6 +16,8 @@
 
 The test-only commit reproduces the actual processor rejection, not merely a type mismatch. Targeted GREEN passed 9/9 in `/tmp/pi-curve-userdata-green.*`; actual addon/SavedVariables startup then returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`.
 
+Getter proof at `b241590df`: scalar/color single numeric mode, default Linear, Step/Linear changes, and independent Copy modes pass in grouped userdata tests (34/34 each retail 12.0.0/12.0.5/12.0.7; 30/30 Mists). `/tmp/verify-curve-get-type-ledger.json` also records format/check/build, startup `[]`, readability and metadata validation. Earlier SetType/Copy entries above retain their historical proof scope.
+
 ## Remaining limits
 
 This slice does not claim complete native curve semantics. Numeric non-linear modes retain their previous behavior. Color Cosine/Cubic interpolation and evaluation below the first configured point explicitly report unsupported behavior. Existing segment ordering and upper endpoint selection remain; native extrapolation modes, duplicate-point ordering, secrecy, and unimplemented curve methods are not established here.
