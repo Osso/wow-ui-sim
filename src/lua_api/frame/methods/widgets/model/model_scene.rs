@@ -382,6 +382,11 @@ pub(super) fn scene_set_paused(state: &mut LuaState) -> LuaResult<u32> {
     let paused = opt_bool(state, 2).unwrap_or(false);
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        #[cfg(feature = "retail-12-0-0")]
+        if frame.widget_type == crate::widget::WidgetType::Cooldown {
+            frame.cooldown_paused = paused;
+            return Ok(0);
+        }
         frame.model_state_mut().model_scene_state.paused = paused;
     }
     Ok(0)
