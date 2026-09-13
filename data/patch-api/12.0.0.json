@@ -79,7 +79,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -120,7 +120,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -161,7 +161,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -6657,7 +6657,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateColorCurve returns a userdata exposing Evaluate.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -6694,7 +6694,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateCurve returns a userdata exposing AddPoint and Evaluate.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -6731,7 +6731,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Concrete true/false selection, ordinary invalid-input rejection, and input preservation; color tests also assert independent RGBA/ColorMixin output. No native or secret conformance is inferred.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -6770,7 +6770,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Concrete true/false selection, ordinary invalid-input rejection, and input preservation; color tests also assert independent RGBA/ColorMixin output. No native or secret conformance is inferred.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -8338,7 +8338,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies the factory result is a table exposing duration methods.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -29544,7 +29544,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover table/method shape, round-trip storage, per-instance isolation, read-only keys, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -29591,7 +29591,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -86700,7 +86700,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateColorCurve returns a userdata exposing Evaluate.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -87214,7 +87214,7 @@
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata_proxy evidence for LuaColorCurvePoint covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -87308,19 +87308,19 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies CreateCurve returns a userdata exposing AddPoint and Evaluate.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies per-instance field storage.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies the LuaCurveObject tostring prefix.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -87359,7 +87359,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies scalar AddPoint insertion and linear interpolation.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -87470,7 +87470,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies scalar AddPoint insertion and linear interpolation.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -87536,7 +87536,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy test verifies Copy returns a userdata with the copied point count.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -87828,7 +87828,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies table/method shape, default-zero behavior, per-instance fields, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88464,7 +88464,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy coverage verifies IsZero on a newly created duration object.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88689,7 +88689,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88729,7 +88729,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88769,7 +88769,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88809,7 +88809,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -88980,7 +88980,7 @@
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata_proxy evidence for NumberAbbrevData covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -89160,7 +89160,7 @@
         {
           "kind": "source",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata_proxy evidence for NumberAbbrevOptions covers generic proxy behavior only; it does not establish the typed Blizzard structure, payload, lifecycle, or secret contract."
         }
       ],
@@ -91860,7 +91860,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -91913,7 +91913,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -91960,7 +91960,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused heal_prediction_set_get_roundtrip test reads the initial mode, sets mode 3, and reads the stored mode back.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
@@ -92049,8 +92049,8 @@
       "id": "added:UnitHealPredictionCalculator.GetHealAbsorbMode",
       "symbol": "UnitHealPredictionCalculator.GetHealAbsorbMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92063,16 +92063,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy returns the locally stored heal-absorb mode or a generic default; exact retail mode mapping/default semantics are not established.",
+          "summary": "Temporary proxy stores a per-calculator heal-absorb processing mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_roundtrip",
+          "summary": "Focused fixture observes the local heal-absorb processing mode getter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_instances_are_independent",
+          "summary": "Focused fixture observes the local heal-absorb processing mode getter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy returns the locally stored heal-absorb mode or a generic default; exact retail mode mapping/default semantics are not established. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Published enum values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.GetHealAbsorbs",
@@ -92107,8 +92122,8 @@
       "id": "added:UnitHealPredictionCalculator.GetIncomingHealClampMode",
       "symbol": "UnitHealPredictionCalculator.GetIncomingHealClampMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92121,23 +92136,38 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy returns the locally stored incoming-heal clamp mode or a generic default; exact retail mode mapping/default semantics are not established.",
+          "summary": "Temporary proxy stores a per-calculator incoming-heal clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_roundtrip",
+          "summary": "Focused fixture observes the local incoming-heal clamp mode getter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_instances_are_independent",
+          "summary": "Focused fixture observes the local incoming-heal clamp mode getter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy returns the locally stored incoming-heal clamp mode or a generic default; exact retail mode mapping/default semantics are not established. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Published enum values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.GetIncomingHealOverflowPercent",
       "symbol": "UnitHealPredictionCalculator.GetIncomingHealOverflowPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92150,16 +92180,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy returns the locally stored overflow percentage or a generic default; exact retail default/range/secret semantics are not established.",
+          "summary": "Temporary proxy stores a per-calculator incoming-heal overflow percentage; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_roundtrip",
+          "summary": "Focused fixture observes the local incoming-heal overflow percentage getter: explicit numeric 0, 0.5, and 1.5 values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_independent",
+          "summary": "Focused fixture observes the local incoming-heal overflow percentage getter: explicit numeric 0, 0.5, and 1.5 values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy returns the locally stored overflow percentage or a generic default; exact retail default/range/secret semantics are not established. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Explicit numeric 0, 0.5, and 1.5 values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. These accepted values are simulator observations, not a native numeric range contract. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.GetIncomingHeals",
@@ -92192,7 +92237,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92245,7 +92290,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92298,7 +92343,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92380,7 +92425,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92450,8 +92495,8 @@
       "id": "added:UnitHealPredictionCalculator.SetHealAbsorbMode",
       "symbol": "UnitHealPredictionCalculator.SetHealAbsorbMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92464,23 +92509,38 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy stores the supplied local heal-absorb mode without establishing accepted modes, validation, or retail semantics.",
+          "summary": "Temporary proxy stores a per-calculator heal-absorb processing mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_roundtrip",
+          "summary": "Focused fixture observes the local heal-absorb processing mode setter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_instances_are_independent",
+          "summary": "Focused fixture observes the local heal-absorb processing mode setter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_heal_absorb_mode_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy stores the supplied local heal-absorb mode without establishing accepted modes, validation, or retail semantics. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Published enum values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.SetIncomingHealClampMode",
       "symbol": "UnitHealPredictionCalculator.SetIncomingHealClampMode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92493,23 +92553,38 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy stores the supplied local incoming-heal clamp mode without establishing accepted modes, validation, or retail semantics.",
+          "summary": "Temporary proxy stores a per-calculator incoming-heal clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_roundtrip",
+          "summary": "Focused fixture observes the local incoming-heal clamp mode setter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_instances_are_independent",
+          "summary": "Focused fixture observes the local incoming-heal clamp mode setter: published enum values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_clamp_mode_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy stores the supplied local incoming-heal clamp mode without establishing accepted modes, validation, or retail semantics. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Published enum values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.SetIncomingHealOverflowPercent",
       "symbol": "UnitHealPredictionCalculator.SetIncomingHealOverflowPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -92522,16 +92597,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "summary": "Current temporary proxy stores the supplied local overflow percentage without establishing accepted range, validation, or secret semantics.",
+          "summary": "Temporary proxy stores a per-calculator incoming-heal overflow percentage; source inspection alone does not establish native semantics, validation, calculations, or security.",
           "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_roundtrip",
+          "summary": "Focused fixture observes the local incoming-heal overflow percentage setter: explicit numeric 0, 0.5, and 1.5 values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_independent",
+          "summary": "Focused fixture observes the local incoming-heal overflow percentage setter: explicit numeric 0, 0.5, and 1.5 values round-trip through per-calculator stored state, exact return arity, and instance-local configuration; it does not establish native semantics.",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_roundtrip",
+        "tests/userdata_proxy.rs::heal_prediction_configuration_incoming_heal_overflow_percent_instances_are_independent"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88f578128",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: Current temporary proxy stores the supplied local overflow percentage without establishing accepted range, validation, or secret semantics. Exact retail contract, mode/default behavior, validation, secret/lifecycle semantics, and edge behavior require authoritative evidence or a correct modeled implementation/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Explicit numeric 0, 0.5, and 1.5 values round-trip through stored local configuration; getter returns one numeric value, setter returns zero values, and instances remain independent. These accepted values are simulator observations, not a native numeric range contract. Native defaults, reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain unverified."
     },
     {
       "id": "added:UnitHealPredictionCalculator.SetPredictedValues",
@@ -92622,7 +92712,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92675,7 +92765,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92728,7 +92818,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92859,7 +92949,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -92912,7 +93002,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover heal-prediction table/method shape, setter/getter round-trip, maximum-health reads, and tostring.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         },
         {
           "kind": "test",
@@ -99215,7 +99305,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata-proxy tests verify AbbreviateConfig table/method shape, data round-trip, per-instance fields, read-only keys, and tostring prefix."
         }
       ],
@@ -99285,7 +99375,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata-proxy tests verify LuaColorCurveObject userdata/Evaluate shape and that copying a populated color curve returns a userdata."
         }
       ],
@@ -99323,7 +99413,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata-proxy tests verify LuaCurveObject userdata/method shape, scalar interpolation, copy shape/count, per-instance fields, and tostring prefix."
         }
       ],
@@ -99393,7 +99483,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata-proxy tests verify LuaDurationObject table/method shape, default-zero state, per-instance fields, and tostring prefix."
         },
         {
@@ -99440,7 +99530,7 @@
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a",
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9",
           "summary": "Focused userdata-proxy tests verify UnitHealPredictionCalculator table/method shape, damage-absorb clamp-mode round-trip, maximum-health calculation, and tostring prefix."
         },
         {
@@ -100837,7 +100927,7 @@
           "kind": "test",
           "reference": "tests/userdata_proxy.rs",
           "summary": "Focused userdata_proxy tests cover userdata method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys.",
-          "source_hash": "ac63656a6c4e3feb4cd4b327ead0c4b296f82328a56ba3f520f4c377b49fd96a"
+          "source_hash": "6b60a49a6ae7cca1871f9686f4a9a7b36a6696600c463212cb7e276da0033cc9"
         }
       ],
       "tests": [
