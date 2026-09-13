@@ -452,6 +452,49 @@ fn heal_prediction_set_get_roundtrip() {
 }
 
 #[test]
+fn heal_prediction_heal_absorb_clamp_roundtrip() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local hp = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitHealAbsorbClampMode
+        assert(select('#', hp:SetHealAbsorbClampMode(modes.MaximumHealth)) == 0)
+        assert(select('#', hp:GetHealAbsorbClampMode()) == 1)
+        local maximum = hp:GetHealAbsorbClampMode()
+        assert(type(maximum) == 'number' and maximum == modes.MaximumHealth)
+
+        assert(select('#', hp:SetHealAbsorbClampMode(modes.CurrentHealth)) == 0)
+        assert(select('#', hp:GetHealAbsorbClampMode()) == 1)
+        local current = hp:GetHealAbsorbClampMode()
+        assert(type(current) == 'number' and current == modes.CurrentHealth)
+        "#,
+    )
+    .expect("configured heal absorb clamp modes roundtrip with exact return counts");
+}
+
+#[test]
+fn heal_prediction_heal_absorb_clamp_instances_are_independent() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = CreateUnitHealPredictionCalculator()
+        local second = CreateUnitHealPredictionCalculator()
+        local modes = Enum.UnitHealAbsorbClampMode
+        first:SetHealAbsorbClampMode(modes.MaximumHealth)
+        second:SetHealAbsorbClampMode(modes.CurrentHealth)
+        assert(first:GetHealAbsorbClampMode() == modes.MaximumHealth)
+        assert(second:GetHealAbsorbClampMode() == modes.CurrentHealth)
+
+        first:SetHealAbsorbClampMode(modes.CurrentHealth)
+        second:SetHealAbsorbClampMode(modes.MaximumHealth)
+        assert(first:GetHealAbsorbClampMode() == modes.CurrentHealth)
+        assert(second:GetHealAbsorbClampMode() == modes.MaximumHealth)
+        "#,
+    )
+    .expect("each calculator retains its independently configured heal absorb clamp mode");
+}
+
+#[test]
 fn heal_prediction_maximum_health_methods_read_predicted_health_max() {
     let env = WowLuaEnv::new().unwrap();
     let max_health: i64 = env
