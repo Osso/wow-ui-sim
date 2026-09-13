@@ -1,8 +1,8 @@
-## [2026-09-13] audit | Pending boolean vertex-color proof
+## [2026-09-13] audit | Credit ordinary boolean vertex-color state
 
-`90f291cca` adds four retail-12.0.0-gated behavioral tests for `SetVertexColorFromBoolean`. The focused RED is 0/4: each case stops at the absent method on its first Texture call, so FontString and downstream assertions were not exercised. `7677086b5` adds the retail-gated shared layered-region registration and implementation. It requires an ordinary boolean plus complete numeric `r/g/b/a` tables, selects the matching branch, and writes the existing `vertex_color` state.
+Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
 
-Pending GREEN and independent verification may establish only ordinary Texture and FontString state behavior: true/false complete RGBA selection, zero returns, input-table preservation, and per-instance isolation. The manifest remains evidence-required/unsafe with no tests, assertions, commit, or credit recorded. Native validation/coercion and error order, channel ranges, rendering/propagation, lifecycle/consumer behavior, and secret/taint/security semantics remain unproven. See [Boolean color selection](../../specs/boolean-color-selection.md).
+Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Metadata renews 13 existing references across all manifests and adds nine evidence references. Final integration/provenance validation remains pending with main; broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [Boolean color selection](../../specs/boolean-color-selection.md).
 
 ## [2026-09-13] audit | Model numeric StatusBar fill-style state
 

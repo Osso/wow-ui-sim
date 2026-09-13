@@ -2214,7 +2214,7 @@
 2214. [evidence-required] `added:LE_GAME_ERR_SOLO_JOIN_TRAINING_GROUND` — unsafe
 2215. [best-effort] `added:LE_PET_JOURNAL_FILTER_TYPE_BATTLE_PETS` — behavioral
 2216. [best-effort] `added:LE_PET_JOURNAL_FILTER_TYPE_NON_COMBAT_PETS` — behavioral
-2217. [evidence-required] `added:LayeredRegion.SetVertexColorFromBoolean` — unsafe
+2217. [best-effort] `added:LayeredRegion.SetVertexColorFromBoolean` — behavioral
 2218. [best-effort] `added:LuaColorCurveObject` — behavioral
 2219. [best-effort] `added:LuaColorCurveObject.AddPoint` — behavioral
 2220. [best-effort] `added:LuaColorCurveObject.ClearPoints` — behavioral
@@ -2291,7 +2291,7 @@
 2291. [evidence-required] `added:REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE` — unsafe
 2292. [evidence-required] `added:Region.IsAnchoringSecret` — unsafe
 2293. [best-effort] `added:Region.SetAlphaFromBoolean` — behavioral
-2294. [evidence-required] `added:Region.SetVertexColorFromBoolean` — unsafe
+2294. [best-effort] `added:Region.SetVertexColorFromBoolean` — behavioral
 2295. [evidence-required] `added:RegisterEventCallback` — unsafe
 2296. [evidence-required] `added:RegisterUnitEventCallback` — unsafe
 2297. [evidence-required] `added:RegularReagentInfo.reagent` — unsafe

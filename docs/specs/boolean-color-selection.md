@@ -16,7 +16,7 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 - Returns no values; preserves both input tables and other instances. Texture and FontString API-level assertions cover both branches.
 - Simulator policy requires a boolean and both color tables with numeric `r/g/b/a`. Native coercion, validation order, channel ranges, and exact errors remain unverified.
 - Rendering, propagation, and secret/taint semantics are not established by state roundtrips. Earlier-profile publication preservation needs separate proof.
-- Implementation: `src/lua_api/frame/methods/widgets/texture/color.rs`; grouped tests: `tests/widget_methods_colorselect.rs`. Tests committed at `90f291cca` failed 0/4 at the missing method boundary; post-implementation proof pending.
+- Implementation: `src/lua_api/frame/methods/widgets/texture/color.rs`; grouped tests: `tests/widget_methods_colorselect.rs`. Tests committed at `90f291cca` failed 0/4 at the missing method boundary; runtime `7677086b5` has Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
 
 ## How it works
 

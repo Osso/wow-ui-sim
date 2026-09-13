@@ -1,6 +1,8 @@
-## [2026-09-13] audit | Record pending boolean vertex-color proof
+## [2026-09-13] audit | Credit ordinary boolean vertex-color state
 
-Read `90f291cca`, `7677086b5`, the boolean-color spec, Texture/FontString tests, and layered-region registration/state code. The tests reached meaningful missing-method RED 0/4; the runtime now selects ordinary complete RGBA input into existing vertex-color state. Wiki-only record: pending GREEN and independent proof cover Texture/FontString true/false branch selection, zero returns, input preservation, and isolation. No manifest credit or totals changed. Native validation/coercion, rendering/propagation, and secret/taint/security semantics remain unproven. See [[patch-12-0-0-api-audit]].
+Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
+
+Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Metadata renews 13 existing references across all manifests and adds nine evidence references. Final integration/provenance validation remains pending with main; broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Model numeric StatusBar fill-style state
 

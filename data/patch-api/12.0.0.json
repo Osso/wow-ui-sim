@@ -86723,8 +86723,8 @@
       "id": "added:LayeredRegion.SetVertexColorFromBoolean",
       "symbol": "LayeredRegion.SetVertexColorFromBoolean",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -86732,21 +86732,56 @@
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Checked-in 12.0.0 source register records LayeredRegion.SetVertexColorFromBoolean as an added uiobject-method occurrence."
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Checked-in 12.0.0 source register records LayeredRegion.SetVertexColorFromBoolean as an added uiobject-method occurrence."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/mod.rs",
-          "source_hash": "f21fb855f99e31b02b4b4662674c265c2c65feb8c894c85638d4b3528f7f6c41",
-          "summary": "The examined texture/region registration surface exposes SetVertexColor but no boolean-branch setter implementation."
+          "source_hash": "c8babaa84508c4bfad4bf96a9c864aaf58a297c13c4e197bff72484e01bbaf03",
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: The examined texture/region registration surface exposes SetVertexColor but no boolean-branch setter implementation."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/frame/methods/widgets/texture/color.rs",
+          "source_hash": "db6410edbbad4447d81607b8cedd16b9ea3482ec26b2a7ecb63647f3f2c7bca9",
+          "summary": "Selects ordinary boolean RGBA into existing vertex_color state; no rendering or native-validation claim."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7677086b597614a617b70b95d9abd2d3b8bf3a09",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: no matching simulator implementation or focused test was found. Exact boolean branch, color/default arguments, vertex-color state interaction, propagation, rendering, validation, and edge semantics require authoritative evidence or a correct model/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
     },
     {
       "id": "added:LuaColorCurveObject",
@@ -89596,8 +89631,8 @@
       "id": "added:Region.SetVertexColorFromBoolean",
       "symbol": "Region.SetVertexColorFromBoolean",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "docs-method-metadata",
       "load_addon": null,
       "evidence": [
@@ -89605,39 +89640,68 @@
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
         },
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/widgets/texture/color.rs",
-          "source_hash": "d186feb96ddb9f97e257602fbc3fa48a1611162e480010060c653a464eecea4d",
-          "summary": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+          "source_hash": "db6410edbbad4447d81607b8cedd16b9ea3482ec26b2a7ecb63647f3f2c7bca9",
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/widgets/texture/mod.rs",
-          "source_hash": "f21fb855f99e31b02b4b4662674c265c2c65feb8c894c85638d4b3528f7f6c41",
-          "summary": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+          "source_hash": "c8babaa84508c4bfad4bf96a9c864aaf58a297c13c4e197bff72484e01bbaf03",
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
-          "summary": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+          "summary": "Pre-fix observation, superseded by runtime 7677086b5 and bounded ordinary-state proof: Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
+          "summary": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/widget_methods_colorselect.rs::vertex_boolean_selects_both_rgba_branches",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_returns_zero_values",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_preserves_input_colors",
+        "tests/widget_methods_colorselect.rs::vertex_boolean_isolates_region_instances"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7677086b597614a617b70b95d9abd2d3b8bf3a09",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail declares the LayeredRegion method through docs metadata; checked-in Texture color support does not establish boolean branch selection, resulting vertex state, propagation, rendering, or edge semantics. Required probe: Full-LoD method probe: call SetVertexColorFromBoolean(true, colorIfTrue, colorIfFalse) and false, then observe GetVertexColor() selects the corresponding RGBA branch on applicable LayeredRegion objects."
+      "notes": "Best-effort behavioral evidence covers only ordinary Texture and FontString true/false selection of complete RGBA (including alpha), zero returns, input-table preservation, and same-type instance isolation. Independent 12.0.0/12.0.5/12.0.7 proof passes 4/4 each. Native behavior, validation/coercion/errors, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven."
     },
     {
       "id": "added:RegisterEventCallback",
@@ -90742,7 +90806,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
@@ -90779,7 +90843,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
@@ -90822,7 +90886,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
@@ -90859,7 +90923,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies exact LuaDurationObject identity and per-instance field round-trip.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
@@ -90902,7 +90966,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar interpolation test verifies target-facing GetValue, displayed GetInterpolatedValue, active interpolation, and snap completion.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
@@ -99591,7 +99655,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
           "summary": "Focused StatusBar test verifies the exact LuaDurationObject table identity and per-instance field round-trip through SetTimerDuration/GetTimerDuration."
         }
       ],
@@ -110519,7 +110583,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
           "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
@@ -110566,7 +110630,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
           "summary": "Five focused tests at 557036636 report RED 2/5; runtime 3c8264198 passes grouped widget_methods_colorselect 25/25 including all five and the updated numeric-enum method-resolution control. Explicit-set numeric round-trips, getter/setter arity, mutations, isolation, and NONNATIVE strict-validation policy only; no default/render/zero-range/interpolation/reverse-fill/native/security/full-LoD credit."
         }
       ],
@@ -110607,7 +110671,7 @@
         {
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3",
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b",
           "summary": "Focused test stores values before two range changes and verifies stored ranges plus upper and lower current-value clamping."
         }
       ],
@@ -110645,7 +110709,7 @@
           "kind": "test",
           "reference": "tests/widget_methods_colorselect.rs",
           "summary": "Focused StatusBar test verifies immediate value 0.25, Smooth target 0.75, target-facing GetValue, displayed GetInterpolatedValue, and snap completion.",
-          "source_hash": "4a068469a97d1afdd8db51e09121a4568013fc02c0bd5b56cecdccab89aabcf3"
+          "source_hash": "614ca5863e410e231720a99e9d573dd913ee8bda02dc7e07b326d30e31968b4b"
         }
       ],
       "tests": [
