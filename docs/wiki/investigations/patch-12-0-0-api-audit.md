@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Restore contaminated inventory note text
 
-Historical `0dea0ce9f3` copied an InitiativeRewardFlags note onto 1,634 unrelated rows in [[patch-12-0-0-occurrence-inventory]]. This correction restores each table note from its corresponding 12.0.0 manifest row and preserves four legitimate enum notes. It changes documentation text only; classifications, runtime behavior, evidence, and credits are not reverified or expanded.
+Corrected 1,634 remaining unrelated notes copied by historical `0dea0ce9f3` in [[patch-12-0-0-occurrence-inventory]]. Each table note now matches its corresponding 12.0.0 manifest row; four legitimate enum notes remain unchanged. Independent verification at `f78e74de6` confirms all 3,410 row identities/statuses/categories/directions/order and historical prose preserved, 1,776 untouched notes, validator exit 0, and 14,872 fresh hashes. Ledger: `/tmp/verify-inventory-note-correction-ledger.json`. Runtime behavior and behavioral credits were not reverified or expanded.
 
 ## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 

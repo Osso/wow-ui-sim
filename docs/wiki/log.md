@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Correct contaminated 12.0.0 inventory notes
 
-Historical `0dea0ce9f3` copied the InitiativeRewardFlags note onto 1,634 unrelated inventory rows. Each was restored from the matching 12.0.0 manifest row note; four legitimate InitiativeRewardFlags rows remain unchanged. Documentation only: no runtime proof, credits, classifications, validators, or generators changed.
+Corrected 1,634 remaining unrelated inventory notes copied by historical `0dea0ce9f3`. Each was restored from the matching 12.0.0 manifest row note; four legitimate InitiativeRewardFlags rows remain unchanged. Documentation only: no runtime proof, credits, classifications, validators, or generators changed.
 
 ## [2026-09-13] audit | Implement contiguous ASCII-space truncation
 
