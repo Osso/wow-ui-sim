@@ -3,6 +3,8 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_string, create_string_bytes, create_table, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+#[cfg(feature = "retail-12-0-0")]
+use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -39,6 +41,13 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
             c_string_util_wrap_string,
         )?;
     }
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        c_string_util_ref,
+        "RemoveContiguousSpaces",
+        c_string_util_remove_contiguous_spaces,
+    )?;
     #[cfg(feature = "retail-12-1-0")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     set_global_val(state, "C_StringUtil", c_string_util);
@@ -84,6 +93,48 @@ pub fn c_string_util_wrap_string(state: &mut LuaState) -> LuaResult<u32> {
     let wrapped_value = create_string_bytes(state, &wrapped);
     state.push(wrapped_value);
     Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn c_string_util_remove_contiguous_spaces(state: &mut LuaState) -> LuaResult<u32> {
+    let input = string_bytes(state, 1)
+        .ok_or_else(|| runtime_error("RemoveContiguousSpaces expects string text"))?;
+    let Val::Num(limit) = stack_val(state, 2) else {
+        return Err(runtime_error(
+            "RemoveContiguousSpaces expects numeric maxAllowedSpaces",
+        ));
+    };
+    // Simulator policy; native invalid-limit validation remains unverified.
+    if !limit.is_finite() || limit < 0.0 || limit.fract() != 0.0 {
+        return Err(runtime_error(
+            "maxAllowedSpaces must be a finite nonnegative integer",
+        ));
+    }
+    let max_spaces = limit.min(input.len() as f64) as usize;
+    let trimmed = truncate_ascii_space_runs(&input, max_spaces);
+    let result = create_string_bytes(state, &trimmed);
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn truncate_ascii_space_runs(input: &[u8], max_spaces: usize) -> Vec<u8> {
+    let mut spaces = 0;
+    input
+        .iter()
+        .copied()
+        .filter(|&byte| {
+            if byte != b' ' {
+                spaces = 0;
+                return true;
+            }
+            if spaces == max_spaces {
+                return false;
+            }
+            spaces += 1;
+            true
+        })
+        .collect()
 }
 
 fn transform_string_bytes(state: &mut LuaState, transform: fn(&[u8]) -> Vec<u8>) -> LuaResult<u32> {
