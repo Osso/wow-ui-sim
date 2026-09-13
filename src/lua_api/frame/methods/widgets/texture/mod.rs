@@ -44,6 +44,11 @@ const TEXTURE_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     // Color + blend
     ("SetColorTexture", color::set_color_texture),
     ("SetVertexColor", color::set_vertex_color),
+    #[cfg(feature = "retail-12-0-0")]
+    (
+        "SetVertexColorFromBoolean",
+        color::set_vertex_color_from_boolean,
+    ),
     ("GetVertexColor", color::get_vertex_color),
     ("SetBlendMode", coords::set_blend_mode),
     ("GetBlendMode", coords::get_blend_mode),

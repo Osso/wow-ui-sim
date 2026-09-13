@@ -10,6 +10,14 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 - [x] Simulator policy: return a fresh color so later result mutations do not alter input colors. Native identity/copy behavior is unverified.
 - [x] Simulator validation policy: require a boolean condition, numeric components, and color tables containing numeric `r`, `g`, `b`, and `a` fields in both branches. Reject invalid inputs without mutating colors. Native coercion and errors are unverified.
 
+## Region vertex color selection
+
+- `SetVertexColorFromBoolean(value, colorIfTrue, colorIfFalse)` selects complete RGBA into the receiver's existing vertex-color state on retail 12.0.0 and later.
+- Returns no values; preserves both input tables and other instances. Texture and FontString API-level assertions cover both branches.
+- Simulator policy requires a boolean and both color tables with numeric `r/g/b/a`. Native coercion, validation order, channel ranges, and exact errors remain unverified.
+- Rendering, propagation, and secret/taint semantics are not established by state roundtrips. Earlier-profile publication preservation needs separate proof.
+- Implementation: `src/lua_api/frame/methods/widgets/texture/color.rs`; grouped tests: `tests/widget_methods_colorselect.rs`. Tests committed at `90f291cca` failed 0/4 at the missing method boundary; post-implementation proof pending.
+
 ## How it works
 
 - [C API boundary](../lua-api.md) and [curve implementation](curve-objects.md).

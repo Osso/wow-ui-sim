@@ -43,6 +43,46 @@ pub(super) fn set_vertex_color(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+pub(super) fn set_vertex_color_from_boolean(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let Val::Bool(condition) = stack_val(state, 2) else {
+        return Err(rilua::runtime_error("boolean expected"));
+    };
+    // Simulator validation policy; native coercion and error order are unverified.
+    let when_true = require_rgba_color(state, 3)?;
+    let when_false = require_rgba_color(state, 4)?;
+    let color = if condition { when_true } else { when_false };
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.vertex_color = Some(color);
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn require_rgba_color(state: &mut LuaState, index: i32) -> LuaResult<crate::widget::Color> {
+    let value = stack_val(state, index);
+    if !matches!(value, Val::Table(_)) {
+        return Err(rilua::runtime_error("color table expected"));
+    }
+    let mut channels = [0.0; 4];
+    for (channel, name) in channels.iter_mut().zip(["r", "g", "b", "a"]) {
+        let Val::Num(number) = table_get(state, value, name) else {
+            return Err(rilua::runtime_error(
+                "color must contain numeric RGBA channels",
+            ));
+        };
+        *channel = number as f32;
+    }
+    Ok(crate::widget::Color::new(
+        channels[0],
+        channels[1],
+        channels[2],
+        channels[3],
+    ))
+}
+
 pub(super) fn get_vertex_color(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let (r, g, b, a) = borrow_state(state)?
