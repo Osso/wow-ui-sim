@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Unpack modeled color-curve evaluation
 
-`c8c6afbc5` adds four RED cases (0/4) for absent `EvaluateUnpacked`; `bab9d8ab4` returns exactly four numeric RGBA channels from existing color evaluation (development GREEN 4/4). Empty, single-point, Linear interior, and Step interior numeric cases are simulator policies, not native proof. Only this row gains credit: **2288 / 1120 / 2**, four test references and 108 provenance renewals (100 in 12.0.0, 8 in 12.1 behaviors). Independent verification is pending. Native interpolation/extrapolation, coercion/errors, identity, secrets/security, and consumers remain open. See [curve objects](../specs/curve-objects.md).
+`c8c6afbc5` adds four RED cases (0/4) for absent `EvaluateUnpacked`; `bab9d8ab4` returns exactly four numeric RGBA channels from existing color evaluation (development GREEN 4/4). Empty, single-point, Linear interior, and Step interior numeric cases are simulator policies, not native proof. Verification at `a0750de45` reuses runtime proof: 50/50 each retail 12.0.0/12.0.5/12.0.7 and 46/46 Mists; default gates, startup and readability pass. Corrected metadata has 108 renewals, four test references, 14,844 fresh hashes and totals **2288 / 1120 / 2**. Native interpolation/extrapolation, coercion/errors, identity, secrets/security, and consumers remain open. See [curve objects](../specs/curve-objects.md).
 
 ## [2026-09-12] audit | Replace stored color-curve points
 
