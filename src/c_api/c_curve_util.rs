@@ -111,6 +111,10 @@ local function make_factory(kind, isColor)
     install_object_access(prototype, methods, state)
     install_curve_methods(methods, state, create, isColor)
     if isColor then
+        function methods:RemovePoint(index)
+            -- Best-effort: valid one-based indices compact stored points.
+            table.remove(state(self).points, index)
+        end
         function methods:GetPoints()
             -- Best-effort: insertion order and independent output snapshots.
             local points = {}
