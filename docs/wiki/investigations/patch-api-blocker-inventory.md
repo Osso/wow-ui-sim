@@ -51,7 +51,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**179 rows now link to 19 narrower plans** in the JSON. The other **942 rows retain routing protocols only**; complete key coverage does not mean complete probe design. All 19 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**380 rows now link to 31 narrower plans** in the JSON. The other **741 rows retain routing protocols only**; complete key coverage does not mean complete probe design. All 31 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|
@@ -65,7 +65,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 Investigation suggestions rejected: mutating the CVar is unnecessary for the recorded getter case-sensitivity gap; later cached cast/action signatures cannot replace the pinned 12.0.0 contract; a fifth cached StripHyperlinks control cannot expand the four-control 12.0.0 matrix without target-build evidence. Security enforcement remains deferred even when an ordinary producer observation is possible.
 
-Independent refinement verification passed at `747017217` after correcting the four-control hyperlink matrix. Proof: `/tmp/verify-blocker-probe-plans-ledger.json` and `/tmp/verify-blocker-probe-plans-corrected-ledger.json`. The initial 35 links/13 plans and unchanged six-manifest baseline were checked; source review supports the selected dependencies, not runtime availability or all remaining semantic contracts. A further 144 transmog rows now link to six plans separating slot/outfit state, catalogs, actions/costs, custom sets, appearance sources and set filters. This extension awaits independent source review.
+Independent refinement verification passed at `747017217` after correcting the four-control hyperlink matrix. Proof: `/tmp/verify-blocker-probe-plans-ledger.json` and `/tmp/verify-blocker-probe-plans-corrected-ledger.json`. The initial 35 links/13 plans and unchanged six-manifest baseline were checked; source review supports the selected dependencies, not runtime availability or all remaining semantic contracts. A further 144 transmog rows now link to six plans separating slot/outfit state, catalogs, actions/costs, custom sets, appearance sources and set filters. A further 201 pending housing/encounter rows link to 12 plans. Integration excluded 28 proposed assignments absent from the unresolved inventory and specialized one duplicate Edit Mode assignment; no resolved rows were reclassified. Housing plans were corrected against actual pending rows rather than unrelated removal examples. These family extensions await independent source review.
 
 ## Refresh and verification
 

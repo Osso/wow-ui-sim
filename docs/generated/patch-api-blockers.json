@@ -591,7 +591,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -603,7 +604,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -615,7 +617,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -627,7 +630,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -639,7 +643,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -651,7 +656,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -663,7 +669,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -675,7 +682,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -687,7 +695,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -699,7 +708,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -711,7 +721,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -723,7 +734,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -735,7 +747,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -747,7 +760,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -759,7 +773,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -771,7 +786,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -783,7 +799,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -795,7 +812,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -807,7 +825,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -819,7 +838,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -831,7 +851,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -843,7 +864,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_CatalogShop"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1324,7 +1346,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_death_recap.rs",
         "src/lua_api/state_types/mythic_plus_scenario.rs"
-      ]
+      ],
+      "probe_plan": "death-recap-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1337,7 +1360,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_death_recap.rs",
         "src/lua_api/state_types/mythic_plus_scenario.rs"
-      ]
+      ],
+      "probe_plan": "death-recap-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1349,7 +1373,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_death_recap.rs"
-      ]
+      ],
+      "probe_plan": "death-recap-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1362,7 +1387,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "docs/wow-api-functions.txt",
         "src/c_api/c_death_recap.rs"
-      ]
+      ],
+      "probe_plan": "death-recap-producer"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1398,7 +1424,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1410,7 +1437,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1422,7 +1450,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1434,7 +1463,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1446,7 +1476,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1458,7 +1489,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1470,7 +1502,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1482,7 +1515,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1494,7 +1528,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1506,7 +1541,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1518,7 +1554,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1530,7 +1567,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1542,7 +1580,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1554,7 +1593,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1566,7 +1606,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1578,7 +1619,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1590,7 +1632,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1602,7 +1645,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1614,7 +1658,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1626,7 +1671,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1638,7 +1684,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1650,7 +1697,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1662,7 +1710,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1674,7 +1723,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1686,7 +1736,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1698,7 +1749,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1710,7 +1762,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1722,7 +1775,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1734,7 +1788,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1746,7 +1801,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1758,7 +1814,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1770,7 +1827,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1782,7 +1840,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1794,7 +1853,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1806,7 +1866,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1818,7 +1879,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1830,7 +1892,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1842,7 +1905,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1854,7 +1918,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1866,7 +1931,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1878,7 +1944,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1890,7 +1957,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1902,7 +1970,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1914,7 +1983,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1926,7 +1996,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1938,7 +2009,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1950,7 +2022,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1962,7 +2035,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1974,7 +2048,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-edit-mode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1986,7 +2061,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -1998,7 +2074,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2010,7 +2087,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2022,7 +2100,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2034,7 +2113,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2046,7 +2126,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/encounter_state.rs"
-      ]
+      ],
+      "probe_plan": "timeline-colors-icons"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2058,7 +2139,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2070,7 +2152,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2082,7 +2165,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2094,7 +2178,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2106,7 +2191,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2118,7 +2204,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2130,7 +2217,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2142,7 +2230,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2154,7 +2243,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2166,7 +2256,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2178,7 +2269,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2190,7 +2282,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2202,7 +2295,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2214,7 +2308,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2226,7 +2321,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2238,7 +2334,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2250,7 +2347,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2262,7 +2360,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2274,7 +2373,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/encounter_warnings.rs"
-      ]
+      ],
+      "probe_plan": "encounter-warning"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2299,7 +2399,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HouseExterior"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2311,7 +2412,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HouseExterior"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2323,7 +2425,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HouseExterior"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2335,7 +2438,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HouseExterior"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2347,7 +2451,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HouseExterior"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2360,7 +2465,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/globals/housing.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_Housing"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2373,7 +2479,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/globals/housing.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_Housing"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2385,7 +2492,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2397,7 +2505,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2409,7 +2518,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2421,7 +2531,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2433,7 +2544,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2445,7 +2557,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2457,7 +2570,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2469,7 +2583,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2481,7 +2596,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2493,7 +2609,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2505,7 +2622,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2517,7 +2635,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2529,7 +2648,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2541,7 +2661,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2553,7 +2674,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2565,7 +2687,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2577,7 +2700,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2589,7 +2713,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2601,7 +2726,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2613,7 +2739,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingCatalog"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2650,7 +2777,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_instance_encounter.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "instance-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2663,7 +2791,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_instance_encounter.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "instance-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2676,7 +2805,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_instance_encounter.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "instance-lifecycle"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2933,7 +3063,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2946,7 +3077,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2959,7 +3091,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2972,7 +3105,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2985,7 +3119,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -2998,7 +3133,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3011,7 +3147,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3024,7 +3161,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3037,7 +3175,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3050,7 +3189,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3063,7 +3203,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3076,7 +3217,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3089,7 +3231,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3102,7 +3245,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3115,7 +3259,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3128,7 +3273,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3141,7 +3287,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3154,7 +3301,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3167,7 +3315,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3180,7 +3329,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3193,7 +3343,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3206,7 +3357,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3219,7 +3371,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3232,7 +3385,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3245,7 +3399,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3258,7 +3413,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3271,7 +3427,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3284,7 +3441,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3297,7 +3455,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3310,7 +3469,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3323,7 +3483,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3336,7 +3497,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3349,7 +3511,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3362,7 +3525,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3375,7 +3539,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3388,7 +3553,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3401,7 +3567,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3414,7 +3581,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3427,7 +3595,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3440,7 +3609,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3453,7 +3623,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3466,7 +3637,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3479,7 +3651,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/neighborhood_initiative.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3492,7 +3665,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3505,7 +3679,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3518,7 +3693,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3531,7 +3707,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3544,7 +3721,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3557,7 +3735,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3570,7 +3749,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3583,7 +3763,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3596,7 +3777,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3609,7 +3791,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3622,7 +3805,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3635,7 +3819,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3648,7 +3833,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3661,7 +3847,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3674,7 +3861,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3687,7 +3875,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3700,7 +3889,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "tests/c_tracking_defaults_probes.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3713,7 +3903,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3726,7 +3917,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3739,7 +3931,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -3752,7 +3945,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_NeighborhoodInitiative"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -10264,7 +10458,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/housing_dashboard_preload.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
-      ]
+      ],
+      "probe_plan": "housing-C_Housing"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11226,7 +11421,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11239,7 +11435,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11252,7 +11449,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11265,7 +11463,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11278,7 +11477,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -11291,7 +11491,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/c_housing.rs",
         "src/lua_api/workarounds/temporary/housing_catalog_state.rs"
-      ]
+      ],
+      "probe_plan": "housing-C_HousingBasicMode"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -14657,6 +14858,128 @@
       ],
       "ready_to_execute": false,
       "design_gap": "No populated set catalog producer, variant fixture, filter-state model, ordering/default contract, or persistence/event evidence."
+    },
+    "housing-C_NeighborhoodInitiative": {
+      "dependency": "Authoritative neighborhood/initiative fixture producer (activity log, milestone, task, tracked-task state); Pinned APIDocumentationGenerated and source-register structure field types; Existing temporary housing dashboard preload is only seeded UI data, not service semantics",
+      "observations": [
+        "Inventory pinned docs for each structure and method return/argument contract.",
+        "Obtain an authoritative populated capture for one loaded initiative with cycle, progress, one milestone/reward, one task/criteria/requirements, and tracked-task list.",
+        "Probe request methods and getters before/after fixture mutation; capture event/callback ordering, empty/unloaded, replacement, and identity/isolation.",
+        "Only then map fields to runtime state and test structure shape; do not credit seeded placeholders."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "initiativeInfo producer with stable IDs/GUIDs; activity log response and nextUpdateTime; milestone reward records and task criteria/requirements; tracked-task mutation/removal behavior; request completion/event dispatch",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "housing-C_CatalogShop": {
+      "dependency": "CatalogShop API documentation and source register for removed OpenCatalogShopInteraction plus result structures; Authoritative shop transaction producer; current housing_catalog_state is explicitly incomplete/seeded; Catalog product entitlement/transaction fixture",
+      "observations": [
+        "Probe namespace publication/removal timing across startup and post-load LoD.",
+        "Obtain one successful and one failed individual/bulk purchase result from native fixture or pinned capture.",
+        "Record status, recordId, entitlementId, parentProductId, externalTransactionId, and ordering; test nil/empty and repeated purchase isolation.",
+        "Keep removal claim separate from result-structure behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "catalog products and prices; entitlement/account ownership state; transaction result producer with success/failure statuses; native OpenCatalogShopInteraction removal capture",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "housing-C_HouseExterior": {
+      "dependency": "Known exterior type/size fixture and matching native or state-backed getter/setter contract; fixture debug calls additionally lack exact signatures/payloads.",
+      "observations": [
+        "For SetHouseExteriorType/Size record current getter values, select a known valid option, observe resulting state and repeated selection; preserve invalid-selection results as unknown until captured.",
+        "For fixture debug APIs first locate exact argument/return declarations, then compare known GUID, hovered, selected and absent-fixture cases. Do not infer payload shape from the method name."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Type/size mutation semantics need evidence; fixture-debug signatures, GUID lookup producer and hovered/selected state payloads remain unidentified. Old exterior-name removal is not a pending row in this inventory.",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "housing-C_HousingCatalog": {
+      "dependency": "Populated preview cart and catalog records with observed GUIDs, bundle relationships, dye IDs, price/discount data and refund-record timestamps; no inferred identity mappings.",
+      "observations": [
+        "Capture a populated HousingPreviewItemData producer with standalone and bundle-parent/child decor; record exact linked-row fields and nil/value distinctions. Delete one observed decorGUID and compare cart contents, repeated deletion and notifications.",
+        "Observe featured entries and dye-ID lists across empty/populated catalog responses; retain ordering and refresh results rather than inventing them.",
+        "Use retained or approved non-purchasing refund/discount fixtures to compare originalPrice, salePrice and record-keyed refund timestamps. Observe RequestHousingMarketRefundInfo completion/list state without initiating purchases."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Preview-item producer and identity mappings, catalog/discount/refund fixtures and request completion semantics remain unproven. Removed numStored is not a pending row here.",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "housing-C_Housing": {
+      "dependency": "Pinned C_Housing docs/source register for RequestHouseFinderNeighborhoodData and related structures; House-finder service producer with neighborhood list/detail payloads; Existing HOUSING_SIM_NEIGHBORHOODS preload and request shim are placeholders",
+      "observations": [
+        "Capture request arguments, return arity, and completion event for valid/invalid GUID/name.",
+        "Fixture multiple neighborhoods with distinct GUID/name/map IDs, empty result, duplicate request, and replacement detail.",
+        "Verify callback payload shape, ordering, errors/result codes, and isolation; compare GetUIMapIDForNeighborhood against producer state.",
+        "Credit only observed request behavior; do not promote preload placeholders."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "authoritative neighborhood list/detail producer; request completion/error events; map-ID mapping source; invalid/missing neighborhood behavior",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "housing-C_HousingBasicMode": {
+      "dependency": "Controlled placement fixture with decor/bundle identity, free-place state, and a real invalid-placement result producer; current setters/no-ops do not establish transitions.",
+      "observations": [
+        "For free-place methods record initial getter and explicit true/false transitions on the same fixture, plus a separate fixture control; do not infer native defaults or persistence.",
+        "For StartPlacingPreviewDecor observe selected decor/bundle before and after entry, cancel/repeat outcomes and request/event ordering using a known preview item.",
+        "For removed InvalidPlacementInfo/fields first obtain a populated invalid-placement result and inspect its shape; separately record namespace lookup and LoD phase. Missing globals alone do not prove removal of a returned structure."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Exact placement producer/input fixture and invalid-result replacement shape absent. IsNudgeEnabled/SetNudgeEnabled removals are not pending rows here.",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+    },
+    "timeline-lifecycle": {
+      "dependency": "Requires a populated timeline fixture and a controllable monotonic clock; AddScriptEvent must produce IDs consumed by state/time/cancel APIs.",
+      "observations": [
+        "Obtain an authoritative custom-event fixture with observed IDs and duration; capture add→list/info/state→pause/resume→elapsed/remaining/timer→finish/cancel, capturing event-removal timing and invalid-ID behavior; do not infer from placeholder queries."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "timeline-edit-mode": {
+      "dependency": "Requires client Edit Mode setup and populated predefined events; track assignment/order and visibility need observed transitions.",
+      "observations": [
+        "Enter Edit Mode, call AddEditModeEvents, capture returned loop duration and complete event/track lists, then CancelEditModeEvents; record IDs, ordering, track metadata, visibility and state transitions across repeated calls."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "timeline-colors-icons": {
+      "dependency": "Requires populated event IDs plus native color/icon consumers; color secrecy and override-trigger semantics are explicit unknowns.",
+      "observations": [
+        "For known custom and encounter-produced IDs capture default color, each overrideTrigger, SetEventIconTextures effects, copy/identity behavior, invalid IDs,; defer tainted/untainted access enforcement; no color defaults or secret handling may be invented."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "encounter-warning": {
+      "dependency": "Requires real warning producer or Edit Mode warning fixture; severity mapping and sound handles need capture.",
+      "observations": [
+        "Capture IsFeatureAvailable/Enabled, settings defaults and roundtrips, per-severity color/sound, PlaySound handle lifecycle, and ENCOUNTER_WARNING payload from a real warning; separate Edit Mode preview from live warning behavior."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "instance-lifecycle": {
+      "dependency": "Requires encounter lifecycle driver that can engage, progress, complete and toggle resurrection/release/timeline policy.",
+      "observations": [
+        "Drive start/stop and policy transitions in an actual instance fixture; capture query values and exact event payloads/order for state, add-timer, engage-unit, objective start/update/complete; avoid synthetic dispatch without producer identity."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
+    },
+    "death-recap-producer": {
+      "dependency": "Requires a real death producer with recap IDs and multiple event records; current state only stores killing blows.",
+      "observations": [
+        "Create deaths with multiple recap events and IDs, then capture GetRecapEvents ordering/fields, link format, max-health, presence and unknown/nil-ID behavior; preserve distinction between killing-blow summary and full event records."
+      ],
+      "ready_to_execute": false,
+      "design_gap": "Concrete fixture and target-build observation remain absent; source declarations and current query state do not establish this producer/lifecycle contract.",
+      "execution_limits": "No security enforcement, native session actions or simulator implementation in this documentation phase. Read each linked row for the exact unresolved fields and source references."
     }
   },
   "probe_plan_scope": "These plans refine selected rows only. Remaining rows retain generic routing protocols and require concrete probe design. ready_to_execute=false records missing fixtures/contracts, not permanent impossibility."
