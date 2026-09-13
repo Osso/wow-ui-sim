@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Store predicted heal values
 
-`be2aae3db` adds three existing-storage tests for `UnitHealPredictionCalculator.SetPredictedValues`: all six modeled fields, exact zero setter returns, input/output snapshot isolation, replacement, and calculator-instance independence. These are temporary-proxy simulator policies, not a complete native structure, absorb calculation, default/reset, validation/coercion, identity, secret/security, lifecycle, or consumer contract. Metadata/docs verification is pending.
+`be2aae3db` adds three existing-storage tests for `UnitHealPredictionCalculator.SetPredictedValues`: all six modeled fields, exact zero setter returns, input/output snapshot isolation, replacement, and calculator-instance independence. Verification at `0104813a7` reuses retail 12.0.0 3/3 and records 16/16 each on retail 12.0.5, 12.0.7, and Mists; format/readability/validators, 14,863 fresh hashes, 90 renewals, and totals **2297 / 1111 / 2** pass. Ledger: `/tmp/verify-heal-predicted-values-ledger.json`. These are temporary-proxy simulator policies, not a complete native structure, absorb calculation, default/reset, validation/coercion, identity, secret/security, lifecycle, or consumer contract.
 
 ## [2026-09-13] audit | Characterize remaining heal configuration
 

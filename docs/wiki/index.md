@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Store predicted heal values
 
-`SetPredictedValues` now has bounded temporary-proxy storage proof for six modeled fields, zero returns, snapshots, replacement, and instance isolation; native structure/calculation/security semantics remain open. See [[patch-12-0-0-api-audit]].
+`SetPredictedValues` has bounded temporary-proxy storage proof for six modeled fields, zero returns, snapshots, replacement, and instance isolation. Verification records retail 12.0.0 3/3 reused and 16/16 each on 12.0.5, 12.0.7, and Mists; one credit, three references, 90 renewals, and 14,863 fresh hashes at **2297 / 1111 / 2**. Native structure/calculation/security semantics remain open. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-13] audit | Characterize remaining heal configuration
 
