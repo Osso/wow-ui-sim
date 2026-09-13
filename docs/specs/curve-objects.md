@@ -20,7 +20,7 @@ The test-only commit reproduces the actual processor rejection, not merely a typ
 
 Getter proof at `b241590df`: scalar/color single numeric mode, default Linear, Step/Linear changes, and independent Copy modes pass in grouped userdata tests (34/34 each retail 12.0.0/12.0.5/12.0.7; 30/30 Mists). `/tmp/verify-curve-get-type-ledger.json` also records format/check/build, startup `[]`, readability and metadata validation. Earlier SetType/Copy entries above retain their historical proof scope.
 
-Color `GetPoint` development: `6b7bd754f` reproduces three missing-method failures; `d2e29052f` implements retrieval; `3c5ecaefa` corrects an unavailable fixture-only `SetRGBA` call to direct channel mutation. Final retail 12.0.0 proof passes 3/3 for fractional points, return count, missing-index nil, output mutation isolation with unchanged evaluation, and Copy/Clear/reuse. Independent verification remains pending. Scalar `GetPoint` has a separate vector contract and remains unimplemented by this slice.
+Color `GetPoint` development: `6b7bd754f` reproduces three missing-method failures; `d2e29052f` implements retrieval; `3c5ecaefa` corrects an unavailable fixture-only `SetRGBA` call to direct channel mutation. Final retail 12.0.0 proof passes 3/3 for fractional points, return count, missing-index nil, output mutation isolation with unchanged evaluation, and Copy/Clear/reuse. Independent verification at `539f9151f` passes grouped userdata tests 37/37 each retail 12.0.0/12.0.5/12.0.7 and 33/33 Mists; format/check/build, startup `[]`, readability, both validators and 14,831 evidence hashes pass. Ledger: `/tmp/verify-color-curve-get-point-ledger.json`. Scalar `GetPoint` has a separate vector contract and remains unimplemented by this slice.
 
 ## Remaining limits
 

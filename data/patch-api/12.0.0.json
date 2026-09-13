@@ -86940,7 +86940,7 @@
       "commit": "3c5ecaefa",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Color getter only. Development RED 0/3; first GREEN 2/3 exposed unavailable SetRGBA in the fixture, corrected to direct channel mutation; final GREEN 3/3 on retail 12.0.0. Independent verification pending. One-based indexing, missing-index nil and fresh output are simulator assumptions. Scalar queries, invalid-input/coercion/exact errors, secrecy, native identity, consumers and complete point-structure semantics remain unverified."
+      "notes": "Color getter only. Development RED 0/3; first GREEN 2/3 exposed unavailable SetRGBA in the fixture, corrected to direct channel mutation; final GREEN 3/3 on retail 12.0.0. Independent grouped userdata proof passes 37/37 each retail 12.0.0/12.0.5/12.0.7 and 33/33 Mists; /tmp/verify-color-curve-get-point-ledger.json records default gates and metadata validation. One-based indexing, missing-index nil and fresh output are simulator assumptions. Scalar queries, invalid-input/coercion/exact errors, secrecy, native identity, consumers and complete point-structure semantics remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.GetPointCount",
