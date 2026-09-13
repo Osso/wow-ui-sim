@@ -87130,7 +87130,7 @@
       "commit": "388b59457",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Color replacement only. Retail 12.0.0 RED 0/3 and GREEN 3/3; independent verification pending. Replacement/order/empty behavior and copied input snapshots are simulator assumptions. Invalid shapes/coercion/errors, native identity/security, complete structures, scalar/vector methods and consumers remain unverified."
+      "notes": "Color replacement only. Retail 12.0.0 RED 0/3 and GREEN 3/3; independent grouped userdata verification passes 46/46 each retail 12.0.0/12.0.5/12.0.7 and 42/42 Mists; /tmp/verify-color-curve-set-points-ledger.json records default gates and metadata proof. Replacement/order/empty behavior and copied input snapshots are simulator assumptions. Invalid shapes/coercion/errors, native identity/security, complete structures, scalar/vector methods and consumers remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.SetToDefaults",

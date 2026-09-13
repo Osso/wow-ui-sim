@@ -32,7 +32,7 @@ Color `GetPoints`: tests `4fae6e8af` reproduce the missing method (RED 0/3); run
 
 Color `RemovePoint`: tests `84d091201` reproduce the missing method (RED 0/3); runtime `17bad77a3` passes retail 12.0.0 GREEN 3/3. Tests assert zero returns, valid first/middle/last removal, compacted order/count, empty state, changed evaluation, and independent copied state. Ledger: `/tmp/color-curve-remove-point-development-ledger.json`. Independent verification at `2eb91714c` passes grouped userdata tests 43/43 each retail 12.0.0/12.0.5/12.0.7 and 39/39 Mists, default format/check/build, startup `[]`, readability and both validators. Ledger: `/tmp/verify-color-curve-remove-point-ledger.json`. Invalid inputs and native semantics remain open.
 
-Color `SetPoints`: tests `717d67f53` reproduce missing replacement (RED 0/3); runtime `388b59457` passes retail 12.0.0 GREEN 3/3. Tests cover populated/empty replacement, zero returns, input mutation isolation, evaluation and independent Copy replacements. Ledger: `/tmp/color-curve-set-points-development-ledger.json`. Independent verification pending.
+Color `SetPoints`: tests `717d67f53` reproduce missing replacement (RED 0/3); runtime `388b59457` passes retail 12.0.0 GREEN 3/3. Tests cover populated/empty replacement, zero returns, input mutation isolation, evaluation and independent Copy replacements. Ledger: `/tmp/color-curve-set-points-development-ledger.json`. Independent verification at `3addffb4e` passes grouped userdata tests 46/46 each retail 12.0.0/12.0.5/12.0.7 and 42/42 Mists; format/default check/build, startup `[]`, readability, both validators and 14,840 evidence hashes pass. Ledger: `/tmp/verify-color-curve-set-points-ledger.json`.
 
 ## Remaining limits
 
