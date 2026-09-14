@@ -1,6 +1,8 @@
 # Patch API blocker inventory
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,110 remaining rows after two bounded speaker-volume credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Format-setting refresh: only Get/SetFormatSetting leave the prior 1,110-row snapshot. All 282 plans remain; 281 unchanged. Ordinary keyed state is independently proven 3/3 per target profile at `b36c27ce3`; metadata has 43 renewals and 12 additions, parent verification pending. Remaining audio plan retains spec/throttle, enable/speech and native/default/range/CVar/output/callback/consumer/security obligations. `/tmp/audio-format-setting-metadata-development.json`.
+
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,108 remaining rows after two bounded format-setting credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Speaker-volume refresh
 
@@ -17,7 +19,7 @@ Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2324 best-effort / 1084 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2326 best-effort / 1082 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 
@@ -55,7 +57,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**All 1,110 remaining rows link to 282 plans** in the JSON: 952 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**All 1,108 remaining rows link to 282 plans** in the JSON: 950 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|

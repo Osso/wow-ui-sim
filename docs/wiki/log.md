@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending combat-audio format-setting proof
+## [2026-09-14] audit | Credit bounded combat-audio format-setting state
 
-Recorded tests `70979713d` RED 0/3 at one nil setter return and runtime `b36c27ce3` focused retail-12.0.0 GREEN 3/3 (exit 0; six existing warnings) from `/tmp/audio-format-setting-green-ledger.json`. State is keyed ordinary numeric unit/alert-type storage only. Independent verifier 18826 is pending; no credit, totals, manifests, or snapshot changed. Native defaults/ranges/enum validation/success semantics, CVar/output/callback/persistence/security behavior and consumer execution remain unproven.
+Exactly two Get/SetFormatSetting credits cover ordinary keyed numeric explicit/repeated writes, return arity, accepted-write `true` simulator policy, key/environment independence and speaker preservation. Runtime `b36c27ce3`: independent **3/3 each** on retail 12.0.0/12.0.5/12.0.7 (12.0.0 exact-byte GREEN reused), plus fmt/check/build/startup (`[]`)/readability PASS. Proof: `/tmp/verify-audio-format-setting-ledger.json`. All six manifests scanned: **43 renewals, 12 additions**; totals **2326 / 1082 / 2**, snapshot **1,108 rows / 282 plans**. Metadata verification remains pending with parent; no validator rerun. Native defaults/ranges/validation/success, CVar/output/callback/persistence/playback, consumer and security gaps remain unproven. Eight Mists failures and broad audit remain open. [Spec](../specs/combat-audio-format-setting.md).
 
 ## [2026-09-14] audit | Credit bounded speaker-volume state
 
