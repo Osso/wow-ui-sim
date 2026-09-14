@@ -180,9 +180,9 @@
 180. [evidence-required] `added:C_CombatLogSecure.SeekToNewestEntry` — unsafe
 181. [evidence-required] `added:C_CombatLogSecure.SeekToPreviousEntry` — unsafe
 182. [evidence-required] `added:C_CombatLogSecure.ShouldShowCurrentEntry` — unsafe
-183. [evidence-required] `added:C_CombatText.GetActiveUnit` — unsafe
+183. [best-effort] `added:C_CombatText.GetActiveUnit` — behavioral
 184. [evidence-required] `added:C_CombatText.GetCurrentEventInfo` — unsafe
-185. [evidence-required] `added:C_CombatText.SetActiveUnit` — unsafe
+185. [best-effort] `added:C_CombatText.SetActiveUnit` — behavioral
 186. [evidence-required] `added:C_Commentator.GetCombatEventInfo` — unsafe
 187. [evidence-required] `added:C_CooldownViewer.CooldownViewerCooldown.category` — unsafe
 188. [evidence-required] `added:C_CooldownViewer.CooldownViewerCooldown.cooldownID` — unsafe
