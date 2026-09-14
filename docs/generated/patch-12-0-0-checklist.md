@@ -2380,7 +2380,7 @@
 2380. [best-effort] `added:UnitIsSpellTarget` — behavioral
 2381. [evidence-required] `added:UnitNameFromGUID` — unsafe
 2382. [best-effort] `added:UnitPowerMissing` — behavioral
-2383. [evidence-required] `added:UnitPowerPercent` — unsafe
+2383. [best-effort] `added:UnitPowerPercent` — behavioral
 2384. [evidence-required] `added:UnitSexBase` — unsafe
 2385. [evidence-required] `added:UnitShouldDisplaySpellTargetName` — unsafe
 2386. [evidence-required] `added:UnitSpellTargetClass` — unsafe

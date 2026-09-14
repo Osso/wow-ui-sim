@@ -116,7 +116,7 @@ The bounded 12.0.0 `C_CombatLogSecure` slice classifies exactly nine added secur
 - **Source:** `data/patch-api/sources/12.0.0-register.json`
 - **Source SHA-256:** `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`
 - **Boundary:** retail 11.2.7 build 65299 → final explicit retail 12.0.0 build 65727
-- **Rows:** 3410 total — 0 implemented, 2345 best-effort, 1063 evidence-required, 2 exception-requested, 0 untriaged
+- **Rows:** 3410 total — 0 implemented, 2346 best-effort, 1062 evidence-required, 2 exception-requested, 0 untriaged
 - **Directions:** 2554 added, 313 changed, 543 removed
 - **Limit:** no historical 12.0.0 FrameXML tree or live SavedVariables capture is claimed.
 
@@ -2506,7 +2506,7 @@ Source occurrence objects preserve optional typed `before`/`after` JSON payloads
 | `UnitIsSpellTarget` | best-effort | api | added | Best-effort behavioral evidence is limited to the named focused test and current modeled/vendor behavior: Deprecated vendor shim publication is proven, and the focused test proves a non-player target returns false. Full retail semantics, invalid inputs, lifecycle, and untested unit/state cases remain unclaimed. |
 | `UnitNameFromGUID` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
 | `UnitPowerMissing` | best-effort | api | added | Best-effort behavioral evidence covers player/target primary and tested player power type 9 current/max difference, subsequent power updates, one numeric return, query non-mutation, and explicit `unmodified=false`; other tokens/power types, `unmodified=true`, native validation/security/lifecycle/consumer semantics remain unproven. |
-| `UnitPowerPercent` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
+| `UnitPowerPercent` | best-effort | api | added | Supplied scalar/color curves, live primary/secondary player power updates, one-result arity, nil/omitted queries and tested invalid-curve rejection; combined power/health proof 11/11 each historical profile, runtime 2ba41cda2. Current 0..100 input is SIMULATOR policy only. Native scale/unmodified/unknown-unit/security/full-LoD gaps remain. [Spec](../../specs/unit-power-percent-curves.md). |
 | `UnitSexBase` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
 | `UnitShouldDisplaySpellTargetName` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
 | `UnitSpellTargetClass` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
