@@ -81,4 +81,16 @@ local function clean(v)
     else assert(type(v) ~= "function" and type(v) ~= "userdata") end
 end
 clean(AuraDispelCurveProbeDB)
+-- Exercise inaccessible (but non-secret) values and unavailable safety APIs.
+C_CurveUtil.CreateColorCurve = function() error("unused factory") end
+AuraDispelCurveProbeDB = nil
+canaccessvalue = function() return false end
+r = capture("normal")
+assert(r.status == "missing-api" and r.client.build == nil)
+clean(AuraDispelCurveProbeDB)
+AuraDispelCurveProbeDB = nil
+canaccessvalue = nil
+r = capture("normal")
+assert(r.status == "missing-api" and r.client.build == nil)
+clean(AuraDispelCurveProbeDB)
 io.write("Aura dispel probe fixtures passed\n")
