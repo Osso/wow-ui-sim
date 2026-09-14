@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Record pending global event callback lifecycle
+## [2026-09-14] audit | Credit bounded global event callback lifecycle
 
-Tests `2d43011c2` are RED 0/4 against inert global fallbacks. Module `5b04622da` and wiring `462a1866c` implement an environment-local ordinary global registry separately from frame callbacks. Cached `Event.lua` exposed container-userdata rejection: `55cec0a97` is RED 5/8; `2ff787d41` recognizes branded callback containers and dispatches existing `Invoke(nil, ...payload)`, GREEN 8/8. Final verification, provenance and credits remain pending. Duplicate/order/error/validation/eligibility/global-frame ordering remain simulator policy or unverified; unit variants, security and full-LoD remain open.
+Two credits cover ordinary plain-function and actual `Event.lua` container callback lifecycle: nil owner/payload, both dispatch paths, identity removal, arity and environment isolation. Independent proof passes 8/8 per retail 12.0.0/12.0.5/12.0.7 (12.0.0 reused), plus fmt/check/default build/startup `[]`; the original two startup errors are gone. Metadata `cf15e178e` proves 118 renewals, 28 additions, **15,098 fresh / zero stale**, six bindings and validator exit 0 / 3,410 matching rows. Totals **2348 / 1060 / 2**; snapshot **1,086 / 282**. Two function-length signals remain. Mutation/recursion/error recovery, native duplicate/order/validation/eligibility/security/full-LoD and unit variants remain unverified.
 
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 

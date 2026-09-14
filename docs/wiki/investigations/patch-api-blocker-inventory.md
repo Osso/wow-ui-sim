@@ -1,8 +1,8 @@
 # Patch API blocker inventory
 
-## Global event callback container refresh
+## Global event callback lifecycle residuals
 
-The ordinary global callback lifecycle remains pending final verification and metadata. Initial tests `2d43011c2` were RED 0/4 against inert fallbacks. Actual cached `Event.lua` passes `C_FunctionContainers.CreateCallback` userdata, exposing function-only validation: container tests `55cec0a97` were RED 5/8. Correction `2ff787d41` accepts branded modeled containers without method probing and dispatches their existing `Invoke(nil, ...payload)` behavior; development proof `/tmp/global-event-container-development-ledger.json` is GREEN 8/8 on retail 12.0.0. This is not a credit: final profile/startup verification and provenance remain pending. Native duplicate/order/error/validation/eligibility/global-frame ordering, unit variants, security and full-LoD remain unverified; registry choices remain simulator policy. [Spec](../../specs/global-event-callbacks.md); [[patch-12-0-0-api-audit]].
+Two bounded credits cover ordinary global callback lifecycle after `2ff787d41` corrected actual `Event.lua` container userdata handling. Independent proof `/tmp/verify-global-event-callbacks-corrected-ledger.json` passes 8/8 per retail 12.0.0/12.0.5/12.0.7, fmt/check/default binary build and startup `[]`; the two original startup errors are gone. Metadata `cf15e178e` proves **15,098 fresh / zero stale**, six bindings, validator exit 0 and all 3,410 rows matching; totals **2348 / 1060 / 2**, snapshot **1,086 / 282**. Native duplicate/order/error/validation/eligibility/global-frame ordering, unit variants, security/full-LoD, callback-time mutation, recursion and error recovery remain unverified; registry policies are simulator choices. Two function-length signals remain. [Spec](../../specs/global-event-callbacks.md); [[patch-12-0-0-api-audit]].
 
 ## UnitPowerPercent curve refresh
 

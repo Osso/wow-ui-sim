@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending global event callback lifecycle proof
+## [2026-09-14] audit | Credit bounded global event callback lifecycle
 
-`5b04622da` adds an environment-local global registry and `462a1866c` wires ordinary dispatch without frame storage reuse. Actual cached `Event.lua` exposed rejected `C_FunctionContainers.CreateCallback` userdata: `55cec0a97` is RED 5/8; `2ff787d41` brands/dispatches containers through existing `Invoke(nil, ...payload)`. Development proof is GREEN 8/8 on retail 12.0.0; final verification, provenance and credits remain pending. Native duplicate/order/error/validation/eligibility/global-frame ordering, unit variants, security and full-LoD remain open. See [[patch-12-0-0-api-audit]] and [spec](../specs/global-event-callbacks.md).
+Two credits cover ordinary global callback lifecycle: plain functions and actual `Event.lua` containers, nil owner/payload, both dispatch paths, identity removal, arity and environment isolation. Independent proof passes 8/8 on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup `[]` pass and the original two startup errors are gone. Metadata `cf15e178e`: **15,098 fresh / zero stale**, six bindings, validator exit 0 / 3,410 rows; totals **2348 / 1060 / 2**, snapshot **1,086 / 282**. Two function-length signals and mutation/recursion/error-recovery gaps remain; duplicate/order/validation/security/native semantics remain unverified. See [[patch-12-0-0-api-audit]] and [spec](../specs/global-event-callbacks.md).
 
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 
