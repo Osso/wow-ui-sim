@@ -1,5 +1,9 @@
 # Patch API blocker inventory
 
+## CombatText active-unit refresh
+
+Only `GetActiveUnit` and `SetActiveUnit` leave the prior 1,097-row snapshot. The bounded model stores copied explicit `player`/`vehicle` selection independently per environment; it does not model identity, token validation, defaults, routing, events or consumers. Runtime `375c71192` passes 3/3 on each target profile; final metadata proof at `c099a68e6` records **15,035 fresh / zero stale**, 95 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Totals **2339 / 1069 / 2**; snapshot **1,095 rows / 282 plans**. `GetCurrentEventInfo`, native/security obligations and eight Mists AccountStore failures remain open. `/tmp/verify-combat-text-active-unit-metadata-ledger.json`.
+
 ## Tracked-task membership refresh
 
 Four bounded credits cover Add/Remove/GetTrackedInitiativeTasks and InitiativeTasksTracked.trackedIDs: ordinary numeric membership, copied arrays, return arity and bidirectional environment isolation. Tests `3abb84e1c` reached RED 0/3 because additions left the tracked-ID list empty. Runtime `d6d48d1e5` stopped at compiler error E0308 before tests ran; corrected runtime `27223f82a` has 3/3 each targeted profile (12.0.0 exact-byte reuse; 12.0.5/12.0.7 fresh), plus fmt/check/build/startup/readability PASS in `/tmp/verify-neighborhood-tracked-tasks-ledger.json`. Final metadata proof at `71209241a`: **15,027 fresh / zero stale**, 151 renewals, 16 additions, validator exit 0 and all 3,410 rows matching. Totals **2337 / 1071 / 2**; snapshot **1,097 rows / 282 plans**. Native validation, initial/order/duplicate/unknown-ID policies, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumers and security remain unproven. Broad audit and eight Mists AccountStore failures remain open. All 282 plans remain; the neighborhood plan retains task-record/native/event/consumer obligations.

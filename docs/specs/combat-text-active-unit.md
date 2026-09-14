@@ -22,7 +22,7 @@ Initial `None` is simulator policy, not an established native default. Current p
 
 ## Tests asserting this spec
 
-Three `combat_text_active_unit_*` tests in `tests/c_namespace_noop_replacements.rs`, committed at `8113cc6bc`, reached RED 0/3: getter returned nil after a write and setter returned nonzero values, without establishing its exact arity. Runtime `375c71192` passes the focused retail 12.0.0 proof 3/3 in `/tmp/combat-text-active-unit-green-ledger.json`; independent verification is pending.
+Three `combat_text_active_unit_*` tests in `tests/c_namespace_noop_replacements.rs`, committed at `8113cc6bc`, reached RED 0/3: getter returned nil after a write and setter returned nonzero values, without establishing its exact arity. Runtime `375c71192` passes 3/3 each on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7 in `/tmp/verify-combat-text-active-unit-ledger.json`. Final metadata proof at `c099a68e6` records 15,035 fresh hashes, zero stale, 95 renewals, eight additions, two credits, validator exit 0 and all 3,410 rows matching. Totals: **2339 / 1069 / 2**; snapshot: **1,095 rows / 282 plans**. Ledger: `/tmp/verify-combat-text-active-unit-metadata-ledger.json`.
 
 ## Known gaps (current cycle)
 
