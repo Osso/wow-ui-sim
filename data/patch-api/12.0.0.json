@@ -30754,7 +30754,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -30766,7 +30766,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -92873,13 +92873,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitCastingDuration contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitCastingDuration contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
@@ -92914,7 +92914,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitChannelDuration contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
@@ -93027,7 +93027,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitEmpoweredChannelDuration contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
@@ -93157,7 +93157,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93169,7 +93169,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -93210,7 +93210,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93222,7 +93222,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -93534,7 +93534,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93546,7 +93546,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -93587,7 +93587,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93599,7 +93599,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -93640,7 +93640,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93652,7 +93652,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -93722,7 +93722,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -93734,7 +93734,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94031,7 +94031,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -94043,7 +94043,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94084,7 +94084,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -94096,7 +94096,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94137,7 +94137,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -94149,7 +94149,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94190,7 +94190,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused behavioral test `unit_detailed_heal_prediction_populates_calculator` proves the bounded behavior described above.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94220,13 +94220,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Temporary prediction structures publish totalHealAbsorbs as numeric zero; adjacent synthetic tests do not establish retail heal-absorb state, updates, secrets, or lifecycle."
         },
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
           "summary": "Existing proof observes only the simulator synthetic zero field and does not establish retail semantics."
         },
         {
@@ -94268,7 +94268,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -94280,7 +94280,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94321,7 +94321,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
           "summary": "Spell API populates predicted health, maximum health, and zero-valued incoming-heal fields for detailed heal prediction.",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e"
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f"
         },
         {
           "kind": "test",
@@ -94333,7 +94333,7 @@
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
           "summary": "Focused admin_health_power_api test covers detailed heal-prediction population, health/healthMax, incoming-heal defaults, current/maximum reads, and secret-value default.",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0"
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8"
         }
       ],
       "tests": [
@@ -94367,13 +94367,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Retail-12.0.0-gated callback reads existing unit health and maximum health and returns their difference; it does not add prediction state or alter lookup behavior."
         },
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
           "summary": "Focused retail-12.0.0 integration tests pass 2/2 at ab204a8cb: player and target max-minus-current results, updates after vital mutations, exact one numeric result, and query non-mutation with usePredicted=false."
         }
       ],
@@ -94391,8 +94391,8 @@
       "id": "added:UnitHealthPercent",
       "symbol": "UnitHealthPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -94405,28 +94405,76 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
-          "summary": "Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and optional predicted/curve behavior; existing numeric tests do not prove the declared contract."
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
         },
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
-          "summary": "Existing tests observe numeric legacy percentages, not the declared table contract."
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Five focused tests cover live scalar/color outputs, nil/omitted queries, one-result arity and observed invalid-curve rejection; no native scale or prediction proof."
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
           "summary": "Independent retail API-surface discovery; no complete unit, prediction, cast, security, or lifecycle semantics are claimed."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_health_power_api.rs::unit_health_percent_supplied_scalar_curve_tracks_live_health",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_health_power_api.rs::unit_health_percent_supplied_color_curve_tracks_live_target_health",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_health_power_api.rs::unit_health_percent_supplied_nil_preserves_uncurved_queries",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_health_power_api.rs::unit_health_percent_rejects_invalid_curves",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/admin_health_power_api.rs::unit_health_percent_uses_player_health_values",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_curve_util.rs",
+          "source_hash": "29e80b5db34676d48771f564c721c51e79b8c912d5b7348a6b8d3ed65f41c1c2",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/unit-health-percent-curves.md",
+          "source_hash": "f48fc5771e39bb5b00946e2d246b1ce3a8fb123cda441d50b503b4ac198e6816",
+          "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/admin_health_power_api.rs::unit_health_percent_supplied_scalar_curve_tracks_live_health",
+        "tests/admin_health_power_api.rs::unit_health_percent_supplied_color_curve_tracks_live_target_health",
+        "tests/admin_health_power_api.rs::unit_health_percent_supplied_nil_preserves_uncurved_queries",
+        "tests/admin_health_power_api.rs::unit_health_percent_rejects_invalid_curves",
+        "tests/admin_health_power_api.rs::unit_health_percent_uses_player_health_values"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "92b4f8c4f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and optional predicted/curve behavior; existing numeric tests do not prove the declared contract. Required probe: Full-LoD probe: assert(type(UnitHealthPercent) == \"function\"); assert the declared table result, predicted/curve handling, and supported/unknown-unit behavior with controlled state."
+      "notes": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
     },
     {
       "id": "added:UnitIsHumanPlayer",
@@ -94660,13 +94708,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Retail-12.0.0-gated callback reads the selected existing power pool and returns maximum minus current without altering state; it does not model unmodified behavior separately."
         },
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
           "summary": "Focused retail-12.0.0 integration tests pass 3/3 at c2d838c75: player and target primary pools plus player power type 9, later state updates, exact one numeric result, and query non-mutation with unmodified=false."
         }
       ],
@@ -94699,13 +94747,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and power-type/unmodified/curve behavior; existing tests do not prove the declared contract."
         },
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
           "summary": "Existing tests observe numeric legacy percentages, not the declared table contract."
         },
         {
@@ -94775,7 +94823,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitShouldDisplaySpellTargetName contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
@@ -94845,7 +94893,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Inspected related source at src/lua_api/globals/utility_system_spell/spell_api.rs; it does not independently establish the complete UnitSpellTargetName contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference."
         },
         {
@@ -100868,7 +100916,7 @@
         {
           "kind": "test",
           "reference": "tests/admin_health_power_api.rs",
-          "source_hash": "b7f18c1d68848035886d9dfcb4e73689edb6a804f5e4fe1790171e3fe5956ce0",
+          "source_hash": "aa504c980bd6133019d62911972c6b6e5c24df844d4c9039cf9f795d41cf76b8",
           "summary": "Focused detailed-heal-prediction test exercises the calculator through UnitGetDetailedHealPrediction and asserts populated predicted/current/maximum health state."
         }
       ],
@@ -112804,7 +112852,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Current simulator runtime implementation/publication for UnitCastingInfo."
         },
         {
@@ -112839,7 +112887,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "784d88110aa34d96dfb1b660474b6b84878db32d810bf13a1b62ef581593760e",
+          "source_hash": "09eff286db043b84cf0ba9ac6d6860c615733bc987e43276ce1f1577ffd4289f",
           "summary": "Current simulator runtime implementation/publication for UnitChannelInfo."
         },
         {

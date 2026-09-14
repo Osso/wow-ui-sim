@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Record bounded UnitHealthPercent curve metadata
+
+One best-effort credit records supplied scalar/color curves, live player/target health, one-result arity, nil/omitted queries and observed invalid-curve rejection. Runtime `92b4f8c4f`: 5/5 each historical profile in `/tmp/verify-unit-health-percent-curves-ledger.json`. Current 0..100 input is simulator policy, not native proof. Six manifests scanned: 59 hash renewals, seven evidence additions. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**. Metadata verification pending. Native scale/prediction/unit/security/full-LoD obligations, eight Mists failures and broad audit remain open. [Spec](../specs/unit-health-percent-curves.md).
+
 ## [2026-09-14] audit | Record UnitHealthPercent curve development
 
 `13bf5219f` produced RED 1/3 for supplied scalar/color curves; `b31004297` produced invalid-curve RED. `92b4f8c4f` evaluates non-nil curves through the existing scalar/color evaluator and development GREEN is 5/5 on retail 12.0.0. The `0..100` input is simulator policy, not native evidence. Independent verification is pending; no credit or inventory metadata changed. [Spec](../specs/unit-health-percent-curves.md); [[patch-12-0-0-api-audit]].

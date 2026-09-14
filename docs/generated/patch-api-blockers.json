@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-14",
-  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. One historical public aura-enumeration credit covers two ordinary tests only; native full filter domain, sorting/default semantics, identity, security and full-LoD parity remain unproven.",
+  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. One UnitHealthPercent credit covers ordinary scalar/color evaluation under explicit 0..100 simulator input policy; native scale, prediction, unit semantics, security and full-LoD parity remain unproven.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "4fc1f66038f97e193af08557cdee5155f1dbe7d8b9e0602c56c864adc609c32a",
-      "rows": 1064
+      "sha256": "00d02827ea0720b3771788fa276583cdf9450dd641bd0853a599f44611244aaf",
+      "rows": 1063
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -30,11 +30,11 @@
     },
     {
       "path": "data/patch-api/12.1.5.json",
-      "sha256": "fe58cb4ede0d0ac1bcb793f40cc384b09f058a087086df359ec5cf510b008dee",
+      "sha256": "45cf4b0cd8e464201601963261176d9e325af84c84f8a2f4b18a53366aebdaf3",
       "rows": 10
     }
   ],
-  "total": 1090,
+  "total": 1089,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -9848,21 +9848,6 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:UnitHealthPercent",
-      "owner": "api",
-      "missing_evidence": "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and optional predicted/curve behavior; existing numeric tests do not prove the declared contract. Required probe: Full-LoD probe: assert(type(UnitHealthPercent) == \"function\"); assert the declared table result, predicted/curve handling, and supported/unknown-unit behavior with controlled state.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/utility_system_spell/spell_api.rs",
-        "tests/admin_health_power_api.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
-      ],
-      "probe_plan": "literal-041"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:UnitIsLieutenant",
       "owner": "api",
       "missing_evidence": "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. No UnitIsLieutenant publication or lieutenant-state model exists; related unit classification APIs are not equivalent. Required probe: Full-LoD probe: assert(type(UnitIsLieutenant) == \"function\"); assert boolean results for known lieutenant/non-lieutenant units and unknown-unit behavior from producer-backed state.",
@@ -15730,13 +15715,22 @@
       "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
     },
     "literal-041": {
-      "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
+      "dependency": "Native input/no-curve scale, prediction and supported/unknown-unit evidence remain missing; bounded ordinary simulator curve evaluation is established.",
       "observations": [
-        "Retail 12.0.0 declaration requires full-LoD/state-backed proof; current simulator behavior is absent, divergent, or temporary. Current runtime returns a legacy numeric percentage, while retail 12.0.0 declares a table result and optional predicted/curve behavior; existing numeric tests do not prove the declared contract. Required probe: Full-LoD probe: assert(type(UnitHealthPercent) == \"function\"); assert the declared table result, predicted/curve handling, and supported/unknown-unit behavior with controlled state."
+        "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
       ],
       "ready_to_execute": false,
-      "design_gap": "Literal source probe requirement, not independently validated native semantics. Preserve exact names and populated-object preconditions; do not assert absence on a missing producer or substitute generated declarations for runtime evidence.",
-      "basis": "Verbatim linked-row manifest note; extraction preserves periods inside Lua member names and expressions."
+      "design_gap": "Retained residual native/prediction/unit/security/full-LoD obligations after bounded best-effort credit; do not interpret LuaCurveEvaluatedResult as an unconditional table.",
+      "basis": "Bounded verified simulator tests and remaining native-contract gaps; not a verbatim original probe.",
+      "bounded_simulator_evidence": {
+        "runtime": "92b4f8c4f",
+        "tests": [
+          "13bf5219f",
+          "b31004297"
+        ],
+        "proof": "/tmp/verify-unit-health-percent-curves-ledger.json",
+        "scope": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
+      }
     },
     "literal-042": {
       "dependency": "The source-specified populated producer or target-build/load-phase capture below is missing. Concrete fixtures must be established before executing assertions.",
@@ -17774,138 +17768,150 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "One bounded historical public aura-enumeration credit; later default regressions preserve behavior without new historical private credit",
-    "runtime_commit": "ba31c6b94",
-    "tests_commit": "33f7fdb39",
-    "proof": "/tmp/verify-aura-instance-ids-historical-ledger.json",
+    "scope": "One bounded UnitHealthPercent scalar/color curve credit; current percentage input scale is simulator policy only",
+    "runtime_commit": "92b4f8c4f",
+    "tests_commit": "13bf5219f",
+    "test_correction_commit": "b31004297",
+    "proof": "/tmp/verify-unit-health-percent-curves-ledger.json",
     "removed_credited_rows": [
-      "added:C_UnitAuras.GetUnitAuraInstanceIDs"
+      "added:UnitHealthPercent"
     ],
-    "prior_rows": 1091,
-    "rows": 1090,
+    "prior_rows": 1090,
+    "rows": 1089,
     "previous_refresh": {
-      "scope": "Two bounded global outfit-situations setting credits; initial/native defaults, pending/per-outfit, reset, persistence, events, UI/consumer and security gaps retained",
-      "runtime_commit": "457a8ae88",
-      "tests_commit": "14ac47769",
-      "proof": "/tmp/verify-outfit-situations-enabled-ledger.json",
+      "scope": "One bounded historical public aura-enumeration credit; later default regressions preserve behavior without new historical private credit",
+      "runtime_commit": "ba31c6b94",
+      "tests_commit": "33f7fdb39",
+      "proof": "/tmp/verify-aura-instance-ids-historical-ledger.json",
       "removed_credited_rows": [
-        "added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
-        "added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled"
+        "added:C_UnitAuras.GetUnitAuraInstanceIDs"
       ],
-      "prior_rows": 1093,
-      "rows": 1091,
+      "prior_rows": 1091,
+      "rows": 1090,
       "previous_refresh": {
-        "scope": "Two bounded explicit filter-storage credits; native/default/reset/filtering/event/persistence/lifecycle/consumer/security gaps retained",
-        "runtime_commit": "5cded1d0b",
-        "tests_commit": "4fb364410",
-        "proof": "/tmp/verify-transmog-sets-filter-ledger.json",
+        "scope": "Two bounded global outfit-situations setting credits; initial/native defaults, pending/per-outfit, reset, persistence, events, UI/consumer and security gaps retained",
+        "runtime_commit": "457a8ae88",
+        "tests_commit": "14ac47769",
+        "proof": "/tmp/verify-outfit-situations-enabled-ledger.json",
         "removed_credited_rows": [
-          "added:C_TransmogSets.GetSetsFilter",
-          "added:C_TransmogSets.SetSetsFilter"
+          "added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
+          "added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled"
         ],
-        "prior_rows": 1095,
-        "rows": 1093,
+        "prior_rows": 1093,
+        "rows": 1091,
         "previous_refresh": {
-          "scope": "Two bounded active-unit selection credits; parent native identity/validation/default/lifecycle/routing/event/consumer/security gaps retained",
-          "runtime_commit": "375c71192",
-          "tests_commit": "8113cc6bc",
-          "proof": "/tmp/verify-combat-text-active-unit-ledger.json",
+          "scope": "Two bounded explicit filter-storage credits; native/default/reset/filtering/event/persistence/lifecycle/consumer/security gaps retained",
+          "runtime_commit": "5cded1d0b",
+          "tests_commit": "4fb364410",
+          "proof": "/tmp/verify-transmog-sets-filter-ledger.json",
           "removed_credited_rows": [
-            "added:C_CombatText.GetActiveUnit",
-            "added:C_CombatText.SetActiveUnit"
+            "added:C_TransmogSets.GetSetsFilter",
+            "added:C_TransmogSets.SetSetsFilter"
           ],
-          "prior_rows": 1097,
-          "rows": 1095,
+          "prior_rows": 1095,
+          "rows": 1093,
           "previous_refresh": {
-            "scope": "Four bounded tracked-task method/array-field credits; parent task-record/native/validation/event/persistence/consumer gaps retained",
-            "runtime_commit": "27223f82a",
-            "tests_commit": "3abb84e1c",
-            "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
+            "scope": "Two bounded active-unit selection credits; parent native identity/validation/default/lifecycle/routing/event/consumer/security gaps retained",
+            "runtime_commit": "375c71192",
+            "tests_commit": "8113cc6bc",
+            "proof": "/tmp/verify-combat-text-active-unit-ledger.json",
             "removed_credited_rows": [
-              "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
-              "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
-              "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
-              "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask"
+              "added:C_CombatText.GetActiveUnit",
+              "added:C_CombatText.SetActiveUnit"
             ],
-            "prior_rows": 1101,
-            "rows": 1097,
+            "prior_rows": 1097,
+            "rows": 1095,
             "previous_refresh": {
-              "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
-              "runtime_commit": "df6264867",
-              "tests_commit": "ef9bbe70c",
-              "proof": "/tmp/verify-custom-set-crud-ledger.json",
+              "scope": "Four bounded tracked-task method/array-field credits; parent task-record/native/validation/event/persistence/consumer gaps retained",
+              "runtime_commit": "27223f82a",
+              "tests_commit": "3abb84e1c",
+              "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
               "removed_credited_rows": [
-                "added:C_TransmogCollection.DeleteCustomSet",
-                "added:C_TransmogCollection.GetCustomSetInfo",
-                "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
-                "added:C_TransmogCollection.GetCustomSets",
-                "added:C_TransmogCollection.ModifyCustomSet",
-                "added:C_TransmogCollection.NewCustomSet",
-                "added:C_TransmogCollection.RenameCustomSet"
+                "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
+                "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
+                "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
+                "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask"
               ],
-              "prior_rows": 1108,
-              "rows": 1101,
+              "prior_rows": 1101,
+              "rows": 1097,
               "previous_refresh": {
-                "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
-                "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
-                "tests_commit": "70979713d",
-                "proof": "/tmp/verify-audio-format-setting-ledger.json",
+                "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
+                "runtime_commit": "df6264867",
+                "tests_commit": "ef9bbe70c",
+                "proof": "/tmp/verify-custom-set-crud-ledger.json",
                 "removed_credited_rows": [
-                  "added:C_CombatAudioAlert.GetFormatSetting",
-                  "added:C_CombatAudioAlert.SetFormatSetting"
+                  "added:C_TransmogCollection.DeleteCustomSet",
+                  "added:C_TransmogCollection.GetCustomSetInfo",
+                  "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
+                  "added:C_TransmogCollection.GetCustomSets",
+                  "added:C_TransmogCollection.ModifyCustomSet",
+                  "added:C_TransmogCollection.NewCustomSet",
+                  "added:C_TransmogCollection.RenameCustomSet"
                 ],
-                "prior_rows": 1110,
-                "rows": 1108,
-                "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
+                "prior_rows": 1108,
+                "rows": 1101,
                 "previous_refresh": {
-                  "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
-                  "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
-                  "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
-                  "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
+                  "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
+                  "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
+                  "tests_commit": "70979713d",
+                  "proof": "/tmp/verify-audio-format-setting-ledger.json",
                   "removed_credited_rows": [
-                    "added:C_CombatAudioAlert.GetSpeakerVolume",
-                    "added:C_CombatAudioAlert.SetSpeakerVolume"
+                    "added:C_CombatAudioAlert.GetFormatSetting",
+                    "added:C_CombatAudioAlert.SetFormatSetting"
                   ],
-                  "prior_rows": 1112,
-                  "rows": 1110,
-                  "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
+                  "prior_rows": 1110,
+                  "rows": 1108,
+                  "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
                   "previous_refresh": {
-                    "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
-                    "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
-                    "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
-                    "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
+                    "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
+                    "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
+                    "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
+                    "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
                     "removed_credited_rows": [
-                      "added:C_CombatAudioAlert.GetSpeakerSpeed",
-                      "added:C_CombatAudioAlert.SetSpeakerSpeed"
+                      "added:C_CombatAudioAlert.GetSpeakerVolume",
+                      "added:C_CombatAudioAlert.SetSpeakerVolume"
                     ],
-                    "prior_rows": 1114,
-                    "rows": 1112,
-                    "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
+                    "prior_rows": 1112,
+                    "rows": 1110,
+                    "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
                     "previous_refresh": {
-                      "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-                      "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-                      "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-                      "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+                      "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+                      "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+                      "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+                      "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
                       "removed_credited_rows": [
-                        "added:C_CombatLog.GetMessageLimit"
+                        "added:C_CombatAudioAlert.GetSpeakerSpeed",
+                        "added:C_CombatAudioAlert.SetSpeakerSpeed"
                       ],
-                      "prior_rows": 1115,
-                      "rows": 1114,
-                      "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+                      "prior_rows": 1114,
+                      "rows": 1112,
+                      "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
                       "previous_refresh": {
-                        "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-                        "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-                        "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+                        "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+                        "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+                        "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+                        "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
                         "removed_credited_rows": [
-                          "added:C_CombatLog.AreFilteredEventsEnabled",
-                          "added:C_CombatLog.GetEntryRetentionTime",
-                          "added:C_CombatLog.SetEntryRetentionTime",
-                          "added:C_CombatLog.SetFilteredEventsEnabled"
+                          "added:C_CombatLog.GetMessageLimit"
                         ],
-                        "prior_rows": 1119,
-                        "rows": 1115,
-                        "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-                        "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+                        "prior_rows": 1115,
+                        "rows": 1114,
+                        "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+                        "previous_refresh": {
+                          "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+                          "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+                          "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+                          "removed_credited_rows": [
+                            "added:C_CombatLog.AreFilteredEventsEnabled",
+                            "added:C_CombatLog.GetEntryRetentionTime",
+                            "added:C_CombatLog.SetEntryRetentionTime",
+                            "added:C_CombatLog.SetFilteredEventsEnabled"
+                          ],
+                          "prior_rows": 1119,
+                          "rows": 1115,
+                          "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+                          "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+                        }
                       }
                     }
                   }

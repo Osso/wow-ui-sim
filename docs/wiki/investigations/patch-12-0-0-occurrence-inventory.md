@@ -116,7 +116,7 @@ The bounded 12.0.0 `C_CombatLogSecure` slice classifies exactly nine added secur
 - **Source:** `data/patch-api/sources/12.0.0-register.json`
 - **Source SHA-256:** `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`
 - **Boundary:** retail 11.2.7 build 65299 → final explicit retail 12.0.0 build 65727
-- **Rows:** 3410 total — 0 implemented, 2344 best-effort, 1064 evidence-required, 2 exception-requested, 0 untriaged
+- **Rows:** 3410 total — 0 implemented, 2345 best-effort, 1063 evidence-required, 2 exception-requested, 0 untriaged
 - **Directions:** 2554 added, 313 changed, 543 removed
 - **Limit:** no historical 12.0.0 FrameXML tree or live SavedVariables capture is claimed.
 
@@ -2498,7 +2498,7 @@ Source occurrence objects preserve optional typed `before`/`after` JSON payloads
 | `UnitHealPredictionValues.totalIncomingHeals` | best-effort | structure-field | added | Best-effort behavioral evidence covers only proxy/default/health/incoming-heal behavior; exact clamp/absorb/overflow/secret/full typed semantics are not established. |
 | `UnitHealPredictionValues.totalIncomingHealsFromHealer` | best-effort | structure-field | added | Best-effort behavioral evidence covers only proxy/default/health/incoming-heal behavior; exact clamp/absorb/overflow/secret/full typed semantics are not established. |
 | `UnitHealthMissing` | best-effort | api | added | Best-effort behavioral evidence covers player/target current/max health difference, subsequent vital updates, one numeric return, query non-mutation, and explicit `usePredicted=false`; predicted health, other tokens, native validation/security/lifecycle/consumer semantics remain unproven. |
-| `UnitHealthPercent` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
+| `UnitHealthPercent` | best-effort | api | added | Scalar/color curve evaluation, live player/target updates, one-result arity, nil/omitted queries and tested invalid-curve rejection: 5/5 each historical profile, runtime 92b4f8c4f. Current 0..100 input is simulator policy only. Native scale/prediction/unit/security/full-LoD gaps remain. [Spec](../../specs/unit-health-percent-curves.md). |
 | `UnitIsHumanPlayer` | best-effort | api | added | Best-effort behavioral evidence is limited to the named focused test and current modeled/vendor behavior: Current modeled token resolution returns true for player/party and false for unset target/pet. Full retail semantics, invalid inputs, lifecycle, and untested unit/state cases remain unclaimed. |
 | `UnitIsLieutenant` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
 | `UnitIsMinion` | evidence-required | api | added | Evidence required: current runtime publication or semantics are absent, divergent, or temporary; full-LoD/state-backed probe required. |
