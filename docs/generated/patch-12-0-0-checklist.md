@@ -759,7 +759,7 @@
 759. [evidence-required] `added:C_UnitAuras.GetAuraDispelTypeColor` — unsafe
 760. [evidence-required] `added:C_UnitAuras.GetAuraDuration` — unsafe
 761. [evidence-required] `added:C_UnitAuras.GetRefreshExtendedDuration` — unsafe
-762. [evidence-required] `added:C_UnitAuras.GetUnitAuraInstanceIDs` — unsafe
+762. [best-effort] `added:C_UnitAuras.GetUnitAuraInstanceIDs` — behavioral
 763. [evidence-required] `added:C_UnitAuras.TriggerPrivateAuraShowDispelType` — unsafe
 764. [evidence-required] `added:C_UnitAurasPrivate.SetShowDispelTypeCallback` — unsafe
 765. [evidence-required] `added:C_WeeklyRewards.GetSortedProgressForActivity` — unsafe

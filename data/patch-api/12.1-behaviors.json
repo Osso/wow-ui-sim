@@ -32,7 +32,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact addon-vs-Blizzard secret error behavior is not modeled.",
-          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
+          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
         }
       ],
       "tests": [],
@@ -54,7 +54,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact caller-sensitive Blizzard/internal secret access behavior is not modeled.",
-          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
+          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
         }
       ],
       "tests": [],
@@ -76,7 +76,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret field accessibility and retail object behavior are not modeled.",
-          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
+          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
         }
       ],
       "tests": [],
@@ -98,7 +98,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret UNIT_AURA payload values and tuple behavior are not modeled.",
-          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
+          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
         }
       ],
       "tests": [],

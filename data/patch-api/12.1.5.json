@@ -2180,7 +2180,7 @@
           "kind": "source",
           "reference": "src/c_api/c_unit_auras.rs",
           "summary": "PTR-only C_UnitAuras registration resolves the selected aura instance through the existing aura model and resolves its current source unit through UnitGUID.",
-          "source_hash": "769f316d581ed6dabcb1f4cd883364abed57832e1a1735ea43b9c9ee1eda8b41"
+          "source_hash": "4c4b1b2026427ac89387d1e34efab7d37aec73b068e9a627b7f84d09a7cc18f7"
         },
         {
           "kind": "test",

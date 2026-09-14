@@ -116,7 +116,7 @@ The bounded 12.0.0 `C_CombatLogSecure` slice classifies exactly nine added secur
 - **Source:** `data/patch-api/sources/12.0.0-register.json`
 - **Source SHA-256:** `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`
 - **Boundary:** retail 11.2.7 build 65299 → final explicit retail 12.0.0 build 65727
-- **Rows:** 3410 total — 0 implemented, 2343 best-effort, 1065 evidence-required, 2 exception-requested, 0 untriaged
+- **Rows:** 3410 total — 0 implemented, 2344 best-effort, 1064 evidence-required, 2 exception-requested, 0 untriaged
 - **Directions:** 2554 added, 313 changed, 543 removed
 - **Limit:** no historical 12.0.0 FrameXML tree or live SavedVariables capture is claimed.
 
@@ -885,7 +885,7 @@ Source occurrence objects preserve optional typed `before`/`after` JSON payloads
 | `C_UnitAuras.GetAuraDispelTypeColor` | evidence-required | api | added | Source-register signatures/defaults and adjacent seeded aura lookup/state behavior do not establish the added 12.0.0 contract; authoritative semantics or a correct model/test are required, and no approval can close this row. |
 | `C_UnitAuras.GetAuraDuration` | evidence-required | api | added | Source-register signatures/defaults and adjacent seeded aura lookup/state behavior do not establish the added 12.0.0 contract; authoritative semantics or a correct model/test are required, and no approval can close this row. |
 | `C_UnitAuras.GetRefreshExtendedDuration` | evidence-required | api | added | Source-register signatures/defaults and adjacent seeded aura lookup/state behavior do not establish the added 12.0.0 contract; authoritative semantics or a correct model/test are required, and no approval can close this row. |
-| `C_UnitAuras.GetUnitAuraInstanceIDs` | evidence-required | api | added | Source-register signatures/defaults and adjacent seeded aura lookup/state behavior do not establish the added 12.0.0 contract; authoritative semantics or a correct model/test are required, and no approval can close this row. |
+| `C_UnitAuras.GetUnitAuraInstanceIDs` | best-effort | api | added | Two ordinary historical tests prove seeded filtering, blocked visibility, live removal and observed sorting/limits. Runtime ba31c6b94; tests 33f7fdb39, 2/2 each historical profile. Default 5/5 preserves later behavior only. Native full filter/sort/default/identity/security/full-LoD gaps and helper-gate compile history remain. |
 | `C_UnitAuras.TriggerPrivateAuraShowDispelType` | evidence-required | api | added | Source-register signatures/defaults and adjacent seeded aura lookup/state behavior do not establish the added 12.0.0 contract; authoritative semantics or a correct model/test are required, and no approval can close this row. |
 | `C_UnitAurasPrivate.SetShowDispelTypeCallback` | evidence-required | api | added | source register establishes secure-only/return-shape metadata only; current temporary model is permissive/partial, and secure/private-aura semantics remain unproven. |
 | `C_WeeklyRewards.GetSortedProgressForActivity` | evidence-required | api | added | Evidence required: GetSortedProgressForActivity is absent and current vault state has no tier sorting or shared-difficulty aggregation. Threshold-type behavior, result ordering, empty/combined cases, refresh events, persistence, and lifecycle remain unproven. |
