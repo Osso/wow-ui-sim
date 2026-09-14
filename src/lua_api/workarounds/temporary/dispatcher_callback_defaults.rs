@@ -1,8 +1,8 @@
 //! Temporary Dispatcher callback global defaults.
 //!
 //! Global event callbacks are modeled from retail 12.0.0. Earlier profiles
-//! retain legacy defaults; unit callbacks and DevTools handlers remain inert
-//! until their independent registration and dispatch systems are modeled.
+//! retain legacy global/unit defaults. DevTools handlers remain inert until
+//! their independent registration and dispatch system is modeled.
 
 #[cfg(not(feature = "retail-12-0-0"))]
 const LEGACY_EVENT_CALLBACK_DEFAULTS_LUA: &str = r#"
@@ -16,9 +16,6 @@ if UnregisterEventCallback == nil then
     end
 end
 
-"#;
-
-const DISPATCHER_CALLBACK_DEFAULTS_LUA: &str = r#"
 if RegisterUnitEventCallback == nil then
     function RegisterUnitEventCallback(_event, _callback, _unit)
     end
@@ -29,6 +26,9 @@ if UnregisterUnitEventCallback == nil then
     end
 end
 
+"#;
+
+const DISPATCHER_CALLBACK_DEFAULTS_LUA: &str = r#"
 if DevTools_AddMessageHandler == nil then
     function DevTools_AddMessageHandler(_handler)
     end
@@ -53,8 +53,6 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
-                if RegisterUnitEventCallback("UNIT_HEALTH", function() end, "player") ~= nil then return "register_unit" end
-                if UnregisterUnitEventCallback("UNIT_HEALTH", function() end, "player") ~= nil then return "unregister_unit" end
                 if DevTools_AddMessageHandler(function() end) ~= nil then return "devtools" end
                 return "ok"
                 "#,
@@ -74,6 +72,8 @@ mod tests {
                 local callback = function() end
                 return RegisterEventCallback("TEST", callback) == nil
                     and UnregisterEventCallback("TEST", callback) == nil
+                    and RegisterUnitEventCallback("UNIT_HEALTH", callback, "player") == nil
+                    and UnregisterUnitEventCallback("UNIT_HEALTH", callback, "player") == nil
                 "#,
             )
             .expect("legacy callback defaults probe should run");

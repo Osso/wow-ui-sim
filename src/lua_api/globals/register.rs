@@ -97,6 +97,16 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
             "UnregisterEventCallback",
             super::real::event_callbacks::unregister_event_callback,
         )?;
+        LuaApiMut::register_function(
+            lua,
+            "RegisterUnitEventCallback",
+            super::real::event_callbacks::register_unit_event_callback,
+        )?;
+        LuaApiMut::register_function(
+            lua,
+            "UnregisterUnitEventCallback",
+            super::real::event_callbacks::unregister_unit_event_callback,
+        )?;
     }
     #[cfg(feature = "retail-12-1-5")]
     super::real::math_extensions::register_all(lua)?;
