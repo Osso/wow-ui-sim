@@ -219,7 +219,7 @@ fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "retail-12-0-0")]
 fn aura_matches_filter_string(aura: &AuraInfo, filter: &str) -> bool {
     let matches_polarity = aura_matches_filter(aura, filter_from_str(filter));
     let requires_player_source = filter
