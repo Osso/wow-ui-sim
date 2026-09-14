@@ -916,3 +916,88 @@ fn combat_log_namespaces_iterate_seeded_entries_and_messages() {
     assert!(filtered_enabled, "filtered-events flag should persist");
     assert_eq!(message_limit, 400, "message limit should persist");
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod combatlog_message_limit_tests {
+    use super::{WowLuaEnv, env};
+
+    fn read_limit(env: &WowLuaEnv) -> i64 {
+        env.eval("return C_CombatLog.GetMessageLimit()").unwrap()
+    }
+
+    #[test]
+    fn combatlog_message_limit_roundtrip_and_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, limit in ipairs({41, 42, 42, 41, 41, 42}) do
+                assert(select('#', C_CombatLog.SetMessageLimit(limit)) == 0,
+                    "message-limit setter must return zero values")
+                assert(select('#', C_CombatLog.GetMessageLimit()) == 1,
+                    "message-limit getter must return one value")
+                local actual = C_CombatLog.GetMessageLimit()
+                assert(type(actual) == "number",
+                    "message-limit getter must return a number")
+                assert(actual == limit,
+                    "message limit differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_message_limit_independent_of_filter_and_retention() {
+        let env = env();
+        env.exec(
+            r#"
+            C_CombatLog.SetFilteredEventsEnabled(false)
+            C_CombatLog.SetEntryRetentionTime(120)
+            C_CombatLog.SetMessageLimit(41)
+            C_CombatLog.SetMessageLimit(42)
+            assert(C_CombatLog.AreFilteredEventsEnabled() == false,
+                "message-limit write changed filtered-events setting")
+            assert(C_CombatLog.GetEntryRetentionTime() == 120,
+                "message-limit write changed retention")
+
+            C_CombatLog.SetFilteredEventsEnabled(true)
+            assert(C_CombatLog.GetMessageLimit() == 42,
+                "enabling filtered events changed message limit")
+            C_CombatLog.SetEntryRetentionTime(240)
+            assert(C_CombatLog.GetMessageLimit() == 42,
+                "retention write changed message limit")
+
+            C_CombatLog.SetMessageLimit(41)
+            assert(C_CombatLog.AreFilteredEventsEnabled() == true,
+                "message-limit write disabled filtered events")
+            assert(C_CombatLog.GetEntryRetentionTime() == 240,
+                "message-limit write changed updated retention")
+            C_CombatLog.SetFilteredEventsEnabled(false)
+            assert(C_CombatLog.GetMessageLimit() == 41,
+                "disabling filtered events changed message limit")
+            C_CombatLog.SetEntryRetentionTime(120)
+            assert(C_CombatLog.GetMessageLimit() == 41,
+                "restoring retention changed message limit")
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combatlog_message_limit_isolates_lua_environments() {
+        let first = env();
+        first.exec("C_CombatLog.SetMessageLimit(41)").unwrap();
+        let second = env();
+        second.exec("C_CombatLog.SetMessageLimit(42)").unwrap();
+        assert_eq!(read_limit(&first), 41);
+        assert_eq!(read_limit(&second), 42);
+
+        first.exec("C_CombatLog.SetMessageLimit(43)").unwrap();
+        assert_eq!(read_limit(&first), 43);
+        assert_eq!(read_limit(&second), 42);
+
+        second.exec("C_CombatLog.SetMessageLimit(44)").unwrap();
+        assert_eq!(read_limit(&first), 43);
+        assert_eq!(read_limit(&second), 44);
+    }
+}
