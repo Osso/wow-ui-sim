@@ -41,6 +41,8 @@ pub(super) fn register_transmog_collection_surface(state: &mut LuaState) -> LuaR
     register_transmog_collection_category_queries(state, table_ref)?;
     register_transmog_collection_flags(state, table_ref)?;
     register_transmog_collection_outfits(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-0")]
+    crate::c_api::c_transmog_collection::register(state, table_ref)?;
     Ok(())
 }
 

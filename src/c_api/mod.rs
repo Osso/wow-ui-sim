@@ -70,6 +70,8 @@ pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
 pub mod c_texture;
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) mod c_transmog_collection;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-1-0")]
 pub mod c_unit_auras;

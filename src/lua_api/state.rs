@@ -118,6 +118,8 @@ macro_rules! build_empty_sim_state {
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
             transmog_outfit_locks: HashSet::new(),
+            #[cfg(feature = "retail-12-0-0")]
+            transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,
             locked_action_slots: HashSet::new(),
             is_active_battlefield: false,
