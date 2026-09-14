@@ -5462,31 +5462,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5531,7 +5531,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "54e0c6c4401303c178bdcdf21c9d010d7de2383e7b21f6e02840de85ab1eca12",
+          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5543,31 +5543,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5612,31 +5612,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -5768,31 +5768,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5837,7 +5837,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "54e0c6c4401303c178bdcdf21c9d010d7de2383e7b21f6e02840de85ab1eca12",
+          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5849,31 +5849,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5918,31 +5918,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "e9b26373620085dd44d5c62d58e729c1a134a7c441615a0f16cee372a3b4d25d",
+          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "b338bf7be81ce98b93dd4bb251e1674d6b742c4ca4da30eb5712d47ab1b33cc5",
+          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -6105,25 +6105,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6229,25 +6229,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6287,19 +6287,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit 41/42 and repeated writes; GetMessageLimit returns exactly one number with the stored value. Setter zero returns are a control, not new setter/event credit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Message-limit writes preserve filter/retention settings and changes to those settings preserve the queried message limit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct 41/42 then 43/44 writes remain isolated between two live Lua environments in both directions."
         }
       ],
@@ -6404,25 +6404,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6462,25 +6462,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "cc3dfbfe9f621777689b136bbf52eb5314c31263b39886a0872e49c79f8c53f2",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -20408,8 +20408,8 @@
       "id": "added:C_TransmogCollection.DeleteCustomSet",
       "symbol": "C_TransmogCollection.DeleteCustomSet",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20422,22 +20422,57 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.DeleteCustomSet contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.GetCustomSetHyperlinkFromItemTransmogInfoList",
@@ -20457,8 +20492,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20478,8 +20513,8 @@
       "id": "added:C_TransmogCollection.GetCustomSetInfo",
       "symbol": "C_TransmogCollection.GetCustomSetInfo",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20492,29 +20527,64 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.GetCustomSetInfo contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
       "symbol": "C_TransmogCollection.GetCustomSetItemTransmogInfoList",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20527,29 +20597,64 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.GetCustomSetItemTransmogInfoList contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.GetCustomSets",
       "symbol": "C_TransmogCollection.GetCustomSets",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20562,22 +20667,57 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.GetCustomSets contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.GetItemTransmogInfoListFromCustomSetHyperlink",
@@ -20597,8 +20737,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20632,8 +20772,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20667,8 +20807,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20702,8 +20842,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20723,8 +20863,8 @@
       "id": "added:C_TransmogCollection.ModifyCustomSet",
       "symbol": "C_TransmogCollection.ModifyCustomSet",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20737,29 +20877,64 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.ModifyCustomSet contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.NewCustomSet",
       "symbol": "C_TransmogCollection.NewCustomSet",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20772,29 +20947,64 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.NewCustomSet contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.RenameCustomSet",
       "symbol": "C_TransmogCollection.RenameCustomSet",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -20807,22 +21017,57 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state_types/collections.rs",
           "source_hash": "928afb7b45803d7631864ce143726137ee9afe3d3eca76a1987ae59e6e427a6c",
           "summary": "The collection/world-object state file defines related simulator data structures. Its presence does not establish the named C_TransmogCollection.RenameCustomSet contract, validation, lifecycle, or persistence."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
+          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_collection.rs",
+          "source_hash": "0dccff1bb29c1c2419beb6de14bd800e7037663170fc910c411288d65973cb51",
+          "summary": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
+        "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df6264867",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+      "notes": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogCollection.TransmogAppearanceSourceInfoData",
@@ -20842,8 +21087,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20877,8 +21122,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20912,8 +21157,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20947,8 +21192,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -20982,8 +21227,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -21017,8 +21262,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -21052,8 +21297,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -21087,8 +21332,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -21122,8 +21367,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -21157,8 +21402,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -101775,7 +102020,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "54e0c6c4401303c178bdcdf21c9d010d7de2383e7b21f6e02840de85ab1eca12",
+          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -101869,7 +102114,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "54e0c6c4401303c178bdcdf21c9d010d7de2383e7b21f6e02840de85ab1eca12",
+          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -103082,8 +103327,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
-          "summary": "Current src/lua_api/globals/missing_surface/transmog_collection.rs provides a seeded appearance/filter/outfit surface, but no modeled custom-set lifecycle, hyperlink handling, or authoritative TransmogAppearanceSourceInfoData return shape."
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
+          "summary": "Existing transmog namespace now registers bounded owned custom-set CRUD; native validation, persistence, hyperlinks and appearance-source semantics remain unproven."
         },
         {
           "kind": "source",
@@ -117480,7 +117725,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117517,7 +117762,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117554,7 +117799,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117591,7 +117836,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117628,7 +117873,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117665,7 +117910,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117702,7 +117947,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117739,7 +117984,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117776,7 +118021,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {
@@ -117813,7 +118058,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/transmog_collection.rs",
-          "source_hash": "20b1116a6de919b7a0b991c52a04afce93f00f02cc59db8e4e3a97981537581e",
+          "source_hash": "8ff9a122a20d3a64624f163e3f91675537389f248661f9898b596eb53cf16723",
           "summary": "The three obsolete simulator outfit placeholders were removed; retained appearance APIs remain registered, while custom-set replacement APIs remain outside this strict-removal proof."
         },
         {

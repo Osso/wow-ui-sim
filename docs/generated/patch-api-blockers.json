@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-14",
-  "scope": "Snapshot of evidence-required rows only; plans are not executable fixtures or fresh native semantic proof. Exceptions and best-effort residual gaps remain outside this inventory. This refresh removes only the separately proven GetMessageLimit storage/query row; snapshot membership awards no native or whole-system closure.",
+  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. Seven ordinary custom-set CRUD credits do not establish native validation, defaults, errors, persistence, events, hyperlinks or consumer behavior.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "f065e6f1f6f129ac3c7e17bcc9233df69b2f926696285c9da5432a6b0b8ab16b",
-      "rows": 1082
+      "sha256": "c9a091823767cdde8684167d296a488bae0b2191987f658845e1a2d31a2f8259",
+      "rows": 1075
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1108,
+  "total": 1101,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -4684,6 +4684,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "src/lua_api/workarounds/temporary/sound_driver_defaults.rs",
         "src/lua_api/workarounds/temporary/sound_driver_defaults.rs"
       ],
       "probe_plan": "remaining-misc-C_Sound"
@@ -5382,63 +5383,7 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.DeleteCustomSet",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_TransmogCollection.GetCustomSetHyperlinkFromItemTransmogInfoList",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.GetCustomSetInfo",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.GetCustomSets",
       "owner": "api",
       "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
       "probe_protocol": "api-state",
@@ -5495,48 +5440,6 @@
     {
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_TransmogCollection.IsValidTransmogSource",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.ModifyCustomSet",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.NewCustomSet",
-      "owner": "api",
-      "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/missing_surface/transmog_collection.rs",
-        "src/lua_api/state_types/collections.rs"
-      ],
-      "probe_plan": "collection_custom_sets"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogCollection.RenameCustomSet",
       "owner": "api",
       "missing_evidence": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row.",
       "probe_protocol": "api-state",
@@ -9382,6 +9285,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
         "src/event/valid_events.rs",
@@ -9397,6 +9301,7 @@
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
+        "data/patch-api/sources/12.0.0-register.json",
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
         "src/lua_api/frame/methods/text_attribute_event/events.rs",
@@ -9561,6 +9466,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
@@ -9574,6 +9480,7 @@
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
+        "data/patch-api/sources/12.0.0-register.json",
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
@@ -9589,6 +9496,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
@@ -9603,6 +9511,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/env_init/mod.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
@@ -9616,6 +9525,7 @@
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
+        "data/patch-api/sources/12.0.0-register.json",
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/frame/methods/misc/secret.rs",
         "src/loader/tests/frame_state.rs",
@@ -9632,6 +9542,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/iced_app/update_servers.rs",
         "src/lua_server.rs",
         "src/iced_app/mouse_tests.rs",
@@ -9647,6 +9558,7 @@
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
+        "data/patch-api/sources/12.0.0-register.json",
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/real/mouse_probes.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
@@ -9938,6 +9850,7 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/utility_system_spell/spell_api.rs",
+        "src/lua_api/globals/utility_system_spell/spell_api.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
       "probe_plan": "remaining-objects-durations"
@@ -9996,6 +9909,7 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/unit_stats.rs",
+        "src/lua_api/globals/unit_stats.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
       "probe_plan": "literal-038"
@@ -10009,6 +9923,7 @@
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
+        "src/lua_api/globals/unit_stats.rs",
         "src/lua_api/globals/unit_stats.rs",
         "docs/wow-client-diff/WowDiscovery.lua"
       ],
@@ -10738,7 +10653,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/item_spell/c_item.rs",
         "src/c_api/mod.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-069"
     },
@@ -10753,7 +10669,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/c_api/item_spell/c_item.rs",
         "src/loader/tests/wow_api_item.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-070"
     },
@@ -10768,7 +10685,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/enum_data/missing_enums.lua",
         "src/c_api/mod.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-071"
     },
@@ -10782,7 +10700,9 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "src/lua_api/globals/lfg_list.rs",
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-072"
     },
@@ -10796,7 +10716,9 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "src/lua_api/globals/lfg_list.rs",
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-073"
     },
@@ -10810,7 +10732,9 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/lfg_list.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "src/lua_api/globals/lfg_list.rs",
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-074"
     },
@@ -10824,7 +10748,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-075"
     },
@@ -10838,7 +10763,8 @@
       "basis_references": [
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/perks_activities_state.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-076"
     },
@@ -11290,7 +11216,8 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/missing_surface/voice_chat.rs",
         "src/loader/tests/wow_api_globals/startup_globals.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "literal-077"
     },
@@ -11394,7 +11321,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-transmog"
     },
@@ -11410,7 +11338,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11426,7 +11355,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11442,7 +11372,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11458,7 +11389,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11474,7 +11406,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11490,7 +11423,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11506,7 +11440,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11522,7 +11457,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11538,7 +11474,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11554,7 +11491,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11570,7 +11508,8 @@
         "src/event/valid_events_c.rs",
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-spellcast"
     },
@@ -11587,6 +11526,7 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/globals/combat_verbs.rs",
         "src/lua_api/globals/missing_surface/profession_crafting.rs"
       ],
@@ -11605,6 +11545,7 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/iced_app/casting.rs"
       ],
       "probe_plan": "remaining-events-event-spellcast"
@@ -11622,6 +11563,7 @@
         "src/event/mod.rs",
         "src/lua_api/env_events.rs",
         "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json",
         "src/iced_app/casting.rs"
       ],
       "probe_plan": "remaining-events-event-spellcast"
@@ -11722,7 +11664,8 @@
         "src/event/valid_events_c.rs",
         "src/lua_api/env_events.rs",
         "src/lua_api/globals/missing_surface/voice_chat.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-tts"
     },
@@ -11738,7 +11681,8 @@
         "src/event/valid_events_c.rs",
         "src/lua_api/env_events.rs",
         "src/lua_api/globals/missing_surface/voice_chat.rs",
-        "docs/wow-client-diff/WowDiscovery.lua"
+        "docs/wow-client-diff/WowDiscovery.lua",
+        "data/patch-api/sources/12.0.0-register.json"
       ],
       "probe_plan": "remaining-events-event-tts"
     },
@@ -15404,14 +15348,19 @@
       "design_gap": "No controllable native transaction producer or cost/currency fixture; action success, rollback, payment, and persistence are unmodeled."
     },
     "collection_custom_sets": {
-      "dependency": "Native wardrobe custom-set producer with populated appearance IDs/items, hyperlink serialization, name validation, max-set limits, and persistence; current src/lua_api/globals/missing_surface/transmog_collection.rs is partial and seeded.",
+      "dependency": "Native wardrobe custom-set producer with populated appearance IDs/items, hyperlink serialization, name validation, max-set limits and persistence. Ordinary copied-value simulator CRUD is proven separately; native policies and consumer execution remain unproven.",
       "observations": [
         "Create, modify, rename, delete and list one custom set; capture returned IDs, item transmog-info list, hyperlink roundtrip, names, max count and invalid-name/source outcomes.",
         "Compare empty, duplicate, deleted, reordered and persisted sets; record whether changes affect outfit state or only catalog storage.",
         "Use an actual item/transmog-info producer and distinguish custom-set catalog identity from appearance collection and outfit application."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative custom-set fixture, hyperlink format contract, validation/order rules, persistence boundary, or producer/consumer wiring."
+      "design_gap": "No authoritative custom-set fixture, hyperlink format contract, validation/order rules, persistence boundary, or producer/consumer wiring.",
+      "bounded_simulator_evidence": {
+        "runtime": "df6264867",
+        "proof": "/tmp/verify-custom-set-crud-ledger.json",
+        "scope": "Bounded ordinary custom-set CRUD: concrete records, generated numeric IDs, ID/info/item-list retrieval, modify/rename/delete, copied input/output values, return arity and record/environment isolation. Runtime df6264867; four tests ef9bbe70c pass 4/4 each on retail 12.0.0/12.0.5/12.0.7. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumer execution and security remain unproven."
+      }
     },
     "collection_appearance_info": {
       "dependency": "Populated wardrobe appearance source producer with item appearance, source type, collection status, icon/link, subclass/category and illusion capability. Current WorldState.transmog_appearances is seeded/partial.",
@@ -17949,66 +17898,83 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
-    "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
-    "tests_commit": "70979713d",
-    "proof": "/tmp/verify-audio-format-setting-ledger.json",
+    "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
+    "runtime_commit": "df6264867",
+    "tests_commit": "ef9bbe70c",
+    "proof": "/tmp/verify-custom-set-crud-ledger.json",
     "removed_credited_rows": [
-      "added:C_CombatAudioAlert.GetFormatSetting",
-      "added:C_CombatAudioAlert.SetFormatSetting"
+      "added:C_TransmogCollection.DeleteCustomSet",
+      "added:C_TransmogCollection.GetCustomSetInfo",
+      "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
+      "added:C_TransmogCollection.GetCustomSets",
+      "added:C_TransmogCollection.ModifyCustomSet",
+      "added:C_TransmogCollection.NewCustomSet",
+      "added:C_TransmogCollection.RenameCustomSet"
     ],
-    "prior_rows": 1110,
-    "rows": 1108,
-    "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
+    "prior_rows": 1108,
+    "rows": 1101,
     "previous_refresh": {
-      "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
-      "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
-      "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
-      "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
+      "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
+      "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
+      "tests_commit": "70979713d",
+      "proof": "/tmp/verify-audio-format-setting-ledger.json",
       "removed_credited_rows": [
-        "added:C_CombatAudioAlert.GetSpeakerVolume",
-        "added:C_CombatAudioAlert.SetSpeakerVolume"
+        "added:C_CombatAudioAlert.GetFormatSetting",
+        "added:C_CombatAudioAlert.SetFormatSetting"
       ],
-      "prior_rows": 1112,
-      "rows": 1110,
-      "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
+      "prior_rows": 1110,
+      "rows": 1108,
+      "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
       "previous_refresh": {
-        "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
-        "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
-        "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
-        "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
+        "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
+        "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
+        "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
+        "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
         "removed_credited_rows": [
-          "added:C_CombatAudioAlert.GetSpeakerSpeed",
-          "added:C_CombatAudioAlert.SetSpeakerSpeed"
+          "added:C_CombatAudioAlert.GetSpeakerVolume",
+          "added:C_CombatAudioAlert.SetSpeakerVolume"
         ],
-        "prior_rows": 1114,
-        "rows": 1112,
-        "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
+        "prior_rows": 1112,
+        "rows": 1110,
+        "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
         "previous_refresh": {
-          "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-          "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-          "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-          "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+          "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+          "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+          "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+          "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
           "removed_credited_rows": [
-            "added:C_CombatLog.GetMessageLimit"
+            "added:C_CombatAudioAlert.GetSpeakerSpeed",
+            "added:C_CombatAudioAlert.SetSpeakerSpeed"
           ],
-          "prior_rows": 1115,
-          "rows": 1114,
-          "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+          "prior_rows": 1114,
+          "rows": 1112,
+          "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
           "previous_refresh": {
-            "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-            "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-            "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+            "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+            "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+            "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+            "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
             "removed_credited_rows": [
-              "added:C_CombatLog.AreFilteredEventsEnabled",
-              "added:C_CombatLog.GetEntryRetentionTime",
-              "added:C_CombatLog.SetEntryRetentionTime",
-              "added:C_CombatLog.SetFilteredEventsEnabled"
+              "added:C_CombatLog.GetMessageLimit"
             ],
-            "prior_rows": 1119,
-            "rows": 1115,
-            "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-            "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+            "prior_rows": 1115,
+            "rows": 1114,
+            "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+            "previous_refresh": {
+              "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+              "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+              "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+              "removed_credited_rows": [
+                "added:C_CombatLog.AreFilteredEventsEnabled",
+                "added:C_CombatLog.GetEntryRetentionTime",
+                "added:C_CombatLog.SetEntryRetentionTime",
+                "added:C_CombatLog.SetFilteredEventsEnabled"
+              ],
+              "prior_rows": 1119,
+              "rows": 1115,
+              "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+              "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+            }
           }
         }
       }

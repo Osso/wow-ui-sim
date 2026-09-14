@@ -2,7 +2,7 @@
 
 Format-setting refresh: only Get/SetFormatSetting leave the prior 1,110-row snapshot. All 282 plans remain; 281 unchanged. Ordinary keyed state is independently proven 3/3 per target profile at `b36c27ce3`; final metadata proof at `19c423c5f` records 14,976 fresh hashes, zero stale, 43 renewals, 12 additions, validator exit 0 and 3,410 matching rows. Remaining audio plan retains spec/throttle, enable/speech and native/default/range/CVar/output/callback/consumer/security obligations. `/tmp/verify-audio-format-setting-metadata-ledger.json`.
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,108 remaining rows after two bounded format-setting credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,101 remaining rows after seven bounded custom-set CRUD credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Speaker-volume refresh
 
@@ -57,7 +57,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**All 1,108 remaining rows link to 282 plans** in the JSON: 950 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**All 1,101 remaining rows link to 282 plans** in the JSON: 943 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|
@@ -104,3 +104,7 @@ Historical verification at `8cae7bfdf` remains scoped to the prior 1,121-row/282
 - [[patch-12-0-0-api-audit]] — accumulated bounded implementation proof.
 - [[patch-12-0-5-api-audit]] — retained native-capture gaps.
 - [[patch-api-audit-manifest]] — manifest system and provenance.
+
+## Bounded custom-set CRUD refresh
+
+Seven historical CRUD methods receive bounded ordinary-state credit at runtime `df6264867`: concrete records, numeric IDs, ID/info/item retrieval, modify/rename/delete, copied input/output values, arity and record/environment isolation. Tests `ef9bbe70c` reached RED 0/4 (initial NewCustomSet returned nil); independent `/tmp/verify-custom-set-crud-ledger.json` records 4/4 each on retail 12.0.0/12.0.5/12.0.7 (12.0.0 exact-byte reuse), fmt/check/build/startup PASS. Readability length/local-Vec-loop findings remain a reviewed signal; main rejected mandatory `read_items` refactoring, not a clean-readability claim. Totals: **2333 / 1075 / 2**; snapshot **1,101 rows / 282 plans**. Six manifests inspected: 86 hash renewals, 35 evidence additions, exactly seven credits. Native/default/validation/error policies, limits, persistence, events, hyperlinks, slot semantics, consumers and security remain unproven. Parent metadata verification remains pending; no validator rerun. Eight Mists AccountStore failures remain unresolved. The `collection_custom_sets` plan remains non-executable and retains native validation/error/default/persistence/events/hyperlink/consumer obligations.

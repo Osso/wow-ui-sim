@@ -116,7 +116,7 @@ The bounded 12.0.0 `C_CombatLogSecure` slice classifies exactly nine added secur
 - **Source:** `data/patch-api/sources/12.0.0-register.json`
 - **Source SHA-256:** `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`
 - **Boundary:** retail 11.2.7 build 65299 → final explicit retail 12.0.0 build 65727
-- **Rows:** 3410 total — 0 implemented, 2326 best-effort, 1082 evidence-required, 2 exception-requested, 0 untriaged
+- **Rows:** 3410 total — 0 implemented, 2333 best-effort, 1075 evidence-required, 2 exception-requested, 0 untriaged
 - **Directions:** 2554 added, 313 changed, 543 removed
 - **Limit:** no historical 12.0.0 FrameXML tree or live SavedVariables capture is claimed.
 
@@ -716,18 +716,18 @@ Source occurrence objects preserve optional typed `before`/`after` JSON payloads
 | `C_Transmog.TransmogSlotVisualInfo.itemSubclass` | evidence-required | structure-field | added | Source-register names/signature transition only; current C_Transmog has no modeled slot-visual/pending/apply state or direct behavioral proof. |
 | `C_Transmog.TransmogSlotVisualInfo.pendingSourceID` | evidence-required | structure-field | added | Source-register names/signature transition only; current C_Transmog has no modeled slot-visual/pending/apply state or direct behavioral proof. |
 | `C_Transmog.TransmogSlotVisualInfo.pendingVisualID` | evidence-required | structure-field | added | Source-register names/signature transition only; current C_Transmog has no modeled slot-visual/pending/apply state or direct behavioral proof. |
-| `C_TransmogCollection.DeleteCustomSet` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
+| `C_TransmogCollection.DeleteCustomSet` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
 | `C_TransmogCollection.GetCustomSetHyperlinkFromItemTransmogInfoList` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.GetCustomSetInfo` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.GetCustomSetItemTransmogInfoList` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.GetCustomSets` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
+| `C_TransmogCollection.GetCustomSetInfo` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
+| `C_TransmogCollection.GetCustomSetItemTransmogInfoList` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
+| `C_TransmogCollection.GetCustomSets` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
 | `C_TransmogCollection.GetItemTransmogInfoListFromCustomSetHyperlink` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
 | `C_TransmogCollection.GetNumMaxCustomSets` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
 | `C_TransmogCollection.IsValidCustomSetName` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
 | `C_TransmogCollection.IsValidTransmogSource` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.ModifyCustomSet` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.NewCustomSet` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
-| `C_TransmogCollection.RenameCustomSet` | evidence-required | api | added | Current collection surface is seeded/partial; custom-set lifecycle, hyperlinks, validation, and changed appearance-source semantics remain unproven. |
+| `C_TransmogCollection.ModifyCustomSet` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
+| `C_TransmogCollection.NewCustomSet` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
+| `C_TransmogCollection.RenameCustomSet` | best-effort | api | added | Ordinary copied-value CRUD and isolation verified; native/default/error/validation/persistence/events/hyperlink/consumer gaps remain. |
 | `C_TransmogCollection.TransmogAppearanceSourceInfoData` | evidence-required | structure | added | Source records the structure name only; seeded collection state does not establish the exact 12.0.0 structure contract. |
 | `C_TransmogCollection.TransmogAppearanceSourceInfoData.canHaveIllusion` | evidence-required | structure-field | added | Source records the field name only; seeded collection state does not establish the exact 12.0.0 field semantics. |
 | `C_TransmogCollection.TransmogAppearanceSourceInfoData.category` | evidence-required | structure-field | added | Source records the field name only; seeded collection state does not establish the exact 12.0.0 field semantics. |
