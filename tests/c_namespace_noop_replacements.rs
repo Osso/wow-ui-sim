@@ -1073,3 +1073,92 @@ mod audio_speaker_speed_tests {
         assert_eq!(read_speed(&second), 4.0);
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod audio_speaker_volume_tests {
+    use super::{WowLuaEnv, env};
+
+    fn read_volume(env: &WowLuaEnv) -> f64 {
+        env.eval("return C_CombatAudioAlert.GetSpeakerVolume()")
+            .unwrap()
+    }
+
+    fn set_volume(env: &WowLuaEnv, volume: i64) {
+        let accepted: bool = env
+            .eval(&format!("return C_CombatAudioAlert.SetSpeakerVolume({volume})"))
+            .unwrap();
+        assert!(accepted, "simulator accepted-write policy requires true");
+    }
+
+    #[test]
+    fn audio_speaker_volume_explicit_and_repeated_writes() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, volume in ipairs({25, 75, 75, 25, 25, 75}) do
+                -- Accepted writes return true by simulator policy, not native change detection.
+                assert(C_CombatAudioAlert.SetSpeakerVolume(volume) == true,
+                    "simulator must accept explicit volume write " .. index)
+                assert(C_CombatAudioAlert.GetSpeakerVolume() == volume,
+                    "speaker volume differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_speaker_volume_arity_and_speed_independence() {
+        let env = env();
+        env.exec(
+            r#"
+            local function single_value(expectedType, ...)
+                assert(select('#', ...) == 1, "expected exactly one return value")
+                local value = ...
+                assert(type(value) == expectedType, "unexpected return type: " .. type(value))
+                return value
+            end
+            assert(C_CombatAudioAlert.SetSpeakerSpeed(1) == true)
+            local accepted = single_value("boolean", C_CombatAudioAlert.SetSpeakerVolume(25))
+            assert(accepted == true, "simulator accepted-write policy requires true")
+            assert(single_value("number", C_CombatAudioAlert.GetSpeakerVolume()) == 25)
+            assert(C_CombatAudioAlert.GetSpeakerSpeed() == 1,
+                "volume write changed speaker speed")
+
+            assert(C_CombatAudioAlert.SetSpeakerVolume(75) == true)
+            assert(single_value("number", C_CombatAudioAlert.GetSpeakerVolume()) == 75)
+            assert(C_CombatAudioAlert.GetSpeakerSpeed() == 1,
+                "second volume write changed speaker speed")
+
+            assert(C_CombatAudioAlert.SetSpeakerSpeed(2) == true)
+            assert(C_CombatAudioAlert.GetSpeakerSpeed() == 2)
+            assert(C_CombatAudioAlert.GetSpeakerVolume() == 75,
+                "speed write changed speaker volume")
+
+            assert(C_CombatAudioAlert.SetSpeakerVolume(25) == true)
+            assert(C_CombatAudioAlert.GetSpeakerVolume() == 25)
+            assert(C_CombatAudioAlert.GetSpeakerSpeed() == 2,
+                "volume write changed updated speaker speed")
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_speaker_volume_isolates_lua_environments() {
+        let first = env();
+        set_volume(&first, 20);
+        let second = env();
+        set_volume(&second, 40);
+        assert_eq!(read_volume(&first), 20.0);
+        assert_eq!(read_volume(&second), 40.0);
+
+        set_volume(&first, 60);
+        assert_eq!(read_volume(&first), 60.0);
+        assert_eq!(read_volume(&second), 40.0);
+
+        set_volume(&second, 80);
+        assert_eq!(read_volume(&first), 60.0);
+        assert_eq!(read_volume(&second), 80.0);
+    }
+}
