@@ -74,6 +74,113 @@ fn global_event_callback_lua_dispatch_lifecycle() {
     assert_lifecycle(fire_from_lua);
 }
 
+fn event_helper_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Event.lua environment");
+    let path = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("synced Blizzard cache")
+        .join("Blizzard_SharedXMLBase/Event.lua");
+    let source = std::fs::read_to_string(&path).expect("read actual pinned Event.lua");
+    env.exec(&source).expect("load actual pinned Event.lua");
+    env
+}
+
+fn assert_event_helper_lifecycle(fire: fn(&WowLuaEnv)) {
+    let env = event_helper_env();
+    env.exec(
+        r#"
+        calls = 0
+        handle = Event.RegisterCallback('CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', function(...)
+            calls = calls + 1
+            assert(select('#', ...) == 3, 'Event.lua strips exactly the nil owner')
+            local index, label, flag = ...
+            assert(index == 3 and label == 'raid' and flag == false)
+            collectgarbage('collect')
+        end)
+        assert(calls == 0, 'validation must not execute callback')
+        collectgarbage('collect')
+        "#,
+    )
+    .expect("register through actual Event.lua");
+    fire(&env);
+    assert_eq!(env.eval::<i64>("return calls").unwrap(), 1);
+    env.exec("handle:Unregister(); handle = nil; collectgarbage('collect')")
+        .unwrap();
+    fire(&env);
+    assert_eq!(env.eval::<i64>("return calls").unwrap(), 1);
+}
+
+#[test]
+fn global_event_callback_event_lua_rust_lifecycle() {
+    assert_event_helper_lifecycle(fire_from_rust);
+}
+
+#[test]
+fn global_event_callback_event_lua_synchronous_lifecycle() {
+    assert_event_helper_lifecycle(fire_from_lua);
+}
+
+#[test]
+fn global_event_callback_container_identity_cancellation_and_roots() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        calls = 0
+        local function callback(...)
+            calls = calls + 1
+            assert(select('#', ...) == 4)
+            local owner, index, label, flag = ...
+            assert(owner == nil and index == 3 and label == 'raid' and flag == false)
+            collectgarbage('collect')
+        end
+        container = C_FunctionContainers.CreateCallback(callback)
+        local other = C_FunctionContainers.CreateCallback(callback)
+        RegisterEventCallback('CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', container)
+        UnregisterEventCallback('CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', other)
+        assert(calls == 0, 'validation must not invoke a container')
+        collectgarbage('collect')
+        "#,
+    ).unwrap();
+    fire_from_rust(&env);
+    env.exec("assert(calls == 1); container:Cancel()").unwrap();
+    fire_from_lua(&env);
+    env.exec(
+        r#"
+        assert(calls == 1, 'cancelled container must not deliver')
+        UnregisterEventCallback('CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', container)
+        container._cancelled = false
+        "#,
+    ).unwrap();
+    fire_from_rust(&env);
+    env.exec(
+        r#"
+        assert(calls == 1, 'removal must preserve exact container identity')
+        RegisterEventCallback('CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', container)
+        container = nil
+        collectgarbage('collect')
+        "#,
+    ).unwrap();
+    fire_from_lua(&env);
+    assert_eq!(env.eval::<i64>("return calls").unwrap(), 2);
+}
+
+#[test]
+fn global_event_callback_rejects_unbranded_userdata_without_invoking() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local reads = 0
+        local fake = newproxy(true)
+        getmetatable(fake).__index = function()
+            reads = reads + 1
+            return function() error('must not execute') end
+        end
+        assert(not pcall(RegisterEventCallback, 'CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', fake))
+        assert(not pcall(UnregisterEventCallback, 'CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX', fake))
+        assert(reads == 0, 'validation must not duck-type userdata')
+        "#,
+    ).unwrap();
+}
+
 #[test]
 fn global_event_callback_return_arities() {
     let env = WowLuaEnv::new().expect("create callback environment");
