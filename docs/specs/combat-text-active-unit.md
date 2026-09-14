@@ -22,7 +22,7 @@ Initial `None` is simulator policy, not an established native default. Current p
 
 ## Tests asserting this spec
 
-Three `combat_text_active_unit_*` tests in `tests/c_namespace_noop_replacements.rs`, committed at `8113cc6bc`, reached RED 0/3. Existing generic methods were callable: getter returned nil after a write; setter returned nonzero values. Later assertions were blocked. Focused runtime proof is pending.
+Three `combat_text_active_unit_*` tests in `tests/c_namespace_noop_replacements.rs`, committed at `8113cc6bc`, reached RED 0/3: getter returned nil after a write and setter returned nonzero values, without establishing its exact arity. Runtime `375c71192` passes the focused retail 12.0.0 proof 3/3 in `/tmp/combat-text-active-unit-green-ledger.json`; independent verification is pending.
 
 ## Known gaps (current cycle)
 
