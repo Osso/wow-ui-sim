@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Pending historical aura-instance enumeration publication
+
+`33f7fdb39` exposed that `C_UnitAuras.GetUnitAuraInstanceIDs` was unavailable at retail 12.0.0 because the parent module had a `retail-12-1-0` publication gate. Runtime `ba31c6b94` corrects public historical publication only; later private/caster/enum boundaries remain gated. The historical ordinary filter/live-update/sort/limit tests pass 2/2. Independent verification remains pending; no audit credit or snapshot change.
+
 ## [2026-09-14] audit | Credit bounded global outfit-situations setting
 
 Two bounded credits cover explicit/repeated global boolean writes, one-boolean getter, zero-return setter and environment isolation. Runtime `457a8ae88`, tests `14ac47769`: independent 3/3 each on retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-outfit-situations-enabled-ledger.json`. Final metadata proof at `9c6404e68` records **15,051 fresh / zero stale**, 107 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Totals **2343 / 1065 / 2**; snapshot **1,091 rows / 282 plans**. Initial false is simulator policy; native defaults, pending/per-outfit behavior, reset, persistence, events, UI/consumer execution and security remain unproven. Broad audit and eight Mists failures remain open. [Spec](../specs/outfit-situations-enabled.md).
