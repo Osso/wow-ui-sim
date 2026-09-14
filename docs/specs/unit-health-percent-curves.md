@@ -9,7 +9,7 @@
 - [x] Reflect explicit player and target health updates on subsequent queries.
 - [x] Preserve omitted/nil-curve numeric results and one-result arity.
 - [x] Reject non-nil values that are not supported curve objects with the existing evaluator error.
-- [ ] Preserve earlier-profile behavior; curve evaluation starts at `retail-12-0-0`.
+- [x] Verify retail 12.0.0/12.0.5/12.0.7 behavior; curve evaluation starts at `retail-12-0-0`.
 
 The existing `health / healthMax * 100` scale is simulator policy for both ordinary results and curve input, not native-scale evidence. A zero maximum retains the existing zero result/input policy. `usePredicted` remains unmodeled and uses current health.
 
@@ -34,11 +34,11 @@ The existing `health / healthMax * 100` scale is simulator policy for both ordin
 - `unit_health_percent_uses_player_health_values`
 - `unit_health_percent_ignores_legacy_truthy_curve_argument` (earlier profiles only)
 
-Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-preservation pass. Invalid-curve test `b31004297` reached RED because invalid values were accepted. Runtime `92b4f8c4f` passes all five `unit_health_percent_` tests on retail 12.0.0 (exit 0; six existing warnings). Full outputs, command and exact source hashes: `/tmp/unit-health-percent-curves-green-ledger.json`. Earlier-profile behavior remains unverified.
+Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-preservation pass. Invalid-curve test `b31004297` reached RED because invalid values were accepted. Runtime `92b4f8c4f` passes all five `unit_health_percent_` tests on retail 12.0.0/12.0.5/12.0.7; 12.0.0 exact-byte proof was reused and later profiles were fresh. Independent fmt/check/build/startup proof passed; startup returned `[]`. Full proof: `/tmp/verify-unit-health-percent-curves-ledger.json`. Metadata proof `68ad13265`: 15,063 fresh hashes, zero stale, 59 renewals, seven additions, one credit, validator exit 0 and all 3,410 rows matching. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent historical-profile and earlier-profile verification.
+- [ ] Earlier-profile curve behavior remains unverified.
 - [ ] Native curve input scale and default/no-curve units remain unverified.
 
 ## Out of scope

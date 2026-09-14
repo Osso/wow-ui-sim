@@ -1,5 +1,9 @@
 # Patch API blocker inventory
 
+## UnitHealthPercent curve refresh
+
+One bounded best-effort credit covers supplied scalar/color curves, live player/target health, one-result arity, nil/omitted queries and invalid-curve rejection. Runtime `92b4f8c4f` passes 5/5 on retail 12.0.0/12.0.5/12.0.7; 12.0.0 exact-byte proof was reused and later profiles were fresh. Fmt/check/build/startup passed with startup `[]`. Final metadata proof `68ad13265`: **15,063 fresh / zero stale**, 59 renewals, seven additions, validator exit 0 and all 3,410 rows matching. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**. The `0..100` curve input is simulator policy, not native scale proof. Prediction, native scale, unknown units, security and full-LoD remain unproven; broad audit and eight Mists failures remain open.
+
 ## Historical aura-instance enumeration refresh
 
 One bounded credit covers `C_UnitAuras.GetUnitAuraInstanceIDs`: public ordinary filtering, live updates, sort rules and limits. Historical publication was corrected at `ba31c6b94`; private, caster and enum gates remain later-only. Final metadata proof at `e9f56b974` records **15,056 fresh / zero stale**, 59 renewals, five additions, validator exit 0 and all 3,410 rows matching. Totals **2344 / 1064 / 2**; snapshot **1,090 rows / 282 plans**. Native filter domains, ordering, defaults, identity, security and full-LoD behavior remain unproven. Broad audit and eight Mists failures remain open.
