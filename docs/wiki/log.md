@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Pending StripHyperlinks parser integration
+
+Committed parser `1463fce69`, API registration `50448633e`, and API tests `2094af7e2`. The standalone parser progressed RED 1/6 to GREEN 6/6; API tests are RED 0/5 because the previous API result was non-string. Scope is balanced well-formed markup and documented flags only. Integrated verification, metadata and credit remain pending; literal `|n` preservation, escaped/malformed markup and flag truthiness are simulator policies.
+
 ## [2026-09-14] audit | Credit bounded global event callback lifecycle
 
 Two credits cover ordinary plain-function and actual `Event.lua` container callback lifecycle: nil owner/payload, both dispatch paths, identity removal, arity and environment isolation. Independent proof passes 8/8 per retail 12.0.0/12.0.5/12.0.7 (12.0.0 reused), plus fmt/check/default build/startup `[]`; the original two startup errors are gone. Metadata `cf15e178e` proves 118 renewals, 28 additions, **15,098 fresh / zero stale**, six bindings and validator exit 0 / 3,410 matching rows. Totals **2348 / 1060 / 2**; snapshot **1,086 / 282**. Two function-length signals remain. Mutation/recursion/error recovery, native duplicate/order/validation/eligibility/security/full-LoD and unit variants remain unverified.
