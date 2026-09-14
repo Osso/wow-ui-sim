@@ -1,6 +1,6 @@
 ## [2026-09-14] audit | Pending global event callback lifecycle proof
 
-`5b04622da` adds an environment-local global registry and `462a1866c` wires ordinary callback dispatch without reusing frame callback storage. `2d43011c2` is RED 0/4; runtime proof, provenance and credits remain pending. Pinned `Event.lua` establishes the leading `nil` owner only; duplicate/order/validation/error, eligibility, global/frame ordering, unit variants, security and full-LoD behavior remain open. See [[patch-12-0-0-api-audit]] and [spec](../specs/global-event-callbacks.md).
+`5b04622da` adds an environment-local global registry and `462a1866c` wires ordinary dispatch without frame storage reuse. Actual cached `Event.lua` exposed rejected `C_FunctionContainers.CreateCallback` userdata: `55cec0a97` is RED 5/8; `2ff787d41` brands/dispatches containers through existing `Invoke(nil, ...payload)`. Development proof is GREEN 8/8 on retail 12.0.0; final verification, provenance and credits remain pending. Native duplicate/order/error/validation/eligibility/global-frame ordering, unit variants, security and full-LoD remain open. See [[patch-12-0-0-api-audit]] and [spec](../specs/global-event-callbacks.md).
 
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 

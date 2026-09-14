@@ -1,6 +1,6 @@
 ## [2026-09-14] audit | Record pending global event callback lifecycle
 
-Tests `2d43011c2` are RED 0/4 against inert global fallbacks. Module `5b04622da` and wiring `462a1866c` implement an environment-local ordinary global registry and dispatch it separately from frame callbacks. Pinned `Event.lua` supports the leading `nil` owner; duplicate/order/validation/error/eligibility/global-frame ordering are simulator policies or unverified. Verification, provenance and credits remain pending; unit variants, security and full-LoD remain open.
+Tests `2d43011c2` are RED 0/4 against inert global fallbacks. Module `5b04622da` and wiring `462a1866c` implement an environment-local ordinary global registry separately from frame callbacks. Cached `Event.lua` exposed container-userdata rejection: `55cec0a97` is RED 5/8; `2ff787d41` recognizes branded callback containers and dispatches existing `Invoke(nil, ...payload)`, GREEN 8/8. Final verification, provenance and credits remain pending. Duplicate/order/error/validation/eligibility/global-frame ordering remain simulator policy or unverified; unit variants, security and full-LoD remain open.
 
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 
