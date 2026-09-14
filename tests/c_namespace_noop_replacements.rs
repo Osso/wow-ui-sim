@@ -1611,3 +1611,97 @@ mod combat_text_active_unit_tests {
         );
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod transmog_sets_filter_tests {
+    use super::env;
+
+    #[test]
+    fn transmog_sets_filter_explicit_writes_preserve_other_keys() {
+        let env = env();
+        env.exec(
+            r#"
+            -- Consumer IDs: collected, uncollected, PVE, PVP.
+            local expected = {true, false, true, false}
+            for index = 1, 4 do
+                C_TransmogSets.SetSetsFilter(index, expected[index])
+            end
+            local function check_all()
+                for index = 1, 4 do
+                    local actual = C_TransmogSets.GetSetsFilter(index)
+                    assert(type(actual) == "boolean", "filter must be boolean: " .. index)
+                    assert(actual == expected[index], "filter value differs: " .. index)
+                end
+            end
+            check_all()
+            for index = 1, 4 do
+                for _, value in ipairs({false, true, true, false}) do
+                    C_TransmogSets.SetSetsFilter(index, value)
+                    expected[index] = value
+                    check_all()
+                end
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn transmog_sets_filter_return_types_and_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            local function zero(...)
+                assert(select('#', ...) == 0, "setter must return zero values")
+            end
+            local function one_boolean(expected, ...)
+                assert(select('#', ...) == 1, "getter must return exactly one value")
+                local actual = ...
+                assert(type(actual) == "boolean", "getter must return a boolean")
+                assert(actual == expected, "getter must return the explicit value")
+            end
+            for index = 1, 4 do
+                for _, value in ipairs({true, false}) do
+                    zero(C_TransmogSets.SetSetsFilter(index, value))
+                    one_boolean(value, C_TransmogSets.GetSetsFilter(index))
+                end
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn transmog_sets_filter_isolates_environments_bidirectionally() {
+        let first = env();
+        let second = env();
+        first
+            .exec("for i = 1, 4 do C_TransmogSets.SetSetsFilter(i, i % 2 == 1) end")
+            .unwrap();
+        second
+            .exec("for i = 1, 4 do C_TransmogSets.SetSetsFilter(i, i % 2 == 0) end")
+            .unwrap();
+        first
+            .exec("for i = 1, 4 do assert(C_TransmogSets.GetSetsFilter(i) == (i % 2 == 1)) end")
+            .unwrap();
+        second
+            .exec("for i = 1, 4 do assert(C_TransmogSets.GetSetsFilter(i) == (i % 2 == 0)) end")
+            .unwrap();
+
+        first
+            .exec("for i = 1, 4 do C_TransmogSets.SetSetsFilter(i, true) end")
+            .unwrap();
+        second
+            .exec("for i = 1, 4 do assert(C_TransmogSets.GetSetsFilter(i) == (i % 2 == 0)) end")
+            .unwrap();
+        second
+            .exec("for i = 1, 4 do C_TransmogSets.SetSetsFilter(i, false) end")
+            .unwrap();
+        first
+            .exec("for i = 1, 4 do assert(C_TransmogSets.GetSetsFilter(i) == true) end")
+            .unwrap();
+        second
+            .exec("for i = 1, 4 do assert(C_TransmogSets.GetSetsFilter(i) == false) end")
+            .unwrap();
+    }
+}
