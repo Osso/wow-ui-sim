@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Pending C_CombatAudioAlert speaker-speed state proof
+
+Tests `87adb4882` reached RED 0/3 at the wrong setter result value—not a missing API lookup. Runtime `df3137a23` adds per-environment finite numeric speaker-speed storage, initial `0` and accepted-write `true` as simulator policy. No credit or manifest update pending independent verification. CVar coupling, playback, native defaults/ranges/success, persistence and security remain open.
+
 ## [2026-09-14] audit | Credit bounded C_CombatLog stored settings
 
 Five existing-behavior tests initially passed at `7bd7f10ca`; no RED or runtime change. Follow-up `3d69ec6ea` has fresh independent **5/5 each** on retail 12.0.0/12.0.5/12.0.7, including distinct boolean/numeric isolation writes in both directions; fmt/readability pass and unchanged-runtime check/build/startup proof is reused by exact hashes. Metadata verification at `19eab5ef4` records 14,933 fresh hashes, zero stale, zero renewals, 16 additions, four credits and validator exit 0 with 3,410 matching rows. Totals: **2319 / 1089 / 2**. Earlier intentionally unattached fixture tests do not become native closure: filtering/matching, restrictions, pruning/bounds, defaults/native validation, events/lifecycle and consumers remain unproven. Proof: `/tmp/verify-combatlog-settings-isolation-ledger.json`; metadata: `/tmp/verify-combatlog-settings-metadata-ledger.json`. [Spec](../specs/combat-log-setting-state.md).
