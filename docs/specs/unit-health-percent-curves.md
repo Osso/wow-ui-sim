@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Evaluate a supplied scalar curve using current modeled health percentage; return exactly one numeric result.
-- [ ] Evaluate a supplied color curve using current modeled health percentage; return exactly one color result.
-- [ ] Reflect explicit player and target health updates on subsequent queries.
-- [ ] Preserve omitted/nil-curve numeric results and one-result arity.
-- [ ] Reject non-nil values that are not supported curve objects with the existing evaluator error.
+- [x] Evaluate a supplied scalar curve using current modeled health percentage; return exactly one numeric result.
+- [x] Evaluate a supplied color curve using current modeled health percentage; return exactly one color result.
+- [x] Reflect explicit player and target health updates on subsequent queries.
+- [x] Preserve omitted/nil-curve numeric results and one-result arity.
+- [x] Reject non-nil values that are not supported curve objects with the existing evaluator error.
 - [ ] Preserve earlier-profile behavior; curve evaluation starts at `retail-12-0-0`.
 
 The existing `health / healthMax * 100` scale is simulator policy for both ordinary results and curve input, not native-scale evidence. A zero maximum retains the existing zero result/input policy. `usePredicted` remains unmodeled and uses current health.
@@ -34,7 +34,7 @@ The existing `health / healthMax * 100` scale is simulator policy for both ordin
 - `unit_health_percent_uses_player_health_values`
 - `unit_health_percent_ignores_legacy_truthy_curve_argument` (earlier profiles only)
 
-Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-preservation pass. Invalid-curve test `b31004297` reached RED because invalid values were accepted. Requirements remain unchecked pending GREEN proof.
+Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-preservation pass. Invalid-curve test `b31004297` reached RED because invalid values were accepted. Runtime `92b4f8c4f` passes all five `unit_health_percent_` tests on retail 12.0.0 (exit 0; six existing warnings). Full outputs, command and exact source hashes: `/tmp/unit-health-percent-curves-green-ledger.json`. Earlier-profile behavior remains unverified.
 
 ## Known gaps (current cycle)
 
