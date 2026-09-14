@@ -5,7 +5,7 @@
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "10b33dfb09c1f96a1e05e45e8e5c4c4c62f20b12e67f2a0f0164a0723e06f478",
+      "sha256": "e96773b07af82bb47321c4cedeaeb2dbd8f3c5cafcc878cdd8eb631efaadc1d8",
       "rows": 1062
     },
     {
@@ -15286,7 +15286,7 @@
     "timeline-lifecycle": {
       "dependency": "Requires a populated timeline fixture and a controllable monotonic clock; AddScriptEvent must produce IDs consumed by state/time/cancel APIs.",
       "observations": [
-        "Obtain an authoritative custom-event fixture with observed IDs and duration; capture add→list/info/state→pause/resume→elapsed/remaining/timer→finish/cancel, capturing event-removal timing and invalid-ID behavior; do not infer from placeholder queries.",
+        "Obtain an authoritative custom-event fixture with observed IDs and duration; capture add\u2192list/info/state\u2192pause/resume\u2192elapsed/remaining/timer\u2192finish/cancel, capturing event-removal timing and invalid-ID behavior; do not infer from placeholder queries.",
         "Record GetCurrentTime at controlled clock observations; compare GetEventCountBySource and any/active/paused/blocked predicates before event creation, during active/paused/blocked states and after removal. Separately capture feature availability/enabled under an identified policy transition; do not infer flags from event count."
       ],
       "ready_to_execute": false,
