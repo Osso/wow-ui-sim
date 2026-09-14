@@ -26,7 +26,7 @@ The existing `current / max * 100` input is simulator policy, not native-scale e
 
 `tests/admin_health_power_api.rs`: `unit_power_percent_` tests cover scalar/color evaluation, primary/secondary updates, arity, nil/omitted queries and invalid curve rejection.
 
-Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Proof: `/tmp/unit-power-percent-curves-red-ledger.json`. Runtime verification pending.
+Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator; verification remains pending. Proof: `/tmp/unit-power-percent-curves-red-ledger.json`.
 
 ## Known gaps (current cycle)
 

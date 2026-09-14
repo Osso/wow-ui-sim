@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Record pending UnitPowerPercent curve verification
+
+Documented committed tests `eb495dbc7` and runtime `2ba41cda2`: two ordinary nil/omitted queries passed at RED while four supplied-curve cases failed; runtime now routes non-nil argument 4 through the existing evaluator. Runtime/profile proof remains pending. No credit, total, snapshot, manifest or generated-inventory change. The `0..100` input is simulator policy; native scale, `unmodified`, unknown units, security and full-LoD remain unverified. [Spec](../specs/unit-power-percent-curves.md); [[patch-12-0-0-api-audit]].
+
 ## [2026-09-14] audit | Credit bounded UnitHealthPercent curve evaluation
 
 `13bf5219f` produced RED 1/3 for supplied scalar/color curves; `b31004297` produced invalid-curve RED. Runtime `92b4f8c4f` evaluates supplied curves through the existing evaluator. Independent proof passes 5/5 on retail 12.0.0/12.0.5/12.0.7; 12.0.0 exact-byte proof was reused and later profiles were fresh. Fmt/check/build/startup passed with startup `[]`. Metadata proof `68ad13265`: **15,063 fresh / zero stale**, 59 renewals, seven additions, one credit, validator exit 0 and all 3,410 rows matching. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**. The `0..100` input is simulator policy, not native evidence. Prediction, native scale, unknown units, security, full-LoD, eight Mists failures and broad audit remain open. [Spec](../specs/unit-health-percent-curves.md); [[patch-12-0-0-api-audit]].
