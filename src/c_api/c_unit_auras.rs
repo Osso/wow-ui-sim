@@ -2,7 +2,9 @@
 
 use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
-use crate::lua_api::methods::{borrow_state, create_table, table_get, table_set, table_set_num};
+use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
+#[cfg(feature = "retail-12-1-0")]
+use crate::lua_api::methods::{table_get, table_set};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -13,7 +15,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let public = super::ensure_namespace(state, "C_UnitAuras")?;
     #[cfg(feature = "retail-12-1-5")]
     table_set_rust_fn_static(state, public, "GetAuraCasterGUID", get_aura_caster_guid)?;
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-1-5")))]
     {
         let removed = create_table(state);
         table_set(state, removed, "GetAuraCasterGUID", Val::Bool(true));
@@ -25,6 +27,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetUnitAuraInstanceIDs",
         get_unit_aura_instance_ids,
     )?;
+    #[cfg(feature = "retail-12-1-0")]
+    register_private_enumeration(state)?;
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn register_private_enumeration(state: &mut LuaState) -> LuaResult<()> {
     let private = super::ensure_namespace(state, "C_UnitAurasPrivate")?;
     table_set_rust_fn_static(
         state,
@@ -34,6 +43,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(feature = "retail-12-1-0")]
 pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
     let values = create_table(state);
     for (name, value) in [("Added", 0), ("ApplicationsIncreased", 1), ("Removed", 2)] {
@@ -169,6 +179,7 @@ fn is_other_player_source(sim: &SimState, aura: &AuraInfo) -> bool {
             .is_some_and(|target| target.is_player)
 }
 
+#[cfg(feature = "retail-12-1-0")]
 fn get_private_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let namespace = super::global_val(state, "C_UnitAurasPrivate");
@@ -196,6 +207,7 @@ fn get_private_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-1-0")]
 fn private_instance_id(state: &mut LuaState, aura: Val) -> LuaResult<i32> {
     match table_get(state, aura, "auraInstanceID") {
         Val::Num(id) => Ok(id as i32),
