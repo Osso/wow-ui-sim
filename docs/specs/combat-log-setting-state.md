@@ -17,6 +17,12 @@ Follow-up `3d69ec6ea` writes distinct settings in both environments: first `(tru
 
 Existing implementation: `src/lua_api/workarounds/temporary/combat_log_state.rs`. Stored settings are part of a temporary combat-log fixture, not a complete combat history model.
 
+## Message-limit query
+
+`GetMessageLimit()` is checked against existing `SetMessageLimit(number)` storage. Three grouped `combatlog_message_limit_*` tests at `bd76679e0` initially pass 3/3 on retail 12.0.0: explicit/repeated 41/42 writes, numeric one-result getter and zero-result setter, independence from filter/retention settings, and distinct 41/42 then 43/44 environment isolation. Existing settings-test bytes remain unchanged. Cross-profile verification is pending; no runtime change or manufactured RED.
+
+Prior SetMessageLimit event proof remains separate. These tests do not establish limits, pruning/enforcement or new event behavior.
+
 ## Gaps
 
 Filtering effects, pruning, clocks, defaults, invalid-input/coercion/error behavior, events, reset/persistence/lifecycle and native consumer behavior remain unproven. Restriction/secret/taint enforcement is deferred. No broader combat-log implementation or earlier-profile availability claim follows from setting-state tests.
