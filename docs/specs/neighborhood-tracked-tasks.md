@@ -22,11 +22,7 @@
 
 ## Tests asserting this spec
 
-`tests/c_namespace_noop_replacements.rs`: three `neighborhood_tracked_tasks_*` tests committed at `3abb84e1c` reached RED 0/3 on empty membership after additions. The first runtime attempt, `d6d48d1e5`, stopped at compiler error E0308 before tests ran; corrected runtime `27223f82a` reached focused 12.0.0 GREEN 3/3. Ledger: `/tmp/neighborhood-tracked-tasks-green-fixed-ledger.json`.
-
-## Known gaps (current cycle)
-
-- [ ] Independent verification beyond focused development GREEN (agent 18851 pending).
+`tests/c_namespace_noop_replacements.rs`: three `neighborhood_tracked_tasks_*` tests committed at `3abb84e1c` reached RED 0/3 on empty membership after additions. The first runtime attempt, `d6d48d1e5`, stopped at compiler error E0308 before tests ran; corrected runtime `27223f82a` reached focused 12.0.0 GREEN 3/3. Independent proof reuses exact 12.0.0 bytes and passes 3/3 fresh on 12.0.5 and 12.0.7, plus fmt/check/build/startup/readability. Runtime ledger: `/tmp/verify-neighborhood-tracked-tasks-ledger.json`. Metadata proof at `71209241a`: 15,027 fresh hashes, zero stale, 151 renewals, 16 additions, validator exit 0 and 3,410 matching rows. Ledger: `/tmp/verify-neighborhood-tracked-tasks-metadata-ledger.json`.
 
 ## Out of scope
 
