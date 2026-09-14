@@ -120,13 +120,29 @@ mod combatlog_settings_tests {
         assert_eq!(read_settings(&first), (false, 240));
         assert_eq!(read_settings(&second), (false, 240));
 
+        first
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(true); C_CombatLog.SetEntryRetentionTime(180)",
+            )
+            .unwrap();
+        assert_eq!(read_settings(&first), (true, 180));
+        assert_eq!(read_settings(&second), (false, 240));
+
         second
             .exec(
                 "C_CombatLog.SetFilteredEventsEnabled(true); C_CombatLog.SetEntryRetentionTime(120)",
             )
             .unwrap();
-        assert_eq!(read_settings(&first), (false, 240));
+        assert_eq!(read_settings(&first), (true, 180));
         assert_eq!(read_settings(&second), (true, 120));
+
+        second
+            .exec(
+                "C_CombatLog.SetFilteredEventsEnabled(false); C_CombatLog.SetEntryRetentionTime(60)",
+            )
+            .unwrap();
+        assert_eq!(read_settings(&first), (true, 180));
+        assert_eq!(read_settings(&second), (false, 60));
     }
 }
 
