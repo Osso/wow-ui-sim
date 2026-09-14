@@ -22,7 +22,7 @@ Simulator policy: storage starts empty, and an unset getter returns zero values,
 
 ## Tests asserting this spec
 
-Three `transmog_sets_filter_*` tests at `4fb364410` reached RED 0/3: after explicit writes, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes the focused retail 12.0.0 proof 3/3. Development ledger: `/tmp/transmog-sets-filter-development-ledger.json`; GREEN ledger: `/tmp/transmog-sets-filter-green-ledger.json`. Independent verification is pending.
+Three `transmog_sets_filter_*` tests at `4fb364410` reached RED 0/3: after explicit writes, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes 3/3 on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7, with fmt/check/build/startup/readability PASS. Development ledger: `/tmp/transmog-sets-filter-development-ledger.json`; runtime proof: `/tmp/verify-transmog-sets-filter-ledger.json`. Final metadata proof at `870511b28` records 15,043 fresh hashes, zero stale, 101 renewals, eight additions, two credits, validator exit 0 and all 3,410 rows matching: `/tmp/verify-transmog-sets-filter-metadata-ledger.json`.
 
 ## Known gaps (current cycle)
 

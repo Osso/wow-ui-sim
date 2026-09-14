@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending bounded transmog-set filter proof
+## [2026-09-14] audit | Credit bounded transmog-set filter state
 
-Tests `4fb364410` reached RED 0/3: after an explicit filter write, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes focused retail 12.0.0 **3/3** for explicit stored booleans at indices 1–4, replacement, arity and environment isolation. Independent verification is pending. Native defaults/reset behavior, filter effects, persistence, events, consumer execution and security remain unproven. No credit, totals, manifest, or blocker snapshot changes. [Spec](../specs/transmog-sets-filter-state.md).
+Tests `4fb364410` reached RED 0/3: after an explicit filter write, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes **3/3** on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7; fmt/check/build/startup/readability pass. Final metadata proof at `870511b28`: **15,043 fresh / zero stale**, 101 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Two credits cover explicit/repeated booleans at indices 1–4, getter-one/setter-zero arity and key/environment isolation. Totals **2341 / 1067 / 2**; snapshot **1,093 rows / 282 plans**. Default/reset APIs remain uncredited. Native unset/default/reset behavior, validation, filter effects, events, persistence, consumer execution and security remain unproven. Broad audit and eight Mists AccountStore failures remain open. [Spec](../specs/transmog-sets-filter-state.md).
 
 ## [2026-09-14] audit | Credit bounded CombatText active-unit selection
 
