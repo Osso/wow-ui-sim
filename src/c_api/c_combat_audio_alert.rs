@@ -9,7 +9,25 @@ use rilua::{LuaResult, Val};
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
     table_set_rust_fn_static(state, namespace, "GetSpeakerSpeed", get_speaker_speed)?;
-    table_set_rust_fn_static(state, namespace, "SetSpeakerSpeed", set_speaker_speed)
+    table_set_rust_fn_static(state, namespace, "SetSpeakerSpeed", set_speaker_speed)?;
+    table_set_rust_fn_static(state, namespace, "GetSpeakerVolume", get_speaker_volume)?;
+    table_set_rust_fn_static(state, namespace, "SetSpeakerVolume", set_speaker_volume)
+}
+
+fn get_speaker_volume(state: &mut LuaState) -> LuaResult<u32> {
+    let volume = borrow_state(state)?.combat_audio_speaker_volume;
+    state.push(Val::Num(volume));
+    Ok(1)
+}
+
+fn set_speaker_volume(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Num(volume) = stack_val(state, 1) else {
+        return Err(rilua::runtime_error("SetSpeakerVolume requires a number"));
+    };
+    borrow_state_mut(state)?.combat_audio_speaker_volume = volume;
+    // Accepted-write policy; native bounds and success semantics are unverified.
+    state.push(Val::Bool(true));
+    Ok(1)
 }
 
 fn get_speaker_speed(state: &mut LuaState) -> LuaResult<u32> {

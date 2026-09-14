@@ -131,6 +131,8 @@ pub struct SimState {
     pub(crate) unit_raid_target_icons: HashMap<String, u8>,
     /// Modeled setting only; not linked to CVar state or audio playback.
     pub combat_audio_speaker_speed: f64,
+    /// Independent setting only; not linked to CVar state or audio playback.
+    pub combat_audio_speaker_volume: f64,
     pub sound_manager: Option<SoundManager>,
     pub last_sound_kit_requested: Option<u32>,
     pub last_sound_file_requested: Option<String>,
