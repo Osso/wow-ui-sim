@@ -1528,3 +1528,86 @@ mod neighborhood_tracked_tasks_tests {
         first.exec("check_members({40, 100})").unwrap();
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod combat_text_active_unit_tests {
+    use super::env;
+
+    #[test]
+    fn combat_text_active_unit_explicit_and_repeated_writes() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, unit in ipairs({"player", "vehicle", "vehicle", "player", "player"}) do
+                C_CombatText.SetActiveUnit(unit)
+                local actual = C_CombatText.GetActiveUnit()
+                assert(type(actual) == "string", "getter must return a string after write " .. index)
+                assert(actual == unit, "active unit differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combat_text_active_unit_return_types_and_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            local function zero(...)
+                assert(select('#', ...) == 0, "setter must return zero values")
+            end
+            local function one_string(expected, ...)
+                assert(select('#', ...) == 1, "getter must return exactly one value")
+                local actual = ...
+                assert(type(actual) == "string", "getter must return a string after explicit write")
+                assert(actual == expected, "getter must return the explicitly written token")
+            end
+            zero(C_CombatText.SetActiveUnit("vehicle"))
+            one_string("vehicle", C_CombatText.GetActiveUnit())
+            zero(C_CombatText.SetActiveUnit("player"))
+            one_string("player", C_CombatText.GetActiveUnit())
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn combat_text_active_unit_isolates_environments_bidirectionally() {
+        let first = env();
+        let second = env();
+        first.exec("C_CombatText.SetActiveUnit('player')").unwrap();
+        second.exec("C_CombatText.SetActiveUnit('player')").unwrap();
+        first.exec("C_CombatText.SetActiveUnit('vehicle')").unwrap();
+        assert_eq!(
+            first
+                .eval::<String>("return C_CombatText.GetActiveUnit()")
+                .unwrap(),
+            "vehicle"
+        );
+        assert_eq!(
+            second
+                .eval::<String>("return C_CombatText.GetActiveUnit()")
+                .unwrap(),
+            "player"
+        );
+
+        second
+            .exec("C_CombatText.SetActiveUnit('vehicle')")
+            .unwrap();
+        first.exec("C_CombatText.SetActiveUnit('vehicle')").unwrap();
+        second.exec("C_CombatText.SetActiveUnit('player')").unwrap();
+        assert_eq!(
+            first
+                .eval::<String>("return C_CombatText.GetActiveUnit()")
+                .unwrap(),
+            "vehicle"
+        );
+        assert_eq!(
+            second
+                .eval::<String>("return C_CombatText.GetActiveUnit()")
+                .unwrap(),
+            "player"
+        );
+    }
+}
