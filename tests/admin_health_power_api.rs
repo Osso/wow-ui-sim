@@ -369,14 +369,133 @@ fn unit_power_percent_uses_current_over_max_power() {
     let (default_percent, updated_percent): (f64, f64) = env
         .eval(
             r#"
-            local defaultPercent = UnitPowerPercent("player", 0, true, 1)
+            local defaultPercent = UnitPowerPercent("player", 0, true, nil)
             A_Admin.SetPlayerPower(300, 1000, 0)
-            return defaultPercent, UnitPowerPercent("player", 0, true, 1)
+            return defaultPercent, UnitPowerPercent("player", 0, true, nil)
             "#,
         )
         .unwrap();
     assert_eq!(default_percent, 50.0);
     assert_eq!(updated_percent, 30.0);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_percent_supplied_scalar_curve_tracks_live_primary_power() {
+    env()
+        .exec(
+            r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'power percentage returns one result')
+            return ...
+        end
+        -- The 0..100 input scale is simulator policy, not native evidence.
+        local curve = C_CurveUtil.CreateCurve()
+        curve:AddPoint(0, 7)
+        curve:AddPoint(25, 80)
+        curve:AddPoint(100, 20)
+        A_Admin.SetPlayerPower(5000, 20000, 0)
+        assert(one_result(UnitPowerPercent('player', 0, false, curve)) == 80,
+            '25 percent must evaluate the supplied scalar curve to 80')
+        A_Admin.SetPlayerPower(12500, 20000, 0)
+        assert(one_result(UnitPowerPercent('player', nil, false, curve)) == 50,
+            '62.5 percent must interpolate the supplied scalar curve to 50')
+        A_Admin.SetPlayerPower(20000, 20000, 0)
+        assert(one_result(UnitPowerPercent('player', 0, false, curve)) == 20)
+    "#,
+        )
+        .expect("supplied scalar curve evaluates live primary power percentage");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_percent_supplied_color_curve_tracks_live_power() {
+    env()
+        .exec(
+            r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'power percentage returns one result')
+            return ...
+        end
+        -- The 0..100 input scale is simulator policy, not native evidence.
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0, CreateColor(1, 0, 0, 1))
+        curve:AddPoint(25, CreateColor(0, 1, 0.5, 0.5))
+        curve:AddPoint(100, CreateColor(1, 0, 1, 1))
+        A_Admin.SetPlayerPower(5000, 20000, 0)
+        local color = one_result(UnitPowerPercent('player', 0, false, curve))
+        assert(type(color) == 'table', 'supplied color curve must return a color')
+        assert(color.r == 0 and color.g == 1 and color.b == 0.5 and color.a == 0.5)
+        A_Admin.SetPlayerPower(12500, 20000, 0)
+        color = one_result(UnitPowerPercent('player', 0, false, curve))
+        assert(color.r == 0.5 and color.g == 0.5 and color.b == 0.75 and color.a == 0.75)
+    "#,
+        )
+        .expect("supplied color curve evaluates live power percentage");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_percent_supplied_curve_selects_secondary_player_power() {
+    env()
+        .exec(
+            r#"
+        -- The 0..100 input scale is simulator policy, not native evidence.
+        local curve = C_CurveUtil.CreateCurve()
+        curve:AddPoint(0, 100)
+        curve:AddPoint(100, 0)
+        A_Admin.SetPlayerPower(2500, 10000, 0)
+        A_Admin.SetPlayerPower(2, 5, 9)
+        assert(UnitPowerPercent('player', 9, false, curve) == 60,
+            'secondary 40 percent must evaluate to 60, not use primary power')
+        A_Admin.SetPlayerPower(4, 5, 9)
+        assert(UnitPowerPercent('player', 9, false, curve) == 20)
+        assert(UnitPowerPercent('player', 0, false, curve) == 75)
+        assert(UnitPower('player') == 2500 and UnitPowerMax('player') == 10000)
+        assert(UnitPower('player', 9) == 4 and UnitPowerMax('player', 9) == 5)
+        assert(UnitPowerType('player') == 0)
+        assert(select('#', UnitPowerPercent('player', 9, false, curve)) == 1)
+    "#,
+        )
+        .expect("supplied curve uses selected secondary pool without changing primary power");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_percent_supplied_nil_preserves_uncurved_queries() {
+    env()
+        .exec(
+            r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'power percentage returns one result')
+            return ...
+        end
+        A_Admin.SetPlayerPower(5000, 20000, 0)
+        assert(one_result(UnitPowerPercent('player')) == 25)
+        assert(one_result(UnitPowerPercent('player', 0, false, nil)) == 25)
+        A_Admin.SetPlayerPower(12500, 20000, 0)
+        assert(one_result(UnitPowerPercent('player')) == 62.5)
+        assert(one_result(UnitPowerPercent('player', 0, false, nil)) == 62.5)
+    "#,
+        )
+        .expect("nil and omitted curves preserve ordinary numeric power queries");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_power_percent_supplied_invalid_curves_are_rejected() {
+    env()
+        .exec(
+            r#"
+        A_Admin.SetPlayerPower(5000, 20000, 0)
+        for _, curve in ipairs({true, false, 17, {}}) do
+            local ok, message = pcall(UnitPowerPercent, 'player', 0, false, curve)
+            assert(not ok, 'invalid curve must fail')
+            assert(string.find(message, 'expected LuaCurveObjectBase', 1, true))
+        end
+    "#,
+        )
+        .expect("invalid supplied power curves are rejected");
 }
 
 #[test]
