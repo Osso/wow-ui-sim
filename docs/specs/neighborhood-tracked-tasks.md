@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Add and remove numeric task IDs with zero return values.
-- [ ] Return one fresh `{ trackedIDs = array }` table, independent of caller mutations.
-- [ ] Keep membership independent across environments and preserve other namespace providers.
+- [x] Add and remove numeric task IDs with zero return values.
+- [x] Return one fresh `{ trackedIDs = array }` table, independent of caller mutations.
+- [x] Keep membership independent across environments and preserve other namespace providers.
 - [ ] Start empty, ignore duplicate adds and unknown removals, and enumerate sorted IDs. These are simulator policies, not established native behavior.
 
 ## How it works
@@ -22,11 +22,11 @@
 
 ## Tests asserting this spec
 
-`tests/c_namespace_noop_replacements.rs`: three `neighborhood_tracked_tasks_*` tests committed at `3abb84e1c`; RED 0/3 on empty membership after additions. GREEN pending at implementation commit.
+`tests/c_namespace_noop_replacements.rs`: three `neighborhood_tracked_tasks_*` tests committed at `3abb84e1c` reached RED 0/3 on empty membership after additions. The first runtime attempt, `d6d48d1e5`, stopped at compiler error E0308 before tests ran; corrected runtime `27223f82a` reached focused 12.0.0 GREEN 3/3. Ledger: `/tmp/neighborhood-tracked-tasks-green-fixed-ledger.json`.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent verification beyond focused development GREEN.
+- [ ] Independent verification beyond focused development GREEN (agent 18851 pending).
 
 ## Out of scope
 
