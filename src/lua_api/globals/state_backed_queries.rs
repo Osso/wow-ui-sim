@@ -62,6 +62,8 @@ pub(crate) fn dispatch_event_now(
     event_name: &str,
     args: &[Val],
 ) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    super::real::event_callbacks::dispatch_event_callbacks(state, event_name, args)?;
     let listeners = get_event_listeners(state, event_name);
     for widget_id in listeners {
         dispatch_unit_event_callbacks(state, widget_id, event_name, args);

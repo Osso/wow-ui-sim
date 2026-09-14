@@ -85,6 +85,19 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::font_strings_collection::register_all(lua)?;
     super::utility_system_spell::register_all(lua)?;
     super::real::frame_level_helpers::register_all(lua)?;
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        LuaApiMut::register_function(
+            lua,
+            "RegisterEventCallback",
+            super::real::event_callbacks::register_event_callback,
+        )?;
+        LuaApiMut::register_function(
+            lua,
+            "UnregisterEventCallback",
+            super::real::event_callbacks::unregister_event_callback,
+        )?;
+    }
     #[cfg(feature = "retail-12-1-5")]
     super::real::math_extensions::register_all(lua)?;
     #[cfg(feature = "retail-12-1-5")]

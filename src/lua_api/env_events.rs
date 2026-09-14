@@ -230,6 +230,12 @@ impl WowLuaEnv {
 
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
+        #[cfg(feature = "retail-12-0-0")]
+        super::globals::real::event_callbacks::dispatch_event_callbacks(
+            self.lua.borrow_mut().state_mut(),
+            event,
+            args,
+        )?;
         let collect_started = Instant::now();
         let listeners = {
             let mut lua = self.lua.borrow_mut();

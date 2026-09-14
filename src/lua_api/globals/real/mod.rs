@@ -9,6 +9,8 @@ pub mod action_highlights;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod container_legacy;
+#[cfg(feature = "retail-12-0-0")]
+pub mod event_callbacks;
 pub mod frame_level_helpers;
 pub mod glyph_state;
 pub mod gossip_probes;

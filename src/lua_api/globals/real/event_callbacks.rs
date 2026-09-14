@@ -105,7 +105,7 @@ pub fn dispatch_event_callbacks(
     state: &mut LuaState,
     event: &str,
     payload: &[Val],
-) -> Result<(), Val> {
+) -> LuaResult<()> {
     let saved_top = state.top;
     // Root payload before any callbacks can allocate or trigger collection.
     for value in payload {
@@ -125,7 +125,13 @@ pub fn dispatch_event_callbacks(
                 return Ok(());
             }
             // Simulator policy: stop this dispatch at the first callback error.
-            protected_call_state(state, callback, &args)?;
+            protected_call_state(state, callback, &args).map_err(|error| {
+                runtime_error(format!(
+                    "global callback for {event}: {}",
+                    val_to_string(state, error)
+                        .unwrap_or_else(|| format!("{} error", error.type_name()))
+                ))
+            })?;
             index += 1;
         }
     })();
