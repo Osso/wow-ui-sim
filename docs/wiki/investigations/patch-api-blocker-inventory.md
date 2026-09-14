@@ -4,7 +4,7 @@ Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained Sta
 
 ## Speaker-volume refresh
 
-Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot. All 282 plans remain; 281 are unchanged. Remaining audio plans retain format/spec/throttle, enable-state and speech obligations, plus native/default/range/CVar/callback/persistence/playback gaps; neither speed nor volume storage proof establishes those effects. Runtime proof: `/tmp/verify-audio-speaker-volume-ledger.json`; metadata change ledger: `/tmp/audio-speaker-volume-metadata-development.json`. Independent metadata verification remains pending.
+Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot. All 282 plans remain; 281 are unchanged. Final metadata proof at `dcf344b01` records 14,964 fresh hashes, zero stale hashes, 31 renewals, 12 evidence additions, and validator exit 0 with all 3,410 rows matching. Remaining audio plans retain format/spec/throttle, enable-state and speech obligations, plus native/default/range/CVar/callback/persistence/playback gaps; neither speed nor volume storage proof establishes those effects. Runtime proof: `/tmp/verify-audio-speaker-volume-ledger.json`; metadata proof: `/tmp/verify-audio-speaker-volume-metadata-ledger.json`.
 
 ## Coverage
 
