@@ -2293,7 +2293,7 @@
 2293. [best-effort] `added:Region.SetAlphaFromBoolean` — behavioral
 2294. [best-effort] `added:Region.SetVertexColorFromBoolean` — behavioral
 2295. [best-effort] `added:RegisterEventCallback` — behavioral
-2296. [evidence-required] `added:RegisterUnitEventCallback` — unsafe
+2296. [best-effort] `added:RegisterUnitEventCallback` — behavioral
 2297. [evidence-required] `added:RegularReagentInfo.reagent` — unsafe
 2298. [evidence-required] `added:SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE` — unsafe
 2299. [evidence-required] `added:SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION` — unsafe
@@ -2387,7 +2387,7 @@
 2387. [evidence-required] `added:UnitSpellTargetName` — unsafe
 2388. [evidence-required] `added:UnitThreatLeadSituation` — unsafe
 2389. [best-effort] `added:UnregisterEventCallback` — behavioral
-2390. [evidence-required] `added:UnregisterUnitEventCallback` — unsafe
+2390. [best-effort] `added:UnregisterUnitEventCallback` — behavioral
 2391. [evidence-required] `added:VIEWED_TRANSMOG_OUTFIT_CHANGED` — unsafe
 2392. [evidence-required] `added:VIEWED_TRANSMOG_OUTFIT_SECONDARY_SLOTS_CHANGED` — unsafe
 2393. [evidence-required] `added:VIEWED_TRANSMOG_OUTFIT_SITUATIONS_CHANGED` — unsafe
