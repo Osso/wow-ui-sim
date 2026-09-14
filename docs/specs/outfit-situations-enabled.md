@@ -24,12 +24,11 @@ Existing lock functions and unrelated namespace defaults are unchanged.
 
 ## Tests asserting this spec
 
-`tests/c_namespace_noop_replacements.rs` contains three `outfit_situations_enabled_*` tests committed at `14ac47769`. RED was 0/3: getter had the wrong type after an explicit write and setter returned nonzero values; later repeated-write/arity/isolation assertions were blocked. Runtime `457a8ae88` reached focused retail 12.0.0 GREEN 3/3; `/tmp/outfit-situations-enabled-green-ledger.json` retains the command, outputs and exit 0.
+`tests/c_namespace_noop_replacements.rs` contains three `outfit_situations_enabled_*` tests committed at `14ac47769`. RED was 0/3: getter had the wrong type after an explicit write and setter returned nonzero values; later repeated-write/arity/isolation assertions were blocked. Runtime `457a8ae88` and `/tmp/verify-outfit-situations-enabled-ledger.json` prove 3/3 each on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7, plus fmt/check/build/startup/readability gates. Final metadata proof at `9c6404e68` records 15,051 fresh hashes, zero stale hashes, 107 renewals, eight additions, validator exit 0 and all 3,410 rows matching.
 
 ## Known gaps (current cycle)
 
-- [x] Focused development GREEN after the committed runtime change.
-- [ ] Independent profile and runtime verification, outside this implementation slice.
+- [x] Independent profile, runtime and metadata verification.
 
 ## Out of scope
 
