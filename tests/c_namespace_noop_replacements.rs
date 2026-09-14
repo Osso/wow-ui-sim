@@ -1001,3 +1001,75 @@ mod combatlog_message_limit_tests {
         assert_eq!(read_limit(&second), 44);
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod audio_speaker_speed_tests {
+    use super::{WowLuaEnv, env};
+
+    fn read_speed(env: &WowLuaEnv) -> f64 {
+        env.eval("return C_CombatAudioAlert.GetSpeakerSpeed()")
+            .unwrap()
+    }
+
+    fn set_speed(env: &WowLuaEnv, speed: i64) {
+        let accepted: bool = env
+            .eval(&format!("return C_CombatAudioAlert.SetSpeakerSpeed({speed})"))
+            .unwrap();
+        assert!(accepted, "simulator accepted-write policy requires true");
+    }
+
+    #[test]
+    fn audio_speaker_speed_explicit_and_repeated_writes() {
+        let env = env();
+        env.exec(
+            r#"
+            for index, speed in ipairs({1, 2, 2, 1, 1, 2}) do
+                -- Accepted writes return true by simulator policy, not native change detection.
+                assert(C_CombatAudioAlert.SetSpeakerSpeed(speed) == true,
+                    "simulator must accept explicit speed write " .. index)
+                assert(C_CombatAudioAlert.GetSpeakerSpeed() == speed,
+                    "speaker speed differs after write " .. index)
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_speaker_speed_return_types_and_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            local function single_value(expectedType, ...)
+                assert(select('#', ...) == 1, "expected exactly one return value")
+                local value = ...
+                assert(type(value) == expectedType, "unexpected return type")
+                return value
+            end
+            local accepted = single_value("boolean", C_CombatAudioAlert.SetSpeakerSpeed(2))
+            assert(accepted == true, "simulator accepted-write policy requires true")
+            local speed = single_value("number", C_CombatAudioAlert.GetSpeakerSpeed())
+            assert(speed == 2, "getter must return explicitly written speed")
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_speaker_speed_isolates_lua_environments() {
+        let first = env();
+        set_speed(&first, 1);
+        let second = env();
+        set_speed(&second, 2);
+        assert_eq!(read_speed(&first), 1.0);
+        assert_eq!(read_speed(&second), 2.0);
+
+        set_speed(&first, 3);
+        assert_eq!(read_speed(&first), 3.0);
+        assert_eq!(read_speed(&second), 2.0);
+
+        set_speed(&second, 4);
+        assert_eq!(read_speed(&first), 3.0);
+        assert_eq!(read_speed(&second), 4.0);
+    }
+}
