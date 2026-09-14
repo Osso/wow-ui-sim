@@ -1162,3 +1162,109 @@ mod audio_speaker_volume_tests {
         assert_eq!(read_volume(&second), 80.0);
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod audio_format_setting_tests {
+    use super::{WowLuaEnv, env};
+
+    fn write_pair(env: &WowLuaEnv, health: i64, cast: i64) {
+        env.exec(&format!(
+            "assert(C_CombatAudioAlert.SetFormatSetting(0, 0, {health}) == true, \
+             'health accepted-write policy requires true'); \
+             assert(C_CombatAudioAlert.SetFormatSetting(1, 1, {cast}) == true, \
+             'cast accepted-write policy requires true')"
+        ))
+        .unwrap();
+    }
+
+    fn read_pair(env: &WowLuaEnv) -> (f64, f64) {
+        env.eval(
+            "return C_CombatAudioAlert.GetFormatSetting(0, 0), \
+             C_CombatAudioAlert.GetFormatSetting(1, 1)",
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn audio_format_setting_distinct_keys_and_repeated_writes() {
+        let env = env();
+        env.exec(
+            r#"
+            local unit, alert = Enum.CombatAudioAlertUnit, Enum.CombatAudioAlertType
+            assert(unit.Player == 0 and unit.Target == 1)
+            assert(alert.Health == 0 and alert.Cast == 1)
+            local keys = {
+                {unit.Player, alert.Health}, {unit.Player, alert.Cast},
+                {unit.Target, alert.Health}, {unit.Target, alert.Cast},
+            }
+            local expected = {}
+            for index, key in ipairs(keys) do
+                assert(C_CombatAudioAlert.SetFormatSetting(key[1], key[2], index) == true,
+                    "simulator accepted-write policy requires true")
+                expected[index] = index
+            end
+            for _, write in ipairs({{1, 2}, {2, 3}, {3, 1}, {4, 2}, {1, 2}, {4, 2}}) do
+                local index, value = write[1], write[2]
+                local key = keys[index]
+                assert(C_CombatAudioAlert.SetFormatSetting(key[1], key[2], value) == true)
+                expected[index] = value
+                for other, otherKey in ipairs(keys) do
+                    assert(C_CombatAudioAlert.GetFormatSetting(otherKey[1], otherKey[2]) == expected[other],
+                        "format key changed unexpectedly: " .. other)
+                end
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_format_setting_arity_and_speaker_preservation() {
+        let env = env();
+        env.exec(
+            r#"
+            local function single_value(expectedType, ...)
+                assert(select('#', ...) == 1, "expected exactly one return value")
+                local value = ...
+                assert(type(value) == expectedType, "unexpected return type: " .. type(value))
+                return value
+            end
+            assert(C_CombatAudioAlert.SetSpeakerSpeed(1) == true)
+            assert(C_CombatAudioAlert.SetSpeakerVolume(25) == true)
+            for _, value in ipairs({1, 2, 2}) do
+                assert(single_value("boolean", C_CombatAudioAlert.SetFormatSetting(0, 1, value)) == true,
+                    "simulator accepted-write policy requires true")
+                assert(single_value("number", C_CombatAudioAlert.GetFormatSetting(0, 1)) == value)
+                assert(C_CombatAudioAlert.GetSpeakerSpeed() == 1)
+                assert(C_CombatAudioAlert.GetSpeakerVolume() == 25)
+            end
+            assert(C_CombatAudioAlert.SetSpeakerSpeed(2) == true)
+            assert(C_CombatAudioAlert.SetSpeakerVolume(75) == true)
+            assert(C_CombatAudioAlert.GetFormatSetting(0, 1) == 2)
+            assert(C_CombatAudioAlert.SetFormatSetting(0, 1, 3) == true)
+            assert(C_CombatAudioAlert.GetFormatSetting(0, 1) == 3)
+            assert(C_CombatAudioAlert.GetSpeakerSpeed() == 2)
+            assert(C_CombatAudioAlert.GetSpeakerVolume() == 75)
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn audio_format_setting_isolates_lua_environments_bidirectionally() {
+        let first = env();
+        write_pair(&first, 1, 2);
+        let second = env();
+        write_pair(&second, 3, 4);
+        assert_eq!(read_pair(&first), (1.0, 2.0));
+        assert_eq!(read_pair(&second), (3.0, 4.0));
+
+        write_pair(&first, 2, 1);
+        assert_eq!(read_pair(&first), (2.0, 1.0));
+        assert_eq!(read_pair(&second), (3.0, 4.0));
+
+        write_pair(&second, 4, 3);
+        assert_eq!(read_pair(&first), (2.0, 1.0));
+        assert_eq!(read_pair(&second), (4.0, 3.0));
+    }
+}
