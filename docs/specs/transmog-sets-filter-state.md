@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Retain explicit boolean writes for ordinary filter indices 1–4 independently, including repeated replacement.
-- [ ] Return one boolean for a stored filter and zero values from the setter.
-- [ ] Keep distinct environments independent in both directions.
+- [x] Retain explicit boolean writes for ordinary filter indices 1–4 independently, including repeated replacement.
+- [x] Return one boolean for a stored filter and zero values from the setter.
+- [x] Keep distinct environments independent in both directions.
 
 Simulator policy: storage starts empty, and an unset getter returns zero values, consistent with the pinned may-return-nothing contract but not proof of native defaults. Numeric indices and strict boolean values are required. Native coercion, bounds and validation remain unproven; proof is restricted to explicitly written indices 1–4.
 
@@ -22,7 +22,7 @@ Simulator policy: storage starts empty, and an unset getter returns zero values,
 
 ## Tests asserting this spec
 
-Three `transmog_sets_filter_*` tests in `tests/c_namespace_noop_replacements.rs` at `4fb364410` reached RED 0/3: getter returned a non-boolean after explicit writes and setter returned nonzero values. Later replacement, arity and isolation assertions were blocked. Development ledger: `/tmp/transmog-sets-filter-development-ledger.json`. Runtime proof is pending.
+Three `transmog_sets_filter_*` tests at `4fb364410` reached RED 0/3: after explicit writes, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes the focused retail 12.0.0 proof 3/3. Development ledger: `/tmp/transmog-sets-filter-development-ledger.json`; GREEN ledger: `/tmp/transmog-sets-filter-green-ledger.json`. Independent verification is pending.
 
 ## Known gaps (current cycle)
 
