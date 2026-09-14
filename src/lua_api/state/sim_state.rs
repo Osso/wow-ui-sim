@@ -104,6 +104,8 @@ pub struct SimState {
     pub account_wide_reputation_factions: HashSet<i64>,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
     pub transmog_outfit_locks: HashSet<i64>,
+    /// Global setting only; no per-outfit or pending-situation behavior.
+    pub outfit_situations_enabled: bool,
     /// Explicit filter values only; native defaults and set filtering are unmodeled.
     pub transmog_set_filters: HashMap<i32, bool>,
     #[cfg(feature = "retail-12-0-0")]
