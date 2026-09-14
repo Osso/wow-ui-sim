@@ -149,6 +149,7 @@ macro_rules! build_empty_sim_state {
             last_sound_file_requested: $runtime.last_sound_file_requested,
             last_stopped_sound_handle: $runtime.last_stopped_sound_handle,
             combat_audio_speaker_speed: 0.0,
+            combat_text_active_unit: None,
             combat_audio_speaker_volume: 100.0,
             combat_audio_format_settings: HashMap::new(),
             neighborhood_tracked_tasks: BTreeSet::new(),

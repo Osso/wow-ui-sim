@@ -27,6 +27,8 @@ pub mod c_chat_bubbles;
 pub mod c_chromie_time;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_audio_alert;
+#[cfg(feature = "retail-12-0-0")]
+mod c_combat_text;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
