@@ -1,5 +1,9 @@
 # Patch API blocker inventory
 
+## Historical aura-instance enumeration refresh
+
+One bounded credit covers `C_UnitAuras.GetUnitAuraInstanceIDs`: public ordinary filtering, live updates, sort rules and limits. Historical publication was corrected at `ba31c6b94`; private, caster and enum gates remain later-only. Final metadata proof at `e9f56b974` records **15,056 fresh / zero stale**, 59 renewals, five additions, validator exit 0 and all 3,410 rows matching. Totals **2344 / 1064 / 2**; snapshot **1,090 rows / 282 plans**. Native filter domains, ordering, defaults, identity, security and full-LoD behavior remain unproven. Broad audit and eight Mists failures remain open.
+
 ## Global outfit-situations setting refresh
 
 Two bounded credits cover explicit/repeated global boolean writes, one-boolean getter, zero-return setter and environment isolation. Runtime `457a8ae88`, tests `14ac47769`: independent 3/3 each on retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-outfit-situations-enabled-ledger.json`. Final metadata proof at `9c6404e68` records **15,051 fresh / zero stale**, 107 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Totals **2343 / 1065 / 2**; snapshot **1,091 rows / 282 plans**. Initial false is simulator policy; native defaults, pending/per-outfit behavior, reset, persistence, events, UI/consumer execution and security remain unproven. Broad audit and eight Mists failures remain open.
@@ -14,7 +18,7 @@ Four bounded credits cover Add/Remove/GetTrackedInitiativeTasks and InitiativeTa
 
 Format-setting refresh: only Get/SetFormatSetting leave the prior 1,110-row snapshot. All 282 plans remain; 281 unchanged. Ordinary keyed state is independently proven 3/3 per target profile at `b36c27ce3`; final metadata proof at `19c423c5f` records 14,976 fresh hashes, zero stale, 43 renewals, 12 additions, validator exit 0 and 3,410 matching rows. Remaining audio plan retains spec/throttle, enable/speech and native/default/range/CVar/output/callback/consumer/security obligations. `/tmp/verify-audio-format-setting-metadata-ledger.json`.
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,091 remaining rows after two bounded global outfit-situations credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log, speaker-speed/volume and historical public-aura credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,090 remaining rows after one bounded historical public-aura credit.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Speaker-volume refresh
 
@@ -24,14 +28,14 @@ Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,071 |
+| 12.0.0 | 1,070 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2337 best-effort / 1071 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2344 best-effort / 1064 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 
