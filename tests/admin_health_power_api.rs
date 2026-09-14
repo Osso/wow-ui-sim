@@ -474,3 +474,83 @@ fn test_set_target_health_default_before_set() {
     // Default health for new target is 100_000
     assert_eq!(hp, 100_000);
 }
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_percent_supplied_scalar_curve_tracks_live_health() {
+    let env = env();
+    env.exec(
+        r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'health percentage returns one result')
+            return ...
+        end
+        -- The 0..100 input scale is simulator policy, not native evidence.
+        local curve = C_CurveUtil.CreateCurve()
+        curve:AddPoint(0, 7)
+        curve:AddPoint(25, 80)
+        curve:AddPoint(100, 20)
+        A_Admin.SetPlayerHealth(5000, 20000)
+        assert(one_result(UnitHealthPercent('player', false, curve)) == 80,
+            '25 percent must evaluate the supplied scalar curve to 80')
+        A_Admin.SetPlayerHealth(12500, 20000)
+        assert(one_result(UnitHealthPercent('player', false, curve)) == 50,
+            '62.5 percent must interpolate the supplied scalar curve to 50')
+        A_Admin.SetPlayerHealth(20000, 20000)
+        assert(one_result(UnitHealthPercent('player', false, curve)) == 20)
+        "#,
+    )
+    .expect("supplied scalar curve evaluates current modeled health percentage");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_percent_supplied_color_curve_tracks_live_target_health() {
+    let env = env();
+    env.exec(
+        r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'health percentage returns one result')
+            return ...
+        end
+        -- The 0..100 input scale is simulator policy, not native evidence.
+        local curve = C_CurveUtil.CreateColorCurve()
+        curve:AddPoint(0, CreateColor(1, 0, 0, 1))
+        curve:AddPoint(25, CreateColor(0, 1, 0.5, 0.5))
+        curve:AddPoint(100, CreateColor(1, 0, 1, 1))
+        A_Admin.SetTarget('Boss', 63, 1, true)
+        A_Admin.SetTargetHealth(5000, 20000)
+        local color = one_result(UnitHealthPercent('target', false, curve))
+        assert(type(color) == 'table', 'supplied color curve must return a color')
+        assert(color.r == 0 and color.g == 1 and color.b == 0.5 and color.a == 0.5)
+        A_Admin.SetTargetHealth(12500, 20000)
+        color = one_result(UnitHealthPercent('target', false, curve))
+        assert(color.r == 0.5 and color.g == 0.5 and color.b == 0.75 and color.a == 0.75)
+        A_Admin.SetTargetHealth(20000, 20000)
+        color = one_result(UnitHealthPercent('target', false, curve))
+        assert(color.r == 1 and color.g == 0 and color.b == 1 and color.a == 1)
+        "#,
+    )
+    .expect("supplied color curve evaluates current modeled target health percentage");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_percent_supplied_nil_preserves_uncurved_queries() {
+    let env = env();
+    env.exec(
+        r#"
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'health percentage returns one result')
+            return ...
+        end
+        A_Admin.SetPlayerHealth(5000, 20000)
+        assert(one_result(UnitHealthPercent('player')) == 25)
+        assert(one_result(UnitHealthPercent('player', false, nil)) == 25)
+        A_Admin.SetPlayerHealth(12500, 20000)
+        assert(one_result(UnitHealthPercent('player')) == 62.5)
+        assert(one_result(UnitHealthPercent('player', false, nil)) == 62.5)
+        "#,
+    )
+    .expect("nil and omitted curves preserve ordinary numeric queries");
+}
