@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Record pending UnitPowerPercent curve verification
+## [2026-09-14] audit | Verify bounded UnitPowerPercent curve evaluation
 
-Tests `eb495dbc7` reached RED: two ordinary nil/omitted queries passed and four supplied-curve cases failed. Runtime `2ba41cda2` now routes non-nil argument 4 through the existing curve evaluator. Verification is pending; no credit, totals, snapshot, manifest or generated-inventory update is claimed. The `0..100` power input is simulator policy, not native-scale evidence. `unmodified`, native scale, unknown units, security and full-LoD remain unverified. [Spec](../../specs/unit-power-percent-curves.md); [RED ledger](/tmp/unit-power-percent-curves-red-ledger.json).
+Tests `eb495dbc7` reached RED: two ordinary nil/omitted queries passed and four supplied-curve cases failed. Runtime `2ba41cda2` routes non-nil argument 4 through the existing evaluator. Independent proof `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata commit `f846069c9` provisionally claims 64 renewals, seven additions, one best-effort credit, totals **2346 / 1062 / 2**, and snapshot **1088 / 282**; metadata verification remains pending. The `0..100` power input is simulator policy, not native-scale evidence. `unmodified`, native validation/coercion, zero-max/defaults, unknown units, security and full-LoD remain unverified. [Spec](../../specs/unit-power-percent-curves.md); [runtime proof](/tmp/verify-unit-power-percent-curves-ledger.json).
 
 ## [2026-09-14] audit | Credit bounded UnitHealthPercent curve evaluation
 

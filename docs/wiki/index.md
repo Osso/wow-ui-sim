@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Record pending UnitPowerPercent curve verification
+## [2026-09-14] audit | Verify bounded UnitPowerPercent curve evaluation
 
-Tests `eb495dbc7` exposed four supplied-curve failures while two ordinary nil/omitted queries passed. Runtime `2ba41cda2` routes non-nil argument 4 through the existing evaluator. Runtime/profile proof is pending: no credit, totals, snapshot, manifest or generated-inventory claim changes. The current `0..100` curve input is simulator policy, not native evidence; `unmodified`, native scale, unknown units, security and full-LoD remain unverified. See [[patch-12-0-0-api-audit]] and [spec](../specs/unit-power-percent-curves.md).
+One bounded ordinary-power slice covers supplied scalar/color curves, live primary and selected secondary power, one-result arity, nil/omitted queries and invalid-curve rejection. Runtime `2ba41cda2` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-unit-power-percent-curves-ledger.json`; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata commit `f846069c9` provisionally claims 64 renewals, seven additions, one credit, totals **2346 / 1062 / 2**, and snapshot **1088 / 282**; metadata verification remains pending. The `0..100` curve input is simulator policy, not native scale evidence. `unmodified`, native validation/zero-max/defaults, unknown units, security/full-LoD, eight Mists failures and broad audit remain open. See [[patch-12-0-0-api-audit]] and [spec](../specs/unit-power-percent-curves.md).
 
 ## [2026-09-14] audit | Credit bounded UnitHealthPercent curve evaluation
 

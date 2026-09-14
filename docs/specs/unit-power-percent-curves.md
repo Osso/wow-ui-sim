@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Evaluate argument 4 using current modeled power percentage and return exactly one scalar/color result.
-- [ ] Reflect live primary power updates and explicit secondary player power selection.
-- [ ] Preserve omitted/nil-curve numeric behavior and one-result arity.
-- [ ] Reject unsupported non-nil curve values through the existing evaluator.
-- [ ] Verify retail 12.0.0/12.0.5/12.0.7 behavior.
+- [x] Evaluate argument 4 using current modeled power percentage and return exactly one scalar/color result.
+- [x] Reflect live primary power updates and explicit secondary player power selection.
+- [x] Preserve omitted/nil-curve numeric behavior and one-result arity.
+- [x] Reject unsupported non-nil curve values through the existing evaluator.
+- [x] Verify retail 12.0.0/12.0.5/12.0.7 behavior.
 
 The existing `current / max * 100` input is simulator policy, not native-scale evidence. Zero maximum retains existing zero input/result policy. `unmodified` remains unmodeled. Earlier profiles retain existing behavior; their curve semantics remain unverified.
 
@@ -26,11 +26,11 @@ The existing `current / max * 100` input is simulator policy, not native-scale e
 
 `tests/admin_health_power_api.rs`: `unit_power_percent_` tests cover scalar/color evaluation, primary/secondary updates, arity, nil/omitted queries and invalid curve rejection.
 
-Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator; verification remains pending. Proof: `/tmp/unit-power-percent-curves-red-ledger.json`.
+Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator. Independent proof `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata commit `f846069c9` provisionally claims 64 renewals, seven additions, one credit, totals **2346 / 1062 / 2**, and snapshot **1088 / 282**; metadata verification remains pending.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent runtime/profile verification and bounded audit provenance.
+- [ ] Independently verify metadata/provenance claim in `f846069c9`.
 
 ## Out of scope
 

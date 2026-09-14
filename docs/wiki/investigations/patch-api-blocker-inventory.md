@@ -1,8 +1,8 @@
 # Patch API blocker inventory
 
-## UnitPowerPercent curve verification pending
+## UnitPowerPercent curve refresh
 
-Tests `eb495dbc7` reached RED with two ordinary nil/omitted queries passing and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 with the existing evaluator. Runtime/profile proof is pending, so this is not credited and does not change totals, snapshot, manifests or generated inventory. The current `0..100` input is simulator policy; `unmodified`, native scale, unknown units, security and full-LoD remain unverified. [Spec](../../specs/unit-power-percent-curves.md); [[patch-12-0-0-api-audit]].
+Tests `eb495dbc7` reached RED with two ordinary nil/omitted queries passing and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 with the existing evaluator. Independent proof `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata commit `f846069c9` provisionally claims 64 renewals, seven additions, one credit, totals **2346 / 1062 / 2**, and snapshot **1088 / 282**; metadata verification remains pending. The current `0..100` input is simulator policy; `unmodified`, native scale/validation, zero-max/defaults, unknown units, security and full-LoD remain unverified. [Spec](../../specs/unit-power-percent-curves.md); [[patch-12-0-0-api-audit]].
 
 ## UnitHealthPercent curve refresh
 
