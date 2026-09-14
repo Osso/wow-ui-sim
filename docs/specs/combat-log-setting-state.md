@@ -19,7 +19,7 @@ Existing implementation: `src/lua_api/workarounds/temporary/combat_log_state.rs`
 
 ## Message-limit query
 
-`GetMessageLimit()` is checked against existing `SetMessageLimit(number)` storage. Three grouped `combatlog_message_limit_*` tests at `bd76679e0` initially pass 3/3 on retail 12.0.0: explicit/repeated 41/42 writes, numeric one-result getter and zero-result setter, independence from filter/retention settings, and distinct 41/42 then 43/44 environment isolation. Existing settings-test bytes remain unchanged. Cross-profile verification is pending; no runtime change or manufactured RED.
+`GetMessageLimit()` is checked against existing `SetMessageLimit(number)` storage. Three grouped `combatlog_message_limit_*` tests at `bd76679e0` initially pass 3/3 on retail 12.0.0: explicit/repeated 41/42 writes, numeric one-result getter and zero-result setter, independence from filter/retention settings, and distinct 41/42 then 43/44 environment isolation. Existing settings-test bytes remain unchanged. Independent `/tmp/verify-combatlog-message-limit-ledger.json` at `b91e21c62` records 12.0.0 3/3 exact-hash reuse and fresh 12.0.5/12.0.7 3/3 each, fmt/readability PASS and unchanged-runtime gate reuse. Exactly one GetMessageLimit storage/query row receives bounded credit; no runtime change or manufactured RED.
 
 Prior SetMessageLimit event proof remains separate. These tests do not establish limits, pruning/enforcement or new event behavior.
 

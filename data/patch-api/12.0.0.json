@@ -5841,25 +5841,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -5965,25 +5965,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6003,8 +6003,8 @@
       "id": "added:C_CombatLog.GetMessageLimit",
       "symbol": "C_CombatLog.GetMessageLimit",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -6018,15 +6018,37 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/combat_log_state.rs",
           "source_hash": "da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8",
-          "summary": "Current temporary combat-log state is shared with C_CombatLogSecure and fixture-backed/permissive: ApplyFilterSettings and RefilterEntries are no-ops, while filter matching, restriction, retention/message-limit bounds, clearing, and entry lifecycle are not modeled authoritatively."
+          "summary": "Existing temporary Lua state stores the message limit queried by GetMessageLimit; focused proof covers storage/query only. Runtime is unchanged, and the separately credited setter/event proof is not extended."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
+          "summary": "Explicit 41/42 and repeated writes; GetMessageLimit returns exactly one number with the stored value. Setter zero returns are a control, not new setter/event credit."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
+          "summary": "Message-limit writes preserve filter/retention settings and changes to those settings preserve the queried message limit."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
+          "summary": "Distinct 41/42 then 43/44 writes remain isolated between two live Lua environments in both directions."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
+        "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
+        "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row."
+      "notes": "Bounded best-effort GetMessageLimit storage/query proof only: explicit/repeated numeric writes, exactly one numeric getter result, independence from filter/retention settings and distinct two-environment isolation. Existing-runtime tests bd76679e0 initially passed 3/3 without RED or runtime changes; independent b91e21c62 proof reuses 12.0.0 3/3 and records fresh 12.0.5/12.0.7 3/3 each, fmt/readability and unchanged-runtime gate reuse. The pre-existing settings-test prefix and SetMessageLimit event credit are unchanged. Bounds, enforcement/pruning, defaults, coercion/errors, events/lifecycle, consumers, earlier profiles and native conformance remain unproven."
     },
     {
       "id": "added:C_CombatLog.IsCombatLogRestricted",
@@ -6118,25 +6140,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6176,25 +6198,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "source_hash": "61b51f8acee7260d496f993ed36bdfd9441588f7151df35c054d671dbebd7ee3",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],

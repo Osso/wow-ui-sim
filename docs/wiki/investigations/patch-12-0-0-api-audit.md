@@ -194,9 +194,9 @@ Historical integration passed 50 original tests plus four explicitly renamed cur
 
 Still stale: **538 references**—536 evidence-required references and two legacy compatibility references. The legacy test passed on PTR only, so its historical claims are not renewed here. Historical integration emitted 529 Lua-error headers (74 distinct including wrapper forms); passing assertions are not a clean-loader claim. Whole-manifest validation remains blocked by the retained stale references; this renewal does not close the audit.
 
-## [2026-09-14] audit | Pending combat-log message-limit query proof
+## [2026-09-14] audit | Credit bounded combat-log message-limit query
 
-`bd76679e0` adds three existing-runtime tests for `C_CombatLog.GetMessageLimit` and `SetMessageLimit`: explicit/repeated numeric storage, getter-one/setter-zero arity, independence from filter/retention settings, and distinct two-environment writes. Initial retail 12.0.0 PASS is 3/3. Prior `SetMessageLimit` event dispatch proof remains separate. No runtime change or credit yet; message-limit bounds/enforcement/pruning, filtering, defaults, native behavior, lifecycle/events beyond prior proof, and security remain unproven pending independent cross-profile verification. See [spec](../../specs/combat-log-setting-state.md).
+One GetMessageLimit storage/query credit uses existing-runtime tests `bd76679e0`: explicit/repeated 41/42 writes, getter-one numeric/setter-zero arity, filter/retention independence and distinct 43/44 environment writes. Independent proof at `b91e21c62` reuses 12.0.0 **3/3** and records fresh 12.0.5/12.0.7 **3/3 each**, fmt/readability PASS and unchanged-runtime gates. Existing settings-test prefix and SetMessageLimit event credit remain unchanged; no RED or runtime change. Metadata renews 16 existing test-file references, adds three file::leaf references, and changes totals to **2320 / 1088 / 2**. Snapshot: **1,114 rows / 282 plans**. Bounds, pruning/enforcement, defaults, validation, events/lifecycle, native/consumer and security gaps remain open. Proof: `/tmp/verify-combatlog-message-limit-ledger.json`; metadata: `/tmp/combatlog-message-limit-metadata-ledger.json`.
 
 ## [2026-08-13] investigation | Resolve retail 12.0.0 EventScheduler display-info slice
 

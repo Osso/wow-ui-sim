@@ -165,7 +165,7 @@
 165. [best-effort] `added:C_CombatLog.ClearEntries` — behavioral
 166. [evidence-required] `added:C_CombatLog.DoesObjectMatchFilter` — unsafe
 167. [best-effort] `added:C_CombatLog.GetEntryRetentionTime` — behavioral
-168. [evidence-required] `added:C_CombatLog.GetMessageLimit` — unsafe
+168. [best-effort] `added:C_CombatLog.GetMessageLimit` — behavioral
 169. [evidence-required] `added:C_CombatLog.IsCombatLogRestricted` — unsafe
 170. [best-effort] `added:C_CombatLog.RefilterEntries` — behavioral
 171. [best-effort] `added:C_CombatLog.SetEntryRetentionTime` — behavioral

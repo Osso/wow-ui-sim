@@ -5,8 +5,8 @@
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "51b7a6509b0763fffcc60f0aea0b8450a6a882a9e390466223b6df01ba18bb81",
-      "rows": 1089
+      "sha256": "72406ba517eeb08e3f20de71ba6a51032e7c3e3e92ffec1e7599cf680445211d",
+      "rows": 1088
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1115,
+  "total": 1114,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -1108,19 +1108,6 @@
     {
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatLog.DoesObjectMatchFilter",
-      "owner": "api",
-      "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_log_state_and_filters"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatLog.GetMessageLimit",
       "owner": "api",
       "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
       "probe_protocol": "api-state",
@@ -17147,14 +17134,13 @@
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_state_and_filters": {
-      "dependency": "Populated message-limit configuration/entry fixture, observed CombatLogObject mask/flags cases, and a separately identified restriction-state/caller context.",
+      "dependency": "Observed CombatLogObject mask/flags fixtures and a separately identified combat-log restriction-state/caller context.",
       "observations": [
-        "Capture GetMessageLimit after supported message-limit configuration changes and with populated entries; distinguish the getter value from native limit enforcement and default policy.",
-        "Capture DoesObjectMatchFilter(mask, flags) with concrete observed CombatLogObject enum pairs and the boolean result; do not replace these inputs with a combat-object table or infer matching from stored filter enablement.",
-        "Identify IsCombatLogRestricted state/caller inputs and capture the query separately; restriction/security enforcement remains deferred rather than inferred from a setting or constant."
+        "Capture DoesObjectMatchFilter(mask, flags) with concrete observed CombatLogObject enum pairs and the boolean result; do not substitute combat-object tables or infer matching from stored settings.",
+        "Identify IsCombatLogRestricted state/caller inputs and capture that query separately; restriction/security enforcement remains deferred rather than inferred from a setting or constant."
       ],
       "ready_to_execute": false,
-      "design_gap": "The remaining rows are GetMessageLimit, DoesObjectMatchFilter and IsCombatLogRestricted. Native limit values/bounds/enforcement, matcher semantics and restriction state remain unverified. The four separately proven stored settings do not establish filtering, pruning or broader combat-log lifecycle.",
+      "design_gap": "Remaining rows are DoesObjectMatchFilter and IsCombatLogRestricted. Native matching and restriction-state semantics remain unverified. Separately proven message-limit/filter/retention storage does not establish enforcement/pruning, bounds, defaults, events/lifecycle or consumer behavior.",
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_secure_deferred": {
