@@ -322,7 +322,7 @@ fn collect_visible_unit_auras(
         .collect()
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn collect_filtered_unit_auras(
     state: &mut LuaState,
     unit: &str,
