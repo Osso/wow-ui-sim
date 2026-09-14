@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending C_CombatAudioAlert speaker-speed state proof
+## [2026-09-14] audit | Credit bounded speaker-speed state
 
-Tests `87adb4882` reached meaningful RED 0/3: the existing setter returned a non-boolean value, violating the pinned one-boolean accepted-write policy; it was not a missing-method exception. Runtime `df3137a23` now stores explicit finite numeric writes per environment with simulator initial `0` and accepted-write `true` policy. CVar aliasing, callbacks, playback, ranges, native defaults/success semantics, persistence and security remain unproven. Independent proof pending. See [spec](../specs/combat-audio-speaker-speed.md).
+Tests `87adb4882` reached RED 0/3 at the wrong setter result, not a missing-method exception. Runtime `df3137a23` has independent fresh **3/3 each** on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup (`[]`)/readability PASS. Exactly two credits cover numeric stored state, getter-one-number/setter-one-boolean arity, accepted-write `true` simulator policy and distinct environment isolation. Totals: **2322 / 1086 / 2**; 21 reference renewals and 16 additions. Modeled Rust registration is gated at `retail-12-0-0`; earlier-profile fallback callability/absence is unproven. Initial `0`, native ranges/coercion/success semantics, CVar aliasing, callbacks, persistence/lifecycle, playback, consumers and security remain unproven; no native policy credit. Runtime proof: `/tmp/verify-audio-speaker-speed-ledger.json`; metadata: `/tmp/audio-speaker-speed-metadata-ledger.json` (committed validation pending). Broad audit remains open. [Spec](../specs/combat-audio-speaker-speed.md).
 
 ## [2026-09-14] audit | Credit bounded C_CombatLog setting state
 

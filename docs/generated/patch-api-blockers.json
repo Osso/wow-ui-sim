@@ -5,8 +5,8 @@
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "72406ba517eeb08e3f20de71ba6a51032e7c3e3e92ffec1e7599cf680445211d",
-      "rows": 1088
+      "sha256": "fc143f05f83d3e6e77ebb0d12c08b8be6855c9dc3b12f8ce10f9e23ec0d9b7d4",
+      "rows": 1086
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1114,
+  "total": 1112,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -953,20 +953,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.GetFormatSetting",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/register.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_audio_settings"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatAudioAlert.GetSpeakerSpeed",
-      "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -979,7 +966,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.GetSpeakerVolume",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -992,7 +979,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.GetSpecSetting",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1005,7 +992,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.GetThrottle",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1018,7 +1005,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.IsEnabled",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1031,20 +1018,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SetFormatSetting",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/register.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_audio_settings"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatAudioAlert.SetSpeakerSpeed",
-      "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1057,7 +1031,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SetSpeakerVolume",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1070,7 +1044,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SetSpecSetting",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1083,7 +1057,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SetThrottle",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -1096,7 +1070,7 @@
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SpeakText",
       "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model C_CombatAudioAlert or this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
+      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
       "scope": "mixed-or-unreviewed; security/VM work remains excluded",
       "basis_references": [
@@ -17122,15 +17096,14 @@
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_audio_settings": {
-      "dependency": "C_CombatAudioAlert setting producer and pinned enum/option values; A controlled audio-alert configuration context; audio playback need not be asserted for getter/setter state",
+      "dependency": "Pinned argument domains and producer-backed fixtures for remaining speaker-volume, format/spec/throttle settings and enable state; speaker-speed storage is modeled separately.",
       "observations": [
-        "Read each Get* default before mutation and record exact type/arity; call corresponding Set* with one valid value then read back, and test a second setting for instance/global scope.",
-        "Use invalid enum/range and repeated writes only where the pinned contract names validation; record errors rather than inventing them.",
-        "Call SpeakText with a minimal text fixture separately from stored settings; capture return/notification behavior only if the target contract exposes it.",
-        "Record IsEnabled under an identified enabled/disabled input; if no enable-state producer is known, retain that exact blocker. Capture each Set* return/success result separately from getter roundtrip state."
+        "For the remaining Get/SetSpeakerVolume, Get/SetFormatSetting, Get/SetSpecSetting and Get/SetThrottle rows, establish exact pinned argument domains, explicit-write state, return arity and setter-success observations. Do not substitute the speaker-speed proof or later category-volume names.",
+        "Observe IsEnabled only with an identified enabled/disabled input; retain the missing enable-state producer as a blocker rather than infer it from stored speed.",
+        "SpeakText scheduling/playback and callback behavior require a separately identified safe producer/capture. No playback or secure enforcement is authorized by these setting plans."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative combat-audio settings fixture, enum-value corpus, or producer-backed scope/persistence behavior; simulator registration alone is insufficient.",
+      "design_gap": "Remaining audio-setting defaults, scope, native validation/success, CVar coupling, enable/throttle and speech behavior remain unproven. No additional speaker-speed state proof is demanded by this remaining-row plan.",
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_state_and_filters": {
@@ -18028,30 +18001,43 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-    "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-    "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-    "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+    "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+    "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+    "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+    "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
     "removed_credited_rows": [
-      "added:C_CombatLog.GetMessageLimit"
+      "added:C_CombatAudioAlert.GetSpeakerSpeed",
+      "added:C_CombatAudioAlert.SetSpeakerSpeed"
     ],
-    "prior_rows": 1115,
-    "rows": 1114,
-    "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+    "prior_rows": 1114,
+    "rows": 1112,
+    "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
     "previous_refresh": {
-      "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-      "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-      "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+      "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+      "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+      "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+      "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
       "removed_credited_rows": [
-        "added:C_CombatLog.AreFilteredEventsEnabled",
-        "added:C_CombatLog.GetEntryRetentionTime",
-        "added:C_CombatLog.SetEntryRetentionTime",
-        "added:C_CombatLog.SetFilteredEventsEnabled"
+        "added:C_CombatLog.GetMessageLimit"
       ],
-      "prior_rows": 1119,
-      "rows": 1115,
-      "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-      "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+      "prior_rows": 1115,
+      "rows": 1114,
+      "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+      "previous_refresh": {
+        "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+        "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+        "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+        "removed_credited_rows": [
+          "added:C_CombatLog.AreFilteredEventsEnabled",
+          "added:C_CombatLog.GetEntryRetentionTime",
+          "added:C_CombatLog.SetEntryRetentionTime",
+          "added:C_CombatLog.SetFilteredEventsEnabled"
+        ],
+        "prior_rows": 1119,
+        "rows": 1115,
+        "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+        "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+      }
     }
   }
 }

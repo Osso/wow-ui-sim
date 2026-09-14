@@ -1,19 +1,19 @@
 # Patch API blocker inventory
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place and combat-log setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,114 remaining rows after the additional message-limit getter credit.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,112 remaining rows after two bounded speaker-speed credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Coverage
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,088 |
+| 12.0.0 | 1,086 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2320 best-effort / 1088 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2322 best-effort / 1086 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 
@@ -29,7 +29,7 @@ Protocol assignment uses literal change/owner fields, with explicit later-patch 
 
 | Proposed protocol | Rows | Missing prerequisite / next observation |
 |---|---:|---|
-| API/state | 450 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
+| API/state | 448 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
 | Structure producer | 318 | Identify populated producer/consumer; vary input and observe exact field relationships. |
 | Publication/removal | 233 | Capture exact old symbol across base/target load phases; distinguish field producers, CVar lookup and globals. |
 | Event producer | 88 | Trigger an actual transition; capture tuple, order, multiplicity and unchanged-state control. |
@@ -51,7 +51,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**All 1,114 remaining rows link to 282 plans** in the JSON: 956 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**All 1,112 remaining rows link to 282 plans** in the JSON: 954 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|
@@ -72,6 +72,10 @@ Corrections distinguish numeric error codes from localized strings, callback/str
 The combat-log setting refresh removes only four credited rows from the preceding 1,119-row snapshot. All 282 plans remain used; 281 are unchanged. The remaining combat-log plan now targets `GetMessageLimit`, `DoesObjectMatchFilter(mask, flags)` and `IsCombatLogRestricted`, not already-proven setting storage. Filtering/matching/restriction/pruning/native/lifecycle gaps remain explicit. The earlier housing validator-exit qualification above is unchanged. Metadata verification at `19eab5ef4` records 14,933 fresh hashes, zero stale, zero renewals, 16 additions, four credits, validator exit 0 and 3,410 matching rows. Proof: `/tmp/verify-combatlog-settings-metadata-ledger.json`.
 
 The message-limit refresh removes only `added:C_CombatLog.GetMessageLimit` from the preceding 1,115-row snapshot. All 282 plans remain used; 281 are unchanged. Its remaining combat-log plan now covers `DoesObjectMatchFilter(mask, flags)` and `IsCombatLogRestricted` only. One storage/query credit changes retail totals to **2320 / 1088 / 2**; independent `b91e21c62` proof is 3/3 per target profile with unchanged-runtime reuse. The existing setter event credit remains intact. Final committed metadata verification at `5c2d06cb7` records 14,936 fresh hashes, zero stale, 16 renewals and three additions. It reuses the `152154a11` saved validator CommandResult—exit 0 and 3,410 matching rows—because all six final manifest byte streams are identical; no validator, test or runtime-gate rerun occurred. Proof: `/tmp/verify-combatlog-message-limit-metadata-ledger.json`. Earlier snapshot/validator evidence below retains its historical scope.
+
+## Speaker-speed refresh
+
+Only `added:C_CombatAudioAlert.GetSpeakerSpeed` and `added:C_CombatAudioAlert.SetSpeakerSpeed` leave the preceding 1,114-row snapshot. All 282 plans remain used; 281 are unchanged. The remaining audio plan targets speaker-volume, format/spec/throttle settings, `IsEnabled` and speech behavior, not already-proven speaker-speed storage. Rust registration is gated at `retail-12-0-0`; generic earlier-profile fallback callability/absence remains unproven. Fresh runtime proof is 3/3 per targeted profile, with initial `0` and accepted-write `true` explicitly simulator policy. CVar/native/playback/security gaps remain open. Metadata records 21 renewals and 16 additions; committed validation is pending in `/tmp/audio-speaker-speed-metadata-ledger.json`. Prior proof paragraphs retain their historical scope.
 
 ## Source correction: StatusBar
 
