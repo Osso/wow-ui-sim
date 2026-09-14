@@ -73,7 +73,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the AbbreviateConfig table proxy, method dispatch, per-instance fields, and tostring/read-only behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -114,7 +114,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides GetAbbreviateNumberData method dispatch and per-instance stored-data reads.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -155,7 +155,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides SetAbbreviateNumberData method dispatch and per-instance stored-data writes.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -5450,7 +5450,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5519,7 +5519,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5600,7 +5600,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5669,7 +5669,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5698,7 +5698,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5727,7 +5727,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -5756,7 +5756,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5825,7 +5825,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5906,7 +5906,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -5975,7 +5975,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -6004,7 +6004,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -6033,7 +6033,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17635,7 +17635,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17664,7 +17664,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17693,7 +17693,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17722,7 +17722,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17751,7 +17751,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17780,7 +17780,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17809,7 +17809,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17838,7 +17838,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17867,7 +17867,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17896,7 +17896,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17925,7 +17925,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17954,7 +17954,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -17983,7 +17983,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18012,7 +18012,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18041,7 +18041,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18070,7 +18070,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18099,7 +18099,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18128,7 +18128,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18157,7 +18157,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18186,7 +18186,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18215,7 +18215,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18244,7 +18244,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -18273,7 +18273,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         }
       ],
@@ -26299,7 +26299,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         }
       ],
@@ -26396,7 +26396,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/state_backed_queries.rs",
           "summary": "Current C_WeeklyRewards registration models basic activities and reward flags only, not sorted tier progress or shared-difficulty aggregation.",
-          "source_hash": "a1333759cfa3b256db3736104b61dc14bd14df01c4dcc482b1c0b24fa4442b21"
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40"
         },
         {
           "kind": "source",
@@ -26461,7 +26461,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/state_backed_queries.rs",
           "summary": "Current C_WeeklyRewards registration models basic activities and reward flags only, not sorted tier progress or shared-difficulty aggregation.",
-          "source_hash": "a1333759cfa3b256db3736104b61dc14bd14df01c4dcc482b1c0b24fa4442b21"
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40"
         },
         {
           "kind": "source",
@@ -26502,7 +26502,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/state_backed_queries.rs",
           "summary": "Current C_WeeklyRewards registration models basic activities and reward flags only, not sorted tier progress or shared-difficulty aggregation.",
-          "source_hash": "a1333759cfa3b256db3736104b61dc14bd14df01c4dcc482b1c0b24fa4442b21"
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40"
         },
         {
           "kind": "source",
@@ -26543,7 +26543,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/state_backed_queries.rs",
           "summary": "Current C_WeeklyRewards registration models basic activities and reward flags only, not sorted tier progress or shared-difficulty aggregation.",
-          "source_hash": "a1333759cfa3b256db3736104b61dc14bd14df01c4dcc482b1c0b24fa4442b21"
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40"
         },
         {
           "kind": "source",
@@ -30707,7 +30707,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the CreateAbbreviateConfig factory and AbbreviateConfig table proxy with method dispatch, per-instance fields, and tostring/read-only behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -30748,7 +30748,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -89957,7 +89957,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -89997,7 +89997,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -90037,7 +90037,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -90077,7 +90077,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -90248,7 +90248,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
           "summary": "Current temporary AbbreviateConfig proxy stores generic table data and does not establish the exact NumberAbbrevData structure contract."
         },
         {
@@ -90284,7 +90284,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.abbreviation publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90313,7 +90313,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.abbreviationIsGlobal publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90342,7 +90342,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.breakpoint publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90371,7 +90371,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.fractionDivisor publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90400,7 +90400,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevData.significandDivisor publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90428,7 +90428,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
           "summary": "Current temporary AbbreviateConfig proxy stores generic options data and does not establish the exact NumberAbbrevOptions structure contract."
         },
         {
@@ -90464,7 +90464,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.breakpointData publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90493,7 +90493,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.config publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90522,7 +90522,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current generic AbbreviateConfig proxy does not model typed NumberAbbrevOptions.locale publication or number-abbreviation semantics.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -90873,8 +90873,8 @@
       "id": "added:RegisterEventCallback",
       "symbol": "RegisterEventCallback",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -90882,45 +90882,138 @@
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
-          "source_hash": "ae8b85140e7a6f29d9988c3725d184f0b715e4a28aa34634586d9509ae7bfbde",
-          "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
+          "source_hash": "051f8636136c06ae7ac2e21b0265d93e1873e2650ec23e937961701afb7afa4d",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
-          "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
+          "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
           "kind": "runtime",
           "reference": "src/event/valid_events.rs",
           "source_hash": "bf8102afeab2caafa0b89cbdc74452631a8ea68ef7b24b2d482410e2b54de4ed",
-          "summary": "Current source classifies callback/event names and restricted/callback eligibility; it does not implement the free global callback registry, unit filtering, invocation, removal, or producer payload delivery. Frame callback methods are a separate surface. Keep evidence-required/unsafe."
+          "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
-          "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_rust_dispatch_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_lua_dispatch_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_event_lua_rust_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_event_lua_synchronous_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_container_identity_cancellation_and_roots",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_rejects_unbranded_userdata_without_invoking",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_return_arities",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_environments_are_isolated",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/real/event_callbacks.rs",
+          "source_hash": "32786c48c05b384f04db7234e3490126712cfed6cc3a0b5f0df34af349f9c14d",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/real/mod.rs",
+          "source_hash": "d8007be70556f0c085abadf1d520bd5c6023dec51d81f4f5dac837d12e094d58",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/register.rs",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/env_events.rs",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/state_backed_queries.rs",
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/global_event_callbacks.rs::global_event_callback_rust_dispatch_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_lua_dispatch_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_event_lua_rust_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_event_lua_synchronous_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_container_identity_cancellation_and_roots",
+        "tests/global_event_callbacks.rs::global_event_callback_rejects_unbranded_userdata_without_invoking",
+        "tests/global_event_callbacks.rs::global_event_callback_return_arities",
+        "tests/global_event_callbacks.rs::global_event_callback_environments_are_isolated"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "2ff787d41",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics. Required probe: Full-LoD global callback probe: register a callback for an event, inject/produce the event, assert boolean registration and callback delivery, then unregister through the matching global API and assert no later invocation; do not substitute Frame methods."
+      "notes": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
     },
     {
       "id": "added:RegisterUnitEventCallback",
@@ -90946,7 +91039,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
-          "source_hash": "ae8b85140e7a6f29d9988c3725d184f0b715e4a28aa34634586d9509ae7bfbde",
+          "source_hash": "051f8636136c06ae7ac2e21b0265d93e1873e2650ec23e937961701afb7afa4d",
           "summary": "Retail declares a global unit-filtered callback API, while the simulator fallback is inert and does not register, filter, or invoke callbacks. Frame:RegisterUnitEventCallback is separate."
         },
         {
@@ -93151,7 +93244,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93204,7 +93297,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93257,7 +93350,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary UnitHealPredictionCalculator proxy stores and returns the local damage-absorb clamp mode.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93294,7 +93387,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored totalDamageAbsorbs field plus a false flag; this generic field/default behavior is not authoritative.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -93323,7 +93416,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator heal-absorb clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93367,7 +93460,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator heal-absorb processing mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93411,7 +93504,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy returns the locally stored totalHealAbsorbs field plus a false flag; this generic field/default behavior is not authoritative.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -93440,7 +93533,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator incoming-heal clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93484,7 +93577,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator incoming-heal overflow percentage; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93528,7 +93621,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93581,7 +93674,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93634,7 +93727,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93687,7 +93780,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy resets local modes, overflow, predicted fields, maximum-health mode, and a secret flag; reset scope/order/defaults are not authoritative.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -93716,7 +93809,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -93769,7 +93862,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator heal-absorb clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93813,7 +93906,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator heal-absorb processing mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93857,7 +93950,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator incoming-heal clamp mode; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93901,7 +93994,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy stores a per-calculator incoming-heal overflow percentage; source inspection alone does not establish native semantics, validation, calculations, or security.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93945,7 +94038,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy copies a selected local predicted-value subset; exact payload fields, missing-field behavior, secret values, and prediction integration are not established.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -93996,7 +94089,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy delegates to its local Reset implementation; exact default values, reset scope, and lifecycle semantics are not established.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         }
       ],
       "tests": [],
@@ -94025,7 +94118,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -94078,7 +94171,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -94131,7 +94224,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -94184,7 +94277,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current detailed heal-prediction payload publishes a numeric default of 0; focused test asserts the field alongside the existing health/incoming-heal payload.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -94262,7 +94355,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -94315,7 +94408,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Temporary proxy factory provides the UnitHealPredictionCalculator table proxy, defaults, method dispatch, and tostring behavior.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "source",
@@ -95004,8 +95097,8 @@
       "id": "added:UnregisterEventCallback",
       "symbol": "UnregisterEventCallback",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -95013,39 +95106,132 @@
           "kind": "source",
           "reference": "data/patch-api/sources/12.0.0-register.json",
           "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry."
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
-          "source_hash": "ae8b85140e7a6f29d9988c3725d184f0b715e4a28aa34634586d9509ae7bfbde",
-          "summary": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry."
+          "source_hash": "051f8636136c06ae7ac2e21b0265d93e1873e2650ec23e937961701afb7afa4d",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         },
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
-          "summary": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry."
+          "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
           "kind": "runtime",
           "reference": "src/event/valid_events.rs",
           "source_hash": "bf8102afeab2caafa0b89cbdc74452631a8ea68ef7b24b2d482410e2b54de4ed",
-          "summary": "Current source classifies callback/event names and restricted/callback eligibility; it does not implement the free global callback registry, unit filtering, invocation, removal, or producer payload delivery. Frame callback methods are a separate surface. Keep evidence-required/unsafe."
+          "summary": "Frame callback storage and event classification remain separate from the modeled free-global lifecycle; native eligibility and unit callback variants remain uncredited."
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
-          "summary": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry."
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_rust_dispatch_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_lua_dispatch_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_event_lua_rust_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_event_lua_synchronous_lifecycle",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_container_identity_cancellation_and_roots",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_rejects_unbranded_userdata_without_invoking",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_return_arities",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/global_event_callbacks.rs::global_event_callback_environments_are_isolated",
+          "source_hash": "31cf9b0ce78822ca56f75fa29c3fc17b6bab54d5c5ac3949b829ba84ef8155d9",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/real/event_callbacks.rs",
+          "source_hash": "32786c48c05b384f04db7234e3490126712cfed6cc3a0b5f0df34af349f9c14d",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/real/mod.rs",
+          "source_hash": "d8007be70556f0c085abadf1d520bd5c6023dec51d81f4f5dac837d12e094d58",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/register.rs",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/env_events.rs",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/globals/state_backed_queries.rs",
+          "source_hash": "fcbab27de7c980e28fd441af2c5a6c9d57c5cded83e9d72c08598581a4375a40",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
+        },
+        {
+          "kind": "runtime",
+          "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
+          "summary": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/global_event_callbacks.rs::global_event_callback_rust_dispatch_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_lua_dispatch_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_event_lua_rust_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_event_lua_synchronous_lifecycle",
+        "tests/global_event_callbacks.rs::global_event_callback_container_identity_cancellation_and_roots",
+        "tests/global_event_callbacks.rs::global_event_callback_rejects_unbranded_userdata_without_invoking",
+        "tests/global_event_callbacks.rs::global_event_callback_return_arities",
+        "tests/global_event_callbacks.rs::global_event_callback_environments_are_isolated"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "2ff787d41",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry. Required probe: Full-LoD callback probe: register a global callback, prove one invocation, unregister the same callback, inject the event again, and assert post-unregister non-invocation; Frame methods are not interchangeable."
+      "notes": "Bounded ordinary global callback lifecycle for plain functions and actual C_FunctionContainers: nil owner and unchanged payload, Rust environment and synchronous Lua dispatch, exact identity removal, boolean registration/zero-return removal and environment isolation. Actual pinned Event.lua wrapping and handle removal, container cancellation/GC survival and unrelated-userdata rejection are covered. Corrected runtime 2ff787d41; tests 55cec0a97; registry 5b04622da, integration 462a1866c, fallback 08eeaa48a. Independent proof: 8/8 each retail 12.0.0/12.0.5/12.0.7, default startup []. Duplicate handling, insertion/global-before-frame order, validation, accepted true, snapshot dispatch and error propagation are SIMULATOR policies, not native parity. Native eligibility/order/duplicates/errors/security/full-LoD and mutation/recursion/error recovery remain unproven; unit callback variants are not credited."
     },
     {
       "id": "added:UnregisterUnitEventCallback",
@@ -95065,7 +95251,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/workarounds/temporary/dispatcher_callback_defaults.rs",
-          "source_hash": "ae8b85140e7a6f29d9988c3725d184f0b715e4a28aa34634586d9509ae7bfbde",
+          "source_hash": "051f8636136c06ae7ac2e21b0265d93e1873e2650ec23e937961701afb7afa4d",
           "summary": "Retail adds a three-argument global unit-callback removal API. The simulator exposes only an inert fallback with no global registry, unit filtering, or invocation semantics."
         },
         {
@@ -100728,7 +100914,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
           "summary": "Current temporary proxy factory creates AbbreviateConfig objects with tested getter/setter state, per-instance fields, read-only method keys, and tostring labels."
         },
         {
@@ -100769,7 +100955,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
           "summary": "The examined temporary proxy-object factory surface contains no FrameAPITooltip construction or method registration; this scoped inspection does not claim exhaustive source absence, and generated documentation presence is not runtime behavior."
         }
       ],
@@ -100953,7 +101139,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9",
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0",
           "summary": "Current temporary proxy factory creates UnitHealPredictionCalculator objects with tested reset, clamp-mode, maximum-health, predicted-value, and tostring state."
         },
         {
@@ -102350,7 +102536,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "Current temporary proxy factory implements userdata-backed FunctionContainer construction, method dispatch, cancellation/invoke behavior, per-instance fields, read-only keys, and timer-handle binding.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -103370,7 +103556,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "After uses a distinct no-argument invoker rather than the ticker proxy invoker. Existing callback-container representation, captured function and cancellation check remain; timer-engine code is unchanged.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -103416,7 +103602,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "The current temporary proxy factory accepts plain functions or userdata containers, returns the callback container from NewTicker, binds each timer handle, and cancels all handles backed by a container.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -103462,7 +103648,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
           "summary": "The current temporary proxy factory coerces plain functions or userdata containers, binds NewTimer handles to the container, and passes a proxy sharing container state.",
-          "source_hash": "538b8ec968e17cd44ad46757c5fb03e9a84b4be3401198ff845d0f773ef89cc9"
+          "source_hash": "fb31531bf187a3630efd67bc647825e8607f330e0c322704e6646e130af85de0"
         },
         {
           "kind": "test",
@@ -104156,7 +104342,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -111676,7 +111862,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -111717,7 +111903,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/register.rs",
-          "source_hash": "97168a9cb71c0abded078aadb53770840a9f1681cbefdbeead821c120efcbf0f",
+          "source_hash": "84fcf840529bc10d6c9d8173df154c2cb5a2c2c42f7a9f158358beed549a5596",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
         },
         {
@@ -112014,7 +112200,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112147,7 +112333,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112200,7 +112386,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112253,7 +112439,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112306,7 +112492,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112359,7 +112545,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112412,7 +112598,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112465,7 +112651,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112518,7 +112704,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112571,7 +112757,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112624,7 +112810,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112677,7 +112863,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112730,7 +112916,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112795,7 +112981,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -112854,7 +113040,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -113153,7 +113339,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {
@@ -113206,7 +113392,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e",
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad",
           "summary": "The environment event helper dispatches caller-supplied event arguments. This dispatcher is not by itself evidence of the named producer, native payloads, ordering, timing, identity, or security; modeled producers elsewhere are not ruled out."
         },
         {

@@ -1483,7 +1483,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e"
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad"
         },
         {
           "kind": "source",
@@ -1573,7 +1573,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e"
+          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad"
         },
         {
           "kind": "source",
