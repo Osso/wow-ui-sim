@@ -94459,7 +94459,7 @@
         {
           "kind": "source",
           "reference": "docs/specs/unit-health-percent-curves.md",
-          "source_hash": "f48fc5771e39bb5b00946e2d246b1ce3a8fb123cda441d50b503b4ac198e6816",
+          "source_hash": "9f05c290c5342eec0f8bd8d838e87848d98e9f9aa1cce7073432f85963131060",
           "summary": "Bounded supplied scalar/color curve evaluation through the existing evaluator using current health / healthMax * 100 as explicit simulator input policy, not native-scale proof. Live player/target health changes, one-result arity, nil/omitted numeric queries and rejection of tested invalid curve values pass 5/5 each on retail 12.0.0/12.0.5/12.0.7. Runtime 92b4f8c4f; tests 13bf5219f plus b31004297. LuaCurveEvaluatedResult is a result typedef, not an unconditional table requirement. Native scale/defaults/validation, prediction, supported/unknown-unit semantics, security and full-LoD parity remain unproven; earlier-profile preservation has static proof only."
         }
       ],
