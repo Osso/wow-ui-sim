@@ -1,8 +1,12 @@
 # Patch API blocker inventory
 
+## Tracked-task membership refresh
+
+Four bounded credits cover Add/Remove/GetTrackedInitiativeTasks and InitiativeTasksTracked.trackedIDs: ordinary numeric membership, copied arrays, return arity and bidirectional environment isolation. Runtime `27223f82a`, tests `3abb84e1c`: independent `/tmp/verify-neighborhood-tracked-tasks-ledger.json` records 3/3 each targeted profile (12.0.0 exact-byte reuse), fmt/check/build/startup/readability PASS. Historical E0308 at `d6d48d1e5` remains recorded. Metadata: 151 hash renewals, 16 additions; totals **2337 / 1071 / 2**, snapshot **1,097 rows / 282 plans**. Metadata verification remains pending; no validator was run. Native validation, initial/order/duplicate/unknown-ID policies, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumers and security remain unproven. Broad audit and eight Mists AccountStore failures remain open. All 282 plans remain; the neighborhood plan retains task-record/native/event/consumer obligations.
+
 Format-setting refresh: only Get/SetFormatSetting leave the prior 1,110-row snapshot. All 282 plans remain; 281 unchanged. Ordinary keyed state is independently proven 3/3 per target profile at `b36c27ce3`; final metadata proof at `19c423c5f` records 14,976 fresh hashes, zero stale, 43 renewals, 12 additions, validator exit 0 and 3,410 matching rows. Remaining audio plan retains spec/throttle, enable/speech and native/default/range/CVar/output/callback/consumer/security obligations. `/tmp/verify-audio-format-setting-metadata-ledger.json`.
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,101 remaining rows after seven bounded custom-set CRUD credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,097 remaining rows after four bounded tracked-task credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Speaker-volume refresh
 
@@ -12,14 +16,14 @@ Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,082 |
+| 12.0.0 | 1,071 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2326 best-effort / 1082 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2337 best-effort / 1071 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 

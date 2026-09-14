@@ -5462,31 +5462,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5531,43 +5531,43 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
+          "source_hash": "7a2836c46390ff8edeedc9a43f2e5b61afe53b7989c84b55924308c6ced400e0",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "95ba27788e29ccd21d75f7881c96ea8d1bd3bf97b54a3231c1859a761bc87a33",
+          "source_hash": "06f4393e397ca5272ccf0bf0b109fe3b84964940e3145ceab329978e65b1da78",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5612,31 +5612,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -5768,31 +5768,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5837,43 +5837,43 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
+          "source_hash": "7a2836c46390ff8edeedc9a43f2e5b61afe53b7989c84b55924308c6ced400e0",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "95ba27788e29ccd21d75f7881c96ea8d1bd3bf97b54a3231c1859a761bc87a33",
+          "source_hash": "06f4393e397ca5272ccf0bf0b109fe3b84964940e3145ceab329978e65b1da78",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5918,31 +5918,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "7554331d4f06adacc6a03a379a1d31c2a34d91d2c8ed4ad0f6dec12e8049c4ca",
+          "source_hash": "e1b0a9b50a80760dc0f1a634eefb1db5195881fe72a00679a943940364e82732",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "34a32a450c67ac49ac6e6de61af744cc97187c1085d52f20ee34eef69084abdf",
+          "source_hash": "93151df30a820c560da276d8c9ecbfbdd7e9802c2134642d187372690cf9c8f7",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -6105,25 +6105,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6229,25 +6229,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6287,19 +6287,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit 41/42 and repeated writes; GetMessageLimit returns exactly one number with the stored value. Setter zero returns are a control, not new setter/event credit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Message-limit writes preserve filter/retention settings and changes to those settings preserve the queried message limit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct 41/42 then 43/44 writes remain isolated between two live Lua environments in both directions."
         }
       ],
@@ -6404,25 +6404,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6462,25 +6462,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -13962,8 +13962,8 @@
       "id": "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
       "symbol": "C_NeighborhoodInitiative.AddTrackedInitiativeTask",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -13976,22 +13976,50 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-          "summary": "Current temporary fallback is an empty no-op function; no tracked-task collection, validation, deduplication, ordering, persistence, or event state exists.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "summary": "The three tracked-task placeholders were removed; this bootstrap preserves unrelated defaults while first-class C API registration owns ordinary membership. Task records, native validation, events and persistence remain unmodeled.",
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
           "reference": "tests/c_tracking_defaults_probes.rs",
-          "summary": "Existing focused probe confirms only that the placeholder is callable and returns nil while trackedIDs remains empty; it does not establish add semantics.",
+          "summary": "Historical empty-shape/callability probe only; no fresh provider-injection or native behavior proof. Membership evidence comes from the focused tests below.",
           "source_hash": "df72a7b7ff97aa354d78a8087c2476b9d8c6feccb9aba9559ea3b34eefd1af47"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_neighborhood_initiative.rs",
+          "source_hash": "d469d2d2a0789abbe563aab66df6f5a9192b6654ca7a327e734ed5ad272a8545",
+          "summary": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "27223f82a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: the no-op fallback does not add a task or establish valid/unknown ID behavior, duplicate handling, ordering, removal interaction, returned task information, persistence, event dispatch, refresh, or lifecycle. Callability and nil return are insufficient."
+      "notes": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_NeighborhoodInitiative.GetActiveNeighborhood",
@@ -14012,7 +14040,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults install only task list/info/add/remove placeholders; they do not publish GetActiveNeighborhood or model active-neighborhood state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14047,7 +14075,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults install only task list/info/add/remove placeholders; they do not publish this method or model neighborhood activity-log state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14082,7 +14110,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults install only task list/info/add/remove placeholders; they do not publish this method or model initiative-task chat links.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14117,7 +14145,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current temporary fallback returns nil unconditionally and has no initiative-task records, payload construction, ID validation, or lifecycle state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
@@ -14152,7 +14180,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults install only task list/info/add/remove placeholders; they do not publish this method or model initiative progress, milestones, tasks, contribution, or neighborhood state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14187,7 +14215,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults do not publish GetRequiredLevel or model initiative availability or required-level state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14207,8 +14235,8 @@
       "id": "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
       "symbol": "C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -14221,22 +14249,50 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-          "summary": "Current temporary fallback always returns { trackedIDs = {} } and has no tracked-task state, validation, ordering, persistence, or lifecycle.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "summary": "The three tracked-task placeholders were removed; this bootstrap preserves unrelated defaults while first-class C API registration owns ordinary membership. Task records, native validation, events and persistence remain unmodeled.",
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
           "reference": "tests/c_tracking_defaults_probes.rs",
-          "summary": "Existing focused probe confirms only table shape and an empty trackedIDs array; it does not establish tracked-task behavior.",
+          "summary": "Historical empty-shape/callability probe only; no fresh provider-injection or native behavior proof. Membership evidence comes from the focused tests below.",
           "source_hash": "df72a7b7ff97aa354d78a8087c2476b9d8c6feccb9aba9559ea3b34eefd1af47"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_neighborhood_initiative.rs",
+          "source_hash": "d469d2d2a0789abbe563aab66df6f5a9192b6654ca7a327e734ed5ad272a8545",
+          "summary": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "27223f82a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: the fixed empty payload proves only placeholder shape. Empty, add/remove, duplicate, invalid/unknown ID, ordering, refresh, persistence, event, and lifecycle behavior remain unproven without tracked-task state."
+      "notes": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_NeighborhoodInitiative.InitiativeActivityLogEntry",
@@ -14281,7 +14337,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log model, entry records, or payload producer that could publish amount.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14316,7 +14372,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log model, entry records, or payload producer that could publish completionTime.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14351,7 +14407,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log model, entry records, or payload producer that could publish playerName.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14386,7 +14442,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log model, entry records, or payload producer that could publish taskID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14421,7 +14477,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log model, entry records, or payload producer that could publish taskName.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14480,7 +14536,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log info model or payload producer that could publish isLoaded.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14515,7 +14571,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log info model or payload producer that could publish neighborhoodGUID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14550,7 +14606,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log info model or payload producer that could publish nextUpdateTime.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14585,7 +14641,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no activity-log info or entry model and no payload producer that could publish taskActivity.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14644,7 +14700,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no initiative info or milestone model and no payload producer that could publish milestoneOrderIndex.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14679,7 +14735,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no initiative info or milestone model and no payload producer that could publish requiredContributionAmount.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14714,7 +14770,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish rewards.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14773,7 +14829,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish decorID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14808,7 +14864,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish decorQuantity.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14843,7 +14899,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish description.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14878,7 +14934,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish favor.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14913,7 +14969,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish money.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14948,7 +15004,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish rewardQuestID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -14983,7 +15039,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no milestone reward model and no initiative payload producer that could publish title.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15042,7 +15098,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing ID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15077,7 +15133,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing completed.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15112,7 +15168,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing criteriaList.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15147,7 +15203,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing description.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15182,7 +15238,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing inProgress.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15217,7 +15273,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing progressContributionAmount.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15252,7 +15308,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing requirementsList.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15287,7 +15343,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing rewardQuestID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15322,7 +15378,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing sortOrder.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15357,7 +15413,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing supersedes.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15392,7 +15448,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing taskName.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15427,7 +15483,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing taskType.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15462,7 +15518,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing timesCompleted.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15497,7 +15553,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no InitiativeTaskInfo model or task records and return nil instead of publishing tracked.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15541,8 +15597,8 @@
       "id": "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
       "symbol": "C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
@@ -15555,22 +15611,50 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-          "summary": "Current fallback returns only an empty trackedIDs table and has no tracked-task state or add/remove synchronization.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "summary": "The three tracked-task placeholders were removed; this bootstrap preserves unrelated defaults while first-class C API registration owns ordinary membership. Task records, native validation, events and persistence remain unmodeled.",
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
           "reference": "tests/c_tracking_defaults_probes.rs",
-          "summary": "Focused coverage proves only the empty trackedIDs table shape and does not establish numeric IDs or transitions.",
+          "summary": "Historical empty-shape/callability probe only; no fresh provider-injection or native behavior proof. Membership evidence comes from the focused tests below.",
           "source_hash": "df72a7b7ff97aa354d78a8087c2476b9d8c6feccb9aba9559ea3b34eefd1af47"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_neighborhood_initiative.rs",
+          "source_hash": "d469d2d2a0789abbe563aab66df6f5a9192b6654ca7a327e734ed5ad272a8545",
+          "summary": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "27223f82a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: no tracked initiative-task state or producer exists. Numeric IDs, valid/invalid and duplicate handling, add/remove transitions, ordering, refresh, persistence, events, and lifecycle remain unproven."
+      "notes": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_NeighborhoodInitiative.IsInitiativeEnabled",
@@ -15591,7 +15675,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current temporary fallback returns constant false without initiative availability state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15626,7 +15710,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults do not implement IsPlayerInNeighborhoodGroup or any group-validity state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15661,7 +15745,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults do not implement IsViewingActiveNeighborhood or active-view state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15720,7 +15804,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish currentCycleID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15755,7 +15839,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish currentProgress.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15790,7 +15874,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish description.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15825,7 +15909,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish duration.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15860,7 +15944,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish initiativeID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15895,7 +15979,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish isLoaded.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15930,7 +16014,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish milestones.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -15965,7 +16049,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish neighborhoodGUID.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16000,7 +16084,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish playerTotalContribution.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16035,7 +16119,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish progressRequired.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16070,7 +16154,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish tasks.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16105,7 +16189,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current neighborhood-initiative defaults contain no NeighborhoodInitiativeInfo model or producer and do not publish title.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16140,7 +16224,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults do not implement initiative access eligibility or backing state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16175,7 +16259,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults do not implement required-level eligibility or player-level state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16195,8 +16279,8 @@
       "id": "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask",
       "symbol": "C_NeighborhoodInitiative.RemoveTrackedInitiativeTask",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -16209,22 +16293,50 @@
         {
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-          "summary": "Current temporary fallback is a no-op and does not mutate tracked-task state.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "summary": "The three tracked-task placeholders were removed; this bootstrap preserves unrelated defaults while first-class C API registration owns ordinary membership. Task records, native validation, events and persistence remain unmodeled.",
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
           "reference": "tests/c_tracking_defaults_probes.rs",
-          "summary": "Focused coverage proves only a nil return from the no-op and does not establish task removal behavior.",
+          "summary": "Historical empty-shape/callability probe only; no fresh provider-injection or native behavior proof. Membership evidence comes from the focused tests below.",
           "source_hash": "df72a7b7ff97aa354d78a8087c2476b9d8c6feccb9aba9559ea3b34eefd1af47"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
+          "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_neighborhood_initiative.rs",
+          "source_hash": "d469d2d2a0789abbe563aab66df6f5a9192b6654ca7a327e734ed5ad272a8545",
+          "summary": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
+        "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "27223f82a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: no tracked-task state or removal behavior exists. Valid/invalid IDs, duplicate removal, list mutation, ordering, task updates, refresh, events, persistence, and lifecycle remain unproven."
+      "notes": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
     },
     {
       "id": "added:C_NeighborhoodInitiative.RequestInitiativeActivityLog",
@@ -16245,7 +16357,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults provide no activity-log request state or producer.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16280,7 +16392,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults provide no initiative-info request state or populated payload producer.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16315,7 +16427,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults contain no active-neighborhood state or GUID validation.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -16350,7 +16462,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current defaults contain no viewing-neighborhood state or GUID validation.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "source",
@@ -20434,25 +20546,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20539,25 +20651,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20609,25 +20721,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20679,25 +20791,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20889,25 +21001,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20959,25 +21071,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -21029,25 +21141,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "2a879d93676cbe0ae4a7d052dc01d182741f0588c095e98acb3bf269dd83adcc",
+          "source_hash": "e4a3dd91e02dae270399650ce2af5c6ecb7cd93dc09c907099f0860c94f2ddd0",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -30512,7 +30624,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current tracking namespace returns nil/empty defaults and constructs no criteria-value or requirement payloads.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
@@ -30553,7 +30665,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current tracking namespace returns nil/empty defaults and constructs no criteria-value or requirement payloads.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
@@ -30618,7 +30730,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current tracking namespace returns nil/empty defaults and constructs no criteria-value or requirement payloads.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
@@ -30659,7 +30771,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
           "summary": "Current tracking namespace returns nil/empty defaults and constructs no criteria-value or requirement payloads.",
-          "source_hash": "db5040407aead23ef410ffc573c40cf673e9e99027a641370eee4c1239a00754"
+          "source_hash": "cdf0ccf8f3605b1fdb5e6836abac21bfab5ae4b9ec4ec16b3cd6939dfe9a2279"
         },
         {
           "kind": "test",
@@ -102020,7 +102132,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
+          "source_hash": "7a2836c46390ff8edeedc9a43f2e5b61afe53b7989c84b55924308c6ced400e0",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -102114,7 +102226,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "879a7c1f824349bda2bf34009445269760d74816d62adb827b01062940885f9d",
+          "source_hash": "7a2836c46390ff8edeedc9a43f2e5b61afe53b7989c84b55924308c6ced400e0",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {

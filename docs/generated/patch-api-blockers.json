@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-14",
-  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. Seven ordinary custom-set CRUD credits do not establish native validation, defaults, errors, persistence, events, hyperlinks or consumer behavior.",
+  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. Four ordinary tracked-task membership credits do not establish task records, native validation, events, refresh, persistence, lifecycle or consumer behavior.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "c9a091823767cdde8684167d296a488bae0b2191987f658845e1a2d31a2f8259",
-      "rows": 1075
+      "sha256": "24e13f93cb5d5ed0070d3efb82e586f03a358d0c0561502304160dd2b7f8785f",
+      "rows": 1071
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1101,
+  "total": 1097,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -2978,20 +2978,6 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
-      "owner": "api",
-      "missing_evidence": "Evidence required: the no-op fallback does not add a task or establish valid/unknown ID behavior, duplicate handling, ordering, removal interaction, returned task information, persistence, event dispatch, refresh, or lifecycle. Callability and nil return are insufficient.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-        "tests/c_tracking_defaults_probes.rs"
-      ],
-      "probe_plan": "housing-C_NeighborhoodInitiative"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_NeighborhoodInitiative.GetActiveNeighborhood",
       "owner": "api",
       "missing_evidence": "Evidence required: the method and active-neighborhood state are absent, while generic fallback returns nil instead of the required GUID string. No-active behavior, valid GUID output, state transitions, refresh, event integration, persistence, and lifecycle remain unproven.",
@@ -3071,20 +3057,6 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ],
-      "probe_plan": "housing-C_NeighborhoodInitiative"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
-      "owner": "api",
-      "missing_evidence": "Evidence required: the fixed empty payload proves only placeholder shape. Empty, add/remove, duplicate, invalid/unknown ID, ordering, refresh, persistence, event, and lifecycle behavior remain unproven without tracked-task state.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-        "tests/c_tracking_defaults_probes.rs"
       ],
       "probe_plan": "housing-C_NeighborhoodInitiative"
     },
@@ -3552,20 +3524,6 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
-      "owner": "structure-field",
-      "missing_evidence": "Evidence required: no tracked initiative-task state or producer exists. Numeric IDs, valid/invalid and duplicate handling, add/remove transitions, ordering, refresh, persistence, events, and lifecycle remain unproven.",
-      "probe_protocol": "structure-producer",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-        "tests/c_tracking_defaults_probes.rs"
-      ],
-      "probe_plan": "housing-C_NeighborhoodInitiative"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_NeighborhoodInitiative.IsInitiativeEnabled",
       "owner": "api",
       "missing_evidence": "Evidence required: no initiative availability state model exists; constant false is compatibility scaffolding only. Enabled/disabled states, player and neighborhood context, transitions, refresh, events, and lifecycle remain unproven.",
@@ -3799,20 +3757,6 @@
         "data/patch-api/sources/12.0.0-register.json",
         "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
         "src/lua_api/env_init/runtime_surface_bootstrap.lua"
-      ],
-      "probe_plan": "housing-C_NeighborhoodInitiative"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask",
-      "owner": "api",
-      "missing_evidence": "Evidence required: no tracked-task state or removal behavior exists. Valid/invalid IDs, duplicate removal, list mutation, ordering, task updates, refresh, events, persistence, and lifecycle remain unproven.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs",
-        "tests/c_tracking_defaults_probes.rs"
       ],
       "probe_plan": "housing-C_NeighborhoodInitiative"
     },
@@ -15383,7 +15327,7 @@
       "design_gap": "No populated set catalog producer, variant fixture, filter-state model, ordering/default contract, or persistence/event evidence."
     },
     "housing-C_NeighborhoodInitiative": {
-      "dependency": "Authoritative neighborhood/initiative fixture producer (activity log, milestone, task, tracked-task state); Pinned APIDocumentationGenerated and source-register structure field types; Existing temporary housing dashboard preload is only seeded UI data, not service semantics",
+      "dependency": "Authoritative neighborhood/initiative fixture producer (activity log, milestone, task records and native tracking lifecycle); pinned structure field contracts. Ordinary simulator tracked-ID membership is proven separately; task-info synchronization, native policies and consumer execution remain unproven.",
       "observations": [
         "Inventory pinned docs for each structure and method return/argument contract.",
         "Obtain an authoritative populated capture for one loaded initiative with cycle, progress, one milestone/reward, one task/criteria/requirements, and tracked-task list.",
@@ -15391,8 +15335,13 @@
         "Only then map fields to runtime state and test structure shape; do not credit seeded placeholders."
       ],
       "ready_to_execute": false,
-      "design_gap": "initiativeInfo producer with stable IDs/GUIDs; activity log response and nextUpdateTime; milestone reward records and task criteria/requirements; tracked-task mutation/removal behavior; request completion/event dispatch",
-      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate."
+      "design_gap": "initiativeInfo producer with stable IDs/GUIDs; activity log response and nextUpdateTime; milestone rewards and task criteria/requirements; task-info tracked synchronization and native tracking lifecycle; request completion/event dispatch",
+      "execution_limits": "Observation plan only. No real-money purchase, account mutation, security enforcement or fixture implementation is authorized. Use retained captures or an explicitly approved safe environment; keep removal and populated-state evidence separate.",
+      "bounded_simulator_evidence": {
+        "runtime": "27223f82a",
+        "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
+        "scope": "Bounded ordinary tracked-task membership: distinct numeric IDs, add/remove transitions, copied trackedIDs arrays, one-table getter/zero-return mutators and bidirectional environment isolation. Runtime 27223f82a; tests 3abb84e1c pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial empty state, duplicate/unknown removal handling and ordering are simulator policies; native validation, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumer execution and security remain unproven."
+      }
     },
     "housing-C_CatalogShop": {
       "dependency": "Safe retained or explicitly approved catalog/service fixture covering house/shop interaction entry points, product/category membership, refundable decor records and currency-code balances. No real purchase or protected transaction is authorized.",
@@ -17898,82 +17847,96 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
-    "runtime_commit": "df6264867",
-    "tests_commit": "ef9bbe70c",
-    "proof": "/tmp/verify-custom-set-crud-ledger.json",
+    "scope": "Four bounded tracked-task method/array-field credits; parent task-record/native/validation/event/persistence/consumer gaps retained",
+    "runtime_commit": "27223f82a",
+    "tests_commit": "3abb84e1c",
+    "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
     "removed_credited_rows": [
-      "added:C_TransmogCollection.DeleteCustomSet",
-      "added:C_TransmogCollection.GetCustomSetInfo",
-      "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
-      "added:C_TransmogCollection.GetCustomSets",
-      "added:C_TransmogCollection.ModifyCustomSet",
-      "added:C_TransmogCollection.NewCustomSet",
-      "added:C_TransmogCollection.RenameCustomSet"
+      "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
+      "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
+      "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
+      "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask"
     ],
-    "prior_rows": 1108,
-    "rows": 1101,
+    "prior_rows": 1101,
+    "rows": 1097,
     "previous_refresh": {
-      "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
-      "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
-      "tests_commit": "70979713d",
-      "proof": "/tmp/verify-audio-format-setting-ledger.json",
+      "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
+      "runtime_commit": "df6264867",
+      "tests_commit": "ef9bbe70c",
+      "proof": "/tmp/verify-custom-set-crud-ledger.json",
       "removed_credited_rows": [
-        "added:C_CombatAudioAlert.GetFormatSetting",
-        "added:C_CombatAudioAlert.SetFormatSetting"
+        "added:C_TransmogCollection.DeleteCustomSet",
+        "added:C_TransmogCollection.GetCustomSetInfo",
+        "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
+        "added:C_TransmogCollection.GetCustomSets",
+        "added:C_TransmogCollection.ModifyCustomSet",
+        "added:C_TransmogCollection.NewCustomSet",
+        "added:C_TransmogCollection.RenameCustomSet"
       ],
-      "prior_rows": 1110,
-      "rows": 1108,
-      "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
+      "prior_rows": 1108,
+      "rows": 1101,
       "previous_refresh": {
-        "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
-        "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
-        "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
-        "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
+        "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
+        "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
+        "tests_commit": "70979713d",
+        "proof": "/tmp/verify-audio-format-setting-ledger.json",
         "removed_credited_rows": [
-          "added:C_CombatAudioAlert.GetSpeakerVolume",
-          "added:C_CombatAudioAlert.SetSpeakerVolume"
+          "added:C_CombatAudioAlert.GetFormatSetting",
+          "added:C_CombatAudioAlert.SetFormatSetting"
         ],
-        "prior_rows": 1112,
-        "rows": 1110,
-        "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
+        "prior_rows": 1110,
+        "rows": 1108,
+        "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
         "previous_refresh": {
-          "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
-          "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
-          "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
-          "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
+          "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
+          "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
+          "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
+          "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
           "removed_credited_rows": [
-            "added:C_CombatAudioAlert.GetSpeakerSpeed",
-            "added:C_CombatAudioAlert.SetSpeakerSpeed"
+            "added:C_CombatAudioAlert.GetSpeakerVolume",
+            "added:C_CombatAudioAlert.SetSpeakerVolume"
           ],
-          "prior_rows": 1114,
-          "rows": 1112,
-          "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
+          "prior_rows": 1112,
+          "rows": 1110,
+          "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
           "previous_refresh": {
-            "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-            "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-            "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-            "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+            "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+            "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+            "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+            "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
             "removed_credited_rows": [
-              "added:C_CombatLog.GetMessageLimit"
+              "added:C_CombatAudioAlert.GetSpeakerSpeed",
+              "added:C_CombatAudioAlert.SetSpeakerSpeed"
             ],
-            "prior_rows": 1115,
-            "rows": 1114,
-            "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+            "prior_rows": 1114,
+            "rows": 1112,
+            "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
             "previous_refresh": {
-              "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-              "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-              "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+              "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+              "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+              "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+              "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
               "removed_credited_rows": [
-                "added:C_CombatLog.AreFilteredEventsEnabled",
-                "added:C_CombatLog.GetEntryRetentionTime",
-                "added:C_CombatLog.SetEntryRetentionTime",
-                "added:C_CombatLog.SetFilteredEventsEnabled"
+                "added:C_CombatLog.GetMessageLimit"
               ],
-              "prior_rows": 1119,
-              "rows": 1115,
-              "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-              "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+              "prior_rows": 1115,
+              "rows": 1114,
+              "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+              "previous_refresh": {
+                "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+                "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+                "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+                "removed_credited_rows": [
+                  "added:C_CombatLog.AreFilteredEventsEnabled",
+                  "added:C_CombatLog.GetEntryRetentionTime",
+                  "added:C_CombatLog.SetEntryRetentionTime",
+                  "added:C_CombatLog.SetFilteredEventsEnabled"
+                ],
+                "prior_rows": 1119,
+                "rows": 1115,
+                "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+                "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+              }
             }
           }
         }

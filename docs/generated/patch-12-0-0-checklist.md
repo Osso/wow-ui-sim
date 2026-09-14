@@ -396,14 +396,14 @@
 396. [evidence-required] `added:C_NamePlateManager.SetNamePlateHitTestFrame` — unsafe
 397. [evidence-required] `added:C_NamePlateManager.SetNamePlateHitTestInsets` — unsafe
 398. [evidence-required] `added:C_NamePlateManager.SetNamePlateSimplified` — unsafe
-399. [evidence-required] `added:C_NeighborhoodInitiative.AddTrackedInitiativeTask` — unsafe
+399. [best-effort] `added:C_NeighborhoodInitiative.AddTrackedInitiativeTask` — behavioral
 400. [evidence-required] `added:C_NeighborhoodInitiative.GetActiveNeighborhood` — unsafe
 401. [evidence-required] `added:C_NeighborhoodInitiative.GetInitiativeActivityLogInfo` — unsafe
 402. [evidence-required] `added:C_NeighborhoodInitiative.GetInitiativeTaskChatLink` — unsafe
 403. [evidence-required] `added:C_NeighborhoodInitiative.GetInitiativeTaskInfo` — unsafe
 404. [evidence-required] `added:C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo` — unsafe
 405. [evidence-required] `added:C_NeighborhoodInitiative.GetRequiredLevel` — unsafe
-406. [evidence-required] `added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks` — unsafe
+406. [best-effort] `added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks` — behavioral
 407. [best-effort] `added:C_NeighborhoodInitiative.InitiativeActivityLogEntry` — provenance-only
 408. [evidence-required] `added:C_NeighborhoodInitiative.InitiativeActivityLogEntry.amount` — unsafe
 409. [evidence-required] `added:C_NeighborhoodInitiative.InitiativeActivityLogEntry.completionTime` — unsafe
@@ -443,7 +443,7 @@
 443. [evidence-required] `added:C_NeighborhoodInitiative.InitiativeTaskInfo.timesCompleted` — unsafe
 444. [evidence-required] `added:C_NeighborhoodInitiative.InitiativeTaskInfo.tracked` — unsafe
 445. [best-effort] `added:C_NeighborhoodInitiative.InitiativeTasksTracked` — provenance-only
-446. [evidence-required] `added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs` — unsafe
+446. [best-effort] `added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs` — behavioral
 447. [evidence-required] `added:C_NeighborhoodInitiative.IsInitiativeEnabled` — unsafe
 448. [evidence-required] `added:C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup` — unsafe
 449. [evidence-required] `added:C_NeighborhoodInitiative.IsViewingActiveNeighborhood` — unsafe
@@ -462,7 +462,7 @@
 462. [evidence-required] `added:C_NeighborhoodInitiative.NeighborhoodInitiativeInfo.title` — unsafe
 463. [evidence-required] `added:C_NeighborhoodInitiative.PlayerHasInitiativeAccess` — unsafe
 464. [evidence-required] `added:C_NeighborhoodInitiative.PlayerMeetsRequiredLevel` — unsafe
-465. [evidence-required] `added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask` — unsafe
+465. [best-effort] `added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask` — behavioral
 466. [evidence-required] `added:C_NeighborhoodInitiative.RequestInitiativeActivityLog` — unsafe
 467. [evidence-required] `added:C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo` — unsafe
 468. [evidence-required] `added:C_NeighborhoodInitiative.SetActiveNeighborhood` — unsafe
