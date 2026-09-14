@@ -5,8 +5,8 @@
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "fc143f05f83d3e6e77ebb0d12c08b8be6855c9dc3b12f8ce10f9e23ec0d9b7d4",
-      "rows": 1086
+      "sha256": "b647bdc2384e9e11025d1645b66a475f61e1680c2ab21d3f210174ff5691206f",
+      "rows": 1084
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1112,
+  "total": 1110,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -964,19 +964,6 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatAudioAlert.GetSpeakerVolume",
-      "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/register.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_audio_settings"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.GetSpecSetting",
       "owner": "api",
       "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
@@ -1017,19 +1004,6 @@
     {
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatAudioAlert.SetFormatSetting",
-      "owner": "api",
-      "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/register.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_audio_settings"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatAudioAlert.SetSpeakerVolume",
       "owner": "api",
       "missing_evidence": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row.",
       "probe_protocol": "api-state",
@@ -17096,14 +17070,14 @@
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_audio_settings": {
-      "dependency": "Pinned argument domains and producer-backed fixtures for remaining speaker-volume, format/spec/throttle settings and enable state; speaker-speed storage is modeled separately.",
+      "dependency": "Pinned argument domains and producer-backed fixtures for remaining format/spec/throttle settings and enable state; speaker-speed and speaker-volume storage are modeled separately.",
       "observations": [
-        "For the remaining Get/SetSpeakerVolume, Get/SetFormatSetting, Get/SetSpecSetting and Get/SetThrottle rows, establish exact pinned argument domains, explicit-write state, return arity and setter-success observations. Do not substitute the speaker-speed proof or later category-volume names.",
-        "Observe IsEnabled only with an identified enabled/disabled input; retain the missing enable-state producer as a blocker rather than infer it from stored speed.",
+        "For the remaining Get/SetFormatSetting, Get/SetSpecSetting and Get/SetThrottle rows, establish exact pinned argument domains, explicit-write state, return arity and setter-success observations. Do not substitute the bounded speed/volume proof or later category-volume names.",
+        "Observe IsEnabled only with an identified enabled/disabled input; retain the missing enable-state producer as a blocker rather than infer it from stored speed or volume.",
         "SpeakText scheduling/playback and callback behavior require a separately identified safe producer/capture. No playback or secure enforcement is authorized by these setting plans."
       ],
       "ready_to_execute": false,
-      "design_gap": "Remaining audio-setting defaults, scope, native validation/success, CVar coupling, enable/throttle and speech behavior remain unproven. No additional speaker-speed state proof is demanded by this remaining-row plan.",
+      "design_gap": "Remaining audio-setting defaults, scope, native validation/success, CVar coupling, enable/throttle and speech behavior remain unproven. No additional speaker-speed or speaker-volume state proof is demanded by this remaining-row plan.",
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_state_and_filters": {
@@ -18001,42 +17975,55 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
-    "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
-    "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
-    "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
+    "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
+    "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
+    "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
+    "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
     "removed_credited_rows": [
-      "added:C_CombatAudioAlert.GetSpeakerSpeed",
-      "added:C_CombatAudioAlert.SetSpeakerSpeed"
+      "added:C_CombatAudioAlert.GetSpeakerVolume",
+      "added:C_CombatAudioAlert.SetSpeakerVolume"
     ],
-    "prior_rows": 1114,
-    "rows": 1112,
-    "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
+    "prior_rows": 1112,
+    "rows": 1110,
+    "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
     "previous_refresh": {
-      "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-      "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-      "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-      "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+      "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+      "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+      "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+      "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
       "removed_credited_rows": [
-        "added:C_CombatLog.GetMessageLimit"
+        "added:C_CombatAudioAlert.GetSpeakerSpeed",
+        "added:C_CombatAudioAlert.SetSpeakerSpeed"
       ],
-      "prior_rows": 1115,
-      "rows": 1114,
-      "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+      "prior_rows": 1114,
+      "rows": 1112,
+      "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
       "previous_refresh": {
-        "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-        "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-        "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+        "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+        "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+        "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+        "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
         "removed_credited_rows": [
-          "added:C_CombatLog.AreFilteredEventsEnabled",
-          "added:C_CombatLog.GetEntryRetentionTime",
-          "added:C_CombatLog.SetEntryRetentionTime",
-          "added:C_CombatLog.SetFilteredEventsEnabled"
+          "added:C_CombatLog.GetMessageLimit"
         ],
-        "prior_rows": 1119,
-        "rows": 1115,
-        "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-        "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+        "prior_rows": 1115,
+        "rows": 1114,
+        "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+        "previous_refresh": {
+          "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+          "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+          "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+          "removed_credited_rows": [
+            "added:C_CombatLog.AreFilteredEventsEnabled",
+            "added:C_CombatLog.GetEntryRetentionTime",
+            "added:C_CombatLog.SetEntryRetentionTime",
+            "added:C_CombatLog.SetFilteredEventsEnabled"
+          ],
+          "prior_rows": 1119,
+          "rows": 1115,
+          "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+          "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+        }
       }
     }
   }

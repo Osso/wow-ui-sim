@@ -5485,7 +5485,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_combat_audio_alert.rs",
-          "source_hash": "4d3acc0c9a5b173013aa19001833a4c442cb081bf35379b7e31a855fdbc10a4c",
+          "source_hash": "a5e28785481ab2ff5e5d1fac4f721902bcb00809234b5281a8e6e640b3e5806a",
           "summary": "Modeled C_API functions read/write per-environment numeric speaker speed; accepted numeric writes return true by simulator policy. No CVar, callback or playback coupling."
         },
         {
@@ -5503,31 +5503,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c5d750565f521d93d7dc42639ca3665d9f159d96792c769a111313c5bf8fd784",
+          "source_hash": "9dfd873b50788573efb94134fb20de569beeeca5e1fe96c36bc2f5bd7cfce77d",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "1f94eaee053f5de1ae9d1084ca1a26dc483fb2c07823f75b87c8661836e518db",
+          "source_hash": "8947af7b9c03f51492d2fe8096d54cf25e8bb9737ef7b6cfa431b198aa8a0aa1",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5546,8 +5546,8 @@
       "id": "added:C_CombatAudioAlert.GetSpeakerVolume",
       "symbol": "C_CombatAudioAlert.GetSpeakerVolume",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -5562,14 +5562,54 @@
           "reference": "src/lua_api/globals/register.rs",
           "source_hash": "8083263303333909004d18321d91238db2c743f666851bef09d63ff6e513d23c",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_combat_audio_alert.rs",
+          "source_hash": "a5e28785481ab2ff5e5d1fac4f721902bcb00809234b5281a8e6e640b3e5806a",
+          "summary": "Modeled C_API functions read/write per-environment numeric speaker volume; accepted numeric writes return true by simulator policy. No CVar, callback or playback coupling."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state.rs",
+          "source_hash": "9dfd873b50788573efb94134fb20de569beeeca5e1fe96c36bc2f5bd7cfce77d",
+          "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state/sim_state.rs",
+          "source_hash": "8947af7b9c03f51492d2fe8096d54cf25e8bb9737ef7b6cfa431b198aa8a0aa1",
+          "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row."
+      "notes": "Bounded best-effort ordinary speaker-volume storage only: explicit/repeated numeric writes, getter-one-number/setter-one-boolean arity, simulator accepted-write true policy and distinct two-environment isolation. Tests 4b5ac2a4a reached RED 0/3 at the wrong setter result, not a missing-method exception. Runtime cfad799bb has independent proof 3/3 each (12.0.0 exact-byte GREEN reused; 12.0.5/12.0.7 fresh) on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup []/readability PASS. Modeled Rust registration is gated at retail-12-0-0; earlier-profile fallback callability/absence is unproven. Historical no-category-argument contract. Speed independence is covered. Initial 100.0, native ranges/coercion/success semantics, CVar aliasing, callbacks, persistence/lifecycle, playback, consumers and security remain unproven; no native policy credit."
     },
     {
       "id": "added:C_CombatAudioAlert.GetSpecSetting",
@@ -5711,7 +5751,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_combat_audio_alert.rs",
-          "source_hash": "4d3acc0c9a5b173013aa19001833a4c442cb081bf35379b7e31a855fdbc10a4c",
+          "source_hash": "a5e28785481ab2ff5e5d1fac4f721902bcb00809234b5281a8e6e640b3e5806a",
           "summary": "Modeled C_API functions read/write per-environment numeric speaker speed; accepted numeric writes return true by simulator policy. No CVar, callback or playback coupling."
         },
         {
@@ -5729,31 +5769,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "c5d750565f521d93d7dc42639ca3665d9f159d96792c769a111313c5bf8fd784",
+          "source_hash": "9dfd873b50788573efb94134fb20de569beeeca5e1fe96c36bc2f5bd7cfce77d",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "1f94eaee053f5de1ae9d1084ca1a26dc483fb2c07823f75b87c8661836e518db",
+          "source_hash": "8947af7b9c03f51492d2fe8096d54cf25e8bb9737ef7b6cfa431b198aa8a0aa1",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5772,8 +5812,8 @@
       "id": "added:C_CombatAudioAlert.SetSpeakerVolume",
       "symbol": "C_CombatAudioAlert.SetSpeakerVolume",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -5788,14 +5828,54 @@
           "reference": "src/lua_api/globals/register.rs",
           "source_hash": "8083263303333909004d18321d91238db2c743f666851bef09d63ff6e513d23c",
           "summary": "Global registration orchestrates simulator API modules and compatibility surfaces; registration presence does not establish native semantics, producer state, or consumer behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_combat_audio_alert.rs",
+          "source_hash": "a5e28785481ab2ff5e5d1fac4f721902bcb00809234b5281a8e6e640b3e5806a",
+          "summary": "Modeled C_API functions read/write per-environment numeric speaker volume; accepted numeric writes return true by simulator policy. No CVar, callback or playback coupling."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state.rs",
+          "source_hash": "9dfd873b50788573efb94134fb20de569beeeca5e1fe96c36bc2f5bd7cfce77d",
+          "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/state/sim_state.rs",
+          "source_hash": "8947af7b9c03f51492d2fe8096d54cf25e8bb9737ef7b6cfa431b198aa8a0aa1",
+          "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
+          "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
+        "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The examined current registration surface does not register/model this method; this is not an exhaustive lexical/runtime absence claim. Exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the row."
+      "notes": "Bounded best-effort ordinary speaker-volume storage only: explicit/repeated numeric writes, getter-one-number/setter-one-boolean arity, simulator accepted-write true policy and distinct two-environment isolation. Tests 4b5ac2a4a reached RED 0/3 at the wrong setter result, not a missing-method exception. Runtime cfad799bb has independent proof 3/3 each (12.0.0 exact-byte GREEN reused; 12.0.5/12.0.7 fresh) on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup []/readability PASS. Modeled Rust registration is gated at retail-12-0-0; earlier-profile fallback callability/absence is unproven. Historical no-category-argument contract. Speed independence is covered. Initial 100.0, native ranges/coercion/success semantics, CVar aliasing, callbacks, persistence/lifecycle, playback, consumers and security remain unproven; no native policy credit."
     },
     {
       "id": "added:C_CombatAudioAlert.SetSpecSetting",
@@ -5945,25 +6025,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6069,25 +6149,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6127,19 +6207,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit 41/42 and repeated writes; GetMessageLimit returns exactly one number with the stored value. Setter zero returns are a control, not new setter/event credit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Message-limit writes preserve filter/retention settings and changes to those settings preserve the queried message limit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Distinct 41/42 then 43/44 writes remain isolated between two live Lua environments in both directions."
         }
       ],
@@ -6244,25 +6324,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6302,25 +6382,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c5d2bb2ed71ffa44b3ab78bb679ce8d3e23881ef5ff1416a781f4e4ab0a09741",
+          "source_hash": "1cf49fedc8f3736762c282b693187193c570d7a71ab2ef28cf55ae96b23c4611",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],

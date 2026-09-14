@@ -1,19 +1,23 @@
 # Patch API blocker inventory
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,112 remaining rows after two bounded speaker-speed credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,110 remaining rows after two bounded speaker-volume credits.** Native behavior and executable readiness are not inferred from inventory membership.
+
+## Speaker-volume refresh
+
+Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot. All 282 plans remain; 281 are unchanged. Remaining audio plans retain format/spec/throttle, enable-state and speech obligations, plus native/default/range/CVar/callback/persistence/playback gaps; neither speed nor volume storage proof establishes those effects. Runtime proof: `/tmp/verify-audio-speaker-volume-ledger.json`; metadata change ledger: `/tmp/audio-speaker-volume-metadata-development.json`. Independent metadata verification remains pending.
 
 ## Coverage
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,086 |
+| 12.0.0 | 1,084 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2322 best-effort / 1086 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2324 best-effort / 1084 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 
@@ -29,7 +33,7 @@ Protocol assignment uses literal change/owner fields, with explicit later-patch 
 
 | Proposed protocol | Rows | Missing prerequisite / next observation |
 |---|---:|---|
-| API/state | 448 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
+| API/state | 446 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
 | Structure producer | 318 | Identify populated producer/consumer; vary input and observe exact field relationships. |
 | Publication/removal | 233 | Capture exact old symbol across base/target load phases; distinguish field producers, CVar lookup and globals. |
 | Event producer | 88 | Trigger an actual transition; capture tuple, order, multiplicity and unchanged-state control. |
@@ -51,7 +55,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**All 1,112 remaining rows link to 282 plans** in the JSON: 954 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**All 1,110 remaining rows link to 282 plans** in the JSON: 952 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|

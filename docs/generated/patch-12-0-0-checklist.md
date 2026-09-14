@@ -150,13 +150,13 @@
 150. [best-effort] `added:C_ColorUtil.WrapTextInColorCode` — behavioral
 151. [evidence-required] `added:C_CombatAudioAlert.GetFormatSetting` — unsafe
 152. [best-effort] `added:C_CombatAudioAlert.GetSpeakerSpeed` — behavioral
-153. [evidence-required] `added:C_CombatAudioAlert.GetSpeakerVolume` — unsafe
+153. [best-effort] `added:C_CombatAudioAlert.GetSpeakerVolume` — behavioral
 154. [evidence-required] `added:C_CombatAudioAlert.GetSpecSetting` — unsafe
 155. [evidence-required] `added:C_CombatAudioAlert.GetThrottle` — unsafe
 156. [evidence-required] `added:C_CombatAudioAlert.IsEnabled` — unsafe
 157. [evidence-required] `added:C_CombatAudioAlert.SetFormatSetting` — unsafe
 158. [best-effort] `added:C_CombatAudioAlert.SetSpeakerSpeed` — behavioral
-159. [evidence-required] `added:C_CombatAudioAlert.SetSpeakerVolume` — unsafe
+159. [best-effort] `added:C_CombatAudioAlert.SetSpeakerVolume` — behavioral
 160. [evidence-required] `added:C_CombatAudioAlert.SetSpecSetting` — unsafe
 161. [evidence-required] `added:C_CombatAudioAlert.SetThrottle` — unsafe
 162. [evidence-required] `added:C_CombatAudioAlert.SpeakText` — unsafe
