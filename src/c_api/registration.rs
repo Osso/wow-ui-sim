@@ -38,6 +38,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_combat_text::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_neighborhood_initiative::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_transmog_sets::register(state)?;
     c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
     c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
