@@ -1,10 +1,11 @@
 //! Temporary Dispatcher callback global defaults.
 //!
-//! Frame methods provide the real callback registration path. These free
-//! globals are inert startup compatibility fallbacks until every caller is
-//! routed through the modeled frame/Dispatcher surfaces.
+//! Global event callbacks are modeled from retail 12.0.0. Earlier profiles
+//! retain legacy defaults; unit callbacks and DevTools handlers remain inert
+//! until their independent registration and dispatch systems are modeled.
 
-const DISPATCHER_CALLBACK_DEFAULTS_LUA: &str = r#"
+#[cfg(not(feature = "retail-12-0-0"))]
+const LEGACY_EVENT_CALLBACK_DEFAULTS_LUA: &str = r#"
 if RegisterEventCallback == nil then
     function RegisterEventCallback(_event, _callback)
     end
@@ -15,6 +16,9 @@ if UnregisterEventCallback == nil then
     end
 end
 
+"#;
+
+const DISPATCHER_CALLBACK_DEFAULTS_LUA: &str = r#"
 if RegisterUnitEventCallback == nil then
     function RegisterUnitEventCallback(_event, _callback, _unit)
     end
@@ -32,6 +36,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-0-0"))]
+    lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
     lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -47,8 +53,6 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
-                if RegisterEventCallback("TEST", function() end) ~= nil then return "register_event" end
-                if UnregisterEventCallback("TEST", function() end) ~= nil then return "unregister_event" end
                 if RegisterUnitEventCallback("UNIT_HEALTH", function() end, "player") ~= nil then return "register_unit" end
                 if UnregisterUnitEventCallback("UNIT_HEALTH", function() end, "player") ~= nil then return "unregister_unit" end
                 if DevTools_AddMessageHandler(function() end) ~= nil then return "devtools" end
@@ -58,6 +62,22 @@ mod tests {
             .expect("dispatcher callback defaults probe should run");
 
         assert_eq!(result, "ok");
+    }
+
+    #[cfg(not(feature = "retail-12-0-0"))]
+    #[test]
+    fn installs_legacy_event_callback_defaults() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: bool = env
+            .eval(
+                r#"
+                local callback = function() end
+                return RegisterEventCallback("TEST", callback) == nil
+                    and UnregisterEventCallback("TEST", callback) == nil
+                "#,
+            )
+            .expect("legacy callback defaults probe should run");
+        assert!(result);
     }
 
     #[test]
