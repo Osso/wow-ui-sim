@@ -1,0 +1,8 @@
+## Interface: 120100
+## Title: Aura Dispel Curve Probe
+## Notes: Manual bounded non-secret aura color observations; /auradispelcurve.
+## Author: Alessio Deiana
+## Version: 0.1.0
+## SavedVariables: AuraDispelCurveProbeDB
+
+AuraDispelCurveProbe.lua
