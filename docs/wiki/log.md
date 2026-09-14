@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending StripHyperlinks parser integration
+## [2026-09-14] audit | Credit StripHyperlinks balanced markup flags
 
-Committed parser `1463fce69`, API registration `50448633e`, and API tests `2094af7e2`. The standalone parser progressed RED 1/6 to GREEN 6/6; API tests are RED 0/5 because the previous API result was non-string. Scope is balanced well-formed markup and documented flags only. Integrated verification, metadata and credit remain pending; literal `|n` preservation, escaped/malformed markup and flag truthiness are simulator policies.
+Parser `1463fce69`, API `50448633e` and tests `2094af7e2` cover balanced well-formed UTF-8 hyperlink markup and documented flags. Behavior passes 5/5 per retail 12.0.0/12.0.5/12.0.7, parser 6/6, and an actual unmodified Talent UI consumer fixture; fmt/check/default builds/startup `[]` pass. The 12.0.0 saved stdout proves 5/5, but exit/compiler stderr/warnings are unknown after recorder loss. Metadata `1f78ffddc` proves one credit, nine renewals, six additions, 15,104 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows. Totals **2349 / 1059 / 2**; snapshot **1,085 / 282**. Literal `|n` preservation when false, escaped/malformed markup and flag truthiness remain simulator policies; native byte/coercion/security/full-LoD gaps remain.
 
 ## [2026-09-14] audit | Credit bounded global event callback lifecycle
 

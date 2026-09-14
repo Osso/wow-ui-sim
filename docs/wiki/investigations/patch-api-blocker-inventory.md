@@ -1,5 +1,9 @@
 # Patch API blocker inventory
 
+## StripHyperlinks residuals
+
+One bounded credit covers ordinary balanced well-formed `C_StringUtil.StripHyperlinks` flags, UTF-8 labels, arity and the actual unmodified Talent consumer fixture. Runtime `50448633e`, parser `1463fce69` and tests `2094af7e2` have 5/5 behavioral PASS on each retail 12.0.0/12.0.5/12.0.7 plus parser 6/6; fmt/check/default builds/startup `[]` pass. The saved 12.0.0 stdout proves 5/5, but its process exit, compiler stderr and warnings are unknown after recorder loss. Metadata `1f78ffddc` proves one credit, nine renewals, six additions, **15,104 fresh / zero stale**, six bindings and validator exit 0 / 3,410 rows; totals **2349 / 1059 / 2**, snapshot **1,085 / 282**. Literal `|n` preservation when false, escaped/malformed markup and flag truthiness are simulator policies. Native malformed/nested markup, byte/string-view lifetime, coercion, security and full-LoD remain unverified. [Spec](../../specs/strip-hyperlinks.md); [[patch-12-0-0-api-audit]].
+
 ## Global event callback lifecycle residuals
 
 Two bounded credits cover ordinary global callback lifecycle after `2ff787d41` corrected actual `Event.lua` container userdata handling. Independent proof `/tmp/verify-global-event-callbacks-corrected-ledger.json` passes 8/8 per retail 12.0.0/12.0.5/12.0.7, fmt/check/default binary build and startup `[]`; the two original startup errors are gone. Metadata `cf15e178e` proves **15,098 fresh / zero stale**, six bindings, validator exit 0 and all 3,410 rows matching; totals **2348 / 1060 / 2**, snapshot **1,086 / 282**. Native duplicate/order/error/validation/eligibility/global-frame ordering, unit variants, security/full-LoD, callback-time mutation, recursion and error recovery remain unverified; registry policies are simulator choices. Two function-length signals remain. [Spec](../../specs/global-event-callbacks.md); [[patch-12-0-0-api-audit]].
