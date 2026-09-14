@@ -69,10 +69,7 @@ fn get_tracked_tasks(state: &mut LuaState) -> LuaResult<u32> {
         table_set_num(state, table, (index + 1) as f64, Val::Num(id as f64));
     }
     let result = create_table(state);
-    let Val::Table(table) = result else {
-        unreachable!()
-    };
-    table_set(state, table, "trackedIDs", array);
+    table_set(state, result, "trackedIDs", array);
     state.push(result);
     Ok(1)
 }
