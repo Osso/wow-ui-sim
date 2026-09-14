@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(feature = "retail-12-0-0")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -88,6 +88,7 @@ fn aura_instance_ids_apply_documented_sorting_and_limits() {
     "#).unwrap();
 }
 
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn aura_instance_ids_private_queries_follow_existing_private_state() {
     let env = seeded_env();
@@ -108,6 +109,7 @@ fn aura_instance_ids_private_queries_follow_existing_private_state() {
     "#).unwrap();
 }
 
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn aura_instance_ids_source_reports_filter_match_separately() {
     let env = seeded_env();
@@ -127,6 +129,7 @@ fn aura_instance_ids_source_reports_filter_match_separately() {
     "#).unwrap();
 }
 
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn aura_instance_ids_sound_trigger_enum_exists_before_secure_copy() {
     let env = seeded_env();

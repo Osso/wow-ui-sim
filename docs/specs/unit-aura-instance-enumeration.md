@@ -25,6 +25,8 @@ Retail 12.1 aura containers enumerate public and private aura instance IDs befor
 
 `tests/aura_instance_ids.rs` covers concrete seeded player/target results, blocked/player filtering, state mutations, limits and each documented sort rule, private list copies, real Blizzard source-wrapper return flags, and public/secure enum values.
 
+The two ordinary public-query tests are enabled from `retail-12-0-0`; private-query, source-wrapper and secure-enum tests remain gated at `retail-12-1-0`. Historical 12.0.0 execution is pending; test bodies and runtime behavior are unchanged.
+
 ## Known gaps (current cycle)
 
 Focused development tests passed 5/5 after implementation `31b0e0f95`; logs `/tmp/pi-aura-instance-ids-green-fixed-build.*`. Full-addon acceptance and independent final checks remain with the integration task.
