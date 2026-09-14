@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Record UnitHealthPercent curve development
+
+`13bf5219f` produced RED 1/3 for supplied scalar/color curves; `b31004297` produced invalid-curve RED. `92b4f8c4f` evaluates non-nil curves through the existing scalar/color evaluator and development GREEN is 5/5 on retail 12.0.0. The `0..100` input is simulator policy, not native evidence. Independent verification is pending; no credit or inventory metadata changed. [Spec](../specs/unit-health-percent-curves.md); [[patch-12-0-0-api-audit]].
+
 ## [2026-09-14] audit | Credit historical aura-instance enumeration publication
 
 `33f7fdb39` exposed that `C_UnitAuras.GetUnitAuraInstanceIDs` was unavailable at retail 12.0.0 because the parent module had a `retail-12-1-0` publication gate. Runtime `ba31c6b94` corrects public historical publication only; later private/caster/enum boundaries remain gated. Independent proof passes the two ordinary tests 2/2 each on retail 12.0.0/12.0.5/12.0.7 and five default-feature later-gated regressions 5/5. Metadata proof `e9f56b974`: 15,056 fresh hashes, zero stale, 59 renewals, five additions, one credit, validator exit 0 / 3,410 matching rows. Totals 2344 / 1064 / 2; snapshot 1,090 / 282. Native filter domains, ordering, defaults, identity, security and full-LoD behavior remain open.
