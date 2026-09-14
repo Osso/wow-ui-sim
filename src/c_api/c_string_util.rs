@@ -10,6 +10,9 @@ use rilua::{LuaResult, Val};
 
 use super::helpers::set_global_val;
 
+#[cfg(feature = "retail-12-0-0")]
+mod hyperlinks;
+
 pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
     let c_string_util = create_table(state);
     let Val::Table(c_string_util_ref) = c_string_util else {
@@ -54,6 +57,13 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         c_string_util_ref,
         "TruncateWhenZero",
         c_string_util_truncate_when_zero,
+    )?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        c_string_util_ref,
+        "StripHyperlinks",
+        c_string_util_strip_hyperlinks,
     )?;
     #[cfg(feature = "retail-12-1-0")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
@@ -141,6 +151,28 @@ fn c_string_util_truncate_when_zero(state: &mut LuaState) -> LuaResult<u32> {
         format!("{integer:.0}")
     };
     let result = create_string(state, &text);
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn c_string_util_strip_hyperlinks(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Str(_) = stack_val(state, 1) else {
+        return Err(runtime_error("StripHyperlinks expects string text"));
+    };
+    let text = val_to_string(state, stack_val(state, 1))
+        .ok_or_else(|| runtime_error("StripHyperlinks expects UTF-8 text"))?;
+    // Ordinary Lua truthiness is simulator policy for optional flags.
+    let enabled = |index| !matches!(stack_val(state, index), Val::Nil | Val::Bool(false));
+    let options = hyperlinks::StripHyperlinksOptions {
+        maintain_color: enabled(2),
+        maintain_brackets: enabled(3),
+        strip_newlines: enabled(4),
+        maintain_atlases: enabled(5),
+        maintain_textures: enabled(6),
+    };
+    let stripped = hyperlinks::strip_hyperlinks(&text, &options);
+    let result = create_string(state, &stripped);
     state.push(result);
     Ok(1)
 }
