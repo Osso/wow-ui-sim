@@ -1268,3 +1268,156 @@ mod audio_format_setting_tests {
         assert_eq!(read_pair(&second), (4.0, 3.0));
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod custom_set_crud_tests {
+    use super::{WowLuaEnv, env};
+
+    // Accepted concrete fixtures and copy-value storage are simulator policies,
+    // not native validation, defaults, limits, persistence, or event contracts.
+    // Pinned 12.0.0 declares these seven APIs; current ItemUtil.lua confirms
+    // appearanceID, secondaryAppearanceID, illusionID, with no slot information.
+    fn fixture_env() -> WowLuaEnv {
+        let env = env();
+        env.exec(
+            r#"
+            api = C_TransmogCollection
+            function item(a, s, i)
+                return {appearanceID=a, secondaryAppearanceID=s, illusionID=i}
+            end
+            function one(kind, ...)
+                assert(select('#', ...) == 1, 'expected one return')
+                local value = ...
+                assert(type(value) == kind, 'expected '..kind..', got '..type(value))
+                return value
+            end
+            function zero(...)
+                assert(select('#', ...) == 0, 'mutator must return zero values')
+            end
+            function create(name, icon, items)
+                return one('number', api.NewCustomSet(name, icon, items))
+            end
+            function check_record(id, name, icon, expected)
+                assert(select('#', api.GetCustomSetInfo(id)) == 2, 'info must return two values')
+                local actualName, actualIcon = api.GetCustomSetInfo(id)
+                assert(actualName == name and actualIcon == icon, 'name/icon mismatch')
+                local actual = one('table', api.GetCustomSetItemTransmogInfoList(id))
+                assert(#actual == #expected, 'item count mismatch')
+                for index, value in ipairs(expected) do
+                    for _, key in ipairs({'appearanceID', 'secondaryAppearanceID', 'illusionID'}) do
+                        assert(actual[index][key] == value[key], 'item field mismatch: '..key)
+                    end
+                end
+            end
+            function has_id(id)
+                local ids = one('table', api.GetCustomSets())
+                for _, candidate in ipairs(ids) do
+                    assert(type(candidate) == 'number')
+                    if candidate == id then return true end
+                end
+                return false
+            end
+            firstItems = {item(101, 102, 103), item(111, 112, 113)}
+            secondItems = {item(201, 202, 203)}
+            "#,
+        )
+        .unwrap();
+        env
+    }
+
+    #[test]
+    fn custom_set_crud_creates_distinct_records_and_lists_ids() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            local first = create('Copper Dawn', 134400, firstItems)
+            local second = create('Silver Dusk', 134401, secondItems)
+            assert(first ~= second, 'two records require distinct IDs')
+            assert(has_id(first) and has_id(second), 'created IDs must be listed')
+            check_record(first, 'Copper Dawn', 134400, firstItems)
+            check_record(second, 'Silver Dusk', 134401, secondItems)
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn custom_set_crud_replaces_renames_and_deletes_without_changing_other_record() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            local first = create('Copper Dawn', 134400, firstItems)
+            local second = create('Silver Dusk', 134401, secondItems)
+            assert(first ~= second)
+            local replacement = {item(301, 302, 303)}
+            zero(api.ModifyCustomSet(first, replacement))
+            check_record(first, 'Copper Dawn', 134400, replacement)
+            check_record(second, 'Silver Dusk', 134401, secondItems)
+            zero(api.RenameCustomSet(first, 'Golden Noon'))
+            check_record(first, 'Golden Noon', 134400, replacement)
+            check_record(second, 'Silver Dusk', 134401, secondItems)
+            zero(api.DeleteCustomSet(first))
+            assert(not has_id(first) and has_id(second), 'delete must remove only its ID')
+            check_record(second, 'Silver Dusk', 134401, secondItems)
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn custom_set_crud_copies_input_and_output_tables() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            local id = create('Copper Dawn', 134400, firstItems)
+            firstItems[1].appearanceID = 999
+            firstItems[1].secondaryAppearanceID = 998
+            firstItems[1].illusionID = 997
+            firstItems[2] = nil
+            check_record(id, 'Copper Dawn', 134400, {item(101, 102, 103), item(111, 112, 113)})
+            local replacement = {item(301, 302, 303), item(311, 312, 313)}
+            zero(api.ModifyCustomSet(id, replacement))
+            replacement[1].appearanceID = 888
+            replacement[1].secondaryAppearanceID = 887
+            replacement[1].illusionID = 886
+            replacement[2] = nil
+            local expected = {item(301, 302, 303), item(311, 312, 313)}
+            check_record(id, 'Copper Dawn', 134400, expected)
+            local output = one('table', api.GetCustomSetItemTransmogInfoList(id))
+            output[1].appearanceID = 777
+            output[1].secondaryAppearanceID = 776
+            output[1].illusionID = 775
+            output[2] = nil
+            local ids = one('table', api.GetCustomSets())
+            for index in pairs(ids) do ids[index] = nil end
+            assert(has_id(id), 'mutating returned IDs must not remove stored records')
+            check_record(id, 'Copper Dawn', 134400, expected)
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn custom_set_crud_isolates_distinct_environment_data() {
+        let first = fixture_env();
+        first
+            .exec("id = create('Copper Dawn', 134400, firstItems)")
+            .unwrap();
+        let second = fixture_env();
+        second
+            .exec("id = create('Silver Dusk', 134401, secondItems)")
+            .unwrap();
+        first
+            .exec("check_record(id, 'Copper Dawn', 134400, firstItems)")
+            .unwrap();
+        second
+            .exec("check_record(id, 'Silver Dusk', 134401, secondItems)")
+            .unwrap();
+        first.exec("zero(api.RenameCustomSet(id, 'Golden Noon')); zero(api.ModifyCustomSet(id, {item(301,302,303)}))").unwrap();
+        second.exec("check_record(id, 'Silver Dusk', 134401, secondItems); zero(api.RenameCustomSet(id, 'Moonrise'))").unwrap();
+        first.exec("check_record(id, 'Golden Noon', 134400, {item(301,302,303)}); zero(api.DeleteCustomSet(id)); assert(not has_id(id))").unwrap();
+        second
+            .exec("assert(has_id(id)); check_record(id, 'Moonrise', 134401, secondItems)")
+            .unwrap();
+    }
+}
