@@ -1421,3 +1421,110 @@ mod custom_set_crud_tests {
             .unwrap();
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod neighborhood_tracked_tasks_tests {
+    use super::{WowLuaEnv, env};
+
+    // Duplicate-add/unknown-remove idempotence and detached getter copies are
+    // simulator policies, not native ordering, validation, or lifecycle claims.
+    fn fixture_env() -> WowLuaEnv {
+        let env = env();
+        env.exec(
+            r#"
+            api = C_NeighborhoodInitiative
+            function check_members(expected)
+                local result = api.GetTrackedInitiativeTasks()
+                assert(type(result) == 'table', 'getter must return a table')
+                local ids = result.trackedIDs
+                assert(type(ids) == 'table', 'trackedIDs must be an array')
+                local wanted, seen = {}, {}
+                for _, id in ipairs(expected) do wanted[id] = true end
+                local count = 0
+                for index, id in pairs(ids) do
+                    assert(type(index) == 'number' and index >= 1 and index <= #expected
+                        and index == math.floor(index), 'trackedIDs must use contiguous array indices')
+                    assert(type(id) == 'number', 'tracked ID must be numeric')
+                    assert(wanted[id], 'unexpected tracked ID: '..tostring(id))
+                    assert(not seen[id], 'duplicate tracked ID: '..tostring(id))
+                    seen[id] = true
+                    count = count + 1
+                end
+                assert(count == #expected, 'tracked membership count mismatch')
+                for _, id in ipairs(expected) do
+                    assert(seen[id], 'missing tracked ID: '..id)
+                end
+            end
+            "#,
+        )
+        .unwrap();
+        env
+    }
+
+    #[test]
+    fn neighborhood_tracked_tasks_membership_and_idempotent_mutations() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            api.AddTrackedInitiativeTask(20)
+            api.AddTrackedInitiativeTask(40)
+            check_members({20, 40})
+            api.AddTrackedInitiativeTask(20)
+            check_members({20, 40})
+            api.RemoveTrackedInitiativeTask(60)
+            check_members({20, 40})
+            api.RemoveTrackedInitiativeTask(20)
+            check_members({40})
+            api.RemoveTrackedInitiativeTask(20)
+            check_members({40})
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn neighborhood_tracked_tasks_arity_and_detached_getter_array() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            local function zero(...)
+                assert(select('#', ...) == 0, 'mutator must return zero values')
+            end
+            local function one_table(...)
+                assert(select('#', ...) == 1, 'getter must return exactly one value')
+                local value = ...
+                assert(type(value) == 'table', 'getter must return a table')
+                return value
+            end
+            zero(api.AddTrackedInitiativeTask(20))
+            zero(api.AddTrackedInitiativeTask(40))
+            local snapshot = one_table(api.GetTrackedInitiativeTasks())
+            check_members({20, 40})
+            snapshot.trackedIDs[1] = 80
+            snapshot.trackedIDs[2] = nil
+            check_members({20, 40})
+            zero(api.RemoveTrackedInitiativeTask(20))
+            check_members({40})
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn neighborhood_tracked_tasks_isolates_environments_bidirectionally() {
+        let first = fixture_env();
+        first
+            .exec("api.AddTrackedInitiativeTask(20); api.AddTrackedInitiativeTask(40)")
+            .unwrap();
+        let second = fixture_env();
+        second
+            .exec("api.AddTrackedInitiativeTask(60); api.AddTrackedInitiativeTask(80)")
+            .unwrap();
+        first.exec("check_members({20, 40})").unwrap();
+        second.exec("check_members({60, 80})").unwrap();
+        first.exec("api.RemoveTrackedInitiativeTask(20); api.AddTrackedInitiativeTask(100); check_members({40, 100})").unwrap();
+        second.exec("check_members({60, 80})").unwrap();
+        second.exec("api.RemoveTrackedInitiativeTask(80); api.AddTrackedInitiativeTask(120); check_members({60, 120})").unwrap();
+        first.exec("check_members({40, 100})").unwrap();
+    }
+}
