@@ -26,11 +26,11 @@ The existing `current / max * 100` input is simulator policy, not native-scale e
 
 `tests/admin_health_power_api.rs`: `unit_power_percent_` tests cover scalar/color evaluation, primary/secondary updates, arity, nil/omitted queries and invalid curve rejection.
 
-Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator. Independent proof `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata commit `f846069c9` provisionally claims 64 renewals, seven additions, one credit, totals **2346 / 1062 / 2**, and snapshot **1088 / 282**; metadata verification remains pending.
+Tests `eb495dbc7` reached RED: two ordinary-query passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator. Independent proof `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed and startup returned `[]`. Metadata `f846069c9` records 64 renewals, seven additions and one credit. Correction `9c75403d2` renewed one stale prior health-spec reference; final snapshot binding `52297be78` proves **15,070 fresh / zero stale**, validator exit 0 and all 3,410 rows matching. Totals **2346 / 1062 / 2**; snapshot **1,088 / 282**.
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify metadata/provenance claim in `f846069c9`.
+- [ ] Earlier-profile curve behavior remains unverified.
 
 ## Out of scope
 
