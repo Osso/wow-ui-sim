@@ -635,7 +635,7 @@
 635. [evidence-required] `added:C_TransmogOutfitInfo.GetNumberOfOutfitsUnlockedForSource` — unsafe
 636. [evidence-required] `added:C_TransmogOutfitInfo.GetOutfitInfo` — unsafe
 637. [evidence-required] `added:C_TransmogOutfitInfo.GetOutfitSituation` — unsafe
-638. [evidence-required] `added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled` — unsafe
+638. [best-effort] `added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled` — behavioral
 639. [evidence-required] `added:C_TransmogOutfitInfo.GetOutfitsInfo` — unsafe
 640. [evidence-required] `added:C_TransmogOutfitInfo.GetPendingTransmogCost` — unsafe
 641. [evidence-required] `added:C_TransmogOutfitInfo.GetSecondarySlotState` — unsafe
@@ -660,7 +660,7 @@
 660. [evidence-required] `added:C_TransmogOutfitInfo.PickupOutfit` — unsafe
 661. [evidence-required] `added:C_TransmogOutfitInfo.ResetOutfitSituations` — unsafe
 662. [evidence-required] `added:C_TransmogOutfitInfo.RevertPendingTransmog` — unsafe
-663. [evidence-required] `added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled` — unsafe
+663. [best-effort] `added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled` — behavioral
 664. [evidence-required] `added:C_TransmogOutfitInfo.SetOutfitToCustomSet` — unsafe
 665. [evidence-required] `added:C_TransmogOutfitInfo.SetOutfitToSet` — unsafe
 666. [evidence-required] `added:C_TransmogOutfitInfo.SetPendingTransmog` — unsafe

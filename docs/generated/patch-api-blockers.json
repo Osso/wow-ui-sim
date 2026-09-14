@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
   "verified": "2026-09-14",
-  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. Two explicit filter-storage credits do not establish native defaults/reset, filtering effects, validation, events, persistence, lifecycle, consumer execution or security.",
+  "scope": "Snapshot of evidence-required rows only; best-effort residual gaps and exceptions remain outside membership. Two global outfit-situations setting credits do not establish initial/native defaults, pending/per-outfit state, reset, persistence, events, UI/consumer execution or security.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "331284acd32a25424c90f30bdb22e0669d51f3ce9f732dda613f03ade0b644ce",
-      "rows": 1067
+      "sha256": "b3e26d7d3157702d3ce01bc17740badd956c0248e7cd7570ceb7ecad9d55a6ed",
+      "rows": 1065
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1093,
+  "total": 1091,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -5810,19 +5810,6 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
-      "owner": "api",
-      "missing_evidence": "The current simulator does not model this transmog-outfit API, structure, or field contract. The source register provides signature metadata only; authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/transmog_outfit_info.rs"
-      ],
-      "probe_plan": "outfit_catalog_state"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_TransmogOutfitInfo.GetOutfitsInfo",
       "owner": "api",
       "missing_evidence": "The current simulator does not model this transmog-outfit API, structure, or field contract. The source register provides signature metadata only; authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close this row.",
@@ -6132,19 +6119,6 @@
         "src/lua_api/globals/transmog_outfit_info.rs"
       ],
       "probe_plan": "outfit_actions_costs"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled",
-      "owner": "api",
-      "missing_evidence": "The current simulator does not model this transmog-outfit API, structure, or field contract. The source register provides signature metadata only; authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/globals/transmog_outfit_info.rs"
-      ],
-      "probe_plan": "outfit_catalog_state"
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
@@ -15216,15 +15190,20 @@
       "design_gap": "No populated native fixture or modeled producer establishes slot appearance, outfit linkage, warning, texture, or pending-state semantics."
     },
     "outfit_catalog_state": {
-      "dependency": "Native outfit catalog fixture or modeled source that produces active/currently-viewed IDs, outfit entries, limits, names, situations, and usable/locked state. Temporary defaults expose placeholders only.",
+      "dependency": "Native outfit catalog fixture or modeled source that produces active/currently-viewed IDs, outfit entries, limits, names, situations, and usable/locked state. Global situation-enable boolean storage is proven separately; catalog placeholders remain.",
       "observations": [
         "Enumerate GetOutfitsInfo/GetOutfitInfo/GetActiveOutfitID/GetCurrentlyViewedOutfitID and compare empty, selected, locked, disabled, event, and renamed outfits.",
-        "Change active/viewed outfit and situation enablement; capture entry identity, names/icons, situation categories/groups/options, ordering and duplicate behavior.",
+        "Change active/viewed outfit and capture entry identity, names/icons, pending/per-outfit situation categories/groups/options, ordering and duplicate behavior. For global situation enablement, capture native initial/default, reset, event, persistence and UI effects; ordinary boolean storage is already proven.",
         "Distinguish catalog metadata from displayed appearance state and from persistence across reload/logout; capture unavailable/invalid IDs separately.",
         "Capture source-specific maximum/unlocked counts, usable/total limits, UI situation category/options and IsValidTransmogOutfitName results using observed source IDs and representative names. Observe complete TransmogOutfitEntryInfo fields together; no inferred capacity or validation policy."
       ],
       "ready_to_execute": false,
-      "design_gap": "No authoritative outfit catalog producer, populated fixture, ordering/default contract, or persistence semantics."
+      "design_gap": "No authoritative outfit catalog producer, populated fixture, ordering/default contract, or persistence semantics.",
+      "bounded_simulator_evidence": {
+        "runtime": "457a8ae88",
+        "proof": "/tmp/verify-outfit-situations-enabled-ledger.json",
+        "scope": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+      }
     },
     "outfit_actions_costs": {
       "dependency": "Native transmog UI action flow with valid item/slot inputs and currency/cost state, or a complete simulator transaction model. Current methods are temporary compatibility defaults and do not prove cost or commit semantics.",
@@ -17803,117 +17782,129 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "Two bounded explicit filter-storage credits; native/default/reset/filtering/event/persistence/lifecycle/consumer/security gaps retained",
-    "runtime_commit": "5cded1d0b",
-    "tests_commit": "4fb364410",
-    "proof": "/tmp/verify-transmog-sets-filter-ledger.json",
+    "scope": "Two bounded global outfit-situations setting credits; initial/native defaults, pending/per-outfit, reset, persistence, events, UI/consumer and security gaps retained",
+    "runtime_commit": "457a8ae88",
+    "tests_commit": "14ac47769",
+    "proof": "/tmp/verify-outfit-situations-enabled-ledger.json",
     "removed_credited_rows": [
-      "added:C_TransmogSets.GetSetsFilter",
-      "added:C_TransmogSets.SetSetsFilter"
+      "added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
+      "added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled"
     ],
-    "prior_rows": 1095,
-    "rows": 1093,
+    "prior_rows": 1093,
+    "rows": 1091,
     "previous_refresh": {
-      "scope": "Two bounded active-unit selection credits; parent native identity/validation/default/lifecycle/routing/event/consumer/security gaps retained",
-      "runtime_commit": "375c71192",
-      "tests_commit": "8113cc6bc",
-      "proof": "/tmp/verify-combat-text-active-unit-ledger.json",
+      "scope": "Two bounded explicit filter-storage credits; native/default/reset/filtering/event/persistence/lifecycle/consumer/security gaps retained",
+      "runtime_commit": "5cded1d0b",
+      "tests_commit": "4fb364410",
+      "proof": "/tmp/verify-transmog-sets-filter-ledger.json",
       "removed_credited_rows": [
-        "added:C_CombatText.GetActiveUnit",
-        "added:C_CombatText.SetActiveUnit"
+        "added:C_TransmogSets.GetSetsFilter",
+        "added:C_TransmogSets.SetSetsFilter"
       ],
-      "prior_rows": 1097,
-      "rows": 1095,
+      "prior_rows": 1095,
+      "rows": 1093,
       "previous_refresh": {
-        "scope": "Four bounded tracked-task method/array-field credits; parent task-record/native/validation/event/persistence/consumer gaps retained",
-        "runtime_commit": "27223f82a",
-        "tests_commit": "3abb84e1c",
-        "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
+        "scope": "Two bounded active-unit selection credits; parent native identity/validation/default/lifecycle/routing/event/consumer/security gaps retained",
+        "runtime_commit": "375c71192",
+        "tests_commit": "8113cc6bc",
+        "proof": "/tmp/verify-combat-text-active-unit-ledger.json",
         "removed_credited_rows": [
-          "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
-          "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
-          "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
-          "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask"
+          "added:C_CombatText.GetActiveUnit",
+          "added:C_CombatText.SetActiveUnit"
         ],
-        "prior_rows": 1101,
-        "rows": 1097,
+        "prior_rows": 1097,
+        "rows": 1095,
         "previous_refresh": {
-          "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
-          "runtime_commit": "df6264867",
-          "tests_commit": "ef9bbe70c",
-          "proof": "/tmp/verify-custom-set-crud-ledger.json",
+          "scope": "Four bounded tracked-task method/array-field credits; parent task-record/native/validation/event/persistence/consumer gaps retained",
+          "runtime_commit": "27223f82a",
+          "tests_commit": "3abb84e1c",
+          "proof": "/tmp/verify-neighborhood-tracked-tasks-ledger.json",
           "removed_credited_rows": [
-            "added:C_TransmogCollection.DeleteCustomSet",
-            "added:C_TransmogCollection.GetCustomSetInfo",
-            "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
-            "added:C_TransmogCollection.GetCustomSets",
-            "added:C_TransmogCollection.ModifyCustomSet",
-            "added:C_TransmogCollection.NewCustomSet",
-            "added:C_TransmogCollection.RenameCustomSet"
+            "added:C_NeighborhoodInitiative.AddTrackedInitiativeTask",
+            "added:C_NeighborhoodInitiative.GetTrackedInitiativeTasks",
+            "added:C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs",
+            "added:C_NeighborhoodInitiative.RemoveTrackedInitiativeTask"
           ],
-          "prior_rows": 1108,
-          "rows": 1101,
+          "prior_rows": 1101,
+          "rows": 1097,
           "previous_refresh": {
-            "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
-            "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
-            "tests_commit": "70979713d",
-            "proof": "/tmp/verify-audio-format-setting-ledger.json",
+            "scope": "Seven bounded historical custom-set CRUD credits; parent native/validation/error/default/persistence/events/hyperlink/consumer gaps retained",
+            "runtime_commit": "df6264867",
+            "tests_commit": "ef9bbe70c",
+            "proof": "/tmp/verify-custom-set-crud-ledger.json",
             "removed_credited_rows": [
-              "added:C_CombatAudioAlert.GetFormatSetting",
-              "added:C_CombatAudioAlert.SetFormatSetting"
+              "added:C_TransmogCollection.DeleteCustomSet",
+              "added:C_TransmogCollection.GetCustomSetInfo",
+              "added:C_TransmogCollection.GetCustomSetItemTransmogInfoList",
+              "added:C_TransmogCollection.GetCustomSets",
+              "added:C_TransmogCollection.ModifyCustomSet",
+              "added:C_TransmogCollection.NewCustomSet",
+              "added:C_TransmogCollection.RenameCustomSet"
             ],
-            "prior_rows": 1110,
-            "rows": 1108,
-            "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
+            "prior_rows": 1108,
+            "rows": 1101,
             "previous_refresh": {
-              "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
-              "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
-              "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
-              "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
+              "scope": "Bounded keyed numeric format-setting metadata; no native policy credit",
+              "runtime_commit": "b36c27ce31c78fc66a5f41b62a401344f55c63e8",
+              "tests_commit": "70979713d",
+              "proof": "/tmp/verify-audio-format-setting-ledger.json",
               "removed_credited_rows": [
-                "added:C_CombatAudioAlert.GetSpeakerVolume",
-                "added:C_CombatAudioAlert.SetSpeakerVolume"
+                "added:C_CombatAudioAlert.GetFormatSetting",
+                "added:C_CombatAudioAlert.SetFormatSetting"
               ],
-              "prior_rows": 1112,
-              "rows": 1110,
-              "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
+              "prior_rows": 1110,
+              "rows": 1108,
+              "prior_inventory_proof": "/tmp/verify-audio-speaker-volume-metadata-ledger.json",
               "previous_refresh": {
-                "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
-                "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
-                "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
-                "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
+                "scope": "Bounded numeric speaker-volume metadata refresh; no native policy credit",
+                "runtime_commit": "cfad799bbbbca7941e7dcfa85f4b14c278148d5d",
+                "tests_commit": "4b5ac2a4a4182ddc7bbf6dcfa3a00c1a260cc1f5",
+                "proof": "/tmp/verify-audio-speaker-volume-ledger.json",
                 "removed_credited_rows": [
-                  "added:C_CombatAudioAlert.GetSpeakerSpeed",
-                  "added:C_CombatAudioAlert.SetSpeakerSpeed"
+                  "added:C_CombatAudioAlert.GetSpeakerVolume",
+                  "added:C_CombatAudioAlert.SetSpeakerVolume"
                 ],
-                "prior_rows": 1114,
-                "rows": 1112,
-                "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
+                "prior_rows": 1112,
+                "rows": 1110,
+                "prior_inventory_proof": "/tmp/verify-audio-speaker-speed-metadata-ledger.json",
                 "previous_refresh": {
-                  "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
-                  "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
-                  "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
-                  "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
+                  "scope": "Bounded numeric speaker-speed metadata refresh; no native policy credit",
+                  "runtime_commit": "df3137a234415baed8f3a3839307f96ec85101ad",
+                  "tests_commit": "87adb488252a6e25fb0944a7ad546d8e346af0f0",
+                  "proof": "/tmp/verify-audio-speaker-speed-ledger.json",
                   "removed_credited_rows": [
-                    "added:C_CombatLog.GetMessageLimit"
+                    "added:C_CombatAudioAlert.GetSpeakerSpeed",
+                    "added:C_CombatAudioAlert.SetSpeakerSpeed"
                   ],
-                  "prior_rows": 1115,
-                  "rows": 1114,
-                  "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+                  "prior_rows": 1114,
+                  "rows": 1112,
+                  "prior_inventory_proof": "/tmp/verify-combatlog-message-limit-metadata-ledger.json",
                   "previous_refresh": {
-                    "scope": "Combat-log stored-setting metadata refresh; no runtime change",
-                    "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
-                    "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+                    "scope": "Message-limit getter metadata refresh; existing runtime and setter event credit unchanged",
+                    "tests_commit": "bd76679e0bb4d6445238b95da1a1835b1cf16a92",
+                    "proof": "/tmp/verify-combatlog-message-limit-ledger.json",
+                    "proof_revision": "b91e21c62ad9c00252658c6c06fc0bde9c64b8b6",
                     "removed_credited_rows": [
-                      "added:C_CombatLog.AreFilteredEventsEnabled",
-                      "added:C_CombatLog.GetEntryRetentionTime",
-                      "added:C_CombatLog.SetEntryRetentionTime",
-                      "added:C_CombatLog.SetFilteredEventsEnabled"
+                      "added:C_CombatLog.GetMessageLimit"
                     ],
-                    "prior_rows": 1119,
-                    "rows": 1115,
-                    "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
-                    "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+                    "prior_rows": 1115,
+                    "rows": 1114,
+                    "prior_inventory_proof": "/tmp/verify-combatlog-settings-metadata-ledger.json",
+                    "previous_refresh": {
+                      "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+                      "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+                      "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
+                      "removed_credited_rows": [
+                        "added:C_CombatLog.AreFilteredEventsEnabled",
+                        "added:C_CombatLog.GetEntryRetentionTime",
+                        "added:C_CombatLog.SetEntryRetentionTime",
+                        "added:C_CombatLog.SetFilteredEventsEnabled"
+                      ],
+                      "prior_rows": 1119,
+                      "rows": 1115,
+                      "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+                      "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
+                    }
                   }
                 }
               }

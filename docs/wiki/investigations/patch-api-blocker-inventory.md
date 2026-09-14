@@ -1,5 +1,9 @@
 # Patch API blocker inventory
 
+## Global outfit-situations setting refresh
+
+Two bounded credits cover explicit/repeated global boolean writes, one-boolean getter, zero-return setter and environment isolation. Runtime `457a8ae88`, tests `14ac47769`: independent 3/3 each on retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-outfit-situations-enabled-ledger.json`. Totals **2343 / 1065 / 2**; snapshot **1,091 rows / 282 plans**. Six manifests scanned: 107 hash renewals and eight evidence additions. Metadata verification remains pending; no validator was run for this slice. Initial false is simulator policy; native defaults, pending/per-outfit behavior, reset, persistence, events, UI/consumer execution and security remain unproven. Broad audit and eight Mists failures remain open.
+
 ## CombatText active-unit refresh
 
 Only `GetActiveUnit` and `SetActiveUnit` leave the prior 1,097-row snapshot. The bounded model stores copied explicit `player`/`vehicle` selection independently per environment; it does not model identity, token validation, defaults, routing, events or consumers. Runtime `375c71192` passes 3/3 on each target profile; final metadata proof at `c099a68e6` records **15,035 fresh / zero stale**, 95 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Totals **2339 / 1069 / 2**; snapshot **1,095 rows / 282 plans**. `GetCurrentEventInfo`, native/security obligations and eight Mists AccountStore failures remain open. `/tmp/verify-combat-text-active-unit-metadata-ledger.json`.
@@ -10,7 +14,7 @@ Four bounded credits cover Add/Remove/GetTrackedInitiativeTasks and InitiativeTa
 
 Format-setting refresh: only Get/SetFormatSetting leave the prior 1,110-row snapshot. All 282 plans remain; 281 unchanged. Ordinary keyed state is independently proven 3/3 per target profile at `b36c27ce3`; final metadata proof at `19c423c5f` records 14,976 fresh hashes, zero stale, 43 renewals, 12 additions, validator exit 0 and 3,410 matching rows. Remaining audio plan retains spec/throttle, enable/speech and native/default/range/CVar/output/callback/consumer/security obligations. `/tmp/verify-audio-format-setting-metadata-ledger.json`.
 
-Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,097 remaining rows after four bounded tracked-task credits.** Native behavior and executable readiness are not inferred from inventory membership.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place, combat-log and speaker-speed/volume setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,091 remaining rows after two bounded global outfit-situations credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Speaker-volume refresh
 

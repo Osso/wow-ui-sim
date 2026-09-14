@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending global outfit-situations toggle proof
+## [2026-09-14] audit | Credit bounded global outfit-situations setting
 
-Tests `14ac47769` reached RED 0/3: the getter had the wrong type after an explicit write and the setter returned nonzero values. Runtime `457a8ae88` records focused retail 12.0.0 GREEN 3/3 in `/tmp/outfit-situations-enabled-green-ledger.json`; independent verification is pending. The model is one environment-local global boolean, initially false by simulator policy, not per-outfit state. Native defaults, pending/per-outfit behavior, events, persistence, UI/consumer behavior and security remain unproven. No audit credit, totals, manifests or blocker snapshot changed. [Spec](../specs/outfit-situations-enabled.md).
+Two bounded credits cover explicit/repeated global boolean writes, one-boolean getter, zero-return setter and environment isolation. Runtime `457a8ae88`, tests `14ac47769`: independent 3/3 each on retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-outfit-situations-enabled-ledger.json`. Totals **2343 / 1065 / 2**; snapshot **1,091 rows / 282 plans**. Six manifests scanned: 107 hash renewals and eight evidence additions. Metadata verification remains pending; no validator was run for this slice. Initial false is simulator policy; native defaults, pending/per-outfit behavior, reset, persistence, events, UI/consumer execution and security remain unproven. Broad audit and eight Mists failures remain open. [Spec](../specs/outfit-situations-enabled.md).
 
 ## [2026-09-14] audit | Credit bounded transmog-set filter state
 

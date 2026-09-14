@@ -5462,31 +5462,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5531,43 +5531,43 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "5d47cc1582435daaa62b923acce18ecb229483dad670fa34ffaeb15064ea9250",
+          "source_hash": "1b1876fdbae1785a20b377672bbc770e6fb9bc2977f4ffb3210d82ed6635a134",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "6fb6b65a98734c26818efa6c7816fd777e56bcaf994478b19cc2cbf45e609b33",
+          "source_hash": "4d7efaf3cd7d03e10b1227004143f777f2c538e060ccd066fafa7c12888a7c7b",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5612,31 +5612,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -5768,31 +5768,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_distinct_keys_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete and repeated numeric writes preserve four distinct ordinary unit/alert-type keys."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_arity_and_speaker_preservation",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter-one-number and setter-one-boolean true accepted-write policy; format keys and speaker speed/volume preserve one another."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_format_setting_isolates_lua_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct keyed writes remain isolated bidirectionally across two live environments."
         }
       ],
@@ -5837,43 +5837,43 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "5d47cc1582435daaa62b923acce18ecb229483dad670fa34ffaeb15064ea9250",
+          "source_hash": "1b1876fdbae1785a20b377672bbc770e6fb9bc2977f4ffb3210d82ed6635a134",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "6fb6b65a98734c26818efa6c7816fd777e56bcaf994478b19cc2cbf45e609b33",
+          "source_hash": "4d7efaf3cd7d03e10b1227004143f777f2c538e060ccd066fafa7c12888a7c7b",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit and repeated numeric writes 1/2 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_speed_isolates_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Two live environments preserve distinct 1/2 then 3/4 speed values, with writes isolated in both directions."
         }
       ],
@@ -5918,31 +5918,31 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "0ffada700663a26fb91219e98d6097a5df1b56e4286bb86059e53058477a988e",
+          "source_hash": "7574d8f65c2f24b61cb777f4e966f41f50d5afa1758881e04208b011d1c01d02",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "2d7e9730ccad7dca513320d314141aa826458f0d89bfe0a91089d4cf5dcbbe37",
+          "source_hash": "4cc81de36e4ee1f303255d2e2c013947b70c4d109bf5d9975852d57e6c2eb161",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit and repeated numeric writes 25/75 roundtrip; true is the simulator accepted-write policy, not native change detection."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_arity_and_speed_independence",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Getter returns exactly one number; accepted numeric setter writes return exactly one boolean true; speed and volume writes remain independent."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::audio_speaker_volume_isolates_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Two live environments preserve distinct 20/40 then 60/80 volume values, with writes isolated in both directions."
         }
       ],
@@ -6105,25 +6105,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6229,25 +6229,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6287,19 +6287,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_roundtrip_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit 41/42 and repeated writes; GetMessageLimit returns exactly one number with the stored value. Setter zero returns are a control, not new setter/event credit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_independent_of_filter_and_retention",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Message-limit writes preserve filter/retention settings and changes to those settings preserve the queried message limit."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_message_limit_isolates_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct 41/42 then 43/44 writes remain isolated between two live Lua environments in both directions."
         }
       ],
@@ -6404,25 +6404,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6462,25 +6462,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Boolean and numeric setting writes preserve the other setting."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
@@ -6826,19 +6826,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
@@ -6912,19 +6912,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_explicit_and_repeated_writes",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::combat_text_active_unit_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete player/vehicle repeated selection, return arity and environment isolation; 3/3 each target profile, not native identity, validation, routing or event/consumer proof."
         },
         {
@@ -14044,19 +14044,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
@@ -14317,19 +14317,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
@@ -15679,19 +15679,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
@@ -16361,19 +16361,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_membership_and_idempotent_mutations",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_arity_and_detached_getter_array",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::neighborhood_tracked_tasks_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete ordinary membership, detached returned arrays, return arity and environment isolation; 3/3 each target profile, not native validation, task-info or event/consumer proof."
         },
         {
@@ -20602,25 +20602,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20707,25 +20707,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20777,25 +20777,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -20847,25 +20847,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -21057,25 +21057,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -21127,25 +21127,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -21197,25 +21197,25 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_creates_distinct_records_and_lists_ids",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_replaces_renames_and_deletes_without_changing_other_record",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_copies_input_and_output_tables",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::custom_set_crud_isolates_distinct_environment_data",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Ordinary concrete CRUD fixtures, copied values, return arity and record/environment isolation; independent 4/4 each targeted profile, not native/error-policy proof."
         },
         {
@@ -22258,8 +22258,8 @@
       "id": "added:C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
       "symbol": "C_TransmogOutfitInfo.GetOutfitSituationsEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -22273,15 +22273,43 @@
           "kind": "source",
           "reference": "src/lua_api/globals/transmog_outfit_info.rs",
           "source_hash": "f70d994263fdf246b18280f992d3c9072de73636500cd4ce1e8942531083958f",
-          "summary": "Current simulator source does not model this transmog-outfit API, structure, or field contract; authoritative runtime semantics are absent."
+          "summary": "Existing lock helpers only; global outfit-situations state is modeled separately in src/c_api/c_transmog_outfit_info.rs. No pending/per-outfit or UI behavior proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_explicit_and_repeated_writes",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_return_types_and_arity",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_isolates_environments_bidirectionally",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_outfit_info.rs",
+          "source_hash": "4a574f067d883238f558f90e836d13897371cc81ae721b91e5a76b635eedfa7e",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_explicit_and_repeated_writes",
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_return_types_and_arity",
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "457a8ae88",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current simulator does not model this transmog-outfit API, structure, or field contract. The source register provides signature metadata only; authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close this row."
+      "notes": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogOutfitInfo.GetOutfitsInfo",
@@ -22983,8 +23011,8 @@
       "id": "added:C_TransmogOutfitInfo.SetOutfitSituationsEnabled",
       "symbol": "C_TransmogOutfitInfo.SetOutfitSituationsEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -22998,15 +23026,43 @@
           "kind": "source",
           "reference": "src/lua_api/globals/transmog_outfit_info.rs",
           "source_hash": "f70d994263fdf246b18280f992d3c9072de73636500cd4ce1e8942531083958f",
-          "summary": "Current simulator source does not model this transmog-outfit API, structure, or field contract; authoritative runtime semantics are absent."
+          "summary": "Existing lock helpers only; global outfit-situations state is modeled separately in src/c_api/c_transmog_outfit_info.rs. No pending/per-outfit or UI behavior proof."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_explicit_and_repeated_writes",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_return_types_and_arity",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_isolates_environments_bidirectionally",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_transmog_outfit_info.rs",
+          "source_hash": "4a574f067d883238f558f90e836d13897371cc81ae721b91e5a76b635eedfa7e",
+          "summary": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_explicit_and_repeated_writes",
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_return_types_and_arity",
+        "tests/c_namespace_noop_replacements.rs::outfit_situations_enabled_isolates_environments_bidirectionally"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "457a8ae88",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current simulator does not model this transmog-outfit API, structure, or field contract. The source register provides signature metadata only; authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close this row."
+      "notes": "Bounded global boolean setting: explicit and repeated writes, one-boolean getter, zero-return setter and bidirectional environment isolation. Runtime 457a8ae88; tests 14ac47769 pass 3/3 each on retail 12.0.0/12.0.5/12.0.7. Initial false is simulator policy, not a native default. Pending/per-outfit behavior, reset, persistence, events, native validation, UI/consumer execution and security remain unproven."
     },
     {
       "id": "added:C_TransmogOutfitInfo.SetOutfitToCustomSet",
@@ -24987,19 +25043,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_explicit_writes_preserve_other_keys",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
@@ -25120,19 +25176,19 @@
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_explicit_writes_preserve_other_keys",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_return_types_and_arity",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
           "kind": "test",
           "reference": "tests/c_namespace_noop_replacements.rs::transmog_sets_filter_isolates_environments_bidirectionally",
-          "source_hash": "c4591636fc667f6ca978e2c6da76e51b9823f4f526c7bcc4f7fff54604241784",
+          "source_hash": "1220170c259337f8fc1ed0e2cbfaae4456a44e4971ab1036f2fc533b09f59b2a",
           "summary": "Concrete IDs 1-4 boolean replacement, key independence, arity and environment isolation; 3/3 each target profile, not native/default/reset/filtering/event/consumer proof."
         },
         {
@@ -102244,7 +102300,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "5d47cc1582435daaa62b923acce18ecb229483dad670fa34ffaeb15064ea9250",
+          "source_hash": "1b1876fdbae1785a20b377672bbc770e6fb9bc2977f4ffb3210d82ed6635a134",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -102338,7 +102394,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "5d47cc1582435daaa62b923acce18ecb229483dad670fa34ffaeb15064ea9250",
+          "source_hash": "1b1876fdbae1785a20b377672bbc770e6fb9bc2977f4ffb3210d82ed6635a134",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
