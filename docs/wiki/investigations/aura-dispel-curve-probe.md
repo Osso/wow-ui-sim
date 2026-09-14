@@ -4,7 +4,7 @@
 
 ## Protocol
 
-The probe targets pinned local retail `12.1.0.69497`, interface `120100`. That pin—not the observed desktop retail `12.0.5.67823` / `120005` client—sets the TOC interface. A manual run scans real accessible player `HELPFUL` and `HARMFUL` auras, recording name, dispel name, aura instance ID, filter/index, and supplied-curve RGBA results. It must be flushed with `/reload` or logout before reading `WTF/Account/<ACCOUNT>/SavedVariables/AuraDispelCurveProbe.lua`.
+The probe targets pinned local retail `12.1.0.69497`, interface `120100`. That pin—not the historic desktop observation from **June 8, 2026** of retail `12.0.5.67823` / `120005`—sets the TOC interface. A manual run scans real accessible player `HELPFUL` and `HARMFUL` auras, recording name, dispel name, aura instance ID, filter/index, and supplied-curve RGBA results. It must be flushed with `/reload` or logout before reading `WTF/Account/<ACCOUNT>/SavedVariables/AuraDispelCurveProbe.lua`.
 
 The only capture command is `/auradispelcurve`. It supplies two explicitly linear, two-point color curves with different domains: `0..32` and `-16..48`. Comparing raw outputs across both curves and real aura scenarios may constrain observed client behavior. It does not justify an assumed dispel ID, default interpolation, input scale, validation rule, or security contract.
 
@@ -12,7 +12,7 @@ The recorder rejects inaccessible values from persisted output and labels API er
 
 ## Proof level
 
-Commits `f2d1e94b9` and `97b770c54` pass the local Lua fixture recorded in `/tmp/aura-dispel-probe-development-ledger.json`. The fixture proves manual-command registration, bounded recording, access redaction, and unavailable-access handling only. Its `101`/`202` fixture IDs and interpolation are not native evidence.
+At `261b4cbe6`, `/tmp/verify-aura-dispel-probe-ledger.json` reuses the exact-byte original harness and records a supplemental **18/18** fixture pass. Together they prove real TOC/slash/SavedVariables wiring, bounded recording, secret/access redaction, opaque errors, curve-construction failures, and 80-scan/10-capture limits. This remains fixture proof only: native execution and dispel-ID mapping are unverified.
 
 `C_UnitAuras.GetAuraDispelTypeColor` remains evidence-required in the 12.0.0 occurrence inventory. A reviewed native capture can support only the demonstrated operation, build, aura scenario, and access context.
 

@@ -4,7 +4,7 @@ Manual native recorder for `C_UnitAuras.GetAuraDispelTypeColor`. It captures add
 
 ## Target and install
 
-The TOC uses interface **120100** because the pinned local retail target is **12.1.0.69497**, not the observed desktop retail client `12.0.5.67823` (interface `120005`). No deployment or native capture has happened.
+The TOC uses interface **120100** because the pinned local retail target is **12.1.0.69497**, not the historic desktop observation from **June 8, 2026** of retail `12.0.5.67823` (interface `120005`). No deployment or native capture has happened.
 
 Manually copy `AuraDispelCurveProbe` into the matching client's `Interface/AddOns/` directory, enable it, then `/reload`. Do not use a deployment script: none exists for this probe.
 

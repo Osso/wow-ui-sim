@@ -24,7 +24,7 @@
 
 ## Tests asserting this spec
 
-`luajit docs/addons/AuraDispelCurveProbe/tests/harness.lua docs/addons/AuraDispelCurveProbe` passed at probe commit `f2d1e94b9`; follow-up commit `97b770c54` adds unavailable-access fixtures. This is recorder proof only, not native behavior or ID evidence.
+At `261b4cbe6`, exact-byte reuse confirms the original harness; a supplemental fixture passes 18/18 for real TOC/slash/SavedVariables wiring, secret/access redaction, opaque errors, curve-construction failures, and the 80-scan/10-capture limits. This is recorder proof only, not native execution or dispel-ID evidence. See `/tmp/verify-aura-dispel-probe-ledger.json`.
 
 ## Known gaps (current cycle)
 
