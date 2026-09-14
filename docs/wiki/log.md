@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Record pending C_CombatLog setting proof
 
-Tests-only existing-behavior audit `7bd7f10ca` initially passes 5/5 on retail 12.0.0. It records explicit filtered-events and retention setting state, arities, independence and environment isolation; no RED, runtime change, credit or manifest update. Cross-profile proof remains pending. Filtering/pruning/default/native/security semantics remain open. See [spec](../specs/combat-log-setting-state.md).
+Tests-only existing-behavior audit `7bd7f10ca` initially passes 5/5 on retail 12.0.0. It records explicit filtered-events and retention setting state, arities, independence and environment isolation; no RED, runtime change, credit or manifest update. Follow-up `3d69ec6ea` adds distinct `(true, 180)`, `(true, 120)` and `(false, 60)` writes in both environment-isolation directions; independent proof remains pending. Filtering/pruning/default/native/security semantics remain open. See [spec](../specs/combat-log-setting-state.md).
 
 ## [2026-09-13] audit | Credit bounded housing free-place state
 

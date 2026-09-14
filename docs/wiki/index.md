@@ -1,6 +1,6 @@
 ## [2026-09-13] audit | Pending C_CombatLog setting state
 
-Five existing-behavior tests initially pass 5/5 on retail 12.0.0 at `7bd7f10ca`; they cover only explicit boolean/numeric setting storage, arity, independence and environment isolation. No runtime change or credit pending independent proof. [Spec](../specs/combat-log-setting-state.md).
+Five existing-behavior tests initially pass 5/5 on retail 12.0.0 at `7bd7f10ca`; they cover only explicit boolean/numeric setting storage, arity, independence and environment isolation. Follow-up `3d69ec6ea` adds distinct `(true, 180)`, `(true, 120)` and `(false, 60)` writes in both isolation directions; independent proof remains pending. No runtime change or credit. [Spec](../specs/combat-log-setting-state.md).
 
 ## [2026-09-13] audit | Credit bounded housing free-place state
 

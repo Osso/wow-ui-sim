@@ -11,7 +11,9 @@ This slice verifies existing ordinary `C_CombatLog` setting storage. It does not
 
 ## Evidence
 
-Five grouped tests in `tests/c_namespace_noop_replacements.rs`, committed `7bd7f10ca`, initially pass 5/5 on retail 12.0.0. This is an existing-behavior audit, not a manufactured RED/GREEN bug fix. Values exercised include true/false and retention settings 120/240. Independent cross-profile proof remains pending.
+Five grouped tests in `tests/c_namespace_noop_replacements.rs`, committed `7bd7f10ca`, initially pass 5/5 on retail 12.0.0. This is an existing-behavior audit, not a manufactured RED/GREEN bug fix. Values exercised include true/false and retention settings 120/240.
+
+Follow-up `3d69ec6ea` writes distinct settings in both environments: first `(true, 180)`, then second `(true, 120)` and `(false, 60)`, asserting neither write leaks across environments. This additional isolation coverage is pending independent proof; it does not alter runtime behavior or the initial 5/5 evidence.
 
 Existing implementation: `src/lua_api/workarounds/temporary/combat_log_state.rs`. Stored settings are part of a temporary combat-log fixture, not a complete combat history model.
 
