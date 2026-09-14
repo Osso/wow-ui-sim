@@ -262,6 +262,8 @@ if rawget(C_FunctionContainers, "CreateCallback") == nil then
   end
 
   local containerProto = buildPrototype(methods)
+  -- Internal bridge: validate actual backing membership without invoking user code.
+  debug.getregistry().__wow_function_containers = { objects = backing, invoke = methods.Invoke }
 
   function C_FunctionContainers.CreateCallback(fn)
     if not isLuaFunction(fn) then

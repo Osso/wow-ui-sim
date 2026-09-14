@@ -1,19 +1,39 @@
 //! Environment-local ordinary global event callbacks.
 
 use crate::lua_api::methods::{
-    create_table, registry_table_or_create, table_get, table_set, val_to_string,
+    create_table, registry_get, registry_table_or_create, table_get, table_set, val_to_string,
 };
 use crate::lua_api::script_helpers::protected_call_state;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val, runtime_error};
 
 const REGISTRY_KEY: &str = "__global_event_callbacks";
 
-fn arguments(state: &LuaState) -> LuaResult<(String, Val)> {
+fn container_invoker(state: &mut LuaState, callback: Val) -> Option<Val> {
+    if !matches!(callback, Val::Userdata(_)) {
+        return None;
+    }
+    let bridge = registry_get(state, "__wow_function_containers");
+    let Val::Table(objects) = table_get(state, bridge, "objects") else {
+        return None;
+    };
+    let backing = state
+        .gc
+        .tables
+        .get(objects)?
+        .get(callback, &state.gc.string_arena);
+    if !matches!(backing, Val::Table(_)) {
+        return None;
+    }
+    let invoke = table_get(state, bridge, "invoke");
+    matches!(invoke, Val::Function(_)).then_some(invoke)
+}
+
+fn arguments(state: &mut LuaState) -> LuaResult<(String, Val)> {
     let event = stack_val(state, 1);
     let callback = stack_val(state, 2);
-    // Simulator policy: nonempty string events and ordinary functions only.
+    // Simulator policy: nonempty events; functions or modeled containers only.
     if !matches!(event, Val::Str(_)) {
         return Err(runtime_error("event name must be a string"));
     }
@@ -21,8 +41,10 @@ fn arguments(state: &LuaState) -> LuaResult<(String, Val)> {
     if event.is_empty() {
         return Err(runtime_error("event name must not be empty"));
     }
-    if !matches!(callback, Val::Function(_)) {
-        return Err(runtime_error("event callback must be a function"));
+    if !matches!(callback, Val::Function(_)) && container_invoker(state, callback).is_none() {
+        return Err(runtime_error(
+            "event callback must be a function or FunctionContainer",
+        ));
     }
     Ok((event, callback))
 }
@@ -124,8 +146,16 @@ pub fn dispatch_event_callbacks(
             if matches!(callback, Val::Nil) {
                 return Ok(());
             }
+            let result = if let Some(invoke) = container_invoker(state, callback) {
+                let mut container_args = Vec::with_capacity(args.len() + 1);
+                container_args.push(callback);
+                container_args.extend_from_slice(&args);
+                protected_call_state(state, invoke, &container_args)
+            } else {
+                protected_call_state(state, callback, &args)
+            };
             // Simulator policy: stop this dispatch at the first callback error.
-            protected_call_state(state, callback, &args).map_err(|error| {
+            result.map_err(|error| {
                 runtime_error(format!(
                     "global callback for {event}: {}",
                     val_to_string(state, error)
