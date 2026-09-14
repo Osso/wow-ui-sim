@@ -67,6 +67,7 @@ fn unit_health_percent_uses_player_health_values() {
     assert_eq!(percent, 25.0);
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn unit_health_percent_ignores_legacy_truthy_curve_argument() {
     let env = env();
@@ -79,6 +80,23 @@ fn unit_health_percent_ignores_legacy_truthy_curve_argument() {
         )
         .unwrap();
     assert_eq!(percent, 12.345);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn unit_health_percent_rejects_invalid_curves() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetPlayerHealth(12345, 100000)
+        for _, curve in ipairs({true, false, 17, {}}) do
+            local ok, message = pcall(UnitHealthPercent, 'player', false, curve)
+            assert(not ok, 'invalid curve must fail')
+            assert(string.find(message, 'expected LuaCurveObjectBase', 1, true))
+        end
+        "#,
+    )
+    .expect("invalid supplied curves are rejected");
 }
 
 #[test]
