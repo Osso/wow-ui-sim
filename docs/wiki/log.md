@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Record pending global event callback lifecycle
+
+Tests `2d43011c2` are RED 0/4 against inert global fallbacks. Module `5b04622da` and wiring `462a1866c` implement an environment-local ordinary global registry and dispatch it separately from frame callbacks. Pinned `Event.lua` supports the leading `nil` owner; duplicate/order/validation/error/eligibility/global-frame ordering are simulator policies or unverified. Verification, provenance and credits remain pending; unit variants, security and full-LoD remain open.
+
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 
 Documented `f2d1e94b9` and `97b770c54` as a manual-only native recorder for `C_UnitAuras.GetAuraDispelTypeColor`; no install, deployment, native run, runtime edit, or API credit occurred. The TOC interface `120100` follows pinned local retail `12.1.0.69497`, not observed desktop retail `12.0.5.67823`. [Protocol](investigations/aura-dispel-curve-probe.md), [README](../addons/AuraDispelCurveProbe/README.md), and [spec](../specs/aura-dispel-curve-probe.md) require real helpful/harmful aura scenarios, `/auradispelcurve`, and `/reload`/logout before reviewing SavedVariables. Fixture-only IDs/interpolation and restricted addon-tainted results remain non-native/inconclusive.

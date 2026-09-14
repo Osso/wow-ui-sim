@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Pending global event callback lifecycle proof
+
+`5b04622da` adds an environment-local global registry and `462a1866c` wires ordinary callback dispatch without reusing frame callback storage. `2d43011c2` is RED 0/4; runtime proof, provenance and credits remain pending. Pinned `Event.lua` establishes the leading `nil` owner only; duplicate/order/validation/error, eligibility, global/frame ordering, unit variants, security and full-LoD behavior remain open. See [[patch-12-0-0-api-audit]] and [spec](../specs/global-event-callbacks.md).
+
 ## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
 
 [[aura-dispel-curve-probe]] documents the uninstalled, manual `C_UnitAuras.GetAuraDispelTypeColor` recorder. It targets pinned local retail `12.1.0.69497` / interface `120100`, not the observed desktop `12.0.5.67823` client. Two explicit linear curves, real helpful/harmful player auras, `/reload` SavedVariables flushing, and tainted-access inconclusiveness are recorded; fixture proof does not establish native IDs. No API credit changed.
