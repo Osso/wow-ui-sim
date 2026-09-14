@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Record pending unit-filtered global callback lifecycle
+
+Recorded runtime `0a0ac416f`, publication `0835b3c94` and RED 0/4 tests `c1d401ba3` for ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`. The model is independent from frame listeners, dispatches `nil, ...payload` to exact first-payload unit matches, and supports modeled FunctionContainers. Integrated proof, provenance and credits remain pending. Exact matching/order/snapshot/validation are simulator policies; aliases/lists, native ordering/errors/eligibility, secrecy/taint, full-LoD and callback mutation/recursion/error recovery remain open.
+
 ## [2026-09-14] audit | Credit StripHyperlinks balanced markup flags
 
 Parser `1463fce69`, API `50448633e` and tests `2094af7e2` cover balanced well-formed UTF-8 hyperlink markup and documented flags. Behavior passes 5/5 per retail 12.0.0/12.0.5/12.0.7, parser 6/6, and an actual unmodified Talent UI consumer fixture; fmt/check/default builds/startup `[]` pass. The 12.0.0 saved stdout proves 5/5, but exit/compiler stderr/warnings are unknown after recorder loss. Metadata `1f78ffddc` proves one credit, nine renewals, six additions, 15,104 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows. Totals **2349 / 1059 / 2**; snapshot **1,085 / 282**. Literal `|n` preservation when false, escaped/malformed markup and flag truthiness remain simulator policies; native byte/coercion/security/full-LoD gaps remain.
