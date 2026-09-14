@@ -1,19 +1,19 @@
 # Patch API blocker inventory
 
-Snapshot date: **2026-09-13**, source baseline `88ccc385a` plus the source correction below and separately proven housing free-place credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal manifest gap, source references, proposed probe protocol and dependency. **1,119 remaining rows after two bounded housing free-place credits.** This is an evidence-acquisition inventory, not proof that all remaining behavior is impossible to model.
+Snapshot date: **2026-09-14**, source baseline `88ccc385a` plus the retained StatusBar correction and separately proven housing/free-place and combat-log setting credits. Per-manifest hashes identify current inputs. [Row inventory](../../generated/patch-api-blockers.json) maps every `evidence-required` occurrence to its literal gap, references and evidence plan. **1,115 remaining rows after four additional stored-setting credits.** Native behavior and executable readiness are not inferred from inventory membership.
 
 ## Coverage
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,093 |
+| 12.0.0 | 1,089 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
 | 12.1 FrameXML | 0 |
 | 12.1.5 | 10 |
 
-Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2315 best-effort / 1093 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
+Counts exclude `best-effort` residual gaps and `exception-requested` rows. Retail 12.0.0 remains **2319 best-effort / 1089 evidence-required / 2 exceptions**. Eight Mists AccountStore failures remain unresolved; this inventory supplies no Mists proof.
 
 ## How to use a row
 
@@ -29,7 +29,7 @@ Protocol assignment uses literal change/owner fields, with explicit later-patch 
 
 | Proposed protocol | Rows | Missing prerequisite / next observation |
 |---|---:|---|
-| API/state | 454 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
+| API/state | 450 | Establish behavioral inputs/model; observe named returns and state changes. Signature-only cases remain design-blocked. |
 | Structure producer | 318 | Identify populated producer/consumer; vary input and observe exact field relationships. |
 | Publication/removal | 233 | Capture exact old symbol across base/target load phases; distinguish field producers, CVar lookup and globals. |
 | Event producer | 88 | Trigger an actual transition; capture tuple, order, multiplicity and unchanged-state control. |
@@ -51,7 +51,7 @@ These explicit deferrals are **not an exhaustive count of security-related rows*
 
 ## Concrete probe-design follow-up
 
-**All 1,119 remaining rows link to 282 plans** in the JSON: 961 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
+**All 1,115 remaining rows link to 282 plans** in the JSON: 957 rows use 124 family-specific plans, and 158 rows preserve explicit probe requirements already written in their manifest notes. No rows rely on a routing label alone. Extraction of a source requirement does not count as fresh semantic validation. All 282 plans remain `ready_to_execute: false`: native fixtures, an exact producer/consumer or an unresolved contract is missing. Plans specify observations, not guessed native outcomes.
 
 | Plan family | Concrete distinction to capture |
 |---|---|
@@ -68,6 +68,8 @@ Investigation suggestions rejected: mutating the CVar is unnecessary for the rec
 Historical source-alignment verification at `8cae7bfdf` covers the prior 1,121-row snapshot only. Correction-only metadata verification at `804a6b073` refreshes the housing delta: 1,119 rows/282 plans, 281 plans unchanged, exact hashes/notes/references matching, 14,917 fresh hashes, zero stale, 139 renewals and 14 additions. Proof: `/tmp/verify-housing-freeplace-metadata-corrected-ledger.json`. Its validator output has 3,410 matching rows and empty stderr, but the exit status was not retained; no second run was made.
 
 Corrections distinguish numeric error codes from localized strings, callback/strided `mapvalues` from table mapping, real message operations from friend queries, and housing refundability from crafting data. Missing signatures remain explicit design gaps. Literal-source plans preserve complete notes, including Lua member names and expressions; they are not newly established native outcomes.
+
+The combat-log setting refresh removes only four credited rows from the preceding 1,119-row snapshot. All 282 plans remain used; 281 are unchanged. The remaining combat-log plan now targets `GetMessageLimit`, `DoesObjectMatchFilter(mask, flags)` and `IsCombatLogRestricted`, not already-proven setting storage. Filtering/matching/restriction/pruning/native/lifecycle gaps remain explicit. The earlier housing validator-exit qualification above is unchanged. Metadata receipt: `/tmp/combatlog-settings-metadata-ledger.json`; no Cargo, tests or validator rerun is claimed for this metadata-only task.
 
 ## Source correction: StatusBar
 

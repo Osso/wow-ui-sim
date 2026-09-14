@@ -5821,8 +5821,8 @@
       "id": "added:C_CombatLog.AreFilteredEventsEnabled",
       "symbol": "C_CombatLog.AreFilteredEventsEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -5836,15 +5836,44 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/combat_log_state.rs",
           "source_hash": "da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8",
-          "summary": "Current temporary combat-log state is shared with C_CombatLogSecure and fixture-backed/permissive: ApplyFilterSettings and RefilterEntries are no-ops, while filter matching, restriction, retention/message-limit bounds, clearing, and entry lifecycle are not modeled authoritatively."
+          "summary": "Existing temporary Lua fixture stores filtered-events and retention settings; focused tests establish only this storage. Filtering/matching, restriction, pruning/bounds, and entry/refilter lifecycle remain non-authoritative; no runtime change is credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Boolean and numeric setting writes preserve the other setting."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row."
+      "notes": "Bounded best-effort stored-setting evidence only: explicit/repeated boolean and numeric writes, getter-one/setter-zero arity and types, setting independence, and distinct environment-isolation writes in both directions. Initial 7bd7f10ca passed existing behavior without RED or runtime changes; 3d69ec6ea has fresh independent 5/5 on 12.0.0/12.0.5/12.0.7, fmt/readability PASS and exact unchanged-runtime gate reuse. Prior intentionally unattached fixture tests remain non-authoritative; these focused tests do not establish filtering or matching, restriction state, retention pruning/message-limit enforcement, defaults, native validation/coercion/errors, clocks/events/reset/persistence/lifecycle, consumers or earlier profiles. No whole-combat-log or native closure is claimed."
     },
     {
       "id": "added:C_CombatLog.ClearEntries",
@@ -5916,8 +5945,8 @@
       "id": "added:C_CombatLog.GetEntryRetentionTime",
       "symbol": "C_CombatLog.GetEntryRetentionTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -5931,15 +5960,44 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/combat_log_state.rs",
           "source_hash": "da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8",
-          "summary": "Current temporary combat-log state is shared with C_CombatLogSecure and fixture-backed/permissive: ApplyFilterSettings and RefilterEntries are no-ops, while filter matching, restriction, retention/message-limit bounds, clearing, and entry lifecycle are not modeled authoritatively."
+          "summary": "Existing temporary Lua fixture stores filtered-events and retention settings; focused tests establish only this storage. Filtering/matching, restriction, pruning/bounds, and entry/refilter lifecycle remain non-authoritative; no runtime change is credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Boolean and numeric setting writes preserve the other setting."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row."
+      "notes": "Bounded best-effort stored-setting evidence only: explicit/repeated boolean and numeric writes, getter-one/setter-zero arity and types, setting independence, and distinct environment-isolation writes in both directions. Initial 7bd7f10ca passed existing behavior without RED or runtime changes; 3d69ec6ea has fresh independent 5/5 on 12.0.0/12.0.5/12.0.7, fmt/readability PASS and exact unchanged-runtime gate reuse. Prior intentionally unattached fixture tests remain non-authoritative; these focused tests do not establish filtering or matching, restriction state, retention pruning/message-limit enforcement, defaults, native validation/coercion/errors, clocks/events/reset/persistence/lifecycle, consumers or earlier profiles. No whole-combat-log or native closure is claimed."
     },
     {
       "id": "added:C_CombatLog.GetMessageLimit",
@@ -6040,8 +6098,8 @@
       "id": "added:C_CombatLog.SetEntryRetentionTime",
       "symbol": "C_CombatLog.SetEntryRetentionTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -6055,22 +6113,51 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/combat_log_state.rs",
           "source_hash": "da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8",
-          "summary": "Current temporary combat-log state is shared with C_CombatLogSecure and fixture-backed/permissive: ApplyFilterSettings and RefilterEntries are no-ops, while filter matching, restriction, retention/message-limit bounds, clearing, and entry lifecycle are not modeled authoritatively."
+          "summary": "Existing temporary Lua fixture stores filtered-events and retention settings; focused tests establish only this storage. Filtering/matching, restriction, pruning/bounds, and entry/refilter lifecycle remain non-authoritative; no runtime change is credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Explicit 120/240 and repeated numeric writes roundtrip through GetEntryRetentionTime."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Boolean and numeric setting writes preserve the other setting."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_retention_roundtrip",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row."
+      "notes": "Bounded best-effort stored-setting evidence only: explicit/repeated boolean and numeric writes, getter-one/setter-zero arity and types, setting independence, and distinct environment-isolation writes in both directions. Initial 7bd7f10ca passed existing behavior without RED or runtime changes; 3d69ec6ea has fresh independent 5/5 on 12.0.0/12.0.5/12.0.7, fmt/readability PASS and exact unchanged-runtime gate reuse. Prior intentionally unattached fixture tests remain non-authoritative; these focused tests do not establish filtering or matching, restriction state, retention pruning/message-limit enforcement, defaults, native validation/coercion/errors, clocks/events/reset/persistence/lifecycle, consumers or earlier profiles. No whole-combat-log or native closure is claimed."
     },
     {
       "id": "added:C_CombatLog.SetFilteredEventsEnabled",
       "symbol": "C_CombatLog.SetFilteredEventsEnabled",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -6084,15 +6171,44 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/combat_log_state.rs",
           "source_hash": "da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8",
-          "summary": "Current temporary combat-log state is shared with C_CombatLogSecure and fixture-backed/permissive: ApplyFilterSettings and RefilterEntries are no-ops, while filter matching, restriction, retention/message-limit bounds, clearing, and entry lifecycle are not modeled authoritatively."
+          "summary": "Existing temporary Lua fixture stores filtered-events and retention settings; focused tests establish only this storage. Filtering/matching, restriction, pruning/bounds, and entry/refilter lifecycle remain non-authoritative; no runtime change is credited."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Explicit true/false and repeated boolean writes roundtrip through AreFilteredEventsEnabled."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Both getters return one appropriately typed value; both setters return zero values for explicit settings."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Boolean and numeric setting writes preserve the other setting."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments",
+          "source_hash": "dbd043f044d6cac17c450325a3036c3ecf79819cf68a7161b17f3e2d0182b465",
+          "summary": "Distinct boolean/numeric writes in both environment directions preserve the other environment, including retention 180/120/60 controls."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_filtered_events_roundtrip",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_return_arity",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_are_independent",
+        "tests/c_namespace_noop_replacements.rs::combatlog_settings_isolate_lua_environments"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row."
+      "notes": "Bounded best-effort stored-setting evidence only: explicit/repeated boolean and numeric writes, getter-one/setter-zero arity and types, setting independence, and distinct environment-isolation writes in both directions. Initial 7bd7f10ca passed existing behavior without RED or runtime changes; 3d69ec6ea has fresh independent 5/5 on 12.0.0/12.0.5/12.0.7, fmt/readability PASS and exact unchanged-runtime gate reuse. Prior intentionally unattached fixture tests remain non-authoritative; these focused tests do not establish filtering or matching, restriction state, retention pruning/message-limit enforcement, defaults, native validation/coercion/errors, clocks/events/reset/persistence/lifecycle, consumers or earlier profiles. No whole-combat-log or native closure is claimed."
     },
     {
       "id": "added:C_CombatLog.SetMessageLimit",

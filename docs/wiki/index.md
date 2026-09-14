@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Pending C_CombatLog setting state
+## [2026-09-14] audit | Credit bounded C_CombatLog setting state
 
-Five existing-behavior tests initially pass 5/5 on retail 12.0.0 at `7bd7f10ca`; they cover only explicit boolean/numeric setting storage, arity, independence and environment isolation. Follow-up `3d69ec6ea` adds distinct `(true, 180)`, `(true, 120)` and `(false, 60)` writes in both isolation directions; independent proof remains pending. No runtime change or credit. [Spec](../specs/combat-log-setting-state.md).
+Five existing-behavior tests initially passed at `7bd7f10ca`; no RED or runtime change. Follow-up `3d69ec6ea` has fresh independent **5/5 each** on retail 12.0.0/12.0.5/12.0.7, including distinct boolean/numeric isolation writes in both directions; fmt/readability pass and unchanged-runtime check/build/startup proof is reused by exact hashes. Exactly four credits cover stored settings, arity/types and setting/environment independence only. Totals: **2319 / 1089 / 2**. Earlier intentionally unattached fixture tests do not become native closure: filtering/matching, restrictions, pruning/bounds, defaults/native validation, events/lifecycle and consumers remain unproven. Proof: `/tmp/verify-combatlog-settings-isolation-ledger.json`. [Spec](../specs/combat-log-setting-state.md).
 
 ## [2026-09-13] audit | Credit bounded housing free-place state
 
@@ -8,7 +8,7 @@ Runtime `3839f707f`, tests `220897051`: independent ordinary-state proof passes 
 
 ## [2026-09-13] audit | Remaining evidence inventory
 
-[Blocker inventory](investigations/patch-api-blocker-inventory.md): 1,119 unresolved rows link to 282 plans after the two housing free-place credits; 281 plans are unchanged from before credit. The prior 1,121-row inventory proof is historical; correction-only metadata verification refreshes hashes and references. Missing fixtures/native contracts stay explicit; no executable-readiness claim.
+[Blocker inventory](investigations/patch-api-blocker-inventory.md): 1,115 unresolved rows link to 282 plans after four further stored-setting credits; only the remaining combat-log plan changed. Prior housing/inventory proof stays historical and its missing validator exit status remains qualified. Missing fixtures/native contracts stay explicit; no executable-readiness claim.
 
 ## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
 

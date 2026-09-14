@@ -1,6 +1,6 @@
-## [2026-09-13] audit | Record pending C_CombatLog setting proof
+## [2026-09-14] audit | Credit bounded C_CombatLog stored settings
 
-Tests-only existing-behavior audit `7bd7f10ca` initially passes 5/5 on retail 12.0.0. It records explicit filtered-events and retention setting state, arities, independence and environment isolation; no RED, runtime change, credit or manifest update. Follow-up `3d69ec6ea` adds distinct `(true, 180)`, `(true, 120)` and `(false, 60)` writes in both environment-isolation directions; independent proof remains pending. Filtering/pruning/default/native/security semantics remain open. See [spec](../specs/combat-log-setting-state.md).
+Five existing-behavior tests initially passed at `7bd7f10ca`; no RED or runtime change. Follow-up `3d69ec6ea` has fresh independent **5/5 each** on retail 12.0.0/12.0.5/12.0.7, including distinct boolean/numeric isolation writes in both directions; fmt/readability pass and unchanged-runtime check/build/startup proof is reused by exact hashes. Exactly four credits cover stored settings, arity/types and setting/environment independence only. Totals: **2319 / 1089 / 2**. Earlier intentionally unattached fixture tests do not become native closure: filtering/matching, restrictions, pruning/bounds, defaults/native validation, events/lifecycle and consumers remain unproven. Proof: `/tmp/verify-combatlog-settings-isolation-ledger.json`. [Spec](../specs/combat-log-setting-state.md).
 
 ## [2026-09-13] audit | Credit bounded housing free-place state
 

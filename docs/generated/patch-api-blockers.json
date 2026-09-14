@@ -1,12 +1,12 @@
 {
   "schema": "patch-api-blockers/v1",
-  "verified": "2026-09-13",
-  "scope": "Snapshot of evidence-required rows only; proposed plans are not executable fixtures or fresh native semantic proof. Exceptions and best-effort residual gaps remain outside this row inventory. The refresh reflects two separately credited housing free-place state rows; snapshot membership awards no additional credit.",
+  "verified": "2026-09-14",
+  "scope": "Snapshot of evidence-required rows only; plans are not executable fixtures or fresh native semantic proof. Exceptions and best-effort residual gaps remain outside this inventory. This refresh removes four separately proven combat-log stored-setting rows; snapshot membership awards no native or whole-system closure.",
   "manifests": [
     {
       "path": "data/patch-api/12.0.0.json",
-      "sha256": "387be801f2b4432bb4eaa8dfa45b83087cc896350e8ca3253a3215a0b3c9cab2",
-      "rows": 1093
+      "sha256": "51b7a6509b0763fffcc60f0aea0b8450a6a882a9e390466223b6df01ba18bb81",
+      "rows": 1089
     },
     {
       "path": "data/patch-api/12.0.5-probes.json",
@@ -34,7 +34,7 @@
       "rows": 10
     }
   ],
-  "total": 1119,
+  "total": 1115,
   "protocols": {
     "publication-removal": {
       "dependency": "Matching base/target client captures and complete addon/load-phase inventory. Simulator-only runs cannot establish native absence.",
@@ -1107,33 +1107,7 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatLog.AreFilteredEventsEnabled",
-      "owner": "api",
-      "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_log_state_and_filters"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatLog.DoesObjectMatchFilter",
-      "owner": "api",
-      "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_log_state_and_filters"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatLog.GetEntryRetentionTime",
       "owner": "api",
       "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
       "probe_protocol": "api-state",
@@ -1160,32 +1134,6 @@
     {
       "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_CombatLog.IsCombatLogRestricted",
-      "owner": "api",
-      "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_log_state_and_filters"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatLog.SetEntryRetentionTime",
-      "owner": "api",
-      "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
-      "probe_protocol": "api-state",
-      "scope": "mixed-or-unreviewed; security/VM work remains excluded",
-      "basis_references": [
-        "data/patch-api/sources/12.0.0-register.json",
-        "src/lua_api/workarounds/temporary/combat_log_state.rs"
-      ],
-      "probe_plan": "combat-crafting-combat_log_state_and_filters"
-    },
-    {
-      "manifest": "data/patch-api/12.0.0.json",
-      "id": "added:C_CombatLog.SetFilteredEventsEnabled",
       "owner": "api",
       "missing_evidence": "Current C_CombatLog behavior is a shared permissive/fixture-backed temporary model, not authoritative 12.0.0 behavior. The source establishes signatures only; filter schema/matching, restriction state, retention and message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven. Existing tests prove simulator fixture behavior and are intentionally not attached; no approval can close this row.",
       "probe_protocol": "api-state",
@@ -17199,15 +17147,14 @@
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_state_and_filters": {
-      "dependency": "C_CombatLog filter/session producer; A populated combat-log entry stream or authoritative filter settings fixture",
+      "dependency": "Populated message-limit configuration/entry fixture, observed CombatLogObject mask/flags cases, and a separately identified restriction-state/caller context.",
       "observations": [
-        "Toggle SetFilteredEventsEnabled and read AreFilteredEventsEnabled around one real filter-settings transition; capture event callbacks and unchanged-state control.",
-        "Set/GetEntryRetentionTime and Get/SetMessageLimit around populated entries; distinguish stored setting from actual retention/limit enforcement.",
-        "Capture DoesObjectMatchFilter(mask, flags) with observed CombatLogObject enum mask/flags pairs; preserve both numeric inputs and the returned boolean. A populated combat-object table is not the pinned argument contract.",
-        "Keep IsCombatLogRestricted query/state observations separate from filter settings. Identify the restriction-state/caller-context fixture; authority enforcement remains deferred rather than inferred from a constant or matcher output."
+        "Capture GetMessageLimit after supported message-limit configuration changes and with populated entries; distinguish the getter value from native limit enforcement and default policy.",
+        "Capture DoesObjectMatchFilter(mask, flags) with concrete observed CombatLogObject enum pairs and the boolean result; do not replace these inputs with a combat-object table or infer matching from stored filter enablement.",
+        "Identify IsCombatLogRestricted state/caller inputs and capture the query separately; restriction/security enforcement remains deferred rather than inferred from a setting or constant."
       ],
       "ready_to_execute": false,
-      "design_gap": "Current combat-log model has notification stubs/partial state but no authoritative filter matcher, retention lifecycle, message-limit producer, or populated native entry fixture.",
+      "design_gap": "The remaining rows are GetMessageLimit, DoesObjectMatchFilter and IsCombatLogRestricted. Native limit values/bounds/enforcement, matcher semantics and restriction state remain unverified. The four separately proven stored settings do not establish filtering, pruning or broader combat-log lifecycle.",
       "execution_limits": "Documentation-only plan. Native session actions, irreversible/account changes and security enforcement require separate approval; no execution or inferred native outcome is recorded here."
     },
     "combat-crafting-combat_log_secure_deferred": {
@@ -18095,13 +18042,18 @@
   ],
   "source_baseline_revision": "88ccc385a",
   "refresh": {
-    "scope": "housing free-place metadata integration; final metadata verification pending",
-    "runtime_commit": "3839f707f",
-    "proof": "/tmp/verify-housing-freeplace-ledger.json",
+    "scope": "Combat-log stored-setting metadata refresh; no runtime change",
+    "tests_commit": "3d69ec6ea03be46d4763c9ec7ab1db9ed2a90af4",
+    "proof": "/tmp/verify-combatlog-settings-isolation-ledger.json",
     "removed_credited_rows": [
-      "added:C_HousingBasicMode.IsFreePlaceEnabled",
-      "added:C_HousingBasicMode.SetFreePlaceEnabled"
+      "added:C_CombatLog.AreFilteredEventsEnabled",
+      "added:C_CombatLog.GetEntryRetentionTime",
+      "added:C_CombatLog.SetEntryRetentionTime",
+      "added:C_CombatLog.SetFilteredEventsEnabled"
     ],
-    "prior_inventory_proof": "8cae7bfdf; reusable only for unchanged rows/plans, not this metadata refresh"
+    "prior_rows": 1119,
+    "rows": 1115,
+    "prior_inventory_proof": "/tmp/verify-housing-freeplace-metadata-corrected-ledger.json",
+    "prior_qualification": "Housing validator emitted 3,410 matching rows with empty stderr, but its exit status was not retained; this refresh does not repair or upgrade that claim."
   }
 }
