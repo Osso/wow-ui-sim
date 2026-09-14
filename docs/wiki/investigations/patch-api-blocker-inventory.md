@@ -12,7 +12,7 @@ Only the historical Get/SetSpeakerVolume rows leave the prior 1,112-row snapshot
 
 | Manifest | Rows |
 |---|---:|
-| 12.0.0 | 1,084 |
+| 12.0.0 | 1,082 |
 | 12.0.5 probes | 4 |
 | 12.0.7 | 0 |
 | 12.1 behaviors | 12 |
