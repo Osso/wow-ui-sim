@@ -148,6 +148,7 @@ macro_rules! build_empty_sim_state {
             last_stopped_sound_handle: $runtime.last_stopped_sound_handle,
             combat_audio_speaker_speed: 0.0,
             combat_audio_speaker_volume: 100.0,
+            combat_audio_format_settings: HashMap::new(),
             last_launched_url: $runtime.last_launched_url,
             highlighted_map_scene_character_guid: $runtime.highlighted_map_scene_character_guid,
             secure_attribute_drivers: $collections.secure_attribute_drivers,

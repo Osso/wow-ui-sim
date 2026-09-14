@@ -133,6 +133,8 @@ pub struct SimState {
     pub combat_audio_speaker_speed: f64,
     /// Independent setting only; not linked to CVar state or audio playback.
     pub combat_audio_speaker_volume: f64,
+    /// Numeric unit/type setting state only; no formatting or CVar coupling.
+    pub combat_audio_format_settings: HashMap<(i32, i32), f64>,
     pub sound_manager: Option<SoundManager>,
     pub last_sound_kit_requested: Option<u32>,
     pub last_sound_file_requested: Option<String>,
