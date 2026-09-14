@@ -1,0 +1,29 @@
+//! Ordinary combat-audio setting state; playback and CVar coupling are unmodeled.
+
+use super::helpers::ensure_namespace;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
+
+pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
+    table_set_rust_fn_static(state, namespace, "GetSpeakerSpeed", get_speaker_speed)?;
+    table_set_rust_fn_static(state, namespace, "SetSpeakerSpeed", set_speaker_speed)
+}
+
+fn get_speaker_speed(state: &mut LuaState) -> LuaResult<u32> {
+    let speed = borrow_state(state)?.combat_audio_speaker_speed;
+    state.push(Val::Num(speed));
+    Ok(1)
+}
+
+fn set_speaker_speed(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Num(speed) = stack_val(state, 1) else {
+        return Err(rilua::runtime_error("SetSpeakerSpeed requires a number"));
+    };
+    borrow_state_mut(state)?.combat_audio_speaker_speed = speed;
+    // Accepted-write policy; native bounds and success semantics are unverified.
+    state.push(Val::Bool(true));
+    Ok(1)
+}
