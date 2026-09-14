@@ -36,19 +36,10 @@ installNeighborhoodInitiativeDefault("GetAvailableHouseXP", function()
     return 0
 end)
 
-installNeighborhoodInitiativeDefault("GetTrackedInitiativeTasks", function()
-    return { trackedIDs = {} }
-end)
-
 installNeighborhoodInitiativeDefault("GetInitiativeTaskInfo", function()
     return nil
 end)
 
-installNeighborhoodInitiativeDefault("RemoveTrackedInitiativeTask", function()
-end)
-
-installNeighborhoodInitiativeDefault("AddTrackedInitiativeTask", function()
-end)
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
