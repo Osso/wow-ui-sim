@@ -728,10 +728,10 @@
 728. [evidence-required] `added:C_TransmogOutfitInfo.ViewedTransmogOutfitSlotInfo.warning` — unsafe
 729. [evidence-required] `added:C_TransmogOutfitInfo.ViewedTransmogOutfitSlotInfo.warningText` — unsafe
 730. [evidence-required] `added:C_TransmogSets.GetAvailableSets` — unsafe
-731. [evidence-required] `added:C_TransmogSets.GetSetsFilter` — unsafe
+731. [best-effort] `added:C_TransmogSets.GetSetsFilter` — behavioral
 732. [evidence-required] `added:C_TransmogSets.IsUsingDefaultSetsFilters` — unsafe
 733. [evidence-required] `added:C_TransmogSets.SetDefaultSetsFilters` — unsafe
-734. [evidence-required] `added:C_TransmogSets.SetSetsFilter` — unsafe
+734. [best-effort] `added:C_TransmogSets.SetSetsFilter` — behavioral
 735. [evidence-required] `added:C_TransmogSets.TransmogSetInfo.grantAsPrecedingVariant` — unsafe
 736. [evidence-required] `added:C_Tutorial.GetCombatEventInfo` — unsafe
 737. [evidence-required] `added:C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo` — unsafe
