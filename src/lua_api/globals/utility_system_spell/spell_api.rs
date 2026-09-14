@@ -126,7 +126,15 @@ fn unit_health_percent(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         0.0
     };
-    state.push(Val::Num(percent));
+    // Prediction is unmodeled. The existing 0..100 scale, including curve input,
+    // is simulator policy; native input units remain unverified.
+    let result = Val::Num(percent);
+    #[cfg(feature = "retail-12-0-0")]
+    let result = match stack_val(state, 3) {
+        Val::Nil => result,
+        curve => crate::c_api::c_curve_util::evaluate_curve_value(state, curve, percent)?,
+    };
+    state.push(result);
     Ok(1)
 }
 
