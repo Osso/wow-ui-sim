@@ -1705,3 +1705,76 @@ mod transmog_sets_filter_tests {
             .unwrap();
     }
 }
+
+#[cfg(feature = "retail-12-0-0")]
+mod outfit_situations_enabled_tests {
+    use super::env;
+
+    #[test]
+    fn outfit_situations_enabled_explicit_and_repeated_writes() {
+        let env = env();
+        env.exec(
+            r#"
+            for _, enabled in ipairs({false, true, true, false, false}) do
+                C_TransmogOutfitInfo.SetOutfitSituationsEnabled(enabled)
+                local actual = C_TransmogOutfitInfo.GetOutfitSituationsEnabled()
+                assert(type(actual) == "boolean", "getter must return a boolean")
+                assert(actual == enabled, "getter must reflect explicit global toggle")
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn outfit_situations_enabled_return_types_and_arity() {
+        let env = env();
+        env.exec(
+            r#"
+            local function zero(...)
+                assert(select('#', ...) == 0, "setter must return zero values")
+            end
+            local function one_boolean(expected, ...)
+                assert(select('#', ...) == 1, "getter must return exactly one value")
+                local actual = ...
+                assert(type(actual) == "boolean", "getter must return a boolean")
+                assert(actual == expected, "getter must return the explicit value")
+            end
+            for _, enabled in ipairs({false, true}) do
+                zero(C_TransmogOutfitInfo.SetOutfitSituationsEnabled(enabled))
+                one_boolean(enabled, C_TransmogOutfitInfo.GetOutfitSituationsEnabled())
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn outfit_situations_enabled_isolates_environments_bidirectionally() {
+        let first = env();
+        let second = env();
+        first
+            .exec("C_TransmogOutfitInfo.SetOutfitSituationsEnabled(false)")
+            .unwrap();
+        second
+            .exec("C_TransmogOutfitInfo.SetOutfitSituationsEnabled(true)")
+            .unwrap();
+        let read = |env: &wow_ui_sim::lua_api::WowLuaEnv| {
+            env.eval::<bool>("return C_TransmogOutfitInfo.GetOutfitSituationsEnabled()")
+                .unwrap()
+        };
+        assert!(!read(&first));
+        assert!(read(&second));
+
+        first
+            .exec("C_TransmogOutfitInfo.SetOutfitSituationsEnabled(true)")
+            .unwrap();
+        assert!(read(&first));
+        assert!(read(&second));
+        second
+            .exec("C_TransmogOutfitInfo.SetOutfitSituationsEnabled(false)")
+            .unwrap();
+        assert!(read(&first));
+        assert!(!read(&second));
+    }
+}
