@@ -69,8 +69,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 151,
-    "partial-recorder": 10,
+    "needs-design-and-recorder-review": 150,
+    "partial-recorder": 11,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -9598,8 +9598,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual AbbreviateNumbers and AbbreviateLargeNumbers calls across twenty-five shared finite inputs with options omitted",
+          "Locale and raw accessible scalar return arity, with opaque errors"
+        ],
+        "missing": [
+          "Native matching-build output and locale corpus",
+          "NumberAbbrevOptions, breakpoint data and configuration producer fixtures",
+          "Native coercion and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-number-abbrev"
     },
