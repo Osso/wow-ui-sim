@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare manual scalar curve state recorder
+
+Runtime `411edf39e` adds manual `/apicontract curve-state <label>`, excluded from `all`. It records unsorted duplicate points, type/count/secret state, reset, evaluation and copy-isolation observations without assigning native semantics. The harness reaches 37 cumulative local fixtures; color curves, set/remove-points and secret semantics remain native capture work. See [[api-contract-probes]].
+
 ## [2026-09-15] audit | Prepare residual plain callback recorder
 
 Runtime `98ba5a44a` adds manual `callbacks-start`/`callbacks-stop` for this addon's own global and player-filtered `UNIT_HEALTH` functions. It retains registration/cleanup outcomes and bounded passive deliveries. Thirty-three local fixtures prove recorder mechanics only; native producers, wrappers, duplicates, ordering, aliases and security remain pending. This is residual best-effort coverage, not a credit or snapshot-plan completion. See [[api-contract-probes]].

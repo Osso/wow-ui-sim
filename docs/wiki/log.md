@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document manual scalar curve state recorder
+
+`411edf39e` prepares `/apicontract curve-state <label>`, manual-only and excluded from `all`. It records empty/populated unsorted duplicate scalar curves, raw type/count/point/secret state, evaluation, reset and copy-isolation observations without interpreting them. Thirty-seven local fixtures are cumulative recorder proof, not native evidence; color curves, set/remove-point and secret behavior remain unexecuted. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document residual plain callback recorder
 
 `98ba5a44a` prepares manual `callbacks-start`/`callbacks-stop` recording for only the probe's plain global and player-filtered `UNIT_HEALTH` callbacks. It preserves retained callback identities, registration/cleanup outcomes, and bounded passive scalar payloads. Thirty-three local fixtures do not establish native producer timing, wrapper, duplicate/order/alias, mutation or security behavior. See [[api-contract-probes]].
