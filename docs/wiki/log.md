@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document guarded color-curve state recorder
+
+`ffd3b08ca` prepares manual `/apicontract color-curves <label>`, excluded from `all`. Four new fixture cases extend the existing 41-fixture harness: they exercise guarded raw RGBA tables, opaque userdata, state/evaluation/reset/copy observations, and bounded failure paths. This does not establish native color representation, identity, coercion, security, removal/replacement or interpolation semantics. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document manual scalar curve point mutation recorder
 
 Runtime `9b7fdb43e` adds manual `/apicontract curve-edit <label>`, excluded from `all`. Fresh `RemovePoint` indices and independent empty/unsorted-duplicate `SetPoints` cases use actual `CreateVector2D` objects; each records bounded state before/after without inferring index, ordering, duplicate, copy or coercion semantics. The 41 local fixtures are cumulative recorder proof only. Native execution, color curves and secret behavior remain pending. See [[api-contract-probes]].
