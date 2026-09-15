@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual equipped-item binding
+
+- Manual `item-binding <label>` is excluded from `all`. Query `GetInventoryItemLink("player", slot)` once for each fixed slot 1–19, retaining exact producer return arity and nil positions.
+- Use only the first actual producer return when it is an accessible non-secret string. Query `C_Item.IsItemBindToAccount` once with the original link, never a truncated saved string, synthetic link or numeric item ID.
+- Check accessibility before type inspection and namespace lookup; recheck link accessibility immediately before calling the binding API, after function lookup/access checks. Missing, nil, nonstring or failed producers explicitly skip binding with `unavailable-input`; restricted links use `restricted-input`. Neither means false.
+- Keep producer and binding errors opaque and continue independent slots. Retain sixteen scalar positions, 256-byte strings and ten snapshots. No mutations, alternate producers or native execution.
+- Eight separate actual TOC/slash fixtures cover argument flow, arity, unavailable/restricted inputs, namespace failures, access revocation, bounds and manual routing. Pinned ItemDocumentation and the Journeys item-link consumer guide arguments, not native binding classifications or security conclusions.
+
 ## Manual StatusBar fill style
 
 - Manual `statusbar-fill <label>` is excluded from `all`. Create one unnamed StatusBar under UIParent, immediately attempt Hide, then capture the raw fresh GetFillStyle default before any fill setter.

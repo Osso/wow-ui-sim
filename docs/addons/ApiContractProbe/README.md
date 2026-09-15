@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual equipped-item binding
+
+`/apicontract item-binding <label>` stays outside `all`. For fixed equipment slots 1–19, call `GetInventoryItemLink("player", slot)` once and retain its exact return arity. Only the first returned value, if an accessible non-secret string, is passed once to `C_Item.IsItemBindToAccount(link)`. The original link is passed, never its truncated saved representation. No synthetic links, numeric item IDs, alternate producers or mutations are used.
+
+Producer and binding results retain sixteen scalar positions, nils and opaque errors; saved strings stop at 256 bytes. Missing, nil, nonstring or failed producers yield `unavailable-input`, not false. Restricted links yield `restricted-input`. Namespace lookup and function access are guarded; link access is rechecked immediately before passing it onward. Each slot proceeds independently after earlier errors. Shared ten-snapshot limit bounds producer calls to 190 and binding calls to at most 190 per load.
+
+Pinned `ItemDocumentation.lua:1362–1374` declares the ItemInfo argument and boolean return. `Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:161–174` passes an actual item link to this API; it does not establish binding classifications for equipped fixtures. Native results, known/unknown binding fixtures and security behavior remain unverified. Eight separate actual TOC/slash fixtures prove recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/item_binding.lua docs/addons/ApiContractProbe
+```
+
 ## Manual StatusBar fill style
 
 `/apicontract statusbar-fill <label>` stays outside `all`. It creates one unnamed `CreateFrame("StatusBar", nil, UIParent)` and immediately attempts `Hide`, before recording the fresh `GetFillStyle()` default. For each published `Enum.StatusBarFillStyle` name `Standard`, `StandardNoRangeFill`, `Center`, `Reverse`, an accessible finite scalar value permits one `SetFillStyle(value)` followed by two independent `GetFillStyle()` observations. No enum numbers are substituted. Missing or throwing setters do not suppress those getters. Missing, restricted or nonscalar enum entries are recorded but not passed to setters.

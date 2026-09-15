@@ -402,6 +402,42 @@ local function mapTuple(...)
     return result
 end
 
+local function observeItemProducer(slot)
+    local fn = GetInventoryItemLink
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, "player", slot))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values[2]
+end
+
+local function observeItemBinding(link)
+    if not accessible(link) then return { status = "restricted-input" } end
+    if type(link) ~= "string" then return { status = "unavailable-input" } end
+    local fn, ok = readField(C_Item, "IsItemBindToAccount")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Namespace lookup and function guards may revoke input access.
+    if not accessible(link) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, link))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function captureItemBinding()
+    local result = { slots = {} }
+    for slot = 1, 19 do
+        local producer, link = observeItemProducer(slot)
+        local binding = { status = "unavailable-input" }
+        if producer.status == "observed" then binding = observeItemBinding(link) end
+        result.slots[slot] = { slot = slot, producer = producer, binding = binding }
+    end
+    return result
+end
+
 local function observeFillMethod(object, name, ...)
     local fn, ok = readField(object, name)
     if not ok then return { status = "field-error" } end
@@ -1005,8 +1041,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1017,6 +1053,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end
         if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
         if mode == "abbreviations" then record.abbreviations = captureAbbreviations() end
