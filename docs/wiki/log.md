@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare bounded heal-calculator recorder
+
+`c47811794` adds manual `/apicontract heal-calculator <label>`, excluded from `all`. Two fresh no-argument calculators receive five read-only getters twice each. Seven separate local fixtures establish only bounded recorder behavior. Native fresh/default values, populated state, reset/default semantics and security remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare pure mapvalues recorder
 
 `decd7bc49` adds manual `/apicontract mapvalues <label>`, excluded from `all`. It records fixed vararg inputs, callback/outer tuple arity and nil positions, nil/multiple/zero returns, opaque callback errors, and bounded 16-position/32-invocation observations without classifying native packing or order. Its separate suite has eight fixtures; main and color harnesses remain 44 and four. Native execution, callback-failure propagation and security remain pending. See [[api-contract-probes]].
