@@ -144,6 +144,71 @@ local function captureCurves()
     return result
 end
 
+local function curveStateMethod(curve, name, ...)
+    local fn, ok = readField(curve, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, curve, ...))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for i = 2, math.min(values.n, 9) do result.values[i - 1] = scalar(values[i]) end
+    if values.n > 9 then result.truncated = true end
+    return result, values[2]
+end
+
+local function curveStateSnapshot(curve)
+    local state = { curveType = curveStateMethod(curve, "GetType"),
+        count = curveStateMethod(curve, "GetPointCount"), points = method(curve, "GetPoints"),
+        hasSecretValues = curveStateMethod(curve, "HasSecretValues"), evaluations = {} }
+    for _, x in ipairs({ -1, 0, 10, 15, 20, 30, 31 }) do
+        state.evaluations[#state.evaluations + 1] = { x = x, result = curveStateMethod(curve, "Evaluate", x) }
+    end
+    return state
+end
+
+local function configureStateCurve(curve)
+    local types, ok = readField(Enum, "LuaCurveType")
+    if not ok then return { status = "missing-linear-type" } end
+    local linear, found = readField(types, "Linear")
+    if not found or not accessible(linear) or type(linear) ~= "number" then
+        return { status = "missing-linear-type" }
+    end
+    return curveStateMethod(curve, "SetType", linear)
+end
+
+local function captureCurveReset(points)
+    local curve, failure = newCurve(points)
+    if not curve then return { status = failure } end
+    local result = { status = "observed", setType = configureStateCurve(curve) }
+    result.before = curveStateSnapshot(curve)
+    result.reset = curveStateMethod(curve, "SetToDefaults")
+    result.after = curveStateSnapshot(curve)
+    return result
+end
+
+local function captureCurveCopy(points)
+    local original, failure = newCurve(points)
+    if not original then return { status = failure } end
+    local result = { status = "observed", setType = configureStateCurve(original) }
+    local copy
+    result.result, copy = curveStateMethod(original, "Copy")
+    if result.result.status ~= "observed" then return result end
+    if not accessible(copy) then result.status = "restricted-copy"; return result end
+    if type(copy) ~= "table" and type(copy) ~= "userdata" then result.status = "invalid-copy"; return result end
+    result.before = curveStateSnapshot(copy)
+    result.add = curveStateMethod(original, "AddPoint", 40, 11)
+    result.originalAfterAdd, result.afterAdd = curveStateSnapshot(original), curveStateSnapshot(copy)
+    result.clear = curveStateMethod(original, "ClearPoints")
+    result.originalAfterClear, result.afterClear = curveStateSnapshot(original), curveStateSnapshot(copy)
+    return result
+end
+
+local function captureCurveState()
+    local points = { { x = 30, y = 4 }, { x = 10, y = 7 }, { x = 20, y = 2 }, { x = 10, y = 9 } }
+    return { inputs = points, empty = captureCurveReset({}), populated = captureCurveReset(points),
+        copy = captureCurveCopy(points) }
+end
+
 local function captureSex()
     local result = { units = {}, enums = {} }
     local unitSexEnum = readField(Enum, "UnitSex")
@@ -551,8 +616,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -563,6 +628,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "curve-state" then record.curveState = captureCurveState() end
         if mode == "resources" then record.resources = captureResources() end
         if mode == "actions" then record.actions = captureActions(slot) end
         if mode == "hyperlinks" then record.hyperlinks = captureHyperlinks() end

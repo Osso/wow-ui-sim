@@ -761,4 +761,93 @@ test("callbacks missing access fails closed and cleanup refusal remains active",
     assert(ApiContractProbeDB.callbackSessions[1].status == "cleanup-incomplete")
     assert(ApiContractProbeDB.callbackSessions[1].unit.status == "cleanup-refused")
 end)
+local function stateCurveFixture(alias, replaceDuplicates, defaultType)
+    Enum.LuaCurveType = { Linear = 73 }
+    local function create(points, curveType)
+        points = points or {}
+        curveType = curveType or 19
+        local curve = {}
+        function curve:SetType(value) curveType = value end
+        function curve:GetType() return curveType end
+        function curve:HasSecretValues() return false end
+        function curve:GetPointCount() return #points end
+        function curve:GetPoints()
+            local result = {}
+            for i, p in ipairs(points) do result[i] = { x = p.x, y = p.y } end
+            return result
+        end
+        function curve:AddPoint(x, y)
+            if replaceDuplicates then
+                for _, p in ipairs(points) do if p.x == x then p.y = y; return end end
+            end
+            points[#points + 1] = { x = x, y = y }
+        end
+        function curve:Evaluate(x) return x + #points * 100 end
+        function curve:SetToDefaults() points = {}; curveType = defaultType end
+        function curve:ClearPoints() points = {} end
+        function curve:Copy()
+            if alias then return self end
+            local copied = {}
+            for i, p in ipairs(points) do copied[i] = { x = p.x, y = p.y } end
+            return create(copied, curveType)
+        end
+        return curve
+    end
+    C_CurveUtil.CreateCurve = function() return create() end
+end
+
+test("curve state retains duplicate defaults evaluations and independent copies", function()
+    reset(); stateCurveFixture(false, false, 91)
+    local state = capture("curve-state own").curveState
+    assert(state.inputs[4].x == 10 and state.inputs[4].y == 9)
+    assert(state.empty.before.count.values[1].value == 0)
+    assert(state.populated.setType.status == "observed")
+    assert(state.populated.before.curveType.values[1].value == 73)
+    assert(state.populated.before.count.values[1].value == 4)
+    assert(state.populated.before.points.values[1].entries[4].fields.y.value == 9)
+    assert(state.populated.before.evaluations[1].result.values[1].value == 399)
+    assert(state.populated.after.curveType.values[1].value == 91)
+    assert(state.populated.after.count.values[1].value == 0)
+    assert(state.populated.after.evaluations[7].result.values[1].value == 31)
+    assert(state.copy.before.count.values[1].value == 4)
+    assert(state.copy.afterAdd.count.values[1].value == 4)
+    assert(state.copy.afterClear.count.values[1].value == 4)
+    assert(state.copy.originalAfterAdd.count.values[1].value == 5)
+    assert(state.copy.originalAfterClear.count.values[1].value == 0)
+end)
+test("curve state records alternative duplicate and alias behavior without normalization", function()
+    reset(); stateCurveFixture(true, true, 27)
+    local state = capture("curve-state alias").curveState
+    assert(state.populated.before.count.values[1].value == 3)
+    assert(state.populated.after.curveType.values[1].value == 27)
+    assert(state.copy.afterAdd.count.values[1].value == 4)
+    assert(state.copy.afterClear.count.values[1].value == 0)
+end)
+test("curve state missing enum copy errors and restricted objects fail closed", function()
+    reset(); stateCurveFixture(false, false, 1)
+    local create = C_CurveUtil.CreateCurve
+    Enum.LuaCurveType.Linear = secret
+    C_CurveUtil.CreateCurve = function()
+        local curve = create()
+        curve.SetType = function() error("restricted enum reached setter") end
+        curve.Copy = function() error(secret) end
+        curve.Evaluate = function() return secret end
+        return curve
+    end
+    local state = capture("curve-state restricted").curveState
+    assert(state.populated.setType.status == "missing-linear-type")
+    assert(state.populated.before.evaluations[1].result.values[1].status == "restricted")
+    assert(state.copy.result.status == "call-error")
+    assert(not containsSecret(ApiContractProbeDB))
+    C_CurveUtil.CreateCurve = function() return secret end
+    assert(capture("curve-state constructor").curveState.empty.status == "restricted-curve")
+end)
+test("curve state is manual and bounded without changing curves capture", function()
+    reset(); stateCurveFixture(false, false, 1)
+    assert(capture("all").curveState == nil)
+    for _ = 1, 9 do capture("curve-state bounded") end
+    C_CurveUtil.CreateCurve = function() error("overflow called constructor") end
+    capture("curve-state overflow")
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+end)
 print(string.format("RESULT %d passed", passed))

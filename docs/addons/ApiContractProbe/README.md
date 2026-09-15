@@ -10,6 +10,12 @@ Capture naturally available partial-resource states with labels and matching cli
 
 Manual native observations for scalar curve points, `UnitSexBase`, unit names/realms, finite numeric formatting, publication/CVars and event payloads. Complements [AuraDispelCurveProbe](../AuraDispelCurveProbe/README.md). Neither recorder infers native contracts from fixture outputs.
 
+## Scalar curve state
+
+`/apicontract curve-state <label>` is manual-only, excluded from `all`; existing `curves` is unchanged. It creates empty and unsorted duplicate-point scalar curves using `(30,4), (10,7), (20,2), (10,9)`, attempts the discovered `Enum.LuaCurveType.Linear`, and records type/count/points/secret-flag plus evaluation at `-1,0,10,15,20,30,31` before and after reset. Setter failures and missing enum values are explicit observations.
+
+A separate populated curve is copied; both original and copy are observed after adding `(40,11)` and after clearing the original. No expected defaults, duplicate policy, interpolation or copy isolation is assumed. Method results are scalar-only except existing bounded point/GetXY inspection; errors remain opaque. Four returned points and eight result positions are retained. Ten snapshots maximum. Color curves, `SetPoints`, `RemovePoint` and secret semantics remain pending; no native execution is claimed.
+
 ## Target
 
 Interface `120100` follows the locally pinned retail `12.1.0.69497` source, not a newly observed desktop build. Install only on a matching client. No installation or native execution has been performed by this task.

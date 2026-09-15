@@ -2,6 +2,16 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual scalar curve state
+
+- [x] Manual `curve-state <label>` is excluded from `all` and leaves existing `curves` capture unchanged.
+- [x] Construct empty and duplicate/unsorted scalar curves with inputs `(30,4), (10,7), (20,2), (10,9)`. Record `GetType`, `GetPointCount`, `GetPoints`, `HasSecretValues` and `Evaluate` at `-1,0,10,15,20,30,31` before and after `SetToDefaults`.
+- [x] Set type only through safely discovered `Enum.LuaCurveType.Linear`, recording missing prerequisites or setter failures without guessing enum values.
+- [x] Copy a separate populated curve, capture the copy before mutation, then original and copy after `AddPoint(40,11)` and `ClearPoints`. Preserve observations even if copying aliases the original; do not classify native behavior.
+- [x] Call only constructed/copied curve methods; scalar-only method results remain opaque except the existing bounded point/GetXY observer for `GetPoints`. Restricted copies and constructor results fail closed; errors are opaque.
+
+Pinned `LuaCurveObjectAPIDocumentation.lua` and `LuaCurveObjectBaseAPIDocumentation.lua` describe these argument and return shapes, not observed native defaults or copy behavior. Four point entries, eight return positions, seven evaluation inputs and the shared ten-snapshot limit bound capture. Color curves, SetPoints, RemovePoint and secret semantics remain outside this experiment. Local fake-client tests retain differing defaults, duplicate replacement/preservation, copied/aliased state and evaluation outputs; native execution remains pending.
+
 ## Manual scalar resource scale capture
 
 - Manual `resources <label>` is excluded from `all`; observe player/target/focus/pet/nonexistent without existence gating.
