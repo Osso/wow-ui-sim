@@ -1,6 +1,6 @@
 {
   "schema": "native-probe-preparation/v1",
-  "verified": "2026-09-14",
+  "verified": "2026-09-15",
   "source": {
     "path": "docs/generated/patch-api-blockers.json",
     "sha256": "c977eb10c0a355131a308444f41e9c28143420bb8d829744d78e20d7e328dcc5"
@@ -10,8 +10,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 158,
-    "partial-recorder": 3,
+    "needs-design-and-recorder-review": 157,
+    "partial-recorder": 4,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -50,8 +50,20 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "UnitName and UnitNameUnmodified positional returns and exact arity",
+          "Player, party1 through party4, target, nonexistent, invalid-unit-token and empty-token inputs without existence gating",
+          "Nil versus empty versus explicit realm text, accessibility redaction and opaque errors",
+          "Manual scenario labels and client build provenance"
+        ],
+        "missing": [
+          "Authoritative matching-build same-realm and cross-realm party fixtures",
+          "Native captures and interpretation"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/unit-name-realm"
     },
