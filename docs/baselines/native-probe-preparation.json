@@ -10204,7 +10204,7 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Fresh unnamed StatusBar hidden before recording initial GetFillStyle",
-          "Two setter/getter observations for each of four accessible published fill-style enum names, without fallback values"
+          "One setter followed by two getter observations for each of four accessible published fill-style enum names, without fallback values"
         ],
         "missing": [
           "Native matching-build initial state and enum roundtrip output",

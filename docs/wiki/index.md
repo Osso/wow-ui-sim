@@ -1,6 +1,6 @@
 ## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
 
-Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. One fresh unnamed hidden StatusBar records its `GetFillStyle` default before setters, then each published fill-style enum value is round-tripped twice without numeric fallback. Seven separate fixtures prove recorder mechanics only. Hide failure leaves visibility unconfirmed; invalid inputs, security, rendering and native default/validation semantics remain pending. See [[api-contract-probes]].
+Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. One fresh unnamed hidden StatusBar records its `GetFillStyle` default before setters, then each published fill-style enum value is set once and read twice without numeric fallback. Seven separate fixtures prove recorder mechanics only. Hide failure leaves visibility unconfirmed; invalid inputs, security, rendering and native default/validation semantics remain pending. See [[api-contract-probes]].
 
 ## [2026-09-15] investigation | Prepare bounded raid-marker recorder
 
