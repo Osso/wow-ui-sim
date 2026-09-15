@@ -9,6 +9,28 @@
   "residual_reviews": [
     {
       "manifest": "data/patch-api/12.0.0.json",
+      "ids": [
+        "added:RegisterEventCallback",
+        "added:UnregisterEventCallback",
+        "added:RegisterUnitEventCallback",
+        "added:UnregisterUnitEventCallback"
+      ],
+      "manifest_status": "best-effort",
+      "status": "partial-recorder",
+      "recorder": "docs/addons/ApiContractProbe",
+      "observations": [
+        "Manual own plain-function global UNIT_HEALTH and player-filtered registrations/removals with retained callback identity",
+        "Bounded passive scalar callback payload arity, registration/removal results and explicit errors"
+      ],
+      "missing": [
+        "Native external UNIT_HEALTH producer and post-removal transition captures",
+        "FunctionContainer wrappers, duplicate registration, ordering, alias matching, mutation and recursion contracts",
+        "Security semantics and native eligibility/validation behavior"
+      ],
+      "native_execution": "not-established-by-this-inventory"
+    },
+    {
+      "manifest": "data/patch-api/12.0.0.json",
       "ids": ["added:UnitHealthPercent", "added:UnitPowerPercent"],
       "manifest_status": "best-effort",
       "status": "partial-recorder",
