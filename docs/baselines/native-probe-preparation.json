@@ -10,8 +10,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 156,
-    "partial-recorder": 5,
+    "needs-design-and-recorder-review": 155,
+    "partial-recorder": 6,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -31,8 +31,20 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "UnitCastingInfo and UnitChannelInfo raw scalar returns, exact arity and nil positions through position 16, with explicit truncation above that bound",
+          "Player, target, focus, party1, nonexistent, invalid and empty unit tokens",
+          "Manual repeated scenario snapshots with build and time provenance; no ID normalization or object method invocation"
+        ],
+        "missing": [
+          "Matching native client and controllable active, completed, cancelled, consecutive and replaced cast fixtures",
+          "Active non-player channel and empowered versus non-empowered channel fixtures",
+          "Native captures establishing identity stability, payload positions and empowerment stage counts"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/cast-identities"
     },
