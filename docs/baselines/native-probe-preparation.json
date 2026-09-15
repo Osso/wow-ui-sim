@@ -9,6 +9,24 @@
   "residual_reviews": [
     {
       "manifest": "data/patch-api/12.0.0.json",
+      "ids": ["added:UnitHealthPercent", "added:UnitPowerPercent"],
+      "manifest_status": "best-effort",
+      "status": "partial-recorder",
+      "recorder": "docs/addons/ApiContractProbe",
+      "observations": [
+        "Manual resources snapshots: raw current health/power and maxima, power type, omitted/nil curve and scalar linear-curve outputs",
+        "Six recorded curve points discriminate possible scales without classifying native output",
+        "Default power selection and explicit false/true unmodified requests without invented power IDs"
+      ],
+      "missing": [
+        "Native matching-build partial, full, zero-resource and unknown-unit captures",
+        "Color-curve results, predicted health, secondary power and security contracts",
+        "Authoritative native input scale, default units and zero-maximum behavior"
+      ],
+      "native_execution": "not-established-by-this-inventory"
+    },
+    {
+      "manifest": "data/patch-api/12.0.0.json",
       "id": "added:C_StringUtil.StripHyperlinks",
       "manifest_status": "best-effort",
       "status": "partial-recorder",
