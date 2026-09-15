@@ -32,6 +32,8 @@ Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence
 
 `/apicontract callbacks-start <label>` registers only this addon's plain Lua callbacks for global `UNIT_HEALTH` and player-filtered `UNIT_HEALTH`; `callbacks-stop` removes the retained identities. It records registration/removal results and up to 128 passive deliveries with exact arity and up to sixteen safe scalar positions. Partial registration and cleanup errors remain recorded rather than treated as stopped. It neither fires events nor examines wrapper containers. The 33 local fixtures prove recorder mechanics only. A native producer, post-removal delivery boundary, `Event.lua` FunctionContainers, duplicates, ordering, aliases, mutation/recursion and security behavior remain pending. This residual best-effort work does not complete the earlier simulator callback credits or a snapshot plan.
 
+`/apicontract mapvalues <label>` is manual-only and excluded from `all`. It calls the actual global as `mapvalues(callback, ...)` across zero/one/multiple inputs, interior and trailing nils, and fixed single/multiple/nil/zero callback returns plus an opaque callback error. It retains callback invocation tuples and outer results with up to sixteen positions and a shared 32-invocation cap. The separate `mapvalues.lua` suite has eight fixtures; the main harness remains 44 and the color harness four—these are not 56 new native cases. Native packing, order, callback-failure propagation and security remain unobserved.
+
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
 
 ## Sex-control local proof

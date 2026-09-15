@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare pure mapvalues recorder
+
+`decd7bc49` adds manual `/apicontract mapvalues <label>`, excluded from `all`. It records fixed vararg inputs, callback/outer tuple arity and nil positions, nil/multiple/zero returns, opaque callback errors, and bounded 16-position/32-invocation observations without classifying native packing or order. Its separate suite has eight fixtures; main and color harnesses remain 44 and four. Native execution, callback-failure propagation and security remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Record independent UnitSex controls
 
 `9d88dc424` removes existence-gating from `UnitSex` and `UnitSexBase` capture; `1bedd3ce9` corrects the restricted-existence fixture. Each of nine fixed tokens has independent `exists`, `legacy`, and `base` observations. The main harness has 44 cumulative fixtures. Native before/during/after-disguise capture with independently established stable unit identity remains pending. See [[api-contract-probes]].
