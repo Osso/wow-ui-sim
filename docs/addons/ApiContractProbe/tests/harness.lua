@@ -850,4 +850,122 @@ test("curve state is manual and bounded without changing curves capture", functi
     capture("curve-state overflow")
     assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
 end)
+local function editCurveFixture(zeroBased, reverseReplacement)
+    local vectors = {}
+    CreateVector2D = function(x, y)
+        local vector = { x = x, y = y }
+        vectors[vector] = true
+        return vector
+    end
+    C_CurveUtil.CreateCurve = function()
+        local points = {}
+        return {
+            AddPoint = function(_, x, y) points[#points + 1] = { x = x, y = y } end,
+            GetPointCount = function() return #points end,
+            GetPoints = function()
+                local result = {}
+                for i, p in ipairs(points) do result[i] = { x = p.x, y = p.y } end
+                return result
+            end,
+            Evaluate = function(_, x) return #points * 100 + x end,
+            RemovePoint = function(_, index)
+                local position = zeroBased and index + 1 or index
+                if position < 1 or position > #points then error(secret) end
+                table.remove(points, position)
+                return nil, "removed"
+            end,
+            SetPoints = function(_, replacement)
+                points = {}
+                for i = 1, #replacement do
+                    local p = replacement[reverseReplacement and (#replacement - i + 1) or i]
+                    assert(vectors[p], "SetPoints requires constructed vectors")
+                    points[#points + 1] = { x = p.x, y = p.y }
+                end
+                return "replaced", nil
+            end,
+        }
+    end
+end
+
+test("curve edit records independent one-based removals and constructed replacements", function()
+    reset(); editCurveFixture(false, false)
+    local edit = capture("curve-edit ordinary").curveEdit
+    assert(#edit.removals == 6 and #edit.replacements == 2)
+    for i, index in ipairs({ -1, 0, 1, 2, 3, 4 }) do
+        local row = edit.removals[i]
+        assert(row.index == index and row.before.count.values[1].value == 3)
+        assert(row.before.evaluation.values[1].value == 315)
+        local valid = index >= 1 and index <= 3
+        assert(row.after.count.values[1].value == (valid and 2 or 3))
+        assert(row.mutation.status == (valid and "observed" or "call-error"))
+        if valid then
+            assert(row.mutation.n == 2 and row.mutation.values[1].kind == "nil")
+            assert(row.mutation.values[2].value == "removed")
+        end
+    end
+    assert(edit.removals[3].after.points.values[1].entries[1].fields.x.value == 10)
+    local empty, duplicate = edit.replacements[1], edit.replacements[2]
+    assert(#empty.inputs == 0 and empty.before.count.values[1].value == 3)
+    assert(empty.after.count.values[1].value == 0 and empty.after.evaluation.values[1].value == 15)
+    assert(duplicate.inputs[4].x == 10 and duplicate.inputs[4].y == 9)
+    assert(duplicate.mutation.n == 2 and duplicate.mutation.values[2].kind == "nil")
+    assert(duplicate.after.count.values[1].value == 4)
+    assert(duplicate.after.points.values[1].entries[1].fields.x.value == 30)
+    assert(duplicate.after.points.values[1].entries[4].fields.y.value == 9)
+end)
+test("curve edit preserves alternate zero-based indices and replacement order", function()
+    reset(); editCurveFixture(true, true)
+    local edit = capture("curve-edit alternate").curveEdit
+    assert(edit.removals[2].mutation.status == "observed")
+    assert(edit.removals[2].after.points.values[1].entries[1].fields.x.value == 10)
+    assert(edit.removals[5].mutation.status == "call-error")
+    local points = edit.replacements[2].after.points.values[1].entries
+    assert(points[1].fields.x.value == 10 and points[1].fields.y.value == 9)
+    assert(points[4].fields.x.value == 30)
+end)
+test("curve edit missing restricted and throwing vector constructors fail closed", function()
+    reset(); editCurveFixture(false, false)
+    local create = C_CurveUtil.CreateCurve
+    C_CurveUtil.CreateCurve = function()
+        local curve = create()
+        curve.SetPoints = function() error("unsafe replacement reached SetPoints") end
+        return curve
+    end
+    CreateVector2D = nil
+    local edit = capture("curve-edit missing").curveEdit
+    assert(edit.replacements[1].mutation.status == "missing-vector-constructor")
+    assert(edit.replacements[2].after.count.values[1].value == 3)
+    CreateVector2D = function() return secret end
+    edit = capture("curve-edit restricted").curveEdit
+    assert(edit.replacements[2].mutation.status == "restricted-vector")
+    CreateVector2D = function() error(secret) end
+    edit = capture("curve-edit error").curveEdit
+    assert(edit.replacements[2].mutation.status == "vector-construction-error")
+    assert(not containsSecret(ApiContractProbeDB))
+end)
+test("curve edit redacts observations preserves errors and remains manual bounded", function()
+    reset(); editCurveFixture(false, false)
+    local create = C_CurveUtil.CreateCurve
+    C_CurveUtil.CreateCurve = function()
+        local curve = create()
+        curve.RemovePoint = function() error(secret) end
+        curve.SetPoints = function() error(secret) end
+        curve.GetPoints = function() return secret end
+        curve.Evaluate = function() return secret end
+        return curve
+    end
+    assert(capture("all").curveEdit == nil)
+    local edit = capture("curve-edit restricted").curveEdit
+    assert(edit.removals[1].mutation.status == "call-error")
+    assert(edit.removals[1].before.points.values[1].status == "restricted")
+    assert(edit.removals[1].after.evaluation.values[1].status == "restricted")
+    assert(edit.replacements[1].mutation.status == "call-error")
+    assert(not containsSecret(ApiContractProbeDB))
+    for _ = 1, 8 do capture("curve-edit bounded") end
+    C_CurveUtil.CreateCurve = function() error("overflow created curve") end
+    capture("curve-edit overflow")
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    reset(); issecretvalue = nil
+    assert(capture("curve-edit inaccessible").status == "missing-access-api")
+end)
 print(string.format("RESULT %d passed", passed))

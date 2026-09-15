@@ -166,6 +166,57 @@ local function curveStateSnapshot(curve)
     return state
 end
 
+local function curveEditSnapshot(curve)
+    return { count = curveStateMethod(curve, "GetPointCount"),
+        points = method(curve, "GetPoints"),
+        evaluationInput = 15, evaluation = curveStateMethod(curve, "Evaluate", 15) }
+end
+
+local function replaceCurvePoints(curve, inputs)
+    if not accessible(CreateVector2D) or type(CreateVector2D) ~= "function" then
+        return { status = "missing-vector-constructor" }
+    end
+    local points = {}
+    for i, input in ipairs(inputs) do
+        local ok, vector = pcall(CreateVector2D, input.x, input.y)
+        if not ok then return { status = "vector-construction-error" } end
+        if not accessible(vector) then return { status = "restricted-vector" } end
+        if type(vector) ~= "table" and type(vector) ~= "userdata" then
+            return { status = "invalid-vector-result" }
+        end
+        points[i] = vector
+    end
+    return curveStateMethod(curve, "SetPoints", points)
+end
+
+local function captureCurveEdit()
+    local inputs = { { x = 30, y = 4 }, { x = 10, y = 7 }, { x = 20, y = 2 } }
+    local result = { inputs = inputs, removals = {}, replacements = {} }
+    for _, index in ipairs({ -1, 0, 1, 2, 3, 4 }) do
+        local curve, failure = newCurve(inputs)
+        local row = { index = index, status = failure or "observed" }
+        if curve then
+            row.before = curveEditSnapshot(curve)
+            row.mutation = curveStateMethod(curve, "RemovePoint", index)
+            row.after = curveEditSnapshot(curve)
+        end
+        result.removals[#result.removals + 1] = row
+    end
+    for _, replacement in ipairs({ {}, {
+        { x = 30, y = 4 }, { x = 10, y = 7 }, { x = 20, y = 2 }, { x = 10, y = 9 },
+    } }) do
+        local curve, failure = newCurve(inputs)
+        local row = { inputs = replacement, status = failure or "observed" }
+        if curve then
+            row.before = curveEditSnapshot(curve)
+            row.mutation = replaceCurvePoints(curve, replacement)
+            row.after = curveEditSnapshot(curve)
+        end
+        result.replacements[#result.replacements + 1] = row
+    end
+    return result
+end
+
 local function configureStateCurve(curve)
     local types, ok = readField(Enum, "LuaCurveType")
     if not ok then return { status = "missing-linear-type" } end
@@ -616,8 +667,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -628,6 +679,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "curve-edit" then record.curveEdit = captureCurveEdit() end
         if mode == "curve-state" then record.curveState = captureCurveState() end
         if mode == "resources" then record.resources = captureResources() end
         if mode == "actions" then record.actions = captureActions(slot) end

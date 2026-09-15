@@ -14,7 +14,15 @@ Manual native observations for scalar curve points, `UnitSexBase`, unit names/re
 
 `/apicontract curve-state <label>` is manual-only, excluded from `all`; existing `curves` is unchanged. It creates empty and unsorted duplicate-point scalar curves using `(30,4), (10,7), (20,2), (10,9)`, attempts the discovered `Enum.LuaCurveType.Linear`, and records type/count/points/secret-flag plus evaluation at `-1,0,10,15,20,30,31` before and after reset. Setter failures and missing enum values are explicit observations.
 
-A separate populated curve is copied; both original and copy are observed after adding `(40,11)` and after clearing the original. No expected defaults, duplicate policy, interpolation or copy isolation is assumed. Method results are scalar-only except existing bounded point/GetXY inspection; errors remain opaque. Four returned points and eight result positions are retained. Ten snapshots maximum. Color curves, `SetPoints`, `RemovePoint` and secret semantics remain pending; no native execution is claimed.
+A separate populated curve is copied; both original and copy are observed after adding `(40,11)` and after clearing the original. No expected defaults, duplicate policy, interpolation or copy isolation is assumed. Method results are scalar-only except existing bounded point/GetXY inspection; errors remain opaque. Four returned points and eight result positions are retained. Ten snapshots maximum. Color curves and secret semantics remain pending; `SetPoints` and `RemovePoint` have the separate manual experiment below. No native execution is claimed.
+
+## Scalar point removal and replacement
+
+`/apicontract curve-edit <label>` is manual-only and excluded from `all`. Each of six `RemovePoint` inputs (`-1,0,1,2,3,4`) gets a fresh scalar curve populated with `(30,4), (10,7), (20,2)`. Two more fresh curves receive `SetPoints`: an empty array, and the unsorted duplicate sequence `(30,4), (10,7), (20,2), (10,9)`. Every replacement point comes from the actual `CreateVector2D(x,y)` constructor; missing, throwing, inaccessible or invalid constructor results prevent that replacement. No plain-table coercion is assumed.
+
+Each case records definitions, `GetPointCount`, bounded `GetPoints` and `Evaluate(15)` before and after the attempt, plus mutation return arity and opaque errors. Existing bounds retain four points, eight return positions and ten snapshots. Numeric out-of-range controls are observations, not expected rejection rules; default curve interpolation is not inferred. Curves and replacement vectors are independently constructed for every case; no returned-point alias or copy semantics are assumed.
+
+Pinned `LuaCurveObjectAPIDocumentation.lua` declares `RemovePoint(index: luaIndex)` and `SetPoints(point: table<vector2>)`; `Blizzard_SharedXML/Vector2D.lua` implements `CreateVector2D` with `x`, `y` and `GetXY`. These sources guide construction, not native indexing, duplicate/order or mutation results. Local fixtures retain distinct zero-/one-based removal and replacement ordering. Native execution, invalid-type coercion, color curves and security semantics remain pending.
 
 ## Target
 

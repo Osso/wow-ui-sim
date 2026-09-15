@@ -10,7 +10,16 @@
 - [x] Copy a separate populated curve, capture the copy before mutation, then original and copy after `AddPoint(40,11)` and `ClearPoints`. Preserve observations even if copying aliases the original; do not classify native behavior.
 - [x] Call only constructed/copied curve methods; scalar-only method results remain opaque except the existing bounded point/GetXY observer for `GetPoints`. Restricted copies and constructor results fail closed; errors are opaque.
 
-Pinned `LuaCurveObjectAPIDocumentation.lua` and `LuaCurveObjectBaseAPIDocumentation.lua` describe these argument and return shapes, not observed native defaults or copy behavior. Four point entries, eight return positions, seven evaluation inputs and the shared ten-snapshot limit bound capture. Color curves, SetPoints, RemovePoint and secret semantics remain outside this experiment. Local fake-client tests retain differing defaults, duplicate replacement/preservation, copied/aliased state and evaluation outputs; native execution remains pending.
+Pinned `LuaCurveObjectAPIDocumentation.lua` and `LuaCurveObjectBaseAPIDocumentation.lua` describe these argument and return shapes, not observed native defaults or copy behavior. Four point entries, eight return positions, seven evaluation inputs and the shared ten-snapshot limit bound capture. Color curves and secret semantics remain outside this experiment; point removal/replacement uses the separate experiment below. Local fake-client tests retain differing defaults, duplicate replacement/preservation, copied/aliased state and evaluation outputs; native execution remains pending.
+
+## Manual scalar point mutation
+
+- [x] Manual `curve-edit <label>` is excluded from `all`. Each `RemovePoint` index `-1,0,1,2,3,4` receives its own curve populated with `(30,4), (10,7), (20,2)`.
+- [x] Two independent populated curves receive empty and unsorted duplicate `SetPoints` inputs `(30,4), (10,7), (20,2), (10,9)`. Construct every vector through actual accessible `CreateVector2D`; missing/throwing/restricted/invalid constructors prevent replacement, without a table-coercion fallback.
+- [x] Record input definitions, count, bounded points and `Evaluate(15)` before and after each attempt; preserve mutation arity/nils and opaque errors. Retain four point entries, eight return positions and ten snapshots using existing accessibility-first observers.
+- [x] Behavioral fixtures preserve differing zero-/one-based removal and SetPoints ordering, constructor failures, redaction, independent curves, manual routing and storage bounds. Do not infer index base, duplicate policy, interpolation or alias behavior from fixtures.
+
+Pinned scalar documentation specifies `RemovePoint(index: luaIndex)` and `SetPoints(point: table<vector2>)`; pinned `Vector2D.lua` constructs an `x`/`y` object with `GetXY`. Native captures remain pending. Only numeric index controls are included; invalid-type coercion, color curves, vendor mutation and security behavior are excluded.
 
 ## Manual scalar resource scale capture
 
