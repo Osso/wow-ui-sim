@@ -60,6 +60,20 @@ Additional commands:
 
 `AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets tied to the blocker snapshot hash. Registration errors, missing parents and missing members are distinct observations. Event payloads retain arity and nil slots, with at most eight summarized values; tables remain bounded observations, not full structure captures. No native actions, purchases, transitions or account mutations are triggered. A symbol missing at one phase does not prove removal; a listener with no deliveries does not prove event absence. These shared recorders do **not** complete all associated behavioral plans. See the [full preparation inventory](../../baselines/native-probe-preparation.json). Start a new capture batch by moving the saved file aside while logged out.
 
+## Manual heal calculator
+
+`/apicontract heal-calculator <label>` is manual-only, excluded from `all`. Each snapshot attempts two fresh `CreateUnitHealPredictionCalculator()` calls with no arguments. On each accessible object, query `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, `GetDamageAbsorbClampMode`, `GetHealAbsorbs`, and `GetDamageAbsorbs` twice, in that order. Repeated observations remain separate; no equality or stability inference is performed.
+
+Record constructor and getter exact arity, nil positions and at most sixteen scalar/opaque positions, marking truncation. Object access precedes method lookup; function and result access precede inspection. Returned objects and errors remain opaque. Missing, restricted or invalid constructors prevent getter calls. At most two constructor and twenty getter calls per snapshot; the shared ten-snapshot limit applies.
+
+Pinned retail `UnitDocumentation.lua` declares the no-argument constructor; `UnitHealPredictionCalculatorAPIDocumentation.lua` declares three mode getters and two `(amount, clamped)` getters. These signatures guide calls, not expected values. No unit variants, population, setters, reset/default transitions, security experiments or native execution. Fresh default values and populated behavior remain unverified.
+
+Separate local behavioral fixtures:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/heal_calculator.lua docs/addons/ApiContractProbe
+```
+
 ## Producer cast durations
 
 `/apicontract cast-durations <label>` is manual-only, excluded from `all`. Queries `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` with hold omitted/false/true for player, target, focus, party1, nonexistent, invalid-unit-token and empty tokens. Record exact arity, nils and at most 16 positions; larger tuples are marked truncated.

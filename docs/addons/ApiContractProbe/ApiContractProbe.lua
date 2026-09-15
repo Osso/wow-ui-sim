@@ -402,6 +402,37 @@ local function mapTuple(...)
     return result
 end
 
+local function captureHealCalculatorObject()
+    local fn = CreateUnitHealPredictionCalculator
+    if not accessible(fn) then return { constructor = { status = "restricted" } } end
+    if type(fn) ~= "function" then return { constructor = { status = "missing-api" } } end
+    local values = pack(pcall(fn))
+    if not values[1] then return { constructor = { status = "call-error" } } end
+    local observation = mapTuple(unpack(values, 2, values.n))
+    observation.status = "observed"
+    local row = { constructor = observation }
+    local object = values[2]
+    if not accessible(object) then return row end
+    if type(object) ~= "table" and type(object) ~= "userdata" then return row end
+    row.methods = {}
+    for _, name in ipairs({ "GetHealAbsorbMode", "GetHealAbsorbClampMode",
+        "GetDamageAbsorbClampMode", "GetHealAbsorbs", "GetDamageAbsorbs" }) do
+        local samples = {}
+        row.methods[name] = samples
+        for index = 1, 2 do
+            local getter, ok = readField(object, name)
+            samples[index] = ok and observeCast(getter, object) or { status = "field-error" }
+        end
+    end
+    return row
+end
+
+local function captureHealCalculator()
+    local result = { objects = {} }
+    for index = 1, 2 do result.objects[index] = captureHealCalculatorObject() end
+    return result
+end
+
 local function mapCallbackResult(mode)
     if mode == "multiple" then return "first", nil, "third" end
     if mode == "nil" then return nil end
@@ -890,8 +921,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -902,6 +933,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "heal-calculator" then record.healCalculator = captureHealCalculator() end
         if mode == "mapvalues" then record.mapvalues = captureMapValues() end
         if mode == "cast-durations" then record.castDurations = captureCastDurations() end
         if mode == "color-curves" then record.colorCurves = captureColorCurves() end

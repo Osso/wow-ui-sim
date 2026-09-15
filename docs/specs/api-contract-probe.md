@@ -56,6 +56,16 @@ Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocument
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Manual heal calculator
+
+- Manual `heal-calculator <label>` stays outside `all`; attempt two independent no-argument `CreateUnitHealPredictionCalculator()` constructions per snapshot.
+- For each accessible object, observe `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, `GetDamageAbsorbClampMode`, `GetHealAbsorbs` and `GetDamageAbsorbs` twice each. Preserve repeats without comparing values or inferring stability.
+- Record constructor/getter exact arity, nil slots and sixteen scalar/opaque positions with explicit truncation. Guard object access before method lookup and method/result access before inspection. Do not serialize runtime objects or errors, invoke returned-object methods or assume zero/default values.
+- Missing, throwing, restricted or non-object constructor results prevent getter work for that attempt. Bound each snapshot to two constructor and twenty getter calls; retain the shared ten-snapshot cap.
+- Separate actual TOC/slash fixtures cover repeated raw values, constructor/method/result access failures, opaque errors/objects, exact larger tuple arity, manual-only dispatch and storage limits.
+
+Pinned retail `UnitDocumentation.lua` and `UnitHealPredictionCalculatorAPIDocumentation.lua` guide the constructor and five getter signatures only. Native observations, populated state, reset/default semantics and security remain unresolved. No unit contexts, setters, population, native execution or conformance credit belong to this partial experiment.
+
 ## Manual producer durations
 
 - Manual `cast-durations <label>` is excluded from `all`. Query casting/channel durations and empowered durations with hold omitted, false and true for player/target/focus/party1/nonexistent/invalid-unit-token/empty tokens.
