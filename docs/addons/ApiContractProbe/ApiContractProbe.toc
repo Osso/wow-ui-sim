@@ -1,0 +1,5 @@
+## Interface: 120100
+## Title: API Contract Probe
+## Notes: Manual scalar curve and unit-sex observations; no inferred native contracts.
+## SavedVariables: ApiContractProbeDB
+ApiContractProbe.lua
