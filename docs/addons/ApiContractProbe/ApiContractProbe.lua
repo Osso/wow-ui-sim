@@ -35,19 +35,24 @@ local function scalar(value)
     return result
 end
 
-local function summarize(value, depth)
+local function summarize(value, depth, invokeMethods)
     local result = scalar(value)
     if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
         return result
     end
     if depth >= 2 then result.status = "depth-limit"; return result end
+    -- Passive event payloads must not execute __index or object methods.
+    if not invokeMethods and result.kind == "userdata" then return result end
+    local lookup = invokeMethods and readField or function(object, key)
+        return rawget(object, key), true
+    end
     result.fields = {}
     for _, key in ipairs({ "x", "y" }) do
-        local field, ok = readField(value, key)
+        local field, ok = lookup(value, key)
         result.fields[key] = ok and scalar(field) or { status = "field-error" }
     end
-    local getXY, methodOK = readField(value, "GetXY")
-    if methodOK and accessible(getXY) and type(getXY) == "function" then
+    local getXY, methodOK = lookup(value, "GetXY")
+    if invokeMethods and methodOK and accessible(getXY) and type(getXY) == "function" then
         local values = pack(pcall(getXY, value))
         result.xy = { status = values[1] and "observed" or "call-error" }
         if values[1] then
@@ -60,8 +65,8 @@ local function summarize(value, depth)
     if result.kind == "table" then
         result.entries = {}
         for index = 1, 4 do
-            local entry, ok = readField(value, index)
-            result.entries[index] = ok and summarize(entry, depth + 1) or { status = "field-error" }
+            local entry, ok = lookup(value, index)
+            result.entries[index] = ok and summarize(entry, depth + 1, invokeMethods) or { status = "field-error" }
         end
     end
     return result
@@ -73,7 +78,7 @@ local function observe(fn, ...)
     if not values[1] then return { status = "call-error" } end
     local result = { status = "observed", n = values.n - 1, values = {} }
     for index = 2, math.min(values.n, 9) do
-        result.values[index - 1] = summarize(values[index], 0)
+        result.values[index - 1] = summarize(values[index], 0, true)
     end
     if values.n > 9 then result.truncated = true end
     return result
