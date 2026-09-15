@@ -2,6 +2,10 @@
 
 Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared recorders target 199 publication/CVar observations and 88 event registrations; these are not complete behavioral plans. Passive capture correction `d959372a3` passes 10/10 fixtures plus 21/21 independent checks. Preparation remains open: see [[api-contract-probes]] and [inventory](../baselines/native-probe-preparation.json).
 
+## [2026-09-15] audit | Prepare bounded cast/channel identity recorder
+
+Runtime `aac8c8be1` adds `/apicontract casts <label>` and `all` inclusion. It captures scalar-only `UnitCastingInfo` and `UnitChannelInfo` results with exact arity, nil positions, and a 16-return bound. Twenty local fixtures prove recorder behavior only. Matching-client ordinary cast, cancellation, replacement/consecutive, non-player channel, and empower fixture sequences remain pending; no spells or native actions were invented. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).
+
 ## [2026-09-14] audit | Prepare remaining native contract probes
 
 Scalar curve points, UnitSexBase, name/realm, and finite numeric formatting share a manual recorder; existing dispel probe remains ready. Numeric runtime `41bcd89f0` records raw GetLocale and both C_StringUtil helpers across 25 finite inputs. Sixteen local fixtures prove recorder behavior only; actual locale/build captures and nonfinite/coercion/security behavior remain unknown. Name recorder's prior 13 fixtures + 12 supplemental checks remain valid in scope. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).

@@ -1,6 +1,6 @@
 # Native API contract probes
 
-Scalar curve point, `UnitSexBase`, unit-name/realm, and finite numeric-formatting investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names`; `41bcd89f0` adds numeric capture; both are included in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
+Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, and cast/channel identity investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names`; `41bcd89f0` adds numeric capture; both are included in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
 
 ## Evidence boundaries
 
@@ -12,13 +12,15 @@ Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence
 
 `/apicontract numbers <label>` records raw `GetLocale` provenance plus exact arity, positional nils, and bounded accessible result bytes from both `C_StringUtil.FloorToNearestString` and `C_StringUtil.RoundToNearestString`. Its ordered 25 finite inputs cover signed ties and close neighbors, integers, fractions, and large finite magnitudes. It records literal observations only; helper names do not establish rounding or grouping semantics. Nonfinite inputs, coercion, security behavior, values outside this corpus, and actual build/locale captures remain unknown.
 
+`/apicontract casts <label>` records `UnitCastingInfo` and `UnitChannelInfo` for fixed player, target, focus, party, unknown, invalid and empty-unit controls. It preserves exact arity and nil positions through sixteen scalar-only return slots; values beyond that bound are marked truncated. Returned objects retain only status/kind: the recorder never invokes methods, indexing, equality or string conversion. `all` includes casts. The matching client and manual sequences for ordinary casts, cancellation, replacement/consecutive casts, non-player channels, and empowered/non-empowered channels remain pending; spell IDs and fixture actions are intentionally not invented.
+
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
 
 ## Local proof
 
-Tests `e2adbb57d` initially failed because the new addon did not exist. The scoped recorder proof now has 16 local fixtures: curve, sex, name/realm, and numeric recording behavior, including deliberately different fake locale bytes, non-rounding strings, multiple/nil/zero returns, restricted/error results, modified/unmodified differences, nil/empty/explicit realms, fixed unknown/invalid tokens, redaction, opaque errors, and `all` inclusion. Actual TOC/slash/SavedVariables wiring remains locally exercised.
+Tests `e2adbb57d` initially failed because the new addon did not exist. The scoped recorder proof now has 20 local fixtures: curve, sex, name/realm, numeric, and cast/channel recording behavior. Cast fixtures cover scalar tenth/eleventh positions, nil positions, empowerment values, repeated/consecutive snapshots, zero returns, opaque errors, restricted values, hostile objects, the sixteen-position bound, and `all` inclusion. Actual TOC/slash/SavedVariables wiring remains locally exercised.
 
-The name recorder's prior 13 fixtures plus 12 supplemental checks remain valid within their earlier scoped commit. The numeric fixtures prove literal recording only, not native formatting. Fixture outputs are not native contracts. No audit credits or totals changed. Actual native captures still require matching-client sessions with independently established same-realm and cross-realm party members, plus matching build/locale numeric sessions, before assigning compatibility evidence.
+The name recorder's prior 13 fixtures plus 12 supplemental checks remain valid within their earlier scoped commit. Numeric and cast fixtures prove literal recording only, not native formatting or casting behavior. Fixture outputs are not native contracts. No audit credits or totals changed. Actual native captures still require matching-client same-/cross-realm party sessions, build/locale numeric sessions, and controlled cast/channel/empower fixture sequences before assigning compatibility evidence.
 
 ## Complete preparation inventory
 
