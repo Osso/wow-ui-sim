@@ -141,4 +141,46 @@ test("restricted unit existence prevents queries", function()
     assert(record.sex.units.player.status == "restricted-or-error")
     assert(not containsSecret(record))
 end)
+test("publication distinguishes missing parent/member and CVar observations", function()
+    reset()
+    ApiContractProbeTargets = { publication = {
+        { id = "removed:Fixture.Value", owner = "enum", path = "Fixture.Value", plan = "p" },
+        { id = "removed:Fixture.Absent", owner = "enum", path = "Fixture.Absent", plan = "p" },
+        { id = "removed:NoParent.Value", owner = "enum", path = "NoParent.Value", plan = "p" },
+        { id = "removed:testCvar", owner = "cvar", path = "testCvar", plan = "p" },
+    }, events = {} }
+    Fixture = { Value = 42 }
+    C_CVar = { GetCVar = function() return "1" end, GetCVarDefault = function() return "0" end }
+    local rows = capture("publication after-login").publication
+    assert(rows[1].ordinary.value == 42 and rows[1].raw.value == 42)
+    assert(rows[2].ordinary.kind == "nil" and rows[2].parent.status == "observed")
+    assert(rows[3].status == "missing-parent")
+    assert(rows[4].current.values[1].value == "1" and rows[4].default.values[1].value == "0")
+end)
+test("event recorder registers actual targets and bounds redacted tuples", function()
+    reset()
+    ApiContractProbeTargets = { publication = {}, events = {
+        { id = "changed:UNIT_HEALTH", event = "UNIT_HEALTH", plan = "events" },
+        { id = "removed:BAD_EVENT", event = "BAD_EVENT", plan = "removed" },
+    } }
+    local frame = {}
+    CreateFrame = function()
+        function frame:SetScript(_, handler) self.handler = handler end
+        function frame:RegisterEvent(event) if event == "BAD_EVENT" then error(secret) end end
+        function frame:UnregisterAllEvents() self.stopped = true end
+        return frame
+    end
+    SlashCmdList.APICONTRACTPROBE("events-start cast-control")
+    assert(ApiContractProbeDB.registrations[1].status == "registered")
+    assert(ApiContractProbeDB.registrations[2].status == "registration-error")
+    frame.handler(frame, "UNIT_HEALTH", "player", nil, secret)
+    local event = ApiContractProbeDB.events[1]
+    assert(event.name == "UNIT_HEALTH" and event.payload.n == 3)
+    assert(event.payload.values[2].kind == "nil" and event.payload.values[3].status == "restricted")
+    for _ = 1, 300 do frame.handler(frame, "UNIT_HEALTH", "target") end
+    assert(#ApiContractProbeDB.events == 256 and ApiContractProbeDB.droppedEvents == 45)
+    SlashCmdList.APICONTRACTPROBE("events-stop")
+    assert(frame.stopped and ApiContractProbeDB.eventStatus == "stopped")
+    assert(not containsSecret(ApiContractProbeDB))
+end)
 print(string.format("RESULT %d passed", passed))
