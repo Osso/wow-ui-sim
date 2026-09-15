@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Expand preparation beyond the three initial probes
+
+Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared recorders target 199 publication/CVar observations and 88 event registrations; these are not complete behavioral plans. Passive capture correction `d959372a3` passes 10/10 fixtures plus 21/21 independent checks. Preparation remains open: see [[api-contract-probes]] and [inventory](../baselines/native-probe-preparation.json).
+
 ## [2026-09-14] audit | Prepare remaining native contract probes
 
 Scalar curve points and UnitSexBase now share a manual recorder; existing dispel probe remains ready. Runtime `a055b98c9`: 8/8 local fixtures and 14/14 independent supplemental checks. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).

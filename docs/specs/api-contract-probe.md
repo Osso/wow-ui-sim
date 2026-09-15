@@ -13,12 +13,14 @@
 
 ## Publication and event recording
 
-- [ ] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.
-- [ ] Capture configured CVars through `C_CVar.GetCVar` and `GetCVarDefault` without writes.
-- [ ] Register configured events only on explicit `events-start`; retain registration errors and bounded positional payloads with nil slots.
-- [ ] Stop listeners with `events-stop`; retain build/source provenance, scenario labels and overflow counts.
+- [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.
+- [x] Capture configured CVars through `C_CVar.GetCVar` and `GetCVarDefault` without writes.
+- [x] Register configured events only on explicit `events-start`; retain registration errors and bounded positional payloads with nil slots.
+- [x] Stop listeners with `events-stop`; retain build/source provenance, scenario labels and overflow counts.
 
-`AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets from the blocker snapshot. These are recording capabilities, not 287 complete behavioral probes. Native transitions, earlier builds, load phases, producers and restricted payloads remain unresolved. Configuration processing is bounded to 256 targets per category; events to 256 and payloads to eight values.
+`AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets from the blocker snapshot. These are recording capabilities, not 287 complete behavioral probes. Native transitions, earlier builds, load phases, producers and restricted payloads remain unresolved. Configuration processing is bounded to 256 targets per category; events to 256 and payloads to eight values. Passive event payloads use raw table inspection without invoking their methods or `__index`.
+
+Runtime `d959372a3` passes 10/10 fixtures (exact-hash reuse) plus 21/21 independent supplemental checks. Proof: `/tmp/verify-all-probes-recorders-corrected-ledger.json`. The initial passive-inspection bug is preserved by regression `5870cfa46`; no native API credits follow from recorder tests.
 
 ## How it works
 
