@@ -1,6 +1,6 @@
 # Native API contract probes
 
-The scalar curve point and `UnitSexBase` investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. These initial recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover the user's request for all remaining probe needs.
+Scalar curve point, `UnitSexBase`, and unit-name/realm investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names` capture and includes it in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
 
 ## Evidence boundaries
 
@@ -8,13 +8,15 @@ Scalar point declarations specify vectors but do not establish indexing, orderin
 
 `UnitSexBase` returns `Enum.UnitSex`; legacy `UnitSex` numbering cannot be copied blindly. The recorder stores both raw returns and named enum values for real existing units, with scenario labels for independently observed transformations. It does not infer what “Base” means.
 
+Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence gating for fixed player, party, target, unknown and invalid-token inputs. It preserves exact arity and positional nils, so nil and empty realms remain distinct from explicit realm strings. Scenario labels identify independently assembled same-realm and cross-realm party slots; returned names never classify the session. Native same-realm and cross-realm sessions remain pending.
+
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
 
 ## Local proof
 
-Tests `e2adbb57d` initially failed because the new addon did not exist. Runtime `a055b98c9`: 8/8 fixtures pass; independent verification reuses exact hashes and passes 14/14 supplemental checks. Actual TOC/slash/SavedVariables wiring, bounded captures, raw values, inaccessible-value redaction, opaque errors, missing APIs and read-only/invalid-index results were checked. Proof: `/tmp/verify-api-contract-probe-ledger.json`.
+Tests `e2adbb57d` initially failed because the new addon did not exist. The 13 local recorder fixtures now cover curves, sex, and name/realm behavior, including modified/unmodified differences, nil/empty/explicit realms, zero returns, fixed unknown/invalid tokens, redaction, opaque errors and `all` inclusion. Actual TOC/slash/SavedVariables wiring remains locally exercised. These fixtures prove recorder behavior only.
 
-Fixture outputs are not native contracts. No audit credits or totals changed. Native capture remains required before assigning compatibility evidence.
+Fixture outputs are not native contracts. No audit credits or totals changed. Actual native captures still require matching-client sessions with independently established same-realm and cross-realm party members before assigning compatibility evidence.
 
 ## Complete preparation inventory
 

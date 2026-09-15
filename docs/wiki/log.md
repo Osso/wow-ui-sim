@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document bounded UnitName realm recorder
+
+Runtime `3f7934e27` adds `/apicontract names <label>` and includes name/realm capture in `all`. Thirteen local fixtures verify raw arity/positional nil preservation, modified versus unmodified results, nil/empty/explicit realms, fixed unknown inputs, redaction and opaque errors. They are recorder proof only: actual matching-client same-realm and cross-realm party sessions remain pending, and no audit credit or all-probe completion is claimed. See [[api-contract-probes]].
+
 ## [2026-09-14] audit | Expand preparation beyond the three initial probes
 
 Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared recorders target 199 publication/CVar observations and 88 event registrations; these are not complete behavioral plans. Passive capture correction `d959372a3` passes 10/10 fixtures plus 21/21 independent checks. Preparation remains open: see [[api-contract-probes]] and [inventory](../baselines/native-probe-preparation.json).
