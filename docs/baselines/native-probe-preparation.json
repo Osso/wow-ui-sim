@@ -10,8 +10,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 155,
-    "partial-recorder": 6,
+    "needs-design-and-recorder-review": 154,
+    "partial-recorder": 7,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -188,8 +188,20 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manually selected integer action slot, identity and GetActionDisplayCount default versus explicit thresholds",
+          "GetActionCharges arity and five accessible raw ActionBarChargeInfo fields without metamethod execution",
+          "GetActionChargeDuration opaque return kind and arity only"
+        ],
+        "missing": [
+          "Native populated spell, multi-charge spell, stackable consumable and empty-slot fixtures",
+          "Native use, depletion, recharge, restoration and stack-change transition captures",
+          "Duration object method contracts and inaccessible charge field behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/action-counts-and-charges"
     },
