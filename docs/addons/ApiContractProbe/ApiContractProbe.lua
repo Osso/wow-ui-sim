@@ -160,24 +160,123 @@ local function captureSex()
     return result
 end
 
+local function capturePublication()
+    local rows = {}
+    for index, target in ipairs(ApiContractProbeTargets.publication) do
+        if index > 256 then break end
+        local row = { id = target.id, plan = target.plan, owner = target.owner }
+        if target.owner == "cvar" then
+            local getter = readField(C_CVar, "GetCVar")
+            local defaultGetter = readField(C_CVar, "GetCVarDefault")
+            row.current, row.default = observe(getter, target.path), observe(defaultGetter, target.path)
+        else
+            local keys = {}
+            for key in string.gmatch(target.path, "[^.]+") do keys[#keys + 1] = key end
+            local parent = _G
+            for part = 1, #keys - 1 do
+                local value, ok = readField(parent, keys[part])
+                if not ok or not accessible(value) then
+                    row.status = "restricted-or-error-parent"; break
+                end
+                if value == nil then row.status = "missing-parent"; break end
+                parent = value
+            end
+            if not row.status then
+                row.parent = scalar(parent)
+                local value, ok = readField(parent, keys[#keys])
+                row.ordinary = ok and scalar(value) or { status = "lookup-error" }
+                if accessible(parent) and type(parent) == "table" then
+                    local rawOK, raw = pcall(rawget, parent, keys[#keys])
+                    row.raw = rawOK and scalar(raw) or { status = "raw-lookup-error" }
+                else
+                    row.raw = { status = "not-accessible-table" }
+                end
+            end
+        end
+        rows[#rows + 1] = row
+    end
+    return rows
+end
+
+local eventFrame
+local function database()
+    if ApiContractProbeDB == nil then
+        ApiContractProbeDB = { schema = 1, captures = {}, dropped = 0 }
+    end
+    local db = ApiContractProbeDB
+    db.events = db.events or {}
+    db.registrations = db.registrations or {}
+    db.droppedEvents = db.droppedEvents or 0
+    return db
+end
+
+local function recordEvent(_, name, ...)
+    local db = database()
+    if #db.events >= 256 then db.droppedEvents = db.droppedEvents + 1; return end
+    local values = pack(...)
+    local payload = { n = values.n, values = {} }
+    for index = 1, math.min(values.n, 8) do payload.values[index] = summarize(values[index], 0) end
+    if values.n > 8 then payload.truncated = true end
+    local safeName = scalar(name)
+    db.events[#db.events + 1] = { name = safeName.value, nameStatus = safeName.status,
+        time = observe(GetTime), payload = payload, label = db.eventLabel }
+end
+
+local function controlEvents(mode, label)
+    local db = database()
+    if mode == "events-stop" then
+        if eventFrame then
+            local stopped = method(eventFrame, "UnregisterAllEvents")
+            db.eventStatus = stopped.status == "observed" and "stopped" or "stop-error"
+            if db.eventStatus == "stopped" then eventFrame = nil end
+        else
+            db.eventStatus = "not-running"
+        end
+        return
+    end
+    if eventFrame then db.eventStatus = "already-running"; return end
+    if type(issecretvalue) ~= "function" or type(canaccessvalue) ~= "function" then
+        db.eventStatus = "missing-access-api"; return
+    end
+    if type(CreateFrame) ~= "function" then db.eventStatus = "missing-frame-api"; return end
+    local ok, frame = pcall(CreateFrame, "Frame")
+    if not ok or not accessible(frame) then db.eventStatus = "frame-error"; return end
+    local script = method(frame, "SetScript", "OnEvent", recordEvent)
+    if script.status ~= "observed" then db.eventStatus = "script-error"; return end
+    eventFrame, db.eventLabel = frame, label
+    db.registrations = {}
+    for index, target in ipairs(ApiContractProbeTargets.events) do
+        if index > 256 then break end
+        local registration = method(frame, "RegisterEvent", target.event)
+        db.registrations[#db.registrations + 1] = { id = target.id, plan = target.plan,
+            status = registration.status == "observed" and "registered" or "registration-error" }
+    end
+    db.eventStatus, db.eventClient = "recording", observe(GetBuildInfo)
+    db.sourceHash = ApiContractProbeTargets.sourceHash
+end
+
 SLASH_APICONTRACTPROBE1 = "/apicontract"
 SlashCmdList.APICONTRACTPROBE = function(input)
     local mode, label = string.match(input or "", "^%s*(%S*)%s*(.-)%s*$")
     if mode == "" then mode = "all" end
-    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" then
-        print("Usage: /apicontract [all|curves|sex] [scenario label]")
+    if mode == "events-start" or mode == "events-stop" then
+        controlEvents(mode, string.sub(label, 1, 128)); return
+    end
+    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|publication|events-start|events-stop] [label]")
         return
     end
-    if ApiContractProbeDB == nil then ApiContractProbeDB = { schema = 1, captures = {}, dropped = 0 } end
-    local db = ApiContractProbeDB
+    local db = database()
     if #db.captures >= 10 then db.dropped = db.dropped + 1; return end
-    local record = { mode = mode, label = string.sub(label, 1, 128) }
+    local record = { mode = mode, label = string.sub(label, 1, 128),
+        sourceHash = ApiContractProbeTargets.sourceHash }
     if type(issecretvalue) ~= "function" or type(canaccessvalue) ~= "function" then
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
+        if mode == "all" or mode == "publication" then record.publication = capturePublication() end
         record.status = "observed"
     end
     db.captures[#db.captures + 1] = record

@@ -2,4 +2,5 @@
 ## Title: API Contract Probe
 ## Notes: Manual scalar curve and unit-sex observations; no inferred native contracts.
 ## SavedVariables: ApiContractProbeDB
+AuditTargets.lua
 ApiContractProbe.lua

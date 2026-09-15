@@ -11,6 +11,15 @@
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Publication and event recording
+
+- [ ] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.
+- [ ] Capture configured CVars through `C_CVar.GetCVar` and `GetCVarDefault` without writes.
+- [ ] Register configured events only on explicit `events-start`; retain registration errors and bounded positional payloads with nil slots.
+- [ ] Stop listeners with `events-stop`; retain build/source provenance, scenario labels and overflow counts.
+
+`AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets from the blocker snapshot. These are recording capabilities, not 287 complete behavioral probes. Native transitions, earlier builds, load phases, producers and restricted payloads remain unresolved. Configuration processing is bounded to 256 targets per category; events to 256 and payloads to eight values.
+
 ## How it works
 
 - [Capture protocol](../addons/ApiContractProbe/README.md)
@@ -19,6 +28,7 @@
 
 - `docs/addons/ApiContractProbe/ApiContractProbe.lua`: shared observation and two experiments.
 - `docs/addons/ApiContractProbe/ApiContractProbe.toc`: manual addon and SavedVariables registration.
+- `docs/addons/ApiContractProbe/AuditTargets.lua`: exact snapshot-derived capture targets and source hash.
 
 ## Tests asserting this spec
 

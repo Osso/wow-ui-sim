@@ -1,6 +1,6 @@
 # API Contract Probe
 
-Manual native observations for scalar curve points and `UnitSexBase`. Complements [AuraDispelCurveProbe](../AuraDispelCurveProbe/README.md). Neither recorder infers native contracts from fixture outputs.
+Manual native observations for scalar curve points, `UnitSexBase`, publication/CVars and event payloads. Complements [AuraDispelCurveProbe](../AuraDispelCurveProbe/README.md). Neither recorder infers native contracts from fixture outputs.
 
 ## Target
 
@@ -14,7 +14,15 @@ Interface `120100` follows the locally pinned retail `12.1.0.69497` source, not 
 4. Run `/reload` or log out to flush SavedVariables.
 5. Retain `WTF/Account/<ACCOUNT>/SavedVariables/ApiContractProbe.lua` with scenario notes. Keep the raw artifact unchanged.
 
-Ten captures maximum; further calls increment `dropped`. No automatic captures. Start a new capture batch by moving the saved file aside while logged out.
+Ten snapshots maximum; further calls increment `dropped`. No automatic captures. `all` includes publication but does not start event listeners.
+
+Additional commands:
+
+- `/apicontract publication after-login` records configured symbol and CVar observations. Repeat with labeled phases after manually loading relevant addons; no addon is loaded by this recorder.
+- `/apicontract events-start before-cast` registers the configured events and records real subsequent deliveries.
+- `/apicontract events-stop` unregisters listeners. Event recording is capped at 256 entries; excess deliveries increment `droppedEvents`.
+
+`AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets tied to the blocker snapshot hash. Registration errors, missing parents and missing members are distinct observations. Event payloads retain arity and nil slots, with at most eight summarized values; tables remain bounded observations, not full structure captures. No native actions, purchases, transitions or account mutations are triggered. A symbol missing at one phase does not prove removal; a listener with no deliveries does not prove event absence. These shared recorders do **not** complete all associated behavioral plans. See the [full preparation inventory](../../baselines/native-probe-preparation.json). Start a new capture batch by moving the saved file aside while logged out.
 
 ## Observations
 
