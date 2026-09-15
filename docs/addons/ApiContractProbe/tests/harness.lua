@@ -173,9 +173,14 @@ test("event recorder registers actual targets and bounds redacted tuples", funct
     SlashCmdList.APICONTRACTPROBE("events-start cast-control")
     assert(ApiContractProbeDB.registrations[1].status == "registered")
     assert(ApiContractProbeDB.registrations[2].status == "registration-error")
-    frame.handler(frame, "UNIT_HEALTH", "player", nil, secret)
+    local calls = 0
+    local payload = setmetatable({ GetXY = function() calls = calls + 1 end }, {
+        __index = function() calls = calls + 1; return nil end,
+    })
+    frame.handler(frame, "UNIT_HEALTH", "player", nil, secret, payload)
+    assert(calls == 0, "passive capture must not invoke payload code")
     local event = ApiContractProbeDB.events[1]
-    assert(event.name == "UNIT_HEALTH" and event.payload.n == 3)
+    assert(event.name == "UNIT_HEALTH" and event.payload.n == 4)
     assert(event.payload.values[2].kind == "nil" and event.payload.values[3].status == "restricted")
     for _ = 1, 300 do frame.handler(frame, "UNIT_HEALTH", "target") end
     assert(#ApiContractProbeDB.events == 256 and ApiContractProbeDB.droppedEvents == 45)
