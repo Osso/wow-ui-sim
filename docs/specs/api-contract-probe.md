@@ -14,9 +14,10 @@
 
 - Manual `spell-metadata <slot> <label>` reuses the actions integer-slot parser and is excluded from `all`. Call `GetActionInfo(slot)` with exactly one argument; preserve raw producer arity and nil positions.
 - Only an accessible string first return exactly `spell` and accessible finite numeric second return authorize querying the original ID. No conversions, guessed IDs or inferred classification.
-- Independently call `C_Spell.GetSpellDisplayCount`, `GetSpellMaxCumulativeAuraApplications`, `IsConsumableSpell`, `IsExternalDefensive`, `IsPriorityAura`, `IsSpellCrowdControl` and `IsSpellImportant`, passing only the ID. Omit display-count optional arguments and exclude `GetVisibilityInfo` pending enum design.
+- Independently call `C_Spell.GetSpellDisplayCount`, `GetSpellMaxCumulativeAuraApplications`, `IsConsumableSpell`, `IsExternalDefensive`, `IsPriorityAura`, `IsSpellCrowdControl` and `IsSpellImportant`, passing only the ID. Omit display-count optional arguments.
+- Query `GetVisibilityInfo(ID, value)` once for each fixed published `Enum.SpellAuraVisibilityType` name: RaidInCombat, RaidOutOfCombat, EnemyTarget. Accept only guarded finite numeric values, without numeric fallbacks or arbitrary iteration. Missing/restricted/invalid enum values record `unavailable-enum` without calls; base queries remain independent. Recheck original spell inputs and the enum value after lookup/function guards, before each call. Preserve zero returns as distinct from nil and opaque errors.
 - Guard each namespace/function lookup and producer values before inspection; recheck input access after lookup/function checks before every downstream call. Missing APIs and opaque errors do not suppress peers. No action execution or casts.
-- Preserve exact arity, nils, sixteen scalar positions, 256-byte strings and ten snapshots. Eight separate actual TOC/slash fixtures prove bounded recorder behavior only; native outputs, classifications, rank/override fixtures and security remain pending.
+- Preserve exact arity, nils, sixteen scalar positions, 256-byte strings and ten snapshots. At most seventy base metadata and thirty visibility calls across ten snapshots. Fourteen separate actual TOC/slash fixtures prove bounded recorder behavior only; native outputs, classifications, rank/override fixtures and security remain pending.
 
 ## Manual public queries
 

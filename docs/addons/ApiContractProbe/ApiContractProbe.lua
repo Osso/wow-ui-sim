@@ -451,12 +451,40 @@ local function observeSpellMetadata(kind, id, name)
     return result
 end
 
+local function observeSpellVisibility(kind, id, name)
+    local status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local enums, enumOK = readField(Enum, "SpellAuraVisibilityType")
+    local value, valueOK
+    if enumOK then value, valueOK = readField(enums, name) end
+    local input = valueOK and scalar(value) or { status = "unavailable-enum" }
+    if input.status ~= "observed" or input.kind ~= "number" then
+        return { status = "unavailable-enum" }
+    end
+    local fn, ok = readField(C_Spell, "GetVisibilityInfo")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Enum lookup, serialization and function guards can revoke producer inputs.
+    status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    if not accessible(value) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, id, value))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.input = "observed", input
+    return result
+end
+
 local function captureSpellMetadata(slot)
     local identity, kind, id = observeSpellProducer(slot)
-    local result = { slot = slot, identity = identity, queries = {} }
+    local result = { slot = slot, identity = identity, queries = {}, visibility = {} }
     for _, name in ipairs({ "GetSpellDisplayCount", "GetSpellMaxCumulativeAuraApplications",
         "IsConsumableSpell", "IsExternalDefensive", "IsPriorityAura", "IsSpellCrowdControl", "IsSpellImportant" }) do
         result.queries[name] = identity.status == "observed" and observeSpellMetadata(kind, id, name)
+            or { status = "unavailable-input" }
+    end
+    for _, name in ipairs({ "RaidInCombat", "RaidOutOfCombat", "EnemyTarget" }) do
+        result.visibility[name] = identity.status == "observed" and observeSpellVisibility(kind, id, name)
             or { status = "unavailable-input" }
     end
     return result
