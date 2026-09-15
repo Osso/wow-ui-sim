@@ -10,9 +10,10 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 270,
+    "needs-design-and-recorder-review": 158,
     "partial-recorder": 3,
     "no-active-rows": 7,
+    "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
   },
   "plans": [
@@ -209,10 +210,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/cvar-case-rename"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/cvar-case-rename",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:nameplateShowFriendlyNPCs"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "perks-alias-removal",
@@ -223,10 +237,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/perks-alias-removal"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/perks-alias-removal",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.PerksVendorCategoryType.UnusedPerksVendorCategoryRefundUnused"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "lua-math-publication",
@@ -242,10 +269,27 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/lua-math-publication"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/lua-math-publication",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:math.huge"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:math.pi"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "crafting-removed-fields",
@@ -2191,10 +2235,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-005"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-005",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:PARTY_KILL"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-006",
@@ -2205,10 +2262,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-006"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-006",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:PLAYER_TARGET_DIED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-007",
@@ -2219,10 +2289,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-007"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-007",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-008",
@@ -2263,10 +2346,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-011"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-011",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-012",
@@ -2277,10 +2373,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-012"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-012",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-013",
@@ -2291,10 +2400,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-013"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-013",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SETTINGS_PANEL_OPEN"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-014",
@@ -2305,10 +2427,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-014"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-014",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SET_SEEN_PRODUCTS"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-015",
@@ -2319,10 +2454,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-015"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-015",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SHOW_JOURNEYS_UI"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-016",
@@ -2333,10 +2481,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-016"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-016",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:SHOW_NEW_PRODUCT_NOTIFICATION"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-017",
@@ -2501,10 +2662,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-028"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-028",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:TOOLTIP_SHOW_ITEM_COMPARISON"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-029",
@@ -2515,10 +2689,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-029"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-029",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:TRAINING_GROUNDS_ENABLED_STATUS_UPDATED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-030",
@@ -2529,10 +2716,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-030"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-030",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:TRANSMOG_CUSTOM_SETS_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-031",
@@ -2543,10 +2743,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-031"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-031",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:TRANSMOG_DISPLAYED_OUTFIT_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-032",
@@ -2557,10 +2770,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-032"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-032",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:TUTORIAL_COMBAT_EVENT"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-033",
@@ -2571,10 +2797,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-033"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-033",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:UNIT_DIED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-034",
@@ -2585,10 +2824,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-034"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-034",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:UNIT_LOOT"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-035",
@@ -2599,10 +2851,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-035"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-035",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:UNIT_SPELL_DIMINISH_CATEGORY_STATE_UPDATED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-036",
@@ -2613,10 +2878,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-036"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-036",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:UPDATE_BULLETIN_BOARD_MEMBER_TYPE"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-037",
@@ -2785,10 +3063,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-050"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-050",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-051",
@@ -2799,10 +3090,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-051"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-051",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_SECONDARY_SLOTS_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-052",
@@ -2813,10 +3117,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-052"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-052",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_SITUATIONS_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-053",
@@ -2827,10 +3144,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-053"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-053",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_SLOT_REFRESH"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-054",
@@ -2841,10 +3171,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-054"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-054",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_SLOT_SAVE_SUCCESS"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-055",
@@ -2855,10 +3198,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-055"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-055",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-056",
@@ -2869,10 +3225,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-056"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-056",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:VOICE_CHAT_TTS_PLAYBACK_BOOKMARK"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-057",
@@ -3163,10 +3532,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-078"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-078",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:VOICE_CHAT_TTS_PLAYBACK_FAILED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-084",
@@ -3359,10 +3741,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-097"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-097",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.NeighbordhoodInitiativeCategory.Current"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-098",
@@ -3373,10 +3768,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-098"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-098",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.NeighbordhoodInitiativeCategory.Legacy"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-099",
@@ -3387,10 +3795,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-099"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-099",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.NeighbordhoodInitiativeCategoryMeta.MaxValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-100",
@@ -3401,10 +3822,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-100"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-100",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.NeighbordhoodInitiativeCategoryMeta.MinValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-1",
@@ -3415,10 +3849,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-1"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-1",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:COMBAT_LOG_EVENT"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-2",
@@ -3429,10 +3876,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-2"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-2",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:COMBAT_LOG_EVENT_UNFILTERED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-3",
@@ -3457,10 +3917,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-4"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-4",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.NeighbordhoodInitiativeCategoryMeta.NumValues"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-5",
@@ -3471,10 +3944,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-5"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-5",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProvider.Alibaba"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-6",
@@ -3485,10 +3971,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-6"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-6",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProvider.Aws"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-7",
@@ -3499,10 +3998,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-7"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-7",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProvider.Gcp"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-8",
@@ -3513,10 +4025,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-8"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-8",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProviderMeta.MaxValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-9",
@@ -3527,10 +4052,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-9"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-9",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProviderMeta.MinValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-10",
@@ -3541,10 +4079,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-10"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-10",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ReportStorageProviderMeta.NumValues"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-11",
@@ -3555,10 +4106,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-11"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-11",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.LocalPlayback"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-12",
@@ -3569,10 +4133,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-12"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-12",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.QueuedLocalPlayback"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-13",
@@ -3583,10 +4160,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-13"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-13",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.QueuedRemoteTransmission"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-14",
@@ -3597,10 +4187,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-14"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-14",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.QueuedRemoteTransmissionWithLocalPlayback"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-15",
@@ -3611,10 +4214,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-15"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-15",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.RemoteTransmission"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-16",
@@ -3625,10 +4241,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-16"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-16",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.RemoteTransmissionWithLocalPlayback"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-17",
@@ -3639,10 +4268,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-17"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-17",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestination.ScreenReader"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-18",
@@ -3653,10 +4295,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-18"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-18",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestinationMeta.MaxValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-19",
@@ -3667,10 +4322,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-19"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-19",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestinationMeta.MinValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-20",
@@ -3681,10 +4349,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-20"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-20",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.VoiceTtsDestinationMeta.NumValues"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-21",
@@ -3695,10 +4376,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-21"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-21",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorID.DefaultAlliance"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-22",
@@ -3709,10 +4403,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-22"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-22",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorID.DefaultHorde"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-23",
@@ -3723,10 +4430,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-23"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-23",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorID.Invalid"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-24",
@@ -3737,10 +4457,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-24"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-24",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorIDMeta.MaxValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-25",
@@ -3751,10 +4484,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-25"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-25",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorIDMeta.MinValue"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-26",
@@ -3765,10 +4511,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-26"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-26",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.WMOExteriorIDMeta.NumValues"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-27",
@@ -3779,10 +4538,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-27"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-27",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:HOUSING_DECOR_NUDGE_STATUS_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-28",
@@ -3793,10 +4565,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-28"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-28",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:LEARNED_SPELL_IN_TAB"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-29",
@@ -3835,10 +4620,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-31"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-31",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_BaseOrbScale"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-32",
@@ -3849,10 +4647,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-32"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-32",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_BaseRingScale"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-33",
@@ -3863,10 +4674,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-33"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-33",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_DistScaleMax"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-34",
@@ -3877,10 +4701,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-34"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-34",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_DistScaleMin"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-35",
@@ -3891,10 +4728,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-35"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-35",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_HighlightDefault"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-36",
@@ -3905,10 +4755,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-36"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-36",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_HighlightDragging"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-37",
@@ -3919,10 +4782,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-37"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-37",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_HighlightHovered"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-38",
@@ -3933,10 +4809,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-38"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-38",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_HighlightKeybind"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-39",
@@ -3947,10 +4836,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-39"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-39",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_HighlightSelected"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-40",
@@ -3961,10 +4863,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-40"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-40",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_OrbPosOffset"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-41",
@@ -3975,10 +4890,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-41"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-41",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_ScaleDistanceMax"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-42",
@@ -3989,10 +4917,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-42"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-42",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_ScaleDistanceMin"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-43",
@@ -4003,10 +4944,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-43"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-43",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_SnapDegrees"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-44",
@@ -4017,10 +4971,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-44"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-44",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_TextMode"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-45",
@@ -4031,10 +4998,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-45"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-45",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_XRayCheckerSize"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-46",
@@ -4045,10 +5025,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-46"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-46",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_XRayDarkAlpha"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-47",
@@ -4059,10 +5052,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-47"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-47",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Rotation_XRayLightAlpha"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-48",
@@ -4073,10 +5079,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-48"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-48",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_BaseArrowHeadScale"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-49",
@@ -4087,10 +5106,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-49"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-49",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_BaseArrowStemScale"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-50",
@@ -4101,10 +5133,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-50"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-50",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_BaseCubeScale"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-51",
@@ -4115,10 +5160,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-51"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-51",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_DistScaleMax"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-52",
@@ -4129,10 +5187,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-52"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-52",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_DistScaleMin"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-53",
@@ -4143,10 +5214,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-53"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-53",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_HighlightDefault"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-54",
@@ -4157,10 +5241,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-54"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-54",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_HighlightDragging"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-55",
@@ -4171,10 +5268,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-55"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-55",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_HighlightHovered"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-56",
@@ -4185,10 +5295,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-56"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-56",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_HighlightKeybind"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-57",
@@ -4199,10 +5322,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-57"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-57",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_HighlightSelected"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-58",
@@ -4213,10 +5349,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-58"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-58",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_MaxDistanceFromCamera"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-59",
@@ -4227,10 +5376,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-59"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-59",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_Padding"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-60",
@@ -4241,10 +5403,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-60"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-60",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_ScaleDistanceMax"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-61",
@@ -4255,10 +5430,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-61"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-61",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_ScaleDistanceMin"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-62",
@@ -4269,10 +5457,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-62"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-62",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_XRayCheckerSize"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-63",
@@ -4283,10 +5484,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-63"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-63",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_XRayDarkAlpha"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "literal-followup-64",
@@ -4297,10 +5511,23 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-64"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-64",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:housingExpertGizmos_Translation_XRayLightAlpha"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "services-major-faction-journey",
@@ -4816,10 +6043,31 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/combat-crafting-tradeskill_removed_methods"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/combat-crafting-tradeskill_removed_methods",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:C_TradeSkillUI.GetReagentRequirementItemIDs"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:C_TradeSkillUI.GetRecipeFixedReagentItemLink"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:C_TradeSkillUI.GetRecipeQualityReagentItemLink"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "combat-crafting-transmog_removed_surface",
@@ -5388,10 +6636,395 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/account-enum-load-phases"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/account-enum-load-phases",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountCurrenciesLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountFactionsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountItemsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountMappingLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountNotificationsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAccountWowlabsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAchievementsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateArchivedPurchasesLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateAuctionableTokensLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBanktabSettingsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBattleNetAccountLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBitVectorsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBpayAddLicenseObjectsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBpayDistributionObjectsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateBpayProductitemObjectsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCharacterItemsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCharactersLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCombinedQuestLogLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateConsumableTokensLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCriteriaLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCurrencyCapsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateCurrencyTransferLogLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateDataElementsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateDynamicCriteriaLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateEventRecordsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateHousingDataLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateItemCollectionsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateLgVendorPurchaseLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateMountsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePerksHeldItemLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePerksPastRewardsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePerksPendingPurchaseLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePerksPendingRewardsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePetjournalInitialized"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStatePurchasesLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateQuestCriteriaLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateQuestLogLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateRafActivityLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateRafBalanceLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateRafRewardsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateRevokedRafRewardsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateSettingsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateTrialBoostHistoryLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateVasTransactionsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateWarbandScenesLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.AccountStateWarbandsLoaded"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.AccountStateLoadedFlags.None"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountCurrenciesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountDynamicCriteriaDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountFactionsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountItemsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountMappingDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountNotificationsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAccountStateHousingData"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAchievementsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllArchivedPurchasesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllAuctionableTokensDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBanktabSettingsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBattlepetsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBitVectorsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBpayAddLicenseObjectsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBpayDistributionObjectsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllBpayProductitemObjectsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCharacterItemsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCharactersDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCombinedQuestLogEntriesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllConsumableTokensDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCriteriaDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCurrencyTransferLogDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllCurrencycapsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllDataElementsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllEventRecordsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllItemCollectionItemsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllLgVendorPurchaseDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllMountsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllNone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllPerkHeldItemsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllPerkPastRewardsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllPerkPendingPurchasesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllPerkPendingRewardsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllPurchasesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllQuestCriteriaDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllQuestLogDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllRafActivitiesDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllRafBalanceDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllRafRewardsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllRevokedRafRewardsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllSettingsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllTrialBoostHistoryDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllVasTransactionsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllWarbandGroupsDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllWarbandScenesLoadedDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateAllWowlabsDataDone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.CreateAllAccountData.CreateObject"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "housing-constant-load-phases",
@@ -5477,10 +7110,83 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/housing-constant-load-phases"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/housing-constant-load-phases",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_CATEGORIES_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_ENTRY_TAGS_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_FILTER_TAGS_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_NONE_TAG_ID"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_NUM_FEATURED_BUNDLES_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_NUM_FEATURED_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_NUM_FILTER_TAG_GROUPS"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_OPTIONS_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_OPTIONS_PER_CATEGORY_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_OPTIONS_PER_SUBCATEGORY_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_ROOMS_CATEGORY_ID"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_ROOMS_SUBCATEGORY_ID"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_SIZE_DATAGROUP_ID"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_SUBCATEGORIES_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_SUBCATEGORIES_PER_CATEGORY_EXPECTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Constants.HousingCatalogConsts.HOUSING_CATALOG_TAG_GROUP_TAGS_EXPECTED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "enum-old-new-members",
@@ -5581,10 +7287,95 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/enum-old-new-members"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/enum-old-new-members",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.GossipNpcOption.Placeholder_6"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.HousingResult.FixtureNotOwned"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.HousingResult.MissingTheme"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionExteriorFixture"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionHeirloom"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionNone"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionRoom"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionRoomMaterial"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionRoomTheme"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionRuneforgeLegendaryAbility"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionToy"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionTransmog"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionTransmogIllusion"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionTransmogSetFavorite"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.ItemCollectionWarbandScene"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemCollectionType.NumItemCollectionTypes"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.ItemRecraftFlags.ItemRecraftFlagInvalid"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.PlayerInteractionType.PlaceholderType79"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:Enum.QuestTagType.Placeholder_1"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-restriction_state",
@@ -5595,10 +7386,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-restriction_state"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-restriction_state",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ADDON_RESTRICTION_STATE_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-catalog_commerce",
@@ -5624,10 +7428,35 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-catalog_commerce"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-catalog_commerce",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:BULK_PURCHASE_RESULT_RECEIVED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:CATALOG_SHOP_REFUNDABLE_DECORS_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:CATALOG_SHOP_VIRTUAL_CURRENCY_BALANCE_UPDATE"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:CATALOG_SHOP_VIRTUAL_CURRENCY_BALANCE_UPDATE_FAILURE"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-loot_commentator",
@@ -5658,10 +7487,39 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-loot_commentator"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-loot_commentator",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:CHAT_MSG_ENCOUNTER_EVENT"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:COMMENTATOR_COMBAT_EVENT"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:FACTION_STANDING_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:LEGACY_LOOT_RULES_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:NAME_PLATE_UNIT_BEHIND_CAMERA_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-combat_damage_meter",
@@ -5682,10 +7540,31 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-combat_damage_meter"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-combat_damage_meter",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:DAMAGE_METER_COMBAT_SESSION_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:DAMAGE_METER_CURRENT_SESSION_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:DAMAGE_METER_RESET"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-encounter_state",
@@ -5696,10 +7575,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_state"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_state",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_STATE_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-encounter_timeline",
@@ -5745,10 +7637,51 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_timeline"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_timeline",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_ADDED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_BLOCK_STATE_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_HIGHLIGHT"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_REMOVED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_EVENT_TRACK_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_LAYOUT_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_TIMELINE_STATE_UPDATED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-encounter_warning",
@@ -5759,10 +7692,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_warning"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-encounter_warning",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:ENCOUNTER_WARNING"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-housing_exterior_fixture",
@@ -5793,10 +7739,39 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-housing_exterior_fixture"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-housing_exterior_fixture",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSE_EXTERIOR_TYPE_UNLOCKED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_FIXTURE_UNLOCKED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_SET_EXTERIOR_HOUSE_SIZE_RESPONSE"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_SET_EXTERIOR_HOUSE_TYPE_RESPONSE"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_SET_FIXTURE_RESPONSE"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-housing_preview",
@@ -5837,10 +7812,47 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-housing_preview"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-housing_preview",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_DECOR_ADD_TO_PREVIEW_LIST"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_DECOR_FREE_PLACE_STATUS_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_DECOR_PREVIEW_LIST_REMOVE_FROM_WORLD"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_DECOR_PREVIEW_LIST_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_DECOR_PREVIEW_STATE_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_EXPERT_MODE_PLACEMENT_FLAGS_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:HOUSING_REFUND_LIST_UPDATED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-initiative",
@@ -5876,10 +7888,43 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-initiative"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-initiative",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:INITIATIVE_ACTIVITY_LOG_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:INITIATIVE_COMPLETED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:INITIATIVE_TASKS_TRACKED_LIST_CHANGED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:INITIATIVE_TASKS_TRACKED_UPDATED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:INITIATIVE_TASK_COMPLETED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "added:NEIGHBORHOOD_INITIATIVE_UPDATED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-transmog",
@@ -5890,10 +7935,23 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-transmog"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-transmog",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:TRANSMOG_OUTFITS_CHANGED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-spellcast",
@@ -5969,10 +8027,75 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-spellcast"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-spellcast",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_CHANNEL_START"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_CHANNEL_STOP"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_CHANNEL_UPDATE"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_DELAYED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_EMPOWER_START"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_EMPOWER_STOP"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_EMPOWER_UPDATE"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_FAILED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_FAILED_QUIET"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_INTERRUPTED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_SENT"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_START"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_STOP"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:UNIT_SPELLCAST_SUCCEEDED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-events-event-tts",
@@ -5988,10 +8111,27 @@
           "protocol": "event-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-tts"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-events-event-tts",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "events",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:VOICE_CHAT_TTS_PLAYBACK_FINISHED"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "changed:VOICE_CHAT_TTS_PLAYBACK_STARTED"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-security-restricted-actions-public-state",
@@ -7772,10 +9912,27 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
+      "status": "shared-recorder-design-review-pending",
       "reviewed_coverage": null,
       "native_execution": "not-established-by-this-inventory",
-      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-combat-removal"
+      "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-combat-removal",
+      "shared_recorder_components": [
+        {
+          "recorder": "docs/addons/ApiContractProbe",
+          "mode": "publication",
+          "rows": [
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:CombatLogAdvanceEntry"
+            },
+            {
+              "manifest": "data/patch-api/12.0.0.json",
+              "id": "removed:CombatLogSetCurrentEntry"
+            }
+          ],
+          "limits": "Observation component only. Native fixture/producer, before-after controls, historical/load phases and full plan design remain unverified."
+        }
+      ]
     },
     {
       "id": "remaining-objects-clip",
