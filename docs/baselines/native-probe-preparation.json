@@ -151,13 +151,13 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Existing-unit raw UnitSex/UnitSexBase values and arity",
+          "Independent UnitExists/UnitSex/UnitSexBase values and arity for nine fixed existing, absent, unknown and invalid unit-token controls",
           "Named Enum.UnitSex values",
           "Manual scenario labels"
         ],
         "missing": [
-          "Native disguise fixture",
-          "Unknown/invalid-unit controls",
+          "Native before/during/after disguise fixture with stable unit identity",
+          "Native existing, absent, unknown and invalid unit captures",
           "Native capture"
         ]
       },
