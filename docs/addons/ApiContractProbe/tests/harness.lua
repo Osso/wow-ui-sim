@@ -180,12 +180,14 @@ test("bounded captures and invalid command", function()
     for _ = 1, 12 do capture("sex") end
     assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 2)
 end)
-test("restricted unit existence prevents queries", function()
+test("restricted unit existence preserves independent query errors", function()
     reset()
     UnitExists = function() return secret end
-    UnitSex = function() error("must not query") end
+    UnitSex = function() error(secret) end
     local record = capture("sex")
-    assert(record.sex.units.player.status == "restricted-or-error")
+    assert(record.sex.units.player.exists.values[1].status == "restricted")
+    assert(record.sex.units.player.legacy.status == "call-error")
+    assert(record.sex.units.player.base.values[1].value == 0)
     assert(not containsSecret(record))
 end)
 test("publication distinguishes missing parent/member and CVar observations", function()
