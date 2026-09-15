@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual selected-slot spell durations
+
+- Manual `spell-duration <slot> <label>` reuses the integer-slot parser and guarded `GetActionInfo(slot)` producer; it is excluded from `all`. Only an accessible `spell` string and finite numeric ID authorize calls with the original ID.
+- Independently call `C_Spell.GetSpellChargeDuration(ID)` and `C_Spell.GetSpellLossOfControlCooldownDuration(ID)`. Protect namespace/function lookup and recheck both producer values immediately before each call. Missing/restricted/errored producers skip queries, never imply zero; one unavailable API does not gate its peer.
+- Preserve raw arity, nils and opaque errors. Reuse the existing ten read-only duration methods through `inspectDuration`; no mutators, guessed IDs, spellbook or ordinary cooldown queries, or casts.
+- Observe current returned objects only. Do not retain objects between captures or touch the cast-duration retention list/counter. Preserve sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds; at most two producers and 320 duration-method calls per snapshot.
+- Nine separate actual TOC/slash fixtures establish recorder behavior, including interleaved cast-retention isolation. Native charge and loss-of-control timing/lifecycle and restricted-context behavior remain pending.
+
 ## Manual selected-slot spell metadata
 
 - Manual `spell-metadata <slot> <label>` reuses the actions integer-slot parser and is excluded from `all`. Call `GetActionInfo(slot)` with exactly one argument; preserve raw producer arity and nil positions.

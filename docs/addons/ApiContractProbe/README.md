@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual selected-slot spell durations
+
+`/apicontract spell-duration <slot> <label>` is excluded from `all`. It uses the existing integer-slot parser and `GetActionInfo(slot)` producer. Only an accessible `"spell"` first return and finite numeric second return permit queries with that original ID. Recheck both inputs after each protected namespace lookup and function guard, immediately before calling `C_Spell.GetSpellChargeDuration(ID)` or `C_Spell.GetSpellLossOfControlCooldownDuration(ID)`. Missing, restricted or failed producers are unavailable inputs, not zero durations; one failed API never suppresses its peer.
+
+Preserve raw return arity, nils and opaque errors. Reuse the ten read-only methods listed under [producer cast durations](#producer-cast-durations) through the existing duration inspector; no setters, guessed IDs, spellbook queries, ordinary cooldown queries, casts or mutations. This mode observes **current objects only**: it retains no objects between snapshots and never reads or changes the cast-duration retention list or capture counter. Repeated manual captures do not prove object identity or lifecycle behavior.
+
+Bounds remain sixteen returned positions and sixteen scalar positions per method, 256-byte strings, 128-byte labels and ten shared snapshots. At most two duration producers and 320 method calls occur per snapshot. Pinned `SpellDocumentation.lua:233–247,426–440` declares both producers with one spell identifier and possible zero returns; declarations and local fixtures are not native evidence. Charge/recharge and loss-of-control transitions, native timing and restricted-context semantics remain unverified.
+
+Nine separate actual TOC/slash fixtures, including interleaved cast-duration retention, run with:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/spell_duration.lua docs/addons/ApiContractProbe
+```
+
 ## Manual selected-slot spell metadata
 
 `/apicontract spell-metadata <slot> <label>` reuses the integer-slot parser and stays outside `all`. Call `GetActionInfo(slot)` with exactly one argument and preserve producer arity. Only an accessible first return exactly equal to `"spell"` and an accessible finite numeric second return permit downstream queries. Use that original ID without conversion, guessed IDs or classification.

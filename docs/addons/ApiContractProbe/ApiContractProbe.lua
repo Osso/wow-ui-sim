@@ -696,6 +696,35 @@ local function inspectDuration(object)
     return result
 end
 
+local function observeSpellDuration(kind, id, name)
+    local status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local fn, ok = readField(C_Spell, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Recheck original inputs after namespace lookup and function access checks.
+    status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        result.values[index - 1] = inspectDuration(values[index])
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function captureSpellDuration(slot)
+    local identity, kind, id = observeSpellProducer(slot)
+    local result = { slot = slot, identity = identity, queries = {} }
+    for _, name in ipairs({ "GetSpellChargeDuration", "GetSpellLossOfControlCooldownDuration" }) do
+        result.queries[name] = identity.status == "observed" and observeSpellDuration(kind, id, name)
+            or { status = "unavailable-input" }
+    end
+    return result
+end
+
 local function queryDuration(fn, retained, counters, ...)
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
     local values = pack(pcall(fn, ...))
@@ -1097,11 +1126,11 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
     local slot
-    if mode == "actions" or mode == "spell-metadata" then
+    if mode == "actions" or mode == "spell-metadata" or mode == "spell-duration" then
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+    if mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
         print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
@@ -1113,6 +1142,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "spell-duration" then record.spellDuration = captureSpellDuration(slot) end
         if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
