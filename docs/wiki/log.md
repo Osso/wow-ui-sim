@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare bounded raid-marker recorder
+
+`666a930d8` adds manual `/apicontract raid-markers <label>`, excluded from `all`: `CanBeRaidTarget` twice for nine fixed tokens, `IsRaidMarkerActive` twice for indices 1–8, and `IsRaidMarkerSystemEnabled` twice, for 36 independent read-only calls. Six separate fixtures prove bounded routing and observation only. `GetRaidTargetIndex`, all mutations, permission/security conclusions, native output and populated world-marker fixtures remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded abbreviation recorder
 
 `7c6a00e6d` adds manual `/apicontract abbreviations <label>`, excluded from `all`. It calls `AbbreviateLargeNumbers` and `AbbreviateNumbers` for the shared 25 finite inputs with options omitted, and records `GetLocale()` once. Six separate fixtures prove bounded recorder mechanics; the main harness remains 44. Native output, options/configuration, table producers, locale mutation and security remain pending. See [[api-contract-probes]].
