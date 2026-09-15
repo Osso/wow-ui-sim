@@ -36,6 +36,8 @@ Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence
 
 `/apicontract mapvalues <label>` is manual-only and excluded from `all`. It calls the actual global as `mapvalues(callback, ...)` across zero/one/multiple inputs, interior and trailing nils, and fixed single/multiple/nil/zero callback returns plus an opaque callback error. It retains callback invocation tuples and outer results with up to sixteen positions and a shared 32-invocation cap. The separate `mapvalues.lua` suite has eight fixtures; the main harness remains 44 and the color harness four—these are not 56 new native cases. Native packing, order, callback-failure propagation and security remain unobserved.
 
+`/apicontract abbreviations <label>` is manual-only and excluded from `all`. It calls `AbbreviateLargeNumbers` and `AbbreviateNumbers` independently for the shared 25 finite inputs, with options omitted, and records one `GetLocale` observation. Scalar tuples retain arity, nil positions and bounded accessible bytes; errors and inaccessible results remain opaque. The separate abbreviation suite has six fixtures; the main harness remains 44. This does not capture `NumberAbbrevOptions`, configuration, table producers, locale mutation, or native abbreviation semantics.
+
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
 
 ## Sex-control local proof

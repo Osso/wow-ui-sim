@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare bounded abbreviation recorder
+
+`7c6a00e6d` adds manual `/apicontract abbreviations <label>`, excluded from `all`. It calls `AbbreviateLargeNumbers` and `AbbreviateNumbers` for the shared 25 finite inputs with options omitted, and records `GetLocale()` once. Six separate fixtures prove bounded recorder mechanics; the main harness remains 44. Native output, options/configuration, table producers, locale mutation and security remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded heal-calculator recorder
 
 `c47811794` adds manual `/apicontract heal-calculator <label>`, excluded from `all`. Two fresh no-argument calculators receive five read-only getters twice each. Seven separate local fixtures establish only bounded recorder behavior. Native fresh/default values, populated state, reset/default semantics and security remain pending. See [[api-contract-probes]].
