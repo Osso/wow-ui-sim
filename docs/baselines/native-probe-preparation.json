@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 145,
-    "partial-recorder": 16,
+    "needs-design-and-recorder-review": 144,
+    "partial-recorder": 17,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -9418,8 +9418,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual selected-slot GetActionInfo capture with guarded produced spell identity",
+          "Seven independent C_Spell metadata queries using the original accessible finite spell ID, with raw arity and opaque errors"
+        ],
+        "missing": [
+          "GetVisibilityInfo capture using published visibility enum fixtures",
+          "Native matching-build classifications, rank and override transitions",
+          "Unknown spell, coercion and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-spells-spell_metadata"
     },
