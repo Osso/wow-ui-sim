@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual public queries
+
+`/apicontract public-queries <label>` stays outside `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice with exactly zero arguments. The latter records only the omitted-companion case; no companion or trait-tree IDs are invented and `IsTraitTreeForCompanion` is not called.
+
+Protected namespace lookup and access guards precede inspection. Missing APIs, lookup failures and opaque call errors do not prevent the other observations. Preserve raw repeated results, exact arity/nils, sixteen scalar positions and 256-byte strings under the shared ten-snapshot cap (forty query calls maximum). Objects remain opaque. No mutations, CVar changes or other query APIs are added.
+
+Pinned `GameRulesDocumentation.lua:231–238` and `DelvesUIDocumentation.lua:229–245` supply the argument shapes, not native outputs. Native ruleset/state transitions, companion lock policy, trait-tree fixtures and restricted-context behavior remain pending. Seven separate actual TOC/slash fixtures prove recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/public_queries.lua docs/addons/ApiContractProbe
+```
+
 ## Manual equipped-item binding
 
 `/apicontract item-binding <label>` stays outside `all`. For fixed equipment slots 1–19, call `GetInventoryItemLink("player", slot)` once and retain its exact return arity. Only the first returned value, if an accessible non-secret string, is passed once to `C_Item.IsItemBindToAccount(link)`. The original link is passed, never its truncated saved representation. No synthetic links, numeric item IDs, alternate producers or mutations are used.

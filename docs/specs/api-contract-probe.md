@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual public queries
+
+- Manual `public-queries <label>` is excluded from `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice, each with exactly zero arguments.
+- Record only the omitted-companion observation. No invented companion/trait-tree IDs, trait-tree query, mutations, CVar changes or additional query APIs.
+- Protect namespace lookup; check access before inspecting functions/results. Preserve independent missing/lookup/call errors opaquely and retain raw arity, nils and repeated observations without stability conclusions.
+- Reuse sixteen-position, 256-byte and ten-snapshot bounds. Seven separate actual TOC/slash fixtures cover zero arguments, repeated results, independent failures, access guards and bounds. Native ruleset transitions, companion lock policy, trait-tree fixtures and security behavior remain unverified.
+
 ## Manual equipped-item binding
 
 - Manual `item-binding <label>` is excluded from `all`. Query `GetInventoryItemLink("player", slot)` once for each fixed slot 1–19, retaining exact producer return arity and nil positions.

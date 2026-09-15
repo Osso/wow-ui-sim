@@ -394,6 +394,21 @@ local function observeCast(fn, ...)
     return result
 end
 
+local function observePublicQuery(namespace, name)
+    local fn, ok = readField(namespace, name)
+    if not ok then return { status = "field-error" } end
+    return observeCast(fn)
+end
+
+local function capturePublicQueries()
+    local result = { personalResourceDisplay = {}, omittedCompanion = {} }
+    for index = 1, 2 do
+        result.personalResourceDisplay[index] = observePublicQuery(C_GameRules, "IsPersonalResourceDisplayEnabled")
+        result.omittedCompanion[index] = observePublicQuery(C_DelvesUI, "GetLockedTextForCompanion")
+    end
+    return result
+end
+
 local function mapTuple(...)
     local values = pack(...)
     local result = { n = values.n, values = {} }
@@ -1041,8 +1056,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1053,6 +1068,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end
         if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
