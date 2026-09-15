@@ -1,3 +1,7 @@
+## [2026-09-15] audit | Record residual StripHyperlinks native observations
+
+Runtime `521b328de` adds explicit `/apicontract hyperlinks <label>`: 16 literal inputs × nine flag variants, with 26 local fixtures proving bounded capture only. This is best-effort residual coverage outside the snapshot, not an audit credit or active-plan completion. Native malformed/coercion/arbitrary-byte/security behavior remains unexecuted. See [[api-contract-probes]].
+
 ## [2026-09-15] audit | Prepare selected action-slot recorder
 
 Runtime `be0f5f54c` adds `/apicontract actions <slot> <label>` for one selected slot; `all` excludes it. Five raw charge fields are retained, while charge duration remains opaque. Twenty-three local fixtures prove recorder mechanics only. Populated slots, recharge/consumable transitions, and duration semantics remain native-capture work. See [[api-contract-probes]].

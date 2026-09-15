@@ -6,6 +6,10 @@
 
 `aac8c8be1` adds manual `/apicontract casts <label>` and `all` inclusion. Scalar-only recording preserves exact arity and nil positions through 16 returns without inspecting returned objects. Twenty local fixtures prove recorder mechanics, not native contracts. Matching-client ordinary cast, cancellation, replacement/consecutive cast, non-player channel and empowered/non-empowered channel sequences remain pending; no spells or native actions were invented. See [[api-contract-probes]].
 
+## [2026-09-15] audit | Record residual StripHyperlinks native observations
+
+`521b328de` prepares manual `/apicontract hyperlinks <label>` capture: 16 inputs × nine flag variants, bounded raw results, omission distinguished from five false flags, redaction and opaque errors. Twenty-six local fixtures prove recorder mechanics only. This best-effort residual work is outside the evidence-required snapshot; no credit or active-plan completion follows. Native malformed/coercion/arbitrary-byte/security behavior remains unexecuted. See [[api-contract-probes]] and [contract](../specs/strip-hyperlinks.md).
+
 ## [2026-09-15] investigation | Document bounded UnitName realm recorder
 
 Runtime `3f7934e27` adds `/apicontract names <label>` and includes name/realm capture in `all`. Thirteen local fixtures verify raw arity/positional nil preservation, modified versus unmodified results, nil/empty/explicit realms, fixed unknown inputs, redaction and opaque errors. They are recorder proof only: actual matching-client same-realm and cross-realm party sessions remain pending, and no audit credit or all-probe completion is claimed. See [[api-contract-probes]].
