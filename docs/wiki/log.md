@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare selected-slot spell-metadata recorder
+
+Runtime `9647bd5d5` adds manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. It uses only an accessible `GetActionInfo(slot)` spell result and original finite spell ID to issue seven independent guarded metadata/predicate queries. Eight local fixtures prove recorder mechanics only. No nil producer result is passed downstream; `GetVisibilityInfo`, native spell fixtures, rank/override transitions, classifications and security remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded public-query recorder
 
 Runtime `03ac1a023` adds manual `/apicontract public-queries <label>`, excluded from `all`. It records two no-argument `C_GameRules.IsPersonalResourceDisplayEnabled()` calls and two no-argument `C_DelvesUI.GetLockedTextForCompanion()` calls, retaining only the omitted-companion case. Seven separate fixtures prove recorder mechanics only; native ruleset transitions, companion lock policy, trait-tree fixtures, and restricted-context behavior remain pending. See [[api-contract-probes]].
