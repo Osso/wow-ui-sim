@@ -9434,10 +9434,10 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual selected-slot GetActionInfo capture with guarded produced spell identity",
-          "Seven independent C_Spell metadata queries using the original accessible finite spell ID, with raw arity and opaque errors"
+          "Seven independent C_Spell metadata queries using the original accessible finite spell ID, with raw arity and opaque errors",
+          "GetVisibilityInfo queries for three fixed accessible published visibility enum names without numeric fallback"
         ],
         "missing": [
-          "GetVisibilityInfo capture using published visibility enum fixtures",
           "Native matching-build classifications, rank and override transitions",
           "Unknown spell, coercion and restricted-context behavior"
         ]
