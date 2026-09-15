@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
+
+Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. One fresh unnamed hidden StatusBar records its `GetFillStyle` default before setters, then each published fill-style enum value is round-tripped twice without numeric fallback. Seven separate fixtures prove recorder mechanics only. Hide failure leaves visibility unconfirmed; invalid inputs, security, rendering and native default/validation semantics remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded raid-marker recorder
 
 Runtime `666a930d8` adds manual `/apicontract raid-markers <label>`, excluded from `all`: two `CanBeRaidTarget` calls for each of nine fixed unit tokens, two `IsRaidMarkerActive` calls for indices 1–8, and two no-argument `IsRaidMarkerSystemEnabled` calls. Six separate local fixtures prove recorder mechanics only. Secret-return `GetRaidTargetIndex`, mutations, permission/security claims, native output and populated world-marker fixtures remain pending. See [[api-contract-probes]].
