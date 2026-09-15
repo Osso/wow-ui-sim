@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare bounded public-query recorder
+
+Runtime `03ac1a023` adds manual `/apicontract public-queries <label>`, excluded from `all`. It calls no-argument `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and no-argument `C_DelvesUI.GetLockedTextForCompanion()` twice, recording only the omitted-companion case. Seven separate fixtures prove recorder mechanics only; native ruleset transitions, companion lock policy, trait-tree fixtures and restricted-context behavior remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare equipped-item account-binding recorder
 
 Runtime `9fd1d250d` adds manual `/apicontract item-binding <label>`, excluded from `all`. It uses only accessible non-secret item links actually produced from player equipment slots 1–19, then queries each link once with `C_Item.IsItemBindToAccount`. Missing or restricted fixture inputs are not classified as false. Eight separate fixtures prove recorder mechanics only; no synthetic IDs/options, account mutation, binding classification, native result or security conclusion follows. See [[api-contract-probes]].

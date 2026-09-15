@@ -1,8 +1,12 @@
 # Native API contract probes
 
+Manual `public-queries` observes two no-argument GameRules and Delves UI queries twice each, with only the omitted companion case. Seven local fixtures prove recorder mechanics; native ruleset transitions, companion lock policy, trait-tree fixtures, and restricted-context behavior remain pending.
+
 Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, cast/channel identity, selected action-slot, scalar resource scale, plain callback lifecycle, and residual `StripHyperlinks` investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names`; `41bcd89f0` adds numeric capture; both are included in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
 
 ## Evidence boundaries
+
+`/apicontract public-queries <label>` is manual-only and excluded from `all`. It calls no-argument `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and no-argument `C_DelvesUI.GetLockedTextForCompanion()` twice, retaining only the omitted-companion case. Protected namespace lookup and accessibility guards precede inspection; missing APIs, lookup failures and opaque errors do not suppress the other query. Seven separate fixtures prove bounded recorder mechanics, not native behavior. Ruleset transitions, companion lock policy, trait-tree fixtures and restricted-context behavior remain pending.
 
 `/apicontract item-binding <label>` is manual-only and excluded from `all`. For player equipment slots 1–19, it records `GetInventoryItemLink` arity and uses only the first actual producer return when it is an accessible non-secret string. Each eligible original link is passed once to `C_Item.IsItemBindToAccount`; truncated stored text, synthetic IDs/options, alternate producers and account mutations are excluded. Missing, nil, nonstring or failed producer results are `unavailable-input`, not false; restricted links are `restricted-input`. Eight separate fixtures prove routing, guards and bounds only. Native binding classifications, known/unknown fixtures, output and security semantics remain pending.
 
