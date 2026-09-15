@@ -60,6 +60,20 @@ Additional commands:
 
 `AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets tied to the blocker snapshot hash. Registration errors, missing parents and missing members are distinct observations. Event payloads retain arity and nil slots, with at most eight summarized values; tables remain bounded observations, not full structure captures. No native actions, purchases, transitions or account mutations are triggered. A symbol missing at one phase does not prove removal; a listener with no deliveries does not prove event absence. These shared recorders do **not** complete all associated behavioral plans. See the [full preparation inventory](../../baselines/native-probe-preparation.json). Start a new capture batch by moving the saved file aside while logged out.
 
+## Manual abbreviations
+
+`/apicontract abbreviations <label>` is excluded from `all`. It reuses the same 25 finite inputs as `numbers`, calling `AbbreviateLargeNumbers(number)` and `AbbreviateNumbers(number)` with options omitted, plus one `GetLocale()` observation. No locale changes or formatting assumptions are made.
+
+Scalar-only capture preserves exact return arity, nil positions and accessible string bytes, with sixteen retained positions and 256 bytes per string; larger results are marked truncated. Returned objects and errors stay opaque. Access checks precede inspection; missing functions or failed guards fail closed. Each snapshot allows at most fifty abbreviation calls and one locale call; the shared ten-snapshot cap applies.
+
+Pinned retail `LocalizationDocumentation.lua` declares each number argument and optional `NumberAbbrevOptions`. This slice does not create options/configuration tables or formatters. Native output, breakpoint/options/configuration behavior and table producers remain separate gaps.
+
+Separate local fixtures (not native evidence):
+
+```text
+luajit docs/addons/ApiContractProbe/tests/abbreviations.lua docs/addons/ApiContractProbe
+```
+
 ## Manual heal calculator
 
 `/apicontract heal-calculator <label>` is manual-only, excluded from `all`. Each snapshot attempts two fresh `CreateUnitHealPredictionCalculator()` calls with no arguments. On each accessible object, query `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, `GetDamageAbsorbClampMode`, `GetHealAbsorbs`, and `GetDamageAbsorbs` twice, in that order. Repeated observations remain separate; no equality or stability inference is performed.

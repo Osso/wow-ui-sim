@@ -650,18 +650,30 @@ local function captureNames()
     return result
 end
 
+local numericInputs = {
+    -2.5, -1.5, -0.5, 0, 0.5, 1.5, 2.5,
+    -0.500001, -0.499999, 0.499999, 0.500001,
+    -1, 1, -100, 100, -0.1, 0.1, -0.9, 0.9,
+    -1234.5678, 1234.5678, -1e6, 1e6, -1e12, 1e12,
+}
+
+local function captureAbbreviations()
+    local result = { locale = observeCast(GetLocale), samples = {} }
+    for _, input in ipairs(numericInputs) do
+        result.samples[#result.samples + 1] = { input = input,
+            large = observeCast(AbbreviateLargeNumbers, input),
+            small = observeCast(AbbreviateNumbers, input) }
+    end
+    return result
+end
+
 local function captureNumbers()
     local floor, floorOK = readField(C_StringUtil, "FloorToNearestString")
     local round, roundOK = readField(C_StringUtil, "RoundToNearestString")
     if not floorOK then floor = nil end
     if not roundOK then round = nil end
     local result = { locale = observe(GetLocale), samples = {} }
-    for _, input in ipairs({
-        -2.5, -1.5, -0.5, 0, 0.5, 1.5, 2.5,
-        -0.500001, -0.499999, 0.499999, 0.500001,
-        -1, 1, -100, 100, -0.1, 0.1, -0.9, 0.9,
-        -1234.5678, 1234.5678, -1e6, 1e6, -1e12, 1e12,
-    }) do
+    for _, input in ipairs(numericInputs) do
         result.samples[#result.samples + 1] = { input = input,
             floor = observe(floor, input), round = observe(round, input) }
     end
@@ -921,8 +933,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -933,6 +945,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "abbreviations" then record.abbreviations = captureAbbreviations() end
         if mode == "heal-calculator" then record.healCalculator = captureHealCalculator() end
         if mode == "mapvalues" then record.mapvalues = captureMapValues() end
         if mode == "cast-durations" then record.castDurations = captureCastDurations() end

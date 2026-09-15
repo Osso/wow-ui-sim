@@ -56,6 +56,16 @@ Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocument
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Manual abbreviations
+
+- Manual `abbreviations <label>` stays outside `all`; reuse the existing 25-number corpus, preserving `numbers` behavior.
+- Call `AbbreviateLargeNumbers(number)` and `AbbreviateNumbers(number)` independently with options omitted; capture `GetLocale()` once without changing locale.
+- Preserve exact scalar result arity, nil slots and accessible bytes, with sixteen positions, 256-byte strings and explicit truncation. Guard access before inspection; returned objects and errors remain opaque.
+- Missing APIs and failed access checks fail closed. Bound each snapshot to fifty abbreviation calls and one locale call, under the shared ten-snapshot limit.
+- Separate actual TOC/slash fixtures cover shared inputs, omitted options, localization, missing/restricted functions and results, errors, arity, opaque objects and bounds.
+
+Pinned retail `LocalizationDocumentation.lua` supplies signatures only. No formatter, options/configuration tables, producer or mutator belongs to this slice. Native semantics and option/configuration behavior remain unverified separate gaps.
+
 ## Manual heal calculator
 
 - Manual `heal-calculator <label>` stays outside `all`; attempt two independent no-argument `CreateUnitHealPredictionCalculator()` constructions per snapshot.
