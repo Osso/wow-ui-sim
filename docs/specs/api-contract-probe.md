@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual StatusBar fill style
+
+- Manual `statusbar-fill <label>` is excluded from `all`. Create one unnamed StatusBar under UIParent, immediately attempt Hide, then capture the raw fresh GetFillStyle default before any fill setter.
+- Read only published `Enum.StatusBarFillStyle` names Standard, StandardNoRangeFill, Center and Reverse. Pass accessible finite scalar values without numeric fallbacks. Record missing/restricted/nonscalar inputs without setter attempts.
+- For each eligible value, record one SetFillStyle and two subsequent independent GetFillStyle calls, preserving setter failures, raw arity/nils and opaque results rather than equality conclusions.
+- Guard object, method and result access before lookup or inspection. Retain sixteen scalar positions, 256-byte strings and ten snapshots. Abort fill operations after constructor/Hide failure; retain no object reference. Hide failure explicitly leaves client visibility unconfirmed; no destruction or alternate setter is attempted.
+- No Show, sizing, layout/rendering, invalid inputs, restricted-context probes or other setters. Addon code is tainted; no untainted setup assumption. Seven separate actual TOC/slash fixtures test recorder behavior, not native conformance. Native initial-state, validation and coercion captures remain pending.
+
 ## Manual scalar curve state
 
 - [x] Manual `curve-state <label>` is excluded from `all` and leaves existing `curves` capture unchanged.

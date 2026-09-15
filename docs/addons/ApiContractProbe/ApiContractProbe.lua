@@ -402,6 +402,55 @@ local function mapTuple(...)
     return result
 end
 
+local function observeFillMethod(object, name, ...)
+    local fn, ok = readField(object, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(object) then return { status = "restricted-object" } end
+    return observeCast(fn, object, ...)
+end
+
+local function captureFillStyles(object)
+    local result = {}
+    for _, name in ipairs({ "Standard", "StandardNoRangeFill", "Center", "Reverse" }) do
+        local enums, enumOK = readField(Enum, "StatusBarFillStyle")
+        local value, valueOK
+        if enumOK then value, valueOK = readField(enums, name) end
+        local input = valueOK and scalar(value) or { status = "field-error" }
+        local row = { name = name, input = input }
+        result[#result + 1] = row
+        if input.status == "observed" and (input.kind == "number" or input.kind == "string"
+            or input.kind == "boolean") and accessible(value) then
+            row.setter = observeFillMethod(object, "SetFillStyle", value)
+            row.getters = {}
+            for index = 1, 2 do row.getters[index] = observeFillMethod(object, "GetFillStyle") end
+        end
+    end
+    return result
+end
+
+local function captureStatusbarFill()
+    local fn, parent = CreateFrame, UIParent
+    if not accessible(fn) or not accessible(parent) then
+        return { constructor = { status = "restricted" } }
+    end
+    if type(fn) ~= "function" then return { constructor = { status = "missing-api" } } end
+    local values = pack(pcall(fn, "StatusBar", nil, parent))
+    if not values[1] then return { constructor = { status = "call-error" } } end
+    local object = values[2]
+    -- Hide before recording constructor results or inspecting fill state.
+    local hidden = observeFillMethod(object, "Hide")
+    local constructor = mapTuple(unpack(values, 2, values.n))
+    constructor.status = "observed"
+    local row = { constructor = constructor, hide = hidden }
+    if hidden.status ~= "observed" then
+        row.status = "visibility-unconfirmed"
+        return row
+    end
+    row.default = observeFillMethod(object, "GetFillStyle")
+    row.styles = captureFillStyles(object)
+    return row
+end
+
 local function captureHealCalculatorObject()
     local fn = CreateUnitHealPredictionCalculator
     if not accessible(fn) then return { constructor = { status = "restricted" } } end
@@ -956,8 +1005,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -968,6 +1017,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end
         if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
         if mode == "abbreviations" then record.abbreviations = captureAbbreviations() end
         if mode == "heal-calculator" then record.healCalculator = captureHealCalculator() end

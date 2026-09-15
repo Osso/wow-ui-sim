@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual StatusBar fill style
+
+`/apicontract statusbar-fill <label>` stays outside `all`. It creates one unnamed `CreateFrame("StatusBar", nil, UIParent)` and immediately attempts `Hide`, before recording the fresh `GetFillStyle()` default. For each published `Enum.StatusBarFillStyle` name `Standard`, `StandardNoRangeFill`, `Center`, `Reverse`, an accessible finite scalar value permits one `SetFillStyle(value)` followed by two independent `GetFillStyle()` observations. No enum numbers are substituted. Missing or throwing setters do not suppress those getters. Missing, restricted or nonscalar enum entries are recorded but not passed to setters.
+
+Object, method and result access is guarded before inspection. Exact arity/nil slots and up to sixteen scalar positions are retained; objects and errors remain opaque. Strings retain at most 256 bytes; ten snapshots cap frame creation. Constructor or Hide failure aborts fill operations and retains no frame reference. A failed Hide is `visibility-unconfirmed`: the addon cannot guarantee disposal or invisibility of a client-owned frame when hiding fails. No Show, sizing, layout, rendering, destruction or other setters are used.
+
+Pinned `SimpleStatusBarAPIDocumentation.lua` declares the getter and enum setter, not native defaults or successful roundtrips. Addon execution is tainted; this recorder assumes no untainted setup and performs no restricted-context or invalid-input experiments. Native validation, coercion and default behavior remain pending. Seven separate local actual TOC/slash fixtures are recorder proof only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/statusbar_fill.lua docs/addons/ApiContractProbe
+```
+
 ## Manual raid-marker observations
 
 `/apicontract raid-markers <label>` stays outside `all`. It calls `CanBeRaidTarget(unit)` twice for each of `player`, `target`, `focus`, `pet`, `party1`, `party2`, `nonexistent`, `invalid-unit-token` and the empty token; `IsRaidMarkerActive(index)` twice for each index 1–8; and `IsRaidMarkerSystemEnabled()` twice with no arguments. All 36 calls are independent: missing APIs never gate other observations. Repeated results remain raw, not stability comparisons.
