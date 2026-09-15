@@ -15,6 +15,8 @@ local function reset()
     GetBuildInfo = function() return "fixture", "123", "date", 120100 end
     time = function() return 123456 end
     UnitExists = function(unit) return unit == "player" or unit == "target" end
+    UnitName = function(unit) return "Name-" .. unit, nil end
+    UnitNameUnmodified = function(unit) return "Original-" .. unit, "FixtureRealm" end
     UnitSex = function(unit) return unit == "player" and 2 or 3 end
     UnitSexBase = function(unit) return unit == "player" and 0 or 1 end
     Enum = { UnitSex = { Male = 0, Female = 1, None = 2, Both = 3, Neutral = 4 } }
@@ -187,5 +189,77 @@ test("event recorder registers actual targets and bounds redacted tuples", funct
     SlashCmdList.APICONTRACTPROBE("events-stop")
     assert(frame.stopped and ApiContractProbeDB.eventStatus == "stopped")
     assert(not containsSecret(ApiContractProbeDB))
+end)
+test("names preserve differing values realm forms and exact nil arity", function()
+    reset()
+    UnitExists = function() error("names must not gate on existence") end
+    UnitName = function(unit)
+        if unit == "player" then return "DisplayPlayer", nil end
+        if unit == "party1" then return "DisplayAlly", "" end
+        if unit == "party2" then return "RemoteAlly", "OtherRealm" end
+        if unit == "party3" then return nil, "RealmWithoutName" end
+        if unit == "party4" then return "Fourth", nil, nil end
+        if unit == "target" then return "DisplayTarget" end
+        if unit == "nonexistent" then return end
+        if unit == "invalid-unit-token" then return nil end
+        if unit == "" then return nil, nil end
+        error("unexpected fixture token")
+    end
+    local record = capture("names same-realm party1; cross-realm party2")
+    assert(record and record.names, "names command must capture observations")
+    assert(record.label == "same-realm party1; cross-realm party2")
+    assert(record.client.values[2].value == "123")
+    local units = record.names.units
+    assert(units.player.name.n == 2 and units.player.name.values[1].value == "DisplayPlayer")
+    assert(units.player.name.values[2].kind == "nil")
+    assert(units.player.unmodified.values[1].value == "Original-player")
+    assert(units.party1.name.values[2].kind == "string" and units.party1.name.values[2].value == "")
+    assert(units.party2.name.values[2].value == "OtherRealm")
+    assert(units.party3.name.values[1].kind == "nil" and units.party3.name.values[2].value == "RealmWithoutName")
+    assert(units.party4.name.n == 3 and units.party4.name.values[3].kind == "nil")
+    assert(units.target.name.n == 1 and units.target.name.values[1].value == "DisplayTarget")
+    assert(units.nonexistent.name.n == 0 and next(units.nonexistent.name.values) == nil)
+    assert(units["invalid-unit-token"].name.n == 1 and units["invalid-unit-token"].name.values[1].kind == "nil")
+    assert(units[""].name.n == 2 and units[""].name.values[2].kind == "nil")
+    for _, token in ipairs({
+        "player", "party1", "party2", "party3", "party4", "target",
+        "nonexistent", "invalid-unit-token", "",
+    }) do
+        assert(units[token].unmodified.n == 2)
+        assert(units[token].unmodified.values[1].value == "Original-" .. token)
+        assert(units[token].unmodified.values[2].value == "FixtureRealm")
+    end
+end)
+test("names redact secret inaccessible and error returns", function()
+    reset()
+    UnitName = function(unit)
+        if unit == "player" then return secret, "OrdinaryRealm" end
+        if unit == "party1" then return "VisibleAlly", "InaccessibleRealm" end
+        error(secret)
+    end
+    UnitNameUnmodified = function() error("private error details") end
+    canaccessvalue = function(value) return value ~= secret and value ~= "InaccessibleRealm" end
+    local record = capture("names restricted")
+    assert(record and record.names, "names command must capture redacted observations")
+    local units = record.names.units
+    assert(units.player.name.n == 2 and units.player.name.values[1].status == "restricted")
+    assert(units.player.name.values[2].value == "OrdinaryRealm")
+    assert(units.party1.name.values[1].value == "VisibleAlly")
+    assert(units.party1.name.values[2].status == "restricted" and units.party1.name.values[2].value == nil)
+    assert(units.target.name.status == "call-error" and units.target.name.values == nil)
+    assert(units.player.unmodified.status == "call-error" and units.player.unmodified.values == nil)
+    assert(not containsSecret(ApiContractProbeDB))
+end)
+test("all includes names and names fail closed for unavailable access or APIs", function()
+    reset()
+    assert(capture("all baseline").names.units.player.name.values[1].value == "Name-player")
+    reset()
+    UnitName, UnitNameUnmodified = nil, nil
+    local units = capture("names missing").names.units
+    assert(units.player.name.status == "missing-api" and units.player.unmodified.status == "missing-api")
+    reset()
+    canaccessvalue = nil
+    local record = capture("names no-access")
+    assert(record.status == "missing-access-api" and record.names == nil)
 end)
 print(string.format("RESULT %d passed", passed))

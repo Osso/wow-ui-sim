@@ -165,6 +165,18 @@ local function captureSex()
     return result
 end
 
+local function captureNames()
+    local result = { units = {} }
+    for _, unit in ipairs({
+        "player", "party1", "party2", "party3", "party4", "target",
+        "nonexistent", "invalid-unit-token", "",
+    }) do
+        result.units[unit] = { name = observe(UnitName, unit),
+            unmodified = observe(UnitNameUnmodified, unit) }
+    end
+    return result
+end
+
 local function capturePublication()
     local rows = {}
     for index, target in ipairs(ApiContractProbeTargets.publication) do
@@ -267,8 +279,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
     if mode == "events-start" or mode == "events-stop" then
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
-    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|publication|events-start|events-stop] [label]")
+    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|names|publication|events-start|events-stop] [label]")
         return
     end
     local db = database()
@@ -281,6 +293,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.client, record.time = observe(GetBuildInfo), observe(time)
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
+        if mode == "all" or mode == "names" then record.names = captureNames() end
         if mode == "all" or mode == "publication" then record.publication = capturePublication() end
         record.status = "observed"
     end
