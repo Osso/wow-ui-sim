@@ -165,6 +165,28 @@ local function captureSex()
     return result
 end
 
+-- Cast results are scalar observations only: never inspect returned objects.
+local function observeCast(fn, unit)
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, unit))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        result.values[index - 1] = scalar(values[index])
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function captureCasts()
+    local result = { units = {} }
+    for _, unit in ipairs({ "player", "target", "focus", "party1", "nonexistent", "invalid-unit-token", "" }) do
+        result.units[unit] = { casting = observeCast(UnitCastingInfo, unit),
+            channel = observeCast(UnitChannelInfo, unit) }
+    end
+    return result
+end
+
 local function captureNames()
     local result = { units = {} }
     for _, unit in ipairs({
@@ -297,8 +319,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
     if mode == "events-start" or mode == "events-stop" then
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
-    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|numbers|publication|events-start|events-stop] [label]")
+    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|publication|events-start|events-stop] [label]")
         return
     end
     local db = database()
@@ -313,6 +335,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
         if mode == "all" or mode == "names" then record.names = captureNames() end
         if mode == "all" or mode == "numbers" then record.numbers = captureNumbers() end
+        if mode == "all" or mode == "casts" then record.casts = captureCasts() end
         if mode == "all" or mode == "publication" then record.publication = capturePublication() end
         record.status = "observed"
     end

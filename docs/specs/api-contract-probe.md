@@ -15,6 +15,14 @@
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Manual cast identities
+
+- [x] `/apicontract casts <label>` and `all` query `UnitCastingInfo` and `UnitChannelInfo` for fixed `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token` and empty-string tokens without existence gating or gameplay actions.
+- [x] Dedicated accessibility-first scalar-only protected calls preserve exact arity and up to 16 positions, including interior/trailing nils, with explicit truncation beyond 16. Accessible objects retain status/kind only; never execute returned-object methods, indexing, equality or string conversion. Errors remain opaque.
+- [x] Preserve raw scalar IDs, empowerment flags and stage counts without identity/coercion assumptions; use existing build/time/label infrastructure and shared ten-capture limit. Document separate batches for fixture sequences.
+
+Pinned `12.0.0-register.json` declarations describe casting position 10 and channel position 11 as castBarID; they are not native evidence and the executing client may differ. Matching native client, controllable casts, non-player channels and empowered/non-empowered fixtures remain pending. No recorder fixture earns native audit credit.
+
 ## Publication and event recording
 
 - [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.
@@ -32,7 +40,7 @@ Runtime `d959372a3` passes 10/10 fixtures (exact-hash reuse) plus 21/21 independ
 
 ## Implementation inventory
 
-- `docs/addons/ApiContractProbe/ApiContractProbe.lua`: shared observation and manual curve, sex, name, numeric, publication and event captures.
+- `docs/addons/ApiContractProbe/ApiContractProbe.lua`: shared observation and manual curve, sex, name, numeric, cast, publication and event captures.
 - `docs/addons/ApiContractProbe/ApiContractProbe.toc`: manual addon and SavedVariables registration.
 - `docs/addons/ApiContractProbe/AuditTargets.lua`: exact snapshot-derived capture targets and source hash.
 
@@ -43,6 +51,8 @@ Runtime `d959372a3` passes 10/10 fixtures (exact-hash reuse) plus 21/21 independ
 Name fixtures exercise differing modified/unmodified names, nil/empty/explicit realms, positional nils and zero returns, all fixed tokens without existence gating, redacted secrets/inaccessible values, opaque errors, missing APIs and `all` inclusion. These are recorder tests, not native name/realm expectations.
 
 Numeric fixtures assert the literal 25-input corpus against deliberately different fake clients, locale bytes, multiple/nil/zero returns, redacted results, opaque errors and missing/failed access APIs. They do not establish native rounding rules.
+
+Cast fixtures cover distinct tenth/eleventh IDs, interior/trailing nils, empowerment flags/stage counts, repeated and consecutive manual captures, zero-result idle states, restricted/opaque errors, hostile objects, missing access/APIs and 16-position bounds. Tests assert recording behavior only.
 
 ## Known gaps (current cycle)
 

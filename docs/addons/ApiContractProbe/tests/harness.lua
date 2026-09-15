@@ -20,6 +20,8 @@ local function reset()
     UnitExists = function(unit) return unit == "player" or unit == "target" end
     UnitName = function(unit) return "Name-" .. unit, nil end
     UnitNameUnmodified = function(unit) return "Original-" .. unit, "FixtureRealm" end
+    UnitCastingInfo = function() return end
+    UnitChannelInfo = function() return end
     UnitSex = function(unit) return unit == "player" and 2 or 3 end
     UnitSexBase = function(unit) return unit == "player" and 0 or 1 end
     Enum = { UnitSex = { Male = 0, Female = 1, None = 2, Both = 3, Neutral = 4 } }
@@ -345,6 +347,100 @@ test("numbers fail closed for missing APIs and failed access checks", function()
         _G[accessName] = nil
         local record = capture("numbers absent-access")
         assert(record.status == "missing-access-api" and record.numbers == nil)
+    end
+end)
+test("casts preserve fixed tokens arity identities and manual sequences", function()
+    reset()
+    local tokens = { "player", "target", "focus", "party1", "nonexistent", "invalid-unit-token", "" }
+    local seenCast, seenChannel = {}, {}
+    local identity = "cast-A"
+    UnitExists = function() error("casts must not gate on existence") end
+    UnitCastingInfo = function(unit)
+        seenCast[#seenCast + 1] = unit
+        return "Cast", nil, 123, 100, 200, false, identity, nil, 456, 901
+    end
+    UnitChannelInfo = function(unit)
+        seenChannel[#seenChannel + 1] = unit
+        return "Channel", "Shown", 124, 110, 210, false, nil, 457, true, 4, 902
+    end
+    local first = capture("casts active-A")
+    assert(first and first.casts, "casts command must capture observations")
+    assert(first.label == "active-A" and first.client.values[2].value == "123")
+    assert(first.time.values[1].value == 123456)
+    assert(#seenCast == 7 and #seenChannel == 7)
+    for index, token in ipairs(tokens) do
+        assert(seenCast[index] == token and seenChannel[index] == token)
+        local row = first.casts.units[token]
+        assert(row.casting.n == 10 and row.casting.values[2].kind == "nil")
+        assert(row.casting.values[7].value == "cast-A" and row.casting.values[8].kind == "nil")
+        assert(row.casting.values[10].value == 901 and row.casting.truncated == nil)
+        assert(row.channel.n == 11 and row.channel.values[7].kind == "nil")
+        assert(row.channel.values[9].value == true and row.channel.values[10].value == 4)
+        assert(row.channel.values[11].value == 902 and row.channel.truncated == nil)
+    end
+    assert(capture("casts active-A-again").casts.units.player.casting.values[7].value == "cast-A")
+    identity = "cast-B"
+    assert(capture("all replacement-B").casts.units.player.casting.values[7].value == "cast-B")
+    assert(first.casts.units.player.casting.values[7].value == "cast-A")
+    UnitChannelInfo = function() return "Plain", nil, nil, nil, nil, false, nil, 99, false, 0, nil end
+    local channel = capture("casts plain-channel").casts.units.player.channel
+    assert(channel.n == 11 and channel.values[9].value == false and channel.values[10].value == 0)
+    assert(channel.values[11].kind == "nil")
+    UnitCastingInfo, UnitChannelInfo = function() return end, function() return end
+    local idle = capture("casts completed-or-cancelled").casts.units.player
+    assert(idle.casting.n == 0 and next(idle.casting.values) == nil)
+    assert(idle.channel.n == 0 and next(idle.channel.values) == nil)
+end)
+test("casts bound positional storage without losing trailing nil arity", function()
+    reset()
+    UnitCastingInfo = function() return 1, nil, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, nil end
+    UnitChannelInfo = function() return 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, nil end
+    local row = capture("casts overflow").casts.units.player
+    assert(row.casting.n == 16 and #row.casting.values == 16 and row.casting.truncated == nil)
+    assert(row.casting.values[16].kind == "nil")
+    assert(row.channel.n == 17 and #row.channel.values == 16 and row.channel.truncated == true)
+    for _ = 1, 11 do capture("casts repeated") end
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 2)
+end)
+test("casts never inspect returned objects or expose opaque errors", function()
+    reset()
+    local calls = 0
+    local function hostile() calls = calls + 1; error("object code executed") end
+    local mt = { __index = hostile, __eq = hostile, __tostring = hostile }
+    local object = setmetatable({ GetXY = hostile }, mt)
+    local denied = setmetatable({}, mt)
+    local userdata = newproxy(true)
+    local umt = getmetatable(userdata)
+    umt.__index, umt.__eq, umt.__tostring = hostile, hostile, hostile
+    issecretvalue = function(value) return rawequal(value, secret) end
+    canaccessvalue = function(value) return not rawequal(value, denied) end
+    UnitCastingInfo = function() return object, userdata, secret, denied end
+    UnitChannelInfo = function() error(object) end
+    local row = capture("casts hostile").casts.units.player
+    assert(row.casting.n == 4 and row.casting.values[1].kind == "table")
+    assert(row.casting.values[1].fields == nil and row.casting.values[1].value == nil)
+    assert(row.casting.values[2].kind == "userdata" and row.casting.values[2].value == nil)
+    assert(row.casting.values[3].status == "restricted" and row.casting.values[4].status == "restricted")
+    assert(row.channel.status == "call-error" and row.channel.values == nil)
+    assert(not containsSecret(ApiContractProbeDB) and calls == 0)
+end)
+test("casts fail closed for unavailable functions and access checks", function()
+    reset()
+    UnitCastingInfo, UnitChannelInfo = nil, nil
+    local row = capture("casts absent").casts.units.player
+    assert(row.casting.status == "missing-api" and row.channel.status == "missing-api")
+    for _, name in ipairs({ "issecretvalue", "canaccessvalue" }) do
+        reset()
+        local calls = 0
+        UnitCastingInfo = function() calls = calls + 1 end
+        UnitChannelInfo = UnitCastingInfo
+        _G[name] = function() error(secret) end
+        row = capture("casts access-error").casts.units.player
+        assert(calls == 0 and row.casting.status == "missing-api" and row.channel.status == "missing-api")
+        reset()
+        _G[name] = nil
+        local record = capture("casts no-access")
+        assert(record.status == "missing-access-api" and record.casts == nil)
     end
 end)
 print(string.format("RESULT %d passed", passed))
