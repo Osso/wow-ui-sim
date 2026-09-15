@@ -9852,10 +9852,11 @@
           "Accessible fields/GetXY, identity, isolated mutation",
           "Manual scalar curve-state: empty/populated type, count, secret-flag query, unsorted duplicate points, raw evaluations and SetToDefaults results",
           "Copy state before and after original AddPoint/ClearPoints mutations without assumed isolation",
-          "Manual scalar curve-edit: independent RemovePoint indices -1,0,1,2,3,4 and CreateVector2D-backed empty/unsorted duplicate SetPoints captures"
+          "Manual scalar curve-edit: independent RemovePoint indices -1,0,1,2,3,4 and CreateVector2D-backed empty/unsorted duplicate SetPoints captures",
+          "Manual color-curves: four explicit RGBA points, empty/populated state, indexed points, packed/unpacked evaluations, defaults and copy mutation observations"
         ],
         "missing": [
-          "Color point and color SetToDefaults experiments",
+          "Native color point userdata fields and identity, color input coercion and inaccessible/secret behavior",
           "Native scalar removal indexing and SetPoints representation/coercion semantics",
           "Native duplicate, interpolation, defaults and copy semantics",
           "Native capture"
