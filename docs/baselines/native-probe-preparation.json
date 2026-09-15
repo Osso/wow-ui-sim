@@ -9849,12 +9849,14 @@
         "observations": [
           "Scalar empty/populated point queries",
           "Indices 0,1,2,3,-1,4",
-          "Accessible fields/GetXY, identity, isolated mutation"
+          "Accessible fields/GetXY, identity, isolated mutation",
+          "Manual scalar curve-state: empty/populated type, count, secret-flag query, unsorted duplicate points, raw evaluations and SetToDefaults results",
+          "Copy state before and after original AddPoint/ClearPoints mutations without assumed isolation"
         ],
         "missing": [
-          "Color point experiments",
-          "RemovePoint/SetToDefaults",
-          "Duplicate coordinates",
+          "Color point and color SetToDefaults experiments",
+          "Scalar RemovePoint and SetPoints experiments",
+          "Native duplicate, interpolation, defaults and copy semantics",
           "Native capture"
         ]
       },
