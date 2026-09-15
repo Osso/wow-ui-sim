@@ -32,6 +32,15 @@ Pinned `12.0.0-register.json` declarations describe casting position 10 and chan
 
 Native ordinary-spell, charged-spell, consumable and empty-slot fixtures plus before/use/recharge/restoration transitions remain pending. Duration-method contracts remain uncaptured. These eight plan rows are only partially prepared; no `GetActionCooldown` query belongs to this slice.
 
+## Residual StripHyperlinks
+
+- [x] Manual-only `/apicontract hyperlinks <label>` records 16 literal inputs × nine flag variants (144 calls); `all` excludes it. Exact corpus and ordered flags are documented in the capture protocol.
+- [x] Preserve omitted optional arguments separately from five explicit false flags; record exact input, variant, flags, argument count and raw accessible result arity without guessed stripping/coercion or malformed-text normalization.
+- [x] Use existing eight-position observer and ten-capture bounds. Strings retain at most 256 bytes with explicit truncation; inaccessible results are redacted, missing APIs fail closed and errors are opaque.
+- [x] Behavioral fixtures discriminate all argument positions/omission, UTF-8 and embedded NUL output bytes, malformed output, restrictions/errors, truncation, manual-only routing and overflow without extra calls.
+
+Native execution, nonboolean truthiness, arbitrary-byte contracts beyond the fixed corpus, string-view lifetime and security remain unverified. This recorder does not change the [simulator StripHyperlinks contract](strip-hyperlinks.md) or earn native audit credit.
+
 ## Publication and event recording
 
 - [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.

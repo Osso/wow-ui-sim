@@ -40,7 +40,15 @@ Use separately labeled manual snapshots for idle, active, repeated same cast, co
 
 **Sex:** records `UnitExists`, then raw `UnitSex` and `UnitSexBase` returns for existing player/target/focus/pet units, plus named `Enum.UnitSex` values. No legacy-to-enum conversion or assumption about what “Base” means.
 
-Restricted values are redacted before comparison or serialization. API errors are opaque status labels, not stringified error objects. Missing access APIs fail closed. Rejected addon-tainted calls are inconclusive; do not bypass restrictions. String observations are truncated to 256 characters.
+Restricted values are redacted before comparison or serialization. API errors are opaque status labels, not stringified error objects. Missing access APIs fail closed. Rejected addon-tainted calls are inconclusive; do not bypass restrictions. String observations are truncated to 256 bytes with `truncated = true` when shortened.
+
+## Residual hyperlink observations
+
+Run `/apicontract hyperlinks <label>` explicitly; `all` excludes this mode. Each snapshot makes 144 calls: 16 literal strings × nine variants. Inputs cover ASCII, `é漢字🙂`, empty text, literal `|n`, an actual newline, balanced item/color/atlas/texture markup and their combination, escaped `||`, unclosed item/color/atlas/texture markup and orphan `|h`.
+
+Variants are omitted optional arguments; five false flags; each single true flag in order `maintainColor`, `maintainBrackets`, `stripNewlines`, `maintainAtlases`, `maintainTextures`; consumer `(false,true,false,true,true)`; and all true. Each row saves exact `input`, `variant`, `flags`, `argumentCount` and raw `result`. Omission remains one argument, not six false arguments. No expected stripping or malformed-text normalization is applied.
+
+Existing observer bounds retain exact return arity and at most eight positions. Strings retain up to 256 bytes and set `truncated = true` when shortened; this may split UTF-8. Missing APIs/access checks fail closed, secret values are redacted and errors remain opaque. Ten captures maximum; rejected captures make no calls. Native execution remains pending; nonboolean truthiness/coercion, arbitrary-byte behavior outside the corpus, string-view lifetime and security semantics remain unverified. Local fixtures prove recording only; see [StripHyperlinks contract](../../specs/strip-hyperlinks.md).
 
 ## Selected action slots
 

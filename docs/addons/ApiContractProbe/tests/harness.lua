@@ -523,4 +523,65 @@ test("invalid action commands and all never query selected-slot APIs", function(
     capture("actions 2 dropped")
     assert(calls == 63 and ApiContractProbeDB.dropped == 1)
 end)
+test("hyperlink corpus records exact inputs and all nine flag variants", function()
+    reset()
+    local calls = {}
+    C_StringUtil.StripHyperlinks = function(...)
+        local args = { n = select("#", ...), ... }
+        calls[#calls + 1] = args
+        return "é漢字🙂\000|h" .. args[1], nil, args.n
+    end
+    local record = capture("hyperlinks native-label")
+    assert(record.label == "native-label" and #record.hyperlinks == 144)
+    assert(#calls == 144)
+    for i, row in ipairs(record.hyperlinks) do
+        local args = calls[i]
+        assert(row.input == args[1] and row.argumentCount == args.n)
+        assert(args.n == (row.variant == "omitted" and 1 or 6))
+        for flag = 1, #row.flags do assert(row.flags[flag] == args[flag + 1]) end
+        assert(row.result.n == 3 and row.result.values[2].kind == "nil")
+        assert(row.result.values[1].value == "é漢字🙂\000|h" .. row.input)
+        assert(row.result.values[3].value == args.n)
+    end
+    local expected = {
+        {}, {false,false,false,false,false}, {true,false,false,false,false},
+        {false,true,false,false,false}, {false,false,true,false,false},
+        {false,false,false,true,false}, {false,false,false,false,true},
+        {false,true,false,true,true}, {true,true,true,true,true},
+    }
+    for i, flags in ipairs(expected) do
+        for j = 1, 5 do assert(record.hyperlinks[i].flags[j] == flags[j]) end
+    end
+    local found = {}
+    for _, row in ipairs(record.hyperlinks) do found[row.input] = true end
+    for _, input in ipairs({ "plain ASCII", "é漢字🙂", "", "a|nb", "a\nb", "||", "|h",
+        "|Hitem:19019|h[Item]", "|cffff0000red", "|A:atlas:16:16", "|Ttexture:16:16" }) do
+        assert(found[input])
+    end
+end)
+test("hyperlink results remain opaque restricted or explicitly truncated", function()
+    reset()
+    C_StringUtil.StripHyperlinks = function() return secret end
+    local rows = capture("hyperlinks restricted").hyperlinks
+    assert(rows[1].result.values[1].status == "restricted" and not containsSecret(rows))
+    C_StringUtil.StripHyperlinks = function() error(secret) end
+    assert(capture("hyperlinks error").hyperlinks[1].result.status == "call-error")
+    C_StringUtil.StripHyperlinks = function() return string.rep("x", 300) end
+    local value = capture("hyperlinks long").hyperlinks[1].result.values[1]
+    assert(value.value == string.rep("x", 256) and value.truncated == true)
+    C_StringUtil = secret
+    assert(capture("hyperlinks missing").hyperlinks[1].result.status == "missing-api")
+    issecretvalue = nil
+    assert(capture("hyperlinks closed").status == "missing-access-api")
+end)
+test("hyperlinks is manual only and capture cap prevents calls", function()
+    reset()
+    local calls = 0
+    C_StringUtil.StripHyperlinks = function(text) calls = calls + 1; return text end
+    assert(capture("all").hyperlinks == nil and calls == 0)
+    for i = 1, 9 do capture("hyperlinks batch") end
+    assert(calls == 9 * 144)
+    capture("hyperlinks dropped")
+    assert(calls == 9 * 144 and ApiContractProbeDB.dropped == 1)
+end)
 print(string.format("RESULT %d passed", passed))

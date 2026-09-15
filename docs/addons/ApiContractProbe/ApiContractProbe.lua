@@ -29,6 +29,7 @@ local function scalar(value)
         end
     elseif kind == "string" then
         result.value = string.sub(value, 1, 256)
+        if #value > 256 then result.truncated = true end
     elseif kind == "boolean" then
         result.value = value
     end
@@ -185,6 +186,36 @@ local function captureCasts()
             channel = observeCast(UnitChannelInfo, unit) }
     end
     return result
+end
+
+local function captureHyperlinks()
+    local inputs = {
+        "plain ASCII", "é漢字🙂", "", "a|nb", "a\nb",
+        "|Hitem:19019|h[Item]|h", "|cffff0000red|r", "|A:atlas:16:16|a",
+        "|Ttexture:16:16|t", "|cffff0000|Hitem:19019|h[Item]|h|r |A:atlas:16:16|a |Ttexture:16:16|t",
+        "||", "|Hitem:19019|h[Item]", "|cffff0000red", "|A:atlas:16:16", "|Ttexture:16:16", "|h",
+    }
+    local variants = {
+        { name = "omitted", flags = {} },
+        { name = "false", flags = { false, false, false, false, false } },
+        { name = "maintainColor", flags = { true, false, false, false, false } },
+        { name = "maintainBrackets", flags = { false, true, false, false, false } },
+        { name = "stripNewlines", flags = { false, false, true, false, false } },
+        { name = "maintainAtlases", flags = { false, false, false, true, false } },
+        { name = "maintainTextures", flags = { false, false, false, false, true } },
+        { name = "consumer", flags = { false, true, false, true, true } },
+        { name = "true", flags = { true, true, true, true, true } },
+    }
+    local fn = readField(C_StringUtil, "StripHyperlinks")
+    local rows = {}
+    for _, input in ipairs(inputs) do
+        for _, variant in ipairs(variants) do
+            rows[#rows + 1] = { input = input, variant = variant.name, flags = variant.flags,
+                argumentCount = 1 + #variant.flags,
+                result = observe(fn, input, unpack(variant.flags)) }
+        end
+    end
+    return rows
 end
 
 local function captureNames()
@@ -376,8 +407,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|publication|events-start|events-stop] [label]")
+    if mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|hyperlinks|publication|events-start|events-stop] [label]")
         return
     end
     local db = database()
@@ -389,6 +420,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
         if mode == "actions" then record.actions = captureActions(slot) end
+        if mode == "hyperlinks" then record.hyperlinks = captureHyperlinks() end
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
         if mode == "all" or mode == "names" then record.names = captureNames() end
