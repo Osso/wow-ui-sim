@@ -69,8 +69,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 149,
-    "partial-recorder": 12,
+    "needs-design-and-recorder-review": 148,
+    "partial-recorder": 13,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -10199,8 +10199,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Fresh unnamed StatusBar hidden before recording initial GetFillStyle",
+          "Two setter/getter observations for each of four accessible published fill-style enum names, without fallback values"
+        ],
+        "missing": [
+          "Native matching-build initial state and enum roundtrip output",
+          "Native invalid-input, coercion and restricted-context behavior",
+          "Native rendering and lifecycle observations; failed Hide leaves visibility unconfirmed"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/statusbar-uiobject-contract"
     },
