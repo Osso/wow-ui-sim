@@ -167,15 +167,65 @@ local function captureSex()
 end
 
 -- Cast results are scalar observations only: never inspect returned objects.
-local function observeCast(fn, unit)
+local function observeCast(fn, ...)
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
-    local values = pack(pcall(fn, unit))
+    local values = pack(pcall(fn, ...))
     if not values[1] then return { status = "call-error" } end
     local result = { status = "observed", n = values.n - 1, values = {} }
     for index = 2, math.min(values.n, 17) do
         result.values[index - 1] = scalar(values[index])
     end
     if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function resourceCurve()
+    local inputs = { { x = 0, y = 0 }, { x = 0.5, y = 10 }, { x = 1, y = 20 },
+        { x = 25, y = 30 }, { x = 50, y = 40 }, { x = 100, y = 50 } }
+    local kindTable = readField(Enum, "LuaCurveType")
+    local linear, ok = readField(kindTable, "Linear")
+    if not ok or not accessible(linear) or type(linear) ~= "number" then
+        return nil, { inputs = inputs, status = "missing-linear-type" }
+    end
+    local curve, failure = newCurve(inputs)
+    if not curve then return nil, { inputs = inputs, status = failure } end
+    local setting = method(curve, "SetType", linear)
+    if setting.status ~= "observed" then return nil, { inputs = inputs, status = "set-type-error" } end
+    return curve, { inputs = inputs, status = "constructed", interpolation = "Linear" }
+end
+
+local function resourcePower(unit, unmodified, curve)
+    return {
+        current = observeCast(UnitPower, unit, nil, unmodified),
+        maximum = observeCast(UnitPowerMax, unit, nil, unmodified),
+        percent = observeCast(UnitPowerPercent, unit, nil, unmodified),
+        nilCurve = observeCast(UnitPowerPercent, unit, nil, unmodified, nil),
+        curved = curve and observeCast(UnitPowerPercent, unit, nil, unmodified, curve)
+            or { status = "curve-unavailable" },
+    }
+end
+
+local function captureResources()
+    local curve, definition = resourceCurve()
+    local result = { curve = definition, units = {} }
+    for _, unit in ipairs({ "player", "target", "focus", "pet", "nonexistent" }) do
+        result.units[unit] = {
+            health = {
+                current = observeCast(UnitHealth, unit), maximum = observeCast(UnitHealthMax, unit),
+                default = observeCast(UnitHealthPercent, unit),
+                percent = observeCast(UnitHealthPercent, unit, false),
+                nilCurve = observeCast(UnitHealthPercent, unit, false, nil),
+                curved = curve and observeCast(UnitHealthPercent, unit, false, curve)
+                    or { status = "curve-unavailable" },
+            },
+            power = {
+                type = observeCast(UnitPowerType, unit),
+                current = observeCast(UnitPower, unit), maximum = observeCast(UnitPowerMax, unit),
+                default = observeCast(UnitPowerPercent, unit),
+                modified = resourcePower(unit, false, curve), unmodified = resourcePower(unit, true, curve),
+            },
+        }
+    end
     return result
 end
 
@@ -407,8 +457,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|hyperlinks|publication|events-start|events-stop] [label]")
+    if mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop] [label]")
         return
     end
     local db = database()
@@ -419,6 +469,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "resources" then record.resources = captureResources() end
         if mode == "actions" then record.actions = captureActions(slot) end
         if mode == "hyperlinks" then record.hyperlinks = captureHyperlinks() end
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end

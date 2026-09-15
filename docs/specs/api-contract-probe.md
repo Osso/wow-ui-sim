@@ -2,6 +2,16 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual scalar resource scale capture
+
+- Manual `resources <label>` is excluded from `all`; observe player/target/focus/pet/nonexistent without existence gating.
+- Preserve raw health/max and power/max/type, exact arity and nil positions. Health percent curve argument 3 follows explicit false prediction; default, false/no-curve and false/nil-curve calls remain separate. Power uses default/nil power type with default calls and explicit false/true unmodified variants; curve is argument 4.
+- Record scalar curve inputs `(0,0), (.5,10), (1,20), (25,30), (50,40), (100,50)` and explicitly set accessible `Enum.LuaCurveType.Linear`. Missing construction prerequisites prevent curved queries, not underlying observations. Never guess enum numbers or power IDs.
+- Reuse accessibility-first scalar-only recording and existing return/storage bounds. Do not interpret normalized versus percentage scale.
+- Native partial-resource fixtures, prediction, secondary powers, color curves and security remain pending; no events or gameplay mutation.
+
+Pinned retail `UnitDocumentation.lua` declares `UnitHealthPercent(unit, usePredicted=true, curve)` and `UnitPowerPercent(unit, powerType, unmodified=false, curve)`. Declarations establish argument positions, not native scale. Simulator policy specs remain unchanged.
+
 ## What it must do
 
 - [x] Record build provenance and manual scenario labels without automatic capture or gameplay changes.

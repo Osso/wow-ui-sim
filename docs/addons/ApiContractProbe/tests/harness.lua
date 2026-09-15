@@ -584,4 +584,69 @@ test("hyperlinks is manual only and capture cap prevents calls", function()
     capture("hyperlinks dropped")
     assert(calls == 9 * 144 and ApiContractProbeDB.dropped == 1)
 end)
+local function resourceFixture(scale)
+    reset()
+    Enum.LuaCurveType = { Linear = 37 }
+    C_CurveUtil.CreateCurve = function()
+        local curve = { points = {} }
+        curve.SetType = function(self, kind) assert(kind == 37); self.linear = true end
+        curve.AddPoint = function(self, x, y) self.points[#self.points + 1] = { x = x, y = y } end
+        return curve
+    end
+    UnitHealth = function(unit) if unit == "nonexistent" then return end; return 50 end
+    UnitHealthMax = function() return 100 end
+    UnitPower = function(_, power, unmodified) assert(power == nil); return unmodified and 500 or 50 end
+    UnitPowerMax = function(_, power, unmodified) assert(power == nil); return unmodified and 1000 or 100 end
+    UnitPowerType = function() return 73, "FixturePower" end
+    UnitHealthPercent = function(unit, predicted, curve)
+        if unit == "nonexistent" then return nil end
+        if curve then assert(predicted == false and curve.linear and #curve.points == 6); return scale end
+        return predicted == false and 51 or 52
+    end
+    UnitPowerPercent = function(_, power, unmodified, curve)
+        assert(power == nil)
+        if curve then assert(curve.linear and #curve.points == 6); return scale + (unmodified and 1 or 0) end
+        return unmodified and 61 or 60
+    end
+end
+test("resources retain discriminating scalar results and correct argument positions", function()
+    resourceFixture(10)
+    local first = capture("resources partial").resources
+    assert(first.curve.inputs[2].x == 0.5 and first.curve.inputs[6].y == 50)
+    assert(first.units.player.health.curved.values[1].value == 10)
+    assert(first.units.player.health.default.values[1].value == 52)
+    assert(first.units.player.power.modified.curved.values[1].value == 10)
+    assert(first.units.player.power.unmodified.curved.values[1].value == 11)
+    assert(first.units.player.power.unmodified.current.values[1].value == 500)
+    assert(first.units.player.power.type.values[1].value == 73)
+    assert(first.units.nonexistent.health.current.n == 0)
+    assert(first.units.nonexistent.health.curved.values[1].kind == "nil")
+    resourceFixture(40)
+    assert(capture("resources alternate").resources.units.player.health.curved.values[1].value == 40)
+end)
+test("resources fail closed for missing linear enum and opaque failures", function()
+    resourceFixture(10)
+    Enum.LuaCurveType.Linear = secret
+    local result = capture("resources missing").resources
+    assert(result.curve.status == "missing-linear-type")
+    assert(result.units.player.health.curved.status == "curve-unavailable")
+    resourceFixture(10)
+    UnitHealth = function() return secret end
+    UnitPowerPercent = function() error(secret) end
+    result = capture("resources restricted").resources
+    assert(result.units.player.health.current.values[1].status == "restricted")
+    assert(result.units.player.power.modified.curved.status == "call-error")
+    assert(not containsSecret(result))
+    resourceFixture(10)
+    C_CurveUtil = nil
+    assert(capture("resources absent").resources.curve.status == "missing-api")
+end)
+test("resources are manual and bounded", function()
+    resourceFixture(10)
+    assert(capture("all").resources == nil)
+    for _ = 1, 9 do assert(capture("resources").resources) end
+    UnitHealth = function() error("must not run") end
+    capture("resources overflow")
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+end)
 print(string.format("RESULT %d passed", passed))

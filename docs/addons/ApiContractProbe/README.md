@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual scalar resource scale observations
+
+`/apicontract resources <label>` captures player, target, focus, pet and nonexistent units; it is excluded from `all`. Records raw health/max, power/max/type, omitted-curve and explicit-nil percent calls. Health curve argument 3 follows explicit `usePredicted=false`; the default call is separate. Power uses default power type (`nil`), with separate explicit false/true `unmodified` calls and curve argument 4. No observed power ID is reused or guessed.
+
+One scalar curve records inputs `(0,0), (.5,10), (1,20), (25,30), (50,40), (100,50)`. Construction explicitly selects accessible `Enum.LuaCurveType.Linear`; missing enum/factory/SetType fails closed for curved queries while underlying observations remain available. Results use scalar-only recording, exact arity and the existing 16-position bound, never scale classification or returned-object methods.
+
+Capture naturally available partial-resource states with labels and matching client build. Prediction, secondary powers, color curves, secret contracts and actual native scale remain pending. No events or gameplay changes are triggered. Ten-snapshot limit applies. Local fixtures distinguish fake normalized/percentage results; they are not native evidence.
+
 Manual native observations for scalar curve points, `UnitSexBase`, unit names/realms, finite numeric formatting, publication/CVars and event payloads. Complements [AuraDispelCurveProbe](../AuraDispelCurveProbe/README.md). Neither recorder infers native contracts from fixture outputs.
 
 ## Target
