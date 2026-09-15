@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare equipped-item account-binding recorder
+
+Runtime `9fd1d250d` adds manual `/apicontract item-binding <label>`, excluded from `all`. It uses only accessible non-secret item links actually produced from player equipment slots 1–19, then queries each link once with `C_Item.IsItemBindToAccount`. Missing or restricted fixture inputs are not classified as false. Eight separate fixtures prove recorder mechanics only; no synthetic IDs/options, account mutation, binding classification, native result or security conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
 
 Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. One fresh unnamed hidden StatusBar records its `GetFillStyle` default before setters, then each published fill-style enum value is set once and read twice without numeric fallback. Seven separate fixtures prove recorder mechanics only. Hide failure leaves visibility unconfirmed; invalid inputs, security, rendering and native default/validation semantics remain pending. See [[api-contract-probes]].

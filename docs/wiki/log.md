@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare equipped-item account-binding recorder
+
+`9fd1d250d` adds manual `/apicontract item-binding <label>`, excluded from `all`. It queries slots 1–19 through `GetInventoryItemLink("player", slot)` and passes only accessible non-secret produced links once to `C_Item.IsItemBindToAccount`. Unavailable or restricted producer inputs do not become false. Eight separate fixtures prove bounded recorder mechanics, not native item classifications, security behavior or account effects. Synthetic inputs, options and mutations remain excluded. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
 
 Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. It creates one unnamed StatusBar under `UIParent`, attempts `Hide`, captures fresh `GetFillStyle()` only after Hide succeeds, then uses only accessible finite values from the four published `Enum.StatusBarFillStyle` names. Each setter is followed by two independent getter observations; no numeric fallback or equality conclusion is made. Seven separate fixtures prove recorder mechanics only. On Hide failure, visibility is unconfirmed and no cleanup/disposal claim follows. Native defaults, invalid inputs/coercion, security, rendering and validation remain pending. See [[api-contract-probes]].
