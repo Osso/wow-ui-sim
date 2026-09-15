@@ -31,7 +31,10 @@
     },
     {
       "manifest": "data/patch-api/12.0.0.json",
-      "ids": ["added:UnitHealthPercent", "added:UnitPowerPercent"],
+      "ids": [
+        "added:UnitHealthPercent",
+        "added:UnitPowerPercent"
+      ],
       "manifest_status": "best-effort",
       "status": "partial-recorder",
       "recorder": "docs/addons/ApiContractProbe",
@@ -69,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 147,
-    "partial-recorder": 14,
+    "needs-design-and-recorder-review": 145,
+    "partial-recorder": 16,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -8859,8 +8862,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual GetLockedTextForCompanion repeated twice with companion argument omitted and raw guarded results"
+        ],
+        "missing": [
+          "Native matching-build companion lock text and progression fixtures",
+          "Producer-derived companion and trait-tree IDs; IsTraitTreeForCompanion capture",
+          "Native restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_DelvesUI"
     },
@@ -8873,8 +8886,16 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual IsPersonalResourceDisplayEnabled no-argument query repeated twice with raw arity and guarded scalar results"
+        ],
+        "missing": [
+          "Native matching-build ruleset and personal-resource-display state transitions"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_GameRules"
     },
