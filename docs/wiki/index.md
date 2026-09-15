@@ -1,3 +1,11 @@
+## [2026-09-15] investigation | Prepare producer duration recorder
+
+Runtime `88e9d1253` adds manual `/apicontract cast-durations <label>`, excluded from `all`. It queries three producer APIs with empowered hold variants and ten guarded read methods, retaining at most 28 earlier duration objects for later observation. The main harness has 43 cumulative fixtures; a separate color harness has four. Matching-client cast/channel/empower lifecycle and clock fixtures remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare producer duration recorder
+
+Runtime `88e9d1253` adds manual `/apicontract cast-durations <label>`, excluded from `all`. It queries three duration producers with empowered-hold variants, records ten guarded read-only methods, and re-queries at most 28 prior references without assuming tracking semantics. Forty-three main-harness fixtures are separate from four color fixtures. Native cast/channel/empower and clock-boundary observations remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare guarded color-curve state recorder
 
 Runtime `ffd3b08ca` adds manual `/apicontract color-curves <label>`, excluded from `all`. It records guarded raw RGBA table fields, keeps userdata opaque, and observes state, evaluation, reset and copy without native semantic claims. Four scoped fixtures extend the existing 41-fixture harness; native userdata representation, identity, coercion, security, removal/replacement and alternate interpolation remain pending. See [[api-contract-probes]].
