@@ -5,7 +5,26 @@
     "path": "docs/generated/patch-api-blockers.json",
     "sha256": "c977eb10c0a355131a308444f41e9c28143420bb8d829744d78e20d7e328dcc5"
   },
-  "scope": "All retained snapshot plans. Best-effort residual gaps and exceptions are excluded by the source snapshot and require separate reconciliation; not declared covered. Existing unreviewed probe code may cover additional observations.",
+  "scope": "All retained snapshot plans. residual_reviews records only explicitly inspected obligations outside the snapshot; other best-effort and exception-requested obligations still require reconciliation. Existing unreviewed probe code may cover additional observations.",
+  "residual_reviews": [
+    {
+      "manifest": "data/patch-api/12.0.0.json",
+      "id": "added:C_StringUtil.StripHyperlinks",
+      "manifest_status": "best-effort",
+      "status": "partial-recorder",
+      "recorder": "docs/addons/ApiContractProbe",
+      "observations": [
+        "Manual hyperlinks capture: 16 literal inputs across nine omitted/boolean optional-flag variants",
+        "Raw accessible output and arity, byte preservation within 256-byte bound and explicit truncation"
+      ],
+      "missing": [
+        "Native matching-build output corpus",
+        "Non-boolean optional argument coercion, arbitrary input bytes and security semantics"
+      ],
+      "native_execution": "not-established-by-this-inventory",
+      "excluded_claim": "Does not establish removed global StripHyperlinks publication or load-phase absence"
+    }
+  ],
   "rows": 1083,
   "active_plans": 275,
   "retained_plans": 282,
