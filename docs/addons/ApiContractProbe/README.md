@@ -32,6 +32,16 @@ Additional commands:
 
 `AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets tied to the blocker snapshot hash. Registration errors, missing parents and missing members are distinct observations. Event payloads retain arity and nil slots, with at most eight summarized values; tables remain bounded observations, not full structure captures. No native actions, purchases, transitions or account mutations are triggered. A symbol missing at one phase does not prove removal; a listener with no deliveries does not prove event absence. These shared recorders do **not** complete all associated behavioral plans. See the [full preparation inventory](../../baselines/native-probe-preparation.json). Start a new capture batch by moving the saved file aside while logged out.
 
+## Plain-function callbacks
+
+Run `/apicontract callbacks-start <label>`, produce a real `UNIT_HEALTH` transition externally, then `/apicontract callbacks-stop`. This manual mode is excluded from `all`; it never fires events or changes gameplay. It registers only its own global callback and its own `player` unit callback, preserving their identities for removal.
+
+Each of at most ten sessions records build/time/label, separate registration/removal results and up to 128 deliveries shared across the two callbacks. Payloads retain exact arity and up to 16 scalar-only positions (including nils); objects remain opaque, inaccessible values are redacted, strings retain the existing 256-byte bound. Excess deliveries increment `dropped`; stop still attempts cleanup. Callbacks themselves never enter SavedVariables.
+
+`registration-incomplete` preserves independent failures/refusals. A throwing registration may already have installed its callback, so stop still attempts removal. Missing, throwing, refused or inaccessible cleanup results retain the identity for another stop attempt and report `cleanup-incomplete`, not success. A successful stop disables recording even if an old callback is invoked later. Repeated start while a session needs cleanup is rejected; stop then start creates one new session. Missing access APIs prevent registration entirely. A nonthrowing zero-return call is recorded as accepted; this is not independent evidence that native registration took effect. Inspect real deliveries and raw results.
+
+Native execution remains pending. FunctionContainer wrappers, duplicate/order/alias behavior, callback-time mutation, security and broader producer coverage are outside this bounded experiment. This is partial preparation, not native conformance proof.
+
 ## Observations
 
 **Curves:** creates an empty curve and another with insertion order `(30,4), (10,7), (20,2)`. Records `GetPoints`, `GetPoint` at `0,1,2,3,-1,4`, return arity, accessible `x`/`y` and `GetXY`, and repeated-point equality. On a separate curve, attempts `GetPoint(1).x = 91` and records another lookup. Index 1 may be invalid; rejection is evidence, not failure of the experiment. Array inspection is bounded to four entries, return inspection to eight values, and object nesting to two levels.

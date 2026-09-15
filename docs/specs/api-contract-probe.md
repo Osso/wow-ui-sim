@@ -51,6 +51,17 @@ Native ordinary-spell, charged-spell, consumable and empty-slot fixtures plus be
 
 Native execution, nonboolean truthiness, arbitrary-byte contracts beyond the fixed corpus, string-view lifetime and security remain unverified. This recorder does not change the [simulator StripHyperlinks contract](strip-hyperlinks.md) or earn native audit credit.
 
+## Residual plain-function callbacks
+
+- [x] Manual `callbacks-start <label>` and `callbacks-stop`, excluded from `all`, register only owned plain functions for global `UNIT_HEALTH` and unit `UNIT_HEALTH`/`player`; cleanup uses those exact identities.
+- [x] Preserve independent registration/removal arity and scalar-only results with opaque errors. Refused or uncertain registration is not success; a throwing call retains possible registration ownership for cleanup. Failed/refused/uncertain cleanup retains identity and reports incomplete cleanup until a successful retry.
+- [x] Capture real deliveries only: 128 entries per session, exact arity and 16 scalar-only positions, nil preservation, accessibility-first redaction, label/build/time provenance. Overflow does not prevent manual cleanup; stale callbacks cannot record after stop.
+- [x] Reject repeated starts while cleanup is outstanding, create one new session after stop, and bound saved sessions to ten. Missing access APIs prevent registration. Callback function objects remain private, outside SavedVariables.
+
+The four pinned global APIs take event name and callback, with a third unit argument for unit registration/removal; current retail declarations list no returns. Record observed arity instead of importing the simulator global registration boolean policy. Zero-return protected-call success is an accepted call, not proof of a native delivery. External `UNIT_HEALTH` fixtures remain pending. FunctionContainer wrappers, duplicates, ordering, aliases, mutation, recursion and security are excluded; this is not complete callback preparation.
+
+Behavioral fixtures cover owned registrations, hostile/secret/nil payloads, identity removal, no after-stop records, partial registration errors, cleanup retries/refusals, repeated start, new sessions, payload/session limits and `all` exclusion.
+
 ## Publication and event recording
 
 - [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.

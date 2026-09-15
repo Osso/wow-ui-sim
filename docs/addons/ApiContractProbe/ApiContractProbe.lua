@@ -445,10 +445,104 @@ local function controlEvents(mode, label)
     db.sourceHash = ApiContractProbeTargets.sourceHash
 end
 
+local callbackSession
+local function callbackPayload(...)
+    local values = pack(...)
+    local result = { n = values.n, values = {} }
+    for index = 1, math.min(values.n, 16) do result.values[index] = scalar(values[index]) end
+    if values.n > 16 then result.truncated = true end
+    return result
+end
+
+local function callbackCall(fn, cb, unit)
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values
+    if unit then values = pack(pcall(fn, "UNIT_HEALTH", cb, unit))
+    else values = pack(pcall(fn, "UNIT_HEALTH", cb)) end
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do result.values[index - 1] = scalar(values[index]) end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function callbackOutcome(result)
+    if result.status ~= "observed" then return result.status end
+    if result.truncated then return "uncertain" end
+    for _, value in ipairs(result.values) do
+        if value.status ~= "observed" then return "uncertain" end
+    end
+    local first = result.values[1]
+    if first and first.kind == "boolean" and first.value == false then return "refused" end
+    return "accepted"
+end
+
+local function startCallbackLane(session, name, register, unit)
+    local lane = { unit = unit }
+    local record = {}
+    session.record[name] = record
+    lane.callback = function(...)
+        if not session.receiving then return end
+        local saved = session.record
+        if #saved.events >= 128 then saved.dropped = saved.dropped + 1; return end
+        saved.events[#saved.events + 1] = { lane = name, label = saved.label,
+            time = observeCast(GetTime), payload = callbackPayload(...) }
+    end
+    -- Retain identity even after a call error: the API may have registered before throwing.
+    lane.pending = accessible(register) and type(register) == "function"
+    record.registration = callbackCall(register, lane.callback, unit)
+    local outcome = callbackOutcome(record.registration)
+    record.status = outcome == "accepted" and "registered" or outcome
+    session[name] = lane
+    return outcome == "accepted"
+end
+
+local function stopCallbackLane(session, name, unregister)
+    local lane, record = session[name], session.record[name]
+    if not lane.pending then return true end
+    record.removal = callbackCall(unregister, lane.callback, lane.unit)
+    local outcome = callbackOutcome(record.removal)
+    if outcome ~= "accepted" then record.status = "cleanup-" .. outcome; return false end
+    lane.pending, record.status = false, "removed"
+    return true
+end
+
+local function controlCallbacks(mode, label)
+    local db = database()
+    db.callbackSessions = db.callbackSessions or {}
+    if mode == "callbacks-stop" then
+        if not callbackSession then db.callbackStatus = "not-running"; return end
+        callbackSession.receiving = false
+        local globalOK = stopCallbackLane(callbackSession, "global", UnregisterEventCallback)
+        local unitOK = stopCallbackLane(callbackSession, "unit", UnregisterUnitEventCallback)
+        db.callbackStatus = globalOK and unitOK and "stopped" or "cleanup-incomplete"
+        callbackSession.record.status = db.callbackStatus
+        if globalOK and unitOK then callbackSession = nil end
+        return
+    end
+    if callbackSession then db.callbackStatus = "already-running"; return end
+    if type(issecretvalue) ~= "function" or type(canaccessvalue) ~= "function" then
+        db.callbackStatus = "missing-access-api"; return
+    end
+    if #db.callbackSessions >= 10 then db.callbackStatus = "session-limit"; return end
+    local record = { label = label, client = observeCast(GetBuildInfo), time = observeCast(GetTime),
+        events = {}, dropped = 0 }
+    local session = { record = record, receiving = true }
+    db.callbackSessions[#db.callbackSessions + 1] = record
+    callbackSession = session
+    local globalOK = startCallbackLane(session, "global", RegisterEventCallback)
+    local unitOK = startCallbackLane(session, "unit", RegisterUnitEventCallback, "player")
+    record.status = globalOK and unitOK and "recording" or "registration-incomplete"
+    db.callbackStatus = record.status
+end
+
 SLASH_APICONTRACTPROBE1 = "/apicontract"
 SlashCmdList.APICONTRACTPROBE = function(input)
     local mode, label = string.match(input or "", "^%s*(%S*)%s*(.-)%s*$")
     if mode == "" then mode = "all" end
+    if mode == "callbacks-start" or mode == "callbacks-stop" then
+        controlCallbacks(mode, string.sub(label, 1, 128)); return
+    end
     if mode == "events-start" or mode == "events-stop" then
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
@@ -458,7 +552,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
     if mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop] [label]")
+        print("Usage: /apicontract [all|curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()

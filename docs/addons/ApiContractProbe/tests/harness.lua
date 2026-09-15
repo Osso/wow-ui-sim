@@ -649,4 +649,116 @@ test("resources are manual and bounded", function()
     capture("resources overflow")
     assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
 end)
+local function callbackFixture()
+    reset()
+    local registered, removed = {}, {}
+    RegisterEventCallback = function(event, cb)
+        assert(event == "UNIT_HEALTH")
+        registered.global = cb
+        return true, nil
+    end
+    RegisterUnitEventCallback = function(event, cb, unit)
+        assert(event == "UNIT_HEALTH" and unit == "player")
+        registered.unit = cb
+    end
+    UnregisterEventCallback = function(event, cb)
+        assert(event == "UNIT_HEALTH" and cb == registered.global)
+        removed.global = cb; registered.global = nil
+    end
+    UnregisterUnitEventCallback = function(event, cb, unit)
+        assert(event == "UNIT_HEALTH" and unit == "player" and cb == registered.unit)
+        removed.unit = cb; registered.unit = nil
+        return nil, 7
+    end
+    return registered, removed
+end
+test("callbacks retain own identity, raw payloads and restart sessions", function()
+    local registered, removed = callbackFixture()
+    capture("all")
+    assert(not registered.global and not registered.unit)
+    SlashCmdList.APICONTRACTPROBE("callbacks-start first")
+    local db = ApiContractProbeDB
+    local session = db.callbackSessions[1]
+    assert(session.status == "recording" and session.label == "first")
+    assert(session.global.registration.n == 2 and session.unit.registration.n == 0)
+    local global, unit = registered.global, registered.unit
+    local hostile = setmetatable({}, { __index = function() error("indexed") end,
+        __tostring = function() error("stringified") end })
+    global(nil, "target", secret, hostile, nil)
+    unit(nil, "player")
+    assert(#session.events == 2 and session.events[1].payload.n == 5)
+    assert(session.events[1].payload.values[1].kind == "nil")
+    assert(session.events[1].payload.values[3].status == "restricted")
+    assert(session.events[1].payload.values[4].kind == "table")
+    assert(not containsSecret(db))
+    SlashCmdList.APICONTRACTPROBE("callbacks-start duplicate")
+    assert(#db.callbackSessions == 1 and registered.global == global)
+    assert(db.callbackStatus == "already-running")
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    assert(session.status == "stopped" and removed.global == global and removed.unit == unit)
+    assert(session.unit.removal.n == 2 and session.unit.removal.values[1].kind == "nil")
+    global("late"); unit("late")
+    assert(#session.events == 2)
+    SlashCmdList.APICONTRACTPROBE("callbacks-start second")
+    assert(#db.callbackSessions == 2 and registered.global ~= global)
+    registered.global(nil, "player")
+    assert(#db.callbackSessions[2].events == 1 and #session.events == 2)
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+end)
+test("callback cap keeps cleanup available and sessions bounded", function()
+    local registered = callbackFixture()
+    SlashCmdList.APICONTRACTPROBE("callbacks-start capped")
+    local session = ApiContractProbeDB.callbackSessions[1]
+    registered.global(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
+    assert(session.events[1].payload.n == 17 and session.events[1].payload.truncated)
+    assert(#session.events[1].payload.values == 16)
+    for _ = 1, 130 do registered.unit(nil, "player") end
+    assert(#session.events == 128 and session.dropped == 3)
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    assert(not registered.global and not registered.unit)
+    for _ = 2, 10 do
+        SlashCmdList.APICONTRACTPROBE("callbacks-start next")
+        SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    end
+    SlashCmdList.APICONTRACTPROBE("callbacks-start overflow")
+    assert(#ApiContractProbeDB.callbackSessions == 10 and not registered.global)
+    assert(ApiContractProbeDB.callbackStatus == "session-limit")
+end)
+test("callback partial errors retain cleanup identity and refuse false success", function()
+    local registered = callbackFixture()
+    RegisterUnitEventCallback = function(_, cb) registered.unit = cb; error(secret) end
+    SlashCmdList.APICONTRACTPROBE("callbacks-start partial")
+    local session = ApiContractProbeDB.callbackSessions[1]
+    assert(session.status == "registration-incomplete")
+    assert(session.unit.registration.status == "call-error")
+    local cleanup = UnregisterEventCallback
+    UnregisterEventCallback = function() error(secret) end
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    assert(session.status == "cleanup-incomplete" and session.global.removal.status == "call-error")
+    assert(not registered.unit and registered.global)
+    SlashCmdList.APICONTRACTPROBE("callbacks-start blocked")
+    assert(#ApiContractProbeDB.callbackSessions == 1)
+    UnregisterEventCallback = cleanup
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    assert(session.status == "stopped" and not registered.global and not containsSecret(session))
+    callbackFixture()
+    RegisterEventCallback = function() return false end
+    SlashCmdList.APICONTRACTPROBE("callbacks-start refused")
+    session = ApiContractProbeDB.callbackSessions[1]
+    assert(session.status == "registration-incomplete" and session.global.status == "refused")
+    assert(session.unit.status == "registered")
+end)
+test("callbacks missing access fails closed and cleanup refusal remains active", function()
+    local registered = callbackFixture()
+    issecretvalue = nil
+    SlashCmdList.APICONTRACTPROBE("callbacks-start unsafe")
+    assert(not registered.global and not registered.unit)
+    assert(ApiContractProbeDB.callbackStatus == "missing-access-api")
+    callbackFixture()
+    SlashCmdList.APICONTRACTPROBE("callbacks-start safe")
+    UnregisterUnitEventCallback = function() return false end
+    SlashCmdList.APICONTRACTPROBE("callbacks-stop")
+    assert(ApiContractProbeDB.callbackSessions[1].status == "cleanup-incomplete")
+    assert(ApiContractProbeDB.callbackSessions[1].unit.status == "cleanup-refused")
+end)
 print(string.format("RESULT %d passed", passed))
