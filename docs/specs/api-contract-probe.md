@@ -46,7 +46,8 @@ Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocument
 
 - [x] Record build provenance and manual scenario labels without automatic capture or gameplay changes.
 - [x] Observe scalar curve empty/populated returns, explicit index queries, fields/GetXY, repeated identity and an isolated returned-point mutation attempt without assuming native outcomes.
-- [x] Preserve raw legacy/base sex values and arity for existing units, alongside named enum values; never convert numbering.
+- [x] Independently preserve `UnitExists`, `UnitSex` and `UnitSexBase` observations for player, target, focus, pet, party1, party2, nonexistent, invalid-unit-token and empty tokens, alongside raw named enum values. Never gate sex queries on existence, convert numbering or compare outputs. Unit records contain `exists`, `legacy` and `base` rather than an aggregate status; each observation retains its own status and arity.
+- [ ] Obtain native before/during/after-disguise captures with independently established stable unit identity; no fixture generation is performed.
 - [x] Capture `UnitName` and `UnitNameUnmodified` with `/apicontract names <label>` and `all` for fixed tokens `player`, `party1`–`party4`, `target`, `nonexistent`, `invalid-unit-token` and the empty string. Never skip queries based on `UnitExists`.
 - [x] Preserve name/realm positional returns and exact arity, including zero returns, nil slots and empty realm strings, under existing accessibility-first redaction and opaque-error rules. Same/cross-realm fixture identity comes from manual labels, not inferred return values.
 - [x] Capture `/apicontract numbers <label>` and `all` numeric samples for `C_StringUtil.FloorToNearestString` and `RoundToNearestString`, with `GetLocale` provenance, build and label. Use exactly the 25 finite inputs listed in the capture protocol: signed ties and their neighbors, integers, fractions and large finite magnitudes.

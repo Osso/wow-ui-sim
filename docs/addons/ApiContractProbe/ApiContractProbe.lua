@@ -373,17 +373,10 @@ local function captureSex()
         local value, ok = readField(unitSexEnum, name)
         result.enums[name] = ok and scalar(value) or { status = "field-error" }
     end
-    for _, unit in ipairs({ "player", "target", "focus", "pet" }) do
-        local exists = observe(UnitExists, unit)
-        local value = exists.values and exists.values[1]
-        if not value or value.status ~= "observed" or value.kind ~= "boolean" then
-            result.units[unit] = { status = "restricted-or-error" }
-        elseif not value.value then
-            result.units[unit] = { status = "absent" }
-        else
-            result.units[unit] = { status = "observed", legacy = observe(UnitSex, unit),
-                base = observe(UnitSexBase, unit) }
-        end
+    for _, unit in ipairs({ "player", "target", "focus", "pet", "party1", "party2",
+        "nonexistent", "invalid-unit-token", "" }) do
+        result.units[unit] = { exists = observe(UnitExists, unit),
+            legacy = observe(UnitSex, unit), base = observe(UnitSexBase, unit) }
     end
     return result
 end

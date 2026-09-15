@@ -79,7 +79,8 @@ test("manual wiring and raw sex comparison", function()
     assert(record.sex.units.player.legacy.values[1].value == 2)
     assert(record.sex.units.player.base.values[1].value == 0)
     assert(record.sex.units.target.base.values[1].value == 1)
-    assert(record.sex.units.focus.status == "absent")
+    assert(record.sex.units.focus.exists.values[1].value == false)
+    assert(record.sex.units.focus.legacy.values[1].value == 3)
     assert(record.sex.enums.Male.value == 0)
 end)
 test("sex does not normalize unusual native results or nil arity", function()
@@ -89,6 +90,45 @@ test("sex does not normalize unusual native results or nil arity", function()
     local unit = capture("sex alternate").sex.units.player
     assert(unit.legacy.values[1].value == 77)
     assert(unit.base.n == 1 and unit.base.values[1].kind == "nil")
+end)
+test("sex independently records absent restricted and invalid unit controls", function()
+    reset()
+    UnitExists = function(unit)
+        if unit == "target" then return secret end
+        if unit == "invalid-unit-token" then error(secret) end
+        return false
+    end
+    UnitSex = function(unit) return "legacy:" .. unit, nil end
+    UnitSexBase = function(unit)
+        if unit == "invalid-unit-token" then error(secret) end
+        if unit == "" then return end
+        if unit == "party2" then return secret end
+        return nil, "base:" .. unit
+    end
+    Enum.UnitSex.Male = 81
+    Enum.UnitSex.Neutral = secret
+    local result = capture("sex controls").sex
+    local count = 0
+    for _ in pairs(result.units) do count = count + 1 end
+    assert(count == 9)
+    for _, token in ipairs({ "player", "target", "focus", "pet", "party1", "party2",
+        "nonexistent", "invalid-unit-token", "" }) do
+        local unit = assert(result.units[token])
+        assert(unit.legacy.n == 2 and unit.legacy.values[1].value == "legacy:" .. token)
+        assert(unit.legacy.values[2].kind == "nil")
+        if token ~= "invalid-unit-token" and token ~= "" and token ~= "party2" then
+            assert(unit.base.n == 2 and unit.base.values[1].kind == "nil")
+            assert(unit.base.values[2].value == "base:" .. token)
+        end
+    end
+    assert(result.units.target.exists.values[1].status == "restricted")
+    assert(result.units.nonexistent.exists.values[1].value == false)
+    assert(result.units["invalid-unit-token"].exists.status == "call-error")
+    assert(result.units["invalid-unit-token"].base.status == "call-error")
+    assert(result.units[""].base.n == 0)
+    assert(result.units.party2.base.values[1].status == "restricted")
+    assert(result.enums.Male.value == 81 and result.enums.Neutral.status == "restricted")
+    assert(not containsSecret(ApiContractProbeDB))
 end)
 test("curve observations retain shapes ordering and copy effects", function()
     reset()
