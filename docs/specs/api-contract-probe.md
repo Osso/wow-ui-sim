@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Record build provenance and manual scenario labels without automatic capture or gameplay changes.
-- [ ] Observe scalar curve empty/populated returns, explicit index queries, fields/GetXY, repeated identity and an isolated returned-point mutation attempt without assuming native outcomes.
-- [ ] Preserve raw legacy/base sex values and arity for existing units, alongside named enum values; never convert numbering.
-- [ ] Redact inaccessible/secret values before comparison or saving, and record opaque failures without stringifying errors.
-- [ ] Bound capture count, inspected results, arrays, depth and strings.
-- [ ] Exercise actual addon loading and slash commands through local behavioral fixtures.
+- [x] Record build provenance and manual scenario labels without automatic capture or gameplay changes.
+- [x] Observe scalar curve empty/populated returns, explicit index queries, fields/GetXY, repeated identity and an isolated returned-point mutation attempt without assuming native outcomes.
+- [x] Preserve raw legacy/base sex values and arity for existing units, alongside named enum values; never convert numbering.
+- [x] Redact inaccessible/secret values before comparison or saving, and record opaque failures without stringifying errors.
+- [x] Bound capture count, inspected results, arrays, depth and strings.
+- [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
 ## How it works
 
@@ -22,11 +22,10 @@
 
 ## Tests asserting this spec
 
-`docs/addons/ApiContractProbe/tests/harness.lua`. Initial RED at `e2adbb57d`: addon not yet present; exit 1. Logs `/tmp/api-contract-probe-red.stdout` and `/tmp/api-contract-probe-red.stderr`. Integrated fixture and independent verification pending.
+`docs/addons/ApiContractProbe/tests/harness.lua`. Initial RED at `e2adbb57d`: addon not yet present; exit 1. Logs `/tmp/api-contract-probe-red.stdout` and `/tmp/api-contract-probe-red.stderr`. Runtime `a055b98c9` passes 8/8 local fixtures. Independent `/tmp/verify-api-contract-probe-ledger.json` reuses exact-hash fixture proof and passes 14/14 supplemental checks, including invalid indices, read-only points, raw values, access filtering and real addon wiring. This proves the recorder, not native API semantics.
 
 ## Known gaps (current cycle)
 
-- [ ] Local recorder verification.
 - [ ] Native captures on a matching client.
 
 ## Out of scope

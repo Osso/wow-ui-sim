@@ -1,3 +1,7 @@
+## [2026-09-14] audit | Prepare remaining native contract probes
+
+Scalar curve points and UnitSexBase now share a manual recorder; existing dispel probe remains ready. Runtime `a055b98c9`: 8/8 local fixtures and 14/14 independent supplemental checks. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).
+
 ## [2026-09-14] audit | Credit bounded unit-filtered global callback lifecycle
 
 Two credits cover ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`: pinned `Event.lua` FunctionContainer wrappers, exact first-payload filtering, nil owner/payload, both dispatch paths, event/container/unit identity removal, zero-return arity and environment isolation. Runtime `0a0ac416f` plus publication `0835b3c94` passes 12/12 each retail 12.0.0/12.0.5/12.0.7; fallback proof is 2/2 retail and 3/3 Mists. Fmt/check/default builds/startup `[]` pass. Metadata `539c44c57`: two credits, 63 renewals, 20 additions, 15,124 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows; totals **2351 / 1057 / 2**, snapshot **1,083 / 282**. Exact matching/order/validation remain simulator policies; aliases/lists, native ordering/errors/eligibility, secrecy/taint, full-LoD and callback mutation/recursion/error recovery remain open. One registration-length signal and eight Mists failures remain.
