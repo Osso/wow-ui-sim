@@ -260,6 +260,112 @@ local function captureCurveState()
         copy = captureCurveCopy(points) }
 end
 
+-- Only plain stored fields of returned colors/points are observed; userdata stays opaque.
+local function colorObservation(value, depth)
+    local result = scalar(value)
+    if result.status ~= "observed" or result.kind ~= "table" then return result end
+    if depth >= 3 then result.status = "depth-limit"; return result end
+    result.fields = {}
+    for _, key in ipairs({ "x", "y", "r", "g", "b", "a" }) do
+        result.fields[key] = colorObservation(rawget(value, key), depth + 1)
+    end
+    if depth == 0 then
+        result.entries = {}
+        for index = 1, 4 do result.entries[index] = colorObservation(rawget(value, index), depth + 1) end
+    end
+    return result
+end
+
+local function colorMethod(curve, name, ...)
+    local fn, ok = readField(curve, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, curve, ...))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        result.values[index - 1] = colorObservation(values[index], 0)
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function colorSnapshot(curve)
+    local result = { curveType = colorMethod(curve, "GetType"), count = colorMethod(curve, "GetPointCount"),
+        hasSecretValues = colorMethod(curve, "HasSecretValues"), points = colorMethod(curve, "GetPoints"),
+        indices = {}, evaluations = {} }
+    for _, index in ipairs({ -1, 0, 1, 2, 3, 4 }) do
+        result.indices[#result.indices + 1] = { index = index, result = colorMethod(curve, "GetPoint", index) }
+    end
+    for _, x in ipairs({ -17, -16, 0, 16, 32, 48, 49 }) do
+        result.evaluations[#result.evaluations + 1] = { x = x, packed = colorMethod(curve, "Evaluate", x),
+            unpacked = colorMethod(curve, "EvaluateUnpacked", x) }
+    end
+    return result
+end
+
+local function createColorProbeCurve()
+    local fn, ok = readField(C_CurveUtil, "CreateColorCurve")
+    if not ok or not accessible(fn) or type(fn) ~= "function" then return nil, "missing-constructor" end
+    if not accessible(CreateColor) or type(CreateColor) ~= "function" then return nil, "missing-constructor" end
+    local success, curve = pcall(fn)
+    if not success then return nil, "curve-construction-error" end
+    if not accessible(curve) then return nil, "restricted-curve" end
+    if type(curve) ~= "table" and type(curve) ~= "userdata" then return nil, "invalid-curve" end
+    return curve
+end
+
+local function addColorProbePoint(curve, point)
+    local ok, color = pcall(CreateColor, point.r, point.g, point.b, point.a)
+    if not ok then return { status = "color-construction-error" } end
+    if not accessible(color) then return { status = "restricted-color" } end
+    if type(color) ~= "table" and type(color) ~= "userdata" then return { status = "invalid-color" } end
+    return colorMethod(curve, "AddPoint", point.x, color)
+end
+
+local function copyColorProbe(curve, point)
+    local fn, ok = readField(curve, "Copy")
+    if not ok or not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, curve))
+    if not values[1] then return { status = "call-error" } end
+    local copy = values[2]
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    -- A copied curve is an owned method target, never a returned point to inspect.
+    for index = 2, math.min(values.n, 17) do result.values[index - 1] = scalar(values[index]) end
+    if values.n > 17 then result.truncated = true end
+    if not accessible(copy) then result.status = "restricted-copy"; return result end
+    if type(copy) ~= "table" and type(copy) ~= "userdata" then result.status = "invalid-copy"; return result end
+    result.before = { original = colorSnapshot(curve), copy = colorSnapshot(copy) }
+    result.add = addColorProbePoint(copy, point)
+    result.afterAdd = { original = colorSnapshot(curve), copy = colorSnapshot(copy) }
+    result.clear = colorMethod(copy, "ClearPoints")
+    result.afterClear = { original = colorSnapshot(curve), copy = colorSnapshot(copy) }
+    return result
+end
+
+local function captureColorCurves()
+    local inputs = {
+        { x = 0, r = 0, g = 1, b = 0.25, a = 1 },
+        { x = 32, r = 1, g = 0, b = 0.25, a = 0.75 },
+        { x = -16, r = 0, g = 0.25, b = 1, a = 0.5 },
+        { x = 48, r = 1, g = 0.75, b = 0, a = 0.25 },
+    }
+    local curve, failure = createColorProbeCurve()
+    if not curve then return { status = failure, inputs = inputs } end
+    local result = { status = "observed", inputs = inputs, empty = colorSnapshot(curve), additions = {} }
+    for _, point in ipairs(inputs) do
+        local added = addColorProbePoint(curve, point)
+        result.additions[#result.additions + 1] = added
+        if added.status ~= "observed" then result.status = added.status; return result end
+    end
+    result.populated = colorSnapshot(curve)
+    result.copyInput = { x = 16, r = 0.5, g = 0.25, b = 0.75, a = 0.5 }
+    result.copy = copyColorProbe(curve, result.copyInput)
+    result.defaults = { before = colorSnapshot(curve), reset = colorMethod(curve, "SetToDefaults") }
+    result.defaults.after = colorSnapshot(curve)
+    return result
+end
+
 local function captureSex()
     local result = { units = {}, enums = {} }
     local unitSexEnum = readField(Enum, "UnitSex")
@@ -667,8 +773,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -679,6 +785,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "color-curves" then record.colorCurves = captureColorCurves() end
         if mode == "curve-edit" then record.curveEdit = captureCurveEdit() end
         if mode == "curve-state" then record.curveState = captureCurveState() end
         if mode == "resources" then record.resources = captureResources() end

@@ -31,6 +31,17 @@ Pinned scalar documentation specifies `RemovePoint(index: luaIndex)` and `SetPoi
 
 Pinned retail `UnitDocumentation.lua` declares `UnitHealthPercent(unit, usePredicted=true, curve)` and `UnitPowerPercent(unit, powerType, unmodified=false, curve)`. Declarations establish argument positions, not native scale. Simulator policy specs remain unchanged.
 
+## Manual color-curve state
+
+- [x] Manual `color-curves <label>` stays outside `all`; construct own curve/colors from four distinct recorded RGBA definitions at x `0,32,-16,48`, without guessed enum values.
+- [x] Capture empty/populated `GetType`, `GetPointCount`, `HasSecretValues`, `GetPoints`, six indices `-1,0,1,2,3,4`, and `Evaluate`/`EvaluateUnpacked` at `-17,-16,0,16,32,48,49`.
+- [x] Record Copy return arity/opaque curve shape; capture original and copy before/after adding the defined fifth point and clearing the copy. Record original before/after reset, preserving copy-alias effects rather than assuming isolation or defaults.
+- [x] Inspect returned tables with accessibility-first raw `x/y/r/g/b/a` fields, four array entries and three table levels; userdata stays opaque. Never invoke returned color/point methods or metamethods. Only guarded owned-curve calls execute.
+- [x] Preserve exact return arity, sixteen positions, nils, secret-channel redaction and opaque errors. Missing/invalid/restricted construction fails closed; shared ten-snapshot limit applies.
+- [x] Local `tests/color_curves.lua` exercises different order/default/copy behaviors, packed/unpacked values, inaccessible channels, opaque userdata, hostile lookup, constructor failures, tuple/storage bounds and manual-only routing.
+
+Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocumentation.lua`, `CurveUtilDocumentation.lua` and `Blizzard_SharedXMLBase/Color.lua` guide construction/field names, not native proof. Actual native state/evaluation, userdata fields, security, removal/replacement and other interpolation types remain unverified.
+
 ## What it must do
 
 - [x] Record build provenance and manual scenario labels without automatic capture or gameplay changes.

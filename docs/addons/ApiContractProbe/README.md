@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual color curve state
+
+`/apicontract color-curves <label>` is excluded from `all`. Own `CreateColorCurve` and `CreateColor` inputs, in insertion order, are `(x; r,g,b,a)`: `(0; 0,1,.25,1)`, `(32; 1,0,.25,.75)`, `(-16; 0,.25,1,.5)`, `(48; 1,.75,0,.25)`. No enum type is assigned or guessed.
+
+Empty and populated snapshots record type/count/secret flag/points, indices `-1,0,1,2,3,4`, and both evaluations at `-17,-16,0,16,32,48,49`. Copy observations surround adding `(16; .5,.25,.75,.5)` to the copy and clearing it; both original and copy are captured after each operation. The original is then captured before/after `SetToDefaults`, even if copying aliased it. Results are observations, not assertions of defaults, order, interpolation or isolation.
+
+Returned tables expose only raw `x/y/r/g/b/a` fields and four array entries, with three levels of table traversal; userdata stays opaque. No returned `GetRGBA`, `__index`, equality or string methods run. Guarded methods on owned curves are allowed. Exact arity and 16 positions are recorded; larger tuples are marked truncated. Ten snapshots maximum; errors stay opaque and missing constructors fail closed.
+
+Cached color-curve/CurveUtil/base documentation and `Blizzard_SharedXMLBase/Color.lua` guide these calls, not native expectations. Userdata field representation, native captures, security semantics, removal/replacement and alternate interpolation types remain gaps. Local fixture command:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/color_curves.lua docs/addons/ApiContractProbe
+```
+
 ## Manual scalar resource scale observations
 
 `/apicontract resources <label>` captures player, target, focus, pet and nonexistent units; it is excluded from `all`. Records raw health/max, power/max/type, omitted-curve and explicit-nil percent calls. Health curve argument 3 follows explicit `usePredicted=false`; the default call is separate. Power uses default power type (`nil`), with separate explicit false/true `unmodified` calls and curve argument 4. No observed power ID is reused or guessed.
