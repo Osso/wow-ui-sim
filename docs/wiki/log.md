@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document selected action-slot recorder
+
+`be0f5f54c` adds manual `/apicontract actions <slot> <label>` for one independently selected slot; `all` excludes actions. It retains raw `currentCharges`, `maxCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate`, while charge duration remains kind/status/arity-only. Twenty-three local fixtures prove recorder behavior only. Native populated-slot, recharge, consumable transition, and duration-semantics evidence remains pending; no native claim or audit credit changed. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document bounded cast/channel identity recorder
 
 `aac8c8be1` adds manual `/apicontract casts <label>` and `all` inclusion. Scalar-only recording preserves exact arity and nil positions through 16 returns without inspecting returned objects. Twenty local fixtures prove recorder mechanics, not native contracts. Matching-client ordinary cast, cancellation, replacement/consecutive cast, non-player channel and empowered/non-empowered channel sequences remain pending; no spells or native actions were invented. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-15] audit | Prepare selected action-slot recorder
+
+Runtime `be0f5f54c` adds `/apicontract actions <slot> <label>` for one selected slot; `all` excludes it. Five raw charge fields are retained, while charge duration remains opaque. Twenty-three local fixtures prove recorder mechanics only. Populated slots, recharge/consumable transitions, and duration semantics remain native-capture work. See [[api-contract-probes]].
+
 ## [2026-09-14] audit | Expand preparation beyond the three initial probes
 
 Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared recorders target 199 publication/CVar observations and 88 event registrations; these are not complete behavioral plans. Passive capture correction `d959372a3` passes 10/10 fixtures plus 21/21 independent checks. Preparation remains open: see [[api-contract-probes]] and [inventory](../baselines/native-probe-preparation.json).
