@@ -12,7 +12,7 @@ Runtime `9b7fdb43e` adds independent manual `/apicontract curve-edit <label>`, a
 
 Runtime `ffd3b08ca` adds manual `/apicontract color-curves <label>`, also excluded from `all`. It constructs one owned curve with four color points, then a copy, records raw state, point lookups and packed/unpacked evaluation, and observes reset/copy mutation without classifying defaults or isolation. Returned tables expose only guarded raw RGBA fields; userdata stays opaque and no returned methods or metamethods run. A separate color harness has four fixtures; the existing harness retains 41. Neither suite is native execution. Native userdata field representation, identity, coercion, security, removal/replacement and alternate interpolation behavior remain unexecuted.
 
-`UnitSexBase` returns `Enum.UnitSex`; legacy `UnitSex` numbering cannot be copied blindly. The recorder stores both raw returns and named enum values for real existing units, with scenario labels for independently observed transformations. It does not infer what “Base” means.
+`UnitSexBase` returns `Enum.UnitSex`; legacy `UnitSex` numbering cannot be copied blindly. The recorder independently stores `UnitExists`, raw `UnitSex`, and raw `UnitSexBase` observations for player, target, focus, pet, party1, party2, nonexistent, invalid-unit-token, and the empty token, plus named enum values. An absent, restricted, or failed existence result does not suppress either sex query; each unit has separate `exists`, `legacy`, and `base` records rather than an aggregate status. It does not infer what “Base” means. Native before/during/after-disguise captures still require independently established stable unit identity.
 
 Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence gating for fixed player, party, target, unknown and invalid-token inputs. It preserves exact arity and positional nils, so nil and empty realms remain distinct from explicit realm strings. Scenario labels identify independently assembled same-realm and cross-realm party slots; returned names never classify the session. Native same-realm and cross-realm sessions remain pending. Actual populated-slot, recharge, consumable transition, and duration-semantics captures remain pending.
 
@@ -33,6 +33,10 @@ Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence
 `/apicontract callbacks-start <label>` registers only this addon's plain Lua callbacks for global `UNIT_HEALTH` and player-filtered `UNIT_HEALTH`; `callbacks-stop` removes the retained identities. It records registration/removal results and up to 128 passive deliveries with exact arity and up to sixteen safe scalar positions. Partial registration and cleanup errors remain recorded rather than treated as stopped. It neither fires events nor examines wrapper containers. The 33 local fixtures prove recorder mechanics only. A native producer, post-removal delivery boundary, `Event.lua` FunctionContainers, duplicates, ordering, aliases, mutation/recursion and security behavior remain pending. This residual best-effort work does not complete the earlier simulator callback credits or a snapshot plan.
 
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
+
+## Sex-control local proof
+
+Runtime `9d88dc424` removes existence-gating from sex queries; `1bedd3ce9` updates the restricted-existence fixture. The main harness has 44 cumulative fixtures; this is recorder proof only, not a native sex-value, disguise, or identity contract.
 
 ## Local proof
 

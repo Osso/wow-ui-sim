@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Record independent UnitSex controls
+
+`9d88dc424` removes existence-gating from `UnitSex` and `UnitSexBase` capture; `1bedd3ce9` corrects the restricted-existence fixture. Each of nine fixed tokens has independent `exists`, `legacy`, and `base` observations. The main harness has 44 cumulative fixtures. Native before/during/after-disguise capture with independently established stable unit identity remains pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document producer duration recorder
 
 `88e9d1253` prepares manual `/apicontract cast-durations <label>`, excluded from `all`. It queries cast, channel and empowered-channel duration producers with hold variants, calls ten guarded read methods only, and caps prior-object re-observation at 28. The main harness has 43 cumulative fixtures; a separate color harness has four. Native active/completed/interrupted/absent producer and clock-boundary captures remain pending. See [[api-contract-probes]].
