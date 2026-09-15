@@ -4,7 +4,7 @@ Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, ex
 
 ## [2026-09-15] investigation | Prepare selected-slot spell-metadata recorder
 
-Runtime `9647bd5d5` adds manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. It queries metadata only when `GetActionInfo(slot)` produces an accessible `"spell"` and finite numeric spell ID, then calls seven guarded `C_Spell` predicates/queries. Eight separate fixtures prove recorder mechanics only. `GetVisibilityInfo`, native spell fixtures, rank/override transitions, classifications and security remain pending. See [[api-contract-probes]].
+Runtime `057183033` extends manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. When `GetActionInfo(slot)` produces an accessible `"spell"` and finite numeric spell ID, it runs seven guarded `C_Spell` predicates/queries plus `GetVisibilityInfo` for the fixed published `RaidInCombat`, `RaidOutOfCombat`, and `EnemyTarget` enum names. Fourteen cumulative fixtures include six new visibility cases; this is recorder proof only. Native classifications, spell fixtures, rank/override transitions and security remain pending. See [[api-contract-probes]].
 
 ## [2026-09-15] investigation | Prepare bounded public-query recorder
 

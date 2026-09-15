@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Extend selected-slot spell metadata with visibility
+
+Runtime `057183033` extends manual `/apicontract spell-metadata <slot> <label>`, still excluded from `all`. An accessible selected-slot spell ID adds guarded `GetVisibilityInfo` calls for fixed published `SpellAuraVisibilityType` names `RaidInCombat`, `RaidOutOfCombat`, and `EnemyTarget`; unavailable enum values make no call. Fourteen cumulative local fixtures include six new visibility cases. Native classifications, producer fixtures, rank/override transitions and security remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare selected-slot spell-duration recorder
 
 Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, excluded from `all`. An accessible `GetActionInfo(slot)` spell ID enables guarded charge and loss-of-control duration producers, followed by ten current-object read-only methods. No objects are retained between snapshots and cast-duration retention state remains untouched. Nine separate local fixtures prove recorder mechanics only; native charge/recharge and loss-of-control transitions, spellbook behavior, timing and restricted-context semantics remain pending. See [[api-contract-probes]].
