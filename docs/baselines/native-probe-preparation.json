@@ -9851,11 +9851,12 @@
           "Indices 0,1,2,3,-1,4",
           "Accessible fields/GetXY, identity, isolated mutation",
           "Manual scalar curve-state: empty/populated type, count, secret-flag query, unsorted duplicate points, raw evaluations and SetToDefaults results",
-          "Copy state before and after original AddPoint/ClearPoints mutations without assumed isolation"
+          "Copy state before and after original AddPoint/ClearPoints mutations without assumed isolation",
+          "Manual scalar curve-edit: independent RemovePoint indices -1,0,1,2,3,4 and CreateVector2D-backed empty/unsorted duplicate SetPoints captures"
         ],
         "missing": [
           "Color point and color SetToDefaults experiments",
-          "Scalar RemovePoint and SetPoints experiments",
+          "Native scalar removal indexing and SetPoints representation/coercion semantics",
           "Native duplicate, interpolation, defaults and copy semantics",
           "Native capture"
         ]
