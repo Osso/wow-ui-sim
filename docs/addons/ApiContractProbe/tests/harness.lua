@@ -968,4 +968,78 @@ test("curve edit redacts observations preserves errors and remains manual bounde
     reset(); issecretvalue = nil
     assert(capture("curve-edit inaccessible").status == "missing-access-api")
 end)
+test("cast durations retain live and frozen observations without saving objects", function()
+    reset()
+    local clock = 10
+    local methods = { "GetTotalDuration", "GetElapsedDuration", "GetRemainingDuration", "GetElapsedPercent",
+        "GetRemainingPercent", "GetStartTime", "GetEndTime", "GetClockTime", "GetModRate", "HasExpired" }
+    local function object(frozen)
+        local result = {}
+        for _, name in ipairs(methods) do result[name] = function() return frozen or clock end end
+        return setmetatable(result, { __tostring = function() error("stringified") end,
+            __eq = function() error("compared") end })
+    end
+    UnitCastingDuration = function() return object() end
+    UnitChannelDuration = function() return object(clock) end
+    UnitEmpoweredChannelDuration = function(_, ...)
+        local n = select("#", ...)
+        return object(n == 0 and 70 or (... and 90 or 80))
+    end
+    local first = capture("cast-durations active").castDurations
+    assert(first.units.player.casting.values[1].methods.GetClockTime.values[1].value == 10)
+    assert(first.units.player.empowerDefault.values[1].methods.GetTotalDuration.values[1].value == 70)
+    assert(first.units.player.empowerFalse.values[1].methods.GetTotalDuration.values[1].value == 80)
+    assert(first.units.player.empowerTrue.values[1].methods.GetTotalDuration.values[1].value == 90)
+    assert(first.retainedCount == 28 and first.retentionDropped == 7)
+    clock = 14
+    local second = capture("cast-durations later").castDurations
+    assert(second.previous[1].observationRef == first.units.player.casting.values[1].observationRef)
+    assert(second.previous[1].observation.methods.GetClockTime.values[1].value == 14)
+    assert(second.previous[2].observation.methods.GetClockTime.values[1].value == 10)
+    local function serializable(value)
+        assert(type(value) ~= "function" and type(value) ~= "userdata")
+        if type(value) == "table" then
+            assert(getmetatable(value) == nil)
+            for key, item in pairs(value) do serializable(key); serializable(item) end
+        end
+    end
+    serializable(ApiContractProbeDB)
+    local third = capture("cast-durations final").castDurations
+    assert(third.previous[1].observationRef == second.units.player.casting.values[1].observationRef)
+end)
+test("cast duration safety arity and manual limits", function()
+    reset()
+    local touched = 0
+    local broken = setmetatable({}, { __index = function() error(secret) end })
+    local duration = { GetClockTime = function() return nil, 7, nil end,
+        GetTotalDuration = function() error(secret) end, GetEndTime = secret }
+    UnitCastingDuration = function(unit)
+        touched = touched + 1
+        if unit == "target" then return end
+        if unit == "focus" then return secret end
+        if unit == "party1" then return broken end
+        return duration, nil
+    end
+    UnitChannelDuration = nil
+    UnitEmpoweredChannelDuration = function() return unpack({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}) end
+    assert(capture("all").castDurations == nil and touched == 0)
+    local result = capture("cast-durations safety").castDurations
+    assert(touched == 7 and result.units.target.casting.n == 0)
+    assert(result.units.focus.casting.values[1].status == "restricted")
+    assert(result.units.party1.casting.values[1].methods.GetClockTime.status == "field-error")
+    local value = result.units.player.casting.values[1]
+    assert(value.methods.GetClockTime.n == 3 and value.methods.GetClockTime.values[3].kind == "nil")
+    assert(value.methods.GetTotalDuration.status == "call-error")
+    assert(value.methods.GetEndTime.status == "missing-api")
+    assert(result.units.player.casting.n == 2 and result.units.player.casting.values[2].kind == "nil")
+    assert(result.units.player.channel.status == "missing-api")
+    assert(result.units.player.empowerTrue.n == 17 and result.units.player.empowerTrue.truncated)
+    assert(#result.units.player.empowerTrue.values == 16 and not containsSecret(ApiContractProbeDB))
+    for _ = 1, 8 do capture("cast-durations bounded") end
+    UnitCastingDuration = function() error("overflow queried") end
+    capture("cast-durations overflow")
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    reset(); issecretvalue = nil
+    assert(capture("cast-durations unavailable").status == "missing-access-api")
+end)
 print(string.format("RESULT %d passed", passed))

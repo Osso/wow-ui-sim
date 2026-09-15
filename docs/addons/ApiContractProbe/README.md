@@ -60,6 +60,14 @@ Additional commands:
 
 `AuditTargets.lua` contains 199 publication/CVar targets and 88 event-registration targets tied to the blocker snapshot hash. Registration errors, missing parents and missing members are distinct observations. Event payloads retain arity and nil slots, with at most eight summarized values; tables remain bounded observations, not full structure captures. No native actions, purchases, transitions or account mutations are triggered. A symbol missing at one phase does not prove removal; a listener with no deliveries does not prove event absence. These shared recorders do **not** complete all associated behavioral plans. See the [full preparation inventory](../../baselines/native-probe-preparation.json). Start a new capture batch by moving the saved file aside while logged out.
 
+## Producer cast durations
+
+`/apicontract cast-durations <label>` is manual-only, excluded from `all`. Queries `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` with hold omitted/false/true for player, target, focus, party1, nonexistent, invalid-unit-token and empty tokens. Record exact arity, nils and at most 16 positions; larger tuples are marked truncated.
+
+For accessible returned duration objects, this controlled experiment calls only `GetTotalDuration`, `GetElapsedDuration`, `GetRemainingDuration`, `GetElapsedPercent`, `GetRemainingPercent`, `GetStartTime`, `GetEndTime`, `GetClockTime`, `GetModRate`, and `HasExpired`. Object and method access are checked before lookup/call; method results stay scalar/opaque, errors are not stringified. No setters, Assign, Reset, object equality or native identity inference.
+
+Capture `active`, then a later `completed` or `interrupted` observation using actual externally produced states. Each capture re-queries up to 28 objects from the previous duration capture and labels them with that capture's `observationRef`; these are observation labels, not native object IDs. Only the new snapshot's first 28 accessible object occurrences are retained, with excess marked `retention = "limit"` and counted. Seven units × five calls can exceed this limit. Runtime references never enter SavedVariables, and reload clears retention. Ten total snapshots per batch; no timers or synthetic casts. Native tracking versus frozen behavior remains unknown until these observations are collected on the matching client.
+
 ## Plain-function callbacks
 
 Run `/apicontract callbacks-start <label>`, produce a real `UNIT_HEALTH` transition externally, then `/apicontract callbacks-stop`. This manual mode is excluded from `all`; it never fires events or changes gameplay. It registers only its own global callback and its own `player` unit callback, preserving their identities for removal.

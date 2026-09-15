@@ -55,6 +55,15 @@ Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocument
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Manual producer durations
+
+- Manual `cast-durations <label>` is excluded from `all`. Query casting/channel durations and empowered durations with hold omitted, false and true for player/target/focus/party1/nonexistent/invalid-unit-token/empty tokens.
+- Record exact arity and at most 16 scalar/opaque positions. On accessible returned objects, explicitly query only `GetTotalDuration`, `GetElapsedDuration`, `GetRemainingDuration`, `GetElapsedPercent`, `GetRemainingPercent`, `GetStartTime`, `GetEndTime`, `GetClockTime`, `GetModRate`, `HasExpired`. Guard object access before method lookup and function access before invocation; errors stay opaque. Method results are scalar-only, with no recursive object inspection.
+- Keep at most 28 returned-object references from one previous duration snapshot in memory. Re-observe them on the next duration capture, then replace retention. Saved records contain local observation references, never runtime objects/functions or native identity claims. Mark excess retention explicitly; no equality/string conversion or mutation calls.
+- Local fixtures distinguish live versus frozen producer objects across manual captures. Native active/completed/interrupted/absent states and time transitions require user-provided fixtures; no casts, timers, clock mutation or native security conclusions.
+
+Pinned retail `UnitDocumentation.lua` declares optional empowered hold default true and potentially absent results; `LuaDurationObjectAPIDocumentation.lua` declares the ten read methods. These declarations guide calls, not native results. Shared ten-snapshot limit applies; retention resets when the addon reloads.
+
 ## Manual cast identities
 
 - [x] `/apicontract casts <label>` and `all` query `UnitCastingInfo` and `UnitChannelInfo` for fixed `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token` and empty-string tokens without existence gating or gameplay actions.

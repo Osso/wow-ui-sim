@@ -451,6 +451,75 @@ local function captureResources()
     return result
 end
 
+local durationMethods = {
+    "GetTotalDuration", "GetElapsedDuration", "GetRemainingDuration", "GetElapsedPercent",
+    "GetRemainingPercent", "GetStartTime", "GetEndTime", "GetClockTime", "GetModRate", "HasExpired",
+}
+local previousDurations = {}
+local durationCapture = 0
+
+local function inspectDuration(object)
+    local result = scalar(object)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    -- Controlled producer-object experiment, never a passive payload observer.
+    result.methods = {}
+    for _, name in ipairs(durationMethods) do
+        local fn, ok = readField(object, name)
+        result.methods[name] = ok and observeCast(fn, object) or { status = "field-error" }
+    end
+    return result
+end
+
+local function queryDuration(fn, retained, counters, ...)
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, ...))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        local object = values[index]
+        local item = inspectDuration(object)
+        result.values[index - 1] = item
+        if item.methods then
+            counters.objects = counters.objects + 1
+            item.observationRef = durationCapture .. ":" .. counters.objects
+            if #retained < 28 then
+                retained[#retained + 1] = { object = object, observationRef = item.observationRef }
+                item.retention = "next-capture"
+            else
+                counters.dropped = counters.dropped + 1
+                item.retention = "limit"
+            end
+        end
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function captureCastDurations()
+    durationCapture = durationCapture + 1
+    local result = { capture = durationCapture, previous = {}, units = {} }
+    local old = previousDurations
+    previousDurations = {}
+    for _, previous in ipairs(old) do
+        result.previous[#result.previous + 1] = { observationRef = previous.observationRef,
+            observation = inspectDuration(previous.object) }
+    end
+    local counters = { objects = 0, dropped = 0 }
+    for _, unit in ipairs({ "player", "target", "focus", "party1", "nonexistent", "invalid-unit-token", "" }) do
+        result.units[unit] = {
+            casting = queryDuration(UnitCastingDuration, previousDurations, counters, unit),
+            channel = queryDuration(UnitChannelDuration, previousDurations, counters, unit),
+            empowerDefault = queryDuration(UnitEmpoweredChannelDuration, previousDurations, counters, unit),
+            empowerFalse = queryDuration(UnitEmpoweredChannelDuration, previousDurations, counters, unit, false),
+            empowerTrue = queryDuration(UnitEmpoweredChannelDuration, previousDurations, counters, unit, true),
+        }
+    end
+    result.retainedCount, result.retentionDropped = #previousDurations, counters.dropped
+    return result
+end
+
 local function captureCasts()
     local result = { units = {} }
     for _, unit in ipairs({ "player", "target", "focus", "party1", "nonexistent", "invalid-unit-token", "" }) do
@@ -773,8 +842,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -785,6 +854,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "cast-durations" then record.castDurations = captureCastDurations() end
         if mode == "color-curves" then record.colorCurves = captureColorCurves() end
         if mode == "curve-edit" then record.curveEdit = captureCurveEdit() end
         if mode == "curve-state" then record.curveState = captureCurveState() end
