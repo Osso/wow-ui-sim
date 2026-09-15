@@ -443,4 +443,84 @@ test("casts fail closed for unavailable functions and access checks", function()
         assert(record.status == "missing-access-api" and record.casts == nil)
     end
 end)
+test("selected action slot retains counts fields and explicit display formats", function()
+    reset()
+    GetActionInfo = function(slot) return "spell", slot + 100, nil end
+    C_ActionBar = {
+        GetActionDisplayCount = function(slot, ...)
+            local n = select("#", ...)
+            if n == 0 then return "" end
+            local threshold, replacement = ...
+            return slot .. ":" .. threshold .. ":" .. replacement
+        end,
+        GetActionCharges = function(slot)
+            return { currentCharges = slot, maxCharges = 3, cooldownStartTime = 12,
+                cooldownDuration = nil, chargeModRate = 0.5 }, nil
+        end,
+        GetActionChargeDuration = function() return {}, nil end,
+    }
+    local record = capture("actions 7 before use")
+    local a = record.actions
+    assert(record.label == "before use" and a.slot == 7)
+    assert(a.identity.n == 3 and a.identity.values[2].value == 107)
+    assert(a.display.default.values[1].value == "")
+    for i, threshold in ipairs({ 0, 1, 9999 }) do
+        assert(a.display.formats[i].result.values[1].value == "7:" .. threshold .. ":*")
+    end
+    assert(a.charges.n == 2 and a.charges.values[2].kind == "nil")
+    local fields = a.charges.values[1].fields
+    assert(fields.currentCharges.value == 7 and fields.maxCharges.value == 3)
+    assert(fields.cooldownStartTime.value == 12 and fields.cooldownDuration.kind == "nil")
+    assert(fields.chargeModRate.value == 0.5)
+    assert(a.duration.n == 2 and a.duration.values[1].kind == "table")
+    assert(a.duration.values[1].fields == nil and a.duration.values[2].kind == "nil")
+    assert(capture("actions 0 empty").actions.slot == 0)
+    assert(capture("actions -1 invalid").actions.charges.values[1].fields.currentCharges.value == -1)
+end)
+test("action payloads stay passive and restricted errors stay opaque", function()
+    reset()
+    local touched = 0
+    local hostile = setmetatable({ currentCharges = secret }, {
+        __index = function() touched = touched + 1; error("index invoked") end,
+        __tostring = function() touched = touched + 1; error("stringified") end,
+    })
+    local duration = setmetatable({ GetRemainingDuration = function() touched = touched + 1 end }, getmetatable(hostile))
+    GetActionInfo = function() return secret end
+    C_ActionBar = { GetActionCharges = function() return hostile end,
+        GetActionDisplayCount = function() error(secret) end,
+        GetActionChargeDuration = function() return duration end }
+    local a = capture("actions 4 hostile").actions
+    assert(a.identity.values[1].status == "restricted")
+    assert(a.charges.values[1].fields.currentCharges.status == "restricted")
+    assert(a.charges.values[1].fields.maxCharges.kind == "nil")
+    assert(a.display.default.status == "call-error" and a.duration.values[1].fields == nil)
+    assert(touched == 0 and not containsSecret(a))
+    C_ActionBar.GetActionCharges = function() return secret end
+    C_ActionBar.GetActionChargeDuration = function() return secret end
+    a = capture("actions 4 restricted").actions
+    assert(a.charges.values[1].status == "restricted" and a.duration.values[1].status == "restricted")
+    C_ActionBar.GetActionChargeDuration = function() return 123, "opaque" end
+    a = capture("actions 4 scalar-duration").actions
+    assert(a.duration.n == 2 and a.duration.values[1].kind == "number")
+    assert(a.duration.values[1].value == nil and a.duration.values[2].value == nil)
+    C_ActionBar = setmetatable({}, getmetatable(hostile))
+    a = capture("actions 4 missing").actions
+    assert(a.charges.status == "missing-api" and a.duration.status == "missing-api" and touched == 0)
+end)
+test("invalid action commands and all never query selected-slot APIs", function()
+    reset()
+    local calls = 0
+    local function query() calls = calls + 1; return nil end
+    GetActionInfo = query
+    C_ActionBar = { GetActionDisplayCount = query, GetActionCharges = query, GetActionChargeDuration = query }
+    for _, command in ipairs({ "actions", "actions nope", "actions 1.5", "actions 1e2", "actions 0x10", "actions inf", "actions 9007199254740992" }) do
+        SlashCmdList.APICONTRACTPROBE(command)
+        assert(ApiContractProbeDB == nil and calls == 0)
+    end
+    assert(capture("all").actions == nil and calls == 0)
+    for i = 1, 9 do capture("actions 2 sample") end
+    assert(calls == 63)
+    capture("actions 2 dropped")
+    assert(calls == 63 and ApiContractProbeDB.dropped == 1)
+end)
 print(string.format("RESULT %d passed", passed))

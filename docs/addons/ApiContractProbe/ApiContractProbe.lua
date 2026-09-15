@@ -217,6 +217,58 @@ local function captureNumbers()
     return result
 end
 
+local function observeAction(fn, fields, ...)
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, ...))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        local value = values[index]
+        local item
+        if fields == false then
+            item = accessible(value) and { status = "observed", kind = type(value) } or { status = "restricted" }
+        else
+            item = scalar(value)
+        end
+        if fields and item.status == "observed" and item.kind == "table" then
+            item.fields = {}
+            for _, key in ipairs(fields) do item.fields[key] = scalar(rawget(value, key)) end
+        end
+        result.values[index - 1] = item
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function actionFunction(name)
+    if not accessible(C_ActionBar) or type(C_ActionBar) ~= "table" then return nil end
+    return rawget(C_ActionBar, name)
+end
+
+local function captureActions(slot)
+    local display = actionFunction("GetActionDisplayCount")
+    local result = { slot = slot, identity = observeAction(GetActionInfo, nil, slot),
+        display = { default = observeAction(display, nil, slot), formats = {} },
+        charges = observeAction(actionFunction("GetActionCharges"), {
+            "currentCharges", "maxCharges", "cooldownStartTime", "cooldownDuration", "chargeModRate",
+        }, slot),
+        duration = observeAction(actionFunction("GetActionChargeDuration"), false, slot) }
+    for _, threshold in ipairs({ 0, 1, 9999 }) do
+        result.display.formats[#result.display.formats + 1] = { threshold = threshold,
+            replacement = "*", result = observeAction(display, nil, slot, threshold, "*") }
+    end
+    return result
+end
+
+local function parseActionSlot(input)
+    local token, label = string.match(input, "^(%S+)%s*(.-)%s*$")
+    if not token or not string.match(token, "^%-?%d+$") then return nil end
+    local slot = tonumber(token)
+    -- Command syntax only: no claim about native slot validation or coercion.
+    if not slot or slot < -9007199254740991 or slot > 9007199254740991 then return nil end
+    return slot, label
+end
+
 local function capturePublication()
     local rows = {}
     for index, target in ipairs(ApiContractProbeTargets.publication) do
@@ -319,7 +371,12 @@ SlashCmdList.APICONTRACTPROBE = function(input)
     if mode == "events-start" or mode == "events-stop" then
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
-    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+    local slot
+    if mode == "actions" then
+        slot, label = parseActionSlot(label)
+        if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
+    end
+    if mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
         print("Usage: /apicontract [all|curves|sex|names|numbers|casts|publication|events-start|events-stop] [label]")
         return
     end
@@ -331,6 +388,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "actions" then record.actions = captureActions(slot) end
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
         if mode == "all" or mode == "names" then record.names = captureNames() end

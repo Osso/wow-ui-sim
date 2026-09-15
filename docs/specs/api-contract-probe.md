@@ -23,6 +23,15 @@
 
 Pinned `12.0.0-register.json` declarations describe casting position 10 and channel position 11 as castBarID; they are not native evidence and the executing client may differ. Matching native client, controllable casts, non-player channels and empowered/non-empowered fixtures remain pending. No recorder fixture earns native audit credit.
 
+## Selected action counts and charges
+
+- [x] `/apicontract actions <slot> <label>` queries one explicitly selected signed decimal integer slot; zero and negative controls are accepted. Reject invalid syntax and integers outside the exactly representable range before any query. This is command validation, not a claim about native coercion. `all` never queries actions.
+- [x] Capture optional `GetActionInfo`, default `C_ActionBar.GetActionDisplayCount`, and explicit thresholds 0, 1 and 9999 with replacement `*`, preserving differing display/charge observations.
+- [x] Capture `GetActionCharges` exact arity and the five accessible raw table fields `currentCharges`, `maxCharges`, `cooldownStartTime`, `cooldownDuration`, `chargeModRate`; never invoke metatable lookup. Capture `GetActionChargeDuration` only as accessible kind/status and arity, never its values or methods.
+- [x] Bound each snapshot to seven selected-slot calls, 16 stored return positions per call, existing ten-capture storage and build/time/label provenance; redact before inspection and keep errors opaque.
+
+Native ordinary-spell, charged-spell, consumable and empty-slot fixtures plus before/use/recharge/restoration transitions remain pending. Duration-method contracts remain uncaptured. These eight plan rows are only partially prepared; no `GetActionCooldown` query belongs to this slice.
+
 ## Publication and event recording
 
 - [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.
