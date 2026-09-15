@@ -177,6 +177,24 @@ local function captureNames()
     return result
 end
 
+local function captureNumbers()
+    local floor, floorOK = readField(C_StringUtil, "FloorToNearestString")
+    local round, roundOK = readField(C_StringUtil, "RoundToNearestString")
+    if not floorOK then floor = nil end
+    if not roundOK then round = nil end
+    local result = { locale = observe(GetLocale), samples = {} }
+    for _, input in ipairs({
+        -2.5, -1.5, -0.5, 0, 0.5, 1.5, 2.5,
+        -0.500001, -0.499999, 0.499999, 0.500001,
+        -1, 1, -100, 100, -0.1, 0.1, -0.9, 0.9,
+        -1234.5678, 1234.5678, -1e6, 1e6, -1e12, 1e12,
+    }) do
+        result.samples[#result.samples + 1] = { input = input,
+            floor = observe(floor, input), round = observe(round, input) }
+    end
+    return result
+end
+
 local function capturePublication()
     local rows = {}
     for index, target in ipairs(ApiContractProbeTargets.publication) do
@@ -279,8 +297,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
     if mode == "events-start" or mode == "events-stop" then
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
-    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|sex|names|publication|events-start|events-stop] [label]")
+    if mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|sex|names|numbers|publication|events-start|events-stop] [label]")
         return
     end
     local db = database()
@@ -294,6 +312,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end
         if mode == "all" or mode == "names" then record.names = captureNames() end
+        if mode == "all" or mode == "numbers" then record.numbers = captureNumbers() end
         if mode == "all" or mode == "publication" then record.publication = capturePublication() end
         record.status = "observed"
     end

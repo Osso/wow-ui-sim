@@ -13,6 +13,9 @@ local function reset()
     issecretvalue = function(value) return value == secret end
     canaccessvalue = function(value) return value ~= secret end
     GetBuildInfo = function() return "fixture", "123", "date", 120100 end
+    GetLocale = function() return "enUS" end
+    C_StringUtil = { FloorToNearestString = function() return "floor fixture" end,
+        RoundToNearestString = function() return "round fixture" end }
     time = function() return 123456 end
     UnitExists = function(unit) return unit == "player" or unit == "target" end
     UnitName = function(unit) return "Name-" .. unit, nil end
@@ -261,5 +264,87 @@ test("all includes names and names fail closed for unavailable access or APIs", 
     canaccessvalue = nil
     local record = capture("names no-access")
     assert(record.status == "missing-access-api" and record.names == nil)
+end)
+local numberInputs = {
+    -2.5, -1.5, -0.5, 0, 0.5, 1.5, 2.5,
+    -0.500001, -0.499999, 0.499999, 0.500001,
+    -1, 1, -100, 100, -0.1, 0.1, -0.9, 0.9,
+    -1234.5678, 1234.5678, -1e6, 1e6, -1e12, 1e12,
+}
+test("numbers preserve finite corpus and differing locale bytes without rounding", function()
+    for _, locale in ipairs({ "enUS", "frFR" }) do
+        reset()
+        GetLocale = function() return locale end
+        local floorText = locale == "enUS" and "not rounded: 1,234.5" or "1\194\160234,5"
+        local roundText = locale == "enUS" and "alternate -zero" or "moins\226\136\146zéro"
+        local seenFloor, seenRound = {}, {}
+        C_StringUtil.FloorToNearestString = function(value)
+            seenFloor[#seenFloor + 1] = value
+            return floorText, nil, "tail"
+        end
+        C_StringUtil.RoundToNearestString = function(value)
+            seenRound[#seenRound + 1] = value
+            return nil, roundText, nil
+        end
+        local record = capture("numbers " .. locale .. " manual")
+        assert(record and record.numbers, "numbers command must record observations")
+        assert(record.label == locale .. " manual" and record.client.values[2].value == "123")
+        assert(record.numbers.locale.n == 1 and record.numbers.locale.values[1].value == locale)
+        assert(#record.numbers.samples == #numberInputs)
+        assert(#seenFloor == #numberInputs and #seenRound == #numberInputs)
+        for index, input in ipairs(numberInputs) do
+            local row = record.numbers.samples[index]
+            assert(row.input == input and seenFloor[index] == input and seenRound[index] == input)
+            assert(row.floor.n == 3 and row.floor.values[1].value == floorText)
+            assert(row.floor.values[2].kind == "nil" and row.floor.values[3].value == "tail")
+            assert(row.round.n == 3 and row.round.values[1].kind == "nil")
+            assert(row.round.values[2].value == roundText and row.round.values[3].kind == "nil")
+        end
+    end
+end)
+test("numbers include all and preserve zero returns restricted values and opaque errors", function()
+    reset()
+    assert(capture("all").numbers.samples[1].floor.values[1].value == "floor fixture")
+    reset()
+    GetLocale = function() return secret end
+    C_StringUtil.FloorToNearestString = function(value)
+        if value == -2.5 then return end
+        if value == -1.5 then return secret end
+        return "denied"
+    end
+    C_StringUtil.RoundToNearestString = function() error(secret) end
+    canaccessvalue = function(value) return value ~= secret and value ~= "denied" end
+    local numbers = capture("numbers redacted").numbers
+    assert(numbers.locale.values[1].status == "restricted")
+    assert(numbers.samples[1].floor.n == 0 and next(numbers.samples[1].floor.values) == nil)
+    assert(numbers.samples[2].floor.values[1].status == "restricted")
+    assert(numbers.samples[3].floor.values[1].status == "restricted")
+    for _, row in ipairs(numbers.samples) do
+        assert(row.round.status == "call-error" and row.round.values == nil)
+    end
+    assert(not containsSecret(ApiContractProbeDB))
+end)
+test("numbers fail closed for missing APIs and failed access checks", function()
+    reset()
+    C_StringUtil, GetLocale = nil, nil
+    local numbers = capture("numbers missing").numbers
+    assert(numbers.locale.status == "missing-api")
+    for _, row in ipairs(numbers.samples) do
+        assert(row.floor.status == "missing-api" and row.round.status == "missing-api")
+    end
+    for _, accessName in ipairs({ "issecretvalue", "canaccessvalue" }) do
+        reset()
+        local calls = 0
+        C_StringUtil.FloorToNearestString = function() calls = calls + 1 end
+        C_StringUtil.RoundToNearestString = C_StringUtil.FloorToNearestString
+        _G[accessName] = function() error(secret) end
+        numbers = capture("numbers failed-access").numbers
+        assert(calls == 0 and not containsSecret(numbers))
+        assert(numbers.samples[1].floor.status == "missing-api")
+        reset()
+        _G[accessName] = nil
+        local record = capture("numbers absent-access")
+        assert(record.status == "missing-access-api" and record.numbers == nil)
+    end
 end)
 print(string.format("RESULT %d passed", passed))
