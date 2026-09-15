@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Record pending unit-filtered global callback lifecycle
+## [2026-09-14] audit | Credit bounded unit-filtered global callback lifecycle
 
-Recorded runtime `0a0ac416f`, publication `0835b3c94` and RED 0/4 tests `c1d401ba3` for ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`. The model is independent from frame listeners, dispatches `nil, ...payload` to exact first-payload unit matches, and supports modeled FunctionContainers. Integrated proof, provenance and credits remain pending. Exact matching/order/snapshot/validation are simulator policies; aliases/lists, native ordering/errors/eligibility, secrecy/taint, full-LoD and callback mutation/recursion/error recovery remain open.
+Two credits cover ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`: pinned `Event.lua` FunctionContainer wrappers, exact first-payload filtering, nil owner/payload, both dispatch paths, event/container/unit identity removal, zero-return arity and environment isolation. Runtime `0a0ac416f` plus publication `0835b3c94` passes 12/12 each retail 12.0.0/12.0.5/12.0.7; fallback proof is 2/2 retail and 3/3 Mists. Fmt/check/default builds/startup `[]` pass. Metadata `539c44c57`: two credits, 63 renewals, 20 additions, 15,124 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows; totals **2351 / 1057 / 2**, snapshot **1,083 / 282**. Exact matching/order/validation remain simulator policies; aliases/lists, native ordering/errors/eligibility, secrecy/taint, full-LoD and callback mutation/recursion/error recovery remain open. One registration-length signal and eight Mists failures remain.
 
 ## [2026-09-14] audit | Credit StripHyperlinks balanced markup flags
 

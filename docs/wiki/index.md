@@ -1,6 +1,6 @@
-## [2026-09-14] audit | Pending unit-filtered global callbacks
+## [2026-09-14] audit | Credit bounded unit-filtered global callbacks
 
-`RegisterUnitEventCallback`/`UnregisterUnitEventCallback` runtime `0a0ac416f`, publication `0835b3c94` and tests `c1d401ba3` are pending integrated proof; RED is 0/4. The independent global registry matches the first payload unit exactly and invokes functions or modeled containers as `nil, ...payload`. Exact token matching/order/snapshot/validation are simulator policies; native aliases/lists, ordering/error/security/full-LoD and mutation/recovery behavior remain unverified. No credit or totals changed. [Spec](../specs/unit-event-callbacks.md); [[patch-12-0-0-api-audit]].
+Two credits cover ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`: actual `Event.lua` wrappers and FunctionContainers, exact first-payload unit filtering, nil owner/payload, both dispatch paths, identity removal, zero-return arity and environment isolation. Runtime `0a0ac416f` plus publication `0835b3c94` passes 12/12 each on retail 12.0.0/12.0.5/12.0.7 (four unit and eight global regressions); fallback tests pass 2/2 retail and 3/3 Mists. Fmt/check/default builds/startup `[]` pass. Metadata `539c44c57`: two credits, 63 renewals, 20 additions, **15,124 fresh / zero stale**, six bindings, validator exit 0 / 3,410 rows; totals **2351 / 1057 / 2**, snapshot **1,083 / 282**. Exact matching/order/validation and native aliases/lists/error/security/full-LoD plus mutation/recursion/error recovery remain unverified; one registration-length signal and eight Mists failures remain. [Spec](../specs/unit-event-callbacks.md); [[patch-12-0-0-api-audit]].
 
 ## [2026-09-14] audit | Credit bounded StripHyperlinks markup flags
 
