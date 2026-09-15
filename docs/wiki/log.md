@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document residual plain callback recorder
+
+`98ba5a44a` prepares manual `callbacks-start`/`callbacks-stop` recording for only the probe's plain global and player-filtered `UNIT_HEALTH` callbacks. It preserves retained callback identities, registration/cleanup outcomes, and bounded passive scalar payloads. Thirty-three local fixtures do not establish native producer timing, wrapper, duplicate/order/alias, mutation or security behavior. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document residual scalar resource scale recorder
 
 `151480a4e` prepares manual `/apicontract resources <label>` capture, excluded from `all`. It observes raw health/max, power/max/type, omitted/nil curves, explicit `unmodified` values and a six-point scalar curve without classifying native scale or inventing power IDs. Twenty-nine local fixtures prove recorder mechanics only. Native matching-client partial-resource, prediction, secondary-power, color-curve, event-order and security captures remain pending. This is best-effort residual preparation, not an audit credit or snapshot-plan completion. See [[api-contract-probes]].

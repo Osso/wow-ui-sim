@@ -1,3 +1,7 @@
+## [2026-09-15] audit | Prepare residual plain callback recorder
+
+Runtime `98ba5a44a` adds manual `callbacks-start`/`callbacks-stop` for this addon's own global and player-filtered `UNIT_HEALTH` functions. It retains registration/cleanup outcomes and bounded passive deliveries. Thirty-three local fixtures prove recorder mechanics only; native producers, wrappers, duplicates, ordering, aliases and security remain pending. This is residual best-effort coverage, not a credit or snapshot-plan completion. See [[api-contract-probes]].
+
 ## [2026-09-15] audit | Prepare residual scalar resource scale recorder
 
 Runtime `151480a4e` adds manual `/apicontract resources <label>`; `all` excludes it. It records raw health/power state and no/nil-curve and `unmodified` observations with a six-point scalar curve, but does not classify scale or infer power IDs. Twenty-nine local fixtures prove recorder mechanics only. Native partial-resource, prediction, secondary-power, color-curve, event-order and security observations remain pending. This is residual best-effort coverage, not an audit credit. See [[api-contract-probes]].
