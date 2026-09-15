@@ -104,6 +104,20 @@ Variants are omitted optional arguments; five false flags; each single true flag
 
 Existing observer bounds retain exact return arity and at most eight positions. Strings retain up to 256 bytes and set `truncated = true` when shortened; this may split UTF-8. Missing APIs/access checks fail closed, secret values are redacted and errors remain opaque. Ten captures maximum; rejected captures make no calls. Native execution remains pending; nonboolean truthiness/coercion, arbitrary-byte behavior outside the corpus, string-view lifetime and security semantics remain unverified. Local fixtures prove recording only; see [StripHyperlinks contract](../../specs/strip-hyperlinks.md).
 
+## Pure mapvalues observations
+
+Run `/apicontract mapvalues <label>` manually; `all` excludes it. The pinned retail `Blizzard_APIDocumentationGenerated/FrameScriptDocumentation.lua` declares `mapvalues(func, ...)`, not a table argument. Actual `TooltipDataHandler.lua` forwards `mapvalues(SanitizeTooltipDataArgument, ...)`; `Blizzard_AuraContainerUtil.lua` applies validation callbacks through it and discards the return. These sources guide the experiment, not native packing or traversal conclusions.
+
+Each snapshot runs nine cases: zero inputs; `(17)`; `(17,"two",false)`; `(17,nil,"tail")`; `(17,nil,nil)`; then `(17,"two")` with multiple, nil and zero callback returns; finally `(17)` with an opaque thrown object. The first five callbacks return literal `"mapped"`; multiple returns are `"first",nil,"third"`. Callback results never depend on observed arguments. No callbacks recurse into `mapvalues`.
+
+Each case stores input arity/positions, callback mode, ordered invocation observations and outer output. Exact arity is retained with at most 16 scalar positions per tuple; objects remain opaque and inaccessible values are redacted before inspection. Existing 256-byte string and ten-snapshot limits apply. Errors retain only `call-error`, never the thrown object. There is one shared budget of 32 recorded callback invocations per snapshot. An excess invocation throws an opaque object and sets `invocation-limit`; remaining cases are skipped even if the mapper catches that error. A callback invoked after its case returns is rejected without recording. This bounds recorder work/storage, not an arbitrary broken mapper that loops while swallowing errors.
+
+Native order, nil handling, multi-return packing, callback failure propagation and security remain unverified. Contrasting fake mappers test raw recording, not native expectations. Local fixture:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/mapvalues.lua docs/addons/ApiContractProbe
+```
+
 ## Selected action slots
 
 Run `/apicontract actions 7 before-use` with a slot you independently identify, then repeat with labels after manual use, during recharge and after restoration. No slot roles are inferred and no action is executed. Use separate labeled batches for ordinary spells, charged spells, consumables and empty slots; `0` and `-1` are explicit input controls. Syntax accepts signed decimal integers within ±9007199254740991 only, rejecting malformed input before queries. This does not establish native slot validation. `all` excludes this selected-slot mode.

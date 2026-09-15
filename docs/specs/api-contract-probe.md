@@ -102,6 +102,16 @@ The four pinned global APIs take event name and callback, with a third unit argu
 
 Behavioral fixtures cover owned registrations, hostile/secret/nil payloads, identity removal, no after-stop records, partial registration errors, cleanup retries/refusals, repeated start, new sessions, payload/session limits and `all` exclusion.
 
+## Pure mapvalues capture
+
+- [x] Manual `/apicontract mapvalues <label>` is excluded from `all`; query the actual accessible global with a callback followed by a fixed vararg tuple, never a guessed table signature.
+- [x] Nine cases cover zero/one/multiple inputs, interior/trailing nils, fixed one/multiple/nil/zero callback returns and an opaque callback throw. Preserve callback invocation sequence, each invocation's arity/positions and outer return arity/scalars without asserting native traversal or packing.
+- [x] Check accessibility before inspecting callback arguments or outer results; objects stay opaque, errors are not stringified, and callback outputs are ordinary fixed literals independent of observed arguments. Missing/restricted APIs fail closed.
+- [x] Retain at most 16 positions per tuple with explicit truncation and 32 callback invocations shared across a snapshot. Excess invocations throw opaquely, mark `invocation-limit` and prevent later cases even when the mapper swallows the error. Reject late callbacks after case completion; callbacks never recurse. Preserve existing string/storage bounds. No recorder can terminate an arbitrary mapper that loops while swallowing callback errors.
+- [x] `tests/mapvalues.lua` loads the actual TOC/slash handler and contrasts individual-value, whole-tuple and reversed fake mappers, nil/multiple returns, hostile/restricted values, errors, tuple/invocation/storage limits and manual-only routing.
+
+Pinned retail `FrameScriptDocumentation.lua` declares `mapvalues(func, values...)` with strided input/output values. `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua` forwards mapped tooltip arguments, while `Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua` discards validation-callback results. Native execution, nil/order/packing/error contracts and security semantics remain pending; fixture behavior earns no native credit.
+
 ## Publication and event recording
 
 - [x] Capture raw and ordinary lookup observations for configured enum, constant and API paths, distinguishing missing parents from missing members.

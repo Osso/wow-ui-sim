@@ -394,6 +394,61 @@ local function observeCast(fn, ...)
     return result
 end
 
+local function mapTuple(...)
+    local values = pack(...)
+    local result = { n = values.n, values = {} }
+    for index = 1, math.min(values.n, 16) do result.values[index] = scalar(values[index]) end
+    if values.n > 16 then result.truncated = true end
+    return result
+end
+
+local function mapCallbackResult(mode)
+    if mode == "multiple" then return "first", nil, "third" end
+    if mode == "nil" then return nil end
+    if mode == "zero" then return end
+    if mode == "throw" then error({}) end
+    return "mapped"
+end
+
+local function captureMapValues()
+    local fn = mapvalues
+    if not accessible(fn) then return { status = "restricted" } end
+    if type(fn) ~= "function" then return { status = "missing-api" } end
+    local cases = {
+        { id = "zero-inputs", inputs = pack(), callback = "single" },
+        { id = "one-input", inputs = pack(17), callback = "single" },
+        { id = "multiple-inputs", inputs = pack(17, "two", false), callback = "single" },
+        { id = "interior-nil", inputs = pack(17, nil, "tail"), callback = "single" },
+        { id = "trailing-nils", inputs = pack(17, nil, nil), callback = "single" },
+        { id = "multiple-returns", inputs = pack(17, "two"), callback = "multiple" },
+        { id = "nil-return", inputs = pack(17, "two"), callback = "nil" },
+        { id = "zero-returns", inputs = pack(17, "two"), callback = "zero" },
+        { id = "opaque-throw", inputs = pack(17), callback = "throw" },
+    }
+    local result = { status = "observed", cases = {}, invocationCount = 0 }
+    for _, case in ipairs(cases) do
+        local row = { id = case.id, callback = case.callback, invocations = {},
+            inputs = mapTuple(unpack(case.inputs, 1, case.inputs.n)) }
+        local active = true
+        local function callback(...)
+            if not active then error({}) end
+            if result.invocationCount >= 32 then
+                result.status = "invocation-limit"
+                error({})
+            end
+            result.invocationCount = result.invocationCount + 1
+            row.invocations[#row.invocations + 1] = mapTuple(...)
+            -- Return only fixed ordinary literals, never compute from callback arguments.
+            return mapCallbackResult(case.callback)
+        end
+        row.output = observeCast(fn, callback, unpack(case.inputs, 1, case.inputs.n))
+        active = false
+        result.cases[#result.cases + 1] = row
+        if result.status == "invocation-limit" then break end
+    end
+    return result
+end
+
 local function resourceCurve()
     local inputs = { { x = 0, y = 0 }, { x = 0.5, y = 10 }, { x = 1, y = 20 },
         { x = 25, y = 30 }, { x = 50, y = 40 }, { x = 100, y = 50 } }
@@ -835,8 +890,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -847,6 +902,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "mapvalues" then record.mapvalues = captureMapValues() end
         if mode == "cast-durations" then record.castDurations = captureCastDurations() end
         if mode == "color-curves" then record.colorCurves = captureColorCurves() end
         if mode == "curve-edit" then record.curveEdit = captureCurveEdit() end
