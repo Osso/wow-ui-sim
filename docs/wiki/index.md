@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare manual scalar curve point mutation recorder
+
+Runtime `9b7fdb43e` adds manual `/apicontract curve-edit <label>`, excluded from `all`: fresh `RemovePoint` index cases and independent empty/unsorted-duplicate `SetPoints` cases built with `CreateVector2D`. The cumulative harness is 41 local fixtures, not 41 new native cases. Native index/order/copy/coercion and color/secret gaps remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare manual scalar curve state recorder
 
 Runtime `411edf39e` adds manual `/apicontract curve-state <label>`, excluded from `all`. It records unsorted duplicate points, type/count/secret state, reset, evaluation and copy-isolation observations without assigning native semantics. The harness reaches 37 cumulative local fixtures; color curves, set/remove-points and secret semantics remain native capture work. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document manual scalar curve point mutation recorder
+
+Runtime `9b7fdb43e` adds manual `/apicontract curve-edit <label>`, excluded from `all`. Fresh `RemovePoint` indices and independent empty/unsorted-duplicate `SetPoints` cases use actual `CreateVector2D` objects; each records bounded state before/after without inferring index, ordering, duplicate, copy or coercion semantics. The 41 local fixtures are cumulative recorder proof only. Native execution, color curves and secret behavior remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document manual scalar curve state recorder
 
 `411edf39e` prepares `/apicontract curve-state <label>`, manual-only and excluded from `all`. It records empty/populated unsorted duplicate scalar curves, raw type/count/point/secret state, evaluation, reset and copy-isolation observations without interpreting them. Thirty-seven local fixtures are cumulative recorder proof, not native evidence; color curves, set/remove-point and secret behavior remain unexecuted. See [[api-contract-probes]].
