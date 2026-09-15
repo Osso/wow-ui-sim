@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare selected-slot spell-duration recorder
+
+Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, excluded from `all`. An accessible `GetActionInfo(slot)` spell ID permits guarded charge and loss-of-control duration producers, whose current objects receive ten read-only method observations only. It retains no objects between captures and does not affect cast-duration retention. Nine separate fixtures prove recorder mechanics only; native transitions, spellbook behavior, timing and restricted-context behavior remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare selected-slot spell-metadata recorder
 
 Runtime `9647bd5d5` adds manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. It queries metadata only when `GetActionInfo(slot)` produces an accessible `"spell"` and finite numeric spell ID, then calls seven guarded `C_Spell` predicates/queries. Eight separate fixtures prove recorder mechanics only. `GetVisibilityInfo`, native spell fixtures, rank/override transitions, classifications and security remain pending. See [[api-contract-probes]].
