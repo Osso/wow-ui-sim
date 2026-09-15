@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Document residual scalar resource scale recorder
+
+`151480a4e` prepares manual `/apicontract resources <label>` capture, excluded from `all`. It observes raw health/max, power/max/type, omitted/nil curves, explicit `unmodified` values and a six-point scalar curve without classifying native scale or inventing power IDs. Twenty-nine local fixtures prove recorder mechanics only. Native matching-client partial-resource, prediction, secondary-power, color-curve, event-order and security captures remain pending. This is best-effort residual preparation, not an audit credit or snapshot-plan completion. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Document selected action-slot recorder
 
 `be0f5f54c` adds manual `/apicontract actions <slot> <label>` for one independently selected slot; `all` excludes actions. It retains raw `currentCharges`, `maxCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate`, while charge duration remains kind/status/arity-only. Twenty-three local fixtures prove recorder behavior only. Native populated-slot, recharge, consumable transition, and duration-semantics evidence remains pending; no native claim or audit credit changed. See [[api-contract-probes]].

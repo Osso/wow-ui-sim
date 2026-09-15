@@ -1,3 +1,7 @@
+## [2026-09-15] audit | Prepare residual scalar resource scale recorder
+
+Runtime `151480a4e` adds manual `/apicontract resources <label>`; `all` excludes it. It records raw health/power state and no/nil-curve and `unmodified` observations with a six-point scalar curve, but does not classify scale or infer power IDs. Twenty-nine local fixtures prove recorder mechanics only. Native partial-resource, prediction, secondary-power, color-curve, event-order and security observations remain pending. This is residual best-effort coverage, not an audit credit. See [[api-contract-probes]].
+
 ## [2026-09-15] audit | Record residual StripHyperlinks native observations
 
 Runtime `521b328de` adds explicit `/apicontract hyperlinks <label>`: 16 literal inputs × nine flag variants, with 26 local fixtures proving bounded capture only. This is best-effort residual coverage outside the snapshot, not an audit credit or active-plan completion. Native malformed/coercion/arbitrary-byte/security behavior remains unexecuted. See [[api-contract-probes]].
