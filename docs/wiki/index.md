@@ -4,7 +4,7 @@ Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared rec
 
 ## [2026-09-14] audit | Prepare remaining native contract probes
 
-Scalar curve points, UnitSexBase and name/realm returns share a manual recorder; existing dispel probe remains ready. Runtime `3f7934e27` adds `names` and `all` inclusion; 13 local fixtures prove recorder behavior only. Native same-realm and cross-realm party sessions remain pending. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).
+Scalar curve points, UnitSexBase, name/realm, and finite numeric formatting share a manual recorder; existing dispel probe remains ready. Numeric runtime `41bcd89f0` records raw GetLocale and both C_StringUtil helpers across 25 finite inputs. Sixteen local fixtures prove recorder behavior only; actual locale/build captures and nonfinite/coercion/security behavior remain unknown. Name recorder's prior 13 fixtures + 12 supplemental checks remain valid in scope. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).
 
 ## [2026-09-14] audit | Credit bounded unit-filtered global callbacks
 

@@ -1,6 +1,6 @@
 # Native API contract probes
 
-Scalar curve point, `UnitSexBase`, and unit-name/realm investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names` capture and includes it in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
+Scalar curve point, `UnitSexBase`, unit-name/realm, and finite numeric-formatting investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names`; `41bcd89f0` adds numeric capture; both are included in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
 
 ## Evidence boundaries
 
@@ -10,13 +10,15 @@ Scalar point declarations specify vectors but do not establish indexing, orderin
 
 Name/realm capture invokes `UnitName` and `UnitNameUnmodified` without existence gating for fixed player, party, target, unknown and invalid-token inputs. It preserves exact arity and positional nils, so nil and empty realms remain distinct from explicit realm strings. Scenario labels identify independently assembled same-realm and cross-realm party slots; returned names never classify the session. Native same-realm and cross-realm sessions remain pending.
 
+`/apicontract numbers <label>` records raw `GetLocale` provenance plus exact arity, positional nils, and bounded accessible result bytes from both `C_StringUtil.FloorToNearestString` and `C_StringUtil.RoundToNearestString`. Its ordered 25 finite inputs cover signed ties and close neighbors, integers, fractions, and large finite magnitudes. It records literal observations only; helper names do not establish rounding or grouping semantics. Nonfinite inputs, coercion, security behavior, values outside this corpus, and actual build/locale captures remain unknown.
+
 Dispel curve numeric IDs remain pending the separate prepared capture. See [[aura-dispel-curve-probe]].
 
 ## Local proof
 
-Tests `e2adbb57d` initially failed because the new addon did not exist. The 13 local recorder fixtures now cover curves, sex, and name/realm behavior, including modified/unmodified differences, nil/empty/explicit realms, zero returns, fixed unknown/invalid tokens, redaction, opaque errors and `all` inclusion. Actual TOC/slash/SavedVariables wiring remains locally exercised. These fixtures prove recorder behavior only.
+Tests `e2adbb57d` initially failed because the new addon did not exist. The scoped recorder proof now has 16 local fixtures: curve, sex, name/realm, and numeric recording behavior, including deliberately different fake locale bytes, non-rounding strings, multiple/nil/zero returns, restricted/error results, modified/unmodified differences, nil/empty/explicit realms, fixed unknown/invalid tokens, redaction, opaque errors, and `all` inclusion. Actual TOC/slash/SavedVariables wiring remains locally exercised.
 
-Fixture outputs are not native contracts. No audit credits or totals changed. Actual native captures still require matching-client sessions with independently established same-realm and cross-realm party members before assigning compatibility evidence.
+The name recorder's prior 13 fixtures plus 12 supplemental checks remain valid within their earlier scoped commit. The numeric fixtures prove literal recording only, not native formatting. Fixture outputs are not native contracts. No audit credits or totals changed. Actual native captures still require matching-client sessions with independently established same-realm and cross-realm party members, plus matching build/locale numeric sessions, before assigning compatibility evidence.
 
 ## Complete preparation inventory
 
