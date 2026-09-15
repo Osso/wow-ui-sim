@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual selected-slot spell metadata
+
+- Manual `spell-metadata <slot> <label>` reuses the actions integer-slot parser and is excluded from `all`. Call `GetActionInfo(slot)` with exactly one argument; preserve raw producer arity and nil positions.
+- Only an accessible string first return exactly `spell` and accessible finite numeric second return authorize querying the original ID. No conversions, guessed IDs or inferred classification.
+- Independently call `C_Spell.GetSpellDisplayCount`, `GetSpellMaxCumulativeAuraApplications`, `IsConsumableSpell`, `IsExternalDefensive`, `IsPriorityAura`, `IsSpellCrowdControl` and `IsSpellImportant`, passing only the ID. Omit display-count optional arguments and exclude `GetVisibilityInfo` pending enum design.
+- Guard each namespace/function lookup and producer values before inspection; recheck input access after lookup/function checks before every downstream call. Missing APIs and opaque errors do not suppress peers. No action execution or casts.
+- Preserve exact arity, nils, sixteen scalar positions, 256-byte strings and ten snapshots. Eight separate actual TOC/slash fixtures prove bounded recorder behavior only; native outputs, classifications, rank/override fixtures and security remain pending.
+
 ## Manual public queries
 
 - Manual `public-queries <label>` is excluded from `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice, each with exactly zero arguments.

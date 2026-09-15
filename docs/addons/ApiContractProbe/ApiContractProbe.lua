@@ -417,6 +417,51 @@ local function mapTuple(...)
     return result
 end
 
+local function observeSpellProducer(slot)
+    local fn = GetActionInfo
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn, slot))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values[2], values[3]
+end
+
+local function spellInputStatus(kind, id)
+    if not accessible(kind) or not accessible(id) then return "restricted-input" end
+    if type(kind) ~= "string" or kind ~= "spell" or type(id) ~= "number" then
+        return "unavailable-input"
+    end
+    if id ~= id or id == math.huge or id == -math.huge then return "unavailable-input" end
+end
+
+local function observeSpellMetadata(kind, id, name)
+    local status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local fn, ok = readField(C_Spell, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Lookup and function guards can revoke the original producer values.
+    status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function captureSpellMetadata(slot)
+    local identity, kind, id = observeSpellProducer(slot)
+    local result = { slot = slot, identity = identity, queries = {} }
+    for _, name in ipairs({ "GetSpellDisplayCount", "GetSpellMaxCumulativeAuraApplications",
+        "IsConsumableSpell", "IsExternalDefensive", "IsPriorityAura", "IsSpellCrowdControl", "IsSpellImportant" }) do
+        result.queries[name] = identity.status == "observed" and observeSpellMetadata(kind, id, name)
+            or { status = "unavailable-input" }
+    end
+    return result
+end
+
 local function observeItemProducer(slot)
     local fn = GetInventoryItemLink
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
@@ -1052,11 +1097,11 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
     local slot
-    if mode == "actions" then
+    if mode == "actions" or mode == "spell-metadata" then
         slot, label = parseActionSlot(label)
-        if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
+        if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+    if mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
         print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
@@ -1068,6 +1113,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end

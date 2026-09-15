@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual selected-slot spell metadata
+
+`/apicontract spell-metadata <slot> <label>` reuses the integer-slot parser and stays outside `all`. Call `GetActionInfo(slot)` with exactly one argument and preserve producer arity. Only an accessible first return exactly equal to `"spell"` and an accessible finite numeric second return permit downstream queries. Use that original ID without conversion, guessed IDs or classification.
+
+Independently query `C_Spell.GetSpellDisplayCount`, `GetSpellMaxCumulativeAuraApplications`, `IsConsumableSpell`, `IsExternalDefensive`, `IsPriorityAura`, `IsSpellCrowdControl` and `IsSpellImportant`, each with only the ID. Display-count optional arguments remain omitted. Guard each namespace/function lookup and recheck producer-value access after lookup and function checks, immediately before each call. Errors never suppress peer queries. `GetVisibilityInfo` is excluded pending enum design; no actions or casts execute.
+
+Retain exact arity/nils, sixteen scalar positions, 256-byte strings and opaque errors under the ten-snapshot cap: at most ten producer and seventy metadata calls. Pinned `SpellDocumentation.lua` supplies signatures, not classifications or native outputs. Native spell fixtures, rank/override transitions and restricted-context behavior remain unverified. Eight separate actual TOC/slash fixtures test recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/spell_metadata.lua docs/addons/ApiContractProbe
+```
+
 ## Manual public queries
 
 `/apicontract public-queries <label>` stays outside `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice with exactly zero arguments. The latter records only the omitted-companion case; no companion or trait-tree IDs are invented and `IsTraitTreeForCompanion` is not called.
