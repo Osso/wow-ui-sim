@@ -56,6 +56,14 @@ Cached `LuaColorCurveObjectAPIDocumentation.lua`, `LuaCurveObjectBaseAPIDocument
 - [x] Bound capture count, inspected results, arrays, depth and strings.
 - [x] Exercise actual addon loading and slash commands through local behavioral fixtures.
 
+## Manual raid markers
+
+- Manual `raid-markers <label>` is excluded from `all`; use the nine sex-control tokens: player, target, focus, pet, party1, party2, nonexistent, invalid-unit-token and empty string.
+- Independently call `CanBeRaidTarget(unit)` twice per token, `IsRaidMarkerActive(index)` twice per index 1–8, and `IsRaidMarkerSystemEnabled()` twice with no arguments. Preserve repeated raw observations, not stability comparisons; missing functions never gate others.
+- Guard access before every inspection; record exact arity/nils and sixteen scalar positions, bounded 256-byte strings, opaque objects/errors and explicit truncation. Shared ten-snapshot cap bounds capture; at most 36 API calls per snapshot.
+- Exclude secret-return `GetRaidTargetIndex`, setters, clear/place/remove operations, permission and security claims. Native output and populated world-marker fixtures remain pending.
+- Six separate actual TOC/slash fixtures prove argument lists, repeated observations, independent failure handling, guards and bounds. Pinned `RaidMarkersDocumentation.lua` establishes signatures only, not native conformance.
+
 ## Manual abbreviations
 
 - Manual `abbreviations <label>` stays outside `all`; reuse the existing 25-number corpus, preserving `numbers` behavior.

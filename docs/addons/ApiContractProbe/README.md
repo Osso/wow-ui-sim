@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual raid-marker observations
+
+`/apicontract raid-markers <label>` stays outside `all`. It calls `CanBeRaidTarget(unit)` twice for each of `player`, `target`, `focus`, `pet`, `party1`, `party2`, `nonexistent`, `invalid-unit-token` and the empty token; `IsRaidMarkerActive(index)` twice for each index 1–8; and `IsRaidMarkerSystemEnabled()` twice with no arguments. All 36 calls are independent: missing APIs never gate other observations. Repeated results remain raw, not stability comparisons.
+
+Pinned `RaidMarkersDocumentation.lua` supplies these argument shapes, not native results. `GetRaidTargetIndex` is excluded because it declares secret returns. No setter, clear, place or remove API runs; no permission or security conclusions are recorded. Capture naturally available states with manual labels; native output and populated world-marker fixtures remain pending.
+
+Accessibility precedes inspection on every call. Exact arity, nil slots and up to sixteen scalar positions are retained; strings stop at 256 bytes, with truncation explicit. Objects and errors remain opaque. Shared ten-snapshot limit applies. Six separate local TOC/slash fixtures test raw repeated results, independent failures, redaction, arity and bounds—not native conformance:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/raid_markers.lua docs/addons/ApiContractProbe
+```
+
 ## Manual color curve state
 
 `/apicontract color-curves <label>` is excluded from `all`. Own `CreateColorCurve` and `CreateColor` inputs, in insertion order, are `(x; r,g,b,a)`: `(0; 0,1,.25,1)`, `(32; 1,0,.25,.75)`, `(-16; 0,.25,1,.5)`, `(48; 1,.75,0,.25)`. No enum type is assigned or guessed.

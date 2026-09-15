@@ -657,6 +657,29 @@ local numericInputs = {
     -1234.5678, 1234.5678, -1e6, 1e6, -1e12, 1e12,
 }
 
+local function captureRaidMarkers()
+    local result = { units = {}, markers = {}, enabled = {} }
+    for _, unit in ipairs({ "player", "target", "focus", "pet", "party1", "party2",
+        "nonexistent", "invalid-unit-token", "" }) do
+        local row = { unit = unit, observations = {} }
+        for attempt = 1, 2 do
+            row.observations[attempt] = observeCast(CanBeRaidTarget, unit)
+        end
+        result.units[#result.units + 1] = row
+    end
+    for index = 1, 8 do
+        local row = { index = index, observations = {} }
+        for attempt = 1, 2 do
+            row.observations[attempt] = observeCast(IsRaidMarkerActive, index)
+        end
+        result.markers[index] = row
+    end
+    for attempt = 1, 2 do
+        result.enabled[attempt] = observeCast(IsRaidMarkerSystemEnabled)
+    end
+    return result
+end
+
 local function captureAbbreviations()
     local result = { locale = observeCast(GetLocale), samples = {} }
     for _, input in ipairs(numericInputs) do
@@ -933,8 +956,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract actions <integer-slot> <label>"); return end
     end
-    if mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -945,6 +968,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
         if mode == "abbreviations" then record.abbreviations = captureAbbreviations() end
         if mode == "heal-calculator" then record.healCalculator = captureHealCalculator() end
         if mode == "mapvalues" then record.mapvalues = captureMapValues() end
