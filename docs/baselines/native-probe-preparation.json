@@ -9767,10 +9767,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual action-state records GetActionInfo control plus twelve independent selected-slot queries for autocast, text, use count, range and action predicates, without requiring a spell identity",
-          "GetExtraBarIndex and GetMultiCastBarIndex are independently called without arguments; IsActionInRange omits its optional target"
+          "GetExtraBarIndex and GetMultiCastBarIndex are independently called without arguments; IsActionInRange omits its optional target",
+          "Manual action-loss-control-duration independently queries GetActionLossOfControlCooldownDuration with the selected slot and inspects ten guarded current-only duration methods without retention"
         ],
         "missing": [
-          "Loss-of-control cooldown/duration observations and ActionBarCooldownInfo.isEnabled",
+          "Historical GetActionLossOfControlCooldown contract and ActionBarCooldownInfo.isEnabled; native duration lifecycle observations",
           "Native populated action fixtures, range/target transitions and classification semantics",
           "Action-button registration, validation and restricted-context behavior"
         ]
