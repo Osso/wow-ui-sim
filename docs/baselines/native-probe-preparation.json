@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 67,
-    "partial-recorder": 76,
+    "needs-design-and-recorder-review": 65,
+    "partial-recorder": 78,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -2821,8 +2821,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual cloak-helm-transition prepares ShowCloak false/true/read observations only after an accessible boolean baseline, followed by bounded original-state restoration; unconfirmed cleanup blocks later transition captures"
+        ],
+        "missing": [
+          "Native baseline/transition/restoration outputs and appearance coupling",
+          "Historical publication/load-phase and validation evidence",
+          "Restricted-context/security semantics remain deferred; no native execution performed"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-019"
     },
@@ -2835,8 +2845,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual cloak-helm-transition prepares ShowHelm false/true/read observations only after an accessible boolean baseline, followed by bounded original-state restoration; unconfirmed cleanup blocks later transition captures"
+        ],
+        "missing": [
+          "Native baseline/transition/restoration outputs and appearance coupling",
+          "Historical publication/load-phase and validation evidence",
+          "Restricted-context/security semantics remain deferred; no native execution performed"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-020"
     },
