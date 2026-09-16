@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 135,
-    "partial-recorder": 26,
+    "needs-design-and-recorder-review": 132,
+    "partial-recorder": 29,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -963,8 +963,17 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual public-queries independently records C_TransmogOutfitInfo.GetActiveOutfitID twice without arguments"
+        ],
+        "missing": [
+          "Other outfit catalog APIs and populated structures",
+          "Native active outfit transitions, validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/outfit_catalog_state"
     },
@@ -8948,8 +8957,17 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual public-queries independently records C_HousingCustomizeMode.IsHouseExteriorDoorHovered twice without arguments"
+        ],
+        "missing": [
+          "Native exterior door hover and customization transitions",
+          "Native defaults, validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_HousingCustomizeMode"
     },
@@ -9619,8 +9637,17 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual public-queries independently records C_SpellDiminish.IsSystemSupported twice without arguments"
+        ],
+        "missing": [
+          "Diminish category, ruleset, tracker and event observations",
+          "Native support transitions and classifications; secret-return APIs remain deferred"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-spells-diminish"
     },
