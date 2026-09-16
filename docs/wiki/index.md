@@ -1,6 +1,10 @@
+## [2026-09-16] investigation | Prepare selected-slot spellbook-duration recorder
+
+Runtime `fe68b79b6` adds manual `/apicontract spellbook-duration <slot> <label>`, excluded from `all`. An accessible selected-action spell ID feeds guarded `FindSpellBookSlotForSpell(id, false, true, true, true)`; its original finite slot/bank pair feeds independent charge, cooldown-with-`false`, and loss-of-control duration queries. Current returned objects receive the ten-method read-only whitelist without retention. Ten fixtures plus eight spellbook-metadata regressions prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare selected-slot spellbook metadata recorder
 
-Runtime `63bb28063` adds manual `/apicontract spellbook-metadata <slot> <label>`, excluded from `all`. An accessible selected-slot original spell ID drives independent guarded `FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, and `FindSpellOverrideByID` queries only. Eight local fixtures prove recorder mechanics; spellbook slot discovery and item-duration slot/bank producers remain missing. Native behavior remains unverified. See [[api-contract-probes]].
+Runtime `63bb28063` adds manual `/apicontract spellbook-metadata <slot> <label>`, excluded from `all`. An accessible selected-slot original spell ID drives independent guarded `FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, and `FindSpellOverrideByID` queries only. Eight local fixtures prove recorder mechanics. At that revision, spellbook slot discovery and item-duration slot/bank producers remained missing; native behavior remains unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded unit target-display recorder
 
