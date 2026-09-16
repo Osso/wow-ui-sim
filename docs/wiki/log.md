@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare spell-diminish category recorder
+
+Runtime `55836b66d` adds manual `/apicontract spell-diminish-categories <label>`, excluded from `all`. Three fixed published rulesets and eight fixed published categories produce eleven independent observations; accessible results expose only bounded first-list or first-info `category`, `name`, and `icon` fields. Eleven local fixtures establish recorder mechanics only. Secret tracking, events, mutations, native semantics, and native results remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Extend bounded public-query recorder
 
 Runtime `c5d272d63` retains seven public-query pairs and adds two reads each of `C_TransmogOutfitInfo.GetActiveOutfitID`, `C_HousingCustomizeMode.IsHouseExteriorDoorHovered`, and `C_SpellDiminish.IsSystemSupported`. Ten APIs make twenty calls per snapshot; seventeen cumulative fixtures, including five new cases, establish recorder mechanics only. No native outfit, hover, diminish, clock, encounter, housing, default, or state-transition behavior was observed.

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare spell-diminish category recorder
+
+Runtime `55836b66d` adds manual `/apicontract spell-diminish-categories <label>`, excluded from `all`. It independently queries three fixed published rulesets and eight fixed published categories, inspecting only first-list entries 1–8 or a first info object and only guarded `category`, `name`, and `icon` fields. Eleven fixtures prove recorder mechanics only; secret tracking, events, mutations, category semantics, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Extend bounded public-query recorder
 
 Runtime `c5d272d63` extends manual `/apicontract public-queries <label>`, excluded from `all`, with two reads each of active outfit ID, exterior-door hover, and spell-diminish support. The prior seven API pairs remain, for ten APIs and twenty calls per snapshot. Seventeen cumulative fixtures include five new cases; no native outfit, hover, diminish, clock, encounter, default, or state behavior is established. See [[api-contract-probes]].
