@@ -178,6 +178,10 @@ Runtime `03ac1a023` adds manual `/apicontract public-queries <label>`, excluded 
 
 Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. It creates one unnamed StatusBar under `UIParent`, attempts `Hide`, captures fresh `GetFillStyle()` only after Hide succeeds, then uses only accessible finite values from the four published `Enum.StatusBarFillStyle` names. Each setter is followed by two independent getter observations; no numeric fallback or equality conclusion is made. Seven separate fixtures prove recorder mechanics only. On Hide failure, visibility is unconfirmed and no cleanup/disposal claim follows. Native defaults, invalid inputs/coercion, security, rendering and validation remain pending. See [[api-contract-probes]].
 
+## [2026-09-16] investigation | Reconcile retained raid-marker literal coverage
+
+Metadata `19b0c52f1` maps literal-003 to existing `/apicontract raid-markers` `IsRaidMarkerSystemEnabled` calls. No runtime or native credit changed; publication/load-phase and marker-system transition obligations remain open. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare bounded raid-marker recorder
 
 `666a930d8` adds manual `/apicontract raid-markers <label>`, excluded from `all`: `CanBeRaidTarget` twice for nine fixed tokens, `IsRaidMarkerActive` twice for indices 1–8, and `IsRaidMarkerSystemEnabled` twice, for 36 independent read-only calls. Six separate fixtures prove bounded routing and observation only. `GetRaidTargetIndex`, all mutations, permission/security conclusions, native output and populated world-marker fixtures remain pending. See [[api-contract-probes]].
