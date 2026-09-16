@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual training grounds structures
+
+- Manual `training-grounds-structures <label>` is excluded from `all`; independently call `C_PvP.GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once each, storing `trainingGroundsStructures.grounds` and `.rewards`.
+- Preserve exact tuple arity, zero returns, nil positions and opaque errors within sixteen observed positions. Only the first training return may be inspected as a table, at indices 1–8. Each entry exposes only `name`, `icon`, `gameType`, `shortDescription`, `longDescription`, `mapDescription`, `maxPlayers`, `battlegroundID`, `lfgDungeonID`, `mapID`, `isHoliday`, `isRandom`, `canEnter`, `isTrainingGround`.
+- Rewards are five declared returns (`honor`, `experience`, `itemRewards`, `currencyRewards`, `roleShortageBonus`), not a structure. Nested objects remain opaque; never invent reward fields or traverse reward tables.
+- Check access before every table/entry/field lookup and value inspection/serialization, including after earlier observations revoke access. Failures remain independent. Do not retain raw objects, iterate or measure source tables, queue/join/request/mutate, or infer ordering, completeness or native classifications.
+- Cap two API calls per snapshot, ten shared snapshots, 256-byte scalar strings and 128-byte labels. Eleven separate actual TOC/slash fixtures prove recorder mechanics only; matching native fixtures and semantics remain unverified. Pinned retail `PvpInfoDocumentation.lua:599–610,767–774,1607–1625` supplies signatures and field declarations.
+
 ## Manual housing catalog
 
 - Manual `housing-catalog <label>` is excluded from `all`. Under `housingCatalog`, capture `featured` twice via no-argument `C_HousingCatalog.HasFeaturedEntries`, `products` once via `C_CatalogShop.GetNewProducts`, and `refundable` once via `GetRefundableDecors` with optional nilable `productIdFilterOpt` omitted. Preserve exact raw arity/nil positions, opaque errors and the refund producer's second return `minTimeRemainingSeconds`.

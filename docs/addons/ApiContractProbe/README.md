@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual training grounds structures
+
+`/apicontract training-grounds-structures <label>` is excluded from `all`. Independently call `C_PvP.GetTrainingGrounds()` and `C_PvP.GetRandomTrainingGroundRewards()` once each. `trainingGroundsStructures.grounds` preserves raw arity and inspects only the first returned table at indices 1–8. Each entry exposes the fourteen declared fields: `name`, `icon`, `gameType`, `shortDescription`, `longDescription`, `mapDescription`, `maxPlayers`, `battlegroundID`, `lfgDungeonID`, `mapID`, `isHoliday`, `isRandom`, `canEnter`, `isTrainingGround`.
+
+Pinned retail `PvpInfoDocumentation.lua:599–610` declares **five reward returns**, not one structure: `honor`, `experience`, `itemRewards`, `currencyRewards`, `roleShortageBonus`. `rewards` records that raw tuple; nested objects remain opaque. Lines 767–774 and 1607–1625 define the training producer and fields. Guard every table, entry and field before lookup and every value before serialization. Preserve nil holes, zero returns, opaque errors and independent failures; retain no raw objects.
+
+Bounds: two calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings, 128-byte labels. No queue/join/request/mutation, nested reward inspection, ordering, completeness or native classification claims. Eleven actual TOC/slash fixtures establish recorder mechanics only; native behavior remains unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/training_grounds_structures.lua docs/addons/ApiContractProbe
+```
+
 ## Manual housing catalog
 
 `/apicontract housing-catalog <label>` is excluded from `all`. Call `C_HousingCatalog.HasFeaturedEntries()` twice and independently call `C_CatalogShop.GetNewProducts()` once. Only the first returned product list at indices 1–8 supplies original accessible finite product IDs. Each ID permits one independent `GetFirstCategoryByProductID(ID)` call; inspect only its first returned object through six fixed fields: `ID`, `displayName`, `iconTexture`, `linkTag`, `isDisabled`, `showPersistentRefundButton`.
