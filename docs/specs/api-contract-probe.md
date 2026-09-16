@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual expansion audio fields
+
+- `expansion-audio-fields <label>` is manual-only, excluded from `all`. Look up only published globals `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT`; require accessible finite numbers, with no numeric fallback. Call global `GetExpansionDisplayInfo` twice independently per value with exactly one argument, leaving `desiredReleaseType` omitted.
+- Guard publication and API lookup before inspection/use, then recheck the original expansion value after function guards before forwarding. Preserve raw return arity, nil positions and opaque errors in named `expansionAudioFields.expansions` observation pairs; unavailable or failing attempts must not suppress peers.
+- Inspect only the first returned table/userdata and three declared fields: `glueAmbianceSoundKit`, `glueCreditsSoundKit`, `glueMusicSoundKit`. Guard the receiver before every lookup and each value before scalar serialization; never traverse other fields, forward sound IDs or retain objects.
+- Bound calls to four per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. No playback, requests or mutations. Eleven actual TOC/slash fixtures prove recorder mechanics only; native assets, defaults, release variants and historical/load-phase behavior remain unverified.
+
 ## Manual Perks criteria
 
 - `perks-criteria <label>` is manual-only, excluded from `all`. Independently invoke `C_PerksActivities.GetPerksActivitiesInfo()` twice with zero arguments; preserve raw arity, nil positions and opaque errors in `perksCriteria[1..2]`.

@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual expansion audio fields
+
+`/apicontract expansion-audio-fields <label>` is excluded from `all`. Read only the published globals `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT`, requiring accessible finite numeric values without fallback. Independently call the global `GetExpansionDisplayInfo(value)` twice per name, omitting `desiredReleaseType`. Recheck the original value after API lookup/function guards. The generated `Expansion` system has no `Namespace`; no `C_Expansion` substitute is used.
+
+`expansionAudioFields.expansions` records each name and two observations, preserving raw arity, nil positions and opaque errors. Only the first returned table/userdata exposes guarded `glueAmbianceSoundKit`, `glueCreditsSoundKit` and `glueMusicSoundKit` scalar fields. Recheck the receiver before every field lookup, including after prior observations revoke access. Never traverse other fields, retain objects or forward sound-kit values.
+
+Bounds: four API calls per snapshot, ten snapshots, 16 tuple positions, 256-byte strings, 128-byte labels. Pinned `ExpansionDocumentation.lua:55–68,297–311` declares the producer and fields; glue UI consumers reference the two global input names. Eleven actual TOC/slash fixtures establish recorder mechanics only. No playback, requests, mutation, asset validity, defaults, stability, release-type or native-conformance claims.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/expansion_audio_fields.lua docs/addons/ApiContractProbe
+```
+
 ## Manual Perks criteria
 
 `/apicontract perks-criteria <label>` is excluded from `all`. It calls `C_PerksActivities.GetPerksActivitiesInfo()` twice independently with no arguments. Only the first returned root's declared `activities` list is inspected, at positions 1–8. Each activity records only `ID`, `criteriaList` positions 1–4 (`criteriaID`, `requiredValue`), and `requirementsList` positions 1–4 (`completed`, `requirementText`). Every container, entry and field is access-guarded before lookup or serialization. No generic traversal or recursive expansion occurs.
