@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded quest-favor recorder
+
+Documented runtime `a02865ad4`: manual `quest-favor` reads the first four original neighborhood-task `rewardQuestID` values, calling `GetQuestLogRewardFavor` with clamp omitted and `true` independently. Nine calls per snapshot and ten fixtures establish recorder mechanics only; requests, refreshes, quest/reward mutation, favor semantics, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
 
 Documented runtime `c6818f925` and extension `f3b0efea9`: manual `empowered-stages` calls durations plus percentage queries with false and true for seven fixed unit tokens, capped at twenty-one producer calls per snapshot and excluded from `all`. First-return duration entries 1–8 receive current-only ten-method observations with receiver rechecks; percentage entries remain scalar-only. No objects are retained and cast state remains isolated. Fifteen cumulative fixtures establish recorder mechanics only; casts, percentage semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.

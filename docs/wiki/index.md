@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded quest-favor recorder
+
+Runtime `a02865ad4` adds manual `/apicontract quest-favor <label>`, excluded from `all`. First-four original `rewardQuestID` values from neighborhood tasks each receive independent favor reads with clamp omitted and `true`. Ten fixtures prove recorder mechanics only; no initiative request, quest/reward mutation, native favor semantics, or native execution occurred. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
 
 Runtime `c6818f925` adds manual `/apicontract empowered-stages <label>`, excluded from `all`; `f3b0efea9` adds current-only ten-method observations for first-return duration entries 1–8. Across seven fixed tokens, percentages with `false` and `true` remain scalar-only; duration objects are not retained and do not affect cast state. Fifteen cumulative fixtures include five new method cases. Native stage values and behavior remain unverified. See [[api-contract-probes]].
