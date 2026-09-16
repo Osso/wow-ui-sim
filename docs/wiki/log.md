@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-catalog recorder
+
+Runtime `b02947092` adds manual `/apicontract outfit-catalog <label>`, excluded from `all`. It bounds `GetOutfitsInfo()` inspection to first-table entries 1–8, seven guarded fields, and category sublists 1–8; accessible original IDs independently receive one non-recursive `GetOutfitInfo(id)` query. Eleven fixtures prove recorder mechanics only. No native execution, mutation, outfit selection, identity/order/completeness claim, or native credit occurred.
+
 ## [2026-09-16] investigation | Prepare spell-diminish category recorder
 
 Runtime `55836b66d` adds manual `/apicontract spell-diminish-categories <label>`, excluded from `all`. Three fixed published rulesets and eight fixed published categories produce eleven independent observations; accessible results expose only bounded first-list or first-info `category`, `name`, and `icon` fields. Eleven local fixtures establish recorder mechanics only. Secret tracking, events, mutations, native semantics, and native results remain unverified. See [[api-contract-probes]].
