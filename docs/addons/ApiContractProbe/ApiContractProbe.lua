@@ -936,7 +936,7 @@ local function inspectSetCatalogEntry(entry)
         return result
     end
     result.fields = {}
-    for _, key in ipairs({ "setID", "name", "collected", "favorite", "validForCharacter" }) do
+    for _, key in ipairs({ "setID", "name", "collected", "favorite", "validForCharacter", "grantAsPrecedingVariant" }) do
         local value, ok = readField(entry, key)
         result.fields[key] = ok and scalar(value) or { status = "field-error" }
     end

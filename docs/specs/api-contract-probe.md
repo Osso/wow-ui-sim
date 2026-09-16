@@ -5,9 +5,9 @@
 ## Manual sets catalog
 
 - Manual `sets-catalog <label>` is excluded from `all`. Independently call no-argument `C_TransmogSets.GetAvailableSets()` once and `IsUsingDefaultSetsFilters()` twice, preserving raw arity, nil positions and opaque errors within sixteen return positions.
-- Inspect only first-return list positions 1–8 and fixed fields `setID`, `name`, `collected`, `favorite`, `validForCharacter`. Guard every receiver before lookup and each value before serialization; no iteration, length lookup or retained raw objects. Failures must not suppress peer observations.
+- Inspect only first-return list positions 1–8 and six fixed fields `setID`, `name`, `collected`, `favorite`, `validForCharacter`, `grantAsPrecedingVariant`. Guard every receiver before lookup and each value before serialization; no iteration, length lookup or retained raw objects. Failures must not suppress peer observations.
 - Cap three API calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. No downstream ID queries, setters, reset or selection; no ordering, completeness, default or native claims.
-- Keep `grantAsPrecedingVariant` outside capture. Current pinned declaration includes the field, but this slice establishes no consumer/native evidence for it. Eleven actual TOC/slash fixtures prove bounded mechanics only; native behavior remains unverified.
+- Capture `grantAsPrecedingVariant` through the same guarded scalar observation path, as declared by pinned `TransmogSetsDocumentation.lua:530`; infer no semantics. Fourteen actual TOC/slash fixtures (eleven existing, three new) prove bounded mechanics only; native observed values and behavior remain unverified.
 
 ## Manual custom-set names
 

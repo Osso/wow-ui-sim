@@ -1,6 +1,6 @@
 local root = assert(arg[1])
-local passed, calls, mutations = 0, {}, 0
-local fields = { "setID", "name", "collected", "favorite", "validForCharacter" }
+local passed, calls, mutations, failed = 0, {}, 0, 0
+local fields = { "setID", "name", "collected", "favorite", "validForCharacter", "grantAsPrecedingVariant" }
 local secret = newproxy(true)
 getmetatable(secret).__index = function() error("secret lookup") end
 getmetatable(secret).__tostring = function() error("secret stringify") end
@@ -28,7 +28,14 @@ local function capture(label)
     return assert(ApiContractProbeDB.captures[#ApiContractProbeDB.captures].setsCatalog)
 end
 local function test(name, fn)
-    fn(); assert(mutations == 0); passed = passed + 1; print("PASS " .. name)
+    local ok, err = pcall(function() fn(); assert(mutations == 0) end)
+    if not ok then
+        failed = failed + 1
+        print("FAIL " .. name .. ": " .. tostring(err))
+        return
+    end
+    passed = passed + 1
+    print("PASS " .. name)
 end
 
 test("one list and two independent no-argument filter calls", function()
@@ -88,7 +95,7 @@ test("zero returns nil holes opaque errors and fresh peer lookup", function()
     assert(r.available.n == 3 and r.available.values[2].entries == nil and r.filters[1].n == 1)
 end)
 
-test("first table only eight entries five fields opaque weak references", function()
+test("first table only eight entries six fields opaque weak references", function()
     local reads, fieldReads = 0, 0
     local weak = setmetatable({}, { __mode = "v" })
     setup(function()
@@ -109,7 +116,7 @@ test("first table only eight entries five fields opaque weak references", functi
         return list, extra
     end, function() return true end)
     local r = capture()
-    assert(reads == 8 and fieldReads == 40 and r.available.values[2].entries == nil)
+    assert(reads == 8 and fieldReads == 48 and r.available.values[2].entries == nil)
     assert(#r.available.values[1].entries[8].fields.name.value == 256)
     assert(r.available.values[1].entries[8].fields.setID.status == "restricted")
     collectgarbage("collect"); collectgarbage("collect"); assert(next(weak) == nil)
@@ -132,7 +139,7 @@ test("list receiver rechecked at every index", function()
 end)
 
 test("entry receiver rechecked at every field and peers continue", function()
-    for stop = 1, 5 do
+    for stop = 1, 6 do
         local reads, revoked = 0, false
         local entry = setmetatable({}, { __index = function(_, key)
             assert(not revoked and key == fields[reads + 1]); reads = reads + 1
@@ -143,7 +150,7 @@ test("entry receiver rechecked at every field and peers continue", function()
         canaccessvalue = function(v) return not rawequal(v, secret) and not (revoked and rawequal(v, entry)) end
         local r = capture()
         assert(reads == stop and r.available.values[1].entries[2].fields.setID.value == 7)
-        if stop < 5 then assert(r.available.values[1].entries[1].fields[fields[stop + 1]].status == "field-error") end
+        if stop < 6 then assert(r.available.values[1].entries[1].fields[fields[stop + 1]].status == "field-error") end
     end
 end)
 
@@ -203,4 +210,57 @@ test("manual only and missing access API fail closed", function()
     SlashCmdList.APICONTRACTPROBE("sets-catalog missing")
     assert(ApiContractProbeDB.captures[1].status == "missing-access-api")
 end)
+
+test("preceding variant preserves true false and nil observations", function()
+    setup(function()
+        return {
+            { grantAsPrecedingVariant = true },
+            { grantAsPrecedingVariant = false },
+            {},
+        }
+    end, function() return true end)
+    local entries = capture().available.values[1].entries
+    local yes = assert(entries[1].fields.grantAsPrecedingVariant)
+    local no = assert(entries[2].fields.grantAsPrecedingVariant)
+    local absent = assert(entries[3].fields.grantAsPrecedingVariant)
+    assert(yes.status == "observed" and yes.kind == "boolean" and yes.value == true)
+    assert(no.status == "observed" and no.kind == "boolean" and no.value == false)
+    assert(absent.status == "observed" and absent.kind == "nil")
+end)
+
+test("preceding variant guards secret values and revoked receivers", function()
+    local revoked, reads = false, 0
+    local entry = setmetatable({}, { __index = function(_, key)
+        if key == "validForCharacter" then revoked = true end
+        if key == "grantAsPrecedingVariant" then reads = reads + 1; error("revoked receiver") end
+        return false
+    end })
+    setup(function() return { entry, { grantAsPrecedingVariant = secret },
+        { grantAsPrecedingVariant = true } } end, function() return false end)
+    canaccessvalue = function(v)
+        return not rawequal(v, secret) and not (revoked and rawequal(v, entry))
+    end
+    local r = capture()
+    local entries = r.available.values[1].entries
+    assert(reads == 0)
+    assert(entries[1].fields.grantAsPrecedingVariant.status == "field-error")
+    assert(entries[2].fields.grantAsPrecedingVariant.status == "restricted")
+    assert(entries[3].fields.grantAsPrecedingVariant.value == true)
+    assert(r.filters[2].values[1].value == false)
+end)
+
+test("preceding variant lookup errors do not suppress peers", function()
+    local entry = setmetatable({}, { __index = function(_, key)
+        if key == "grantAsPrecedingVariant" then error(secret) end
+        return false
+    end })
+    setup(function() return { entry, { grantAsPrecedingVariant = false } } end,
+        function() return true end)
+    local r = capture()
+    local entries = r.available.values[1].entries
+    assert(entries[1].fields.grantAsPrecedingVariant.status == "field-error")
+    assert(entries[2].fields.grantAsPrecedingVariant.value == false)
+    assert(r.filters[1].values[1].value == true and r.filters[2].values[1].value == true)
+end)
+assert(failed == 0, failed .. " sets-catalog fixtures failed")
 print("PASS " .. passed .. " sets-catalog fixtures")
