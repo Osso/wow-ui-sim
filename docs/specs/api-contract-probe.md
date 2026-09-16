@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual item interaction flags
+
+- `item-interaction-flags <label>` is manual-only, excluded from `all`. Independently call `C_ItemInteraction.GetItemInteractionInfo()` twice with no arguments, recording raw arity, nil positions and opaque errors under `itemInteractionFlags[1..2]`.
+- Only the first accessible table/userdata result exposes `values[1].fields.flags`. Guard namespace/function before lookup/use, root before field lookup and flags before inspection/serialization; recheck the root after potentially revoking tuple observations. No other field or nested object traversal. Missing or inaccessible population must not be fabricated or suppress the second call.
+- Bound snapshots to ten, calls to two per snapshot, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Do not initialize/open an interaction, set pending items, perform interactions or invoke conversion APIs.
+- Eleven actual TOC/slash fixtures establish recorder mechanics only. No enum interpretation, historical equivalence, populated native values or flags semantics are established.
+
 ## Manual house exterior options
 
 - `house-exterior-options <label>` is manual-only, excluded from `all`. Independently call `C_HouseExterior.GetCurrentHouseExteriorType`, `GetHouseExteriorSizeOptions` and `GetHouseExteriorTypeOptions` once each with zero arguments; preserve raw arity, nil positions and opaque errors in API-name-keyed `houseExteriorOptions` observations.

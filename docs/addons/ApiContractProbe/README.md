@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual item interaction flags
+
+`/apicontract item-interaction-flags <label>` is excluded from `all`. Call `C_ItemInteraction.GetItemInteractionInfo()` twice independently with zero arguments. Missing APIs, nil/unavailable results and opaque errors remain observations; no interaction is opened or populated.
+
+`itemInteractionFlags[1..2]` preserves raw return arity and nil positions. Only the first accessible table/userdata result exposes `values[1].fields.flags`, using guarded receiver and value reads. Other fields and returned objects are not traversed. Recheck the root after tuple serialization; inaccessible flags stay opaque. No enum interpretation, historical equivalence or native flags claim follows.
+
+Bounds: two calls per snapshot, ten snapshots, 16 result positions, 256-byte strings and 128-byte labels. Never call initialization, pending-item, open, perform or conversion APIs. The pinned `ItemInteractionUIDocumentation.lua` declares the no-argument optional root and `flags`; populated native behavior remains unverified. Eleven actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/item_interaction_flags.lua docs/addons/ApiContractProbe
+```
+
 ## Manual house exterior options
 
 `/apicontract house-exterior-options <label>` is excluded from `all`. Independently call `C_HouseExterior.GetCurrentHouseExteriorType()`, `GetHouseExteriorSizeOptions()` and `GetHouseExteriorTypeOptions()` once each, without arguments. Preserve raw return arity, nil positions and opaque errors; failures do not suppress peer calls.
