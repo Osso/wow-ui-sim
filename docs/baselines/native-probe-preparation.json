@@ -967,10 +967,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual public-queries independently records C_TransmogOutfitInfo.GetActiveOutfitID twice without arguments"
+          "Manual public-queries independently records C_TransmogOutfitInfo.GetActiveOutfitID twice without arguments",
+          "Manual outfit-catalog inspects the first eight GetOutfitsInfo entries and seven guarded fields, including up to eight situationCategories positions, then independently queries GetOutfitInfo with each original accessible finite outfitID without recursive followups"
         ],
         "missing": [
-          "Other outfit catalog APIs and populated structures",
+          "Other outfit catalog APIs, remaining list entries and populated native fixtures",
           "Native active outfit transitions, validation and restricted-context behavior"
         ]
       },
