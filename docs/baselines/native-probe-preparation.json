@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 68,
-    "partial-recorder": 75,
+    "needs-design-and-recorder-review": 67,
+    "partial-recorder": 76,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -3411,8 +3411,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual threat-lead-read independently records UnitThreatLeadSituation for four fixed player/unit-token pairs, preserving raw arity while inaccessible conditional-secret results remain opaque"
+        ],
+        "missing": [
+          "Native populated threat fixtures, classifications and transitions",
+          "Native scale, validation and historical contract evidence",
+          "Restricted-context/security semantics remain deferred"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-047"
     },
