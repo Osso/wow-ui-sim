@@ -9,6 +9,14 @@
 - Preserve raw arity/nils and accessible scalar results within sixteen positions, 256-byte strings, 128-byte labels and ten shared snapshots. Do not infer boolean expectations, defaults, repeated-read stability or native target semantics.
 - Never query secret-return `UnitSpellTargetClass`/`UnitSpellTargetName` or add casting queries. Existing `casts` mode supplies separate manual context. Native cast/target fixtures remain unverified; eight local actual TOC/slash fixtures establish recorder mechanics only.
 
+## Manual selected-slot spellbook durations
+
+- Manual `spellbook-duration <actionslot> <label>` uses the existing integer parser and actual `GetActionInfo(actionslot)` producer; excluded from `all`. Only the accessible original `spell` kind and finite numeric spell ID permit `FindSpellBookSlotForSpell(ID, false, true, true, true)`, the pinned consumer's `knownSpellsOnly=false` branch, not inferred defaults.
+- Record raw producer arity/nils/opaque errors. Forward only its original accessible finite numeric first pair as slotIndex/bank; no enum interpretation, coercion or guessing. Recheck kind/ID after slot lookup/function guards, and the pair before inspection and after every duration lookup/function guard.
+- Independently query charge `(slot, bank)`, cooldown `(slot, bank, false)` and loss-of-control `(slot, bank)` durations. Inspect current returned objects with the existing ten read-only methods; receiver guards apply before lookup/use. Never retain objects or change cast-duration retention/counters.
+- Bounds: sixteen returned positions, 256-byte strings, 128-byte labels, ten snapshots, one slot producer and three duration queries per snapshot, at most 480 method calls per snapshot. Preserve nil positions, missing/restricted outcomes and independent errors without native/default/bank/identity conclusions.
+- Ten actual TOC/slash fixtures exercise forwarding, revocation, arity/errors, method guards, collectibility and bounds. Local proof establishes recorder mechanics only; native behavior remains unverified.
+
 ## Manual selected-slot spell durations
 
 - Manual `spell-duration <slot> <label>` reuses the integer-slot parser and guarded `GetActionInfo(slot)` producer; it is excluded from `all`. Only an accessible `spell` string and finite numeric ID authorize calls with the original ID.

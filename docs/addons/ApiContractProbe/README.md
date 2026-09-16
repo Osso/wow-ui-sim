@@ -12,6 +12,14 @@ Eight actual TOC/slash fixtures prove recorder mechanics only:
 luajit docs/addons/ApiContractProbe/tests/unit_target_display.lua docs/addons/ApiContractProbe
 ```
 
+## Manual selected-slot spellbook durations
+
+`/apicontract spellbook-duration <actionslot> <label>` is manual only, excluded from `all`. The original accessible `"spell"` kind and finite spell ID from `GetActionInfo(actionslot)` authorize `C_SpellBook.FindSpellBookSlotForSpell(ID, false, true, true, true)`. This is the `knownSpellsOnly=false` branch used by the pinned `Blizzard_SpellBookFrame.lua` consumer, not a claim about defaults. Preserve producer arity, nils and opaque errors. Only the original accessible finite numeric first pair is forwarded, without interpreting or guessing bank/slot identity.
+
+Independently call `GetSpellBookItemChargeDuration(slot, bank)`, `GetSpellBookItemCooldownDuration(slot, bank, false)` and `GetSpellBookItemLossOfControlCooldownDuration(slot, bank)`. Recheck kind/ID after lookup/function guards before the slot producer, and slot/bank after every duration API lookup/function guard. Missing or restricted inputs remain unavailable observations, not zero durations. Current objects receive the existing ten read-only duration methods, with receiver access rechecked before invocation; no objects are retained and cast-duration state is untouched.
+
+Bounds: sixteen return positions, 256-byte scalar strings, 128-byte labels, ten snapshots, one slot lookup and three duration queries per snapshot; at most 480 method calls per snapshot. Ten actual TOC/slash fixtures prove recorder mechanics only. No native bank, identity, cooldown, default, lifecycle or security semantics are established.
+
 ## Manual selected-slot spell durations
 
 `/apicontract spell-duration <slot> <label>` is excluded from `all`. It uses the existing integer-slot parser and `GetActionInfo(slot)` producer. Only an accessible `"spell"` first return and finite numeric second return permit queries with that original ID. Recheck both inputs after each protected namespace lookup and function guard, immediately before calling `C_Spell.GetSpellChargeDuration(ID)` or `C_Spell.GetSpellLossOfControlCooldownDuration(ID)`. Missing, restricted or failed producers are unavailable inputs, not zero durations; one failed API never suppresses its peer.
