@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 141,
-    "partial-recorder": 20,
+    "needs-design-and-recorder-review": 140,
+    "partial-recorder": 21,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -9481,8 +9481,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual spellbook-metadata uses the original accessible finite spell ID from GetActionInfo(slot) for three independent FindBaseSpellByID, FindFlyoutSlotBySpellID and FindSpellOverrideByID observations"
+        ],
+        "missing": [
+          "Spellbook item duration observations with produced slotIndex and spellBank",
+          "Native rank, override, base, flyout and spellbook population transitions",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-spells-spellbook"
     },
