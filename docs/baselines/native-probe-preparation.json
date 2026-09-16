@@ -9590,11 +9590,12 @@
         "observations": [
           "Manual spell-metadata capture independently queries C_UnitAuras.AuraIsBigDefensive using the original accessible finite spell ID produced by GetActionInfo(slot)",
           "Guarded producer inputs, namespace/function lookup and access rechecks; bounded raw return arity and opaque errors",
-          "Manual aura-display-count captures the first player HELPFUL page with up to eight original slots and guarded auraInstanceIDs, then five independent omitted/min/max display-count variants per ID"
+          "Manual aura-display-count captures the first player HELPFUL page with up to eight original slots and guarded auraInstanceIDs, then five independent omitted/min/max display-count variants per ID",
+          "Manual unit-auras-current independently captures required-filter omission as a negative case and HELPFUL/HARMFUL maxCount=8 calls; first returned table positions 1-8 expose only three guarded consumer-grounded fields with sort arguments omitted"
         ],
         "missing": [
           "Aura display-count continuation pages, additional filters/units, native stack transitions and formatting results",
-          "GetUnitAuras changed enumeration contract and populated aura fixtures",
+          "GetUnitAuras historical changed contract, explicit sorting/maxCount transitions, completeness and populated native aura fixtures",
           "Native defensive classifications, transitions, coercion and restricted-context behavior"
         ]
       },
