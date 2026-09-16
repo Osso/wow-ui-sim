@@ -10,6 +10,13 @@
 - Observe current returned objects only. Do not retain objects between captures or touch the cast-duration retention list/counter. Preserve sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds; at most two producers and 320 duration-method calls per snapshot.
 - Nine separate actual TOC/slash fixtures establish recorder behavior, including interleaved cast-retention isolation. Native charge and loss-of-control timing/lifecycle and restricted-context behavior remain pending.
 
+## Manual current-only aura time
+
+- Manual `aura-time <label>` is excluded from `all`; reuse the first-page player HELPFUL eight-slot producer without changing `aura-display-count` output or behavior. Forward only original accessible finite slots and guarded original aura instance IDs.
+- Independently call `DoesAuraHaveExpirationTime`, `GetAuraBaseDuration`, `GetRefreshExtendedDuration`, and `GetAuraDuration`, each with exactly `("player", id)`. Omit optional spell IDs entirely. Recheck original inputs after namespace/function lookup and access guards, before forwarding.
+- Preserve scalar return arity, nil positions and opaque errors; record duration results as opaque accessible/restricted values only. No methods, field traversal, retention, continuation or mutations: current-only producer observations, not lifecycle or native-conformance proof.
+- Missing fixtures/APIs, restricted/invalid inputs and errors produce independent observations. Cap each snapshot at one page, eight data calls, 32 queries, 16 tuple positions, 256-byte strings and a 128-byte label; cap captures at ten.
+
 ## Manual first-page aura display counts
 
 - Manual `aura-display-count <label>` is excluded from `all`. Call `C_UnitAuras.GetAuraSlots("player", "HELPFUL", 8)` exactly once. Preserve continuation plus vararg slots as a bounded raw tuple, never traverse continuation or claim enumeration completeness.

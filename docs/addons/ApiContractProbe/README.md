@@ -14,6 +14,18 @@ Nine separate actual TOC/slash fixtures, including interleaved cast-duration ret
 luajit docs/addons/ApiContractProbe/tests/spell_duration.lua docs/addons/ApiContractProbe
 ```
 
+## Manual current-only aura time
+
+`/apicontract aura-time <label>` is excluded from `all`. It reuses the first-page player HELPFUL eight-slot producer described below, without changing `aura-display-count`. Each guarded original aura instance ID receives four independent calls with exactly `("player", id)`: `DoesAuraHaveExpirationTime`, `GetAuraBaseDuration`, `GetRefreshExtendedDuration`, and `GetAuraDuration`. Optional spell IDs are omitted, not supplied as nil.
+
+These are current-only producer observations. Scalar tuples preserve arity/nils and opaque errors; duration objects remain opaque, with no method calls, field traversal or retention. Missing fixtures/APIs, restricted inputs and errors remain independent observations. Original slots/IDs are checked before inspection and again after namespace/function lookups and access guards.
+
+Bounds: one page, eight data calls, 32 time queries per snapshot; 16 tuple positions, 256-byte strings, 128-byte labels, ten snapshots. No continuation, mutation, native execution or claims about expiration, refresh, defaults, lifecycle or security semantics.
+
+```text
+luajit docs/addons/ApiContractProbe/tests/aura_time.lua docs/addons/ApiContractProbe
+```
+
 ## Manual first-page aura display counts
 
 `/apicontract aura-display-count <label>` is excluded from `all`. It calls `C_UnitAuras.GetAuraSlots("player", "HELPFUL", 8)` once, preserving the continuation and vararg slot tuple. Continuation is recorded but never followed: this is explicitly first-page coverage, not complete enumeration.
