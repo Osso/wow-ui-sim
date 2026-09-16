@@ -76,11 +76,11 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 88,
+    "needs-design-and-recorder-review": 69,
     "partial-recorder": 73,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
-    "deferred-security": 2
+    "deferred-security": 21
   },
   "plans": [
     {
@@ -2801,8 +2801,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-018"
     },
@@ -2889,8 +2895,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-023"
     },
@@ -3598,8 +3610,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-057"
     },
@@ -3612,8 +3630,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-058"
     },
@@ -3626,8 +3650,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-059"
     },
@@ -3640,8 +3670,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-060"
     },
@@ -3696,8 +3732,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-064"
     },
@@ -3710,8 +3752,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-065"
     },
@@ -3724,8 +3772,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-066"
     },
@@ -6470,8 +6524,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/combat-crafting-combat_log_secure_deferred"
     },
@@ -8641,8 +8701,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-restricted-actions-public-state"
     },
@@ -8765,8 +8831,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-secrecy-policy-queries"
     },
@@ -8799,8 +8871,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-secure-transfer-transaction"
     },
@@ -8863,8 +8941,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-private-aura-public-producer"
     },
@@ -8912,8 +8996,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-secret-object-method-boundary"
     },
@@ -8996,8 +9086,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-secure-ping-lifecycle"
     },
@@ -9015,8 +9111,14 @@
           "protocol": "deferred-security"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-security-forbidden-store-observation"
     },
@@ -10781,8 +10883,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/secret-global-boundaries"
     },
@@ -10795,8 +10903,14 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "deferred-security",
+      "reviewed_coverage": {
+        "recorder": "none prepared by this reconciliation",
+        "observations": [],
+        "missing": [
+          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/securecallmethod-boundaries"
     },
