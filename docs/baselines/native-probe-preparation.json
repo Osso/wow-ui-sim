@@ -456,7 +456,16 @@
         }
       ],
       "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "reviewed_coverage": {
+        "recorder": "no qualifying executable experiment established",
+        "observations": [
+          "Pinned PTR CreateRegionParams declaration supplies fields but reviewed cached constructor calls use positional arguments"
+        ],
+        "missing": [
+          "No source-grounded constructor consuming the CreateRegionParams structure was located; synthetic table-accepting fixtures do not establish that contract",
+          "Native per-field creation effects, omitted values and validation remain unverified"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/region-params-consumer"
     },
@@ -480,7 +489,16 @@
         }
       ],
       "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "reviewed_coverage": {
+        "recorder": "no qualifying executable experiment established",
+        "observations": [
+          "Pinned PTR TimedSignalMap.GetNextSignal returns separate key/time scalars; existing owned-map recorder does not produce a TimedSignalMapEntry object"
+        ],
+        "missing": [
+          "A real producer/consumer exposing TimedSignalMapEntry structure fields has not been identified",
+          "Native object identity and structure observations remain missing; scalar tuple output earns no structure credit"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/timed-entry-exposure"
     },
@@ -2788,7 +2806,16 @@
         }
       ],
       "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "reviewed_coverage": {
+        "recorder": "no qualifying executable experiment established",
+        "observations": [
+          "Pinned retail InputDocumentation identifies the global two-number SetCursorPosition, distinct from the EditBox method"
+        ],
+        "missing": [
+          "A qualifying gamepad hardware-input context is required by the documented limited-input contract; no context bypass or native execution prepared",
+          "Native coordinate conversion and before/after global cursor observations remain missing"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-017"
     },
@@ -3843,7 +3870,16 @@
         }
       ],
       "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "reviewed_coverage": {
+        "recorder": "no qualifying executable experiment established",
+        "observations": [
+          "Registered string.concat symbol is not treated as equivalent to legacy strconcat"
+        ],
+        "missing": [
+          "No callable signature or Blizzard consumer was located in reviewed retail/PTR sources; bounded argument experiments require a grounded call contract",
+          "Native arity, coercion, output and historical behavior remain unverified"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-067"
     },
