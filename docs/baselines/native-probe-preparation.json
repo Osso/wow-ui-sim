@@ -298,12 +298,14 @@
       ],
       "status": "partial-recorder",
       "reviewed_coverage": {
-        "recorder": "docs/addons/AuraDispelCurveProbe",
+        "recorder": "docs/addons/AuraDispelCurveProbe; docs/addons/ApiContractProbe",
         "observations": [
-          "Two supplied color curves on existing player auras"
+          "Two supplied color curves on existing player auras",
+          "Manual aura-time first-page player HELPFUL capture uses up to eight guarded original auraInstanceIDs for independent expiration, base-duration, refresh-duration and duration-object producer calls",
+          "Optional spellID omitted; duration objects recorded opaquely without methods, retention or continuation traversal"
         ],
         "missing": [
-          "Other aura duration/time observations in plan",
+          "Duration-object method observations, explicit spellID variants, continuation pages and native refresh/removal transitions",
           "Native aura fixtures/dispel-ID evidence",
           "Native capture"
         ]
