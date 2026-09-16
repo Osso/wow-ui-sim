@@ -5962,10 +5962,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual training-grounds-state independently records AreTrainingGroundsEnabled, CanPlayerUseTrainingGroundsUI and HasRandomTrainingGroundWinToday twice each without arguments"
+          "Manual training-grounds-state independently records AreTrainingGroundsEnabled, CanPlayerUseTrainingGroundsUI and HasRandomTrainingGroundWinToday twice each without arguments",
+          "Manual training-grounds-structures independently records GetTrainingGrounds and GetRandomTrainingGroundRewards; first eight training entries expose fourteen guarded declared fields, while reward tuple positions are preserved and nested tables remain opaque"
         ],
         "missing": [
-          "Training ground and reward structure producers and populated native fixtures",
+          "Nested item/currency/role reward structures, remaining training entries and populated native fixtures",
           "Native eligibility, daily-win and state transitions",
           "Queue/join operations and restricted-context behavior"
         ]
