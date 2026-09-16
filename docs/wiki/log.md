@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded training-grounds structures recorder
+
+Documented runtime `5459e10c8`: manual `training-grounds-structures` independently records no-argument `GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once each. Only first training entries 1–8 expose fourteen declared fields; reward tuple positions remain raw and nested tables opaque. Eleven fixtures establish recorder mechanics only; queue/join, requests, mutations, ordering, completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
 
 Documented runtime `1aeb67703`: manual `training-grounds-state` makes two zero-argument observations each of `AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, capped at six calls per snapshot. Ten local fixtures establish mechanics only; queue/join, requests, mutations, structures, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.

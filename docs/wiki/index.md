@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded training-grounds structures recorder
+
+Runtime `5459e10c8` adds manual `/apicontract training-grounds-structures <label>`, excluded from `all`. It independently calls `GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once, inspecting only first training entries 1–8 through fourteen declared fields. Five raw reward positions are preserved while nested tables remain opaque. Eleven fixtures prove recorder mechanics only; queue/join, mutations, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
 
 Runtime `1aeb67703` adds manual `/apicontract training-grounds-state <label>`, excluded from `all`. It records two no-argument observations each for `C_PvP.AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, preserving raw tuple arity under six calls per snapshot. Queue/join, requests, mutations, structure queries, and native behavior claims remain excluded. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].
