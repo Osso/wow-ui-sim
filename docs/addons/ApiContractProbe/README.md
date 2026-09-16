@@ -84,6 +84,18 @@ Pinned retail `UnitDocumentation.lua:1129–1165` declares both stage-list APIs 
 luajit docs/addons/ApiContractProbe/tests/empowered_stages.lua docs/addons/ApiContractProbe
 ```
 
+## Manual encounter warning state
+
+`/apicontract encounter-warning-state <label>` independently calls only `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments. Results live under `encounterWarningState.IsFeatureAvailable` and `encounterWarningState.IsFeatureEnabled`. Each read performs fresh guarded namespace/function lookup; missing, restricted, throwing or replaced APIs do not suppress peer observations.
+
+Excluded from `all`; four calls per snapshot, ten shared snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels. Raw arity, nil positions and opaque errors are preserved without retaining returned objects. No toggles, sounds, warning creation, mutations or security experiments. Repeated reads establish no native availability, enabled-state, default or stability semantics.
+
+Pinned retail `EncounterWarningsDocumentation.lua:76–94` declares both no-argument boolean queries without secret annotations; it establishes call shape, not native results. Twelve actual TOC/slash fixtures exercise recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/encounter_warning_state.lua docs/addons/ApiContractProbe
+```
+
 ## Manual ping enabled
 
 `/apicontract ping-enabled <label>` calls only `C_Ping.IsPingSystemEnabled()` twice independently with zero arguments. Observations are stored under `pingEnabled.IsPingSystemEnabled`. Fresh guarded namespace/function lookup keeps missing, restricted, throwing or replaced APIs independent.

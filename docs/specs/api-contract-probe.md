@@ -56,6 +56,13 @@
 - Preserve exact arity and nil positions, opaque errors, sixteen tuple positions, 256-byte strings, 128-byte labels and ten shared snapshots. Maximum 21 producer calls and 560 duration-method calls per snapshot. No cast initiation, mutation, order/completeness/default/percentage or native behavior claims.
 - Fifteen actual TOC/slash fixtures (ten existing, five new) establish local mechanics only. Matching native empowered-channel fixtures remain unverified.
 
+## Manual encounter warning state
+
+- Manual `encounter-warning-state <label>` is excluded from `all`. Independently call only `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with exactly zero arguments; store observations under `encounterWarningState` keyed by API name.
+- Guard namespace/function before lookup/use on every read. Missing, restricted, throwing or replaced APIs must not suppress peers. Preserve raw arity, nil positions and opaque errors; retain no raw returned objects.
+- Limit calls to four per snapshot, shared snapshots to ten, result tuples to sixteen positions, scalar strings to 256 bytes and labels to 128 bytes.
+- Do not toggle warnings, play sounds, create warnings, mutate state or perform security experiments. No native availability, enabled-state, default or stability claims. Twelve actual TOC/slash fixtures provide local recorder proof only.
+
 ## Manual ping enabled
 
 - Manual `ping-enabled <label>` is excluded from `all`; call only `C_Ping.IsPingSystemEnabled()` twice independently with exactly zero arguments. Store observations under `pingEnabled.IsPingSystemEnabled`.
