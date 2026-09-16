@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 129,
-    "partial-recorder": 32,
+    "needs-design-and-recorder-review": 128,
+    "partial-recorder": 33,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -1236,8 +1236,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual sets-catalog queries GetAvailableSets once and IsUsingDefaultSetsFilters twice independently",
+          "First eight returned set entries expose six guarded declared fields: setID, name, collected, favorite, validForCharacter and grantAsPrecedingVariant"
+        ],
+        "missing": [
+          "SetDefaultSetsFilters mutation and native before/after filter transitions",
+          "Native populated set fixtures, ordering, completeness and field semantics",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/sets_catalog_filters"
     },
