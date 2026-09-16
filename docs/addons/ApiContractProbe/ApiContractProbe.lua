@@ -921,6 +921,21 @@ local function majorFactionInputStatus(id)
     end
 end
 
+local function inspectMajorFactionData(object)
+    local result, highlights = inspectNeighborhoodFields(object,
+        { "description", "playerCompanionID", "highlights" }, "highlights")
+    if not result.fields then return result end
+    result.highlights = scalar(highlights)
+    if result.highlights.status ~= "observed" or result.highlights.kind ~= "table" then return result end
+    result.highlights.entries = {}
+    for index = 1, 4 do
+        local entry, ok = readField(highlights, index)
+        result.highlights.entries[index] = ok and inspectNeighborhoodFields(entry,
+            { "title", "description", "level" }) or { status = "field-error" }
+    end
+    return result
+end
+
 local function observeMajorFactionJourney(id, name)
     local status = majorFactionInputStatus(id)
     if status then return { status = status } end
@@ -933,6 +948,7 @@ local function observeMajorFactionJourney(id, name)
     if not values[1] then return { status = "call-error" } end
     local result = mapTuple(unpack(values, 2, values.n))
     result.status = "observed"
+    if name == "GetMajorFactionData" then result.data = inspectMajorFactionData(values[2]) end
     return result
 end
 
@@ -959,6 +975,7 @@ local function captureMajorFactionJourney()
             for _, name in ipairs({ "ShouldDisplayMajorFactionAsJourney", "ShouldUseJourneyRewardTrack" }) do
                 row.queries[name] = observeMajorFactionJourney(id, name)
             end
+            row.queries.GetMajorFactionData = observeMajorFactionJourney(id, "GetMajorFactionData")
         end
         result.entries[index] = row
     end

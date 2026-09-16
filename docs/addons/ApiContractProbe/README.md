@@ -4,9 +4,11 @@
 
 `/apicontract major-faction-journey <label>` is excluded from `all`. Call `C_MajorFactions.GetMajorFactionIDs(nil)` once with **one explicit nil** expansion argument. Only first-return table indices 1–8 supply original accessible finite faction IDs to two independent predicates: `ShouldDisplayMajorFactionAsJourney(ID)` and `ShouldUseJourneyRewardTrack(ID)`. Preserve duplicates and fractional inputs without interpreting them; never invent IDs or expansion values.
 
-Guard namespace/function/list before lookup or inspection and recheck each original ID after predicate lookup/function guards. Record raw arity, nil holes and opaque errors; failures do not suppress peer predicates or entries. Bounds: seventeen API calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Raw objects are not retained. No renown/data queries, mutations, ordering/completeness or native classification claims; structure fields and matching native fixtures remain pending.
+Guard namespace/function/list before lookup or inspection and recheck each original ID after predicate lookup/function guards. Record raw arity, nil holes and opaque errors; failures do not suppress peer predicates or entries. Bounds: twenty-five API calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Raw objects are not retained. No renown reward/level queries, mutations, ordering/completeness or native classification claims; reward structures and matching native fixtures remain pending.
 
-Pinned retail `MajorFactionsDocumentation.lua:41–53,156–184` supplies the nilable producer argument and predicate signatures, not native outputs. Ten actual TOC/slash fixtures prove recorder mechanics only:
+Each original ID also independently feeds `GetMajorFactionData(ID)` once. Preserve its raw tuple and inspect only the first returned data object: `description`, `playerCompanionID`, and an opaque scalar `highlights` observation, plus the first four highlights with `title`, `description`, and `level`. Every container/index/field read is guarded; no companion or reward followups. Data inspection uses pinned declarations at `MajorFactionsDocumentation.lua:26–39,228–253,300–307`.
+
+Pinned retail `MajorFactionsDocumentation.lua:41–53,156–184` supplies the nilable producer argument and predicate signatures, not native outputs. Fifteen cumulative actual TOC/slash fixtures (ten existing, five new) prove recorder mechanics only:
 
 ```sh
 luajit docs/addons/ApiContractProbe/tests/major_faction_journey.lua docs/addons/ApiContractProbe

@@ -143,5 +143,109 @@ test("opaque objects are collectible and all excludes the mode", function()
     capture(); collectgarbage(); collectgarbage(); assert(weak[1] == nil and weak[2] == nil)
     local before = calls; SlashCmdList.APICONTRACTPROBE("all other"); assert(calls == before)
 end)
+test("data original IDs fields highlights and first object only", function()
+    local seen = {}
+    setup(function() return { 12.5, -3.25 } end, function() return true end)
+    C_MajorFactions.GetMajorFactionData = function(...)
+        assert(select("#", ...) == 1); local id = ...; seen[#seen + 1] = id
+        return { description = "faction", playerCompanionID = 9,
+            highlights = { { title = "title", description = "detail", level = 3 } } }, nil, "tail"
+    end
+    local r = capture(); local q = assert(r.entries[1].queries.GetMajorFactionData, "data query absent")
+    assert(#seen == 2 and seen[1] == 12.5 and seen[2] == -3.25)
+    assert(q.n == 3 and q.values[2].kind == "nil" and q.values[3].value == "tail")
+    assert(q.data.fields.description.value == "faction" and q.data.fields.playerCompanionID.value == 9)
+    assert(q.data.fields.highlights.kind == "table" and q.data.fields.highlights.fields == nil)
+    assert(q.data.highlights.entries[1].fields.title.value == "title")
+    assert(q.data.highlights.entries[1].fields.description.value == "detail")
+    assert(q.data.highlights.entries[1].fields.level.value == 3)
+end)
+test("data input revoked after lookup and both function guards", function()
+    for _, phase in ipairs({ "lookup", "secret", "access" }) do
+        setup(function() return { 7.5 } end, function() return true end)
+        local revoked = false
+        local fn = function() error("revoked ID forwarded") end
+        C_MajorFactions.GetMajorFactionData = fn
+        if phase == "lookup" then
+            C_MajorFactions.GetMajorFactionData = nil
+            setmetatable(C_MajorFactions, { __index = function(_, key)
+                if key == "GetMajorFactionData" then revoked = true; return fn end
+            end })
+        end
+        issecretvalue = function(v)
+            if phase == "secret" and rawequal(v, fn) then revoked = true end
+            return rawequal(v, secret)
+        end
+        canaccessvalue = function(v)
+            if phase == "access" and rawequal(v, fn) then revoked = true end
+            return not rawequal(v, secret) and not (revoked and v == 7.5)
+        end
+        local q = capture().entries[1].queries
+        assert(q.GetMajorFactionData.status == "restricted-input")
+        assert(q[names[1]].status == "observed" and q[names[2]].status == "observed")
+    end
+end)
+test("data fields list indices and highlight fields recheck receivers", function()
+    for _, keys in ipairs({ { "description", "playerCompanionID", "highlights" },
+        { 1, 2, 3, 4 }, { "title", "description", "level" } }) do
+        for stop = 1, #keys do
+            setup(function() return { 2 } end, function() return true end)
+            local revoked, reads = false, 0
+            local receiver = setmetatable({}, { __index = function(_, key)
+                assert(not revoked, "revoked receiver indexed")
+                reads = reads + 1; assert(key == keys[reads])
+                if reads == stop then revoked = true end
+                return nil
+            end })
+            local data = receiver
+            if type(keys[1]) == "number" then data = { highlights = receiver }
+            elseif keys[1] == "title" then data = { highlights = { receiver } } end
+            C_MajorFactions.GetMajorFactionData = function() return data end
+            canaccessvalue = function(v) return not rawequal(v, secret) and not (rawequal(v, receiver) and revoked) end
+            local q = capture().entries[1].queries.GetMajorFactionData
+            assert(q and q.data and reads == stop)
+        end
+    end
+end)
+test("data nil errors and inaccessible highlights stay independent", function()
+    setup(function() return { 1, 2, 3, 4 } end, function() return false end)
+    C_MajorFactions.GetMajorFactionData = function(id)
+        if id == 1 then error(secret) end
+        if id == 2 then return nil, { description = "wrong return" } end
+        if id == 3 then return { description = secret, highlights = secret } end
+    end
+    local r = capture()
+    assert(r.entries[1].queries.GetMajorFactionData.status == "call-error")
+    assert(r.entries[2].queries.GetMajorFactionData.data.kind == "nil")
+    assert(r.entries[3].queries.GetMajorFactionData.data.fields.description.status == "restricted")
+    assert(r.entries[3].queries.GetMajorFactionData.data.highlights.status == "restricted")
+    assert(r.entries[4].queries.GetMajorFactionData.n == 0)
+    assert(r.entries[4].queries[names[2]].values[1].value == false)
+end)
+test("data twenty five calls four highlights bounded tuples and collection", function()
+    local ids = {}; for i = 1, 20 do ids[i] = i end
+    local weak = setmetatable({}, { __mode = "v" })
+    local dataCalls = 0
+    setup(function() return ids end, function() return true end)
+    C_MajorFactions.GetMajorFactionData = function()
+        dataCalls = dataCalls + 1
+        local highlights = setmetatable({}, { __index = function(_, index)
+            assert(index <= 4); local entry = { title = string.rep("x", 300), description = "d", level = index }
+            weak[#weak + 1] = entry; return entry
+        end })
+        local data = setmetatable({ description = "d", playerCompanionID = 1, highlights = highlights }, {
+            __index = function() error("unlisted data field") end })
+        weak[#weak + 1] = data; weak[#weak + 1] = highlights
+        local values = { data }; for i = 2, 20 do values[i] = string.rep("z", 300) end
+        return unpack(values)
+    end
+    for i = 1, 11 do capture(string.rep("l", 200)) end
+    assert(calls + dataCalls == 250 and dataCalls == 80)
+    local q = ApiContractProbeDB.captures[1].majorFactionJourney.entries[1].queries.GetMajorFactionData
+    assert(q.n == 20 and q.truncated and #q.values == 16 and #q.values[16].value == 256)
+    assert(#q.data.highlights.entries == 4 and #q.data.highlights.entries[4].fields.title.value == 256)
+    collectgarbage(); collectgarbage(); assert(next(weak) == nil)
+    local before = dataCalls; SlashCmdList.APICONTRACTPROBE("all other"); assert(dataCalls == before)
+end)
 print(string.format("%d passed, %d failed", passed, failed))
 os.exit(failed == 0 and 0 or 1)
