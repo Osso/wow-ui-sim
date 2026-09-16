@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Extend major-faction journey recorder
+
+Documented runtime `f9da77301`: original faction IDs now also independently query `GetMajorFactionData`, bounded to guarded `description`, `playerCompanionID`, and first-four highlight title/description/level fields. Predicates remain; the cap is twenty-five calls per snapshot. Fifteen cumulative fixtures, including five new cases, establish mechanics only; reward structures, mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded major-faction journey recorder
 
 Documented runtime `f2e7c222c`: manual `major-faction-journey` calls `GetMajorFactionIDs(nil)` once, then runs two independent predicates for original accessible finite faction IDs from entries 1–8. It preserves raw arity, nils, errors, duplicates, and fractional IDs under seventeen calls per snapshot. Ten fixtures establish recorder mechanics only; structures, mutations, ordering/completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.

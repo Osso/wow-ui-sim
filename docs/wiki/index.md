@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded major-faction journey recorder
 
-Runtime `f2e7c222c` adds manual `/apicontract major-faction-journey <label>`, excluded from `all`. It passes one explicit `nil` expansion argument to `GetMajorFactionIDs`, then applies two independent predicates to original accessible finite IDs from entries 1–8. Ten fixtures prove recorder mechanics only; major-faction structures, native classifications, transitions, and restricted-context behavior remain pending. See [[api-contract-probes]].
+Runtime `f9da77301` extends manual `/apicontract major-faction-journey <label>`, excluded from `all`. Original IDs from `GetMajorFactionIDs(nil)` retain two predicates and add one `GetMajorFactionData` query, inspecting only `description`, `playerCompanionID`, and first-four highlight title/description/level fields. Fifteen cumulative fixtures include five new cases; reward structures, native classifications, transitions, and restricted-context behavior remain pending. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded training-grounds structures recorder
 
