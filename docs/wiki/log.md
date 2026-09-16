@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-state recorder
+
+Runtime `c3a88dd56` adds manual `/apicontract outfit-state <label>`, excluded from `all`. It independently observes seven no-argument outfit-state queries twice each, preserving pending-cost arity without mutations, purchases, selection, price interpretation, or native credit. Ten local fixtures establish recorder mechanics only.
+
 ## [2026-09-16] investigation | Prepare bounded outfit-slot recorder
 
 Runtime `c3d32142b` adds manual `/apicontract outfit-slots <label>`, excluded from `all`. It independently observes two no-argument slot producers, capped location/group structures, and two read-only queries using only up to sixteen guarded original location slots. Eleven local fixtures establish recorder mechanics only; no mutation, 3D, mapping, ordering, completeness, or native result was observed.

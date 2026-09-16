@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-state recorder
+
+Runtime `c3a88dd56` adds manual `/apicontract outfit-state <label>`, excluded from `all`. It makes two no-argument reads each of seven outfit-state queries, preserving raw tuple arity including the pending-cost tuple. Ten fixtures prove recorder mechanics only; no mutation, purchases, selection, price interpretation, defaults, stability, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded outfit-slot recorder
 
 Runtime `c3d32142b` adds manual `/apicontract outfit-slots <label>`, excluded from `all`. It bounds two no-argument producers to two location lists and one group list, each through eight entries, and forwards only up to sixteen guarded original slots to two read-only queries. Eleven fixtures prove recorder mechanics only; no mutation, 3D, mapping, ordering, completeness, or native behavior is established. See [[api-contract-probes]].
