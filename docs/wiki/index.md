@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
+
+Runtime `ac475000f` adds manual `/apicontract tradeskill-item-quality <label>`, excluded from `all`. Original accessible equipment links from slots 1–19 feed independent crafted- and reagent-quality queries; only thirteen guarded first-object fields are inspected. Ten fixtures prove recorder mechanics only; recipes, crafting/orders, mutations, native quality populations, and semantics remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
 
 Runtime `506d529b9` adds manual `/apicontract nameplate-metrics <label>`, excluded from `all`. It reads nameplate size twice and hit-test insets twice for the fixed published `Friendly` and `Enemy` nameplate types. Eleven fixtures prove recorder mechanics only; setters, camera/3D behavior, geometry semantics, and native results remain unverified. See [[api-contract-probes]].

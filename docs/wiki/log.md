@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
+
+Documented runtime `ac475000f`: manual `tradeskill-item-quality` reads original accessible player-equipment links from slots 1–19 and independently queries crafted and reagent quality. It bounds first returned objects to thirteen guarded declared fields and fifty-seven calls per snapshot. Ten fixtures establish recorder mechanics only; recipe/crafting/order operations, mutations, atlas interpretation, native quality populations, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
 
 Documented runtime `506d529b9`: manual `nameplate-metrics` reads `GetNamePlateSize` twice and `GetNamePlateHitTestInsets` twice for the fixed published `Friendly` and `Enemy` nameplate types. Six calls per snapshot and eleven fixtures establish recorder mechanics only; setters, camera/3D behavior, geometry/default claims, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
