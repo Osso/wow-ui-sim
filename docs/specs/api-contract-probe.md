@@ -10,6 +10,13 @@
 - Observe current returned objects only. Do not retain objects between captures or touch the cast-duration retention list/counter. Preserve sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds; at most two producers and 320 duration-method calls per snapshot.
 - Nine separate actual TOC/slash fixtures establish recorder behavior, including interleaved cast-retention isolation. Native charge and loss-of-control timing/lifecycle and restricted-context behavior remain pending.
 
+## Manual first-page aura display counts
+
+- Manual `aura-display-count <label>` is excluded from `all`. Call `C_UnitAuras.GetAuraSlots("player", "HELPFUL", 8)` exactly once. Preserve continuation plus vararg slots as a bounded raw tuple, never traverse continuation or claim enumeration completeness.
+- At most eight original accessible finite slot values feed `GetAuraDataBySlot("player", slot)`. Preserve producer arity without traversing AuraData; access only `auraInstanceID` through guarded field lookup on an accessible table/userdata. Require an accessible finite original numeric ID, without coercion or invented values.
+- Independently call `GetAuraApplicationDisplayCount("player", id)` with optional arguments omitted, `(1)`, `(2)`, `(2, 5)` and `(1, 1)`. Guard namespace/function and produced inputs before inspection/forwarding; recheck inputs after lookup and function guards. Record missing, inaccessible, invalid and error cases independently.
+- Preserve raw return arity/nils and opaque errors with 16-position, 256-byte string, 128-byte label and ten-snapshot limits. At most eight data calls and forty count queries per snapshot; no gameplay mutation or native execution. Local fixtures establish recorder behavior only, not native ordering, defaults, formatting, coercion or completeness.
+
 ## Manual selected-slot spell metadata
 
 - Manual `spell-metadata <slot> <label>` reuses the actions integer-slot parser and is excluded from `all`. Call `GetActionInfo(slot)` with exactly one argument; preserve raw producer arity and nil positions.

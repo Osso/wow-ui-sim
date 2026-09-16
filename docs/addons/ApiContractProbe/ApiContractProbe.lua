@@ -417,6 +417,74 @@ local function mapTuple(...)
     return result
 end
 
+local function auraNumberStatus(value)
+    if not accessible(value) then return "restricted-input" end
+    if type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge then
+        return "unavailable-input"
+    end
+end
+
+local function observeAuraCall(name, input, ...)
+    if name ~= "GetAuraSlots" then
+        local status = auraNumberStatus(input)
+        if status then return { status = status } end
+    end
+    local fn, ok = readField(C_UnitAuras, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if name ~= "GetAuraSlots" then
+        local status = auraNumberStatus(input)
+        if status then return { status = status } end
+    end
+    local values = pack(pcall(fn, ...))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values
+end
+
+local function readAuraID(aura)
+    if not accessible(aura) then return nil, "restricted-input" end
+    if type(aura) ~= "table" and type(aura) ~= "userdata" then return nil, "unavailable-input" end
+    local id, ok = readField(aura, "auraInstanceID")
+    if not ok then return nil, "field-error" end
+    local status = auraNumberStatus(id)
+    if status then return nil, status end
+    return id
+end
+
+local function captureAuraSlot(slot)
+    local row = { slot = scalar(slot), queries = {} }
+    local status = auraNumberStatus(slot)
+    local values
+    if status then row.producer = { status = status }
+    else row.producer, values = observeAuraCall("GetAuraDataBySlot", slot, "player", slot) end
+    local id
+    status = "unavailable-input"
+    if values then id, status = readAuraID(values[2]) end
+    row.id = status and { status = status } or scalar(id)
+    local variants = { {}, { 1 }, { 2 }, { 2, 5 }, { 1, 1 } }
+    for index, args in ipairs(variants) do
+        if status then row.queries[index] = { status = status }
+        else
+            row.queries[index] = observeAuraCall("GetAuraApplicationDisplayCount", id,
+                "player", id, unpack(args))
+        end
+    end
+    return row
+end
+
+local function captureAuraDisplayCount()
+    local producer, values = observeAuraCall("GetAuraSlots", nil, "player", "HELPFUL", 8)
+    local result = { producer = producer, slots = {} }
+    if not values then return result end
+    -- First page only: continuation is recorded in the tuple, never followed.
+    for index = 3, math.min(values.n, 10) do
+        result.slots[#result.slots + 1] = captureAuraSlot(values[index])
+    end
+    return result
+end
+
 local function observeSpellProducer(slot)
     local fn = GetActionInfo
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
@@ -1178,8 +1246,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1190,6 +1258,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "aura-display-count" then record.auraDisplayCount = captureAuraDisplayCount() end
         if mode == "spell-duration" then record.spellDuration = captureSpellDuration(slot) end
         if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end

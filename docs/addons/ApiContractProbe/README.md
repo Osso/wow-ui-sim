@@ -14,6 +14,18 @@ Nine separate actual TOC/slash fixtures, including interleaved cast-duration ret
 luajit docs/addons/ApiContractProbe/tests/spell_duration.lua docs/addons/ApiContractProbe
 ```
 
+## Manual first-page aura display counts
+
+`/apicontract aura-display-count <label>` is excluded from `all`. It calls `C_UnitAuras.GetAuraSlots("player", "HELPFUL", 8)` once, preserving the continuation and vararg slot tuple. Continuation is recorded but never followed: this is explicitly first-page coverage, not complete enumeration.
+
+At most eight original accessible finite slots feed `GetAuraDataBySlot("player", slot)`. Only guarded `auraInstanceID` lookup on an accessible table/userdata is permitted; AuraData is otherwise opaque. Each accessible finite original ID receives five independent `GetAuraApplicationDisplayCount` calls: omitted min/max, min 1, min 2, min 2/max 5, min 1/max 1. Namespace/function guards and input rechecks precede forwarding. Missing, restricted, invalid and error observations do not become fabricated IDs or counts.
+
+Results preserve arity/nils and opaque errors, capped at 16 positions, 256-byte strings, 128-byte labels and ten snapshots. Per snapshot: one page call, at most eight data calls and forty count queries. No gameplay mutation, native execution or inference about ordering, completeness, defaults, coercion or formatting semantics.
+
+```text
+luajit docs/addons/ApiContractProbe/tests/aura_display_count.lua docs/addons/ApiContractProbe
+```
+
 ## Manual selected-slot spell metadata
 
 `/apicontract spell-metadata <slot> <label>` reuses the integer-slot parser and stays outside `all`. Call `GetActionInfo(slot)` with exactly one argument and preserve producer arity. Only an accessible first return exactly equal to `"spell"` and an accessible finite numeric second return permit downstream queries. Use that original ID without conversion, guessed IDs or classification.
