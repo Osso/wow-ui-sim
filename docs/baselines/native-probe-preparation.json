@@ -1561,10 +1561,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual neighborhood-state independently records GetActiveNeighborhood, GetRequiredLevel, IsInitiativeEnabled, IsPlayerInNeighborhoodGroup, IsViewingActiveNeighborhood, PlayerHasInitiativeAccess and PlayerMeetsRequiredLevel twice each without arguments",
-          "Manual neighborhood-structures independently observes initiative info, activity-log info and tracked tasks; first eight log entries and four original tracked IDs are bounded, with independent task-info/chat-link queries and guarded fixed fields"
+          "Manual neighborhood-structures independently observes initiative info, activity-log info and tracked tasks; first eight log entries and four original tracked IDs are bounded, with independent task-info/chat-link queries and guarded fixed fields",
+          "Initiative info additionally exposes the first four tasks and milestones, and four rewards per milestone, through fixed guarded fields without additional API calls"
         ],
         "missing": [
-          "Milestone/reward and task requirements/criteria nested observations, untracked tasks and remaining activity-log entries",
+          "Task requirements/criteria nested observations, remaining tasks/milestones/rewards and activity-log entries",
           "Native populated neighborhood fixtures, transitions and access conditions",
           "Request/setter operations and restricted-context behavior"
         ]
