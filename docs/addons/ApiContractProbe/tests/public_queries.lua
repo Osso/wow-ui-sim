@@ -11,6 +11,7 @@ local function setup(rules, delves)
     time = function() return 42 end
     C_GameRules, C_DelvesUI = rules, delves
     C_Housing, C_EncounterTimeline, C_InstanceEncounter = nil, nil, nil
+    C_TransmogOutfitInfo, C_HousingCustomizeMode, C_SpellDiminish = nil, nil, nil
     local toc = assert(io.open(root .. "/ApiContractProbe.toc"))
     for line in toc:lines() do
         if line:match("%.lua$") then assert(loadfile(root .. "/" .. line))() end
@@ -261,6 +262,160 @@ test("all seven queries are manual only with 140 total calls and no mutations", 
     install()
     for i = 1, 11 do SlashCmdList.APICONTRACTPROBE("public-queries " .. string.rep("l", 200)) end
     assert(calls == 140 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
+end)
+local nextQueries = {
+    { "C_TransmogOutfitInfo", "GetActiveOutfitID", "activeOutfitID" },
+    { "C_HousingCustomizeMode", "IsHouseExteriorDoorHovered", "houseExteriorDoorHovered" },
+    { "C_SpellDiminish", "IsSystemSupported", "spellDiminishSystemSupported" },
+}
+local function installNextQueries(factory)
+    for index, query in ipairs(nextQueries) do
+        _G[query[1]] = { [query[2]] = factory(index) }
+    end
+end
+
+test("three additional named outputs retain exact no-argument tuples", function()
+    setup({}, {})
+    local calls = { 0, 0, 0 }
+    installNextQueries(function(index)
+        return function(...)
+            assert(select("#", ...) == 0)
+            calls[index] = calls[index] + 1
+            if index == 1 then return 123.5, nil, calls[index] end
+            if index == 2 then return calls[index] == 1 end
+        end
+    end)
+    local result = capture()
+    for index, query in ipairs(nextQueries) do
+        local lane = assert(result[query[3]], "missing next-query output: " .. query[3])
+        assert(calls[index] == 2)
+        for repetition = 1, 2 do
+            assert(lane[repetition].status == "observed")
+            if index == 1 then
+                assert(lane[repetition].n == 3 and lane[repetition].values[1].value == 123.5)
+                assert(lane[repetition].values[2].kind == "nil")
+                assert(lane[repetition].values[3].value == repetition)
+            elseif index == 2 then
+                assert(lane[repetition].n == 1 and lane[repetition].values[1].value == (repetition == 1))
+            else assert(lane[repetition].n == 0) end
+        end
+    end
+end)
+
+test("each added namespace or function failure preserves nine peer queries", function()
+    for _, query in ipairs(nextQueries) do
+        for _, failure in ipairs({ "namespace", "restricted-namespace", "missing", "secret", "lookup", "call" }) do
+            local calls = 0
+            local function fn(...) assert(select("#", ...) == 0); calls = calls + 1; return nil, false end
+            setup({ IsPersonalResourceDisplayEnabled = fn }, { GetLockedTextForCompanion = fn })
+            installPublicState(function() return fn end)
+            installNextQueries(function() return fn end)
+            local namespace = _G[query[1]]
+            if failure == "namespace" then _G[query[1]] = nil
+            elseif failure == "restricted-namespace" then _G[query[1]] = secret
+            elseif failure == "missing" then namespace[query[2]] = nil
+            elseif failure == "secret" then namespace[query[2]] = secret
+            elseif failure == "lookup" then
+                namespace[query[2]] = nil
+                setmetatable(namespace, { __index = function() error(secret) end })
+            else namespace[query[2]] = function() error(secret) end end
+            local original = type
+            type = function(value) assert(not rawequal(value, secret)); return original(value) end
+            local ok, result = pcall(capture)
+            type = original
+            assert(ok, result)
+            assert(calls == 18)
+            local expected = (failure == "namespace" or failure == "restricted-namespace" or failure == "lookup")
+                and "field-error" or failure == "call" and "call-error" or "missing-api"
+            for _, peer in ipairs(nextQueries) do
+                for repetition = 1, 2 do
+                    local observation = result[peer[3]][repetition]
+                    if peer == query then assert(observation.status == expected)
+                    else assert(observation.n == 2 and observation.values[1].kind == "nil") end
+                end
+            end
+        end
+    end
+end)
+
+test("added query guards fail closed and recheck each repetition", function()
+    for selected, query in ipairs(nextQueries) do
+        for _, guard in ipairs({ "issecretvalue", "canaccessvalue" }) do
+            setup({}, {})
+            local calls, revoked, chosen = 0, false
+            installNextQueries(function(index)
+                if index ~= selected then return function() return true end end
+                chosen = function() calls = calls + 1; revoked = true; return secret end
+                return chosen
+            end)
+            local original = _G[guard]
+            _G[guard] = function(value)
+                if revoked and rawequal(value, chosen) then error(secret) end
+                return original(value)
+            end
+            local result = capture()
+            assert(calls == 1)
+            assert(result[query[3]][1].values[1].status == "restricted")
+            assert(result[query[3]][2].status == "missing-api")
+            for _, peer in ipairs(nextQueries) do
+                if peer ~= query then assert(result[peer[3]][2].values[1].value == true) end
+            end
+        end
+    end
+    setup({}, {})
+    local calls = 0
+    installNextQueries(function() return function() calls = calls + 1 end end)
+    canaccessvalue = nil
+    SlashCmdList.APICONTRACTPROBE("public-queries")
+    assert(calls == 0 and ApiContractProbeDB.captures[1].status == "missing-access-api")
+end)
+
+test("added results preserve bounded scalars without inspecting objects", function()
+    setup({}, {})
+    local opaque = setmetatable({}, { __index = function() error("object inspected") end,
+        __tostring = function() error("object stringified") end })
+    installNextQueries(function()
+        return function()
+            local values = { secret, opaque, string.rep("x", 300), math.huge }
+            for index = 5, 20 do values[index] = index end
+            return unpack(values)
+        end
+    end)
+    local result = capture()
+    for _, query in ipairs(nextQueries) do
+        for repetition = 1, 2 do
+            local observation = result[query[3]][repetition]
+            assert(observation.n == 20 and #observation.values == 16 and observation.truncated)
+            assert(observation.values[1].status == "restricted")
+            assert(observation.values[2].kind == "table" and observation.values[2].fields == nil)
+            assert(#observation.values[3].value == 256 and observation.values[3].truncated)
+            assert(observation.values[4].status == "nonfinite")
+        end
+    end
+end)
+
+test("ten queries remain manual with 200-call cap and no extra API access", function()
+    local calls, unexpected = 0, 0
+    local function fn(...) assert(select("#", ...) == 0); calls = calls + 1 end
+    local function install()
+        setup({ IsPersonalResourceDisplayEnabled = fn }, { GetLockedTextForCompanion = fn })
+        installPublicState(function() return fn end)
+        installNextQueries(function() return fn end)
+        for _, query in ipairs(nextQueries) do
+            setmetatable(_G[query[1]], {
+                __index = function() unexpected = unexpected + 1; error("excluded API") end,
+                __newindex = function() unexpected = unexpected + 1; error("namespace mutation") end,
+            })
+        end
+    end
+    install()
+    SlashCmdList.APICONTRACTPROBE("all")
+    assert(calls == 0 and ApiContractProbeDB.captures[1].publicQueries == nil)
+    install()
+    for index = 1, 11 do SlashCmdList.APICONTRACTPROBE("public-queries " .. string.rep("x", 200)) end
+    assert(calls == 200 and unexpected == 0)
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
     assert(#ApiContractProbeDB.captures[1].label == 128)
 end)
 print(string.format("%d/%d passed", passed, passed))

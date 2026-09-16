@@ -83,9 +83,10 @@
 
 - Manual `public-queries <label>` is excluded from `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice, each with exactly zero arguments.
 - Independently call five additional no-argument queries twice each: `C_Housing.IsHousingMarketShopEnabled`, `C_EncounterTimeline.GetCurrentTime`, and `C_InstanceEncounter.IsEncounterLimitingResurrections`, `IsEncounterSuppressingRelease`, `ShouldShowTimelineForEncounter`. Preserve distinct named outputs `housingMarketShopEnabled`, `encounterTimelineCurrentTime`, `encounterLimitingResurrections`, `encounterSuppressingRelease`, `showTimelineForEncounter` alongside the original two.
+- Add independent zero-argument pairs for `C_TransmogOutfitInfo.GetActiveOutfitID`, `C_HousingCustomizeMode.IsHouseExteriorDoorHovered`, and `C_SpellDiminish.IsSystemSupported`, named `activeOutfitID`, `houseExteriorDoorHovered`, and `spellDiminishSystemSupported`. Retain all seven preceding API pairs.
 - Record only the omitted-companion observation. No invented companion/trait-tree IDs, trait-tree query, mutations, CVar changes, state transitions or default claims.
 - Protect namespace lookup; check access before inspecting functions/results. Preserve independent missing/lookup/call errors opaquely and retain raw arity, nils and repeated observations without stability conclusions.
-- Reuse sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds: fourteen query calls per snapshot, 140 maximum. Twelve cumulative actual TOC/slash fixtures cover zero arguments, repeated results, independent failures, access guards and bounds. Native ruleset/encounter/housing transitions, timeline timestamps, companion lock policy, trait-tree fixtures and security behavior remain unverified.
+- Reuse sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds: ten APIs, twenty query calls per snapshot, 200 maximum. Seventeen cumulative actual TOC/slash fixtures (twelve existing, five new) cover zero arguments, repeated results, independent failures, access guards and bounds. Native ruleset/encounter/housing transitions, timeline timestamps, outfit identity, exterior-door hover, spell-diminish support, companion lock policy, trait-tree fixtures and security behavior remain unverified.
 
 ## Manual equipped-item binding
 

@@ -429,7 +429,8 @@ end
 local function capturePublicQueries()
     local result = { personalResourceDisplay = {}, omittedCompanion = {},
         housingMarketShopEnabled = {}, encounterTimelineCurrentTime = {},
-        encounterLimitingResurrections = {}, encounterSuppressingRelease = {}, showTimelineForEncounter = {} }
+        encounterLimitingResurrections = {}, encounterSuppressingRelease = {}, showTimelineForEncounter = {},
+        activeOutfitID = {}, houseExteriorDoorHovered = {}, spellDiminishSystemSupported = {} }
     for index = 1, 2 do
         result.personalResourceDisplay[index] = observePublicQuery(C_GameRules, "IsPersonalResourceDisplayEnabled")
         result.omittedCompanion[index] = observePublicQuery(C_DelvesUI, "GetLockedTextForCompanion")
@@ -438,6 +439,9 @@ local function capturePublicQueries()
         result.encounterLimitingResurrections[index] = observePublicQuery(C_InstanceEncounter, "IsEncounterLimitingResurrections")
         result.encounterSuppressingRelease[index] = observePublicQuery(C_InstanceEncounter, "IsEncounterSuppressingRelease")
         result.showTimelineForEncounter[index] = observePublicQuery(C_InstanceEncounter, "ShouldShowTimelineForEncounter")
+        result.activeOutfitID[index] = observePublicQuery(C_TransmogOutfitInfo, "GetActiveOutfitID")
+        result.houseExteriorDoorHovered[index] = observePublicQuery(C_HousingCustomizeMode, "IsHouseExteriorDoorHovered")
+        result.spellDiminishSystemSupported[index] = observePublicQuery(C_SpellDiminish, "IsSystemSupported")
     end
     return result
 end
