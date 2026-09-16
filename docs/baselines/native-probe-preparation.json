@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 92,
-    "partial-recorder": 69,
+    "needs-design-and-recorder-review": 91,
+    "partial-recorder": 70,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -10267,8 +10267,17 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual expansion-audio-fields queries GetExpansionDisplayInfo twice for each guarded published classic/current expansion value with release type omitted, observing only three declared glue sound-kit fields"
+        ],
+        "missing": [
+          "Other expansion/release variants and native field values",
+          "Native load-phase behavior, validation and asset identity; playback excluded"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-expansion-audio"
     },
