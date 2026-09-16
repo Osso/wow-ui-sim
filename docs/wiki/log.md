@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
+
+`7d4d063eb` adds manual `equipped-transmog-eligibility`: each original owned `ItemLocation:CreateFromEquipmentSlot` result for slots 1–19 feeds one `C_Item.CanItemTransmogAppearance` call. Both outputs remain raw and guarded; the recorder neither equips nor transmogrifies. Nine fixtures, eight item-binding regressions, and eleven equipped-item-info regressions prove local mechanics only. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare equipped item-info recorder
 
 `ad054cd3d` adds manual `equipped-item-info`, excluded from `all`: each original accessible equipment link from slots 1–19 feeds one `C_Item.GetItemInfo` call. Its declared 18-return tuple is a local exception to the shared 16-position bound; values 16–18, including nils, remain captured without deeper traversal. Eleven fixtures plus eight item-binding regressions establish recorder mechanics only. No ItemLocation, transmog, mutation, native, or historical claim follows. Updated [[api-contract-probes]] and the index.

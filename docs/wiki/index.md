@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
+
+Runtime `7d4d063eb` adds manual `/apicontract equipped-transmog-eligibility <label>`, excluded from `all`. It creates guarded owned `ItemLocation` objects for equipment slots 1–19 and forwards each original object once to `C_Item.CanItemTransmogAppearance`, preserving both raw outputs. Nine fixtures plus eight item-binding and eleven equipped-item-info regressions prove recorder mechanics only. No equip/transmog operation, eligibility semantics, native behavior, or historical conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare equipped item-info recorder
 
 Runtime `ad054cd3d` adds manual `/apicontract equipped-item-info <label>`, excluded from `all`. It forwards each original accessible player-equipment link to one `C_Item.GetItemInfo` call and preserves the declared 18-position tuple exception locally. Eleven fixtures plus eight item-binding regressions prove recorder mechanics only; no ItemLocation, transmog, mutation, native, or historical conclusion follows. See [[api-contract-probes]].
