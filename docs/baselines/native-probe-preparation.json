@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 96,
-    "partial-recorder": 65,
+    "needs-design-and-recorder-review": 95,
+    "partial-recorder": 66,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -3742,8 +3742,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual equipped-transmog-eligibility creates original ItemLocation objects from equipment slots 1-19 and independently forwards each accessible object to CanItemTransmogAppearance, preserving raw return arity without inspecting location fields"
+        ],
+        "missing": [
+          "Native populated equipment eligibility and error-code results",
+          "Historical changed-contract evidence and item-state transitions",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-069"
     },
