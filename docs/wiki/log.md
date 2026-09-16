@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
+
+Documented runtime `7f2769fab` and inventory correction `006264322`: manual `sets-catalog` records one available-set list and two independent default-filter reads, bounded to entries 1–8 and six guarded fields. `grantAsPrecedingVariant` is declared in the pinned source; its prior claimed absence was corrected. Fourteen cumulative fixtures establish recorder mechanics only; no setters, native values, ordering, defaults, or native credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded custom-set name recorder
 
 Documented `10df9a28a`: manual `custom-set-names` reads maximum custom sets twice, bounds the first list to four original IDs, then queries each original ID and its original untruncated accessible name once. Eleven calls per snapshot and ten fixtures establish recorder mechanics only. Custom-set mutation, item-list/hyperlink table forwarding, name-validity semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.

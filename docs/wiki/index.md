@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
+
+Runtime `7f2769fab` adds manual `/apicontract sets-catalog <label>`, excluded from `all`. It calls `GetAvailableSets()` once and `IsUsingDefaultSetsFilters()` twice, inspecting first-list entries 1–8 through six guarded fields: `setID`, `name`, `collected`, `favorite`, `validForCharacter`, and declared `grantAsPrecedingVariant`. Fourteen cumulative fixtures include three new cases; no setters, ordering/default claims, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded custom-set name recorder
 
 Runtime `10df9a28a` adds manual `/apicontract custom-set-names <label>`, excluded from `all`. It reads the maximum twice and the first four custom-set IDs, then forwards only guarded original IDs to `GetCustomSetInfo` and original untruncated names to `IsValidCustomSetName`, for at most eleven calls per snapshot. Ten fixtures prove recorder mechanics only; no mutations, list/hyperlink forwarding, name-validity semantics, or native behavior is established. See [[api-contract-probes]].
