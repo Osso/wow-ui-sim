@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
 
-Runtime `c6818f925` adds manual `/apicontract empowered-stages <label>`, excluded from `all`. Across seven fixed tokens, it independently calls empowered-stage durations plus percentages with `false` and `true`, inspecting only first-return entries 1–8 and keeping duration objects opaque. Ten fixtures prove recorder mechanics only; casts, methods, native stage values, and native behavior remain unverified. See [[api-contract-probes]].
+Runtime `c6818f925` adds manual `/apicontract empowered-stages <label>`, excluded from `all`; `f3b0efea9` adds current-only ten-method observations for first-return duration entries 1–8. Across seven fixed tokens, percentages with `false` and `true` remain scalar-only; duration objects are not retained and do not affect cast state. Fifteen cumulative fixtures include five new method cases. Native stage values and behavior remain unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
 
