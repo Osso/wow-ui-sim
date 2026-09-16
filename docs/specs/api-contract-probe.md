@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual housing catalog
+
+- Manual `housing-catalog <label>` is excluded from `all`. Under `housingCatalog`, capture `featured` twice via no-argument `C_HousingCatalog.HasFeaturedEntries`, `products` once via `C_CatalogShop.GetNewProducts`, and `refundable` once via `GetRefundableDecors` with optional nilable `productIdFilterOpt` omitted. Preserve exact raw arity/nil positions, opaque errors and the refund producer's second return `minTimeRemainingSeconds`.
+- Only first-return product list indices 1–8 may feed original accessible finite IDs to independent `GetFirstCategoryByProductID(ID)` calls. Inspect only each first category object and its declared `ID`, `displayName`, `iconTexture`, `linkTag`, `isDisabled`, `showPersistentRefundButton` fields. Refund first-return list indices 1–8 expose only declared `decorGUID`, `timeRemainingSeconds`, `name`, `price`; `standaloneDecorProductID` remains an explicit missing observation.
+- Guard every table/entry/field access and value inspection/serialization. Recheck IDs after namespace/function lookup and function guards before forwarding. Peer observations continue after missing, restricted, invalid or failed inputs. Do not iterate, measure or mutate returned tables, invent IDs, retain raw objects or inspect other returned objects.
+- Cap four base plus eight category calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, purchases, refunds, currency guesses or native price/default/stability/completeness claims. Eleven actual TOC/slash fixtures establish mechanics only; native fixtures and semantics remain unverified. Pinned `CatalogShopDocumentation.lua:259–272` explicitly permits an omitted filter; `673–683,838–846` define observed fields.
+
 ## Manual neighborhood structures
 
 - Manual `neighborhood-structures <label>` is excluded from `all`. Under `neighborhoodStructures`, independently capture `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo`, `GetInitiativeActivityLogInfo` and `GetTrackedInitiativeTasks`, once each without arguments. Preserve raw arity, nils and opaque errors within sixteen positions; inspect only first returned objects.

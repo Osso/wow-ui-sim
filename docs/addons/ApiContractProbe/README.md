@@ -1,5 +1,15 @@
 # API Contract Probe
 
+## Manual housing catalog
+
+`/apicontract housing-catalog <label>` is excluded from `all`. Call `C_HousingCatalog.HasFeaturedEntries()` twice and independently call `C_CatalogShop.GetNewProducts()` once. Only the first returned product list at indices 1–8 supplies original accessible finite product IDs. Each ID permits one independent `GetFirstCategoryByProductID(ID)` call; inspect only its first returned object through six fixed fields: `ID`, `displayName`, `iconTexture`, `linkTag`, `isDisabled`, `showPersistentRefundButton`.
+
+Independently call `GetRefundableDecors()` once with its nilable `productIdFilterOpt` **omitted**, not passed explicitly as nil. Inspect only the first returned list at indices 1–8 through `decorGUID`, `timeRemainingSeconds`, `name`, `price`; preserve the raw second return `minTimeRemainingSeconds`. `standaloneDecorProductID` is not declared in the pinned current `RefundableDecorInfo` and remains missing, not inferred from another field.
+
+Guard every receiver before each index/field lookup and every value before inspection/serialization. Recheck original product IDs after namespace/function lookup and function guards, immediately before forwarding. Missing, restricted, invalid and failed observations do not suppress peers. No iteration/length lookup, fabricated IDs, retained raw objects, requests, purchases, refunds, mutations, currency guesses, native price/default/stability or completeness claims.
+
+Bounds: four base plus eight category calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. Pinned `HousingCatalogUIDocumentation.lua:287–293` and `CatalogShopDocumentation.lua:141–162,259–272,673–683,838–846` define the signatures and fields, not native results. Eleven actual TOC/slash fixtures prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/housing_catalog.lua docs/addons/ApiContractProbe`.
+
 ## Manual neighborhood structures
 
 `/apicontract neighborhood-structures <label>` is excluded from `all`. Independently call `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()`, `GetInitiativeActivityLogInfo()` and `GetTrackedInitiativeTasks()` once. Preserve raw arity, nil positions and opaque errors within sixteen return positions; inspect only each first returned object. Initiative fields are `isLoaded`, `neighborhoodGUID`, `initiativeID`, `currentCycleID`, `progressRequired`, `currentProgress`, `playerTotalContribution`, `duration`, `tasks`, `milestones`, `title`, `description`. Keep the scalar `fields.tasks` and `fields.milestones` observations opaque and unchanged. Add separate `taskEntries` and `milestoneEntries` observations, each inspecting indices 1–4 only. Initiative tasks use the same task-field inspector as tracked task responses, without additional task API calls. Milestones expose `milestoneOrderIndex`, `requiredContributionAmount` and opaque `rewards`; separate `rewardEntries` inspects reward indices 1–4 with only `title`, `description`, `decorID`, `decorQuantity`, `favor`, `money`, `rewardQuestID`.
