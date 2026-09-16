@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare weekly progress recorder
+
+Runtime `1043a349a` adds manual `/apicontract weekly-progress <label>`, excluded from `all`. It queries five fixed published weekly-reward threshold names with `false` and `true`, then reads only entries 1–8 of an accessible first result table and only guarded `activityTierID`, `difficulty`, and `numPoints` fields. Eleven local fixtures establish recorder mechanics only; sorting, combine behavior, completeness, and native results remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare housing preview-mode recorder
 
 Runtime `742df677d` adds manual `/apicontract housing-preview-modes <label>`, excluded from `all`. It reads only the fixed published `BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, and `ExteriorCustomization` HouseEditorMode names, querying each twice without fallback or mutation. Eight local fixtures establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].

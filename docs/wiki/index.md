@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare weekly progress recorder
+
+Runtime `1043a349a` adds manual `/apicontract weekly-progress <label>`, excluded from `all`. It reads five fixed published weekly-reward threshold names and independently queries each with `false` then `true`. It inspects only entries 1–8 of an accessible first returned table, limited to guarded `activityTierID`, `difficulty`, and `numPoints` fields. Eleven fixtures prove recorder mechanics only; no sorting, combine behavior, completeness, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare housing preview-mode recorder
 
 Runtime `742df677d` adds manual `/apicontract housing-preview-modes <label>`, excluded from `all`. It reads six fixed published HouseEditorMode names and independently queries each twice through `C_HousingDecor.IsModeDisabledForPreviewState`, without enum iteration or numeric fallback. It does not change preview mode or state. Eight fixtures prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
