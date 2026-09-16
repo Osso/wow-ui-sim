@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 97,
-    "partial-recorder": 64,
+    "needs-design-and-recorder-review": 96,
+    "partial-recorder": 65,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -3756,8 +3756,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual equipped-item-info forwards original accessible untruncated links from equipment slots 1-19 to C_Item.GetItemInfo, preserving eighteen declared return positions and exact raw arity with a mode-local bound"
+        ],
+        "missing": [
+          "Native matching-build and historical before/after item-info outputs",
+          "Other item representations, cache/population transitions and acceptance semantics",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-070"
     },
