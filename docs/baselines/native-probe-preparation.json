@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 132,
-    "partial-recorder": 29,
+    "needs-design-and-recorder-review": 131,
+    "partial-recorder": 30,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -834,8 +834,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual outfit-slots records GetAllSlotLocationInfo and GetSlotGroupInfo independently, inspecting eight entries per location/group/nested slot list and fixed guarded fields",
+          "Only original accessible finite slots from the first two location lists feed GetEquippedSlotOptionFromTransmogSlot and GetUnassignedAtlasForSlot, up to 32 independent downstream queries"
+        ],
+        "missing": [
+          "Other slot/type/option APIs and linked or weapon collection structures",
+          "Native populated slot states, order, completeness and atlas identity",
+          "Native transitions, validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/outfit_slot_state"
     },
