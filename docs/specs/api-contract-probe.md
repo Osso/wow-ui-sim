@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual neighborhood state
+
+- Manual `neighborhood-state <label>` is excluded from `all`. Call only `C_NeighborhoodInitiative.GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, and `PlayerMeetsRequiredLevel`, twice independently with exactly zero arguments.
+- Store two raw observations per function-name key under `neighborhoodState`. Reuse guarded namespace/function lookup and scalar serialization; missing, restricted, throwing or replaced APIs must not suppress peers.
+- Preserve exact arity, nil positions and opaque errors. Cap fourteen calls per snapshot, ten shared snapshots, sixteen result positions, 256-byte strings including GUIDs, and 128-byte labels. GUIDs are bounded scalar observations only.
+- No requests, active/viewing changes, claims, contributions or other mutations; no `GetAvailableHouseXP`, structured initiative/activity-log producers or task queries. Do not infer defaults, stability, native behavior or group identity. Native fixtures and transitions remain unverified.
+
 ## Manual sets catalog
 
 - Manual `sets-catalog <label>` is excluded from `all`. Independently call no-argument `C_TransmogSets.GetAvailableSets()` once and `IsUsingDefaultSetsFilters()` twice, preserving raw arity, nil positions and opaque errors within sixteen return positions.

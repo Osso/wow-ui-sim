@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual neighborhood state
+
+`/apicontract neighborhood-state <label>` is excluded from `all`. Independently call seven `C_NeighborhoodInitiative` queries twice each with zero arguments: `GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, `PlayerMeetsRequiredLevel`. Guard namespace/function lookup and scalar serialization; preserve raw arity, nil positions and opaque errors. Missing, restricted, throwing or replaced APIs do not suppress peers.
+
+Bounds: fourteen calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte strings (including GUIDs) and 128-byte labels. No GUID parsing or group identity conclusions, requests, active/viewing changes, claims, contributions or other mutations. Do not call `GetAvailableHouseXP`, structured initiative/activity-log producers or task queries. Repeated observations establish neither defaults nor stability nor native behavior.
+
+Pinned `NeighborhoodInitiativeDocumentation.lua:21–28,103–110,121–164` supplies the seven no-argument signatures, not native results. Ten actual TOC/slash fixtures exercise recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/neighborhood_state.lua docs/addons/ApiContractProbe`.
+
 ## Manual sets catalog
 
 `/apicontract sets-catalog <label>` is excluded from `all`. Call `C_TransmogSets.GetAvailableSets()` once and independently call `IsUsingDefaultSetsFilters()` twice, all without arguments. Preserve raw arity, nil positions and opaque errors within sixteen return positions. Inspect only the first returned list at indices 1–8, reading only six guarded fields: `setID`, `name`, `collected`, `favorite`, `validForCharacter`, `grantAsPrecedingVariant`. Recheck each list/entry receiver before every lookup and each field before serialization; never iterate, measure, mutate or retain returned objects.
