@@ -9641,10 +9641,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual public-queries independently records C_SpellDiminish.IsSystemSupported twice without arguments"
+          "Manual public-queries independently records C_SpellDiminish.IsSystemSupported twice without arguments",
+          "Manual spell-diminish-categories independently queries three fixed published ruleset values and eight fixed published categories; first returned lists are capped at eight entries with guarded category, name and icon fields"
         ],
         "missing": [
-          "Diminish category, ruleset, tracker and event observations",
+          "Native populated category/ruleset results, ordering and completeness; tracker and event observations",
           "Native support transitions and classifications; secret-return APIs remain deferred"
         ]
       },
