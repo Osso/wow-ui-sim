@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual weekly progress
+
+- Manual `weekly-progress <label>` is excluded from `all`. For fixed published `WeeklyRewardChestThresholdType` names `Raid`, `Activities`, `World`, `RankedPvP`, `Concession`, independently query `GetSortedProgressForActivity(value, false)` then `true`.
+- Accept only guarded finite numeric published values; no fallback or enum iteration. Recheck value access after API lookup/function guards and before forwarding.
+- Preserve sixteen raw return positions, nils and opaque errors. Inspect only the first returned table, positions 1–8, and fields `activityTierID`, `difficulty`, `numPoints`, guarding every table/entry/field read. Do not traverse, measure or mutate returned tables.
+- Cap ten calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Independent failures must not suppress peer observations. No guessed IDs, secret inspection, sorting/combine/completeness conclusions or native credit.
+
 ## Manual housing preview modes
 
 - Manual `housing-preview-modes <label>` is excluded from `all`. Query only `C_HousingDecor.IsModeDisabledForPreviewState` twice independently for each fixed published `Enum.HouseEditorMode` name: `BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, `ExteriorCustomization`.

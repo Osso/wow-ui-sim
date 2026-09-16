@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual weekly progress
+
+`/apicontract weekly-progress <label>` is excluded from `all`. Resolve only the five fixed published `Enum.WeeklyRewardChestThresholdType` names `Raid`, `Activities`, `World`, `RankedPvP`, `Concession`; call `C_WeeklyRewards.GetSortedProgressForActivity(value, false)` then independently with `true`. Values must be accessible finite numbers, with no numeric fallback or enum iteration. Recheck inputs after API lookup/function guards.
+
+Preserve raw tuples up to sixteen positions. Only the first returned table is inspected at indices 1–8, reading only `activityTierID`, `difficulty`, `numPoints`; guard each table, entry and field read. No returned-table iteration, length lookup or mutation. Bounds: ten calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Missing, restricted and failed observations do not suppress peers. No sorting, combine, completeness or native-result claims.
+
+Pinned `WeeklyRewardsDocumentation.lua:180-193,339-346` supplies signature and fields; `Blizzard_WeeklyRewards.lua:35-63` and `Blizzard_WeeklyRewards.xml:499` supply enum-name consumers. Eleven local actual TOC/slash fixtures prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/weekly_progress.lua docs/addons/ApiContractProbe`.
+
 ## Manual housing preview modes
 
 `/apicontract housing-preview-modes <label>` is excluded from `all`. For each fixed published `Enum.HouseEditorMode` name (`BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, `ExteriorCustomization`), independently resolve an accessible finite numeric value and call `C_HousingDecor.IsModeDisabledForPreviewState(value)` twice. No enum iteration or numeric fallback. Guard enum tables, values and functions before lookup/use; recheck the value after function guards. Missing, invalid, restricted and error outcomes remain explicit and do not suppress peers.

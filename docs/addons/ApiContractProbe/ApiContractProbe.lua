@@ -637,6 +637,57 @@ local function observeSpellMetadata(kind, id, name)
     return result
 end
 
+local function inspectWeeklyProgressEntry(entry)
+    local result = scalar(entry)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    result.fields = {}
+    for _, key in ipairs({ "activityTierID", "difficulty", "numPoints" }) do
+        local value, ok = readField(entry, key)
+        result.fields[key] = ok and scalar(value) or { status = "field-error" }
+    end
+    return result
+end
+
+local function observeWeeklyProgress(name, combine)
+    local enums, enumOK = readField(Enum, "WeeklyRewardChestThresholdType")
+    local value, valueOK
+    if enumOK then value, valueOK = readField(enums, name) end
+    local input = valueOK and scalar(value) or { status = "unavailable-enum" }
+    if input.status ~= "observed" or input.kind ~= "number" then
+        return { status = "unavailable-enum" }
+    end
+    local fn, ok = readField(C_WeeklyRewards, "GetSortedProgressForActivity")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not accessible(value) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, value, combine))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.input = "observed", input
+    local first = result.values[1]
+    if first and first.status == "observed" and first.kind == "table" then
+        first.entries = {}
+        for index = 1, 8 do
+            local entry, entryOK = readField(values[2], index)
+            first.entries[index] = entryOK and inspectWeeklyProgressEntry(entry) or { status = "field-error" }
+        end
+    end
+    return result
+end
+
+local function captureWeeklyProgress()
+    local result = { modes = {} }
+    for _, name in ipairs({ "Raid", "Activities", "World", "RankedPvP", "Concession" }) do
+        local row = { name = name, observations = {} }
+        row.observations[1] = observeWeeklyProgress(name, false)
+        row.observations[2] = observeWeeklyProgress(name, true)
+        result.modes[#result.modes + 1] = row
+    end
+    return result
+end
+
 local function observeHousingPreviewMode(name)
     local enums, enumOK = readField(Enum, "HouseEditorMode")
     local value, valueOK
@@ -1463,8 +1514,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1475,6 +1526,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "weekly-progress" then record.weeklyProgress = captureWeeklyProgress() end
         if mode == "housing-preview-modes" then record.housingPreviewModes = captureHousingPreviewModes() end
         if mode == "unit-target-display" then record.unitTargetDisplay = captureUnitTargetDisplay() end
         if mode == "unit-auras-current" then record.unitAurasCurrent = captureCurrentUnitAuras() end
