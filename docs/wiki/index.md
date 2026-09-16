@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
+
+Runtime `28d6194e0` adds manual `/apicontract unit-role-predicates <label>`, excluded from `all`. It independently calls `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` for eight fixed unit tokens, preserving raw tuples under twenty-four calls per snapshot. Threat/secret identity queries, mutations, and native classifications remain unverified. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded stable bonus-slot recorder
 
 Runtime `8eb05bf4f` adds manual `/apicontract stable-bonus-slot <label>`, excluded from `all`. It calls `C_StableInfo.IsBonusPetSlotAvailable()` twice with no arguments, preserving raw tuples only. Pet queries, stable mutations, availability/default claims, and native behavior remain unverified. Eleven fixtures prove recorder mechanics only. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
+
+Documented runtime `28d6194e0`: manual `unit-role-predicates` makes independent `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` calls for eight fixed tokens, capped at twenty-four calls per snapshot and excluded from `all`. Ten fixtures establish recorder mechanics only; threat/secret identity queries, mutations, and native classifications remain excluded or unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded stable bonus-slot recorder
 
 Documented runtime `8eb05bf4f`: manual `stable-bonus-slot` makes two independent no-argument `C_StableInfo.IsBonusPetSlotAvailable` calls, excluded from `all`. Eleven fixtures prove recorder mechanics only; pet queries, mutations, and native behavior remain excluded or unverified. Updated [[api-contract-probes]] and the index.
