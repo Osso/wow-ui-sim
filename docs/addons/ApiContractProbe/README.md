@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual spell diminish categories
+
+`/apicontract spell-diminish-categories <label>` is excluded from `all`. Query `GetAllSpellDiminishCategories` once for each fixed published `Enum.SpellDiminishRuleset` name `None`, `PvE`, `PvP`; independently query `GetSpellDiminishCategoryInfo` once for each published `Enum.SpellDiminishCategory` name `Root`, `Taunt`, `Stun`, `AoEKnockback`, `Incapacitate`, `Disorient`, `Silence`, `Disarm`. Require accessible finite numeric values, without numeric fallback or enum iteration. Recheck inputs after API lookup/function guards.
+
+Preserve raw arity, nils and opaque errors within sixteen return positions. Inspect only the first returned list at positions 1–8, or the first returned category-info object, reading only guarded `category`, `name`, `icon` fields. Every list, entry and field access is guarded; do not traverse, measure or retain returned objects. Eleven independent calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels bound capture size. Missing/restricted/failed observations do not suppress peers.
+
+Pinned `SpellDiminishUIDocumentation.lua` and `SpellDiminishConstantsDocumentation.lua` declare calls, fields and enum names. `RequiresSpellDiminishUI` may return nothing; the recorder does not load UI or manufacture fixtures. Never call secret-return `ShouldTrackSpellDiminishCategory` or access secret tracker events. No mutation, native classification, order, completeness, defaults, population or 3D claims. Eleven actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified. Run `luajit docs/addons/ApiContractProbe/tests/spell_diminish_categories.lua docs/addons/ApiContractProbe`.
+
 ## Manual weekly progress
 
 `/apicontract weekly-progress <label>` is excluded from `all`. Resolve only the five fixed published `Enum.WeeklyRewardChestThresholdType` names `Raid`, `Activities`, `World`, `RankedPvP`, `Concession`; call `C_WeeklyRewards.GetSortedProgressForActivity(value, false)` then independently with `true`. Values must be accessible finite numbers, with no numeric fallback or enum iteration. Recheck inputs after API lookup/function guards.

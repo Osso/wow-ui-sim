@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual spell diminish categories
+
+- Manual `spell-diminish-categories <label>` is excluded from `all`. Independently call `C_SpellDiminish.GetAllSpellDiminishCategories` for three fixed published ruleset names (`None`, `PvE`, `PvP`) and `GetSpellDiminishCategoryInfo` for eight fixed category names (`Root`, `Taunt`, `Stun`, `AoEKnockback`, `Incapacitate`, `Disorient`, `Silence`, `Disarm`).
+- Accept only guarded finite numeric published values. No numeric fallback or enum iteration. Recheck enum input access after namespace/function lookup and function guards before forwarding.
+- Preserve raw arity, nil positions and opaque errors within sixteen positions. Inspect only the first returned list at indices 1–8 or first returned info object; read only `category`, `name`, `icon`. Guard every list/entry/field access, without traversal, length lookup, mutation or retention. Independent failures must not suppress peers.
+- Cap eleven calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Missing UI prerequisites remain observed failures/empty returns, not synthesized fixtures; no UI loading.
+- Exclude `ShouldTrackSpellDiminishCategory`, secret tracker events, native classification/order/completeness/default/population conclusions and 3D claims. Eleven local actual TOC/slash fixtures establish recorder mechanics only, not native behavior.
+
 ## Manual weekly progress
 
 - Manual `weekly-progress <label>` is excluded from `all`. For fixed published `WeeklyRewardChestThresholdType` names `Raid`, `Activities`, `World`, `RankedPvP`, `Concession`, independently query `GetSortedProgressForActivity(value, false)` then `true`.
