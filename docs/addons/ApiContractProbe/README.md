@@ -128,6 +128,18 @@ Retain exact arity/nils, sixteen scalar positions, 256-byte strings, 128-byte la
 luajit docs/addons/ApiContractProbe/tests/spell_metadata.lua docs/addons/ApiContractProbe
 ```
 
+## Manual outfit state
+
+`/apicontract outfit-state <label>` is excluded from `all`. It independently calls seven `C_TransmogOutfitInfo` functions twice each, with no arguments: `GetCurrentlyViewedOutfitID`, `GetMaxNumberOfUsableOutfits`, `GetNextOutfitCost`, `GetPendingTransmogCost`, `HasPendingOutfitSituations`, `IsEquippedGearOutfitDisplayed`, and `IsEquippedGearOutfitLocked`.
+
+Each `outfitState` function-name key contains two guarded raw observations. Zero returns, explicit nil positions, opaque errors, and the pending-cost two-result tuple remain distinct. No state changes, purchases, selection, price interpretation, defaults, stability or native behavior are inferred. Bounds: 14 calls per snapshot, 10 snapshots, 16 return positions, 256-byte strings and 128-byte labels.
+
+Pinned `TransmogOutfitInfoDocumentation.lua:175–182,262–278,377–385,556–563,583–599` establishes these call shapes only. Ten separate actual TOC/slash fixtures test recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/outfit_state.lua docs/addons/ApiContractProbe
+```
+
 ## Manual public queries
 
 `/apicontract public-queries <label>` stays outside `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice with exactly zero arguments. The latter records only the omitted-companion case; no companion or trait-tree IDs are invented and `IsTraitTreeForCompanion` is not called.

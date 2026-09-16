@@ -103,6 +103,13 @@
 - Independently record `auraQueries.AuraIsBigDefensive` using `C_UnitAuras.AuraIsBigDefensive(originalID)`, whose pinned declaration accepts one `SpellIdentifier` and returns a boolean. No aura instance or invented ID. Guard namespace/field/function and original kind/ID before inspection; recheck input access after potentially revoking lookups/function guards. Aura and spell-query failures must not suppress each other.
 - Preserve exact arity, nils, sixteen scalar positions, 256-byte strings, 128-byte labels and ten snapshots. At most seventy base metadata, thirty visibility and ten aura-defensive calls across ten snapshots. Nineteen cumulative actual TOC/slash fixtures include five added aura-defensive cases and prove bounded recorder behavior only, with no native-conformance credit; native outputs, classifications, rank/override fixtures and security remain pending.
 
+## Manual outfit state
+
+- Manual `outfit-state <label>` is excluded from `all`. Independently call each of seven `C_TransmogOutfitInfo` queries twice with exactly zero arguments: `GetCurrentlyViewedOutfitID`, `GetMaxNumberOfUsableOutfits`, `GetNextOutfitCost`, `GetPendingTransmogCost`, `HasPendingOutfitSituations`, `IsEquippedGearOutfitDisplayed`, `IsEquippedGearOutfitLocked`.
+- Store two raw observations per function-name key under `outfitState`. Reuse guarded namespace/function lookup and accessible scalar recording. Missing, restricted, throwing or replaced APIs must not suppress peer observations.
+- Preserve exact return arity, nil positions and opaque errors, including pending-cost two-return and no-return cases. Bound captures to 14 calls per snapshot, ten snapshots, 16 return positions, 256-byte strings and 128-byte labels.
+- No mutations, purchases, selection, price interpretation, defaults, stability or native-conformance claims. Matching-client state transitions and cost semantics remain unverified.
+
 ## Manual public queries
 
 - Manual `public-queries <label>` is excluded from `all`. Independently call `C_GameRules.IsPersonalResourceDisplayEnabled()` twice and `C_DelvesUI.GetLockedTextForCompanion()` twice, each with exactly zero arguments.
