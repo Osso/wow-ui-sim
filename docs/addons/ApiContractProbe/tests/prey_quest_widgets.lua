@@ -179,4 +179,34 @@ test("chain bounded nineteen calls and collectible objects", function()
     assert(#ApiContractProbeDB.captures[1].preyQuestWidgets.details.Tooltip.entries[1].visualization.fields.tooltip.value == 256)
     collectgarbage(); collectgarbage(); assert(next(weak) == nil)
 end)
+test("chain discriminator revoked by intervening kind guard is not compared", function()
+    local armed, revoked, calls = false, false, 0
+    chain(function() return { { widgetID = 9, widgetType = 82.25 } } end,
+        function() calls = calls + 1 end)
+    Enum.UIWidgetVisualizationType = setmetatable({}, { __index = function(_, key)
+        assert(key == "PreyHuntProgress")
+        armed = true
+        return 81.25
+    end })
+    canaccessvalue = function(value)
+        if armed and rawequal(value, 82.25) then revoked = true end
+        return not (revoked and rawequal(value, 81.25))
+    end
+    local row = capture().details.Tooltip.entries[1].visualization
+    assert(row.status == "restricted-input", "inaccessible discriminator compared: " .. row.status)
+    assert(calls == 0)
+end)
+test("chain discriminator guard revoking widget ID prevents forwarding", function()
+    local armed, revoked, calls = false, false, 0
+    local fn = function() calls = calls + 1 end
+    chain(function() return { { widgetID = 9, widgetType = 51.5 } } end, fn)
+    canaccessvalue = function(value)
+        if rawequal(value, fn) then armed = true end
+        if armed and rawequal(value, 51.5) then revoked = true end
+        return not (revoked and rawequal(value, 9))
+    end
+    local row = capture().details.Tooltip.entries[1].visualization
+    assert(calls == 0, "revoked widget ID forwarded")
+    assert(row.status == "restricted-input")
+end)
 print("Passed " .. passed .. " tests")

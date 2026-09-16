@@ -10,7 +10,7 @@
 - Guard entry receivers before reading original widget ID/type. Only a type matching guarded published `Enum.UIWidgetVisualizationType.PreyHuntProgress` may feed `GetPreyHuntProgressWidgetVisualizationInfo`. Recheck original IDs, type and discriminator after API/function guards before comparison or forwarding; never dispatch wrong types.
 - Inspect only the first visualization object and sixteen declared fields as guarded scalar observations; no recursive nested inspection or object retention.
 - Bound nineteen calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte strings and 128-byte labels. No quest acceptance, abandonment, requests, mutations, completeness or native classification/default claims.
-- Eight actual TOC/slash fixtures prove recorder mechanics only; native quest/widget fixtures remain unverified.
+- Sixteen cumulative actual TOC/slash fixtures, including two comparison/forwarding revocation regressions, prove recorder mechanics only; native quest/widget fixtures remain unverified.
 
 ## Manual major faction renown rewards
 

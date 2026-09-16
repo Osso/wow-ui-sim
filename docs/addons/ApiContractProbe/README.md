@@ -8,7 +8,7 @@ Distinct `details` preserve existing query tuples. Each original finite widget-s
 
 Manual-only, excluded from `all`: at most nineteen API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Raw arity, nil positions and opaque errors remain distinct. No wrong-type calls, quest acceptance/abandonment, requests, mutations, completeness or native classification/default claims.
 
-Pinned retail `QuestLogDocumentation.lua:96–103`, `QuestTaskInfoDocumentation.lua:111–125`, and `UIWidgetManagerSharedDocumentation.lua:6–15` supply call shapes and enum names, not native outputs. `UIWidgetManagerDocumentation.lua:11–24,278–290,1626–1646,2073–2081` and the published visualization enum ground the extension. Fourteen cumulative actual TOC/slash fixtures (eight existing, six new) prove local mechanics only:
+Pinned retail `QuestLogDocumentation.lua:96–103`, `QuestTaskInfoDocumentation.lua:111–125`, and `UIWidgetManagerSharedDocumentation.lua:6–15` supply call shapes and enum names, not native outputs. `UIWidgetManagerDocumentation.lua:11–24,278–290,1626–1646,2073–2081` and the published visualization enum ground the extension. Sixteen cumulative actual TOC/slash fixtures (eight original, six widget-chain cases, two revocation regressions) prove local mechanics only:
 
 ```text
 luajit docs/addons/ApiContractProbe/tests/prey_quest_widgets.lua docs/addons/ApiContractProbe

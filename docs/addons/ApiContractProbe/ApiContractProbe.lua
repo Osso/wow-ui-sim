@@ -1075,6 +1075,7 @@ local function observePreyVisualization(id, kind)
     if ok then discriminator, ok = readField(enums, "PreyHuntProgress") end
     if not ok or not preyNumberAccessible(discriminator) then return { status = "unavailable-enum" } end
     if not preyNumberAccessible(id) or not preyNumberAccessible(kind) then return { status = "restricted-input" } end
+    if not accessible(kind) or not accessible(discriminator) then return { status = "restricted-input" } end
     if kind ~= discriminator then return { status = "wrong-widget-type" } end
     local fn
     fn, ok = readField(C_UIWidgetManager, "GetPreyHuntProgressWidgetVisualizationInfo")
@@ -1082,7 +1083,9 @@ local function observePreyVisualization(id, kind)
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
     if not preyNumberAccessible(id) or not preyNumberAccessible(kind)
         or not preyNumberAccessible(discriminator) then return { status = "restricted-input" } end
+    if not accessible(kind) or not accessible(discriminator) then return { status = "restricted-input" } end
     if kind ~= discriminator then return { status = "wrong-widget-type" } end
+    if not preyNumberAccessible(id) then return { status = "restricted-input" } end
     local values = pack(pcall(fn, id))
     if not values[1] then return { status = "call-error" } end
     local result = mapTuple(unpack(values, 2, values.n))
