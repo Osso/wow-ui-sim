@@ -2847,8 +2847,14 @@ local function callbackPayload(...)
     return result
 end
 
-local function callbackCall(fn, cb, unit)
+local function callbackInputsAccessible(cb, unit)
+    return accessible("UNIT_HEALTH") and accessible(unit) and accessible(cb)
+end
+
+local function callbackCall(fn, cb, unit, guardInputs)
+    if guardInputs and not callbackInputsAccessible(cb, unit) then return { status = "restricted-input" } end
     if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if guardInputs and not callbackInputsAccessible(cb, unit) then return { status = "restricted-input" } end
     local values
     if unit then values = pack(pcall(fn, "UNIT_HEALTH", cb, unit))
     else values = pack(pcall(fn, "UNIT_HEALTH", cb)) end
@@ -2870,6 +2876,25 @@ local function callbackOutcome(result)
     return "accepted"
 end
 
+local function registerDuplicateCallbackLane(lane, record, register)
+    lane.pendingAttempts = {}
+    record.registrations, record.removals, record.removalAttempts = {}, {}, { 0, 0 }
+    local complete = true
+    for attempt = 1, 2 do
+        -- An available call can register before throwing; keep its cleanup slot.
+        lane.pendingAttempts[attempt] = accessible(register) and type(register) == "function"
+        if lane.pendingAttempts[attempt] then
+            record.registrations[attempt] = callbackCall(register, lane.callback, lane.unit, true)
+        else
+            record.registrations[attempt] = { status = "missing-api" }
+        end
+        local outcome = callbackOutcome(record.registrations[attempt])
+        if outcome ~= "accepted" then complete, record.status = false, outcome end
+    end
+    if complete then record.status = "registered" end
+    return complete
+end
+
 local function startCallbackLane(session, name, register, unit)
     local lane = { unit = unit }
     local record = {}
@@ -2881,6 +2906,10 @@ local function startCallbackLane(session, name, register, unit)
         saved.events[#saved.events + 1] = { lane = name, label = saved.label,
             time = observeCast(GetTime), payload = callbackPayload(...) }
     end
+    if session.duplicate then
+        session[name] = lane
+        return registerDuplicateCallbackLane(lane, record, register)
+    end
     -- Retain identity even after a call error: the API may have registered before throwing.
     lane.pending = accessible(register) and type(register) == "function"
     record.registration = callbackCall(register, lane.callback, unit)
@@ -2890,8 +2919,27 @@ local function startCallbackLane(session, name, register, unit)
     return outcome == "accepted"
 end
 
+local function stopDuplicateCallbackLane(lane, record, unregister)
+    local complete = true
+    for attempt = 1, 2 do
+        if lane.pendingAttempts[attempt] then
+            record.removalAttempts[attempt] = record.removalAttempts[attempt] + 1
+            record.removals[attempt] = callbackCall(unregister, lane.callback, lane.unit, true)
+            local outcome = callbackOutcome(record.removals[attempt])
+            if outcome == "accepted" then
+                lane.pendingAttempts[attempt] = false
+            else
+                complete, record.status = false, "cleanup-" .. outcome
+            end
+        end
+    end
+    if complete then record.status = "removed" end
+    return complete
+end
+
 local function stopCallbackLane(session, name, unregister)
     local lane, record = session[name], session.record[name]
+    if lane.pendingAttempts then return stopDuplicateCallbackLane(lane, record, unregister) end
     if not lane.pending then return true end
     record.removal = callbackCall(unregister, lane.callback, lane.unit)
     local outcome = callbackOutcome(record.removal)
@@ -2920,7 +2968,8 @@ local function controlCallbacks(mode, label)
     if #db.callbackSessions >= 10 then db.callbackStatus = "session-limit"; return end
     local record = { label = label, client = observeCast(GetBuildInfo), time = observeCast(GetTime),
         events = {}, dropped = 0 }
-    local session = { record = record, receiving = true }
+    local session = { record = record, receiving = true, duplicate = mode == "callbacks-duplicate-start" }
+    if session.duplicate then record.duplicate = true end
     db.callbackSessions[#db.callbackSessions + 1] = record
     callbackSession = session
     local globalOK = startCallbackLane(session, "global", RegisterEventCallback)
@@ -2933,7 +2982,7 @@ SLASH_APICONTRACTPROBE1 = "/apicontract"
 SlashCmdList.APICONTRACTPROBE = function(input)
     local mode, label = string.match(input or "", "^%s*(%S*)%s*(.-)%s*$")
     if mode == "" then mode = "all" end
-    if mode == "callbacks-start" or mode == "callbacks-stop" then
+    if mode == "callbacks-start" or mode == "callbacks-duplicate-start" or mode == "callbacks-stop" then
         controlCallbacks(mode, string.sub(label, 1, 128)); return
     end
     if mode == "events-start" or mode == "events-stop" then
@@ -2945,7 +2994,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
     if mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+        print("Usage: /apicontract [combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()

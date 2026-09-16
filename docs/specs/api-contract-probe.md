@@ -437,9 +437,17 @@ Native execution, nonboolean truthiness, arbitrary-byte contracts beyond the fix
 - [x] Capture real deliveries only: 128 entries per session, exact arity and 16 scalar-only positions, nil preservation, accessibility-first redaction, label/build/time provenance. Overflow does not prevent manual cleanup; stale callbacks cannot record after stop.
 - [x] Reject repeated starts while cleanup is outstanding, create one new session after stop, and bound saved sessions to ten. Missing access APIs prevent registration. Callback function objects remain private, outside SavedVariables.
 
-The four pinned global APIs take event name and callback, with a third unit argument for unit registration/removal; current retail declarations list no returns. Record observed arity instead of importing the simulator global registration boolean policy. Zero-return protected-call success is an accepted call, not proof of a native delivery. External `UNIT_HEALTH` fixtures remain pending. FunctionContainer wrappers, duplicates, ordering, aliases, mutation, recursion and security are excluded; this is not complete callback preparation.
+The four pinned global APIs take event name and callback, with a third unit argument for unit registration/removal; current retail declarations list no returns. Record observed arity instead of importing the simulator global registration boolean policy. Zero-return protected-call success is an accepted call, not proof of a native delivery. External `UNIT_HEALTH` fixtures remain pending. FunctionContainer wrappers, native duplicate/ordering semantics, aliases, callback-time mutation, recursion, GC and security claims are excluded; this is not complete callback preparation.
 
 Behavioral fixtures cover owned registrations, hostile/secret/nil payloads, identity removal, no after-stop records, partial registration errors, cleanup retries/refusals, repeated start, new sessions, payload/session limits and `all` exclusion.
+
+### Duplicate callback inputs
+
+- [x] Manual `callbacks-duplicate-start <label>` reuses one active session with global and player-unit lanes, registering each exact owned closure twice. Four registration calls maximum; no extra callback identity or synthesized delivery.
+- [x] Preserve both raw registration results per lane. Reserve each available call's cleanup slot before invocation, including throw-after-side-effect and false results. Guard event/unit/callback inputs before forwarding and after function guards.
+- [x] `callbacks-stop` disables receiving first and attempts each pending duplicate slot once, at most four removals total. Peer lanes continue independently. Accepted outcomes retire only their corresponding slot; unconfirmed outcomes retain identity and `cleanup-incomplete`, blocking new starts.
+- [x] No automatic retries beyond those slots. A later explicit stop retries only still-pending slots. Store latest raw removal result and attempt count per slot in fixed-size records; do not infer deduplication/reference-count semantics from false or error outcomes.
+- [x] Preserve normal `callbacks-start`/`callbacks-stop` output and behavior, ten saved sessions, one active session, 128 payloads, 16 result positions and 128-byte labels. Fixture-driven local deliveries prove recorder bounds only; native execution and callback semantics remain unverified.
 
 ## Pure mapvalues capture
 

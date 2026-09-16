@@ -564,7 +564,15 @@ Each of at most ten sessions records build/time/label, separate registration/rem
 
 `registration-incomplete` preserves independent failures/refusals. A throwing registration may already have installed its callback, so stop still attempts removal. Missing, throwing, refused or inaccessible cleanup results retain the identity for another stop attempt and report `cleanup-incomplete`, not success. A successful stop disables recording even if an old callback is invoked later. Repeated start while a session needs cleanup is rejected; stop then start creates one new session. Missing access APIs prevent registration entirely. A nonthrowing zero-return call is recorded as accepted; this is not independent evidence that native registration took effect. Inspect real deliveries and raw results.
 
-Native execution remains pending. FunctionContainer wrappers, duplicate/order/alias behavior, callback-time mutation, security and broader producer coverage are outside this bounded experiment. This is partial preparation, not native conformance proof.
+### Duplicate registration inputs
+
+`/apicontract callbacks-duplicate-start <label>` uses the same single-session limit and the same two owned lanes, registering each lane's exact closure twice (four calls). `callbacks-stop` disables receiving before attempting at most two removals per duplicate lane. Global and unit cleanup proceed independently. Normal `callbacks-start` retains its singular registration/removal records and behavior.
+
+Duplicate lanes store `registrations[1..2]` separately. Each available registration call reserves a cleanup slot before invocation, including calls that throw or return false. Each pending slot gets one removal attempt per explicit stop; `removals[slot]` holds its latest raw result and `removalAttempts[slot]` its attempt count. These fixed-size records replace prior removal results on an explicit retry rather than accumulating an unbounded history. Accepted cleanup retires only that slot. False, errors, inaccessible or truncated outcomes retain the exact closure and report `cleanup-incomplete`; another start remains blocked. No automatic retries occur. An API that deduplicates registrations but returns false on the second removal can therefore leave cleanup unconfirmed; the recorder never guesses deduplication or reference-count semantics.
+
+Event, unit and callback accessibility are checked before forwarding and again after function guards in duplicate mode. Existing ten-session, one-active-session, 128-delivery, 16-position and 128-byte label limits apply. Local fixture deliveries are driven only by tests, never by the recorder. Run the focused suite with `luajit docs/addons/ApiContractProbe/tests/callback_duplicates.lua docs/addons/ApiContractProbe`.
+
+Native execution remains pending. The duplicate mode prepares same-closure registration/removal inputs only; it establishes no native duplicate, delivery or ordering semantics. FunctionContainer wrappers, aliases, callback-time mutation, security and GC claims remain outside this experiment. This is partial preparation, not native conformance proof.
 
 ## Observations
 
