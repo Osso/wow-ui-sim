@@ -10,6 +10,7 @@ local function setup(rules, delves)
     GetBuildInfo = function() return "fixture", "123" end
     time = function() return 42 end
     C_GameRules, C_DelvesUI = rules, delves
+    C_Housing, C_EncounterTimeline, C_InstanceEncounter = nil, nil, nil
     local toc = assert(io.open(root .. "/ApiContractProbe.toc"))
     for line in toc:lines() do
         if line:match("%.lua$") then assert(loadfile(root .. "/" .. line))() end
@@ -125,5 +126,141 @@ test("manual only and ten snapshot cap", function()
     setup({ IsPersonalResourceDisplayEnabled = fn }, { GetLockedTextForCompanion = fn })
     for i = 1, 11 do SlashCmdList.APICONTRACTPROBE("public-queries") end
     assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1 and calls == 40)
+end)
+local publicStateQueries = {
+    { "C_Housing", "IsHousingMarketShopEnabled", "housingMarketShopEnabled" },
+    { "C_EncounterTimeline", "GetCurrentTime", "encounterTimelineCurrentTime" },
+    { "C_InstanceEncounter", "IsEncounterLimitingResurrections", "encounterLimitingResurrections" },
+    { "C_InstanceEncounter", "IsEncounterSuppressingRelease", "encounterSuppressingRelease" },
+    { "C_InstanceEncounter", "ShouldShowTimelineForEncounter", "showTimelineForEncounter" },
+}
+local function installPublicState(factory)
+    C_Housing, C_EncounterTimeline, C_InstanceEncounter = {}, {}, {}
+    for index, query in ipairs(publicStateQueries) do
+        _G[query[1]][query[2]] = factory(index)
+    end
+end
+
+test("five new named outputs preserve independent zero-argument tuples", function()
+    setup({}, {})
+    local calls = {}
+    installPublicState(function(index)
+        calls[index] = 0
+        return function(...)
+            assert(select("#", ...) == 0)
+            calls[index] = calls[index] + 1
+            return index, nil, calls[index]
+        end
+    end)
+    local result = capture()
+    for index, query in ipairs(publicStateQueries) do
+        local lane = assert(result[query[3]], "missing public-state output: " .. query[3])
+        assert(calls[index] == 2)
+        for repetition = 1, 2 do
+            assert(lane[repetition].n == 3)
+            assert(lane[repetition].values[1].value == index)
+            assert(lane[repetition].values[2].kind == "nil")
+            assert(lane[repetition].values[3].value == repetition)
+        end
+    end
+end)
+
+test("each new function failure leaves all peers independent", function()
+    for failed, query in ipairs(publicStateQueries) do
+        for _, failure in ipairs({ "missing", "secret", "lookup", "call" }) do
+            local oldCalls, newCalls = 0, 0
+            local function old() oldCalls = oldCalls + 1 end
+            setup({ IsPersonalResourceDisplayEnabled = old }, { GetLockedTextForCompanion = old })
+            installPublicState(function() return function() newCalls = newCalls + 1; return nil end end)
+            local namespace = _G[query[1]]
+            if failure == "missing" then namespace[query[2]] = nil
+            elseif failure == "secret" then namespace[query[2]] = secret
+            elseif failure == "lookup" then
+                namespace[query[2]] = nil
+                setmetatable(namespace, { __index = function(_, key)
+                    assert(key == query[2]); error(secret)
+                end })
+            else namespace[query[2]] = function() error(secret) end end
+            local result = capture()
+            local expected = failure == "lookup" and "field-error"
+                or failure == "call" and "call-error" or "missing-api"
+            assert(oldCalls == 4 and newCalls == 8)
+            for index, peer in ipairs(publicStateQueries) do
+                for repetition = 1, 2 do
+                    local observation = result[peer[3]][repetition]
+                    if index == failed then assert(observation.status == expected)
+                    else assert(observation.n == 1 and observation.values[1].kind == "nil") end
+                end
+            end
+        end
+    end
+end)
+
+test("new namespace absence restriction and lookup errors preserve other namespaces", function()
+    for _, name in ipairs({ "C_Housing", "C_EncounterTimeline", "C_InstanceEncounter" }) do
+        for _, failure in ipairs({ "missing", "secret", "lookup" }) do
+            local calls = 0
+            setup({}, {})
+            installPublicState(function() return function() calls = calls + 1 end end)
+            _G[name] = failure == "secret" and secret or failure == "lookup"
+                and setmetatable({}, { __index = function() error(secret) end }) or nil
+            local original = type
+            type = function(value) assert(not rawequal(value, secret)); return original(value) end
+            local ok, result = pcall(capture)
+            type = original
+            assert(ok, result)
+            assert(calls == (name == "C_InstanceEncounter" and 4 or 8))
+            for _, query in ipairs(publicStateQueries) do
+                if query[1] == name then assert(result[query[3]][2].status == "field-error") end
+            end
+        end
+    end
+end)
+
+test("new query results stay bounded opaque and recheck function access", function()
+    for selected, query in ipairs(publicStateQueries) do
+        setup({}, {})
+        local calls, revoked, chosen = 0, false
+        installPublicState(function(index)
+            if index ~= selected then return function() return nil end end
+            chosen = function()
+                calls = calls + 1
+                revoked = true
+                local values = { secret, string.rep("z", 300), math.huge }
+                for i = 4, 20 do values[i] = i end
+                return unpack(values)
+            end
+            return chosen
+        end)
+        canaccessvalue = function(value)
+            return not rawequal(value, secret) and not (revoked and rawequal(value, chosen))
+        end
+        local result = capture()[query[3]]
+        assert(calls == 1 and result[2].status == "missing-api")
+        assert(result[1].n == 20 and #result[1].values == 16 and result[1].truncated)
+        assert(result[1].values[1].status == "restricted")
+        assert(#result[1].values[2].value == 256 and result[1].values[2].truncated)
+        assert(result[1].values[3].status == "nonfinite")
+    end
+end)
+
+test("all seven queries are manual only with 140 total calls and no mutations", function()
+    local calls = 0
+    local function fn(...) assert(select("#", ...) == 0); calls = calls + 1 end
+    local function install()
+        setup({ IsPersonalResourceDisplayEnabled = fn }, { GetLockedTextForCompanion = fn })
+        installPublicState(function() return fn end)
+        for _, name in ipairs({ "C_Housing", "C_EncounterTimeline", "C_InstanceEncounter" }) do
+            setmetatable(_G[name], { __index = function() error("unexpected API") end,
+                __newindex = function() error("namespace mutation") end })
+        end
+    end
+    install()
+    SlashCmdList.APICONTRACTPROBE("all")
+    assert(calls == 0 and ApiContractProbeDB.captures[1].publicQueries == nil)
+    install()
+    for i = 1, 11 do SlashCmdList.APICONTRACTPROBE("public-queries " .. string.rep("l", 200)) end
+    assert(calls == 140 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
 end)
 print(string.format("%d/%d passed", passed, passed))

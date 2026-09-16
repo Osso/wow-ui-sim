@@ -427,10 +427,17 @@ local function observePublicQuery(namespace, name)
 end
 
 local function capturePublicQueries()
-    local result = { personalResourceDisplay = {}, omittedCompanion = {} }
+    local result = { personalResourceDisplay = {}, omittedCompanion = {},
+        housingMarketShopEnabled = {}, encounterTimelineCurrentTime = {},
+        encounterLimitingResurrections = {}, encounterSuppressingRelease = {}, showTimelineForEncounter = {} }
     for index = 1, 2 do
         result.personalResourceDisplay[index] = observePublicQuery(C_GameRules, "IsPersonalResourceDisplayEnabled")
         result.omittedCompanion[index] = observePublicQuery(C_DelvesUI, "GetLockedTextForCompanion")
+        result.housingMarketShopEnabled[index] = observePublicQuery(C_Housing, "IsHousingMarketShopEnabled")
+        result.encounterTimelineCurrentTime[index] = observePublicQuery(C_EncounterTimeline, "GetCurrentTime")
+        result.encounterLimitingResurrections[index] = observePublicQuery(C_InstanceEncounter, "IsEncounterLimitingResurrections")
+        result.encounterSuppressingRelease[index] = observePublicQuery(C_InstanceEncounter, "IsEncounterSuppressingRelease")
+        result.showTimelineForEncounter[index] = observePublicQuery(C_InstanceEncounter, "ShouldShowTimelineForEncounter")
     end
     return result
 end
