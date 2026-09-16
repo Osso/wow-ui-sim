@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Extend bounded public-query recorder
 
-Runtime `428000300` extends manual `/apicontract public-queries <label>`, excluded from `all`, with two reads each of housing-market availability, encounter time, and three instance-encounter flags. The original GameRules and omitted-companion Delves UI pairs remain. Twelve cumulative fixtures include five new cases; no native clock, encounter, default, or state behavior is established. See [[api-contract-probes]].
+Runtime `c5d272d63` extends manual `/apicontract public-queries <label>`, excluded from `all`, with two reads each of active outfit ID, exterior-door hover, and spell-diminish support. The prior seven API pairs remain, for ten APIs and twenty calls per snapshot. Seventeen cumulative fixtures include five new cases; no native outfit, hover, diminish, clock, encounter, default, or state behavior is established. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare weekly progress recorder
 

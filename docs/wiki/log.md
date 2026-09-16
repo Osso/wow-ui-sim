@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Extend bounded public-query recorder
 
-Runtime `428000300` keeps the original two no-argument GameRules and omitted-companion Delves UI calls, then adds two reads each of housing-market availability, encounter time, and three instance-encounter flags. Fourteen calls per snapshot and twelve cumulative fixtures establish recorder mechanics only. No native clock, encounter, housing, default, or state-transition behavior was observed.
+Runtime `c5d272d63` retains seven public-query pairs and adds two reads each of `C_TransmogOutfitInfo.GetActiveOutfitID`, `C_HousingCustomizeMode.IsHouseExteriorDoorHovered`, and `C_SpellDiminish.IsSystemSupported`. Ten APIs make twenty calls per snapshot; seventeen cumulative fixtures, including five new cases, establish recorder mechanics only. No native outfit, hover, diminish, clock, encounter, housing, default, or state-transition behavior was observed.
 
 ## [2026-09-16] investigation | Prepare weekly progress recorder
 
