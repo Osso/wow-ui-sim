@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 89,
-    "partial-recorder": 72,
+    "needs-design-and-recorder-review": 88,
+    "partial-recorder": 73,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -3800,8 +3800,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual item-interaction-flags independently records GetItemInteractionInfo twice without arguments and observes only the guarded flags field of each first returned object, without initializing an interaction"
+        ],
+        "missing": [
+          "Native populated interaction fixtures and flags values",
+          "Historical changed-contract semantics and interaction transitions",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-071"
     },
