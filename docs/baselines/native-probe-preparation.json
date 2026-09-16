@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 98,
-    "partial-recorder": 63,
+    "needs-design-and-recorder-review": 97,
+    "partial-recorder": 64,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -9762,8 +9762,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual action-state records GetActionInfo control plus twelve independent selected-slot queries for autocast, text, use count, range and action predicates, without requiring a spell identity",
+          "GetExtraBarIndex and GetMultiCastBarIndex are independently called without arguments; IsActionInRange omits its optional target"
+        ],
+        "missing": [
+          "Loss-of-control cooldown/duration observations and ActionBarCooldownInfo.isEnabled",
+          "Native populated action fixtures, range/target transitions and classification semantics",
+          "Action-button registration, validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-spells-actionbar"
     },
