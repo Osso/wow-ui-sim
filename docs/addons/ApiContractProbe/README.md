@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual major faction journey
+
+`/apicontract major-faction-journey <label>` is excluded from `all`. Call `C_MajorFactions.GetMajorFactionIDs(nil)` once with **one explicit nil** expansion argument. Only first-return table indices 1–8 supply original accessible finite faction IDs to two independent predicates: `ShouldDisplayMajorFactionAsJourney(ID)` and `ShouldUseJourneyRewardTrack(ID)`. Preserve duplicates and fractional inputs without interpreting them; never invent IDs or expansion values.
+
+Guard namespace/function/list before lookup or inspection and recheck each original ID after predicate lookup/function guards. Record raw arity, nil holes and opaque errors; failures do not suppress peer predicates or entries. Bounds: seventeen API calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Raw objects are not retained. No renown/data queries, mutations, ordering/completeness or native classification claims; structure fields and matching native fixtures remain pending.
+
+Pinned retail `MajorFactionsDocumentation.lua:41–53,156–184` supplies the nilable producer argument and predicate signatures, not native outputs. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/major_faction_journey.lua docs/addons/ApiContractProbe
+```
+
 ## Manual training grounds structures
 
 `/apicontract training-grounds-structures <label>` is excluded from `all`. Independently call `C_PvP.GetTrainingGrounds()` and `C_PvP.GetRandomTrainingGroundRewards()` once each. `trainingGroundsStructures.grounds` preserves raw arity and inspects only the first returned table at indices 1–8. Each entry exposes the fourteen declared fields: `name`, `icon`, `gameType`, `shortDescription`, `longDescription`, `mapDescription`, `maxPlayers`, `battlegroundID`, `lfgDungeonID`, `mapID`, `isHoliday`, `isRandom`, `canEnter`, `isTrainingGround`.

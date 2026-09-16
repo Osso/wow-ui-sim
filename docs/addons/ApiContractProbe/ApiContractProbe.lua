@@ -914,6 +914,57 @@ local function captureCurrentUnitAuras()
     return result
 end
 
+local function majorFactionInputStatus(id)
+    if not accessible(id) then return "restricted-input" end
+    if type(id) ~= "number" or id ~= id or id == math.huge or id == -math.huge then
+        return "unavailable-input"
+    end
+end
+
+local function observeMajorFactionJourney(id, name)
+    local status = majorFactionInputStatus(id)
+    if status then return { status = status } end
+    local fn, ok = readField(C_MajorFactions, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    status = majorFactionInputStatus(id)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function captureMajorFactionJourney()
+    local result = { entries = {} }
+    local fn, ok = readField(C_MajorFactions, "GetMajorFactionIDs")
+    if not ok then result.producer = { status = "field-error" }; return result end
+    if not accessible(fn) or type(fn) ~= "function" then
+        result.producer = { status = "missing-api" }; return result
+    end
+    -- One explicit nil is the documented nilable expansion filter.
+    local values = pack(pcall(fn, nil))
+    if not values[1] then result.producer = { status = "call-error" }; return result end
+    result.producer = mapTuple(unpack(values, 2, values.n))
+    result.producer.status = "observed"
+    local list = values[2]
+    if not accessible(list) or type(list) ~= "table" then return result end
+    for index = 1, 8 do
+        local id, idOK = readField(list, index)
+        local row = { queries = {} }
+        if not idOK then row.status = "field-error"
+        else
+            row.id = scalar(id)
+            for _, name in ipairs({ "ShouldDisplayMajorFactionAsJourney", "ShouldUseJourneyRewardTrack" }) do
+                row.queries[name] = observeMajorFactionJourney(id, name)
+            end
+        end
+        result.entries[index] = row
+    end
+    return result
+end
+
 local function auraNumberStatus(value)
     if not accessible(value) then return "restricted-input" end
     if type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge then
@@ -2200,8 +2251,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -2228,6 +2279,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "sets-catalog" then record.setsCatalog = captureSetsCatalog() end
         if mode == "custom-set-names" then record.customSetNames = captureCustomSetNames() end
         if mode == "housing-catalog" then record.housingCatalog = captureHousingCatalog() end
+        if mode == "major-faction-journey" then record.majorFactionJourney = captureMajorFactionJourney() end
         if mode == "training-grounds-structures" then record.trainingGroundsStructures = captureTrainingGroundsStructures() end
         if mode == "training-grounds-state" then record.trainingGroundsState = captureTrainingGroundsState() end
         if mode == "neighborhood-state" then record.neighborhoodState = captureNeighborhoodState() end

@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual major faction journey
+
+- Manual `major-faction-journey <label>` is excluded from `all`; capture `majorFactionJourney.producer` from `C_MajorFactions.GetMajorFactionIDs(nil)` with exactly one explicit nil argument, permitted by the pinned nilable expansion parameter.
+- Only first-return table indices 1–8 supply original accessible finite faction IDs. Each entry independently invokes `ShouldDisplayMajorFactionAsJourney(ID)` and `ShouldUseJourneyRewardTrack(ID)` once, recording named `queries`; do not coerce, deduplicate or invent IDs/expansions.
+- Guard namespaces/functions/list receivers before lookup and values before inspection/serialization. Recheck original IDs after each predicate namespace lookup and function guard, immediately before invocation. Preserve independent missing/restricted/invalid/error outcomes, zero returns and nil positions.
+- Cap seventeen API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Retain no raw objects; no renown/data queries, mutations, ordering/completeness or native classification claims. Structure fields and native fixtures remain pending.
+- Ten actual TOC/slash fixtures establish local recorder mechanics only. Pinned retail `MajorFactionsDocumentation.lua:41–53,156–184` establishes signatures, not native behavior.
+
 ## Manual training grounds structures
 
 - Manual `training-grounds-structures <label>` is excluded from `all`; independently call `C_PvP.GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once each, storing `trainingGroundsStructures.grounds` and `.rewards`.
