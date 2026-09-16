@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare duplicate callback registration recorder
+
+Runtime `e04fc0148` adds manual `/apicontract callbacks-duplicate-start <label>`, excluded from `all`. It registers the same owned callback twice for each global and player-filtered lane, then retains exact pending identities through bounded removal attempts and later explicit retries. Sixteen duplicate-mode fixtures and four normal-mode regressions prove recorder mechanics only; native duplicate, delivery, ordering, GC and security semantics remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] audit | Reconcile shared recorder target routing
 
 Metadata `eda32cf0a` confirms 287 exact `AuditTargets.lua` mappings across 112 shared-recorder plans: 199 publication/CVar targets route to `capturePublication`; 88 event targets route through `controlEvents`/`recordEvent`. This is component wiring only, not complete plan design or native evidence. See [[api-contract-probes]].

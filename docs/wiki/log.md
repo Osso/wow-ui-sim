@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare duplicate callback registrations
+
+`e04fc0148` adds manual `callbacks-duplicate-start`: same owned closure twice per global/unit lane, four registrations maximum. Existing stop performs at most four pending exact-identity removals; false/error slots remain for an explicit later retry. Sixteen duplicate fixtures plus four normal-mode regressions prove recorder mechanics only. No native deduplication, delivery, ordering, GC or security conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-16] audit | Reconcile shared recorder target routing
 
 `eda32cf0a` records 287 exact executable target mappings across 112 shared-recorder plans: 199 publication/CVar entries route to `capturePublication`; 88 event entries route to `controlEvents`/`recordEvent`. Publication load phases, external event producers, payload/transition behavior, plan-specific experiments, and native evidence remain open. Updated [[api-contract-probes]] and the index.
