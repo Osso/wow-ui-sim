@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded custom-set name recorder
+
+Documented `10df9a28a`: manual `custom-set-names` reads maximum custom sets twice, bounds the first list to four original IDs, then queries each original ID and its original untruncated accessible name once. Eleven calls per snapshot and ten fixtures establish recorder mechanics only. Custom-set mutation, item-list/hyperlink table forwarding, name-validity semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded outfit-state recorder
 
 Runtime `c3a88dd56` adds manual `/apicontract outfit-state <label>`, excluded from `all`. It independently observes seven no-argument outfit-state queries twice each, preserving pending-cost arity without mutations, purchases, selection, price interpretation, or native credit. Ten local fixtures establish recorder mechanics only.

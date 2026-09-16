@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded custom-set name recorder
+
+Runtime `10df9a28a` adds manual `/apicontract custom-set-names <label>`, excluded from `all`. It reads the maximum twice and the first four custom-set IDs, then forwards only guarded original IDs to `GetCustomSetInfo` and original untruncated names to `IsValidCustomSetName`, for at most eleven calls per snapshot. Ten fixtures prove recorder mechanics only; no mutations, list/hyperlink forwarding, name-validity semantics, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded outfit-state recorder
 
 Runtime `c3a88dd56` adds manual `/apicontract outfit-state <label>`, excluded from `all`. It makes two no-argument reads each of seven outfit-state queries, preserving raw tuple arity including the pending-cost tuple. Ten fixtures prove recorder mechanics only; no mutation, purchases, selection, price interpretation, defaults, stability, or native behavior is established. See [[api-contract-probes]].
