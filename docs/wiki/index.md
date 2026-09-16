@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded house-exterior options recorder
+
+Runtime `185a2b6cc` adds manual `/apicontract house-exterior-options <label>`, excluded from `all`. It calls three zero-argument house-exterior producers, bounds size/type options to four entries, and records only current declared option fields; `reasonString` is not treated as historical `lockReasonString`. Ten fixtures plus ten Perks and sixteen neighborhood regressions prove recorder mechanics only. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded expansion-audio field recorder
 
 Runtime `4f2138bba` adds manual `/apicontract expansion-audio-fields <label>`, excluded from `all`. It reads published `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT` twice each with `GetExpansionDisplayInfo`, leaving the optional release argument omitted, then captures only three guarded sound-kit fields from the first result. Eleven fixtures plus seventeen public-query regressions prove recorder mechanics only; no sound playback, native asset, default, release-variant, or load-phase conclusion follows. See [[api-contract-probes]].

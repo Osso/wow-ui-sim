@@ -138,6 +138,10 @@ Runtime `2288d233b` extends manual `neighborhood-structures`, excluded from `all
 
 Runtime `bc0768208` adds manual `neighborhood-state`, excluded from `all`: two zero-argument observations each for seven `C_NeighborhoodInitiative` state queries, bounded to fourteen calls per snapshot. It neither requests nor changes state, nor queries structured initiative/activity/task data. Ten local fixtures establish recorder mechanics only; native neighborhood state, transitions, group identity, defaults, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
 
+## [2026-09-16] investigation | Prepare bounded house-exterior options recorder
+
+Runtime `185a2b6cc` adds bounded zero-argument house-exterior option capture. It records current declared size/type option fields only; `reasonString` does not establish historical `lockReasonString`. Ten fixtures, ten Perks regressions, and sixteen neighborhood regressions prove recorder mechanics only.
+
 ## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
 
 Documented runtime `7f2769fab`, sixth-field addition `006264322`, and inventory `91076a4af`: manual `sets-catalog` records one available-set list and two independent default-filter reads, bounded to entries 1–8 and six guarded fields. `grantAsPrecedingVariant` is declared in the pinned source; its prior claimed absence was corrected. Fourteen cumulative fixtures establish recorder mechanics only; no setters, native values, ordering, defaults, or native credit follows. Updated [[api-contract-probes]] and the index.
