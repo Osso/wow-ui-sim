@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
 
-Documented runtime `7f2769fab` and inventory correction `006264322`: manual `sets-catalog` records one available-set list and two independent default-filter reads, bounded to entries 1–8 and six guarded fields. `grantAsPrecedingVariant` is declared in the pinned source; its prior claimed absence was corrected. Fourteen cumulative fixtures establish recorder mechanics only; no setters, native values, ordering, defaults, or native credit follows. Updated [[api-contract-probes]] and the index.
+Documented runtime `7f2769fab`, sixth-field addition `006264322`, and inventory `91076a4af`: manual `sets-catalog` records one available-set list and two independent default-filter reads, bounded to entries 1–8 and six guarded fields. `grantAsPrecedingVariant` is declared in the pinned source; its prior claimed absence was corrected. Fourteen cumulative fixtures establish recorder mechanics only; no setters, native values, ordering, defaults, or native credit follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare bounded custom-set name recorder
 
