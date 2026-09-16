@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 125,
-    "partial-recorder": 36,
+    "needs-design-and-recorder-review": 124,
+    "partial-recorder": 37,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -5958,8 +5958,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual training-grounds-state independently records AreTrainingGroundsEnabled, CanPlayerUseTrainingGroundsUI and HasRandomTrainingGroundWinToday twice each without arguments"
+        ],
+        "missing": [
+          "Training ground and reward structure producers and populated native fixtures",
+          "Native eligibility, daily-win and state transitions",
+          "Queue/join operations and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/services-pvp-training-grounds"
     },
