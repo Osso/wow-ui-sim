@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual equipped item info
+
+- `equipped-item-info <label>` is manual-only and excluded from `all`. Call `GetInventoryItemLink("player", slot)` once for each slot 1–19, forwarding only each original accessible string to one independent `C_Item.GetItemInfo` call. Recheck link access after namespace/function guards; never forward serialized or truncated copies.
+- Record `equippedItemInfo.slots` with `slot`, `producer` and `itemInfo`. Preserve exact arity, nil holes and opaque errors. **Item-info results alone have an 18-position cap** for the 18 declared returns, including nil positions 16–18; set `truncated` only when `n > 18`, without inspecting further values. Producer tuples and all shared 16-position bounds remain unchanged.
+- Bound 38 API calls per snapshot, ten snapshots, 256-byte output strings and 128-byte labels. Missing, invalid, restricted and failing inputs or queries must not suppress peers. Do not traverse, retain or forward returned objects.
+- No ItemLocation, transmog or mutation calls; no native acceptance, normalization or historical changed-contract conclusions. Eleven actual TOC/slash fixtures prove local recorder mechanics only; matching-client and historical semantics remain unverified.
+
 ## Manual combat audio settings reads
 
 - `combat-audio-settings-read <label>` is manual-only and excluded from `all`. Independently call `C_CombatAudioAlert.IsEnabled()` twice.

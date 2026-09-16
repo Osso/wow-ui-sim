@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual equipped item info
+
+`/apicontract equipped-item-info <label>` is excluded from `all`. For equipment slots 1–19, it calls `GetInventoryItemLink("player", slot)` once and independently forwards each original accessible string link to `C_Item.GetItemInfo` once. Missing, invalid, restricted or failing producers do not suppress other slots. Links are rechecked after namespace/function guards and never truncated before invocation.
+
+`equippedItemInfo.slots` stores `slot`, `producer` and `itemInfo`. **Only this mode's item-info result captures up to 18 return positions**, matching the pinned declaration; producer tuples and shared observers retain their 16-position bounds. Exact `n` and nil holes are preserved, including positions 16–18; results exceeding 18 positions set `truncated` and never inspect position 19. Scalar output strings remain capped at 256 bytes, labels at 128 bytes, and captures at ten snapshots. Maximum: 19 producer calls plus 19 item-info calls per snapshot. Outputs remain opaque where necessary, unretained, and are never forwarded.
+
+Pinned `ItemDocumentation.lua:604–636` declares all 18 returns. `Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUtil.lua:340–345` passes an item link to `C_Item.GetItemInfo`. These sources ground call shape, not native acceptance or historical changed-contract semantics. No ItemLocation, transmog, item mutation or native-conformance claims. Eleven actual TOC/slash fixtures cover recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/equipped_item_info.lua docs/addons/ApiContractProbe
+```
+
 ## Manual combat audio settings reads
 
 `/apicontract combat-audio-settings-read <label>` is excluded from `all`. It calls `C_CombatAudioAlert.IsEnabled()` twice, `GetSpecSetting(value)` twice for nine fixed published `Enum.CombatAudioAlertSpecSetting` names, and `GetThrottle(value)` twice for eleven fixed published `Enum.CombatAudioAlertThrottle` names. No enum iteration or numeric fallback occurs.
