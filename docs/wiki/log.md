@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
+
+Documented runtime `4472d1375`: manual `prey-quest-widgets` captures one active prey-quest ID, then independently queries three fixed published map-icon widget-set types. The cap is four calls per snapshot. Eight fixtures establish recorder mechanics only; widget followups, quest mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
 
 Documented runtime `83a9fb0bb`: manual `major-faction-renown-rewards` obtains original faction IDs with `GetMajorFactionIDs(nil)`, bounds each to four produced levels and four produced rewards, and captures fifteen declared reward fields including `rewardType`. The cap is forty-one calls per snapshot. Ten fixtures establish mechanics only; unlock/claim, mutations, ordering/completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
+
+Runtime `4472d1375` adds manual `/apicontract prey-quest-widgets <label>`, excluded from `all`. An original accessible finite active prey-quest ID independently queries three fixed published widget-set types: `Tooltip`, `BehindIcon`, and `AdventureMapDetails`. Eight fixtures prove recorder mechanics only; widget followups, quest mutations, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
 
 Runtime `83a9fb0bb` adds manual `/apicontract major-faction-renown-rewards <label>`, excluded from `all`. Original faction IDs produce up to four levels each; original faction-ID/level pairs produce up to four rewards, inspected through fifteen declared fields including `rewardType`. Ten fixtures prove recorder mechanics only; unlock/claim, mutation, ordering, and native values remain unverified. See [[api-contract-probes]].
