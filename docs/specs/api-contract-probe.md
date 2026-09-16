@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual equipped transmog eligibility
+
+- `equipped-transmog-eligibility <label>` is manual-only, excluded from `all`. For equipment slots 1–19, invoke the original `ItemLocation:CreateFromEquipmentSlot(slot)` method and forward its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`.
+- Guard the constructor receiver and function before use, rechecking the receiver after method guards. Recheck the original produced location after namespace/function guards before forwarding. Do not clone, inspect fields, retain locations, synthesize fields, or substitute links.
+- Record `equippedTransmogEligibility.slots` with `slot`, `producer` and `eligibility`; preserve raw arity, nil positions, both eligibility outputs and opaque errors. Bound tuples to 16 positions, strings to 256 bytes, labels to 128 bytes, snapshots to ten, and calls to 19 constructors plus 19 eligibility queries per snapshot. Failures remain independent across slots.
+- No equip/transmog/apply operations or native eligibility/error-code interpretation. Nine actual TOC/slash fixtures prove local mechanics only; matching-client outputs and historical semantics remain unverified.
+
 ## Manual equipped item info
 
 - `equipped-item-info <label>` is manual-only and excluded from `all`. Call `GetInventoryItemLink("player", slot)` once for each slot 1–19, forwarding only each original accessible string to one independent `C_Item.GetItemInfo` call. Recheck link access after namespace/function guards; never forward serialized or truncated copies.

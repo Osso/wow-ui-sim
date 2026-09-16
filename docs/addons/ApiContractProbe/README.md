@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual equipped transmog eligibility
+
+`/apicontract equipped-transmog-eligibility <label>` is excluded from `all`. For slots 1–19, call the original `ItemLocation:CreateFromEquipmentSlot(slot)` method, then independently pass its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`. Recheck the constructor receiver after method guards and the original location after namespace/function guards. Never clone locations, inspect their fields, substitute links, or retain objects between captures.
+
+`equippedTransmogEligibility.slots` records `slot`, `producer` and `eligibility`. Preserve exact arity, nil positions and opaque errors, including both eligibility outputs. Each tuple is bounded to 16 positions, strings to 256 bytes, labels to 128 bytes, and captures to ten snapshots. Maximum: 19 constructor and 19 query calls per snapshot. Missing or failing slots do not suppress peers.
+
+Pinned `Blizzard_ObjectAPI/Mainline/ItemLocation.lua:15–18` establishes the constructor, and `ItemDocumentation.lua:34–47` establishes the eligibility signature. Nine actual TOC/slash fixtures prove recorder mechanics only; native eligibility/error meanings and historical changed-contract behavior remain unverified. No equip, transmog apply, purchase or other item-state mutation is performed.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/equipped_transmog_eligibility.lua docs/addons/ApiContractProbe
+```
+
 ## Manual equipped item info
 
 `/apicontract equipped-item-info <label>` is excluded from `all`. For equipment slots 1–19, it calls `GetInventoryItemLink("player", slot)` once and independently forwards each original accessible string link to `C_Item.GetItemInfo` once. Missing, invalid, restricted or failing producers do not suppress other slots. Links are rechecked after namespace/function guards and never truncated before invocation.
