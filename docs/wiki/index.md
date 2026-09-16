@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare selected-slot action loss-of-control duration recorder
+
+Runtime `7865a172c` adds manual `/apicontract action-loss-control-duration <slot> <label>`, excluded from `all`. It independently captures `GetActionInfo(slot)` control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` using the original parsed slot; returned duration objects receive ten current-only read methods without retention. Ten fixtures plus ten action-state regressions prove recorder mechanics only. Historical non-duration loss-of-control and cooldown-info observations remain missing. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare selected-slot action-state recorder
 
 Runtime `87750c75b` adds manual `/apicontract action-state <slot> <label>`, excluded from `all`. It records `GetActionInfo(slot)` as control, then calls twelve one-slot `C_ActionBar` queries plus two zero-argument bar-index queries without a spell gate or range target. Ten fixtures prove recorder mechanics only; action execution, mutations, classification and native behavior remain unverified. See [[api-contract-probes]].
