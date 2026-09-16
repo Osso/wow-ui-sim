@@ -1,6 +1,10 @@
+## [2026-09-15] investigation | Extend current-only aura-time duration observations
+
+Runtime `ee4349ec6` adds the ten-method current-only whitelist to accessible `GetAuraDuration` table/userdata returns at positions 1–16. Receiver access is rechecked after method lookup and function guards before each invocation; objects are not retained. Eleven cumulative aura-time fixtures include three new cases, with eight display-count, nine spell-duration, and two main-harness targeted regressions. Recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare current-only aura-time recorder
 
-Runtime `87e230e6b` adds manual `/apicontract aura-time <label>`, excluded from `all`. One first-page player HELPFUL producer yields up to eight guarded original aura instance IDs; each has four independent two-argument time/duration observations, with optional spell ID omitted. Duration objects remain opaque without methods or retention. Eight local fixtures plus unchanged display-count regression coverage prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+Historical runtime `87e230e6b` added the first-page player HELPFUL producer and four independent two-argument time/duration calls with optional spell ID omitted. Duration objects were then recorded without methods or retention. See [[api-contract-probes]].
 
 ## [2026-09-15] investigation | Prepare first-page aura display-count recorder
 
