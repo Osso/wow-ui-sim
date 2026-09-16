@@ -112,7 +112,7 @@ Also independently call `C_Housing.IsHousingMarketShopEnabled()`, `C_EncounterTi
 
 Protected namespace lookup and access guards precede inspection. Missing APIs, lookup failures and opaque call errors do not prevent the other observations. Preserve raw repeated results, exact arity/nils, sixteen scalar positions, 256-byte strings and 128-byte labels under the shared ten-snapshot cap (fourteen query calls per snapshot; 140 maximum). Objects remain opaque. No mutations, CVar changes, state transitions, default or stability claims are made.
 
-Pinned `GameRulesDocumentation.lua:231–238` and `DelvesUIDocumentation.lua:229–245` supply the argument shapes, not native outputs. Native ruleset/state transitions, companion lock policy, trait-tree fixtures and restricted-context behavior remain pending. Seven separate actual TOC/slash fixtures prove recorder mechanics only:
+Pinned `GameRulesDocumentation.lua:231–238` and `DelvesUIDocumentation.lua:229–245` supply the argument shapes, not native outputs. Native ruleset/state transitions, companion lock policy, trait-tree fixtures and restricted-context behavior remain pending. Twelve cumulative actual TOC/slash fixtures (seven existing, five new) prove recorder mechanics only:
 
 ```text
 luajit docs/addons/ApiContractProbe/tests/public_queries.lua docs/addons/ApiContractProbe
