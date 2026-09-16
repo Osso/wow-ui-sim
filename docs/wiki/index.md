@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded death-recap recorder
+
+Runtime `95a18c015` adds manual `/apicontract death-recap-current <label>`, excluded from `all`. It calls `GetRecapEvents`, `GetRecapLink`, and `HasRecapEvents` twice each with zero arguments; optional recap IDs remain omitted. Eleven fixtures prove recorder mechanics only. Native recap population, transitions, requests, and event fields remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded quest-favor recorder
 
 Runtime `a02865ad4` adds manual `/apicontract quest-favor <label>`, excluded from `all`. First-four original `rewardQuestID` values from neighborhood tasks each receive independent favor reads with clamp omitted and `true`. Ten fixtures prove recorder mechanics only; no initiative request, quest/reward mutation, native favor semantics, or native execution occurred. See [[api-contract-probes]].

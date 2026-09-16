@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded death-recap recorder
+
+Documented runtime `95a18c015`: manual `death-recap-current` makes two zero-argument reads each for `GetRecapEvents`, `GetRecapLink`, and `HasRecapEvents`, excluded from `all`. Nilable recap IDs remain omitted; no original-ID producer is required for this vendor current-call shape. Eleven fixtures establish recorder mechanics only; no death trigger, request, mutation, event traversal, native recap data, or native credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded quest-favor recorder
 
 Documented runtime `a02865ad4`: manual `quest-favor` reads the first four original neighborhood-task `rewardQuestID` values, calling `GetQuestLogRewardFavor` with clamp omitted and `true` independently. Nine calls per snapshot and ten fixtures establish recorder mechanics only; requests, refreshes, quest/reward mutation, favor semantics, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
