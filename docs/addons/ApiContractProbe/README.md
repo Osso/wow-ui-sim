@@ -14,6 +14,20 @@ Nine separate actual TOC/slash fixtures, including interleaved cast-duration ret
 luajit docs/addons/ApiContractProbe/tests/spell_duration.lua docs/addons/ApiContractProbe
 ```
 
+## Manual current unit auras
+
+`/apicontract unit-auras-current <label>` is excluded from `all`. Three independent `C_UnitAuras.GetUnitAuras` calls use exactly `("player")`, `("player", "HELPFUL", 8)`, and `("player", "HARMFUL", 8)`. The `omittedFilterNegative` result is an intentional missing-required-filter negative case, **not** a valid default-filter experiment. Sort arguments are omitted. This API has no continuation argument.
+
+Each result preserves raw arity, nil positions, opaque errors and at most sixteen scalar observations. Only the first returned value, if an accessible table, receives numeric entry observations for indices 1–8. Accessible table/userdata entries receive only `auraInstanceID`, `spellId`, and `applications` field observations. Access is checked before every table/entry lookup and before scalar inspection; lookup failures remain independent. No length/pairs traversal, mutation, coercion or returned-object retention occurs.
+
+The pinned `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:452–469` establishes the signature and conditional contents. An `AuraData` field declaration was not found in this cache: the fixed keys are grounded in actual consumers, `Blizzard_FrameXMLUtil/AuraUtil.lua:45–54` (`applications`, `spellId`) and `:266–267` (`auraInstanceID`), not a claimed declared schema. Paths are relative to `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`.
+
+Bounds: three API calls per snapshot, ten snapshots, sixteen return positions, eight entry positions per first table, 256-byte strings and 128-byte labels. Nine local fixtures prove recorder mechanics only. No native ordering, completeness, identity, sorting, defaults, security semantics or historical-contract equivalence is established.
+
+```text
+luajit docs/addons/ApiContractProbe/tests/unit_auras_current.lua docs/addons/ApiContractProbe
+```
+
 ## Manual current-only aura time
 
 `/apicontract aura-time <label>` is excluded from `all`. It reuses the first-page player HELPFUL eight-slot producer described below, without changing `aura-display-count`. Each guarded original aura instance ID receives four independent calls with exactly `("player", id)`: `DoesAuraHaveExpirationTime`, `GetAuraBaseDuration`, `GetRefreshExtendedDuration`, and `GetAuraDuration`. Optional spell IDs are omitted, not supplied as nil.

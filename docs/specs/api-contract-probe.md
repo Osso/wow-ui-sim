@@ -10,6 +10,14 @@
 - Observe current returned objects only. Do not retain objects between captures or touch the cast-duration retention list/counter. Preserve sixteen-position, 256-byte string, 128-byte label and ten-snapshot bounds; at most two producers and 320 duration-method calls per snapshot.
 - Nine separate actual TOC/slash fixtures establish recorder behavior, including interleaved cast-retention isolation. Native charge and loss-of-control timing/lifecycle and restricted-context behavior remain pending.
 
+## Manual current unit auras
+
+- Manual `unit-auras-current <label>` is excluded from `all`. Make three independent `C_UnitAuras.GetUnitAuras` calls with exact arguments `("player")`, `("player", "HELPFUL", 8)` and `("player", "HARMFUL", 8)`. Label the first `omittedFilterNegative`: missing required filter is a negative experiment, not valid/default semantics. Omit sort arguments; no continuation exists in the pinned signature.
+- Preserve raw return arity/nils and opaque errors, with at most sixteen scalar observations. Only the first returned value may receive numeric entries 1–8, and only if it is an accessible table. Never traverse with length/pairs or mutate returned objects.
+- For each accessible table/userdata entry, observe only `auraInstanceID`, `spellId` and `applications` through guarded field reads. Guard parent table/entry before every lookup and returned fields before scalar inspection; peer entries/calls continue after missing, restricted or failed observations. No coercion, downstream forwarding or retention.
+- Fixed keys are consumer-grounded, not claimed schema declarations: pinned retail `Blizzard_FrameXMLUtil/AuraUtil.lua:45–54,266–267`. Signature source: `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:452–469`, under the profile cache. No `AuraData` field declaration was located there.
+- Bound output to three calls per snapshot, ten snapshots, sixteen return positions, eight entries per first table, 256-byte strings and 128-byte labels. Local tests prove recorder mechanics, not native ordering/completeness, identity, defaults, sorting, security semantics or historical contract equality.
+
 ## Manual current-only aura time
 
 - Manual `aura-time <label>` is excluded from `all`; reuse the first-page player HELPFUL eight-slot producer without changing `aura-display-count` output or behavior. Forward only original accessible finite slots and guarded original aura instance IDs.
