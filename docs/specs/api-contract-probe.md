@@ -2,6 +2,15 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual major faction renown rewards
+
+- Manual `major-faction-renown-rewards <label>` is excluded from `all`; record `majorFactionRenownRewards.producer` from `GetMajorFactionIDs(nil)` with exactly one explicit nil. Only first-return table positions 1–8 supply original accessible finite faction IDs.
+- Each ID independently calls `GetRenownLevels(ID)`. First-return list positions 1–4 expose only `factionID`, `level`, `locked`, `isMilestone`, `isCapstone`. Original accessible finite `level` values feed `GetRenownRewardsForLevel(originalFactionID, originalLevel)`; never substitute the entry's `factionID` or deduplicate inputs.
+- First-return reward positions 1–4 expose only `renownRewardID`, `uiOrder`, `isAccountUnlock`, `itemID`, `spellID`, `mountID`, `transmogID`, `transmogSetID`, `titleMaskID`, `transmogIllusionSourceID`, `icon`, `name`, `description`, `toastDescription`, `rewardType`. The pinned declaration additionally contains `isCollected`; it is outside this fifteen-field slice.
+- Guard every receiver/index/field before lookup and every value before serialization. Recheck both original faction ID and level after API lookup/function guards. Preserve independent errors, zero returns, nil positions and raw arity; never forward reward IDs, recurse or retain raw objects.
+- Cap 41 API calls per snapshot (1 + 8 + 32), ten shared snapshots, sixteen return positions, 256-byte strings and 128-byte labels. No unlock/claim/request/mutations or equality, ordering, completeness or native claims.
+- Ten separate actual TOC/slash fixtures prove local mechanics only. Pinned retail `MajorFactionsDocumentation.lua:41–53,71–83,95–108,265–297` supplies signatures and fields; native fixtures and transitions remain unverified.
+
 ## Manual major faction journey
 
 - Manual `major-faction-journey <label>` is excluded from `all`; capture `majorFactionJourney.producer` from `C_MajorFactions.GetMajorFactionIDs(nil)` with exactly one explicit nil argument, permitted by the pinned nilable expansion parameter.

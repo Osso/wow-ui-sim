@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual major faction renown rewards
+
+`/apicontract major-faction-renown-rewards <label>` is manual-only, excluded from `all`. It records one explicit-nil `GetMajorFactionIDs(nil)` call, then up to eight original finite faction IDs through `GetRenownLevels`. First four level entries expose `factionID`, `level`, `locked`, `isMilestone`, `isCapstone`; each original accessible finite level independently feeds `GetRenownRewardsForLevel(originalFactionID, originalLevel)`. Entry `factionID` never replaces the producer ID.
+
+First four rewards expose fifteen fixed fields: `renownRewardID`, `uiOrder`, `isAccountUnlock`, `itemID`, `spellID`, `mountID`, `transmogID`, `transmogSetID`, `titleMaskID`, `transmogIllusionSourceID`, `icon`, `name`, `description`, `toastDescription`, `rewardType`. Pinned `MajorFactionsDocumentation.lua:265–297` also declares `isCollected`; that field is outside this slice. Both original call inputs are rechecked after API lookup/function guards. Every list/entry/field access is guarded; unavailable inputs and errors remain independent.
+
+Bounds: 41 calls per snapshot, ten snapshots, sixteen raw return positions, 256-byte strings, 128-byte labels. No reward-ID forwarding, recursion, deduplication, unlock/claim/request/mutations, retained objects or inferred ordering/completeness/equality/native semantics. Native reward fixtures remain unverified. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/major_faction_renown_rewards.lua docs/addons/ApiContractProbe
+```
+
 ## Manual major faction journey
 
 `/apicontract major-faction-journey <label>` is excluded from `all`. Call `C_MajorFactions.GetMajorFactionIDs(nil)` once with **one explicit nil** expansion argument. Only first-return table indices 1–8 supply original accessible finite faction IDs to two independent predicates: `ShouldDisplayMajorFactionAsJourney(ID)` and `ShouldUseJourneyRewardTrack(ID)`. Preserve duplicates and fractional inputs without interpreting them; never invent IDs or expansion values.

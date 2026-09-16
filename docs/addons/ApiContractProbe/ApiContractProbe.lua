@@ -921,6 +921,87 @@ local function majorFactionInputStatus(id)
     end
 end
 
+local function observeRenownCall(name, factionID, level)
+    local function inputStatus()
+        local status = majorFactionInputStatus(factionID)
+        if status then return status end
+        if name == "GetRenownRewardsForLevel" then return majorFactionInputStatus(level) end
+    end
+    local status = inputStatus()
+    if status then return { status = status } end
+    local fn, ok = readField(C_MajorFactions, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    status = inputStatus()
+    if status then return { status = status } end
+    local values
+    if name == "GetRenownRewardsForLevel" then values = pack(pcall(fn, factionID, level))
+    else values = pack(pcall(fn, factionID)) end
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values[2]
+end
+
+local function captureRenownRewards(factionID, level)
+    local result, list = observeRenownCall("GetRenownRewardsForLevel", factionID, level)
+    if not accessible(list) or type(list) ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 4 do
+        local entry, ok = readField(list, index)
+        result.entries[index] = ok and inspectNeighborhoodFields(entry, {
+            "renownRewardID", "uiOrder", "isAccountUnlock", "itemID", "spellID", "mountID",
+            "transmogID", "transmogSetID", "titleMaskID", "transmogIllusionSourceID",
+            "icon", "name", "description", "toastDescription", "rewardType",
+        }) or { status = "field-error" }
+    end
+    return result
+end
+
+local function captureRenownLevels(factionID)
+    local result, list = observeRenownCall("GetRenownLevels", factionID)
+    if not accessible(list) or type(list) ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 4 do
+        local entry, ok = readField(list, index)
+        local row = { status = "field-error" }
+        if ok then
+            local level
+            row, level = inspectNeighborhoodFields(entry,
+                { "factionID", "level", "locked", "isMilestone", "isCapstone" }, "level")
+            -- Never substitute the entry's factionID for the original producer ID.
+            row.rewards = captureRenownRewards(factionID, level)
+        end
+        result.entries[index] = row
+    end
+    return result
+end
+
+local function captureMajorFactionRenownRewards()
+    local result = { entries = {} }
+    local fn, ok = readField(C_MajorFactions, "GetMajorFactionIDs")
+    if not ok then result.producer = { status = "field-error" }; return result end
+    if not accessible(fn) or type(fn) ~= "function" then
+        result.producer = { status = "missing-api" }; return result
+    end
+    local values = pack(pcall(fn, nil))
+    if not values[1] then result.producer = { status = "call-error" }; return result end
+    result.producer = mapTuple(unpack(values, 2, values.n))
+    result.producer.status = "observed"
+    local list = values[2]
+    if not accessible(list) or type(list) ~= "table" then return result end
+    for index = 1, 8 do
+        local id, idOK = readField(list, index)
+        local row = { status = "field-error" }
+        if idOK then
+            row = { id = scalar(id) }
+            row.levels = captureRenownLevels(id)
+        end
+        result.entries[index] = row
+    end
+    return result
+end
+
 local function inspectMajorFactionData(object)
     local result, highlights = inspectNeighborhoodFields(object,
         { "description", "playerCompanionID", "highlights" }, "highlights")
@@ -2268,8 +2349,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -2297,6 +2378,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "custom-set-names" then record.customSetNames = captureCustomSetNames() end
         if mode == "housing-catalog" then record.housingCatalog = captureHousingCatalog() end
         if mode == "major-faction-journey" then record.majorFactionJourney = captureMajorFactionJourney() end
+        if mode == "major-faction-renown-rewards" then record.majorFactionRenownRewards = captureMajorFactionRenownRewards() end
         if mode == "training-grounds-structures" then record.trainingGroundsStructures = captureTrainingGroundsStructures() end
         if mode == "training-grounds-state" then record.trainingGroundsState = captureTrainingGroundsState() end
         if mode == "neighborhood-state" then record.neighborhoodState = captureNeighborhoodState() end
