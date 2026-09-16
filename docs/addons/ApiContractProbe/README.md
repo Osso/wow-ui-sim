@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual full names
+
+`/apicontract full-names <label>` calls `UnitFullName` once for each fixed token: `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string. It is excluded from `all`; existing `names` observations remain unchanged.
+
+`fullNames.units` records guarded unit observations and raw `result` tuples. Global lookup/function guards precede invocation, and token access is rechecked after function guards. Every returned value passes the existing scalar guards before inspection or serialization; conditional-secret results stay opaque. Preserve exact arity and nil positions, including both name/server returns, without joining or comparing them. Bounds: eight calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Returned objects are not retained.
+
+Pinned `UnitDocumentation.lua:1196–1211` declares `SecretWhenUnitIdentityRestricted=true` and `SecretArguments=AllowedWhenUntainted`. This mode observes ordinary accessible results only, never restricted-identity experiments, realm defaults, coercion or native classifications. Native same-/cross-realm fixtures and historical behavior remain unverified. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/full_names.lua docs/addons/ApiContractProbe
+```
+
 ## Manual player state queries
 
 `/apicontract player-state-queries <label>` is excluded from `all`. It independently calls the globals `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments. Every call performs a fresh guarded `_G` field lookup and function-access check; missing, restricted or throwing globals do not suppress peers.

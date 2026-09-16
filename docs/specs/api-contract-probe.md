@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual full names
+
+- `full-names <label>` is manual-only and excluded from `all`; existing `names` behavior remains unchanged.
+- Call `UnitFullName` once each for `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty token. Guard global lookup/function access and recheck token access after function guards.
+- Record `fullNames.units` with guarded unit observations and raw `result` tuples. Preserve exact arity and nil positions; scalar guards must reject conditional-secret outputs before inspection, comparison or serialization. Never combine or compare returned name/server values; returned objects stay opaque and unretained.
+- Bound eight calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. No restricted-identity experiments, mutations, realm defaults, coercion, classifications or native-conformance claims.
+- Ten actual TOC/slash fixtures cover recorder mechanics only. Native same-/cross-realm fixtures, restricted behavior and historical evidence remain pending.
+
 ## Manual player state queries
 
 - `player-state-queries <label>` is manual-only and excluded from `all`. Independently call `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments.
