@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
+
+Runtime `83a9fb0bb` adds manual `/apicontract major-faction-renown-rewards <label>`, excluded from `all`. Original faction IDs produce up to four levels each; original faction-ID/level pairs produce up to four rewards, inspected through fifteen declared fields including `rewardType`. Ten fixtures prove recorder mechanics only; unlock/claim, mutation, ordering, and native values remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded major-faction journey recorder
 
 Runtime `f9da77301` extends manual `/apicontract major-faction-journey <label>`, excluded from `all`. Original IDs from `GetMajorFactionIDs(nil)` retain two predicates and add one `GetMajorFactionData` query, inspecting only `description`, `playerCompanionID`, and first-four highlight title/description/level fields. Fifteen cumulative fixtures include five new cases; reward structures, native classifications, transitions, and restricted-context behavior remain pending. See [[api-contract-probes]].

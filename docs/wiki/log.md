@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
+
+Documented runtime `83a9fb0bb`: manual `major-faction-renown-rewards` obtains original faction IDs with `GetMajorFactionIDs(nil)`, bounds each to four produced levels and four produced rewards, and captures fifteen declared reward fields including `rewardType`. The cap is forty-one calls per snapshot. Ten fixtures establish mechanics only; unlock/claim, mutations, ordering/completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Extend major-faction journey recorder
 
 Documented runtime `f9da77301`: original faction IDs now also independently query `GetMajorFactionData`, bounded to guarded `description`, `playerCompanionID`, and first-four highlight title/description/level fields. Predicates remain; the cap is twenty-five calls per snapshot. Fifteen cumulative fixtures, including five new cases, establish mechanics only; reward structures, mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
