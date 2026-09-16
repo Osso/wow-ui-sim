@@ -1,6 +1,6 @@
-## [2026-09-16] audit | Defer retained security probe plans
+## [2026-09-16] audit | Correct retained security probe deferral
 
-Documented metadata `86273373a`: nineteen whole security plans move to `deferred-security`, making twenty-one with two existing deferrals. No implementation, status completion, or native credit follows. `private-aura-border-scale` remains unreviewed because ordinary numeric configuration is distinct from private authority enforcement. Updated [[api-contract-probes]] and the index.
+Correction `812a981fe` reverses the earlier whole-plan deferral for mixed `remaining-security-forbidden-store-observation`: ordinary `DropdownPopulation` remains in-scope; only forbidden/secure enforcement is deferred. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty total. `private-aura-border-scale` remains unreviewed. No implementation, completion, or native credit follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
 

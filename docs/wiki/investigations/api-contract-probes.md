@@ -10,7 +10,7 @@ Metadata `eda32cf0a` validates exact routing for **287** `AuditTargets.lua` entr
 
 ## Security deferral reconciliation
 
-Metadata `86273373a` reclassifies nineteen whole retained security plans as `deferred-security`; with two already deferred plans, the inventory now has twenty-one. This is an audit-scope boundary, not implementation or native credit: protected/restricted actions, secrecy policies, secure transfers, private-aura authority, secret-object methods, secure ping, forbidden-store observations, combat-log secure APIs, and literal secret-access globals remain unprepared. `private-aura-border-scale` remains outside this blanket deferral because its retained plan distinguishes ordinary numeric configuration from private authority enforcement. The inventory has sixty-nine needs-design and seventy-three partial plans; shared-recorder plans remain separately pending.
+Metadata `86273373a` initially over-deferred a mixed Store plan. Correction `812a981fe` retains its ordinary `DropdownPopulation` capture as in-scope while deferring only forbidden/secure enforcement. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty deferred plans. `private-aura-border-scale` also remains in scope because its retained plan distinguishes ordinary numeric configuration from private authority enforcement. This is an audit-scope boundary, not implementation or native credit. The inventory has seventy needs-design and seventy-three partial plans; shared-recorder plans remain separately pending.
 
 ## Evidence boundaries
 
