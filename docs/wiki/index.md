@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded full-name recorder
+
+Runtime `b490f4777` adds manual `/apicontract full-names <label>`, excluded from `all`. It calls `UnitFullName` once for eight fixed tokens and preserves raw two-return, nil, zero-arity, error, and conditionally restricted states. Ten fixtures prove recorder mechanics only; native identity and realm behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded player-state recorder
 
 Runtime `14f75d44e` adds manual `/apicontract player-state-queries <label>`, excluded from `all`. It records `GetCollapsingStarCost`, `ShowingCloak`, and `ShowingHelm` twice each with zero arguments, without calling cloak/helm mutation APIs. Eleven fixtures prove recorder mechanics only; cost, state, defaults, stability, and native behavior remain unverified. See [[api-contract-probes]].

@@ -166,6 +166,10 @@ Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, ex
 
 Runtime `9647bd5d5` adds manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. It uses only an accessible `GetActionInfo(slot)` spell result and original finite spell ID to issue seven independent guarded metadata/predicate queries. Eight local fixtures prove recorder mechanics only. No nil producer result is passed downstream; `GetVisibilityInfo`, native spell fixtures, rank/override transitions, classifications and security remain pending. See [[api-contract-probes]].
 
+## [2026-09-16] investigation | Prepare bounded full-name recorder
+
+Runtime `b490f4777` adds manual `/apicontract full-names <label>`, excluded from `all`. It records one guarded `UnitFullName` call for each of eight fixed tokens, retaining raw two-return, nil, zero-arity, error, and conditionally restricted states without identity or realm conclusions. Ten fixtures prove recorder mechanics only; native behavior remains unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-15] investigation | Prepare bounded public-query recorder
 
 Runtime `03ac1a023` adds manual `/apicontract public-queries <label>`, excluded from `all`. It records two no-argument `C_GameRules.IsPersonalResourceDisplayEnabled()` calls and two no-argument `C_DelvesUI.GetLockedTextForCompanion()` calls, retaining only the omitted-companion case. Seven separate fixtures prove recorder mechanics only; native ruleset transitions, companion lock policy, trait-tree fixtures, and restricted-context behavior remain pending. See [[api-contract-probes]].
