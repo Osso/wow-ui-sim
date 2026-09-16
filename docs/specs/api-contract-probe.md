@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual combat audio settings reads
+
+- `combat-audio-settings-read <label>` is manual-only and excluded from `all`. Independently call `C_CombatAudioAlert.IsEnabled()` twice.
+- Call `GetSpecSetting` twice each for the published `CombatAudioAlertSpecSetting` names Resource1Percent, Resource1Format, Resource1Voice, Resource1Volume, Resource2Percent, Resource2Format, Resource2Voice, Resource2Volume and SayIfTargeted. Call `GetThrottle` twice each for published `CombatAudioAlertThrottle` names Sample, PlayerHealth, TargetHealth, PlayerCast, TargetCast, PlayerResource1, PlayerResource2, PlayerHealthSamePercent, TargetHealthSamePercent, PlayerResource1SamePercent and PlayerResource2SamePercent.
+- Guard every publication container/member and API lookup before inspection; forward only original accessible finite enum values, rechecked after namespace/function guards. No numeric fallback or enum iteration. Missing, invalid, restricted and failing calls must not suppress peers.
+- Store `combatAudioSettingsRead.IsEnabled`, named `specSettings` and `throttles` observation pairs. Preserve raw arity, nil positions and opaque errors; returned objects remain opaque and unretained. Bound 42 calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
+- Never call setters, `SpeakText`, target-list or playback APIs. No throttling enforcement, security, native defaults/ranges or CVar interpretation. Ten actual TOC/slash fixtures cover recorder behavior only; native behavior remains unverified.
+
 ## Manual full names
 
 - `full-names <label>` is manual-only and excluded from `all`; existing `names` behavior remains unchanged.

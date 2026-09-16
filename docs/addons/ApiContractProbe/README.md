@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual combat audio settings reads
+
+`/apicontract combat-audio-settings-read <label>` is excluded from `all`. It calls `C_CombatAudioAlert.IsEnabled()` twice, `GetSpecSetting(value)` twice for nine fixed published `Enum.CombatAudioAlertSpecSetting` names, and `GetThrottle(value)` twice for eleven fixed published `Enum.CombatAudioAlertThrottle` names. No enum iteration or numeric fallback occurs.
+
+`combatAudioSettingsRead` stores `IsEnabled` observations and named `specSettings`/`throttles` rows. Every publication container/member and API lookup is guarded; original accessible finite enum values are rechecked after namespace/function guards before invocation. Calls are independent, preserving raw arity, nil positions and opaque errors. Bounds: 42 calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Returned objects remain opaque and unretained.
+
+Pinned `CombatAudioAlertDocumentation.lua` declares the three read signatures; `CombatAudioAlertSharedDocumentation.lua` declares the fixed names. `Blizzard_SettingsDefinitions_Shared/AudioAssist.lua` uses the published enum paths. No setters, `SpeakText`, targeting-list operations or playback occur; no throttling enforcement, security, native defaults/ranges or CVar interpretation is established. Ten actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/combat_audio_settings_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual full names
 
 `/apicontract full-names <label>` calls `UnitFullName` once for each fixed token: `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string. It is excluded from `all`; existing `names` observations remain unchanged.
