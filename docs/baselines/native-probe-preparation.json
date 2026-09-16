@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 121,
-    "partial-recorder": 40,
+    "needs-design-and-recorder-review": 120,
+    "partial-recorder": 41,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -6104,8 +6104,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual prey-quest-widgets forwards up to three original widget-set IDs to GetAllWidgetsBySetID, inspecting four widgets per set",
+          "Only guarded widget types matching the published PreyHuntProgress discriminator trigger visualization queries with original widget IDs; first returned objects expose sixteen declared fields"
+        ],
+        "missing": [
+          "Native populated prey widget fixtures and progress transitions",
+          "Other widget sets, remaining entries, field semantics and completeness",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/services-uiwidget-prey-hunt"
     },
@@ -9291,7 +9302,7 @@
           "Manual prey-quest-widgets forwards the original accessible finite active prey quest ID to GetQuestUIWidgetSetByType for three guarded published MapIconUIWidgetSetType names without numeric fallback"
         ],
         "missing": [
-          "Other quest fixtures, native widget-set results and downstream widget observations",
+          "Other quest fixtures and native widget-set results beyond the bounded prey visualization chain",
           "Native transitions, validation and restricted-context behavior"
         ]
       },
