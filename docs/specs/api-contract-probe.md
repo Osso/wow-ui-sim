@@ -488,3 +488,15 @@ luajit docs/addons/ApiContractProbe/tests/death_recap_current.lua docs/addons/Ap
 `/apicontract hyperlinks-residual <label>` is excluded from `all`; existing `hyperlinks` corpus and behavior remain unchanged. Thirty-five calls vary each of five optional positions through explicit nil, 0, 1, empty string, `x`, an owned empty table and an owned function, keeping other flags false and all six argument positions. Eight additional one-argument literals cover an unclosed link header, nested links/colors, crossed atlas/texture markers, stray closers, embedded NUL, control bytes and high bytes absent from the original corpus.
 
 Every forwarded value is access-checked after API lookup/function guards. Owned table/function inputs are observed opaquely, never executed or retained by the recorder. Calls preserve raw arity, nil positions and opaque failures; outputs are capped at 16 positions and 256-byte strings, labels at 128 bytes, captures at ten (43 calls each). Seven actual TOC/slash fixtures prove recording mechanics only. No normalization, native coercion/output semantics, security behavior or historical fifth-flag claim follows.
+
+## Manual explicit power observations
+
+`/apicontract explicit-power <label>` is excluded from `all`. For `player` and `target`, it reads only published `Enum.PowerType.Mana`, `Rage` and `Energy`, without numeric fallback. Each unit/type receives independent `UnitPower` and `UnitPowerMax` calls with `unmodified=false/true`, and `UnitPowerPercent` calls with exactly four arguments, including an explicit nil curve.
+
+The recorder makes at most 36 calls per snapshot and retains ten snapshots, 16 return positions, 256-byte scalar strings and 128-byte labels. Unit/type accessibility is rechecked after global lookup and function guards; inaccessible results remain opaque. Existing `resources` behavior is unchanged. No resource mutation, curve experiment, power-scale conclusion, restricted-context experiment or native-conformance credit follows. Pinned `UnitDocumentation.lua:2643–2767` and `PowerTypeConstantsDocumentation.lua:18–42` establish the call shapes and publication names only.
+
+Eight actual TOC/slash fixtures cover recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/explicit_power.lua docs/addons/ApiContractProbe
+```
