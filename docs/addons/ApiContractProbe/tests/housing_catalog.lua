@@ -205,4 +205,126 @@ test("manual mode excluded from all and raw objects collectible", function()
     setup(forbidden, forbidden, forbidden, forbidden)
     SlashCmdList.APICONTRACTPROBE("all fixture"); assert(ApiContractProbeDB.captures[1].housingCatalog == nil)
 end)
+test("category followups preserve original fractional IDs without deduplication", function()
+    local calls = {}
+    setup(function() return { 1, 2 } end, function() return { ID = 7.25 } end)
+    C_CatalogShop.GetProductIDsForCategory = function(...)
+        assert(select("#", ...) == 1 and (...) == 7.25)
+        calls[#calls + 1] = ...; return { 9.5, nil, false }, nil, "tail"
+    end
+    local e = entries(capture())
+    assert(#calls == 2, "category followup absent")
+    assert(e[1].categoryProducts.n == 3 and e[1].categoryProducts.values[2].kind == "nil")
+    local list = e[1].categoryProducts.values[1].entries
+    assert(#list == 8 and list[1].value == 9.5 and list[2].kind == "nil" and list[3].value == false)
+end)
+
+test("category followup rejects invalid first category objects and IDs independently", function()
+    for _, bad in ipairs({ false, "id", math.huge, -math.huge, 0/0, secret, {} }) do
+        local calls = 0
+        setup(function() return { 1, 2 } end, function(id)
+            if id == 1 then return { ID = bad } end
+            return { ID = 4.5 }
+        end)
+        C_CatalogShop.GetProductIDsForCategory = function(id) assert(id == 4.5); calls = calls + 1 end
+        local e = entries(capture()); assert(calls == 1 and e[1].categoryProducts.status ~= "observed")
+    end
+    for _, bad in ipairs({ false, "category", 3, secret }) do
+        setup(function() return { 1 } end, function() return bad, { ID = 2 } end)
+        C_CatalogShop.GetProductIDsForCategory = forbidden
+        assert(entries(capture())[1].categoryProducts.status ~= "observed")
+    end
+end)
+
+test("category receiver and original ID rechecked after field serialization", function()
+    for _, revokeObject in ipairs({ false, true }) do
+        local revoked, object = false, { ID = 9.25, displayName = "revoke-category" }
+        setup(function() return { 1 } end, function() return object end)
+        C_CatalogShop.GetProductIDsForCategory = forbidden
+        canaccessvalue = function(v)
+            if v == "revoke-category" then revoked = true end
+            return not rawequal(v, secret) and not (revoked and (revokeObject and rawequal(v, object) or not revokeObject and v == 9.25))
+        end
+        assert(entries(capture())[1].categoryProducts.status ~= "observed")
+    end
+end)
+
+test("category IDs rechecked after every followup lookup and function guard", function()
+    for _, phase in ipairs({ "namespace", "lookup", "secret", "access" }) do
+        for selected = 1, 8 do
+            local revoked, armed, calls = false, false, 0
+            local target = selected + 100.25
+            setup(function() return { 1,2,3,4,5,6,7,8 } end, function(id) return { ID = id + 100.25 } end)
+            local ns = C_CatalogShop
+            local fn = function(id) assert(not (revoked and id == target)); calls = calls + 1; return {} end
+            setmetatable(ns, { __index = function(_, key)
+                if key == "GetProductIDsForCategory" then
+                    if phase == "lookup" then revoked = true end
+                    return fn
+                end
+            end })
+            local oldCategory = ns.GetFirstCategoryByProductID
+            ns.GetFirstCategoryByProductID = function(id) armed = true; return oldCategory(id) end
+            issecretvalue = function(v)
+                if phase == "secret" and rawequal(v, fn) then revoked = true end
+                return rawequal(v, secret)
+            end
+            canaccessvalue = function(v)
+                if phase == "namespace" and armed and rawequal(v, ns) then revoked = true end
+                if phase == "access" and rawequal(v, fn) then revoked = true end
+                return not rawequal(v, secret) and not (revoked and v == target)
+            end
+            local e = entries(capture()); assert(calls == 7 and e[selected].categoryProducts.status == "restricted-input")
+        end
+    end
+end)
+
+test("followup missing errors and nil tuples do not suppress peers", function()
+    setup(function() return { 1,2,3,4 } end, function(id) return { ID = id } end)
+    C_CatalogShop.GetProductIDsForCategory = function(id)
+        if id == 1 then error(secret) elseif id == 2 then return nil, { 99 }, nil
+        elseif id == 3 then return else return { 5 } end
+    end
+    local e = entries(capture())
+    assert(e[1].categoryProducts.status == "call-error" and e[2].categoryProducts.n == 3)
+    assert(e[2].categoryProducts.values[2].entries == nil and e[3].categoryProducts.n == 0)
+    assert(e[4].categoryProducts.values[1].entries[1].value == 5)
+    C_CatalogShop.GetProductIDsForCategory = nil
+    assert(entries(capture())[1].categoryProducts.status == "missing-api")
+    C_CatalogShop.GetProductIDsForCategory = secret
+    assert(entries(capture())[1].categoryProducts.status == "missing-api")
+end)
+
+test("followup list receivers rechecked at every bounded index", function()
+    for selected = 1, 8 do
+        local revoked, reads = false, 0
+        local list = setmetatable({}, { __index = function(_, index)
+            assert(not revoked and index <= 8); reads = reads + 1
+            if index == selected then revoked = true end
+            return index
+        end, __len = forbidden, __pairs = forbidden })
+        setup(function() return { 1 } end, function() return { ID = 2 } end)
+        C_CatalogShop.GetProductIDsForCategory = function() return list end
+        canaccessvalue = function(v) return not rawequal(v, secret) and not (revoked and rawequal(v, list)) end
+        local e = entries(capture())[1].categoryProducts.values[1].entries
+        assert(reads == selected)
+        if selected < 8 then assert(e[selected + 1].status == "field-error") end
+    end
+end)
+
+test("twenty calls bounded followup tuples and no downstream recursion", function()
+    local calls, ids, many = 0, {}, {}
+    for i = 1, 20 do ids[i] = i; many[i] = string.rep("x", 300) end
+    setup(function() calls = calls + 1; return ids end,
+        function(id) calls = calls + 1; return { ID = id + 0.25 } end,
+        function() calls = calls + 1; return {} end,
+        function() calls = calls + 1; return true end)
+    C_CatalogShop.GetProductIDsForCategory = function() calls = calls + 1; return ids, unpack(many) end
+    C_CatalogShop.GetProductInfo = forbidden
+    for i = 1, 11 do capture(string.rep("L", 180)) end
+    assert(calls == 200 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    local q = entries(ApiContractProbeDB.captures[1].housingCatalog)[1].categoryProducts
+    assert(q.n == 21 and q.truncated and #q.values == 16 and #q.values[2].value == 256)
+    assert(#q.values[1].entries == 8 and #ApiContractProbeDB.captures[1].label == 128)
+end)
 print("housing-catalog fixtures passed: " .. passed)

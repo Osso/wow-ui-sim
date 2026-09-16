@@ -546,6 +546,38 @@ local function observeCatalogShopCall(name, id, productQuery)
     return result, values
 end
 
+local function observeCategoryProducts(categoryValues)
+    if not categoryValues then return { status = "unavailable-input" } end
+    local category = categoryValues[2]
+    if not accessible(category) then return { status = "restricted-input" } end
+    if type(category) ~= "table" and type(category) ~= "userdata" then
+        return { status = "unavailable-input" }
+    end
+    -- Existing category-field observations can revoke this original receiver or ID.
+    local id, ok = readField(category, "ID")
+    if not ok then return { status = "field-error" } end
+    local status = customSetInputStatus(id, "number")
+    if status then return { status = status } end
+    local fn, found = readField(C_CatalogShop, "GetProductIDsForCategory")
+    if not found then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    status = customSetInputStatus(id, "number")
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    local first = result.values[1]
+    if first and first.status == "observed" and first.kind == "table" then
+        first.entries = {}
+        for index = 1, 8 do
+            local value, readable = readField(values[2], index)
+            first.entries[index] = readable and scalar(value) or { status = "field-error" }
+        end
+    end
+    return result
+end
+
 local function captureCatalogProducts()
     local result, values = observeCatalogShopCall("GetNewProducts")
     local first = result.values and result.values[1]
@@ -556,7 +588,9 @@ local function captureCatalogProducts()
         local row = { status = ok and "observed" or "field-error" }
         if ok then
             row.id = scalar(id)
-            row.category = observeCatalogShopCall("GetFirstCategoryByProductID", id, true)
+            local categoryValues
+            row.category, categoryValues = observeCatalogShopCall("GetFirstCategoryByProductID", id, true)
+            row.categoryProducts = observeCategoryProducts(categoryValues)
         end
         first.entries[index] = row
     end
