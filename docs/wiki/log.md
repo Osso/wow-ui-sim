@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare first-page aura display-count recorder
+
+Runtime `ca237baf9` adds manual `/apicontract aura-display-count <label>`, excluded from `all`. It records one player HELPFUL first page of eight slots without continuation traversal, then five guarded display-count argument variants for each accessible original aura instance ID. Eight local fixtures establish bounded recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Extend selected-slot spell metadata with aura predicate
 
 Runtime `02ab512c6` adds independent `auraQueries.AuraIsBigDefensive` using the original accessible `GetActionInfo(slot)` spell ID. Existing seven metadata queries and three visibility enums remain unchanged. Nineteen cumulative local fixtures include five new aura-defensive cases; native behavior remains unverified. See [[api-contract-probes]].

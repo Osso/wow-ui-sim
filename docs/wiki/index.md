@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare first-page aura display-count recorder
+
+Runtime `ca237baf9` adds manual `/apicontract aura-display-count <label>`, excluded from `all`. One `GetAuraSlots("player", "HELPFUL", 8)` first page yields at most eight guarded original aura instance IDs; each receives five independent `GetAuraApplicationDisplayCount` argument variants. It does not traverse continuations. Eight separate fixtures prove recorder mechanics only; native enumeration, ordering, formatting, defaults, coercion and behavior remain pending. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare selected-slot spell-duration recorder
 
 Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, excluded from `all`. An accessible `GetActionInfo(slot)` spell ID permits guarded charge and loss-of-control duration producers, whose current objects receive ten read-only method observations only. It retains no objects between captures and does not affect cast-duration retention. Nine separate fixtures prove recorder mechanics only; native transitions, spellbook behavior, timing and restricted-context behavior remain pending. See [[api-contract-probes]].

@@ -6,6 +6,8 @@ Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, c
 
 ## Evidence boundaries
 
+`/apicontract aura-display-count <label>` is manual-only and excluded from `all`. It calls `C_UnitAuras.GetAuraSlots("player", "HELPFUL", 8)` once, preserves its continuation and slot tuple, and does not traverse continuation. At most eight accessible finite original slot values produce guarded `auraInstanceID` values through `GetAuraDataBySlot("player", slot)`. Each ID receives five independent `GetAuraApplicationDisplayCount` calls: omitted optional arguments, `(1)`, `(2)`, `(2, 5)`, and `(1, 1)`. Namespace/function and producer values are guarded and rechecked before forwarding. Eight separate fixtures prove bounds, arity, errors and access behavior only; no native ordering, formatting, coercion, defaults, enumeration completeness or native behavior follows.
+
 `/apicontract spell-duration <slot> <label>` is manual-only and excluded from `all`. It uses the existing integer-slot parser and calls `GetActionInfo(slot)` with exactly one argument. Only an accessible first result exactly equal to `"spell"` and accessible finite numeric second result authorize the original spell ID for `C_Spell.GetSpellChargeDuration` and `C_Spell.GetSpellLossOfControlCooldownDuration`.
 
 Protected namespace/function lookup and both producer values are guarded and rechecked immediately before each call. Missing, restricted or failed producers are unavailable inputs, not zero; one unavailable producer does not suppress the other. Current returned objects alone receive the existing ten read-only duration methods. No objects are retained between snapshots, and this mode neither reads nor changes cast-duration retention state or its counter.
