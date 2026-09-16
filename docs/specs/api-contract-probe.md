@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual outfit tooltip
+
+- `outfit-tooltip <label>` is manual-only and excluded from `all`.
+- Call `C_TransmogOutfitInfo.GetOutfitsInfo()` once. Inspect only its first returned table, positions 1–4, and each entry's guarded `outfitID`; forward only original accessible finite numeric IDs to independent `C_TooltipInfo.GetOutfit` calls. Recheck IDs after namespace/function guards.
+- Preserve raw arity, nil positions and opaque errors. TooltipData remains opaque, with no line/args traversal or tooltip UI calls. Guard each list/entry/field lookup; one failure must not suppress peers. Retain no returned objects.
+- Bound each snapshot to five API calls, sixteen tuple positions, 256-byte scalar strings and a 128-byte label; retain at most ten snapshots.
+- No outfit selection, requests, mutations or native content conclusions. Nine actual TOC/slash fixtures cover local recorder behavior only; native behavior remains unverified.
+
 ## Manual tradeskill item quality
 
 - `tradeskill-item-quality <label>` is manual-only, excluded from `all`.

@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual outfit tooltip
+
+`/apicontract outfit-tooltip <label>` is excluded from `all`. One `C_TransmogOutfitInfo.GetOutfitsInfo()` call supplies the first four list entries; only guarded original finite `outfitID` values feed independent `C_TooltipInfo.GetOutfit(id)` calls. Access is rechecked after namespace/function guards. No synthesized IDs or serialized input substitutes are used.
+
+`outfitTooltip` preserves the producer tuple; its first table observation has four bounded `entries`, each with `id` and `query` observations. TooltipData stays opaque: no lines, args, fields, tooltip UI or recursive traversal. Errors and missing/restricted entries do not suppress peers; returned objects are not retained.
+
+Bounds: five API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. No outfit selection, requests, mutations or native tooltip-content claims. Pinned `TooltipInfoDocumentation.lua:646–662` declares `GetOutfit(number) -> TooltipData`, `MayReturnNothing` and `SecretArguments = AllowedWhenUntainted`; `TransmogOutfitInfoDocumentation.lua:367–375` supplies the list producer. Nine actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/outfit_tooltip.lua docs/addons/ApiContractProbe
+```
+
 ## Manual tradeskill item quality
 
 `/apicontract tradeskill-item-quality <label>` is excluded from `all`. For equipment slots 1–19, `GetInventoryItemLink("player", slot)` supplies the original accessible string to independent `C_TradeSkillUI.GetItemCraftedQualityInfo` and `GetItemReagentQualityInfo` calls. Inputs are never replaced by serialized/truncated links; access is rechecked after namespace/function guards.
