@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
 
-Runtime `4472d1375` adds manual `/apicontract prey-quest-widgets <label>`, excluded from `all`. An original accessible finite active prey-quest ID independently queries three fixed published widget-set types: `Tooltip`, `BehindIcon`, and `AdventureMapDetails`. Eight fixtures prove recorder mechanics only; widget followups, quest mutations, and native behavior remain unverified. See [[api-contract-probes]].
+Runtime `7937582a2` extends manual `/apicontract prey-quest-widgets <label>`, excluded from `all`. Three original widget-set IDs each yield at most four guarded widgets; only the published `PreyHuntProgress` visualization type receives a visualization query, exposing sixteen fixed fields. Fourteen cumulative fixtures include six new cases; wrong-type calls, mutations, and native behavior remain unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
 
