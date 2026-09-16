@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare explicit-power recorder
+
+Runtime `2d0ee4876` adds manual `/apicontract explicit-power <label>`, excluded from `all`. For `player` and `target`, guarded published `Mana`, `Rage`, and `Energy` values independently feed power, maximum, and percent calls for `unmodified=false`/`true`; percent calls include an explicit nil curve. Eight fixtures prove recorder mechanics only. Existing `resources` behavior, native scale/curve semantics, and restricted-context behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
 
 Runtime `a64c3a9a5` adds manual `/apicontract hyperlinks-residual <label>`, excluded from `all`. It records a 35-call six-argument optional-position matrix plus eight malformed/binary one-argument literals, preserving raw arity and opaque failures. Seven fixtures prove recorder mechanics only; no native coercion, fifth-flag, security, or output-semantic claim follows. See [[api-contract-probes]].

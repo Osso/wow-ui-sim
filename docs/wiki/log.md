@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare explicit-power recorder
+
+Documented runtime `2d0ee4876`: manual `explicit-power` reads three guarded published power types for `player` and `target`, with independent false/true power, maximum, and percent calls; percent calls explicitly pass a nil curve. Eight fixtures establish recorder mechanics only. Existing `resources` behavior remains unchanged; native scale, curve, restricted-context behavior, and conformance remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
 
 Documented runtime `a64c3a9a5`: manual `hyperlinks-residual` adds thirty-five six-argument optional-position cases and eight malformed/binary one-argument cases, excluded from `all`. Seven fixtures establish recorder mechanics only; native coercion, fifth-flag, security, and output semantics remain unverified. Runtime reports a Lua 60-upvalue wrapper adjustment. Updated [[api-contract-probes]] and the index.
