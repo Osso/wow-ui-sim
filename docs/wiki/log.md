@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded player-state recorder
+
+Documented runtime `14f75d44e`: manual `player-state-queries` makes two zero-argument reads each for `GetCollapsingStarCost`, `ShowingCloak`, and `ShowingHelm`, excluded from `all`. Eleven fixtures establish recorder mechanics only; no cloak/helm mutation, purchase, native cost/state/default claim, or native credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
 
 Documented runtime `8b2555739`: manual `outfit-tooltip` uses the first four original accessible finite outfit IDs from `GetOutfitsInfo()` for independent `C_TooltipInfo.GetOutfit` calls. TooltipData remains opaque; no UI, mutation, request, native content, or native credit follows. Nine fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.

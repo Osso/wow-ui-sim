@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded player-state recorder
+
+Runtime `14f75d44e` adds manual `/apicontract player-state-queries <label>`, excluded from `all`. It records `GetCollapsingStarCost`, `ShowingCloak`, and `ShowingHelm` twice each with zero arguments, without calling cloak/helm mutation APIs. Eleven fixtures prove recorder mechanics only; cost, state, defaults, stability, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
 
 Runtime `8b2555739` adds manual `/apicontract outfit-tooltip <label>`, excluded from `all`. First-four original outfit IDs from `GetOutfitsInfo()` independently call `C_TooltipInfo.GetOutfit`; returned TooltipData remains opaque. Nine fixtures prove recorder mechanics only; no UI, mutation, native tooltip content, or native behavior is established. See [[api-contract-probes]].
