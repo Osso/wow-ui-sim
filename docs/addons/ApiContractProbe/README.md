@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual house exterior options
+
+`/apicontract house-exterior-options <label>` is excluded from `all`. Independently call `C_HouseExterior.GetCurrentHouseExteriorType()`, `GetHouseExteriorSizeOptions()` and `GetHouseExteriorTypeOptions()` once each, without arguments. Preserve raw return arity, nil positions and opaque errors; failures do not suppress peer calls.
+
+`houseExteriorOptions` contains observations keyed by API name. Only the first size/type result exposes `selectedSize`/`selectedExteriorType` and an opaque scalar `options` observation under `values[1].fields`. Separate `values[1].optionEntries.entries` captures positions 1–4: size options read `size`, `name`, `isLocked`; type options read `houseExteriorTypeID`, `name`, `isLocked`, `isInvalid`, `reasonString`. Guard every receiver before lookup and every value before serialization, including after earlier observations revoke access. No generic iteration, recursion or object retention.
+
+Bounds: three API calls per snapshot, ten snapshots, 16 tuple positions, 256-byte strings and 128-byte labels. Pinned `HouseExteriorUIDocumentation.lua:40–66` and `HouseExteriorConstantsDocumentation.lua:6–43` declare the current producers and fields. Current `reasonString` is not historical `lockReasonString`; this recorder does not establish that historical contract. Ten actual TOC/slash fixtures prove local mechanics only. No setters, entering a house, fixture-debug calls, 3D/camera behavior, native lock/default meanings, ordering or completeness claims.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/house_exterior_options.lua docs/addons/ApiContractProbe
+```
+
 ## Manual expansion audio fields
 
 `/apicontract expansion-audio-fields <label>` is excluded from `all`. Read only the published globals `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT`, requiring accessible finite numeric values without fallback. Independently call the global `GetExpansionDisplayInfo(value)` twice per name, omitting `desiredReleaseType`. Recheck the original value after API lookup/function guards. The generated `Expansion` system has no `Namespace`; no `C_Expansion` substitute is used.

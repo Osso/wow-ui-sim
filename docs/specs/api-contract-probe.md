@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual house exterior options
+
+- `house-exterior-options <label>` is manual-only, excluded from `all`. Independently call `C_HouseExterior.GetCurrentHouseExteriorType`, `GetHouseExteriorSizeOptions` and `GetHouseExteriorTypeOptions` once each with zero arguments; preserve raw arity, nil positions and opaque errors in API-name-keyed `houseExteriorOptions` observations.
+- Only first size/type result objects expose guarded `selectedSize`/`selectedExteriorType` and opaque `options` scalar fields. Distinct `optionEntries.entries` captures positions 1–4, using only `size`, `name`, `isLocked` for size entries and `houseExteriorTypeID`, `name`, `isLocked`, `isInvalid`, `reasonString` for type entries. Guard every container, entry and field before lookup or serialization; recheck receivers after potentially revoking observations. No generic traversal, recursion or retained raw objects.
+- Bound calls to three per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Missing, restricted and failing observations must not suppress peers. No setters, house entry, fixture-debug APIs, 3D or camera behavior.
+- Current declared `reasonString` must not be substituted for historical `lockReasonString`. Ten actual TOC/slash fixtures establish recorder mechanics only; native values, lock/default semantics, ordering, completeness and historical contracts remain unverified.
+
 ## Manual expansion audio fields
 
 - `expansion-audio-fields <label>` is manual-only, excluded from `all`. Look up only published globals `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT`; require accessible finite numbers, with no numeric fallback. Call global `GetExpansionDisplayInfo` twice independently per value with exactly one argument, leaving `desiredReleaseType` omitted.
