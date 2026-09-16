@@ -595,6 +595,32 @@ local function spellInputStatus(kind, id)
     if id ~= id or id == math.huge or id == -math.huge then return "unavailable-input" end
 end
 
+local function observeSpellbookMetadata(kind, id, name)
+    local status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local fn, ok = readField(C_SpellBook, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Lookup and function guards can revoke the original producer values.
+    status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function captureSpellbookMetadata(slot)
+    local identity, kind, id = observeSpellProducer(slot)
+    local result = { slot = slot, identity = identity, queries = {} }
+    for _, name in ipairs({ "FindBaseSpellByID", "FindFlyoutSlotBySpellID", "FindSpellOverrideByID" }) do
+        result.queries[name] = identity.status == "observed" and observeSpellbookMetadata(kind, id, name)
+            or { status = "unavailable-input" }
+    end
+    return result
+end
+
 local function observeSpellMetadata(kind, id, name)
     local status = spellInputStatus(kind, id)
     if status then return { status = status } end
@@ -1345,12 +1371,12 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
     local slot
-    if mode == "actions" or mode == "spell-metadata" or mode == "spell-duration" then
+    if mode == "actions" or mode == "spell-metadata" or mode == "spell-duration" or mode == "spellbook-metadata" then
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1367,6 +1393,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "aura-time" then record.auraTime = captureAuraPage(captureAuraTimeSlot) end
         if mode == "spell-duration" then record.spellDuration = captureSpellDuration(slot) end
         if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
+        if mode == "spellbook-metadata" then record.spellbookMetadata = captureSpellbookMetadata(slot) end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end

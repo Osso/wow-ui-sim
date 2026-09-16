@@ -40,6 +40,13 @@
 - Independently call `GetAuraApplicationDisplayCount("player", id)` with optional arguments omitted, `(1)`, `(2)`, `(2, 5)` and `(1, 1)`. Guard namespace/function and produced inputs before inspection/forwarding; recheck inputs after lookup and function guards. Record missing, inaccessible, invalid and error cases independently.
 - Preserve raw return arity/nils and opaque errors with 16-position, 256-byte string, 128-byte label and ten-snapshot limits. At most eight data calls and forty count queries per snapshot; no gameplay mutation or native execution. Local fixtures establish recorder behavior only, not native ordering, defaults, formatting, coercion or completeness.
 
+## Manual selected-slot spellbook metadata
+
+- Manual `spellbook-metadata <slot> <label>` uses the existing integer-slot parser and `GetActionInfo(slot)` producer; excluded from `all`. Only an accessible `spell` kind and finite numeric original ID authorize queries.
+- Independently call `C_SpellBook.FindBaseSpellByID`, `FindFlyoutSlotBySpellID` and `FindSpellOverrideByID`, each with exactly that original ID. Guard namespace/function access and recheck kind/ID after lookup and function guards before each call.
+- Preserve producer/query arity, nil positions, opaque errors and restricted values without inferred identity, slot/bank validity or native semantics. Bounds: sixteen scalar positions, 256-byte strings, 128-byte labels, ten snapshots and thirty total queries.
+- No spellbook slot producer, duration query, mutation, secret-specific call or object retention. Existing spell-metadata output remains unchanged. Eight actual TOC/slash fixtures establish recorder mechanics only; native classifications, transitions and security remain unverified.
+
 ## Manual selected-slot spell metadata
 
 - Manual `spell-metadata <slot> <label>` reuses the actions integer-slot parser and is excluded from `all`. Call `GetActionInfo(slot)` with exactly one argument; preserve raw producer arity and nil positions.
