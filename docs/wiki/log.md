@@ -1,6 +1,10 @@
+## [2026-09-16] investigation | Extend housing-catalog currency recorder
+
+Documented `637a9fecc`: two guarded published currency-key strings independently feed `GetVirtualCurrencyBalance` once each without a literal fallback or truncated input forwarding. The housing-catalog cap is twenty-two calls per snapshot. Twenty-four cumulative fixtures, including six new cases, establish mechanics only; no refresh, purchase, mutation, native currency state, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Extend bounded housing-catalog recorder
 
-Documented `8a34f0120`: each first-eight original category ID now independently feeds `GetProductIDsForCategory`, whose first-return scalar positions are capped at eight with no recursive product followups. The housing-catalog cap is twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, establish mechanics only; no request, purchase, refund, mutation, native value, ordering, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+Documented `8a34f0120`: each first-eight original category ID now independently feeds `GetProductIDsForCategory`, whose first-return scalar positions are capped at eight with no recursive product followups. The historical housing-catalog cap is twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, establish mechanics only; no request, purchase, refund, mutation, native value, ordering, or conformance credit follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare bounded housing-catalog recorder
 

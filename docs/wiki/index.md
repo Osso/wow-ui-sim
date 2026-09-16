@@ -1,6 +1,10 @@
+## [2026-09-16] investigation | Extend housing-catalog currency recorder
+
+Runtime `637a9fecc` extends manual `/apicontract housing-catalog <label>`, excluded from `all`. It reads two guarded published catalog currency-key strings and forwards each original untruncated string once to `GetVirtualCurrencyBalance`, without a fallback literal. The cap is twenty-two calls per snapshot. Twenty-four cumulative fixtures, including six new cases, prove recorder mechanics only; refreshes, purchases, native currency state, ordering, and price semantics remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Extend bounded housing-catalog recorder
 
-Runtime `8a34f0120` extends manual `/apicontract housing-catalog <label>`, excluded from `all`. Up to eight original category IDs now independently call `GetProductIDsForCategory`, with first-return scalar positions capped at eight and no recursive product followups. The cap is twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, prove recorder mechanics only; requests, purchases, refunds, native catalog fixtures, ordering, and price semantics remain unverified. See [[api-contract-probes]].
+Runtime `8a34f0120` extends manual `/apicontract housing-catalog <label>`, excluded from `all`. Up to eight original category IDs now independently call `GetProductIDsForCategory`, with first-return scalar positions capped at eight and no recursive product followups. Its historical cap was twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, prove recorder mechanics only; requests, purchases, refunds, native catalog fixtures, ordering, and price semantics remain unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
 
