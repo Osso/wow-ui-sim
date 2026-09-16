@@ -18,6 +18,13 @@
 - Guard every receiver before each field/index lookup and every value before inspection or serialization. Recheck original task IDs after namespace/function lookup and function guards, immediately before invocation. Missing, restricted and failed observations must not suppress peers. Retain no raw objects; do not fabricate IDs, rebuild input structures, iterate/measure returned tables or recurse.
 - Cap three producer plus eight task calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, setters, tracking mutations or native semantics claims. Sixteen cumulative actual TOC/slash fixtures establish bounded recorder mechanics only, including preservation of existing eight-log/four-tracked limits and task queries; native fixtures, transitions, ordering and completeness remain unverified.
 
+## Manual training grounds state
+
+- Manual `training-grounds-state <label>` is excluded from `all`. Call only `C_PvP.AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, twice independently with exactly zero arguments.
+- Store two raw observations per function-name key under `trainingGroundsState`. Reuse guarded namespace/function lookup and scalar serialization; missing, restricted, throwing or replaced APIs must not suppress peers.
+- Preserve exact arity, nil positions and opaque errors, including the eligibility failure-reason return. Cap six calls per snapshot, ten shared snapshots, sixteen result positions, 256-byte strings and 128-byte labels.
+- Do not queue, join, request, mutate, or query training-ground/reward structures. Local fixtures establish recorder mechanics only, not native defaults, stability, eligibility, win-history or transition semantics.
+
 ## Manual neighborhood state
 
 - Manual `neighborhood-state <label>` is excluded from `all`. Call only `C_NeighborhoodInitiative.GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, and `PlayerMeetsRequiredLevel`, twice independently with exactly zero arguments.

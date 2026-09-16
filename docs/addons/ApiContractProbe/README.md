@@ -24,6 +24,18 @@ Guard each receiver before every lookup and each value before inspection/seriali
 
 Pinned `NeighborhoodInitiativeDocumentation.lua:39–79,94–119,259–353` defines the calls and fields, not native results. Sixteen cumulative actual TOC/slash fixtures (eleven existing, five nested-capture additions) prove recorder mechanics only, including unchanged eight-log/four-tracked limits and eleven API calls per snapshot. Run `luajit docs/addons/ApiContractProbe/tests/neighborhood_structures.lua docs/addons/ApiContractProbe`.
 
+## Manual training grounds state
+
+`/apicontract training-grounds-state <label>` is excluded from `all`. Independently call `C_PvP.AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday` twice each with zero arguments. Reuse guarded namespace/function lookup and scalar serialization; missing, restricted, throwing or replaced APIs do not suppress peers. Preserve exact arity, nil positions and opaque errors, including the eligibility query's failure-reason return.
+
+Bounds: six calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte strings and 128-byte labels. No queue/join operations, requests, mutations, or training-ground/reward structure queries. Repeated observations establish neither defaults nor stability nor native behavior. Pinned `PvpInfoDocumentation.lua:20–26,57–64,846–852` establishes call shapes only.
+
+Ten actual TOC/slash fixtures test recorder mechanics:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/training_grounds_state.lua docs/addons/ApiContractProbe
+```
+
 ## Manual neighborhood state
 
 `/apicontract neighborhood-state <label>` is excluded from `all`. Independently call seven `C_NeighborhoodInitiative` queries twice each with zero arguments: `GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, `PlayerMeetsRequiredLevel`. Guard namespace/function lookup and scalar serialization; preserve raw arity, nil positions and opaque errors. Missing, restricted, throwing or replaced APIs do not suppress peers.
