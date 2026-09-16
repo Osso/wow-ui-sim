@@ -9485,10 +9485,12 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual spellbook-metadata uses the original accessible finite spell ID from GetActionInfo(slot) for three independent FindBaseSpellByID, FindFlyoutSlotBySpellID and FindSpellOverrideByID observations"
+          "Manual spellbook-metadata uses the original accessible finite spell ID from GetActionInfo(slot) for three independent FindBaseSpellByID, FindFlyoutSlotBySpellID and FindSpellOverrideByID observations",
+          "Manual spellbook-duration obtains an original slot/bank pair with FindSpellBookSlotForSpell(id, false, true, true, true), then independently observes three duration producers with ten current-only methods; cooldown ignoreGCD is explicitly false"
+
         ],
         "missing": [
-          "Spellbook item duration observations with produced slotIndex and spellBank",
+          "Other slot-lookup flag combinations, ignoreGCD variants and native duration lifecycle observations",
           "Native rank, override, base, flyout and spellbook population transitions",
           "Native validation and restricted-context behavior"
         ]
