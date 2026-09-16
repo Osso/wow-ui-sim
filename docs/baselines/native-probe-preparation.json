@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 120,
-    "partial-recorder": 41,
+    "needs-design-and-recorder-review": 119,
+    "partial-recorder": 42,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -8991,8 +8991,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual cooldown-viewer-read queries nine guarded published categories with allowUnlearned=false and uses eight original cooldown IDs per category for independent cooldown-info and valid-alert queries",
+          "First info objects expose cooldownID/category; first alert tables expose eight scalar positions without interpreting membership or ordering"
+        ],
+        "missing": [
+          "Native populated cooldown/category fixtures, alert semantics and transitions",
+          "Remaining category entries, completeness and validation behavior",
+          "Restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_CooldownViewer"
     },
