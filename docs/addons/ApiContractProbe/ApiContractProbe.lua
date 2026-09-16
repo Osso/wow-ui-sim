@@ -705,6 +705,96 @@ local function captureDiminishCategories()
     return result
 end
 
+local function observeOutfitSlotQuery(slot, name)
+    local status = auraNumberStatus(slot)
+    if status then return { status = status } end
+    local fn, ok = readField(C_TransmogOutfitInfo, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    status = auraNumberStatus(slot)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, slot))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function inspectOutfitSlot(entry, querySlot)
+    local result = scalar(entry)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    result.fields = {}
+    local slot
+    for _, key in ipairs({ "slot", "type", "collectionType", "slotName", "isSecondary" }) do
+        local value, ok = readField(entry, key)
+        result.fields[key] = ok and scalar(value) or { status = "field-error" }
+        if key == "slot" and ok then slot = value end
+    end
+    if querySlot then
+        result.queries = {}
+        for _, name in ipairs({ "GetEquippedSlotOptionFromTransmogSlot", "GetUnassignedAtlasForSlot" }) do
+            result.queries[name] = observeOutfitSlotQuery(slot, name)
+        end
+    end
+    return result
+end
+
+local function inspectOutfitSlotList(list, querySlot)
+    local result = scalar(list)
+    if result.status ~= "observed" or result.kind ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 8 do
+        local entry, ok = readField(list, index)
+        result.entries[index] = ok and inspectOutfitSlot(entry, querySlot) or { status = "field-error" }
+    end
+    return result
+end
+
+local function inspectOutfitSlotGroups(groups)
+    local result = scalar(groups)
+    if result.status ~= "observed" or result.kind ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 8 do
+        local entry, ok = readField(groups, index)
+        local row = ok and scalar(entry) or { status = "field-error" }
+        if row.status == "observed" and (row.kind == "table" or row.kind == "userdata") then
+            row.fields = {}
+            for _, key in ipairs({ "position", "appearanceSlotInfo", "illusionSlotInfo" }) do
+                local value, fieldOK = readField(entry, key)
+                if not fieldOK then row.fields[key] = { status = "field-error" }
+                elseif key == "position" then row.fields[key] = scalar(value)
+                else row.fields[key] = inspectOutfitSlotList(value, false) end
+            end
+        end
+        result.entries[index] = row
+    end
+    return result
+end
+
+local function observeOutfitSlotProducer(name, locations)
+    local fn, ok = readField(C_TransmogOutfitInfo, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    if locations then
+        for index = 2, math.min(values.n, 3) do
+            result.values[index - 1] = inspectOutfitSlotList(values[index], true)
+        end
+    elseif values.n > 1 then result.values[1] = inspectOutfitSlotGroups(values[2]) end
+    return result
+end
+
+local function captureOutfitSlots()
+    local locations = observeOutfitSlotProducer("GetAllSlotLocationInfo", true)
+    local groups = observeOutfitSlotProducer("GetSlotGroupInfo", false)
+    return { locations = locations, groups = groups }
+end
+
 local function inspectOutfitCategories(categories)
     local result = scalar(categories)
     if result.status ~= "observed" or result.kind ~= "table" then return result end
@@ -1651,8 +1741,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1665,6 +1755,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.client, record.time = observe(GetBuildInfo), observe(time)
         if mode == "spell-diminish-categories" then record.spellDiminishCategories = captureDiminishCategories() end
         if mode == "outfit-catalog" then record.outfitCatalog = captureOutfitCatalog() end
+        if mode == "outfit-slots" then record.outfitSlots = captureOutfitSlots() end
         if mode == "weekly-progress" then record.weeklyProgress = captureWeeklyProgress() end
         if mode == "housing-preview-modes" then record.housingPreviewModes = captureHousingPreviewModes() end
         if mode == "unit-target-display" then record.unitTargetDisplay = captureUnitTargetDisplay() end

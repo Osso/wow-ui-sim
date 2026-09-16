@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual outfit slots
+
+- Manual `outfit-slots <label>` is excluded from `all`. Independently call no-argument `GetAllSlotLocationInfo` and `GetSlotGroupInfo`; preserve raw arity, nil holes and opaque errors within sixteen return positions.
+- Inspect first two location returns at indices 1–8, reading only guarded `slot`, `type`, `collectionType`, `slotName`, `isSecondary`. Each accessible finite original slot permits two independent exact-one-argument queries: `GetEquippedSlotOptionFromTransmogSlot(slot)` and `GetUnassignedAtlasForSlot(slot)`. Recheck input after namespace/function lookup and function guards.
+- Inspect only first group return at indices 1–8: `position` and nested `appearanceSlotInfo`/`illusionSlotInfo`, each capped at eight slot entries with the same five fields. Group entries never trigger queries. Guard every receiver and field before lookup/serialization; no general recursion, length lookup, iteration or retained raw objects.
+- Cap two producers plus 32 queries per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Missing/restricted/failed observations must not suppress peers. No guessed IDs, type/option mapping, equality, ordering, completeness, atlas validity, mutations, 3D or native-conformance claims.
+- Eleven actual TOC/slash fixtures prove bounded mechanics only; native behavior remains unverified.
+
 ## Manual outfit catalog
 
 - Manual `outfit-catalog <label>` is excluded from `all`. Call `C_TransmogOutfitInfo.GetOutfitsInfo()` once; preserve raw arity, nils and opaque errors within sixteen return positions. Inspect only the first returned table at indices 1–8.

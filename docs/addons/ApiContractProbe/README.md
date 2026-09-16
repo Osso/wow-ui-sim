@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual outfit slots
+
+`/apicontract outfit-slots <label>` is excluded from `all`. Independently call `GetAllSlotLocationInfo()` and `GetSlotGroupInfo()` without arguments, preserving sixteen raw return positions, nil holes and opaque errors. Inspect only the first two location lists, eight entries each, and five guarded fields: `slot`, `type`, `collectionType`, `slotName`, `isSecondary`. Only these original location entries may feed `GetEquippedSlotOptionFromTransmogSlot(slot)` and `GetUnassignedAtlasForSlot(slot)`, each with exactly one original accessible finite slot argument. Recheck slot access after API lookup/function guards; failures remain independent.
+
+Inspect only the first group return, eight entries, with `position` and nested `appearanceSlotInfo`/`illusionSlotInfo` lists capped at eight slot entries each. Group entries never trigger queries. Every receiver and field lookup/serialization is guarded; no general recursion, length lookup, iteration or raw-object retention. Cap two producers plus 32 queries per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. No mutations, 3D, guessed IDs, type/option mapping, equality, ordering, completeness, atlas validity or native claims.
+
+Pinned `TransmogOutfitInfoDocumentation.lua:130–138,184–198,420–427,489–503,918–937` supplies exact signatures and structs. Eleven actual TOC/slash fixtures prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/outfit_slots.lua docs/addons/ApiContractProbe`.
+
 ## Manual outfit catalog
 
 `/apicontract outfit-catalog <label>` is excluded from `all`. Call `C_TransmogOutfitInfo.GetOutfitsInfo()` once, preserving raw arity/nils/opaque errors within sixteen return positions. Inspect only the first returned table at indices 1–8. Each accessible entry exposes only guarded `outfitID`, `name`, `icon`, `isEventOutfit`, `isDisabled`, `playerFacingOutfitIndex`, and `situationCategories`; the latter exposes only guarded scalar indices 1–8, without iteration or length lookup.
