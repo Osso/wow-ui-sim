@@ -12,6 +12,10 @@ Metadata `eda32cf0a` validates exact routing for **287** `AuditTargets.lua` entr
 
 Metadata `86273373a` initially over-deferred a mixed Store plan. Correction `812a981fe` retains its ordinary `DropdownPopulation` capture as in-scope while deferring only forbidden/secure enforcement. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty deferred plans. `private-aura-border-scale` also remains in scope because its retained plan distinguishes ordinary numeric configuration from private authority enforcement. This is an audit-scope boundary, not implementation or native credit. The inventory has seventy needs-design and seventy-three partial plans; shared-recorder plans remain separately pending.
 
+## Concrete preparation blockers
+
+Inventory `1e0b2a9bc` records four source-checked gaps without changing status or credit: global `SetCursorPosition` needs the documented limited-gamepad context; `string.concat` has no grounded callable signature or Blizzard caller and is not equated with `strconcat`; `TimedSignalMap:GetNextSignal` returns scalar key/time, not a `TimedSignalMapEntry`; PTR `CreateRegionParams` declares fields, but no cached table-form constructor consumer was found. These are research constraints, not universal absence claims or native evidence.
+
 ## Evidence boundaries
 
 `/apicontract explicit-power <label>` is manual-only and excluded from `all`. For `player` and `target`, it uses only guarded published `Enum.PowerType.Mana`, `Rage`, and `Energy` values. Each unit/type independently calls `UnitPower` and `UnitPowerMax` with `unmodified=false` and `true`, plus `UnitPowerPercent` with the same flag and an explicit nil curve: thirty-six calls per snapshot. Results remain guarded raw tuples; existing `resources` behavior is unchanged. Eight fixtures prove recorder mechanics only. No resource mutation, curve or scale conclusion, restricted-context experiment, or native credit follows.
@@ -189,6 +193,7 @@ All-probe preparation remains open. No installation or native execution is autho
 - [Recorder spec](../../specs/api-contract-probe.md)
 - [Manual capture protocol](../../addons/ApiContractProbe/README.md)
 - [Dispel probe spec](../../specs/aura-dispel-curve-probe.md)
+- [Preparation inventory](../../baselines/native-probe-preparation.json)
 
 ## See Also
 

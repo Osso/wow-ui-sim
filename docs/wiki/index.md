@@ -1,3 +1,7 @@
+## [2026-09-16] audit | Record concrete preparation blockers
+
+Inventory `1e0b2a9bc` records source-checked blockers for limited-gamepad cursor input, ungrounded `string.concat`, scalar `GetNextSignal`, and consumerless PTR `CreateRegionParams`; no status, runtime, or native-credit change. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
 
 Runtime `b33e99159` adds manual `/apicontract cloak-helm-transition <label>`, excluded from `all`. It may mutate cloak/helm appearance only when later manually run: each eligible lane records a boolean baseline, false/true reads, and a guarded restoration attempt. An unconfirmed restoration locks future transition captures for the addon session. Fourteen fixtures and eleven player-state regressions prove cleanup mechanics only; no native execution or appearance conclusion occurred. See [[api-contract-probes]].

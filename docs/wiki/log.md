@@ -38,6 +38,10 @@ Documented runtime `4f2138bba`: manual `expansion-audio-fields` reads published 
 
 Documented runtime `7865a172c`: manual `action-loss-control-duration <slot> <label>` records selected-slot control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` independently. It inspects returned duration objects only through ten current-only read methods, retains none, and caps work at two API calls and 160 method calls per snapshot. Ten fixtures plus ten action-state regressions establish recorder mechanics only; historical non-duration loss-of-control and cooldown-info observations, native behavior, and credit remain open. Updated [[api-contract-probes]] and the index.
 
+## [2026-09-16] audit | Record concrete preparation blockers
+
+`1e0b2a9bc` records four source-checked constraints: global `SetCursorPosition` needs limited-gamepad context; `string.concat` lacks a grounded call shape and is not `strconcat`; `GetNextSignal` returns scalar key/time, not `TimedSignalMapEntry`; and PTR `CreateRegionParams` has no located table-form constructor consumer. No status, runtime, or native credit changed. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare selected-slot action-state recorder
 
 Documented runtime `87750c75b`: manual `action-state <slot> <label>` records guarded `GetActionInfo(slot)` control, twelve independent one-slot `C_ActionBar` queries, and two no-argument bar-index queries. It omits the range target, makes fifteen calls per snapshot, and remains excluded from `all`. Ten fixtures prove recorder mechanics only; no action execution, mutation, classification, or native conclusion follows. Updated [[api-contract-probes]] and the index.
