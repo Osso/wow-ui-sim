@@ -930,6 +930,46 @@ local function captureOutfitCatalog()
     return result
 end
 
+local function inspectSetCatalogEntry(entry)
+    local result = scalar(entry)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    result.fields = {}
+    for _, key in ipairs({ "setID", "name", "collected", "favorite", "validForCharacter" }) do
+        local value, ok = readField(entry, key)
+        result.fields[key] = ok and scalar(value) or { status = "field-error" }
+    end
+    return result
+end
+
+local function observeAvailableSets()
+    local fn, ok = readField(C_TransmogSets, "GetAvailableSets")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values = pack(pcall(fn))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    local first = result.values[1]
+    if first and first.status == "observed" and first.kind == "table" then
+        first.entries = {}
+        for index = 1, 8 do
+            local entry, entryOK = readField(values[2], index)
+            first.entries[index] = entryOK and inspectSetCatalogEntry(entry) or { status = "field-error" }
+        end
+    end
+    return result
+end
+
+local function captureSetsCatalog()
+    local result = { available = observeAvailableSets(), filters = {} }
+    for index = 1, 2 do
+        result.filters[index] = observePublicQuery(C_TransmogSets, "IsUsingDefaultSetsFilters")
+    end
+    return result
+end
+
 local function inspectWeeklyProgressEntry(entry)
     local result = scalar(entry)
     if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
@@ -1807,8 +1847,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1832,6 +1872,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
         if mode == "spellbook-metadata" then record.spellbookMetadata = captureSpellbookMetadata(slot) end
         if mode == "spellbook-duration" then record.spellbookDuration = captureSpellbookDuration(slot) end
+        if mode == "sets-catalog" then record.setsCatalog = captureSetsCatalog() end
         if mode == "custom-set-names" then record.customSetNames = captureCustomSetNames() end
         if mode == "outfit-state" then record.outfitState = captureOutfitState() end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end

@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual sets catalog
+
+- Manual `sets-catalog <label>` is excluded from `all`. Independently call no-argument `C_TransmogSets.GetAvailableSets()` once and `IsUsingDefaultSetsFilters()` twice, preserving raw arity, nil positions and opaque errors within sixteen return positions.
+- Inspect only first-return list positions 1–8 and fixed fields `setID`, `name`, `collected`, `favorite`, `validForCharacter`. Guard every receiver before lookup and each value before serialization; no iteration, length lookup or retained raw objects. Failures must not suppress peer observations.
+- Cap three API calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. No downstream ID queries, setters, reset or selection; no ordering, completeness, default or native claims.
+- Keep `grantAsPrecedingVariant` outside capture. Current pinned declaration includes the field, but this slice establishes no consumer/native evidence for it. Eleven actual TOC/slash fixtures prove bounded mechanics only; native behavior remains unverified.
+
 ## Manual custom-set names
 
 - Manual `custom-set-names <label>` is excluded from `all`. Independently call `C_TransmogCollection.GetNumMaxCustomSets()` twice and `GetCustomSets()` once; preserve raw arity, nils and opaque errors within sixteen return positions.

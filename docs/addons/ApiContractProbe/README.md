@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual sets catalog
+
+`/apicontract sets-catalog <label>` is excluded from `all`. Call `C_TransmogSets.GetAvailableSets()` once and independently call `IsUsingDefaultSetsFilters()` twice, all without arguments. Preserve raw arity, nil positions and opaque errors within sixteen return positions. Inspect only the first returned list at indices 1–8, reading only guarded `setID`, `name`, `collected`, `favorite`, `validForCharacter` fields. Recheck each list/entry receiver before every lookup and each field before serialization; never iterate, measure, mutate or retain returned objects.
+
+Bounds: three API calls per snapshot, ten shared snapshots, 256-byte scalar strings and 128-byte labels. Missing, restricted and failed observations remain independent. No downstream set-ID queries, setters, reset, selection, ordering, completeness, defaults or native-conformance claims. `grantAsPrecedingVariant` remains unobserved in this mode: the inspected declaration includes it at line 530, contrary to the preparation recipe, but this slice establishes no consumer or native evidence for it.
+
+Pinned `TransmogSetsDocumentation.lua:61–68,412–419,511–530` defines the calls and fields. Actual consumers: `Blizzard_TransmogShared.lua:1024–1033` calls the list producer; `Blizzard_TransmogTemplates.lua:1456–1459,1498,1525–1531` reads collected/favorite/setID/name; `Blizzard_Wardrobe_Sets.lua:648–651` reads validity. These consumers do not establish native results. Eleven actual TOC/slash fixtures prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/sets_catalog.lua docs/addons/ApiContractProbe`.
+
 ## Manual custom-set names
 
 `/apicontract custom-set-names <label>` is excluded from `all`. Independently call `C_TransmogCollection.GetNumMaxCustomSets()` twice and `GetCustomSets()` once. Preserve raw return arity, nil positions and opaque errors within sixteen positions. Inspect only the first returned ID table at indices 1–4, guarding the table before every lookup. Each accessible finite original ID permits one `GetCustomSetInfo(ID)` call; its accessible string first return permits one `IsValidCustomSetName(name)` call. Forward the original name, never its serialized 256-byte prefix. Recheck IDs and names after namespace/function lookup and function guards, immediately before use.
