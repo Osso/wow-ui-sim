@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Extend selected-slot spell metadata with aura predicate
+
+Runtime `02ab512c6` adds independent `auraQueries.AuraIsBigDefensive` using the original accessible `GetActionInfo(slot)` spell ID. Existing seven metadata queries and three visibility enums remain unchanged. Nineteen cumulative local fixtures include five new aura-defensive cases; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Extend selected-slot spell metadata with visibility
 
 Runtime `057183033` extends manual `/apicontract spell-metadata <slot> <label>`, still excluded from `all`. An accessible selected-slot spell ID adds guarded `GetVisibilityInfo` calls for fixed published `SpellAuraVisibilityType` names `RaidInCombat`, `RaidOutOfCombat`, and `EnemyTarget`; unavailable enum values make no call. Fourteen cumulative local fixtures include six new visibility cases. Native classifications, producer fixtures, rank/override transitions and security remain pending. See [[api-contract-probes]].
