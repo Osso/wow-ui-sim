@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded threat-lead recorder
+
+Runtime `0dd177d2a` adds manual `/apicontract threat-lead-read <label>`, excluded from `all`. It calls `UnitThreatLeadSituation` for four fixed unit-token pairs, treating both arguments as guarded tokens despite the second parameter name. Nine fixtures plus eleven GUID-identity and ten full-name regressions prove recorder mechanics only; native combat, threat and restricted-context behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] audit | Correct retained security probe deferral
 
 Correction `812a981fe` restores the mixed Store plan's ordinary `DropdownPopulation` capture to in-scope review; only its forbidden/secure enforcement remains deferred. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty total. `private-aura-border-scale` also remains in scope. No implementation or native credit follows. See [[api-contract-probes]].

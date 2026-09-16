@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded threat-lead recorder
+
+Runtime `0dd177d2a` adds manual `threat-lead-read`: four guarded fixed unit-token pairs feed `UnitThreatLeadSituation`, whose second parameter remains a token rather than a derived GUID. Conditional-secret outputs remain opaque. Nine fixtures plus eleven GUID-identity and ten full-name regressions prove recorder mechanics only; no combat, threat, security, scale, default, classification, or native conclusion follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded GUID-identity recorder
 
 Documented runtime `7fc5ad8b9`: manual `guid-identity` forwards only original accessible GUID strings from `player`, `target`, and `party1` to `UnitClassFromGUID` and `UnitNameFromGUID`. Eleven fixtures plus ten full-name regressions prove bounded recorder mechanics only. Conditional-secret results remain opaque; native identity, class, realm, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
