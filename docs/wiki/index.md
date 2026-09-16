@@ -1,6 +1,6 @@
-## [2026-09-16] investigation | Prepare bounded housing-catalog recorder
+## [2026-09-16] investigation | Extend bounded housing-catalog recorder
 
-Runtime `6ff4a22f1` adds manual `/apicontract housing-catalog <label>`, excluded from `all`. It records featured state twice, new products once, categories for up to eight original product IDs, and refundable decors once with its optional filter omitted. It exposes only bounded declared category/refund fields and preserves the second minimum-time return. Eleven fixtures prove recorder mechanics only; requests, purchases, refunds, native catalog fixtures, and price semantics remain unverified. See [[api-contract-probes]].
+Runtime `8a34f0120` extends manual `/apicontract housing-catalog <label>`, excluded from `all`. Up to eight original category IDs now independently call `GetProductIDsForCategory`, with first-return scalar positions capped at eight and no recursive product followups. The cap is twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, prove recorder mechanics only; requests, purchases, refunds, native catalog fixtures, ordering, and price semantics remain unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
 
