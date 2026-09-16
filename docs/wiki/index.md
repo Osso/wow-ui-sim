@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
+
+Runtime `506d529b9` adds manual `/apicontract nameplate-metrics <label>`, excluded from `all`. It reads nameplate size twice and hit-test insets twice for the fixed published `Friendly` and `Enemy` nameplate types. Eleven fixtures prove recorder mechanics only; setters, camera/3D behavior, geometry semantics, and native results remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded death-recap recorder
 
 Runtime `95a18c015` adds manual `/apicontract death-recap-current <label>`, excluded from `all`. It calls `GetRecapEvents`, `GetRecapLink`, and `HasRecapEvents` twice each with zero arguments; optional recap IDs remain omitted. Eleven fixtures prove recorder mechanics only. Native recap population, transitions, requests, and event fields remain unverified. See [[api-contract-probes]].

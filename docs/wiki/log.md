@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
+
+Documented runtime `506d529b9`: manual `nameplate-metrics` reads `GetNamePlateSize` twice and `GetNamePlateHitTestInsets` twice for the fixed published `Friendly` and `Enemy` nameplate types. Six calls per snapshot and eleven fixtures establish recorder mechanics only; setters, camera/3D behavior, geometry/default claims, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded death-recap recorder
 
 Documented runtime `95a18c015`: manual `death-recap-current` makes two zero-argument reads each for `GetRecapEvents`, `GetRecapLink`, and `HasRecapEvents`, excluded from `all`. Nilable recap IDs remain omitted; no original-ID producer is required for this vendor current-call shape. Eleven fixtures establish recorder mechanics only; no death trigger, request, mutation, event traversal, native recap data, or native credit follows. Updated [[api-contract-probes]] and the index.
