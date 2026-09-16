@@ -601,3 +601,9 @@ Eleven separate actual-TOC/slash fixtures establish recorder mechanics only:
 ```text
 luajit docs/addons/ApiContractProbe/tests/death_recap_current.lua docs/addons/ApiContractProbe
 ```
+
+## Manual hyperlink residual observations
+
+`/apicontract hyperlinks-residual <label>` is excluded from `all`; existing `hyperlinks` corpus and behavior remain unchanged. Thirty-five calls vary each of five optional positions through explicit nil, 0, 1, empty string, `x`, an owned empty table and an owned function, keeping other flags false and all six argument positions. Eight additional one-argument literals cover an unclosed link header, nested links/colors, crossed atlas/texture markers, stray closers, embedded NUL, control bytes and high bytes absent from the original corpus.
+
+Every forwarded value is access-checked after API lookup/function guards. Owned table/function inputs are observed opaquely, never executed or retained by the recorder. Calls preserve raw arity, nil positions and opaque failures; outputs are capped at 16 positions and 256-byte strings, labels at 128 bytes, captures at ten (43 calls each). Seven actual TOC/slash fixtures prove recording mechanics only. No normalization, native coercion/output semantics, security behavior or historical fifth-flag claim follows.
