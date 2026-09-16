@@ -135,6 +135,13 @@
 - Preserve raw arity/nil positions and opaque errors within sixteen return positions, 256-byte strings, 128-byte labels, ten shared snapshots and twelve calls per snapshot.
 - Do not change modes, mutate preview state, load LoD addons or infer native conditions, defaults or repeated-read stability. Eight local actual TOC/slash fixtures establish recorder mechanics only, not native behavior.
 
+## Manual unit role predicates
+
+- Manual `unit-role-predicates <label>` is excluded from `all`. Independently call `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` once each for `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: 24 calls per snapshot, no omitted/nil-token case.
+- Guard tokens/functions before inspection/use and recheck token access after lookup/function guards before invocation. Missing/restricted values and opaque errors must not suppress independent peers.
+- Preserve raw arity/nil positions within sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. Do not infer classification, defaults, stability or native behavior.
+- Exclude `UnitNameFromGUID`, threat/security queries and mutations. Ten local actual TOC/slash fixtures establish recorder mechanics only; native populated unit fixtures and outcomes remain unverified.
+
 ## Manual unit target display
 
 - Manual `unit-target-display <label>` is excluded from `all`. Independently call only `UnitShouldDisplaySpellTargetName(unit)` twice for each of `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: fourteen calls per snapshot.
