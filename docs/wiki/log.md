@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
+
+Documented runtime `c6818f925`: manual `empowered-stages` calls durations plus percentage queries with false and true for seven fixed unit tokens, capped at twenty-one calls per snapshot and excluded from `all`. It inspects only first-return entries 1–8 and keeps duration objects opaque. Ten fixtures establish recorder mechanics only; casts, methods, percentage semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
 
 Documented runtime `28d6194e0`: manual `unit-role-predicates` makes independent `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` calls for eight fixed tokens, capped at twenty-four calls per snapshot and excluded from `all`. Ten fixtures establish recorder mechanics only; threat/secret identity queries, mutations, and native classifications remain excluded or unverified. Updated [[api-contract-probes]] and the index.

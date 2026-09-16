@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
+
+Runtime `c6818f925` adds manual `/apicontract empowered-stages <label>`, excluded from `all`. Across seven fixed tokens, it independently calls empowered-stage durations plus percentages with `false` and `true`, inspecting only first-return entries 1–8 and keeping duration objects opaque. Ten fixtures prove recorder mechanics only; casts, methods, native stage values, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
 
 Runtime `28d6194e0` adds manual `/apicontract unit-role-predicates <label>`, excluded from `all`. It independently calls `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` for eight fixed unit tokens, preserving raw tuples under twenty-four calls per snapshot. Threat/secret identity queries, mutations, and native classifications remain unverified. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].
