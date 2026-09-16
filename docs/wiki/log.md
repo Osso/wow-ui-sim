@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded GUID-identity recorder
+
+Documented runtime `7fc5ad8b9`: manual `guid-identity` forwards only original accessible GUID strings from `player`, `target`, and `party1` to `UnitClassFromGUID` and `UnitNameFromGUID`. Eleven fixtures plus ten full-name regressions prove bounded recorder mechanics only. Conditional-secret results remain opaque; native identity, class, realm, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] audit | Correct retained security probe deferral
 
 Correction `812a981fe` reverses the earlier whole-plan deferral for mixed `remaining-security-forbidden-store-observation`: ordinary `DropdownPopulation` remains in-scope; only forbidden/secure enforcement is deferred. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty total. `private-aura-border-scale` remains unreviewed. No implementation, completion, or native credit follows. Updated [[api-contract-probes]] and the index.
