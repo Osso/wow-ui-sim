@@ -84,6 +84,18 @@ Pinned `CombatAudioAlertDocumentation.lua` declares the three read signatures; `
 luajit docs/addons/ApiContractProbe/tests/combat_audio_settings_read.lua docs/addons/ApiContractProbe
 ```
 
+## Manual threat lead read
+
+`/apicontract threat-lead-read <label>` independently calls `UnitThreatLeadSituation` once for each exact pair: `("player", "target")`, `("player", "focus")`, `("player", "party1")`, and `("player", "nonexistent")`. It is excluded from `all`. Both arguments are original unit tokens: the second parameter is named `mobGUID` but declared `UnitToken`; no GUID producer or conversion is used.
+
+`threatLeadRead.pairs` records guarded `unit`/`mob` observations and raw `result` tuples. Both tokens are checked before lookup and rechecked after global lookup/function guards. Conditional-secret results remain opaque before inspection or serialization. Bounds: four calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Nil positions, zero returns and opaque errors remain distinct; failures do not suppress peer pairs.
+
+Pinned `UnitDocumentation.lua:3134–3153` and `Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:622` establish the signature and consumer shape, not native results. No combat/threat mutation, restricted-context experiment, classification, scale, default or native-conformance claim follows. Nine actual TOC/slash fixtures cover recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/threat_lead_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual GUID identity
 
 `/apicontract guid-identity <label>` calls `UnitGUID(unit)` once each for `player`, `target`, and `party1`. Only an accessible string in the first return position is forwarded, unchanged, to independent `UnitClassFromGUID(guid)` and `UnitNameFromGUID(guid)` calls. No GUID parsing, coercion, invented IDs, or truncated observation copies are used as inputs. The mode is excluded from `all`; existing `names` and `full-names` modes are unchanged.

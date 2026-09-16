@@ -50,6 +50,14 @@
 - Store `combatAudioSettingsRead.IsEnabled`, named `specSettings` and `throttles` observation pairs. Preserve raw arity, nil positions and opaque errors; returned objects remain opaque and unretained. Bound 42 calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
 - Never call setters, `SpeakText`, target-list or playback APIs. No throttling enforcement, security, native defaults/ranges or CVar interpretation. Ten actual TOC/slash fixtures cover recorder behavior only; native behavior remains unverified.
 
+## Manual threat lead read
+
+- `threat-lead-read <label>` is manual-only and excluded from `all`; existing modes remain unchanged.
+- Independently call `UnitThreatLeadSituation` once for each exact pair: `player/target`, `player/focus`, `player/party1`, `player/nonexistent`. Forward exactly two original unit-token arguments. The declared `mobGUID` parameter is a `UnitToken`, not a produced GUID.
+- Check both tokens before lookup/use and recheck after global lookup/function guards. Conditional-secret outputs remain opaque before inspection, comparison or serialization. Preserve raw arity, nil positions, zero returns and opaque errors independently for each pair.
+- Record `threatLeadRead.pairs` with guarded `unit`, `mob` and raw `result`. Bound four calls per snapshot, ten snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels. Do not traverse or retain returned objects.
+- No combat/threat mutation, GUID production, security experiment, native classification, scale or default claim. Nine actual TOC/slash fixtures establish recorder mechanics only; native threat fixtures and restricted-context behavior remain unverified.
+
 ## Manual GUID identity
 
 - `guid-identity <label>` is manual-only and excluded from `all`; existing name modes remain unchanged.
