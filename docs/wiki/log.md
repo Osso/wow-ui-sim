@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded Perks criteria recorder
+
+`1e1d9de4f` adds manual `perks-criteria`: two guarded roots, first eight activities, four criteria and four requirements through current declared fields. Ten fixtures plus sixteen neighborhood-structures regressions prove recorder mechanics only. Removed type identities, native behavior, historical compatibility, ordering, and completeness remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
 
 `7d4d063eb` adds manual `equipped-transmog-eligibility`: each original owned `ItemLocation:CreateFromEquipmentSlot` result for slots 1–19 feeds one `C_Item.CanItemTransmogAppearance` call. Both outputs remain raw and guarded; the recorder neither equips nor transmogrifies. Nine fixtures, eight item-binding regressions, and eleven equipped-item-info regressions prove local mechanics only. Updated [[api-contract-probes]] and the index.

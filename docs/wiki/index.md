@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded Perks criteria recorder
+
+Runtime `1e1d9de4f` adds manual `/apicontract perks-criteria <label>`, excluded from `all`. It makes two `C_PerksActivities.GetPerksActivitiesInfo()` captures, bounded to eight activities, four criteria, and four requirements through current declared fields. Ten fixtures and sixteen neighborhood-structures regressions prove recorder mechanics only; removed-type identities, historical behavior, ordering, completeness, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
 
 Runtime `7d4d063eb` adds manual `/apicontract equipped-transmog-eligibility <label>`, excluded from `all`. It creates guarded owned `ItemLocation` objects for equipment slots 1–19 and forwards each original object once to `C_Item.CanItemTransmogAppearance`, preserving both raw outputs. Nine fixtures plus eight item-binding and eleven equipped-item-info regressions prove recorder mechanics only. No equip/transmog operation, eligibility semantics, native behavior, or historical conclusion follows. See [[api-contract-probes]].
