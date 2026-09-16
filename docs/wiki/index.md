@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
+
+Runtime `d10ae2e29` adds manual `/apicontract neighborhood-structures <label>`, excluded from `all`. It bounds three no-argument initiative producers, scalar fields, activity entries 1–8, and four original tracked task IDs, each feeding two independent task queries. Nested milestone, requirements, and criteria structures remain opaque. Eleven fixtures prove recorder mechanics only; requests, mutations, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
 
 Runtime `bc0768208` adds manual `/apicontract neighborhood-state <label>`, excluded from `all`. It calls seven no-argument `C_NeighborhoodInitiative` state queries twice each, preserving raw tuples under fourteen calls per snapshot. Requests, setters, structured producers, task queries, and native behavior claims are excluded. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].

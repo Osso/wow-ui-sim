@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
+
+Runtime `d10ae2e29` adds manual `neighborhood-structures`, excluded from `all`. It captures three initiative producers, bounds activity entries to 1–8 and tracked original IDs to 1–4, then makes independent task-info and task-link reads. Nested milestone, requirements, and criteria structures stay opaque. Eleven fixtures establish recorder mechanics only; no requests, mutations, or native credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
 
 Runtime `bc0768208` adds manual `neighborhood-state`, excluded from `all`: two zero-argument observations each for seven `C_NeighborhoodInitiative` state queries, bounded to fourteen calls per snapshot. It neither requests nor changes state, nor queries structured initiative/activity/task data. Ten local fixtures establish recorder mechanics only; native neighborhood state, transitions, group identity, defaults, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
