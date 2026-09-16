@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
+
+Documented runtime `a64c3a9a5`: manual `hyperlinks-residual` adds thirty-five six-argument optional-position cases and eight malformed/binary one-argument cases, excluded from `all`. Seven fixtures establish recorder mechanics only; native coercion, fifth-flag, security, and output semantics remain unverified. Runtime reports a Lua 60-upvalue wrapper adjustment. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded player-state recorder
 
 Documented runtime `14f75d44e`: manual `player-state-queries` makes two zero-argument reads each for `GetCollapsingStarCost`, `ShowingCloak`, and `ShowingHelm`, excluded from `all`. Eleven fixtures establish recorder mechanics only; no cloak/helm mutation, purchase, native cost/state/default claim, or native credit follows. Updated [[api-contract-probes]] and the index.

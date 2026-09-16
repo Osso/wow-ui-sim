@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
+
+Runtime `a64c3a9a5` adds manual `/apicontract hyperlinks-residual <label>`, excluded from `all`. It records a 35-call six-argument optional-position matrix plus eight malformed/binary one-argument literals, preserving raw arity and opaque failures. Seven fixtures prove recorder mechanics only; no native coercion, fifth-flag, security, or output-semantic claim follows. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded full-name recorder
 
 Runtime `b490f4777` adds manual `/apicontract full-names <label>`, excluded from `all`. It calls `UnitFullName` once for eight fixed tokens and preserves raw two-return, nil, zero-arity, error, and conditionally restricted states. Ten fixtures prove recorder mechanics only; native identity and realm behavior remain unverified. See [[api-contract-probes]].
