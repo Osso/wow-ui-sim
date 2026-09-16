@@ -430,3 +430,17 @@ Cast fixtures cover distinct tenth/eleventh IDs, interior/trailing nils, empower
 ## Out of scope
 
 Installation, native execution, inferred numeric mappings or vector contracts, secret access bypass, arbitrary object serialization and gameplay manipulation. No API audit credit from local recorder fixtures.
+
+## Manual death recap current observations
+
+`/apicontract death-recap-current <label>` is excluded from `all`. It independently calls `C_DeathRecap.GetRecapEvents()`, `GetRecapLink()`, and `HasRecapEvents()` twice each with **zero arguments**, not an explicit nil or invented recap ID. Each lookup uses the guarded namespace query helper. Missing, restricted and error outcomes do not suppress peer observations.
+
+Pinned `DeathRecapDocumentation.lua` declares nilable recap IDs and an empty `DeathRecapEventInfo` structure. `GameDialogDefs.lua:203` calls `C_DeathRecap.HasRecapEvents()` without an ID. These sources ground call shapes only; the mode name does not establish native current/default/stability semantics.
+
+Return arity and nil positions are preserved, with at most 16 recorded positions, 256 bytes per scalar string, 128 bytes per label, ten snapshots and six calls per snapshot. Tables and userdata stay opaque and are not retained. No event-field traversal, identity comparison, link opening, request, death trigger, mutation or security experiment is performed. Native recap population, non-nil IDs, transitions and event fields remain unverified.
+
+Eleven separate actual-TOC/slash fixtures establish recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/death_recap_current.lua docs/addons/ApiContractProbe
+```
