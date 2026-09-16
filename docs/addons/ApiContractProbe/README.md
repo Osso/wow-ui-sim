@@ -1,5 +1,11 @@
 # API Contract Probe
 
+## Manual housing preview modes
+
+`/apicontract housing-preview-modes <label>` is excluded from `all`. For each fixed published `Enum.HouseEditorMode` name (`BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, `ExteriorCustomization`), independently resolve an accessible finite numeric value and call `C_HousingDecor.IsModeDisabledForPreviewState(value)` twice. No enum iteration or numeric fallback. Guard enum tables, values and functions before lookup/use; recheck the value after function guards. Missing, invalid, restricted and error outcomes remain explicit and do not suppress peers.
+
+Bounds: twelve calls per snapshot, sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. Preserve raw arity/nils and opaque errors without asserting preview conditions, defaults or repeated-read stability. No mode changes, preview mutations or LoD loads. Pinned `HousingDecorUIDocumentation.lua:311-323` declares the call; `Blizzard_HouseEditorModeButtons.lua:117` and XML lines 230/243/256/269/283/298 supply the consumer and six names. Eight local actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified.
+
 ## Manual unit target display
 
 `/apicontract unit-target-display <label>` is excluded from `all`. It independently calls only `UnitShouldDisplaySpellTargetName(unit)` twice for each fixed token: `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string. Guard the token and function before use and recheck token access after function guards. Missing/restricted APIs, tokens and opaque call errors do not suppress peer observations.

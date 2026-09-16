@@ -637,6 +637,36 @@ local function observeSpellMetadata(kind, id, name)
     return result
 end
 
+local function observeHousingPreviewMode(name)
+    local enums, enumOK = readField(Enum, "HouseEditorMode")
+    local value, valueOK
+    if enumOK then value, valueOK = readField(enums, name) end
+    local input = valueOK and scalar(value) or { status = "unavailable-enum" }
+    if input.status ~= "observed" or input.kind ~= "number" then
+        return { status = "unavailable-enum" }
+    end
+    local fn, ok = readField(C_HousingDecor, "IsModeDisabledForPreviewState")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Namespace lookup and function guards can revoke the published value.
+    if not accessible(value) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, value))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.input = "observed", input
+    return result
+end
+
+local function captureHousingPreviewModes()
+    local result = { modes = {} }
+    for _, name in ipairs({ "BasicDecor", "ExpertDecor", "Customize", "Cleanup", "Layout", "ExteriorCustomization" }) do
+        local row = { name = name, observations = {} }
+        for index = 1, 2 do row.observations[index] = observeHousingPreviewMode(name) end
+        result.modes[#result.modes + 1] = row
+    end
+    return result
+end
+
 local function observeSpellVisibility(kind, id, name)
     local status = spellInputStatus(kind, id)
     if status then return { status = status } end
@@ -1433,8 +1463,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1445,6 +1475,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "housing-preview-modes" then record.housingPreviewModes = captureHousingPreviewModes() end
         if mode == "unit-target-display" then record.unitTargetDisplay = captureUnitTargetDisplay() end
         if mode == "unit-auras-current" then record.unitAurasCurrent = captureCurrentUnitAuras() end
         if mode == "aura-display-count" then record.auraDisplayCount = captureAuraPage(captureAuraSlot) end

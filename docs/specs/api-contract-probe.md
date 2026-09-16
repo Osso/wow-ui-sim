@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual housing preview modes
+
+- Manual `housing-preview-modes <label>` is excluded from `all`. Query only `C_HousingDecor.IsModeDisabledForPreviewState` twice independently for each fixed published `Enum.HouseEditorMode` name: `BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, `ExteriorCustomization`.
+- Resolve accessible finite numeric enum values only, without fallback or enum iteration. Guard tables/values/functions before lookup/use and recheck value access after function guards. Missing, invalid, restricted and error observations must not suppress peers.
+- Preserve raw arity/nil positions and opaque errors within sixteen return positions, 256-byte strings, 128-byte labels, ten shared snapshots and twelve calls per snapshot.
+- Do not change modes, mutate preview state, load LoD addons or infer native conditions, defaults or repeated-read stability. Eight local actual TOC/slash fixtures establish recorder mechanics only, not native behavior.
+
 ## Manual unit target display
 
 - Manual `unit-target-display <label>` is excluded from `all`. Independently call only `UnitShouldDisplaySpellTargetName(unit)` twice for each of `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: fourteen calls per snapshot.
