@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 140,
-    "partial-recorder": 21,
+    "needs-design-and-recorder-review": 139,
+    "partial-recorder": 22,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -8929,8 +8929,18 @@
           "protocol": "publication-removal"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual housing-preview-modes queries IsModeDisabledForPreviewState twice independently for six guarded published HouseEditorMode names used by vendor mode buttons, without numeric fallback or mode changes"
+        ],
+        "missing": [
+          "Native preview-state transitions and mode eligibility results",
+          "Removed HousingLevelInfo producer/publication evidence",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_HousingDecor"
     },
