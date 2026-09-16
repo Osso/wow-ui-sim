@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
 
-Runtime `d10ae2e29` adds manual `neighborhood-structures`, excluded from `all`. It captures three initiative producers, bounds activity entries to 1–8 and tracked original IDs to 1–4, then makes independent task-info and task-link reads. Nested milestone, requirements, and criteria structures stay opaque. Eleven fixtures establish recorder mechanics only; no requests, mutations, or native credit follows. Updated [[api-contract-probes]] and the index.
+Runtime `2288d233b` extends manual `neighborhood-structures`, excluded from `all`. It preserves three initiative producers, activity entries 1–8, tracked original IDs 1–4, and task-info/task-link reads; it adds four fixed task entries, four milestones, and four reward entries per milestone. Requirements and criteria remain opaque. Sixteen cumulative fixtures, including five new cases, establish recorder mechanics only; no requests, mutations, or native credit follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
 
