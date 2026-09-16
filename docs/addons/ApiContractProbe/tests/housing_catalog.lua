@@ -8,6 +8,7 @@ local categoryKeys = { "ID", "displayName", "iconTexture", "linkTag", "isDisable
 local refundKeys = { "decorGUID", "timeRemainingSeconds", "name", "price" }
 local function setup(products, category, refunds, featured)
     ApiContractProbeDB, SlashCmdList, excluded = nil, {}, 0
+    Constants = nil
     issecretvalue = function(v) return rawequal(v, secret) end
     canaccessvalue = function(v) return not rawequal(v, secret) end
     GetBuildInfo, time = function() return "fixture" end, function() return 42 end
@@ -326,5 +327,107 @@ test("twenty calls bounded followup tuples and no downstream recursion", functio
     local q = entries(ApiContractProbeDB.captures[1].housingCatalog)[1].categoryProducts
     assert(q.n == 21 and q.truncated and #q.values == 16 and #q.values[2].value == 256)
     assert(#q.values[1].entries == 8 and #ApiContractProbeDB.captures[1].label == 128)
+end)
+local currencyKeys = { "HEARTHSTEEL_VC_CURRENCY_CODE", "TRADERS_TENDER_VC_CURRENCY_CODE" }
+local function currencies(fn)
+    setup()
+    Constants = { CatalogShopVirtualCurrencyConstants = {
+        [currencyKeys[1]] = string.rep("custom", 70), [currencyKeys[2]] = "other-code",
+    } }
+    C_CatalogShop.GetVirtualCurrencyBalance = fn
+end
+
+test("currency publication forwards original long strings and exact tuples", function()
+    local seen = {}
+    currencies(function(...) assert(select("#", ...) == 1); seen[#seen + 1] = ...; return nil, "balance", nil end)
+    local r = capture().currencies
+    assert(#seen == 2 and #seen[1] == 420 and seen[2] == "other-code")
+    assert(r[currencyKeys[1]].n == 3 and r[currencyKeys[1]].values[1].kind == "nil")
+    assert(r[currencyKeys[2]].values[2].value == "balance")
+    assert(#r[currencyKeys[1]].input.value == 256)
+end)
+
+test("currency missing restricted invalid and throwing publications keep peers independent", function()
+    for _, bad in ipairs({ false, 4, secret, {} }) do
+        local calls = 0
+        currencies(function(code) assert(code == "other-code"); calls = calls + 1 end)
+        Constants.CatalogShopVirtualCurrencyConstants[currencyKeys[1]] = bad
+        local r = capture().currencies
+        assert(calls == 1 and r[currencyKeys[1]].status ~= "observed" and r[currencyKeys[2]].n == 0)
+    end
+    for _, container in ipairs({ secret, setmetatable({}, { __index = function() error(secret) end }) }) do
+        currencies(forbidden); Constants = container
+        assert(capture().currencies[currencyKeys[1]].status ~= "observed")
+        currencies(forbidden); Constants.CatalogShopVirtualCurrencyConstants = container
+        assert(capture().currencies[currencyKeys[2]].status ~= "observed")
+    end
+end)
+
+test("currency original inputs rechecked after namespace lookup and function guards", function()
+    for _, phase in ipairs({ "namespace", "lookup", "secret", "access" }) do
+        for chosen = 1, 2 do
+            local revoked, calls = false, 0
+            local fn = function(code) assert(not revoked or code ~= "target"); calls = calls + 1 end
+            currencies(fn)
+            Constants.CatalogShopVirtualCurrencyConstants[currencyKeys[chosen]] = "target"
+            local ns = C_CatalogShop
+            ns.GetVirtualCurrencyBalance = nil
+            setmetatable(ns, { __index = function(_, key)
+                if key == "GetVirtualCurrencyBalance" then
+                    if phase == "lookup" then revoked = true end
+                    return fn
+                end
+            end })
+            issecretvalue = function(v)
+                if phase == "secret" and rawequal(v, fn) then revoked = true end
+                return rawequal(v, secret) or (revoked and v == "target")
+            end
+            canaccessvalue = function(v)
+                if (phase == "namespace" and rawequal(v, ns)) or (phase == "access" and rawequal(v, fn)) then revoked = true end
+                return not rawequal(v, secret) and not (revoked and v == "target")
+            end
+            local r = capture().currencies
+            assert(calls == 1 and r[currencyKeys[chosen]].status ~= "observed")
+        end
+    end
+end)
+
+test("currency container guards prevent lookup and member inspection", function()
+    for _, level in ipairs({ "root", "members" }) do
+        local touched = 0
+        currencies(forbidden)
+        local blocked = setmetatable({}, { __index = function() touched = touched + 1; error("lookup") end })
+        if level == "root" then Constants = blocked else Constants.CatalogShopVirtualCurrencyConstants = blocked end
+        canaccessvalue = function(v) return not rawequal(v, blocked) and not rawequal(v, secret) end
+        capture(); assert(touched == 0)
+    end
+end)
+
+test("currency errors zero arity and missing functions remain independent", function()
+    currencies(function(code) if code == "other-code" then return end; error(secret) end)
+    local r = capture().currencies
+    assert(r[currencyKeys[1]].status == "call-error" and r[currencyKeys[2]].n == 0)
+    C_CatalogShop.GetVirtualCurrencyBalance = secret
+    assert(capture().currencies[currencyKeys[1]].status == "missing-api")
+end)
+
+test("currency extension retains twenty two call and shared serialization bounds", function()
+    local calls, many = 0, {}
+    for i = 1, 20 do many[i] = string.rep("x", 300) end
+    currencies(function() calls = calls + 1; return unpack(many) end)
+    local ids = {}; for i = 1, 8 do ids[i] = i end
+    C_HousingCatalog.HasFeaturedEntries = function() calls = calls + 1 end
+    C_CatalogShop.GetNewProducts = function() calls = calls + 1; return ids end
+    C_CatalogShop.GetRefundableDecors = function() calls = calls + 1 end
+    C_CatalogShop.GetFirstCategoryByProductID = function(id) calls = calls + 1; return { ID = id } end
+    C_CatalogShop.GetProductIDsForCategory = function() calls = calls + 1; return ids end
+    for i = 1, 11 do capture(string.rep("L", 180)) end
+    assert(calls == 220 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    local q = ApiContractProbeDB.captures[1].housingCatalog.currencies[currencyKeys[1]]
+    assert(q.n == 20 and q.truncated and #q.values == 16 and #q.values[1].value == 256)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
+    ApiContractProbeDB = nil; calls = 0
+    SlashCmdList.APICONTRACTPROBE("all fixture")
+    assert(calls == 0)
 end)
 print("housing-catalog fixtures passed: " .. passed)

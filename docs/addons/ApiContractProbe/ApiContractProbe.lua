@@ -612,6 +612,26 @@ local function captureRefundableDecors()
     return result
 end
 
+local function observeCatalogCurrency(name)
+    local constants, ok = readField(Constants, "CatalogShopVirtualCurrencyConstants")
+    if not ok then return { status = "unavailable-input" } end
+    local value, valueOK = readField(constants, name)
+    if not valueOK then return { status = "unavailable-input" } end
+    if not accessible(value) then return { status = "restricted-input" } end
+    if type(value) ~= "string" then return { status = "unavailable-input" } end
+    local input = scalar(value)
+    local fn, functionOK = readField(C_CatalogShop, "GetVirtualCurrencyBalance")
+    if not functionOK then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Publication observations and function guards can revoke the original string.
+    if not accessible(value) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, value))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.input = "observed", input
+    return result
+end
+
 local function captureHousingCatalog()
     local result = { featured = {} }
     for index = 1, 2 do
@@ -619,6 +639,10 @@ local function captureHousingCatalog()
     end
     result.products = captureCatalogProducts()
     result.refundable = captureRefundableDecors()
+    result.currencies = {}
+    for _, name in ipairs({ "HEARTHSTEEL_VC_CURRENCY_CODE", "TRADERS_TENDER_VC_CURRENCY_CODE" }) do
+        result.currencies[name] = observeCatalogCurrency(name)
+    end
     return result
 end
 
