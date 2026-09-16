@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare housing preview-mode recorder
+
+Runtime `742df677d` adds manual `/apicontract housing-preview-modes <label>`, excluded from `all`. It reads six fixed published HouseEditorMode names and independently queries each twice through `C_HousingDecor.IsModeDisabledForPreviewState`, without enum iteration or numeric fallback. It does not change preview mode or state. Eight fixtures prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare selected-slot spellbook-duration recorder
 
 Runtime `fe68b79b6` adds manual `/apicontract spellbook-duration <slot> <label>`, excluded from `all`. An accessible selected-action spell ID feeds guarded `FindSpellBookSlotForSpell(id, false, true, true, true)`; its original finite slot/bank pair feeds independent charge, cooldown-with-`false`, and loss-of-control duration queries. Current returned objects receive the ten-method read-only whitelist without retention. Ten fixtures plus eight spellbook-metadata regressions prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].

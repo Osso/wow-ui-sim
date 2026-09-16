@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare housing preview-mode recorder
+
+Runtime `742df677d` adds manual `/apicontract housing-preview-modes <label>`, excluded from `all`. It reads only the fixed published `BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, and `ExteriorCustomization` HouseEditorMode names, querying each twice without fallback or mutation. Eight local fixtures establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare selected-slot spellbook-duration recorder
 
 Runtime `fe68b79b6` adds manual `/apicontract spellbook-duration <slot> <label>`, excluded from `all`. It uses an accessible selected-action spell ID with guarded `FindSpellBookSlotForSpell(id, false, true, true, true)`, then forwards its original finite slot/bank pair to independent charge, cooldown-with-`false`, and loss-of-control duration queries. Current duration objects receive ten read-only methods without retention. Ten fixtures and eight spellbook-metadata regressions establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
