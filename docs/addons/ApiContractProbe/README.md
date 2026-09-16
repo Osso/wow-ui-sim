@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual tradeskill item quality
+
+`/apicontract tradeskill-item-quality <label>` is excluded from `all`. For equipment slots 1–19, `GetInventoryItemLink("player", slot)` supplies the original accessible string to independent `C_TradeSkillUI.GetItemCraftedQualityInfo` and `GetItemReagentQualityInfo` calls. Inputs are never replaced by serialized/truncated links; access is rechecked after namespace/function guards.
+
+`tradeskillItemQuality.slots[]` preserves producer and query tuples; each query's `info.fields` observes only the first returned object's thirteen declared `CraftingQualityInfo` fields: quality, icon, iconSmall, iconInventory, iconMixed, iconAppear, iconDissolve, barFill, barBackground, barBackgroundCap, barHighlight, iconChat and iconQuestObjective. Every field lookup rechecks its receiver. Missing links, inaccessible values and errors remain independent observations.
+
+Bounds: 19 producers plus 38 queries per snapshot, ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. No recipe queries, crafting/orders, mutations, atlas interpretation or native quality claims. Pinned `TradeSkillUIDocumentation.lua:334–376`, `TradeSkillUITypesDocumentation.lua:194–211` and `Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua:330–334` ground signatures, fields and item-link inputs. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/tradeskill_item_quality.lua docs/addons/ApiContractProbe
+```
+
 ## Manual nameplate metrics
 
 `/apicontract nameplate-metrics <label>` is excluded from `all`. It independently calls `C_NamePlate.GetNamePlateSize()` twice and `C_NamePlateManager.GetNamePlateHitTestInsets(value)` twice for each fixed published `Enum.NamePlateType.Friendly` and `Enemy` value. Only accessible finite published numbers are forwarded, without fallback; values are rechecked after namespace/function guards.

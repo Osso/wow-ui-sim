@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual tradeskill item quality
+
+- `tradeskill-item-quality <label>` is manual-only, excluded from `all`.
+- Read player equipment slots 1–19 with `GetInventoryItemLink`; independently forward only each original accessible string to crafted-quality and reagent-quality queries, rechecking access after namespace/function guards. Never truncate inputs.
+- Preserve producer/query arity, nil positions and opaque failures. Inspect only the first returned quality object through thirteen fixed declared fields: quality, icon, iconSmall, iconInventory, iconMixed, iconAppear, iconDissolve, barFill, barBackground, barBackgroundCap, barHighlight, iconChat, iconQuestObjective. Guard every receiver/field before lookup or serialization.
+- Bound captures to 57 API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. Missing/error/restricted inputs must not suppress independent slots or queries; retain no returned objects.
+- No recipe queries, crafting/orders, mutations, atlas interpretation or native quality conclusions. Ten separate actual TOC/slash fixtures cover recorder behavior only; native populations and semantics remain unverified.
+
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
 ## Manual nameplate metrics

@@ -1961,6 +1961,50 @@ local function observeItemProducer(slot)
     return result, values[2]
 end
 
+local function inspectCraftingQuality(info)
+    local result = scalar(info)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    result.fields = {}
+    for _, name in ipairs({ "quality", "icon", "iconSmall", "iconInventory", "iconMixed",
+        "iconAppear", "iconDissolve", "barFill", "barBackground", "barBackgroundCap",
+        "barHighlight", "iconChat", "iconQuestObjective" }) do
+        local value, ok = readField(info, name)
+        result.fields[name] = ok and scalar(value) or { status = "field-error" }
+    end
+    return result
+end
+
+local function observeItemQuality(link, name)
+    if not accessible(link) then return { status = "restricted-input" } end
+    if type(link) ~= "string" then return { status = "unavailable-input" } end
+    local fn, ok = readField(C_TradeSkillUI, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not accessible(link) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, link))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    result.info = inspectCraftingQuality(values[2])
+    return result
+end
+
+local function captureTradeskillItemQuality()
+    local result = { slots = {} }
+    for slot = 1, 19 do
+        local producer, link = observeItemProducer(slot)
+        local row = { slot = slot, producer = producer, queries = {} }
+        for _, name in ipairs({ "GetItemCraftedQualityInfo", "GetItemReagentQualityInfo" }) do
+            row.queries[name] = producer.status == "observed" and observeItemQuality(link, name)
+                or { status = "unavailable-input" }
+        end
+        result.slots[slot] = row
+    end
+    return result
+end
+
 local function observeItemBinding(link)
     if not accessible(link) then return { status = "restricted-input" } end
     if type(link) ~= "string" then return { status = "unavailable-input" } end
@@ -2688,8 +2732,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -2732,6 +2776,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "neighborhood-structures" then record.neighborhoodStructures = captureNeighborhoodStructures() end
         if mode == "outfit-state" then record.outfitState = captureOutfitState() end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
+        if mode == "tradeskill-item-quality" then record.tradeskillItemQuality = captureTradeskillItemQuality() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "statusbar-fill" then record.statusbarFill = captureStatusbarFill() end
         if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
