@@ -1,6 +1,6 @@
 ## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
 
-Runtime `7937582a2` extends manual `/apicontract prey-quest-widgets <label>`, excluded from `all`. Three original widget-set IDs each yield at most four guarded widgets; only the published `PreyHuntProgress` visualization type receives a visualization query, exposing sixteen fixed fields. Fourteen cumulative fixtures include six new cases; wrong-type calls, mutations, and native behavior remain unverified. See [[api-contract-probes]].
+Runtime `7937582a2` extends manual `/apicontract prey-quest-widgets <label>`, excluded from `all`; corrective runtime `57cab9ffc` rechecks discriminator access immediately before comparison and widget-ID access immediately before dispatch. Three original widget-set IDs each yield at most four guarded widgets; only the published `PreyHuntProgress` visualization type receives a visualization query, exposing sixteen fixed fields. Sixteen cumulative fixtures include two new guard-order regressions; final independent verification remains pending. Wrong-type calls, mutations, and native behavior remain unverified. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
 

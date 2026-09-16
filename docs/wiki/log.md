@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Correct prey-widget guard ordering
+
+Runtime `57cab9ffc` fixes the `prey-quest-widgets` visualization chain: it rechecks discriminator access immediately before comparing it and widget-ID access immediately before dispatch. Sixteen cumulative fixtures include two new guard-order regressions; the second was not reached by the initial RED run. Final independent verification remains pending. Native behavior and conformance credit remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
 
 Documented runtime `7937582a2`: manual `prey-quest-widgets` obtains three original widget-set IDs, then inspects at most four widgets per set. Only guarded published `PreyHuntProgress` widgets query visualization data through sixteen fixed fields. The cap is nineteen calls per snapshot. Fourteen cumulative fixtures establish recorder mechanics only; wrong-type calls, quest mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
