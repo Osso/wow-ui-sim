@@ -1,3 +1,7 @@
+## [2026-09-16] audit | Reconcile shared recorder target routing
+
+`eda32cf0a` records 287 exact executable target mappings across 112 shared-recorder plans: 199 publication/CVar entries route to `capturePublication`; 88 event entries route to `controlEvents`/`recordEvent`. Publication load phases, external event producers, payload/transition behavior, plan-specific experiments, and native evidence remain open. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
 
 Documented runtime `fedb65fb0`: manual `combat-audio-settings-read` records `C_CombatAudioAlert.IsEnabled()` twice, nine guarded published spec settings twice, and eleven guarded published throttles twice, excluded from `all`. Forty-two calls per snapshot and ten fixtures establish recorder mechanics only; setters, playback, enforcement, CVar interpretation, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.

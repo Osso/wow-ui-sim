@@ -1,3 +1,7 @@
+## [2026-09-16] audit | Reconcile shared recorder target routing
+
+Metadata `eda32cf0a` confirms 287 exact `AuditTargets.lua` mappings across 112 shared-recorder plans: 199 publication/CVar targets route to `capturePublication`; 88 event targets route through `controlEvents`/`recordEvent`. This is component wiring only, not complete plan design or native evidence. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
 
 Runtime `fedb65fb0` adds manual `/apicontract combat-audio-settings-read <label>`, excluded from `all`. It reads audio-alert enabled state twice, nine fixed published spec settings twice, and eleven fixed published throttles twice: 42 calls per snapshot. Ten fixtures prove recorder mechanics only; setters, playback, enforcement, CVar interpretation, and native behavior remain unverified. See [[api-contract-probes]].
