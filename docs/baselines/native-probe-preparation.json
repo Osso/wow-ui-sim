@@ -9582,8 +9582,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual spell-metadata capture independently queries C_UnitAuras.AuraIsBigDefensive using the original accessible finite spell ID produced by GetActionInfo(slot)",
+          "Guarded producer inputs, namespace/function lookup and access rechecks; bounded raw return arity and opaque errors"
+        ],
+        "missing": [
+          "GetAuraApplicationDisplayCount producer-backed argument variants",
+          "GetUnitAuras changed enumeration contract and populated aura fixtures",
+          "Native defensive classifications, transitions, coercion and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-spells-auras"
     },
