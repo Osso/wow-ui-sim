@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare selected-slot action-state recorder
+
+Runtime `87750c75b` adds manual `/apicontract action-state <slot> <label>`, excluded from `all`. It records `GetActionInfo(slot)` as control, then calls twelve one-slot `C_ActionBar` queries plus two zero-argument bar-index queries without a spell gate or range target. Ten fixtures prove recorder mechanics only; action execution, mutations, classification and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare duplicate callback registration recorder
 
 Runtime `e04fc0148` adds manual `/apicontract callbacks-duplicate-start <label>`, excluded from `all`. It registers the same owned callback twice for each global and player-filtered lane, then retains exact pending identities through bounded removal attempts and later explicit retries. Sixteen duplicate-mode fixtures and four normal-mode regressions prove recorder mechanics only; native duplicate, delivery, ordering, GC and security semantics remain unverified. See [[api-contract-probes]].
