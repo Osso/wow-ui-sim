@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual player state queries
+
+`/apicontract player-state-queries <label>` is excluded from `all`. It independently calls the globals `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments. Every call performs a fresh guarded `_G` field lookup and function-access check; missing, restricted or throwing globals do not suppress peers.
+
+`playerStateQueries` stores named pairs of raw observations, preserving zero returns, nil positions and opaque errors. Bounds: six calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. Returned objects stay opaque and are not retained. No `ShowCloak`, `ShowHelm`, setters or purchases occur; no cost, default, stability or native behavior is inferred.
+
+Pinned `PlayerScriptDocumentation.lua:275–282,1550–1566` declares the three no-argument signatures without secret annotations. Eleven actual TOC/slash fixtures prove local recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/player_state_queries.lua docs/addons/ApiContractProbe
+```
+
 ## Manual outfit tooltip
 
 `/apicontract outfit-tooltip <label>` is excluded from `all`. One `C_TransmogOutfitInfo.GetOutfitsInfo()` call supplies the first four list entries; only guarded original finite `outfitID` values feed independent `C_TooltipInfo.GetOutfit(id)` calls. Access is rechecked after namespace/function guards. No synthesized IDs or serialized input substitutes are used.

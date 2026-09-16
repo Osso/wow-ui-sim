@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual player state queries
+
+- `player-state-queries <label>` is manual-only and excluded from `all`. Independently call `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments.
+- Guard `_G` before each field lookup and check function accessibility before invocation. Fresh lookups observe replacements; missing, restricted and throwing globals must not suppress peers.
+- Preserve raw arity, nil positions and opaque errors under `playerStateQueries`; retain no returned objects. Bound six calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels.
+- Never call `ShowCloak`, `ShowHelm`, setters or purchases. Do not infer cost, defaults, stability or native semantics. Eleven actual TOC/slash fixtures cover recorder mechanics only; native behavior remains unverified.
+
 ## Manual outfit tooltip
 
 - `outfit-tooltip <label>` is manual-only and excluded from `all`.
