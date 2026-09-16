@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual stable bonus slot
+
+- Manual `stable-bonus-slot <label>` is excluded from `all`; call only `C_StableInfo.IsBonusPetSlotAvailable()` twice independently with exactly zero arguments, storing observations under `stableBonusSlot.IsBonusPetSlotAvailable`.
+- Reuse guarded `observePublicQuery` namespace/function lookup and scalar serialization. Missing, restricted, throwing or replaced APIs must not suppress the peer observation; retain no raw objects.
+- Preserve raw arity, nil positions and opaque errors. Bound each tuple to sixteen positions, scalar strings to 256 bytes, labels to 128 bytes and shared snapshots to ten, for two query calls per snapshot.
+- Do not query pet IDs/lists, summon, move stable pets, rename, request or mutate state. Local proof establishes no native availability, defaults, stability or security semantics. Eleven actual TOC/slash fixtures cover recorder mechanics; matching native fixtures remain pending.
+
 ## Manual cooldown viewer reads
 
 - Manual `cooldown-viewer-read <label>` is excluded from `all`. Read only the nine fixed published `CooldownViewerCategory` names Essential, Utility, TrackedBuff, TrackedBar, GroupBuff, SpecAgnosticEssential, SpecAgnosticTracked, EquipSlotEssential and EquipSlotTracked; never supply numeric fallbacks.

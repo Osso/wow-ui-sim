@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual stable bonus slot
+
+`/apicontract stable-bonus-slot <label>` independently calls only `C_StableInfo.IsBonusPetSlotAvailable()` twice with no arguments. Results are stored under `stableBonusSlot.IsBonusPetSlotAvailable`. Each call freshly uses guarded namespace/function lookup; missing, restricted, throwing or replaced APIs do not suppress the other observation.
+
+The mode is excluded from `all`. It preserves raw arity, nil positions and opaque errors, bounded to sixteen result positions, 256-byte scalar strings, 128-byte labels and ten shared snapshots (twenty query calls maximum). No raw objects are retained. It performs no pet-ID/list queries, summon, stable move, rename, request or mutation operations. Repeated values establish neither stability nor native availability/default/security semantics.
+
+Pinned retail `StableInfoDocumentation.lua:99–105` declares the no-argument boolean result; `Blizzard_StableUI.lua:749–753` consumes it for the secondary-pet button. These sources establish the call shape, not native results. Eleven actual TOC/slash fixtures test recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/stable_bonus_slot.lua docs/addons/ApiContractProbe
+```
+
 ## Manual cooldown viewer reads
 
 `/apicontract cooldown-viewer-read <label>` queries the nine fixed published `Enum.CooldownViewerCategory` names: Essential, Utility, TrackedBuff, TrackedBar, GroupBuff, SpecAgnosticEssential, SpecAgnosticTracked, EquipSlotEssential and EquipSlotTracked. No numeric fallback is used. Each category feeds `GetCooldownViewerCategorySet(value, false)`; the first eight original accessible finite IDs independently feed `GetCooldownViewerCooldownInfo(id)` and `GetValidAlertTypes(id)`. Duplicate IDs remain independent observations.
