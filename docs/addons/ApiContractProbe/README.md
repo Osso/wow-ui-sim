@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual cooldown viewer reads
+
+`/apicontract cooldown-viewer-read <label>` queries the nine fixed published `Enum.CooldownViewerCategory` names: Essential, Utility, TrackedBuff, TrackedBar, GroupBuff, SpecAgnosticEssential, SpecAgnosticTracked, EquipSlotEssential and EquipSlotTracked. No numeric fallback is used. Each category feeds `GetCooldownViewerCategorySet(value, false)`; the first eight original accessible finite IDs independently feed `GetCooldownViewerCooldownInfo(id)` and `GetValidAlertTypes(id)`. Duplicate IDs remain independent observations.
+
+Only `cooldownID` and `category` are inspected on the first info object; only the first eight scalar entries of the first alert list are inspected. Every receiver is guarded before lookup; category/ID access is rechecked after API lookup and function guards. Raw tuples retain arity/nil positions and opaque errors, capped at 16 positions and 256-byte strings. Labels cap at 128 bytes, captures at ten, API calls at 153 per capture. Excluded from `all`; no linked-field traversal, flag interpretation, refreshes or mutations.
+
+Pinned `CooldownViewerDocumentation.lua` and `CooldownViewerConstantsDocumentation.lua` establish call shapes and publication names, not native defaults, membership, ordering, completeness or alert semantics. Eight actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/cooldown_viewer_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual prey quest widgets
 
 `/apicontract prey-quest-widgets <label>` calls `C_QuestLog.GetActivePreyQuest()` once, then uses only its original accessible finite first quest ID for three independent `C_TaskQuest.GetQuestUIWidgetSetByType` calls. Inputs use published `Enum.MapIconUIWidgetSetType.Tooltip`, `BehindIcon`, and `AdventureMapDetails` values, never numeric fallbacks. Both inputs are rechecked after API lookup/function guards.

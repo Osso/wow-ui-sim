@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual cooldown viewer reads
+
+- Manual `cooldown-viewer-read <label>` is excluded from `all`. Read only the nine fixed published `CooldownViewerCategory` names Essential, Utility, TrackedBuff, TrackedBar, GroupBuff, SpecAgnosticEssential, SpecAgnosticTracked, EquipSlotEssential and EquipSlotTracked; never supply numeric fallbacks.
+- Call `GetCooldownViewerCategorySet(category, false)` independently for each accessible finite published value. Only the first eight original accessible finite IDs may feed independent `GetCooldownViewerCooldownInfo(id)` and `GetValidAlertTypes(id)` calls. Preserve duplicates and peer failures.
+- Inspect only the first info object's `cooldownID` and `category`, and the first alert list's eight scalar positions. Guard containers, members, indexes and fields before inspection; recheck original category/ID after API lookup and function guards. Never interpret flags or inspect linked fields.
+- Preserve exact raw arity/nil positions and opaque errors within 16 result positions, 256-byte strings, 128-byte labels and ten captures. Maximum 153 API calls per capture; no refreshes, mutations or native default/order/completeness claims.
+- Eight separate actual TOC/slash fixtures establish recorder mechanics only, not native conformance.
+
 ## Manual prey quest widgets
 
 - Manual `prey-quest-widgets <label>` is excluded from `all`. Call `C_QuestLog.GetActivePreyQuest()` once; only its first original accessible finite quest ID may feed queries.
