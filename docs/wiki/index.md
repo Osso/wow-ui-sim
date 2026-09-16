@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
+
+Runtime `9a296becb` adds manual `/apicontract item-interaction-flags <label>`, excluded from `all`. It calls `C_ItemInteraction.GetItemInteractionInfo()` twice with no arguments and inspects only guarded first-result `flags`; no interaction initialization, opening, pending-item operation, conversion, or nested traversal occurs. Eleven local fixtures prove recorder mechanics only. Populated native interaction behavior, flags semantics, historical compatibility, and restricted contexts remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded house-exterior options recorder
 
 Runtime `185a2b6cc` adds manual `/apicontract house-exterior-options <label>`, excluded from `all`. It calls three zero-argument house-exterior producers, bounds size/type options to four entries, and records only current declared option fields; `reasonString` is not treated as historical `lockReasonString`. Ten fixtures plus ten Perks and sixteen neighborhood regressions prove recorder mechanics only. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
+
+Runtime `9a296becb` adds manual `item-interaction-flags`: two zero-argument `C_ItemInteraction.GetItemInteractionInfo` calls, with only guarded first-result `flags` observed. Eleven fixtures prove recorder mechanics only; no interaction operation, populated native state, flags semantics, historical compatibility, or native credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded expansion-audio field recorder
 
 Documented runtime `4f2138bba`: manual `expansion-audio-fields` reads published `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT` twice each through `GetExpansionDisplayInfo`, with optional release omitted. It inspects only guarded first-result `glueAmbianceSoundKit`, `glueCreditsSoundKit`, and `glueMusicSoundKit` fields. Eleven fixtures plus seventeen public-query regressions establish recorder mechanics only; playback, native assets, defaults, release variants, and load phases remain unverified. Updated [[api-contract-probes]] and the index.
