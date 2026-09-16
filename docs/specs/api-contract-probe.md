@@ -56,6 +56,13 @@
 - Preserve exact arity and nil positions, opaque errors, sixteen tuple positions, 256-byte strings, 128-byte labels and ten shared snapshots. Maximum 21 producer calls and 560 duration-method calls per snapshot. No cast initiation, mutation, order/completeness/default/percentage or native behavior claims.
 - Fifteen actual TOC/slash fixtures (ten existing, five new) establish local mechanics only. Matching native empowered-channel fixtures remain unverified.
 
+## Manual ping enabled
+
+- Manual `ping-enabled <label>` is excluded from `all`; call only `C_Ping.IsPingSystemEnabled()` twice independently with exactly zero arguments. Store observations under `pingEnabled.IsPingSystemEnabled`.
+- Guard namespace/function before lookup/use; missing, restricted, throwing or replaced APIs must not suppress the peer read. Preserve raw arity, nil positions and opaque errors without retaining raw objects.
+- Bound tuples to sixteen positions, scalar strings to 256 bytes, labels to 128 bytes and shared snapshots to ten; at most two query calls per snapshot.
+- Do not call secure ping send/toggle/lifecycle APIs or read/write CVars. No native enabled-state, defaults, stability or security claims. Twelve actual TOC/slash fixtures provide local recorder proof only.
+
 ## Manual stable bonus slot
 
 - Manual `stable-bonus-slot <label>` is excluded from `all`; call only `C_StableInfo.IsBonusPetSlotAvailable()` twice independently with exactly zero arguments, storing observations under `stableBonusSlot.IsBonusPetSlotAvailable`.

@@ -84,6 +84,18 @@ Pinned retail `UnitDocumentation.lua:1129–1165` declares both stage-list APIs 
 luajit docs/addons/ApiContractProbe/tests/empowered_stages.lua docs/addons/ApiContractProbe
 ```
 
+## Manual ping enabled
+
+`/apicontract ping-enabled <label>` calls only `C_Ping.IsPingSystemEnabled()` twice independently with zero arguments. Observations are stored under `pingEnabled.IsPingSystemEnabled`. Fresh guarded namespace/function lookup keeps missing, restricted, throwing or replaced APIs independent.
+
+Excluded from `all`; raw arity, nil positions and opaque errors are preserved within sixteen result positions, 256-byte scalar strings, 128-byte labels and ten shared snapshots (two calls per snapshot). No raw objects are retained. No secure ping send/toggle/lifecycle APIs or CVars are queried or changed. Repeated observations establish no native enabled-state, default, stability or security semantics.
+
+Pinned retail `PingManagerDocumentation.lua:44–52` declares the no-argument boolean query without secret/restriction annotations; this establishes call shape, not native results. Twelve actual TOC/slash fixtures cover recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/ping_enabled.lua docs/addons/ApiContractProbe
+```
+
 ## Manual stable bonus slot
 
 `/apicontract stable-bonus-slot <label>` independently calls only `C_StableInfo.IsBonusPetSlotAvailable()` twice with no arguments. Results are stored under `stableBonusSlot.IsBonusPetSlotAvailable`. Each call freshly uses guarded namespace/function lookup; missing, restricted, throwing or replaced APIs do not suppress the other observation.
