@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
+
+Runtime `6fbefcb73` adds manual `/apicontract encounter-warning-state <label>`, excluded from `all`. It calls only `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments; warning toggles, sounds, creation, and security experiments remain untouched. Twelve fixtures prove recorder mechanics only; native availability, enabled-state, defaults, stability, and behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
 
 Runtime `f9f24fa84` adds manual `/apicontract ping-enabled <label>`, excluded from `all`. It calls only `C_Ping.IsPingSystemEnabled()` twice with zero arguments; secure ping send/toggle APIs and CVars remain untouched. Twelve fixtures prove recorder mechanics only; native enabled-state, defaults, stability, and security behavior remain unverified. See [[api-contract-probes]].

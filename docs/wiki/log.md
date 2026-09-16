@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
+
+Documented runtime `6fbefcb73`: manual `encounter-warning-state` calls `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; warning toggles, sounds, creation, native availability/enabled state, defaults, stability, security, and conformance remain unverified. Focused regression proof retains twelve ping-enabled and seventeen public-query fixtures. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
 
 Documented runtime `f9f24fa84`: manual `ping-enabled` calls `C_Ping.IsPingSystemEnabled()` twice with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; secure ping send/toggle APIs, CVars, native enabled state, defaults, stability, security, and conformance remain unverified. Updated [[api-contract-probes]] and the index.
