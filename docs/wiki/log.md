@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded expansion-audio field recorder
+
+Documented runtime `4f2138bba`: manual `expansion-audio-fields` reads published `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT` twice each through `GetExpansionDisplayInfo`, with optional release omitted. It inspects only guarded first-result `glueAmbianceSoundKit`, `glueCreditsSoundKit`, and `glueMusicSoundKit` fields. Eleven fixtures plus seventeen public-query regressions establish recorder mechanics only; playback, native assets, defaults, release variants, and load phases remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded Perks criteria recorder
 
 `1e1d9de4f` adds manual `perks-criteria`: two guarded roots, first eight activities, four criteria and four requirements through current declared fields. Ten fixtures plus sixteen neighborhood-structures regressions prove recorder mechanics only. Removed type identities, native behavior, historical compatibility, ordering, and completeness remain unverified. Updated [[api-contract-probes]] and the index.
