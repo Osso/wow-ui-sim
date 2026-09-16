@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 109,
-    "partial-recorder": 52,
+    "needs-design-and-recorder-review": 107,
+    "partial-recorder": 54,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -6497,8 +6497,17 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual tradeskill-item-quality inspects thirteen guarded declared CraftingQualityInfo fields on first returned crafted/reagent quality objects"
+        ],
+        "missing": [
+          "Native quality/atlas field values and populated item fixtures",
+          "Recipe-produced quality structures and native validation behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/combat-crafting-crafting_quality"
     },
@@ -9454,8 +9463,17 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual tradeskill-item-quality uses original accessible equipment links from slots 1-19 for independent GetItemCraftedQualityInfo and GetItemReagentQualityInfo calls"
+        ],
+        "missing": [
+          "Produced recipe IDs, quality and reagent indices for recipe-specific APIs",
+          "Native item quality fixtures, transitions and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-misc-C_TradeSkillUI"
     },
