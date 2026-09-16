@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual Perks criteria
+
+`/apicontract perks-criteria <label>` is excluded from `all`. It calls `C_PerksActivities.GetPerksActivitiesInfo()` twice independently with no arguments. Only the first returned root's declared `activities` list is inspected, at positions 1–8. Each activity records only `ID`, `criteriaList` positions 1–4 (`criteriaID`, `requiredValue`), and `requirementsList` positions 1–4 (`completed`, `requirementText`). Every container, entry and field is access-guarded before lookup or serialization. No generic traversal or recursive expansion occurs.
+
+`perksCriteria[1..2]` preserves raw status, arity and nil positions; nested observations live under `values[1].fields.activities.entries`. Bounds: two API calls per snapshot, ten snapshots, 16 tuple positions, 256-byte strings, 128-byte labels. Missing, restricted and failing observations do not suppress the second call or peer entries. No refresh, claim, tracking or other mutations are performed.
+
+Pinned retail/PTR `PerksActivitiesDocumentation.lua` declares the root and activity lists; `PerksVendorConstantsDocumentation.lua` declares `CriteriaRequiredValue` and `CriteriaRequirement`. The root is not an activity array. Removed `PerksActivityCriteria`/`PerksActivityRequirement` names are not substituted for current types. Ten actual TOC/slash fixtures prove local mechanics only; native criteria values, ordering, completeness, changed-contract and historical behavior remain unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/perks_criteria.lua docs/addons/ApiContractProbe
+```
+
 ## Manual equipped transmog eligibility
 
 `/apicontract equipped-transmog-eligibility <label>` is excluded from `all`. For slots 1–19, call the original `ItemLocation:CreateFromEquipmentSlot(slot)` method, then independently pass its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`. Recheck the constructor receiver after method guards and the original location after namespace/function guards. Never clone locations, inspect their fields, substitute links, or retain objects between captures.

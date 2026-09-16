@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual Perks criteria
+
+- `perks-criteria <label>` is manual-only, excluded from `all`. Independently invoke `C_PerksActivities.GetPerksActivitiesInfo()` twice with zero arguments; preserve raw arity, nil positions and opaque errors in `perksCriteria[1..2]`.
+- Inspect only the first returned root's declared `activities` field, positions 1–8. Capture activity `ID`, then four `criteriaList` entries with `criteriaID`/`requiredValue` and four `requirementsList` entries with `completed`/`requirementText`. Guard every root, list, entry and field before lookup or serialization, including after earlier observations revoke access. Do not treat the root as an array or traverse other fields.
+- Bound calls to two per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Keep peer entries and both calls independent after missing, restricted or error outcomes. Do not retain produced objects, iterate arbitrary keys or recursively expand values.
+- No refresh, claim, tracking or mutation calls. Current declared nested types do not establish removed type identities, ordering, completeness, native criteria semantics or historical compatibility. Ten actual TOC/slash fixtures establish recorder mechanics only; native evidence remains outstanding.
+
 ## Manual equipped transmog eligibility
 
 - `equipped-transmog-eligibility <label>` is manual-only, excluded from `all`. For equipment slots 1–19, invoke the original `ItemLocation:CreateFromEquipmentSlot(slot)` method and forward its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`.

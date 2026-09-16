@@ -1148,8 +1148,62 @@ local function inspectNeighborhoodInitiative(object)
     return result
 end
 
-local function captureNeighborhoodStructures()
+local function inspectPerksCriteriaList(list, fields)
+    local result = scalar(list)
+    if result.status ~= "observed" or result.kind ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 4 do
+        local entry, ok = readField(list, index)
+        result.entries[index] = ok and inspectHousingCatalogFields(entry, fields) or { status = "field-error" }
+    end
+    return result
+end
+
+local function inspectPerksRoot(root)
+    local result = scalar(root)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then return result end
+    local list, ok = readField(root, "activities")
+    local activities = ok and scalar(list) or { status = "field-error" }
+    result.fields = { activities = activities }
+    if activities.status ~= "observed" or activities.kind ~= "table" then return result end
+    activities.entries = {}
+    for index = 1, 8 do
+        local entry, entryOK = readField(list, index)
+        local activity = entryOK and inspectHousingCatalogFields(entry, { "ID" }) or { status = "field-error" }
+        activities.entries[index] = activity
+        if activity.fields then
+            local criteria, criteriaOK = readField(entry, "criteriaList")
+            activity.fields.criteriaList = criteriaOK and inspectPerksCriteriaList(criteria, { "criteriaID", "requiredValue" })
+                or { status = "field-error" }
+            local requirements, requirementsOK = readField(entry, "requirementsList")
+            activity.fields.requirementsList = requirementsOK and inspectPerksCriteriaList(requirements, { "completed", "requirementText" })
+                or { status = "field-error" }
+        end
+    end
+    return result
+end
+
+local function captureNeighborhoodStructures(mode)
     local result = {}
+    if mode == "perks-criteria" then
+        for attempt = 1, 2 do
+            local fn, ok = readField(C_PerksActivities, "GetPerksActivitiesInfo")
+            local observation
+            if not ok then observation = { status = "field-error" }
+            elseif not accessible(fn) or type(fn) ~= "function" then observation = { status = "missing-api" }
+            else
+                local values = pack(pcall(fn))
+                if not values[1] then observation = { status = "call-error" }
+                else
+                    observation = mapTuple(unpack(values, 2, values.n))
+                    observation.status = "observed"
+                    if values.n > 1 then observation.values[1] = inspectPerksRoot(values[2]) end
+                end
+            end
+            result[attempt] = observation
+        end
+        return result
+    end
     for _, name in ipairs({ "GetNeighborhoodInitiativeInfo", "GetInitiativeActivityLogInfo", "GetTrackedInitiativeTasks" }) do
         local observation, values = observeNeighborhoodCall(name)
         if values and values.n > 1 then
@@ -3098,8 +3152,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -3143,6 +3197,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "quest-favor" then record.questFavor = captureQuestFavor() end
         if mode == "neighborhood-state" then record.neighborhoodState = captureNeighborhoodState() end
         if mode == "neighborhood-structures" then record.neighborhoodStructures = captureNeighborhoodStructures() end
+        if mode == "perks-criteria" then record.perksCriteria = captureNeighborhoodStructures(mode) end
         if mode == "outfit-state" then record.outfitState = captureOutfitState() end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "ping-enabled" then record.pingEnabled = capturePublicQueries(mode) end
