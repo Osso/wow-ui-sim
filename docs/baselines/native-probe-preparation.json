@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 112,
-    "partial-recorder": 49,
+    "needs-design-and-recorder-review": 111,
+    "partial-recorder": 50,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -2392,8 +2392,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual death-recap-current independently records GetRecapEvents, GetRecapLink and HasRecapEvents twice each with optional recap ID omitted, preserving raw tuples and opaque tables"
+        ],
+        "missing": [
+          "DeathRecapEventInfo fields and populated native current-recap fixtures",
+          "Explicit original recap IDs and recap transitions",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/death-recap-producer"
     },
