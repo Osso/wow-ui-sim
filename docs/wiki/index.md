@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
+
+Runtime `8b2555739` adds manual `/apicontract outfit-tooltip <label>`, excluded from `all`. First-four original outfit IDs from `GetOutfitsInfo()` independently call `C_TooltipInfo.GetOutfit`; returned TooltipData remains opaque. Nine fixtures prove recorder mechanics only; no UI, mutation, native tooltip content, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
 
 Runtime `ac475000f` adds manual `/apicontract tradeskill-item-quality <label>`, excluded from `all`. Original accessible equipment links from slots 1–19 feed independent crafted- and reagent-quality queries; only thirteen guarded first-object fields are inspected. Ten fixtures prove recorder mechanics only; recipes, crafting/orders, mutations, native quality populations, and semantics remain unverified. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
+
+Documented runtime `8b2555739`: manual `outfit-tooltip` uses the first four original accessible finite outfit IDs from `GetOutfitsInfo()` for independent `C_TooltipInfo.GetOutfit` calls. TooltipData remains opaque; no UI, mutation, request, native content, or native credit follows. Nine fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
 
 Documented runtime `ac475000f`: manual `tradeskill-item-quality` reads original accessible player-equipment links from slots 1–19 and independently queries crafted and reagent quality. It bounds first returned objects to thirteen guarded declared fields and fifty-seven calls per snapshot. Ten fixtures establish recorder mechanics only; recipe/crafting/order operations, mutations, atlas interpretation, native quality populations, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
