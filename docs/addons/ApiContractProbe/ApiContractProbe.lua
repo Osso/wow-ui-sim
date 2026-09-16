@@ -467,6 +467,59 @@ local function mapTuple(...)
     return result
 end
 
+local function customSetInputStatus(value, expected)
+    if not accessible(value) then return "restricted-input" end
+    if type(value) ~= expected then return "unavailable-input" end
+    if expected == "number" and (value ~= value or value == math.huge or value == -math.huge) then
+        return "unavailable-input"
+    end
+end
+
+local function observeCustomSetCall(name, input, expected)
+    if expected then
+        local status = customSetInputStatus(input, expected)
+        if status then return { status = status } end
+    end
+    local fn, ok = readField(C_TransmogCollection, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values
+    if expected then
+        local status = customSetInputStatus(input, expected)
+        if status then return { status = status } end
+        values = pack(pcall(fn, input))
+    else values = pack(pcall(fn)) end
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values
+end
+
+local function captureCustomSetNames()
+    local maximum = {}
+    for index = 1, 2 do
+        maximum[index] = observePublicQuery(C_TransmogCollection, "GetNumMaxCustomSets")
+    end
+    local sets, values = observeCustomSetCall("GetCustomSets")
+    local result = { maximum = maximum, sets = sets }
+    local first = sets.values and sets.values[1]
+    if not first or first.status ~= "observed" or first.kind ~= "table" then return result end
+    first.entries = {}
+    for index = 1, 4 do
+        local id, ok = readField(values[2], index)
+        local row = { status = ok and "observed" or "field-error" }
+        if ok then
+            row.id = scalar(id)
+            local infoValues
+            row.info, infoValues = observeCustomSetCall("GetCustomSetInfo", id, "number")
+            local name = infoValues and infoValues[2]
+            row.validation = observeCustomSetCall("IsValidCustomSetName", name, "string")
+        end
+        first.entries[index] = row
+    end
+    return result
+end
+
 local function inspectCurrentAura(entry)
     local result = scalar(entry)
     if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
@@ -1754,8 +1807,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1779,6 +1832,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "spell-metadata" then record.spellMetadata = captureSpellMetadata(slot) end
         if mode == "spellbook-metadata" then record.spellbookMetadata = captureSpellbookMetadata(slot) end
         if mode == "spellbook-duration" then record.spellbookDuration = captureSpellbookDuration(slot) end
+        if mode == "custom-set-names" then record.customSetNames = captureCustomSetNames() end
         if mode == "outfit-state" then record.outfitState = captureOutfitState() end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end

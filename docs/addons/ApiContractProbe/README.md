@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual custom-set names
+
+`/apicontract custom-set-names <label>` is excluded from `all`. Independently call `C_TransmogCollection.GetNumMaxCustomSets()` twice and `GetCustomSets()` once. Preserve raw return arity, nil positions and opaque errors within sixteen positions. Inspect only the first returned ID table at indices 1–4, guarding the table before every lookup. Each accessible finite original ID permits one `GetCustomSetInfo(ID)` call; its accessible string first return permits one `IsValidCustomSetName(name)` call. Forward the original name, never its serialized 256-byte prefix. Recheck IDs and names after namespace/function lookup and function guards, immediately before use.
+
+Missing, restricted, invalid and failed observations do not suppress peers. Bounds: eleven API calls per snapshot, ten shared snapshots, 256-byte output strings and 128-byte labels. No returned objects are retained. No account mutations, name-validity/identity/default/native conclusions, ItemTransmogInfo forwarding, item-list or hyperlink chains. Pinned `TransmogItemsDocumentation.lua:365–379,398–404,564–570,808–820` supplies the four signatures, not observed client behavior.
+
+Ten actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified. Run `luajit docs/addons/ApiContractProbe/tests/custom_set_names.lua docs/addons/ApiContractProbe`.
+
 ## Manual outfit slots
 
 `/apicontract outfit-slots <label>` is excluded from `all`. Independently call `GetAllSlotLocationInfo()` and `GetSlotGroupInfo()` without arguments, preserving sixteen raw return positions, nil holes and opaque errors. Inspect only the first two location lists, eight entries each, and five guarded fields: `slot`, `type`, `collectionType`, `slotName`, `isSecondary`. Only these original location entries may feed `GetEquippedSlotOptionFromTransmogSlot(slot)` and `GetUnassignedAtlasForSlot(slot)`, each with exactly one original accessible finite slot argument. Recheck slot access after API lookup/function guards; failures remain independent.

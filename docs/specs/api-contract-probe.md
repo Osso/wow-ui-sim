@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual custom-set names
+
+- Manual `custom-set-names <label>` is excluded from `all`. Independently call `C_TransmogCollection.GetNumMaxCustomSets()` twice and `GetCustomSets()` once; preserve raw arity, nils and opaque errors within sixteen return positions.
+- Inspect only first-return ID table indices 1–4, guarding each lookup. Each accessible finite original ID permits one `GetCustomSetInfo(ID)` call. Only its original accessible string first return permits one `IsValidCustomSetName(name)` call; never forward a serialized/truncated name. Recheck ID/name after namespace/function lookup and function guards, immediately before invocation.
+- Keep missing/restricted/invalid/error observations independent. Cap eleven API calls per snapshot, ten shared snapshots, 256-byte output strings and 128-byte labels; retain no raw objects.
+- Exclude account mutations, ItemTransmogInfo forwarding, item-list/hyperlink chains and identity/name-validity/default/native conclusions. Ten actual TOC/slash fixtures establish bounded mechanics only, not native behavior. Pinned `TransmogItemsDocumentation.lua:365–379,398–404,564–570,808–820` defines the four signatures.
+
 ## Manual outfit slots
 
 - Manual `outfit-slots <label>` is excluded from `all`. Independently call no-argument `GetAllSlotLocationInfo` and `GetSlotGroupInfo`; preserve raw arity, nil holes and opaque errors within sixteen return positions.
