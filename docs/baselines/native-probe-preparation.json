@@ -302,10 +302,10 @@
         "observations": [
           "Two supplied color curves on existing player auras",
           "Manual aura-time first-page player HELPFUL capture uses up to eight guarded original auraInstanceIDs for independent expiration, base-duration, refresh-duration and duration-object producer calls",
-          "Optional spellID omitted; duration objects recorded opaquely without methods, retention or continuation traversal"
+          "Optional spellID omitted; GetAuraDuration objects receive ten guarded current-only read-method observations within the 16-position return bound, without retention or continuation traversal"
         ],
         "missing": [
-          "Duration-object method observations, explicit spellID variants, continuation pages and native refresh/removal transitions",
+          "Explicit spellID variants, continuation pages and native duration values/refresh/removal transitions",
           "Native aura fixtures/dispel-ID evidence",
           "Native capture"
         ]
