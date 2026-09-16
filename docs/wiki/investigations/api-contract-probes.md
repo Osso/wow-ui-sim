@@ -6,6 +6,8 @@ Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, c
 
 ## Evidence boundaries
 
+`/apicontract major-faction-journey <label>` is manual-only and excluded from `all`. It calls `C_MajorFactions.GetMajorFactionIDs(nil)` once with its explicit nilable expansion argument. Only first-return entries 1–8 provide original accessible finite faction IDs; each independently calls `ShouldDisplayMajorFactionAsJourney` and `ShouldUseJourneyRewardTrack`. It preserves raw arity, nil positions, opaque errors, duplicates, and fractional IDs under a seventeen-call per-snapshot cap. Renown/data structures, mutations, ordering/completeness, faction classification, and native fixtures remain pending. Ten fixtures prove recorder mechanics only.
+
 `/apicontract training-grounds-state <label>` is manual-only and excluded from `all`. It calls `C_PvP.AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday` twice each with no arguments, preserving raw tuple arity including the eligibility failure-reason position. It caps at six calls per snapshot. Queue, join, requests, mutations, defaults, stability, and native claims are excluded. Ten fixtures prove recorder mechanics only.
 
 `/apicontract training-grounds-structures <label>` is manual-only and excluded from `all`. It independently calls `GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once each. Only the first training-ground result is inspected through entries 1–8 and fourteen declared fields; the five reward return positions preserve raw arity while nested tables remain opaque. Queue, join, requests, mutations, ordering/completeness, and native claims are excluded. Eleven fixtures prove recorder mechanics only.
