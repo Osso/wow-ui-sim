@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare current unit-aura recorder
+
+Runtime `a7b51126e` adds manual `/apicontract unit-auras-current <label>`, excluded from `all`. It records three independent current `GetUnitAuras` calls: omitted required filter as an invalid negative, then player HELPFUL/HARMFUL with max 8 and omitted sort arguments. Only entries 1–8 of an accessible first returned table receive guarded consumer-grounded `auraInstanceID`, `spellId`, and `applications` reads. Nine fixtures establish local recorder mechanics only; no native ordering, completeness, defaults, security, or historical-contract conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Extend current-only aura-time duration observations
 
 Runtime `ee4349ec6` adds the ten-method current-only whitelist to accessible `GetAuraDuration` table/userdata returns at positions 1–16. Receiver access is rechecked after method lookup and function guards before each invocation; objects are not retained. Eleven cumulative aura-time fixtures include three new cases, with eight display-count, nine spell-duration, and two main-harness targeted regressions. Recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
