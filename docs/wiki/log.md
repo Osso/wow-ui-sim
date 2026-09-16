@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded stable bonus-slot recorder
+
+Documented runtime `8eb05bf4f`: manual `stable-bonus-slot` makes two independent no-argument `C_StableInfo.IsBonusPetSlotAvailable` calls, excluded from `all`. Eleven fixtures prove recorder mechanics only; pet queries, mutations, and native behavior remain excluded or unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded cooldown-viewer recorder
 
 Documented runtime `491d3a818`: manual `cooldown-viewer-read` reads nine fixed published categories with `false`, then bounds each category set to eight original IDs and independent cooldown-info/alert reads. Only `cooldownID`, `category`, and eight alert scalars are captured. The cap is 153 calls per snapshot; refreshes, mutations, flag interpretation, native values, and conformance credit remain excluded. Eight fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.
