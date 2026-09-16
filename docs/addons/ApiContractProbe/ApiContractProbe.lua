@@ -479,12 +479,22 @@ local function captureAuraSlot(slot)
     return row
 end
 
+local inspectDuration
+
 local function captureAuraTimeSlot(slot)
     local row, id, status = observeAuraSlot(slot)
     for _, name in ipairs({ "DoesAuraHaveExpirationTime", "GetAuraBaseDuration",
         "GetRefreshExtendedDuration", "GetAuraDuration" }) do
         if status then row.queries[name] = { status = status }
-        else row.queries[name] = observeAuraCall(name, id, "player", id) end
+        else
+            local observation, values = observeAuraCall(name, id, "player", id)
+            row.queries[name] = observation
+            if name == "GetAuraDuration" and values then
+                for index = 2, math.min(values.n, 17) do
+                    observation.values[index - 1] = inspectDuration(values[index])
+                end
+            end
+        end
     end
     return row
 end
@@ -813,7 +823,19 @@ local durationMethods = {
 local previousDurations = {}
 local durationCapture = 0
 
-local function inspectDuration(object)
+local function observeDurationMethod(object, name)
+    local fn, ok = readField(object, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not accessible(object) then return { status = "restricted-object" } end
+    local values = pack(pcall(fn, object))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+inspectDuration = function(object)
     local result = scalar(object)
     if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
         return result
@@ -821,8 +843,7 @@ local function inspectDuration(object)
     -- Controlled producer-object experiment, never a passive payload observer.
     result.methods = {}
     for _, name in ipairs(durationMethods) do
-        local fn, ok = readField(object, name)
-        result.methods[name] = ok and observeCast(fn, object) or { status = "field-error" }
+        result.methods[name] = observeDurationMethod(object, name)
     end
     return result
 end

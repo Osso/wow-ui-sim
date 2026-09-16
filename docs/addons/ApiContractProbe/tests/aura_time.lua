@@ -221,4 +221,124 @@ test("inaccessible aura not inspected and unavailable ID outcomes explicit", fun
         setup(ns); assert(capture().slots[1].queries.GetAuraDuration.status ~= "observed")
     end
 end)
+local methods = { "GetTotalDuration", "GetElapsedDuration", "GetRemainingDuration", "GetElapsedPercent",
+    "GetRemainingPercent", "GetStartTime", "GetEndTime", "GetClockTime", "GetModRate", "HasExpired" }
+
+test("duration methods preserve tuples and independent failures without retaining objects", function()
+    local ns, calls, produced = namespace(), 0, 0
+    local weak = setmetatable({}, { __mode = "v" })
+    ns.GetAuraDuration = function()
+        produced = produced + 1
+        local object = newproxy(true)
+        weak[1] = object
+        getmetatable(object).__tostring = function() error("stringified") end
+        getmetatable(object).__index = function(_, key)
+            local allowed = false
+            for _, name in ipairs(methods) do if key == name then allowed = true end end
+            assert(allowed, key)
+            if key == "GetElapsedDuration" then error(secret) end
+            if key == "GetRemainingDuration" then return secret end
+            return function(self, ...)
+                assert(rawequal(self, object) and select("#", ...) == 0)
+                calls = calls + 1
+                if key == "GetElapsedPercent" then error(secret) end
+                if key == "GetRemainingPercent" then return end
+                return 12, nil, secret, string.rep("x", 300)
+            end
+        end
+        return object, nil, 7, secret
+    end
+    setup(ns)
+    local q = capture().slots[1].queries.GetAuraDuration
+    assert(produced == 1 and calls == 8, "ten whitelist observations missing")
+    assert(q.status == "observed" and q.n == 4 and q.values[1].kind == "userdata")
+    assert(q.values[1].status == "observed" and q.values[1].value == nil)
+    assert(q.values[2].kind == "nil" and q.values[3].value == 7 and q.values[4].status == "restricted")
+    local m = assert(q.values[1].methods)
+    assert(m.GetElapsedDuration.status == "field-error" and m.GetRemainingDuration.status == "missing-api")
+    assert(m.GetElapsedPercent.status == "call-error" and m.GetRemainingPercent.n == 0)
+    assert(m.GetTotalDuration.n == 4 and m.GetTotalDuration.values[2].kind == "nil")
+    assert(m.GetTotalDuration.values[3].status == "restricted" and #m.GetTotalDuration.values[4].value == 256)
+    collectgarbage("collect"); collectgarbage("collect")
+    assert(next(weak) == nil, "aura duration retained")
+    UnitCastingDuration, UnitChannelDuration, UnitEmpoweredChannelDuration = nil, nil, nil
+    SlashCmdList.APICONTRACTPROBE("cast-durations")
+    local cast = ApiContractProbeDB.captures[2].castDurations
+    assert(cast.capture == 1 and #cast.previous == 0 and cast.retainedCount == 0)
+end)
+
+test("duration receiver revocation blocks every method in aura spell and cast consumers", function()
+    for _, mode in ipairs({ "aura-time", "spell-duration 17", "cast-durations" }) do
+        for _, target in ipairs(methods) do
+            for _, stage in ipairs({ "lookup", "secret-guard", "access-guard" }) do
+                local ns, revoked, forbiddenCalls, object = namespace(), false, 0, {}
+                local fn = function() forbiddenCalls = forbiddenCalls + 1 end
+                setmetatable(object, { __index = function(_, key)
+                    assert(not revoked, "lookup after revocation")
+                    if key == target then
+                        if stage == "lookup" then revoked = true end
+                        return fn
+                    end
+                    return function() return 1 end
+                end })
+                ns.GetAuraDuration = function() return object end
+                setup(ns)
+                GetActionInfo = function() return "spell", 123 end
+                C_Spell = { GetSpellChargeDuration = function() return object end }
+                UnitCastingDuration = function() return object end
+                UnitChannelDuration, UnitEmpoweredChannelDuration = nil, nil
+                issecretvalue = function(v)
+                    if stage == "secret-guard" and rawequal(v, fn) then revoked = true end
+                    return rawequal(v, secret)
+                end
+                canaccessvalue = function(v)
+                    if stage == "access-guard" and rawequal(v, fn) then revoked = true end
+                    return not rawequal(v, secret) and not (revoked and rawequal(v, object))
+                end
+                SlashCmdList.APICONTRACTPROBE(mode)
+                assert(forbiddenCalls == 0, mode .. ":" .. target .. ":" .. stage)
+                local r = ApiContractProbeDB.captures[1]
+                local q
+                if mode == "aura-time" then q = r.auraTime.slots[1].queries.GetAuraDuration
+                elseif mode == "spell-duration 17" then q = r.spellDuration.queries.GetSpellChargeDuration
+                else q = r.castDurations.units.player.casting end
+                assert(q.values[1].methods[target].status == "restricted-object")
+            end
+        end
+    end
+end)
+
+test("duration method return and invocation bounds include all produced positions", function()
+    local ns, produced, calls = namespace(), 0, 0
+    ns.GetAuraSlots = function() return nil, 1, 2, 3, 4, 5, 6, 7, 8, 9 end
+    ns.GetAuraDuration = function()
+        produced = produced + 1
+        local values = {}
+        for i = 1, 20 do
+            values[i] = setmetatable({}, { __index = function(_, key)
+                local allowed = false
+                for _, name in ipairs(methods) do if key == name then allowed = true end end
+                assert(allowed)
+                return function()
+                    calls = calls + 1
+                    local result = {}; for j = 1, 20 do result[j] = j end
+                    return unpack(result)
+                end
+            end })
+        end
+        return unpack(values)
+    end
+    setup(ns)
+    for i = 1, 11 do SlashCmdList.APICONTRACTPROBE("aura-time") end
+    assert(produced == 80 and calls == 12800 and ApiContractProbeDB.dropped == 1)
+    local q = ApiContractProbeDB.captures[1].auraTime.slots[1].queries.GetAuraDuration
+    assert(q.n == 20 and q.truncated and #q.values == 16)
+    for _, item in ipairs(q.values) do
+        for _, name in ipairs(methods) do
+            local m = item.methods[name]
+            assert(m.n == 20 and m.truncated and #m.values == 16)
+        end
+    end
+end)
+
 print(string.format("%d/%d passed", passed, passed))

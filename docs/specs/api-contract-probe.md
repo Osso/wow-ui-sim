@@ -14,8 +14,9 @@
 
 - Manual `aura-time <label>` is excluded from `all`; reuse the first-page player HELPFUL eight-slot producer without changing `aura-display-count` output or behavior. Forward only original accessible finite slots and guarded original aura instance IDs.
 - Independently call `DoesAuraHaveExpirationTime`, `GetAuraBaseDuration`, `GetRefreshExtendedDuration`, and `GetAuraDuration`, each with exactly `("player", id)`. Omit optional spell IDs entirely. Recheck original inputs after namespace/function lookup and access guards, before forwarding.
-- Preserve scalar return arity, nil positions and opaque errors; record duration results as opaque accessible/restricted values only. No methods, field traversal, retention, continuation or mutations: current-only producer observations, not lifecycle or native-conformance proof.
-- Missing fixtures/APIs, restricted/invalid inputs and errors produce independent observations. Cap each snapshot at one page, eight data calls, 32 queries, 16 tuple positions, 256-byte strings and a 128-byte label; cap captures at ten.
+- Preserve query status, return arity/nils and scalar kind/status. Reuse the ten-method duration whitelist on accessible table/userdata returns of `GetAuraDuration`, at positions 1–16, without calling the producer twice. Guard object access before inspection/lookup and recheck the receiver after function guards immediately before invocation; shared spell/cast consumers receive the same guard. Preserve independent method return arity/nils, opaque errors and bounded scalar values.
+- No evaluate/set/copy methods, field traversal, retention, continuation, mutations or changes to cast-duration retained state: current-only observations, not lifecycle or native-conformance proof.
+- Missing fixtures/APIs, restricted/invalid inputs and errors produce independent observations. Cap each snapshot at one page, eight data calls, 32 queries and 1,280 method calls (8 IDs × 16 returned positions × 10 methods), 16 tuple positions per producer/method, 256-byte strings and a 128-byte label; cap captures at ten.
 
 ## Manual first-page aura display counts
 
