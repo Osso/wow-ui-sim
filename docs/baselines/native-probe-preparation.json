@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 139,
-    "partial-recorder": 22,
+    "needs-design-and-recorder-review": 138,
+    "partial-recorder": 23,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -5995,8 +5995,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual weekly-progress queries five fixed published WeeklyRewardChestThresholdType names independently with combineSharedDifficulty false and true",
+          "Only first returned table positions 1-8 and guarded activityTierID, difficulty and numPoints fields are inspected; raw tuples remain bounded"
+        ],
+        "missing": [
+          "Native populated weekly reward fixtures and progress transitions",
+          "Native sorting, combineSharedDifficulty and completeness semantics",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/services-weekly-reward-tiers"
     },
