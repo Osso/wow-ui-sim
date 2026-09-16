@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare selected-slot spellbook metadata recorder
+
+Runtime `63bb28063` adds manual `/apicontract spellbook-metadata <slot> <label>`, excluded from `all`. It forwards only an accessible original selected-slot spell ID to independent guarded base-spell, flyout-slot, and override queries. Eight local fixtures establish recorder mechanics only. It does not produce spellbook slots or query item durations; item-duration slot/bank producers remain missing. No native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded unit target-display recorder
 
 Runtime `fc1e54637` adds manual `/apicontract unit-target-display <label>`, excluded from `all`. It records two `UnitShouldDisplaySpellTargetName` observations for each of seven fixed tokens. Secret target name/class APIs, casts, mutations, and default claims are excluded. Eight local fixtures establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
