@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual prey quest widgets
+
+`/apicontract prey-quest-widgets <label>` calls `C_QuestLog.GetActivePreyQuest()` once, then uses only its original accessible finite first quest ID for three independent `C_TaskQuest.GetQuestUIWidgetSetByType` calls. Inputs use published `Enum.MapIconUIWidgetSetType.Tooltip`, `BehindIcon`, and `AdventureMapDetails` values, never numeric fallbacks. Both inputs are rechecked after API lookup/function guards.
+
+Manual-only, excluded from `all`: at most four API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Raw arity, nil positions and opaque errors remain distinct. No widget followups, quest acceptance/abandonment, requests, mutations or native classification/default claims.
+
+Pinned retail `QuestLogDocumentation.lua:96–103`, `QuestTaskInfoDocumentation.lua:111–125`, and `UIWidgetManagerSharedDocumentation.lua:6–15` supply call shapes and enum names, not native outputs. Eight actual TOC/slash fixtures prove local mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/prey_quest_widgets.lua docs/addons/ApiContractProbe
+```
+
 ## Manual major faction renown rewards
 
 `/apicontract major-faction-renown-rewards <label>` is manual-only, excluded from `all`. It records one explicit-nil `GetMajorFactionIDs(nil)` call, then up to eight original finite faction IDs through `GetRenownLevels`. First four level entries expose `factionID`, `level`, `locked`, `isMilestone`, `isCapstone`; each original accessible finite level independently feeds `GetRenownRewardsForLevel(originalFactionID, originalLevel)`. Entry `factionID` never replaces the producer ID.

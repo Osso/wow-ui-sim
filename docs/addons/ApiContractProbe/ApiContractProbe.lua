@@ -1063,6 +1063,52 @@ local function captureMajorFactionJourney()
     return result
 end
 
+local function preyNumberAccessible(value)
+    return accessible(value) and type(value) == "number" and value == value
+        and value ~= math.huge and value ~= -math.huge
+end
+
+local function observePreyWidget(id, name)
+    if not preyNumberAccessible(id) then return { status = "unavailable-input" } end
+    local enums, ok = readField(Enum, "MapIconUIWidgetSetType")
+    local value
+    if ok then value, ok = readField(enums, name) end
+    if not ok or not preyNumberAccessible(value) then return { status = "unavailable-enum" } end
+    local fn
+    fn, ok = readField(C_TaskQuest, "GetQuestUIWidgetSetByType")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not preyNumberAccessible(id) or not preyNumberAccessible(value) then
+        return { status = "restricted-input" }
+    end
+    local values = pack(pcall(fn, id, value))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
+local function capturePreyQuestWidgets()
+    local result = { queries = {} }
+    local fn, ok = readField(C_QuestLog, "GetActivePreyQuest")
+    local values
+    if not ok then result.producer = { status = "field-error" }
+    elseif not accessible(fn) or type(fn) ~= "function" then
+        result.producer = { status = "missing-api" }
+    else
+        values = pack(pcall(fn))
+        if values[1] then
+            result.producer = mapTuple(unpack(values, 2, values.n))
+            result.producer.status = "observed"
+        else result.producer = { status = "call-error" }; values = nil end
+    end
+    for _, name in ipairs({ "Tooltip", "BehindIcon", "AdventureMapDetails" }) do
+        result.queries[name] = values and observePreyWidget(values[2], name)
+            or { status = "unavailable-input" }
+    end
+    return result
+end
+
 local function auraNumberStatus(value)
     if not accessible(value) then return "restricted-input" end
     if type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge then
@@ -2349,7 +2395,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+    if mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
         print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
@@ -2379,6 +2425,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "housing-catalog" then record.housingCatalog = captureHousingCatalog() end
         if mode == "major-faction-journey" then record.majorFactionJourney = captureMajorFactionJourney() end
         if mode == "major-faction-renown-rewards" then record.majorFactionRenownRewards = captureMajorFactionRenownRewards() end
+        if mode == "prey-quest-widgets" then record.preyQuestWidgets = capturePreyQuestWidgets() end
         if mode == "training-grounds-structures" then record.trainingGroundsStructures = captureTrainingGroundsStructures() end
         if mode == "training-grounds-state" then record.trainingGroundsState = captureTrainingGroundsState() end
         if mode == "neighborhood-state" then record.neighborhoodState = captureNeighborhoodState() end
