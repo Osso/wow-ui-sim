@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
+
+Documented runtime `fedb65fb0`: manual `combat-audio-settings-read` records `C_CombatAudioAlert.IsEnabled()` twice, nine guarded published spec settings twice, and eleven guarded published throttles twice, excluded from `all`. Forty-two calls per snapshot and ten fixtures establish recorder mechanics only; setters, playback, enforcement, CVar interpretation, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
 
 Documented runtime `6fbefcb73`: manual `encounter-warning-state` calls `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; warning toggles, sounds, creation, native availability/enabled state, defaults, stability, security, and conformance remain unverified. Focused regression proof retains twelve ping-enabled and seventeen public-query fixtures. Updated [[api-contract-probes]] and the index.

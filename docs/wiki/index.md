@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
+
+Runtime `fedb65fb0` adds manual `/apicontract combat-audio-settings-read <label>`, excluded from `all`. It reads audio-alert enabled state twice, nine fixed published spec settings twice, and eleven fixed published throttles twice: 42 calls per snapshot. Ten fixtures prove recorder mechanics only; setters, playback, enforcement, CVar interpretation, and native behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
 
 Runtime `6fbefcb73` adds manual `/apicontract encounter-warning-state <label>`, excluded from `all`. It calls only `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments; warning toggles, sounds, creation, and security experiments remain untouched. Twelve fixtures prove recorder mechanics only; native availability, enabled-state, defaults, stability, and behavior remain unverified. See [[api-contract-probes]].
