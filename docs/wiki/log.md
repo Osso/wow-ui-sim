@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded housing-catalog recorder
+
+Documented `6ff4a22f1`: manual `housing-catalog` records featured state twice, new products once, first-eight original product IDs and category fields, plus one omitted-filter refundable-decor result with its raw second minimum-time return. `standaloneDecorProductID` remains a declared-gap observation. Twelve maximum calls and eleven local fixtures establish mechanics only; no request, purchase, refund, mutation, native value, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
 
 Runtime `2288d233b` extends manual `neighborhood-structures`, excluded from `all`. It preserves three initiative producers, activity entries 1–8, tracked original IDs 1–4, and task-info/task-link reads; it adds four fixed task entries, four milestones, and four reward entries per milestone. Requirements and criteria remain opaque. Sixteen cumulative fixtures, including five new cases, establish recorder mechanics only; no requests, mutations, or native credit follows. Updated [[api-contract-probes]] and the index.
