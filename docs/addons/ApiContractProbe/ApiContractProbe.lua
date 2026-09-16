@@ -2720,7 +2720,7 @@ local function actionFunction(name)
 end
 
 local function captureActions(slot, mode)
-    if mode == "action-state" then
+    if mode == "action-state" or mode == "action-loss-control-duration" then
         local function query(name, usesSlot, global)
             if usesSlot and not accessible(slot) then return { status = "restricted-input" } end
             local namespace, ok = _G, true
@@ -2735,8 +2735,22 @@ local function captureActions(slot, mode)
             local values
             if usesSlot then values = pack(pcall(fn, slot)) else values = pack(pcall(fn)) end
             if not values[1] then return { status = "call-error" } end
-            local result = mapTuple(unpack(values, 2, values.n))
+            local result
+            if name == "GetActionLossOfControlCooldownDuration" then
+                result = { n = values.n - 1, values = {} }
+                for index = 2, math.min(values.n, 17) do
+                    result.values[index - 1] = inspectDuration(values[index])
+                end
+                if values.n > 17 then result.truncated = true end
+            else
+                result = mapTuple(unpack(values, 2, values.n))
+            end
             result.status = "observed"
+            return result
+        end
+        if mode == "action-loss-control-duration" then
+            local result = { slot = scalar(slot), identity = query("GetActionInfo", true, true) }
+            result.duration = query("GetActionLossOfControlCooldownDuration", true)
             return result
         end
         local result = { slot = scalar(slot), identity = query("GetActionInfo", true, true),
@@ -3020,12 +3034,12 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         controlEvents(mode, string.sub(label, 1, 128)); return
     end
     local slot
-    if mode == "action-state" or mode == "actions" or mode == "spell-metadata" or mode == "spell-duration" or mode == "spellbook-metadata" or mode == "spellbook-duration" then
+    if mode == "action-loss-control-duration" or mode == "action-state" or mode == "actions" or mode == "spell-metadata" or mode == "spell-duration" or mode == "spellbook-metadata" or mode == "spellbook-duration" then
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -3088,6 +3102,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "resources" then record.resources = captureResources() end
         if mode == "actions" then record.actions = captureActions(slot) end
         if mode == "action-state" then record.actionState = captureActions(slot, mode) end
+        if mode == "action-loss-control-duration" then record.actionLossControlDuration = captureActions(slot, mode) end
         captureHyperlinkModes(record, mode)
         if mode == "all" or mode == "curves" then record.curves = captureCurves() end
         if mode == "all" or mode == "sex" then record.sex = captureSex() end

@@ -614,6 +614,18 @@ Native order, nil handling, multi-return packing, callback failure propagation a
 luajit docs/addons/ApiContractProbe/tests/mapvalues.lua docs/addons/ApiContractProbe
 ```
 
+## Manual selected-slot action loss-of-control duration
+
+`/apicontract action-loss-control-duration <slot> <label>` reuses the signed-integer parser and is excluded from `all`. It independently records `GetActionInfo(slot)` as control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` with exactly one original parsed slot argument. Item/macro identities, missing controls and control errors do not gate the duration query. Guard the slot before use and recheck after namespace/function lookup and access guards.
+
+`actionLossControlDuration` contains guarded `slot`, raw `identity`, and `duration`. Preserve exact arity, nil positions and opaque errors. Accessible duration objects use the shared ten-method read-only inspector with receiver checks before lookup and after function guards. Objects are current-only, never retained; cast-duration retained objects and capture counters remain untouched. Bounds: two selected-slot API calls and at most 160 duration-method calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
+
+Pinned retail `ActionBarFrameDocumentation.lua:210–224` declares one `actionID:luaIndex`, `RequiresValidActionSlot`, `SecretArguments=AllowedWhenUntainted` and a `LuaDurationObject` return. This does not establish native slot validation, timing or loss-of-control behavior. Historical `GetActionLossOfControlCooldown` and `ActionBarCooldownInfo` fields remain missing. No adjacent cooldown APIs, button registration, action execution or mutations are added. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/action_loss_control_duration.lua docs/addons/ApiContractProbe
+```
+
 ## Manual selected-slot action state
 
 `/apicontract action-state <slot> <label>` reuses the signed-integer slot parser and is excluded from `all`. `GetActionInfo(slot)` is an observed control, not an authorization gate: item, macro, missing, and error results do not suppress independent queries. The original parsed slot feeds exactly one argument to `C_ActionBar.GetActionAutocast`, `GetActionText`, `GetActionUseCount`, `HasRangeRequirements`, `IsAttackAction`, `IsAutoRepeatAction`, `IsConsumableAction`, `IsEquippedAction`, `IsItemAction`, `IsStackableAction`, `IsUsableAction`, and `IsActionInRange` (target omitted). `GetExtraBarIndex()` and `GetMultiCastBarIndex()` are independent no-argument namespace calls.

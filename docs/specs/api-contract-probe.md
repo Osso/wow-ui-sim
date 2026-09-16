@@ -412,6 +412,14 @@ Pinned retail `UnitDocumentation.lua` declares optional empowered hold default t
 
 Pinned `12.0.0-register.json` declarations describe casting position 10 and channel position 11 as castBarID; they are not native evidence and the executing client may differ. Matching native client, controllable casts, non-player channels and empowered/non-empowered fixtures remain pending. No recorder fixture earns native audit credit.
 
+## Manual selected-slot action loss-of-control duration
+
+- `action-loss-control-duration <slot> <label>` reuses `parseActionSlot`, is manual-only and excluded from `all`. Independently record `GetActionInfo(slot)` control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` with one original slot argument; no spell-kind or successful-control gate.
+- Preserve guarded `actionLossControlDuration.slot`, raw `identity` and `duration` tuples with exact arity, nils and opaque errors. Check slot accessibility before forwarding and again after namespace/function lookup and guards. Inspect only accessible duration objects using the shared ten read-only methods and receiver guards.
+- Bound to two selected-slot API calls, sixteen returned positions, 160 method calls per snapshot, ten snapshots, 256-byte scalar strings and 128-byte labels. Retain no duration objects and do not change cast-duration lifecycle state; percentages, timing, equality and native semantics are not inferred.
+- Historical `GetActionLossOfControlCooldown` and `ActionBarCooldownInfo` fields remain missing. Add no adjacent cooldown calls, mutations, action execution or button registration. Native active/expired loss-of-control fixtures and restricted-context behavior remain unverified.
+- Ten actual TOC/slash fixtures cover independent control/query behavior, original slots, method arity and revocation, errors/nils, bounds, collectibility and cast interleaving. Local proof earns no native credit.
+
 ## Manual selected-slot action state
 
 - `action-state <slot> <label>` reuses `parseActionSlot`; excluded from `all`. Record `GetActionInfo(slot)` once as control without requiring a spell kind or successful control call.
