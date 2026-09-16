@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual unit target display
+
+- Manual `unit-target-display <label>` is excluded from `all`. Independently call only `UnitShouldDisplaySpellTargetName(unit)` twice for each of `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: fourteen calls per snapshot.
+- Guard the token and function before use; recheck token access after function guards, immediately before invocation. Missing/restricted inputs or functions and opaque errors remain independent observations.
+- Preserve raw arity/nils and accessible scalar results within sixteen positions, 256-byte strings, 128-byte labels and ten shared snapshots. Do not infer boolean expectations, defaults, repeated-read stability or native target semantics.
+- Never query secret-return `UnitSpellTargetClass`/`UnitSpellTargetName` or add casting queries. Existing `casts` mode supplies separate manual context. Native cast/target fixtures remain unverified; eight local actual TOC/slash fixtures establish recorder mechanics only.
+
 ## Manual selected-slot spell durations
 
 - Manual `spell-duration <slot> <label>` reuses the integer-slot parser and guarded `GetActionInfo(slot)` producer; it is excluded from `all`. Only an accessible `spell` string and finite numeric ID authorize calls with the original ID.

@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual unit target display
+
+`/apicontract unit-target-display <label>` is excluded from `all`. It independently calls only `UnitShouldDisplaySpellTargetName(unit)` twice for each fixed token: `player`, `target`, `focus`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string. Guard the token and function before use and recheck token access after function guards. Missing/restricted APIs, tokens and opaque call errors do not suppress peer observations.
+
+Preserve raw arity/nils and accessible scalar results without asserting boolean values, defaults or stability. Bounds: fourteen calls per snapshot, sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. Never call `UnitSpellTargetClass`, `UnitSpellTargetName` or additional cast queries; use the separate `casts` mode for manual context. Native targeted-cast transitions and semantics remain unverified. Pinned retail `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:3007–3068` declares the ordinary predicate and explicitly secret class/name returns.
+
+Eight actual TOC/slash fixtures prove recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/unit_target_display.lua docs/addons/ApiContractProbe
+```
+
 ## Manual selected-slot spell durations
 
 `/apicontract spell-duration <slot> <label>` is excluded from `all`. It uses the existing integer-slot parser and `GetActionInfo(slot)` producer. Only an accessible `"spell"` first return and finite numeric second return permit queries with that original ID. Recheck both inputs after each protected namespace lookup and function guard, immediately before calling `C_Spell.GetSpellChargeDuration(ID)` or `C_Spell.GetSpellLossOfControlCooldownDuration(ID)`. Missing, restricted or failed producers are unavailable inputs, not zero durations; one failed API never suppresses its peer.

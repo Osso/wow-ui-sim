@@ -394,6 +394,32 @@ local function observeCast(fn, ...)
     return result
 end
 
+local function observeUnitTargetDisplay(unit)
+    if not accessible(unit) then return { status = "restricted-input" } end
+    local fn = UnitShouldDisplaySpellTargetName
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Function guards may revoke the token before invocation.
+    if not accessible(unit) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, unit))
+    if not values[1] then return { status = "call-error" } end
+    local result = { status = "observed", n = values.n - 1, values = {} }
+    for index = 2, math.min(values.n, 17) do
+        result.values[index - 1] = scalar(values[index])
+    end
+    if values.n > 17 then result.truncated = true end
+    return result
+end
+
+local function captureUnitTargetDisplay()
+    local result = { units = {} }
+    for _, unit in ipairs({ "player", "target", "focus", "party1", "nonexistent", "invalid-unit-token", "" }) do
+        local row = { unit = scalar(unit), observations = {} }
+        for index = 1, 2 do row.observations[index] = observeUnitTargetDisplay(unit) end
+        result.units[#result.units + 1] = row
+    end
+    return result
+end
+
 local function observePublicQuery(namespace, name)
     local fn, ok = readField(namespace, name)
     if not ok then return { status = "field-error" } end
@@ -1323,8 +1349,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1335,6 +1361,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         record.status = "missing-access-api"
     else
         record.client, record.time = observe(GetBuildInfo), observe(time)
+        if mode == "unit-target-display" then record.unitTargetDisplay = captureUnitTargetDisplay() end
         if mode == "unit-auras-current" then record.unitAurasCurrent = captureCurrentUnitAuras() end
         if mode == "aura-display-count" then record.auraDisplayCount = captureAuraPage(captureAuraSlot) end
         if mode == "aura-time" then record.auraTime = captureAuraPage(captureAuraTimeSlot) end
