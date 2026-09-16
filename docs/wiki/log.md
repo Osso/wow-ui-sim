@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded cooldown-viewer recorder
+
+Documented runtime `491d3a818`: manual `cooldown-viewer-read` reads nine fixed published categories with `false`, then bounds each category set to eight original IDs and independent cooldown-info/alert reads. Only `cooldownID`, `category`, and eight alert scalars are captured. The cap is 153 calls per snapshot; refreshes, mutations, flag interpretation, native values, and conformance credit remain excluded. Eight fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Correct prey-widget guard ordering
 
 Runtime `57cab9ffc` fixes the `prey-quest-widgets` visualization chain: it rechecks discriminator access immediately before comparing it and widget-ID access immediately before dispatch. Sixteen cumulative fixtures include two new guard-order regressions; the second was not reached by the initial RED run. Final independent verification remains pending. Native behavior and conformance credit remain unverified. Updated [[api-contract-probes]] and the index.

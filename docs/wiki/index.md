@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded cooldown-viewer recorder
+
+Runtime `491d3a818` adds manual `/apicontract cooldown-viewer-read <label>`, excluded from `all`. It reads nine fixed published cooldown-viewer categories with `false`, then uses up to eight original IDs per category for independent info and alert reads. Only two info fields and eight alert scalars are bounded; no refresh, mutation, flag interpretation, or native claim follows. Eight fixtures prove recorder mechanics only. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
 
 Runtime `7937582a2` extends manual `/apicontract prey-quest-widgets <label>`, excluded from `all`; corrective runtime `57cab9ffc` rechecks discriminator access immediately before comparison and widget-ID access immediately before dispatch. Three original widget-set IDs each yield at most four guarded widgets; only the published `PreyHuntProgress` visualization type receives a visualization query, exposing sixteen fixed fields. Sixteen cumulative fixtures include two new guard-order regressions; final independent verification remains pending. Wrong-type calls, mutations, and native behavior remain unverified. See [[api-contract-probes]].
