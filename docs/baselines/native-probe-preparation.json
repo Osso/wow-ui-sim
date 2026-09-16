@@ -9587,10 +9587,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual spell-metadata capture independently queries C_UnitAuras.AuraIsBigDefensive using the original accessible finite spell ID produced by GetActionInfo(slot)",
-          "Guarded producer inputs, namespace/function lookup and access rechecks; bounded raw return arity and opaque errors"
+          "Guarded producer inputs, namespace/function lookup and access rechecks; bounded raw return arity and opaque errors",
+          "Manual aura-display-count captures the first player HELPFUL page with up to eight original slots and guarded auraInstanceIDs, then five independent omitted/min/max display-count variants per ID"
         ],
         "missing": [
-          "GetAuraApplicationDisplayCount producer-backed argument variants",
+          "Aura display-count continuation pages, additional filters/units, native stack transitions and formatting results",
           "GetUnitAuras changed enumeration contract and populated aura fixtures",
           "Native defensive classifications, transitions, coercion and restricted-context behavior"
         ]
