@@ -11,7 +11,7 @@ local function setup(producer, namespace)
     canaccessvalue = function(v) return not rawequal(v, secret) end
     GetBuildInfo = function() return "fixture", "123" end
     time = function() return 42 end
-    GetActionInfo, C_Spell, Enum = producer, namespace, nil
+    GetActionInfo, C_Spell, Enum, C_UnitAuras = producer, namespace, nil, nil
     local toc = assert(io.open(root .. "/ApiContractProbe.toc"))
     for line in toc:lines() do
         if line:match("%.lua$") then assert(loadfile(root .. "/" .. line))() end
@@ -284,5 +284,96 @@ test("visibility remains manual and capped at thirty calls", function()
     visibilitySetup(function() calls = calls + 1 end)
     for i = 1, 11 do SlashCmdList.APICONTRACTPROBE("spell-metadata 17") end
     assert(calls == 30 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+end)
+test("aura defensive uses original spell ID independently of failed spell queries", function()
+    setup(function(slot) assert(slot == 17); return "spell", 12345.5 end, {})
+    local calls = 0
+    C_UnitAuras = { AuraIsBigDefensive = function(...)
+        assert(select("#", ...) == 1 and (...) == 12345.5)
+        calls = calls + 1
+        return false, nil, true
+    end }
+    local result = capture()
+    local row = assert(result.auraQueries, "aura queries absent").AuraIsBigDefensive
+    assert(calls == 1 and row.n == 3 and row.values[1].value == false)
+    assert(row.values[2].kind == "nil" and row.values[3].value == true)
+    assert(result.queries[names[1]].status == "missing-api")
+end)
+
+test("aura namespace function and call failures preserve spell and visibility peers", function()
+    for _, variant in ipairs({ "absent", "namespace", "lookup", "function", "error", "empty", "restricted-result" }) do
+        local visibilityCalls = 0
+        local baseCalls = visibilitySetup(function() visibilityCalls = visibilityCalls + 1; return true end)
+        if variant == "namespace" then C_UnitAuras = secret
+        elseif variant == "lookup" then C_UnitAuras = setmetatable({}, { __index = function() error(secret) end })
+        elseif variant == "function" then C_UnitAuras = { AuraIsBigDefensive = secret }
+        elseif variant == "error" then C_UnitAuras = { AuraIsBigDefensive = function() error(secret) end }
+        elseif variant == "empty" then C_UnitAuras = { AuraIsBigDefensive = function() end }
+        elseif variant == "restricted-result" then C_UnitAuras = { AuraIsBigDefensive = function() return secret, nil end } end
+        local original = type
+        type = function(v) assert(not rawequal(v, secret), "restricted inspection"); return original(v) end
+        local ok, result = pcall(capture)
+        type = original
+        assert(ok, result)
+        local row = assert(result.auraQueries).AuraIsBigDefensive
+        assert(baseCalls() == 7 and visibilityCalls == 3)
+        if variant == "empty" then assert(row.n == 0)
+        elseif variant == "restricted-result" then assert(row.n == 2 and row.values[1].status == "restricted" and row.values[2].kind == "nil")
+        elseif variant == "error" then assert(row.status == "call-error")
+        elseif variant == "function" then assert(row.status == "missing-api")
+        else assert(row.status == "field-error") end
+    end
+end)
+
+test("aura rejects invalid and restricted original identities", function()
+    for _, input in ipairs({ { "item", 12 }, { secret, 12 }, { "spell", secret }, { "spell", "12" }, { "spell", math.huge } }) do
+        setup(function() return unpack(input) end, {})
+        C_UnitAuras = setmetatable({}, { __index = function() error("invalid input lookup") end })
+        local row = assert(capture().auraQueries).AuraIsBigDefensive
+        assert(row.status == "restricted-input" or row.status == "unavailable-input")
+    end
+end)
+
+test("aura rechecks kind and ID after namespace lookup and function guards", function()
+    for _, target in ipairs({ "spell", 12345 }) do
+        for _, phase in ipairs({ "lookup", "function" }) do
+            local revoked, calls = false, 0
+            visibilitySetup(function() return true end)
+            local fn = function() calls = calls + 1 end
+            C_UnitAuras = setmetatable({}, { __index = function()
+                if phase == "lookup" then revoked = true end
+                return fn
+            end })
+            canaccessvalue = function(v)
+                if phase == "function" and rawequal(v, fn) then revoked = true end
+                return not (revoked and rawequal(v, target))
+            end
+            assert(capture().auraQueries.AuraIsBigDefensive.status == "restricted-input")
+            assert(calls == 0)
+        end
+    end
+    visibilitySetup(function()
+        canaccessvalue = function(v) return not rawequal(v, 12345) end
+    end)
+    C_UnitAuras = { AuraIsBigDefensive = function() error("revoked producer forwarded") end }
+    assert(capture().auraQueries.AuraIsBigDefensive.status == "restricted-input")
+end)
+
+test("aura tuple strings labels snapshots and manual routing remain bounded", function()
+    visibilitySetup(function() return true end)
+    local calls, tuple = 0, {}
+    for i = 1, 20 do tuple[i] = string.rep("A", 400) end
+    C_UnitAuras = { AuraIsBigDefensive = function() calls = calls + 1; return unpack(tuple) end }
+    local result = capture("spell-metadata 17 " .. string.rep("L", 200))
+    local row = assert(result.auraQueries).AuraIsBigDefensive
+    assert(row.n == 20 and #row.values == 16 and row.truncated)
+    assert(#row.values[1].value == 256 and row.values[1].truncated)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
+    for i = 1, 10 do SlashCmdList.APICONTRACTPROBE("spell-metadata 17") end
+    assert(calls == 10 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    visibilitySetup(function() return true end)
+    C_UnitAuras = { AuraIsBigDefensive = function() error("automatic aura query") end }
+    SlashCmdList.APICONTRACTPROBE("all")
+    assert(ApiContractProbeDB.captures[1].spellMetadata == nil)
 end)
 print(string.format("%d/%d passed", passed, passed))

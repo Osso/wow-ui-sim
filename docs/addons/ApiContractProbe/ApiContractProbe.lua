@@ -475,6 +475,22 @@ local function observeSpellVisibility(kind, id, name)
     return result
 end
 
+local function observeAuraDefensive(kind, id)
+    local status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local fn, ok = readField(C_UnitAuras, "AuraIsBigDefensive")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    -- Namespace lookup and function guards can revoke the original inputs.
+    status = spellInputStatus(kind, id)
+    if status then return { status = status } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result
+end
+
 local function captureSpellMetadata(slot)
     local identity, kind, id = observeSpellProducer(slot)
     local result = { slot = slot, identity = identity, queries = {}, visibility = {} }
@@ -487,6 +503,10 @@ local function captureSpellMetadata(slot)
         result.visibility[name] = identity.status == "observed" and observeSpellVisibility(kind, id, name)
             or { status = "unavailable-input" }
     end
+    result.auraQueries = {
+        AuraIsBigDefensive = identity.status == "observed" and observeAuraDefensive(kind, id)
+            or { status = "unavailable-input" },
+    }
     return result
 end
 
