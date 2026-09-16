@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare equipped item-info recorder
+
+Runtime `ad054cd3d` adds manual `/apicontract equipped-item-info <label>`, excluded from `all`. It forwards each original accessible player-equipment link to one `C_Item.GetItemInfo` call and preserves the declared 18-position tuple exception locally. Eleven fixtures plus eight item-binding regressions prove recorder mechanics only; no ItemLocation, transmog, mutation, native, or historical conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare selected-slot action loss-of-control duration recorder
 
 Runtime `7865a172c` adds manual `/apicontract action-loss-control-duration <slot> <label>`, excluded from `all`. It independently captures `GetActionInfo(slot)` control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` using the original parsed slot; returned duration objects receive ten current-only read methods without retention. Ten fixtures plus ten action-state regressions prove recorder mechanics only. Historical non-duration loss-of-control and cooldown-info observations remain missing. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare equipped item-info recorder
+
+`ad054cd3d` adds manual `equipped-item-info`, excluded from `all`: each original accessible equipment link from slots 1–19 feeds one `C_Item.GetItemInfo` call. Its declared 18-return tuple is a local exception to the shared 16-position bound; values 16–18, including nils, remain captured without deeper traversal. Eleven fixtures plus eight item-binding regressions establish recorder mechanics only. No ItemLocation, transmog, mutation, native, or historical claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare selected-slot action loss-of-control duration recorder
 
 Documented runtime `7865a172c`: manual `action-loss-control-duration <slot> <label>` records selected-slot control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` independently. It inspects returned duration objects only through ten current-only read methods, retains none, and caps work at two API calls and 160 method calls per snapshot. Ten fixtures plus ten action-state regressions establish recorder mechanics only; historical non-duration loss-of-control and cooldown-info observations, native behavior, and credit remain open. Updated [[api-contract-probes]] and the index.
