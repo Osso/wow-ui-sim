@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 95,
-    "partial-recorder": 66,
+    "needs-design-and-recorder-review": 92,
+    "partial-recorder": 69,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -3846,8 +3846,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual perks-criteria captures the first four current criteriaList entries of eight produced activities, observing guarded criteriaID and requiredValue"
+        ],
+        "missing": [
+          "Native populated activities, criteria/requirement values and transitions",
+          "Remaining list entries, completeness and historical changed-type evidence",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-075"
     },
@@ -3860,8 +3870,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual perks-criteria captures the first four current requirementsList entries of eight produced activities, observing guarded completed and requirementText"
+        ],
+        "missing": [
+          "Native populated activities, criteria/requirement values and transitions",
+          "Remaining list entries, completeness and historical changed-type evidence",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-076"
     },
@@ -10213,8 +10233,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual perks-criteria records current CriteriaRequiredValue and CriteriaRequirement fields from actual GetPerksActivitiesInfo nested lists in two independent bounded captures"
+        ],
+        "missing": [
+          "Native populated activities, criteria/requirement values and transitions",
+          "Remaining list entries, completeness and historical changed-type evidence",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-criteria-structures"
     },
