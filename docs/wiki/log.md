@@ -1,3 +1,7 @@
+## [2026-09-15] investigation | Prepare current-only aura-time recorder
+
+Runtime `87e230e6b` adds manual `/apicontract aura-time <label>`, excluded from `all`. One first-page player HELPFUL producer yields up to eight guarded original aura instance IDs; each has four independent two-argument time/duration observations, with optional spell ID omitted. Duration objects remain opaque without methods or retention. Eight local fixtures plus unchanged display-count regression coverage prove recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
 ## [2026-09-15] investigation | Prepare first-page aura display-count recorder
 
 Runtime `ca237baf9` adds manual `/apicontract aura-display-count <label>`, excluded from `all`. It records one player HELPFUL first page of eight slots without continuation traversal, then five guarded display-count argument variants for each accessible original aura instance ID. Eight local fixtures establish bounded recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
