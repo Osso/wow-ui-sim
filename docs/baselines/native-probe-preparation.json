@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 127,
-    "partial-recorder": 34,
+    "needs-design-and-recorder-review": 125,
+    "partial-recorder": 36,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -1687,8 +1687,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual housing-catalog records GetNewProducts once and uses up to eight original accessible finite product IDs for GetFirstCategoryByProductID, observing six guarded category fields including showPersistentRefundButton",
+          "GetRefundableDecors is independently called with optional filter omitted; first eight entries expose four declared fields and raw tuple preserves minTimeRemainingSeconds"
+        ],
+        "missing": [
+          "Product/category followup queries, currency-code producers and product consumableQuantity",
+          "Historical standaloneDecorProductID field evidence and native populated catalog/refund fixtures",
+          "Purchase, refund, refresh and interaction mutations; native transitions and restricted contexts"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/housing-C_CatalogShop"
     },
@@ -1815,8 +1826,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual housing-catalog independently records HasFeaturedEntries twice without arguments"
+        ],
+        "missing": [
+          "Catalog entry refund timestamp with produced record ID and entry type",
+          "Bundle, catalog-entry and preview-item structures and native populated fixtures",
+          "Preview-cart mutation, refund requests and native transitions/restricted contexts"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/housing-C_HousingCatalog"
     },
