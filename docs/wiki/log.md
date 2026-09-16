@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
+
+Documented runtime `f9f24fa84`: manual `ping-enabled` calls `C_Ping.IsPingSystemEnabled()` twice with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; secure ping send/toggle APIs, CVars, native enabled state, defaults, stability, security, and conformance remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare explicit-power recorder
 
 Documented runtime `2d0ee4876`: manual `explicit-power` reads three guarded published power types for `player` and `target`, with independent false/true power, maximum, and percent calls; percent calls explicitly pass a nil curve. Eight fixtures establish recorder mechanics only. Existing `resources` behavior remains unchanged; native scale, curve, restricted-context behavior, and conformance remain unverified. Updated [[api-contract-probes]] and the index.

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
+
+Runtime `f9f24fa84` adds manual `/apicontract ping-enabled <label>`, excluded from `all`. It calls only `C_Ping.IsPingSystemEnabled()` twice with zero arguments; secure ping send/toggle APIs and CVars remain untouched. Twelve fixtures prove recorder mechanics only; native enabled-state, defaults, stability, and security behavior remain unverified. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare explicit-power recorder
 
 Runtime `2d0ee4876` adds manual `/apicontract explicit-power <label>`, excluded from `all`. For `player` and `target`, guarded published `Mana`, `Rage`, and `Energy` values independently feed power, maximum, and percent calls for `unmodified=false`/`true`; percent calls include an explicit nil curve. Eight fixtures prove recorder mechanics only. Existing `resources` behavior, native scale/curve semantics, and restricted-context behavior remain unverified. See [[api-contract-probes]].
