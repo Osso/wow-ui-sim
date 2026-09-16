@@ -1692,10 +1692,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual housing-catalog records GetNewProducts once and uses up to eight original accessible finite product IDs for GetFirstCategoryByProductID, observing six guarded category fields including showPersistentRefundButton",
-          "GetRefundableDecors is independently called with optional filter omitted; first eight entries expose four declared fields and raw tuple preserves minTimeRemainingSeconds"
+          "GetRefundableDecors is independently called with optional filter omitted; first eight entries expose four declared fields and raw tuple preserves minTimeRemainingSeconds",
+          "Original accessible finite IDs from the first category objects feed GetProductIDsForCategory independently, observing only the first eight returned product IDs without recursive queries"
         ],
         "missing": [
-          "Product/category followup queries, currency-code producers and product consumableQuantity",
+          "Product details, currency balance observations and product consumableQuantity evidence",
           "Historical standaloneDecorProductID field evidence and native populated catalog/refund fixtures",
           "Purchase, refund, refresh and interaction mutations; native transitions and restricted contexts"
         ]
