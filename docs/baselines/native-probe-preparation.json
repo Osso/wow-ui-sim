@@ -75,8 +75,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 100,
-    "partial-recorder": 61,
+    "needs-design-and-recorder-review": 99,
+    "partial-recorder": 62,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -2333,8 +2333,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual encounter-warning-state independently records IsFeatureAvailable and IsFeatureEnabled twice each without arguments"
+        ],
+        "missing": [
+          "Native encounter-warning availability/enabled fixtures and transitions",
+          "Other warning APIs and structures; sound playback, toggles and restricted mutations remain excluded",
+          "Native validation and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/encounter-warning"
     },
