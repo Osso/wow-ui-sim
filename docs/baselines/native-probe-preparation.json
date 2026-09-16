@@ -5810,10 +5810,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual major-faction-journey calls GetMajorFactionIDs with an explicit nil expansion filter, then independently queries ShouldDisplayMajorFactionAsJourney and ShouldUseJourneyRewardTrack for the first eight original accessible finite IDs",
-          "Each original faction ID independently feeds GetMajorFactionData; first returned data exposes guarded description, playerCompanionID and four highlights with title, description and level fields"
+          "Each original faction ID independently feeds GetMajorFactionData; first returned data exposes guarded description, playerCompanionID and four highlights with title, description and level fields",
+          "Manual major-faction-renown-rewards uses eight original faction IDs and four produced levels per faction to observe four rewards per level, including fifteen guarded declared reward fields and rewardType"
         ],
         "missing": [
-          "Renown reward structures and rewardType, remaining highlights and populated native data",
+          "Remaining faction IDs, levels, rewards and highlights; populated native data and rewardType semantics",
           "Native populated faction fixtures, journey classification and transitions",
           "Native validation and restricted-context behavior"
         ]
