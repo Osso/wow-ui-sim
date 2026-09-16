@@ -4,9 +4,11 @@
 
 `/apicontract prey-quest-widgets <label>` calls `C_QuestLog.GetActivePreyQuest()` once, then uses only its original accessible finite first quest ID for three independent `C_TaskQuest.GetQuestUIWidgetSetByType` calls. Inputs use published `Enum.MapIconUIWidgetSetType.Tooltip`, `BehindIcon`, and `AdventureMapDetails` values, never numeric fallbacks. Both inputs are rechecked after API lookup/function guards.
 
-Manual-only, excluded from `all`: at most four API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Raw arity, nil positions and opaque errors remain distinct. No widget followups, quest acceptance/abandonment, requests, mutations or native classification/default claims.
+Distinct `details` preserve existing query tuples. Each original finite widget-set first return feeds `GetAllWidgetsBySetID` once; only its first four entries supply guarded original `widgetID`/`widgetType`. Only a match with accessible published `Enum.UIWidgetVisualizationType.PreyHuntProgress` permits visualization lookup, with all dispatch inputs rechecked after lookup/function guards. The first visualization object exposes sixteen declared fields as scalar observations, without nested traversal.
 
-Pinned retail `QuestLogDocumentation.lua:96–103`, `QuestTaskInfoDocumentation.lua:111–125`, and `UIWidgetManagerSharedDocumentation.lua:6–15` supply call shapes and enum names, not native outputs. Eight actual TOC/slash fixtures prove local mechanics only:
+Manual-only, excluded from `all`: at most nineteen API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Raw arity, nil positions and opaque errors remain distinct. No wrong-type calls, quest acceptance/abandonment, requests, mutations, completeness or native classification/default claims.
+
+Pinned retail `QuestLogDocumentation.lua:96–103`, `QuestTaskInfoDocumentation.lua:111–125`, and `UIWidgetManagerSharedDocumentation.lua:6–15` supply call shapes and enum names, not native outputs. `UIWidgetManagerDocumentation.lua:11–24,278–290,1626–1646,2073–2081` and the published visualization enum ground the extension. Fourteen cumulative actual TOC/slash fixtures (eight existing, six new) prove local mechanics only:
 
 ```text
 luajit docs/addons/ApiContractProbe/tests/prey_quest_widgets.lua docs/addons/ApiContractProbe

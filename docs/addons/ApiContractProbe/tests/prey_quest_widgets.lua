@@ -112,4 +112,71 @@ test("bounded tuples strings labels snapshots and manual only", function()
     SlashCmdList.APICONTRACTPROBE("all")
     assert(ApiContractProbeDB.captures[1].preyQuestWidgets == nil)
 end)
+local fields = { "shownState", "progressState", "tooltip", "tooltipLoc", "widgetSizeSetting", "textureKit", "frameTextureKit", "hasTimer", "orderIndex", "widgetTag", "inAnimType", "outAnimType", "widgetScale", "layoutDirection", "modelSceneLayer", "scriptedAnimationEffectID" }
+local function chain(list, visual)
+    setup(function() return 77 end, function() return 91.25 end)
+    Enum.UIWidgetVisualizationType = { PreyHuntProgress = 51.5 }
+    C_UIWidgetManager = { GetAllWidgetsBySetID = list, GetPreyHuntProgressWidgetVisualizationInfo = visual }
+end
+test("chain originals discriminator fields and wrong types", function()
+    local lists, calls = 0, 0
+    chain(function(id) lists = lists + 1; assert(id == 91.25); return { { widgetID = 13.25, widgetType = 51.5 }, { widgetID = 14, widgetType = 31 } } end,
+        function(id) calls = calls + 1; assert(id == 13.25); local r = {}; for i, key in ipairs(fields) do r[key] = i end; return r, nil end)
+    local r = capture(); assert(r.details and lists == 3 and calls == 3)
+    for _, name in ipairs(names) do
+        local v = r.details[name].entries[1].visualization
+        assert(v.n == 2)
+        for i, key in ipairs(fields) do assert(v.fields[key].value == i) end
+    end
+end)
+test("chain lookup and function guards revoke dispatch inputs", function()
+    for _, phase in ipairs({ "lookup", "secret", "access" }) do
+        for _, target in ipairs({ 13.25, 51.5 }) do
+            local revoked, calls = false, 0
+            local fn = function() calls = calls + 1 end
+            chain(function() return { { widgetID = 13.25, widgetType = 51.5 } } end, fn)
+            C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo = nil
+            setmetatable(C_UIWidgetManager, { __index = function() if phase == "lookup" then revoked = true end; return fn end })
+            issecretvalue = function(v) if phase == "secret" and rawequal(v, fn) then revoked = true end; return false end
+            canaccessvalue = function(v) if phase == "access" and rawequal(v, fn) then revoked = true end; return not (revoked and rawequal(v, target)) end
+            capture(); assert(calls == 0)
+        end
+    end
+end)
+test("chain set ID revoked during list lookup", function()
+    local revoked, calls = false, 0
+    chain(function() calls = calls + 1 end, function() error("visual") end)
+    local fn = C_UIWidgetManager.GetAllWidgetsBySetID
+    C_UIWidgetManager.GetAllWidgetsBySetID = nil
+    setmetatable(C_UIWidgetManager, { __index = function() revoked = true; return fn end })
+    canaccessvalue = function(v) return not (revoked and rawequal(v, 91.25)) end
+    capture(); assert(calls == 0)
+end)
+test("chain visualization receiver checked before every field", function()
+    for position = 1, #fields do
+        local revoked, reads = false, 0
+        local obj = setmetatable({}, { __index = function(_, key) assert(not revoked); reads = reads + 1; if key == fields[position] then revoked = true end; return 4 end })
+        chain(function() return { { widgetID = 13, widgetType = 51.5 } } end, function() return obj end)
+        canaccessvalue = function(v) return not (revoked and rawequal(v, obj)) end
+        capture(); assert(reads == position)
+    end
+end)
+test("chain nil errors independent and first return only", function()
+    local calls = 0
+    chain(function() return { { widgetID = 1, widgetType = 51.5 }, { widgetID = 2, widgetType = 51.5 }, { widgetID = 3, widgetType = 51.5 } } end,
+        function(id) calls = calls + 1; if id == 1 then error(secret) elseif id == 2 then return nil, {} else return end end)
+    local r = capture(); assert(calls == 9)
+    local e = r.details.Tooltip.entries
+    assert(e[1].visualization.status == "call-error" and e[2].visualization.n == 2 and e[3].visualization.n == 0)
+end)
+test("chain bounded nineteen calls and collectible objects", function()
+    local calls, weak = 0, setmetatable({}, { __mode = "v" })
+    chain(function() calls = calls + 1; local list = {}; for i = 1, 9 do list[i] = { widgetID = i, widgetType = 51.5 } end; weak[#weak + 1] = list; return list end,
+        function() calls = calls + 1; local obj = { tooltip = string.rep("x", 300), widgetTag = secret }; weak[#weak + 1] = obj; return obj end)
+    for i = 1, 11 do capture() end
+    assert(calls == 150 and #ApiContractProbeDB.captures == 10)
+    assert(#ApiContractProbeDB.captures[1].preyQuestWidgets.details.Tooltip.entries == 4)
+    assert(#ApiContractProbeDB.captures[1].preyQuestWidgets.details.Tooltip.entries[1].visualization.fields.tooltip.value == 256)
+    collectgarbage(); collectgarbage(); assert(next(weak) == nil)
+end)
 print("Passed " .. passed .. " tests")

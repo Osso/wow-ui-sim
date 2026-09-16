@@ -1068,6 +1068,60 @@ local function preyNumberAccessible(value)
         and value ~= math.huge and value ~= -math.huge
 end
 
+local function observePreyVisualization(id, kind)
+    if not preyNumberAccessible(id) or not preyNumberAccessible(kind) then return { status = "unavailable-input" } end
+    local enums, ok = readField(Enum, "UIWidgetVisualizationType")
+    local discriminator
+    if ok then discriminator, ok = readField(enums, "PreyHuntProgress") end
+    if not ok or not preyNumberAccessible(discriminator) then return { status = "unavailable-enum" } end
+    if not preyNumberAccessible(id) or not preyNumberAccessible(kind) then return { status = "restricted-input" } end
+    if kind ~= discriminator then return { status = "wrong-widget-type" } end
+    local fn
+    fn, ok = readField(C_UIWidgetManager, "GetPreyHuntProgressWidgetVisualizationInfo")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not preyNumberAccessible(id) or not preyNumberAccessible(kind)
+        or not preyNumberAccessible(discriminator) then return { status = "restricted-input" } end
+    if kind ~= discriminator then return { status = "wrong-widget-type" } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.fields = "observed", {}
+    for _, key in ipairs({ "shownState", "progressState", "tooltip", "tooltipLoc", "widgetSizeSetting",
+        "textureKit", "frameTextureKit", "hasTimer", "orderIndex", "widgetTag", "inAnimType",
+        "outAnimType", "widgetScale", "layoutDirection", "modelSceneLayer", "scriptedAnimationEffectID" }) do
+        local value, fieldOK = readField(values[2], key)
+        result.fields[key] = fieldOK and scalar(value) or { status = "field-error" }
+    end
+    return result
+end
+
+local function observePreyWidgetSet(id)
+    if not preyNumberAccessible(id) then return { status = "unavailable-input" } end
+    local fn, ok = readField(C_UIWidgetManager, "GetAllWidgetsBySetID")
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    if not preyNumberAccessible(id) then return { status = "restricted-input" } end
+    local values = pack(pcall(fn, id))
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status, result.entries = "observed", {}
+    for index = 1, 4 do
+        local entry, entryOK = readField(values[2], index)
+        local row = { status = entryOK and "observed" or "field-error" }
+        result.entries[index] = row
+        if entryOK then
+            local widgetID, idOK = readField(entry, "widgetID")
+            local kind, kindOK = readField(entry, "widgetType")
+            row.widgetID = idOK and scalar(widgetID) or { status = "field-error" }
+            row.widgetType = kindOK and scalar(kind) or { status = "field-error" }
+            row.visualization = idOK and kindOK and observePreyVisualization(widgetID, kind)
+                or { status = "unavailable-input" }
+        end
+    end
+    return result
+end
+
 local function observePreyWidget(id, name)
     if not preyNumberAccessible(id) then return { status = "unavailable-input" } end
     local enums, ok = readField(Enum, "MapIconUIWidgetSetType")
@@ -1085,11 +1139,11 @@ local function observePreyWidget(id, name)
     if not values[1] then return { status = "call-error" } end
     local result = mapTuple(unpack(values, 2, values.n))
     result.status = "observed"
-    return result
+    return result, values[2]
 end
 
 local function capturePreyQuestWidgets()
-    local result = { queries = {} }
+    local result = { queries = {}, details = {} }
     local fn, ok = readField(C_QuestLog, "GetActivePreyQuest")
     local values
     if not ok then result.producer = { status = "field-error" }
@@ -1103,8 +1157,10 @@ local function capturePreyQuestWidgets()
         else result.producer = { status = "call-error" }; values = nil end
     end
     for _, name in ipairs({ "Tooltip", "BehindIcon", "AdventureMapDetails" }) do
-        result.queries[name] = values and observePreyWidget(values[2], name)
-            or { status = "unavailable-input" }
+        local setID
+        if values then result.queries[name], setID = observePreyWidget(values[2], name)
+        else result.queries[name] = { status = "unavailable-input" } end
+        result.details[name] = observePreyWidgetSet(setID)
     end
     return result
 end
