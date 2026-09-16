@@ -569,6 +569,104 @@ local function capturePlayerStateQueries()
     return result
 end
 
+do
+    -- Keep the lock in the addon session, not in resettable SavedVariables.
+    local transitionBlocked = false
+    local captureReadOnly = capturePlayerStateQueries
+
+    local function usableBoolean(value)
+        return accessible(value) and type(value) == "boolean"
+    end
+
+    local function invoke(fn, ...)
+        local values = pack(pcall(fn, ...))
+        if not values[1] then return { status = "call-error" } end
+        local result = { status = "observed", n = values.n - 1, values = {} }
+        for index = 2, math.min(values.n, 17) do
+            result.values[index - 1] = scalar(values[index])
+        end
+        if values.n > 17 then result.truncated = true end
+        return result, values[2]
+    end
+
+    local function readState(name)
+        local fn, ok = readField(_G, name)
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        return invoke(fn)
+    end
+
+    local function setState(name, value, baseline)
+        if not usableBoolean(baseline) then return { status = "restricted-baseline" }, false end
+        local fn, ok = readField(_G, name)
+        if not ok then return { status = "field-error" }, false end
+        if not accessible(fn) or type(fn) ~= "function" then
+            return { status = "missing-api" }, false
+        end
+        -- Lookup/function/argument guards may revoke the original restoration value.
+        if not usableBoolean(value) then return { status = "restricted-argument" }, false end
+        if not usableBoolean(baseline) then return { status = "restricted-baseline" }, false end
+        local result = invoke(fn, value)
+        return result, true
+    end
+
+    local function restoreState(getter, setter, baseline)
+        local result = {}
+        local attempted
+        result.setter, attempted = setState(setter, baseline, baseline)
+        local final
+        result.read, final = readState(getter)
+        if not attempted then result.status = "restoration-skipped"
+        elseif result.setter.status == "call-error" then result.status = "restoration-error"
+        else
+            result.status = "restoration-unconfirmed"
+            if result.read.status == "observed" and usableBoolean(final) and usableBoolean(baseline)
+                and accessible(final) and accessible(baseline) and final == baseline then
+                -- Equality is a captured observation, not a native restoration guarantee.
+                result.status = "confirmed-by-observation"
+            end
+        end
+        return result
+    end
+
+    local function captureLane(getter, setter)
+        local row = { steps = {}, restoration = { status = "not-needed" } }
+        local baseline
+        row.baseline, baseline = readState(getter)
+        if row.baseline.status ~= "observed" or not usableBoolean(baseline) then
+            row.status = "transition-unavailable"
+            return row, false
+        end
+        local attempted = false
+        for index, value in ipairs({ false, true }) do
+            local step, invoked = {}, false
+            step.setter, invoked = setState(setter, value, baseline)
+            attempted = attempted or invoked
+            step.read = invoked and readState(getter) or { status = "skipped" }
+            row.steps[index] = step
+        end
+        if attempted then
+            -- Native setter errors are contained; cleanup still runs after every attempted sequence.
+            row.restoration = restoreState(getter, setter, baseline)
+        end
+        local unconfirmed = attempted and row.restoration.status ~= "confirmed-by-observation"
+        row.status = unconfirmed and "restoration-unconfirmed" or "observed"
+        return row, unconfirmed
+    end
+
+    capturePlayerStateQueries = function(mode)
+        if mode ~= "cloak-helm-transition" then return captureReadOnly() end
+        if transitionBlocked then return { status = "blocked-restoration-unconfirmed" } end
+        local result = {}
+        local cloakUnconfirmed, helmUnconfirmed
+        result.cloak, cloakUnconfirmed = captureLane("ShowingCloak", "ShowCloak")
+        result.helm, helmUnconfirmed = captureLane("ShowingHelm", "ShowHelm")
+        transitionBlocked = cloakUnconfirmed or helmUnconfirmed
+        result.status = transitionBlocked and "restoration-unconfirmed" or "observed"
+        return result
+    end
+end
+
 local function captureStableBonusSlot()
     local result = { IsBonusPetSlotAvailable = {} }
     for index = 1, 2 do
@@ -3298,8 +3396,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -3340,6 +3438,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "nameplate-metrics" then record.nameplateMetrics = captureNameplateMetrics() end
         if mode == "death-recap-current" then record.deathRecapCurrent = captureDeathRecapCurrent() end
         if mode == "player-state-queries" then record.playerStateQueries = capturePlayerStateQueries() end
+        if mode == "cloak-helm-transition" then record.cloakHelmTransition = capturePlayerStateQueries(mode) end
         if mode == "stable-bonus-slot" then record.stableBonusSlot = captureStableBonusSlot() end
         if mode == "training-grounds-state" then record.trainingGroundsState = captureTrainingGroundsState() end
         if mode == "quest-favor" then record.questFavor = captureQuestFavor() end

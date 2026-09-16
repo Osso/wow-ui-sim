@@ -120,6 +120,22 @@ Pinned `UnitDocumentation.lua:1196–1211` declares `SecretWhenUnitIdentityRestr
 luajit docs/addons/ApiContractProbe/tests/full_names.lua docs/addons/ApiContractProbe
 ```
 
+## Manual cloak/helm transition — changes appearance
+
+**`/apicontract cloak-helm-transition <label>` changes cloak/helm appearance when later manually run. Restoration is attempted but can fail. No native execution was performed during preparation.** This explicit mode is excluded from `all` and `player-state-queries`; existing read modes never invoke its setters.
+
+Each independent cloak/helm lane reads `ShowingCloak()`/`ShowingHelm()` once. Only an original accessible boolean baseline permits any setters. An eligible lane attempts setter `false` → read, setter `true` → read, then setter **original baseline** → final read. Baseline access is checked before every experimental setter and again after lookups/function/argument guards. Native calls are protected; setter errors do not bypass cleanup. A skipped setter has a skipped paired read. Bounds: seven appearance API calls per lane, fourteen total per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels.
+
+`cloakHelmTransition.cloak` / `.helm` retain only safe observations: `baseline`, two `steps` (each `setter` and `read`), and `restoration`. Cleanup records `restoration-skipped`, `restoration-error` or `restoration-unconfirmed` on failure; no setter attempts means `not-needed`. `confirmed-by-observation` requires an actually invoked, nonthrowing restore call and an accessible boolean final getter equal to the still-accessible original baseline. This label is an observation, not a native semantic guarantee. No inaccessible value is substituted or forwarded.
+
+After any attempted mutation with unconfirmed restoration, the addon-session lock rejects subsequent transition captures (`blocked-restoration-unconfirmed`) without further appearance calls, including after SavedVariables are cleared. The other lane in the current capture still runs independently. There are no automatic retries; read-only modes remain usable. No security, rendering, equipment or CVar coupling is claimed. Pinned `PlayerScriptDocumentation.lua:1530–1566` supplies setter/getter signatures only; native transitions remain unverified.
+
+Fourteen actual TOC/slash local modeled-setter fixtures cover preparation mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/cloak_helm_transition.lua docs/addons/ApiContractProbe
+```
+
 ## Manual player state queries
 
 `/apicontract player-state-queries <label>` is excluded from `all`. It independently calls the globals `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments. Every call performs a fresh guarded `_G` field lookup and function-access check; missing, restricted or throwing globals do not suppress peers.

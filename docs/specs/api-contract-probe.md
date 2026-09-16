@@ -74,6 +74,16 @@
 - Bound eight calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. No restricted-identity experiments, mutations, realm defaults, coercion, classifications or native-conformance claims.
 - Ten actual TOC/slash fixtures cover recorder mechanics only. Native same-/cross-realm fixtures, restricted behavior and historical evidence remain pending.
 
+## Manual cloak/helm transition
+
+**This mode changes appearance when later manually run. Restore attempts can fail; preparation must never execute it on a native client.**
+
+- `cloak-helm-transition <label>` is explicit and separate from `all` and `player-state-queries`. Process cloak and helm independently: one no-argument `Showing*` baseline read; only an original accessible boolean permits setters. Unknown, missing, throwing or restricted baselines skip all setters in that lane.
+- Eligible lanes attempt `Show*(false)`/read, `Show*(true)`/read, then `Show*(originalBaseline)`/read. Protect all calls, check baseline access before every experimental setter, and recheck baseline/argument after global lookup and function guards. After any setter invocation, including one that throws, attempt protected cleanup. Do not guess a restoration value, automatically retry or suppress the peer lane. Reads paired with uninvoked setters may be skipped.
+- Preserve baseline/step/restoration raw tuples under `cloakHelmTransition`; inaccessible values and errors stay opaque. Bound seven appearance API calls per lane, fourteen per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. Retain no original objects or secret values between captures.
+- Mark unavailable cleanup `restoration-skipped`, throwing cleanup `restoration-error`, and failed final confirmation `restoration-unconfirmed`. `confirmed-by-observation` requires an actual nonthrowing restore setter and an accessible boolean final getter equal to the still-accessible original baseline. It establishes only a recorded equality, not native restoration semantics. No setter invocation means restoration is `not-needed`.
+- Unconfirmed restoration after an attempted mutation latches an addon-session block on all subsequent transition captures, surviving SavedVariables reset; do not make further appearance API calls from blocked captures. Existing read modes remain unaffected. No native execution, security, rendering or CVar claims. Fourteen local actual TOC/slash fixtures cover mechanics only; native behavior remains unverified.
+
 ## Manual player state queries
 
 - `player-state-queries <label>` is manual-only and excluded from `all`. Independently call `GetCollapsingStarCost`, `ShowingCloak` and `ShowingHelm` twice each with zero arguments.
