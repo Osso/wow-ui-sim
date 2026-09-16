@@ -614,6 +614,18 @@ Native order, nil handling, multi-return packing, callback failure propagation a
 luajit docs/addons/ApiContractProbe/tests/mapvalues.lua docs/addons/ApiContractProbe
 ```
 
+## Manual selected-slot action state
+
+`/apicontract action-state <slot> <label>` reuses the signed-integer slot parser and is excluded from `all`. `GetActionInfo(slot)` is an observed control, not an authorization gate: item, macro, missing, and error results do not suppress independent queries. The original parsed slot feeds exactly one argument to `C_ActionBar.GetActionAutocast`, `GetActionText`, `GetActionUseCount`, `HasRangeRequirements`, `IsAttackAction`, `IsAutoRepeatAction`, `IsConsumableAction`, `IsEquippedAction`, `IsItemAction`, `IsStackableAction`, `IsUsableAction`, and `IsActionInRange` (target omitted). `GetExtraBarIndex()` and `GetMultiCastBarIndex()` are independent no-argument namespace calls.
+
+`actionState` stores guarded `slot`, raw `identity`, named `queries`, and named `bars`. Recheck slot accessibility after namespace/function lookup and guards before forwarding. Restricted results remain opaque before inspection; preserve zero returns, nil positions and opaque errors. Bounds: 15 API calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings, 128-byte labels. No loss-of-control queries, button registration, action execution, mutation, native classification or range/default claims.
+
+Pinned retail `ActionBarFrameDocumentation.lua` establishes these call shapes, including two returns for autocast/usability and the optional range target, not native outputs. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/action_state.lua docs/addons/ApiContractProbe
+```
+
 ## Selected action slots
 
 Run `/apicontract actions 7 before-use` with a slot you independently identify, then repeat with labels after manual use, during recharge and after restoration. No slot roles are inferred and no action is executed. Use separate labeled batches for ordinary spells, charged spells, consumables and empty slots; `0` and `-1` are explicit input controls. Syntax accepts signed decimal integers within ±9007199254740991 only, rejecting malformed input before queries. This does not establish native slot validation. `all` excludes this selected-slot mode.

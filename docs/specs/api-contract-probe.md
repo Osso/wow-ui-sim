@@ -412,6 +412,14 @@ Pinned retail `UnitDocumentation.lua` declares optional empowered hold default t
 
 Pinned `12.0.0-register.json` declarations describe casting position 10 and channel position 11 as castBarID; they are not native evidence and the executing client may differ. Matching native client, controllable casts, non-player channels and empowered/non-empowered fixtures remain pending. No recorder fixture earns native audit credit.
 
+## Manual selected-slot action state
+
+- `action-state <slot> <label>` reuses `parseActionSlot`; excluded from `all`. Record `GetActionInfo(slot)` once as control without requiring a spell kind or successful control call.
+- Independently call twelve `C_ActionBar` APIs with exactly the original parsed slot: `GetActionAutocast`, `GetActionText`, `GetActionUseCount`, `HasRangeRequirements`, `IsAttackAction`, `IsAutoRepeatAction`, `IsConsumableAction`, `IsEquippedAction`, `IsItemAction`, `IsStackableAction`, `IsUsableAction`, `IsActionInRange`. Omit the range target. Independently call `GetExtraBarIndex` and `GetMultiCastBarIndex` once each with zero arguments.
+- Capture `actionState.slot` as a guarded scalar, `identity` as a raw tuple, and named `queries`/`bars`. Guard slot before forwarding and recheck after namespace/function lookup and function guards. Check result accessibility before inspection; inaccessible results and thrown errors remain opaque. Preserve exact arity, zero returns and nil positions; peer calls continue after errors.
+- Cap 15 API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte strings and 128-byte labels. No loss-of-control APIs, button registration, action execution, mutations or native classification/default claims. Existing `actions` mode remains unchanged.
+- Ten actual TOC/slash fixtures establish local mechanics only; native action, range, item, macro and restricted-state outcomes remain unverified.
+
 ## Selected action counts and charges
 
 - [x] `/apicontract actions <slot> <label>` queries one explicitly selected signed decimal integer slot; zero and negative controls are accepted. Reject invalid syntax and integers outside the exactly representable range before any query. This is command validation, not a claim about native coercion. `all` never queries actions.
