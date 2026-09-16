@@ -76,11 +76,11 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 69,
+    "needs-design-and-recorder-review": 70,
     "partial-recorder": 73,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
-    "deferred-security": 21
+    "deferred-security": 20
   },
   "plans": [
     {
@@ -9111,12 +9111,13 @@
           "protocol": "deferred-security"
         }
       ],
-      "status": "deferred-security",
+      "status": "needs-design-and-recorder-review",
       "reviewed_coverage": {
         "recorder": "none prepared by this reconciliation",
         "observations": [],
         "missing": [
-          "Retained secret, security, protected or forbidden-state experiments are explicitly deferred by audit scope; no implementation, native result or conformance credit follows"
+          "Ordinary Store dropdown population entry point and real data-set fixture remain in scope and unprepared",
+          "Forbidden/secure descendant enforcement remains deferred separately; do not treat the mixed plan as wholly excluded"
         ]
       },
       "native_execution": "not-established-by-this-inventory",
