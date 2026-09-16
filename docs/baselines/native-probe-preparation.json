@@ -72,8 +72,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 118,
-    "partial-recorder": 43,
+    "needs-design-and-recorder-review": 115,
+    "partial-recorder": 46,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -3196,8 +3196,17 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual unit-role-predicates independently records UnitIsLieutenant once for each of eight fixed unit tokens with guarded raw tuples"
+        ],
+        "missing": [
+          "Native populated unit-role fixtures and classifications",
+          "Native validation, transitions and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-042"
     },
@@ -3210,8 +3219,17 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual unit-role-predicates independently records UnitIsMinion once for each of eight fixed unit tokens with guarded raw tuples"
+        ],
+        "missing": [
+          "Native populated unit-role fixtures and classifications",
+          "Native validation, transitions and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-043"
     },
@@ -3224,8 +3242,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual unit-role-predicates independently records UnitIsNPCAsPlayer once for each of eight fixed unit tokens with guarded raw tuples"
+        ],
+        "missing": [
+          "Native populated unit-role fixtures and classifications",
+          "Native validation, transitions and restricted-context behavior",
+          "Omitted/nil unit argument observations"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-044"
     },
