@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded outfit-slot recorder
+
+Runtime `c3d32142b` adds manual `/apicontract outfit-slots <label>`, excluded from `all`. It bounds two no-argument producers to two location lists and one group list, each through eight entries, and forwards only up to sixteen guarded original slots to two read-only queries. Eleven fixtures prove recorder mechanics only; no mutation, 3D, mapping, ordering, completeness, or native behavior is established. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded outfit-catalog recorder
 
 Runtime `b02947092` adds manual `/apicontract outfit-catalog <label>`, excluded from `all`. It captures `GetOutfitsInfo()` only through first-table entries 1–8 and seven guarded fields, including category sublists capped at eight scalar positions. Accessible original outfit IDs independently query `GetOutfitInfo(id)` once with the same non-recursive inspection. Eleven fixtures prove recorder mechanics only; no mutation, selection, ordering, completeness, identity, or native behavior is established. See [[api-contract-probes]].
