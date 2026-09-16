@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
+
+Runtime `bc0768208` adds manual `/apicontract neighborhood-state <label>`, excluded from `all`. It calls seven no-argument `C_NeighborhoodInitiative` state queries twice each, preserving raw tuples under fourteen calls per snapshot. Requests, setters, structured producers, task queries, and native behavior claims are excluded. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
 
 Runtime `7f2769fab` adds manual `/apicontract sets-catalog <label>`, excluded from `all`. It calls `GetAvailableSets()` once and `IsUsingDefaultSetsFilters()` twice, inspecting first-list entries 1–8 through six guarded fields: `setID`, `name`, `collected`, `favorite`, `validForCharacter`, and declared `grantAsPrecedingVariant`. Fourteen cumulative fixtures include three new cases; no setters, ordering/default claims, or native behavior is established. See [[api-contract-probes]].
