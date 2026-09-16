@@ -1,6 +1,6 @@
 {
   "schema": "native-probe-preparation/v1",
-  "verified": "2026-09-15",
+  "verified": "2026-09-16",
   "source": {
     "path": "docs/generated/patch-api-blockers.json",
     "sha256": "c977eb10c0a355131a308444f41e9c28143420bb8d829744d78e20d7e328dcc5"
@@ -4226,7 +4226,17 @@
         }
       ],
       "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "reviewed_coverage": {
+        "recorder": "none",
+        "observations": [
+          "Current manual names mode calls UnitName and UnitNameUnmodified only; no executable ApiContractProbe mode invokes UnitFullName"
+        ],
+        "missing": [
+          "Guarded UnitFullName recorder that preserves both raw returns for a bounded accessible unit-token source",
+          "Native same-realm and cross-realm party fixtures for the changed second return",
+          "Identity-restricted and historical/load-phase observations"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-followup-3"
     },
