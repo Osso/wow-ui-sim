@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual nameplate metrics
+
+- Manual `nameplate-metrics <label>` is excluded from `all`. Independently call `C_NamePlate.GetNamePlateSize()` twice and `C_NamePlateManager.GetNamePlateHitTestInsets(value)` twice for each published `Enum.NamePlateType.Friendly` and `Enemy`.
+- Guard containers/members before inspection; require original accessible finite numeric enum values without fallback and recheck them after namespace/function guards. Store size tuples and named inset observations under `nameplateMetrics`.
+- Preserve raw arity, nil positions and opaque errors up to sixteen positions, including but not enforcing the declared two/four-return signatures. Bound six calls per snapshot, ten snapshots, 256-byte strings and 128-byte labels.
+- No setters, camera/3D, unit queries, geometry/default/stability conclusions or native-conformance credit. Eleven actual TOC/slash fixtures establish local mechanics only.
+
 ## Manual quest favor
 
 - Manual `quest-favor <label>` is excluded from `all`. Call `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once; preserve the opaque producer tuple and inspect only the first object's `tasks` positions 1–4 and each entry's `rewardQuestID`.

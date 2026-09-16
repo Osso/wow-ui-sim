@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual nameplate metrics
+
+`/apicontract nameplate-metrics <label>` is excluded from `all`. It independently calls `C_NamePlate.GetNamePlateSize()` twice and `C_NamePlateManager.GetNamePlateHitTestInsets(value)` twice for each fixed published `Enum.NamePlateType.Friendly` and `Enemy` value. Only accessible finite published numbers are forwarded, without fallback; values are rechecked after namespace/function guards.
+
+`nameplateMetrics.size` and `nameplateMetrics.modes[].observations` preserve raw arity, nil positions and opaque errors. Pinned size/inset signatures declare two/four returns, but captures do not enforce that shape or infer geometry, defaults or stability. Bounds: six calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No setters, camera/3D or unit queries; native behavior remains unverified.
+
+Pinned sources: `NamePlateDocumentation.lua:27–34`, `NamePlateManagerDocumentation.lua:11–28`, and `NamePlateConstantsDocumentation.lua:152–162`. Eleven actual TOC/slash fixtures test recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/nameplate_metrics.lua docs/addons/ApiContractProbe
+```
+
 ## Manual quest favor
 
 `/apicontract quest-favor <label>` is excluded from `all`. It calls `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once, retaining its bounded opaque tuple. Only the first returned object's `tasks` positions 1–4 supply original accessible finite `rewardQuestID` values. Each independently feeds `C_QuestInfoSystem.GetQuestLogRewardFavor(id)` and `GetQuestLogRewardFavor(id, true)` with exact one/two-argument calls.
