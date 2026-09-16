@@ -1,5 +1,13 @@
 # API Contract Probe
 
+## Manual outfit catalog
+
+`/apicontract outfit-catalog <label>` is excluded from `all`. Call `C_TransmogOutfitInfo.GetOutfitsInfo()` once, preserving raw arity/nils/opaque errors within sixteen return positions. Inspect only the first returned table at indices 1–8. Each accessible entry exposes only guarded `outfitID`, `name`, `icon`, `isEventOutfit`, `isDisabled`, `playerFacingOutfitIndex`, and `situationCategories`; the latter exposes only guarded scalar indices 1–8, without iteration or length lookup.
+
+Each accessible finite original outfit ID permits exactly one independent `GetOutfitInfo(ID)` call. Recheck ID access after namespace/function lookup and function guards. Inspect only its first returned entry with the same field bounds, without recursive queries. Never forward serialized/truncated substitutes. Entry failures do not suppress peers; no returned objects are retained.
+
+Bounds: nine API calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. No mutations, outfit selection, name queries, equality/identity, ordering/completeness or native-classification claims. Pinned `TransmogOutfitInfoDocumentation.lua:295–309,367–375,886–897` supplies signatures and seven fields. Eleven actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified. Run `luajit docs/addons/ApiContractProbe/tests/outfit_catalog.lua docs/addons/ApiContractProbe`.
+
 ## Manual spell diminish categories
 
 `/apicontract spell-diminish-categories <label>` is excluded from `all`. Query `GetAllSpellDiminishCategories` once for each fixed published `Enum.SpellDiminishRuleset` name `None`, `PvE`, `PvP`; independently query `GetSpellDiminishCategoryInfo` once for each published `Enum.SpellDiminishCategory` name `Root`, `Taunt`, `Stun`, `AoEKnockback`, `Incapacitate`, `Disorient`, `Silence`, `Disarm`. Require accessible finite numeric values, without numeric fallback or enum iteration. Recheck inputs after API lookup/function guards.

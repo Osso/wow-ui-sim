@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual outfit catalog
+
+- Manual `outfit-catalog <label>` is excluded from `all`. Call `C_TransmogOutfitInfo.GetOutfitsInfo()` once; preserve raw arity, nils and opaque errors within sixteen return positions. Inspect only the first returned table at indices 1–8.
+- Guard every list/entry/field lookup and scalar inspection. Read only `outfitID`, `name`, `icon`, `isEventOutfit`, `isDisabled`, `playerFacingOutfitIndex`, `situationCategories`. For categories, inspect only guarded scalar indices 1–8; no iteration or length lookup.
+- Each accessible finite original outfit ID permits one independent `GetOutfitInfo(ID)` call. Recheck access after namespace/function lookup and function guards; never forward guessed or serialized/truncated IDs. Preserve its raw tuple and inspect only its first entry using the same field inspector, with no recursive follow-up queries.
+- Cap nine API calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Entry failures must not suppress peers; retain no raw objects. Exclude mutations, outfit selection and name queries.
+- Eleven actual TOC/slash fixtures establish recorder mechanics only. No equality, identity, ordering, completeness or native-classification conclusions follow. Pinned `TransmogOutfitInfoDocumentation.lua:295–309,367–375,886–897` defines the calls and seven fields.
+
 ## Manual spell diminish categories
 
 - Manual `spell-diminish-categories <label>` is excluded from `all`. Independently call `C_SpellDiminish.GetAllSpellDiminishCategories` for three fixed published ruleset names (`None`, `PvE`, `PvP`) and `GetSpellDiminishCategoryInfo` for eight fixed category names (`Root`, `Taunt`, `Stun`, `AoEKnockback`, `Incapacitate`, `Disorient`, `Silence`, `Disarm`).
