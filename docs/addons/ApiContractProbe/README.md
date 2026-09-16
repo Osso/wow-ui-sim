@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual empowered stages
+
+`/apicontract empowered-stages <label>` independently calls `UnitEmpoweredStageDurations(unit)`, `UnitEmpoweredStagePercentages(unit, false)` and `UnitEmpoweredStagePercentages(unit, true)` for player, target, focus, party1, nonexistent, invalid-unit-token and the empty token. Results live under `empoweredStages.units[].queries` as `durations`, `percentagesWithoutHold` and `percentagesWithHold`.
+
+Only the first returned table exposes positions 1–8 as guarded scalar observations in `entries`; duration objects remain opaque, with no method calls or retention. Function and token access are guarded, tokens rechecked after function guards, and the returned table rechecked before every index lookup. Peer failures remain independent. Raw arity, nil positions and opaque errors are preserved within sixteen result positions, 256-byte strings, 128-byte labels and ten shared snapshots (21 calls per snapshot, 210 total). Excluded from `all`.
+
+Pinned retail `UnitDocumentation.lua:1129–1165` declares both stage-list APIs with `MayReturnNothing` and `SecretArguments=AllowedWhenUntainted`, without secret-return annotations. Explicit false/true observations do not establish default or percentage semantics. No cast initiation, mutation, stage count/order, lifecycle or native-conformance claims. Ten actual TOC/slash fixtures prove local recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/empowered_stages.lua docs/addons/ApiContractProbe
+```
+
 ## Manual stable bonus slot
 
 `/apicontract stable-bonus-slot <label>` independently calls only `C_StableInfo.IsBonusPetSlotAvailable()` twice with no arguments. Results are stored under `stableBonusSlot.IsBonusPetSlotAvailable`. Each call freshly uses guarded namespace/function lookup; missing, restricted, throwing or replaced APIs do not suppress the other observation.

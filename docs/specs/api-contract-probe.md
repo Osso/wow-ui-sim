@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual empowered stages
+
+- Manual `empowered-stages <label>` is excluded from `all`. For player, target, focus, party1, nonexistent, invalid-unit-token and the empty token, independently call `UnitEmpoweredStageDurations(unit)` and `UnitEmpoweredStagePercentages(unit, false/true)` with exact argument counts.
+- Store raw query tuples under `empoweredStages.units[].queries`. Inspect only the first returned table's positions 1–8 in `entries`, using guarded scalar observations. Duration objects remain opaque: no methods, retention, comparisons or lifecycle experiments; percentages are not normalized.
+- Guard globals/functions and tokens before use, recheck tokens after lookup/function guards, and guard the returned table before every index read. Missing, restricted, nil and error outcomes must not suppress peers.
+- Preserve exact arity and nil positions, opaque errors, sixteen tuple positions, 256-byte strings, 128-byte labels and ten shared snapshots. Maximum 21 API calls per snapshot. No cast initiation, mutation, order/completeness/default/percentage or native behavior claims.
+- Ten actual TOC/slash fixtures establish local mechanics only. Matching native empowered-channel fixtures remain unverified.
+
 ## Manual stable bonus slot
 
 - Manual `stable-bonus-slot <label>` is excluded from `all`; call only `C_StableInfo.IsBonusPetSlotAvailable()` twice independently with exactly zero arguments, storing observations under `stableBonusSlot.IsBonusPetSlotAvailable`.
