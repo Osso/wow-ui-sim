@@ -614,13 +614,64 @@ local function inspectNeighborhoodTracked(object)
     return result
 end
 
+local function inspectNeighborhoodEntries(list, inspectEntry)
+    local result = scalar(list)
+    if result.status ~= "observed" or result.kind ~= "table" then return result end
+    result.entries = {}
+    for index = 1, 4 do
+        local entry, ok = readField(list, index)
+        result.entries[index] = ok and inspectEntry(entry) or { status = "field-error" }
+    end
+    return result
+end
+
+local function inspectNeighborhoodTask(object)
+    return inspectNeighborhoodFields(object, neighborhoodTaskFields)
+end
+
+local function inspectNeighborhoodReward(object)
+    return inspectNeighborhoodFields(object,
+        { "title", "description", "decorID", "decorQuantity", "favor", "money", "rewardQuestID" })
+end
+
+local function inspectNeighborhoodMilestone(object)
+    local result, rewards = inspectNeighborhoodFields(object,
+        { "milestoneOrderIndex", "requiredContributionAmount", "rewards" }, "rewards")
+    if result.fields then
+        result.rewardEntries = result.fields.rewards.status == "field-error" and { status = "field-error" }
+            or inspectNeighborhoodEntries(rewards, inspectNeighborhoodReward)
+    end
+    return result
+end
+
+local function inspectNeighborhoodInitiative(object)
+    local result = scalar(object)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    local tasks, milestones, tasksOK, milestonesOK
+    result.fields = {}
+    for _, key in ipairs(neighborhoodInfoFields) do
+        local value, ok = readField(object, key)
+        result.fields[key] = ok and scalar(value) or { status = "field-error" }
+        if key == "tasks" then tasks, tasksOK = value, ok end
+        if key == "milestones" then milestones, milestonesOK = value, ok end
+    end
+    -- Keep opaque field observations intact; nested captures never feed task APIs.
+    result.taskEntries = tasksOK and inspectNeighborhoodEntries(tasks, inspectNeighborhoodTask)
+        or { status = "field-error" }
+    result.milestoneEntries = milestonesOK and inspectNeighborhoodEntries(milestones, inspectNeighborhoodMilestone)
+        or { status = "field-error" }
+    return result
+end
+
 local function captureNeighborhoodStructures()
     local result = {}
     for _, name in ipairs({ "GetNeighborhoodInitiativeInfo", "GetInitiativeActivityLogInfo", "GetTrackedInitiativeTasks" }) do
         local observation, values = observeNeighborhoodCall(name)
         if values and values.n > 1 then
             if name == "GetNeighborhoodInitiativeInfo" then
-                observation.values[1] = inspectNeighborhoodFields(values[2], neighborhoodInfoFields)
+                observation.values[1] = inspectNeighborhoodInitiative(values[2])
             elseif name == "GetInitiativeActivityLogInfo" then
                 observation.values[1] = inspectNeighborhoodActivity(values[2])
             else observation.values[1] = inspectNeighborhoodTracked(values[2]) end
