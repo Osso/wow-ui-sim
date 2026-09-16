@@ -50,6 +50,14 @@
 - Store `combatAudioSettingsRead.IsEnabled`, named `specSettings` and `throttles` observation pairs. Preserve raw arity, nil positions and opaque errors; returned objects remain opaque and unretained. Bound 42 calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
 - Never call setters, `SpeakText`, target-list or playback APIs. No throttling enforcement, security, native defaults/ranges or CVar interpretation. Ten actual TOC/slash fixtures cover recorder behavior only; native behavior remains unverified.
 
+## Manual GUID identity
+
+- `guid-identity <label>` is manual-only and excluded from `all`; existing name modes remain unchanged.
+- Call `UnitGUID(unit)` once each for `player`, `target`, and `party1`. Only the original accessible first-result string may independently feed `UnitClassFromGUID` and `UnitNameFromGUID`, once each. Never parse, coerce, synthesize or truncate forwarded GUIDs.
+- Guard global/function access and recheck the original token/GUID after lookups and function guards. Conditional-secret results must remain opaque before inspection, comparison or serialization. Missing/invalid producers skip downstream calls; missing or failing queries must not suppress peers.
+- Record `guidIdentity.units` with guarded `unit`, raw `producer`, and named `queries` tuples. Preserve exact arity and nil positions, including class three-tuples and name two-tuples. Bound nine calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels; do not retain or traverse returned objects.
+- No restricted-context/security experiments, mutations, GUID/name/class/realm inference or native-conformance claims. Eleven actual TOC/slash fixtures cover mechanics only; native identity fixtures and historical behavior remain unverified.
+
 ## Manual full names
 
 - `full-names <label>` is manual-only and excluded from `all`; existing `names` behavior remains unchanged.
