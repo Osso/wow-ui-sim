@@ -1,6 +1,6 @@
 ## [2026-09-16] audit | Record concrete preparation blockers
 
-Inventory `1e0b2a9bc` records source-checked blockers for limited-gamepad cursor input, ungrounded `string.concat`, scalar `GetNextSignal`, and consumerless PTR `CreateRegionParams`; no status, runtime, or native-credit change. See [[api-contract-probes]].
+Inventory `1e0b2a9bc` records source-checked blockers for limited-gamepad cursor input, ungrounded `string.concat`, scalar `GetNextSignal`, and PTR `CreateRegionParams` with no consumer located in reviewed sources; no status, runtime, or native-credit change. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
 

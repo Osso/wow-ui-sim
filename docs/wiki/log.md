@@ -40,7 +40,7 @@ Documented runtime `7865a172c`: manual `action-loss-control-duration <slot> <lab
 
 ## [2026-09-16] audit | Record concrete preparation blockers
 
-`1e0b2a9bc` records four source-checked constraints: global `SetCursorPosition` needs limited-gamepad context; `string.concat` lacks a grounded call shape and is not `strconcat`; `GetNextSignal` returns scalar key/time, not `TimedSignalMapEntry`; and PTR `CreateRegionParams` has no located table-form constructor consumer. No status, runtime, or native credit changed. Updated [[api-contract-probes]] and the index.
+`1e0b2a9bc` records four source-checked constraints: global `SetCursorPosition` needs limited-gamepad context; no `string.concat` signature or caller was located in reviewed retail/PTR sources, and it is not equated with `strconcat`; `GetNextSignal` returns scalar key/time, not `TimedSignalMapEntry`; and PTR `CreateRegionParams` has no located table-form constructor consumer. No status, runtime, or native credit changed. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare selected-slot action-state recorder
 

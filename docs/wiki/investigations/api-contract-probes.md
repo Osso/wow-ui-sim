@@ -14,7 +14,7 @@ Metadata `86273373a` initially over-deferred a mixed Store plan. Correction `812
 
 ## Concrete preparation blockers
 
-Inventory `1e0b2a9bc` records four source-checked gaps without changing status or credit: global `SetCursorPosition` needs the documented limited-gamepad context; `string.concat` has no grounded callable signature or Blizzard caller and is not equated with `strconcat`; `TimedSignalMap:GetNextSignal` returns scalar key/time, not a `TimedSignalMapEntry`; PTR `CreateRegionParams` declares fields, but no cached table-form constructor consumer was found. These are research constraints, not universal absence claims or native evidence.
+Inventory `1e0b2a9bc` records four source-checked gaps without changing status or credit: global `SetCursorPosition` needs the documented limited-gamepad context; no `string.concat` signature or caller was located in reviewed retail/PTR sources, and it is not equated with `strconcat`; `TimedSignalMap:GetNextSignal` returns scalar key/time, not a `TimedSignalMapEntry`; PTR `CreateRegionParams` declares fields, but no cached table-form constructor consumer was found. These are research constraints, not universal absence claims or native evidence.
 
 ## Evidence boundaries
 
