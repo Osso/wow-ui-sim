@@ -10839,5 +10839,30 @@
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-global-error-codes"
     }
-  ]
+  ],
+  "shared_component_review": {
+    "scope": "Exact executable target routing only; retained plan designs and native evidence remain incomplete",
+    "plans": 112,
+    "publication_targets": 199,
+    "event_targets": 88,
+    "source_revision": "aa7bd9c8e",
+    "recorder": "docs/addons/ApiContractProbe",
+    "target_source": "docs/addons/ApiContractProbe/AuditTargets.lua",
+    "runtime_routes": [
+      "ApiContractProbe.lua::capturePublication",
+      "ApiContractProbe.lua::controlEvents",
+      "ApiContractProbe.lua::recordEvent"
+    ],
+    "observations": [
+      "All 287 executable target entries match the manifest/row/plan/mode assignments in shared_recorder_components",
+      "Publication observes guarded paths or CVar current/default reads; events record registration outcomes and bounded externally delivered payloads"
+    ],
+    "missing": [
+      "Matching-client publication/load phases and historical before/after captures",
+      "External event producers, payload semantics and before/after or post-removal transitions",
+      "Plan-specific behavioral experiments beyond shared components"
+    ],
+    "native_execution": "not-established-by-this-inventory",
+    "status_changes": false
+  }
 }
