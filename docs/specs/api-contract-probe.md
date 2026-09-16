@@ -2,6 +2,14 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual quest favor
+
+- Manual `quest-favor <label>` is excluded from `all`. Call `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once; preserve the opaque producer tuple and inspect only the first object's `tasks` positions 1–4 and each entry's `rewardQuestID`.
+- Original accessible finite IDs independently feed `C_QuestInfoSystem.GetQuestLogRewardFavor(id)` and `(id, true)`, exactly one versus two arguments. Store bounded IDs and query observations under `questFavor.entries`; never synthesize IDs or forward serialized substitutes.
+- Guard every receiver/field read and ID inspection; recheck IDs after namespace/function lookup and function guards. Nil, restricted, malformed and opaque-error outcomes remain independent.
+- Bound nine API calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, initiative refresh, quest/reward mutations, defaults, cycle-cap or native favor semantics.
+- Ten actual TOC/slash fixtures establish local mechanics only; native populated reward quests and favor/cap behavior remain unverified.
+
 ## Manual empowered stages
 
 - Manual `empowered-stages <label>` is excluded from `all`. For player, target, focus, party1, nonexistent, invalid-unit-token and the empty token, independently call `UnitEmpoweredStageDurations(unit)` and `UnitEmpoweredStagePercentages(unit, false/true)` with exact argument counts.

@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual quest favor
+
+`/apicontract quest-favor <label>` is excluded from `all`. It calls `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once, retaining its bounded opaque tuple. Only the first returned object's `tasks` positions 1–4 supply original accessible finite `rewardQuestID` values. Each independently feeds `C_QuestInfoSystem.GetQuestLogRewardFavor(id)` and `GetQuestLogRewardFavor(id, true)` with exact one/two-argument calls.
+
+Every receiver/field lookup is guarded; IDs are rechecked after API lookup/function guards. Missing, restricted, malformed and error outcomes do not suppress peers. Maximum nine API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. No guessed IDs, requests, refreshes, quest/reward mutations or default/cap/favor conclusions. Native behavior remains unverified.
+
+Pinned `QuestInfoSystemDocumentation.lua:42–55` declares optional quest/clamp arguments; `NeighborhoodInitiativeDocumentation.lua:94–101,308–350` supplies the task producer and `rewardQuestID` field. Ten actual TOC/slash fixtures prove recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/quest_favor.lua docs/addons/ApiContractProbe
+```
+
 ## Manual empowered stages
 
 `/apicontract empowered-stages <label>` independently calls `UnitEmpoweredStageDurations(unit)`, `UnitEmpoweredStagePercentages(unit, false)` and `UnitEmpoweredStagePercentages(unit, true)` for player, target, focus, party1, nonexistent, invalid-unit-token and the empty token. Results live under `empoweredStages.units[].queries` as `durations`, `percentagesWithoutHold` and `percentagesWithHold`.
