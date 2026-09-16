@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 91,
-    "partial-recorder": 70,
+    "needs-design-and-recorder-review": 89,
+    "partial-recorder": 72,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 2
@@ -2453,8 +2453,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual house-exterior-options observes original houseExteriorTypeID fields from the first four produced exterior type options"
+        ],
+        "missing": [
+          "Native populated exterior options, selected states and transitions",
+          "Historical lockReasonString field evidence; current reasonString is not treated as equivalent",
+          "Other housing structures, completeness, validation and restricted contexts"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-002"
     },
@@ -10365,8 +10375,18 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual house-exterior-options independently records current exterior type and size/type options, inspecting selected values and the first four option entries through current declared fields"
+        ],
+        "missing": [
+          "Native populated exterior options, selected states and transitions",
+          "Historical lockReasonString field evidence; current reasonString is not treated as equivalent",
+          "Other housing structures, completeness, validation and restricted contexts"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-housing-structures"
     },
