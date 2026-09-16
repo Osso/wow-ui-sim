@@ -58,11 +58,13 @@
       "recorder": "docs/addons/ApiContractProbe",
       "observations": [
         "Manual hyperlinks capture: 16 literal inputs across nine omitted/boolean optional-flag variants",
-        "Raw accessible output and arity, byte preservation within 256-byte bound and explicit truncation"
+        "Raw accessible output and arity, byte preservation within 256-byte bound and explicit truncation",
+        "Manual hyperlinks-residual adds 35 explicit six-argument nil/nonboolean optional-position cases and eight distinct one-argument malformed/binary literals; original hyperlinks matrix remains unchanged"
       ],
       "missing": [
-        "Native matching-build output corpus",
-        "Non-boolean optional argument coercion, arbitrary input bytes and security semantics"
+        "Native matching-build output and coercion corpus",
+        "Additional arbitrary byte/input cases beyond the fixed bounded corpus",
+        "Security semantics and historical fifth-flag availability"
       ],
       "native_execution": "not-established-by-this-inventory",
       "excluded_claim": "Does not establish removed global StripHyperlinks publication or load-phase absence"
