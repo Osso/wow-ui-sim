@@ -427,6 +427,8 @@ local function observeUnitRolePredicate(unit, name)
     return result
 end
 
+local inspectDuration
+
 local function observeEmpoweredStages(unit, name, ...)
     if not accessible(unit) then return { status = "restricted-input" } end
     local fn, ok = readField(_G, name)
@@ -445,7 +447,9 @@ local function observeEmpoweredStages(unit, name, ...)
         result.entries = {}
         for index = 1, 8 do
             local value, entryOK = readField(list, index)
-            result.entries[index] = entryOK and scalar(value) or { status = "field-error" }
+            if not entryOK then result.entries[index] = { status = "field-error" }
+            elseif name == "UnitEmpoweredStageDurations" then result.entries[index] = inspectDuration(value)
+            else result.entries[index] = scalar(value) end
         end
     end
     return result
@@ -1374,8 +1378,6 @@ local function captureAuraSlot(slot)
     end
     return row
 end
-
-local inspectDuration
 
 local function captureAuraTimeSlot(slot)
     local row, id, status = observeAuraSlot(slot)

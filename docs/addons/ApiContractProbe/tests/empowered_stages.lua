@@ -175,7 +175,7 @@ test("entry lookup failures and peer API errors remain independent", function()
     end
 end)
 
-test("opaque duration objects never receive methods and are collectible", function()
+test("duration method lookup errors stay opaque and objects are collectible", function()
     local weak = setmetatable({}, { __mode = "v" })
     setup(function() return function()
         local object = newproxy(true)
@@ -185,7 +185,7 @@ test("opaque duration objects never receive methods and are collectible", functi
         return { object, secret }
     end end)
     local q = capture().units[1].queries.durations
-    assert(q.entries[1].kind == "userdata" and q.entries[1].methods == nil)
+    assert(q.entries[1].kind == "userdata" and q.entries[1].methods.GetTotalDuration.status == "field-error")
     assert(q.entries[2].status == "restricted")
     collectgarbage("collect"); collectgarbage("collect")
     assert(next(weak) == nil)
@@ -225,5 +225,138 @@ test("manual excluded from all and unavailable guards fail closed", function()
         _G[guard] = function() error("guard unavailable") end
         capture(); assert(calls == 0)
     end
+end)
+local methods = {
+    "GetTotalDuration", "GetElapsedDuration", "GetRemainingDuration", "GetElapsedPercent",
+    "GetRemainingPercent", "GetStartTime", "GetEndTime", "GetClockTime", "GetModRate", "HasExpired",
+}
+
+test("duration whitelist preserves receivers tuples and percentage opacity", function()
+    local calls, lookups = 0, 0
+    local object = newproxy(true)
+    getmetatable(object).__index = function(_, name)
+        lookups = lookups + 1
+        local allowed = false
+        for _, method in ipairs(methods) do if method == name then allowed = true end end
+        assert(allowed, "non-whitelisted method")
+        return function(receiver)
+            assert(rawequal(receiver, object)); calls = calls + 1
+            if name == "GetElapsedDuration" then error(secret) end
+            if name == "HasExpired" then return end
+            return 12, nil, string.rep("m", 300)
+        end
+    end
+    setup(function() return function() return { object, nil, secret, 17 }, nil end end)
+    local r = capture()
+    assert(calls == 70 and lookups == 70)
+    for _, row in ipairs(r.units) do
+        local q = row.queries.durations
+        assert(q.n == 2 and q.values[1].kind == "table" and q.values[2].kind == "nil")
+        assert(q.entries[1].kind == "userdata" and q.entries[1].status == "observed")
+        assert(q.entries[1].methods.GetTotalDuration.n == 3)
+        assert(q.entries[1].methods.GetTotalDuration.values[2].kind == "nil")
+        assert(#q.entries[1].methods.GetTotalDuration.values[3].value == 256)
+        assert(q.entries[1].methods.GetElapsedDuration.status == "call-error")
+        assert(q.entries[1].methods.HasExpired.n == 0)
+        assert(q.entries[2].kind == "nil" and q.entries[3].status == "restricted")
+        assert(q.entries[4].value == 17)
+        assert(row.queries.percentagesWithoutHold.entries[1].methods == nil)
+        assert(row.queries.percentagesWithHold.entries[1].methods == nil)
+    end
+end)
+
+test("each method lookup and function guard can revoke its original receiver", function()
+    for _, phase in ipairs({ "lookup", "secret", "access" }) do
+        for blocked, name in ipairs(methods) do
+            local revoked, calls = false, 0
+            local object, target = {}, nil
+            setmetatable(object, { __index = function(_, key)
+                assert(not revoked)
+                local fn = function(receiver)
+                    assert(rawequal(receiver, object) and not revoked)
+                    calls = calls + 1; return calls
+                end
+                if key == name then
+                    target = fn
+                    if phase == "lookup" then revoked = true end
+                end
+                return fn
+            end })
+            setup(function(api) return function(unit)
+                if api == 1 and unit == "player" then return { object } end
+            end end)
+            issecretvalue = function(v)
+                if phase == "secret" and target and rawequal(v, target) then revoked = true end
+                return rawequal(v, secret)
+            end
+            canaccessvalue = function(v)
+                if phase == "access" and target and rawequal(v, target) then revoked = true end
+                return not rawequal(v, secret) and not (revoked and rawequal(v, object))
+            end
+            local entry = capture().units[1].queries.durations.entries[1]
+            assert(revoked and calls == blocked - 1)
+            assert(entry.methods[name].status == "restricted-object")
+        end
+    end
+end)
+
+test("method output can revoke the next list entry without suppressing percentages", function()
+    local revoked, calls = false, 0
+    local marker, second = {}, {}
+    local first = { GetTotalDuration = function() return marker end }
+    setmetatable(second, { __index = function() error("revoked entry inspected") end })
+    setup(function() return function() calls = calls + 1; return { first, second } end end)
+    canaccessvalue = function(v)
+        if rawequal(v, marker) then revoked = true end
+        return not rawequal(v, secret) and not (revoked and rawequal(v, second))
+    end
+    local r = capture()
+    assert(calls == 21 and r.units[1].queries.durations.entries[2].status == "restricted")
+    assert(r.units[1].queries.percentagesWithHold.entries[1].methods == nil)
+end)
+
+test("560 method calls per snapshot and method return bounds", function()
+    local methodCalls, producers = 0, 0
+    local object = setmetatable({}, { __index = function()
+        return function()
+            methodCalls = methodCalls + 1
+            local values = {}; for i = 1, 20 do values[i] = string.rep("z", 300) end
+            return unpack(values)
+        end
+    end })
+    setup(function() return function()
+        producers = producers + 1
+        return setmetatable({}, { __index = function(_, i) assert(i <= 8); return object end })
+    end end)
+    local q = capture().units[1].queries.durations.entries[1].methods.GetTotalDuration
+    assert(methodCalls == 560 and producers == 21)
+    assert(q.n == 20 and q.truncated and #q.values == 16 and #q.values[1].value == 256)
+    for _ = 2, 11 do capture() end
+    assert(methodCalls == 5600 and producers == 210 and ApiContractProbeDB.dropped == 1)
+end)
+
+test("current duration receivers are collectible and cast retention is isolated", function()
+    local weak = setmetatable({}, { __mode = "v" })
+    local oldReads = 0
+    local retained = { GetTotalDuration = function() oldReads = oldReads + 1; return 1 end }
+    setup(function() return function()
+        local object = newproxy(true)
+        getmetatable(object).__index = function()
+            return function(receiver) assert(rawequal(receiver, object)); return 2 end
+        end
+        weak[#weak + 1] = object
+        return { object }
+    end end)
+    UnitCastingDuration = function() return retained end
+    UnitChannelDuration = function() return nil end
+    UnitEmpoweredChannelDuration = function() return nil end
+    SlashCmdList.APICONTRACTPROBE("cast-durations before")
+    local before = oldReads
+    capture(); capture()
+    assert(oldReads == before)
+    collectgarbage("collect"); collectgarbage("collect")
+    assert(next(weak) == nil)
+    SlashCmdList.APICONTRACTPROBE("cast-durations after")
+    assert(oldReads > before)
 end)
 print(string.format("%d empowered-stages fixtures passed", passed))
