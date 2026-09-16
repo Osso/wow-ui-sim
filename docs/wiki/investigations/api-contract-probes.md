@@ -8,6 +8,10 @@ Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, c
 
 Metadata `eda32cf0a` validates exact routing for **287** `AuditTargets.lua` entries across **112** shared-recorder plans: 199 publication/CVar targets use `capturePublication`; 88 event targets use `controlEvents` and `recordEvent`. This proves only target-to-component wiring. Publication still needs matching-client/load-phase evidence; events still need external producers, payload semantics, and transition observations; every shared plan still needs its own behavioral design. Statuses and native credit remain unchanged.
 
+## Security deferral reconciliation
+
+Metadata `86273373a` reclassifies nineteen whole retained security plans as `deferred-security`; with two already deferred plans, the inventory now has twenty-one. This is an audit-scope boundary, not implementation or native credit: protected/restricted actions, secrecy policies, secure transfers, private-aura authority, secret-object methods, secure ping, forbidden-store observations, combat-log secure APIs, and literal secret-access globals remain unprepared. `private-aura-border-scale` remains outside this blanket deferral because its retained plan distinguishes ordinary numeric configuration from private authority enforcement. The inventory has sixty-nine needs-design and seventy-three partial plans; shared-recorder plans remain separately pending.
+
 ## Evidence boundaries
 
 `/apicontract explicit-power <label>` is manual-only and excluded from `all`. For `player` and `target`, it uses only guarded published `Enum.PowerType.Mana`, `Rage`, and `Energy` values. Each unit/type independently calls `UnitPower` and `UnitPowerMax` with `unmodified=false` and `true`, plus `UnitPowerPercent` with the same flag and an explicit nil curve: thirty-six calls per snapshot. Results remain guarded raw tuples; existing `resources` behavior is unchanged. Eight fixtures prove recorder mechanics only. No resource mutation, curve or scale conclusion, restricted-context experiment, or native credit follows.

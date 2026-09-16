@@ -1,3 +1,7 @@
+## [2026-09-16] audit | Defer retained security probe plans
+
+Documented metadata `86273373a`: nineteen whole security plans move to `deferred-security`, making twenty-one with two existing deferrals. No implementation, status completion, or native credit follows. `private-aura-border-scale` remains unreviewed because ordinary numeric configuration is distinct from private authority enforcement. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
 
 Runtime `9a296becb` adds manual `item-interaction-flags`: two zero-argument `C_ItemInteraction.GetItemInteractionInfo` calls, with only guarded first-result `flags` observed. Eleven fixtures prove recorder mechanics only; no interaction operation, populated native state, flags semantics, historical compatibility, or native credit follows. Updated [[api-contract-probes]] and the index.

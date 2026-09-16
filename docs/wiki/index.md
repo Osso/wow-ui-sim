@@ -1,3 +1,7 @@
+## [2026-09-16] audit | Defer retained security probe plans
+
+Metadata `86273373a` reclassifies nineteen retained security plans as `deferred-security`, for twenty-one total including two already deferred plans. No implementation or native credit follows; ordinary numeric `private-aura-border-scale` remains unreviewed rather than blanket-deferred. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
 
 Runtime `9a296becb` adds manual `/apicontract item-interaction-flags <label>`, excluded from `all`. It calls `C_ItemInteraction.GetItemInteractionInfo()` twice with no arguments and inspects only guarded first-result `flags`; no interaction initialization, opening, pending-item operation, conversion, or nested traversal occurs. Eleven local fixtures prove recorder mechanics only. Populated native interaction behavior, flags semantics, historical compatibility, and restricted contexts remain unverified. See [[api-contract-probes]].
