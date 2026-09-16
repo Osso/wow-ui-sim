@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
+
+Runtime `1aeb67703` adds manual `/apicontract training-grounds-state <label>`, excluded from `all`. It records two no-argument observations each for `C_PvP.AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, preserving raw tuple arity under six calls per snapshot. Queue/join, requests, mutations, structure queries, and native behavior claims remain excluded. Ten fixtures prove recorder mechanics only. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Extend housing-catalog currency recorder
 
 Runtime `637a9fecc` extends manual `/apicontract housing-catalog <label>`, excluded from `all`. It reads two guarded published catalog currency-key strings and forwards each original untruncated string once to `GetVirtualCurrencyBalance`, without a fallback literal. The cap is twenty-two calls per snapshot. Twenty-four cumulative fixtures, including six new cases, prove recorder mechanics only; refreshes, purchases, native currency state, ordering, and price semantics remain unverified. See [[api-contract-probes]].

@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
+
+Documented runtime `1aeb67703`: manual `training-grounds-state` makes two zero-argument observations each of `AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, capped at six calls per snapshot. Ten local fixtures establish mechanics only; queue/join, requests, mutations, structures, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Extend housing-catalog currency recorder
 
 Documented `637a9fecc`: two guarded published currency-key strings independently feed `GetVirtualCurrencyBalance` once each without a literal fallback or truncated input forwarding. The housing-catalog cap is twenty-two calls per snapshot. Twenty-four cumulative fixtures, including six new cases, establish mechanics only; no refresh, purchase, mutation, native currency state, or conformance credit follows. Updated [[api-contract-probes]] and the index.
