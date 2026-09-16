@@ -1,5 +1,15 @@
 # API Contract Probe
 
+## Manual neighborhood structures
+
+`/apicontract neighborhood-structures <label>` is excluded from `all`. Independently call `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()`, `GetInitiativeActivityLogInfo()` and `GetTrackedInitiativeTasks()` once. Preserve raw arity, nil positions and opaque errors within sixteen return positions; inspect only each first returned object. Initiative fields are `isLoaded`, `neighborhoodGUID`, `initiativeID`, `currentCycleID`, `progressRequired`, `currentProgress`, `playerTotalContribution`, `duration`, `tasks`, `milestones`, `title`, `description`. Keep `tasks` and `milestones` opaque.
+
+Activity fields are `isLoaded`, `neighborhoodGUID`, `nextUpdateTime`, `taskActivity`; inspect only activity indices 1–8 and their `taskID`, `playerName`, `taskName`, `completionTime`, `amount` fields. Only `trackedIDs` indices 1–4 from the tracked object supply original accessible finite task IDs. Independently query `GetInitiativeTaskInfo(ID)` and `GetInitiativeTaskChatLink(ID)` with exactly one original argument. Inspect only the first task-info return: `ID`, `taskName`, `description`, `progressContributionAmount`, `tracked`, `supersedes`, `timesCompleted`, `completed`, `inProgress`, `taskType`, `sortOrder`, `rewardQuestID`, `requirementsList`, `criteriaList`; keep the last two opaque.
+
+Guard each receiver before every lookup and each value before inspection/serialization; recheck task IDs after namespace lookup and function guards. Failures do not suppress peers. No general recursion, table iteration/length lookup, fabricated IDs, retained raw objects, requests, setters or tracking mutations. Bounds: three producers plus eight task calls per snapshot, ten shared snapshots, 256-byte strings and 128-byte labels. Native fixtures, ordering, completeness, defaults and behavior remain unverified.
+
+Pinned `NeighborhoodInitiativeDocumentation.lua:39–79,94–119,259–353` defines the calls and fields, not native results. Eleven actual TOC/slash fixtures prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/neighborhood_structures.lua docs/addons/ApiContractProbe`.
+
 ## Manual neighborhood state
 
 `/apicontract neighborhood-state <label>` is excluded from `all`. Independently call seven `C_NeighborhoodInitiative` queries twice each with zero arguments: `GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, `PlayerMeetsRequiredLevel`. Guard namespace/function lookup and scalar serialization; preserve raw arity, nil positions and opaque errors. Missing, restricted, throwing or replaced APIs do not suppress peers.

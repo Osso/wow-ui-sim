@@ -533,6 +533,103 @@ local function captureCustomSetNames()
     return result
 end
 
+local neighborhoodInfoFields = { "isLoaded", "neighborhoodGUID", "initiativeID", "currentCycleID",
+    "progressRequired", "currentProgress", "playerTotalContribution", "duration", "tasks", "milestones",
+    "title", "description" }
+local neighborhoodTaskFields = { "ID", "taskName", "description", "progressContributionAmount", "tracked",
+    "supersedes", "timesCompleted", "completed", "inProgress", "taskType", "sortOrder", "rewardQuestID",
+    "requirementsList", "criteriaList" }
+
+local function inspectNeighborhoodFields(object, keys, nestedKey)
+    local result = scalar(object)
+    if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
+        return result
+    end
+    local nested
+    result.fields = {}
+    for _, key in ipairs(keys) do
+        local value, ok = readField(object, key)
+        result.fields[key] = ok and scalar(value) or { status = "field-error" }
+        if ok and key == nestedKey then nested = value end
+    end
+    return result, nested
+end
+
+local function observeNeighborhoodCall(name, id, taskQuery)
+    if taskQuery then
+        local input = scalar(id)
+        if input.status == "restricted" then return { status = "restricted-input" } end
+        if input.status ~= "observed" or input.kind ~= "number" then
+            return { status = "unavailable-input" }
+        end
+    end
+    local fn, ok = readField(C_NeighborhoodInitiative, name)
+    if not ok then return { status = "field-error" } end
+    if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+    local values
+    if taskQuery then
+        -- Namespace lookup and function guards can revoke a producer's original ID.
+        if not accessible(id) then return { status = "restricted-input" } end
+        values = pack(pcall(fn, id))
+    else values = pack(pcall(fn)) end
+    if not values[1] then return { status = "call-error" } end
+    local result = mapTuple(unpack(values, 2, values.n))
+    result.status = "observed"
+    return result, values
+end
+
+local function inspectNeighborhoodActivity(object)
+    local result, list = inspectNeighborhoodFields(object,
+        { "isLoaded", "neighborhoodGUID", "nextUpdateTime", "taskActivity" }, "taskActivity")
+    local field = result.fields and result.fields.taskActivity
+    if not field or field.status ~= "observed" or field.kind ~= "table" then return result end
+    field.entries = {}
+    for index = 1, 8 do
+        local entry, ok = readField(list, index)
+        field.entries[index] = ok and inspectNeighborhoodFields(entry,
+            { "taskID", "playerName", "taskName", "completionTime", "amount" }) or { status = "field-error" }
+    end
+    return result
+end
+
+local function inspectNeighborhoodTracked(object)
+    local result, ids = inspectNeighborhoodFields(object, { "trackedIDs" }, "trackedIDs")
+    local field = result.fields and result.fields.trackedIDs
+    if not field or field.status ~= "observed" or field.kind ~= "table" then return result end
+    field.entries = {}
+    for index = 1, 4 do
+        local id, ok = readField(ids, index)
+        local row = { status = ok and "observed" or "field-error" }
+        if ok then
+            row.id = scalar(id)
+            local values
+            row.info, values = observeNeighborhoodCall("GetInitiativeTaskInfo", id, true)
+            if values and values.n > 1 then
+                row.info.values[1] = inspectNeighborhoodFields(values[2], neighborhoodTaskFields)
+            end
+            row.chatLink = observeNeighborhoodCall("GetInitiativeTaskChatLink", id, true)
+        end
+        field.entries[index] = row
+    end
+    return result
+end
+
+local function captureNeighborhoodStructures()
+    local result = {}
+    for _, name in ipairs({ "GetNeighborhoodInitiativeInfo", "GetInitiativeActivityLogInfo", "GetTrackedInitiativeTasks" }) do
+        local observation, values = observeNeighborhoodCall(name)
+        if values and values.n > 1 then
+            if name == "GetNeighborhoodInitiativeInfo" then
+                observation.values[1] = inspectNeighborhoodFields(values[2], neighborhoodInfoFields)
+            elseif name == "GetInitiativeActivityLogInfo" then
+                observation.values[1] = inspectNeighborhoodActivity(values[2])
+            else observation.values[1] = inspectNeighborhoodTracked(values[2]) end
+        end
+        result[name] = observation
+    end
+    return result
+end
+
 local function inspectCurrentAura(entry)
     local result = scalar(entry)
     if result.status ~= "observed" or (result.kind ~= "table" and result.kind ~= "userdata") then
@@ -1860,8 +1957,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
+    if mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|publication|events-start|events-stop|callbacks-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -1888,6 +1985,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "sets-catalog" then record.setsCatalog = captureSetsCatalog() end
         if mode == "custom-set-names" then record.customSetNames = captureCustomSetNames() end
         if mode == "neighborhood-state" then record.neighborhoodState = captureNeighborhoodState() end
+        if mode == "neighborhood-structures" then record.neighborhoodStructures = captureNeighborhoodStructures() end
         if mode == "outfit-state" then record.outfitState = captureOutfitState() end
         if mode == "public-queries" then record.publicQueries = capturePublicQueries() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end

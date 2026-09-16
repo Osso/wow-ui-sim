@@ -2,6 +2,13 @@
 
 `docs/addons/ApiContractProbe/` prepares native investigations of scalar curve point returns, `UnitSexBase` comparison, unit name/realm returns and finite numeric formatting. It shares one manual recorder; the existing [dispel probe](aura-dispel-curve-probe.md) remains separate. See [capture protocol](../addons/ApiContractProbe/README.md).
 
+## Manual neighborhood structures
+
+- Manual `neighborhood-structures <label>` is excluded from `all`. Under `neighborhoodStructures`, independently capture `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo`, `GetInitiativeActivityLogInfo` and `GetTrackedInitiativeTasks`, once each without arguments. Preserve raw arity, nils and opaque errors within sixteen positions; inspect only first returned objects.
+- Inspect fixed fields from pinned `NeighborhoodInitiativeDocumentation.lua`: initiative scalar fields with `tasks`/`milestones` opaque; activity scalar fields plus `taskActivity` indices 1–8 with only `taskID`, `playerName`, `taskName`, `completionTime`, `amount`. Inspect only `trackedIDs` indices 1–4 from the tracked object; accessible finite original IDs independently feed `GetInitiativeTaskInfo(ID)` and `GetInitiativeTaskChatLink(ID)`. Task-info first returns expose declared fields, with `requirementsList`/`criteriaList` opaque. Do not use activity IDs or returned task IDs as further query inputs.
+- Guard every receiver before each field/index lookup and every value before inspection or serialization. Recheck original task IDs after namespace/function lookup and function guards, immediately before invocation. Missing, restricted and failed observations must not suppress peers. Retain no raw objects; do not fabricate IDs, rebuild input structures, iterate/measure returned tables or recurse.
+- Cap three producer plus eight task calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, setters, tracking mutations or native semantics claims. Eleven actual TOC/slash fixtures establish bounded recorder mechanics only; native fixtures, transitions, ordering and completeness remain unverified.
+
 ## Manual neighborhood state
 
 - Manual `neighborhood-state <label>` is excluded from `all`. Call only `C_NeighborhoodInitiative.GetActiveNeighborhood`, `GetRequiredLevel`, `IsInitiativeEnabled`, `IsPlayerInNeighborhoodGroup`, `IsViewingActiveNeighborhood`, `PlayerHasInitiativeAccess`, and `PlayerMeetsRequiredLevel`, twice independently with exactly zero arguments.
