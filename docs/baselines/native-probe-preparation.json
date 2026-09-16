@@ -3150,11 +3150,12 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual empowered-stages records UnitEmpoweredStageDurations for seven fixed unit tokens; percentages use independent false/true hold arguments, and first returned table positions 1-8 are guarded scalar observations"
+          "Manual empowered-stages records UnitEmpoweredStageDurations for seven fixed unit tokens; percentages use independent false/true hold arguments, and first returned table positions 1-8 are guarded scalar observations",
+          "First eight duration entries per unit receive ten guarded current-only read-method observations without retention; percentage observations remain scalar"
         ],
         "missing": [
           "Native active empowered-channel fixtures, stage ordering and lifecycle transitions",
-          "Duration-object methods and authoritative timing/percentage semantics",
+          "Authoritative native duration timing and lifecycle semantics",
           "Native validation and restricted-context behavior"
         ]
       },
@@ -3178,7 +3179,7 @@
         ],
         "missing": [
           "Native active empowered-channel fixtures, stage ordering and lifecycle transitions",
-          "Duration-object methods and authoritative timing/percentage semantics",
+          "Authoritative native percentage scale and hold-time semantics",
           "Native validation and restricted-context behavior"
         ]
       },
