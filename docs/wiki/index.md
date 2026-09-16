@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
+
+Runtime `b33e99159` adds manual `/apicontract cloak-helm-transition <label>`, excluded from `all`. It may mutate cloak/helm appearance only when later manually run: each eligible lane records a boolean baseline, false/true reads, and a guarded restoration attempt. An unconfirmed restoration locks future transition captures for the addon session. Fourteen fixtures and eleven player-state regressions prove cleanup mechanics only; no native execution or appearance conclusion occurred. See [[api-contract-probes]].
+
 ## [2026-09-16] investigation | Prepare bounded threat-lead recorder
 
 Runtime `0dd177d2a` adds manual `/apicontract threat-lead-read <label>`, excluded from `all`. It calls `UnitThreatLeadSituation` for four fixed unit-token pairs, treating both arguments as guarded tokens despite the second parameter name. Nine fixtures plus eleven GUID-identity and ten full-name regressions prove recorder mechanics only; native combat, threat and restricted-context behavior remain unverified. See [[api-contract-probes]].
