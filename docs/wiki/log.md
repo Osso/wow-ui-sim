@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Extend bounded public-query recorder
+
+Runtime `428000300` keeps the original two no-argument GameRules and omitted-companion Delves UI calls, then adds two reads each of housing-market availability, encounter time, and three instance-encounter flags. Fourteen calls per snapshot and twelve cumulative fixtures establish recorder mechanics only. No native clock, encounter, housing, default, or state-transition behavior was observed.
+
 ## [2026-09-16] investigation | Prepare weekly progress recorder
 
 Runtime `1043a349a` adds manual `/apicontract weekly-progress <label>`, excluded from `all`. It queries five fixed published weekly-reward threshold names with `false` and `true`, then reads only entries 1–8 of an accessible first result table and only guarded `activityTierID`, `difficulty`, and `numPoints` fields. Eleven local fixtures establish recorder mechanics only; sorting, combine behavior, completeness, and native results remain unverified. See [[api-contract-probes]].
