@@ -1,6 +1,6 @@
-## [2026-09-17] investigation | Prepare bounded transmog slot visual recorder
+## [2026-09-17] investigation | Extend bounded transmog slot visual recorder
 
-`b62e630d6` adds manual `transmog-slot-visual-info <label>`, excluded from `all`. Four guarded original vendor factory cases (`HEADSLOT`/`SHOULDERSLOT` × secondary false/true) call original `GetData` and `C_Transmog.GetSlotVisualInfo`; only nine declared visual fields are inspected. Recorder-level calls cap at twelve per snapshot, excluding vendor-internal factory calls. Eleven fixtures, plus eleven item-info, nine transmog-eligibility, and eight item-binding regressions, establish local mechanics only. No native visual, apply, selection, equipment/account mutation, or restricted-context conclusion follows. Updated [[api-contract-probes]] and the index.
+`6464827ad` extends manual `transmog-slot-visual-info <label>`, excluded from `all`. Four guarded original vendor factory cases (`HEADSLOT`/`SHOULDERSLOT` × secondary false/true) call original `GetData` and `C_Transmog.GetSlotVisualInfo`; original accessible base/applied source IDs then each independently query `C_TransmogCollection.GetAppearanceSourceInfo`, exposing ten guarded fields. Recorder-level calls cap at twenty per snapshot, excluding vendor-internal factory calls. Eighteen cumulative fixtures, including seven new cases, plus eleven item-info, nine transmog-eligibility, and eight item-binding regressions establish local mechanics only. No native visual, collection, apply, selection, equipment/account/3D mutation, or restricted-context conclusion follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-17] investigation | Prepare bounded error-code publication recorder
 

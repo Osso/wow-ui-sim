@@ -1,6 +1,6 @@
 ## [2026-09-17] investigation | Prepare bounded transmog slot visual recorder
 
-Runtime `b62e630d6` adds manual `/apicontract transmog-slot-visual-info <label>`, excluded from `all`. It passes four guarded vendor-created transmog locations through `GetData` and `C_Transmog.GetSlotVisualInfo`, exposing nine guarded visual fields. Eleven fixtures plus item-info, transmog-eligibility, and item-binding regressions prove recorder mechanics only. No native visual, apply, selection, or account conclusion follows. See [[api-contract-probes]].
+Runtime `6464827ad` extends manual `/apicontract transmog-slot-visual-info <label>`, excluded from `all`. Four guarded vendor-created locations yield visual info, whose original base/applied source IDs each independently feed guarded appearance-source queries with ten fixed fields. Eighteen cumulative fixtures, including seven new cases, prove recorder mechanics only. No native visual, collection, apply, selection, or account conclusion follows. See [[api-contract-probes]].
 
 ## [2026-09-17] investigation | Prepare bounded error-code publication recorder
 
