@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
+
+`08a8ae25d` adds manual `timeline-lifecycle-read <label>`. It calls `GetEventList` once, forwards at most eight original accessible IDs to four independent lifecycle reads, and records `GetEventHighlightTime` twice. Timers stay opaque. Eleven fixtures prove recorder mechanics only; no event mutation, native lifecycle, timing, ordering, completeness, restricted-context, or native claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
 
 `68da96764` adds manual `timeline-current-events <label>`. It observes one `GetEventList` result, bounds its original accessible finite ID list to eight entries, then independently captures `GetEventInfo` through ten fixed guarded fields and opaque `GetEventColor` with override omitted. Seventeen calls per snapshot, twelve local fixtures, and eleven plus sixteen targeted regressions establish recorder mechanics only. No synthetic events, icon mutation, security probing, native execution, or native behavior claim follows. Updated [[api-contract-probes]] and the index.
