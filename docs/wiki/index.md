@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
+
+Runtime `664fb4808` adds manual `/apicontract timeline-source-counts <label>`, excluded from `all`. It reads only the published `Encounter`, `Script`, and `EditMode` timeline-source values and calls `GetEventCountBySource` twice per value. Eleven fixtures prove bounded routing and guards only; no event synthesis, native count, ordering, population, or transition conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
 
 Runtime `dae53acf2` extends manual `/apicontract timeline-lifecycle-read <label>`, excluded from `all`. It bounds original `GetEventList()` IDs to eight, reads four lifecycle APIs per usable ID, records highlight time twice, and applies the shared ten-method duration inspector only to bounded `GetEventTimer` returns. The 35 API-call cap remains; timers have 80 declared-return method calls per snapshot and a defensive 1,280 bound for 16 returned values. Seventeen cumulative fixtures, including six new timer cases, prove recorder mechanics only; no event mutation, native lifecycle, timing, ordering, completeness, or restricted-context conclusion follows. See [[api-contract-probes]].

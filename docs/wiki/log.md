@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
+
+`664fb4808` adds manual `timeline-source-counts <label>`. It calls `GetEventCountBySource` twice for each fixed published `Encounter`, `Script`, and `EditMode` source value, preserving guarded raw tuples under six calls per snapshot. Eleven fixtures establish recorder mechanics only; native source counts, event population, ordering, transitions, and security remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
 
 `dae53acf2` extends manual `timeline-lifecycle-read <label>` from `08a8ae25d`. `GetEventTimer` return values alone receive the shared current-only ten-method duration inspector; no timer retention or event mutation occurs. The 35 API-call cap remains, with 80 declared-return method calls and a defensive 1,280-method-call bound per snapshot. Seventeen cumulative fixtures, including six new timer cases, prove recorder mechanics only; no native lifecycle, timing, ordering, completeness, restricted-context, or native claim follows. Updated [[api-contract-probes]] and the index.
