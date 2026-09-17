@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual current timeline events
+
+- `timeline-current-events <label>` is manual-only, excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once with zero arguments. Only positions 1–8 of its first returned table may supply original accessible finite event IDs; preserve duplicate IDs and nil holes without guessing, sorting or coercion.
+- Independently query `GetEventInfo(id)` and `GetEventColor(id)` for each usable ID with exactly one argument, omitting the color override. Recheck ID accessibility after namespace lookup and function guards before forwarding. Missing, restricted or failing producer entries and peer queries must remain explicit independent observations.
+- Store raw tuples under `timelineCurrentEvents.producer` and `entries[].info`/`color`, with scalar ID observations. Only the first info object exposes fixed declared fields `id`, `source`, `spellName`, `spellID`, `iconFileID`, `duration`, `maxQueueDuration`, `icons`, `severity`, `isApproximate`. Guard every list, object and field before lookup or inspection, including after potentially revoking tuple/field serialization. Secret/inaccessible values remain opaque. Color objects have no field or method inspection; retain no raw objects.
+- Bound API calls to 17 per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Do not create/cancel/finish timeline events or change icon textures. Twelve actual TOC/slash fixtures prove local mechanics only; native population, security contexts, defaults, ordering, completeness, timing and color semantics remain unverified.
+
 ## Manual item interaction flags
 
 - `item-interaction-flags <label>` is manual-only, excluded from `all`. Independently call `C_ItemInteraction.GetItemInteractionInfo()` twice with no arguments, recording raw arity, nil positions and opaque errors under `itemInteractionFlags[1..2]`.

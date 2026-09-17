@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual current timeline events
+
+`/apicontract timeline-current-events <label>` is excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once without arguments. Only the first returned table's positions 1–8 supply original accessible finite event IDs. For each, independently call `GetEventInfo(id)` and `GetEventColor(id)` with exactly one argument; the color override is omitted. Preserve duplicates, nil holes, raw arity and opaque errors without inventing event IDs.
+
+`timelineCurrentEvents` contains `producer` and bounded `entries`; each entry has `id`, `info` and `color` observations. Only the first info result exposes guarded fields `id`, `source`, `spellName`, `spellID`, `iconFileID`, `duration`, `maxQueueDuration`, `icons`, `severity`, `isApproximate`. Recheck the original ID after namespace/function guards and the info receiver before every field lookup, including after tuple or earlier field observations revoke access. Conditional-secret objects and values remain opaque before inspection. Colors receive no methods or field reads; no produced objects are retained.
+
+Bounds: 17 API calls per snapshot, ten snapshots, 16 tuple positions, 256-byte strings and 128-byte labels. Pinned `EncounterTimelineDocumentation.lua:81–97,126–152,585–600` supplies signatures and fields, not native results. Never create, cancel or finish events or set icon textures. Twelve actual TOC/slash fixtures prove recorder mechanics only; no native execution, security-context experiment, ordering, completeness, default, timing or color conclusion follows.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/timeline_current_events.lua docs/addons/ApiContractProbe
+```
+
 ## Manual item interaction flags
 
 `/apicontract item-interaction-flags <label>` is excluded from `all`. Call `C_ItemInteraction.GetItemInteractionInfo()` twice independently with zero arguments. Missing APIs, nil/unavailable results and opaque errors remain observations; no interaction is opened or populated.
