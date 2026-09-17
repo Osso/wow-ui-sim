@@ -43,11 +43,12 @@
         "Manual resources snapshots: raw current health/power and maxima, power type, omitted/nil curve and scalar linear-curve outputs",
         "Six recorded curve points discriminate possible scales without classifying native output",
         "Default power selection and explicit false/true unmodified requests without invented power IDs",
-        "Manual explicit-power queries player/target with guarded published Mana/Rage/Energy values: UnitPower, UnitPowerMax and UnitPowerPercent independently use false/true unmodified values, with explicit nil curve for percentages"
+        "Manual explicit-power queries player/target with guarded published Mana/Rage/Energy values: UnitPower, UnitPowerMax and UnitPowerPercent independently use false/true unmodified values, with explicit nil curve for percentages",
+        "Manual resource-color-input creates a fresh owned color curve with two literal control points and independently forwards the original curve to player health/power percentage queries after successful guarded setup; inaccessible results remain opaque"
       ],
       "missing": [
         "Native matching-build partial, full, zero-resource and unknown-unit captures",
-        "Color-curve results, predicted health, additional power types and native/security contracts",
+        "Native color-curve results, predicted health, additional power types and security contracts",
         "Authoritative native input scale, default units and zero-maximum behavior"
       ],
       "native_execution": "not-established-by-this-inventory"
