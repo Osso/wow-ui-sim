@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
+
+`bd13c305e` adds manual `resource-color-input <label>`, excluded from `all`. It creates a fresh owned color curve, two original RGBA colors, and two controlled literal points before independently calling opaque health- and power-percent APIs. Failed setup prevents both resource calls; curve, color, and result objects are not retained. Seven calls per snapshot and thirteen fixtures prove recorder mechanics only. No native scale, color, security, or behavior claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
 
 `664fb4808` adds manual `timeline-source-counts <label>`. It calls `GetEventCountBySource` twice for each fixed published `Encounter`, `Script`, and `EditMode` source value, preserving guarded raw tuples under six calls per snapshot. Eleven fixtures establish recorder mechanics only; native source counts, event population, ordering, transitions, and security remain unverified. Updated [[api-contract-probes]] and the index.

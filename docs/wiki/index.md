@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
+
+Runtime `bd13c305e` adds manual `/apicontract resource-color-input <label>`, excluded from `all`. It creates one fresh owned color curve with two literal controlled RGBA points, then makes bounded opaque `UnitHealthPercent` and `UnitPowerPercent` calls. Setup failure prevents both calls; it retains no curve, color, or result object. Thirteen fixtures prove recorder mechanics only. No native resource scale, color, security, or behavior conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
 
 Runtime `664fb4808` adds manual `/apicontract timeline-source-counts <label>`, excluded from `all`. It reads only the published `Encounter`, `Script`, and `EditMode` timeline-source values and calls `GetEventCountBySource` twice per value. Eleven fixtures prove bounded routing and guards only; no event synthesis, native count, ordering, population, or transition conclusion follows. See [[api-contract-probes]].
