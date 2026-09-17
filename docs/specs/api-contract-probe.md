@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual timeline lifecycle reads
+
+- `timeline-lifecycle-read <label>` is manual-only and excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once without arguments; only positions 1–8 of its first returned accessible table may supply original accessible finite event IDs. Preserve duplicates and holes without sorting, coercion or guessed IDs.
+- Independently query `GetEventState(id)`, `GetEventTimeElapsed(id)`, `GetEventTimeRemaining(id)` and `GetEventTimer(id)` with exactly one argument per usable ID. Independently call `GetEventHighlightTime()` twice with zero arguments even after a missing, restricted or failing list producer. Guard every list index and recheck original ID accessibility after namespace/function lookup and guards before forwarding.
+- Store bounded raw tuples under `timelineLifecycleRead.producer`, `entries[].queries` keyed by API name, and `highlight[1..2]`, with scalar ID observations. Preserve arity, nil positions and opaque failures independently. Inaccessible/secret values remain opaque before inspection. Timer objects remain opaque: no fields, methods, retention or state comparisons.
+- Bound calls to 35 per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Do not query event counts, invent source enums, add/cancel/finish/pause/resume events or perform other timeline mutations. Eleven actual TOC/slash fixtures establish recorder mechanics only; native timing, state, lifecycle, ordering, completeness and restricted contexts remain unverified.
+
 ## Manual current timeline events
 
 - `timeline-current-events <label>` is manual-only, excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once with zero arguments. Only positions 1–8 of its first returned table may supply original accessible finite event IDs; preserve duplicate IDs and nil holes without guessing, sorting or coercion.

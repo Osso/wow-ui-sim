@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual timeline lifecycle reads
+
+`/apicontract timeline-lifecycle-read <label>` is excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once with no arguments. Only positions 1–8 of its first returned accessible table supply original finite event IDs. Independently call `GetEventState(id)`, `GetEventTimeElapsed(id)`, `GetEventTimeRemaining(id)` and `GetEventTimer(id)` with exactly one argument per usable ID. Independently call `GetEventHighlightTime()` twice, including when the list or every ID is unavailable.
+
+`timelineLifecycleRead` stores `producer`, `entries[].id`, API-name-keyed `entries[].queries` and `highlight[1..2]`. Guard each list index and original ID before inspection, and recheck ID accessibility after namespace/function lookup and guards. Preserve duplicate IDs, nil holes, raw arity and opaque errors. Conditional-secret values remain opaque before inspection; timer objects receive no fields or methods and are not retained.
+
+Bounds: 35 API calls per snapshot, ten snapshots, 16 tuple positions, 256-byte strings and 128-byte labels. Pinned `EncounterTimelineDocumentation.lua:116–123,144–219` declares the call shapes, not native values. No event-count queries, guessed source enums, event mutations, timer methods, state comparisons or timing conclusions. Eleven actual TOC/slash fixtures establish local recorder mechanics only; native population, lifecycle, timing, ordering, completeness and restricted-context behavior remain unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/timeline_lifecycle_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual current timeline events
 
 `/apicontract timeline-current-events <label>` is excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once without arguments. Only the first returned table's positions 1–8 supply original accessible finite event IDs. For each, independently call `GetEventInfo(id)` and `GetEventColor(id)` with exactly one argument; the color override is omitted. Preserve duplicates, nil holes, raw arity and opaque errors without inventing event IDs.
