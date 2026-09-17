@@ -1,6 +1,6 @@
 ## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
 
-Runtime `08a8ae25d` adds manual `/apicontract timeline-lifecycle-read <label>`, excluded from `all`. It bounds original `GetEventList()` IDs to eight, reads four lifecycle APIs per usable ID, and records highlight time twice. Timer results stay opaque. Eleven fixtures prove recorder mechanics only; no event mutation, native lifecycle, timing, ordering, completeness, or restricted-context conclusion follows. See [[api-contract-probes]].
+Runtime `dae53acf2` extends manual `/apicontract timeline-lifecycle-read <label>`, excluded from `all`. It bounds original `GetEventList()` IDs to eight, reads four lifecycle APIs per usable ID, records highlight time twice, and applies the shared ten-method duration inspector only to bounded `GetEventTimer` returns. The 35 API-call cap remains; timers have 80 declared-return method calls per snapshot and a defensive 1,280 bound for 16 returned values. Seventeen cumulative fixtures, including six new timer cases, prove recorder mechanics only; no event mutation, native lifecycle, timing, ordering, completeness, or restricted-context conclusion follows. See [[api-contract-probes]].
 
 ## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
 

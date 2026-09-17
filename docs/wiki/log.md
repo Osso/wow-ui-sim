@@ -1,6 +1,6 @@
 ## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
 
-`08a8ae25d` adds manual `timeline-lifecycle-read <label>`. It calls `GetEventList` once, forwards at most eight original accessible IDs to four independent lifecycle reads, and records `GetEventHighlightTime` twice. Timers stay opaque. Eleven fixtures prove recorder mechanics only; no event mutation, native lifecycle, timing, ordering, completeness, restricted-context, or native claim follows. Updated [[api-contract-probes]] and the index.
+`dae53acf2` extends manual `timeline-lifecycle-read <label>` from `08a8ae25d`. `GetEventTimer` return values alone receive the shared current-only ten-method duration inspector; no timer retention or event mutation occurs. The 35 API-call cap remains, with 80 declared-return method calls and a defensive 1,280-return bound per snapshot. Seventeen cumulative fixtures, including six new timer cases, prove recorder mechanics only; no native lifecycle, timing, ordering, completeness, restricted-context, or native claim follows. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
 
