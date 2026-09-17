@@ -56,6 +56,14 @@
 - Bound calls to two per snapshot, snapshots to ten, tuples to 16 positions, strings to 256 bytes and labels to 128 bytes. Keep peer entries and both calls independent after missing, restricted or error outcomes. Do not retain produced objects, iterate arbitrary keys or recursively expand values.
 - No refresh, claim, tracking or mutation calls. Current declared nested types do not establish removed type identities, ordering, completeness, native criteria semantics or historical compatibility. Ten actual TOC/slash fixtures establish recorder mechanics only; native evidence remains outstanding.
 
+## Manual transmog slot visual info
+
+- `transmog-slot-visual-info <label>` is manual-only, excluded from `all`. Observe exactly four cases: original string descriptors `HEADSLOT`/`SHOULDERSLOT` × secondary `false`/`true`, using guarded published `Enum.TransmogType.Appearance` without numeric fallback.
+- Invoke the original dot-call factory with three arguments, original location `GetData` with its receiver, then `C_Transmog.GetSlotVisualInfo` with the original first data table. Guard descriptor/type/boolean, receivers and data before inspection/use, rechecking after lookup/function guards. Validate only the data's exact `slotID`, `type`, `modification` fields as accessible finite numbers, including access revoked by later field reads. Do not rebuild, coerce or remap data.
+- Preserve independent missing/invalid/restricted/error outcomes and exact raw arity/nil positions in `transmogSlotVisualInfo.cases[].factory/data/visual`. Inspect only the first visual object's nine declared fields: `baseSourceID`, `baseVisualID`, `appliedSourceID`, `appliedVisualID`, `pendingSourceID`, `pendingVisualID`, `hasUndo`, `isHideVisual`, `itemSubclass`. Recheck the visual receiver before each field lookup and guard values before serialization.
+- Bound recorder-level invocations to 12 per snapshot, excluding vendor factory-internal calls explicitly; ten snapshots, 16 tuple positions, 256-byte strings and 128-byte labels. Retain no produced objects. No transmog apply, selection, equipment/account mutation, native visual interpretation or historical-contract conclusion.
+- Eleven actual TOC/slash fixtures in `tests/transmog_slot_visual_info.lua` prove local mechanics, including bounded pinned vendor factory/Set/GetData execution against local dependencies. Native values and restricted-context behavior remain unverified.
+
 ## Manual equipped transmog eligibility
 
 - `equipped-transmog-eligibility <label>` is manual-only, excluded from `all`. For equipment slots 1–19, invoke the original `ItemLocation:CreateFromEquipmentSlot(slot)` method and forward its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`.

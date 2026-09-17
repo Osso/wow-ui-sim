@@ -2610,6 +2610,113 @@ local function captureItemBinding(itemInfo)
     return result
 end
 
+-- Keep the new producer chain scoped: the main chunk and slash handler have Lua 5.1 local/upvalue limits.
+do
+    local captureEquipment = captureItemBinding
+    local function objectStatus(object, tableOnly)
+        if not accessible(object) then return "restricted-input" end
+        local kind = type(object)
+        if kind ~= "table" and (tableOnly or kind ~= "userdata") then return "unavailable-input" end
+    end
+
+    local function factoryInputStatus(descriptor, transmogType, secondary)
+        if not accessible(descriptor) or not accessible(transmogType) or not accessible(secondary) then
+            return "restricted-input"
+        end
+        if type(descriptor) ~= "string" or type(secondary) ~= "boolean" then return "unavailable-input" end
+        return customSetInputStatus(transmogType, "number")
+    end
+
+    local function recordCall(fn, ...)
+        local values = pack(pcall(fn, ...))
+        if not values[1] then return { status = "call-error" } end
+        local result = mapTuple(unpack(values, 2, values.n))
+        result.status = "observed"
+        return result, values[2]
+    end
+
+    local function createLocation(descriptor, secondary)
+        local enum, enumOK = readField(Enum, "TransmogType")
+        local transmogType, valueOK
+        if enumOK then transmogType, valueOK = readField(enum, "Appearance") end
+        if not valueOK then return { status = "field-error" } end
+        local status = factoryInputStatus(descriptor, transmogType, secondary)
+        if status then return { status = status } end
+        local fn, ok = readField(TransmogUtil, "CreateTransmogLocation")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        status = factoryInputStatus(descriptor, transmogType, secondary)
+        if status then return { status = status } end
+        -- Vendor factory is a dot call; no TransmogUtil receiver is passed.
+        return recordCall(fn, descriptor, transmogType, secondary)
+    end
+
+    local function getLocationData(location)
+        local status = objectStatus(location)
+        if status then return { status = status } end
+        local fn, ok = readField(location, "GetData")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        status = objectStatus(location)
+        if status then return { status = status } end
+        return recordCall(fn, location)
+    end
+
+    local function dataStatus(data)
+        local status = objectStatus(data, true)
+        if status then return status end
+        local fields = {}
+        for index, key in ipairs({ "slotID", "type", "modification" }) do
+            local value, ok = readField(data, key)
+            if not ok then return "field-error" end
+            fields[index] = value
+            status = customSetInputStatus(value, "number")
+            if status then return status end
+        end
+        -- A later field lookup may revoke an earlier value. Validate all three again; never rebuild data.
+        for index = 1, 3 do
+            status = customSetInputStatus(fields[index], "number")
+            if status then return status end
+        end
+        return objectStatus(data, true)
+    end
+
+    local function getVisualInfo(data)
+        local status = dataStatus(data)
+        if status then return { status = status } end
+        local fn, ok = readField(C_Transmog, "GetSlotVisualInfo")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        status = dataStatus(data)
+        if status then return { status = status } end
+        local result, object = recordCall(fn, data)
+        if result.status == "observed" then
+            result.object = inspectHousingCatalogFields(object, { "baseSourceID", "baseVisualID",
+                "appliedSourceID", "appliedVisualID", "pendingSourceID", "pendingVisualID",
+                "hasUndo", "isHideVisual", "itemSubclass" })
+        end
+        return result
+    end
+
+    captureItemBinding = function(mode)
+        if mode ~= "slot-visual-info" then return captureEquipment(mode) end
+        local result = { cases = {} }
+        for _, descriptor in ipairs({ "HEADSLOT", "SHOULDERSLOT" }) do
+            for _, secondary in ipairs({ false, true }) do
+                local row = { descriptor = scalar(descriptor), secondary = scalar(secondary) }
+                local location, data
+                row.factory, location = createLocation(descriptor, secondary)
+                row.data = { status = "unavailable-input" }
+                row.visual = { status = "unavailable-input" }
+                if row.factory.status == "observed" then row.data, data = getLocationData(location) end
+                if row.data.status == "observed" then row.visual = getVisualInfo(data) end
+                result.cases[#result.cases + 1] = row
+            end
+        end
+        return result
+    end
+end
+
 local function observeFillMethod(object, name, ...)
     local fn, ok = readField(object, name)
     if not ok then return { status = "field-error" } end
@@ -3586,8 +3693,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -3649,6 +3756,9 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "tradeskill-item-quality" then record.tradeskillItemQuality = captureTradeskillItemQuality() end
         if mode == "item-binding" then record.itemBinding = captureItemBinding() end
         if mode == "equipped-item-info" then record.equippedItemInfo = captureItemBinding(true) end
+        if mode == "transmog-slot-visual-info" then
+            record.transmogSlotVisualInfo = captureItemBinding("slot-visual-info")
+        end
         if mode == "equipped-transmog-eligibility" then
             record.equippedTransmogEligibility = captureItemBinding("transmog-eligibility")
         end

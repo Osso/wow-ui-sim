@@ -98,6 +98,20 @@ Pinned retail/PTR `PerksActivitiesDocumentation.lua` declares the root and activ
 luajit docs/addons/ApiContractProbe/tests/perks_criteria.lua docs/addons/ApiContractProbe
 ```
 
+## Manual transmog slot visual info
+
+`/apicontract transmog-slot-visual-info <label>` is excluded from `all`. Four cases use the literal string descriptors `HEADSLOT` and `SHOULDERSLOT`, each with `false` and `true` secondary input, and the guarded published `Enum.TransmogType.Appearance` value. Call the original `TransmogUtil.CreateTransmogLocation(descriptor, type, secondary)` **without a receiver argument**, then original `location:GetData()`, then `C_Transmog.GetSlotVisualInfo(originalData)`. No replacement location/data tables, numeric enum fallbacks, field coercion or slot/type remapping are used.
+
+`transmogSlotVisualInfo.cases` stores descriptor/secondary scalar observations and `factory`, `data`, `visual` tuples. Guard factory inputs and location receivers after lookup/function guards. Before forwarding the first GetData table, guard its exact `slotID`, `type`, `modification` fields as finite numbers; recheck fields after later field lookups and again after query lookup/function guards. Missing, invalid, restricted and failed cases remain independent. Only the first visual object exposes nine guarded fields: `baseSourceID`, `baseVisualID`, `appliedSourceID`, `appliedVisualID`, `pendingSourceID`, `pendingVisualID`, `hasUndo`, `isHideVisual`, `itemSubclass`. Other returned objects remain opaque; nothing is retained between captures.
+
+Bounds: **12 recorder-level invocations per snapshot** (four factories, four GetData methods, four visual queries), ten snapshots, 16 tuple positions, 256-byte strings and 128-byte labels. Vendor factory-internal calls are explicitly excluded from that invocation count. Native visual state, historical contracts and restricted-context behavior remain unverified; no transmog application, outfit selection, equipment or account mutation is performed.
+
+Source: retail `Blizzard_TransmogShared.lua:149–189,532–540,604–611`, `Blizzard_Wardrobe.lua:1073`, `TransmogDocumentation.lua:86–101,303–315`, and `TransmogSharedDocumentation.lua:105–114`. Eleven actual TOC/slash fixtures establish local recorder mechanics only, including a bounded execution of unmodified pinned vendor factory/Set/GetData source sections with local dependency fixtures, not a native client run.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/transmog_slot_visual_info.lua docs/addons/ApiContractProbe
+```
+
 ## Manual equipped transmog eligibility
 
 `/apicontract equipped-transmog-eligibility <label>` is excluded from `all`. For slots 1–19, call the original `ItemLocation:CreateFromEquipmentSlot(slot)` method, then independently pass its first accessible table/userdata result once to `C_Item.CanItemTransmogAppearance`. Recheck the constructor receiver after method guards and the original location after namespace/function guards. Never clone locations, inspect their fields, substitute links, or retain objects between captures.
