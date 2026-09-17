@@ -6,6 +6,8 @@ Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, c
 
 `/apicontract error-code-publication <label>` is manual-only and excluded from `all`. It performs one guarded `_G` lookup for each of twelve fixed retained `LE_GAME_ERR_*` globals, preserving scalar presence/status without supplying numeric defaults, triggering errors, or adding shared targets. Functions and objects remain opaque. Twelve fixtures prove recorder mechanics only; native mappings, emission, timing, load phase, and full retained-plan behavior remain unverified.
 
+`/apicontract transmog-slot-visual-info <label>` is manual-only and excluded from `all`. It covers four original vendor factory cases: `HEADSLOT`/`SHOULDERSLOT` with secondary false/true. Each case guards the original location, `GetData` result, and nine fixed visual fields before a bounded `C_Transmog.GetSlotVisualInfo` call. Recorder-level calls cap at twelve per snapshot; vendor-internal factory calls are separate. Eleven fixtures plus nine item-info, eleven transmog-eligibility, and eight item-binding regressions prove local routing only. No apply, selection, equipment/account mutation, or native visual conclusion follows.
+
 ## Shared recorder reconciliation
 
 Metadata `eda32cf0a` validates exact routing for **287** `AuditTargets.lua` entries across **112** shared-recorder plans: 199 publication/CVar targets use `capturePublication`; 88 event targets use `controlEvents` and `recordEvent`. This proves only target-to-component wiring. Publication still needs matching-client/load-phase evidence; events still need external producers, payload semantics, and transition observations; every shared plan still needs its own behavioral design. Statuses and native credit remain unchanged.

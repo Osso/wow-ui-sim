@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded transmog slot visual recorder
+
+`b62e630d6` adds manual `transmog-slot-visual-info <label>`, excluded from `all`. Four guarded original vendor factory cases (`HEADSLOT`/`SHOULDERSLOT` × secondary false/true) call original `GetData` and `C_Transmog.GetSlotVisualInfo`; only nine declared visual fields are inspected. Recorder-level calls cap at twelve per snapshot, excluding vendor-internal factory calls. Eleven fixtures, plus nine item-info, eleven transmog-eligibility, and eight item-binding regressions, establish local mechanics only. No native visual, apply, selection, equipment/account mutation, or restricted-context conclusion follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-17] investigation | Prepare bounded error-code publication recorder
 
 `d313b16d9` adds manual `error-code-publication <label>`, excluded from `all`. It reads twelve fixed retained `LE_GAME_ERR_*` globals through guarded lookup only; no numeric fallback, error trigger, or shared-target change. Twelve fixtures prove recorder mechanics only; native mappings, emission, timing, load phase, and plan behavior remain unverified. Updated [[api-contract-probes]] and the index.
