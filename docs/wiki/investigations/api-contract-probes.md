@@ -4,6 +4,8 @@ Manual `timeline-source-counts` uses only the fixed published `Encounter`, `Scri
 
 Scalar curve point, `UnitSexBase`, unit-name/realm, finite numeric-formatting, cast/channel identity, selected action-slot, scalar resource scale, plain callback lifecycle, and residual `StripHyperlinks` investigations share one manual [ApiContractProbe](../../addons/ApiContractProbe/README.md). The existing [AuraDispelCurveProbe](../../addons/AuraDispelCurveProbe/README.md) covers dispel-ID input. Runtime `3f7934e27` adds `names`; `41bcd89f0` adds numeric capture; both are included in `all`. These recorder experiments are prepared; none was installed or executed in a native client by this task. They do **not** cover all remaining probe needs.
 
+`/apicontract error-code-publication <label>` is manual-only and excluded from `all`. It performs one guarded `_G` lookup for each of twelve fixed retained `LE_GAME_ERR_*` globals, preserving scalar presence/status without supplying numeric defaults, triggering errors, or adding shared targets. Functions and objects remain opaque. Twelve fixtures prove recorder mechanics only; native mappings, emission, timing, load phase, and full retained-plan behavior remain unverified.
+
 ## Shared recorder reconciliation
 
 Metadata `eda32cf0a` validates exact routing for **287** `AuditTargets.lua` entries across **112** shared-recorder plans: 199 publication/CVar targets use `capturePublication`; 88 event targets use `controlEvents` and `recordEvent`. This proves only target-to-component wiring. Publication still needs matching-client/load-phase evidence; events still need external producers, payload semantics, and transition observations; every shared plan still needs its own behavioral design. Statuses and native credit remain unchanged.

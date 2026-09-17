@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded error-code publication recorder
+
+`d313b16d9` adds manual `error-code-publication <label>`, excluded from `all`. It reads twelve fixed retained `LE_GAME_ERR_*` globals through guarded lookup only; no numeric fallback, error trigger, or shared-target change. Twelve fixtures prove recorder mechanics only; native mappings, emission, timing, load phase, and plan behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
 
 `bd13c305e` adds manual `resource-color-input <label>`, excluded from `all`. It creates a fresh owned color curve, two original RGBA colors, and two controlled literal points before independently calling opaque health- and power-percent APIs. Failed setup prevents both resource calls; curve, color, and result objects are not retained. Seven calls per snapshot and thirteen fixtures prove recorder mechanics only. No native scale, color, security, or behavior claim follows. Updated [[api-contract-probes]] and the index.

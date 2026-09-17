@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded error-code publication recorder
+
+Runtime `d313b16d9` adds manual `/apicontract error-code-publication <label>`, excluded from `all`. It makes one guarded lookup for each of twelve retained `LE_GAME_ERR_*` globals and preserves scalar presence only. Twelve fixtures prove recorder mechanics; no numeric mapping, error emission, mutation, load-phase, or native conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
 
 Runtime `bd13c305e` adds manual `/apicontract resource-color-input <label>`, excluded from `all`. It creates one fresh owned color curve with two literal controlled RGBA points, then makes bounded opaque `UnitHealthPercent` and `UnitPowerPercent` calls. Setup failure prevents both calls; it retains no curve, color, or result object. Thirteen fixtures prove recorder mechanics only. No native resource scale, color, security, or behavior conclusion follows. See [[api-contract-probes]].
