@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual error-code publication
+
+`/apicontract error-code-publication <label>` is excluded from `all` and does not extend the shared `publication` target list. It reads exactly the twelve fixed `LE_GAME_ERR_*` names retained by `remaining-objects-global-error-codes`, once each through guarded global lookup. No numeric values, defaults or fallbacks are supplied; looked-up functions and objects are never invoked or traversed. No error trigger is needed for these presence observations.
+
+`errorCodePublication[]` records each `name` with a scalar observation: `missing` for an absent global, `restricted` for an inaccessible value, `lookup-error` for a denied receiver or failed lookup, `nonfinite` for nonfinite numbers, otherwise `observed` with its accessible kind/value. Functions, tables and userdata remain opaque. Recheck global receiver access for every lookup; value access is checked before type inspection or serialization. Missing access APIs retain the existing capture-level `missing-access-api` outcome.
+
+Bounds: twelve lookup attempts per capture, ten captures, 256-byte scalar strings and 128-byte labels. `AuditTargets.lua` and existing publication behavior remain unchanged. Twelve actual TOC/slash fixtures cover exact names, noncanonical values, missing/restricted/failed lookups, receiver revocation, opaque values, limits and old/new/publication/all interleaving. This is presence-only recorder preparation, not native error-code mapping, emission or semantics; the retained plan's native numeric and load-phase evidence remains unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/error_code_publication.lua docs/addons/ApiContractProbe
+```
+
 ## Manual timeline source counts
 
 `/apicontract timeline-source-counts <label>` is excluded from `all`. For each fixed published `Enum.EncounterTimelineEventSource` name `Encounter`, `Script` and `EditMode`, independently call `C_EncounterTimeline.GetEventCountBySource(value)` twice with exactly one argument. Re-read the published member for each attempt; accept only accessible finite numeric values, without numeric fallback, enum iteration or deduplication.

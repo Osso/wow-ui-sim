@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual error-code publication
+
+- `error-code-publication <label>` is manual-only, excluded from `all`, and reads exactly the twelve fixed `LE_GAME_ERR_*` names retained by `remaining-objects-global-error-codes`. Each name receives one guarded `readField(_G, name)` lookup attempt; no numeric constants, defaults or fallbacks are supplied. Do not add these names to `AuditTargets.lua` or change shared publication behavior.
+- Save `errorCodePublication[]` with each name and scalar status/kind/value. Absent globals are `missing`, inaccessible values `restricted`, denied receivers or failed lookups `lookup-error`, and nonfinite numbers `nonfinite`; other accessible values are `observed`. Check receiver access before every lookup and value access before inspection/serialization. Functions and objects remain opaque and are never invoked or traversed. Missing access APIs fail closed at capture level.
+- Bound lookups to twelve per capture, captures to ten, strings to 256 bytes and labels to 128 bytes. No native error generation, mutations or error-trigger calls. Twelve actual TOC/slash fixtures establish bounded recorder behavior and unchanged old publication interleaving only.
+- Presence observations do not establish native numeric error-code mappings, emission, timing or semantics. The retained plan's full behavior and matching-client/load-phase evidence remain open; no native-conformance credit follows.
+
 ## Manual timeline source counts
 
 - `timeline-source-counts <label>` is manual-only and excluded from `all`. Independently query `C_EncounterTimeline.GetEventCountBySource(value)` twice for each fixed published `Enum.EncounterTimelineEventSource` name `Encounter`, `Script`, `EditMode`; re-read the member on every attempt. Require an accessible finite original numeric value. Never substitute enum numbers, iterate extra members or deduplicate values.
