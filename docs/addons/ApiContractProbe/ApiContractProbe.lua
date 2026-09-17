@@ -1381,6 +1381,11 @@ local function captureNeighborhoodStructures(mode)
             if not values[1] then return { status = "call-error" } end
             local observation = mapTuple(unpack(values, 2, values.n))
             observation.status = "observed"
+            if name == "GetEventTimer" then
+                for index = 2, math.min(values.n, 17) do
+                    observation.values[index - 1] = inspectDuration(values[index])
+                end
+            end
             return observation, values
         end
         local producer, values = observeLifecycle("GetEventList")

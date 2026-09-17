@@ -147,7 +147,7 @@ test("list receiver checked at every index and after tuple serialization", funct
     canaccessvalue = function(v) if rawequal(v, marker) then revoked = true end; return not (revoked and rawequal(v, list)) end
     local r = capture(); assert(calls == 3 and r.highlight[1].status == "observed")
 end)
-test("opaque timers secret outputs and no raw object retention", function()
+test("timer method lookup errors secret outputs and no raw object retention", function()
     local weak = setmetatable({}, { __mode = "v" })
     local reads = 0
     setup(function() local list = { 1 }; weak[1] = list; return list end, function(name)
@@ -159,7 +159,8 @@ test("opaque timers secret outputs and no raw object retention", function()
     local r = capture()
     assert(r.entries[1].queries.GetEventTimer.values[1].kind == "userdata")
     assert(r.entries[1].queries.GetEventState.values[1].status == "restricted")
-    assert(r.highlight[1].values[1].status == "restricted" and reads == 0)
+    assert(r.highlight[1].values[1].status == "restricted" and reads == 10)
+    assert(r.entries[1].queries.GetEventTimer.values[1].methods.GetTotalDuration.status == "field-error")
     collectgarbage("collect"); collectgarbage("collect")
     assert(weak[1] == nil and weak[2] == nil)
 end)
@@ -192,5 +193,186 @@ test("all excludes lifecycle queries and highlights", function()
     assert(calls == 0 and excluded == 0 and ApiContractProbeDB.captures[1].timelineLifecycleRead == nil)
     assert(capture().producer.status == "call-error")
 end)
+local timerMethods = {
+    "GetTotalDuration", "GetElapsedDuration", "GetRemainingDuration", "GetElapsedPercent",
+    "GetRemainingPercent", "GetStartTime", "GetEndTime", "GetClockTime", "GetModRate", "HasExpired",
+}
+
+test("timer methods preserve receiver arity and never inspect scalar-query objects", function()
+    local methodCalls, scalarReads = 0, 0
+    local scalarObject = setmetatable({}, { __index = function() scalarReads = scalarReads + 1; error("scalar inspected") end })
+    local object = newproxy(true)
+    getmetatable(object).__index = function(_, key)
+        local allowed = false
+        for _, name in ipairs(timerMethods) do if key == name then allowed = true end end
+        assert(allowed, "non-whitelisted method")
+        return function(...)
+            assert(select("#", ...) == 1 and rawequal((...), object))
+            methodCalls = methodCalls + 1
+            if key == "GetElapsedDuration" then error(secret) end
+            if key == "HasExpired" then return end
+            return key, nil, string.rep("x", 300), nil
+        end
+    end
+    setup(function() return { 1 } end, function(name)
+        if name == "GetEventTimer" then return object, nil, 5, secret end
+        return scalarObject, nil
+    end, function() return scalarObject end)
+    local r = capture()
+    local q = r.entries[1].queries.GetEventTimer
+    assert(methodCalls == 10 and scalarReads == 0 and calls == 7)
+    assert(q.status == "observed" and q.n == 4 and q.values[1].kind == "userdata")
+    assert(q.values[2].kind == "nil" and q.values[3].value == 5 and q.values[4].status == "restricted")
+    for _, name in ipairs(timerMethods) do
+        local m = q.values[1].methods[name]
+        if name == "GetElapsedDuration" then assert(m.status == "call-error")
+        elseif name == "HasExpired" then assert(m.status == "observed" and m.n == 0)
+        else assert(m.n == 4 and m.values[1].value == name and m.values[2].kind == "nil"
+            and #m.values[3].value == 256 and m.values[4].kind == "nil") end
+    end
+    for _, name in ipairs({ "GetEventState", "GetEventTimeElapsed", "GetEventTimeRemaining" }) do
+        assert(r.entries[1].queries[name].n == 2 and r.entries[1].queries[name].values[1].methods == nil)
+    end
+    assert(r.highlight[1].values[1].methods == nil)
+end)
+
+test("all timer receiver lookup and function guard revocation phases fail closed", function()
+    for _, phase in ipairs({ "lookup", "secret", "access" }) do
+        for blocked, name in ipairs(timerMethods) do
+            local revoked, target, methodCalls = false, nil, 0
+            local object = {}
+            setmetatable(object, { __index = function(_, key)
+                assert(not revoked, "revoked receiver lookup")
+                local fn = function(...)
+                    assert(select("#", ...) == 1 and rawequal((...), object) and not revoked)
+                    methodCalls = methodCalls + 1; return methodCalls
+                end
+                if key == name then target = fn; if phase == "lookup" then revoked = true end end
+                return fn
+            end })
+            setup(function() return { 1 } end, function(api)
+                if api == "GetEventTimer" then return object end
+                return 3
+            end, function() return 4 end)
+            issecretvalue = function(v)
+                if phase == "secret" and target and rawequal(v, target) then revoked = true end
+                return rawequal(v, secret)
+            end
+            canaccessvalue = function(v)
+                if phase == "access" and target and rawequal(v, target) then revoked = true end
+                return not rawequal(v, secret) and not (revoked and rawequal(v, object))
+            end
+            local r = capture()
+            assert(revoked and methodCalls == blocked - 1, name .. phase)
+            assert(r.entries[1].queries.GetEventTimer.values[1].methods[name].status == "restricted-object")
+            assert(calls == 7 and r.highlight[2].values[1].value == 4)
+        end
+    end
+end)
+
+test("timer serialization and method results can revoke later receivers and IDs", function()
+    local revoked, methodCalls = false, 0
+    local second = setmetatable({}, { __index = function() error("restricted object inspected") end })
+    local marker = {}
+    local first = { GetTotalDuration = function() methodCalls = methodCalls + 1; return marker end }
+    setup(function() return { 1, 2 } end, function(name, id)
+        assert(not revoked or id ~= 2)
+        if name == "GetEventTimer" then return first, second end
+        return 3
+    end, function() return 4 end)
+    canaccessvalue = function(v)
+        if rawequal(v, marker) then revoked = true end
+        return not rawequal(v, secret) and not (revoked and (rawequal(v, second) or rawequal(v, 2)))
+    end
+    local r = capture()
+    assert(methodCalls == 1 and r.entries[1].queries.GetEventTimer.values[2].status == "restricted")
+    assert(r.entries[2].queries.GetEventState.status == "restricted-input" and calls == 7)
+    assert(r.highlight[2].values[1].value == 4)
+    revoked = false
+    setup(function() return { 1 } end, function(name)
+        if name == "GetEventTimer" then return second, marker end
+        return 3
+    end, function() return 4 end)
+    canaccessvalue = function(v)
+        if rawequal(v, marker) then revoked = true end
+        return not rawequal(v, secret) and not (revoked and rawequal(v, second))
+    end
+    r = capture()
+    assert(r.entries[1].queries.GetEventTimer.values[1].status == "restricted" and calls == 7)
+end)
+
+test("declared single timer return bounds eighty method calls and thirty-five APIs", function()
+    local methodCalls = 0
+    local object = {}
+    setmetatable(object, { __index = function()
+        return function(receiver) assert(rawequal(receiver, object)); methodCalls = methodCalls + 1; return 1 end
+    end })
+    setup(function() return { 1, 2, 3, 4, 5, 6, 7, 8, 9 } end, function(name)
+        if name == "GetEventTimer" then return object end
+        return 3
+    end, function() return 4 end)
+    local r = capture()
+    assert(methodCalls == 80 and calls == 35 and #r.entries == 8)
+    assert(r.entries[8].queries.GetEventTimer.n == 1)
+end)
+
+test("defensive sixteen timer returns bound 1280 methods without inspecting extras", function()
+    local methodCalls, objects, returns = 0, {}, {}
+    for index = 1, 16 do
+        local object = {}
+        objects[index], returns[index] = object, object
+        setmetatable(object, { __index = function()
+            return function(...)
+                assert(select("#", ...) == 1 and rawequal((...), object))
+                methodCalls = methodCalls + 1
+                return nil, unpack({ string.rep("v", 300), 3, 4, 5, 6, 7, 8, 9, 10,
+                    11, 12, 13, 14, 15, 16, 17, 18 }, 1, 18)
+            end
+        end })
+    end
+    returns[17] = setmetatable({}, { __index = function() error("seventeenth timer inspected") end })
+    setup(function() return { 1, 2, 3, 4, 5, 6, 7, 8, 9 } end, function(name)
+        if name == "GetEventTimer" then return unpack(returns, 1, 17) end
+        return 3
+    end, function() return 4 end)
+    local r = capture(string.rep("l", 200))
+    local q = r.entries[8].queries.GetEventTimer
+    assert(methodCalls == 1280 and calls == 35 and q.n == 17 and q.truncated and #q.values == 16)
+    local m = q.values[16].methods.GetTotalDuration
+    assert(m.n == 19 and m.truncated and #m.values == 16 and m.values[1].kind == "nil")
+    assert(#m.values[2].value == 256 and #ApiContractProbeDB.captures[1].label == 128)
+    for _ = 2, 11 do capture() end
+    assert(methodCalls == 12800 and calls == 350 and ApiContractProbeDB.dropped == 1)
+end)
+
+test("current timers are collectible without advancing or replacing cast retention", function()
+    local weak, serial, castReads, timerReads = setmetatable({}, { __mode = "v" }), 0, 0, 0
+    local retained = { GetTotalDuration = function() castReads = castReads + 1; return 1 end }
+    setup(function() return { 1 } end, function(name)
+        if name ~= "GetEventTimer" then return 3 end
+        serial = serial + 1
+        local object = newproxy(true)
+        getmetatable(object).__index = function()
+            return function(receiver) assert(rawequal(receiver, object)); timerReads = timerReads + 1; return 2 end
+        end
+        weak[serial] = object
+        return object
+    end, function() return 4 end)
+    UnitCastingDuration = function(unit) if unit == "player" then return retained end end
+    UnitChannelDuration, UnitEmpoweredChannelDuration = function() end, function() end
+    SlashCmdList.APICONTRACTPROBE("cast-durations before")
+    local before = ApiContractProbeDB.captures[1].castDurations
+    local oldReads = castReads
+    capture(); capture()
+    assert(timerReads == 20 and castReads == oldReads)
+    collectgarbage("collect"); collectgarbage("collect")
+    assert(next(weak) == nil)
+    SlashCmdList.APICONTRACTPROBE("cast-durations after")
+    local after = ApiContractProbeDB.captures[4].castDurations
+    assert(after.capture == before.capture + 1 and #after.previous == 1)
+    assert(after.previous[1].observationRef == before.units.player.casting.values[1].observationRef)
+    assert(castReads == oldReads + 2)
+end)
+
 print(string.format("%d passed, %d failed", passed, failed))
 os.exit(failed == 0 and 0 or 1)
