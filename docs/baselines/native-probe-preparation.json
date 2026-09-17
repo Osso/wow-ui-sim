@@ -1160,10 +1160,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual custom-set-names records GetNumMaxCustomSets twice, obtains the first four original IDs from GetCustomSets, then passes original accessible names from GetCustomSetInfo to IsValidCustomSetName without truncating inputs"
+          "Manual custom-set-names records GetNumMaxCustomSets twice, obtains the first four original IDs from GetCustomSets, then passes original accessible names from GetCustomSetInfo to IsValidCustomSetName without truncating inputs",
+          "Manual transmog-source-validity uses an accessible nonnegative integer GetNumTransmogSources result to bound eight vendor-backed one-based source-filter indices for IsValidTransmogSource, distinct from appearance source IDs"
         ],
         "missing": [
-          "ItemTransmogInfo list/hyperlink conversion and IsValidTransmogSource observations",
+          "ItemTransmogInfo list/hyperlink conversion and native source-filter validity values",
           "Remaining custom sets, native name-validation and populated fixtures",
           "Native transitions and restricted-context behavior"
         ]
