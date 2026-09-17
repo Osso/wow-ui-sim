@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
+
+`68da96764` adds manual `timeline-current-events <label>`. It observes one `GetEventList` result, bounds its original accessible finite ID list to eight entries, then independently captures `GetEventInfo` through ten fixed guarded fields and opaque `GetEventColor` with override omitted. Seventeen calls per snapshot, twelve local fixtures, and eleven plus sixteen targeted regressions establish recorder mechanics only. No synthetic events, icon mutation, security probing, native execution, or native behavior claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
 
 Runtime `b33e99159` adds manual `cloak-helm-transition`. The mode remains outside `all` because it can change appearance when later manually run. It records guarded baseline, transition, and restoration tuples per lane; unconfirmed cleanup blocks later transition captures in the addon session. Fourteen fixtures and eleven player-state regressions establish recorder mechanics only. No native execution, restoration semantics, security, or appearance claim follows. Updated [[api-contract-probes]] and the index.

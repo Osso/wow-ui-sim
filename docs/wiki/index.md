@@ -1,3 +1,7 @@
+## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
+
+Runtime `68da96764` adds manual `/apicontract timeline-current-events <label>`, excluded from `all`. It bounds the first `GetEventList()` ID table to eight original accessible finite IDs, then independently captures `GetEventInfo` fields and opaque `GetEventColor` results with override omitted. Twelve fixtures plus eleven and sixteen targeted regressions prove recorder mechanics only; no event creation, icon mutation, native event behavior, ordering, timing, color, or security conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-16] audit | Record concrete preparation blockers
 
 Inventory `1e0b2a9bc` records source-checked blockers for limited-gamepad cursor input, ungrounded `string.concat`, scalar `GetNextSignal`, and PTR `CreateRegionParams` with no consumer located in reviewed sources; no status, runtime, or native-credit change. See [[api-contract-probes]].
