@@ -76,8 +76,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 65,
-    "partial-recorder": 78,
+    "needs-design-and-recorder-review": 64,
+    "partial-recorder": 79,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -2090,7 +2090,8 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual public-queries independently records C_EncounterTimeline.GetCurrentTime twice without arguments"
+          "Manual public-queries independently records C_EncounterTimeline.GetCurrentTime twice without arguments",
+          "Manual timeline-current-events records the current event-ID list and bounded original-ID info/color observations without creating or altering events"
         ],
         "missing": [
           "Timeline event producers, lifecycle, pause/resume and event structures",
@@ -2248,8 +2249,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual timeline-current-events obtains up to eight original accessible IDs from GetEventList and independently queries GetEventInfo and GetEventColor with override omitted",
+          "First event-info objects expose ten guarded declared fields; inaccessible values and returned colors remain opaque"
+        ],
+        "missing": [
+          "Native populated encounter fixtures, event transitions and color semantics",
+          "SetEventIconTextures experiment with produced icon masks and owned texture inputs",
+          "Native validation, ordering and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/timeline-colors-icons"
     },
