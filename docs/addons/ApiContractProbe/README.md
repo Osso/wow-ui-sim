@@ -826,6 +826,20 @@ luajit docs/addons/ApiContractProbe/tests/death_recap_current.lua docs/addons/Ap
 
 Every forwarded value is access-checked after API lookup/function guards. Owned table/function inputs are observed opaquely, never executed or retained by the recorder. Calls preserve raw arity, nil positions and opaque failures; outputs are capped at 16 positions and 256-byte strings, labels at 128 bytes, captures at ten (43 calls each). Seven actual TOC/slash fixtures prove recording mechanics only. No normalization, native coercion/output semantics, security behavior or historical fifth-flag claim follows.
 
+## Manual resource color-curve inputs
+
+`/apicontract resource-color-input <label>` is excluded from `all`. It creates a fresh `C_CurveUtil.CreateColorCurve()` and two original `CreateColor` objects, then adds the literal points `(0, red RGBA 1,0,0,1)` and `(100, blue RGBA 0,0,1,1)`. These are controlled inputs, not evidence of native resource scaling.
+
+Every setup call retains bounded raw outcomes. Missing, invalid, inaccessible or erroring setup leaves both resource observations `unavailable-input`. Successful setup permits independent `UnitHealthPercent("player", false, originalCurve)` and `UnitPowerPercent("player", nil, false, originalCurve)` calls. Curve, colors and arguments are guarded before lookup and after function guards; the AddPoint receiver is checked again before invocation. Original objects are forwarded, not reconstructed or serialized substitutes.
+
+At most seven calls occur per snapshot: one curve constructor, two color constructors, two AddPoint calls and two resource queries. Ten snapshots, 16 return positions, 256-byte scalar strings and 128-byte labels are retained. Resource outputs remain scalar/opaque observations: no result fields or methods, secret inspection, object retention, resource mutation or combat transition. Existing `resources` and `color-curves` behavior is unchanged.
+
+Pinned `CurveUtilDocumentation.lua`, `LuaColorCurveObjectAPIDocumentation.lua`, `Blizzard_SharedXMLBase/Color.lua` and `UnitDocumentation.lua` establish construction/call shapes only. Native input scale, color/resource results and restricted-context behavior remain unverified. Thirteen local actual-TOC/slash fixtures prove recorder mechanics only:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/resource_color_input.lua docs/addons/ApiContractProbe
+```
+
 ## Manual explicit power observations
 
 `/apicontract explicit-power <label>` is excluded from `all`. For `player` and `target`, it reads only published `Enum.PowerType.Mana`, `Rage` and `Energy`, without numeric fallback. Each unit/type receives independent `UnitPower` and `UnitPowerMax` calls with `unmodified=false/true`, and `UnitPowerPercent` calls with exactly four arguments, including an explicit nil curve.

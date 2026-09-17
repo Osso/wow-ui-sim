@@ -624,6 +624,15 @@ luajit docs/addons/ApiContractProbe/tests/death_recap_current.lua docs/addons/Ap
 
 Every forwarded value is access-checked after API lookup/function guards. Owned table/function inputs are observed opaquely, never executed or retained by the recorder. Calls preserve raw arity, nil positions and opaque failures; outputs are capped at 16 positions and 256-byte strings, labels at 128 bytes, captures at ten (43 calls each). Seven actual TOC/slash fixtures prove recording mechanics only. No normalization, native coercion/output semantics, security behavior or historical fifth-flag claim follows.
 
+## Manual resource color-curve inputs
+
+- Manual `resource-color-input <label>` is excluded from `all`; existing resource and color-curve modes retain their behavior.
+- Construct one fresh owned color curve and two original RGBA colors. Add exactly `(0, 1,0,0,1)` and `(100, 0,0,1,1)` as controlled point/color inputs, without inferring native resource scale.
+- Record raw setup outcomes. Missing, invalid, restricted or failed construction/AddPoint setup must prevent both resource calls and record unavailable input. Guard original curve/colors/arguments before method lookup and recheck after function guards, including the receiver before AddPoint invocation.
+- After successful setup, independently call `UnitHealthPercent("player", false, originalCurve)` and `UnitPowerPercent("player", nil, false, originalCurve)` with exact arity. Recheck original unit/curve after global lookup and function guards. Record only scalar/opaque outputs; never inspect returned resource objects or security behavior.
+- Bound each snapshot to seven calls, 16 result positions, 256-byte scalar strings and 128-byte labels; retain at most ten snapshots. Do not retain curve/color/result objects, including partial setup failures, or mutate resources/combat state.
+- Thirteen local fixtures cover actual TOC/slash routing, original identities, setup gating, revocation, independent failures, raw nil/secret/opaque outcomes, bounds, collectibility and old-mode interleaving. They establish no native conformance.
+
 ## Manual explicit power observations
 
 `/apicontract explicit-power <label>` is excluded from `all`. For `player` and `target`, it reads only published `Enum.PowerType.Mana`, `Rage` and `Energy`, without numeric fallback. Each unit/type receives independent `UnitPower` and `UnitPowerMax` calls with `unmodified=false/true`, and `UnitPowerPercent` calls with exactly four arguments, including an explicit nil curve.
