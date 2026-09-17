@@ -77,8 +77,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 62,
-    "partial-recorder": 81,
+    "needs-design-and-recorder-review": 61,
+    "partial-recorder": 82,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -1230,8 +1230,19 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual transmog-slot-visual-info forwards original accessible finite baseSourceID/appliedSourceID values from four produced visual cases to GetAppearanceSourceInfo through the vendor-backed ID chain",
+          "First returned appearance-source objects expose ten guarded currently declared fields without fallback-source calls or model operations"
+        ],
+        "missing": [
+          "Native populated source/collection values and transitions",
+          "Historical changed-contract evidence and other source fixtures",
+          "Native validation and restricted-context behavior; model semantics remain excluded"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/collection_appearance_info"
     },
