@@ -2092,10 +2092,11 @@
         "observations": [
           "Manual public-queries independently records C_EncounterTimeline.GetCurrentTime twice without arguments",
           "Manual timeline-current-events records the current event-ID list and bounded original-ID info/color observations without creating or altering events",
-          "Manual timeline-lifecycle-read independently queries state, elapsed time, remaining time and opaque timer objects for eight original event IDs, plus two no-argument highlight-time reads"
+          "Manual timeline-lifecycle-read independently queries state, elapsed time, remaining time and timer objects for eight original event IDs, plus two no-argument highlight-time reads",
+          "GetEventTimer return positions additionally receive ten guarded current-only duration-method observations without retention; scalar state/time queries remain unchanged"
         ],
         "missing": [
-          "Native lifecycle transitions, pause/resume controls, event-source counts and timer-object methods",
+          "Native lifecycle transitions, pause/resume controls, event-source counts and authoritative timer values",
           "Native clock progression, defaults and restricted-context behavior"
         ]
       },
