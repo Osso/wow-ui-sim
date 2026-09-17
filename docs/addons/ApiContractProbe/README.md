@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual timeline source counts
+
+`/apicontract timeline-source-counts <label>` is excluded from `all`. For each fixed published `Enum.EncounterTimelineEventSource` name `Encounter`, `Script` and `EditMode`, independently call `C_EncounterTimeline.GetEventCountBySource(value)` twice with exactly one argument. Re-read the published member for each attempt; accept only accessible finite numeric values, without numeric fallback, enum iteration or deduplication.
+
+`timelineSourceCounts.sources[]` stores each `name` and `observations[1..2]`, including bounded scalar `input` and raw result tuples. Guard publication containers and members before lookup/inspection, then recheck the original value after API lookup and function guards before forwarding. Missing, invalid or restricted enums, missing APIs, lookup errors and opaque call errors do not suppress peer observations. Preserve exact arity, nil positions and inaccessible outputs without interpreting counts.
+
+Bounds: six API calls per snapshot, ten snapshots, 16 result positions, 256-byte scalar strings and 128-byte labels. Pinned `EncounterTimelineDocumentation.lua:100–114` and `EncounterTimelineConstantsDocumentation.lua:18–30` establish the signature and enum names only. No event synthesis, Add/Cancel/Finish/Pause/Resume operations, EditMode events, icon mutations, native count/default/order conclusions or conformance credit. Native source populations and transitions remain unverified.
+
+Eleven separate actual TOC/slash fixtures exercise recorder mechanics:
+
+```text
+luajit docs/addons/ApiContractProbe/tests/timeline_source_counts.lua docs/addons/ApiContractProbe
+```
+
 ## Manual timeline lifecycle reads
 
 `/apicontract timeline-lifecycle-read <label>` is excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once with no arguments. Only positions 1–8 of its first returned accessible table supply original finite event IDs. Independently call `GetEventState(id)`, `GetEventTimeElapsed(id)`, `GetEventTimeRemaining(id)` and `GetEventTimer(id)` with exactly one argument per usable ID. Independently call `GetEventHighlightTime()` twice, including when the list or every ID is unavailable.

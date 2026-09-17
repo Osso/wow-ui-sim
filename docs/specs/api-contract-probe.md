@@ -1,5 +1,12 @@
 # API contract probe
 
+## Manual timeline source counts
+
+- `timeline-source-counts <label>` is manual-only and excluded from `all`. Independently query `C_EncounterTimeline.GetEventCountBySource(value)` twice for each fixed published `Enum.EncounterTimelineEventSource` name `Encounter`, `Script`, `EditMode`; re-read the member on every attempt. Require an accessible finite original numeric value. Never substitute enum numbers, iterate extra members or deduplicate values.
+- Guard publication containers/members before lookup and value inspection. Recheck the original value after API lookup/function accessibility guards and immediately before the one-argument invocation. Missing, restricted, invalid and failing inputs/APIs produce explicit independent observations rather than guessed counts.
+- Save `timelineSourceCounts.sources[].name` and `observations[1..2]` with scalar input and bounded raw tuples. Preserve exact arity, nil positions, opaque errors and inaccessible results. Cap six calls/snapshot, ten snapshots, 16 result positions, 256-byte scalar strings and 128-byte labels.
+- Do not synthesize/add/cancel/finish/pause/resume events, create EditMode events, mutate icons or infer native count, default, ordering, population or transition semantics. This recorder establishes no native conformance. Eleven separate TOC/slash fixtures cover input routing, revocation, errors, bounds, opaque output lifetimes and exclusion from `all`.
+
 ## Manual timeline lifecycle reads
 
 - `timeline-lifecycle-read <label>` is manual-only and excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once without arguments; only positions 1–8 of its first returned accessible table may supply original accessible finite event IDs. Preserve duplicates and holes without sorting, coercion or guessed IDs.
