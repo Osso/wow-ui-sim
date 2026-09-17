@@ -2681,6 +2681,28 @@ do
         return objectStatus(data, true)
     end
 
+    local function getAppearanceSource(object, key)
+        local status = objectStatus(object)
+        if status then return { status = status } end
+        -- Reread the original field after visual serialization, never its saved scalar copy.
+        local id, fieldOK = readField(object, key)
+        if not fieldOK then return { status = "field-error" } end
+        status = customSetInputStatus(id, "number")
+        if status then return { status = status } end
+        local fn, ok = readField(C_TransmogCollection, "GetAppearanceSourceInfo")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        status = customSetInputStatus(id, "number")
+        if status then return { status = status } end
+        local result, info = recordCall(fn, id)
+        if result.status == "observed" then
+            result.object = inspectHousingCatalogFields(info, { "category", "itemAppearanceID",
+                "canHaveIllusion", "icon", "isCollected", "itemLink", "transmoglink", "sourceType",
+                "itemSubclass", "ignoreModelAttachmentChecksForIllusion" })
+        end
+        return result
+    end
+
     local function getVisualInfo(data)
         local status = dataStatus(data)
         if status then return { status = status } end
@@ -2695,7 +2717,7 @@ do
                 "appliedSourceID", "appliedVisualID", "pendingSourceID", "pendingVisualID",
                 "hasUndo", "isHideVisual", "itemSubclass" })
         end
-        return result
+        return result, object
     end
 
     captureItemBinding = function(mode)
@@ -2704,12 +2726,17 @@ do
         for _, descriptor in ipairs({ "HEADSLOT", "SHOULDERSLOT" }) do
             for _, secondary in ipairs({ false, true }) do
                 local row = { descriptor = scalar(descriptor), secondary = scalar(secondary) }
-                local location, data
+                local location, data, visualObject
                 row.factory, location = createLocation(descriptor, secondary)
                 row.data = { status = "unavailable-input" }
                 row.visual = { status = "unavailable-input" }
                 if row.factory.status == "observed" then row.data, data = getLocationData(location) end
-                if row.data.status == "observed" then row.visual = getVisualInfo(data) end
+                if row.data.status == "observed" then row.visual, visualObject = getVisualInfo(data) end
+                row.sources = {}
+                for _, key in ipairs({ "baseSourceID", "appliedSourceID" }) do
+                    row.sources[key] = row.visual.status == "observed" and getAppearanceSource(visualObject, key)
+                        or { status = "unavailable-input" }
+                end
                 result.cases[#result.cases + 1] = row
             end
         end

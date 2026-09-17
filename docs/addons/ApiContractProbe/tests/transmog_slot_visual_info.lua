@@ -9,12 +9,13 @@ local function test(name, fn)
     if ok then passed = passed + 1; print("PASS " .. name)
     else failed = failed + 1; print("FAIL " .. name .. ": " .. tostring(err)) end
 end
-local function setup(factory, query)
+local function setup(factory, query, sourceQuery)
     ApiContractProbeDB, SlashCmdList = nil, {}
     issecretvalue, canaccessvalue = function() return false end, function() return true end
     GetBuildInfo, time = function() return "fixture" end, function() return 42 end
     Enum = { TransmogType = { Appearance = 23.5 } }
     TransmogUtil, C_Transmog = { CreateTransmogLocation = factory }, { GetSlotVisualInfo = query }
+    C_TransmogCollection = { GetAppearanceSourceInfo = sourceQuery }
     local toc = assert(io.open(root .. "/ApiContractProbe.toc"))
     for line in toc:lines() do
         if line:match("%.lua$") then assert(loadfile(root .. "/" .. line))() end
@@ -297,6 +298,239 @@ test("bounded pinned vendor factory Set and GetData chain", function()
         "function TransmogUtil.GetTransmogLocation("), "@vendor-factory"))()
     assert(loadstring(section("function TransmogLocationMixin:GetData()", "-- This will indirectly populate"), "@vendor-data"))()
     assert(capture().cases[4].visual.status == "observed" and queries == 4)
+end)
+
+local appearanceFields = { "category", "itemAppearanceID", "canHaveIllusion", "icon", "isCollected",
+    "itemLink", "transmoglink", "sourceType", "itemSubclass", "ignoreModelAttachmentChecksForIllusion" }
+local sourceKeys = { "baseSourceID", "appliedSourceID" }
+local function appearance()
+    local value = {}
+    for i, key in ipairs(appearanceFields) do value[key] = i + 0.25 end
+    value.canHaveIllusion, value.isCollected = false, true
+    value.itemLink, value.transmoglink = "item:fixture", "transmog:fixture"
+    value.ignoreModelAttachmentChecksForIllusion = false
+    return value
+end
+local function sourceID(position)
+    return math.floor((position - 1) / 2) * 100 + (position % 2 == 1 and 1.25 or 2.25)
+end
+local function sourceSetup(query)
+    local case = 0
+    setup(function() return location(data()) end, function()
+        case = case + 1
+        local value = visual()
+        value.baseSourceID, value.appliedSourceID = sourceID(case * 2 - 1), sourceID(case * 2)
+        return value
+    end, query)
+end
+local function sourceResult(result, position)
+    local row = result.cases[math.floor((position - 1) / 2) + 1]
+    return assert(row.sources, "source followups absent")[sourceKeys[position % 2 == 1 and 1 or 2]]
+end
+
+test("appearance followups reread original dynamic source IDs and preserve old visual fields", function()
+    local calls, expected = 0, {}
+    setup(function() return location(data()) end, function()
+        local reads, base = {}, #expected * 100
+        expected[#expected + 1], expected[#expected + 2] = base + 71.25, base + 72.25
+        return setmetatable({}, { __index = function(_, key)
+            if key == "baseSourceID" or key == "appliedSourceID" then
+                reads[key] = (reads[key] or 0) + 1
+                if reads[key] == 1 then return key == "baseSourceID" and 1.5 or 3.5 end
+                return base + (key == "baseSourceID" and 71.25 or 72.25)
+            end
+            return visual()[key]
+        end })
+    end, function(...)
+        calls = calls + 1
+        assert(select("#", ...) == 1 and (...) == expected[calls], "must forward original reread ID")
+        return appearance(), nil, "source-tail"
+    end)
+    local result = capture()
+    assert(calls == 8, "eight independent source queries required")
+    for position = 1, 8 do
+        local row, observation = result.cases[math.floor((position - 1) / 2) + 1], sourceResult(result, position)
+        assert(row.visual.object.fields.baseSourceID.value == 1.5)
+        assert(row.visual.object.fields.appliedSourceID.value == 3.5)
+        assert(observation.n == 3 and observation.values[2].kind == "nil")
+        local count = 0
+        for key, field in pairs(observation.object.fields) do
+            count = count + 1; assert(field.value == appearance()[key])
+        end
+        assert(count == 10 and observation.object.fields.ignoreModelAttachmentChecksForIllusion.value == false)
+    end
+    calls = 0
+    setup(function() return location(data()) end, function()
+        local value = visual(); value.baseSourceID, value.appliedSourceID = 0, 0; return value
+    end, function(id) assert(id == 0); calls = calls + 1; return nil end)
+    capture(); assert(calls == 8, "zero/duplicate IDs are observed, not remapped or deduplicated")
+end)
+
+test("source queries reject absent invalid and restricted original IDs without suppressing peers", function()
+    for _, key in ipairs(sourceKeys) do
+        for _, values in ipairs({ {}, { false }, { "123" }, { {} }, { math.huge }, { -math.huge }, { 0/0 } }) do
+            local calls = 0
+            setup(function() return location(data()) end, function()
+                local value = visual(); value[key] = values[1]; return value
+            end, function() calls = calls + 1; return appearance() end)
+            local result = capture()
+            assert(result.cases[1].sources[key].status ~= "observed" and calls == 4)
+        end
+    end
+    local calls = 0
+    sourceSetup(function(id) assert(id ~= sourceID(1)); calls = calls + 1 end)
+    issecretvalue = function(value) return value == sourceID(1) end
+    assert(sourceResult(capture(), 1).status == "restricted-input" and calls == 7)
+    setup(function() return location(data()) end, function() return nil, visual() end,
+        function() error("second visual return forwarded") end)
+    assert(sourceResult(capture(), 1).status == "unavailable-input")
+    sourceSetup(nil)
+    assert(sourceResult(capture(), 1).status == "missing-api")
+    C_TransmogCollection = setmetatable({}, { __index = function() error(opaque()) end })
+    assert(sourceResult(capture(), 1).status == "field-error")
+end)
+
+test("every original source ID is rechecked after namespace lookup and both function guards", function()
+    for _, phase in ipairs({ "namespace-secret", "namespace-access", "lookup", "function-secret", "function-access" }) do
+        for selected = 1, 8 do
+            local attempt, calls, revoked = 0, 0, false
+            local fn = function(id)
+                assert(not (revoked and id == sourceID(selected)), "revoked ID forwarded")
+                calls = calls + 1; return appearance()
+            end
+            sourceSetup(fn)
+            local ns = setmetatable({}, { __index = function(_, key)
+                assert(key == "GetAppearanceSourceInfo", "fallback query")
+                if phase == "lookup" and attempt == selected then revoked = true end
+                return fn
+            end }); C_TransmogCollection = ns
+            issecretvalue = function(value)
+                if rawequal(value, ns) then
+                    attempt = attempt + 1
+                    if phase == "namespace-secret" and attempt == selected then revoked = true end
+                end
+                if phase == "function-secret" and rawequal(value, fn) and attempt == selected then revoked = true end
+                return false
+            end
+            canaccessvalue = function(value)
+                if attempt == selected and ((phase == "namespace-access" and rawequal(value, ns)) or
+                    (phase == "function-access" and rawequal(value, fn))) then revoked = true end
+                return not (revoked and rawequal(value, sourceID(selected)))
+            end
+            local result = capture()
+            assert(sourceResult(result, selected).status == "restricted-input" and calls == 7,
+                phase .. "/" .. selected .. " calls=" .. calls)
+        end
+    end
+end)
+
+test("visual serialization and earlier source outputs can revoke later followups", function()
+    for _, revokeReceiver in ipairs({ false, true }) do
+        local object, revoked, calls = nil, false, 0
+        setup(function() return location(data()) end, function()
+            revoked = false; object = visual(); object.itemSubclass = "revoke-original"; return object
+        end, function(id) assert(id ~= 1.5); calls = calls + 1 end)
+        canaccessvalue = function(value)
+            if value == "revoke-original" then revoked = true end
+            return not (revoked and rawequal(value, revokeReceiver and object or 1.5))
+        end
+        local result = capture()
+        assert(sourceResult(result, 1).status ~= "observed")
+        assert(calls == (revokeReceiver and 0 or 4))
+    end
+    local revoked, calls = false, 0
+    sourceSetup(function(id)
+        assert(not (revoked and id == sourceID(2)))
+        calls = calls + 1
+        if id == sourceID(1) then return nil, "revoke-applied" end
+        return appearance()
+    end)
+    canaccessvalue = function(value)
+        if value == "revoke-applied" then revoked = true end
+        return not (revoked and rawequal(value, sourceID(2)))
+    end
+    assert(sourceResult(capture(), 2).status == "restricted-input" and calls == 7)
+end)
+
+test("appearance receiver and all ten fields stay guarded after every observation", function()
+    for _, guard in ipairs({ "secret", "access" }) do
+        for selected = 1, 10 do
+            local object, revoked, reads = nil, false, 0
+            sourceSetup(function()
+                revoked, reads = false, 0
+                object = setmetatable({}, { __index = function(_, key)
+                    assert(not revoked, "revoked appearance receiver indexed")
+                    reads = reads + 1
+                    if reads == selected then revoked = true end
+                    return appearance()[key]
+                end })
+                return object
+            end)
+            issecretvalue = function(value) return guard == "secret" and revoked and rawequal(value, object) end
+            canaccessvalue = function(value) return not (guard == "access" and revoked and rawequal(value, object)) end
+            local result = capture()
+            local last = sourceResult(result, 8).object.fields
+            assert(reads == selected and last[appearanceFields[selected]].status == "observed")
+            if selected < 10 then assert(last[appearanceFields[selected + 1]].status == "field-error") end
+        end
+    end
+    local secret = opaque()
+    sourceSetup(function()
+        local value = appearance(); value.sourceType = nil
+        value.itemLink = string.rep("x", 300); value.icon = math.huge
+        value.ignoreModelAttachmentChecksForIllusion = secret
+        return value
+    end)
+    issecretvalue = function(value) return rawequal(value, secret) end
+    local fieldsResult = sourceResult(capture(), 1).object.fields
+    assert(fieldsResult.sourceType.kind == "nil" and fieldsResult.icon.status == "nonfinite")
+    assert(fieldsResult.ignoreModelAttachmentChecksForIllusion.status == "restricted")
+    assert(#fieldsResult.itemLink.value == 256 and fieldsResult.itemLink.truncated)
+    sourceSetup(function() return setmetatable({}, { __index = function() error(opaque()) end }) end)
+    assert(sourceResult(capture(), 1).object.fields.category.status == "field-error")
+end)
+
+test("source errors exact nil arity first-object-only bounds and collectibility", function()
+    local calls = 0
+    sourceSetup(function()
+        calls = calls + 1
+        if calls == 1 then return end
+        if calls == 2 then error(opaque()) end
+        if calls == 3 then return nil, appearance(), nil end
+        local values = { appearance() }
+        for i = 2, 18 do values[i] = string.rep("s", 300) end
+        return unpack(values, 1, 18)
+    end)
+    local result = capture()
+    assert(calls == 8 and sourceResult(result, 1).n == 0 and sourceResult(result, 2).status == "call-error")
+    assert(sourceResult(result, 3).n == 3 and sourceResult(result, 3).object.kind == "nil")
+    assert(sourceResult(result, 3).values[3].kind == "nil")
+    local bounded = sourceResult(result, 8)
+    assert(bounded.n == 18 and bounded.truncated and #bounded.values == 16)
+    assert(#bounded.values[16].value == 256)
+    local weak, n = setmetatable({}, { __mode = "v" }), 0
+    local function track(value) n = n + 1; weak[n] = value; return value end
+    setup(function() return track(location(track(data()))) end, function() return track(visual()) end,
+        function() return track(appearance()), track(opaque()) end)
+    assert(sourceResult(capture(), 1).status == "observed")
+    collectgarbage("collect"); collectgarbage("collect"); assert(next(weak) == nil)
+end)
+
+test("source extension caps twenty recorder calls and remains absent from all", function()
+    local calls, sources = 0, 0
+    setup(function()
+        calls = calls + 1; return { GetData = function() calls = calls + 1; return data() end }
+    end, function() calls = calls + 1; return visual() end, function()
+        calls = calls + 1; sources = sources + 1; return appearance()
+    end)
+    for i = 1, 11 do capture(string.rep("l", 200)) end
+    assert(calls == 200 and sources == 80, "20 recorder invocations per snapshot")
+    assert(#ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
+    setup(function() error("factory from all") end, function() error("visual from all") end,
+        function() error("appearance from all") end)
+    SlashCmdList.APICONTRACTPROBE("all")
+    assert(ApiContractProbeDB.captures[1].transmogSlotVisualInfo == nil)
 end)
 
 print(string.format("transmog-slot-visual-info: %d passed, %d failed", passed, failed))
