@@ -426,6 +426,16 @@ Bounds: three API calls per snapshot, ten shared snapshots, 256-byte scalar stri
 
 Pinned `TransmogSetsDocumentation.lua:61–68,412–419,511–530` defines the calls and fields. Actual consumers: `Blizzard_TransmogShared.lua:1024–1033` calls the list producer; `Blizzard_TransmogTemplates.lua:1456–1459,1498,1525–1531` reads collected/favorite/setID/name; `Blizzard_Wardrobe_Sets.lua:648–651` reads validity. These consumers do not establish native results. Fourteen actual TOC/slash fixtures (eleven existing, three new) prove recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/sets_catalog.lua docs/addons/ApiContractProbe`.
 
+## Manual transmog source validity
+
+`/apicontract transmog-source-validity <label>` is excluded from `all`. Call `C_TransmogCollection.GetNumTransmogSources()` once and preserve its raw tuple. Only its original accessible finite nonnegative **integer** first return permits enumeration of `1..min(count, 8)`. Call `IsValidTransmogSource(index)` independently once per derived index. These are `TransmogSource` filter indices, **not** appearance IDs or visual `baseSourceID`/`appliedSourceID` values.
+
+`transmogSourceValidity` stores `producer`, count-validation `status`, and `sources` query observations. Guard the original count before arithmetic, after producer serialization, and again after each query lookup/function guard and derived-index access check. Do not replace the count with the capped loop bound or re-read it from serialized output. Missing, invalid, restricted and error outcomes stay explicit; one query failure does not suppress later indices. No continuation, filtering, reconstruction or fallback IDs.
+
+Bounds: nine API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Returned objects are never inspected or retained. No setters, filters, native validity, ordering or completeness claims. Pinned `TransmogItemsDocumentation.lua:573–580,823–836` defines the signatures; `Blizzard_Collections/Mainline/Blizzard_Wardrobe.lua:67–70` supplies the count/index loop. These sources establish inputs, not native outputs.
+
+Eleven actual TOC/slash fixtures prove local recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/transmog_source_validity.lua docs/addons/ApiContractProbe`. Native behavior remains unverified.
+
 ## Manual custom-set names
 
 `/apicontract custom-set-names <label>` is excluded from `all`. Independently call `C_TransmogCollection.GetNumMaxCustomSets()` twice and `GetCustomSets()` once. Preserve raw return arity, nil positions and opaque errors within sixteen positions. Inspect only the first returned ID table at indices 1–4, guarding the table before every lookup. Each accessible finite original ID permits one `GetCustomSetInfo(ID)` call; its accessible string first return permits one `IsValidCustomSetName(name)` call. Forward the original name, never its serialized 256-byte prefix. Recheck IDs and names after namespace/function lookup and function guards, immediately before use.
