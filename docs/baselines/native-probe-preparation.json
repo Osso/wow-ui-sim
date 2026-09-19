@@ -6709,11 +6709,12 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual crafting-enchant-items forwards four original tracked recipe IDs to GetEnchantItems with explicit nil optional crafting reagents and records eight scalar positions from each first returned list"
+          "Manual crafting-enchant-items forwards four original tracked recipe IDs to GetEnchantItems with explicit nil optional crafting reagents and records eight scalar positions from each first returned list",
+          "Manual recraft-limit-read forwards original guarded schematic reagent objects from two recipes, two slots and two reagents per slot to RecraftLimitCategoryValid without constructing allocations or replacement tables"
         ],
         "missing": [
           "Populated crafting-reagent inputs and actual recraft-allocation producers",
-          "GetRecraftRemovalWarnings, IsRecraftReagentValid and RecraftLimitCategoryValid observations",
+          "GetRecraftRemovalWarnings and IsRecraftReagentValid observations; native reagent-limit semantics",
           "Native enchant/recraft fixtures, historical changed contracts and restricted-context behavior"
         ]
       },
