@@ -10821,12 +10821,13 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual creation of two fresh heal prediction calculators with five read-only getters repeated twice",
-          "Raw return arity and accessible scalar results with opaque objects and errors"
+          "Raw return arity and accessible scalar results with opaque objects and errors",
+          "Manual heal-calculator-modes uses one fresh owned calculator for three baseline mode reads, seven published enum setter/readback pairs and Reset/ResetPredictedValues observations without asserting equivalence"
         ],
         "missing": [
           "Native matching-build fresh-object output corpus",
           "Populated heal and damage absorb fixtures and producer-backed transitions",
-          "Reset, SetToDefaults and restricted-context native behavior"
+          "Native reset/default semantics, populated-state resets and restricted-context behavior"
         ]
       },
       "native_execution": "not-established-by-this-inventory",
