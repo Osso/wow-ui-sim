@@ -1,3 +1,7 @@
+## [2026-09-19] system | Document bounded Forever module-import resolver
+
+Added [[addon-module-imports]] and its tracked spec after `be073174d`. Sixteen resolver tests prove only logical absolute/relative path resolution, addon-boundary rejection, direct dependency authorization, dynamic absolute exemption, malformed-path rejection, and exact errors. Finished-file lookup, original Lua values, loader/provenance integration, and wowforever-only exposure remain unchecked and unwired.
+
 ## [2026-09-19] investigation | Correct recipe-quality final guard ordering
 
 Documented `f132248d4`: initial independent verification of `b7ea594a2` was 7/9 because the frozen ninth original-ID guard could revoke quality, recipe-list ancestry, or schematic ancestry after prior checks, forwarding one revoked input in each of twenty-four cases. The correction boundedly reauthorizes those original sources around an original-argument recheck without reconstruction or coercion. Development RED covered thirteen existing plus five new groups; GREEN passed eighteen groups with zero forbidden forwards across twenty-four frozen and 288 staged cross-input occurrences. Frozen cases overlap staged group three, so counts are not disjoint. Fixed-revision independent verification passed 9/9. Sequential checks establish neither atomic authorization nor native behavior, conformance, or execution. Updated [[api-contract-probes]] and the index.
