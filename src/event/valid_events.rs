@@ -10,15 +10,6 @@
 //! `is_valid_event` = registerable OR non-registerable (for C_EventUtils).
 //! `is_registerable_event` = only registerable (for RegisterEvent).
 
-#[cfg(feature = "retail-12-0-0")]
-use super::valid_events_a::EVENTS_A;
-#[cfg(feature = "retail-12-0-0")]
-use super::valid_events_a_tail::EVENTS_A_TAIL;
-#[cfg(feature = "retail-12-0-0")]
-use super::valid_events_b::EVENTS_B;
-#[cfg(feature = "retail-12-0-0")]
-use super::valid_events_c::EVENTS_C;
-
 /// Check if an event can be passed to `RegisterEvent()`.
 ///
 /// Under non-mainline client profiles the validator is permissive: the
@@ -36,7 +27,9 @@ pub fn is_registerable_event(name: &str) -> bool {
     crate::wrath::is_registerable_event(name)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+// Forever starts with the finite known-event table, not the permissive legacy
+// validator. Its client-specific event additions still need source-backed data.
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub fn is_registerable_event(name: &str) -> bool {
     #[cfg(feature = "retail-12-1-5")]
     if name == "WEATHER_CHANGED" {
@@ -60,12 +53,7 @@ pub fn is_registerable_event(name: &str) -> bool {
     {
         return true;
     }
-    let first = name.as_bytes().first().copied().unwrap_or(0);
-    if first <= b'G' {
-        return EVENTS_A.contains(&name) || EVENTS_A_TAIL.contains(&name);
-    }
-    let chunk = if first <= b'P' { EVENTS_B } else { EVENTS_C };
-    chunk.contains(&name)
+    super::known_events::contains(name)
 }
 
 #[cfg(feature = "retail-12-0-7")]

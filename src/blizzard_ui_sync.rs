@@ -8,6 +8,7 @@ mod profile_cache;
 use self::profile_cache::{cache_entry_is_usable, required_profile_cache_entries};
 #[cfg(feature = "casc")]
 use cascette_client_storage::BuildInfoFile;
+#[cfg(feature = "casc")]
 use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 #[cfg(feature = "casc")]
@@ -20,6 +21,8 @@ const MISTS_BLIZZARD_UI_MANIFEST: &str = include_str!("../data/blizzard-ui-files
 const ERA_BLIZZARD_UI_MANIFEST: &str = include_str!("../data/blizzard-ui-files/era.txt");
 const ANNIVERSARY_BLIZZARD_UI_MANIFEST: &str =
     include_str!("../data/blizzard-ui-files/anniversary.txt");
+const WOWFOREVER_BLIZZARD_UI_MANIFEST: &str =
+    include_str!("../data/blizzard-ui-files/wowforever.txt");
 const COMPLETE_MARKER: &str = ".wow-ui-sim-blizzard-ui-complete";
 const PROVENANCE_FILE: &str = ".wow-ui-sim-blizzard-ui-provenance";
 const PROVENANCE_SCHEMA: &str = "1";
@@ -95,6 +98,7 @@ fn active_blizzard_ui_manifest() -> &'static str {
         crate::client_profile::ClientProfile::Mists => MISTS_BLIZZARD_UI_MANIFEST,
         crate::client_profile::ClientProfile::Era => ERA_BLIZZARD_UI_MANIFEST,
         crate::client_profile::ClientProfile::Anniversary => ANNIVERSARY_BLIZZARD_UI_MANIFEST,
+        crate::client_profile::ClientProfile::WowForever => WOWFOREVER_BLIZZARD_UI_MANIFEST,
     }
 }
 

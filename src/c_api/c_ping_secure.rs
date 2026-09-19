@@ -16,51 +16,50 @@ const CALLBACK_TABLE_KEY: &str = "__wow_ping_secure_callbacks";
 pub(crate) fn register_c_ping_secure_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PingSecure")?;
     table_set_rust_fn_static(state, table_ref, "CreateFrame", create_frame)?;
+    #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     register_global_callback_accessors(state)?;
     register_callback_setters(state, table_ref)
 }
 
+#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn register_global_callback_accessors(state: &mut LuaState) -> LuaResult<()> {
-    #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
-    {
-        let globals = state.global;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "GetSecurePendingButtonCallback",
-            get_button_callback,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "GetSecurePendingPingOffScreenCallback",
-            get_pending_ping_off_screen_callback,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "GetSecurePendingToggleRunCallback",
-            get_toggle_run_callback,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "SetSecurePendingButtonCallback",
-            set_button_callback,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "SetSecurePendingPingOffScreenCallback",
-            set_pending_ping_off_screen_callback,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            globals,
-            "SetSecurePendingToggleRunCallback",
-            set_toggle_run_callback,
-        )?;
-    }
+    let globals = state.global;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "GetSecurePendingButtonCallback",
+        get_button_callback,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "GetSecurePendingPingOffScreenCallback",
+        get_pending_ping_off_screen_callback,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "GetSecurePendingToggleRunCallback",
+        get_toggle_run_callback,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "SetSecurePendingButtonCallback",
+        set_button_callback,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "SetSecurePendingPingOffScreenCallback",
+        set_pending_ping_off_screen_callback,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "SetSecurePendingToggleRunCallback",
+        set_toggle_run_callback,
+    )?;
     Ok(())
 }
 

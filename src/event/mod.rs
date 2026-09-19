@@ -2,15 +2,9 @@
 
 use std::collections::HashMap;
 
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+mod known_events;
 pub mod valid_events;
-#[cfg(feature = "retail-12-0-0")]
-mod valid_events_a;
-#[cfg(feature = "retail-12-0-0")]
-mod valid_events_a_tail;
-#[cfg(feature = "retail-12-0-0")]
-mod valid_events_b;
-#[cfg(feature = "retail-12-0-0")]
-mod valid_events_c;
 pub use valid_events::{
     callback_events, is_callback_event, is_registerable_event, is_restricted_event, is_valid_event,
     restricted_events,

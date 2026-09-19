@@ -47,18 +47,8 @@ fn strip_annotations(line: &str) -> &str {
     }
 }
 
-/// Check if an inline `[AllowLoadGameType ...]` annotation includes a game type
-/// compatible with the active client profile.
-fn is_allowed_game_type(line: &str) -> bool {
-    let Some(start) = line.find("[AllowLoadGameType") else {
-        return true;
-    };
-    let rest = &line[start + "[AllowLoadGameType".len()..];
-    let Some(end) = rest.find(']') else {
-        return true;
-    };
-    let types = &rest[..end];
-    let allowed: &[&str] = match crate::client_profile::ACTIVE {
+fn active_game_types() -> &'static [&'static str] {
+    match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail
         | crate::client_profile::ClientProfile::Ptr => &["mainline", "standard"],
         crate::client_profile::ClientProfile::Wrath => &["wrath", "wrath_classic", "classic"],
@@ -67,10 +57,29 @@ fn is_allowed_game_type(line: &str) -> bool {
         crate::client_profile::ClientProfile::Anniversary => {
             &["vanilla", "classic_anniversary", "classic"]
         }
-    };
+        crate::client_profile::ClientProfile::WowForever => &["camelot", "classic"],
+    }
+}
+
+fn matches_active_game_type(types: &str) -> bool {
     types
         .split(|character: char| character == ',' || character.is_whitespace())
-        .any(|game_type| allowed.contains(&game_type))
+        .any(|game_type| active_game_types().contains(&game_type))
+}
+
+fn game_type_annotation<'a>(line: &'a str, annotation: &str) -> Option<&'a str> {
+    let start = line.find(annotation)? + annotation.len();
+    let rest = &line[start..];
+    Some(&rest[..rest.find(']')?])
+}
+
+/// Apply both inline game-type filters used by the profile's TOC files.
+fn is_allowed_game_type(line: &str) -> bool {
+    let allowed =
+        game_type_annotation(line, "[AllowLoadGameType").is_none_or(matches_active_game_type);
+    let excluded =
+        game_type_annotation(line, "[ExcludeLoadGameType").is_some_and(matches_active_game_type);
+    allowed && !excluded
 }
 
 fn is_mists_game_menu_shared_file(addon_dir: &Path, line: &str) -> bool {
@@ -189,7 +198,10 @@ fn split_metadata_list(value: &str) -> Vec<String> {
     }
 }
 
-fn collect_metadata_lists(metadata: &HashMap<String, String>, keys: &[&str]) -> Vec<String> {
+pub(crate) fn collect_metadata_lists(
+    metadata: &HashMap<String, String>,
+    keys: &[&str],
+) -> Vec<String> {
     keys.iter()
         .filter_map(|key| metadata.get(*key))
         .flat_map(|value| split_metadata_list(value))
@@ -206,7 +218,8 @@ fn family_subdir() -> &'static str {
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists
         | crate::client_profile::ClientProfile::Era
-        | crate::client_profile::ClientProfile::Anniversary => "Classic",
+        | crate::client_profile::ClientProfile::Anniversary
+        | crate::client_profile::ClientProfile::WowForever => "Classic",
     }
 }
 
@@ -219,6 +232,7 @@ fn game_subdir() -> &'static str {
         crate::client_profile::ClientProfile::Mists => "Mists",
         crate::client_profile::ClientProfile::Era
         | crate::client_profile::ClientProfile::Anniversary => "Vanilla",
+        crate::client_profile::ClientProfile::WowForever => "Camelot",
     }
 }
 
@@ -236,10 +250,7 @@ impl ParsedFileEntries {
         if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
             return;
         }
-        if line.contains("[AllowLoadGameType")
-            && !is_allowed_game_type(line)
-            && !is_mists_game_menu_shared_file(addon_dir, line)
-        {
+        if !is_allowed_game_type(line) && !is_mists_game_menu_shared_file(addon_dir, line) {
             return;
         }
         let line = line.replace("[TextLocale]", "enUS");
@@ -433,7 +444,11 @@ impl TocFile {
             .get("OnlyBetaAndPTR")
             .map(|v| v == "1")
             .unwrap_or(false)
-            && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Ptr
+            && !matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Ptr
+                    | crate::client_profile::ClientProfile::WowForever
+            )
     }
 
     /// Check if addon is restricted to a game type incompatible with the active client profile.
@@ -443,20 +458,15 @@ impl TocFile {
             return false;
         }
 
-        let allowed: &[&str] = match crate::client_profile::ACTIVE {
-            crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr => &["mainline", "standard"],
-            crate::client_profile::ClientProfile::Wrath => &["wrath", "wrath_classic", "classic"],
-            crate::client_profile::ClientProfile::Mists => &["mists", "mists_classic", "classic"],
-            crate::client_profile::ClientProfile::Era => &["vanilla", "classic_era", "classic"],
-            crate::client_profile::ClientProfile::Anniversary => {
-                &["vanilla", "classic_anniversary", "classic"]
-            }
-        };
-        self.metadata
+        let excluded_by_allow = self
+            .metadata
             .get("AllowLoadGameType")
-            .map(|v| !v.split(',').any(|t| allowed.contains(&t.trim())))
-            .unwrap_or(false)
+            .is_some_and(|value| !matches_active_game_type(value));
+        let explicitly_excluded = self
+            .metadata
+            .get("ExcludeLoadGameType")
+            .is_some_and(|value| matches_active_game_type(value));
+        excluded_by_allow || explicitly_excluded
     }
 
     fn is_mists_legacy_craft_ui_toc(&self) -> bool {

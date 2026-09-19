@@ -4,15 +4,24 @@
 //! They are compatibility defaults until the simulator has a real client/session
 //! metadata model.
 
-#[cfg(all(not(feature = "client-ptr"), feature = "retail-12-1-0"))]
-const CLIENT_VERSION: &str = "12.1.0";
-#[cfg(all(not(feature = "client-ptr"), not(feature = "retail-12-1-0")))]
-const CLIENT_VERSION: &str = "12.0.7";
+#[cfg(not(feature = "client-ptr"))]
+const CLIENT_VERSION: &str = if cfg!(feature = "client-wowforever") {
+    "1.60.1"
+} else if cfg!(feature = "retail-12-1-0") {
+    "12.1.0"
+} else {
+    "12.0.7"
+};
 
 #[cfg(not(feature = "client-ptr"))]
-const RETAIL_BUILD: &str = "68256";
+const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
+    "69913"
+} else {
+    "68256"
+};
 
-const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") {
+const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") || cfg!(feature = "client-wowforever")
+{
     crate::client_profile::ACTIVE_INTERFACE_VERSION
 } else if cfg!(feature = "retail-12-1-0") {
     120100
@@ -28,7 +37,7 @@ fn client_identity() -> crate::Result<(String, String)> {
     }
 
     #[cfg(not(feature = "client-ptr"))]
-    Ok((CLIENT_VERSION.to_owned(), RETAIL_BUILD.to_owned()))
+    Ok((CLIENT_VERSION.to_owned(), CLIENT_BUILD.to_owned()))
 }
 
 const CLIENT_INFO_DEFAULTS_LUA: &str = r#"

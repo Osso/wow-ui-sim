@@ -177,6 +177,8 @@ pub enum AuditFlavor {
     Mists,
     Era,
     Anniversary,
+    #[serde(rename = "wowforever")]
+    WowForever,
 }
 
 impl AuditFlavor {
@@ -188,6 +190,7 @@ impl AuditFlavor {
             Self::Mists => "mists",
             Self::Era => "era",
             Self::Anniversary => "anniversary",
+            Self::WowForever => "wowforever",
         }
     }
 }
@@ -278,6 +281,7 @@ impl AuditFlavor {
             ClientProfile::Mists => Self::Mists,
             ClientProfile::Era => Self::Era,
             ClientProfile::Anniversary => Self::Anniversary,
+            ClientProfile::WowForever => Self::WowForever,
         }
     }
 }

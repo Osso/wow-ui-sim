@@ -148,6 +148,9 @@ pub fn blizzard_interface_art_root_for_install_root(root: &Path) -> Option<PathB
     let path = match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail => root.join("_retail_/BlizzardInterfaceArt"),
         crate::client_profile::ClientProfile::Ptr => root.join("_ptr_/BlizzardInterfaceArt"),
+        crate::client_profile::ClientProfile::WowForever => {
+            root.join("_classic_beta_/BlizzardInterfaceArt")
+        }
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists => {
             root.join("_classic_/BlizzardInterfaceArt")
@@ -171,6 +174,10 @@ fn interface_paths_for_install_root(root: &Path) -> Vec<PathBuf> {
         crate::client_profile::ClientProfile::Ptr => vec![
             root.join("_ptr_/BlizzardInterfaceArt/Interface"),
             root.join("_ptr_/Interface"),
+        ],
+        crate::client_profile::ClientProfile::WowForever => vec![
+            root.join("_classic_beta_/BlizzardInterfaceArt/Interface"),
+            root.join("_classic_beta_/Interface"),
         ],
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists => {
@@ -242,6 +249,9 @@ fn addon_paths_for_install_root(root: &Path) -> Vec<PathBuf> {
         crate::client_profile::ClientProfile::Ptr => {
             vec![root.join("_ptr_/Interface/AddOns")]
         }
+        crate::client_profile::ClientProfile::WowForever => {
+            vec![root.join("_classic_beta_/Interface/AddOns")]
+        }
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists => {
             vec![root.join("_classic_/Interface/AddOns")]
@@ -301,6 +311,9 @@ fn wtf_paths_for_install_root(root: &Path) -> Vec<PathBuf> {
         }
         crate::client_profile::ClientProfile::Ptr => {
             vec![root.join("_ptr_/WTF")]
+        }
+        crate::client_profile::ClientProfile::WowForever => {
+            vec![root.join("_classic_beta_/WTF")]
         }
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists => {
@@ -430,6 +443,32 @@ mod tests {
     use std::path::{Path, PathBuf};
 
     use super::*;
+
+    #[test]
+    #[cfg(feature = "client-wowforever")]
+    fn wowforever_profile_uses_classic_beta_install_paths_only() {
+        let root = Path::new("/wow");
+        assert_eq!(
+            addon_paths_for_install_root(root),
+            vec![root.join("_classic_beta_/Interface/AddOns")]
+        );
+        assert_eq!(
+            wtf_paths_for_install_root(root),
+            vec![root.join("_classic_beta_/WTF")]
+        );
+        assert_eq!(
+            interface_paths_for_install_root(root),
+            vec![
+                root.join("_classic_beta_/BlizzardInterfaceArt/Interface"),
+                root.join("_classic_beta_/Interface"),
+            ]
+        );
+        assert_eq!(
+            blizzard_interface_art_root_for_install_root(root),
+            Some(root.join("_classic_beta_/BlizzardInterfaceArt"))
+        );
+        assert!(!project_wtf_fallback_enabled());
+    }
 
     #[test]
     fn bundled_addons_candidates_include_macos_app_resources() {

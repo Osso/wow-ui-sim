@@ -126,6 +126,7 @@ client-wrath = []
 client-mists = []
 client-era = []
 client-anniversary = []
+client-wowforever = []
 
 [profile.release]
 lto = false

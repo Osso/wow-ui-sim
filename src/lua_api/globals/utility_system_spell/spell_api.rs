@@ -323,6 +323,7 @@ struct CastInfoSnapshot {
     cast_id: u32,
     spell_id: u32,
     num_empower_stages: u32,
+    #[cfg(feature = "retail-12-1-0")]
     delay_time: f64,
 }
 
@@ -362,6 +363,7 @@ fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<C
         cast_id: cast.cast_id,
         spell_id: cast.spell_id,
         num_empower_stages: cast.empower_stage_count() as u32,
+        #[cfg(feature = "retail-12-1-0")]
         delay_time: cast.delay_time,
     }))
 }

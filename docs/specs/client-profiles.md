@@ -13,6 +13,10 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] PTR 12.1.5 publishes `Enum.CurioRarity.EpicTier2 = 5` and metadata through 5; earlier retail epochs retain the four-value contract.
 - [x] Same-epoch profiles may have source-proven post-startup removals: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while PTR hides it after startup.
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
+- [x] `client-wowforever` selects a distinct `WowForever` profile with interface `16001`, cache `wowforever`, CASC product `wow_classic_beta`, and `_classic_beta_` install paths.
+- [x] Forever resolves `[Family]` to `Classic` and `[Game]` to `Camelot`, accepting `classic`/`camelot` tags without treating `vanilla` as an alias; matching exclusion annotations suppress files and dependencies.
+- [x] Forever selects generic TOCs, with the source-pinned `Blizzard_WorldMap_Mainline.toc` exception; other client-flavored TOCs are not selected accidentally.
+- [x] Forever reports version `1.60.1`, build `69913`, and interface `16001` without enabling a retail API epoch or legacy compatibility bootstrap.
 
 ## How it works
 
@@ -34,12 +38,17 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 ## Tests asserting this spec
 
 - `src/client_profile.rs` — current retail, historical retail, PTR, and interface-version contracts.
+- `tests/wowforever_profile.rs` — Forever identity, manifest/cache isolation, game-type filters, source TOC substitution and discovery.
+- `src/paths.rs` and `src/asset_resolver_config.rs` — Forever install-root and CASC product selection.
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — post-startup strict-removal contract, including PTR-only `C_RecruitAFriend.IsEnabled` removal.
 - `tests/blizzard_recruit_a_friend_loads.rs` — retail `C_RecruitAFriend.IsEnabled` availability and behavior.
 - `src/lua_api/globals/register.rs` — exact retail 12.1 string values and intentional nil globals.
 - `src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs` — PTR 12.1.5 CurioRarity, vendor mapping, and build-identity contracts.
 
 ## Known gaps (current cycle)
+
+- [ ] Forever startup/UI compatibility is not established by profile selection. Its event registration starts with the finite known-event table; Forever-specific events still need source-backed coverage.
+- [ ] Forever `GetBuildInfo()` date and trailing fields retain existing temporary defaults, not a native build-date claim.
 
 - [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but the current startup baseline has six pixel-rounding error records; profile selection is not startup acceptance.
 - [ ] Representative PTR panel interactions remain unproven.

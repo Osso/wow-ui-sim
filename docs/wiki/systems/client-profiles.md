@@ -1,10 +1,10 @@
 # Client Profiles
 
-The simulator targets six WoW client profiles concurrently — retail, PTR, wrath (3.3.5a), mists (5.4 / MoP Classic), era (1.x / Vanilla), and anniversary — selected at compile time via mutually-exclusive cargo features. Each profile uses a profile-scoped Blizzard UI cache and routes the loader through profile-aware suffix and gametype filters. Mainline API surface differences are gated by cumulative retail API epoch features so `client-retail` and `client-ptr` can point at different patch-note lifetimes without making PTR itself the API truth. Retail-family API availability is gated separately by cumulative patch epoch features so a profile/channel points at an API epoch instead of hard-coding every API delta to `client-ptr`.
+The simulator targets seven WoW client profiles — retail, PTR, wrath (3.3.5a), mists (5.4 / MoP Classic), era (1.x / Vanilla), anniversary, and WoW Forever — selected at compile time via mutually-exclusive cargo features. Each profile uses a profile-scoped Blizzard UI cache and routes the loader through profile-aware suffix and gametype filters. Mainline API surface differences are gated by cumulative retail API epoch features so `client-retail` and `client-ptr` can point at different patch-note lifetimes without making PTR itself the API truth. Retail-family API availability is gated separately by cumulative patch epoch features so a profile/channel points at an API epoch instead of hard-coding every API delta to `client-ptr`.
 
 ## Active profile selection
 
-`src/client_profile.rs` defines `enum ClientProfile { Retail, Ptr, Wrath, Mists, Era, Anniversary }` and a single `pub const ACTIVE: ClientProfile` resolved by cfg-blocks against the enabled profile marker. Retail uses the internal `profile-retail` feature; public `client-retail` remains the retail 12.1.0 bundle, while `client-ptr` selects the cumulative 12.1.5 epoch. A `compile_error!` block enforces exactly one client profile marker.
+`src/client_profile.rs` defines `enum ClientProfile { Retail, Ptr, Wrath, Mists, Era, Anniversary, WowForever }` and a single `pub const ACTIVE: ClientProfile` resolved by cfg-blocks against the enabled profile marker. Retail uses the internal `profile-retail` feature; public `client-retail` remains the retail 12.1.0 bundle, while `client-ptr` selects the cumulative 12.1.5 epoch. A `compile_error!` block enforces exactly one client profile marker.
 
 Feature ↔ profile ↔ vendor source ↔ TOC suffix:
 
@@ -17,6 +17,7 @@ Feature ↔ profile ↔ vendor source ↔ TOC suffix:
 | `client-mists`       | Mists       | `mists`      | `50504`          | `_Mists`           |
 | `client-era`         | Era         | `era`        | `11507`          | `_Vanilla`         |
 | `client-anniversary` | Anniversary | `anniversary`| `11507`          | `_Vanilla`         |
+| `client-wowforever`  | WowForever  | `wowforever` | `16001`          | generic; source-pinned WorldMap `_Mainline` exception |
 
 Retail-family epoch features are cumulative: `retail-12-0-5` includes `retail-12-0-0`, `retail-12-0-7` includes earlier 12.0 epochs, `retail-12-1-0` includes `retail-12-0-7`, and `retail-12-1-5` includes `retail-12-1-0`. `client-retail` remains at `retail-12-1-0`/`120100`; `client-ptr` selects `retail-12-1-5`/`120105`; `profile-retail` selects the retail cache without forcing an epoch. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` resolve the highest enabled cumulative retail epoch. API surfaces, CVars, enums, events, XML elements, and frame methods introduced by patch notes should gate on the epoch feature rather than on the channel feature. Strict removals follow the same rule unless source evidence proves a profile-specific retirement: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while `src/ptr/strict_removals.lua` hides it from PTR addons after startup. Profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. Channel/vendor behavior stays profile-gated: PTR CASC product `wowxptr`, `_ptr_` install paths, and `data/blizzard-ui-files/ptr.txt` remain `client-ptr` concerns. PTR 12.1.5 now has a completed 4,025-file source cache from immutable `wowxptr` CDN ranges pinned by build/config and Gethe-revision provenance. Only `client-ptr` reads the pinned `GetBuildInfo()` version/build (`12.1.5` / `69594`) and returns interface `120105`; non-PTR builds retain temporary interface `120100` with `retail-12-1-0`, otherwise `120007`. Its date and trailing slots remain temporary defaults. The current startup baseline has six pixel-rounding records, so startup and panel compatibility remain unproven.
 
@@ -66,7 +67,7 @@ Populate it with `wow-cli casc sync-blizzard-ui` or the compatibility wrapper `s
 
 Each profile uses its own committed manifest in `data/blizzard-ui-files/<profile>.txt`. PTR is configured for the `wowxptr` CASC product and the `ptr.txt` manifest; retail uses the `wow` CASC product and `retail.txt`. The retail manifest mirrors the complete Gethe `live` AddOns tree, including both `Classic/` and `Mainline/` family variants where the live tree contains them. The manifest is a source inventory, not the retail runtime's final TOC selection: retail `[Family]` substitution resolves to `Mainline`, while profile-aware TOC and game-type filtering governs which discovered addons load. Other profile manifests remain profile-specific. PTR 12.1.5 reads `data/blizzard-ui-builds/ptr.json`: a generated, committed CDN range index that validates encoded BLTE and decoded content keys. It does not relabel local `wowt` data or fall back to Gethe bytes. The first full cache synchronization extracted 4,025 files. The remaining six-record pixel-rounding baseline is a compatibility gap, not a source-acquisition failure.
 
-Local install discovery uses the active profile's WoW flavor directory. PTR reads addons, WTF, and BlizzardInterfaceArt from `_ptr_`; retail continues to use `_retail_` with optional `_beta_` addon fallback.
+Local install discovery uses the active profile's WoW flavor directory. PTR reads addons, WTF, and BlizzardInterfaceArt from `_ptr_`; retail continues to use `_retail_` with optional `_beta_` addon fallback. Forever reads `_classic_beta_` and uses product `wow_classic_beta`, confirmed by local build `1.60.1.69913`. Its 4,398-file manifest comes from the `forever` source branch in the versioned source cache; it is not an Anniversary alias. Interface `16001` is the published [1.60.1 TOC version](https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes). Profile selection does not establish full UI startup compatibility.
 
 ## Profile-aware loader paths
 
@@ -90,8 +91,9 @@ Local install discovery uses the active profile's WoW flavor directory. PTR read
 | Mists       | `mists`, `mists_classic`, `classic`               |
 | Era         | `vanilla`, `classic_era`, `classic`               |
 | Anniversary | `vanilla`, `classic_anniversary`, `classic`       |
+| WowForever  | `camelot`, `classic`                              |
 
-`family_subdir()` substitutes the `[Family]` TOC token: retail/PTR → `Mainline`, wrath/mists/era/anniversary → `Classic`. The `[Game]` token maps retail/PTR to `Standard`, wrath to `Wrath`, mists to `Mists`, and era/anniversary to `Vanilla`.
+`family_subdir()` substitutes the `[Family]` TOC token: retail/PTR → `Mainline`, wrath/mists/era/anniversary/Forever → `Classic`. The `[Game]` token maps retail/PTR to `Standard`, wrath to `Wrath`, mists to `Mists`, era/anniversary to `Vanilla`, and Forever to `Camelot`. Both inline and header `ExcludeLoadGameType` filters reject matching game types. Forever's FrameXML selects `Camelot/StackSplitFrame.xml` instead of the excluded Classic XML. Its WorldMap TOC retains the `_Mainline` filename while containing explicit Camelot entries; that single addon is selected explicitly, not by accepting all mainline-flavored TOCs.
 
 `TocFile::is_game_type_restricted()` evaluates the `## AllowLoadGameType` *header* line (separate from the inline annotation parser) using the same allow-list.
 
@@ -109,7 +111,9 @@ Promotion rule: a stub starts in the per-addon shim (`tools/classic-addon-compat
 
 The wrath module is shared with mists/era/anniversary at the cfg level (`src/lib.rs`: `#[cfg(any(client-wrath, client-mists, client-era, client-anniversary))] pub mod wrath;`) because all four profiles need its `frame_methods::register_all` (no-op stubs for backdrop / depth / player-texture methods that vendor frames call directly). Only wrath actually loads `compat_bootstrap.lua` itself; mists has its own; era + anniversary share `src/era/compat_bootstrap.lua`. The wrath-only `compat_frame_proxies.lua` (real `Blizzard_SharedXML` would shadow it on mists) is gated tighter at `#[cfg(feature = "client-wrath")]`.
 
-`src/event/valid_events.rs` follows the same shape: retail/PTR use the strict generated `EVENTS_A/B/C` tables; wrath/mists/era/anniversary route through `crate::wrath::is_registerable_event(name)` which accepts any non-empty event name (the mainline `events.yaml` doesn't cover pre-Cataclysm or vanilla). Patch-specific event additions/removals inside the mainline table gate on the retail epoch feature, not on `client-ptr`.
+Forever loads no era/anniversary compatibility bootstrap. Its temporary `GetBuildInfo()` identity uses `1.60.1` / `69913` / `16001`; date and trailing values remain defaults. Its event validator shares the finite known-event tables without enabling retail epoch deltas; unmodeled Forever-specific events remain a documented gap.
+
+`src/event/valid_events.rs` follows the same shape: retail/PTR use the strict generated event tables grouped under `src/event/known_events.rs`; wrath/mists/era/anniversary route through `crate::wrath::is_registerable_event(name)` which accepts any non-empty event name (the mainline `events.yaml` doesn't cover pre-Cataclysm or vanilla). Patch-specific event additions/removals inside the mainline table gate on the retail epoch feature, not on `client-ptr`.
 
 ## Synthetic FrameXML addon (wrath only)
 

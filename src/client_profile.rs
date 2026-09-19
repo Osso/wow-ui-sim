@@ -1,4 +1,4 @@
-//! WoW client profile selection — retail, PTR, wrath, mists, era, anniversary.
+//! WoW client profile selection — retail, PTR, wrath, mists, era, anniversary, Forever.
 //!
 //! Exactly one client profile marker must be enabled. The active profile
 //! determines which profile-scoped Blizzard UI cache the addon loader reads;
@@ -14,6 +14,7 @@ pub enum ClientProfile {
     Mists,
     Era,
     Anniversary,
+    WowForever,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -84,6 +85,10 @@ pub const ACTIVE_INTERFACE_VERSION: u32 = 50504;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub const ACTIVE_INTERFACE_VERSION: u32 = 11507;
 
+// Forever 1.60.1's published TOC version, distinct from Era/Anniversary.
+#[cfg(feature = "client-wowforever")]
+pub const ACTIVE_INTERFACE_VERSION: u32 = 16001;
+
 impl ClientProfile {
     pub fn subdir(self) -> &'static str {
         match self {
@@ -93,6 +98,7 @@ impl ClientProfile {
             ClientProfile::Mists => "Mists",
             ClientProfile::Era => "Era",
             ClientProfile::Anniversary => "Anniversary",
+            ClientProfile::WowForever => "WowForever",
         }
     }
 
@@ -104,6 +110,7 @@ impl ClientProfile {
             ClientProfile::Mists => "mists",
             ClientProfile::Era => "era",
             ClientProfile::Anniversary => "anniversary",
+            ClientProfile::WowForever => "wowforever",
         }
     }
 
@@ -113,6 +120,7 @@ impl ClientProfile {
             ClientProfile::Wrath => 38001,
             ClientProfile::Mists => 50504,
             ClientProfile::Era | ClientProfile::Anniversary => 11507,
+            ClientProfile::WowForever => 16001,
         }
     }
 }
@@ -124,6 +132,7 @@ impl ClientProfile {
     not(feature = "client-anniversary"),
     not(feature = "client-ptr"),
     feature = "profile-retail",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Retail;
 
@@ -134,6 +143,7 @@ pub const ACTIVE: ClientProfile = ClientProfile::Retail;
     not(feature = "client-era"),
     not(feature = "client-anniversary"),
     feature = "client-ptr",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Ptr;
 
@@ -144,6 +154,7 @@ pub const ACTIVE: ClientProfile = ClientProfile::Ptr;
     not(feature = "client-era"),
     not(feature = "client-anniversary"),
     feature = "client-wrath",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Wrath;
 
@@ -154,6 +165,7 @@ pub const ACTIVE: ClientProfile = ClientProfile::Wrath;
     not(feature = "client-era"),
     not(feature = "client-anniversary"),
     feature = "client-mists",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Mists;
 
@@ -164,6 +176,7 @@ pub const ACTIVE: ClientProfile = ClientProfile::Mists;
     not(feature = "client-mists"),
     not(feature = "client-anniversary"),
     feature = "client-era",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Era;
 
@@ -174,8 +187,20 @@ pub const ACTIVE: ClientProfile = ClientProfile::Era;
     not(feature = "client-mists"),
     not(feature = "client-era"),
     feature = "client-anniversary",
+    not(feature = "client-wowforever"),
 ))]
 pub const ACTIVE: ClientProfile = ClientProfile::Anniversary;
+
+#[cfg(all(
+    not(feature = "profile-retail"),
+    not(feature = "client-ptr"),
+    not(feature = "client-wrath"),
+    not(feature = "client-mists"),
+    not(feature = "client-era"),
+    not(feature = "client-anniversary"),
+    feature = "client-wowforever",
+))]
+pub const ACTIVE: ClientProfile = ClientProfile::WowForever;
 
 #[cfg(any(
     all(feature = "profile-retail", feature = "client-wrath"),
@@ -193,9 +218,20 @@ pub const ACTIVE: ClientProfile = ClientProfile::Anniversary;
     all(feature = "client-mists", feature = "client-era"),
     all(feature = "client-mists", feature = "client-anniversary"),
     all(feature = "client-era", feature = "client-anniversary"),
+    all(
+        feature = "client-wowforever",
+        any(
+            feature = "profile-retail",
+            feature = "client-ptr",
+            feature = "client-wrath",
+            feature = "client-mists",
+            feature = "client-era",
+            feature = "client-anniversary"
+        )
+    ),
 ))]
 compile_error!(
-    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, or client-anniversary"
+    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, client-anniversary, or client-wowforever"
 );
 
 #[cfg(not(any(
@@ -205,9 +241,10 @@ compile_error!(
     feature = "client-mists",
     feature = "client-era",
     feature = "client-anniversary",
+    feature = "client-wowforever",
 )))]
 compile_error!(
-    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, or client-anniversary"
+    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, client-anniversary, or client-wowforever"
 );
 
 #[cfg(all(feature = "client-ptr", not(feature = "retail-12-1-5")))]
