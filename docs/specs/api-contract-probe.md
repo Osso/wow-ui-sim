@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual recraft limit reads
+
+- `recraft-limit-read <label>` is manual-only and excluded from `all`. Call `GetRecipesTracked(false)` once; the first returned accessible table supplies only positions 1–2 as original finite recipe IDs. Independently call `GetRecipeSchematic(id, false, nil)` with exactly three arguments.
+- From each first returned schematic, inspect two `reagentSlotSchematics` positions and two `reagents` positions per slot. Forward each original accessible table/userdata `CraftingReagent` unchanged to `RecraftLimitCategoryValid` once; never clone, synthesize fields, infer allocation or equate source objects.
+- Guard every original ancestor, receiver and index before access. Read only optional `itemID`/`currencyID`, requiring accessible nil or finite numeric values without defaults or exclusivity assumptions. Recheck ancestry and current reagent fields after namespace/function lookup and function guards before invocation. Bounded sequential reauthorization does not establish atomicity against arbitrary guard side effects.
+- Save raw `recraftLimitRead.producer`, `entries[].id/schematic`, and positional `slots[].reagents[]` observations (`reagent`, diagnostic `fields`, `result`). Preserve exact arity, nil positions and opaque errors; no raw object retention or traversal beyond the fixed paths. Missing/restricted/invalid/error cases must not suppress independent paths.
+- Cap eleven API calls (one list + two schematics + eight queries) per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. No transaction/allocation construction, crafting/recraft mutation, quality queries, native validity, ordering or completeness claims. Eleven actual TOC/slash fixtures prove recorder mechanics only; native behavior remains unverified.
+
 ## Manual crafting enchant items
 
 - `crafting-enchant-items <label>` is manual-only, excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once and inspect positions 1–4 of only its first accessible table result. Forward each original accessible finite numeric ID independently to `GetEnchantItems(id, nil)` with exactly two arguments. The nullable crafting-reagent argument remains intentionally unpopulated; never synthesize reagent tables or infer that tracked recipes are valid enchant recipes.

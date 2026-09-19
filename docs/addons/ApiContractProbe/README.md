@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual recraft limit reads
+
+`/apicontract recraft-limit-read <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; only positions 1–2 of its first accessible table supply original finite recipe IDs. Each ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments. Inspect only the first schematic's first two `reagentSlotSchematics` and each slot's first two `reagents`.
+
+Each original accessible table/userdata `CraftingReagent` is passed unchanged to `RecraftLimitCategoryValid(reagent)` once. Check only its declared optional `itemID` and `currencyID`: nil or accessible finite numbers; no defaults, exclusivity rule, cloning or synthetic fields. Recheck original recipe/list/schematic/slot/reagent ancestry and current fields after API lookup/function guards and before forwarding. These bounded sequential guards do not provide atomic authorization against arbitrary guard side effects.
+
+`recraftLimitRead` stores raw `producer`, `entries[].id/schematic`, and `entries[].slots[].reagents[]` containing opaque `reagent`, guarded diagnostic `fields`, and raw query `result`. Missing, restricted, malformed and failed inputs remain explicit; independent paths continue. Retain no raw source objects. Bounds: **11 API calls per snapshot** (one list, two schematics, eight reagent queries), ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels.
+
+Pinned retail `TradeSkillUIDocumentation.lua:1098–1114` and `TradeSkillUITypesDocumentation.lua:214–220` declare the exact reagent argument and fields. `ProfessionsUtil.lua:50–54,107–116` supplies the schematic chain; `Blizzard_ProfessionsCrafting.lua:608–619` forwards a reagent directly to the query. Same declared type does not establish a live allocation or valid item. No transactions, allocation construction, crafting/recraft mutation, native validity, ordering, completeness or conformance claim follows. Eleven actual TOC/slash fixtures establish recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/recraft_limit_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual crafting enchant items
 
 `/apicontract crafting-enchant-items <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; inspect only positions 1–4 of its first accessible returned table. Each original accessible finite recipe ID independently feeds `GetEnchantItems(originalRecipeID, nil)` with **exactly two arguments**. The nullable crafting-reagent argument is intentionally unpopulated; never build a synthetic reagent table or execute an enchant.
