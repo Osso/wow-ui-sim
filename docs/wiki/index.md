@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded recipe-quality input recorder
+
+Runtime `b7ea594a2` adds manual `/apicontract recipe-quality-acceptance <label>`, excluded from `all`. Up to four original tracked IDs feed the same schematic's original `productQuality`, unchanged, into `GetRecipeItemQualityInfo`; only thirteen guarded result fields are recorded. Nine calls, thirteen fixtures, ten item-quality regressions, and eleven schematic regressions establish local input-acceptance recorder mechanics only. No valid-index/range/maximum/equivalence, crafting, or native-acceptance claim follows. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
 
 Runtime `cc123a50a` adds manual `/apicontract unit-heal-calculator <label>`, excluded from `all`. Fresh calculators for `player` and `target` each receive five getter reads before and after `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)`: 24 calls total. Fourteen fixtures plus eleven older mode regressions establish recorder mechanics only. The documented call is a unit-fed calculator population mechanism, not `UnitHealPredictionValues` field, resource-mutation, native-healing, or conformance credit. See [[api-contract-probes]].

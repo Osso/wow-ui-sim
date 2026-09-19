@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded recipe-quality input recorder
+
+Documented `b7ea594a2`: manual `recipe-quality-acceptance <label>`, excluded from `all`, forwards at most four original accessible finite tracked IDs to `GetRecipeSchematic(id, false, nil)`, then sends each same-schematic original `productQuality` unchanged with its original ID to `GetRecipeItemQualityInfo`. It retains raw tuples and exposes only thirteen guarded fields from each first quality result. Nine calls, thirteen fixtures, ten item-quality regressions, and eleven schematic regressions prove local input-acceptance recorder mechanics only. No valid-index/range/maximum/equivalence, crafting/recrafting, native acceptance, or conformance claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
 
 Documented `cc123a50a`: manual `unit-heal-calculator <label>`, excluded from `all`, creates fresh no-argument calculators for `player` and `target`. Each lane reads five getters, calls `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)`, then reads those five getters again: 24 calls total. Fourteen fresh fixtures plus eleven older mode regressions establish recorder mechanics only. The documented signature corrects any current claim that no unit-fed calculator producer exists. It does not credit `UnitHealPredictionValues` fields, resource mutation, native healing, or conformance. Updated [[api-contract-probes]] and the index.
