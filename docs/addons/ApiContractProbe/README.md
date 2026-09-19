@@ -1,5 +1,21 @@
 # API Contract Probe
 
+## Manual recipe quality input acceptance
+
+`/apicontract recipe-quality-acceptance <label>` is manual-only and excluded from `all`. It calls `C_TradeSkillUI.GetRecipesTracked(false)` once and reads only positions 1–4 of the first accessible returned table. Each original finite recipe ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments. Only the first schematic object supplies `productQuality`; an accessible finite **number** is forwarded unchanged with the **same original recipe ID** to `GetRecipeItemQualityInfo(id, quality)`.
+
+This is an **INPUT-ACCEPTANCE experiment**, not evidence that `productQuality` is a valid index, maximum, tier, or equivalent quality value. No ranges, flooring, clamping, coercion, reconstructed recipes, or comparison with returned `info.quality` are used. Nil, inaccessible, nonnumeric, nonfinite, or failed producers skip only dependent calls; a query error is an observation, not a failed semantic assertion.
+
+`recipeQualityAcceptance` stores the raw `producer` tuple and four positional `entries` containing `id`, `schematic`, `productQuality` when available, and `query`. The first quality-result object exposes exactly thirteen guarded fields: `quality`, `icon`, `iconSmall`, `iconInventory`, `iconMixed`, `iconAppear`, `iconDissolve`, `barFill`, `barBackground`, `barBackgroundCap`, `barHighlight`, `iconChat`, and `iconQuestObjective`. Other returned objects remain opaque.
+
+Original list, recipe ID, schematic and quality access is checked before inspection/forwarding and after API lookup/function guards. Bounded forward/reverse peer checks do not establish atomic authorization against arbitrary guard side effects. Keep the original field value rather than rereading or replacing it. No raw source/result object is retained.
+
+Bounds: **nine API calls per snapshot** (one tracked list, four schematics, four quality queries), ten snapshots, sixteen raw return positions, 256-byte scalar strings, and 128-byte labels. Shared build/time provenance calls are separate. Pinned retail `TradeSkillUIDocumentation.lua:656–669,738–767` and `TradeSkillUITypesDocumentation.lua:194–211,281–295` establish call/field shapes only. No crafting, allocation, request, mutation, native acceptance, error taxonomy, atlas meaning, or conformance claim follows. Thirteen actual TOC/slash fixtures establish local recorder mechanics only; final verification is separate.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/recipe_quality_acceptance.lua docs/addons/ApiContractProbe
+```
+
 ## Manual timeline Edit Mode preview
 
 **Warning:** `/apicontract timeline-edit-preview <label>` temporarily adds preview events if later run manually in a client. Cleanup can fail or be skipped. `CancelEditModeEvents` removes **all** Edit Mode events, not recorder-owned events. This mode establishes neither atomic ownership nor preservation of other events. It is excluded from `all`; no native execution was performed during preparation.
