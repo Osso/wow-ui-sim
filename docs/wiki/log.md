@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded LFG title-match recorder
+
+Documented `91503ab04`: manual `lfg-title-match-read <label>`, excluded from `all`, follows at most two original category, group, and activity positions per stage before calling `DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil)` with exactly four arguments. Explicit nil playstyle positions are an experiment, not native caller defaults or title context. Fifteen calls, eleven actual TOC/slash fixtures, and eleven playstyle-format regressions establish local recorder mechanics only. No title/entry/search-result/listing operation, request, mutation, native title-match result, default, historical behavior, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded LFG playstyle-format recorder
 
 Documented `95a63168f`: manual `lfg-playstyle-format <label>`, excluded from `all`, forwards at most two original category IDs and two original activity IDs per category through the bounded LFG producer chain. The vendor group argument `0` remains separate from the guarded published PvE filter; formatting receives separately guarded published `None` values and original activity-info objects only. Eleven calls, eleven actual TOC/slash fixtures, and eleven plus sixteen focused regressions establish local recorder mechanics only. No search-result/listing operation, mutation, native listing, default, formatting, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
