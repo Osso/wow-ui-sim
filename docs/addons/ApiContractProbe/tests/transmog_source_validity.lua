@@ -179,6 +179,51 @@ test("fixed indices are guarded after function checks and cannot revoke count un
     end
 end)
 
+for _, phase in ipairs({ "secret", "access" }) do
+    test("final count " .. phase .. " guard cannot forward a revoked index", function()
+        local failures = {}
+        for position = 1, 8 do
+            local armed, revoked, forwarded = false, false, 0
+            local seen = {}
+            local query = function(index)
+                if revoked and index == position then forwarded = forwarded + 1 end
+                seen[#seen + 1] = index
+                return true
+            end
+            setup(function() return 20 end, query)
+            local function revoke(value)
+                if rawequal(value, query) and #seen + 1 == position then armed = true end
+                if armed and rawequal(value, 20) then revoked = true end
+            end
+            issecretvalue = function(value)
+                if phase == "secret" then revoke(value) end
+                return rawequal(value, secret) or (revoked and rawequal(value, position))
+            end
+            canaccessvalue = function(value)
+                if phase == "access" then revoke(value) end
+                return not rawequal(value, secret) and not (revoked and rawequal(value, position))
+            end
+            local result = capture()
+            local context = phase .. ":" .. position
+            if forwarded ~= 0 or result.sources[position].status ~= "restricted-input" then
+                failures[#failures + 1] = context .. " forwarded=" .. forwarded
+                    .. " status=" .. tostring(result.sources[position].status)
+            end
+            if #seen ~= 7 then failures[#failures + 1] = context .. " peer count=" .. #seen end
+            local nextSeen = 1
+            for index = 1, 8 do
+                if index ~= position then
+                    if seen[nextSeen] ~= index or result.sources[index].status ~= "observed" then
+                        failures[#failures + 1] = context .. " suppressed peer=" .. index
+                    end
+                    nextSeen = nextSeen + 1
+                end
+            end
+        end
+        assert(#failures == 0, table.concat(failures, "; "))
+    end)
+end
+
 test("producer serialization and preceding query observations can revoke original count", function()
     local revoked, output = false, {}
     setup(function() return 20, output end, forbidden)

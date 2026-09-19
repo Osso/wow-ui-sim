@@ -1131,6 +1131,8 @@ local function captureCustomSetNames(mode)
             if not accessible(index) then return { status = "restricted-input" } end
             status = countStatus(count)
             if status then return { status = status } end
+            -- The count guard can revoke the previously checked index.
+            if not accessible(index) then return { status = "restricted-input" } end
             local values = pack(pcall(fn, index))
             if not values[1] then return { status = "call-error" } end
             local result = mapTuple(unpack(values, 2, values.n))
