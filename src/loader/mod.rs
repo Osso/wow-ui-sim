@@ -1,6 +1,8 @@
 //! Addon loader - loads addons from TOC files.
 
 mod addon;
+#[cfg(any(feature = "client-wowforever", test))]
+pub(crate) mod addon_modules;
 mod addon_order;
 mod addon_saved_variables;
 pub(crate) mod button;

@@ -6,9 +6,9 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 
 ### Completed module values
 
-- [ ] Look up only files that have completed initial execution; `require` must not load or re-execute files.
-- [ ] Return the original completed file value, including `nil`, `false`, and non-table values.
-- [ ] Reject imports of missing, self, or unfinished files with `Invalid import: No module with that name exists`.
+- [x] At the registry boundary, look up only files whose execution has completed; imports do not execute files.
+- [x] Return one original completed file value, including `nil`, `false`, tables and functions, preserving identity through garbage collection.
+- [x] Reject imports of missing, self, or unfinished files with `Invalid import: No module with that name exists`.
 
 ### Module paths and addon boundaries
 
@@ -22,13 +22,14 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 - [x] Permit a disk-file caller to import another addon only when its direct required or optional dependency matches the target addon case-insensitively; same-addon imports do not need a dependency.
 - [x] Reject an undeclared cross-addon disk-file import with `Invalid import: Modules from other addons may only be imported if the calling addon has a direct dependency on the addon being imported`.
 - [x] Exempt a dynamic caller from the cross-addon direct-dependency check for absolute paths.
+- [x] Preserve registered file provenance for delayed nested closures; dynamically compiled chunks remain dynamic even with a spoofed addon filename.
 - [x] Reject a dynamic relative request because it has no file origin. This is an explicit simulator policy; the source contract does not specify it.
 
 ### Profile isolation
 
 - [ ] Expose this API only for the `wowforever` profile. Other client profiles must retain their current `require` surface.
 
-The checked bullets above are limited to the sixteen unit tests in `src/loader/module_import.rs` at `be073174d`; they prove pure identity resolution and dependency authorization only.
+Checked path/dependency requirements have sixteen pure resolver tests; registry/value/provenance requirements have ten actual-rilua unit tests in `src/loader/addon_modules.rs`. Loader hooks and profile exposure are not yet wired by these slices.
 
 ## How it works
 
@@ -38,17 +39,20 @@ The checked bullets above are limited to the sixteen unit tests in `src/loader/m
 
 ## Implementation inventory
 
-- `src/loader/module_import.rs` — pure logical path and direct-dependency resolver; currently the only implementation file.
-- `src/loader/mod.rs` — declares `module_import`; no loader-backed registry, Lua global, or profile gate is wired yet.
+- `src/loader/module_import.rs` — pure logical path and direct-dependency resolver.
+- `src/loader/addon_modules.rs` — completed-value registry, prototype-identity caller provenance, and native `require` installation hook.
+- `src/lua_api/env.rs` — per-VM module metadata; module values and source closures are rooted in the Lua registry.
+- `src/loader/mod.rs` — declares the resolver and profile/test-gated runtime module; loader execution hooks remain pending.
 
 ## Tests asserting this spec
 
 - `src/loader/module_import.rs` — sixteen unit tests for absolute/relative resolution, addon boundary rejection, direct dependency authorization, dynamic absolute exemption, malformed requests, and exact errors.
+- `src/loader/addon_modules.rs` — actual-rilua tests for completed values/GC identity, load boundaries, delayed closures, direct dependencies, spoofed dynamic sources, failed loads/replacement and VM isolation.
 
 ## Known gaps (current cycle)
 
-- [ ] Add a loader-owned completed-module registry and preserve original Lua return values.
-- [ ] Capture disk-file caller provenance and distinguish dynamic callers without using a Lua-supplied path.
+- [ ] Wire the registry begin/finish/abort hooks into the actual addon file-loading boundary.
+- [ ] Validate the complete loader integration beyond the registry's explicit test hooks.
 - [ ] Register the `require` global only for `client-wowforever`.
 - [ ] Add the distinct wowforever profile, source mapping, manifest integration, and profile-isolation tests.
 

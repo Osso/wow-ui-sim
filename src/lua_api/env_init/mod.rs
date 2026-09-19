@@ -282,6 +282,7 @@ mod tests {
             on_update_cache_dirty: true,
             hot_literals: None,
             global_slots: None,
+            addon_modules: None,
         });
 
         install_global_slots_from_env(&mut lua, Some("1"));
