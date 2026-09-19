@@ -1613,6 +1613,12 @@ local function captureNeighborhoodStructures(mode)
                 if status or not accessible(item) or not accessible(currency) then return "restricted-input" end
             end
             if authorize(path) then return "restricted-input" end
+            -- The final ancestor guard may revoke fields; their guards may revoke peers.
+            -- Reauthorize both sides in a bounded sequence, not an atomic access guarantee.
+            if not accessible(item) or not accessible(currency) or authorize(path)
+                or not accessible(item) or not accessible(currency) or not accessible(item) then
+                return "restricted-input"
+            end
             return nil, item, currency
         end
         local function queryReagent(path, reagent)

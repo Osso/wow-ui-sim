@@ -273,6 +273,144 @@ test("all excludes the new mode and neighboring crafting modes retain routing", 
     SlashCmdList.APICONTRACTPROBE("crafting-schematic-read")
     assert(ApiContractProbeDB.captures[2].craftingSchematicRead and #f.calls > 0)
 end)
+-- Arm after the target query's function guard; its ninth receiver check is
+-- the final ancestor pass from the production failure, not a synthetic call.
+local function runFinalReagentGuardCase(position, phase, scenario, fieldName, ancestorIndex)
+    local f = setup()
+    local recipeIndex = math.floor((position - 1) / 4) + 1
+    local slotIndex = math.floor(((position - 1) % 4) / 2) + 1
+    local reagentIndex = (position - 1) % 2 + 1
+    local schematic = f.schematics[f.ids[recipeIndex]]
+    local slot = schematic.reagentSlotSchematics[slotIndex]
+    local reagent = f.objects[position]
+    reagent.currencyID = 9000 + position
+    local item, currency = reagent.itemID, reagent.currencyID
+    local path = { f.ids, f.ids[recipeIndex], schematic, schematic.reagentSlotSchematics,
+        slot, slot.reagents, reagent }
+    local victim = fieldName == "itemID" and item or currency
+    local revoked = {}
+    local queryChecks, receiverChecks, stage = 0, 0, 0
+    local armed, finalPass = false, false
+    local forbiddenForwards = 0
+    local original = C_TradeSkillUI.RecraftLimitCategoryValid
+    local query
+    query = function(obj, ...)
+        if rawequal(obj, reagent) then
+            local forbidden = revoked[item] or revoked[currency]
+            for _, value in ipairs(path) do forbidden = forbidden or revoked[value] end
+            if forbidden then forbiddenForwards = forbiddenForwards + 1 end
+        end
+        return original(obj, ...)
+    end
+    C_TradeSkillUI.RecraftLimitCategoryValid = query
+    local function guard(value, guardPhase)
+        if guardPhase == "access" and rawequal(value, query) then
+            queryChecks = queryChecks + 1
+            if queryChecks == position then armed = true end
+        end
+        if not armed or guardPhase ~= phase then return end
+        if rawequal(value, reagent) then
+            receiverChecks = receiverChecks + 1
+            if receiverChecks == 9 then
+                finalPass = true
+                if scenario == "ancestor-to-field" then revoked[victim] = true; stage = 1 end
+            end
+        end
+        if not finalPass then return end
+        if scenario == "field-to-field" and stage == 0 and rawequal(value, victim) then
+            revoked[fieldName == "itemID" and currency or item] = true
+            stage = 1
+        elseif scenario == "field-to-ancestor" and stage == 0 and rawequal(value, victim) then
+            revoked[path[ancestorIndex]] = true
+            stage = 1
+        elseif scenario == "ancestor-to-field-staged" then
+            if stage == 0 and rawequal(value, currency) then
+                stage = 1
+            elseif stage == 1 and rawequal(value, path[ancestorIndex]) then
+                revoked[victim] = true
+                stage = 2
+            end
+        end
+    end
+    issecretvalue = function(value)
+        guard(value, "secret")
+        return rawequal(value, secret) or (phase == "secret" and revoked[value] == true)
+    end
+    canaccessvalue = function(value)
+        guard(value, "access")
+        return not rawequal(value, secret) and not revoked[value]
+    end
+    local result = capture()
+    local target = row(result, recipeIndex, slotIndex, reagentIndex)
+    local expectedStage = scenario == "ancestor-to-field-staged" and 2 or 1
+    local blocked = finalPass and stage == expectedStage and forbiddenForwards == 0
+        and target.result.status ~= "observed"
+    if scenario == "ancestor-to-field" or scenario == "field-to-field" then
+        blocked = blocked and #f.queries == 7
+        for _, forwarded in ipairs(f.queries) do blocked = blocked and not rawequal(forwarded, reagent) end
+    end
+    return blocked
+end
+
+for _, phase in ipairs({ "secret", "access" }) do
+    test("final ancestor " .. phase .. " guard cannot revoke a declared field before forwarding", function()
+        local failures = {}
+        for position = 1, 8 do
+            for _, fieldName in ipairs({ "itemID", "currencyID" }) do
+                if not runFinalReagentGuardCase(position, phase, "ancestor-to-field", fieldName) then
+                    failures[#failures + 1] = position .. "/" .. fieldName
+                end
+            end
+        end
+        assert(#failures == 0, "final receiver revoked field: " .. table.concat(failures, ","))
+    end)
+end
+
+test("final declared field guards reauthorize the other field without replacing reagent identity", function()
+    local failures = {}
+    for position = 1, 8 do
+        for _, phase in ipairs({ "secret", "access" }) do
+            for _, fieldName in ipairs({ "itemID", "currencyID" }) do
+                if not runFinalReagentGuardCase(position, phase, "field-to-field", fieldName) then
+                    failures[#failures + 1] = position .. "/" .. phase .. "/" .. fieldName
+                end
+            end
+        end
+    end
+    assert(#failures == 0, "peer field revocation: " .. table.concat(failures, ","))
+end)
+
+test("final declared field checks retain authorization of all seven original ancestors", function()
+    local failures = {}
+    for position = 1, 8 do
+        for _, phase in ipairs({ "secret", "access" }) do
+            for _, fieldName in ipairs({ "itemID", "currencyID" }) do
+                for ancestor = 1, 7 do
+                    if not runFinalReagentGuardCase(position, phase, "field-to-ancestor", fieldName, ancestor) then
+                        failures[#failures + 1] = position .. "/" .. phase .. "/" .. fieldName .. "/" .. ancestor
+                    end
+                end
+            end
+        end
+    end
+    assert(#failures == 0, "field revoked ancestor: " .. table.concat(failures, ","))
+end)
+
+test("staged ancestor checks after final field checks reauthorize declared fields again", function()
+    local failures = {}
+    for position = 1, 8 do
+        for _, phase in ipairs({ "secret", "access" }) do
+            for _, fieldName in ipairs({ "itemID", "currencyID" }) do
+                for ancestor = 1, 7 do
+                    if not runFinalReagentGuardCase(position, phase, "ancestor-to-field-staged", fieldName, ancestor) then
+                        failures[#failures + 1] = position .. "/" .. phase .. "/" .. fieldName .. "/" .. ancestor
+                    end
+                end
+            end
+        end
+    end
+    assert(#failures == 0, "staged ancestor revoked field: " .. table.concat(failures, ","))
+end)
 setmetatable(_G, baseMeta)
 print(string.format("%d passed, %d failed", passed, failed))
 os.exit(failed == 0 and 0 or 1)
