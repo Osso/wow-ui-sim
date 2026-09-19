@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual crafting schematic reads
+
+`/apicontract crafting-schematic-read <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once, then inspect only positions 1–4 of its first accessible returned table. Each original accessible finite recipe ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments, including the explicit nil recipe level. Missing product quality does not prevent schematic inspection; no quality API is called.
+
+`craftingSchematicRead` records `producer` and four bounded `entries` containing an ID observation and `schematic` tuple. Inspect only the first schematic result: `recipeID`, `productQuality`, and `reagentSlotSchematics` positions 1–4. Each slot exposes `quantityRequired`, `dataSlotIndex`, `slotIndex`, `reagentType`, plus the first four `reagents` (`itemID`, `currencyID`) and first four `variableQuantities` (`quantity` and the original nested `reagent`'s `itemID`/`currencyID`). Every container, entry and field is access-checked before lookup or serialization, including after earlier observations revoke access. Recipe IDs are rechecked after namespace/function lookup and guards before forwarding. No source list length, generic iteration, recursive expansion, synthetic reagent table or downstream derived-quality call is used.
+
+Bounds: five API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels. Preserve raw arity, nil holes and opaque errors; do not retain raw objects. Pinned retail `TradeSkillUIDocumentation.lua:738–767` and `TradeSkillUITypesDocumentation.lua` declare the signatures/fields; `ProfessionsUtil.lua` and `Blizzard_ProfessionsRecipeTracker.lua` ground the tracked-recipe-to-schematic chain. Eleven actual TOC/slash fixtures prove local recorder mechanics only. This is **not** coverage for `CraftingReagentInfo`, `CraftingItemSlotModification`, `CraftingOrderReagentInfo` or `CraftingResourceReturnInfo`. No crafting, orders, allocations, requests, mutations, native quality/completeness/type-identity conclusions or conformance credit follow.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/crafting_schematic_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual error-code publication
 
 `/apicontract error-code-publication <label>` is excluded from `all` and does not extend the shared `publication` target list. It reads exactly the twelve fixed `LE_GAME_ERR_*` names retained by `remaining-objects-global-error-codes`, once each through guarded global lookup. No numeric values, defaults or fallbacks are supplied; looked-up functions and objects are never invoked or traversed. No error trigger is needed for these presence observations.

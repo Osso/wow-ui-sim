@@ -1,5 +1,14 @@
 # API contract probe
 
+## Manual crafting schematic reads
+
+- `crafting-schematic-read <label>` is manual-only and excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; only indices 1–4 of its first accessible returned table supply original finite numeric recipe IDs. Preserve duplicates, holes and values without coercion or synthetic IDs.
+- Independently call `GetRecipeSchematic(id, false, nil)` once per usable original ID with exactly three arguments. Guard the ID before inspection and recheck it after namespace/function lookup and accessibility guards before forwarding. Missing, restricted, invalid and failing inputs remain explicit; peer entries continue.
+- Save `craftingSchematicRead.producer` and `entries[].id/schematic` with exact arity, nil positions and opaque errors. Only the first schematic object is inspected: `recipeID`, `productQuality`, and four `reagentSlotSchematics` positions. Slots expose `quantityRequired`, `dataSlotIndex`, `slotIndex`, `reagentType`, four `reagents` with `itemID`/`currencyID`, and four `variableQuantities` with `quantity` plus the original nested `reagent`'s `itemID`/`currencyID`.
+- Check every receiver before each lookup and each value before inspection/serialization, including after earlier observations revoke access. Use no source length/iteration, generic recursion, reconstructed reagent tables, derived quality calls or retained raw objects. Missing `productQuality` does not gate the rest of the schematic.
+- Bound five API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. Eleven actual TOC/slash fixtures establish local mechanics only. No crafting, order, allocation, request or mutation calls; no native quality, ordering, completeness or type-identity conclusions.
+- Explicitly do not credit `CraftingReagentInfo` wrappers, `CraftingItemSlotModification`, `CraftingOrderReagentInfo` or `CraftingResourceReturnInfo`. Matching native populations, historical contracts and restricted-context behavior remain unverified.
+
 ## Manual error-code publication
 
 - `error-code-publication <label>` is manual-only, excluded from `all`, and reads exactly the twelve fixed `LE_GAME_ERR_*` names retained by `remaining-objects-global-error-codes`. Each name receives one guarded `readField(_G, name)` lookup attempt; no numeric constants, defaults or fallbacks are supplied. Do not add these names to `AuditTargets.lua` or change shared publication behavior.
