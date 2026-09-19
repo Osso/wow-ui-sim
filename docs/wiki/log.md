@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded timeline track-information recorder
+
+Documented `90ecfa0ab`: manual `timeline-track-info <label>`, excluded from `all`, forwards each of five fixed published original accessible finite `Enum.EncounterTimelineTrack` values once to `C_EncounterTimeline.GetTrackInfo`. Only the first returned table/userdata exposes eight declared guarded fields; raw objects and other returns remain opaque. Five calls, twelve actual TOC/slash fixtures, and eleven timeline-source-count regressions establish local recorder mechanics only. No Edit Mode events, mutation, native queue, timing, conformance, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded heal-calculator mode recorder
 
 Documented `c5246eee6`: manual `heal-calculator-modes <label>`, excluded from `all`, uses one fresh owned calculator for three baseline getters, seven published setter/getter pairs, and two resets followed by six reads. Twenty-five method calls plus one constructor call, eleven fresh fixtures, and seven older read-only regressions establish local recorder mechanics only. No equality, default, reset-equivalence, native, or resource conclusion follows. Updated [[api-contract-probes]] and the index.

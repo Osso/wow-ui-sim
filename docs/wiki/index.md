@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded timeline track-information recorder
+
+Runtime `90ecfa0ab` adds manual `/apicontract timeline-track-info <label>`, excluded from `all`. It calls `C_EncounterTimeline.GetTrackInfo` once for each of five fixed published original accessible finite track values and exposes only eight declared fields from each first returned table/userdata. Five calls, twelve fixtures, and eleven timeline-source-count regressions establish local recorder mechanics only. No Edit Mode event operation, event mutation, native queue, timing, or conformance conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded LFG title-match recorder
 
 Runtime `91503ab04` adds manual `/apicontract lfg-title-match-read <label>`, excluded from `all`. It bounds original category, group, and activity pairs at two positions per stage, then calls `DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil)` with exactly four arguments. Explicit nil playstyles are an experiment, not native caller defaults or title context. Fifteen calls, eleven fixtures, and eleven playstyle-format regressions establish local recorder mechanics only. No title, entry, search-result, listing, request, mutation, native default, result, or conclusion follows. See [[api-contract-probes]].
