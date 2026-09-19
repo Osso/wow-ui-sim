@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual abbreviation options
+
+- `abbreviation-options <label>` is manual-only, excluded from `all`. Call `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once with exactly one explicit nil. Use only the first accessible table result as the original `breakpointData` in a fresh owned options table; do not inspect/rewrite entries, synthesize breakpoints or add locale/config fields.
+- Use exactly eight finite inputs: `0, 999, 1000, 1234, 999999, 1000000, -1000, 1000000000`. For each, independently call `AbbreviateNumbers` omitted/options then `AbbreviateLargeNumbers` omitted/options with exactly one/two arguments. Omitted controls continue when the producer or any option call fails. Invalid/inaccessible producers never enable option calls.
+- Guard namespace/global/function lookup and arguments before inspection/use. Recheck the original breakpoint table, owned options and input after lookup/function-access guards. Read only the owned `breakpointData` field and access-check both operands before identity comparison; changed/inaccessible fields prevent forwarding. Never use serialized or copied substitutes.
+- Save raw `abbreviationOptions.producer` and `samples[].input/small/large` with `omitted` and `options` observations. Preserve exact arity and nil positions, opaque errors and restricted outcomes; cap 33 calls/snapshot, ten snapshots, sixteen result positions, 256-byte strings and 128-byte labels. Do not retain or inspect returned objects.
+- Do not construct configs, invoke restricted setters/callbacks, change locale, or infer formatting equality, coercion, defaults or native conformance. Existing `abbreviations` behavior remains unchanged. Local fixtures establish recorder mechanics only.
+
 ## Manual timeline track queries
 
 - `timeline-track-queries <label>` is manual-only and excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once; inspect only positions 1–8 of its first returned table. Independently forward each original accessible finite numeric ID to `GetEventTrack(id)` once, preserving exact raw return arity and nil sort-index positions.
