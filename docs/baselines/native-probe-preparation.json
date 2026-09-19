@@ -77,8 +77,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 61,
-    "partial-recorder": 82,
+    "needs-design-and-recorder-review": 60,
+    "partial-recorder": 83,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -10453,8 +10453,19 @@
           "protocol": "structure-producer"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual crafting-schematic-read obtains four original tracked recipe IDs and records GetRecipeSchematic(id, false, nil), with bounded reagent slots, reagents and variable quantities",
+          "Current variableQuantities quantity/reagent fields are inspected through fixed guarded paths; unrelated wrapper structures receive no coverage credit"
+        ],
+        "missing": [
+          "CraftingReagentInfo, CraftingItemSlotModification, CraftingOrderReagentInfo and CraftingResourceReturnInfo producers",
+          "Native populated schematics, remaining entries and quantity semantics",
+          "Historical changed structures, transitions and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/remaining-objects-crafting-structures"
     },
