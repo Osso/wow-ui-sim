@@ -300,7 +300,7 @@ Runtime `7c6a00e6d` adds manual `/apicontract abbreviations <label>`, excluded f
 
 ## [2026-09-15] investigation | Prepare bounded heal-calculator recorder
 
-Runtime `c47811794` adds manual `/apicontract heal-calculator <label>`, excluded from `all`. It creates two fresh no-argument calculators and calls five read-only getters twice on each. A separate seven-fixture suite proves recorder mechanics only; native fresh/default values, populated state, reset/default transitions and security remain pending. See [[api-contract-probes]].
+Runtime `c5246eee6` adds manual `/apicontract heal-calculator-modes <label>`, excluded from `all`. One fresh owned calculator receives seven published enum setter values, matched getter readbacks, then `Reset` and `ResetPredictedValues` with three getter reads after each. Twenty-five method calls plus one constructor call, eleven fresh fixtures, and seven older read-only regressions prove local recorder mechanics only. No equality, default, reset-equivalence, native, or resource conclusion follows. See [[api-contract-probes]].
 
 ## [2026-09-15] investigation | Prepare pure mapvalues recorder
 

@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded heal-calculator mode recorder
+
+Documented `c5246eee6`: manual `heal-calculator-modes <label>`, excluded from `all`, uses one fresh owned calculator for three baseline getters, seven published setter/getter pairs, and two resets followed by six reads. Twenty-five method calls plus one constructor call, eleven fresh fixtures, and seven older read-only regressions establish local recorder mechanics only. No equality, default, reset-equivalence, native, or resource conclusion follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded LFG title-match recorder
 
 Documented `91503ab04`: manual `lfg-title-match-read <label>`, excluded from `all`, follows at most two original category, group, and activity positions per stage before calling `DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil)` with exactly four arguments. Explicit nil playstyle positions are an experiment, not native caller defaults or title context. Fifteen calls, eleven actual TOC/slash fixtures, and eleven playstyle-format regressions establish local recorder mechanics only. No title/entry/search-result/listing operation, request, mutation, native title-match result, default, historical behavior, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
