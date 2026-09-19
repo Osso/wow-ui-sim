@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual LFG playstyle formatting
+
+- `lfg-playstyle-format <label>` is manual-only and excluded from `all`. Guard the published `Enum.LFGListFilter.PvE` member; call `GetAvailableCategories(value)` once. Only the first returned accessible table's positions 1–2 supply original finite category IDs to `GetAvailableActivities(categoryID, 0, originalPvE)`. Group zero is the vendor's zero-group/selected-filters-zero control argument, never an enum fallback.
+- Each first activity table's positions 1–2 supply original finite IDs to `GetActivityInfoTable(activityID)` with exactly one argument. Only its original accessible first table/userdata result may feed `GetPlaystyleString(published LFGEntryPlaystyle.None, published LFGEntryGeneralPlaystyle.None, originalActivityInfo)`. Never derive general playstyle from an activity-info field or synthesize/reconstruct an info object.
+- Guard publication containers, values, IDs and list receivers before inspection/lookup. Recheck every input after API lookup/function guards before forwarding. Missing, invalid, restricted and failing inputs/APIs remain explicit and independent. Do not use numeric enum fallbacks, source-list lengths, generic iteration, field traversal or object methods.
+- Save `lfgPlaystyleFormat.filter`, `producer` and `categories[].categoryID/producer/activities[].activityID/info/formatted`. Preserve raw arity, nil positions, opaque errors and guarded scalar values; retain no original objects. Bound eleven API calls per snapshot, ten snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels.
+- Do not call entry/search-result APIs, listing/search/request/mutation operations or infer native listing state, defaults, enum identities, activity-dependent formatting, order or completeness. Eleven actual TOC/slash fixtures prove bounded mechanics only; no native execution or conformance credit follows.
+
 ## Manual crafting schematic reads
 
 - `crafting-schematic-read <label>` is manual-only and excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; only indices 1–4 of its first accessible returned table supply original finite numeric recipe IDs. Preserve duplicates, holes and values without coercion or synthetic IDs.

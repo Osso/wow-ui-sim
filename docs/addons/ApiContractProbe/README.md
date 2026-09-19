@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual LFG playstyle formatting
+
+`/apicontract lfg-playstyle-format <label>` is excluded from `all`. Read the original published `Enum.LFGListFilter.PvE` value and call `C_LFGList.GetAvailableCategories(value)`. Only positions 1–2 of its first accessible returned table supply original finite category IDs. Each feeds `GetAvailableActivities(categoryID, 0, originalPvE)`; the literal group `0` follows the vendor's zero-group/selected-filters-zero branch, not an enum fallback. Only positions 1–2 of each first activity table supply original finite IDs to `GetActivityInfoTable(activityID)` with exactly one argument.
+
+For each original accessible table/userdata activity result, independently call `GetPlaystyleString(Enum.LFGEntryPlaystyle.None, Enum.LFGEntryGeneralPlaystyle.None, originalActivityInfo)` using guarded published values. Missing publication skips the affected calls; no numeric substitute is supplied. Recheck every forwarded input after API lookup and function guards. Check each list receiver before indexing. Neither activity-info objects nor returned objects are traversed, reconstructed, normalized or retained.
+
+`lfgPlaystyleFormat` saves `filter`, the category `producer`, and bounded `categories` rows with `categoryID`, activity-list `producer`, and `activities` containing `activityID`, `info` and `formatted` raw tuples. Calls fail independently; preserve exact arity, nil holes, opaque errors and restricted values. Bounds: eleven API calls per snapshot (1 + 2 + 4 + 4), ten snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels.
+
+Pinned `LFGListInfoDocumentation.lua:184–203,368–382` supplies the info/formatter signatures; `LFGConstantsDocumentation.lua` supplies the three enum members. `Blizzard_GroupFinder/Mainline/LFGList.lua:628,881–882,4390,4404` establishes category/activity production and original-info forwarding. This mode does not call entry/search-result APIs, create listings, send requests or mutate state. Eleven actual TOC/slash fixtures prove recorder mechanics only; native listing state, non-None playstyles, formatter output and historical semantics remain unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/lfg_playstyle_format.lua docs/addons/ApiContractProbe
+```
+
 ## Manual crafting schematic reads
 
 `/apicontract crafting-schematic-read <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once, then inspect only positions 1–4 of its first accessible returned table. Each original accessible finite recipe ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments, including the explicit nil recipe level. Missing product quality does not prevent schematic inspection; no quality API is called.
