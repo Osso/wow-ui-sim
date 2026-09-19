@@ -12,6 +12,7 @@ pub(crate) mod helpers;
 pub(crate) mod helpers_anim;
 mod load_addon_trace;
 pub(crate) mod lua_file;
+pub(crate) mod module_import;
 pub(crate) mod precompiled;
 pub(crate) mod stack_taint;
 mod startup_addons;
