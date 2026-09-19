@@ -6860,11 +6860,12 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual tradeskill-item-quality inspects thirteen guarded declared CraftingQualityInfo fields on first returned crafted/reagent quality objects"
+          "Manual tradeskill-item-quality inspects thirteen guarded declared CraftingQualityInfo fields on first returned crafted/reagent quality objects",
+          "Recipe-quality acceptance additionally observes thirteen guarded fields on first returned GetRecipeItemQualityInfo objects without asserting input validity"
         ],
         "missing": [
           "Native quality/atlas field values and populated item fixtures",
-          "Recipe-produced quality structures and native validation behavior"
+          "Native recipe-produced quality values and validation behavior"
         ]
       },
       "native_execution": "not-established-by-this-inventory",
@@ -9879,10 +9880,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual tradeskill-item-quality uses original accessible equipment links from slots 1-19 for independent GetItemCraftedQualityInfo and GetItemReagentQualityInfo calls"
+          "Manual tradeskill-item-quality uses original accessible equipment links from slots 1-19 for independent GetItemCraftedQualityInfo and GetItemReagentQualityInfo calls",
+          "Manual recipe-quality-acceptance forwards unchanged same-recipe schematic.productQuality numbers with original recipe IDs to GetRecipeItemQualityInfo as input-acceptance observations, not proof of a valid quality index"
         ],
         "missing": [
-          "Produced recipe IDs, quality and reagent indices for recipe-specific APIs",
+          "Produced data-slot and quality indices for GetRecipeQualityReagentLink; native recipe-quality acceptance semantics",
           "Native item quality fixtures, transitions and restricted-context behavior"
         ]
       },
