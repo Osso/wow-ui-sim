@@ -1,6 +1,6 @@
 ## [2026-09-19] investigation | Correct transmog source-validity final index guard
 
-Initial independent supplementation of `48f2eb121` preserved an 8-passed/1-failed result: final original-count validation could revoke an already checked derived source-filter index before `IsValidTransmogSource` forwarding. Runtime correction `4ed9baf9d` immediately rechecks that index after the count guard. Development RED recorded 11 passed / 2 failed; GREEN recorded 13/13 cumulative fixtures after two new count-guard revocation cases. Final independent verification remains pending; no native execution or credit occurred. Updated [[api-contract-probes]] and the index.
+Initial independent supplementation of `48f2eb121` preserved an 8-passed/1-failed result: final original-count validation could revoke an already checked derived source-filter index before `IsValidTransmogSource` forwarding. Runtime correction `4ed9baf9d` immediately rechecks that index after the count guard. Development RED recorded 11 passed / 2 failed; GREEN recorded 13/13 cumulative fixtures after two new count-guard revocation cases. Fixed-revision independent verification completed 9/9; no native execution or credit occurred. Updated [[api-contract-probes]] and the index.
 
 ## [2026-09-17] investigation | Prepare bounded transmog source-validity recorder
 
