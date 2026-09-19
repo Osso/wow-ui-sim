@@ -2,6 +2,10 @@
 
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial from existing capture only: event ordering, snapshots, marks, and pre-login buffering. Actual window-transition identity, an unchanged-size control, and native equal-size evidence remain missing. No recorder, native execution, or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
 
+## [2026-09-19] investigation | Prepare bounded abbreviation-options recorder
+
+Documented `e26d37b3d`: manual `abbreviation-options <label>`, excluded from `all`, calls `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once and uses an accessible original table only as `breakpointData` on one owned options table. Eight fixed finite numbers each receive omitted and owned-options calls to `AbbreviateNumbers` and `AbbreviateLargeNumbers`, under thirty-three calls per snapshot. Eleven fixtures and six older abbreviation regressions establish local recorder mechanics only. No configuration or locale mutation, native formatting/equality/default, conformance, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
 
 Documented `0f6dde217`: manual `timeline-track-queries <label>`, excluded from `all`, forwards only the first eight original accessible finite IDs from one `GetEventList()` tuple to independent `GetEventTrack(id)` calls and preserves their raw track/sort-index tuples without interpretation. Independently it exposes eight declared guarded fields from the first five `GetTrackList()` entries and captures one opaque `HasVisibleEvents()` tuple. Eleven calls, twelve actual TOC/slash fixtures, and twelve timeline-track-info regressions establish local recorder mechanics only. No Edit Mode operation, event mutation, native placement, visibility, queue, timing, conformance, or native-execution claim follows. Lifecycle mutation and native populated queue/timing/transition, validation, and restricted-context gaps remain. Updated [[api-contract-probes]] and the index.

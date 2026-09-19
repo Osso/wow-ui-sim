@@ -2,6 +2,8 @@
 
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial because the existing probe records event ordering, snapshots, marks, and pre-login entries. Actual transition identity, an unchanged-size control, and native equal-size evidence remain missing; no recorder or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
 
+Runtime `e26d37b3d` adds manual `abbreviation-options <label>`, excluded from `all`: one explicit-nil default-breakpoint producer, one owned `breakpointData` options field, and omitted/options calls across eight fixed finite numbers and two functions. It caps at thirty-three calls; eleven fixtures and six existing abbreviation regressions prove recorder mechanics only. No configuration or locale mutation, native formatting, equality, default, or conformance claim follows. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
 
 Runtime `0f6dde217` adds manual `/apicontract timeline-track-queries <label>`, excluded from `all`. It forwards up to eight original accessible finite `GetEventList()` IDs to `GetEventTrack`, preserving raw track/sort-index tuples without interpretation; independently it inspects the first five `GetTrackList()` entries through eight declared fields and records one opaque `HasVisibleEvents()` tuple. Eleven calls, twelve fixtures, and twelve timeline-track-info regressions establish local recorder mechanics only. No Edit Mode operation, event mutation, native placement, visibility, queue, timing, or conformance conclusion follows. Lifecycle mutation and native populated queue/timing/transition, validation, and restricted-context gaps remain. See [[api-contract-probes]].
