@@ -77,8 +77,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 57,
-    "partial-recorder": 86,
+    "needs-design-and-recorder-review": 56,
+    "partial-recorder": 87,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -11152,8 +11152,19 @@
           "protocol": "window-transition"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ScaleEventProbe",
+        "observations": [
+          "Existing wired recorder preserves every delivered display-size/UI-scale event with screen and physical dimensions, scale/CVar state and explicit operator mark entries, including pre-login buffering",
+          "This mapping reconciles existing capture capability only; historical event references are not new native evidence"
+        ],
+        "missing": [
+          "Explicit actual window-transition identity and adjacent unchanged-window control",
+          "Producer evidence proving a maximize/restore transition occurred despite equal dimensions",
+          "Matching native control/transition logs and duplicate-pair semantics"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/same-size-window-signal"
     },
