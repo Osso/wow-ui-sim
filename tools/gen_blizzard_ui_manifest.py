@@ -10,6 +10,7 @@ is the per-client dump, so the branch tree maps 1:1 to a profile manifest:
     mists       -> classic          (current Classic is Mists of Pandaria)
     era         -> classic_era
     anniversary -> classic_anniversary
+    wowforever  -> forever
 
 By default the script refreshes the local wow-ui-source cache from upstream
 (shallow) before enumerating, so the manifest matches the current build of the
@@ -38,6 +39,7 @@ PROFILE_BRANCH = {
     "mists": "classic",
     "era": "classic_era",
     "anniversary": "classic_anniversary",
+    "wowforever": "forever",
 }
 
 
