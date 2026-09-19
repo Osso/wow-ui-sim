@@ -343,5 +343,76 @@ test("all excludes the mode and raw objects are not retained", function()
     eq(next(weak), nil, "raw objects retained")
 end)
 
+local function checkFrozenRevocation(position, triggerName, occurrence, victimName, phase)
+    local ids, qualities, roots = { 101.5, 202.5, 303.5, 404.5 }, { -2.125, 3.375, 0, 6.875 }, {}
+    for i = 1, 4 do roots[i] = { productQuality = qualities[i] } end
+    local values = { id = ids[position], quality = qualities[position], list = ids, schematic = roots[position] }
+    local current, hits, forbiddenCalls, successfulPeers = 0, 0, 0, 0
+    local armed, revoked = false, false
+    setup(function() return ids end, function()
+        current = current + 1; return roots[current]
+    end, function(id, quality)
+        eq(id, ids[current]); eq(quality, qualities[current])
+        if current == position and revoked then forbiddenCalls = forbiddenCalls + 1
+        else successfulPeers = successfulPeers + 1 end
+        return info()
+    end)
+    local query = C_TradeSkillUI.GetRecipeItemQualityInfo
+    local function check(value, guardPhase)
+        if current == position and guardPhase == "access" and rawequal(value, query) then armed = true end
+        if armed and current == position and guardPhase == phase and rawequal(value, values[triggerName]) then
+            hits = hits + 1
+            if hits == occurrence then revoked = true end
+        end
+        return not rawequal(value, secret) and not (revoked and rawequal(value, values[victimName]))
+    end
+    issecretvalue = function(value) return not check(value, "secret") end
+    canaccessvalue = function(value) return check(value, "access") end
+    local record = capture()
+    local expectedPeers = victimName == "list" and position - 1 or 3
+    return revoked and forbiddenCalls == 0 and successfulPeers == expectedPeers
+        and record.entries[position].query.status == "restricted-input", forbiddenCalls
+end
+
+for _, phase in ipairs({ "secret", "access" }) do
+    test("frozen ninth ID " .. phase .. " guard cannot revoke quality or ancestors before forwarding", function()
+        local failures, cases, forwarded = 0, 0, 0
+        for position = 1, 4 do
+            for _, victim in ipairs({ "quality", "list", "schematic" }) do
+                local ok, bad = checkFrozenRevocation(position, "id", 9, victim, phase)
+                cases, forwarded = cases + 1, forwarded + bad
+                if not ok then failures = failures + 1 end
+            end
+        end
+        eq(cases, 12)
+        print("DETAIL frozen ninth ID " .. phase .. ": " .. cases .. " cases, " .. forwarded .. " forbidden forwards")
+        eq(failures, 0, "frozen boundary failures")
+    end)
+end
+
+-- Occurrences are frozen to the original authorization passes, never a moving final check.
+local originalOccurrences = { id = { 7, 8, 9 }, quality = { 3, 4, 5 }, list = { 2, 3, 4 }, schematic = { 2, 3, 4 } }
+for stage = 1, 3 do
+    test("bounded final authorization rejects original staged cross-input pass " .. stage, function()
+        local failures, cases, forwarded = 0, 0, 0
+        for position = 1, 4 do
+            for _, trigger in ipairs({ "id", "quality", "list", "schematic" }) do
+                for _, victim in ipairs({ "id", "quality", "list", "schematic" }) do
+                    if trigger ~= victim then
+                        for _, phase in ipairs({ "secret", "access" }) do
+                            local ok, bad = checkFrozenRevocation(position, trigger, originalOccurrences[trigger][stage], victim, phase)
+                            cases, forwarded = cases + 1, forwarded + bad
+                            if not ok then failures = failures + 1 end
+                        end
+                    end
+                end
+            end
+        end
+        eq(cases, 96)
+        print("DETAIL staged pass " .. stage .. ": " .. cases .. " cases, " .. forwarded .. " forbidden forwards")
+        eq(failures, 0, "staged boundary failures")
+    end)
+end
+
 print(string.format("%d passed, %d failed", passed, failed))
 os.exit(failed == 0 and 0 or 1)

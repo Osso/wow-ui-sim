@@ -3179,7 +3179,12 @@ local function captureTradeskillItemQuality(mode)
                     status = customSetInputStatus(args[2], "number")
                     if status then return status end
                 end
-                return authorize(ancestors) or authorize(args)
+                status = authorize(ancestors) or authorize(args)
+                if status then return status end
+                if name == "GetRecipeItemQualityInfo" then
+                    local qualitySources = pack(args[2], ancestors[1], ancestors[3])
+                    return authorize(qualitySources) or authorize(args) or authorize(qualitySources)
+                end
             end
             local status = inputStatus()
             if status then return { status = status } end
