@@ -27,7 +27,8 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 - `Cargo.toml` — cumulative retail epoch features and public client bundles; `retail-12-1-5` extends `retail-12-1-0` for PTR.
 - `src/client_profile.rs` — active profile/epoch selection and interface constants.
-- `src/asset_resolver_config.rs` — profile-to-CASC-product mapping (`client-ptr` uses `wowxptr`).
+- `src/asset_resolver_config.rs` — profile-to-CASC-product mapping (`client-ptr` uses `wowxptr`; Forever uses `wow_classic_beta`).
+- `data/blizzard-ui-files/wowforever.txt` — Forever manifest generated from `/home/osso/.cache/wow-ui-sim/wow-ui-source/forever`; source branch `forever` and runtime cache profile `wowforever` are intentionally distinct.
 - `src/blizzard_ui_sync/pinned.rs` — reads the pinned PTR version/build identity.
 - `src/lua_api/workarounds/temporary/client_info_defaults.rs` — exposes the modeled `GetBuildInfo()` identity.
 - `src/ptr/strict_removals.lua` — PTR-only post-startup removals, including `C_RecruitAFriend.IsEnabled`.
@@ -47,7 +48,7 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 ## Known gaps (current cycle)
 
-- [ ] Forever startup/UI compatibility is not established by profile selection. Its event registration starts with the finite known-event table; Forever-specific events still need source-backed coverage.
+- [ ] Forever startup/UI compatibility is not established by profile selection. Targeted profile evidence passed 8/8, but startup smoke and a full Blizzard baseline remain pending. Its event registration starts with the finite known-event table; Forever-specific events still need source-backed coverage.
 - [ ] Forever `GetBuildInfo()` date and trailing fields retain existing temporary defaults, not a native build-date claim.
 
 - [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but the current startup baseline has six pixel-rounding error records; profile selection is not startup acceptance.

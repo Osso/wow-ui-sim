@@ -1,6 +1,6 @@
-## [2026-09-19] system | Document bounded Forever module-import resolver
+## [2026-09-19] system | Integrate Forever loader module imports
 
-Added [[addon-module-imports]] and its tracked spec after `be073174d`. Sixteen resolver tests prove only logical absolute/relative path resolution, addon-boundary rejection, direct dependency authorization, dynamic absolute exemption, malformed-path rejection, and exact errors. Finished-file lookup, original Lua values, loader/provenance integration, and wowforever-only exposure remain unchecked and unwired.
+Updated [[addon-module-imports]] and [[client-profiles]] after `abbc1272f` and `78cf08372`. Forever is now a distinct seventh profile (`16001`, `wow_classic_beta`, `wowforever` cache; canonical source branch `forever`), never an Era/Anniversary alias. Its loader-bound `require` returns completed-file values with private GC roots and prototype caller provenance; disk cross-addon imports require direct TOC dependencies, while dynamic absolute callers are exempt. Targeted profile tests passed 8/8 and loader tests 10/10 before formatting, extraction, startup smoke, and final verification. No native execution or full Blizzard-baseline claim.
 
 ## [2026-09-19] investigation | Correct recipe-quality final guard ordering
 
