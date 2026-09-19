@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual LFG title-match reads
+
+`/apicontract lfg-title-match-read <label>` is excluded from `all`. Guard the original published `Enum.LFGListFilter.PvE` value, then follow the static vendor selection chain: `GetAvailableCategories(PvE)` → first two original category IDs → `GetAvailableActivityGroups(categoryID, PvE)` → first two original group IDs → `GetAvailableActivities(categoryID, groupID, PvE)` → first two original activity IDs per group. Missing or inaccessible publication skips the chain; no numeric fallback, synthetic IDs or activity-info objects are supplied.
+
+For each original activity/group pair, call `DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil)` with **exactly four arguments**. `lfgTitleMatchRead.experiment` labels this `explicit-nil-playstyles`: the two optionals are declared nullable, but this is **not** a claim about native caller defaults, title context or matching semantics. No title argument, current UI read, title creation, entry/search-result query, listing, request or mutation is used.
+
+Save `filter`, the category `producer`, and bounded `categories[].categoryID/producer/groups[].groupID/producer/activities[].activityID/match`. Guard publication, list receivers, all original ancestor IDs and the PvE value before inspection or forwarding; recheck those inputs and both nil arguments after API lookup/function guards. Preserve raw arity, nil holes, opaque errors and inaccessible values. Failures do not suppress independent peers, and no original objects are retained.
+
+Bounds: fifteen API calls per snapshot (1 category producer + 2 group queries + 4 activity queries + 8 predicates), ten snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels. Pinned `LFGListInfoDocumentation.lua:121–136,281–295` declares the predicate and group query. `Blizzard_GroupFinder/Mainline/LFGList.lua:229,627–638,879–880,917–922,964–968` grounds the published filter and selected category/group/activity flow. Eleven actual TOC/slash fixtures prove recorder mechanics only; native title state, explicit-nil behavior, historical changes, validation and restricted contexts remain unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/lfg_title_match_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual LFG playstyle formatting
 
 `/apicontract lfg-playstyle-format <label>` is excluded from `all`. Read the original published `Enum.LFGListFilter.PvE` value and call `C_LFGList.GetAvailableCategories(value)`. Only positions 1–2 of its first accessible returned table supply original finite category IDs. Each feeds `GetAvailableActivities(categoryID, 0, originalPvE)`; the literal group `0` follows the vendor's zero-group/selected-filters-zero branch, not an enum fallback. Only positions 1–2 of each first activity table supply original finite IDs to `GetActivityInfoTable(activityID)` with exactly one argument.

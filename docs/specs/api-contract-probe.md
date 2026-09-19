@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual LFG title-match reads
+
+- Manual `lfg-title-match-read <label>` is excluded from `all`. Obtain the original guarded published `Enum.LFGListFilter.PvE` value without fallback. Call `GetAvailableCategories(PvE)`, then `GetAvailableActivityGroups(originalCategoryID, PvE)`, then `GetAvailableActivities(originalCategoryID, originalGroupID, PvE)`. Only positions 1–2 of each first accessible returned table feed the next step; preserve original pairs, duplicates and holes without coercion, synthesis or source-table iteration.
+- For each produced activity/group pair call `DoesEntryTitleMatchPrebuiltTitle(originalActivityID, originalGroupID, nil, nil)` with exactly four arguments. Label the experiment `explicit-nil-playstyles`, not native caller defaults or title context. Do not supply a title, inspect current UI, create titles, access entries/search results, list groups, make requests or mutate state.
+- Guard list receivers before every index and all original IDs/PvE before inspection or forwarding. Recheck ancestor inputs, forwarded IDs and explicit nil arguments after namespace/function lookup and accessibility guards. Missing, invalid, restricted and failing cases remain explicit and independent; no numeric enum fallback or synthetic info table is permitted.
+- Save `lfgTitleMatchRead.filter`, `experiment`, `producer` and `categories[].categoryID/producer/groups[].groupID/producer/activities[].activityID/match`. Preserve raw tuple arity, nil positions and opaque errors; do not retain or inspect raw returned objects beyond the bounded producer lists.
+- Cap fifteen calls per snapshot (1 + 2 + 4 + 8), ten snapshots, sixteen result positions, 256-byte scalar strings and 128-byte labels. Eleven actual TOC/slash fixtures establish recorder mechanics only. Native title-match results, defaults, historical behavior and restricted-context semantics remain unverified; no native execution or conformance credit follows.
+
 ## Manual LFG playstyle formatting
 
 - `lfg-playstyle-format <label>` is manual-only and excluded from `all`. Guard the published `Enum.LFGListFilter.PvE` member; call `GetAvailableCategories(value)` once. Only the first returned accessible table's positions 1–2 supply original finite category IDs to `GetAvailableActivities(categoryID, 0, originalPvE)`. Group zero is the vendor's zero-group/selected-filters-zero control argument, never an enum fallback.
