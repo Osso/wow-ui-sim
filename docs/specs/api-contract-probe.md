@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual crafting enchant items
+
+- `crafting-enchant-items <label>` is manual-only, excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once and inspect positions 1–4 of only its first accessible table result. Forward each original accessible finite numeric ID independently to `GetEnchantItems(id, nil)` with exactly two arguments. The nullable crafting-reagent argument remains intentionally unpopulated; never synthesize reagent tables or infer that tracked recipes are valid enchant recipes.
+- Guard namespace/function lookup, list receivers before every index, and each produced value before inspection/serialization. Recheck the original ID and explicit nil after API/function guards and before forwarding, including bounded peer reauthorization for staged revocation. Do not claim atomic authorization against arbitrary guard side effects.
+- Save raw `craftingEnchantItems.producer` and `entries[].id/items` tuples. Inspect only the first returned item table at positions 1–8, with scalar GUID observations and no parsing, comparison, nested traversal or downstream forwarding. Preserve exact arity, nil positions, opaque errors and inaccessible values; failures must not suppress peers.
+- Cap five API calls per snapshot, ten snapshots, sixteen raw return positions, 256-byte strings and 128-byte labels. Retain no raw producer/result objects. Existing schematic capture remains unchanged.
+- No enchant/crafting/recraft execution, order/request/mutation, list-completeness or native changed-contract claims. Twelve actual TOC/slash fixtures establish recorder mechanics only; native recipe/reagent fixtures and semantics remain unverified.
+
 ## Manual abbreviation options
 
 - `abbreviation-options <label>` is manual-only, excluded from `all`. Call `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once with exactly one explicit nil. Use only the first accessible table result as the original `breakpointData` in a fresh owned options table; do not inspect/rewrite entries, synthesize breakpoints or add locale/config fields.

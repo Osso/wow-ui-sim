@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual crafting enchant items
+
+`/apicontract crafting-enchant-items <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; inspect only positions 1–4 of its first accessible returned table. Each original accessible finite recipe ID independently feeds `GetEnchantItems(originalRecipeID, nil)` with **exactly two arguments**. The nullable crafting-reagent argument is intentionally unpopulated; never build a synthetic reagent table or execute an enchant.
+
+`craftingEnchantItems` saves the raw `producer` tuple and `entries[].id/items`. Only the first returned item list is inspected, at positions 1–8; values remain bounded scalar observations, without GUID parsing, comparison, traversal or forwarding. Guard every list receiver before indexing. Recheck the original recipe ID and explicit nil after API lookup/function guards; bounded sequential peer checks are not atomic authorization against arbitrary guard side effects. Missing, restricted, invalid or failing inputs/results do not suppress other positions.
+
+Bounds: **five API calls per snapshot**, ten snapshots, sixteen raw tuple positions, 256-byte scalar strings and 128-byte labels. Preserve exact arity, nil positions and opaque errors; retain no raw objects. Pinned retail `TradeSkillUIDocumentation.lua:257–270,755–767` declares the signatures, not recipe suitability, list completeness, recraft behavior or native changed-contract semantics. Existing `crafting-schematic-read` is unchanged. Twelve actual TOC/slash fixtures cover recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/crafting_enchant_items.lua docs/addons/ApiContractProbe
+```
+
 ## Manual abbreviation options
 
 `/apicontract abbreviation-options <label>` is excluded from `all`. Call `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once with one explicit nil argument. Only its original accessible table first return supplies a fresh owned `{ breakpointData = originalTable }` options object. Never inspect, iterate, rewrite or copy breakpoint entries; do not add `locale` or `config` fields.
