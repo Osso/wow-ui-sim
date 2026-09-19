@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Record omitted and nil unit role-predicate arguments
+
+Runtime `ba0d2edc0` keeps the twenty-four fixed-token `/apicontract unit-role-predicates <label>` calls unchanged and adds separate `UnitIsNPCAsPlayer()` and `UnitIsNPCAsPlayer(nil)` observations, preserving zero versus one argument under a twenty-six-call cap. Sixteen cumulative fixtures, including six new cases, establish local recorder mechanics only. No equivalence, default, classification, identity, or native conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-17] investigation | Prepare bounded transmog source-validity recorder
 
 Runtime `48f2eb121` adds manual `/apicontract transmog-source-validity <label>`, excluded from `all`. One accessible finite nonnegative integer `GetNumTransmogSources()` result bounds up to eight original one-based vendor source-filter indices for `IsValidTransmogSource`; these are not appearance or visual source IDs. Initial independent supplementation exposed a final count guard revoking an already checked index; `4ed9baf9d` immediately rechecks that index. Development GREEN is 13/13 cumulative fixtures, including two new revocation cases; fixed-revision independent verification completed 9/9. Metadata `0254088b7` maps retained coverage; no mutation, native validity, ordering, completeness, or transition conclusion follows. See [[api-contract-probes]].
