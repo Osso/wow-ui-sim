@@ -24,11 +24,10 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 use rilua::Val;
-use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
-use rilua::vm::table::Table;
 
-type NamespaceTable = GcRef<Table>;
+#[cfg(feature = "retail-12-0-7")]
+type NamespaceTable = rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>;
 
 #[cfg(feature = "retail-12-1-0")]
 const BLUEPRINT_CODE_PREFIX: &str = "wow-ui-sim:blueprint:";
@@ -235,11 +234,6 @@ fn register_catalog_methods(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]
-fn register_catalog_methods(_state: &mut LuaState) -> LuaResult<()> {
-    Ok(())
-}
-
 #[cfg(feature = "retail-12-1-0")]
 fn register_customize_mode_methods(
     state: &mut LuaState,
@@ -273,28 +267,12 @@ fn register_patch_12_0_7_customize_mode_methods(
     )
 }
 
-#[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]
-fn register_patch_12_0_7_customize_mode_methods(
-    _state: &mut LuaState,
-    _customize_mode: NamespaceTable,
-) -> LuaResult<()> {
-    Ok(())
-}
-
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn register_patch_12_0_7_layout_methods(
     state: &mut LuaState,
     layout: NamespaceTable,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, layout, "CanSetViewedFloor", can_set_viewed_floor)
-}
-
-#[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]
-fn register_patch_12_0_7_layout_methods(
-    _state: &mut LuaState,
-    _layout: NamespaceTable,
-) -> LuaResult<()> {
-    Ok(())
 }
 
 #[cfg(feature = "retail-12-1-0")]
