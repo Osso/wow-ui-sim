@@ -77,8 +77,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 59,
-    "partial-recorder": 84,
+    "needs-design-and-recorder-review": 58,
+    "partial-recorder": 85,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -3992,8 +3992,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual lfg-title-match-read uses bounded original category/group/activity IDs from the vendor-backed static chain and records DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil) as an explicit optional-input experiment"
+        ],
+        "missing": [
+          "Native prebuilt-title state, populated listing fixtures and match semantics",
+          "Other playstyles, historical changed-contract evidence and transitions",
+          "Title mutations and restricted-context/security behavior remain outside this capture"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/literal-072"
     },
