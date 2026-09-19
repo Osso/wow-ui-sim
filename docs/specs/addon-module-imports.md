@@ -29,7 +29,7 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 
 - [ ] Expose this API only for the `wowforever` profile. Other client profiles must retain their current `require` surface.
 
-Checked path/dependency requirements have sixteen pure resolver tests; registry/value/provenance requirements have ten actual-rilua unit tests in `src/loader/addon_modules.rs`. Loader hooks and profile exposure are not yet wired by these slices.
+Checked path/dependency requirements have sixteen pure resolver tests; registry/value/provenance requirements have fourteen actual-rilua unit tests in `src/loader/addon_modules.rs`. Loader hooks and profile exposure are not yet wired by these slices.
 
 ## How it works
 
@@ -47,7 +47,7 @@ Checked path/dependency requirements have sixteen pure resolver tests; registry/
 ## Tests asserting this spec
 
 - `src/loader/module_import.rs` — sixteen unit tests for absolute/relative resolution, addon boundary rejection, direct dependency authorization, dynamic absolute exemption, malformed requests, and exact errors.
-- `src/loader/addon_modules.rs` — actual-rilua tests for completed values/GC identity, load boundaries, delayed closures, direct dependencies, spoofed dynamic sources, failed loads/replacement and VM isolation.
+- `src/loader/addon_modules.rs` — fourteen actual-rilua tests for completed values/GC identity and stack restoration, load boundaries, delayed/escaped closures, direct dependencies, spoofed dynamic sources, nearest dynamic origins, failed loads/replacement, non-reexecution and VM isolation.
 
 ## Known gaps (current cycle)
 

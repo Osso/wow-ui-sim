@@ -495,6 +495,97 @@ mod tests {
     }
 
     #[test]
+    fn ephemeral_completion_values_survive_collection_and_restore_stack_top() {
+        let mut lua = environment();
+        lua.gc_set_pause(0);
+        lua.gc_set_step_multiplier(1000);
+        for index in 0..8 {
+            let name = format!("Ephemeral{index}.lua");
+            let function = lua
+                .load_bytes(
+                    b"local value = { text = 'rooted return' }; return function() return value end",
+                    &format!("@Interface/AddOns/Addon/{name}"),
+                )
+                .unwrap();
+            let token =
+                begin_file(lua.state_mut(), &function, "Addon", Path::new(&name), &[]).unwrap();
+            let returned = lua.call_function(&function, &[]).unwrap();
+            let first = returned[0];
+            drop(returned);
+            let top = lua.state_mut().top;
+            finish_file(lua.state_mut(), token, first).unwrap();
+            assert_eq!(lua.state_mut().top, top);
+            lua.gc_step(1000).unwrap();
+            lua.gc_collect().unwrap();
+            run(
+                &mut lua,
+                &format!("assert(require('Addon.Ephemeral{index}')().text == 'rooted return')"),
+            );
+        }
+    }
+
+    #[test]
+    fn failed_file_escaped_closure_retains_direct_dependency_restriction() {
+        let mut lua = environment();
+        load_file(&mut lua, "Library", "Value.lua", &[], "return 4").unwrap();
+        assert!(
+            load_file(
+                &mut lua,
+                "Consumer",
+                "Failed.lua",
+                &[],
+                r#"
+            escaped = function() return require('Library.Value') end
+            error('load failed after assigning closure')
+        "#
+            )
+            .is_err()
+        );
+        lua.gc_collect().unwrap();
+        run(
+            &mut lua,
+            r#"
+            local ok, err = pcall(escaped)
+            assert(not ok)
+            assert(string.find(err, 'direct dependency', 1, true))
+        "#,
+        );
+    }
+
+    #[test]
+    fn nearest_dynamic_frame_does_not_inherit_outer_relative_origin() {
+        let mut lua = environment();
+        load_file(&mut lua, "Addon", "Core/Value.lua", &[], "return 4").unwrap();
+        load_file(&mut lua, "Addon", "Core/Entry.lua", &[], r#"
+            return function()
+                local dynamic = assert(loadstring("return require('.Value')"))
+                local ok, err = pcall(dynamic)
+                assert(not ok)
+                assert(string.find(err, 'Relative imports may only be used within the same addon', 1, true))
+            end
+        "#).unwrap();
+        run(&mut lua, "require('Addon.Core.Entry')()");
+    }
+
+    #[test]
+    fn imports_and_reinitialization_do_not_reexecute_completed_files() {
+        let mut lua = environment();
+        load_file(
+            &mut lua,
+            "Addon",
+            "Once.lua",
+            &[],
+            "executions = (executions or 0) + 1; return executions",
+        )
+        .unwrap();
+        initialize(lua.state_mut()).unwrap();
+        run(
+            &mut lua,
+            "assert(require('Addon.Once') == 1); assert(require('Addon.Once') == 1); assert(executions == 1)",
+        );
+    }
+
+    #[test]
     fn separate_lua_states_do_not_share_completed_modules() {
         let mut first = environment();
         let mut second = environment();
