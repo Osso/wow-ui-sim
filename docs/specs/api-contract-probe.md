@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual timeline track queries
+
+- `timeline-track-queries <label>` is manual-only and excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once; inspect only positions 1–8 of its first returned table. Independently forward each original accessible finite numeric ID to `GetEventTrack(id)` once, preserving exact raw return arity and nil sort-index positions.
+- Call `GetTrackList()` and `HasVisibleEvents()` independently once each, regardless of event-list or per-event failures. Inspect only positions 1–5 of the first returned track table, using exactly eight declared fields: `id`, `type`, `minimumDuration`, `maximumDuration`, `minimumEventIntroDuration`, `minimumEventGapDuration`, `maximumEventCount`, `sortDirection`.
+- Guard namespace/function access, list indexing and each entry-field lookup. Recheck the original event ID after API lookup/function guards immediately before forwarding; guard values before inspection/serialization, including after earlier observations revoke access. Preserve missing, restricted, nil, opaque and error outcomes independently.
+- Save `timelineTrackQueries.producer`, `entries[].id/track`, `trackList` with bounded `entries[].fields`, and `visible`. Preserve raw tuple arity within sixteen positions, strings within 256 bytes and labels within 128 bytes. Bound eleven API calls per snapshot and ten snapshots; retain no produced objects.
+- Do not reorder or deduplicate IDs, infer completeness/enum identity/native visibility, mutate events, or call Add/Cancel/EditMode operations. Twelve actual TOC/slash fixtures establish recorder mechanics only; native behavior and conformance remain unverified. Existing `timeline-track-info` behavior remains unchanged.
+
 ## Manual timeline track information
 
 - `timeline-track-info <label>` is manual-only, excluded from `all`. Read only the five fixed published `Enum.EncounterTimelineTrack` members `Queued`, `Short`, `Medium`, `Long`, `Indeterminate`; require original accessible finite numeric inputs without fallback or enum iteration.

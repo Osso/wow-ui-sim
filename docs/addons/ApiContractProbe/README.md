@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual timeline track queries
+
+`/apicontract timeline-track-queries <label>` is excluded from `all`. Call `C_EncounterTimeline.GetEventList()` once; only the first returned table supplies positions 1–8 as original accessible finite event IDs. Independently call `GetEventTrack(id)` once per usable ID, preserving the raw track/sort-index tuple, including a nil sort index. Recheck the original ID after namespace lookup and function-access guards; never sort, deduplicate, coerce or substitute IDs.
+
+Independently call `GetTrackList()` and `HasVisibleEvents()` once each, even when event production fails. Only the first returned track table is inspected at positions 1–5. Reuse the guarded field inspector for exactly `id`, `type`, `minimumDuration`, `maximumDuration`, `minimumEventIntroDuration`, `minimumEventGapDuration`, `maximumEventCount`, and `sortDirection`; recheck each list/entry receiver before every lookup and each value before serialization. Returned objects are not retained.
+
+`timelineTrackQueries` stores raw `producer`, positional `entries[].id/track`, raw `trackList` with bounded `entries[].fields`, and raw `visible`. Bounds: **11 API calls per snapshot**, ten snapshots, sixteen return positions, 256-byte scalar strings, 128-byte labels. Pinned retail/PTR `EncounterTimelineDocumentation.lua:221–236,274–281,356–363,617–630` supplies call shapes and fields only. No Add/Cancel/EditMode operations, mutations, reordering, completeness, enum identity, native visibility or conformance claims. Twelve actual TOC/slash fixtures establish recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/timeline_track_queries.lua docs/addons/ApiContractProbe
+```
+
 ## Manual timeline track information
 
 `/apicontract timeline-track-info <label>` is excluded from `all`. Query `C_EncounterTimeline.GetTrackInfo` once for each fixed published `Enum.EncounterTimelineTrack` name: `Queued`, `Short`, `Medium`, `Long`, `Indeterminate`. Forward only the original accessible finite numeric value; never substitute canonical numbers, enumerate additional keys, or compare returned IDs with inputs.
