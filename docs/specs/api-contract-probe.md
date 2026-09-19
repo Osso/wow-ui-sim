@@ -1,5 +1,14 @@
 # API contract probe
 
+## Manual recraft reagent input reads
+
+- `recraft-reagent-read <label>` is manual-only and excluded from `all`. Slots 1 and 2 independently produce original `ItemLocation:CreateFromEquipmentSlot` objects and `C_Item.GetItemGUID` results. Forward only original accessible string GUIDs, without parsing, truncation, coercion or fabricated locations.
+- Independently obtain `GetRecipesTracked(false)` and the first two original accessible finite IDs. Call `GetRecipeSchematic(id, false, nil)` with exactly three arguments; inspect two slots and two original reagents per slot. Pair each original reagent with each eligible original equipment GUID for `IsRecraftReagentValid(GUID, reagent)` with exactly two arguments, at most sixteen queries.
+- Guard every source ancestor, receiver, index and value before lookup/inspection/serialization. Check optional reagent `itemID`/`currencyID` as accessible nil or finite numbers. Reauthorize equipment and reagent ancestry, original GUID and declared fields after query lookup/function guards, retaining corrected bounded final peer/ancestor checks. These sequential checks are not atomic authorization against arbitrary guard side effects. Block only dependent branches when control inputs fail.
+- Preserve raw tuples, nil positions, opaque errors and inaccessible outcomes in `recraftReagentRead.equipment[].producer/guid`, `producer`, and `entries[].id/schematic/slots[].reagents[].pairs[].result`; diagnostics contain scalar summaries only. Never retain raw objects or create replacement reagent arrays, clones or allocations. Existing `recraft-limit-read` behavior remains unchanged.
+- Cap 23 recorder API calls (2 constructors + 2 GUID queries + 1 tracked list + 2 schematics + 16 pair queries), ten snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Constructor-internal Lua operations are separate from this API-call count.
+- This observes input acceptance only: an equipped GUID is not established as a recraft allocation or valid target. Exclude removal-warning calls, crafting, equipping, recrafting, requests, mutation and native-validity/historical conclusions. Twelve actual TOC/slash fixtures provide local recorder proof only; native behavior remains unverified.
+
 ## Manual recraft limit reads
 
 - `recraft-limit-read <label>` is manual-only and excluded from `all`. Call `GetRecipesTracked(false)` once; the first returned accessible table supplies only positions 1–2 as original finite recipe IDs. Independently call `GetRecipeSchematic(id, false, nil)` with exactly three arguments.

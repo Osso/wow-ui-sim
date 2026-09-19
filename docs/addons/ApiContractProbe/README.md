@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual recraft reagent input reads
+
+`/apicontract recraft-reagent-read <label>` is excluded from `all`. Equipment slots **1 and 2** independently feed `ItemLocation:CreateFromEquipmentSlot(slot)` and `C_Item.GetItemGUID(originalLocation)`. Only the first original accessible string GUID is eligible; never parse, clone, coerce or truncate an input GUID. Independently call `GetRecipesTracked(false)` once, then `GetRecipeSchematic(id, false, nil)` for the first two original accessible finite recipe IDs. Inspect only two slots and two original reagents per slot.
+
+Each original reagent is independently paired with each original GUID for `IsRecraftReagentValid(GUID, reagent)`: at most **16 pair queries**. Reuse the corrected recraft-limit ancestry/field checks; authorize equipment receiver/slot/location/GUID, recipe/list/schematic/slot/reagent ancestors, and optional `itemID`/`currencyID` fields before forwarding and again after query lookup/function guards. Fields must be accessible nil or finite numbers. Bounded final GUID/field/ancestor rechecks preserve the known revocation boundaries; they do not provide atomic authorization against arbitrary guard side effects. A failed input blocks only dependent branches, not other equipment or recipes.
+
+`recraftReagentRead` records `equipment[].producer/guid`, raw tracked `producer`, and `entries[].id/schematic/slots[].reagents[]`. Each reagent has two positional `pairs[]` with a bounded GUID observation, guarded diagnostic fields when available, and raw `result`. No raw location, reagent, list or returned object is retained. Bounds: **23 API calls per snapshot** (two constructors, two GUID queries, one tracked list, two schematics, sixteen pair queries), ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. Constructor-internal Lua operations are not extra recorder API calls.
+
+This is **input-acceptance preparation only**. Ordinary equipment GUIDs are not claimed to be recraft allocations or valid targets. No replacement arrays, synthetic reagents, transactions, allocations, `GetRecraftRemovalWarnings`, crafting, equipping or recrafting operations are performed. Pinned retail `ItemDocumentation.lua:479–491`, `TradeSkillUIDocumentation.lua:1048–1061`, and `TradeSkillUITypesDocumentation.lua` establish shapes, not native validity or historical semantics. Twelve actual TOC/slash fixtures establish local recorder mechanics only; native behavior remains unverified.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/recraft_reagent_read.lua docs/addons/ApiContractProbe
+```
+
 ## Manual recraft limit reads
 
 `/apicontract recraft-limit-read <label>` is excluded from `all`. Call `C_TradeSkillUI.GetRecipesTracked(false)` once; only positions 1–2 of its first accessible table supply original finite recipe IDs. Each ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments. Inspect only the first schematic's first two `reagentSlotSchematics` and each slot's first two `reagents`.

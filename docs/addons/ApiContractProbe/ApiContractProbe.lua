@@ -1576,7 +1576,7 @@ local function captureNeighborhoodStructures(mode)
         end)
         return result
     end
-    if mode == "recraft-limit-read" then
+    if mode == "recraft-limit-read" or mode == "recraft-reagent-read" then
         local function authorize(path)
             for index = 1, path.n do
                 if not accessible(path[index]) then return "restricted-input" end
@@ -1621,8 +1621,88 @@ local function captureNeighborhoodStructures(mode)
             end
             return nil, item, currency
         end
+        local equipment, guidSources = {}, {}
+        local function equipmentCall(namespace, name, args, authorizeInputs)
+            local status = authorizeInputs()
+            if status then return { status = status } end
+            local fn, ok = readField(namespace, name)
+            if not ok then return { status = "field-error" } end
+            if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+            status = authorizeInputs()
+            if status then return { status = status } end
+            local values = pack(pcall(fn, unpack(args, 1, args.n)))
+            if not values[1] then return { status = "call-error" } end
+            local observation = mapTuple(unpack(values, 2, values.n))
+            observation.status = "observed"
+            return observation, values[2]
+        end
+        local function captureEquipmentGUID(slot)
+            local receiver = ItemLocation
+            local source, row = { path = pack(receiver, slot) }, { slot = slot }
+            local function locationInputs()
+                return objectStatus(receiver) or authorize(pack(receiver, slot, receiver, slot))
+            end
+            local location
+            row.producer, location = equipmentCall(receiver, "CreateFromEquipmentSlot",
+                pack(receiver, slot), locationInputs)
+            local function guidInputs()
+                return authorize(source.path) or objectStatus(location)
+                    or authorize(pack(receiver, slot, location, receiver, slot, location))
+            end
+            source.path = pack(receiver, slot, location)
+            row.guid, source.guid = equipmentCall(C_Item, "GetItemGUID", pack(location), guidInputs)
+            source.path = pack(receiver, slot, location, source.guid)
+            equipment[slot], guidSources[slot] = row, source
+        end
+        local function pairStatus(path, reagent, source)
+            local status = authorize(source.path) or customSetInputStatus(source.guid, "string")
+            if status then return status end
+            local combined = pack()
+            for index = 1, source.path.n do
+                combined.n = combined.n + 1; combined[combined.n] = source.path[index]
+            end
+            for index = 1, path.n do
+                combined.n = combined.n + 1; combined[combined.n] = path[index]
+            end
+            local item, currency
+            status, item, currency = reagentStatus(combined, reagent)
+            if status then return status end
+            -- Recheck GUID/fields after ancestry guards and ancestry after field guards.
+            -- Bounded sequential authorization, not atomic against arbitrary guard side effects.
+            for _ = 1, 2 do
+                if not accessible(source.guid) or not accessible(item) or not accessible(currency)
+                    or authorize(combined) or not accessible(source.guid)
+                    or not accessible(item) or not accessible(currency) then return "restricted-input" end
+            end
+            if not accessible(source.guid) or not accessible(item) or not accessible(currency)
+                or not accessible(source.guid) then return "restricted-input" end
+            return nil, item, currency
+        end
+        local function queryPair(path, reagent, source)
+            local row = { guid = scalar(source.guid) }
+            local status, item, currency = pairStatus(path, reagent, source)
+            if status then row.result = { status = status }; return row end
+            row.fields = { itemID = scalar(item), currencyID = scalar(currency) }
+            local fn, ok = readField(C_TradeSkillUI, "IsRecraftReagentValid")
+            if not ok then row.result = { status = "field-error" }; return row end
+            if not accessible(fn) or type(fn) ~= "function" then
+                row.result = { status = "missing-api" }; return row
+            end
+            status = pairStatus(path, reagent, source)
+            if status then row.result = { status = status }; return row end
+            local values = pack(pcall(fn, source.guid, reagent))
+            if not values[1] then row.result = { status = "call-error" }; return row end
+            row.result = mapTuple(unpack(values, 2, values.n))
+            row.result.status = "observed"
+            return row
+        end
         local function queryReagent(path, reagent)
             local row = { reagent = scalar(reagent) }
+            if mode == "recraft-reagent-read" then
+                row.pairs = {}
+                for slot = 1, 2 do row.pairs[slot] = queryPair(path, reagent, guidSources[slot]) end
+                return row
+            end
             local status, item, currency = reagentStatus(path, reagent)
             if status then row.result = { status = status }; return row end
             row.fields = { itemID = scalar(item), currencyID = scalar(currency) }
@@ -1689,8 +1769,12 @@ local function captureNeighborhoodStructures(mode)
             observation.status = "observed"
             return observation, values
         end
+        if mode == "recraft-reagent-read" then
+            for slot = 1, 2 do captureEquipmentGUID(slot) end
+        end
         local producer, values = observeRecipe(nil, nil, false)
         result = { producer = producer, entries = {} }
+        if mode == "recraft-reagent-read" then result.equipment = equipment end
         local ids = values and values[2]
         if not accessible(ids) or type(ids) ~= "table" then return result end
         for index = 1, 2 do
@@ -4418,8 +4502,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "recraft-reagent-read" and mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [recraft-reagent-read|recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -4469,6 +4553,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "lfg-title-match-read" then record.lfgTitleMatchRead = captureNeighborhoodStructures(mode) end
         if mode == "lfg-playstyle-format" then record.lfgPlaystyleFormat = captureNeighborhoodStructures(mode) end
         if mode == "recraft-limit-read" then record.recraftLimitRead = captureNeighborhoodStructures(mode) end
+        if mode == "recraft-reagent-read" then record.recraftReagentRead = captureNeighborhoodStructures(mode) end
         if mode == "crafting-enchant-items" then record.craftingEnchantItems = captureNeighborhoodStructures(mode) end
         if mode == "crafting-schematic-read" then record.craftingSchematicRead = captureNeighborhoodStructures(mode) end
         if mode == "neighborhood-structures" then record.neighborhoodStructures = captureNeighborhoodStructures() end
