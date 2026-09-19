@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
+
+Runtime `cc123a50a` adds manual `/apicontract unit-heal-calculator <label>`, excluded from `all`. Fresh calculators for `player` and `target` each receive five getter reads before and after `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)`: 24 calls total. Fourteen fixtures plus eleven older mode regressions establish recorder mechanics only. The documented call is a unit-fed calculator population mechanism, not `UnitHealPredictionValues` field, resource-mutation, native-healing, or conformance credit. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded timeline Edit Mode preview recorder
 
 Runtime `c0d80bd22` adds manual `/apicontract timeline-edit-preview <label>`, excluded from `all`. Guarded inactive Edit Mode and zero Edit Mode-source-count gates precede one add attempt; cleanup refuses broad cancellation if actual Edit Mode becomes active, and unconfirmed cleanup locks the session. Later manual use can have preview side effects and establishes neither ownership nor preservation of real encounter events. Twelve experiment calls, fifteen fixtures, and twelve timeline-track regressions prove local recorder mechanics only. No native execution, atomic ownership, conformance, isolation, cleanup guarantee, or native-preservation claim follows. See [[api-contract-probes]].
