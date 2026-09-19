@@ -276,7 +276,7 @@
 - Independently call `IsValidTransmogSource(index)` once per derived one-based index. Inputs are vendor-enumerated `TransmogSource` indices, never appearance IDs, visual source IDs, guessed numeric fallbacks or reconstructed producer data.
 - Preserve raw producer/query arity, nil positions and opaque errors in `transmogSourceValidity.producer/sources`, with explicit count-validation status. Guard count before arithmetic and recheck the original count after API lookup/function guards and index access checks before invocation; guard each derived index before forwarding. Missing/invalid/restricted counts make no validity calls. Query failures do not suppress peers.
 - Bound nine API calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No continuation, setters, filters, raw-object retention, validity/order/completeness or native semantic conclusions.
-- Pinned `TransmogItemsDocumentation.lua:573–580,823–836` and `Blizzard_Wardrobe.lua:67–70` ground the call shape and enumeration, not output values. Eleven actual TOC/slash fixtures cover mechanics; native results and transitions remain unverified.
+- Pinned `TransmogItemsDocumentation.lua:573–580,823–836` and `Blizzard_Wardrobe.lua:67–70` ground the call shape and enumeration, not output values. Thirteen actual TOC/slash fixtures (eleven existing, two count-guard revocation regressions) cover mechanics; native results and transitions remain unverified.
 
 ## Manual custom-set names
 

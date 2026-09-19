@@ -434,7 +434,7 @@ Pinned `TransmogSetsDocumentation.lua:61–68,412–419,511–530` defines the c
 
 Bounds: nine API calls per snapshot, ten shared snapshots, sixteen return positions, 256-byte output strings and 128-byte labels. Returned objects are never inspected or retained. No setters, filters, native validity, ordering or completeness claims. Pinned `TransmogItemsDocumentation.lua:573–580,823–836` defines the signatures; `Blizzard_Collections/Mainline/Blizzard_Wardrobe.lua:67–70` supplies the count/index loop. These sources establish inputs, not native outputs.
 
-Eleven actual TOC/slash fixtures prove local recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/transmog_source_validity.lua docs/addons/ApiContractProbe`. Native behavior remains unverified.
+Thirteen actual TOC/slash fixtures (eleven existing, two count-guard revocation regressions) prove local recorder mechanics only. Run `luajit docs/addons/ApiContractProbe/tests/transmog_source_validity.lua docs/addons/ApiContractProbe`. Native behavior remains unverified.
 
 ## Manual custom-set names
 
