@@ -1,3 +1,7 @@
+## [2026-09-17] investigation | Prepare bounded transmog source-validity recorder
+
+Runtime `48f2eb121` adds manual `/apicontract transmog-source-validity <label>`, excluded from `all`. One accessible finite nonnegative integer `GetNumTransmogSources()` result bounds up to eight original one-based vendor source-filter indices for `IsValidTransmogSource`; these are not appearance or visual source IDs. Nine API calls per snapshot, eleven fixtures, and ten custom-set regressions prove recorder mechanics only. Metadata `0254088b7` maps retained coverage; no mutation, native validity, ordering, completeness, or transition conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-17] investigation | Prepare bounded transmog slot visual recorder
 
 Runtime `6464827ad` extends manual `/apicontract transmog-slot-visual-info <label>`, excluded from `all`. Four guarded vendor-created locations yield visual info, whose original base/applied source IDs each independently feed guarded appearance-source queries with ten fixed fields. Eighteen cumulative fixtures, including seven new cases, prove recorder mechanics only. No native visual, collection, apply, selection, or account conclusion follows. See [[api-contract-probes]].
