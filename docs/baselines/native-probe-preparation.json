@@ -9679,10 +9679,11 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual quest-favor uses original accessible finite rewardQuestIDs from the first four neighborhood initiative tasks for independent GetQuestLogRewardFavor calls with clamp omitted and explicitly true"
+          "Manual quest-favor uses original accessible finite rewardQuestIDs from the first four neighborhood initiative tasks for independent GetQuestLogRewardFavor calls with clamp omitted and explicitly true",
+          "Separate zero-argument and explicit (nil, false) calls preserve omission/argument arity independently of producer availability"
         ],
         "missing": [
-          "Other quest fixtures, omitted quest ID and explicit false clamp variants",
+          "Other quest fixtures and explicit false clamp variants with produced quest IDs",
           "Native favor amounts, cycle-cap behavior and transitions",
           "Native validation and restricted-context behavior"
         ]
