@@ -1,5 +1,13 @@
 # API contract probe
 
+## Manual timeline track information
+
+- `timeline-track-info <label>` is manual-only, excluded from `all`. Read only the five fixed published `Enum.EncounterTimelineTrack` members `Queued`, `Short`, `Medium`, `Long`, `Indeterminate`; require original accessible finite numeric inputs without fallback or enum iteration.
+- Call `C_EncounterTimeline.GetTrackInfo(originalValue)` independently once per available member. Guard publication containers and values before inspection; recheck the original value after namespace/function lookup and function-access guards immediately before invocation.
+- Save `timelineTrackInfo.tracks[].name/observation`, including scalar `input`, exact raw tuple arity, nil positions and opaque errors. Inspect only the first returned table/userdata as `info.fields`, with exactly `id`, `type`, `minimumDuration`, `maximumDuration`, `minimumEventIntroDuration`, `minimumEventGapDuration`, `maximumEventCount`, `sortDirection`. Guard the receiver before every lookup and each field before serialization. Do not compare returned IDs, normalize fields, inspect extra returned objects or retain raw objects.
+- Preserve independent missing/restricted/error outcomes. Bound five calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
+- No Edit Mode/event creation, cancellation or other mutation; no native queue, timing, default, ordering, stability or conformance claims. Twelve actual TOC/slash fixtures prove recorder mechanics only. Retail/PTR declarations establish shape, not native results.
+
 ## Manual heal-calculator modes
 
 - `heal-calculator-modes <label>` is manual-only and excluded from `all`. Create one fresh owned calculator through the no-argument factory; only the first accessible table/userdata result is a method receiver. Preserve constructor arity and opaque failures; never substitute a synthetic calculator.

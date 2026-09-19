@@ -1,5 +1,17 @@
 # API Contract Probe
 
+## Manual timeline track information
+
+`/apicontract timeline-track-info <label>` is excluded from `all`. Query `C_EncounterTimeline.GetTrackInfo` once for each fixed published `Enum.EncounterTimelineTrack` name: `Queued`, `Short`, `Medium`, `Long`, `Indeterminate`. Forward only the original accessible finite numeric value; never substitute canonical numbers, enumerate additional keys, or compare returned IDs with inputs.
+
+`timelineTrackInfo.tracks[].name/observation` preserves raw return arity, nil positions, opaque errors and the observed input. Only the first returned object receives `info.fields`: `id`, `type`, `minimumDuration`, `maximumDuration`, `minimumEventIntroDuration`, `minimumEventGapDuration`, `maximumEventCount`, `sortDirection`. Recheck the enum after API lookup/function guards and guard the returned receiver before every field lookup and each field before serialization. Missing/restricted values and errors do not suppress peer tracks; returned objects are not retained.
+
+Bounds: five calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels. Retail/PTR `EncounterTimelineDocumentation.lua:258–272,617–630` and `EncounterTimelineConstantsDocumentation.lua:63–75` establish call shape, fields and published names only. No AddEditMode/Cancel/event creation, mutation, native queue/timing/default/order or conformance claims. Twelve actual TOC/slash fixtures establish local recorder mechanics:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/timeline_track_info.lua docs/addons/ApiContractProbe
+```
+
 ## Manual heal-calculator modes
 
 `/apicontract heal-calculator-modes <label>` is excluded from `all`. Create one fresh owned `CreateUnitHealPredictionCalculator()` result. Record three baseline mode getters, then seven fixed published inputs: `UnitHealAbsorbMode.ReducedByIncomingHeals/Total`, `UnitHealAbsorbClampMode.CurrentHealth/MaximumHealth`, and `UnitDamageAbsorbClampMode.MissingHealth/MissingHealthWithoutIncomingHeals/MaximumHealth`. Each original accessible finite enum value is passed to its matching setter once, followed by one independent matching getter. Missing publication never uses numeric fallback.
