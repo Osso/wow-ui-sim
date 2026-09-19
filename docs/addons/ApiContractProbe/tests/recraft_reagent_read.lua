@@ -279,6 +279,96 @@ test("all excludes new mode and corrected recraft-limit behavior remains indepen
     SlashCmdList.APICONTRACTPROBE("recraft-limit-read")
     assert(ApiContractProbeDB.captures[3].recraftLimitRead and #f.calls == calls + 3)
 end)
+-- The final currency check in the reported revision is the eleventh after the
+-- query function guard. Keep this boundary fixed while testing added checks.
+local function finalPairGuardCase(position, phase, scenario, victimName, ancestorIndex)
+    local f = setup()
+    local n, g = math.floor((position - 1) / 2) + 1, (position - 1) % 2 + 1
+    local reagent = f.reagents[n]
+    local item, currency = reagent.itemID, reagent.currencyID
+    local equipment = { ItemLocation, g, f.locations[g], f.guids[g] }
+    local denied, checks, currencyChecks, armed, reached, stage, bad = {}, 0, 0, false, false, 0, 0
+    local original = C_TradeSkillUI.IsRecraftReagentValid
+    local query = function(guid, obj)
+        if rawequal(guid, f.guids[g]) and rawequal(obj, reagent) then
+            local forbidden = denied[item] or denied[currency] or denied[guid]
+            for _, value in ipairs(equipment) do forbidden = forbidden or denied[value] end
+            if forbidden then bad = bad + 1 end
+        end
+        armed = false
+        return original(guid, obj)
+    end
+    C_TradeSkillUI.IsRecraftReagentValid = query
+    local function guard(value, guardPhase)
+        if guardPhase == "access" and rawequal(value, query) then
+            checks = checks + 1; armed = checks == position
+        end
+        if not armed or guardPhase ~= phase then return end
+        if rawequal(value, currency) then
+            currencyChecks = currencyChecks + 1
+            if currencyChecks == 11 then
+                reached = true
+                if scenario == "final-currency" then
+                    denied[victimName == "item" and item or f.locations[g]] = true
+                    stage = 1
+                end
+                return
+            end
+        end
+        if not reached then return end
+        local field = victimName == "item" and item or currency
+        if scenario == "equipment-to-field" and stage == 0 and rawequal(value, equipment[ancestorIndex]) then
+            denied[field] = true; stage = 1
+        elseif scenario == "field-to-equipment" and stage == 0 and rawequal(value, field) then
+            denied[equipment[ancestorIndex]] = true; stage = 1
+        elseif scenario == "peer-field" and stage == 0 and rawequal(value, field) then
+            denied[victimName == "item" and currency or item] = true; stage = 1
+        end
+    end
+    issecretvalue = function(value)
+        guard(value, "secret")
+        return rawequal(value, secret) or (phase == "secret" and denied[value] == true)
+    end
+    canaccessvalue = function(value)
+        guard(value, "access")
+        return not rawequal(value, secret) and not denied[value]
+    end
+    local result = capture()
+    return reached and stage == 1 and bad == 0 and row(result, n).pairs[g].result.status ~= "observed"
+end
+
+for _, phase in ipairs({ "secret", "access" }) do
+    test("final currency " .. phase .. " guard cannot revoke item or equipment location before forwarding", function()
+        local failures = {}
+        for position = 1, 16 do
+            for _, victim in ipairs({ "item", "ancestor" }) do
+                if not finalPairGuardCase(position, phase, "final-currency", victim) then
+                    failures[#failures + 1] = position .. "/" .. victim
+                end
+            end
+        end
+        assert(#failures == 0, "final currency forbidden forwards: " .. table.concat(failures, ","))
+    end)
+end
+
+for _, scenario in ipairs({ "equipment-to-field", "field-to-equipment", "peer-field" }) do
+    test("bounded final pair checks reject staged " .. scenario .. " revocation", function()
+        local failures = {}
+        for position = 1, 16 do
+            for _, phase in ipairs({ "secret", "access" }) do
+                for _, victim in ipairs({ "item", "currency" }) do
+                    for ancestor = 1, scenario == "peer-field" and 1 or 4 do
+                        if not finalPairGuardCase(position, phase, scenario, victim, ancestor) then
+                            failures[#failures + 1] = position .. "/" .. phase .. "/" .. victim .. "/" .. ancestor
+                        end
+                    end
+                end
+            end
+        end
+        assert(#failures == 0, "staged pair revocation: " .. table.concat(failures, ","))
+    end)
+end
+
 setmetatable(_G, baseMeta)
 print(string.format("%d passed, %d failed", passed, failed))
 os.exit(failed == 0 and 0 or 1)

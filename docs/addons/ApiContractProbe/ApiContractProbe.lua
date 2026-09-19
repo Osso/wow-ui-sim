@@ -1676,6 +1676,13 @@ local function captureNeighborhoodStructures(mode)
             end
             if not accessible(source.guid) or not accessible(item) or not accessible(currency)
                 or not accessible(source.guid) then return "restricted-input" end
+            -- Final field guards can revoke equipment ancestry or the other field.
+            -- Bounded reauthorization preserves both inputs without claiming atomicity.
+            if authorize(combined) or not accessible(item) or not accessible(currency)
+                or authorize(source.path) or not accessible(item) or not accessible(currency)
+                or not accessible(item) or authorize(source.path) or not accessible(source.guid) then
+                return "restricted-input"
+            end
             return nil, item, currency
         end
         local function queryPair(path, reagent, source)
