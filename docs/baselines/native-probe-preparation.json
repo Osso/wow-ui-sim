@@ -2201,10 +2201,11 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual timeline-track-info queries five guarded published track values and observes eight declared fields on each first returned track-info object",
-          "Manual timeline-track-queries records GetEventTrack for eight original event IDs, five GetTrackList entries with guarded fields and an independent HasVisibleEvents query"
+          "Manual timeline-track-queries records GetEventTrack for eight original event IDs, five GetTrackList entries with guarded fields and an independent HasVisibleEvents query",
+          "Manual timeline-edit-preview prepares one AddEditModeEvents attempt only behind inactive-EditMode and zero-preview-count gates, with bounded Cancel cleanup, raw post/final observations and session lockout after unconfirmed cleanup"
         ],
         "missing": [
-          "AddEditModeEvents/CancelEditModeEvents experiment with isolated preview ownership and cleanup",
+          "Native preview add/cancel and cleanup results; atomic ownership and concurrent Edit Mode isolation are not established",
           "Native populated track values, queue timing and transitions",
           "Native validation and restricted-context behavior"
         ]
