@@ -4,11 +4,11 @@
 
 `/apicontract abbreviation-options <label>` is excluded from `all`. Call `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once with one explicit nil argument. Only its original accessible table first return supplies a fresh owned `{ breakpointData = originalTable }` options object. Never inspect, iterate, rewrite or copy breakpoint entries; do not add `locale` or `config` fields.
 
-For each literal input `0, 999, 1000, 1234, 999999, 1000000, -1000, 1000000000`, independently call `AbbreviateNumbers(number)`, `AbbreviateNumbers(number, options)`, `AbbreviateLargeNumbers(number)` and `AbbreviateLargeNumbers(number, options)` in that order. Missing/invalid/restricted producer results skip option variants, not omitted-option controls. Recheck the original table, owned options, its guarded `breakpointData` identity and input after function lookup/access guards. A changed owned field is unavailable input, never a replacement producer.
+For each literal input `0, 999, 1000, 1234, 999999, 1000000, -1000, 1000000000`, independently call `AbbreviateNumbers(number)`, `AbbreviateNumbers(number, options)`, `AbbreviateLargeNumbers(number)` and `AbbreviateLargeNumbers(number, options)` in that order. Missing/invalid/restricted producer results skip option variants, not omitted-option controls. Recheck the original table, owned options, its guarded `breakpointData` identity and input after function lookup/access guards. A changed owned field is unavailable input, never a replacement producer. After numeric authorization, recheck both tables, then the number and both tables again to catch staged cross-input revocation. These bounded sequential checks do not provide atomic authorization against arbitrary guard side effects.
 
 `abbreviationOptions` stores raw `producer` and `samples[].input/small/large`, with `omitted` and `options` tuples in each lane. Preserve exact arity and nil positions, opaque errors and inaccessible results. Bounds: **33 calls per snapshot**, ten snapshots, sixteen result positions, 256-byte scalar strings, 128-byte labels. Returned objects remain opaque and are not retained. Pinned `LocalizationDocumentation.lua` and `LocalizationSharedDocumentation.lua` establish call shapes and the sole supplied options field, not formatting equality, locale behavior or native semantics. No config construction, restricted setters, callbacks or locale changes. Existing `abbreviations` stays unchanged.
 
-Targeted recorder fixtures:
+Seventeen targeted recorder fixtures include 64 numeric-guard revocation cases and 128 staged table/options cross-input cases:
 
 ```sh
 luajit docs/addons/ApiContractProbe/tests/abbreviation_options.lua docs/addons/ApiContractProbe

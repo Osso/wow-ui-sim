@@ -3807,6 +3807,12 @@ local function captureAbbreviations(mode)
                 if not accessible(options) or not accessible(breakpoints) then return "restricted-input" end
             end
             if not accessible(input) then return "restricted-input" end
+            if withOptions then
+                -- Numeric guards can revoke either table; table guards can revoke the number.
+                if not accessible(options) or not accessible(breakpoints) then return "restricted-input" end
+                if not accessible(input) then return "restricted-input" end
+                if not accessible(options) or not accessible(breakpoints) then return "restricted-input" end
+            end
         end
         local function query(name, input, withOptions)
             local status = inputStatus(input, withOptions)

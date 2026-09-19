@@ -292,5 +292,88 @@ test("manual exclusion, shared capture cap and unchanged old abbreviation mode",
     assert(producerCalls == 10 and omitted == 160 and optionCalls == 160)
 end)
 
+local function checkFinalInputRevocation(triggerName, victimName)
+    local failures, cases = {}, 0
+    for target = 1, 16 do
+        for _, phase in ipairs({ "secret", "access" }) do
+            local breakpoints, options = hostile(), nil
+            local active, armed, numberChecked, revoked = false, false, false, false
+            local triggered, unsafe, targetCalls, controls, lookups = 0, 0, 0, 0, 0
+            local number = inputs[math.floor((target - 1) / 2) + 1]
+            local fn = function(...)
+                if select("#", ...) == 1 then controls = controls + 1; return end
+                if active then targetCalls = targetCalls + 1 end
+                if revoked and (victimName ~= "number" or rawequal((...), number)) then
+                    unsafe = unsafe + 1
+                end
+            end
+            setup(function() return breakpoints end, fn, fn)
+            local prior = getmetatable(_G)
+            rawset(_G, "AbbreviateNumbers", nil); rawset(_G, "AbbreviateLargeNumbers", nil)
+            setmetatable(_G, { __index = function(_, key)
+                if key == "AbbreviateNumbers" or key == "AbbreviateLargeNumbers" then
+                    lookups = lookups + 1; active = lookups == target * 2
+                    return fn
+                end
+                if prior and type(prior.__index) == "function" then return prior.__index(_G, key) end
+            end })
+            local function guard(value, currentPhase)
+                if type(value) == "table" and rawequal(rawget(value, "breakpointData"), breakpoints) then
+                    options = value
+                end
+                if active and rawequal(value, fn) then armed = true end
+                if active and armed and rawequal(value, number) then numberChecked = true end
+                local trigger = triggerName == "number" and number
+                    or (triggerName == "options" and options or breakpoints)
+                if active and armed and numberChecked and currentPhase == phase and rawequal(value, trigger) then
+                    revoked, armed, triggered = true, false, triggered + 1
+                end
+                local victim = victimName == "number" and number
+                    or (victimName == "options" and options or breakpoints)
+                return revoked and rawequal(value, victim)
+            end
+            issecretvalue = function(value) return guard(value, "secret") end
+            canaccessvalue = function(value) return not guard(value, "access") end
+            local ok, result = pcall(capture)
+            setmetatable(_G, prior)
+            cases = cases + 1
+            local sample = ok and result.samples[math.floor((target - 1) / 2) + 1]
+            local observation = sample and (target % 2 == 1 and sample.small.options or sample.large.options)
+            if not ok or triggered ~= 1 or unsafe ~= 0 or targetCalls ~= 0
+                or not observation or observation.status ~= "restricted-input"
+                or (victimName ~= "number" and controls ~= 16) then
+                failures[#failures + 1] = string.format("%d:%s %s->%s triggered=%d forwarded=%d target=%d",
+                    target, phase, triggerName, victimName, triggered, unsafe, targetCalls)
+            end
+        end
+    end
+    assert(cases == 32)
+    assert(#failures == 0, table.concat(failures, ", "))
+end
+
+test("final numeric guards cannot revoke original breakpoints before any option call", function()
+    checkFinalInputRevocation("number", "breakpoints")
+end)
+
+test("final numeric guards cannot revoke owned options before any option call", function()
+    checkFinalInputRevocation("number", "options")
+end)
+
+test("post-number options guards cannot revoke the numeric input before forwarding", function()
+    checkFinalInputRevocation("options", "number")
+end)
+
+test("post-number breakpoint guards cannot revoke the numeric input before forwarding", function()
+    checkFinalInputRevocation("breakpoints", "number")
+end)
+
+test("post-number options guards cannot revoke original breakpoints before forwarding", function()
+    checkFinalInputRevocation("options", "breakpoints")
+end)
+
+test("post-number breakpoint guards cannot revoke owned options before forwarding", function()
+    checkFinalInputRevocation("breakpoints", "options")
+end)
+
 print(string.format("%d/%d passed", passed, passed + failed))
 if failed > 0 then os.exit(1) end
