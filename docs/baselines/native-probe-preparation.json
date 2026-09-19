@@ -77,8 +77,8 @@
   "active_plans": 275,
   "retained_plans": 282,
   "status_counts": {
-    "needs-design-and-recorder-review": 56,
-    "partial-recorder": 87,
+    "needs-design-and-recorder-review": 55,
+    "partial-recorder": 88,
     "no-active-rows": 7,
     "shared-recorder-design-review-pending": 112,
     "deferred-security": 20
@@ -6705,8 +6705,18 @@
           "protocol": "api-state"
         }
       ],
-      "status": "needs-design-and-recorder-review",
-      "reviewed_coverage": null,
+      "status": "partial-recorder",
+      "reviewed_coverage": {
+        "recorder": "docs/addons/ApiContractProbe",
+        "observations": [
+          "Manual crafting-enchant-items forwards four original tracked recipe IDs to GetEnchantItems with explicit nil optional crafting reagents and records eight scalar positions from each first returned list"
+        ],
+        "missing": [
+          "Populated crafting-reagent inputs and actual recraft-allocation producers",
+          "GetRecraftRemovalWarnings, IsRecraftReagentValid and RecraftLimitCategoryValid observations",
+          "Native enchant/recraft fixtures, historical changed contracts and restricted-context behavior"
+        ]
+      },
       "native_execution": "not-established-by-this-inventory",
       "plan_reference": "docs/generated/patch-api-blockers.json#probe_plans/combat-crafting-tradeskill_recraft_and_enchant"
     },
