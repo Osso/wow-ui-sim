@@ -254,9 +254,11 @@ luajit docs/addons/ApiContractProbe/tests/nameplate_metrics.lua docs/addons/ApiC
 
 `/apicontract quest-favor <label>` is excluded from `all`. It calls `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once, retaining its bounded opaque tuple. Only the first returned object's `tasks` positions 1–4 supply original accessible finite `rewardQuestID` values. Each independently feeds `C_QuestInfoSystem.GetQuestLogRewardFavor(id)` and `GetQuestLogRewardFavor(id, true)` with exact one/two-argument calls.
 
-Every receiver/field lookup is guarded; IDs are rechecked after API lookup/function guards. Missing, restricted, malformed and error outcomes do not suppress peers. Maximum nine API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. No guessed IDs, requests, refreshes, quest/reward mutations or default/cap/favor conclusions. Native behavior remains unverified.
+After the unchanged produced-ID matrix, `questFavor.omissions.omitted` records `GetQuestLogRewardFavor()` and `questFavor.omissions.unclamped` records `GetQuestLogRewardFavor(nil, false)` independently, even when the producer or task inputs are unavailable. These preserve exact zero/two-argument arity; explicit nil/false inputs are checked before lookup and again after function guards.
 
-Pinned `QuestInfoSystemDocumentation.lua:42–55` declares optional quest/clamp arguments; `NeighborhoodInitiativeDocumentation.lua:94–101,308–350` supplies the task producer and `rewardQuestID` field. Ten actual TOC/slash fixtures prove recorder mechanics only:
+Every receiver/field lookup is guarded; IDs are rechecked after API lookup/function guards. Missing, restricted, malformed and error outcomes do not suppress peers. Maximum eleven API calls per snapshot, ten snapshots, sixteen tuple positions, 256-byte output strings and 128-byte labels. No guessed IDs, requests, refreshes, quest/reward mutations or default/cap/equality/favor conclusions. Native behavior remains unverified.
+
+Pinned `QuestInfoSystemDocumentation.lua:42–55` declares optional quest/clamp arguments; `NeighborhoodInitiativeDocumentation.lua:94–101,308–350` supplies the task producer and `rewardQuestID` field. Seventeen cumulative actual TOC/slash fixtures (ten existing, seven new) prove recorder mechanics only:
 
 ```text
 luajit docs/addons/ApiContractProbe/tests/quest_favor.lua docs/addons/ApiContractProbe

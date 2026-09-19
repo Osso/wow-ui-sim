@@ -1261,13 +1261,37 @@ end
 local function captureQuestFavor()
     local producer, values = observeNeighborhoodCall("GetNeighborhoodInitiativeInfo")
     local result = { producer = producer, entries = {} }
-    if not values then return result end
+    local function observeOmission(explicitFalse)
+        if explicitFalse and (not accessible(nil) or not accessible(false)) then
+            return { status = "restricted-input" }
+        end
+        local fn, fieldOK = readField(C_QuestInfoSystem, "GetQuestLogRewardFavor")
+        if not fieldOK then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        -- Lookup and function guards can revoke the explicit optional arguments.
+        if explicitFalse and (not accessible(nil) or not accessible(false)) then
+            return { status = "restricted-input" }
+        end
+        local returns
+        if explicitFalse then returns = pack(pcall(fn, nil, false))
+        else returns = pack(pcall(fn)) end
+        if not returns[1] then return { status = "call-error" } end
+        local observation = mapTuple(unpack(returns, 2, returns.n))
+        observation.status = "observed"
+        return observation
+    end
+    local function finish()
+        result.omissions = { omitted = observeOmission(false) }
+        result.omissions.unclamped = observeOmission(true)
+        return result
+    end
+    if not values then return finish() end
     local tasks, ok = readField(values[2], "tasks")
-    if not ok then result.status = "field-error"; return result end
+    if not ok then result.status = "field-error"; return finish() end
     local observed = scalar(tasks)
     if observed.status ~= "observed" or observed.kind ~= "table" then
         result.status = "unavailable-input"
-        return result
+        return finish()
     end
     for index = 1, 4 do
         local entry, entryOK = readField(tasks, index)
@@ -1280,7 +1304,7 @@ local function captureQuestFavor()
         end
         result.entries[index] = row
     end
-    return result
+    return finish()
 end
 
 local function inspectNeighborhoodActivity(object)

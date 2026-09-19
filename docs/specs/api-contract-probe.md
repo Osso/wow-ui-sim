@@ -156,9 +156,10 @@
 
 - Manual `quest-favor <label>` is excluded from `all`. Call `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo()` once; preserve the opaque producer tuple and inspect only the first object's `tasks` positions 1–4 and each entry's `rewardQuestID`.
 - Original accessible finite IDs independently feed `C_QuestInfoSystem.GetQuestLogRewardFavor(id)` and `(id, true)`, exactly one versus two arguments. Store bounded IDs and query observations under `questFavor.entries`; never synthesize IDs or forward serialized substitutes.
+- After the unchanged produced-ID matrix, independently record `GetQuestLogRewardFavor()` under `questFavor.omissions.omitted` and `GetQuestLogRewardFavor(nil, false)` under `questFavor.omissions.unclamped`, even if the producer/tasks are unavailable. Preserve exact zero/two-argument arity; guard explicit nil/false before lookup and recheck after function guards.
 - Guard every receiver/field read and ID inspection; recheck IDs after namespace/function lookup and function guards. Nil, restricted, malformed and opaque-error outcomes remain independent.
-- Bound nine API calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, initiative refresh, quest/reward mutations, defaults, cycle-cap or native favor semantics.
-- Ten actual TOC/slash fixtures establish local mechanics only; native populated reward quests and favor/cap behavior remain unverified.
+- Bound eleven API calls per snapshot, ten shared snapshots, sixteen tuple positions, 256-byte strings and 128-byte labels. No requests, initiative refresh, quest/reward mutations, defaults, equality, cycle-cap or native favor semantics.
+- Seventeen cumulative actual TOC/slash fixtures (ten existing, seven new) establish local mechanics only; native populated reward quests and favor/cap behavior remain unverified.
 
 ## Manual empowered stages
 
