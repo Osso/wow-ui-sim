@@ -484,11 +484,11 @@ Bounds: twelve calls per snapshot, sixteen return positions, 256-byte strings, 1
 
 ## Manual unit role predicates
 
-`/apicontract unit-role-predicates <label>` is excluded from `all`. For each fixed token (`player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string), call `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` once independently. No omitted/nil-token case or repetitions are added. Guard tokens and functions before inspection/use and recheck tokens after lookup/function guards.
+`/apicontract unit-role-predicates <label>` is excluded from `all`. For each fixed token (`player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string), call `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` once independently. The 24 fixed-token calls remain unchanged. Separate `omittedInput.omitted` and `omittedInput.explicitNil` observations call only `UnitIsNPCAsPlayer()` and `UnitIsNPCAsPlayer(nil)` independently, preserving zero versus one argument. Guard tokens and functions before inspection/use and recheck tokens after lookup/function guards; guard explicit nil before forwarding and again after function guards.
 
-Preserve raw arity, nil positions, restricted results and opaque errors: 24 calls per snapshot, sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. No `UnitNameFromGUID`, threat/security queries or mutations. Pinned retail `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2028–2088` declares one unit argument and boolean returns without secret-return annotations; it does not establish native results. No classification, default or stability claims.
+Preserve raw arity, nil positions, restricted results and opaque errors: 26 calls per snapshot, sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. No `UnitNameFromGUID`, threat/security queries or mutations. Pinned retail `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2028–2088` declares one unit argument and boolean returns without secret-return annotations; it does not establish native results. No classification, default, equality, identity or stability claims.
 
-Ten actual TOC/slash fixtures prove recorder mechanics only:
+Sixteen cumulative actual TOC/slash fixtures (ten existing, six new) prove recorder mechanics only:
 
 ```text
 luajit docs/addons/ApiContractProbe/tests/unit_role_predicates.lua docs/addons/ApiContractProbe

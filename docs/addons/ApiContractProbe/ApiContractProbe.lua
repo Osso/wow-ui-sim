@@ -478,6 +478,23 @@ local function captureFullNames()
 end
 
 local function captureUnitRolePredicates()
+    local function observeOmission(explicitNil)
+        if explicitNil and not accessible(nil) then return { status = "restricted-input" } end
+        local fn, ok = readField(_G, "UnitIsNPCAsPlayer")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        -- Function guards may revoke the explicit nil before forwarding.
+        if explicitNil and not accessible(nil) then return { status = "restricted-input" } end
+        local values
+        if explicitNil then values = pack(pcall(fn, nil)) else values = pack(pcall(fn)) end
+        if not values[1] then return { status = "call-error" } end
+        local observation = { status = "observed", n = values.n - 1, values = {} }
+        for index = 2, math.min(values.n, 17) do
+            observation.values[index - 1] = scalar(values[index])
+        end
+        if values.n > 17 then observation.truncated = true end
+        return observation
+    end
     local result = { units = {} }
     for _, unit in ipairs({ "player", "target", "focus", "pet", "party1", "nonexistent", "invalid-unit-token", "" }) do
         local row = { unit = scalar(unit), queries = {} }
@@ -486,6 +503,9 @@ local function captureUnitRolePredicates()
         end
         result.units[#result.units + 1] = row
     end
+    result.omittedInput = {}
+    result.omittedInput.omitted = observeOmission(false)
+    result.omittedInput.explicitNil = observeOmission(true)
     return result
 end
 

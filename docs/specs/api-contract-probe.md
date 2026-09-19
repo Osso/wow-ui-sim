@@ -325,10 +325,10 @@
 
 ## Manual unit role predicates
 
-- Manual `unit-role-predicates <label>` is excluded from `all`. Independently call `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` once each for `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: 24 calls per snapshot, no omitted/nil-token case.
-- Guard tokens/functions before inspection/use and recheck token access after lookup/function guards before invocation. Missing/restricted values and opaque errors must not suppress independent peers.
+- Manual `unit-role-predicates <label>` is excluded from `all`. Independently call `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` once each for `player`, `target`, `focus`, `pet`, `party1`, `nonexistent`, `invalid-unit-token`, and the empty string: 24 fixed-token calls per snapshot, unchanged. Add separate `omittedInput.omitted` and `omittedInput.explicitNil` observations for `UnitIsNPCAsPlayer()` and `UnitIsNPCAsPlayer(nil)` only, independently preserving zero versus one argument. Bound the total to 26 calls per snapshot.
+- Guard tokens/functions before inspection/use and recheck token access after lookup/function guards before invocation. Guard explicit nil before forwarding and recheck it after function guards. Missing/restricted values and opaque errors must not suppress either optional observation or existing peers.
 - Preserve raw arity/nil positions within sixteen return positions, 256-byte strings, 128-byte labels and ten shared snapshots. Do not infer classification, defaults, stability or native behavior.
-- Exclude `UnitNameFromGUID`, threat/security queries and mutations. Ten local actual TOC/slash fixtures establish recorder mechanics only; native populated unit fixtures and outcomes remain unverified.
+- Exclude `UnitNameFromGUID`, threat/security queries and mutations. Do not infer default, equality or identity semantics from omitted/nil observations. Sixteen cumulative actual TOC/slash fixtures (ten existing, six new) establish recorder mechanics only; native populated unit fixtures and outcomes remain unverified.
 
 ## Manual unit target display
 

@@ -7,12 +7,22 @@ getmetatable(secret).__tostring = function() error("secret stringify") end
 getmetatable(secret).__index = function() error("secret lookup") end
 local forbiddenCalls = 0
 local function forbidden() forbiddenCalls = forbiddenCalls + 1; error("excluded API") end
-local function setup(factory)
+local function setup(factory, optional)
     ApiContractProbeDB, SlashCmdList = nil, {}
     issecretvalue = function(v) return not not rawequal(v, secret) end
     canaccessvalue = function(v) return not rawequal(v, secret) end
     GetBuildInfo, time = function() return "fixture" end, function() return 42 end
     for i, name in ipairs(names) do _G[name] = factory(i, name) end
+    local npc = UnitIsNPCAsPlayer
+    if type(npc) == "function" then
+        UnitIsNPCAsPlayer = function(...)
+            if select("#", ...) == 0 or (...) == nil then
+                if optional then return optional(...) end
+                return
+            end
+            return npc(...)
+        end
+    end
     UnitNameFromGUID, UnitThreatLeadSituation = forbidden, forbidden
     forbiddenCalls = 0
     local toc = assert(io.open(root .. "/ApiContractProbe.toc"))
@@ -194,5 +204,132 @@ test("all excludes role predicates", function()
     setup(function() return function() calls = calls + 1 end end)
     SlashCmdList.APICONTRACTPROBE("all context")
     assert(calls == 0 and ApiContractProbeDB.captures[1].unitRolePredicates == nil)
+end)
+test("omitted and explicit nil are separate calls after unchanged token matrix", function()
+    local calls, omissions = {}, {}
+    setup(function(i)
+        return function(...)
+            calls[#calls + 1] = { api = i, n = select("#", ...), unit = (...) }
+            return i
+        end
+    end, function(...)
+        omissions[#omissions + 1] = select("#", ...)
+        assert(select("#", ...) <= 1 and (...) == nil)
+        assert(#calls == 24)
+        return nil, false, nil
+    end)
+    local r = capture()
+    assert(#calls == 24 and #omissions == 2 and omissions[1] == 0 and omissions[2] == 1)
+    for i, call in ipairs(calls) do
+        assert(call.n == 1 and call.api == (i - 1) % 3 + 1)
+        assert(call.unit == tokens[math.floor((i - 1) / 3) + 1])
+    end
+    for _, key in ipairs({ "omitted", "explicitNil" }) do
+        local q = assert(r.omittedInput[key])
+        assert(q.status == "observed" and q.n == 3)
+        assert(q.values[1].kind == "nil" and q.values[2].value == false and q.values[3].kind == "nil")
+    end
+end)
+
+test("optional errors zero returns and replacement are independent", function()
+    for _, failFirst in ipairs({ true, false }) do
+        local calls = 0
+        setup(function() return function() end end, function(...)
+            calls = calls + 1
+            if (select("#", ...) == 0) == failFirst then error(secret) end
+            return
+        end)
+        local r = capture().omittedInput
+        assert(calls == 2)
+        assert(r[failFirst and "omitted" or "explicitNil"].status == "call-error")
+        assert(r[failFirst and "explicitNil" or "omitted"].n == 0)
+    end
+    setup(function() return function() end end, function(...)
+        assert(select("#", ...) == 0)
+        UnitIsNPCAsPlayer = function(...)
+            assert(select("#", ...) == 1 and (...) == nil)
+            return "replacement"
+        end
+        return "first"
+    end)
+    local r = capture().omittedInput
+    assert(r.omitted.values[1].value == "first" and r.explicitNil.values[1].value == "replacement")
+end)
+
+test("optional function guards deny each call independently", function()
+    for _, guard in ipairs({ "issecretvalue", "canaccessvalue" }) do
+        for blocked = 1, 2 do
+            local tokensSeen, checks, optionalCalls = 0, 0, 0
+            setup(function() return function() tokensSeen = tokensSeen + 1 end end,
+                function() optionalCalls = optionalCalls + 1 end)
+            local fn = UnitIsNPCAsPlayer
+            _G[guard] = function(v)
+                local denied = rawequal(v, secret)
+                if tokensSeen == 24 and rawequal(v, fn) then
+                    checks = checks + 1
+                    denied = checks == blocked
+                end
+                if guard == "issecretvalue" then return denied end
+                return not denied
+            end
+            local r = capture().omittedInput
+            assert(tokensSeen == 24 and optionalCalls == 1)
+            assert(r[blocked == 1 and "omitted" or "explicitNil"].status == "missing-api")
+            assert(r[blocked == 1 and "explicitNil" or "omitted"].status == "observed")
+        end
+    end
+end)
+
+test("explicit nil is rechecked after both function guards", function()
+    for _, phase in ipairs({ "secret", "access" }) do
+        local revoked, omittedCalls, nilCalls = false, 0, 0
+        setup(function() return function() end end, function(...)
+            if select("#", ...) == 0 then omittedCalls = omittedCalls + 1
+            else nilCalls = nilCalls + 1; assert(not revoked, "revoked nil forwarded") end
+        end)
+        local fn = UnitIsNPCAsPlayer
+        issecretvalue = function(v)
+            if phase == "secret" and omittedCalls == 1 and rawequal(v, fn) then revoked = true end
+            return rawequal(v, secret)
+        end
+        canaccessvalue = function(v)
+            if phase == "access" and omittedCalls == 1 and rawequal(v, fn) then revoked = true end
+            return not rawequal(v, secret) and not (v == nil and revoked)
+        end
+        local r = capture().omittedInput
+        assert(revoked and omittedCalls == 1 and nilCalls == 0)
+        assert(r.omitted.status == "observed" and r.explicitNil.status == "restricted-input")
+    end
+end)
+
+test("missing optional function and inaccessible nil stay bounded observations", function()
+    setup(function() return function() end end, function()
+        UnitIsNPCAsPlayer = nil
+        return secret
+    end)
+    local r = capture().omittedInput
+    assert(r.omitted.values[1].status == "restricted" and r.explicitNil.status == "missing-api")
+    local optionalCalls = 0
+    setup(function() return function() end end, function(...)
+        optionalCalls = optionalCalls + 1; assert(select("#", ...) == 0)
+    end)
+    canaccessvalue = function(v) return v ~= nil and not rawequal(v, secret) end
+    r = capture().omittedInput
+    assert(optionalCalls == 1 and r.omitted.status == "observed" and r.explicitNil.status == "restricted-input")
+end)
+
+test("all 26 calls and optional result bounds respect snapshot limit", function()
+    local calls, values = 0, {}
+    for i = 1, 20 do values[i] = string.rep("b", 300) end
+    local function observe() calls = calls + 1; return unpack(values) end
+    setup(function() return observe end, observe)
+    local r = capture(string.rep("l", 200)).omittedInput
+    for _, key in ipairs({ "omitted", "explicitNil" }) do
+        assert(r[key].n == 20 and r[key].truncated and #r[key].values == 16)
+        assert(#r[key].values[16].value == 256)
+    end
+    for _ = 2, 11 do capture() end
+    assert(calls == 260 and #ApiContractProbeDB.captures == 10 and ApiContractProbeDB.dropped == 1)
+    assert(#ApiContractProbeDB.captures[1].label == 128)
 end)
 print(string.format("%d unit-role-predicates fixtures passed", passed))
