@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
+
+Runtime `0f6dde217` adds manual `/apicontract timeline-track-queries <label>`, excluded from `all`. It forwards up to eight original accessible finite `GetEventList()` IDs to `GetEventTrack`, preserving raw track/sort-index tuples without interpretation; independently it inspects the first five `GetTrackList()` entries through eight declared fields and records one opaque `HasVisibleEvents()` tuple. Eleven calls, twelve fixtures, and twelve timeline-track-info regressions establish local recorder mechanics only. No Edit Mode operation, event mutation, native placement, visibility, queue, timing, or conformance conclusion follows. Lifecycle mutation and native populated queue/timing/transition, validation, and restricted-context gaps remain. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded timeline track-information recorder
 
 Runtime `90ecfa0ab` adds manual `/apicontract timeline-track-info <label>`, excluded from `all`. It calls `C_EncounterTimeline.GetTrackInfo` once for each of five fixed published original accessible finite track values and exposes only eight declared fields from each first returned table/userdata. Five calls, twelve fixtures, and eleven timeline-source-count regressions establish local recorder mechanics only. No Edit Mode event operation, event mutation, native queue, timing, or conformance conclusion follows. See [[api-contract-probes]].
