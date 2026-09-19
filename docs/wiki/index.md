@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded recraft limit recorder
+
+Runtime `175fab0ab` adds manual `/apicontract recraft-limit-read <label>`, excluded from `all`. One tracked-recipe tuple supplies at most two original accessible finite IDs; each feeds `GetRecipeSchematic(id, false, nil)`, then only two slots and two original reagent objects per slot feed `RecraftLimitCategoryValid`. The recorder keeps original reagent identity, guarded declared `itemID`/`currencyID` fields, and raw query tuples. Eleven API calls, eleven fixtures, eleven schematic regressions, and twelve enchant-item regressions prove local recorder mechanics only. No allocation construction, recraft, native validity, ordering, completeness, or native-execution claim follows. See [[api-contract-probes]].
+
 ## [2026-09-19] audit | Reconcile existing same-size scale-event capture
 
 ## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder

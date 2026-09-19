@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded recraft limit recorder
+
+Documented `175fab0ab`: manual `recraft-limit-read <label>`, excluded from `all`, takes at most two original accessible finite tracked recipe IDs, queries each schematic with `false, nil`, and forwards only two slots with two original accessible table/userdata reagents per slot to `RecraftLimitCategoryValid`. It preserves original reagent identity and only guarded declared `itemID`/`currencyID` fields. Eleven API calls, eleven fixtures, eleven schematic regressions, and twelve enchant-item regressions establish recorder mechanics only. No allocation construction, recraft, native validity, ordering, completeness, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder
 
 Documented `20691891d`: manual `crafting-enchant-items <label>`, excluded from `all`, reads one `GetRecipesTracked(false)` tuple and forwards at most four original accessible finite tracked recipe IDs to `GetEnchantItems(id, nil)`. The optional reagent remains unpopulated; only first-eight scalar or opaque GUID values from each first returned item list are recorded. Five calls, twelve actual TOC/slash fixtures, and eleven schematic regressions establish recorder mechanics only. No enchant/recraft/crafting mutation, recipe validity, reagent semantics, list completeness, native validity, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
