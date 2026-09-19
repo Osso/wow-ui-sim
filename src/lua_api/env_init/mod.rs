@@ -67,6 +67,8 @@ pub(super) fn init_lua_state(
     crate::era::compat_bootstrap::init(lua)?;
     #[cfg(feature = "retail-12-1-0")]
     crate::ptr::compat_bootstrap::init(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    crate::loader::addon_modules::initialize(lua.state_mut())?;
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
     // the dangerous globals (dofile / loadfile / require / string.dump /
     // math.randomseed) so secure chunks — which Blizzard trusts —
@@ -202,7 +204,7 @@ fn taint_calling_frame(state: &mut LuaState, taint: &str) {
 }
 
 /// Nil WoW-forbidden globals from `_G`: the filesystem / module
-/// loaders (`dofile`, `loadfile`, `require`), the bytecode dumper
+/// loaders (`dofile`, `loadfile`, and non-Forever `require`), the bytecode dumper
 /// (`string.dump`), and the process-global RNG seeder
 /// (`math.randomseed`).
 ///
@@ -213,9 +215,12 @@ fn taint_calling_frame(state: &mut LuaState, taint: &str) {
 /// Covered by `tests/sandbox_dangerous_globals.rs`.
 fn remove_sandbox_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     use rilua::LuaApiMut;
-    for name in ["dofile", "loadfile", "require"] {
+    for name in ["dofile", "loadfile"] {
         LuaApiMut::set_global_val(lua, name, rilua::Val::Nil)?;
     }
+    // Forever's require imports completed addon modules; it is not a filesystem loader.
+    #[cfg(not(feature = "client-wowforever"))]
+    LuaApiMut::set_global_val(lua, "require", rilua::Val::Nil)?;
     // `string` and `math` are shared tables: secureenv's shallow copy
     // holds the same reference. Niling a field would mutate both. Swap
     // `_G.string` and `_G.math` for fresh shallow copies minus the

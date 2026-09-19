@@ -60,6 +60,7 @@ fn loadfile_nil_on_g_retained_on_secureenv() {
     );
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn require_nil_on_g_retained_on_secureenv() {
     let env = env();
@@ -69,6 +70,20 @@ fn require_nil_on_g_retained_on_secureenv() {
         secure, "function",
         "require must remain on __secureenv for secure chunks"
     );
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn require_is_module_lookup_on_both_forever_environments() {
+    let env = env();
+    let (g, secure) = probe(&env, "require");
+    assert_eq!(g, "function");
+    assert_eq!(secure, "function");
+    let (public_ok, secure_ok): (bool, bool) = env
+        .eval("local public = pcall(require, 'os'); local secure = pcall(__secureenv.require, 'os'); return public, secure")
+        .unwrap();
+    assert!(!public_ok, "Forever does not expose host package loading");
+    assert!(!secure_ok, "secure Forever imports use the same addon registry");
 }
 
 #[test]

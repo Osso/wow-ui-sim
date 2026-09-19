@@ -6,7 +6,7 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 
 ### Completed module values
 
-- [x] At the registry boundary, look up only files whose execution has completed; imports do not execute files.
+- [x] Publish values only after successful execution at the actual TOC/XML Lua-file loading boundary; imports do not execute files.
 - [x] Return one original completed file value, including `nil`, `false`, tables and functions, preserving identity through garbage collection.
 - [x] Reject imports of missing, self, or unfinished files with `Invalid import: No module with that name exists`.
 
@@ -29,7 +29,7 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 
 - [ ] Expose this API only for the `wowforever` profile. Other client profiles must retain their current `require` surface.
 
-Checked path/dependency requirements have sixteen pure resolver tests; registry/value/provenance requirements have fourteen actual-rilua unit tests in `src/loader/addon_modules.rs`. Loader hooks and profile exposure are not yet wired by these slices.
+Path/dependency requirements have sixteen pure resolver tests; registry/value/provenance requirements have fourteen actual-rilua unit tests. Ten grouped integration tests exercise the real TOC/XML loader, delayed/coroutine imports, dynamic chunks, secure environments, addon varargs and existing peer-file taint behavior. Cross-profile final verification remains pending.
 
 ## How it works
 
@@ -42,19 +42,24 @@ Checked path/dependency requirements have sixteen pure resolver tests; registry/
 - `src/loader/module_import.rs` — pure logical path and direct-dependency resolver.
 - `src/loader/addon_modules.rs` — completed-value registry, prototype-identity caller provenance, and native `require` installation hook.
 - `src/lua_api/env.rs` — per-VM module metadata; module values and source closures are rooted in the Lua registry.
-- `src/loader/mod.rs` — declares the resolver and profile/test-gated runtime module; loader execution hooks remain pending.
+- `src/loader/mod.rs` — declares the profile/test-gated resolver and runtime modules.
+- `src/loader/lua_file.rs` — registers compiled-file provenance and publishes the existing execution helper's first return only after success.
+- `src/lua_api/env_init/mod.rs` — installs Forever imports before secure-environment copying and preserves other profiles' sandbox behavior.
+- `src/client_profile.rs` — selects the distinct Forever profile and interface version.
 
 ## Tests asserting this spec
 
 - `src/loader/module_import.rs` — sixteen unit tests for absolute/relative resolution, addon boundary rejection, direct dependency authorization, dynamic absolute exemption, malformed requests, and exact errors.
 - `src/loader/addon_modules.rs` — fourteen actual-rilua tests for completed values/GC identity and stack restoration, load boundaries, delayed/escaped closures, direct dependencies, spoofed dynamic sources, nearest dynamic origins, failed loads/replacement, non-reexecution and VM isolation.
 
+- `tests/addon_require.rs` — ten Forever loader-boundary tests, including TOC dependencies, XML files, values, failed/self/forward imports and caller provenance.
+- `tests/sandbox_dangerous_globals.rs` — profile-specific global/secure-environment exposure and absence of host package loading.
+- `tests/wowforever_profile.rs` — distinct profile identity, client paths, TOC routing and build information.
+
 ## Known gaps (current cycle)
 
-- [ ] Wire the registry begin/finish/abort hooks into the actual addon file-loading boundary.
-- [ ] Validate the complete loader integration beyond the registry's explicit test hooks.
-- [ ] Register the `require` global only for `client-wowforever`.
-- [ ] Add the distinct wowforever profile, source mapping, manifest integration, and profile-isolation tests.
+- [ ] Complete independent verification, cross-profile isolation and startup smoke checks.
+- [ ] Native Forever execution is not part of this task; the Wiki contract and local behavioral fixtures do not establish undocumented native edge cases.
 
 ## Out of scope
 

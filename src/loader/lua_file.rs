@@ -32,10 +32,74 @@ pub fn load_lua_file(
 
     let timing_before = LuaFileTimingSnapshot::from_load_timing(timing);
     let func = compile_lua_file(env, &patched_source, &chunk_name, timing)?;
-    execute_lua_file(env, func, ctx, &chunk_name, timing)?;
+    #[cfg(feature = "client-wowforever")]
+    let module = begin_addon_module(env, &func, path, ctx)?;
+    let execution = execute_lua_file(env, func, ctx, &chunk_name, timing);
+    #[cfg(feature = "client-wowforever")]
+    complete_addon_module(env, module, &execution)?;
+    execution?;
     super::record_lua_file_timing(timing_before.diff(&chunk_name, timing));
 
     Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn begin_addon_module(
+    env: &LoaderEnv<'_>,
+    function: &rilua::Function,
+    path: &Path,
+    ctx: &AddonContext<'_>,
+) -> Result<super::addon_modules::ModuleToken, LoadError> {
+    let relative_path = path.strip_prefix(ctx.addon_root).map_err(|_| {
+        LoadError::Lua(format!(
+            "addon module path {} is outside {}",
+            path.display(),
+            ctx.addon_root.display()
+        ))
+    })?;
+    let dependencies = read_addon_module_dependencies(env, ctx.name);
+    env.with_state(|state| {
+        super::addon_modules::begin_file(state, function, ctx.name, relative_path, &dependencies)
+            .map_err(|error| LoadError::Lua(error.to_string()))
+    })
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_addon_module_dependencies(env: &LoaderEnv<'_>, name: &str) -> Vec<String> {
+    let state = env.state().borrow();
+    let addon = state
+        .addons
+        .iter()
+        .find(|addon| addon.folder_name.eq_ignore_ascii_case(name));
+    let Some(addon) = addon else {
+        return Vec::new();
+    };
+    crate::toc::collect_metadata_lists(
+        &addon.metadata,
+        &[
+            "Dep",
+            "RequiredDep",
+            "Dependencies",
+            "RequiredDeps",
+            "OptionalDep",
+            "OptionalDeps",
+        ],
+    )
+}
+
+#[cfg(feature = "client-wowforever")]
+fn complete_addon_module(
+    env: &LoaderEnv<'_>,
+    token: super::addon_modules::ModuleToken,
+    execution: &Result<rilua::Val, LoadError>,
+) -> Result<(), LoadError> {
+    env.with_state(|state| {
+        let result = match execution {
+            Ok(value) => super::addon_modules::finish_file(state, token, *value),
+            Err(_) => super::addon_modules::abort_file(state, token),
+        };
+        result.map_err(|error| LoadError::Lua(error.to_string()))
+    })
 }
 
 struct LuaFileTimingSnapshot {
@@ -111,7 +175,7 @@ fn execute_lua_file(
     ctx: &AddonContext,
     chunk_name: &str,
     timing: &mut LoadTiming,
-) -> Result<(), LoadError> {
+) -> Result<rilua::Val, LoadError> {
     let call_start = Instant::now();
     let exec_result =
         env.with_state(|state| execute_compiled_lua_file(state, func, ctx, chunk_name));
@@ -127,7 +191,7 @@ fn execute_compiled_lua_file(
     func: rilua::Function,
     ctx: &AddonContext,
     chunk_name: &str,
-) -> Result<(), LoadError> {
+) -> Result<rilua::Val, LoadError> {
     // Stamp addon taint on the compiled function's GC header. When the VM executes
     // it, fixedtaint blocks read-propagation and inner closures inherit writetaint.
     if ctx.taint {
@@ -176,14 +240,13 @@ fn exec_addon_func(
     state: &mut LuaState,
     func: rilua::Function,
     ctx: &AddonContext,
-) -> Result<(), LoadError> {
+) -> Result<rilua::Val, LoadError> {
     let name = create_string(state, ctx.name);
     crate::lua_api::methods::call_function_state(
         state,
         rilua::Val::Function(func.gc_ref()),
         &[name, ctx.table],
     )
-    .map(|_| ())
     .map_err(|e| LoadError::Lua(e.to_string()))
 }
 
