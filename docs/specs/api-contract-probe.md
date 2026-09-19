@@ -1,5 +1,14 @@
 # API contract probe
 
+## Manual heal-calculator modes
+
+- `heal-calculator-modes <label>` is manual-only and excluded from `all`. Create one fresh owned calculator through the no-argument factory; only the first accessible table/userdata result is a method receiver. Preserve constructor arity and opaque failures; never substitute a synthetic calculator.
+- Read `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, and `GetDamageAbsorbClampMode` once for baseline. For seven fixed published enum keys, call the corresponding setter once and getter once independently: `UnitHealAbsorbMode.ReducedByIncomingHeals/Total`, `UnitHealAbsorbClampMode.CurrentHealth/MaximumHealth`, and `UnitDamageAbsorbClampMode.MissingHealth/MissingHealthWithoutIncomingHeals/MaximumHealth`. Require original accessible finite numeric values, without numeric fallback or enum iteration.
+- After these observations call `Reset()` followed by all three getters, then `ResetPredictedValues()` followed by all three getters. Errors or unavailable setters/resets must not suppress independent getters or peers. Record raw results, not equality, defaults or reset-equivalence assertions.
+- Guard the calculator before every type inspection, method lookup and use. Guard enum containers and members before lookup/inspection; recheck calculator and enum after method-function guards immediately before forwarding. Record inaccessible inputs, missing methods and opaque errors explicitly. Never inspect returned objects or retain calculators between captures.
+- Save `healCalculatorModes.constructor`, `baseline`, `modes[].enum/key/setter/getter`, and `resets[].name/result/getters`. Bound seven setters, sixteen getters and two resets to **25 method calls plus one constructor: 26 calls/snapshot**, ten snapshots, sixteen tuple positions, 256-byte scalar strings and 128-byte labels.
+- No unit binding, predicted-value population, resource mutation, security experiment or native-conformance claim. Existing `heal-calculator` behavior remains unchanged. Eleven actual TOC/slash fixtures establish recorder mechanics only; native mode and reset semantics remain unverified.
+
 ## Manual LFG title-match reads
 
 - Manual `lfg-title-match-read <label>` is excluded from `all`. Obtain the original guarded published `Enum.LFGListFilter.PvE` value without fallback. Call `GetAvailableCategories(PvE)`, then `GetAvailableActivityGroups(originalCategoryID, PvE)`, then `GetAvailableActivities(originalCategoryID, originalGroupID, PvE)`. Only positions 1–2 of each first accessible returned table feed the next step; preserve original pairs, duplicates and holes without coercion, synthesis or source-table iteration.

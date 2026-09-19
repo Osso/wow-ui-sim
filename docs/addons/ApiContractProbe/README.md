@@ -1,5 +1,19 @@
 # API Contract Probe
 
+## Manual heal-calculator modes
+
+`/apicontract heal-calculator-modes <label>` is excluded from `all`. Create one fresh owned `CreateUnitHealPredictionCalculator()` result. Record three baseline mode getters, then seven fixed published inputs: `UnitHealAbsorbMode.ReducedByIncomingHeals/Total`, `UnitHealAbsorbClampMode.CurrentHealth/MaximumHealth`, and `UnitDamageAbsorbClampMode.MissingHealth/MissingHealthWithoutIncomingHeals/MaximumHealth`. Each original accessible finite enum value is passed to its matching setter once, followed by one independent matching getter. Missing publication never uses numeric fallback.
+
+Call `Reset()` and read all three getters, then `ResetPredictedValues()` and read all three again. Setter/reset failures do not suppress readbacks or peer observations. `healCalculatorModes` stores raw `constructor`, `baseline`, `modes[].enum/key/setter/getter`, and `resets[].name/result/getters` observations. Guard the calculator before type inspection, every method lookup and invocation; recheck receiver and enum after method-function guards. Returned objects remain opaque and are not retained.
+
+Bound: **7 setters + 16 getters + 2 resets = 25 methods, plus 1 constructor = 26 calls per snapshot**, at most 260 calls across ten snapshots. Preserve exact arity and nil positions within sixteen result positions, 256-byte strings and 128-byte labels. Pinned `UnitHealPredictionCalculatorAPIDocumentation.lua` and `UnitHealPredictionCalculatorSharedDocumentation.lua` establish method shapes and seven enum names, not equality, defaults, reset equivalence or native semantics. This mutates only a fresh owned calculator; no unit binding, predicted-value population, resource mutation or security experiment is included. Existing `heal-calculator` remains unchanged.
+
+Eleven actual TOC/slash fixtures cover local recorder mechanics only:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/heal_calculator_modes.lua docs/addons/ApiContractProbe
+```
+
 ## Manual LFG title-match reads
 
 `/apicontract lfg-title-match-read <label>` is excluded from `all`. Guard the original published `Enum.LFGListFilter.PvE` value, then follow the static vendor selection chain: `GetAvailableCategories(PvE)` → first two original category IDs → `GetAvailableActivityGroups(categoryID, PvE)` → first two original group IDs → `GetAvailableActivities(categoryID, groupID, PvE)` → first two original activity IDs per group. Missing or inaccessible publication skips the chain; no numeric fallback, synthetic IDs or activity-info objects are supplied.
