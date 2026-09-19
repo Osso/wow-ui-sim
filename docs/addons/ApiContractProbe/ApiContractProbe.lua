@@ -3464,6 +3464,78 @@ local function captureHealCalculatorObject()
 end
 
 local function captureHealCalculator(mode)
+    if mode == "unit" then
+        local function objectStatus(object)
+            if not accessible(object) then return "restricted-input" end
+            if type(object) ~= "table" and type(object) ~= "userdata" then return "unavailable-input" end
+        end
+        local function observeValues(values)
+            if not values[1] then return { status = "call-error" } end
+            local result = mapTuple(unpack(values, 2, values.n))
+            result.status = "observed"
+            return result
+        end
+        local function getter(object, name)
+            local status = objectStatus(object)
+            if status then return { status = status } end
+            local fn, ok = readField(object, name)
+            if not ok then return { status = "field-error" } end
+            if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+            status = objectStatus(object)
+            if status then return { status = status } end
+            return observeValues(pack(pcall(fn, object)))
+        end
+        local function snapshot(object)
+            local result = {}
+            for _, name in ipairs({ "GetHealAbsorbMode", "GetHealAbsorbClampMode",
+                "GetDamageAbsorbClampMode", "GetHealAbsorbs", "GetDamageAbsorbs" }) do
+                result[name] = getter(object, name)
+            end
+            return result
+        end
+        local function populationStatus(unit, object)
+            -- Bounded sequential rechecks, not an atomic authorization guarantee.
+            for _ = 1, 2 do
+                if not accessible(unit) or not accessible(nil) then return "restricted-input" end
+                local status = objectStatus(object)
+                if status then return status end
+            end
+        end
+        local function populate(unit, object)
+            local status = populationStatus(unit, object)
+            if status then return { status = status } end
+            local fn, ok = readField(_G, "UnitGetDetailedHealPrediction")
+            if not ok then return { status = "field-error" } end
+            if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+            status = populationStatus(unit, object)
+            if status then return { status = status } end
+            return observeValues(pack(pcall(fn, unit, nil, object)))
+        end
+        local function captureUnit(unit)
+            local row = { unit = scalar(unit) }
+            local fn, ok = readField(_G, "CreateUnitHealPredictionCalculator")
+            if not ok then row.constructor = { status = "field-error" }; return row end
+            if not accessible(fn) or type(fn) ~= "function" then
+                row.constructor = { status = "missing-api" }; return row
+            end
+            local values = pack(pcall(fn))
+            row.constructor = observeValues(values)
+            if not values[1] then return row end
+            local object = values[2]
+            row.status = objectStatus(object)
+            if row.status then return row end
+            row.before = snapshot(object)
+            row.populate = populate(unit, object)
+            -- Population may change the calculator and then throw; readbacks stay independent.
+            row.after = snapshot(object)
+            return row
+        end
+        local result = { units = {} }
+        for _, unit in ipairs({ "player", "target" }) do
+            result.units[#result.units + 1] = captureUnit(unit)
+        end
+        return result
+    end
     if mode == "modes" then
         local function objectStatus(object)
             if not accessible(object) then return "restricted-input" end
@@ -4683,8 +4755,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "timeline-edit-preview" and mode ~= "recraft-reagent-read" and mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [timeline-edit-preview|recraft-reagent-read|recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "unit-heal-calculator" and mode ~= "timeline-edit-preview" and mode ~= "recraft-reagent-read" and mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [unit-heal-calculator|timeline-edit-preview|recraft-reagent-read|recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -4766,6 +4838,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "raid-markers" then record.raidMarkers = captureRaidMarkers() end
         if mode == "abbreviations" then record.abbreviations = captureAbbreviations() end
         if mode == "abbreviation-options" then record.abbreviationOptions = captureAbbreviations("options") end
+        if mode == "unit-heal-calculator" then record.unitHealCalculator = captureHealCalculator("unit") end
         if mode == "heal-calculator" then record.healCalculator = captureHealCalculator() end
         if mode == "heal-calculator-modes" then record.healCalculatorModes = captureHealCalculator("modes") end
         if mode == "mapvalues" then record.mapvalues = captureMapValues() end

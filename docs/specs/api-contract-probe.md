@@ -59,6 +59,14 @@
 - Preserve independent missing/restricted/error outcomes. Bound five calls per snapshot, ten snapshots, sixteen return positions, 256-byte scalar strings and 128-byte labels.
 - No Edit Mode/event creation, cancellation or other mutation; no native queue, timing, default, ordering, stability or conformance claims. Twelve actual TOC/slash fixtures prove recorder mechanics only. Retail/PTR declarations establish shape, not native results.
 
+## Manual unit-fed heal calculator
+
+- `unit-heal-calculator <label>` is manual-only and excluded from `all`. Independently create a fresh no-argument calculator for `player` and `target`; use only the first accessible table/userdata result, preserving constructor arity and opaque failures.
+- For each original calculator, read `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, `GetDamageAbsorbClampMode`, `GetHealAbsorbs`, and `GetDamageAbsorbs` once before population. Call `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)` with exactly three arguments. Independently read all five getters afterward, including when population fails after mutating the owned calculator. One getter or lane failure must not suppress other available observations.
+- Guard the calculator before type inspection and each method lookup, and recheck it after method-function guards. Recheck the original unit, explicit nil healer and calculator after population global lookup/function guards before forwarding. Preserve conditional/inaccessible returns opaquely before inspection. Bounded sequential checks do not claim atomic authorization.
+- Store `unitHealCalculator.units[].unit`, `constructor`, named `before`/`after` observations and `populate`. Preserve raw arity, nil positions and opaque errors within sixteen result positions, 256-byte scalar strings and 128-byte labels. Bound ten snapshots and 24 experiment calls per snapshot: two constructors, two population calls, twenty getters. Retain no original calculators or returned objects.
+- Do not fabricate prediction inputs, inspect `UnitHealPredictionValues` fields, bind existing calculators, alter game health, or call setters/resets. Do not infer native healing, defaults, stability, equality, security or conformance. Fourteen actual TOC/slash fixtures cover only recorder mechanics; old calculator modes remain unchanged.
+
 ## Manual heal-calculator modes
 
 - `heal-calculator-modes <label>` is manual-only and excluded from `all`. Create one fresh owned calculator through the no-argument factory; only the first accessible table/userdata result is a method receiver. Preserve constructor arity and opaque failures; never substitute a synthetic calculator.

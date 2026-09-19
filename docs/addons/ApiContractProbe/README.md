@@ -96,6 +96,18 @@ Bounds: five calls per snapshot, ten snapshots, sixteen return positions, 256-by
 luajit docs/addons/ApiContractProbe/tests/timeline_track_info.lua docs/addons/ApiContractProbe
 ```
 
+## Manual unit-fed heal calculator
+
+`/apicontract unit-heal-calculator <label>` is excluded from `all`. For `player` and `target` independently, create a fresh `CreateUnitHealPredictionCalculator()` and read `GetHealAbsorbMode`, `GetHealAbsorbClampMode`, `GetDamageAbsorbClampMode`, `GetHealAbsorbs`, and `GetDamageAbsorbs` once. Call `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)` with exactly three arguments, then read the same five getters independently—even when population throws after changing the owned object.
+
+`unitHealCalculator.units[]` records guarded `unit`, raw `constructor`, named `before`/`after` getter tuples, and raw `populate`. Use only the first accessible table/userdata constructor result; never fabricate prediction inputs, substitute calculators, or retain objects between captures. Guard the receiver before every lookup and after method-function checks. Recheck unit, explicit nil healer and calculator after global population lookup/function guards. Inaccessible results remain opaque before inspection; errors are opaque and do not suppress peer observations. Sequential access rechecks do not establish atomic authorization.
+
+Bounds: **2 constructors + 2 population calls + 20 getters = 24 experiment calls per snapshot**, 240 across ten snapshots; sixteen result positions, 256-byte strings, 128-byte labels. Pinned retail `UnitDocumentation.lua:72–79,1229–1243` declares the factory and no-return population call. This changes only fresh owned calculator state, not game health. No native healing, defaults, stability, equality, security, or `UnitHealPredictionValues` field coverage is established. Existing `heal-calculator` and `heal-calculator-modes` remain unchanged. Fourteen actual TOC/slash fixtures cover recorder mechanics:
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/unit_heal_calculator.lua docs/addons/ApiContractProbe
+```
+
 ## Manual heal-calculator modes
 
 `/apicontract heal-calculator-modes <label>` is excluded from `all`. Create one fresh owned `CreateUnitHealPredictionCalculator()` result. Record three baseline mode getters, then seven fixed published inputs: `UnitHealAbsorbMode.ReducedByIncomingHeals/Total`, `UnitHealAbsorbClampMode.CurrentHealth/MaximumHealth`, and `UnitDamageAbsorbClampMode.MissingHealth/MissingHealthWithoutIncomingHeals/MaximumHealth`. Each original accessible finite enum value is passed to its matching setter once, followed by one independent matching getter. Missing publication never uses numeric fallback.
