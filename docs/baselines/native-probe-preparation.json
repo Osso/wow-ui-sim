@@ -2203,6 +2203,7 @@
           "Manual timeline-track-info queries five guarded published track values and observes eight declared fields on each first returned track-info object"
         ],
         "missing": [
+          "GetEventTrack, GetTrackList and HasVisibleEvents observations",
           "AddEditModeEvents/CancelEditModeEvents experiment with isolated preview ownership and cleanup",
           "Native populated track values, queue timing and transitions",
           "Native validation and restricted-context behavior"
