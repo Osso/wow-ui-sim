@@ -4494,6 +4494,180 @@ local function controlCallbacks(mode, label)
     db.callbackStatus = record.status
 end
 
+-- The preview lock lives outside resettable SavedVariables. This is not atomic ownership.
+captureNeighborhoodStructures = (function(previous)
+    local locked = false
+
+    local function finite(value)
+        return accessible(value) and type(value) == "number" and value == value
+            and value ~= math.huge and value ~= -math.huge
+    end
+
+    local function invoke(fn, ...)
+        local values = pack(pcall(fn, ...))
+        if not values[1] then return { status = "call-error" }, values end
+        local result = { status = "observed", n = values.n - 1, values = {} }
+        for index = 2, math.min(values.n, 17) do
+            result.values[index - 1] = scalar(values[index])
+        end
+        if values.n > 17 then result.truncated = true end
+        return result, values
+    end
+
+    local function certain(result, values)
+        if result.status ~= "observed" or result.truncated or not values then return false end
+        for index = 2, values.n do
+            local observed = result.values[index - 1]
+            if not observed or observed.status ~= "observed" or observed.truncated
+                or not accessible(values[index]) then return false end
+        end
+        return true
+    end
+
+    local function timelineFunction(name)
+        local namespace, ok = readField(_G, "C_EncounterTimeline")
+        local fn
+        if ok then fn, ok = readField(namespace, name) end
+        if not ok then return nil, "field-error" end
+        if not accessible(fn) or type(fn) ~= "function" then return nil, "missing-api" end
+        return fn
+    end
+
+    local function readActive(manager)
+        if not accessible(manager) then return { status = "restricted-input" } end
+        if type(manager) ~= "table" and type(manager) ~= "userdata" then
+            return { status = "unavailable-input" }
+        end
+        local fn, ok = readField(manager, "IsEditModeActive")
+        if not ok then return { status = "field-error" } end
+        if not accessible(fn) or type(fn) ~= "function" then return { status = "missing-api" } end
+        if not accessible(manager) then return { status = "restricted-input" } end
+        return invoke(fn, manager)
+    end
+
+    local function readCount(source)
+        if not finite(source) then return { status = "unavailable-source" } end
+        local fn, status = timelineFunction("GetEventCountBySource")
+        if not fn then return { status = status } end
+        if not finite(source) then return { status = "restricted-input" } end
+        return invoke(fn, source)
+    end
+
+    local function readList()
+        local fn, status = timelineFunction("GetEventList")
+        if not fn then return { status = status }, false end
+        local result, values = invoke(fn)
+        if not certain(result, values) or not accessible(values[2])
+            or type(values[2]) ~= "table" then return result, false end
+        result.entries = {}
+        local complete = true
+        for index = 1, 8 do
+            local id, ok = readField(values[2], index)
+            result.entries[index] = ok and scalar(id) or { status = "field-error" }
+            if not ok or not accessible(id) or (type(id) ~= "nil" and not finite(id)) then
+                complete = false
+            end
+        end
+        return result, complete
+    end
+
+    local function falseState(result, values)
+        return certain(result, values) and accessible(values[2])
+            and type(values[2]) == "boolean" and values[2] == false
+    end
+
+    local function zeroCount(result, values)
+        return certain(result, values) and finite(values[2]) and values[2] == 0
+    end
+
+    local function gate(source)
+        local result, active, count = {}
+        local manager = readField(_G, "EditModeManagerFrame")
+        result.active, active = readActive(manager)
+        result.count, count = readCount(source)
+        return result, active, count, manager
+    end
+
+    local function snapshot(source)
+        local result, values = {}
+        result.count, values = readCount(source)
+        local listOK
+        result.list, listOK = readList()
+        local countOK = certain(result.count, values) and finite(values[2]) and values[2] >= 0
+        return result, countOK and listOK, values
+    end
+
+    local function cleanup(result, source, postOK, addValues)
+        -- Resolve cleanup first: its lookup may change the newly observed Edit Mode state.
+        local cancel, cancelStatus = timelineFunction("CancelEditModeEvents")
+        local active, cancelValues
+        local manager = readField(_G, "EditModeManagerFrame")
+        result.cleanup = {}
+        result.cleanup.active, active = readActive(manager)
+        local activeTrue = certain(result.cleanup.active, active) and accessible(active[2])
+            and type(active[2]) == "boolean" and active[2] == true
+        if activeTrue then
+            result.cleanup.cancel = { status = "skipped-active-edit-mode", attempted = false }
+        elseif not cancel then
+            result.cleanup.cancel = { status = cancelStatus, attempted = false }
+        elseif not accessible(cancel) then
+            result.cleanup.cancel = { status = "restricted-function", attempted = false }
+        else
+            -- Unknown state still gets the one requested cleanup attempt, but cannot confirm it.
+            result.cleanup.cancel, cancelValues = invoke(cancel)
+            result.cleanup.cancel.attempted = true
+        end
+        local finalOK, countValues, finalActive
+        result.final, finalOK, countValues = snapshot(source)
+        manager = readField(_G, "EditModeManagerFrame")
+        result.final.active, finalActive = readActive(manager)
+        local confirmed = postOK and certain(result.add, addValues)
+            and falseState(result.cleanup.active, active)
+            and certain(result.cleanup.cancel, cancelValues)
+            and finalOK and zeroCount(result.final.count, countValues)
+            and falseState(result.final.active, finalActive)
+        result.cleanup.status = confirmed and "confirmed-by-observation" or "unconfirmed"
+        locked = not confirmed
+        result.locked = locked
+        result.status = locked and "cleanup-unconfirmed" or "observed"
+    end
+
+    return function(mode)
+        if mode ~= "timeline-edit-preview" then return previous(mode) end
+        if locked then return { status = "blocked-cleanup-unconfirmed", locked = true } end
+        locked = true
+        local result = { status = "gate-unavailable", locked = false }
+        local enums = readField(_G, "Enum")
+        local sources = readField(enums, "EncounterTimelineEventSource")
+        local source = readField(sources, "EditMode")
+        result.source = scalar(source)
+        local active, count, manager
+        result.baseline, active, count, manager = gate(source)
+        if not falseState(result.baseline.active, active) or not zeroCount(result.baseline.count, count) then
+            locked = false
+            return result
+        end
+        local add, addStatus = timelineFunction("AddEditModeEvents")
+        local cancel, cancelStatus = timelineFunction("CancelEditModeEvents")
+        result.preflight = { add = addStatus or "available", cancel = cancelStatus or "available" }
+        if not add or not cancel then locked = false; return result end
+        -- Fresh state/count calls after mutator lookup; bounded sequential checks, not ownership.
+        result.beforeAdd, active, count, manager = gate(source)
+        if not accessible(add) or not accessible(cancel) or not accessible(manager) or not finite(source)
+            or not falseState(result.beforeAdd.active, active) or not zeroCount(result.beforeAdd.count, count) then
+            locked = false
+            return result
+        end
+        local addValues
+        result.add, addValues = invoke(add)
+        result.add.attempted = true
+        local postOK
+        result.post, postOK = snapshot(source)
+        cleanup(result, source, postOK, addValues)
+        return result
+    end
+end)(captureNeighborhoodStructures)
+
 SLASH_APICONTRACTPROBE1 = "/apicontract"
 SlashCmdList.APICONTRACTPROBE = function(input)
     local mode, label = string.match(input or "", "^%s*(%S*)%s*(.-)%s*$")
@@ -4509,8 +4683,8 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         slot, label = parseActionSlot(label)
         if slot == nil then print("Usage: /apicontract " .. mode .. " <integer-slot> <label>"); return end
     end
-    if mode ~= "recraft-reagent-read" and mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
-        print("Usage: /apicontract [recraft-reagent-read|recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
+    if mode ~= "timeline-edit-preview" and mode ~= "recraft-reagent-read" and mode ~= "recraft-limit-read" and mode ~= "crafting-enchant-items" and mode ~= "abbreviation-options" and mode ~= "timeline-track-queries" and mode ~= "timeline-track-info" and mode ~= "heal-calculator-modes" and mode ~= "lfg-title-match-read" and mode ~= "lfg-playstyle-format" and mode ~= "crafting-schematic-read" and mode ~= "transmog-source-validity" and mode ~= "transmog-slot-visual-info" and mode ~= "error-code-publication" and mode ~= "resource-color-input" and mode ~= "timeline-source-counts" and mode ~= "timeline-lifecycle-read" and mode ~= "timeline-current-events" and mode ~= "cloak-helm-transition" and mode ~= "threat-lead-read" and mode ~= "guid-identity" and mode ~= "item-interaction-flags" and mode ~= "house-exterior-options" and mode ~= "expansion-audio-fields" and mode ~= "perks-criteria" and mode ~= "equipped-transmog-eligibility" and mode ~= "equipped-item-info" and mode ~= "action-loss-control-duration" and mode ~= "action-state" and mode ~= "combat-audio-settings-read" and mode ~= "encounter-warning-state" and mode ~= "ping-enabled" and mode ~= "explicit-power" and mode ~= "hyperlinks-residual" and mode ~= "full-names" and mode ~= "player-state-queries" and mode ~= "outfit-tooltip" and mode ~= "tradeskill-item-quality" and mode ~= "nameplate-metrics" and mode ~= "death-recap-current" and mode ~= "quest-favor" and mode ~= "empowered-stages" and mode ~= "unit-role-predicates" and mode ~= "stable-bonus-slot" and mode ~= "cooldown-viewer-read" and mode ~= "prey-quest-widgets" and mode ~= "major-faction-renown-rewards" and mode ~= "major-faction-journey" and mode ~= "training-grounds-structures" and mode ~= "training-grounds-state" and mode ~= "housing-catalog" and mode ~= "neighborhood-structures" and mode ~= "neighborhood-state" and mode ~= "sets-catalog" and mode ~= "custom-set-names" and mode ~= "outfit-state" and mode ~= "outfit-slots" and mode ~= "outfit-catalog" and mode ~= "spell-diminish-categories" and mode ~= "weekly-progress" and mode ~= "housing-preview-modes" and mode ~= "spellbook-duration" and mode ~= "spellbook-metadata" and mode ~= "unit-target-display" and mode ~= "unit-auras-current" and mode ~= "aura-time" and mode ~= "aura-display-count" and mode ~= "spell-duration" and mode ~= "spell-metadata" and mode ~= "public-queries" and mode ~= "item-binding" and mode ~= "statusbar-fill" and mode ~= "raid-markers" and mode ~= "abbreviations" and mode ~= "heal-calculator" and mode ~= "mapvalues" and mode ~= "cast-durations" and mode ~= "color-curves" and mode ~= "curve-edit" and mode ~= "curve-state" and mode ~= "resources" and mode ~= "hyperlinks" and mode ~= "actions" and mode ~= "all" and mode ~= "curves" and mode ~= "sex" and mode ~= "names" and mode ~= "numbers" and mode ~= "casts" and mode ~= "publication" then
+        print("Usage: /apicontract [timeline-edit-preview|recraft-reagent-read|recraft-limit-read|crafting-enchant-items|abbreviation-options|timeline-track-queries|timeline-track-info|heal-calculator-modes|lfg-title-match-read|lfg-playstyle-format|crafting-schematic-read|transmog-source-validity|transmog-slot-visual-info|error-code-publication|resource-color-input|timeline-source-counts|timeline-lifecycle-read|timeline-current-events|cloak-helm-transition|threat-lead-read|guid-identity|item-interaction-flags|house-exterior-options|expansion-audio-fields|perks-criteria|equipped-transmog-eligibility|equipped-item-info|action-loss-control-duration|action-state|combat-audio-settings-read|encounter-warning-state|ping-enabled|explicit-power|hyperlinks-residual|full-names|player-state-queries|outfit-tooltip|tradeskill-item-quality|nameplate-metrics|death-recap-current|quest-favor|empowered-stages|unit-role-predicates|stable-bonus-slot|cooldown-viewer-read|all|curves|curve-state|curve-edit|color-curves|sex|names|numbers|casts|cast-durations|resources|hyperlinks|mapvalues|heal-calculator|abbreviations|raid-markers|statusbar-fill|item-binding|public-queries|aura-display-count|aura-time|unit-auras-current|unit-target-display|spellbook-metadata|spellbook-duration|housing-preview-modes|weekly-progress|spell-diminish-categories|outfit-catalog|outfit-slots|outfit-state|custom-set-names|sets-catalog|neighborhood-state|neighborhood-structures|housing-catalog|training-grounds-state|training-grounds-structures|major-faction-journey|major-faction-renown-rewards|publication|events-start|events-stop|callbacks-start|callbacks-duplicate-start|callbacks-stop] [label]")
         return
     end
     local db = database()
@@ -4565,6 +4739,7 @@ SlashCmdList.APICONTRACTPROBE = function(input)
         if mode == "crafting-schematic-read" then record.craftingSchematicRead = captureNeighborhoodStructures(mode) end
         if mode == "neighborhood-structures" then record.neighborhoodStructures = captureNeighborhoodStructures() end
         if mode == "timeline-track-queries" then record.timelineTrackQueries = captureNeighborhoodStructures(mode) end
+        if mode == "timeline-edit-preview" then record.timelineEditPreview = captureNeighborhoodStructures(mode) end
         if mode == "timeline-track-info" then record.timelineTrackInfo = captureNeighborhoodStructures(mode) end
         if mode == "timeline-source-counts" then record.timelineSourceCounts = captureNeighborhoodStructures(mode) end
         if mode == "timeline-lifecycle-read" then record.timelineLifecycleRead = captureNeighborhoodStructures(mode) end

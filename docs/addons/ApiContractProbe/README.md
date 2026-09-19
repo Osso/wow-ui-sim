@@ -1,5 +1,23 @@
 # API Contract Probe
 
+## Manual timeline Edit Mode preview
+
+**Warning:** `/apicontract timeline-edit-preview <label>` temporarily adds preview events if later run manually in a client. Cleanup can fail or be skipped. `CancelEditModeEvents` removes **all** Edit Mode events, not recorder-owned events. This mode establishes neither atomic ownership nor preservation of other events. It is excluded from `all`; no native execution was performed during preparation.
+
+The recorder requires an accessible `EditModeManagerFrame:IsEditModeActive()` result exactly `false` and `GetEventCountBySource(originalPublishedEditModeValue)` exactly zero. The source comes from guarded `Enum.EncounterTimelineEventSource.EditMode`, with no numeric fallback. Missing, restricted, invalid or failing gates perform no mutations. Both mutators must initially be callable. After their lookup, a second active/count gate is recorded immediately before the one permitted `AddEditModeEvents()` attempt. Each state check reacquires the actual manager and invokes its guarded original method receiver.
+
+After an add attempt—including an error that may follow a side effect—the recorder independently captures the post-add count and first eight scalar event-list positions. It resolves cleanup and reads Edit Mode state again. An accessible `true` skips broad cancellation; otherwise it makes exactly one cancellation attempt if the function remains accessible/callable. Unknown cleanup state does not suppress that attempt, but prevents confirmation. No retry, timer, event-info lookup, ownership classification or event-ID equality comparison is used.
+
+Final count, bounded event list, and Edit Mode state are recorded independently. `confirmed-by-observation` requires an accessible zero final count, accessible false final state and successful accessible cancel results; a zero-return cancel is accepted. Any failed, restricted, malformed or truncated post-attempt observation leaves cleanup unconfirmed. The session-local lock then rejects later preview attempts even if `ApiContractProbeDB` is reset. Confirmation is only the recorded postcondition, not a native cleanup guarantee.
+
+`timelineEditPreview` stores `source`, `baseline`, `preflight`, `beforeAdd`, `add`, `post`, `cleanup`, `final`, `status` and `locked`. Raw result tuples preserve arity/nil positions up to 16 values; strings cap at 256 bytes, labels at 128 bytes and snapshots at ten. The maximum is **12 experiment API calls per snapshot**: four active-state reads, four source-count reads, two list reads, one add and one cancel. The shared build/time provenance calls are separate. List reads inspect only positions 1–8 without length or general traversal; no raw objects are retained.
+
+Pinned PTR `EncounterTimelineDocumentation.lua:11–18,42–44,100–114,144–151`, `Blizzard_EncounterTimeline/EncounterTimeline.lua:278–296`, and `Blizzard_EditMode/Shared/EditModeManager.lua:144–146` establish call shapes and the broad cancel/timer boundary. Native population, loop duration, event ordering, isolation and security semantics remain unverified. Fifteen local actual-TOC/slash fixtures cover recorder mechanics; final acceptance remains separate.
+
+```sh
+luajit docs/addons/ApiContractProbe/tests/timeline_edit_preview.lua docs/addons/ApiContractProbe
+```
+
 ## Manual recraft reagent input reads
 
 `/apicontract recraft-reagent-read <label>` is excluded from `all`. Equipment slots **1 and 2** independently feed `ItemLocation:CreateFromEquipmentSlot(slot)` and `C_Item.GetItemGUID(originalLocation)`. Only the first original accessible string GUID is eligible; never parse, clone, coerce or truncate an input GUID. Independently call `GetRecipesTracked(false)` once, then `GetRecipeSchematic(id, false, nil)` for the first two original accessible finite recipe IDs. Inspect only two slots and two original reagents per slot.
