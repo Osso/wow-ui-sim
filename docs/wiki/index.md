@@ -2,7 +2,7 @@
 
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial because the existing probe records event ordering, snapshots, marks, and pre-login entries. Actual transition identity, an unchanged-size control, and native equal-size evidence remain missing; no recorder or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
 
-Runtime `e26d37b3d` adds manual `abbreviation-options <label>`, excluded from `all`: one explicit-nil default-breakpoint producer, one owned `breakpointData` options field, and omitted/options calls across eight fixed finite numbers and two functions. It caps at thirty-three calls; eleven fixtures and six existing abbreviation regressions prove recorder mechanics only. No configuration or locale mutation, native formatting, equality, default, or conformance claim follows. See [[api-contract-probes]].
+Runtime `e26d37b3d` adds manual `abbreviation-options <label>`, excluded from `all`: one explicit-nil default-breakpoint producer, one owned `breakpointData` options field, and omitted/options calls across eight fixed finite numbers and two functions. Initial independent verification preserved an 8-passed/1-failed numeric-access revocation before forwarding. Correction `a4096bb6f` adds bounded sequential reauthorization: 17 fixtures, including six new fixtures, 64 exact RED cases, and 128 staged cross-input cases. This is not atomic authorization; independent final verification remains pending. No configuration or locale mutation, native formatting, equality, default, or conformance claim follows. See [[api-contract-probes]].
 
 ## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
 

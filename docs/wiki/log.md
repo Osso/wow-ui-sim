@@ -2,6 +2,10 @@
 
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial from existing capture only: event ordering, snapshots, marks, and pre-login buffering. Actual window-transition identity, an unchanged-size control, and native equal-size evidence remain missing. No recorder, native execution, or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
 
+## [2026-09-19] investigation | Correct abbreviation-options final guard ordering
+
+Initial independent verification of `e26d37b3d` preserved an 8-passed/1-failed failure: final numeric access validation could revoke an already checked original breakpoint table or owned options table before forwarding. Correction `a4096bb6f` adds bounded sequential reauthorization after the numeric guard. Development evidence records 17 fixtures, including six new fixtures, 64 exact numeric-guard RED cases, and 128 staged cross-input cases. It is not an atomic authorization claim; independent final verification remains pending. No native execution or credit occurred. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded abbreviation-options recorder
 
 Documented `e26d37b3d`: manual `abbreviation-options <label>`, excluded from `all`, calls `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once and uses an accessible original table only as `breakpointData` on one owned options table. Eight fixed finite numbers each receive omitted and owned-options calls to `AbbreviateNumbers` and `AbbreviateLargeNumbers`, under thirty-three calls per snapshot. Eleven fixtures and six older abbreviation regressions establish local recorder mechanics only. No configuration or locale mutation, native formatting/equality/default, conformance, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
