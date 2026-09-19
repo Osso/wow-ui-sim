@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded LFG playstyle-format recorder
+
+Documented `95a63168f`: manual `lfg-playstyle-format <label>`, excluded from `all`, forwards at most two original category IDs and two original activity IDs per category through the bounded LFG producer chain. The vendor group argument `0` remains separate from the guarded published PvE filter; formatting receives separately guarded published `None` values and original activity-info objects only. Eleven calls, eleven actual TOC/slash fixtures, and eleven plus sixteen focused regressions establish local recorder mechanics only. No search-result/listing operation, mutation, native listing, default, formatting, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Prepare bounded crafting schematic recorder
 
 Documented `b29aae9bf`: manual `crafting-schematic-read <label>`, excluded from `all`, takes up to four original accessible finite IDs from `C_TradeSkillUI.GetRecipesTracked(false)` and independently calls `GetRecipeSchematic(id, false, nil)`. It reads only fixed current fields across four bounded reagent slots, reagents, and variable quantities. Five API calls, eleven fixtures, and sixteen neighborhood regressions prove local recorder mechanics only. No crafting/order behavior, wrapper structure, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
