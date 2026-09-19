@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Record omitted quest-favor arguments
+
+Documented `996db2fdf`: four original produced-ID quest-favor cases remain unchanged; independent zero-argument and explicit `nil, false` calls run even when the producer is unavailable. Eleven calls per snapshot and seventeen cumulative fixtures, including seven new cases, are local recorder proof only. No default, clamp, equality, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Record omitted and nil unit role-predicate arguments
 
 Documented `ba0d2edc0`: the fixed twenty-four token calls remain unchanged; separate zero-argument and explicit-nil `UnitIsNPCAsPlayer` observations raise the bound to twenty-six calls. Sixteen cumulative fixtures, including six new cases, are local recorder proof only. No equivalence, default, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
