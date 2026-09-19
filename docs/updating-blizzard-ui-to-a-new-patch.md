@@ -29,6 +29,7 @@ Profile → Gethe branch:
 | mists | `classic` (current Classic = Mists of Pandaria) |
 | era | `classic_era` |
 | anniversary | `classic_anniversary` |
+| wowforever | `forever` (1.60.1.69913 source inventory only; runtime profile pending) |
 
 ## Steps
 
