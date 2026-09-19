@@ -1,6 +1,10 @@
+## [2026-09-19] investigation | Correct recipe-quality final guard ordering
+
+Initial independent verification of `b7ea594a2` was 7/9: a frozen ninth original-ID guard could revoke quality, recipe-list ancestry, or schematic ancestry after prior checks, forwarding one revoked input in each of twenty-four cases. Correction `f132248d4` boundedly reauthorizes those original sources around an original-argument recheck without reconstruction or coercion. Development RED covered thirteen existing plus five new fixture groups; GREEN passed all eighteen with zero forbidden forwards across twenty-four frozen and 288 staged cross-input occurrences. Frozen cases overlap staged group three; counts are not disjoint. Fixed-revision independent verification passed 9/9. This makes no atomic-authorization, native-acceptance, conformance, or native-execution claim. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Prepare bounded recipe-quality input recorder
 
-Runtime `b7ea594a2` adds manual `/apicontract recipe-quality-acceptance <label>`, excluded from `all`. Up to four original tracked IDs feed the same schematic's original `productQuality`, unchanged, into `GetRecipeItemQualityInfo`; only thirteen guarded result fields are recorded. Nine calls, thirteen fixtures, ten item-quality regressions, and eleven schematic regressions establish local input-acceptance recorder mechanics only. No valid-index/range/maximum/equivalence, crafting, or native-acceptance claim follows. See [[api-contract-probes]].
+Runtime `b7ea594a2` adds manual `/apicontract recipe-quality-acceptance <label>`, excluded from `all`. Up to four original tracked IDs feed the same schematic's original `productQuality`, unchanged, into `GetRecipeItemQualityInfo`; only thirteen guarded result fields are recorded. Nine calls, eighteen cumulative fixtures, ten item-quality regressions, and eleven schematic regressions establish local input-acceptance recorder mechanics only. No valid-index/range/maximum/equivalence, crafting, or native-acceptance claim follows. See [[api-contract-probes]].
 
 ## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
 
