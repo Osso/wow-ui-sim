@@ -1,5 +1,9 @@
 ## [2026-09-19] audit | Reconcile existing same-size scale-event capture
 
+## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder
+
+Runtime `20691891d` adds manual `/apicontract crafting-enchant-items <label>`, excluded from `all`. It forwards up to four original accessible finite tracked recipe IDs from one `GetRecipesTracked(false)` call to `GetEnchantItems(id, nil)` with the optional reagent intentionally unpopulated. It records only first-eight scalar or opaque GUID values from each first returned item list. Five API calls, twelve actual TOC/slash fixtures, and eleven crafting-schematic regressions prove local recorder mechanics only. No enchant, crafting, recraft, mutation, recipe validity, reagent semantics, list completeness, or native-execution claim follows. See [[api-contract-probes]].
+
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial because the existing probe records event ordering, snapshots, marks, and pre-login entries. Actual transition identity, an unchanged-size control, and native equal-size evidence remain missing; no recorder or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
 
 Runtime `e26d37b3d` adds manual `abbreviation-options <label>`, excluded from `all`: one explicit-nil default-breakpoint producer, one owned `breakpointData` options field, and omitted/options calls across eight fixed finite numbers and two functions. Initial independent verification preserved an 8-passed/1-failed numeric-access revocation before forwarding. Correction `a4096bb6f` adds bounded sequential reauthorization: 17 fixtures, including six new fixtures, 64 exact RED cases, and 128 staged cross-input cases. This is not atomic authorization; independent final verification remains pending. No configuration or locale mutation, native formatting, equality, default, or conformance claim follows. See [[api-contract-probes]].

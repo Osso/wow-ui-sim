@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder
+
+Documented `20691891d`: manual `crafting-enchant-items <label>`, excluded from `all`, reads one `GetRecipesTracked(false)` tuple and forwards at most four original accessible finite tracked recipe IDs to `GetEnchantItems(id, nil)`. The optional reagent remains unpopulated; only first-eight scalar or opaque GUID values from each first returned item list are recorded. Five calls, twelve actual TOC/slash fixtures, and eleven schematic regressions establish recorder mechanics only. No enchant/recraft/crafting mutation, recipe validity, reagent semantics, list completeness, native validity, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] audit | Reconcile existing same-size scale-event capture
 
 Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial from existing capture only: event ordering, snapshots, marks, and pre-login buffering. Actual window-transition identity, an unchanged-size control, and native equal-size evidence remain missing. No recorder, native execution, or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
