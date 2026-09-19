@@ -3434,12 +3434,12 @@
       "reviewed_coverage": {
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
-          "Manual unit-role-predicates independently records UnitIsNPCAsPlayer once for each of eight fixed unit tokens with guarded raw tuples"
+          "Manual unit-role-predicates independently records UnitIsNPCAsPlayer once for each of eight fixed unit tokens with guarded raw tuples",
+          "Separate UnitIsNPCAsPlayer calls record omitted and explicit nil unit inputs with exact zero/one argument arity; existing fixed-token matrix remains unchanged"
         ],
         "missing": [
           "Native populated unit-role fixtures and classifications",
-          "Native validation, transitions and restricted-context behavior",
-          "Omitted/nil unit argument observations"
+          "Native validation, transitions and restricted-context behavior"
         ]
       },
       "native_execution": "not-established-by-this-inventory",
