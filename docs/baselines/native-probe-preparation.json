@@ -10847,11 +10847,12 @@
         "observations": [
           "Manual creation of two fresh heal prediction calculators with five read-only getters repeated twice",
           "Raw return arity and accessible scalar results with opaque objects and errors",
-          "Manual heal-calculator-modes uses one fresh owned calculator for three baseline mode reads, seven published enum setter/readback pairs and Reset/ResetPredictedValues observations without asserting equivalence"
+          "Manual heal-calculator-modes uses one fresh owned calculator for three baseline mode reads, seven published enum setter/readback pairs and Reset/ResetPredictedValues observations without asserting equivalence",
+          "Manual unit-heal-calculator creates separate player/target calculators and records five getters before and after UnitGetDetailedHealPrediction(unit, nil, originalCalculator), without treating its no-return population API as a UnitHealPredictionValues producer"
         ],
         "missing": [
           "Native matching-build fresh-object output corpus",
-          "Populated heal and damage absorb fixtures and producer-backed transitions",
+          "Native populated heal/damage absorb fixtures, other healer/unit inputs and authoritative transitions",
           "Native reset/default semantics, populated-state resets and restricted-context behavior"
         ]
       },
