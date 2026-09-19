@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded crafting schematic recorder
+
+Runtime `b29aae9bf` adds manual `/apicontract crafting-schematic-read <label>`, excluded from `all`. It forwards at most four original accessible finite `C_TradeSkillUI.GetRecipesTracked(false)` IDs to `GetRecipeSchematic(id, false, nil)`, inspecting fixed current fields through four bounded slots, reagents, and variable quantities. Five API calls per snapshot, eleven fixtures, and sixteen neighborhood regressions establish local recorder mechanics only. No crafting/order behavior, wrapper structure, or native conclusion follows. See [[api-contract-probes]].
+
 ## [2026-09-19] investigation | Record omitted quest-favor arguments
 
 Runtime `996db2fdf` keeps the four produced-ID `/apicontract quest-favor <label>` cases unchanged and independently adds `GetQuestLogRewardFavor()` plus `GetQuestLogRewardFavor(nil, false)`, even when the producer is unavailable. Eleven calls per snapshot and seventeen cumulative fixtures, including seven new cases, establish local recorder mechanics only. No default, clamp, equality, or native conclusion follows. See [[api-contract-probes]].

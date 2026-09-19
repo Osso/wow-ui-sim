@@ -1,3 +1,7 @@
+## [2026-09-19] investigation | Prepare bounded crafting schematic recorder
+
+Documented `b29aae9bf`: manual `crafting-schematic-read <label>`, excluded from `all`, takes up to four original accessible finite IDs from `C_TradeSkillUI.GetRecipesTracked(false)` and independently calls `GetRecipeSchematic(id, false, nil)`. It reads only fixed current fields across four bounded reagent slots, reagents, and variable quantities. Five API calls, eleven fixtures, and sixteen neighborhood regressions prove local recorder mechanics only. No crafting/order behavior, wrapper structure, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
+
 ## [2026-09-19] investigation | Record omitted quest-favor arguments
 
 Documented `996db2fdf`: four original produced-ID quest-favor cases remain unchanged; independent zero-argument and explicit `nil, false` calls run even when the producer is unavailable. Eleven calls per snapshot and seventeen cumulative fixtures, including seven new cases, are local recorder proof only. No default, clamp, equality, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
