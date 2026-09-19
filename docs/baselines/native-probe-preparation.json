@@ -10435,11 +10435,12 @@
         "recorder": "docs/addons/ApiContractProbe",
         "observations": [
           "Manual AbbreviateNumbers and AbbreviateLargeNumbers calls across twenty-five shared finite inputs with options omitted",
-          "Locale and raw accessible scalar return arity, with opaque errors"
+          "Locale and raw accessible scalar return arity, with opaque errors",
+          "Manual abbreviation-options forwards original default breakpoint tables through the declared breakpointData option for eight literal numbers, independently retaining omitted-options controls without inspecting producer entries"
         ],
         "missing": [
           "Native matching-build output and locale corpus",
-          "NumberAbbrevOptions, breakpoint data and configuration producer fixtures",
+          "Breakpoint entry semantics, configuration objects, locale options and populated native option results",
           "Native coercion and restricted-context behavior"
         ]
       },
