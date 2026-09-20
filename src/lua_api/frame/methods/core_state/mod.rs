@@ -10,7 +10,6 @@ pub mod alpha;
 pub mod identity;
 pub mod input;
 pub mod region;
-#[cfg(feature = "retail-12-1-5")]
 mod round_layout;
 pub mod scale;
 pub mod size;
@@ -43,8 +42,12 @@ pub fn register_all(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     register_input(state, mt)?;
     register_scale(state, mt)?;
     register_region(state, mt)?;
-    #[cfg(feature = "retail-12-1-5")]
-    round_layout::register(state, mt)?;
+    if cfg!(any(
+        feature = "retail-12-1-5",
+        feature = "client-wowforever"
+    )) {
+        round_layout::register(state, mt)?;
+    }
     Ok(())
 }
 

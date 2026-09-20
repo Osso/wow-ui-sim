@@ -4,7 +4,7 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 
 ## What it must do
 
-- [x] Expose the native boolean setter/getter under the cumulative `retail-12-1-5` epoch, defaulting to false independently for Frame, Texture, and FontString objects.
+- [x] Expose the boolean setter/getter under the cumulative `retail-12-1-5` epoch and `client-wowforever`, defaulting to false independently for Frame, Texture, and FontString objects. Forever reuses the existing layout model without enabling a retail epoch; its real PixelUtil recursive consumer must toggle frames, regions, and descendants and restore fractional dimensions when disabled.
 - [x] Preserve requested dimensions and anchor offsets while resolving rounded explicit dimensions and offsets using `768 / (physical display height × effective region scale)`. `GetPoint` retains requested offsets; disabling rounding restores fractional layout.
 - [x] Match captured bottom-left, center, two-anchor stretch, object-scale, parent-scale/reposition, Texture all-points, and explicit FontString cases. Do not round inherited target geometry or stretch-derived dimensions a second time.
 - [x] Return coherent rounded dimensions through `GetRect`, `GetSize`, `GetWidth`, and `GetHeight`, with the same results when enabled before or after geometry assignment and on subsequent timer ticks.
@@ -27,6 +27,7 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 ## Tests asserting this spec
 
 - `tests/pixel_rounding_probe.rs` — grouped native capture replay and display-resize regressions, plus existing read-only probe protocol tests.
+- `tests/wowforever_round_layout.rs` — real Forever PixelUtil recursive traversal, per-type method publication, rounded dimensions, and restoration. This is simulator behavior proof, not a native Forever capture.
 
 ## Known gaps (current cycle)
 
