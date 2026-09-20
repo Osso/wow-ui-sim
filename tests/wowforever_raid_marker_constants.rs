@@ -115,10 +115,10 @@ fn forever_marker_shared_consumer_uses_real_search_and_assignment() {
         button.IconOverlay = button:CreateTexture()
         TestMarkerShared.SetUpTargetMarkerButton(bar, button, 1)
         assert(shownMarker == 2, "initial marker: " .. tostring(shownMarker))
-        assert(not button.IconOverlay:IsShown(), "initial overlay")
         button:GetScript("OnClick")(button, "LeftButton", true)
         assert(GetRaidTargetIndex("target") == 2, "assigned marker: " .. tostring(GetRaidTargetIndex("target")))
         assert(shownMarker == 3, "next marker: " .. tostring(shownMarker))
+        assert(not button.IconOverlay:IsShown(), "updated overlay")
     "#,
     )
     .unwrap();
