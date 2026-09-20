@@ -670,6 +670,7 @@ fn text_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScr
 fn state_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 10] {
     [
         ("OnKeyDown", scripts.on_key_down.last()),
+        ("OnGamePadStick", scripts.on_game_pad_stick.last()),
         ("OnKeyUp", scripts.on_key_up.last()),
         ("OnValueChanged", scripts.on_value_changed.last()),
         ("OnEnable", scripts.on_enable.last()),

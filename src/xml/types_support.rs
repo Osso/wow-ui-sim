@@ -239,6 +239,8 @@ pub struct ScriptsXml {
     pub on_key_down: Vec<ScriptBodyXml>,
     #[serde(rename = "OnKeyUp", default)]
     pub on_key_up: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnGamePadStick", default)]
+    pub on_game_pad_stick: Vec<ScriptBodyXml>,
     #[serde(rename = "OnValueChanged", default)]
     pub on_value_changed: Vec<ScriptBodyXml>,
     #[serde(rename = "OnEnable", default)]
