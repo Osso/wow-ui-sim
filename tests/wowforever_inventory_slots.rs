@@ -12,6 +12,7 @@ fn load_source(env: &WowLuaEnv, relative: &str) {
 #[test]
 fn forever_paper_doll_initializes_real_equipment_buttons() {
     let env = WowLuaEnv::new().unwrap();
+    load_source(&env, "Blizzard_FrameXML/Camelot/EquipmentFlyout.lua");
     load_source(&env, "Blizzard_ItemButton/Shared/ItemButtonTemplate.lua");
     load_source(&env, "Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua");
     load_source(&env, "Blizzard_UIPanels_Game/Camelot/PaperDollFrame.lua");
