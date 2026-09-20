@@ -58,8 +58,12 @@ fn wowforever_profile_reports_build_identity_and_finite_event_validation() {
         "GUILD_RANKS_UPDATE_ACTIVE_PLAYER",
         "INPUT_DEVICE_INTERFACE_TRANSITION",
         "LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY",
+        "SOCIAL_UI_SYSTEM_STATUS_UPDATED",
         "UNIT_HAPPINESS",
+        "UNIT_PET_TRAINING_POINTS",
         "UNIT_PING_PIN_ADDED",
+        "UNIT_PING_PIN_REMOVED",
+        "DISCORD_STATUS_UPDATE",
     ] {
         assert!(wow_ui_sim::event::is_registerable_event(event), "{event}");
     }
