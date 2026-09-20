@@ -1,6 +1,6 @@
 #![cfg(feature = "client-wowforever")]
 
-use wow_ui_sim::c_api::weapon_enchants::WeaponEnchant;
+use wow_ui_sim::c_api::weapon_enchants::{TEMPORARY_ENCHANT_TYPE, WeaponEnchant};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -11,7 +11,7 @@ fn forever_weapon_enchants_empty_lists() {
 
 fn enchant(id: u32, time_left: f64) -> WeaponEnchant {
     WeaponEnchant {
-        enchant_type: 2,
+        enchant_type: TEMPORARY_ENCHANT_TYPE,
         time_left,
         charges: 3,
         enchant_id: id,
@@ -45,7 +45,7 @@ fn forever_weapon_enchants_share_updates_with_legacy_query() {
         assert(next(C_Item.GetWeaponEnchantInfo(1)) == nil)
         local _, t, _, _, off = GetWeaponEnchantInfo()
         assert(t == 15000 and off == false)
-        assert(not pcall(C_Item.GetWeaponEnchantInfo, 2))
+        assert(not pcall(C_Item.GetWeaponEnchantInfo, 3))
     "#,
     )
     .unwrap();
@@ -55,6 +55,30 @@ fn forever_weapon_enchants_share_updates_with_legacy_query() {
             .eval::<bool>("return next(C_Item.GetWeaponEnchantInfo(0)) == nil")
             .unwrap()
     );
+}
+
+#[test]
+fn forever_ranged_weapon_enchants_preserve_legacy_returns() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(Enum.WeaponSlot.Ranged == 2); assert(Enum.WeaponSlotMeta.MaxValue == 2); assert(Enum.WeaponSlotMeta.NumValues == 3); assert(next(C_Item.GetWeaponEnchantInfo(2)) == nil)").unwrap();
+    env.state()
+        .borrow_mut()
+        .weapon_enchants
+        .get_mut(2)
+        .unwrap()
+        .push(enchant(44, 45000.0));
+    env.exec(
+        r#"
+        local ranged = C_Item.GetWeaponEnchantInfo(Enum.WeaponSlot.Ranged)[1]
+        assert(ranged.hasEnchant and ranged.enchantID == 44 and ranged.timeLeft == 45000)
+        assert(select('#', GetWeaponEnchantInfo()) == 8)
+        local main, mt, mc, mi, off, ot, oc, oi = GetWeaponEnchantInfo()
+        assert(main == false and mt == 0 and mc == 0 and mi == 0)
+        assert(off == false and ot == 0 and oc == 0 and oi == 0)
+        assert(not pcall(C_Item.GetWeaponEnchantInfo, 3))
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -94,6 +118,21 @@ fn forever_buff_consumer_reads_current_enchants() {
     "#,
     )
     .unwrap();
+    env.state()
+        .borrow_mut()
+        .weapon_enchants
+        .get_mut(2)
+        .unwrap()
+        .push(enchant(44, 45000.0));
+    env.state().borrow_mut().weapon_enchants[1].push(enchant(43, 30000.0));
+    env.exec("probe.auraInfo = {}; BuffFrameMixin.UpdateTemporaryEnchantmentBuffs(probe); assert(#probe.auraInfo == 3); local ids = {}; for _, aura in ipairs(probe.auraInfo) do ids[aura.ID] = true end; assert(ids[16] and ids[17] and ids[18])").unwrap();
+    env.state().borrow_mut().weapon_enchants[1].clear();
+    env.state()
+        .borrow_mut()
+        .weapon_enchants
+        .get_mut(2)
+        .unwrap()
+        .clear();
     env.state().borrow_mut().weapon_enchants[0].clear();
     env.exec("probe.auraInfo = {}; BuffFrameMixin.UpdateTemporaryEnchantmentBuffs(probe); assert(#probe.auraInfo == 0)").unwrap();
 }

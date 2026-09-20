@@ -6,6 +6,18 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn register(state: &mut LuaState) {
     let enums = super::helpers::ensure_global_table(state, "Enum");
+    publish(
+        state,
+        enums,
+        "WeaponSlot",
+        &[("MainHand", 0), ("OffHand", 1), ("Ranged", 2)],
+    );
+    publish(
+        state,
+        enums,
+        "WeaponSlotMeta",
+        &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
+    );
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
     publish(state, enums, "GamepadPossessBarOverride", POSSESS_OVERRIDES);

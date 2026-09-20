@@ -147,7 +147,7 @@ pub struct SimState {
     pub combat_audio_format_settings: HashMap<(i32, i32), f64>,
     /// Simulator tracking membership; empty initially, independent of task records.
     pub neighborhood_tracked_tasks: BTreeSet<i32>,
-    pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 2],
+    pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
     pub last_sound_kit_requested: Option<u32>,
     pub last_sound_file_requested: Option<String>,
