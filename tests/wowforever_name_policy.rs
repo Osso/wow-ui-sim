@@ -17,10 +17,14 @@ fn forever_name_policy_changes_vendor_first_name_and_is_isolated() {
     // Explicit separator fixture: this test covers name policy, not constants publication.
     env.exec("Constants.CharacterNameSeparatorConsts = { CHARACTERNAME_SURNAME_SEPARATOR = '-' }")
         .unwrap();
-    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
-        .unwrap()
-        .join("Blizzard_FrameXMLUtil/Camelot/NameUtil.lua");
-    env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
+    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    for source in [
+        "Blizzard_SharedXMLBase/Compat.lua",
+        "Blizzard_FrameXMLUtil/Camelot/NameUtil.lua",
+    ] {
+        env.exec(&std::fs::read_to_string(addons.join(source)).unwrap())
+            .unwrap();
+    }
     env.exec("assert(NameUtil.GetUnitFirstName('player') == 'Ada-Lovelace')")
         .unwrap();
     env.state()
