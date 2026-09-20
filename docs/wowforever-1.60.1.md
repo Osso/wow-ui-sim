@@ -20,6 +20,8 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | CASC mappings and cache sync | `65139f909` | Refreshing the community listfile added 592 generated path-to-FDID rows. Rebuilding then extracted all 4,398 manifest files from local `wow_classic_beta` CASC. |
 | Loader-bound `require` | `be073174d`, `55c9b3d27`, `964358618`, `78cf08372`, `23928cfb7` | Forever-only `require` resolves completed addon Lua modules, retains values/provenance across GC, enforces direct TOC dependencies for disk callers, and never becomes filesystem or `package` loading. |
 | Family TOC routing | `5e26960b6` | Corrects `[Family]` from `Classic` to `Mainline`; `[Game]` remains `Camelot`. This loads base `NineSliceLayouts`, `InputUtil`, and shared-panel definitions before Camelot overrides, while still excluding generic `mainline`-annotated TOC entries. |
+| Math utilities | `0a354c0e0` | Reuses the simulator's existing math extensions for Forever so `MathUtil.lua` can publish `Round` and related aliases. A real `MathUtil.lua` fixture covers the aliases and extension behavior; no retail API epoch is enabled. |
+| Finite event registration | `4deca63f1` | Adds source-documented Forever acceptance and ordinary frame dispatch for `PET_STATS_UPDATE`, `SHARD_TRANSFER`, `SHARD_TRANSFER_IMMINENT`, `GUILD_PREFERRED_PLAY_SETTINGS_UPDATED`, and `HIDDEN_GROUP_BUFFS_CHANGED`; invented names remain rejected. |
 
 ## Proof
 
@@ -32,9 +34,9 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 
 These source-backed items were identified from the initial baseline but are not recorded here as completed compatibility:
 
-- expose existing Forever-needed math and table utility registrations without enabling a retail API epoch;
+- expose existing Forever-needed table utility registrations without enabling a retail API epoch;
 - expose the existing timed-signal-map implementation for `C_Timer.NewTimedSignalMap`;
-- publish source-documented Forever enums and five finite registerable events;
+- publish the remaining source-documented Forever enum groups;
 - expose the existing cycle-safe `securecopy` helper for Forever;
 - rerun startup after each causal group, then classify remaining loader, API, template, widget, atlas, and input-handler gaps.
 
