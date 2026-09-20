@@ -18,7 +18,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn query(state: &mut LuaState, predicate: fn(UnitInteraction) -> bool) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let result = resolve_unit_snapshot(&borrow_state(state)?, &unit)
+    let result = resolve_unit_snapshot(&*borrow_state(state)?, &unit)
         .is_some_and(|unit| predicate(unit.interaction));
     state.push(Val::Bool(result));
     Ok(1)
