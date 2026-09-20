@@ -1,3 +1,7 @@
+## [2026-09-20] investigation | Fix Forever WorldMap sustained update failure
+
+Startup-only acceptance missed repeated `Blizzard_WorldMap` updates failing with nil `targetScale`. `WorldMapMixin:OnShow()` aborted before `SetMapID()` because the Camelot quest-count consumer lacked source-published `Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT = 40`. Commit `ed4c97a8a` publishes the Forever-only constant. Actual WorldMap Show plus 60 GUI-style ticks passes 1/1 with a positive target scale and zero errors; a fresh 20-second GUI run records no Lua error, update failure, nil comparison, or warning. Updated [[forever-clean-startup]], index, spec, and the Forever report.
+
 ## [2026-09-20] acceptance | Clean Forever 1.60.1 startup
 
 Immutable batch fifteen at `7e449f911` compiled `gui,client-wowforever`, copied and hashed its binary, then ran `lua-errors` with no addons or SavedVariables: exit 0, stdout `[]`, zero records and occurrences. The subsequent interaction script completed its Gamepad-page, pet-ID, EditMode, weapon-enchant, BuffFrame, interact-icon, MainActionBar, and chat-overflow assertions and emitted no Lua errors. Updated [[forever-clean-startup]], the running report, index, and current Forever baseline. Native Gamepad hardware, pet-slot offset, dynamic EditMode policy, and secret-value limits remain explicit.

@@ -1,6 +1,6 @@
-## [2026-09-20] acceptance | Clean Forever 1.60.1 startup
+## [2026-09-20] acceptance | Clean Forever 1.60.1 sustained runtime
 
-Immutable batch fifteen at `7e449f911` loads the matching Forever UI with `lua-errors` exit 0 and `[]` output. A post-start interaction script checks both Gamepad page units, pet IDs, Modern default, weapon enchants, BuffFrame, interaction icons, MainActionBar, and chat overflow. This proves clean simulator startup and scoped interactions, not native hardware, pet-slot offset, dynamic EditMode policy, or secret-value conformance. See [[forever-clean-startup]] and the [Forever report](../wowforever-1.60.1.md).
+Startup-only proof missed a repeated WorldMap update failure. Commit `ed4c97a8a` publishes the source-documented quest-log limit `40`, allowing the actual `WorldMapFrame:Show()` path to reach `SetMapID()` and initialize scroll `targetScale`. The consumer plus 60 GUI-style ticks passes 1/1 with zero collected errors; a fresh 20-second GUI run records no Lua error, update failure, nil comparison, or warning. Earlier startup and interaction proofs retain their narrower scope. See [[forever-clean-startup]] and the [Forever report](../wowforever-1.60.1.md).
 
 ## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
 
@@ -1274,7 +1274,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
-| [[forever-clean-startup]] | Immutable `7e449f911` Forever startup reaches `lua-errors` exit 0 and scoped Gamepad/BuffFrame/EditMode/chat interaction checks; native policy limits remain explicit. |
+| [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
 | [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 3410 rows with current status and proof boundaries recorded per slice; duration curve-evaluation implementation is pending GREEN and independent proof. |
 | [[duration-curve-evaluation]] | Four duration curve-evaluation methods now reuse modeled getters and existing scalar/color curves; RED evidence is recorded, while GREEN and independent proof remain pending. |
 | [[patch-12-0-5-api-audit]] | 12.0.5 probe-driven audit: 33 best-effort rows; 4 behavior gaps are evidence-required; 1 provenance-only exception-requested row is approved |
