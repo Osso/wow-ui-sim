@@ -6,7 +6,9 @@
 mod addon_system;
 mod combat_system;
 mod edit_mode;
+mod forever_shared;
 mod game_system;
+pub use forever_shared::ENUMS as FOREVER_SHARED_ENUMS;
 mod widget;
 
 pub use addon_system::*;
@@ -126,8 +128,6 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     UI_FRAME_TYPE,
     COOLDOWN_VIEWER_CATEGORY,
     #[cfg(feature = "retail-12-1-0")]
-    COOLDOWN_VIEWER_SOUND,
-    #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER,
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE,
@@ -189,8 +189,6 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
 // All explicit value enums (for batch registration)
 pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     #[cfg(feature = "retail-12-1-0")]
-    COOLDOWN_VIEWER_SOUND_META,
-    #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META,
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE_META,
@@ -200,10 +198,6 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     ROLODEX_TYPE_LEGACY_FRIEND,
     #[cfg(feature = "retail-12-1-0")]
     ROLODEX_TYPE_META,
-    #[cfg(feature = "retail-12-1-0")]
-    BATTLE_NET_FRIEND_LEVEL,
-    #[cfg(feature = "retail-12-1-0")]
-    BATTLE_NET_FRIEND_LEVEL_META,
     #[cfg(feature = "retail-12-1-0")]
     BATTLE_NET_FRIEND_TAG,
     #[cfg(feature = "retail-12-1-0")]
@@ -224,10 +218,6 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     EDIT_MODE_LOSS_OF_CONTROL_SETTING_META,
     #[cfg(feature = "retail-12-1-0")]
     EDIT_MODE_SYSTEM_META,
-    #[cfg(feature = "retail-12-1-0")]
-    VISUAL_ALERT_TYPE,
-    #[cfg(feature = "retail-12-1-0")]
-    VISUAL_ALERT_TYPE_META,
     #[cfg(feature = "retail-12-1-0")]
     RAID_DISPEL_OVERLAY_TYPE_META,
     #[cfg(feature = "retail-12-1-0")]

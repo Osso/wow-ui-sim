@@ -1,7 +1,7 @@
 //! Enum and constant globals: `Enum.*`, `Constants.*`, LE_* values.
 
 use crate::client_profile::{ACTIVE_RETAIL_API_EPOCH, RetailApiEpoch};
-use crate::lua_api::globals::enum_data::{EXPLICIT_ENUMS, SEQUENTIAL_ENUMS};
+use crate::lua_api::globals::enum_data::{EXPLICIT_ENUMS, FOREVER_SHARED_ENUMS, SEQUENTIAL_ENUMS};
 use crate::lua_api::methods::{create_table, table_get, table_set};
 use rilua::LuaApiMut;
 use rilua::Val;
@@ -219,13 +219,13 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     {
         let state = lua.state_mut();
         let enum_table = ensure_global_table(state, "Enum");
-        for &(enum_name, entries) in EXPLICIT_ENUMS.iter() {
+        for &(enum_name, entries) in EXPLICIT_ENUMS.iter().chain(FOREVER_SHARED_ENUMS.0) {
             let enum_values = ensure_table_field(state, enum_table, enum_name);
             for &(variant_name, value) in entries {
                 table_set(state, enum_values, variant_name, Val::Num(value as f64));
             }
         }
-        for &(enum_name, entries) in SEQUENTIAL_ENUMS.iter() {
+        for &(enum_name, entries) in SEQUENTIAL_ENUMS.iter().chain(FOREVER_SHARED_ENUMS.1) {
             let enum_values = ensure_table_field(state, enum_table, enum_name);
             for (index, &variant_name) in entries.iter().enumerate() {
                 table_set(state, enum_values, variant_name, Val::Num(index as f64));

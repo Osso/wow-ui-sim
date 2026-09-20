@@ -183,113 +183,6 @@ pub const COOLDOWN_VIEWER_CATEGORY: SeqEnumDef = (
     &["Essential", "Utility", "TrackedBuff", "TrackedBar"],
 );
 
-#[cfg(feature = "retail-12-1-0")]
-pub const COOLDOWN_VIEWER_SOUND: SeqEnumDef = (
-    "CooldownViewerSound",
-    &[
-        "TextToSpeech",
-        "AnimalsCat",
-        "AnimalsChicken",
-        "AnimalsCow",
-        "AnimalsGnoll",
-        "AnimalsGoat",
-        "AnimalsLion",
-        "AnimalsPanther",
-        "AnimalsRattlesnake",
-        "AnimalsSheep",
-        "AnimalsWolf",
-        "DevicesBoatHorn",
-        "DevicesAirHorn",
-        "DevicesBikeHorn",
-        "DevicesCashRegister",
-        "DevicesJackpotBell",
-        "DevicesJackpotCoins",
-        "DevicesJackpotFail",
-        "DevicesRotaryPhoneDial",
-        "DevicesRotaryPhoneRing",
-        "DevicesStovePipe",
-        "DevicesTrashcanLid",
-        "ImpactsAnvilStrike",
-        "ImpactsBubbleSmash",
-        "ImpactsLowThud",
-        "ImpactsMetalClanks",
-        "ImpactsMetalRattle",
-        "ImpactsMetalScrape",
-        "ImpactsMetalWarble",
-        "ImpactsPopClick",
-        "ImpactsStrangeClang",
-        "ImpactsSwordScrape",
-        "InstrumentsBellRing",
-        "InstrumentsBellTrill",
-        "InstrumentsBrass",
-        "InstrumentsChimeAscending",
-        "InstrumentsGuitarChug",
-        "InstrumentsGuitarPinch",
-        "InstrumentsPitchPipeDistressed",
-        "InstrumentsPitchPipeNote",
-        "InstrumentsSynthBig",
-        "InstrumentsSynthBuzz",
-        "InstrumentsSynthHigh",
-        "InstrumentsWarhorn",
-        "War2AbstractWhoosh",
-        "War2Choir",
-        "War2Construction",
-        "War2MagicChimes",
-        "War2PigSqueal",
-        "War2Saws",
-        "War2Seal",
-        "War2Slow",
-        "War2Smith",
-        "War2SynthStinger",
-        "War2TrumpetRally",
-        "War2ZippyMagic",
-        "War3Bell",
-        "War3CrunchyBell",
-        "War3DrumSplash",
-        "War3Error",
-        "War3Fanfare",
-        "War3GateOpen",
-        "War3Gold",
-        "War3MagicShimmer",
-        "War3Ringout",
-        "War3Rooster",
-        "War3ShimmerBell",
-        "War3WolfHowl",
-        "ShortBellStrike",
-        "ShortBellTree",
-        "ShortBigPot",
-        "ShortBlades",
-        "ShortCoffeeMug",
-        "ShortCowBell",
-        "ShortFingerSnap",
-        "ShortGuitar",
-        "ShortKalimba",
-        "ShortMetalBladeDrop",
-        "ShortMetalBladeOnRod",
-        "ShortMetalImpact",
-        "ShortMiniWoodXylophone",
-        "ShortPaperCup",
-        "ShortSheetMetal",
-        "ShortStovePipe",
-        "ShortStovePipeBlade",
-        "ShortSwordShing",
-        "ShortSynthBleep",
-        "ShortSynthBlurp",
-        "ShortSynthError",
-        "ShortSynthHigh",
-        "ShortTriangle",
-        "ShortWaterDrop",
-        "ShortWineBottle",
-        "ShortWoodXylophone",
-    ],
-);
-
-#[cfg(feature = "retail-12-1-0")]
-pub const COOLDOWN_VIEWER_SOUND_META: EnumDef = (
-    "CooldownViewerSoundMeta",
-    &[("MinValue", 0), ("MaxValue", 93), ("NumValues", 94)],
-);
-
 pub const TTS_VOICE_TYPE: SeqEnumDef = ("TtsVoiceType", &["Standard", "Alternate"]);
 
 #[cfg(feature = "retail-12-1-0")]
@@ -344,18 +237,6 @@ pub const RECENT_ALLIES_FRIEND_TAG_META: EnumDef = (
 // ============================================================================
 // Guild / Social Enums
 // ============================================================================
-
-#[cfg(feature = "retail-12-1-0")]
-pub const BATTLE_NET_FRIEND_LEVEL: EnumDef = (
-    "BattleNetFriendLevel",
-    &[("BattleTag", 1), ("RealID", 2), ("Title", 3)],
-);
-
-#[cfg(feature = "retail-12-1-0")]
-pub const BATTLE_NET_FRIEND_LEVEL_META: EnumDef = (
-    "BattleNetFriendLevelMeta",
-    &[("MinValue", 1), ("MaxValue", 3), ("NumValues", 3)],
-);
 
 #[cfg(feature = "retail-12-1-0")]
 pub const BATTLE_NET_FRIEND_TAG: EnumDef = (

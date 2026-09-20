@@ -691,29 +691,6 @@ pub const WIDGET_TEXT_HORIZONTAL_ALIGNMENT: EnumDef = (
     &[("Left", 0), ("Center", 1), ("Right", 2)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
-pub const VISUAL_ALERT_TYPE: EnumDef = (
-    "VisualAlertType",
-    &[
-        ("MarchingAnts", 1),
-        ("MarchingAntsCyan", 2),
-        ("MarchingAntsRed", 3),
-        ("MarchingAntsGreen", 4),
-        ("MarchingAntsBlue", 5),
-        ("Flash", 6),
-        ("FlashCyan", 7),
-        ("FlashRed", 8),
-        ("FlashGreen", 9),
-        ("FlashBlue", 10),
-    ],
-);
-
-#[cfg(feature = "retail-12-1-0")]
-pub const VISUAL_ALERT_TYPE_META: EnumDef = (
-    "VisualAlertTypeMeta",
-    &[("MinValue", 1), ("MaxValue", 10), ("NumValues", 10)],
-);
-
 pub const BAG_INDEX: EnumDef = (
     "BagIndex",
     &[

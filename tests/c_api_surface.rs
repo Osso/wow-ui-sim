@@ -2,6 +2,94 @@ use std::fs;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-wowforever")]
+mod forever_shared_enums {
+    use super::*;
+
+    fn load_vendor(env: &WowLuaEnv, relative: &str) {
+        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+            .unwrap()
+            .join(relative);
+        env.exec(&fs::read_to_string(&path).unwrap())
+            .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+    }
+
+    #[test]
+    fn forever_shared_enums_match_published_fields_and_metadata() {
+        let env = env();
+        env.exec(r#"
+            checkedEnums = 0
+            local wanted = { BattleNetFriendLevel = true, VisualAlertType = true, CooldownViewerSound = true }
+            APIDocumentation = { AddDocumentationTable = function(_, doc)
+                for _, enum in ipairs(doc.Tables or {}) do
+                    if wanted[enum.Name] then
+                        local actual = assert(Enum[enum.Name], enum.Name)
+                        local meta = assert(Enum[enum.Name .. 'Meta'])
+                        local count = 0
+                        for _ in pairs(actual) do count = count + 1 end
+                        assert(count == #enum.Fields)
+                        for _, field in ipairs(enum.Fields) do
+                            assert(actual[field.Name] == field.EnumValue, field.Name)
+                        end
+                        assert(meta.MinValue == enum.MinValue)
+                        assert(meta.MaxValue == enum.MaxValue)
+                        assert(meta.NumValues == #enum.Fields)
+                        checkedEnums = checkedEnums + 1
+                    end
+                end
+            end }
+        "#).unwrap();
+        for file in [
+            "BattleNetSharedDocumentation.lua",
+            "VisualAlertConstantsDocumentation.lua",
+            "CooldownViewerConstantsDocumentation.lua",
+        ] {
+            load_vendor(&env, &format!("Blizzard_APIDocumentationGenerated/{file}"));
+        }
+        assert_eq!(env.eval::<i32>("return checkedEnums").unwrap(), 3);
+    }
+
+    #[test]
+    fn forever_shared_enums_support_account_friend_rank_queries() {
+        let env = env();
+        load_vendor(&env, "Blizzard_SharedXML/AccountUtil.lua");
+        env.exec(r#"
+            assert(BNet_GetFriendLevelRank(Enum.BattleNetFriendLevel.Title) == 1)
+            assert(BNet_GetFriendLevelRank(Enum.BattleNetFriendLevel.BattleTag) == 2)
+            assert(BNet_GetFriendLevelRank(Enum.BattleNetFriendLevel.RealID) == 3)
+            assert(BNet_IsFriendLevelEqualOrHigher(Enum.BattleNetFriendLevel.RealID, Enum.BattleNetFriendLevel.Title))
+            assert(not BNet_IsFriendLevelEqualOrHigher(Enum.BattleNetFriendLevel.Title, Enum.BattleNetFriendLevel.RealID))
+        "#).unwrap();
+    }
+
+    #[test]
+    fn forever_shared_enums_populate_sound_alert_data() {
+        let env = env();
+        load_vendor(
+            &env,
+            "Blizzard_CooldownViewer/CooldownViewerSettingsConstants.lua",
+        );
+        load_vendor(
+            &env,
+            "Blizzard_CooldownViewer/CooldownViewerSoundAlertData.lua",
+        );
+        env.exec(
+            r#"
+            local cat = CooldownViewerSoundData[Enum.CooldownViewerSoundCategory.Animals][1]
+            assert(cat.soundEnum == 1)
+            assert(cat.soundKitID == 316401)
+            for _, category in pairs(CooldownViewerSoundData) do
+                for _, sound in ipairs(category) do
+                    assert(type(sound.soundEnum) == 'number')
+                    assert(sound.soundEnum >= 0 and sound.soundEnum <= 93)
+                end
+            end
+        "#,
+        )
+        .unwrap();
+    }
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("failed to create Lua environment")
 }
