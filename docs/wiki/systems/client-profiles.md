@@ -157,5 +157,6 @@ Captured in `docs/baselines/`:
 - [[taint-system]] — `runtime_surface_bootstrap.lua` runs before each profile's compat bootstrap
 - [[lua-api]] — frame methods registered globally vs profile-conditional
 - [Client profile spec](../../specs/client-profiles.md) — supported bundle contract and current gaps
+- [Forever 1.60.1 running report](../../wowforever-1.60.1.md) — committed changes, proof, and current limitations
 - [PTR CDN content index](../../ptr-cdn-content-index.md) — offline regeneration contract
 - [[event-system]] — strict-vs-permissive event validator gating

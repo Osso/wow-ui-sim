@@ -1,3 +1,7 @@
+## [2026-09-20] reference | Start Forever 1.60.1 running report
+
+Created [Forever 1.60.1.69913](../wowforever-1.60.1.md) as the patch-specific running report. It records committed profile, manifest/mapping, `require`, and `[Family]` routing work; distinguishes the historical 422-record startup baseline from current proof; and lists source-backed pending compatibility groups without claiming completion. Linked from [[client-profiles]].
+
 ## [2026-09-20] system | Correct Forever Family TOC routing
 
 Commit `5e26960b6` corrects `client-wowforever` `[Family]` substitution from `Classic` to `Mainline`, matching the authenticated Forever source's base `NineSliceLayouts`, `InputUtil`, and shared-panel templates. `[Game]` remains `Camelot`; `camelot`/`classic` annotation filtering remains unchanged, so this does not load general `mainline`-annotated entries. The earlier 422-record startup baseline predates this correction and remains failure evidence only. Updated [[client-profiles]], [[addon-loading]], and the index.
