@@ -31,7 +31,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 - At `65139f909`, the rebuilt Forever sync completed `4,398/4,398` extraction. This proves manifest mapping and cache synchronization; one file used existing CDN recovery.
 - The first `--no-addons --no-saved-vars lua-errors` capture after sync exited `1`, with 422 distinct records and 514 occurrences. It is preserved in [the Forever error baseline](baselines/wowforever-lua-errors.json).
 - That baseline predates `5e26960b6`; it is failure evidence, not a current compatibility result.
-- `0a354c0e0` development proof ran the real Forever `MathUtil.lua` and a `ScrollBox` consumer fixture (`1/1` GREEN). Final independent verification remains pending.
+- `0a354c0e0` development proof ran the real Forever `MathUtil.lua` and a `ScrollBox` consumer fixture (`1/1` GREEN). `4deca63f1` event proof was RED on an unregistered documented event, then GREEN (`2/2`); its concurrent-build warnings prevent treating it as final integration proof. Final independent verification remains pending.
 
 ## Pending fixes
 
