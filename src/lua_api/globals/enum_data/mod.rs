@@ -188,6 +188,10 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
 pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     COOLDOWN_VIEWER_CATEGORY_META,
     #[cfg(feature = "client-wowforever")]
+    forever_shared::COMBAT_AUDIO_ALERT_PULSE_PERCENT_VALUES,
+    #[cfg(feature = "client-wowforever")]
+    forever_shared::COMBAT_AUDIO_ALERT_PULSE_PERCENT_VALUES_META,
+    #[cfg(feature = "client-wowforever")]
     forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER,
     #[cfg(feature = "client-wowforever")]
     forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER_META,

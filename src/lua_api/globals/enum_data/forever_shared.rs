@@ -32,6 +32,30 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
     (&[], &[])
 };
 
+// Forever 1.60.1.69913 CombatAudioAlertSharedDocumentation.lua.
+#[cfg(feature = "client-wowforever")]
+pub(super) const COMBAT_AUDIO_ALERT_PULSE_PERCENT_VALUES: EnumDef = (
+    "CombatAudioAlertPulsePercentValues",
+    &[
+        ("Off", 0),
+        ("Under90Percent", 1),
+        ("Under80Percent", 2),
+        ("Under70Percent", 3),
+        ("Under60Percent", 4),
+        ("Under50Percent", 5),
+        ("Under40Percent", 6),
+        ("Under30Percent", 7),
+        ("Under20Percent", 8),
+        ("Under10Percent", 9),
+    ],
+);
+
+#[cfg(feature = "client-wowforever")]
+pub(super) const COMBAT_AUDIO_ALERT_PULSE_PERCENT_VALUES_META: EnumDef = (
+    "CombatAudioAlertPulsePercentValuesMeta",
+    &[("MinValue", 0), ("MaxValue", 9), ("NumValues", 10)],
+);
+
 #[cfg(feature = "client-wowforever")]
 pub(super) const RECENT_ALLIES_INTERACTION_CATEGORY_FILTER: EnumDef = (
     "RecentAlliesInteractionCategoryFilter",

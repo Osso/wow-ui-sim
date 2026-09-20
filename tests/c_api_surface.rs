@@ -19,7 +19,7 @@ mod forever_shared_enums {
         let env = env();
         env.exec(r#"
             checkedEnums = 0
-            local wanted = { BattleNetFriendLevel = true, VisualAlertType = true, CooldownViewerSound = true }
+            local wanted = { BattleNetFriendLevel = true, VisualAlertType = true, CooldownViewerSound = true, CombatAudioAlertPulsePercentValues = true }
             APIDocumentation = { AddDocumentationTable = function(_, doc)
                 for _, enum in ipairs(doc.Tables or {}) do
                     if wanted[enum.Name] then
@@ -43,10 +43,63 @@ mod forever_shared_enums {
             "BattleNetSharedDocumentation.lua",
             "VisualAlertConstantsDocumentation.lua",
             "CooldownViewerConstantsDocumentation.lua",
+            "CombatAudioAlertSharedDocumentation.lua",
         ] {
             load_vendor(&env, &format!("Blizzard_APIDocumentationGenerated/{file}"));
         }
-        assert_eq!(env.eval::<i32>("return checkedEnums").unwrap(), 3);
+        assert_eq!(env.eval::<i32>("return checkedEnums").unwrap(), 4);
+    }
+
+    #[test]
+    fn forever_shared_enums_pulse_health_vendor_command_range() {
+        let env = env();
+        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+            .unwrap()
+            .join("Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua");
+        let source = fs::read_to_string(path).unwrap();
+        // Execute the unmodified command block; the surrounding slash-command UI
+        // is replaced by a recorder so its actual handler can be exercised.
+        let block = source
+            .split_once("-- Pulse Your Health")
+            .unwrap()
+            .1
+            .split_once("-- Pulse Your Health Volume")
+            .unwrap()
+            .0;
+        env.exec(
+            r#"
+            CAACommands = { AddCommand = function(_, _, handler, _, _, _, min, max)
+                pulseHandler, pulseMin, pulseMax = handler, min, max
+            end }
+            CombatAudioAlertUtil = {
+                EnumeratePulseHealthPercentInfo = function() return ipairs({}) end,
+                GetPulseHealthPercentInfo = function(value) return { str = tostring(value) } end,
+            }
+            function GetInitialSuboptionFailureStrings() return 'invalid', 'invalid' end
+            SLASH_CAA_CONFIRMATION = '%s: %s'
+            CAA_PULSE_PLAYER_HEALTH_LABEL = 'Health'
+            pulseCommand = { GetCommands = function() return {
+                SpeakConfirmation = function(_, text) pulseConfirmation = text end,
+            } end }
+        "#,
+        )
+        .unwrap();
+        env.exec(block).unwrap();
+        env.exec(
+            r#"
+            assert(pulseMin == 0 and pulseMax == 9)
+            for value = 0, 9 do
+                assert(pulseHandler(pulseCommand, tostring(value)))
+                assert(GetCVar('CAAPulsePlayerHealthPercent') == tostring(value))
+                assert(pulseConfirmation == 'Health: ' .. value)
+            end
+            for _, value in ipairs({'-1', '10', 'invalid'}) do
+                assert(not pulseHandler(pulseCommand, value))
+                assert(GetCVar('CAAPulsePlayerHealthPercent') == '9')
+            end
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]
