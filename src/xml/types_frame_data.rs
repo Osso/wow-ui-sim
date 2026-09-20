@@ -21,7 +21,7 @@ macro_rules! impl_frame_data_for {
             }
 
             fn as_primary_frame_data(&self) -> Option<(&FrameXml, &'static str)> {
-                #[cfg(feature = "retail-12-1-0")]
+                #[cfg(feature = "aura-xml-widgets")]
                 if let Some(frame_data) =
                     frame_variant_data!(self, AuraContainer, ManagedAuraContainer, AuraButton,)
                 {

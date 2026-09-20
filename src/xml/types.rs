@@ -48,12 +48,12 @@ pub struct ScopedModifierXml {
 pub enum XmlElement {
     // Frame-like widgets
     Frame(FrameXml),
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-xml-widgets")]
     AuraContainer(FrameXml),
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-xml-widgets")]
     ManagedAuraContainer(FrameXml),
     Button(FrameXml),
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-xml-widgets")]
     AuraButton(FrameXml),
     ItemButton(FrameXml),
     CheckButton(FrameXml),
