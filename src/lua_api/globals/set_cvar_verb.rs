@@ -88,14 +88,48 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
         dispatch_event_now(state, "UI_SCALE_CHANGED", &[])?;
     }
 
+    #[cfg(feature = "client-wowforever")]
+    let override_change = gamepad_override_change(state, &name, &value)?;
     let accepted = borrow_state_mut(state)?.cvars.set(&name, &value);
     if accepted {
         let name_arg = create_string(state, &name);
         let value_arg = create_string(state, &value);
         dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
+        #[cfg(feature = "client-wowforever")]
+        if let Some((event, old, new)) = override_change {
+            dispatch_event_now(state, event, &[Val::Num(old), Val::Num(new)])?;
+        }
     }
     state.push(Val::Bool(accepted));
     Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn gamepad_override_change(
+    state: &LuaState,
+    name: &str,
+    new: &str,
+) -> LuaResult<Option<(&'static str, f64, f64)>> {
+    let event = match name.to_ascii_lowercase().as_str() {
+        "gamepadpossessbaroverride" => "GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED",
+        "gamepadstancebaroverride" => "GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED",
+        _ => return Ok(None),
+    };
+    let parse = |value: &str| {
+        value
+            .parse::<f64>()
+            .ok()
+            .filter(|number| number.is_finite())
+            .ok_or_else(|| {
+                rilua::runtime_error(format!("{name}: expected numeric override, got {value:?}"))
+            })
+    };
+    let old = borrow_state(state)?.cvars.get(name).ok_or_else(|| {
+        rilua::runtime_error(format!("{name}: missing registered override value"))
+    })?;
+    let old = parse(&old)?;
+    let new = parse(new)?;
+    Ok((old != new).then_some((event, old, new)))
 }
 
 fn is_ui_scale_cvar(name: &str) -> bool {

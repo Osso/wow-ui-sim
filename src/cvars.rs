@@ -212,7 +212,27 @@ fn insert_profile_cvars(
     insert_cvar_defaults(defaults, original_names, PATCH_12_1_CVARS);
 }
 
-#[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]
+#[cfg(feature = "client-wowforever")]
+fn insert_profile_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    // Ketho/BlizzardInterfaceResources 659e804: Forever 1.60.1.69913.
+    for (name, value) in [
+        ("GamepadPossessBarOverride", "1"),
+        ("GamepadStanceBarOverride", "3"),
+    ] {
+        let key = name.to_lowercase();
+        original_names.insert(key.clone(), name.to_string());
+        defaults.insert(key, value.to_string());
+    }
+}
+
+#[cfg(not(any(
+    feature = "retail-12-0-7",
+    feature = "retail-12-1-0",
+    feature = "client-wowforever"
+)))]
 fn insert_profile_cvars(
     _defaults: &mut HashMap<String, String>,
     _original_names: &mut HashMap<String, String>,
