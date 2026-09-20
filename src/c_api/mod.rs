@@ -40,6 +40,8 @@ pub(crate) mod c_encounter_timeline;
 pub(crate) mod c_encounter_warnings;
 pub mod c_glue;
 pub mod c_housing;
+#[cfg(feature = "client-wowforever")]
+pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
 pub mod c_lfg_info;

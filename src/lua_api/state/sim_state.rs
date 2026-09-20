@@ -1,6 +1,8 @@
 use super::*;
 
 pub struct SimState {
+    #[cfg(feature = "client-wowforever")]
+    pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
     pub widgets: WidgetRegistry,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
