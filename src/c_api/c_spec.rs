@@ -17,6 +17,8 @@ type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
 
 const C_SPECIALIZATION_INFO_METHODS: &[(&str, RustLuaFn)] = &[
+    #[cfg(feature = "client-wowforever")]
+    ("GetAllClassIDs", c_spec_get_all_class_ids),
     ("GetSpecialization", c_spec_get_specialization),
     ("GetSpecializationInfo", c_spec_get_specialization_info),
     ("GetClassIDFromSpecID", c_spec_get_class_id_from_spec_id),
@@ -149,6 +151,14 @@ fn push_specialization_defaults(state: &mut LuaState) {
     ] {
         state.push(value);
     }
+}
+
+#[cfg(feature = "client-wowforever")]
+fn c_spec_get_all_class_ids(state: &mut LuaState) -> LuaResult<u32> {
+    // Class catalogue membership is independent of specialization availability.
+    let ids: Vec<u32> = (1..=crate::lua_api::game_data::CLASS_LABELS.len() as u32).collect();
+    push_number_array(state, &ids);
+    Ok(1)
 }
 
 fn c_spec_get_spec_ids(state: &mut LuaState) -> LuaResult<u32> {
