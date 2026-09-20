@@ -79,6 +79,43 @@ fn forever_edit_mode_preset_consumer() {
 }
 
 #[test]
+fn forever_edit_mode_default_layout_consumer() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(C_EditMode.GetEditModeDefaultLayout() == 0)")
+        .unwrap();
+    load_source(&env, "Blizzard_SharedXMLBase/TableUtil.lua");
+    load_source(
+        &env,
+        "Blizzard_EditMode/Camelot/EditModePresetLayoutConstants.lua",
+    );
+    load_source(&env, "Blizzard_EditMode/Mainline/EditModePresetLayouts.lua");
+    load_source(
+        &env,
+        "Blizzard_EditMode/Shared/EditModePresetLayoutSystemUtils.lua",
+    );
+    load_source(
+        &env,
+        "Blizzard_EditMode/Shared/EditModePresetLayoutsManager.lua",
+    );
+    env.exec(r#"
+        local system = Enum.EditModeSystem.SwingTimer
+        local index = Enum.EditModeSwingTimerSystemIndices.MainHand
+        local expected = EDIT_MODE_MODERN_SYSTEM_MAP[system][index].anchorInfo
+        local actual = EditModePresetLayoutManager:GetDefaultSystemAnchorInfo(system, index)
+        assert(actual ~= expected)
+        assert(actual.point == expected.point and actual.relativePoint == expected.relativePoint)
+        assert(actual.offsetX == expected.offsetX and actual.offsetY == expected.offsetY)
+        actual.offsetX = 9999
+        assert(EditModePresetLayoutManager:GetDefaultSystemAnchorInfo(system, index).offsetX == expected.offsetX)
+    "#).unwrap();
+    env.state().borrow_mut().set_input_interface_style(
+        wow_ui_sim::c_api::c_input_interface_style::InputInterfaceStyle::Gamepad,
+    );
+    env.exec("assert(C_EditMode.GetEditModeDefaultLayout() == 0)")
+        .unwrap();
+}
+
+#[test]
 fn forever_edit_mode_display_consumer() {
     let env = WowLuaEnv::new().unwrap();
     load_source(&env, "Blizzard_SharedXMLBase/TableUtil.lua");

@@ -34,6 +34,8 @@ pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_death_recap;
 pub mod c_discord;
+#[cfg(feature = "client-wowforever")]
+mod c_edit_mode;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-1-5")]
