@@ -127,7 +127,7 @@ fn wowforever_profile_applies_header_filters_without_vanilla_alias() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
-fn wowforever_profile_selects_generic_toc_not_other_client_flavors() {
+fn wowforever_profile_selects_camelot_then_generic_then_mainline_toc() {
     let root = tempfile::tempdir().unwrap();
     let addon = root.path().join("Example");
     std::fs::create_dir(&addon).unwrap();
@@ -147,7 +147,18 @@ fn wowforever_profile_selects_generic_toc_not_other_client_flavors() {
         wow_ui_sim::loader::find_toc_file(&addon),
         Some(addon.join("Example.toc"))
     );
+    std::fs::write(addon.join("Example_Camelot.toc"), "Core.lua\n").unwrap();
+    assert_eq!(
+        wow_ui_sim::loader::find_toc_file(&addon),
+        Some(addon.join("Example_Camelot.toc"))
+    );
+    std::fs::remove_file(addon.join("Example_Camelot.toc")).unwrap();
     std::fs::remove_file(addon.join("Example.toc")).unwrap();
+    assert_eq!(
+        wow_ui_sim::loader::find_toc_file(&addon),
+        Some(addon.join("Example_Mainline.toc"))
+    );
+    std::fs::remove_file(addon.join("Example_Mainline.toc")).unwrap();
     assert_eq!(wow_ui_sim::loader::find_toc_file(&addon), None);
 }
 
@@ -172,4 +183,50 @@ fn wowforever_profile_loads_pinned_world_map_filename() {
         toc.files,
         vec![PathBuf::from("Camelot/Blizzard_WorldMapConstants.lua")]
     );
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_profile_discovers_mainline_required_provider_before_consumer() {
+    use wow_ui_sim::{loader, lua_api::WowLuaEnv, screen::ScreenKind};
+    let root = tempfile::tempdir().unwrap();
+    for (name, metadata, source) in [
+        (
+            "Blizzard_SharedMapDataProviders",
+            "## LoadOnDemand: 1\n",
+            "MapExplorationDataProviderMixin = { OnAdded = function(self, map) self.map = map end }",
+        ),
+        (
+            "Blizzard_WorldMap",
+            "## RequiredDep: Blizzard_SharedMapDataProviders\n",
+            "local provider = CreateFromMixins(MapExplorationDataProviderMixin); provider:OnAdded(37); ProviderMap = provider.map",
+        ),
+    ] {
+        let dir = root.path().join(name);
+        std::fs::create_dir(&dir).unwrap();
+        std::fs::write(
+            dir.join(format!("{name}_Mainline.toc")),
+            format!("## AllowLoad: game\n## AllowLoadGameType: mainline\n{metadata}Core.lua\n"),
+        )
+        .unwrap();
+        std::fs::write(dir.join("Core.lua"), source).unwrap();
+    }
+    let addons = loader::discover_blizzard_addon_closure_for_screen(
+        root.path(),
+        ScreenKind::Game,
+        &["Blizzard_WorldMap"],
+    );
+    assert_eq!(
+        addons
+            .iter()
+            .map(|(name, _)| name.as_str())
+            .collect::<Vec<_>>(),
+        vec!["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"]
+    );
+    let env = WowLuaEnv::new().unwrap();
+    for (_, toc) in addons {
+        let result = loader::load_addon(&env.loader_env(), &toc).unwrap();
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    }
+    assert_eq!(env.eval::<i32>("return ProviderMap").unwrap(), 37);
 }

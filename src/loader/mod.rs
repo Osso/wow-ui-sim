@@ -183,21 +183,16 @@ fn implicit_blizzard_startup_dependencies() -> HashMap<String, Vec<String>> {
     ])
 }
 
-/// TOC suffix matching the active client profile (e.g. `_Mainline` for retail/PTR,
-/// `_Vanilla` for era/anniversary). Forever ships generic TOCs.
-fn active_profile_toc_suffix(addon_name: &str) -> &'static str {
+/// Ordered TOC variants for the active client profile.
+fn active_profile_toc_suffixes() -> &'static [&'static str] {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail
-        | crate::client_profile::ClientProfile::Ptr => "_Mainline",
-        crate::client_profile::ClientProfile::Wrath => "_Wrath",
-        crate::client_profile::ClientProfile::Mists => "_Mists",
+        | crate::client_profile::ClientProfile::Ptr => &["_Mainline", ""],
+        crate::client_profile::ClientProfile::Wrath => &["_Wrath", ""],
+        crate::client_profile::ClientProfile::Mists => &["_Mists", ""],
         crate::client_profile::ClientProfile::Era
-        | crate::client_profile::ClientProfile::Anniversary => "_Vanilla",
-        // Forever's pinned tree keeps this legacy filename with Camelot entries.
-        crate::client_profile::ClientProfile::WowForever if addon_name == "Blizzard_WorldMap" => {
-            "_Mainline"
-        }
-        crate::client_profile::ClientProfile::WowForever => "",
+        | crate::client_profile::ClientProfile::Anniversary => &["_Vanilla", ""],
+        crate::client_profile::ClientProfile::WowForever => &["_Camelot", "", "_Mainline"],
     }
 }
 
@@ -219,15 +214,9 @@ fn other_profile_toc_suffixes() -> &'static [&'static str] {
         | crate::client_profile::ClientProfile::Anniversary => {
             &["_Cata", "_Wrath", "_TBC", "_Mists", "_Mainline"]
         }
-        crate::client_profile::ClientProfile::WowForever => &[
-            "_Cata",
-            "_Wrath",
-            "_TBC",
-            "_Vanilla",
-            "_Mists",
-            "_Mainline",
-            "_Classic",
-        ],
+        crate::client_profile::ClientProfile::WowForever => {
+            &["_Cata", "_Wrath", "_TBC", "_Vanilla", "_Mists", "_Classic"]
+        }
     }
 }
 
@@ -295,16 +284,8 @@ pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
             return Some(toc_path);
         }
     }
-    let toc_variants = [
-        format!(
-            "{}{}.toc",
-            addon_name,
-            active_profile_toc_suffix(addon_name)
-        ),
-        format!("{}.toc", addon_name),
-    ];
-    for variant in &toc_variants {
-        let toc_path = addon_dir.join(variant);
+    for suffix in active_profile_toc_suffixes() {
+        let toc_path = addon_dir.join(format!("{addon_name}{suffix}.toc"));
         if toc_path.exists() {
             return Some(toc_path);
         }
