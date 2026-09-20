@@ -4,9 +4,9 @@ Forever publishes three existing enum contracts through `src/lua_api/globals/enu
 
 ## What it must do
 
-- [ ] Publish all source-documented `BattleNetFriendLevel` (1–3), `VisualAlertType` (1–10), and `CooldownViewerSound` (0–93) fields and matching metadata on Forever.
-- [ ] Let vendor AccountUtil rank friend levels and compare their ordering.
-- [ ] Let vendor cooldown sound data retain numeric sound enums and concrete sound-kit IDs.
+- [x] Publish all source-documented `BattleNetFriendLevel` (1–3), `VisualAlertType` (1–10), and `CooldownViewerSound` (0–93) fields and matching metadata on Forever.
+- [x] Let vendor AccountUtil rank friend levels and compare their ordering.
+- [x] Let vendor cooldown sound data retain numeric sound enums and concrete sound-kit IDs.
 - [ ] Preserve existing exposure on earlier profiles without enabling a retail epoch for Forever.
 
 ## How it works
