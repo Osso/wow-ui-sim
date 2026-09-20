@@ -23,6 +23,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Math utilities | `0a354c0e0` | Reuses the simulator's existing math extensions for Forever so `MathUtil.lua` can publish `Round` and related aliases. A real `MathUtil.lua` fixture covers the aliases and extension behavior; no retail API epoch is enabled. |
 | Finite event registration | `4deca63f1` | Adds source-documented Forever acceptance and ordinary frame dispatch for `PET_STATS_UPDATE`, `SHARD_TRANSFER`, `SHARD_TRANSFER_IMMINENT`, `GUILD_PREFERRED_PLAY_SETTINGS_UPDATED`, and `HIDDEN_GROUP_BUFFS_CHANGED`; invented names remain rejected. |
 | Timed signal maps | `799389a6e` | Extracts a `timed-signal-maps` capability shared by PTR 12.1.5 and Forever. It exposes the existing `C_Timer.NewTimedSignalMap` state, scheduling, and `TimerUtil.lua` consumer without enabling a retail epoch. |
+| Table utilities | `b6a6a7dad` | Reuses existing table extensions for Forever so `TableUtil.lua` can publish its compatibility aliases. The real-source fixture is committed; final verification remains pending. |
 | Source-documented enums and gamepad constants | `5e2558264`, `b838d6917` | Publishes Forever `BattleNetFriendLevel`, `VisualAlertType`, and `CooldownViewerSound` with metadata, plus `Constants.GamepadActionBarConstants`; the second commit exposes the new C API module. Vendor-consumer regressions are committed but targeted GREEN evidence is pending. This does not implement interactive gamepad input. |
 
 ## Proof
@@ -37,7 +38,6 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 
 These source-backed items were identified from the initial baseline but are not recorded here as completed compatibility:
 
-- expose existing Forever-needed table utility registrations without enabling a retail API epoch;
 - expose the existing cycle-safe `securecopy` helper for Forever;
 - rerun startup after each causal group, then classify remaining loader, API, template, widget, atlas, and input-handler gaps;
 - implement gamepad-stick input only after establishing its source contract; current constants do not establish interactive gamepad support.
