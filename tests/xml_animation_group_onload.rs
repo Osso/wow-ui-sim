@@ -36,8 +36,13 @@ fn inherited_chat_glow_keeps_animation_on_its_texture() {
         </Ui>"#,
         "ChatGlowIdentity",
     );
-    load_addon(&env.loader_env(), &addon.path().join("ChatGlowIdentity.toc")).unwrap();
-    env.exec(r#"
+    load_addon(
+        &env.loader_env(),
+        &addon.path().join("ChatGlowIdentity.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
         assert(ChatGlowInstance.glow == ChatGlowInstanceGlow)
         assert(ChatGlowInstance.glow.FlashAnim, "inherited glow lost FlashAnim")
         assert(ChatGlowInstance.glow.FlashAnim:GetParent() == ChatGlowInstance.glow)
@@ -45,7 +50,9 @@ fn inherited_chat_glow_keeps_animation_on_its_texture() {
         assert(ChatGlowInstance.glow.FlashAnim:IsPlaying())
         ChatGlowInstance.glow.FlashAnim:Stop()
         assert(not ChatGlowInstance.glow.FlashAnim:IsPlaying())
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -54,18 +61,27 @@ fn forever_chat_xml_attaches_flash_groups_to_named_glows() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let xml = std::fs::read_to_string(cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml")).unwrap();
+    let xml = std::fs::read_to_string(
+        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml"),
+    )
+    .unwrap();
     // Keep the real virtual definitions, excluding unrelated concrete dock frames.
     let templates = xml.split("<!-- Main dock manager -->").next().unwrap();
     let addon = create_test_addon(&format!("{templates}</Ui>"), "ActualChatGlow");
-    let animation_xml = std::fs::read_to_string(cache.join("Blizzard_SharedXML/AnimationTemplates.xml")).unwrap();
+    let animation_xml =
+        std::fs::read_to_string(cache.join("Blizzard_SharedXML/AnimationTemplates.xml")).unwrap();
     std::fs::write(addon.path().join("AnimationTemplates.xml"), animation_xml).unwrap();
-    std::fs::write(addon.path().join("ActualChatGlow.toc"), "AnimationTemplates.xml\nActualChatGlow.xml\n").unwrap();
+    std::fs::write(
+        addon.path().join("ActualChatGlow.toc"),
+        "AnimationTemplates.xml\nActualChatGlow.xml\n",
+    )
+    .unwrap();
     load_addon(&env.loader_env(), &addon.path().join("ActualChatGlow.toc")).unwrap();
     let compat = std::fs::read_to_string(cache.join("Blizzard_SharedXMLBase/Compat.lua")).unwrap();
     env.exec(&compat).unwrap();
     for file in ["Shared/ChatFrameConstants.lua", "Shared/ChatFrameUtil.lua"] {
-        let source = std::fs::read_to_string(cache.join("Blizzard_ChatFrameBase").join(file)).unwrap();
+        let source =
+            std::fs::read_to_string(cache.join("Blizzard_ChatFrameBase").join(file)).unwrap();
         env.exec(&source).unwrap();
     }
     env.exec(r#"
