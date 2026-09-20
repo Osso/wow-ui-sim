@@ -16,8 +16,7 @@ mod unit_event;
 use crate::lua_api::methods::call_function_state;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_api::methods::{
-    create_table, frame_id_from_stack, get_or_create_frame_fields, table_get, table_set,
-    val_to_string,
+    frame_id_from_stack, get_or_create_frame_fields, table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::api::LuaApiMut;
