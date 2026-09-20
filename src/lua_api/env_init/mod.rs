@@ -71,6 +71,7 @@ pub(super) fn init_lua_state(
     {
         lua.exec(include_str!("../workarounds/temporary/securecopy.lua"))?;
         crate::loader::addon_modules::initialize(lua.state_mut())?;
+        rilua::table_security::register_table_security(lua)?;
     }
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
     // the dangerous globals (dofile / loadfile / require / string.dump /
