@@ -79,7 +79,7 @@ fn forever_buff_consumer_reads_current_enchants() {
         .split("function BuffFrameMixin:UpdateAuras()")
         .next()
         .unwrap();
-    env.exec(&format!("local textureMapping = {mapping};\nBuffFrameMixin = {{}}\nfunction BuffFrameMixin:UpdateTemporaryEnchantmentBuffs(){consumer}")).unwrap();
+    env.exec(&format!("local textureMapping = {mapping}}};\nBuffFrameMixin = {{}}\nfunction BuffFrameMixin:UpdateTemporaryEnchantmentBuffs(){consumer}")).unwrap();
     env.exec("BUFF_DURATION_WARNING_TIME = 120; probe = {auraInfo={}, maxAuras=32, numHideableBuffs=0}; BuffFrameMixin.UpdateTemporaryEnchantmentBuffs(probe); assert(#probe.auraInfo == 0)").unwrap();
     env.state().borrow_mut().weapon_enchants[0].push(enchant(42, 60000.0));
     env.exec(
