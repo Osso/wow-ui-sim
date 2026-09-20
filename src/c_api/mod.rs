@@ -100,7 +100,7 @@ mod mists_talents;
 mod numeric_rule_formatter;
 pub mod permanent_shims;
 pub(crate) mod seconds_formatter;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
 
 mod helpers;

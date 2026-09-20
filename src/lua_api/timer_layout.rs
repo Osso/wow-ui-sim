@@ -434,11 +434,11 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
             Val::Table(c_timer_ref),
             &state.gc.string_arena,
         )?;
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "timed-signal-maps")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(not(feature = "timed-signal-maps"))]
     {
-        // Keep namespace lookup from fabricating the PTR-only factory.
+        // Keep namespace lookup from fabricating an unsupported factory.
         use crate::lua_api::methods::{create_table, table_set_static};
 
         let removed = create_table(state);

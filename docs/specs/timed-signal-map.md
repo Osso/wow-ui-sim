@@ -1,6 +1,6 @@
 # Timed signal maps
 
-PTR 12.1.5 provides `C_Timer.NewTimedSignalMap` as a state-backed C API object for keyed deadlines. The backing module, state, timer-pass dispatch, next-deadline calculation, and Lua app-data export compile only under `retail-12-1-5`; other profiles keep their existing timer behavior. The simulator does not emulate secret-value taint restrictions not otherwise modeled.
+PTR 12.1.5 and Forever provide `C_Timer.NewTimedSignalMap` as a state-backed C API object for keyed deadlines. The shared `timed-signal-maps` capability, enabled by `retail-12-1-5` and `client-wowforever`, gates the backing module, state, timer-pass dispatch, and next-deadline calculation; other profiles keep their existing timer behavior. The simulator does not emulate secret-value taint restrictions not otherwise modeled.
 
 ## What it must do
 
@@ -9,8 +9,8 @@ PTR 12.1.5 provides `C_Timer.NewTimedSignalMap` as a state-backed C API object f
 - [x] Remove a due key before invoking its callback with that key.
 - [x] Defer signals scheduled from a callback until the next timer pass.
 - [x] Release scheduled signals and callback retention when the map is finalized.
-- [x] Support the PTR `TimerUtil.CreateTimedSignalCallbackMap` wrapper.
-- [ ] Prove non-PTR builds omit the TimedSignalMap backing state while preserving existing timer behavior.
+- [x] Support the PTR and Forever `TimerUtil.CreateTimedSignalCallbackMap` wrappers.
+- [ ] Prove builds without the capability omit the TimedSignalMap backing state while preserving existing timer behavior.
 - [ ] Enforce secret-value access restrictions. Rilua timer objects currently have no modeled secret-value state.
 
 ## How it works
@@ -21,13 +21,13 @@ PTR 12.1.5 provides `C_Timer.NewTimedSignalMap` as a state-backed C API object f
 ## Implementation inventory
 
 - `src/c_api/timed_signal_map.rs`: native userdata, keyed deadline model, and due-signal extraction.
-- `src/lua_api/timer_layout.rs`: PTR-gated `C_Timer` registration and callback retention.
-- `src/lua_api/env_runtime.rs`: PTR-gated timer-pass dispatch and next-deadline integration.
-- `src/lua_api/state/sim_state.rs`: PTR-gated map state owned by `SimState`.
+- `src/lua_api/timer_layout.rs`: capability-gated `C_Timer` registration and callback retention.
+- `src/lua_api/env_runtime.rs`: capability-gated timer-pass dispatch and next-deadline integration.
+- `src/lua_api/state/sim_state.rs`: capability-gated map state owned by `SimState`.
 
 ## Tests asserting this spec
 
-- `tests/timed_signal_map.rs`: method behavior, reentrant scheduling, finalization, and the source-derived `TimerUtil` wrapper fixture.
+- `tests/timed_signal_map.rs`: method behavior, reentrant scheduling, finalization, the PTR source-derived wrapper fixture, and the authenticated Forever cache's `TimerUtil.lua` consumer.
 
 ## Known gaps (current cycle)
 

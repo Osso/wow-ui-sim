@@ -19,7 +19,7 @@ const RECENT_FRAME_WINDOW_SIZE: usize = 60;
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 const UI_REFERENCE_HEIGHT: f32 = 768.0;
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "timed-signal-maps")]
 fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {
     match (
         timer_delay,
@@ -31,7 +31,7 @@ fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -
     }
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "timed-signal-maps"))]
 fn next_timer_or_signal_delay(
     timer_delay: Option<Duration>,
     _state: &SimState,
@@ -237,7 +237,7 @@ impl WowLuaEnv {
         Ok(signal_fired + timer_fired)
     }
 
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "timed-signal-maps")]
     fn process_due_timed_signals(&self) -> usize {
         let due_signals = {
             let mut state = self.state.borrow_mut();
@@ -259,7 +259,7 @@ impl WowLuaEnv {
         fired
     }
 
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(not(feature = "timed-signal-maps"))]
     fn process_due_timed_signals(&self) -> usize {
         0
     }

@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-1-5")]
+#![cfg(feature = "timed-signal-maps")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -28,8 +28,15 @@ fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
     )
     .unwrap();
 
-    assert_eq!(env.eval::<String>("return type(signal_map)").unwrap(), "userdata");
-    assert_eq!(env.eval::<String>("return signal_map.custom_field").unwrap(), "kept");
+    assert_eq!(
+        env.eval::<String>("return type(signal_map)").unwrap(),
+        "userdata"
+    );
+    assert_eq!(
+        env.eval::<String>("return signal_map.custom_field")
+            .unwrap(),
+        "kept"
+    );
     assert_eq!(env.eval::<i64>("return signal_count_before").unwrap(), 1);
     assert_eq!(env.eval::<i64>("return signal_next_key").unwrap(), 1);
     assert_eq!(env.eval::<i64>("return signal_next_time").unwrap(), 0);
@@ -37,8 +44,15 @@ fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
     assert_eq!(env.process_timers().unwrap(), 1);
     assert_eq!(env.eval::<i64>("return #signal_calls").unwrap(), 1);
     assert_eq!(env.eval::<i64>("return signal_calls[1]").unwrap(), 7);
-    assert_eq!(env.eval::<bool>("return signal_map:HasSignal(7)").unwrap(), false);
-    assert_eq!(env.eval::<Option<f64>>("return signal_map:GetSignalTime(7)").unwrap(), None);
+    assert_eq!(
+        env.eval::<bool>("return signal_map:HasSignal(7)").unwrap(),
+        false
+    );
+    assert_eq!(
+        env.eval::<Option<f64>>("return signal_map:GetSignalTime(7)")
+            .unwrap(),
+        None
+    );
 }
 
 #[test]
@@ -128,12 +142,20 @@ fn timed_signal_map_finalizer_drops_pending_signals() {
 #[test]
 fn timer_util_callback_map_uses_native_timed_signal_userdata() {
     let env = WowLuaEnv::new().unwrap();
-    let timer_util = concat!(
+    #[cfg(not(feature = "client-wowforever"))]
+    let timer_util = std::path::PathBuf::from(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/data/ptr-fixtures/TimerUtil-12.1.5.69594.lua"
-    );
-    env.exec_named(&std::fs::read_to_string(timer_util).unwrap(), "TimerUtil.lua")
-        .unwrap();
+    ));
+    #[cfg(feature = "client-wowforever")]
+    let timer_util = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_SharedXMLBase/TimerUtil.lua");
+    env.exec_named(
+        &std::fs::read_to_string(timer_util).unwrap(),
+        "TimerUtil.lua",
+    )
+    .unwrap();
     env.exec(
         r#"
         timer_util_calls = 0
@@ -146,7 +168,10 @@ fn timer_util_callback_map_uses_native_timed_signal_userdata() {
     )
     .unwrap();
 
-    assert_eq!(env.eval::<String>("return type(timer_util_map)").unwrap(), "userdata");
+    assert_eq!(
+        env.eval::<String>("return type(timer_util_map)").unwrap(),
+        "userdata"
+    );
     assert_eq!(env.process_timers().unwrap(), 1);
     assert_eq!(env.eval::<i64>("return timer_util_calls").unwrap(), 1);
 }
