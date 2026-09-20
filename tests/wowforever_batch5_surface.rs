@@ -47,6 +47,49 @@ fn forever_guild_and_friends_documented_events_register() {
 }
 
 #[test]
+fn forever_gamepad_override_onload_initializes_mapping() {
+    wow_ui_sim::xml::clear_templates();
+    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let (env, _) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &cache,
+        &["Blizzard_ActionBar", "Blizzard_GamepadActionBars"],
+        &[],
+    );
+    env.exec(
+        r#"
+        local anchor = GamepadMainActionBarFramePageUnit.TopCenteredAnchor
+        local failures = {}
+        for _, entry in ipairs({
+            {"PossessBar", "GamepadPossessBarOverride", "GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED"},
+            {"StanceBar", "GamepadStanceBarOverride", "GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED"},
+        }) do
+            local bar = assert(anchor[entry[1]], entry[1])
+            assert(bar.overrideCVar == entry[2])
+            assert(bar.overrideCVarChangedEvent == entry[3])
+            local ok, err = pcall(GamepadOverrideBarMixin.OnLoad, bar)
+            if not ok then
+                failures[#failures + 1] = tostring(err)
+            else
+                assert(bar:IsEventRegistered(entry[3]))
+                assert(bar:IsEventRegistered("PLAYER_SOFT_ENEMY_CHANGED"))
+                assert(type(bar.overrideMap) == "table" and next(bar.overrideMap) == nil)
+                assert(bar.isOverrideBarActive == false)
+                local owner = CreateFrame("Frame")
+                bar.pagingUnitOwner = owner
+                bar:SetOverrideMapping(1, function(page) assert(page == owner); return anchor end, 2)
+                assert(bar:GetLinkedOverrideBarAnchorFrame("1") == anchor)
+                assert(bar:GetLinkedOverrideBarPage("1") == 2)
+                bar:UnregisterEvent(entry[3])
+                assert(not bar:IsEventRegistered(entry[3]))
+            end
+        end
+        assert(#failures == 0, table.concat(failures, "\n"))
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_aura_styles_support_deprecated_vendor_aliases() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"

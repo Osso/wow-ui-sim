@@ -9,6 +9,14 @@ The documented GuildControl events `DISCORD_GUILD_LOBBY_UPDATE` and
 `NEW_MATCHMAKING_PARTY_INVITE`, consumed by FriendsFrame, already registers
 through the common event surface and must not be duplicated in the Forever list.
 
+Forever accepts `GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED` and
+`GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED`, the two events published by matching
+`GamepadUIDocumentation.lua` and assigned by `ActionBarTemplates.xml`.
+Unmodified `GamepadOverrideBarMixin.OnLoad` must finish registration and initialize
+its override map and inactive state; subsequent mapping writes and lookups work.
+The grouped consumer test loads ActionBar before GamepadActionBars and replays
+OnLoad on actual XML-created possess/stance bars. This is not full startup proof.
+
 Forever exposes `CustomAuraButtonDispelTypeTextureStyle`: Border=0,
 BorderWithIcon=1, Icon=2, PreserveAsset=3, CustomAsset=4; metadata is
 MinValue=0, MaxValue=4, NumValues=5. The unmodified
