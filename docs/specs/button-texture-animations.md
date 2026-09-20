@@ -4,8 +4,8 @@ XML button texture slots must retain their declared animation groups on the text
 
 ## What it must do
 
-- [ ] Instantiate the overflow highlight's `FlashAnim` on its actual `GetHighlightTexture()` object, once.
-- [ ] Preserve the texture identity while the unchanged overflow consumer stops its animation and shows the highlight.
+- [x] Instantiate the overflow highlight's `FlashAnim` on its actual `GetHighlightTexture()` object, once.
+- [x] Preserve the texture identity while the unchanged overflow consumer stops its animation and shows the highlight.
 
 ## How it works
 
@@ -21,7 +21,7 @@ XML button texture slots must retain their declared animation groups on the text
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN pending.
+- [ ] Full-startup and cross-profile verification remain parent-owned. Targeted animation group module: 4/4 passing.
 
 ## Out of scope
 
