@@ -4,10 +4,10 @@ Forever 1.60.1.69913 publishes finite additions from its `EditModeManagerConstan
 
 ## What it must do
 
-- [ ] Publish the six missing GroupFinder, MainActionBarEndCap and SwingTimer setting/index/visibility namespaces and their source metadata.
-- [ ] Publish documented LossOfControl and RaidWarning settings, Gamepad preset 2, systems 24–29, account settings 33–37, minimap IconScale, micro-menu DeprecatedEyeSize and unit-frame DebuffIconSize/BuffIconSize with updated metadata.
-- [ ] Reuse the existing RaidDispelOverlayType values and metadata.
-- [ ] Execute the actual Forever preset and setting-display consumers without enum lookup failures.
+- [x] Publish the six missing GroupFinder, MainActionBarEndCap and SwingTimer setting/index/visibility namespaces and their source metadata.
+- [x] Publish documented LossOfControl and RaidWarning settings, Gamepad preset 2, systems 24–29, account settings 33–37, minimap IconScale, micro-menu DeprecatedEyeSize and unit-frame DebuffIconSize/BuffIconSize with updated metadata.
+- [x] Reuse the existing RaidDispelOverlayType values and metadata.
+- [x] Execute the actual Forever preset and setting-display consumers without enum lookup failures.
 - [ ] Keep these additions scoped to Forever without enabling a retail epoch.
 
 ## How it works
