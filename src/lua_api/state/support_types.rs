@@ -63,6 +63,10 @@ pub struct ShapeshiftForm {
     pub is_castable: bool,
 }
 
+/// First logical pet slot exposed by the simulator's pet APIs.
+/// Forever shares this range; native Gamepad storage numbering is unverified.
+pub const FIRST_PET_ACTION_SLOT: i32 = 1;
+
 /// One pet action-bar slot (10 slots total; `NUM_PET_ACTION_SLOTS = 10`).
 /// Drives `GetPetActionInfo`, `GetPetActionCooldown`, `CastPetAction`,
 /// `TogglePetAutocast`, and `PetHasActionBar` consumed by

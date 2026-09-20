@@ -108,6 +108,8 @@ pub mod timed_signal_map;
 pub mod weapon_enchants;
 
 #[cfg(feature = "client-wowforever")]
+mod c_gamepad_ui;
+#[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_edit_mode_enums;
 #[cfg(feature = "client-wowforever")]
 mod forever_finite_constants;

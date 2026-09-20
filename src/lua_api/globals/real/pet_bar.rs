@@ -40,7 +40,7 @@ fn stack_i32(state: &LuaState, index: i32) -> Option<i32> {
 }
 
 fn slot_index_to_zero_based(index: i32) -> Option<usize> {
-    usize::try_from(index.checked_sub(1)?).ok()
+    usize::try_from(index.checked_sub(crate::lua_api::state::FIRST_PET_ACTION_SLOT)?).ok()
 }
 
 fn push_optional_string(state: &mut LuaState, value: Option<&str>) {
