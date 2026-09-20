@@ -67,8 +67,12 @@ fn forever_edit_mode_preset_consumer() {
     load_source(&env, "Blizzard_EditMode/Mainline/EditModePresetLayouts.lua");
     env.exec(
         r#"
-        assert(EDIT_MODE_MODERN_SYSTEM_MAP[Enum.EditModeSystem.SwingTimer])
-        assert(EDIT_MODE_MODERN_SYSTEM_MAP[Enum.EditModeSystem.MainActionBarEndCap])
+        local timers = EDIT_MODE_MODERN_SYSTEM_MAP[Enum.EditModeSystem.SwingTimer]
+        local mainHand = timers[Enum.EditModeSwingTimerSystemIndices.MainHand].settings
+        assert(mainHand[Enum.EditModeSwingTimerSetting.Width] == 213)
+        assert(mainHand[Enum.EditModeSwingTimerSetting.Visibility] == Enum.EditModeSwingTimerVisibility.Always)
+        local caps = EDIT_MODE_MODERN_SYSTEM_MAP[Enum.EditModeSystem.MainActionBarEndCap]
+        assert(caps[Enum.EditModeMainActionBarEndCapSystemIndices.EndCapLeft].settings[Enum.EditModeMainActionBarEndCapSetting.Hidden] == 0)
     "#,
     )
     .unwrap();
@@ -82,4 +86,11 @@ fn forever_edit_mode_display_consumer() {
         &env,
         "Blizzard_EditMode/Shared/EditModeSettingDisplayInfo.lua",
     );
+    env.exec(r#"
+        local settings = EditModeSettingDisplayInfoManager.systemSettingDisplayInfo[Enum.EditModeSystem.SwingTimer]
+        assert(settings[1].setting == Enum.EditModeSwingTimerSetting.Scale)
+        assert(settings[1].minValue == 50 and settings[1].maxValue == 200)
+        assert(settings[2].setting == Enum.EditModeSwingTimerSetting.Opacity)
+        assert(settings[2].minValue == 50 and settings[2].maxValue == 100)
+    "#).unwrap();
 }
