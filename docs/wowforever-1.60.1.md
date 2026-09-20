@@ -25,7 +25,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Timed signal maps | `799389a6e` | Extracts a `timed-signal-maps` capability shared by PTR 12.1.5 and Forever. It exposes the existing `C_Timer.NewTimedSignalMap` state, scheduling, and `TimerUtil.lua` consumer without enabling a retail epoch. |
 | Table utilities | `b6a6a7dad` | Reuses existing table extensions for Forever so `TableUtil.lua` can publish its compatibility aliases. The real-source fixture is committed; final verification remains pending. |
 | Source-documented enums and gamepad constants | `5e2558264`, `b838d6917` | Publishes Forever `BattleNetFriendLevel`, `VisualAlertType`, and `CooldownViewerSound` with metadata, plus `Constants.GamepadActionBarConstants`; the second commit exposes the new C API module. Vendor-consumer regressions are committed but targeted GREEN evidence is pending. This does not implement interactive gamepad input. |
-| Gamepad stick scripts | `72fc53d24` | Adds canonical `OnGamePadStick` and the Forever Lua `OnGamepadStick` alias across script APIs, with generic `(stick, x, y)` dispatch. It does not enable host-gamepad delivery or establish native alias validation. |
+| Gamepad stick scripts | `72fc53d24`, `5570fe263` | Adds canonical `OnGamePadStick` and the Forever Lua `OnGamepadStick` alias across script APIs, with generic `(stick, x, y)` dispatch; the follow-up loads those handlers from XML and templates. It does not enable host-gamepad delivery or establish native alias validation. |
 
 ## Proof
 
