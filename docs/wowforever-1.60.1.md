@@ -11,6 +11,10 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 - Build: `1.60.1.69913`
 - Interface: `16001`
 
+## Keyring inventory query
+
+`5a73449b8` adds Forever-only `HasKey()` backed by occupied keyring inventory slots. Targeted tests passed **2/2**, covering insertion/removal, zero stacks, ordinary-bag exclusion and the real acknowledged-tutorial consumer. The missing-global RED was reproduced; the first consumer RED instead exposed a missing fixture prerequisite. Other-profile/final checks remain pending. See [the contract and inventory policy](specs/forever-has-key.md).
+
 ## Committed changes
 
 | Area | Commits | Committed behavior / current proof |
@@ -41,6 +45,10 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | LFG lair category | deferred | `Constants.lua:482` is instrumented as the exact missing key (`LFG_CATEGORY_LAIR`), but the Forever cache only consumes the symbol and provides no value assignment. Existing retail 12.1 value `8` is not Forever evidence; no fix is claimed. |
 | Aura XML widgets | `c20f26dad` | Shares existing AuraContainer, ManagedAuraContainer, and AuraButton XML/factory support with Forever. Nested schema and widget-behavior fixtures are GREEN (`2/2`); this is not a full vendor UnitFrame load claim. |
 | Gamepad stick scripts | `72fc53d24`, `5570fe263`, `d5ad14601` | Adds canonical `OnGamePadStick` and the Forever Lua `OnGamepadStick` alias across script APIs, with generic `(stick, x, y)` dispatch; follow-ups load those handlers from XML/templates and correct template-handler array length. It does not enable host-gamepad delivery or establish native alias validation. |
+
+## Graveyard-port predicate
+
+`a13a97aba` adds Forever-only `CanPortGraveyard()` backed by independent player availability state, defaulting to false as simulator policy. Actual `GhostFrame.lua` OnLoad tests pass **2/2** after reproducing the missing global: unavailable hides the frame; available preserves its existing visibility; state changes and environment isolation work. Other-profile exclusion is tested in code but awaits final verification. No automatic death/ghost rules or port action are inferred. See [contract](specs/forever-graveyard-port.md) and `/tmp/forever-graveyard-proof.json`.
 
 ## Proof
 
