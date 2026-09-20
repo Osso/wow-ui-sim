@@ -84,7 +84,16 @@ fn regional_unique_names_enabled(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-wowforever")]
+fn can_port_graveyard(state: &mut LuaState) -> LuaResult<u32> {
+    let available = borrow_state(state)?.player.can_port_graveyard;
+    state.push(Val::Bool(available));
+    Ok(1)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(feature = "client-wowforever")]
+    LuaApiMut::register_function(lua, "CanPortGraveyard", can_port_graveyard)?;
     #[cfg(feature = "client-wowforever")]
     LuaApiMut::register_function(
         lua,
