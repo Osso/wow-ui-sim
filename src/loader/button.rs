@@ -91,6 +91,15 @@ fn generate_texture_layout_snippet(
     }
 
     code.push_str(&generate_texture_tex_coords_snippet(texture));
+    if let Some(animations) = &texture.animations {
+        for group in &animations.animations {
+            if group.is_virtual != Some(true) {
+                code.push_str(&super::helpers_anim::generate_animation_group_code(
+                    group, "tex",
+                ));
+            }
+        }
+    }
 
     code.push_str("    end\nend\n");
     code

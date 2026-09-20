@@ -102,6 +102,77 @@ fn forever_chat_xml_attaches_flash_groups_to_named_glows() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_dock_overflow_highlight_keeps_its_flash_animation() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let xml = std::fs::read_to_string(
+        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml"),
+    )
+    .unwrap();
+    let templates = xml.split("<!-- Main dock manager -->").next().unwrap();
+    let addon = create_test_addon(&format!("{templates}</Ui>"), "ActualDockOverflow");
+    std::fs::write(
+        addon.path().join("AnimationTemplates.xml"),
+        std::fs::read_to_string(cache.join("Blizzard_SharedXML/AnimationTemplates.xml")).unwrap(),
+    )
+    .unwrap();
+    std::fs::write(
+        addon.path().join("ActualDockOverflow.toc"),
+        "AnimationTemplates.xml\nActualDockOverflow.xml\n",
+    )
+    .unwrap();
+    load_addon(
+        &env.loader_env(),
+        &addon.path().join("ActualDockOverflow.toc"),
+    )
+    .unwrap();
+    for file in [
+        "Blizzard_SharedXMLBase/Compat.lua",
+        "Blizzard_ChatFrameBase/Shared/ChatFrameConstants.lua",
+        "Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua",
+    ] {
+        env.exec(&std::fs::read_to_string(cache.join(file)).unwrap())
+            .unwrap();
+    }
+    let floating = std::fs::read_to_string(
+        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua"),
+    )
+    .unwrap();
+    // Execute the unchanged consumer and its dock-list accessor, without unrelated
+    // top-level chat-manager registration dependencies.
+    for name in [
+        "FCFDock_GetChatFrames",
+        "FCFDockOverflowButton_UpdatePulseState",
+    ] {
+        let start = floating.find(&format!("function {name}(")).unwrap();
+        let body = &floating[start..];
+        let end = body.find("\nend").unwrap() + "\nend".len();
+        env.exec(&body[..end]).unwrap();
+    }
+    env.exec(
+        r##"
+        local dock = CreateFrame("Frame", "ActualOverflowDock", UIParent, "DockManagerTemplate")
+        dock.DOCKED_CHAT_FRAMES = {}
+        local button = dock.overflowButton
+        button.list:Hide()
+        local highlight = button:GetHighlightTexture()
+        assert(highlight.FlashAnim, "actual overflow HighlightTexture lost FlashAnim")
+        assert(highlight.FlashAnim:GetParent() == highlight)
+        assert(select("#", highlight:GetAnimationGroups()) == 1)
+        highlight.FlashAnim:Play()
+        assert(highlight.FlashAnim:IsPlaying())
+        assert(FCFDockOverflowButton_UpdatePulseState(button))
+        assert(not highlight.FlashAnim:IsPlaying())
+        assert(highlight:IsShown())
+        assert(button:GetHighlightTexture() == highlight)
+    "##,
+    )
+    .unwrap();
+}
+
+#[test]
 fn xml_animation_group_onload_hides_target_textures() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
