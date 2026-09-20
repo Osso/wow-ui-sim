@@ -263,7 +263,7 @@ enum GenerateTarget {
     /// Generate data/items.rs from ItemSparse CSV
     Items,
     /// Generate data/atlas.rs from UiTextureAtlas CSVs
-    Atlas,
+    Atlas(gen_atlas::Options),
     /// Generate data/currencies.rs from CurrencyTypes CSV
     Currencies,
     /// Generate data/global_strings.rs from GlobalStrings CSV
@@ -361,7 +361,7 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells => gen_spells::run(),
         GenerateTarget::Items => gen_items::run(),
-        GenerateTarget::Atlas => gen_atlas::run(),
+        GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
         GenerateTarget::GlobalStrings => gen_global_strings::run(),
         GenerateTarget::Manifest => gen_manifest::run(),

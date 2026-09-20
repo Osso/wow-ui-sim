@@ -9,16 +9,45 @@
 //!
 //! Generates: data/atlas.rs
 
+#[cfg(test)]
+#[path = "gen_atlas_tests.rs"]
+mod tests;
+
 use super::csv_util::{parse_csv_line, wow_data_dir};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let wow_data = wow_data_dir();
-    let atlas_data = load_atlas_data(&wow_data)?;
-    let output = generate_output_files(&atlas_data)?;
+#[derive(clap::Args)]
+pub struct Options {
+    /// Explicit CSV directory; never uses the retail slice override.
+    #[arg(long)]
+    csv_dir: Option<PathBuf>,
+    #[arg(long)]
+    listfile: Option<PathBuf>,
+    #[arg(long, default_value = "data/atlas.rs")]
+    output: PathBuf,
+    #[arg(long, default_value = "data/atlas_elements.rs")]
+    elements_output: PathBuf,
+}
+
+pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
+    let wow_data = options.csv_dir.clone().unwrap_or_else(wow_data_dir);
+    let listfile = options
+        .listfile
+        .clone()
+        .unwrap_or_else(|| wow_data.join("listfile.csv"));
+    let slices = if options.csv_dir.is_some() {
+        wow_data.join("UiTextureAtlasElementSliceData.csv")
+    } else {
+        slice_data_path(&wow_data)
+    };
+    let mut atlas_data = load_atlas_data(&wow_data, &listfile, &slices)?;
+    if options.csv_dir.is_some() {
+        add_element_names(&mut atlas_data);
+    }
+    let output = generate_output_files(&atlas_data, &options.output, &options.elements_output)?;
     println!(
         "Generated {} atlas entries ({} skipped), {} element mappings",
         output.count, output.skipped, output.elem_count
@@ -39,12 +68,16 @@ struct GeneratedOutput {
     count: u32,
     skipped: u32,
     elem_count: u32,
-    output_path: &'static Path,
+    output_path: PathBuf,
 }
 
-fn load_atlas_data(wow_data: &Path) -> Result<AtlasData, Box<dyn std::error::Error>> {
+fn load_atlas_data(
+    wow_data: &Path,
+    listfile_path: &Path,
+    slices_path: &Path,
+) -> Result<AtlasData, Box<dyn std::error::Error>> {
     println!("Loading listfile...");
-    let listfile = load_listfile(&wow_data.join("listfile.csv"))?;
+    let listfile = load_listfile(listfile_path)?;
     println!("  {} entries", listfile.len());
 
     println!("Loading UiTextureAtlas...");
@@ -56,7 +89,7 @@ fn load_atlas_data(wow_data: &Path) -> Result<AtlasData, Box<dyn std::error::Err
     println!("  {} entries", elements.len());
 
     println!("Loading UiTextureAtlasElementSliceData...");
-    let slices = load_slices(&slice_data_path(wow_data), &elements)?;
+    let slices = load_slices(slices_path, &elements)?;
     println!("  {} entries", slices.len());
 
     println!("Loading UiTextureAtlasMember...");
@@ -72,6 +105,29 @@ fn load_atlas_data(wow_data: &Path) -> Result<AtlasData, Box<dyn std::error::Err
     })
 }
 
+// Element names are public API names; committed names identify canvas variants.
+// The default atlas set's 1x canvas supplies logical API geometry.
+fn add_element_names(data: &mut AtlasData) {
+    let aliases: Vec<_> = data
+        .members
+        .iter()
+        .filter_map(|member| {
+            let atlas = data.atlases.get(&member.atlas_id)?;
+            if atlas.set_id != 1 || atlas.canvas_id != 1 {
+                return None;
+            }
+            let name = data.elements.get(&member.element_id)?;
+            if name.eq_ignore_ascii_case(&member.name) {
+                return None;
+            }
+            let mut alias = member.clone();
+            alias.name = name.clone();
+            Some(alias)
+        })
+        .collect();
+    data.members.extend(aliases);
+}
+
 fn slice_data_path(wow_data: &Path) -> std::path::PathBuf {
     let local = Path::new("data/db2/UiTextureAtlasElementSliceData.csv");
     if local.exists() {
@@ -83,10 +139,16 @@ fn slice_data_path(wow_data: &Path) -> std::path::PathBuf {
 
 fn generate_output_files(
     atlas_data: &AtlasData,
+    output_path: &Path,
+    elem_path: &Path,
 ) -> Result<GeneratedOutput, Box<dyn std::error::Error>> {
     println!("Generating atlas_data.rs...");
-    std::fs::create_dir_all("data")?;
-    let output_path = Path::new("data/atlas.rs");
+    if let Some(parent) = output_path.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    if let Some(parent) = elem_path.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
     let mut out = File::create(output_path)?;
 
     write_header(&mut out)?;
@@ -99,7 +161,6 @@ fn generate_output_files(
     )?;
     write_slice_lookup(&mut out, &atlas_data.slices)?;
 
-    let elem_path = Path::new("data/atlas_elements.rs");
     let mut elem_out = File::create(elem_path)?;
     let elem_count = write_element_map(&mut elem_out, &atlas_data.elements)?;
 
@@ -107,7 +168,7 @@ fn generate_output_files(
         count,
         skipped,
         elem_count,
-        output_path,
+        output_path: output_path.to_path_buf(),
     })
 }
 
@@ -395,10 +456,14 @@ struct AtlasEntry {
     file_data_id: u32,
     width: u32,
     height: u32,
+    set_id: u32,
+    canvas_id: u32,
 }
 
+#[derive(Clone)]
 struct MemberEntry {
     name: String,
+    element_id: u32,
     atlas_id: u32,
     width: u32,
     height: u32,
@@ -441,24 +506,38 @@ fn load_atlas(path: &Path) -> Result<HashMap<u32, AtlasEntry>, Box<dyn std::erro
     let reader = BufReader::new(file);
     let mut map = HashMap::new();
 
-    for (i, line) in reader.lines().enumerate() {
+    let mut lines = reader.lines();
+    let header = lines.next().ok_or("empty atlas CSV")??;
+    let columns: Vec<_> = header.split(',').collect();
+    let width_index = columns.iter().position(|v| *v == "AtlasWidth").unwrap_or(2);
+    let height_index = columns
+        .iter()
+        .position(|v| *v == "AtlasHeight")
+        .unwrap_or(3);
+    let set_index = columns.iter().position(|v| *v == "UiTextureAtlasSetID");
+    let canvas_index = columns.iter().position(|v| *v == "UiCanvasID");
+    for line in lines {
         let line = line?;
-        if i == 0 {
-            continue;
-        }
-
         let fields: Vec<&str> = line.split(',').collect();
         if fields.len() >= 4 {
             let id: u32 = fields[0].parse()?;
             let file_data_id: u32 = fields[1].parse()?;
-            let width: u32 = fields[2].parse()?;
-            let height: u32 = fields[3].parse()?;
+            let width: u32 = fields[width_index].parse()?;
+            let height: u32 = fields[height_index].parse()?;
             map.insert(
                 id,
                 AtlasEntry {
                     file_data_id,
                     width,
                     height,
+                    set_id: set_index
+                        .map(|i| fields[i].parse())
+                        .transpose()?
+                        .unwrap_or(1),
+                    canvas_id: canvas_index
+                        .map(|i| fields[i].parse())
+                        .transpose()?
+                        .unwrap_or(1),
                 },
             );
         }
@@ -555,6 +634,7 @@ fn load_members(path: &Path) -> Result<Vec<MemberEntry>, Box<dyn std::error::Err
         if fields.len() >= 13 {
             entries.push(MemberEntry {
                 name: fields[0].clone(),
+                element_id: fields[9].parse()?,
                 atlas_id: fields[2].parse()?,
                 width: fields[3].parse()?,
                 height: fields[4].parse()?,

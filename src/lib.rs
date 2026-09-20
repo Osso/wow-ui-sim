@@ -12,9 +12,11 @@ pub mod addon_tests;
 pub mod app_icon_render;
 pub mod asset_resolver_config;
 pub mod atlas;
-#[path = "../data/atlas.rs"]
+#[cfg_attr(feature = "client-wowforever", path = "../data/atlas_wowforever.rs")]
+#[cfg_attr(not(feature = "client-wowforever"), path = "../data/atlas.rs")]
 mod atlas_data;
-#[path = "../data/atlas_elements.rs"]
+#[cfg_attr(feature = "client-wowforever", path = "../data/atlas_elements_wowforever.rs")]
+#[cfg_attr(not(feature = "client-wowforever"), path = "../data/atlas_elements.rs")]
 mod atlas_elements;
 pub mod blizzard_ui_sync;
 pub mod c_api;
