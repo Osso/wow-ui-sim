@@ -238,7 +238,6 @@ pub const RECENT_ALLIES_FRIEND_TAG_META: EnumDef = (
 // Guild / Social Enums
 // ============================================================================
 
-#[cfg(feature = "retail-12-1-0")]
 pub const BATTLE_NET_FRIEND_TAG: EnumDef = (
     "BattleNetFriendTag",
     &[
@@ -255,7 +254,6 @@ pub const BATTLE_NET_FRIEND_TAG: EnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const BATTLE_NET_FRIEND_TAG_META: EnumDef = (
     "BattleNetFriendTagMeta",
     &[("MinValue", 0), ("MaxValue", 9), ("NumValues", 10)],

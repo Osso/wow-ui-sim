@@ -1,5 +1,5 @@
 //! Source-confirmed enum group shared by retail 12.1 and Forever.
-use super::{EnumDef, SeqEnumDef};
+use super::{BATTLE_NET_FRIEND_TAG, BATTLE_NET_FRIEND_TAG_META, EnumDef, SeqEnumDef};
 
 pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
     feature = "retail-12-1-0",
@@ -8,6 +8,8 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
     (
         &[
             BATTLE_NET_FRIEND_LEVEL,
+            BATTLE_NET_FRIEND_TAG,
+            BATTLE_NET_FRIEND_TAG_META,
             BATTLE_NET_FRIEND_LEVEL_META,
             VISUAL_ALERT_TYPE,
             VISUAL_ALERT_TYPE_META,
@@ -18,6 +20,25 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
 } else {
     (&[], &[])
 };
+
+#[cfg(feature = "client-wowforever")]
+pub(super) const RECENT_ALLIES_INTERACTION_CATEGORY_FILTER: EnumDef = (
+    "RecentAlliesInteractionCategoryFilter",
+    &[
+        ("Professions", 0),
+        ("PvP", 1),
+        ("Raiding", 2),
+        ("Dungeons", 3),
+        ("Delves", 4),
+        ("Questing", 5),
+    ],
+);
+
+#[cfg(feature = "client-wowforever")]
+pub(super) const RECENT_ALLIES_INTERACTION_CATEGORY_FILTER_META: EnumDef = (
+    "RecentAlliesInteractionCategoryFilterMeta",
+    &[("MinValue", 0), ("MaxValue", 5), ("NumValues", 6)],
+);
 
 const COOLDOWN_VIEWER_SOUND: SeqEnumDef = (
     "CooldownViewerSound",

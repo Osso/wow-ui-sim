@@ -188,6 +188,15 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
 
 // All explicit value enums (for batch registration)
 pub const EXPLICIT_ENUMS: &[EnumDef] = &[
+    #[cfg(feature = "client-wowforever")]
+    forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER,
+    #[cfg(feature = "client-wowforever")]
+    forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER_META,
+    #[cfg(feature = "client-wowforever")]
+    (
+        "ClubStreamTypeMeta",
+        &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
+    ),
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META,
     #[cfg(feature = "retail-12-1-0")]
@@ -198,10 +207,6 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     ROLODEX_TYPE_LEGACY_FRIEND,
     #[cfg(feature = "retail-12-1-0")]
     ROLODEX_TYPE_META,
-    #[cfg(feature = "retail-12-1-0")]
-    BATTLE_NET_FRIEND_TAG,
-    #[cfg(feature = "retail-12-1-0")]
-    BATTLE_NET_FRIEND_TAG_META,
     #[cfg(feature = "retail-12-1-0")]
     SOCIAL_UI_BLOCK_TYPE,
     #[cfg(feature = "retail-12-1-0")]

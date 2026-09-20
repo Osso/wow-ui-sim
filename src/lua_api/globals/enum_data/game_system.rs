@@ -364,8 +364,14 @@ pub const COLOR_OVERRIDE: SeqEnumDef = (
     ],
 );
 
-pub const CLUB_STREAM_TYPE: SeqEnumDef =
-    ("ClubStreamType", &["General", "Guild", "Officer", "Other"]);
+pub const CLUB_STREAM_TYPE: SeqEnumDef = if cfg!(feature = "client-wowforever") {
+    (
+        "ClubStreamType",
+        &["General", "Guild", "Officer", "Discord", "Other"],
+    )
+} else {
+    ("ClubStreamType", &["General", "Guild", "Officer", "Other"])
+};
 
 pub const RECRUIT_A_FRIEND_REWARDS_VERSION: SeqEnumDef = (
     "RecruitAFriendRewardsVersion",
