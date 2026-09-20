@@ -782,5 +782,5 @@ pub const LFG_CATEGORY_CONSTANTS: &[IntDef] = &[
     ("LE_LFG_CATEGORY_BATTLEFIELD", 7),
 ];
 
-#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+#[cfg(feature = "retail-12-1-0")]
 pub const RETAIL_12_1_LFG_CATEGORY_CONSTANTS: &[IntDef] = &[("LE_LFG_CATEGORY_LAIR", 8)];
