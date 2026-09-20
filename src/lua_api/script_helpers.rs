@@ -381,6 +381,7 @@ fn static_input_script_handler_name(handler_name: &str) -> Option<&'static [u8]>
         "OnInputLanguageChanged" => Some(b"OnInputLanguageChanged"),
         "OnKeyDown" => Some(b"OnKeyDown"),
         "OnKeyUp" => Some(b"OnKeyUp"),
+        "OnGamePadStick" | "OnGamepadStick" => Some(b"OnGamePadStick"),
         "OnValueChanged" => Some(b"OnValueChanged"),
         "OnHyperlinkClick" => Some(b"OnHyperlinkClick"),
         "OnHyperlinkEnter" => Some(b"OnHyperlinkEnter"),

@@ -153,6 +153,7 @@ pub enum ScriptHandler {
     // GamePad
     OnGamePadButtonDown,
     OnGamePadButtonUp,
+    OnGamePadStick,
     // Model / PlayerModel
     OnModelLoaded,
     OnModelCleared,
@@ -248,6 +249,9 @@ const SCRIPT_HANDLERS_BY_NAME: &[(&'static str, ScriptHandler)] = &[
     ("OnCooldownDone", ScriptHandler::OnCooldownDone),
     ("OnGamePadButtonDown", ScriptHandler::OnGamePadButtonDown),
     ("OnGamePadButtonUp", ScriptHandler::OnGamePadButtonUp),
+    ("OnGamePadStick", ScriptHandler::OnGamePadStick),
+    // Forever Lua uses this spelling; XML uses the canonical spelling above.
+    ("OnGamepadStick", ScriptHandler::OnGamePadStick),
     ("OnModelLoaded", ScriptHandler::OnModelLoaded),
     ("OnModelCleared", ScriptHandler::OnModelCleared),
     ("OnDressModel", ScriptHandler::OnDressModel),

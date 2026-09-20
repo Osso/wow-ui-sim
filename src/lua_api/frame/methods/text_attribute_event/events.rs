@@ -482,6 +482,8 @@ fn is_keyboard_script_handler(handler_name: &str) -> bool {
             | "OnChar"
             | "OnKeyDown"
             | "OnKeyUp"
+            | "OnGamePadStick"
+            | "OnGamepadStick"
     )
 }
 
