@@ -1,6 +1,6 @@
 # Lua table extensions
 
-Retail 12.1.5 exposes native `table` helpers that `Blizzard_SharedXMLBase/TableUtil.lua` aliases during startup. The simulator publishes the startup-required subset only for the cumulative `retail-12-1-5` epoch.
+Retail 12.1.5 exposes native `table` helpers that `Blizzard_SharedXMLBase/TableUtil.lua` aliases during startup. The simulator publishes the startup-required subset for the cumulative `retail-12-1-5` epoch and the distinct `client-wowforever` profile, without enabling a retail epoch for Forever.
 
 ## What it must do
 
@@ -26,6 +26,7 @@ Retail 12.1.5 exposes native `table` helpers that `Blizzard_SharedXMLBase/TableU
 ## Tests asserting this spec
 
 - `patch-tests/patch_12_1/table_extensions.rs`
+- `tests/wowforever_table.rs` — real Forever `TableUtil.lua` aliases and consumer mutations, plus earlier-profile exclusion. All eight exposed helpers are published by Forever 1.60.1.69913 `LuaTableExtensionsDocumentation.lua`; no native-conformance claim.
 
 ## Known gaps (current cycle)
 
