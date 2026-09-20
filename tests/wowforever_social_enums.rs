@@ -13,7 +13,7 @@ fn forever_social_enums_match_documented_values_and_metadata() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         checked = 0
-        local wanted = {ClubStreamType=true, BattleNetFriendTag=true, RecentAlliesInteractionCategoryFilter=true}
+        local wanted = {ClubStreamType=true, BattleNetFriendTag=true, RecentAlliesInteractionCategoryFilter=true, SocialUIPresenceType=true, SocialSystemType=true, SocialUIBlockType=true, RolodexType=true}
         APIDocumentation = {AddDocumentationTable=function(_, doc)
             for _, definition in ipairs(doc.Tables or {}) do
                 if wanted[definition.Name] then
@@ -34,10 +34,27 @@ fn forever_social_enums_match_documented_values_and_metadata() {
         "ClubDocumentation.lua",
         "BattleNetSharedDocumentation.lua",
         "RecentAlliesConstantsDocumentation.lua",
+        "SocialUIDocumentation.lua",
+        "RolodexConstantsDocumentation.lua",
     ] {
         load_vendor(&env, &format!("Blizzard_APIDocumentationGenerated/{file}"));
     }
-    assert_eq!(env.eval::<i32>("return checked").unwrap(), 3);
+    assert_eq!(env.eval::<i32>("return checked").unwrap(), 7);
+}
+
+#[test]
+fn forever_social_presence_consumer_maps_icons_and_account_states() {
+    let env = WowLuaEnv::new().unwrap();
+    load_vendor(&env, "Blizzard_SocialUIShared/SocialUIUtil.lua");
+    env.exec(r#"
+        assert(SocialUIUtil.GetIconForPresenceType(Enum.SocialUIPresenceType.Busy) == "friends-status-busy")
+        assert(SocialUIUtil.GetIconForPresenceType(999) == "friends-status-offline")
+        assert(SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo(nil) == Enum.SocialUIPresenceType.Offline)
+        local account = {gameAccountInfo={isOnline=true}}
+        assert(SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo(account) == Enum.SocialUIPresenceType.Online)
+        account.isAFK = true
+        assert(SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo(account) == Enum.SocialUIPresenceType.Away)
+    "#).unwrap();
 }
 
 #[test]

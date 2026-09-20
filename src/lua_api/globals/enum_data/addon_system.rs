@@ -282,19 +282,16 @@ pub const BATTLE_NET_FRIEND_TAG_META: EnumDef = (
     &[("MinValue", 0), ("MaxValue", 9), ("NumValues", 10)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_UI_BLOCK_TYPE: EnumDef = (
     "SocialUIBlockType",
     &[("None", 0), ("Ignore", 1), ("BattleNetInviteBlock", 2)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_UI_BLOCK_TYPE_META: EnumDef = (
     "SocialUIBlockTypeMeta",
     &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_UI_PRESENCE_TYPE: EnumDef = (
     "SocialUIPresenceType",
     &[
@@ -307,13 +304,11 @@ pub const SOCIAL_UI_PRESENCE_TYPE: EnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_UI_PRESENCE_TYPE_META: EnumDef = (
     "SocialUIPresenceTypeMeta",
     &[("MinValue", 0), ("MaxValue", 5), ("NumValues", 6)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_SYSTEM_TYPE: SeqEnumDef = (
     "SocialSystemType",
     &[
@@ -325,7 +320,6 @@ pub const SOCIAL_SYSTEM_TYPE: SeqEnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const SOCIAL_SYSTEM_TYPE_META: EnumDef = (
     "SocialSystemTypeMeta",
     &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
@@ -417,10 +411,8 @@ pub const ROLODEX_TYPE: SeqEnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const ROLODEX_TYPE_LEGACY_FRIEND: EnumDef = ("RolodexType", &[("LegacyFriend", 23)]);
 
-#[cfg(feature = "retail-12-1-0")]
 pub const ROLODEX_TYPE_META: EnumDef = (
     "RolodexTypeMeta",
     &[("MinValue", 0), ("MaxValue", 23), ("NumValues", 22)],

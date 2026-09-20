@@ -1,5 +1,9 @@
 //! Source-confirmed enum group shared by retail 12.1 and Forever.
-use super::{BATTLE_NET_FRIEND_TAG, BATTLE_NET_FRIEND_TAG_META, EnumDef, SeqEnumDef};
+use super::{
+    BATTLE_NET_FRIEND_TAG, BATTLE_NET_FRIEND_TAG_META, EnumDef, ROLODEX_TYPE_LEGACY_FRIEND,
+    ROLODEX_TYPE_META, SOCIAL_SYSTEM_TYPE, SOCIAL_SYSTEM_TYPE_META, SOCIAL_UI_BLOCK_TYPE,
+    SOCIAL_UI_BLOCK_TYPE_META, SOCIAL_UI_PRESENCE_TYPE, SOCIAL_UI_PRESENCE_TYPE_META, SeqEnumDef,
+};
 
 pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
     feature = "retail-12-1-0",
@@ -14,8 +18,15 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
             VISUAL_ALERT_TYPE,
             VISUAL_ALERT_TYPE_META,
             COOLDOWN_VIEWER_SOUND_META,
+            SOCIAL_UI_PRESENCE_TYPE,
+            SOCIAL_UI_PRESENCE_TYPE_META,
+            SOCIAL_SYSTEM_TYPE_META,
+            SOCIAL_UI_BLOCK_TYPE,
+            SOCIAL_UI_BLOCK_TYPE_META,
+            ROLODEX_TYPE_LEGACY_FRIEND,
+            ROLODEX_TYPE_META,
         ],
-        &[COOLDOWN_VIEWER_SOUND],
+        &[COOLDOWN_VIEWER_SOUND, SOCIAL_SYSTEM_TYPE],
     )
 } else {
     (&[], &[])

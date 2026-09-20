@@ -133,8 +133,6 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE,
     #[cfg(feature = "retail-12-1-0")]
     RECENT_ALLIES_FRIEND_TAG,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_SYSTEM_TYPE,
     TTS_VOICE_TYPE,
     GUILD_ERROR_TYPE,
     ROLODEX_TYPE,
@@ -204,20 +202,6 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE_META,
     #[cfg(feature = "retail-12-1-0")]
     RECENT_ALLIES_FRIEND_TAG_META,
-    #[cfg(feature = "retail-12-1-0")]
-    ROLODEX_TYPE_LEGACY_FRIEND,
-    #[cfg(feature = "retail-12-1-0")]
-    ROLODEX_TYPE_META,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_UI_BLOCK_TYPE,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_UI_BLOCK_TYPE_META,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_UI_PRESENCE_TYPE,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_UI_PRESENCE_TYPE_META,
-    #[cfg(feature = "retail-12-1-0")]
-    SOCIAL_SYSTEM_TYPE_META,
     #[cfg(feature = "retail-12-1-0")]
     EDIT_MODE_ACCOUNT_SETTING_META,
     #[cfg(feature = "retail-12-1-0")]
