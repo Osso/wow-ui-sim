@@ -38,11 +38,19 @@ pub struct AtlasLookup {
 
 impl AtlasLookup {
     pub fn width(&self) -> u32 {
-        if self.is_2x_fallback { self.info.width / 2 } else { self.info.width }
+        if self.is_2x_fallback {
+            self.info.width / 2
+        } else {
+            self.info.width
+        }
     }
 
     pub fn height(&self) -> u32 {
-        if self.is_2x_fallback { self.info.height / 2 } else { self.info.height }
+        if self.is_2x_fallback {
+            self.info.height / 2
+        } else {
+            self.info.height
+        }
     }
 }
 
@@ -50,19 +58,28 @@ pub fn get_atlas_info(name: &str) -> Option<AtlasLookup> {
     let lower = name.to_lowercase();
 
     if let Some(info) = ATLAS_DB.get(&lower as &str) {
-        return Some(AtlasLookup { info, is_2x_fallback: false });
+        return Some(AtlasLookup {
+            info,
+            is_2x_fallback: false,
+        });
     }
 
     if !lower.ends_with("-2x") {
         let with_2x = format!("{lower}-2x");
         if let Some(info) = ATLAS_DB.get(&with_2x as &str) {
-            return Some(AtlasLookup { info, is_2x_fallback: true });
+            return Some(AtlasLookup {
+                info,
+                is_2x_fallback: true,
+            });
         }
     }
 
     if let Some(base) = lower.strip_suffix("-2x") {
         if let Some(info) = ATLAS_DB.get(base) {
-            return Some(AtlasLookup { info, is_2x_fallback: false });
+            return Some(AtlasLookup {
+                info,
+                is_2x_fallback: false,
+            });
         }
     }
 
