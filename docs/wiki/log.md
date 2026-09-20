@@ -1,3 +1,7 @@
+## [2026-09-20] system | Correct Forever Family TOC routing
+
+Commit `5e26960b6` corrects `client-wowforever` `[Family]` substitution from `Classic` to `Mainline`, matching the authenticated Forever source's base `NineSliceLayouts`, `InputUtil`, and shared-panel templates. `[Game]` remains `Camelot`; `camelot`/`classic` annotation filtering remains unchanged, so this does not load general `mainline`-annotated entries. The earlier 422-record startup baseline predates this correction and remains failure evidence only. Updated [[client-profiles]], [[addon-loading]], and the index.
+
 ## [2026-09-20] system | Synchronize Forever source cache and record failing startup baseline
 
 Commit `65139f909` regenerated the bundled listfile from refreshed community data, adding 592 `wowforever` path-to-FDID rows. Rebuilt `wow-cli casc sync-blizzard-ui` extracted all 4,398 manifest files from local `wow_classic_beta` CASC with no unresolved paths. The first no-addons/no-saved-vars startup capture instead exited 1: `docs/baselines/wowforever-lua-errors.json` records 422 distinct errors and 514 occurrences, including missing `BattleNetFriendLevel` and `InputUtil`. This proves mapping and extraction only, not startup, Blizzard UI, or native compatibility. Updated [[client-profiles]], [[casc-asset-cache]], and their index summaries.
