@@ -26,6 +26,7 @@ pub mod pet_bar;
 pub mod pet_stats;
 pub mod player_identity;
 pub mod player_probes;
+pub mod preferred_interact;
 pub mod shapeshift;
 pub mod specialization_helpers;
 pub mod specialization_legacy;

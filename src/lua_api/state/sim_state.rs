@@ -136,6 +136,8 @@ pub struct SimState {
     pub current_focus: Option<TargetInfo>,
     /// Soft interaction selection aliases an existing target/focus/enemy token.
     pub soft_interact_target: Option<String>,
+    /// Preferred gamepad interaction identity; independent of target aliases.
+    pub preferred_gamepad_interact_guid: Option<String>,
     pub enemy_pool: Vec<TargetInfo>,
     /// Unit raid target icons keyed by GUID; independent of world markers.
     pub(crate) unit_raid_target_icons: HashMap<String, u8>,
