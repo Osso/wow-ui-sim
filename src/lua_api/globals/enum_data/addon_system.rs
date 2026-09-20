@@ -180,7 +180,30 @@ pub const UI_FRAME_TYPE: SeqEnumDef = ("UIFrameType", &["JailersTowerBuffs", "In
 
 pub const COOLDOWN_VIEWER_CATEGORY: SeqEnumDef = (
     "CooldownViewerCategory",
-    &["Essential", "Utility", "TrackedBuff", "TrackedBar"],
+    if cfg!(feature = "client-wowforever") {
+        &[
+            "Essential",
+            "Utility",
+            "TrackedBuff",
+            "TrackedBar",
+            "GroupBuff",
+            "SpecAgnosticEssential",
+            "SpecAgnosticTracked",
+            "EquipSlotEssential",
+            "EquipSlotTracked",
+        ]
+    } else {
+        &["Essential", "Utility", "TrackedBuff", "TrackedBar"]
+    },
+);
+
+pub const COOLDOWN_VIEWER_CATEGORY_META: EnumDef = (
+    "CooldownViewerCategoryMeta",
+    if cfg!(feature = "client-wowforever") {
+        &[("MinValue", 0), ("MaxValue", 8), ("NumValues", 9)]
+    } else {
+        &[("MinValue", 0), ("MaxValue", 3), ("NumValues", 4)]
+    },
 );
 
 pub const TTS_VOICE_TYPE: SeqEnumDef = ("TtsVoiceType", &["Standard", "Alternate"]);

@@ -188,6 +188,7 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
 
 // All explicit value enums (for batch registration)
 pub const EXPLICIT_ENUMS: &[EnumDef] = &[
+    COOLDOWN_VIEWER_CATEGORY_META,
     #[cfg(feature = "client-wowforever")]
     forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER,
     #[cfg(feature = "client-wowforever")]
