@@ -4,8 +4,8 @@ Forever publishes the `Constants.RaidMarkerConsts` table specified by build 1.60
 
 ## What it must do
 
-- [ ] Publish `MAX_RAID_TARGETS_USER=8`, `MAX_RAID_TARGETS_RESTRICTED=8`, `MAX_VALID_RAID_TARGETS=0`, and `MAX_RAID_MARKERS=8` only for Forever.
-- [ ] Let the unchanged gamepad `TargetActionBars/Shared.lua` select clear-marker state at the forward eighth-marker and reverse first-marker boundaries.
+- [x] Publish `MAX_RAID_TARGETS_USER=8`, `MAX_RAID_TARGETS_RESTRICTED=8`, `MAX_VALID_RAID_TARGETS=0`, and `MAX_RAID_MARKERS=8` only for Forever.
+- [x] Let the unchanged gamepad `TargetActionBars/Shared.lua` select clear-marker state at the forward eighth-marker and reverse first-marker boundaries.
 
 ## How it works
 
