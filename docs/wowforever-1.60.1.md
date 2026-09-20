@@ -49,6 +49,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Specialization class IDs | `9b86850b4` | Adds Forever `C_SpecializationInfo.GetAllClassIDs()` from the existing class catalogue, returning fresh numeric arrays. RED (`0/2`) reproduced `ClubFinder.lua:80` `ipairs(nil)`; GREEN (`2/2`) includes full vendor ClubFinder initialization. This is not a native-roster claim. |
 | Combat-audio pulse enum | `8c3fc1025`, `0d8f30dc1` | Publishes source-backed Forever `CombatAudioAlertPulsePercentValues` (0–9) and metadata. GREEN (`4/4`) covers generated-documentation equality and the isolated vendor command block; full startup remains separate. |
 | Batch-five events and enums | `1b29df37a` | Publishes two documented Forever events plus documented aura/curio enum metadata without enabling a retail epoch. RED (`0/3`) then GREEN (`3/3`) covers registration/unregistration, the actual `Deprecated_12_1_0.lua` consumer, and curio key usage. |
+| Tracked initiative membership | `61becf6e7` | Reuses only the documented tracked-membership methods for Forever, retaining the existing model rather than enabling a retail epoch. RED (`0/4`) then GREEN (`4/4`) covers actual objective-tracker initialization, empty layout, relevant events, and untracking. It does not model task records, populated layout, emitted events, persistence, or native conformance; this post-batch-five focused proof does not reduce the recorded startup count. |
 
 ## Graveyard-port predicate
 
