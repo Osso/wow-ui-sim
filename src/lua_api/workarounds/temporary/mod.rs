@@ -189,4 +189,3 @@ pub(crate) mod unit_stagger_defaults;
 pub(crate) mod unit_threat_defaults;
 pub(crate) mod video_options_state;
 pub(crate) mod vignette_pin_template;
-pub(crate) mod weapon_enchant_defaults;

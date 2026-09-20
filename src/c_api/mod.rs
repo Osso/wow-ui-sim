@@ -103,6 +103,7 @@ pub mod permanent_shims;
 pub(crate) mod seconds_formatter;
 #[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
+pub mod weapon_enchants;
 
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_edit_mode_enums;

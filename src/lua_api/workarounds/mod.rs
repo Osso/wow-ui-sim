@@ -366,7 +366,6 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::spell_metadata_defaults::apply_bootstrap(lua)?;
     temporary::spell_static_defaults::apply_bootstrap(lua)?;
     temporary::spell_target_defaults::apply_bootstrap(lua)?;
-    temporary::weapon_enchant_defaults::apply_bootstrap(lua)?;
     Ok(())
 }
 
