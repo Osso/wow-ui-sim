@@ -4,7 +4,7 @@ Retail 12.1.5 adds native functions to the Lua `math` table. The simulator expos
 
 ## What it must do
 
-- [x] Under `retail-12-1-5`, publish `math.clamp`, `isfinite`, `isinf`, `isnan`, `lerp`, `normalize`, `remap`, `round`, `saturate`, `sign`, and `wrap`.
+- [x] Under `retail-12-1-5` or `client-wowforever`, publish `math.clamp`, `isfinite`, `isinf`, `isnan`, `lerp`, `normalize`, `remap`, `round`, `saturate`, `sign`, and `wrap`.
 - [x] `round` rounds halfway values away from zero at positive or negative decimal places.
 - [x] `wrap` uses `[minimum, maximum)` and returns `minimum` when endpoints are equal.
 - [ ] Do not publish these extensions to earlier API epochs.
@@ -16,11 +16,12 @@ Retail 12.1.5 adds native functions to the Lua `math` table. The simulator expos
 ## Implementation inventory
 
 - `src/lua_api/globals/real/math_extensions.rs` — native `math` table functions.
-- `src/lua_api/globals/register.rs` — 12.1.5-gated registration.
+- `src/lua_api/globals/register.rs` — PTR 12.1.5 and Forever registration; Forever does not enable a retail epoch.
 
 ## Tests asserting this spec
 
 - `patch-tests/patch_12_1/math_extensions.rs` — PTR numeric behavior.
+- `tests/wowforever_math.rs` — real Forever `MathUtil.lua` aliases and consumers, all eleven documented primitives, and earlier-profile exclusion. Source: Forever 1.60.1.69913 `LuaMathExtensionsDocumentation.lua`. This proves simulator behavior, not native conformance.
 
 ## Known gaps (current cycle)
 
