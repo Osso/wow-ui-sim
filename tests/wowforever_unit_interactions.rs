@@ -12,6 +12,12 @@ fn consumer() -> WowLuaEnv {
         r#"
         local f = CreateFrame("Frame")
         icon = f:CreateTexture()
+        local expectedIcon = f:CreateTexture()
+        function AssertIcon(texture)
+            expectedIcon:SetTexture(texture)
+            assert(icon:GetTexture() == expectedIcon:GetTexture(),
+                tostring(icon:GetTexture()) .. " ~= " .. tostring(expectedIcon:GetTexture()))
+        end
         bar = { PageUnit = { actionBars = { topBar = { Right = {
             ActionButton1 = { SpecialActionIcon = icon }
         } } } } }
@@ -40,7 +46,7 @@ fn unknown_interactions_and_vendor_no_target() {
             assert(UnitIsInteractable(unit) == false)
         end
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == C_Spell.GetSpellTexture(6603))
+        AssertIcon(C_Spell.GetSpellTexture(6603))
         assert(preferred == nil)
     "#,
     )
@@ -51,7 +57,7 @@ fn unknown_interactions_and_vendor_no_target() {
 fn resolved_interaction_state_drives_vendor_icon_branches() {
     let env = consumer();
     env.exec("TargetUnit('enemy1')").unwrap();
-    env.exec("bar:UpdateInteractIcons(); assert(icon:GetTexture() == C_Spell.GetSpellTexture(6603)); assert(preferred == nil)").unwrap();
+    env.exec("bar:UpdateInteractIcons(); AssertIcon(C_Spell.GetSpellTexture(6603)); assert(preferred == nil)").unwrap();
     {
         let state = env.state();
         let mut state = state.borrow_mut();
@@ -62,7 +68,7 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
     env.exec(
         r#"
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == "Interface\\Cursor\\LootAll")
+        AssertIcon("Interface\\Cursor\\LootAll")
         assert(preferred == "target")
     "#,
     )
@@ -77,7 +83,7 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
     env.exec(
         r#"
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == "Interface\\Cursor\\UnableLootAll")
+        AssertIcon("Interface\\Cursor\\UnableLootAll")
     "#,
     )
     .unwrap();
@@ -92,7 +98,7 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
     env.exec(
         r#"
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == "Interface\\Cursor\\Interact")
+        AssertIcon("Interface\\Cursor\\Interact")
         assert(preferred == "target")
     "#,
     )
@@ -112,7 +118,7 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
         assert(not UnitExists("softinteract"))
         assert(UnitIsGameObject("softinteract"))
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == "Interface\\Cursor\\Interact")
+        AssertIcon("Interface\\Cursor\\Interact")
         assert(preferred == "softinteract")
     "#,
     )
@@ -127,7 +133,7 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
     env.exec(
         r#"
         bar:UpdateInteractIcons()
-        assert(icon:GetTexture() == "Interface\\Cursor\\LootAll")
+        AssertIcon("Interface\\Cursor\\LootAll")
         assert(preferred == "softinteract")
     "#,
     )
