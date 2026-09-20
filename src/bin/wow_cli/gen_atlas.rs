@@ -508,41 +508,79 @@ fn load_atlas(path: &Path) -> Result<HashMap<u32, AtlasEntry>, Box<dyn std::erro
 
     let mut lines = reader.lines();
     let header = lines.next().ok_or("empty atlas CSV")??;
-    let columns: Vec<_> = header.split(',').collect();
-    let width_index = columns.iter().position(|v| *v == "AtlasWidth").unwrap_or(2);
-    let height_index = columns
-        .iter()
-        .position(|v| *v == "AtlasHeight")
-        .unwrap_or(3);
-    let set_index = columns.iter().position(|v| *v == "UiTextureAtlasSetID");
-    let canvas_index = columns.iter().position(|v| *v == "UiCanvasID");
-    for line in lines {
-        let line = line?;
-        let fields: Vec<&str> = line.split(',').collect();
-        if fields.len() >= 4 {
-            let id: u32 = fields[0].parse()?;
-            let file_data_id: u32 = fields[1].parse()?;
-            let width: u32 = fields[width_index].parse()?;
-            let height: u32 = fields[height_index].parse()?;
-            map.insert(
-                id,
-                AtlasEntry {
-                    file_data_id,
-                    width,
-                    height,
-                    set_id: set_index
-                        .map(|i| fields[i].parse())
-                        .transpose()?
-                        .unwrap_or(1),
-                    canvas_id: canvas_index
-                        .map(|i| fields[i].parse())
-                        .transpose()?
-                        .unwrap_or(1),
-                },
-            );
-        }
+    let columns = AtlasColumns::parse(&header)?;
+    for (index, line) in lines.enumerate() {
+        let (id, entry) = columns.parse_row(&line?, index + 2)?;
+        map.insert(id, entry);
     }
     Ok(map)
+}
+
+const ATLAS_COLUMNS: [&str; 6] = [
+    "ID",
+    "FileDataID",
+    "UiTextureAtlasSetID",
+    "AtlasWidth",
+    "AtlasHeight",
+    "UiCanvasID",
+];
+
+struct AtlasColumns {
+    indices: [usize; 6],
+    count: usize,
+}
+
+impl AtlasColumns {
+    fn parse(header: &str) -> Result<Self, Box<dyn std::error::Error>> {
+        let columns = parse_csv_line(header);
+        let mut indices = [0; 6];
+        for (slot, name) in ATLAS_COLUMNS.iter().enumerate() {
+            indices[slot] = columns
+                .iter()
+                .position(|column| column == name)
+                .ok_or_else(|| format!("atlas CSV missing required column '{name}'"))?;
+        }
+        Ok(Self {
+            indices,
+            count: columns.len(),
+        })
+    }
+
+    fn parse_row(
+        &self,
+        line: &str,
+        row: usize,
+    ) -> Result<(u32, AtlasEntry), Box<dyn std::error::Error>> {
+        let fields = parse_csv_line(line);
+        if fields.len() != self.count {
+            return Err(format!(
+                "atlas CSV row {row}: expected {} columns, got {}",
+                self.count,
+                fields.len()
+            )
+            .into());
+        }
+        let mut values = [0u32; 6];
+        for (slot, index) in self.indices.iter().enumerate() {
+            values[slot] = fields[*index].parse().map_err(|error| {
+                format!(
+                    "atlas CSV row {row}, column '{}': {error}",
+                    ATLAS_COLUMNS[slot]
+                )
+            })?;
+        }
+        let [id, file_data_id, set_id, width, height, canvas_id] = values;
+        Ok((
+            id,
+            AtlasEntry {
+                file_data_id,
+                width,
+                height,
+                set_id,
+                canvas_id,
+            },
+        ))
+    }
 }
 
 fn load_elements(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std::error::Error>> {

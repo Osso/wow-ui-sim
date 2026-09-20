@@ -1,5 +1,71 @@
 use super::*;
 
+fn atlas_fixture(csv: &str) -> tempfile::NamedTempFile {
+    let file = tempfile::NamedTempFile::new().unwrap();
+    std::fs::write(file.path(), csv).unwrap();
+    file
+}
+
+#[test]
+fn atlas_csv_reads_reordered_named_columns() {
+    let file = atlas_fixture(
+        "UiCanvasID,AtlasHeight,ID,UiTextureAtlasSetID,FileDataID,AtlasWidth\n2,1024,3945,7,8026708,512\n",
+    );
+    let entries = load_atlas(file.path()).unwrap();
+    let atlas = &entries[&3945];
+    assert_eq!(
+        (atlas.file_data_id, atlas.width, atlas.height),
+        (8026708, 512, 1024)
+    );
+    assert_eq!((atlas.set_id, atlas.canvas_id), (7, 2));
+}
+
+#[test]
+fn atlas_csv_rejects_each_missing_required_header() {
+    let columns = [
+        "ID",
+        "FileDataID",
+        "UiTextureAtlasSetID",
+        "AtlasWidth",
+        "AtlasHeight",
+        "UiCanvasID",
+    ];
+    for missing in columns {
+        let header = columns
+            .iter()
+            .copied()
+            .filter(|name| *name != missing)
+            .collect::<Vec<_>>()
+            .join(",");
+        let file = atlas_fixture(&format!("{header}\n"));
+        let error = load_atlas(file.path())
+            .err()
+            .expect("missing header must fail")
+            .to_string();
+        assert!(error.contains(missing), "{error}");
+        assert!(error.contains("missing required column"), "{error}");
+    }
+}
+
+#[test]
+fn atlas_csv_rejects_truncated_rows_without_panicking() {
+    for row in [
+        "3944,8026705,1",
+        "3944,8026705,1,512",
+        "3944,8026705,1,512,512",
+    ] {
+        let file = atlas_fixture(&format!(
+            "ID,FileDataID,UiTextureAtlasSetID,AtlasWidth,AtlasHeight,UiCanvasID\n{row}\n"
+        ));
+        let error = load_atlas(file.path())
+            .err()
+            .expect("short row must fail")
+            .to_string();
+        assert!(error.contains("row 2"), "{error}");
+        assert!(error.contains("expected 6 columns"), "{error}");
+    }
+}
+
 #[test]
 fn explicit_csv_generation_uses_canvas_geometry_and_local_slices() {
     let temp = tempfile::tempdir().unwrap();
