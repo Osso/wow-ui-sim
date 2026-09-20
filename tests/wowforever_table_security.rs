@@ -45,6 +45,25 @@ fn forever_vendor_secure_map_preserves_wrapped_key_identity() {
 }
 
 #[test]
+fn forever_cleanup_restore_preserves_native_security_functions() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("SavedTableSecurity = { settablesecurity, secretwrap, secretunwrap, issecretvalue }")
+        .unwrap();
+    env.restore_post_cleanup_globals();
+    env.exec(
+        r#"
+        assert(SavedTableSecurity[1] == settablesecurity)
+        assert(SavedTableSecurity[2] == secretwrap)
+        assert(SavedTableSecurity[3] == secretunwrap)
+        assert(SavedTableSecurity[4] == issecretvalue)
+        local key = secretwrap(77)
+        assert(issecretvalue(key) and secretunwrap(key) == 77)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_secured_map_rejects_explicit_caller_taint() {
     let env = WowLuaEnv::new().unwrap();
     load_secure_map_source(&env);
