@@ -77,7 +77,20 @@ fn unit_class_from_guid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
+#[cfg(feature = "client-wowforever")]
+fn regional_unique_names_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.player.regional_unique_names_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(feature = "client-wowforever")]
+    LuaApiMut::register_function(
+        lua,
+        "RegionalUniqueNamesEnabled",
+        regional_unique_names_enabled,
+    )?;
     LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
     #[cfg(feature = "retail-12-1-0")]
     {

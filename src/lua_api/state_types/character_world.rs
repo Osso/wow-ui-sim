@@ -143,6 +143,8 @@ pub struct MovementState {
 #[derive(Debug, Clone, Default)]
 pub struct PlayerState {
     pub name: String,
+    /// Simulator name policy; defaults false, not an inferred native default.
+    pub regional_unique_names_enabled: bool,
     pub health: i32,
     pub health_max: i32,
     pub class_index: i32,
