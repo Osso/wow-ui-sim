@@ -1,3 +1,7 @@
+## [2026-09-20] acceptance | Clean Forever 1.60.1 startup
+
+Immutable batch fifteen at `7e449f911` compiled `gui,client-wowforever`, copied and hashed its binary, then ran `lua-errors` with no addons or SavedVariables: exit 0, stdout `[]`, zero records and occurrences. The subsequent interaction script completed its Gamepad-page, pet-ID, EditMode, weapon-enchant, BuffFrame, interact-icon, MainActionBar, and chat-overflow assertions and emitted no Lua errors. Updated [[forever-clean-startup]], the running report, index, and current Forever baseline. Native Gamepad hardware, pet-slot offset, dynamic EditMode policy, and secret-value limits remain explicit.
+
 ## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
 
 Documented `13ca52c1c`, `016aec606`, and `32c666fd4` in [[forever-chat-overflow-slot-animations]]. The actual DockManager overflow `HighlightTexture` was created without its XML-owned `FlashAnim`; unchanged `FCFDockOverflowButton_UpdatePulseState` then called `ChatFrameUtil.StopFlash` with nil. RED was 0/1 and GREEN 4/4 for group ownership, identity, stop behavior, and consumer behavior. Earlier minFrame/tab-glow and general lifecycle-order hypotheses were falsified. Pinned immutable batch six at `32c666fd4` remains failing, but improves to 20 records / 36 occurrences. Updated the Forever running report and index.

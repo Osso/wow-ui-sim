@@ -1,3 +1,7 @@
+## [2026-09-20] acceptance | Clean Forever 1.60.1 startup
+
+Immutable batch fifteen at `7e449f911` loads the matching Forever UI with `lua-errors` exit 0 and `[]` output. A post-start interaction script checks both Gamepad page units, pet IDs, Modern default, weapon enchants, BuffFrame, interaction icons, MainActionBar, and chat overflow. This proves clean simulator startup and scoped interactions, not native hardware, pet-slot offset, dynamic EditMode policy, or secret-value conformance. See [[forever-clean-startup]] and the [Forever report](../wowforever-1.60.1.md).
+
 ## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
 
 `13ca52c1c` fixes a simulator XML-region omission: the DockManager overflow button's `HighlightTexture` existed without its authored `FlashAnim`, so unchanged `FCFDockOverflowButton_UpdatePulseState` passed nil to `ChatFrameUtil.StopFlash`. Actual DockManager RED was 0/1; GREEN is 4/4 for one owned group, identity, `StopFlash`, and consumer behavior. Earlier minFrame/tab-glow and lifecycle-order hypotheses were falsified. Pinned batch six then fell to 20 records / 36 occurrences but still exits 1. See [[forever-chat-overflow-slot-animations]] and the [Forever running report](../wowforever-1.60.1.md).
@@ -1270,6 +1274,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[forever-clean-startup]] | Immutable `7e449f911` Forever startup reaches `lua-errors` exit 0 and scoped Gamepad/BuffFrame/EditMode/chat interaction checks; native policy limits remain explicit. |
 | [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 3410 rows with current status and proof boundaries recorded per slice; duration curve-evaluation implementation is pending GREEN and independent proof. |
 | [[duration-curve-evaluation]] | Four duration curve-evaluation methods now reuse modeled getters and existing scalar/color curves; RED evidence is recorded, while GREEN and independent proof remain pending. |
 | [[patch-12-0-5-api-audit]] | 12.0.5 probe-driven audit: 33 best-effort rows; 4 behavior gaps are evidence-required; 1 provenance-only exception-requested row is approved |
