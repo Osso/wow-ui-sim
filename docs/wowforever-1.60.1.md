@@ -34,7 +34,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Regional name policy | `6f9877555`, `df74659ea` | Models Forever regional unique-name availability through existing player-identity state with an explicit simulator default of `false`. Actual Camelot `NameUtil` proof is GREEN (`2/2`); default-profile exclusion remains pending. |
 | Texture metatable | `7da2b6028`, `343c4624b`, `f4800730c` | Exposes the real texture metatable helper required by `UnitFrameUtil.lua`. The actual consumer went RED then GREEN (`1/1`) for `__index` identity, type, and mutation; default-profile exclusion remains pending. |
 | Roleset methods | `e3dfe88a3`, `1532a3cc8` | Shares existing `AddRoleset`, `GetRolesetNames`, `RemoveRoleset`, and `SetRolesets` with Forever while leaving the retail-only security method group unchanged. RED (`0/1`) then warning-free GREEN (`1/1`) covers membership, replacement, removal, clear, isolation, and metatable publication. |
-| Rilua table security | rilua `122cfc9`–`690fc3b`, simulator `29f95e6f5` | Pins Osso/rilua `main` at `690fc3b8`. Table flags enforce documented `DisallowTaintedAccess` and `DisallowSecretKeys` through VM, raw, iterator, metamethod, and metatable paths. Core (`8/8`), VM (`3/3`), and stdlib (`4/4`) development suites passed with explicit caller taint. `SecretWrapContents` fails explicitly; opaque GC-traced secret keys support this Cooldown Viewer boundary only, not a full secret-value VM or native-conformance claim. |
+| Rilua table security | rilua `122cfc9`–`7cdef27`, simulator `29f95e6f5`, `5a671fce9`, `5ebe21a46` | Forever now registers rilua's native table-security globals after compatibility initialization and before secure-environment copying; other profiles remain unchanged. `5ebe21a46` pins published Osso/rilua `main` at `7cdef27ca7f856a3b30608f41918980e79fb346c`, which consumes closure stamps at call entry, preserves them through tail-call reuse, and lets secure calls clear caller taint without erasing callee stamps. Table flags enforce documented `DisallowTaintedAccess` and `DisallowSecretKeys` through VM, raw, iterator, metamethod, and metatable paths. Core (`8/8`), VM (`3/3`), stdlib (`4/4`), closure (`2/2`), and table-security (`15/15`) development suites passed. `SecretWrapContents` fails explicitly; opaque GC-traced secret keys support this Cooldown Viewer boundary only, not a full secret-value VM or native-conformance claim. |
 | Inventory slot methods | `68989ffcf`, `25442752c` | Publishes existing `C_PaperDollInfo` inventory-slot methods and loads required equipment-flyout data. Real Head/MainHand/Ammo button behavior is GREEN (`2/2`); the isolated vendor RED also exposed fixture prerequisites. |
 | Finite UI constants | `db875f554`, `97ef67031` | Publishes source-backed Minimap/Ping/Transmog/Gamepad possess-bar values. Actual Minimap, Ping, and Transmog consumer loading is GREEN (`3/3`); Transmog's remaining startup root was not attributed to `NoTransmogID` alone. |
 | Build-specific global strings | `f954fc665` | Adds 27,262 build-specific `GlobalStrings.csv` tags with provenance and a generator. GameplaySettingsGroup/string restoration is GREEN (`2/2`); generator fixtures are GREEN (`2/2`). |
@@ -56,7 +56,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 These source-backed items remain open:
 
 - Classify the remaining 81 / 97 startup failures at `f6aa9a987`, then fix their demonstrated roots without masking cascades.
-- Validate the newly pinned table-security integration against the actual `CooldownViewerSecure.lua` startup path. It is not yet a full secret-value VM or native-conformance claim.
+- `5a671fce9` adds actual `CooldownViewerSecure.lua` proxy and loader-boundary regressions, but their GREEN integration result remains pending with agent 19687. Do not treat the rilua development suites as proof of this Forever loader path. It is not yet a full secret-value VM or native-conformance claim.
 - Do not use the 222 / 290 concurrent-binary diagnostic as clean-HEAD acceptance.
 - Rerun startup after each causal group and retain exact records/occurrences in the proof ledger.
 - Validate remaining gamepad behavior against real UI paths; generic stick dispatch does not establish host-gamepad input support.
@@ -71,6 +71,7 @@ These source-backed items remain open:
 ## Canonical documents
 
 - [Client profiles](specs/client-profiles.md) — supported profile contract and feature isolation.
+- [Forever table security](specs/forever-table-security.md) — native registration order, profile boundary, Cooldown Viewer contract, and remaining loader-boundary gate.
 - [Addon module imports](specs/addon-module-imports.md) — `require` behavior and exclusions.
 - [Updating Blizzard UI](updating-blizzard-ui-to-a-new-patch.md) — manifest/listfile refresh and residual-miss workflow.
 - [Profile baselines](baselines/README.md) — startup-baseline interpretation.
