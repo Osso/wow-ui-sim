@@ -36,6 +36,7 @@ pub(super) fn lady_liadrin_target() -> crate::lua_api::game_data::TargetInfo {
         classification: "normal".to_string(),
         creature_type: "Blood Elf".to_string(),
         reaction: 5,
+        interaction: Default::default(),
     }
 }
 

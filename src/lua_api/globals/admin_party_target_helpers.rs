@@ -50,6 +50,7 @@ pub(super) fn make_target_info(
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: if is_enemy { 2 } else { 5 },
+        interaction: Default::default(),
     }
 }
 

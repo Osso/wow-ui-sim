@@ -415,6 +415,8 @@ pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &
         "" => false,
         "player" | "vehicle" | "pet" => true,
         "questnpc" => st.gossip.active,
+        "softinteract" => super::targeting_verbs::resolve_unit_snapshot(st, unit)
+            .is_some_and(|unit| !unit.interaction.is_game_object),
         "target" => st.current_target.is_some(),
         "focus" => st.current_focus.is_some(),
         other => {

@@ -49,13 +49,25 @@ fn resolve_token_to_target_info(
     token: &str,
 ) -> LuaResult<Option<TargetInfo>> {
     let st = borrow_state_mut(state)?;
-    let result = match token.to_ascii_lowercase().as_str() {
+    Ok(resolve_unit_snapshot(&st, token))
+}
+
+pub(crate) fn resolve_unit_snapshot(
+    st: &crate::lua_api::state::SimState,
+    token: &str,
+) -> Option<TargetInfo> {
+    let token = token.to_ascii_lowercase();
+    let token = if token == "softinteract" {
+        st.soft_interact_target.as_deref()?
+    } else {
+        &token
+    };
+    match token {
         "player" | "self" => Some(player_target_info(&st)),
         "target" => st.current_target.clone(),
         "focus" => st.current_focus.clone(),
         other => resolve_party_token(&st, other).or_else(|| resolve_enemy_token(&st, other)),
-    };
-    Ok(result)
+    }
 }
 
 fn player_target_info(st: &crate::lua_api::state::SimState) -> TargetInfo {
@@ -73,6 +85,7 @@ fn player_target_info(st: &crate::lua_api::state::SimState) -> TargetInfo {
         is_player: true,
         is_enemy: false,
         guid: super::unit_misc::guid_for_unit(st, "player"),
+        interaction: Default::default(),
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: 5,
@@ -112,6 +125,7 @@ fn default_enemy_target_info() -> TargetInfo {
         is_player: false,
         is_enemy: true,
         guid: "Creature-0-0-0-0-448-000001".to_string(),
+        interaction: Default::default(),
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: 2,
@@ -148,6 +162,7 @@ fn party_member_to_target_info(m: &PartyMember, guid: String) -> TargetInfo {
         is_player: true,
         is_enemy: false,
         guid,
+        interaction: Default::default(),
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: 5,

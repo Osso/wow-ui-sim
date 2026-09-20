@@ -136,7 +136,6 @@ static GLOBAL_FALSE_STUBS: &[&str] = &[
     "UnitIsCharmed",
     "UnitIsOwnerOrControllerOfUnit",
     "UnitIsPVP",
-    "UnitIsGameObject",
     "UnitIsOtherPlayersPet",
     "UnitIsBattlePet",
     "UnitIsBattlePetCompanion",

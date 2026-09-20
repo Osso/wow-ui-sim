@@ -12,6 +12,15 @@ pub use empower::EmpowerTiming;
 use crate::lua_api::state::{MajorFactionData, RenownLevelInfo};
 use std::collections::HashMap;
 
+/// Server-provided interaction capabilities for a resolved world object.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct UnitInteraction {
+    pub is_game_object: bool,
+    pub has_loot: bool,
+    pub interactable: bool,
+    pub in_range: bool,
+}
+
 /// Information about the current target.
 #[derive(Clone)]
 pub struct TargetInfo {
@@ -34,6 +43,7 @@ pub struct TargetInfo {
     pub creature_type: String,
     /// 1-8: 1=Hostile, 4=Neutral, 5=Friendly (relative to player).
     pub reaction: i32,
+    pub interaction: UnitInteraction,
 }
 
 /// A simulated party member.

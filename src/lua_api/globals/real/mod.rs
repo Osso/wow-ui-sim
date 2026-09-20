@@ -37,6 +37,7 @@ pub mod table_extensions;
 pub mod table_freeze;
 pub mod timerunning;
 pub mod ui_widget_container;
+pub mod unit_interaction;
 #[cfg(feature = "retail-12-1-0")]
 pub mod unit_relationships;
 pub mod vehicle_possession;

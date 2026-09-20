@@ -299,6 +299,7 @@ fn make_target_info(
         classification: target_classification().to_string(),
         creature_type: target_creature_type().to_string(),
         reaction: if is_enemy { 2 } else { 5 },
+        interaction: Default::default(),
     }
 }
 
