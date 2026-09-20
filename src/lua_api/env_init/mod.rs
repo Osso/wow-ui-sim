@@ -68,7 +68,10 @@ pub(super) fn init_lua_state(
     #[cfg(feature = "retail-12-1-0")]
     crate::ptr::compat_bootstrap::init(lua)?;
     #[cfg(feature = "client-wowforever")]
-    crate::loader::addon_modules::initialize(lua.state_mut())?;
+    {
+        lua.exec(include_str!("../workarounds/temporary/securecopy.lua"))?;
+        crate::loader::addon_modules::initialize(lua.state_mut())?;
+    }
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
     // the dangerous globals (dofile / loadfile / require / string.dump /
     // math.randomseed) so secure chunks — which Blizzard trusts —

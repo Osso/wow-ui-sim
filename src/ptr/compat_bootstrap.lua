@@ -137,27 +137,6 @@ if GetSpecializationSystem == nil then
   end
 end
 
-if securecopy == nil then
-  local function __wow_securecopy(value, seen)
-    if type(value) ~= "table" then
-      return value
-    end
-    if seen[value] ~= nil then
-      return seen[value]
-    end
-    local copy = {}
-    seen[value] = copy
-    for k, v in pairs(value) do
-      copy[__wow_securecopy(k, seen)] = __wow_securecopy(v, seen)
-    end
-    return copy
-  end
-
-  function securecopy(value)
-    return __wow_securecopy(value, {})
-  end
-end
-
 if settablesecurity == nil then
   function settablesecurity(_table, _key, _taint, _secure)
   end
