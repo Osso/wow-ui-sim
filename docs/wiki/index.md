@@ -1,3 +1,11 @@
+## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
+
+`13ca52c1c` fixes a simulator XML-region omission: the DockManager overflow button's `HighlightTexture` existed without its authored `FlashAnim`, so unchanged `FCFDockOverflowButton_UpdatePulseState` passed nil to `ChatFrameUtil.StopFlash`. Actual DockManager RED was 0/1; GREEN is 4/4 for one owned group, identity, `StopFlash`, and consumer behavior. Earlier minFrame/tab-glow and lifecycle-order hypotheses were falsified. Pinned batch six then fell to 20 records / 36 occurrences but still exits 1. See [[forever-chat-overflow-slot-animations]] and the [Forever running report](../wowforever-1.60.1.md).
+
+## [2026-09-20] system | Extend documented Forever event registration
+
+`af05c04e8` adds three rejected exact documented events for existing GuildControl and Friends consumers; `NEW_MATCHMAKING_PARTY_INVITE` was already accepted and was not changed. Development RED was 0/1 and grouped GREEN 4/4. This only permits registration—no event-producer or native-delivery claim follows. See the [Forever running report](../wowforever-1.60.1.md).
+
 ## [2026-09-19] investigation | Correct recipe-quality final guard ordering
 
 Initial independent verification of `b7ea594a2` was 7/9: a frozen ninth original-ID guard could revoke quality, recipe-list ancestry, or schematic ancestry after prior checks, forwarding one revoked input in each of twenty-four cases. Correction `f132248d4` boundedly reauthorizes those original sources around an original-argument recheck without reconstruction or coercion. Development RED covered thirteen existing plus five new fixture groups; GREEN passed all eighteen with zero forbidden forwards across twenty-four frozen and 288 staged cross-input occurrences. Frozen cases overlap staged group three; counts are not disjoint. Fixed-revision independent verification passed 9/9. This makes no atomic-authorization, native-acceptance, conformance, or native-execution claim. See [[api-contract-probes]].

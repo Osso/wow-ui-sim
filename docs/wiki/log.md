@@ -1,3 +1,11 @@
+## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
+
+Documented `13ca52c1c`, `016aec606`, and `32c666fd4` in [[forever-chat-overflow-slot-animations]]. The actual DockManager overflow `HighlightTexture` was created without its XML-owned `FlashAnim`; unchanged `FCFDockOverflowButton_UpdatePulseState` then called `ChatFrameUtil.StopFlash` with nil. RED was 0/1 and GREEN 4/4 for group ownership, identity, stop behavior, and consumer behavior. Earlier minFrame/tab-glow and general lifecycle-order hypotheses were falsified. Pinned immutable batch six at `32c666fd4` remains failing, but improves to 20 records / 36 occurrences. Updated the Forever running report and index.
+
+## [2026-09-20] system | Extend documented Forever event registration
+
+`af05c04e8` adds only rejected documented GuildControl/Friends events: `DISCORD_GUILD_LOBBY_UPDATE`, `DISCORD_GUILD_SETTINGS_UPDATE`, and `SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED`. `NEW_MATCHMAKING_PARTY_INVITE` was already accepted. RED was 0/1; grouped GREEN 4/4 establishes registration only, not producers or native delivery. Updated the Forever running report and index.
+
 ## [2026-09-20] reference | Start Forever 1.60.1 running report
 
 Created [Forever 1.60.1.69913](../wowforever-1.60.1.md) as the patch-specific running report. It records committed profile, manifest/mapping, `require`, and `[Family]` routing work; distinguishes the historical 422-record startup baseline from current proof; and lists source-backed pending compatibility groups without claiming completion. Linked from [[client-profiles]].
