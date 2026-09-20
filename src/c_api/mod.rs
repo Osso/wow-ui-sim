@@ -103,6 +103,8 @@ pub(crate) mod seconds_formatter;
 #[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
 
+#[cfg(feature = "client-wowforever")]
+mod gamepad_action_bar_constants;
 mod helpers;
 mod registration;
 
