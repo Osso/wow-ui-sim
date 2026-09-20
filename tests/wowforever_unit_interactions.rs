@@ -142,13 +142,11 @@ fn focus_snapshot_queries_are_read_only_and_aliases_follow_selection() {
     {
         let state = env.state();
         let mut state = state.borrow_mut();
-        state.current_target.as_mut().unwrap().interaction =
-            wow_ui_sim::lua_api::game_data::UnitInteraction {
-                is_game_object: true,
-                has_loot: true,
-                interactable: true,
-                in_range: true,
-            };
+        let interaction = &mut state.current_target.as_mut().unwrap().interaction;
+        interaction.is_game_object = true;
+        interaction.has_loot = true;
+        interaction.interactable = true;
+        interaction.in_range = true;
         state.current_focus = state.current_target.clone();
         state.soft_interact_target = Some("focus".into());
         state.current_target = None;
