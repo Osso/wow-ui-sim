@@ -266,6 +266,18 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(MISSING_CONSTANTS_LUA)?;
     lua.exec(CONSTANTS_VALUES_LUA)?;
     lua.exec(COMPAT_CONSTANTS_LUA)?;
+    #[cfg(feature = "client-wowforever")]
+    lua.exec(
+        // Forever 1.60.1.69913 RaidMarkerConstantsDocumentation.lua.
+        r#"
+        Constants.RaidMarkerConsts = {
+            MAX_RAID_TARGETS_USER = 8,
+            MAX_RAID_TARGETS_RESTRICTED = 8,
+            MAX_VALID_RAID_TARGETS = 0,
+            MAX_RAID_MARKERS = 8,
+        }
+        "#,
+    )?;
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         lua.exec(RETAIL_12_0_0_POST_COMPAT_CONSTANT_OVERRIDES_LUA)?;
     }
