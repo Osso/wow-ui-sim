@@ -9,6 +9,8 @@ const RUNTIME_SURFACE_BOOTSTRAP_LUA: &str = include_str!("runtime_surface_bootst
 
 pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SHARED_BOOTSTRAP_LUA)?;
+    #[cfg(feature = "client-wowforever")]
+    lua.exec(include_str!("texture_metatable.lua"))?;
     Ok(())
 }
 
