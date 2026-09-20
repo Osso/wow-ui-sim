@@ -13,11 +13,11 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 
 ## Committed changes
 
-| Area | Commits | Verified result |
+| Area | Commits | Committed behavior / current proof |
 |---|---|---|
 | Distinct profile | `abbc1272f` | Adds `WowForever`; it is not an Era or Anniversary alias. Selects the `wowforever` cache, `_classic_beta_` install path, Camelot game directory, and interface `16001`. |
 | Source inventory | `f2619520c`, `d1ebc389e` | Adds the 4,398-file Forever manifest and maps `wowforever` to the Gethe `forever` source branch. |
-| CASC mappings and cache sync | `65139f909` | Refreshing the community listfile added 592 generated path-to-FDID rows. Rebuilding then extracted all 4,398 manifest files from local `wow_classic_beta` CASC. |
+| CASC mappings and cache sync | `65139f909` | Refreshing the community listfile added 592 generated path-to-FDID rows. Rebuilding completed sync of all 4,398 manifest files; the verifier recorded one existing CDN recovery, so this is not an all-local-CASC claim. |
 | Loader-bound `require` | `be073174d`, `55c9b3d27`, `964358618`, `78cf08372`, `23928cfb7` | Forever-only `require` resolves completed addon Lua modules, retains values/provenance across GC, enforces direct TOC dependencies for disk callers, and never becomes filesystem or `package` loading. |
 | Family TOC routing | `5e26960b6` | Corrects `[Family]` from `Classic` to `Mainline`; `[Game]` remains `Camelot`. This loads base `NineSliceLayouts`, `InputUtil`, and shared-panel definitions before Camelot overrides, while still excluding generic `mainline`-annotated TOC entries. |
 | Math utilities | `0a354c0e0` | Reuses the simulator's existing math extensions for Forever so `MathUtil.lua` can publish `Round` and related aliases. A real `MathUtil.lua` fixture covers the aliases and extension behavior; no retail API epoch is enabled. |
@@ -26,7 +26,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 ## Proof
 
 - The initial independent `require` verifier recorded formatting, default and Forever checks, ten module-loader tests, six Forever sandbox tests, and six default sandbox tests passing. See [addon module imports](specs/addon-module-imports.md).
-- At `65139f909`, the rebuilt Forever sync completed `4,398/4,398` extraction. This proves manifest mapping and local CASC extraction only.
+- At `65139f909`, the rebuilt Forever sync completed `4,398/4,398` extraction. This proves manifest mapping and cache synchronization; one file used existing CDN recovery.
 - The first `--no-addons --no-saved-vars lua-errors` capture after sync exited `1`, with 422 distinct records and 514 occurrences. It is preserved in [the Forever error baseline](baselines/wowforever-lua-errors.json).
 - That baseline predates `5e26960b6`; it is failure evidence, not a current compatibility result.
 - `0a354c0e0` development proof ran the real Forever `MathUtil.lua` and a `ScrollBox` consumer fixture (`1/1` GREEN). Final independent verification remains pending.
