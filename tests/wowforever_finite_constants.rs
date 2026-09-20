@@ -65,6 +65,63 @@ fn forever_finite_constants_load_ping_and_transmog_consumers() {
 }
 
 #[test]
+fn forever_stance_override_initializes_vendor_mapping() {
+    let env = WowLuaEnv::new().unwrap();
+    // Supply the page owner's anchor contract without loading its unrelated UI.
+    env.exec(
+        r#"
+        GamepadActionBarMixin = {}
+        GamepadActionBarPageUnitMixin = {
+            GetTopAnchorFrame = function(self) return self.top end,
+            GetLeftAnchorFrame = function(self) return self.left end,
+            GetRightAnchorFrame = function(self) return self.right end,
+            GetBottomAnchorFrame = function(self) return self.bottom end,
+        }
+    "#,
+    )
+    .unwrap();
+    load(
+        &env,
+        "Blizzard_GamepadActionBars/GamepadOverrideBarMixin.lua",
+    );
+    load(&env, "Blizzard_GamepadActionBars/StanceBar.lua");
+    env.exec(r#"
+        local page = CreateFrame("Frame")
+        for _, name in ipairs({"top", "left", "right", "bottom"}) do
+            page[name] = CreateFrame("Frame", nil, page)
+            page[name].Bar = CreateFrame("Frame", nil, page[name])
+        end
+        local bar = CreateFrame("Frame", nil, page)
+        Mixin(bar, GamepadStanceBarMixin)
+        bar.overrideMap = {}
+        bar.overrideCVar = "GamepadStanceBarOverride"
+        bar.isOverrideBarActive = false
+        bar.pagingUnitOwner = page
+        page.actionBars = {stanceBar = bar}
+        GamepadActionBarPageUnitMixin.InitializeStanceBar(page)
+        assert(bar:GetParent() == page.right)
+        assert(bar:GetActionBarLinkedWithOverrideBar() == page.right.Bar)
+        local anchors = {false, page.left, page.right, page.bottom,
+            page.top, page.left, page.right, page.bottom,
+            page.top, page.left, page.right, page.bottom}
+        for value = 1, 12 do
+            assert(bar:GetLinkedOverrideBarAnchorFrame(value) == (anchors[value] or nil))
+            assert(bar:GetLinkedOverrideBarPage(value) == math.floor((value - 1) / 4) + (value == 1 and 0 or 1))
+        end
+        assert(SetCVar("GamepadStanceBarOverride", "1"))
+        bar:ApplyInitialOverridePositioning()
+        assert(bar:GetParent() == nil)
+        assert(bar:GetActionBarLinkedWithOverrideBar() == bar)
+        local names = {"None", "Page1LeftBar", "Page1RightBar", "Page1BottomBar",
+            "Page2TopBar", "Page2LeftBar", "Page2RightBar", "Page2BottomBar",
+            "Page3TopBar", "Page3LeftBar", "Page3RightBar", "Page3BottomBar"}
+        for value, name in ipairs(names) do assert(Enum.GamepadStanceBarOverride[name] == value) end
+        local meta = Enum.GamepadStanceBarOverrideMeta
+        assert(meta.MinValue == 1 and meta.MaxValue == 12 and meta.NumValues == 12)
+    "#).unwrap();
+}
+
+#[test]
 fn forever_finite_constants_publish_source_values() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"

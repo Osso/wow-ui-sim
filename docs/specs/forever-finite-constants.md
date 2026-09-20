@@ -11,6 +11,14 @@ Forever 1.60.1.69913 publishes these additions from its generated API documentat
 
 Sources: authenticated Forever `MinimapConstantsDocumentation.lua`, `PingConstantsDocumentation.lua`, `TransmogConstantsDocumentation.lua`, and `GamepadUIDocumentation.lua` under `Blizzard_APIDocumentationGenerated`.
 
+## Stance override enum
+
+Forever publishes `Enum.GamepadStanceBarOverride`: `None=1`, Page1 Left/Right/Bottom=2/3/4, Page2 Top/Left/Right/Bottom=5/6/7/8, Page3 Top/Left/Right/Bottom=9/10/11/12. `GamepadStanceBarOverrideMeta` has MinValue=1, MaxValue=12, NumValues=12. Publication remains Forever-only.
+
+Evidence: cached `GamepadUIDocumentation.lua` and `Resources/LuaEnum.lua` in Ketho/BlizzardInterfaceResources revision `659e8042049df854c114714f8ecd640823a1cd5c`, whose README identifies build 1.60.1.69913. Unlike possession, the first stance value means no override.
+
+The grouped regression executes unchanged `StanceBar.lua` and `GamepadOverrideBarMixin.lua` against frame-backed fixture anchors. It exercises all twelve mappings, default right-anchor positioning, linked-bar identity, and unparented `None` behavior. Page-owner getters are fixture inputs; this is not full PageUnit startup proof.
+
 ## Legacy and level constants
 
 Forever `LegacyConstantsDocumentation.lua` publishes `Constants.LegacyConsts`: `LEGACY_REWARD_TRACK_FACTION_ID=2802`, `LEGACY_POINTS_TRAIT_CURRENCY_ID=4225`, `LEGACY_TREE_PROFESSIONS_ID=1187`, `LEGACY_TREE_ADVENTURE_ID=1188`, `LEGACY_TREE_PROGRESSION_ID=1189`, and `LEGACY_TREE_ADVENTURE_TALENTED_NODE_ID=110298`.

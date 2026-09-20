@@ -15,6 +15,13 @@ pub(crate) fn register(state: &mut LuaState) {
         "GamepadPossessBarOverrideMeta",
         &[("MinValue", 1), ("MaxValue", 12), ("NumValues", 12)],
     );
+    publish(state, enums, "GamepadStanceBarOverride", STANCE_OVERRIDES);
+    publish(
+        state,
+        enums,
+        "GamepadStanceBarOverrideMeta",
+        &[("MinValue", 1), ("MaxValue", 12), ("NumValues", 12)],
+    );
     let constants = super::helpers::ensure_global_table(state, "Constants");
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
     publish(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
@@ -77,6 +84,22 @@ const LEGACY_CONSTANTS: &[(&str, i32)] = &[
     ("LEGACY_TREE_ADVENTURE_ID", 1188),
     ("LEGACY_TREE_PROGRESSION_ID", 1189),
     ("LEGACY_TREE_ADVENTURE_TALENTED_NODE_ID", 110298),
+];
+
+// Forever GamepadUIDocumentation.lua; None deliberately differs from possession.
+const STANCE_OVERRIDES: &[(&str, i32)] = &[
+    ("None", 1),
+    ("Page1LeftBar", 2),
+    ("Page1RightBar", 3),
+    ("Page1BottomBar", 4),
+    ("Page2TopBar", 5),
+    ("Page2LeftBar", 6),
+    ("Page2RightBar", 7),
+    ("Page2BottomBar", 8),
+    ("Page3TopBar", 9),
+    ("Page3LeftBar", 10),
+    ("Page3RightBar", 11),
+    ("Page3BottomBar", 12),
 ];
 
 const POSSESS_OVERRIDES: &[(&str, i32)] = &[
