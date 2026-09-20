@@ -13,4 +13,4 @@ Sources: authenticated Forever `MinimapConstantsDocumentation.lua`, `PingConstan
 
 ## Verification
 
-`tests/wowforever_finite_constants.rs` checks publication and actual Camelot minimap filter construction. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.
+`tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.

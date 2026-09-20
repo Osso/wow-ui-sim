@@ -6,6 +6,20 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn register(state: &mut LuaState) {
     let enums = super::helpers::ensure_global_table(state, "Enum");
+    register_tracking_filters(state, enums);
+    register_ping_results(state, enums);
+    publish(state, enums, "GamepadPossessBarOverride", POSSESS_OVERRIDES);
+    publish(
+        state,
+        enums,
+        "GamepadPossessBarOverrideMeta",
+        &[("MinValue", 1), ("MaxValue", 12), ("NumValues", 12)],
+    );
+    let constants = super::helpers::ensure_global_table(state, "Constants");
+    publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
+}
+
+fn register_tracking_filters(state: &mut LuaState, enums: Val) {
     publish(
         state,
         enums,
@@ -18,6 +32,9 @@ pub(crate) fn register(state: &mut LuaState) {
         "MinimapTrackingFilterMeta",
         &[("MinValue", 0), ("MaxValue", 16777216), ("NumValues", 26)],
     );
+}
+
+fn register_ping_results(state: &mut LuaState, enums: Val) {
     publish(state, enums, "PingResult", &[("FailedSilent", 8)]);
     publish(
         state,
@@ -25,15 +42,6 @@ pub(crate) fn register(state: &mut LuaState) {
         "PingResultMeta",
         &[("MinValue", 0), ("MaxValue", 8), ("NumValues", 9)],
     );
-    publish(state, enums, "GamepadPossessBarOverride", POSSESS_OVERRIDES);
-    publish(
-        state,
-        enums,
-        "GamepadPossessBarOverrideMeta",
-        &[("MinValue", 1), ("MaxValue", 12), ("NumValues", 12)],
-    );
-    let constants = super::helpers::ensure_global_table(state, "Constants");
-    publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
 }
 
 fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) {

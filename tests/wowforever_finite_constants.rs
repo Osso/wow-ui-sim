@@ -16,6 +16,14 @@ fn forever_finite_constants_construct_minimap_filters() {
 }
 
 #[test]
+fn forever_finite_constants_load_ping_and_transmog_consumers() {
+    let env = WowLuaEnv::new().unwrap();
+    load(&env, "Blizzard_PingUI/Blizzard_PingManager.lua");
+    load(&env, "Blizzard_TransmogShared/Blizzard_TransmogShared.lua");
+    env.exec("assert(type(PingManager.SetupDefaultPingOptions) == 'function'); assert(type(TransmogUtil.GetInfoForEquippedSlot) == 'function')").unwrap();
+}
+
+#[test]
 fn forever_finite_constants_publish_source_values() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
