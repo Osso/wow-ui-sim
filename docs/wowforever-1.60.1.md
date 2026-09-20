@@ -1,6 +1,16 @@
 # WoW Forever 1.60.1.69913
 
-Running compatibility report for the authenticated `wow_classic_beta` build with interface `16001`. This records committed work and measured evidence only; pending work is updated incrementally rather than inferred from source presence.
+Compatibility report for the authenticated `wow_classic_beta` build with interface `16001`.
+
+## Verified acceptance — 2026-09-20
+
+Independent verification of source `7e449f911` confirms immutable batch-fifteen startup and affected interaction assertions: **exit 0, zero Lua errors, zero UI warnings**. The command uses `--no-addons --no-saved-vars lua-errors`; the interaction run additionally checks both Gamepad page units, their mappings and pet IDs, BuffFrame, EditMode/MainActionBar, interaction icons, and chat overflow.
+
+Formatting and default/Forever checks pass without compiler warnings. Fresh Forever integration tests pass **75/75**; bounded default-profile regressions pass **121/121**. Unchanged require (**12/12**), sandbox (**6/6** per profile), and XML animation (**4/4**) proofs were reused. Proof: `/tmp/verify-forever-final/ledger.json` and `/tmp/verify-forever-final/report.md`.
+
+The default-retail TargetFrame fixture emitted eight ancillary missing-UI-prerequisite Lua errors despite passing its assertions. Those are absent from Forever startup; this report does not claim clean retail UI startup or establish their historical origin. Exact diagnostics: `/tmp/verify-forever-final/default-fixture-errors.json`.
+
+The chronological development results below retain their original scope. This acceptance establishes the requested Forever startup and tested interactions, not native numeric equivalence or every optional panel/hardware path.
 
 ## Scope
 
@@ -102,7 +112,7 @@ The startup blocker list is empty at batch fifteen. Remaining scope limits:
 - Do not use the 222 / 290 concurrent-binary diagnostic or batch-four result as clean-HEAD acceptance.
 - Generic Gamepad stick dispatch does not establish host-gamepad input support. Pet storage base `1` is a documented simulator policy, not native numeric conformance.
 - Modern (`0`) is the named initial EditMode default; dynamic native selection across input styles remains unverified.
-- Independent final verification is running separately; this report does not replace it.
+- Independent final verification passed for the acceptance scope above; native conformance and unsupported hardware/panel paths remain outside that proof.
 
 ## Limitations
 
