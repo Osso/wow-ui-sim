@@ -106,6 +106,15 @@ fn forever_gamepad_cvar_defaults_drive_vendor_mapping_and_events() {
             end
             assert(updates == 1 and overrides == 1)
             listener:UnregisterAllEvents()
+            local changes = 0
+            listener:RegisterEvent(event)
+            listener:SetScript("OnEvent", function() changes = changes + 1 end)
+            assert(SetCVar(name, "2"))
+            assert(changes == 0)
+            assert(not pcall(SetCVar, name, "not-a-number"))
+            assert(GetCVar(name) == "2" and GetCVarDefault(name) == default)
+            assert(changes == 0)
+            listener:UnregisterAllEvents()
         end
     "#).unwrap();
 }
