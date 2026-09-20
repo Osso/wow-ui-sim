@@ -14,6 +14,8 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     super::c_input_interface_style::register(state)?;
     #[cfg(feature = "client-wowforever")]
     super::gamepad_action_bar_constants::register(state);
+    #[cfg(feature = "client-wowforever")]
+    super::forever_finite_constants::register(state);
     c_spell::register_c_spell_surface(state)?;
     c_spell_diminish::register_c_spell_diminish_surface(state)?;
     c_widget::register_c_widget_surface(state)

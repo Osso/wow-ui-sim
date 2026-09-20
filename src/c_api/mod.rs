@@ -108,6 +108,8 @@ pub mod timed_signal_map;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_edit_mode_enums;
 #[cfg(feature = "client-wowforever")]
+mod forever_finite_constants;
+#[cfg(feature = "client-wowforever")]
 mod gamepad_action_bar_constants;
 
 mod helpers;
