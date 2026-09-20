@@ -23,7 +23,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Math utilities | `0a354c0e0` | Reuses the simulator's existing math extensions for Forever so `MathUtil.lua` can publish `Round` and related aliases. A real `MathUtil.lua` fixture covers the aliases and extension behavior; no retail API epoch is enabled. |
 | Finite event registration | `4deca63f1` | Adds source-documented Forever acceptance and ordinary frame dispatch for `PET_STATS_UPDATE`, `SHARD_TRANSFER`, `SHARD_TRANSFER_IMMINENT`, `GUILD_PREFERRED_PLAY_SETTINGS_UPDATED`, and `HIDDEN_GROUP_BUFFS_CHANGED`; invented names remain rejected. |
 | Timed signal maps | `799389a6e` | Extracts a `timed-signal-maps` capability shared by PTR 12.1.5 and Forever. It exposes the existing `C_Timer.NewTimedSignalMap` state, scheduling, and `TimerUtil.lua` consumer without enabling a retail epoch. |
-| Source-documented enums and gamepad constants | `5e2558264` | Publishes Forever `BattleNetFriendLevel`, `VisualAlertType`, and `CooldownViewerSound` with metadata, plus `Constants.GamepadActionBarConstants`. Real vendor consumers cover alert data, friend-rank helpers, and gamepad action-bar initialization; this does not implement interactive gamepad input. |
+| Source-documented enums and gamepad constants | `5e2558264`, `b838d6917` | Publishes Forever `BattleNetFriendLevel`, `VisualAlertType`, and `CooldownViewerSound` with metadata, plus `Constants.GamepadActionBarConstants`; the second commit exposes the new C API module. Vendor-consumer regressions are committed but targeted GREEN evidence is pending. This does not implement interactive gamepad input. |
 
 ## Proof
 
