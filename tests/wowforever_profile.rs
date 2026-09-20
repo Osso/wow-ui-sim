@@ -49,6 +49,20 @@ fn wowforever_profile_reports_build_identity_and_finite_event_validation() {
         .unwrap();
     assert_eq!(identity, ("1.60.1".to_owned(), "69913".to_owned(), 16001));
     assert!(wow_ui_sim::event::is_registerable_event("PLAYER_LOGIN"));
+    for event in [
+        "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW",
+        "DIEL_CYCLE_CHANGED",
+        "DISCORD_LINK_UPDATE",
+        "EXTERNAL_EVENT_LAUNCH_URL_FAILED",
+        "GROUP_BUFF_VISUAL_ALERTS_CHANGED",
+        "GUILD_RANKS_UPDATE_ACTIVE_PLAYER",
+        "INPUT_DEVICE_INTERFACE_TRANSITION",
+        "LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY",
+        "UNIT_HAPPINESS",
+        "UNIT_PING_PIN_ADDED",
+    ] {
+        assert!(wow_ui_sim::event::is_registerable_event(event), "{event}");
+    }
     assert!(!wow_ui_sim::event::is_registerable_event(
         "WOWFOREVER_INVENTED_EVENT"
     ));

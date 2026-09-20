@@ -30,11 +30,21 @@ pub fn is_registerable_event(name: &str) -> bool {
 // Forever extends the finite table with events published by its API docs.
 #[cfg(feature = "client-wowforever")]
 const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
+    "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW",
+    "DIEL_CYCLE_CHANGED",
+    "DISCORD_LINK_UPDATE",
+    "EXTERNAL_EVENT_LAUNCH_URL_FAILED",
+    "GROUP_BUFF_VISUAL_ALERTS_CHANGED",
     "GUILD_PREFERRED_PLAY_SETTINGS_UPDATED",
+    "GUILD_RANKS_UPDATE_ACTIVE_PLAYER",
     "HIDDEN_GROUP_BUFFS_CHANGED",
+    "INPUT_DEVICE_INTERFACE_TRANSITION",
+    "LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY",
     "PET_STATS_UPDATE",
     "SHARD_TRANSFER",
     "SHARD_TRANSFER_IMMINENT",
+    "UNIT_HAPPINESS",
+    "UNIT_PING_PIN_ADDED",
 ];
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub fn is_registerable_event(name: &str) -> bool {

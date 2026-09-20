@@ -49,6 +49,7 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 ## Forever event coverage
 
 - Forever accepts and dispatches `PET_STATS_UPDATE`, `SHARD_TRANSFER`, `SHARD_TRANSFER_IMMINENT`, `GUILD_PREFERRED_PLAY_SETTINGS_UPDATED`, and `HIDDEN_GROUP_BUFFS_CHANGED` through ordinary frame event handlers. Empty and invented event names remain rejected.
+- Forever also accepts its documented `INPUT_DEVICE_INTERFACE_TRANSITION`, `DIEL_CYCLE_CHANGED`, `DISCORD_LINK_UPDATE`, `CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW`, `EXTERNAL_EVENT_LAUNCH_URL_FAILED`, `GROUP_BUFF_VISUAL_ALERTS_CHANGED`, `GUILD_RANKS_UPDATE_ACTIVE_PLAYER`, `LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY`, `UNIT_HAPPINESS`, and `UNIT_PING_PIN_ADDED` events. Acceptance does not imply every event has a modeled producer.
 - Source: Forever 1.60.1.69913 `Blizzard_APIDocumentationGenerated/{PaperDollInfo,System,GuildInfo,UnitAura}Documentation.lua`. This finite addition does not enable permissive legacy validation or imply modeled event producers.
 - Behavioral coverage: `tests/startup_api_events.rs`, `forever_source_events_*`.
 
