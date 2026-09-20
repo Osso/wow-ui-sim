@@ -782,5 +782,9 @@ pub const LFG_CATEGORY_CONSTANTS: &[IntDef] = &[
     ("LE_LFG_CATEGORY_BATTLEFIELD", 7),
 ];
 
-#[cfg(feature = "retail-12-1-0")]
-pub const RETAIL_12_1_LFG_CATEGORY_CONSTANTS: &[IntDef] = &[("LE_LFG_CATEGORY_LAIR", 8)];
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+pub const LAIR_LFG_CATEGORY_CONSTANTS: &[IntDef] = &[("LE_LFG_CATEGORY_LAIR", 8)];
+
+// Exact Forever 1.60.1.69913 LuaEnum dump; other profiles retain their count.
+#[cfg(feature = "client-wowforever")]
+pub const FOREVER_LFG_CATEGORY_COUNT: &[IntDef] = &[("NUM_LE_LFG_CATEGORYS", 8)];
