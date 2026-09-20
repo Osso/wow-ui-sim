@@ -14,7 +14,7 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] Same-epoch profiles may have source-proven post-startup removals: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while PTR hides it after startup.
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
 - [x] `client-wowforever` selects a distinct `WowForever` profile with interface `16001`, cache `wowforever`, CASC product `wow_classic_beta`, and `_classic_beta_` install paths.
-- [x] Forever resolves `[Family]` to `Mainline` and `[Game]` to `Camelot`, accepting `classic`/`camelot` tags without treating `vanilla` as an alias; matching exclusion annotations suppress files and dependencies.
+- [x] Forever resolves `[Family]` to `Mainline` and `[Game]` to `Camelot`, accepting `mainline`/`camelot` annotations, not `classic`, `standard`, or `vanilla`; matching exclusion annotations suppress files and dependencies. This follows the authenticated 1.60.1.69913 source tree, not the product name: ActionBar's mainline annotations select present `AssistedCombatManager.lua` and `ActionButtonOverrides.lua`, while its classic annotation selects absent `Mainline/MainMenuBar.lua`.
 - [x] Forever selects generic TOCs, with the source-pinned `Blizzard_WorldMap_Mainline.toc` exception; other client-flavored TOCs are not selected accidentally.
 - [x] Forever reports version `1.60.1`, build `69913`, and interface `16001` without enabling a retail API epoch or legacy compatibility bootstrap.
 

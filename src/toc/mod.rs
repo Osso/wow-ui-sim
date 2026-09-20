@@ -57,7 +57,7 @@ fn active_game_types() -> &'static [&'static str] {
         crate::client_profile::ClientProfile::Anniversary => {
             &["vanilla", "classic_anniversary", "classic"]
         }
-        crate::client_profile::ClientProfile::WowForever => &["camelot", "classic"],
+        crate::client_profile::ClientProfile::WowForever => &["camelot", "mainline"],
     }
 }
 

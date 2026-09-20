@@ -61,7 +61,7 @@ fn wowforever_profile_reports_build_identity_and_finite_event_validation() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
-fn wowforever_profile_loads_camelot_classic_toc_entries() {
+fn wowforever_profile_loads_camelot_mainline_toc_entries() {
     // Forever 1.60.1.69913 Blizzard_FrameXML and FrameXMLBase TOC excerpts.
     let toc = TocFile::parse(
         Path::new("/addons/Blizzard_FrameXML"),
@@ -72,11 +72,11 @@ fn wowforever_profile_loads_camelot_classic_toc_entries() {
          [Game]\\StackSplitFrame.xml\t[AllowLoadGameType camelot]\n\
          Vanilla\\Constants.lua [AllowLoadGameType vanilla]\n",
     );
-    assert_eq!(toc.dependencies(), vec!["Blizzard_UnitPopup"]);
+    assert_eq!(toc.dependencies(), vec!["Blizzard_UIParentPanelManager"]);
     assert_eq!(
         toc.files,
         vec![
-            PathBuf::from("Classic/StackSplitFrame.lua"),
+            PathBuf::from("Mainline/StackSplitFrame.lua"),
             PathBuf::from("Camelot/StackSplitFrame.xml"),
         ]
     );
@@ -85,7 +85,7 @@ fn wowforever_profile_loads_camelot_classic_toc_entries() {
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn wowforever_profile_applies_header_filters_without_vanilla_alias() {
-    for tag in ["camelot", "classic"] {
+    for tag in ["camelot", "mainline"] {
         let toc = TocFile::parse(
             Path::new("/addons/Test"),
             &format!("## AllowLoadGameType: {tag}\n"),
@@ -94,8 +94,10 @@ fn wowforever_profile_applies_header_filters_without_vanilla_alias() {
     }
     for header in [
         "## AllowLoadGameType: vanilla",
+        "## AllowLoadGameType: classic",
+        "## AllowLoadGameType: standard",
         "## ExcludeLoadGameType: camelot",
-        "## ExcludeLoadGameType: classic",
+        "## ExcludeLoadGameType: mainline",
     ] {
         assert!(
             TocFile::parse(Path::new("/addons/Test"), header).is_game_type_restricted(),

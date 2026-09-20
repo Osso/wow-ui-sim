@@ -36,7 +36,8 @@ mod forever {
         }
 
         fn load(&self, name: &str, metadata: &str, files: &[(&str, &str)]) {
-            let result = load_addon(&self.env.loader_env(), &self.write(name, metadata, files)).unwrap();
+            let result =
+                load_addon(&self.env.loader_env(), &self.write(name, metadata, files)).unwrap();
             assert!(result.warnings.is_empty(), "{name}: {:?}", result.warnings);
         }
 
@@ -55,30 +56,76 @@ mod forever {
             ("Mainline/SharedUIPanelTemplates.lua", "SidePanelTabButtonMixin = { ready = true }; FamilyOrder = FamilyOrder .. ',templates'"),
             ("Dependent.lua", "assert(NineSliceLayouts.border == 11 and InputUtil.ready and SidePanelTabButtonMixin.ready); FamilyOrder = FamilyOrder .. ',dependent'"),
         ]);
-        std::fs::write(&toc, concat!(
-            "## Title: FamilyOrdering\n",
-            "[Family]\\NineSliceLayouts.lua\n",
-            "[Game]\\NineSliceLayoutOverrides.lua\n",
-            "[Family]\\InputUtil.lua\n",
-            "[Family]\\SharedUIPanelTemplates.lua\n",
-            "Dependent.lua\n",
-        )).unwrap();
+        std::fs::write(
+            &toc,
+            concat!(
+                "## Title: FamilyOrdering\n",
+                "[Family]\\NineSliceLayouts.lua\n",
+                "[Game]\\NineSliceLayoutOverrides.lua\n",
+                "[Family]\\InputUtil.lua\n",
+                "[Family]\\SharedUIPanelTemplates.lua\n",
+                "Dependent.lua\n",
+            ),
+        )
+        .unwrap();
         let result = load_addon(&addons.env.loader_env(), &toc).unwrap();
         assert!(result.warnings.is_empty(), "{:?}", result.warnings);
         addons.check("assert(FamilyOrder == 'layouts,override,input,templates,dependent')");
     }
 
     #[test]
+    fn mainline_annotations_select_dependencies_and_camelot_overrides() {
+        let addons = Addons::new();
+        addons.load("MainlineDependency", "", &[("Value.lua", "return 17")]);
+        let toc = addons.write("AnnotatedFamily", "", &[
+            ("Mainline/Base.lua", "AnnotationValue = require('MainlineDependency.Value'); AnnotationOrder = 'base'"),
+            ("Camelot/Override.lua", "assert(AnnotationValue == 17); AnnotationValue = 29; AnnotationOrder = AnnotationOrder .. ',camelot'"),
+            ("Classic.lua", "error('classic file must not load')"),
+            ("Standard.lua", "error('standard file must not load')"),
+            ("Vanilla.lua", "error('vanilla file must not load')"),
+            ("Excluded.lua", "error('excluded file must not load')"),
+        ]);
+        std::fs::write(
+            &toc,
+            concat!(
+                "## Title: AnnotatedFamily\n",
+                "## Dep: MainlineDependency [AllowLoadGameType mainline]\n",
+                "## Dep: ClassicDependency [AllowLoadGameType classic]\n",
+                "[Family]/Base.lua [AllowLoadGameType mainline]\n",
+                "[Game]/Override.lua [AllowLoadGameType camelot]\n",
+                "Classic.lua [AllowLoadGameType classic]\n",
+                "Standard.lua [AllowLoadGameType standard]\n",
+                "Vanilla.lua [AllowLoadGameType vanilla]\n",
+                "Excluded.lua [ExcludeLoadGameType mainline]\n",
+            ),
+        )
+        .unwrap();
+        let parsed = wow_ui_sim::toc::TocFile::from_file(&toc).unwrap();
+        assert_eq!(parsed.dependencies(), vec!["MainlineDependency"]);
+        let result = load_addon(&addons.env.loader_env(), &toc).unwrap();
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        addons.check("assert(AnnotationValue == 29 and AnnotationOrder == 'base,camelot')");
+    }
+
+    #[test]
     fn completed_file_values_preserve_identity_false_and_nil_without_reexecution() {
         let addons = Addons::new();
-        addons.load("ExampleAddon", "", &[
-            ("Empty.lua", ""),
-            ("False.lua", "return false"),
-            ("Number.lua", "return 37"),
-            ("Text.lua", "return 'module value'"),
-            ("Object.lua", "ModuleRuns = (ModuleRuns or 0) + 1; return { value = 19 }"),
-            ("Function.lua", "return function() return 41 end"),
-            ("Check.lua", r#"
+        addons.load(
+            "ExampleAddon",
+            "",
+            &[
+                ("Empty.lua", ""),
+                ("False.lua", "return false"),
+                ("Number.lua", "return 37"),
+                ("Text.lua", "return 'module value'"),
+                (
+                    "Object.lua",
+                    "ModuleRuns = (ModuleRuns or 0) + 1; return { value = 19 }",
+                ),
+                ("Function.lua", "return function() return 41 end"),
+                (
+                    "Check.lua",
+                    r#"
                 assert(require('ExampleAddon.Empty') == nil)
                 assert(require('ExampleAddon.False') == false)
                 assert(require('ExampleAddon.Number') == 37)
@@ -90,10 +137,13 @@ mod forever {
                 assert(require('ExampleAddon.Function')() == 41)
                 assert(ModuleRuns == 1)
                 ModuleValuesChecked = true
-            "#),
-        ]);
+            "#,
+                ),
+            ],
+        );
         addons.check("assert(ModuleValuesChecked)");
-        addons.check("collectgarbage('collect'); assert(require('ExampleAddon.Object').value == 23)");
+        addons
+            .check("collectgarbage('collect'); assert(require('ExampleAddon.Object').value == 23)");
     }
 
     #[test]
@@ -129,22 +179,37 @@ mod forever {
                 end
             "#),
         ]);
-        addons.load("Invoker", "", &[("Run.lua", "assert(DelayedModuleImports())")]);
+        addons.load(
+            "Invoker",
+            "",
+            &[("Run.lua", "assert(DelayedModuleImports())")],
+        );
         addons.check("assert(DelayedModuleImports())");
     }
 
     #[test]
     fn direct_required_and_optional_dependencies_allow_imports_case_insensitively() {
         let addons = Addons::new();
-        addons.load("ExampleLibrary", "", &[("Formatting/Text.lua", "return { prefix = 'ok' }")]);
+        addons.load(
+            "ExampleLibrary",
+            "",
+            &[("Formatting/Text.lua", "return { prefix = 'ok' }")],
+        );
         for (name, declaration) in [
             ("RequiredClient", "## Dep: eXaMpLeLiBrArY"),
             ("OptionalClient", "## OptionalDeps: EXAMPLELIBRARY"),
         ] {
-            addons.load(name, declaration, &[("Read.lua", r#"
+            addons.load(
+                name,
+                declaration,
+                &[(
+                    "Read.lua",
+                    r#"
                 local value = require('ExampleLibrary.Formatting.Text')
                 assert(value.prefix == 'ok')
-            "#)]);
+            "#,
+                )],
+            );
         }
     }
 
@@ -152,9 +217,16 @@ mod forever {
     fn transitive_dependencies_do_not_authorize_delayed_imports() {
         let addons = Addons::new();
         addons.load("Library", "", &[("Value.lua", "return 29")]);
-        addons.load("Middle", "## Dep: Library", &[("Read.lua", r#"
+        addons.load(
+            "Middle",
+            "## Dep: Library",
+            &[(
+                "Read.lua",
+                r#"
             function MiddleImport() return require('Library.Value') end
-        "#)]);
+        "#,
+            )],
+        );
         addons.load("Outer", "## Dep: Middle", &[("Read.lua", r#"
             function OuterImport()
                 local ok, err = pcall(require, 'Library.Value')
@@ -182,9 +254,24 @@ mod forever {
     #[test]
     fn xml_script_files_use_the_same_completion_registry() {
         let addons = Addons::new();
-        let toc = addons.write("XmlModules", "", &[("Load.xml", r#"<Ui><Script file="Data.lua"/><Script file="Read.lua"/></Ui>"#)]);
-        std::fs::write(toc.parent().unwrap().join("Data.lua"), "return { answer = 47 }").unwrap();
-        std::fs::write(toc.parent().unwrap().join("Read.lua"), "assert(require('.Data').answer == 47); XmlImportChecked = true").unwrap();
+        let toc = addons.write(
+            "XmlModules",
+            "",
+            &[(
+                "Load.xml",
+                r#"<Ui><Script file="Data.lua"/><Script file="Read.lua"/></Ui>"#,
+            )],
+        );
+        std::fs::write(
+            toc.parent().unwrap().join("Data.lua"),
+            "return { answer = 47 }",
+        )
+        .unwrap();
+        std::fs::write(
+            toc.parent().unwrap().join("Read.lua"),
+            "assert(require('.Data').answer == 47); XmlImportChecked = true",
+        )
+        .unwrap();
         load_addon(&addons.env.loader_env(), &toc).unwrap();
         addons.check("assert(XmlImportChecked)");
     }
@@ -217,10 +304,17 @@ mod forever {
     #[test]
     fn secure_addon_files_share_the_profile_module_registry() {
         let addons = Addons::new();
-        addons.load("Blizzard_ModuleFixture", "## UseSecureEnvironment: 1", &[
-            ("Value.lua", "return { answer = 59 }"),
-            ("Read.lua", "assert(require('.Value').answer == 59); return require('.Value')"),
-        ]);
+        addons.load(
+            "Blizzard_ModuleFixture",
+            "## UseSecureEnvironment: 1",
+            &[
+                ("Value.lua", "return { answer = 59 }"),
+                (
+                    "Read.lua",
+                    "assert(require('.Value').answer == 59); return require('.Value')",
+                ),
+            ],
+        );
         addons.check("assert(require('Blizzard_ModuleFixture.Value').answer == 59)");
     }
 
