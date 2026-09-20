@@ -331,6 +331,50 @@ pub fn get_raid_target_index(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// Search the eight user markers, including the starting index; zero means exhausted.
+#[cfg(feature = "client-wowforever")]
+fn get_next_available_raid_target_marker_index(state: &mut LuaState) -> LuaResult<u32> {
+    let start = i32::from_stack(state, 1)?;
+    if !(1..=8).contains(&start) {
+        return Err(rilua::runtime_error("startIndex must be between 1 and 8"));
+    }
+    let reverse = Option::<bool>::from_stack(state, 2)?.unwrap_or(false);
+    let wrap = Option::<bool>::from_stack(state, 3)?.unwrap_or(false);
+    let allow_dead = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
+    let occupied = occupied_raid_target_markers(state, allow_dead)?;
+    let direction = if reverse { -1 } else { 1 };
+    let next = (0..8)
+        .map(|offset| start + offset * direction)
+        .find_map(|index| {
+            if !wrap && !(1..=8).contains(&index) {
+                return None;
+            }
+            let index = (index - 1).rem_euclid(8) + 1;
+            (!occupied[index as usize]).then_some(index)
+        });
+    state.push(rilua::Val::Num(next.unwrap_or(0) as f64));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn occupied_raid_target_markers(state: &LuaState, allow_dead: bool) -> LuaResult<[bool; 9]> {
+    let sim = borrow_state(state)?;
+    let mut occupied = [false; 9];
+    for (guid, &marker) in &sim.unit_raid_target_icons {
+        let unit = sim
+            .current_target
+            .iter()
+            .chain(sim.current_focus.iter())
+            .chain(sim.enemy_pool.iter())
+            .find(|unit| &unit.guid == guid);
+        let reusable = allow_dead && unit.is_some_and(|unit| unit.health <= 0 && unit.reaction < 5);
+        if !reusable {
+            occupied[marker as usize] = true;
+        }
+    }
+    Ok(occupied)
+}
+
 fn read_raid_target_icon(state: &LuaState) -> LuaResult<u8> {
     match crate::lua_bridge::stack_val(state, 2) {
         rilua::Val::Num(index)
@@ -492,6 +536,13 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     table_set_rust_fn_static(state, g, "IsTargetLoose", is_target_loose)?;
     table_set_rust_fn_static(state, g, "CanBeRaidTarget", can_be_raid_target)?;
     table_set_rust_fn_static(state, g, "GetRaidTargetIndex", get_raid_target_index)?;
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(
+        state,
+        g,
+        "GetNextAvailableRaidTargetMarkerIndex",
+        get_next_available_raid_target_marker_index,
+    )?;
     table_set_rust_fn_static(state, g, "SetRaidTarget", set_raid_target)?;
     table_set_rust_fn_static(state, g, "SetRaidTargetIcon", set_raid_target)?;
     table_set_rust_fn_static(state, g, "TargetLastTarget", target_last_target)?;
