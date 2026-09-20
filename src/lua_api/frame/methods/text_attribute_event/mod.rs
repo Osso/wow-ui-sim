@@ -9,6 +9,7 @@ mod attributes;
 pub(crate) mod callbacks;
 mod events;
 mod helpers;
+mod rolesets;
 mod text;
 mod unit_event;
 
@@ -30,6 +31,12 @@ pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> 
     register_text_methods(state, table)?;
     register_attribute_methods(state, table)?;
     register_event_methods(state, table)?;
+    if cfg!(any(
+        feature = "retail-12-1-0",
+        feature = "client-wowforever"
+    )) {
+        rolesets::register(state, table)?;
+    }
     #[cfg(feature = "retail-12-1-0")]
     register_patch_12_1_methods(state, table)?;
     Ok(())
@@ -53,12 +60,8 @@ fn register_patch_12_1_methods(state: &mut LuaState, table: GcRef<Table>) -> Lua
         "HasAnyForbiddenAspects",
         has_any_forbidden_aspects,
     )?;
-    table_set_rust_fn_static(state, table, "AddRoleset", add_roleset)?;
-    table_set_rust_fn_static(state, table, "GetRolesetNames", get_roleset_names)?;
-    table_set_rust_fn_static(state, table, "RemoveRoleset", remove_roleset)?;
     table_set_rust_fn_static(state, table, "SetOnUpdateMode", set_on_update_mode)?;
     table_set_rust_fn_static(state, table, "GetOnUpdateMode", get_on_update_mode)?;
-    table_set_rust_fn_static(state, table, "SetRolesets", set_rolesets)?;
     table_set_rust_fn_static(state, table, "ClearScripts", clear_scripts)?;
     Ok(())
 }
@@ -130,60 +133,6 @@ fn has_any_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     let aspects =
         crate::lua_api::frame::methods::forbidden_aspects::stored_forbidden_aspects(state, id)?;
     state.push(Val::Bool(aspects != 0));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn roleset_table(state: &mut LuaState, fields: Val) -> Val {
-    let rolesets = table_get(state, fields, "__rolesets");
-    if matches!(rolesets, Val::Table(_)) {
-        return rolesets;
-    }
-    let rolesets = create_table(state);
-    table_set(state, fields, "__rolesets", rolesets);
-    rolesets
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
-    let fields = frame_fields_from_stack(state)?;
-    let rolesets = roleset_table(state, fields);
-    if let Some(name) = val_to_string(state, crate::lua_bridge::stack_val(state, 2)) {
-        table_set(state, rolesets, &name, Val::Bool(true));
-    }
-    Ok(0)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
-    let fields = frame_fields_from_stack(state)?;
-    let rolesets = create_table(state);
-    let count = (state.top.saturating_sub(1)) as usize;
-    for index in 2..=count {
-        if let Some(name) = val_to_string(state, crate::lua_bridge::stack_val(state, index as i32))
-        {
-            table_set(state, rolesets, &name, Val::Bool(true));
-        }
-    }
-    table_set(state, fields, "__rolesets", rolesets);
-    Ok(0)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn remove_roleset(state: &mut LuaState) -> LuaResult<u32> {
-    let fields = frame_fields_from_stack(state)?;
-    let rolesets = roleset_table(state, fields);
-    if let Some(name) = val_to_string(state, crate::lua_bridge::stack_val(state, 2)) {
-        table_set(state, rolesets, &name, Val::Nil);
-    }
-    Ok(0)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn get_roleset_names(state: &mut LuaState) -> LuaResult<u32> {
-    let fields = frame_fields_from_stack(state)?;
-    let rolesets = roleset_table(state, fields);
-    state.push(rolesets);
     Ok(1)
 }
 
