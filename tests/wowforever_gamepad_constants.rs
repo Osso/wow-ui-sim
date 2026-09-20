@@ -186,7 +186,7 @@ fn forever_gamepad_cvar_defaults_are_profile_scoped() {
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn forever_gamepad_pet_storage_uses_existing_pet_slots() {
-    use wow_ui_sim::lua_api::state::PetActionSlot;
+    use wow_ui_sim::lua_api::state::{PetActionSlot, SpellCooldownState};
     let env = WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
@@ -195,14 +195,23 @@ fn forever_gamepad_pet_storage_uses_existing_pet_slots() {
                 has_action: true,
                 name: Some(format!("Pet{}", i + 1)),
                 spell_id: Some(16827 + i as u32),
+                cooldown: Some(SpellCooldownState {
+                    start: 10.0,
+                    duration: 20.0,
+                }),
                 ..PetActionSlot::default()
             };
         }
         state.action_bars.insert(1, 6603);
     }
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    env.exec(&std::fs::read_to_string(cache.join("Blizzard_GamepadActionBars/ActionBarButton.lua")).unwrap()).unwrap();
-    env.exec(r#"
+    env.exec(
+        &std::fs::read_to_string(cache.join("Blizzard_GamepadActionBars/ActionBarButton.lua"))
+            .unwrap(),
+    )
+    .unwrap();
+    env.exec(
+        r#"
         local first = C_GamepadUI.GetFirstGamepadPetActionStorageSlotIndex()
         assert(first == 1, "logical pet slot base")
         for i = 1, 8 do
@@ -210,11 +219,13 @@ fn forever_gamepad_pet_storage_uses_existing_pet_slots() {
             button:SetID(first + i - 1)
             assert(GamepadActionBarPetButtonMixin.HasAction(button) == "Pet" .. i)
             local start, duration, enabled = GetPetActionCooldown(button:GetID())
-            assert(start == 0 and duration == 0 and enabled == 1)
+            assert(start == 10 and duration == 20 and enabled == 1)
         end
         local kind, id = GetActionInfo(1)
         assert(kind == "spell" and id == 6603)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().pet_actions[0] = PetActionSlot::default();
     env.exec("assert(GetPetActionInfo(C_GamepadUI.GetFirstGamepadPetActionStorageSlotIndex()) == nil); local _, id = GetActionInfo(1); assert(id == 6603)").unwrap();
 }

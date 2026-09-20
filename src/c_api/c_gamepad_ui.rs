@@ -3,7 +3,7 @@
 use crate::lua_api::state::FIRST_PET_ACTION_SLOT;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let table = super::helpers::ensure_namespace(state, "C_GamepadUI")?;
