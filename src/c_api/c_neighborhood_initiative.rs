@@ -9,6 +9,12 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if !cfg!(any(
+        feature = "retail-12-0-0",
+        feature = "client-wowforever"
+    )) {
+        return Ok(());
+    }
     let namespace = ensure_namespace(state, "C_NeighborhoodInitiative")?;
     table_set_rust_fn_static(
         state,

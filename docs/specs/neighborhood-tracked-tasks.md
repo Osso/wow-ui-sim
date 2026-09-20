@@ -1,6 +1,6 @@
 # Neighborhood tracked tasks
 
-`C_NeighborhoodInitiative` exposes per-environment tracked-ID membership through `src/c_api/c_neighborhood_initiative.rs`, gated at retail 12.0.0. See the [audit inventory](../wiki/investigations/patch-api-blocker-inventory.md) for remaining initiative obligations.
+`C_NeighborhoodInitiative` exposes per-environment tracked-ID membership through `src/c_api/c_neighborhood_initiative.rs`, enabled at retail 12.0.0 and for Forever. Forever's generated `NeighborhoodInitiativeDocumentation.lua` declares all three reused methods and the non-nil numeric `trackedIDs` array. See the [audit inventory](../wiki/investigations/patch-api-blocker-inventory.md) for remaining initiative obligations.
 
 ## What it must do
 
@@ -16,7 +16,7 @@
 ## Implementation inventory
 
 - `src/c_api/c_neighborhood_initiative.rs`: membership handlers using the existing namespace table.
-- `src/c_api/mod.rs`, `src/c_api/registration.rs`: retail 12.0.0 registration.
+- `src/c_api/registration.rs`: registration call; the membership module owns the single profile-capability decision.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment integer-ID set and initialization.
 - `src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs`: retains unrelated defaults, no tracking-method definitions.
 
@@ -26,4 +26,4 @@
 
 ## Out of scope
 
-Task records (including `InitiativeTaskInfo.tracked`), events, persistence, hyperlinks and consumer execution are not modeled by this slice. Native ordering, initial state, duplicate/unknown-ID semantics, ID validity, numeric coercion/ranges and errors remain unproven. Numeric arguments use existing simulator integer-ID conversion conventions; no additional validation policy is introduced.
+Forever's actual tracker initialization, empty layout, entering-world/zone events, and untracking are exercised in the grouped membership tests. Task records (including `InitiativeTaskInfo.tracked`), emitted events, persistence, hyperlinks and populated layout remain outside this slice. Native ordering, initial state, duplicate/unknown-ID semantics, ID validity, numeric coercion/ranges and errors remain unproven. Numeric arguments use existing simulator integer-ID conversion conventions; no additional validation policy is introduced.

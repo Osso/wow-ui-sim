@@ -1013,7 +1013,9 @@ mod audio_speaker_speed_tests {
 
     fn set_speed(env: &WowLuaEnv, speed: i64) {
         let accepted: bool = env
-            .eval(&format!("return C_CombatAudioAlert.SetSpeakerSpeed({speed})"))
+            .eval(&format!(
+                "return C_CombatAudioAlert.SetSpeakerSpeed({speed})"
+            ))
             .unwrap();
         assert!(accepted, "simulator accepted-write policy requires true");
     }
@@ -1085,7 +1087,9 @@ mod audio_speaker_volume_tests {
 
     fn set_volume(env: &WowLuaEnv, volume: i64) {
         let accepted: bool = env
-            .eval(&format!("return C_CombatAudioAlert.SetSpeakerVolume({volume})"))
+            .eval(&format!(
+                "return C_CombatAudioAlert.SetSpeakerVolume({volume})"
+            ))
             .unwrap();
         assert!(accepted, "simulator accepted-write policy requires true");
     }
@@ -1422,9 +1426,39 @@ mod custom_set_crud_tests {
     }
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod neighborhood_tracked_tasks_tests {
     use super::{WowLuaEnv, env};
+
+    #[cfg(feature = "client-wowforever")]
+    #[test]
+    fn neighborhood_tracked_tasks_forever_tracker_consumer() {
+        let env = fixture_env();
+        let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+        let source = std::fs::read_to_string(
+            root.join("Blizzard_ObjectiveTracker/Blizzard_InitiativeTasksObjectiveTracker.lua"),
+        )
+        .unwrap();
+        env.exec(&source).unwrap();
+        env.exec(
+            r#"
+            local tracker = InitiativeTasksObjectiveTrackerMixin
+            tracker:InitModule()
+            tracker:OnEvent('PLAYER_ENTERING_WORLD')
+            tracker:LayoutContents()
+            api.AddTrackedInitiativeTask(20)
+            api.AddTrackedInitiativeTask(40)
+            check_members({20, 40})
+            tracker:UntrackInitiativeTask(20)
+            check_members({40})
+            tracker:UntrackInitiativeTask(40)
+            check_members({})
+            tracker:OnEvent('ZONE_CHANGED_NEW_AREA')
+            tracker:LayoutContents()
+        "#,
+        )
+        .unwrap();
+    }
 
     // Duplicate-add/unknown-remove idempotence and detached getter copies are
     // simulator policies, not native ordering, validation, or lifecycle claims.
