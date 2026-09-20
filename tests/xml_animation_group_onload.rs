@@ -62,6 +62,8 @@ fn forever_chat_xml_attaches_flash_groups_to_named_glows() {
     std::fs::write(addon.path().join("AnimationTemplates.xml"), animation_xml).unwrap();
     std::fs::write(addon.path().join("ActualChatGlow.toc"), "AnimationTemplates.xml\nActualChatGlow.xml\n").unwrap();
     load_addon(&env.loader_env(), &addon.path().join("ActualChatGlow.toc")).unwrap();
+    let compat = std::fs::read_to_string(cache.join("Blizzard_SharedXMLBase/Compat.lua")).unwrap();
+    env.exec(&compat).unwrap();
     for file in ["Shared/ChatFrameConstants.lua", "Shared/ChatFrameUtil.lua"] {
         let source = std::fs::read_to_string(cache.join("Blizzard_ChatFrameBase").join(file)).unwrap();
         env.exec(&source).unwrap();
