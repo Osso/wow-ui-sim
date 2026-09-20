@@ -4,9 +4,9 @@ Forever 1.60.1.69913 publishes the pulse-health enumeration described by its cac
 
 ## What it must do
 
-- [ ] Publish `Enum.CombatAudioAlertPulsePercentValues`: `Off=0`, then `Under90Percent=1` through `Under10Percent=9`.
-- [ ] Publish corresponding `Meta`: `MinValue=0`, `MaxValue=9`, `NumValues=10`.
-- [ ] Allow the actual `TextToSpeechCommands.lua` pulse-health command block to register range 0–9, accept each integer in that range, and reject -1, 10, and nonnumeric input without changing the CVar.
+- [x] Publish `Enum.CombatAudioAlertPulsePercentValues`: `Off=0`, then `Under90Percent=1` through `Under10Percent=9`.
+- [x] Publish corresponding `Meta`: `MinValue=0`, `MaxValue=9`, `NumValues=10`.
+- [x] Allow the actual `TextToSpeechCommands.lua` pulse-health command block to register range 0–9, accept each integer in that range, and reject -1, 10, and nonnumeric input without changing the CVar.
 - [ ] Restrict this publication change to Forever without enabling retail epochs.
 
 ## How it works
