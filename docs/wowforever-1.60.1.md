@@ -11,6 +11,10 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 - Build: `1.60.1.69913`
 - Interface: `16001`
 
+## Pinned external evidence
+
+Warcraft Wiki's Forever patch page links to Ketho's BlizzardInterfaceResources dump. Its pinned [`forever` revision `659e8042049df854c114714f8ecd640823a1cd5c`](https://github.com/Ketho/BlizzardInterfaceResources/tree/659e8042049df854c114714f8ecd640823a1cd5c) reports `GetBuildInfo()` as `1.60.1.69913`, interface `16001`. Its immutable [Lua enum dump](https://raw.githubusercontent.com/Ketho/BlizzardInterfaceResources/659e8042049df854c114714f8ecd640823a1cd5c/Resources/LuaEnum.lua) sets `LE_LFG_CATEGORY_LAIR = 8`; its immutable [CVar dump](https://raw.githubusercontent.com/Ketho/BlizzardInterfaceResources/659e8042049df854c114714f8ecd640823a1cd5c/Resources/CVars.lua) sets `GamepadPossessBarOverride = "1"` and `GamepadStanceBarOverride = "3"`. Direct Warcraft Wiki/wowdev pages did not supply these Forever values; mutable mainline/PTR tables are not used as evidence.
+
 ## Keyring inventory query
 
 `5a73449b8` adds Forever-only `HasKey()` backed by occupied keyring inventory slots. Targeted tests passed **2/2**, covering insertion/removal, zero stacks, ordinary-bag exclusion and the real acknowledged-tutorial consumer. The missing-global RED was reproduced; the first consumer RED instead exposed a missing fixture prerequisite. Other-profile/final checks remain pending. See [the contract and inventory policy](specs/forever-has-key.md).
@@ -42,7 +46,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Inventory slot methods | `68989ffcf`, `25442752c` | Publishes existing `C_PaperDollInfo` inventory-slot methods and loads required equipment-flyout data. Real Head/MainHand/Ammo button behavior is GREEN (`2/2`); the isolated vendor RED also exposed fixture prerequisites. |
 | Finite UI constants | `db875f554`, `97ef67031` | Publishes source-backed Minimap/Ping/Transmog/Gamepad possess-bar values. Actual Minimap, Ping, and Transmog consumer loading is GREEN (`3/3`); Transmog's remaining startup root was not attributed to `NoTransmogID` alone. |
 | Build-specific global strings | `f954fc665` | Adds 27,262 build-specific `GlobalStrings.csv` tags with provenance and a generator. GameplaySettingsGroup/string restoration is GREEN (`2/2`); generator fixtures are GREEN (`2/2`). |
-| LFG lair category | deferred | `Constants.lua:482` is instrumented as the exact missing key (`LFG_CATEGORY_LAIR`), but the Forever cache only consumes the symbol and provides no value assignment. Existing retail 12.1 value `8` is not Forever evidence; no fix is claimed. |
+| LFG lair category | implementation pending | `Constants.lua:482` needs `LE_LFG_CATEGORY_LAIR`. The pinned Forever dump above establishes its exact value as `8`, independent of the retail-only registration; implementation and focused proof remain pending. |
 | Aura XML widgets | `c20f26dad` | Shares existing AuraContainer, ManagedAuraContainer, and AuraButton XML/factory support with Forever. Nested schema and widget-behavior fixtures are GREEN (`2/2`); this is not a full vendor UnitFrame load claim. |
 | Gamepad stick scripts | `72fc53d24`, `5570fe263`, `d5ad14601` | Adds canonical `OnGamePadStick` and the Forever Lua `OnGamepadStick` alias across script APIs, with generic `(stick, x, y)` dispatch; follow-ups load those handlers from XML/templates and correct template-handler array length. It does not enable host-gamepad delivery or establish native alias validation. |
 | Gamepad override events | `10826d74c` | Registers the documented Forever `GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED` and `GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED` events. Actual startup replay established that inherited possess/stance `OnLoad` handlers exist but abort at `RegisterEvent` before `GamepadOverrideBarMixin.OnLoad` initializes `overrideMap`; this is not missing inherited scripts or parent/child ordering. Grouped proof is GREEN (`5/5`). See `/tmp/forever-gamepad-events-ledger.json`. |
@@ -82,10 +86,11 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 
 These source-backed items remain open:
 
-- Classify the remaining 20 / 36 pinned batch-seven startup failures, then fix their demonstrated roots without masking cascades.
+- Classify the remaining **14 / 22** immutable batch-nine startup failures, then fix their demonstrated roots without masking cascades.
 - The actual `CooldownViewerSecure.lua` and loader-boundary table-security regression is GREEN (`4/4`) at `4f92e7cb0`/`60ae94004`; earlier-profile, readability, broader Rust, runtime, and independent final gates remain pending. It is not a full secret-value VM or native-conformance claim.
 - Do not use the 222 / 290 concurrent-binary diagnostic or batch-four result as clean-HEAD acceptance.
-- Rerun startup after each causal group and retain exact records/occurrences in the proof ledger. Verifier `19731` remains a pending checkpoint.
+- Rerun startup after each causal group and retain exact records/occurrences in the proof ledger. The constants checkpoint is complete; later implementation slices need their own delta proof.
+- Apply and test the now-sourced Forever values `LE_LFG_CATEGORY_LAIR = 8`, `GamepadPossessBarOverride = "1"`, and `GamepadStanceBarOverride = "3"`. Their implementations were pending when this evidence was recorded.
 - Validate remaining gamepad behavior against real UI paths; generic stick dispatch does not establish host-gamepad input support.
 - `C_EditMode.GetEditModeDefaultLayout()` still yields a layout index with no corresponding Camelot preset map during post-load `MainActionBar` replay, leaving `defaultLayoutMap` nil in `EditModePresetLayoutsManager.lua`. Exact documentation establishes the numeric API surface, not a valid default-layout selection; no implementation is justified yet.
 
