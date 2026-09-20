@@ -220,7 +220,6 @@ pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META: EnumDef = (
     &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE: SeqEnumDef = (
     "CustomAuraButtonDispelTypeTextureStyle",
     &[
@@ -232,7 +231,6 @@ pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE: SeqEnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
 pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE_META: EnumDef = (
     "CustomAuraButtonDispelTypeTextureStyleMeta",
     &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
@@ -907,13 +905,13 @@ pub const CURRENCY_FILTER_TYPE: SeqEnumDef = (
 // Delves Enums
 // ============================================================================
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(any(feature = "retail-12-1-5", feature = "client-wowforever")))]
 pub const CURIO_RARITY: EnumDef = (
     "CurioRarity",
     &[("Common", 1), ("Uncommon", 2), ("Rare", 3), ("Epic", 4)],
 );
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub const CURIO_RARITY: EnumDef = (
     "CurioRarity",
     &[

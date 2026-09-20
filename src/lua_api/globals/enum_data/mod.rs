@@ -129,7 +129,7 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     COOLDOWN_VIEWER_CATEGORY,
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE,
     #[cfg(feature = "retail-12-1-0")]
     RECENT_ALLIES_FRIEND_TAG,
@@ -202,8 +202,13 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     ),
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE_META,
+    #[cfg(feature = "client-wowforever")]
+    (
+        "CurioRarityMeta",
+        &[("MinValue", 1), ("MaxValue", 5), ("NumValues", 5)],
+    ),
     #[cfg(feature = "retail-12-1-0")]
     RECENT_ALLIES_FRIEND_TAG_META,
     #[cfg(feature = "retail-12-1-0")]
