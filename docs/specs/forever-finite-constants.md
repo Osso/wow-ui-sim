@@ -27,6 +27,12 @@ Forever `LevelConstantsDocumentation.lua` publishes `Constants.LevelConstsExpose
 
 The actual Camelot `PlayerSpellsMicroButtonMixin:GetTalentUnlockLevel()` returns `10` when adventure tree `1188` has no config. An unknown tree returning nil remains valid; this publication does not change the trait model or claim configured-tree behavior. Grouped tests assert all nine values and execute the unchanged Camelot override file against the real `C_Traits` API.
 
+## Quest log limit
+
+Forever `QuestConstantsDocumentation.lua` publishes `Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT = 40`. The Camelot quest-map count refresh compares the current quest count against this value while `WorldMapFrame:Show()` initializes the map. It remains Forever-only.
+
+The world-map runtime regression shows the real failure boundary: without the constant, `QuestLogQuests_ShowQuestCount()` aborts `WorldMapMixin:OnShow()` before `SetMapID()`. The scroll container consequently retains a nil `targetScale`, and every later `OnUpdate` fails in `IsZoomingOut()`. The test shows the map and runs sixty GUI-style updates, asserting a positive target scale and no collected errors; no vendor guard or scale fallback is added.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.

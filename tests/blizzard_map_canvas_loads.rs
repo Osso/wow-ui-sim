@@ -1,7 +1,9 @@
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_startup_events_for_screen;
+use wow_ui_sim::startup::{
+    fire_gui_startup_on_update_tick, fire_startup_events_for_screen, process_pending_timers,
+};
 use wow_ui_sim::toc::TocFile;
 
 #[path = "blizzard_map_canvas_loads/support.rs"]
@@ -32,6 +34,37 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_world_map_show_and_sustained_updates_are_error_free() {
+    let env = load_full_game_ui();
+    env.state().borrow_mut().lua_errors.clear();
+
+    env.exec("WorldMapFrame:Show()")
+        .expect("showing the Forever world map should dispatch its handlers");
+    for _ in 0..60 {
+        env.state().borrow_mut().ensure_layout_rects();
+        fire_gui_startup_on_update_tick(&env);
+        process_pending_timers(&env);
+    }
+
+    let (target_scale, quest_limit): (f64, i64) = env
+        .eval(
+            "return WorldMapFrame.ScrollContainer.targetScale, \
+             Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT",
+        )
+        .expect("Forever world-map runtime state should be initialized");
+    assert!(target_scale > 0.0);
+    assert_eq!(quest_limit, 40);
+
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "showing and ticking the Forever world map emitted Lua errors:\n{}",
+        errors.join("\n")
+    );
 }
 
 #[test]

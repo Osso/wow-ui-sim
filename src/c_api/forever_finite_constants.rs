@@ -40,6 +40,12 @@ pub(crate) fn register(state: &mut LuaState) {
     publish(
         state,
         constants,
+        "QuestLogConsts",
+        &[("MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT", 40)],
+    );
+    publish(
+        state,
+        constants,
         "LevelConstsExposed",
         &[
             ("MIN_RES_SICKNESS_LEVEL", 10),
