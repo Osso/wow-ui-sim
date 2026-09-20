@@ -19,11 +19,12 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 | Source inventory | `f2619520c`, `d1ebc389e` | Adds the 4,398-file Forever manifest and maps `wowforever` to the Gethe `forever` source branch. |
 | CASC mappings and cache sync | `65139f909` | Refreshing the community listfile added 592 generated path-to-FDID rows. Rebuilding completed sync of all 4,398 manifest files; the verifier recorded one existing CDN recovery, so this is not an all-local-CASC claim. |
 | Loader-bound `require` | `be073174d`, `55c9b3d27`, `964358618`, `78cf08372`, `23928cfb7` | Forever-only `require` resolves completed addon Lua modules, retains values/provenance across GC, enforces direct TOC dependencies for disk callers, and never becomes filesystem or `package` loading. |
-| Family TOC routing | `5e26960b6` | Corrects `[Family]` from `Classic` to `Mainline`; `[Game]` remains `Camelot`. This loads base `NineSliceLayouts`, `InputUtil`, and shared-panel definitions before Camelot overrides, while still excluding generic `mainline`-annotated TOC entries. |
+| Family TOC routing | `5e26960b6` | Corrects `[Family]` from `Classic` to `Mainline`; `[Game]` remains `Camelot`. This loads base `NineSliceLayouts`, `InputUtil`, and shared-panel definitions before Camelot overrides. The then-unchanged active-tag filter is now a separately identified pending issue. |
 | Math utilities | `0a354c0e0` | Reuses the simulator's existing math extensions for Forever so `MathUtil.lua` can publish `Round` and related aliases. A real `MathUtil.lua` fixture covers the aliases and extension behavior; no retail API epoch is enabled. |
 | Finite event registration | `4deca63f1` | Adds source-documented Forever acceptance and ordinary frame dispatch for `PET_STATS_UPDATE`, `SHARD_TRANSFER`, `SHARD_TRANSFER_IMMINENT`, `GUILD_PREFERRED_PLAY_SETTINGS_UPDATED`, and `HIDDEN_GROUP_BUFFS_CHANGED`; invented names remain rejected. |
 | Timed signal maps | `799389a6e` | Extracts a `timed-signal-maps` capability shared by PTR 12.1.5 and Forever. It exposes the existing `C_Timer.NewTimedSignalMap` state, scheduling, and `TimerUtil.lua` consumer without enabling a retail epoch. |
 | Table utilities | `b6a6a7dad` | Reuses existing table extensions for Forever so `TableUtil.lua` can publish its compatibility aliases. The real-source fixture is committed; final verification remains pending. |
+| `securecopy` | `0d7942e64` | Moves the existing cycle-safe deep-copy compatibility helper from PTR bootstrap scope into a shared temporary workaround for PTR and Forever. Its tests cover nested/cyclic table independence and userdata identity; no metatable or taint-copy claim. |
 | Source-documented enums and gamepad constants | `5e2558264`, `b838d6917` | Publishes Forever `BattleNetFriendLevel`, `VisualAlertType`, and `CooldownViewerSound` with metadata, plus `Constants.GamepadActionBarConstants`; the second commit exposes the new C API module. Vendor-consumer regressions are committed but targeted GREEN evidence is pending. This does not implement interactive gamepad input. |
 | Gamepad stick scripts | `72fc53d24`, `5570fe263`, `d5ad14601` | Adds canonical `OnGamePadStick` and the Forever Lua `OnGamepadStick` alias across script APIs, with generic `(stick, x, y)` dispatch; follow-ups load those handlers from XML/templates and correct template-handler array length. It does not enable host-gamepad delivery or establish native alias validation. |
 
@@ -39,7 +40,7 @@ Running compatibility report for the authenticated `wow_classic_beta` build with
 
 These source-backed items were identified from the initial baseline but are not recorded here as completed compatibility:
 
-- expose the existing cycle-safe `securecopy` helper for Forever;
+- correct active Forever TOC tags from the current `camelot`/`classic` selection to source-audited `camelot`/`mainline`; no claim until the routing correction is committed and tested;
 - rerun startup after each causal group, then classify remaining loader, API, template, widget, atlas, and input-handler gaps;
 - validate remaining gamepad behavior against real UI paths; generic stick dispatch does not establish host-gamepad input support.
 
