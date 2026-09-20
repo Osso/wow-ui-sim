@@ -18,6 +18,35 @@ fn forever_documented_events_register_and_reject_unknown_names() {
 }
 
 #[test]
+fn forever_guild_and_friends_documented_events_register() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame")
+        local rejected = {}
+        for _, event in ipairs({
+            "DISCORD_GUILD_LOBBY_UPDATE",
+            "DISCORD_GUILD_SETTINGS_UPDATE",
+            "SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED",
+            "NEW_MATCHMAKING_PARTY_INVITE",
+        }) do
+            local ok = pcall(frame.RegisterEvent, frame, event)
+            if not ok then
+                rejected[#rejected + 1] = event
+            else
+                assert(frame:IsEventRegistered(event))
+                frame:UnregisterEvent(event)
+                assert(not frame:IsEventRegistered(event))
+            end
+        end
+        assert(not pcall(frame.RegisterEvent, frame, "FOREVER_INVENTED_EVENT"))
+        assert(#rejected == 0, table.concat(rejected, ", "))
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_aura_styles_support_deprecated_vendor_aliases() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
