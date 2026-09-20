@@ -1,6 +1,6 @@
-# Mists Baselines
+# Profile Baselines
 
-Mists/Pandaria Classic validation artifacts for the `client-mists` profile.
+Validation artifacts for supported client profiles.
 
 ## Lua Errors
 
@@ -17,6 +17,10 @@ verified clean Mists capture.
 Use `scripts/diff-lua-errors.sh BASELINE NEW` to compare message sets and
 report regressed/fixed errors. The Mists CI guard uses this for addon-induced
 error counts and release proof diagnostics.
+
+## Forever Lua Errors
+
+`wowforever-lua-errors.json` records the first `client-wowforever` startup capture after commit `65139f909` synchronized all 4,398 manifest files from local `wow_classic_beta` CASC. It contains 422 distinct error records with 514 occurrences; the process exited 1. Preserve it as the initial failure baseline, not an accepted clean startup.
 
 ## Panel And Addon Evidence
 

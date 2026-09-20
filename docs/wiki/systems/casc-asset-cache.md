@@ -81,6 +81,8 @@ The GUI startup path uses the cache only. If the completion marker is missing, s
 
 `tools/gen_limited_listfile.py` stores ordinary community rows with normalized lowercase paths. `data/listfile-overrides.csv` is authoritative: an override replaces the source display path for both normalized path and FDID resolution while preserving slash-normalized canonical casing. Generated rows sort by normalized path, keeping output deterministic when display casing differs.
 
+On September 20, 2026, refreshed community data added 592 mappings needed by the Forever manifest. Rebuilding commit `65139f909` then let `wow-cli casc sync-blizzard-ui` extract all 4,398 `wowforever` entries from local `wow_classic_beta` CASC with no unresolved manifest paths. This proves FDID resolution and source extraction, not a clean simulator startup.
+
 ### Retail-only isolation test
 
 Run `scripts/test-retail-casc-isolation.py` to verify the retail manifest without allowing access to any sibling WoW flavor. The script builds `wow-cli`, discovers every `_..._` directory beside `_retail_`, masks the non-retail directories with empty Bubblewrap mounts, and syncs into a fresh writable HOME/cache. Failed runs preserve the cache and `retail-casc-isolation.log`, then print manifest entries that are absent or fail profile-specific content validation.

@@ -29,7 +29,7 @@ Profile → Gethe branch:
 | mists | `classic` (current Classic = Mists of Pandaria) |
 | era | `classic_era` |
 | anniversary | `classic_anniversary` |
-| wowforever | `forever` (1.60.1.69913 source inventory only; runtime profile pending) |
+| wowforever | `forever` (1.60.1.69913; distinct runtime profile, cache, and manifest) |
 
 ## Steps
 
@@ -79,6 +79,13 @@ entry in `data/listfile-overrides.csv` is authoritative for its normalized path
 and FDID: it replaces the source display path while preserving slash-normalized
 canonical casing. Generated rows sort by normalized path, so canonical casing
 does not change output ordering.
+
+On September 20, 2026, refreshing the community listfile and regenerating this
+file added 592 `wowforever` path-to-FDID rows. Every one of the 4,398 paths in
+`data/blizzard-ui-files/wowforever.txt` then mapped, and the rebuilt
+`client-wowforever` sync extracted all 4,398 files from local `wow_classic_beta`
+CASC. This establishes source acquisition only; it does not establish startup or
+Blizzard UI compatibility.
 
 ### 4. Rebuild and validate the sync
 

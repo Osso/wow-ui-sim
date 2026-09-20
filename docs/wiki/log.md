@@ -1,3 +1,7 @@
+## [2026-09-20] system | Synchronize Forever source cache and record failing startup baseline
+
+Commit `65139f909` regenerated the bundled listfile from refreshed community data, adding 592 `wowforever` path-to-FDID rows. Rebuilt `wow-cli casc sync-blizzard-ui` extracted all 4,398 manifest files from local `wow_classic_beta` CASC with no unresolved paths. The first no-addons/no-saved-vars startup capture instead exited 1: `docs/baselines/wowforever-lua-errors.json` records 422 distinct errors and 514 occurrences, including missing `BattleNetFriendLevel` and `InputUtil`. This proves mapping and extraction only, not startup, Blizzard UI, or native compatibility. Updated [[client-profiles]], [[casc-asset-cache]], and their index summaries.
+
 ## [2026-09-19] system | Integrate Forever loader module imports
 
 Updated [[addon-module-imports]] and [[client-profiles]] after `abbc1272f` and `78cf08372`. Forever is now a distinct seventh profile (`16001`, `wow_classic_beta`, `wowforever` cache; canonical source branch `forever`), never an Era/Anniversary alias. Its loader-bound `require` returns completed-file values with private GC roots and prototype caller provenance; disk cross-addon imports require direct TOC dependencies, while dynamic absolute callers are exempt. Targeted profile tests passed 8/8 and loader tests 10/10 before formatting, extraction, startup smoke, and final verification. No native execution or full Blizzard-baseline claim.
