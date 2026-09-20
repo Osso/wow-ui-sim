@@ -62,7 +62,7 @@ fn forever_gamepad_cvar_defaults_drive_vendor_mapping_and_events() {
     .unwrap();
     env.exec(r#"
         for _, entry in ipairs({
-            {"GamepadPossessBarOverride", "1", "GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED"},
+            {"GamepadPossessBarOverride", "4", "GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED"},
             {"GamepadStanceBarOverride", "3", "GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED"},
         }) do
             local name, default, event = unpack(entry)
@@ -117,6 +117,63 @@ fn forever_gamepad_cvar_defaults_drive_vendor_mapping_and_events() {
             listener:UnregisterAllEvents()
         end
     "#).unwrap();
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_possess_default_selects_vendor_page_one_bottom_bar() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        GamepadActionBarMixin = {}
+        GamepadActionBarPageUnitMixin = {
+            GetTopAnchorFrame = function(self) return self.top end,
+            GetLeftAnchorFrame = function(self) return self.left end,
+            GetRightAnchorFrame = function(self) return self.right end,
+            GetBottomAnchorFrame = function(self) return self.bottom end,
+        }
+    "#,
+    )
+    .unwrap();
+    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    for file in ["GamepadOverrideBarMixin.lua", "PossessBar.lua"] {
+        env.exec(
+            &std::fs::read_to_string(cache.join("Blizzard_GamepadActionBars").join(file)).unwrap(),
+        )
+        .unwrap();
+    }
+    env.exec(
+        r#"
+        local page = CreateFrame("Frame")
+        for _, name in ipairs({"top", "left", "right", "bottom"}) do
+            page[name] = CreateFrame("Frame", nil, page)
+            page[name].Bar = CreateFrame("Frame", nil, page[name])
+        end
+        local bar = CreateFrame("Frame", nil, page)
+        Mixin(bar, GamepadPossessBarMixin)
+        bar.overrideMap = {}
+        bar.overrideCVar = "GamepadPossessBarOverride"
+        bar.isOverrideBarActive = false
+        bar.pagingUnitOwner = page
+        page.actionBars = {possessBar = bar}
+        function page:RefreshPageTrackerSpecialPageSlotVisibility()
+            self.specialPageVisible = bar:IsPossessBarOverrideOnSpecialPage()
+        end
+        function page:HandleSpecialPageActiveStateChange()
+            self.specialPageActive = bar:IsPossessBarOverrideOnSpecialPage()
+        end
+        GamepadActionBarPageUnitMixin.InitializePossessBar(page)
+        assert(bar:GetParent() == page.bottom, "native default selects Page1BottomBar")
+        assert(bar:GetActionBarLinkedWithOverrideBar() == page.bottom.Bar)
+        assert(bar:GetLinkedOverrideBarPage(GetCVar(bar.overrideCVar)) == 1)
+        assert(SetCVar(bar.overrideCVar, "1"))
+        bar:ApplyInitialOverridePositioning()
+        assert(bar:GetParent() == page.top)
+        assert(bar:GetLinkedOverrideBarPage("1") == 4)
+        assert(GetCVarDefault(bar.overrideCVar) == "4")
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]

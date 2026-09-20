@@ -217,9 +217,9 @@ fn insert_profile_cvars(
     defaults: &mut HashMap<String, String>,
     original_names: &mut HashMap<String, String>,
 ) {
-    // Ketho/BlizzardInterfaceResources 659e804: Forever 1.60.1.69913.
+    // Native Forever 1.60.1.69913 probe; see docs/specs/forever-gamepad-cvars.md.
     for (name, value) in [
-        ("GamepadPossessBarOverride", "1"),
+        ("GamepadPossessBarOverride", "4"),
         ("GamepadStanceBarOverride", "3"),
     ] {
         let key = name.to_lowercase();
