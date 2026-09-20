@@ -26,5 +26,22 @@ pub(crate) fn register_legacy_container_globals(state: &mut LuaState) -> LuaResu
     for &(name, rust_fn) in LEGACY_CONTAINER_GLOBALS {
         table_set_rust_fn_static(state, state.global, name, rust_fn)?;
     }
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(state, state.global, "HasKey", has_key)?;
     Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn has_key(state: &mut LuaState) -> LuaResult<u32> {
+    // Forever BagIndex.Keyring is -1. Membership, not item-name guessing,
+    // defines a key in the simulator's modeled keyring inventory.
+    const KEYRING_CONTAINER: i32 = -1;
+    let has_key = crate::lua_api::methods::borrow_state(state)?
+        .bag_items
+        .iter()
+        .any(|(&(bag, slot), item)| {
+            bag == KEYRING_CONTAINER && slot > 0 && item.item_id != 0 && item.stack_count > 0
+        });
+    state.push(rilua::Val::Bool(has_key));
+    Ok(1)
 }
