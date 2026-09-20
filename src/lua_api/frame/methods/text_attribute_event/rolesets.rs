@@ -4,7 +4,6 @@ use crate::lua_api::methods::{
     val_to_string,
 };
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-use rilua::api::LuaApiMut;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
