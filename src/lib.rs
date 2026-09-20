@@ -43,7 +43,11 @@ pub mod extract_textures;
 #[path = "render/font.rs"]
 pub mod font;
 pub mod global_slot_coverage;
-#[path = "../data/global_strings.rs"]
+#[cfg_attr(
+    feature = "client-wowforever",
+    path = "../data/global_strings_wowforever.rs"
+)]
+#[cfg_attr(not(feature = "client-wowforever"), path = "../data/global_strings.rs")]
 pub mod global_strings;
 pub mod iced_app;
 #[cfg(not(target_os = "linux"))]
