@@ -46,6 +46,29 @@ mod forever {
     }
 
     #[test]
+    fn family_definitions_load_before_camelot_overrides_and_bare_dependents() {
+        let addons = Addons::new();
+        let toc = addons.write("FamilyOrdering", "", &[
+            ("Mainline/NineSliceLayouts.lua", "NineSliceLayouts = { border = 7 }; FamilyOrder = 'layouts'"),
+            ("Camelot/NineSliceLayoutOverrides.lua", "assert(NineSliceLayouts.border == 7); NineSliceLayouts.border = 11; FamilyOrder = FamilyOrder .. ',override'"),
+            ("Mainline/InputUtil.lua", "InputUtil = { ready = true }; FamilyOrder = FamilyOrder .. ',input'"),
+            ("Mainline/SharedUIPanelTemplates.lua", "SidePanelTabButtonMixin = { ready = true }; FamilyOrder = FamilyOrder .. ',templates'"),
+            ("Dependent.lua", "assert(NineSliceLayouts.border == 11 and InputUtil.ready and SidePanelTabButtonMixin.ready); FamilyOrder = FamilyOrder .. ',dependent'"),
+        ]);
+        std::fs::write(&toc, concat!(
+            "## Title: FamilyOrdering\n",
+            "[Family]\\NineSliceLayouts.lua\n",
+            "[Game]\\NineSliceLayoutOverrides.lua\n",
+            "[Family]\\InputUtil.lua\n",
+            "[Family]\\SharedUIPanelTemplates.lua\n",
+            "Dependent.lua\n",
+        )).unwrap();
+        let result = load_addon(&addons.env.loader_env(), &toc).unwrap();
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        addons.check("assert(FamilyOrder == 'layouts,override,input,templates,dependent')");
+    }
+
+    #[test]
     fn completed_file_values_preserve_identity_false_and_nil_without_reexecution() {
         let addons = Addons::new();
         addons.load("ExampleAddon", "", &[

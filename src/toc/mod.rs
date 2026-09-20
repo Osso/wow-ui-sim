@@ -209,17 +209,17 @@ pub(crate) fn collect_metadata_lists(
 }
 
 /// Resolve the `[Family]` TOC substitution per active client profile. Retail
-/// vendors ship a `Mainline/` subdir; mists vendors ship `Classic/`. Wrath
+/// and Forever vendors ship a `Mainline/` subdir; mists ship `Classic/`. Wrath
 /// FrameXML doesn't use the substitution, so the value there doesn't matter.
 fn family_subdir() -> &'static str {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail
-        | crate::client_profile::ClientProfile::Ptr => "Mainline",
+        | crate::client_profile::ClientProfile::Ptr
+        | crate::client_profile::ClientProfile::WowForever => "Mainline",
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists
         | crate::client_profile::ClientProfile::Era
-        | crate::client_profile::ClientProfile::Anniversary
-        | crate::client_profile::ClientProfile::WowForever => "Classic",
+        | crate::client_profile::ClientProfile::Anniversary => "Classic",
     }
 }
 
