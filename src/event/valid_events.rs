@@ -27,10 +27,21 @@ pub fn is_registerable_event(name: &str) -> bool {
     crate::wrath::is_registerable_event(name)
 }
 
-// Forever starts with the finite known-event table, not the permissive legacy
-// validator. Its client-specific event additions still need source-backed data.
+// Forever extends the finite table with events published by its API docs.
+#[cfg(feature = "client-wowforever")]
+const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
+    "GUILD_PREFERRED_PLAY_SETTINGS_UPDATED",
+    "HIDDEN_GROUP_BUFFS_CHANGED",
+    "PET_STATS_UPDATE",
+    "SHARD_TRANSFER",
+    "SHARD_TRANSFER_IMMINENT",
+];
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub fn is_registerable_event(name: &str) -> bool {
+    #[cfg(feature = "client-wowforever")]
+    if FOREVER_REGISTERABLE_EVENTS.binary_search(&name).is_ok() {
+        return true;
+    }
     #[cfg(feature = "retail-12-1-5")]
     if name == "WEATHER_CHANGED" {
         return true;

@@ -6,6 +6,46 @@ mod startup_api_common;
 use startup_api_common::*;
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_source_events_register_and_dispatch() {
+    let env = env();
+    for event in [
+        "GUILD_PREFERRED_PLAY_SETTINGS_UPDATED",
+        "HIDDEN_GROUP_BUFFS_CHANGED",
+        "PET_STATS_UPDATE",
+        "SHARD_TRANSFER",
+        "SHARD_TRANSFER_IMMINENT",
+    ] {
+        env.exec(&format!(
+            "received = nil; receiver = CreateFrame('Frame'); \
+             receiver:RegisterEvent('{event}'); \
+             receiver:SetScript('OnEvent', function(_, name, value) \
+             received = name .. ':' .. value end)"
+        ))
+        .unwrap();
+        env.fire_event_with_args(event, &[env.lua_string("delivered")])
+            .unwrap();
+        assert_eq!(
+            env.eval::<String>("return received").unwrap(),
+            format!("{event}:delivered")
+        );
+        env.exec("receiver:UnregisterAllEvents()").unwrap();
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_source_events_reject_unknown_and_empty_names() {
+    let env = env();
+    env.exec(
+        "local frame = CreateFrame('Frame'); \
+         assert(not pcall(frame.RegisterEvent, frame, 'WOWFOREVER_INVENTED_EVENT')); \
+         assert(not pcall(frame.RegisterEvent, frame, ''))",
+    )
+    .unwrap();
+}
+
+#[test]
 fn map_util_helpers_exist_in_shared_bootstrap() {
     let env = env();
     let (displayable_map_id_type, map_type_zone_callable, parent_info_callable, cache_match): (
