@@ -11,6 +11,14 @@ Forever 1.60.1.69913 publishes these additions from its generated API documentat
 
 Sources: authenticated Forever `MinimapConstantsDocumentation.lua`, `PingConstantsDocumentation.lua`, `TransmogConstantsDocumentation.lua`, and `GamepadUIDocumentation.lua` under `Blizzard_APIDocumentationGenerated`.
 
+## Legacy and level constants
+
+Forever `LegacyConstantsDocumentation.lua` publishes `Constants.LegacyConsts`: `LEGACY_REWARD_TRACK_FACTION_ID=2802`, `LEGACY_POINTS_TRAIT_CURRENCY_ID=4225`, `LEGACY_TREE_PROFESSIONS_ID=1187`, `LEGACY_TREE_ADVENTURE_ID=1188`, `LEGACY_TREE_PROGRESSION_ID=1189`, and `LEGACY_TREE_ADVENTURE_TALENTED_NODE_ID=110298`.
+
+Forever `LevelConstantsDocumentation.lua` publishes `Constants.LevelConstsExposed.MIN_RES_SICKNESS_LEVEL`, `MIN_ACHIEVEMENT_LEVEL`, and `MIN_TALENT_LEVEL`, each `10`.
+
+The actual Camelot `PlayerSpellsMicroButtonMixin:GetTalentUnlockLevel()` returns `10` when adventure tree `1188` has no config. An unknown tree returning nil remains valid; this publication does not change the trait model or claim configured-tree behavior. Grouped tests assert all nine values and execute the unchanged Camelot override file against the real `C_Traits` API.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.

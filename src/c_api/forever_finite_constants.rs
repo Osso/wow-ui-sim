@@ -17,6 +17,17 @@ pub(crate) fn register(state: &mut LuaState) {
     );
     let constants = super::helpers::ensure_global_table(state, "Constants");
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
+    publish(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
+    publish(
+        state,
+        constants,
+        "LevelConstsExposed",
+        &[
+            ("MIN_RES_SICKNESS_LEVEL", 10),
+            ("MIN_ACHIEVEMENT_LEVEL", 10),
+            ("MIN_TALENT_LEVEL", 10),
+        ],
+    );
 }
 
 fn register_tracking_filters(state: &mut LuaState, enums: Val) {
@@ -57,6 +68,16 @@ fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) 
         table_set(state, values, field, Val::Num(f64::from(value)));
     }
 }
+
+// Forever LegacyConstantsDocumentation.lua.
+const LEGACY_CONSTANTS: &[(&str, i32)] = &[
+    ("LEGACY_REWARD_TRACK_FACTION_ID", 2802),
+    ("LEGACY_POINTS_TRAIT_CURRENCY_ID", 4225),
+    ("LEGACY_TREE_PROFESSIONS_ID", 1187),
+    ("LEGACY_TREE_ADVENTURE_ID", 1188),
+    ("LEGACY_TREE_PROGRESSION_ID", 1189),
+    ("LEGACY_TREE_ADVENTURE_TALENTED_NODE_ID", 110298),
+];
 
 const POSSESS_OVERRIDES: &[(&str, i32)] = &[
     ("SpecialPageTopBar", 1),

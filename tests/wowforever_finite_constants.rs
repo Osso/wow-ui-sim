@@ -9,6 +9,47 @@ fn load(env: &WowLuaEnv, path: &str) {
 }
 
 #[test]
+fn forever_finite_constants_publish_legacy_and_level_values() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local legacy = Constants.LegacyConsts
+        assert(legacy, "missing LegacyConsts")
+        assert(legacy.LEGACY_REWARD_TRACK_FACTION_ID == 2802)
+        assert(legacy.LEGACY_POINTS_TRAIT_CURRENCY_ID == 4225)
+        assert(legacy.LEGACY_TREE_PROFESSIONS_ID == 1187)
+        assert(legacy.LEGACY_TREE_ADVENTURE_ID == 1188)
+        assert(legacy.LEGACY_TREE_PROGRESSION_ID == 1189)
+        assert(legacy.LEGACY_TREE_ADVENTURE_TALENTED_NODE_ID == 110298)
+        local level = Constants.LevelConstsExposed
+        assert(level.MIN_RES_SICKNESS_LEVEL == 10)
+        assert(level.MIN_ACHIEVEMENT_LEVEL == 10)
+        assert(level.MIN_TALENT_LEVEL == 10)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn forever_finite_constants_camelot_talent_unlock_without_config() {
+    let env = WowLuaEnv::new().unwrap();
+    // The override file extends these mixin tables; no API or consumer is mocked.
+    env.exec("PlayerSpellsMicroButtonMixin = {}; CharacterMicroButtonMixin = {}")
+        .unwrap();
+    load(
+        &env,
+        "Blizzard_MicroMenu/Camelot/MainMenuBarMicroButtonsOverrides.lua",
+    );
+    env.exec(
+        r#"
+        assert(C_Traits.GetConfigIDByTreeID(1188) == nil)
+        assert(PlayerSpellsMicroButtonMixin:GetTalentUnlockLevel() == 10)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_finite_constants_construct_minimap_filters() {
     let env = WowLuaEnv::new().unwrap();
     load(&env, "Blizzard_Minimap/Camelot/MinimapConstants.lua");
