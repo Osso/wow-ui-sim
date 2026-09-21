@@ -190,10 +190,10 @@ fn visibility_binding_env() -> WowLuaEnv {
     let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env.exec(r#"
-        VisibilityParent = CreateFrame('VisibilityPrecall', 'VisibilityParent', UIParent, 'VisibilityPostcall')
+        VisibilityParent = CreateFrame('Frame', 'VisibilityParent', UIParent, 'VisibilityPrecall,VisibilityPostcall')
         VisibilityParent:Hide()
-        VisibilityChild = CreateFrame('VisibilityPrecall', 'VisibilityChild', VisibilityParent, 'VisibilityPostcall')
-        VisibilityHiddenChild = CreateFrame('VisibilityPrecall', 'VisibilityHiddenChild', VisibilityParent, 'VisibilityPostcall')
+        VisibilityChild = CreateFrame('Frame', 'VisibilityChild', VisibilityParent, 'VisibilityPrecall,VisibilityPostcall')
+        VisibilityHiddenChild = CreateFrame('Frame', 'VisibilityHiddenChild', VisibilityParent, 'VisibilityPrecall,VisibilityPostcall')
         VisibilityHiddenChild:Hide()
         for _, frame in ipairs({VisibilityParent, VisibilityChild, VisibilityHiddenChild}) do
             for _, event in ipairs({'OnShow', 'OnHide'}) do

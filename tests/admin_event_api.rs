@@ -32,7 +32,7 @@ fn env_with_intrinsic_event_frame() -> WowLuaEnv {
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env.exec(
         r#"
-        CreateFrame('SynchronousEventPre', 'SynchronousEventFrame', UIParent, 'SynchronousEventPost')
+        CreateFrame('Frame', 'SynchronousEventFrame', UIParent, 'SynchronousEventPre,SynchronousEventPost')
         assert(type(SynchronousEventFrame:GetScript('OnEvent', 0)) == 'function')
         assert(SynchronousEventFrame:GetScript('OnEvent', 1) == nil)
         assert(type(SynchronousEventFrame:GetScript('OnEvent', 2)) == 'function')
