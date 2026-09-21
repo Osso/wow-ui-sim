@@ -12,10 +12,12 @@ fn native_target_aura_callback_roundtrips_before_cleanup() {
 
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    // Full startup eagerly loads UseSecureEnvironment addons, including
+    // AuraContainer, before UnitFrame. UnitFrame does not declare that dependency.
     let closure = discover_blizzard_addon_closure_for_screen_with_overrides(
         &ui,
         ScreenKind::Game,
-        &["Blizzard_UnitFrame"],
+        &["Blizzard_AuraContainer", "Blizzard_UnitFrame"],
         &[],
     );
     let mut loaded = Vec::new();
