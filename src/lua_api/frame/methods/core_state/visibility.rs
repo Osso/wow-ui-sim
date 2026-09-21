@@ -6,14 +6,13 @@ use crate::lua_api::frame::methods::methods_helpers::{
 };
 use crate::lua_api::frame::methods::secret_origin::{require_shown_readable, unwrap_input};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
-use crate::lua_api::script_helpers::call_error_handler_state;
-use crate::lua_api::script_helpers::get_script as get_rilua_script;
+use crate::lua_api::script_helpers::{call_error_handler_state, get_scripts_for_dispatch};
 use crate::lua_bridge::stack_val;
 use crate::widget::WidgetType;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-/// Maximum handler invocations per Show/Hide call (6 cycles × 2 handlers).
+/// Maximum visibility transitions per Show/Hide call (6 show/hide cycles).
 const SHOW_HIDE_HANDLER_LIMIT: usize = 12;
 
 /// Maximum cross-frame Show/Hide dispatch depth.
@@ -202,18 +201,25 @@ fn fire_visibility_handler_recursive(
         fire_visibility_handler_recursive(state, child_id, handler_name)?;
     }
 
-    if let Some(handler) = get_rilua_script(state, frame_id, handler_name) {
-        let Ok(frame) = frame_ref(state, frame_id) else {
-            return Ok(());
-        };
+    fire_visibility_bindings(state, frame_id, handler_name);
+    Ok(())
+}
+
+fn fire_visibility_bindings(state: &mut LuaState, frame_id: u64, handler_name: &str) {
+    let handlers = get_scripts_for_dispatch(state, frame_id, handler_name);
+    if handlers.is_empty() {
+        return;
+    }
+    let Ok(frame) = frame_ref(state, frame_id) else {
+        return;
+    };
+    for handler in handlers {
         if let Err(error_msg) =
             crate::lua_api::script_helpers::protected_lua_pcall_state(state, handler, &[frame])
         {
             call_error_handler_state(state, &error_msg);
         }
     }
-
-    Ok(())
 }
 
 pub fn is_visible(state: &mut LuaState) -> LuaResult<u32> {
