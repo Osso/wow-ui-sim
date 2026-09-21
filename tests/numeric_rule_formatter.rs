@@ -1,6 +1,13 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(feature = "numeric-rule-formatters")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[test]
+fn numeric_rule_formatter_formats_ellesmere_aura_duration_breakpoints() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(include_str!("fixtures/ellesmere_duration_formatter.lua"))
+        .expect("Ellesmere AuraKit preferred numeric duration formatter");
+}
 
 #[test]
 fn numeric_rule_formatter_formats_resource_bar_countdown_and_rounding_modes() {

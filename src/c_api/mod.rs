@@ -102,7 +102,7 @@ pub mod item_spell;
 pub mod legacy_spell_book;
 #[cfg(feature = "client-mists")]
 mod mists_talents;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "numeric-rule-formatters")]
 mod numeric_rule_formatter;
 pub(crate) mod on_update_modes;
 pub mod permanent_shims;

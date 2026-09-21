@@ -65,7 +65,7 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "StripHyperlinks",
         c_string_util_strip_hyperlinks,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     set_global_val(state, "C_StringUtil", c_string_util);
     Ok(())

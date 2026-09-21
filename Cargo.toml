@@ -113,7 +113,7 @@ intern-stats = ["rilua/intern-stats"]
 retail-12-0-0 = []
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
-retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects"]
+retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters"]
 retail-12-1-5 = ["retail-12-1-0", "dep:cc", "dep:pkg-config", "dep:vcpkg", "timed-signal-maps", "forbidden-animation-aspects"]
 # Shared keyed timer capability used by PTR and Forever.
 timed-signal-maps = []
@@ -126,6 +126,8 @@ player-cast-durations = []
 # Shared forbidden-aspect state/query surface; animation bits arrived after Retail 12.1.
 forbidden-aspects = []
 forbidden-animation-aspects = ["forbidden-aspects"]
+# Shared modeled numeric formatting rules for Retail 12.1+ and Forever.
+numeric-rule-formatters = []
 
 # Client profile features — exactly one profile marker must be enabled. The
 # public client-retail bundle preserves the current retail epoch; profile-retail
@@ -137,7 +139,7 @@ client-wrath = []
 client-mists = []
 client-era = []
 client-anniversary = []
-client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects"]
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters"]
 
 [profile.release]
 lto = false
