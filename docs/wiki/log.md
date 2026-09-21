@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Implement numeric shared OnUpdate modes
+
+`d93621f42` introduces `on-update-modes` for Retail 12.1+ and Forever without enabling a broader Retail epoch. It publishes native numeric `Enum.OnUpdateMode` values and metadata, stores numeric mode state, maps XML names, resets one-shot modes before callbacks so rearming survives, and replaces PTR string/undocumented-alias publication with the shared Rust producer. Five focused cases are RED, including the real inherited ManagedAuraContainer dirty path; GREEN and runtime replay are pending. Updated [[ellesmereui-forever]], [the OnUpdate-mode spec](../specs/on-update-modes.md), and index; parent report unchanged.
+
 ## [2026-09-21] investigation | Restore native Edit Mode initial-anchor ordering
 
 `0b95bed3e` adds the native `EditModeManagerFrame:InitSystemAnchors()` phase before the simulator's custom per-system replay. Failure-time QueueProbe evidence from actual Ellesmere startup found `QueueStatusButton` at 45×45 with zero anchors and nil center while earlier MicroMenu/action-bar/Minimap callbacks reached Camelot `UpdateDefaultAnchor`; settled geometry was not causal evidence. Pinned `EditModeManager.lua` calls initialization before `UpdateSystems()`. The exact regression fixture is RED at `/tmp/ellesmere-forever/queue-regression-red.stderr`; focused GREEN and real addon replay remain pending. See [[ellesmereui-forever]] and [the initial-anchor spec](../specs/edit-mode-initial-anchors.md).
