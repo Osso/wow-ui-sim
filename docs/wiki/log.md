@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Dispatch intrinsic visibility bindings after `ReloadFrames`
+
+`1e1dfe7c0` changes recursive visibility delivery from normal-only to ordered precall/normal/postcall bindings, preserving children-first order. Root cause: `ReloadFrames` hides the parent, configures the native AuraContainer, then shows the parent; normal-only recursive `OnShow` skipped its intrinsic `UNIT_AURA` re-registration. `c6d970cf3` remains only the `FireEvent`/`A_Admin.FireEvent` fix; `AddBuff`/`RemoveBuff` already used `fire_named_event_state`. New tests are committed; compiled GREEN and actual removal GREEN remain pending. See [[synchronous-intrinsic-events]].
+
 ## [2026-09-21] investigation | Correct `FireEvent` intrinsic-event delivery attribution
 
 Recorded `c6d970cf3` as a normal-only `FireEvent`/`A_Admin.FireEvent` correction with shared all-binding dispatch and API-level ordering/filter regressions. Diagnosis correction: admin aura producers use `fire_named_event_state` already, so their passing cold-container lifecycle test is not proof for that commit. Post-`ReloadFrames` evidence instead points to normal-only recursive `OnShow` visibility dispatch skipping AuraContainer's intrinsic re-registration; implementation and GREEN remain pending. See [[synchronous-intrinsic-events]].

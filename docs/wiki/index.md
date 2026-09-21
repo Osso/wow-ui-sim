@@ -1,6 +1,6 @@
-## [2026-09-21] investigation | Synchronous events omitted intrinsic bindings
+## [2026-09-21] investigation | Intrinsic event and visibility dispatch routes
 
-The admin/model event route dispatched only normal OnEvent scripts, leaving a settled native AuraContainer stale after aura removal. It now shares ordered precall/normal/postcall frame dispatch and unit filtering while preserving independent callbacks. XML-binding and repeated native aura-cycle regressions are added; compiled GREEN is pending. See [[synchronous-intrinsic-events]].
+`c6d970cf3` corrects only `FireEvent`/`A_Admin.FireEvent`: normal-only OnEvent lookup became ordered, unit-filtered all-binding dispatch. `AddBuff`/`RemoveBuff` already used all-binding `fire_named_event_state`. The actual stale-aura route is `ReloadFrames`: a hidden configured AuraContainer misses intrinsic `OnShow` re-registration when recursive visibility delivery invokes only normal bindings. `1e1dfe7c0` delivers all visibility bindings children-first. New tests are committed; compiled and actual removal GREEN remain pending. See [[synchronous-intrinsic-events]].
 
 ## [2026-09-21] investigation | EllesmereUI Forever producer defects
 
