@@ -24,7 +24,7 @@ pub(crate) fn player_cast_args(
 }
 
 pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_id: u32) {
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     {
         // A replacement callback can supersede this producer before it publishes START.
         if !is_current_cast(state, cast_id) {
@@ -39,7 +39,7 @@ pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_i
     fire_player_cast_event(state, "UNIT_SPELLCAST_START", cast_id, spell_id);
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 fn is_current_cast(state: &LuaState, cast_id: u32) -> bool {
     super::methods::borrow_state(state)
         .expect("registered cast producer has simulator state")
@@ -49,7 +49,7 @@ fn is_current_cast(state: &LuaState, cast_id: u32) -> bool {
 }
 
 /// Discard a deferred specialization only when replacing its owning cast.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 pub(crate) fn clear_replaced_specialization(sim: &mut super::SimState) {
     if sim
         .casting
@@ -71,7 +71,7 @@ pub(crate) fn fire_player_cast_event(
 }
 
 /// Self-cancel policy: interruption first, then STOP for non-interruption listeners.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 pub(crate) fn fire_player_cast_interrupted(
     state: &mut LuaState,
     cast_id: u32,

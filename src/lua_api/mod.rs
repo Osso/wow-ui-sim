@@ -3,7 +3,7 @@
 mod addon_scan;
 pub mod animation;
 mod builtin_frames;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 pub(crate) mod channeling;
 pub mod chat_init;
 mod diagnostics;

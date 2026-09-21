@@ -83,7 +83,7 @@ fn start_cast(
     let now = st.start_time.elapsed().as_secs_f64();
     let cast_id = st.next_cast_id;
     st.next_cast_id = st.next_cast_id.wrapping_add(1);
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     crate::lua_api::spellcast_events::clear_replaced_specialization(&mut st);
     st.casting = Some(CastingState {
         spell_id,
@@ -96,7 +96,7 @@ fn start_cast(
         delay_time: 0.0,
     });
     drop(st);
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     if let Err(error) = crate::lua_api::channeling::cancel_for_cast(state) {
         tracing::error!(%error, "failed to cancel replaced channel");
         return None;
@@ -462,7 +462,7 @@ fn spell_is_targeting(state: &mut LuaState) -> LuaResult<u32> {
 /// `SpellStopCasting()` — interrupt the active cast marker when one exists.
 fn spell_stop_casting(state: &mut LuaState) -> LuaResult<u32> {
     let cast = borrow_state_mut(state)?.casting.take();
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     if let Some(cast) = &cast {
         let interrupted_by = {
             let sim = borrow_state(state)?;
@@ -476,7 +476,7 @@ fn spell_stop_casting(state: &mut LuaState) -> LuaResult<u32> {
         );
     }
     let stopped = cast.is_some();
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     let stopped = stopped || crate::lua_api::channeling::stop(state, false)?;
     state.push(Val::Bool(stopped));
     Ok(1)

@@ -84,7 +84,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     let builder = register_player(builder)?;
     let builder = register_combat_casting(builder)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;
     let builder = register_world(builder)?;
@@ -134,7 +134,7 @@ fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetSwimming", set_swimming)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
     use crate::lua_api::channeling;
     b.set_function("StartChannel", channeling::start_channel)?
@@ -502,7 +502,7 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
     let now = st.start_time.elapsed().as_secs_f64();
     let cast_id = st.next_cast_id;
     st.next_cast_id += 1;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     crate::lua_api::spellcast_events::clear_replaced_specialization(&mut st);
     st.casting = Some(CastingState {
         spell_id,
@@ -515,7 +515,7 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
         delay_time: 0.0,
     });
     drop(st);
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     crate::lua_api::channeling::cancel_for_cast(state)?;
     Ok(0)
 }

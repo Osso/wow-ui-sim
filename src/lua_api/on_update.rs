@@ -40,7 +40,7 @@ pub(crate) fn fire(
     // instead of interleaving mid-dispatch.
     env.gc_stop();
 
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(env.rilua_mut().state_mut())?;
 
     #[cfg(feature = "retail-12-1-5")]

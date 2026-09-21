@@ -1,11 +1,15 @@
 //! Simulator channel lifecycle; no spell damage or native interrupt attribution.
+mod durations;
 mod inputs;
 mod queries;
 
 pub(crate) use inputs::{
     start_channel, start_empower, stop_channel, update_channel, update_empower,
 };
-pub(crate) use queries::register_queries;
+pub(crate) fn register_queries(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
+    queries::register_queries(lua)?;
+    durations::register(lua)
+}
 
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};

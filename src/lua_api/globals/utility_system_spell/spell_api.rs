@@ -323,7 +323,7 @@ struct CastInfoSnapshot {
     cast_id: u32,
     spell_id: u32,
     num_empower_stages: u32,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     delay_time: f64,
 }
 
@@ -363,7 +363,7 @@ fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<C
         cast_id: cast.cast_id,
         spell_id: cast.spell_id,
         num_empower_stages: cast.empower_stage_count() as u32,
-        #[cfg(feature = "retail-12-1-0")]
+        #[cfg(feature = "player-cast-durations")]
         delay_time: cast.delay_time,
     }))
 }
@@ -382,23 +382,23 @@ fn push_common_cast_fields(state: &mut LuaState, cast_info: &CastInfoSnapshot) {
 
 fn push_cast_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 {
     push_common_cast_fields(state, cast_info);
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     {
         let guid = crate::lua_api::spellcast_events::cast_guid(cast_info.cast_id);
         let value = create_string(state, &guid);
         state.push(value);
     }
-    #[cfg(not(feature = "retail-12-1-0"))]
+    #[cfg(not(feature = "player-cast-durations"))]
     state.push(Val::Num(cast_info.cast_id as f64));
     state.push(Val::Bool(false));
     state.push(Val::Num(cast_info.spell_id as f64));
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     {
         state.push(Val::Num(cast_info.cast_id as f64));
         state.push(Val::Num(cast_info.delay_time * 1000.0));
         11
     }
-    #[cfg(not(feature = "retail-12-1-0"))]
+    #[cfg(not(feature = "player-cast-durations"))]
     {
         9
     }
@@ -410,12 +410,12 @@ fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 
     state.push(Val::Num(cast_info.spell_id as f64));
     state.push(Val::Bool(cast_info.num_empower_stages > 0));
     state.push(Val::Num(cast_info.num_empower_stages as f64));
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     {
         state.push(Val::Num(cast_info.cast_id as f64));
         11
     }
-    #[cfg(not(feature = "retail-12-1-0"))]
+    #[cfg(not(feature = "player-cast-durations"))]
     {
         10
     }
@@ -424,7 +424,7 @@ fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 
 // ── Registration ─────────────────────────────────────────────────────────────
 
 pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "player-cast-durations")]
     crate::lua_api::channeling::register_queries(lua)?;
     LuaApiMut::register_function(lua, "UnitHealth", unit_health)?;
     LuaApiMut::register_function(lua, "UnitHealthMax", unit_health_max)?;
