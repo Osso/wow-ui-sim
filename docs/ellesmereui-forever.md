@@ -7,7 +7,7 @@
 - Package contains 21 addon folders. This does not mean 21 active Forever modules: TOC game filters, LoadOnDemand options/locales and explicit suite stand-down rules must be distinguished from failures.
 - Sources remain unchanged in `/tmp/ellesmere-forever/8936131/Interface/AddOns`; isolated addon-enable state and empty WTF/install roots avoid changing the user's installed addons or SavedVariables.
 
-Goal: actual startup and major reachable interactions, not source-diff-only acceptance. No addon/vendor patch, guessed API values or compatibility shim is credited.
+Goal: actual startup and major reachable interactions, not source-diff-only acceptance. Addon/vendor patches and masking shims are excluded. The user permits informed simulator guesses when explicitly recorded as guesses; those are not native-conformance evidence. User-run Forever probes are unavailable.
 
 ## Initial runtime evidence
 
@@ -67,6 +67,21 @@ Nested timer queue preservation, duration-binding profile availability, formatte
 | Startup | Remaining native TargetFrame callback error reproduced | `SetAuraContainerAnchorsChangedCallback` ownership/load boundary remains under diagnosis; post-cleanup missing globals do not prove mixin-composition failure |
 
 Evidence: `/tmp/ellesmere-forever/audited-chain-tests-ledger.json`, `secure-chain-tests-ledger.json`, and `secure-chain-gui-ledger.json`. GUI completion means all six fixtures returned, **not** that all passed: the recorded result is 4/6. Existing eight profile-gating warnings remain pre-existing. No full compatibility, clean-startup, or independent final acceptance claim is made.
+
+## Runtime data trace: `bff7719e3`
+
+Actual GUI replay now passes **5/6** fixtures: chat, options/navigation/unlock, player cast/channel/empower, action icon/cooldown/reset, and target show/health/hide. Aura display remains blocked. Evidence: `/tmp/ellesmere-forever/traced-producers-gui-ledger.json`.
+
+- TOC parsing retained a tab-separated game-type annotation inside two filenames. `ac9ce1897` fixes that root cause; the latest GUI no longer reports the TargetFrame callback error. A focused native-template regression needed the real startup prerequisite AuraContainer loaded first; that fixture correction is committed but its GREEN is pending.
+- Public and secure aura namespaces were identical, but both enumeration methods returned nil because their modeled implementations were Retail-gated. `4dadf6a5a` shares the existing producers; five grouped tests pass. Runtime enumeration now includes injected aura `19750` (instance `6`) under `HELPFUL`, and the real `pball|-` group has ten frames.
+- Action cooldown data omitted required `SpellCooldownInfo.isActive`; this was not a fixture error. `bff7719e3` restores the field for Forever/current Retail while preserving the earlier four-field result. Three grouped tests and actual five-second cooldown paint/reset pass.
+- The next aura boundaries are `UnitIsPlayerControlledOrGroupMember` publication (`5903290d5`, compiled GREEN pending) and authenticated secret-number inputs rejected by duration setters. A direct untainted probe reproduces all three setters accepting plain numbers but rejecting wrapped equivalents.
+
+After opening options, 17 of the 21 package folders are loaded. Friends, MythicTimer and RaidFrames explicitly require `standard`, which Forever does not advertise. Locales is on-demand for non-English clients. These four unloaded folders are not runtime failures. Loaded module namespaces are recorded in the GUI ledger; presence alone does not prove every module interaction.
+
+### Bounded secret-value assumptions
+
+The user authorized informed guesses and explicitly ruled out user-run Forever probes. [Duration core](specs/duration-core.md) records the selected non-native-verified policy: retain authenticated wrappers in timing storage, restrict timing reads to untainted callers, preserve secrecy through copying/reconfiguration/reset, and clear it with `SetToDefaults`. Plaintext timing must not be exposed through raw Lua fields or addon formatter arguments. Widget/text-binding handoffs retain secret origin and restrict direct readouts. These changes are committed or in progress; their combined compilation, behavioral GREEN, runtime acceptance and independent verification remain pending. General VM secret arithmetic and complete secrecy enforcement are not claimed.
 
 ## Coverage still required
 
