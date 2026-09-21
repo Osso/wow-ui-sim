@@ -2,6 +2,8 @@
 
 use rilua::Val;
 
+#[cfg(all(test, feature = "player-cast-durations"))]
+mod duration_tests;
 #[cfg(all(test, feature = "retail-12-1-0"))]
 mod input_tests;
 #[cfg(all(test, feature = "retail-12-1-0"))]

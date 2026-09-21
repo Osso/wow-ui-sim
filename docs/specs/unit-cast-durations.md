@@ -27,7 +27,8 @@ Modeled player cast and channel duration queries live in `src/lua_api/channeling
 
 ## Tests asserting this spec
 
-- `tests/unit_cast_durations.rs`: idle/non-player absence, cast clocks and delays, channel updates/replacement/cancellation, empowered hold/completion, consumer-shaped identity matching.
+- `tests/unit_cast_durations.rs`: idle/non-player absence, cast clocks and delays, channel updates/replacement/cancellation, empowered hold/completion, consumer-shaped identity matching through real cast-start events.
+- `src/iced_app/casting/duration_tests.rs`: ordinary-cast removal and duration absence during callbacks at the GUI completion boundary. `WowLuaEnv::fire_on_update` alone does not perform this stage.
 
 ## Known gaps (current cycle)
 

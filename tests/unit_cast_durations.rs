@@ -48,7 +48,7 @@ fn unit_cast_durations_idle_and_nonplayer_return_no_results() {
 }
 
 #[test]
-fn unit_cast_durations_cast_tracks_time_replacement_cancel_and_completion() {
+fn unit_cast_durations_cast_tracks_time_replacement_cancel_and_expiry() {
     let env = setup();
     env.exec(
         r#"
@@ -78,7 +78,10 @@ fn unit_cast_durations_cast_tracks_time_replacement_cancel_and_completion() {
     )
     .unwrap();
     advance(&env, 2);
-    env.exec("absent(UnitCastingDuration, 'player')").unwrap();
+    // OnUpdate advances duration clocks; the GUI cast-completion stage removes
+    // ordinary casts. That boundary is covered by casting::duration_tests.
+    env.exec("assert(UnitCastingDuration('player'):HasExpired())")
+        .unwrap();
 }
 
 #[test]
@@ -132,7 +135,8 @@ fn unit_cast_durations_consumer_matches_numeric_bar_ids_on_updates_and_stops() {
                 if id and activeID == id then stops = stops + 1; activeID = nil end
             end
         end)
-        A_Admin.SetCasting(19750, 'Cast', 'icon', 20)
+        CastSpellByID(19750)
+        assert(type(activeID) == 'number', 'cast START must initialize consumer identity')
         assert(A_Admin.DelayCasting(2))
         assert(SpellStopCasting())
         A_Admin.StartChannel(15407, 'Channel', 'icon', 20)
