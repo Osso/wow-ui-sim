@@ -25,9 +25,9 @@ The chronological development results below retain their original scope. This ac
 
 ## Addon comparison audit — in progress
 
-Commit `7eb74d91e` captures the complete public CurseForge Forever / `1.60.1` catalog: **875 unique projects across 44 A–Z pages**, with no duplicate or missing project rows and a stable 875 count during capture. This is corpus coverage only. File pairing, distinct-package or pre/post-support diffs, real consumer reproduction, and full third-party compatibility remain in progress; a Forever tag is not an API contract or a passing-addon result. See [the comparison audit](forever-addon-comparison.md).
+The public catalog capture remains corpus evidence only. After acquisition stopped, `6397eb7a3` records the offline cached-comparison boundary, static triage, parked remainder, and candidate dispositions in [the comparison audit](forever-addon-comparison.md). It does not establish full third-party compatibility; a Forever tag is not an API contract or a passing-addon result.
 
-The first source-documented correction from that corpus is `bb83a4c0a`: Forever-only `Enum.BagIndex` now exposes character bank tabs `6..14`, account bank slots `15..23`, and metadata `-3/23/27`, matching `BagIndexConstantsDocumentation.lua`. Two exact BetterBags-shaped contiguous-enumeration tests went RED then GREEN. This establishes enum shape only—not a BetterBags load, bank state, purchased tabs, account-bank availability, Warbank support, money-display lifecycle, or native conformance. See [the finite constants contract](specs/forever-finite-constants.md) and [[forever-addon-comparison]].
+`bb83a4c0a` corrects Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and metadata `-3/23/27`, matching `BagIndexConstantsDocumentation.lua`. Its two BetterBags-shaped contiguous-enumeration tests went RED then GREEN. This establishes enum shape only—not a BetterBags load, bank state, purchased tabs, account-bank availability, Warbank support, money-display lifecycle, or native conformance. See [the finite constants contract](specs/forever-finite-constants.md) and [[forever-addon-comparison]].
 
 ## Pinned external evidence
 

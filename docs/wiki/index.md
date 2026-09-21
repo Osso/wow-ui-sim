@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
+
+`6397eb7a3` stops further acquisition after the bulk-download concern and records the offline cached-pair comparison/triage boundary. The [comparison audit](../forever-addon-comparison.md) remains the count and disposition source of truth; static source triage is neither runtime acceptance nor full addon compatibility. See [[forever-addon-comparison]].
+
 ## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
 
 Retail-only fixtures missed Forever's real `S` open/close failure. `d06147537` and `389c3a2d5` add one production-shaped keybinding regression shared by Retail, PTR, and Forever; all three pass open → 10 ticks → close → 10 ticks with zero collected errors. Forever fixes remain producer-side: bootstrap publication, class skill-line and pet-icon queries, documented ActionBarSet/transmog values, and exact spell metadata. Mists/Cata and legacy SpellBook lifecycles remain explicit separate gaps. See [[mainline-spellbook-lifecycle]].

@@ -6,7 +6,7 @@ A complete public CurseForge catalog capture provides the comparison corpus; it 
 
 Commit `7eb74d91e` records the public CurseForge `1.60.1` / Forever catalog in [the comparison audit](../../forever-addon-comparison.md): 875 unique projects across all 44 rendered A–Z pages, with no duplicate or missing rows. Every captured page reported 875 projects and the ending page-one check retained that count and ordering. The live catalog was previously observed at 871, so this capture is a dated 875-project observation rather than a stable total.
 
-File pairing, package/source diffing, consumer reproduction, and broader compatibility remain in progress. A Forever tag is a declaration, not an API contract or a passing simulator result.
+Commit `6397eb7a3` freezes this pass to offline use of the already acquired archive set after bulk acquisition stopped. [The comparison audit](../../forever-addon-comparison.md) is the single source for the acquisition boundary, cached-pair/triage coverage, parked remainder, and candidate dispositions. A Forever tag is a declaration, not an API contract or a passing simulator result.
 
 ## BagIndex correction
 

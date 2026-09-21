@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
+
+Commit `6397eb7a3` records the offline-only boundary after further acquisition stopped. [The comparison audit](../forever-addon-comparison.md) remains the source of truth for cached coverage, parked work, and static candidate dispositions; none establishes runtime acceptance or full addon compatibility. Updated [[forever-addon-comparison]] and the running Forever report.
+
 ## [2026-09-21] investigation | Start full Forever addon comparison audit
 
 Commit `7eb74d91e` records a complete public CurseForge Forever/1.60.1 corpus: 875 unique projects across 44 A–Z pages, no duplicate or missing rows, and a stable 875 count during capture. This is catalog coverage only; pairing, historical/source diffs, consumer reproduction, and broad addon compatibility remain in progress. Commit `bb83a4c0a` corrects the first source-documented producer discrepancy: Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and exact metadata. Two BetterBags-shaped consumer-loop tests were RED then GREEN; the result does not claim BetterBags loading, bank state, Warbank, or native conformance. Added [[forever-addon-comparison]], updated index and the Forever report.
