@@ -246,7 +246,7 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
       applied = function(_self, ...)
         local delegateSelf = wrapInbound and __wow_xml_object_partition(object, inboundName) or object
         if projectArguments then
-          return fn(delegateSelf, __wow_project_forbidden_arguments(...))
+          return securecallfunction(fn, delegateSelf, __wow_project_forbidden_arguments(...))
         end
         return fn(delegateSelf, ...)
       end

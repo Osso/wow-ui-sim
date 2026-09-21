@@ -10,7 +10,7 @@ Retail 12.1+ and Forever secure Blizzard functions use a distinct object-table p
 - Private fields remain independent between frames and from same-named public assignments. Private XML key values/mixin methods are absent publicly unless explicitly exported or delegated; this is partition separation, not a universal inaccessible-key list.
 - Native frame methods and parent arguments accept the private projection as the same underlying frame. Ordinary tables cannot impersonate that identity.
 - Actual AuraContainer provider callbacks retain their public view; public overrides do not replace private implementations.
-- Under `forbidden-aspects`, XML mixins with `secureDelegates="true"` and `inboundPartition="forbidden"` project direct native-frame arguments, including ordinary Cooldown, Texture and FontString children, into canonical forbidden views. Other arguments retain identity, position and nil slots; nested tables are not traversed. Ordinary secure calls and other XML delegate modes retain their existing argument behavior.
+- Under `forbidden-aspects`, XML mixins with `secureDelegates="true"` and `inboundPartition="forbidden"` project direct native-frame arguments, including ordinary Cooldown, Texture and FontString children, into canonical forbidden views. They invoke the native delegate through `securecallfunction`: caller taint is suspended during the call and restored on return/error; addon callback closure taint remains effective. Other arguments retain identity, position and nil slots; nested tables are not traversed. Ordinary secure calls and other XML delegate modes retain their existing argument behavior.
 
 Focused proof must cover projection identity, field isolation, native parent/method behavior, spoof rejection, and the unmodified provider boundary. Caller authority, secret accessibility, hooks, handler-storage isolation, and native security remain unverified.
 
@@ -41,6 +41,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 ## Tests asserting this spec
 
 - `tests/userdata_proxy.rs` — native parent acceptance, spoof rejection, real provider acquisition, initializer ownership, and private/public isolation.
+- `tests/xml_secure_delegates.rs` — secure entry, addon callback taint, caller restoration after return/error, and receiver-only negative control. Compiled GREEN pending; native tainted AuraContainer creation reproduces the pre-fix table-security failure.
 - Runtime environment-transfer tests cover arguments, varargs, multiple results, tail returns, native callbacks, reentry and error propagation.
 
 ## Known gaps
