@@ -26,15 +26,46 @@ fn advance(env: &WowLuaEnv, seconds: u64) {
 }
 
 #[test]
-fn unit_cast_durations_resolve_self_interrupt_name() {
+fn unit_cast_durations_resolve_self_interrupt_identity() {
     let env = setup();
-    env.state().borrow_mut().player.name = "Interrupt Actor".to_owned();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.player.name = "Interrupt Actor".to_owned();
+        state.player.class_index = 2;
+    }
     env.exec(
         r#"
         local name, realm = UnitNameFromGUID(UnitGUID('player'))
         assert(name == 'Interrupt Actor' and name == UnitName('player'))
         assert(realm == 'SimRealm')
+        local class, token, id = UnitClassFromGUID(UnitGUID('player'))
+        assert(class == 'Paladin' and token == 'PALADIN' and id == 2)
+        assert(class == UnitClass('player'))
+        assert(select('#', UnitClassFromGUID(UnitGUID('player'))) == 3)
         assert(select('#', UnitNameFromGUID('unknown')) == 0)
+        assert(select('#', UnitClassFromGUID('unknown')) == 0)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn unit_cast_durations_native_interrupt_text_resolves_player_class() {
+    let env = super::spell_casting::env_with_full_blizzard_ui();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.player.name = "Interrupt Actor".to_owned();
+        state.player.class_index = 2;
+    }
+    env.exec(
+        r#"
+        local text = CastingBarMixin.GetInterruptText({}, UnitGUID('player'))
+        local coloredName = RAID_CLASS_COLORS.PALADIN:WrapTextInColorCode('Interrupt Actor')
+        assert(text == SPELL_INTERRUPTED_BY:format(coloredName))
+        assert(CastingBarMixin.GetInterruptText({}, 'unknown') == INTERRUPTED)
+        assert(CastingBarMixin.GetInterruptText({}, nil) == INTERRUPTED)
         "#,
     )
     .unwrap();

@@ -32,7 +32,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - `src/lua_api/on_update.rs`: shared update boundary.
 - `src/lua_api/spellcast_events.rs`: stable existing cast identity and cross-mode START handling.
 - `src/lua_api/globals/admin.rs`: input registration and existing casting integration.
-- `src/lua_api/globals/real/player_identity.rs`: local-player `UnitNameFromGUID` supports Blizzard cancellation labels under the shared cast-duration capability; `UnitClassFromGUID` remains Retail-only. Other GUIDs remain unmodeled.
+- `src/lua_api/globals/real/player_identity.rs`: local-player `UnitNameFromGUID` and `UnitClassFromGUID` support Blizzard cancellation labels under the shared Retail 12.1+/Forever cast-duration capability. The class query returns modeled class name, token and ID; unknown GUIDs return no values.
 
 ## Tests asserting this spec
 
@@ -40,6 +40,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - `tests/channel_reentrancy.rs`: callback replacement wins over stale producers and cancels pending specialization ownership.
 - `tests/channel_blizzard.rs`: unmodified Blizzard channel/empower handlers, three stage-pip offsets, natural/early/cancel stops, and the observed UPDATE boundary.
 - `tests/cast_bar_id.rs`: complete eleven-field tuple assertions through the real inputs.
+- `tests/unit_cast_durations.rs`: seeded player name/class/GUID identity and the unchanged native `CastingBarMixin:GetInterruptText` colored-label consumer, including unknown GUIDs. Forever's generated `UnitDocumentation.lua` declares both GUID queries; actual interruption reached the missing class query at `CastingBarFrame.lua:622`. External query/consumer RED is recorded in `/tmp/ellesmere-forever/interrupt-class-ledger.json`; compiled GREEN remains pending.
 
 Development proof at `7a34d3891`: 11 library + 63 integration cases passed per profile, with one old simultaneous-mode fixture failing. `1de909e5d` replaced internal fixture mutation with public input/tuple checks; its three affected tests passed on each profile. `a844e36f8` strengthened stage-count update/hold validation and passed on both profiles. `89c03462c` records the source-backed lifecycle/consumer boundary. Together these cover 75 unique focused tests per profile (10 new, 65 existing); this is combined development proof, not one final acceptance run. Logs and exact commands: `/tmp/channel-development-ledger.json`, `/tmp/channel-tuple-final-ledger.json`, and `/tmp/channel-stage-count-final-{ptr,retail}.log`.
 
@@ -49,7 +50,7 @@ Development proof at `7a34d3891`: 11 library + 63 integration cases passed per p
 - [ ] Native channel/empower stage values, automatic updates, stage achievements, target units, secret/restricted events and interruptedBy attribution are unverified.
 - [ ] The unmodified Blizzard empower UPDATE handler omits hold when recomputing `maxValue` and does not rebuild stage pips. After updating stages/hold, public queries and natural deadline remain coherent, but that handler retains old pips and a charging-only display maximum. `channel_blizzard_empower_update_exposes_vendor_hold_boundary` records this observed ambiguity. No vendor patch, fake global, or unit distortion is applied; native update semantics remain unresolved.
 - [ ] Earlier epochs before `retail-12-1-0` were not executed; feature gating preserves their previous query/input surface by construction.
-- [ ] Local-player `UnitNameFromGUID` supports self-cancel labels on Retail 12.1+ and Forever. `UnitClassFromGUID`, other GUID identity resolution and secret-value behavior remain unmodeled on Forever.
+- [ ] Shared local-player `UnitNameFromGUID`/`UnitClassFromGUID` self-cancel labels require integrated Forever GREEN. Other GUID identity resolution and secret-value behavior remain unmodeled on Forever.
 
 ## Out of scope
 
