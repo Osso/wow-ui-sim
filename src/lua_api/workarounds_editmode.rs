@@ -2,8 +2,8 @@
 //!
 //! Patches EditModeManagerFrame to apply preset layout anchors to all 43
 //! registered system frames. The real UpdateLayoutInfo crashes partway through
-//! due to cascading dependencies, so we manually set up layoutInfo and call
-//! our custom InitSystemAnchors.
+//! due to cascading dependencies, so we manually set up layoutInfo and replay
+//! the native initial-anchor phase before per-system updates.
 
 use super::WowLuaEnv;
 use std::time::Instant;
@@ -21,8 +21,8 @@ const FIX_ACTION_BAR_NAN_SIZE_LUA: &str =
 /// EDIT_MODE_LAYOUTS_UPDATED fires during startup but UpdateLayoutInfo
 /// crashes partway through (cascading dependencies). This leaves
 /// layoutInfo nil. Manually set it up from C_EditMode.GetLayouts() +
-/// preset layouts, then call our custom InitSystemAnchors, including the
-/// post-bootstrap action-bar managed positioning pass. Also ensures
+/// preset layouts, then replay native initial anchors before the custom
+/// per-system pass and post-bootstrap action-bar managed positioning. Also ensures
 /// accountSettings is initialized so CanEnterEditMode() returns true.
 pub fn init_edit_mode_layout(env: &WowLuaEnv) {
     log_step(env, "setup_layout_info", || {

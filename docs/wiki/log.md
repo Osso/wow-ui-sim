@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Restore native Edit Mode initial-anchor ordering
+
+`0b95bed3e` adds the native `EditModeManagerFrame:InitSystemAnchors()` phase before the simulator's custom per-system replay. Failure-time QueueProbe evidence from actual Ellesmere startup found `QueueStatusButton` at 45×45 with zero anchors and nil center while earlier MicroMenu/action-bar/Minimap callbacks reached Camelot `UpdateDefaultAnchor`; settled geometry was not causal evidence. Pinned `EditModeManager.lua` calls initialization before `UpdateSystems()`. The exact regression fixture is RED at `/tmp/ellesmere-forever/queue-regression-red.stderr`; focused GREEN and real addon replay remain pending. See [[ellesmereui-forever]] and [the initial-anchor spec](../specs/edit-mode-initial-anchors.md).
+
 ## [2026-09-21] system | Bind persisted Lua bytecode to locked Rilua
 
 `8ddf0908d` updates [[bytecode-cache-growth]] and [[ellesmereui-forever]]. Pack headers and content keys now carry the exact Git revision resolved from `Cargo.lock`; malformed, missing, or ambiguous compiler identity fails the build. `WOWBC003` rejects earlier packs, and loose `.luac` plus legacy keys are ignored instead of imported. Existing bounded storage, read-only, and prefork behavior remain in scope. This records implementation only: parent-owned Ellesmere stale-cache rejection, cold compilation, and warm replay acceptance remain pending.

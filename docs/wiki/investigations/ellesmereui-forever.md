@@ -20,7 +20,7 @@ A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua
 
 - Implement source-backed nilable cast/channel duration producers over existing state; no fabricated active cast.
 - Publish Forever's numeric `Enum.OnUpdateMode` and frame methods as the documented shared capability, not a retail-epoch leak.
-- Reproduce and correct QueueStatus/Edit Mode replay ordering only if it persists after preceding producer fixes; later valid geometry rules out coordinate fabrication.
+- `0b95bed3e` restores the native initial-anchor phase before simulator replay. Failure-time instrumentation from `/tmp/ellesmere-forever/queue-runtime/mutation-boundary.stderr` saw the 45×45 QueueStatusButton with zero anchors and nil center when earlier MicroMenu, action-bar and Minimap callbacks invoked Camelot `QueueStatusButtonMixin:UpdateDefaultAnchor`; final startup geometry was therefore not relevant evidence. Pinned `Blizzard_EditMode/Shared/EditModeManager.lua:995-1013` orders `InitSystemAnchors()` before `UpdateSystems()`, while `:1454-1466` initializes a `TOPLEFT` anchor for registered non-managed-default systems. The initial RED executes the exact regression Lua blocks in `/tmp/ellesmere-forever/queue-regression-red.stderr`; focused GREEN and real startup replay remain pending. No coordinate fabrication or vendor/addon edit is part of the fix.
 - Re-run isolated startup and reachable Ellesmere interactions after the remaining fixes. No full-startup or full-addon compatibility claim is current.
 
 ## Sources
@@ -31,6 +31,7 @@ A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua
 - `Blizzard_DeprecatedSpecialization/Blizzard_DeprecatedSpecialization.toc` in the pinned Forever cache — Camelot exclusion
 - `/tmp/ellesmere-forever/nil-initialization.lua` and `/tmp/ellesmere-forever/rilua-nil-ledger.json` — reduced compiler reproduction and focused proof
 - [compiler bytecode cache spec](../../specs/compiler-bytecode-cache.md) — locked-compiler cache contract and pending replay acceptance
+- [Edit Mode initial-anchor spec](../../specs/edit-mode-initial-anchors.md) — native initialization ordering and pending regression proof
 
 ## See Also
 
