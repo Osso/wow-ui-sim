@@ -6,7 +6,7 @@ Retail 12.1 and cumulative PTR startup execute annotated files from eligible Loa
 
 - [ ] Visit eligible retail 12.1 and PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility; the retail gate extension awaits GREEN verification.
 - [x] Keep eager addon files in literal TOC order, including normal files before and after `[Bootstrap]` entries.
-- [ ] Strip every trailing inline annotation from file paths across spaces, tabs, and mixed whitespace, regardless of annotation order. Preserve `[Game]`/`[Family]` path substitutions, game-type inclusion/exclusion, and per-file environment flags. The native Forever TargetFrame load reproduces malformed filenames before the fix; parser and loader GREEN remain pending.
+- [ ] Strip every trailing inline annotation from file paths across spaces, tabs, and mixed whitespace, regardless of annotation order. Preserve `[Game]`/`[Family]` path substitutions, game-type inclusion/exclusion, and per-file environment flags. Before `ac9ce1897`, the Forever native `TargetFrameAuraContainer.lua\t\t[AllowLoadGameType mainline] [LoadIntoEnvironment secure]` line retained its first tab-separated annotation in the path and failed as `ENOENT`; parser/loader GREEN remains pending.
 - [x] Execute only annotated files during a LoD bootstrap operation. Expose `IsAddOnLoaded` as `true,false` during execution and `false,false` afterward.
 - [x] On the first subsequent full load, execute remaining files in TOC order without repeating completed bootstrap files; report `true,true` after completion.
 - [x] On repeated full loads, execute no files again. Classic startup selection remains outside the retail epoch gate.

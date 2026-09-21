@@ -34,7 +34,8 @@ Forever shares the existing forbidden-aspect model and query/mutation methods wi
 
 ## Known gaps (current cycle)
 
-- [ ] Compiled GREEN and full Ellesmere replay remain pending. After `GetObjectTable` exposure, the unchanged native aura provider still fails at `Blizzard_AuraContainerFrameProviders.lua:90` because the outbound-created button is not projected back to its private table. Precise consumer RED: `/tmp/ellesmere-forever/forbidden-followup-green.{stdout,stderr}` (2 passed, 1 failed).
+- [x] At `9476efcf5`, `secure-chain-tests-ledger.json` records native forbidden consumers 3/3 and the native AuraContainer initializer/partition group 8/8 after `AddSecretAspect` publication and scoped secure delegation. This proves the modeled aspect masks, transfer, and initializer boundary.
+- [ ] Full Ellesmere GUI aura acceptance remains open. Later runtime tracing finds `C_UnitAuras.GetUnitAuraInstanceIDs` and `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs` return nil in both public and secure namespaces before `ParseAllAuras`; this is a separate enumeration-registration gate, not an aspect/identity failure.
 
 ## Out of scope
 

@@ -19,7 +19,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
 - [x] Convert direct references to XML-partitioned frames across the covered secure-environment boundary; ordinary frame fields remain public and nested data is not recursively rewritten.
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
-- [ ] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection; compilation/GREEN is deferred to the integrating parent.
+- [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
 - [x] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.
 
@@ -41,14 +41,15 @@ Focused proof must cover projection identity, field isolation, native parent/met
 ## Tests asserting this spec
 
 - `tests/userdata_proxy.rs` — native parent acceptance, spoof rejection, real provider acquisition, initializer ownership, and private/public isolation.
-- `tests/xml_secure_delegates.rs` — secure entry, addon callback taint, caller restoration after return/error, and receiver-only negative control. Compiled GREEN pending; native tainted AuraContainer creation reproduces the pre-fix table-security failure.
+- `tests/xml_secure_delegates.rs` — secure entry, addon callback taint, caller restoration after return/error, and receiver-only negative control. At `9476efcf5`, both cases pass.
 - Runtime environment-transfer tests cover arguments, varargs, multiple results, tail returns, native callbacks, reentry and error propagation.
 
 ## Known gaps
 
 - [x] Focused retail proof at `8787273ad`: six `forbidden_partition_` cases cover interned projection/field isolation, native parent identity, spoof rejection, ordinary frame transfer, and real AuraContainer provider/initializer boundaries.
 - [x] Three earlier-12.0.7 controls pass, preserving focused partition behavior outside 12.1.
-- [ ] Forever compiled GREEN remains pending. Shared environment transfer resolves the earlier private `UpdateAuraDisplay` lookup boundary, but the existing initializer regression at `e137d9df6` rejects an ordinary child with `expected forbidden object reference`. Forever's native validator checks forbidden identity, unlike pinned Retail. Scoped XML argument projection addresses that boundary without changing public `GetObjectTable` or adding Rust aura methods. Missing `CustomAuraButtonUpdateMode` is a separate provider dependency; earlier Retail proof does not establish Forever GREEN.
+- [x] At `9476efcf5`, `secure-chain-tests-ledger.json` records the native AuraContainer initializer/partition group 8/8, `forever_forbidden_consumers` 3/3, and `xml_secure_delegates` 2/2. This closes the scoped transfer/delegate proof, not full GUI aura acceptance.
+- [ ] Full GUI aura acceptance remains blocked outside this boundary: runtime tracing subsequently shows both public and secure `C_UnitAuras` enumeration functions returning nil before native `ParseAllAuras` can assign a button. That is a registration-gate defect, not argument projection, private identity, or candidate filtering.
 - Coroutine yield/resume conversion and recursive conversion of table contents are not implemented by this facility.
 - Conditional aura-secrecy access enforcement is separate from partition conversion and remains unmodeled.
 

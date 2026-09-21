@@ -40,7 +40,7 @@ These are simulator policies, not claims about native object layout or garbage c
 
 ## Known gaps (current cycle)
 
-Forever availability RED: `/tmp/ellesmere-forever/batch-numeric_rule_formatter.stderr` records a nil binding before formatting. Availability sharing and broadened regressions await parent-run compilation/GREEN. This slice changes no formatting, clock, color, scheduling, or copy semantics.
+The availability RED recorded a nil binding before formatting. At `9476efcf5`, `secure-chain-tests-ledger.json` records the Forever native binding/copy group 7/7 and `c_api::duration_text_binding::tests::` 1/1 after profile availability sharing. This proves factory publication and existing binding behavior, not formatter threshold parity, broader GUI aura display, or new formatting/clock/color/scheduling semantics.
 
 The representation-retention test passed on `client-retail` at `9a8189612` (one focused integration test). This proves the chosen handle/reference policy only; the existing copy/configuration tests were not rerun for this slice.
 
