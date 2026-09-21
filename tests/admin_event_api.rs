@@ -9,17 +9,16 @@ fn env() -> WowLuaEnv {
 
 const INTRINSIC_EVENT_FRAME_XML: &str = r#"
         <Ui>
-            <Frame name="SynchronousEventPre" virtual="true">
+            <Frame name="SynchronousEventPre" intrinsic="true">
                 <Scripts><OnEvent intrinsicOrder="precall">
                     SynchronousEventProbe(self, 'pre', event, ...)
                 </OnEvent></Scripts>
             </Frame>
-            <Frame name="SynchronousEventPost" virtual="true" inherits="SynchronousEventPre">
+            <Frame name="SynchronousEventPost" virtual="true">
                 <Scripts><OnEvent intrinsicOrder="postcall">
                     SynchronousEventProbe(self, 'post', event, ...)
                 </OnEvent></Scripts>
             </Frame>
-            <Frame name="SynchronousEventFrame" parent="UIParent" inherits="SynchronousEventPost"/>
         </Ui>
     "#;
 
@@ -33,6 +32,7 @@ fn env_with_intrinsic_event_frame() -> WowLuaEnv {
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env.exec(
         r#"
+        CreateFrame('SynchronousEventPre', 'SynchronousEventFrame', UIParent, 'SynchronousEventPost')
         assert(type(SynchronousEventFrame:GetScript('OnEvent', 0)) == 'function')
         assert(SynchronousEventFrame:GetScript('OnEvent', 1) == nil)
         assert(type(SynchronousEventFrame:GetScript('OnEvent', 2)) == 'function')
