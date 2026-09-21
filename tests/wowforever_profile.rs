@@ -3,6 +3,103 @@
 use std::path::{Path, PathBuf};
 use wow_ui_sim::toc::TocFile;
 
+#[cfg(feature = "client-wowforever")]
+fn assert_ellesmere_specialization_guards(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    env.exec(
+        r#"
+        local guards = {
+            reminders = function()
+                if not GetSpecialization then return nil end
+                local s = GetSpecialization(); if not s then return nil end
+                return GetSpecializationInfo(s)
+            end,
+            nameplates = function()
+                local specIndex = GetSpecialization and GetSpecialization() or 0
+                return specIndex and specIndex > 0
+                    and GetSpecializationInfo(specIndex) or nil
+            end,
+            profiles = function()
+                local specIdx = GetSpecialization and GetSpecialization() or 0
+                return specIdx and specIdx > 0
+                    and GetSpecializationInfo(specIdx) or nil
+            end,
+        }
+        for name, guard in pairs(guards) do
+            local ok, value = pcall(guard)
+            assert(ok, name .. ": " .. tostring(value))
+            assert(value == nil, name .. " must skip legacy specialization")
+        end
+        assert(rawget(_G, "GetSpecialization") == nil)
+        assert(rawget(_G, "GetSpecializationInfo") == nil)
+        assert(GetSpecialization == nil and GetSpecializationInfo == nil)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_specialization_visibility_preserves_ellesmere_guards() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    assert_ellesmere_specialization_guards(&env);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_specialization_visibility_keeps_namespace_state() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 2;
+        state.player.active_spec_index = 2;
+    }
+    env.exec(
+        r#"
+        assert(C_SpecializationInfo.GetSpecialization() == 2)
+        local id, name, _, _, role = C_SpecializationInfo.GetSpecializationInfo(2)
+        assert(id == 66 and name == "Protection" and role == "TANK")
+        "#,
+    )
+    .unwrap();
+    assert_ellesmere_specialization_guards(&env);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_specialization_visibility_survives_bootstrap_replay() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let toc = TocFile::from_file(
+        &ui.join("Blizzard_DeprecatedSpecialization/Blizzard_DeprecatedSpecialization.toc"),
+    )
+    .unwrap();
+    assert!(toc.is_game_type_restricted());
+    env.exec(
+        r#"
+        assert(GetCVarBool("loadDeprecationFallbacks"))
+        SpecNamespaceBefore = {
+            C_SpecializationInfo.GetSpecialization,
+            C_SpecializationInfo.GetSpecializationInfo,
+        }
+        "#,
+    )
+    .unwrap();
+    for _ in 0..2 {
+        env.loader_env().restore_post_cleanup_globals().unwrap();
+        assert_ellesmere_specialization_guards(&env);
+        env.exec(
+            r#"
+            assert(C_SpecializationInfo.GetSpecialization == SpecNamespaceBefore[1])
+            assert(C_SpecializationInfo.GetSpecializationInfo == SpecNamespaceBefore[2])
+            local index = C_SpecializationInfo.GetSpecialization()
+            local id, name = C_SpecializationInfo.GetSpecializationInfo(index)
+            assert(id == 65 and name == "Holy")
+            "#,
+        )
+        .unwrap();
+    }
+}
+
 #[test]
 #[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
 fn wowforever_profile_exclusion_annotation_filters_files_and_dependencies() {
