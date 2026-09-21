@@ -1,6 +1,6 @@
 //! Duration snapshots from the modeled player cast/channel timeline.
 use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
-use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
+use crate::lua_api::methods::{borrow_state, table_set_num};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -50,7 +50,7 @@ fn stage_percentages(state: &mut LuaState) -> LuaResult<u32> {
     }
     // Input validation requires positive stages and nonnegative hold time.
     let total: f64 = sections.iter().sum();
-    let percentages = create_table(state);
+    let percentages = state.gc.alloc_table(rilua::vm::table::Table::new());
     for (index, seconds) in sections.into_iter().enumerate() {
         table_set_num(
             state,
@@ -59,7 +59,7 @@ fn stage_percentages(state: &mut LuaState) -> LuaResult<u32> {
             Val::Num(seconds / total),
         );
     }
-    state.push(percentages);
+    state.push(Val::Table(percentages));
     Ok(1)
 }
 
