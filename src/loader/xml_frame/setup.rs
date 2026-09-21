@@ -8,7 +8,7 @@ use crate::loader::LoadTiming;
 use crate::loader::error::LoadError;
 use crate::lua_api::LoaderEnv;
 use crate::lua_api::frame::methods::forbidden_aspects;
-use crate::lua_api::methods::{create_string, frame_ref, table_get, table_set};
+use crate::lua_api::methods::{frame_ref, table_get, table_set};
 use rilua::Val;
 
 pub(super) struct SetupFrame<'a> {
