@@ -79,7 +79,7 @@ pub(super) fn init_lua_state(
     // retain them. Insecure addon code that reads through `_G` sees nil
     // after the cleanup below.
     super::globals::security::create_secure_environment(lua)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
     enable_taint_and_wrap_loadstring(lua)?;
     crate::loader::precompiled::init(lua)?;

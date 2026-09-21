@@ -33,7 +33,7 @@ pub(crate) mod on_update;
 pub(crate) mod rect_geometry;
 #[allow(dead_code)] // Phase 3 infrastructure — callers added during VM switch
 pub(crate) mod script_helpers;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 mod script_object_transfer;
 pub(crate) mod sim_substates;
 pub mod simple_html;
