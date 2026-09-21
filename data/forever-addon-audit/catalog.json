@@ -1,0 +1,7304 @@
+{
+  "schemaVersion": 1,
+  "source": "CurseForge rendered public search pages via browser-cli",
+  "filters": {
+    "game": "wow",
+    "class": "addons",
+    "version": "1.60.1",
+    "gameVersionTypeId": 88568,
+    "pageSize": 20,
+    "sortBy": "a-z"
+  },
+  "startedAt": "2026-09-21T04:23:46.202Z",
+  "completedAt": "2026-09-21T04:26:24.518Z",
+  "coverage": {
+    "expectedPages": 44,
+    "pagesCaptured": 44,
+    "missingPages": [],
+    "rawProjectRows": 875,
+    "uniqueProjects": 875,
+    "duplicateProjects": [],
+    "initialObservedCount": 875,
+    "endObservedCount": 875,
+    "observedCounts": [
+      875
+    ],
+    "priorReportedCount": 871,
+    "changeFromPriorReport": 4,
+    "pageOneUnchanged": true,
+    "missingProjectCount": 0
+  },
+  "limitations": [
+    "Catalog tags indicate declared compatibility, not API behavior proof.",
+    "Live catalog, not transactionally snapshot-isolated; start/end count and first-page ordering checked.",
+    "Optional raw page text removed to fit browser localStorage quota; all project rows and pagination provenance retained."
+  ],
+  "projects": [
+    {
+      "slug": "quest-tldr",
+      "title": "(Forever) Quest TLDR",
+      "url": "https://www.curseforge.com/wow/addons/quest-tldr",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "abattis-pugboard",
+      "title": "Abatti's PugBoard",
+      "url": "https://www.curseforge.com/wow/addons/abattis-pugboard",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "abgesattelt",
+      "title": "Abgesattelt",
+      "url": "https://www.curseforge.com/wow/addons/abgesattelt",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "accentchat",
+      "title": "AccentChat",
+      "url": "https://www.curseforge.com/wow/addons/accentchat",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "account-wide-ui",
+      "title": "Account Wide Interface Settings",
+      "url": "https://www.curseforge.com/wow/addons/account-wide-ui",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "accountant-classic",
+      "title": "Accountant Classic",
+      "url": "https://www.curseforge.com/wow/addons/accountant-classic",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "acecommqueue",
+      "title": "AceCommQueue",
+      "url": "https://www.curseforge.com/wow/addons/acecommqueue",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "achievement-guild-rank",
+      "title": "Achievement Guild Rank",
+      "url": "https://www.curseforge.com/wow/addons/achievement-guild-rank",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "achievementsutils",
+      "title": "AchievementsUtils (Overachiever Alternative)",
+      "url": "https://www.curseforge.com/wow/addons/achievementsutils",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "ackis-recipe-list-classic",
+      "title": "Ackis Recipe List Classic",
+      "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "ackis-recipe-list-classic-cooking",
+      "title": "Ackis Recipe List Classic: Cooking",
+      "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-cooking",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "ackis-recipe-list-classic-leatherworking",
+      "title": "Ackis Recipe List Classic: Leatherworking",
+      "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-leatherworking",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "ackis-recipe-list-classic-tailoring",
+      "title": "Ackis Recipe List Classic: Tailoring",
+      "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-tailoring",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "actionbarinterrupthighlight",
+      "title": "ActionBar Interrupt Highlight",
+      "url": "https://www.curseforge.com/wow/addons/actionbarinterrupthighlight",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "actionbarauras",
+      "title": "ActionBarAuras",
+      "url": "https://www.curseforge.com/wow/addons/actionbarauras",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "actionhud",
+      "title": "ActionHUD",
+      "url": "https://www.curseforge.com/wow/addons/actionhud",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "numy-addon-profiler",
+      "title": "Addon Profiler - CPU Usage",
+      "url": "https://www.curseforge.com/wow/addons/numy-addon-profiler",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "addonprofiles",
+      "title": "AddonProfiles",
+      "url": "https://www.curseforge.com/wow/addons/addonprofiles",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "adhd-quest",
+      "title": "ADHD Quest",
+      "url": "https://www.curseforge.com/wow/addons/adhd-quest",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "adibags-fishing",
+      "title": "Adibags_Fishing",
+      "url": "https://www.curseforge.com/wow/addons/adibags-fishing",
+      "seenPages": [
+        1
+      ]
+    },
+    {
+      "slug": "adventurers-codex",
+      "title": "Adventurer's Codex.",
+      "url": "https://www.curseforge.com/wow/addons/adventurers-codex",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemote-drwho-sounds",
+      "title": "AEmotes - DrWho Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemote-drwho-sounds",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-full-metal-jacket-sound-pack-from-holyfrey",
+      "title": "AEmotes - Full Metal Jacket Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-full-metal-jacket-sound-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemote-sound-pack-from-holyfrey",
+      "title": "AEmotes - Holyfreys Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemote-sound-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-laugh-sounds-pack-from-holyfrey",
+      "title": "AEmotes - Laugh Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-laugh-sounds-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-leeroy-sound-pack-from-holyfrey",
+      "title": "AEmotes - Leeroy Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-leeroy-sound-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-lynge-sound-pack-from-holyfrey",
+      "title": "AEmotes - Lynge Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-lynge-sound-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-millhouse-manastorm-sound-pack",
+      "title": "AEmotes - Millhouse Manastorm Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-millhouse-manastorm-sound-pack",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-wonderwoman-sound-pack-from-holyfrey",
+      "title": "AEmotes - WonderWoman Sound Pack from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-wonderwoman-sound-pack-from-holyfrey",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "aemotes-classic",
+      "title": "AEmotes Classic & Retail from Holyfrey",
+      "url": "https://www.curseforge.com/wow/addons/aemotes-classic",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "ahledger",
+      "title": "AHledger",
+      "url": "https://www.curseforge.com/wow/addons/ahledger",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "alenyas-guides",
+      "title": "Alenya's Guides",
+      "url": "https://www.curseforge.com/wow/addons/alenyas-guides",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "alenyas-guides-writer",
+      "title": "Alenya's Guides Writer",
+      "url": "https://www.curseforge.com/wow/addons/alenyas-guides-writer",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "alias",
+      "title": "Alias",
+      "url": "https://www.curseforge.com/wow/addons/alias",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "alias-rename-anyone",
+      "title": "Alias - Rename Anyone",
+      "url": "https://www.curseforge.com/wow/addons/alias-rename-anyone",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "all-the-things",
+      "title": "ALL THE THINGS",
+      "url": "https://www.curseforge.com/wow/addons/all-the-things",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "altitude",
+      "title": "Altitude",
+      "url": "https://www.curseforge.com/wow/addons/altitude",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "ambidextrous-by-overcraft",
+      "title": "Ambidextrous by OverCraft",
+      "url": "https://www.curseforge.com/wow/addons/ambidextrous-by-overcraft",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "ame-infohub",
+      "title": "AME InfoHub",
+      "url": "https://www.curseforge.com/wow/addons/ame-infohub",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "anglers-pocket",
+      "title": "Angler's Pocket",
+      "url": "https://www.curseforge.com/wow/addons/anglers-pocket",
+      "seenPages": [
+        2
+      ]
+    },
+    {
+      "slug": "angleur",
+      "title": "Angleur - Fishing Extraordinaire",
+      "url": "https://www.curseforge.com/wow/addons/angleur",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "angleur-nicheoptions",
+      "title": "Angleur_NicheOptions",
+      "url": "https://www.curseforge.com/wow/addons/angleur-nicheoptions",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "animated-blizzard-portraits",
+      "title": "Animated Blizzard Portraits",
+      "url": "https://www.curseforge.com/wow/addons/animated-blizzard-portraits",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "antisocial",
+      "title": "AntiSocial",
+      "url": "https://www.curseforge.com/wow/addons/antisocial",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "appelswingsforever",
+      "title": "AppelSwingsForever",
+      "url": "https://www.curseforge.com/wow/addons/appelswingsforever",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "arc-track",
+      "title": "Arc Track",
+      "url": "https://www.curseforge.com/wow/addons/arc-track",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "arcane-wizard-library",
+      "title": "Arcane Wizard: Library (Addon Framework)",
+      "url": "https://www.curseforge.com/wow/addons/arcane-wizard-library",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "archindulas-jump-habit",
+      "title": "Archindula's Jump Habit",
+      "url": "https://www.curseforge.com/wow/addons/archindulas-jump-habit",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "arena-ranked-duels",
+      "title": "Arena Ranked Duels",
+      "url": "https://www.curseforge.com/wow/addons/arena-ranked-duels",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "armoryutils",
+      "title": "ArmoryUtils (ilvl/Itemlevel, Enchants, Gems)",
+      "url": "https://www.curseforge.com/wow/addons/armoryutils",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "atlasloot-forever",
+      "title": "AtlasLoot Classic Forever",
+      "url": "https://www.curseforge.com/wow/addons/atlasloot-forever",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "atlasloot-classic-forever",
+      "title": "AtlasLoot Forever",
+      "url": "https://www.curseforge.com/wow/addons/atlasloot-classic-forever",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "atlasloot-continued",
+      "title": "AtlasLootClassic Continued",
+      "url": "https://www.curseforge.com/wow/addons/atlasloot-continued",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "atlaslootforever",
+      "title": "AtlasLootForever",
+      "url": "https://www.curseforge.com/wow/addons/atlaslootforever",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "auctionhouseconfirmquantity",
+      "title": "Auction House - Confirm Quantity",
+      "url": "https://www.curseforge.com/wow/addons/auctionhouseconfirmquantity",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "auctionator",
+      "title": "Auctionator",
+      "url": "https://www.curseforge.com/wow/addons/auctionator",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "aurarium",
+      "title": "Aurarium (Gold & Currency Tracker \u2022 Overview)",
+      "url": "https://www.curseforge.com/wow/addons/aurarium",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "aurashelf",
+      "title": "AuraShelf - Retail and Forever buff notifier",
+      "url": "https://www.curseforge.com/wow/addons/aurashelf",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "auto-forever",
+      "title": "Auto Forever",
+      "url": "https://www.curseforge.com/wow/addons/auto-forever",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "auto-grats",
+      "title": "Auto Grats",
+      "url": "https://www.curseforge.com/wow/addons/auto-grats",
+      "seenPages": [
+        3
+      ]
+    },
+    {
+      "slug": "auto-queue",
+      "title": "Auto Queue",
+      "url": "https://www.curseforge.com/wow/addons/auto-queue",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "auto-restock",
+      "title": "Auto Restock",
+      "url": "https://www.curseforge.com/wow/addons/auto-restock",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "autofeed",
+      "title": "AutoFeed",
+      "url": "https://www.curseforge.com/wow/addons/autofeed",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "autoloot-by-overcraft",
+      "title": "Autoloot cancel animation with shift support by OverCraft",
+      "url": "https://www.curseforge.com/wow/addons/autoloot-by-overcraft",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "autolooter-continued",
+      "title": "AutoLooter Continued",
+      "url": "https://www.curseforge.com/wow/addons/autolooter-continued",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "automated-consumables",
+      "title": "Automated-Consumables",
+      "url": "https://www.curseforge.com/wow/addons/automated-consumables",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "autometerreset",
+      "title": "AutoMeterReset",
+      "url": "https://www.curseforge.com/wow/addons/autometerreset",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "autostow",
+      "title": "AutoStow",
+      "url": "https://www.curseforge.com/wow/addons/autostow",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "auto-trackers",
+      "title": "AutoTrackers",
+      "url": "https://www.curseforge.com/wow/addons/auto-trackers",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "avoidancestats-tbc",
+      "title": "AvoidanceStats TBC",
+      "url": "https://www.curseforge.com/wow/addons/avoidancestats-tbc",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "azeriteui-junnez-edition-wow12",
+      "title": "AzeriteUI - JuNNeZ Edition (WoW12)",
+      "url": "https://www.curseforge.com/wow/addons/azeriteui-junnez-edition-wow12",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "azeroth-idle-forever",
+      "title": "Azeroth Idle Forever",
+      "url": "https://www.curseforge.com/wow/addons/azeroth-idle-forever",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "azeroth-pilot-reloaded-route-recorder",
+      "title": "Azeroth Pilot Reloaded - Route Recorder",
+      "url": "https://www.curseforge.com/wow/addons/azeroth-pilot-reloaded-route-recorder",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "azeroth-public-library-forever",
+      "title": "Azeroth Public Library: Forever",
+      "url": "https://www.curseforge.com/wow/addons/azeroth-public-library-forever",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "baganator",
+      "title": "Baganator",
+      "url": "https://www.curseforge.com/wow/addons/baganator",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagbrother",
+      "title": "BagBrother",
+      "url": "https://www.curseforge.com/wow/addons/bagbrother",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagmeter",
+      "title": "Bagmeter",
+      "url": "https://www.curseforge.com/wow/addons/bagmeter",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagnon",
+      "title": "Bagnon",
+      "url": "https://www.curseforge.com/wow/addons/bagnon",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagnon-consolidator",
+      "title": "Bagnon Consolidator",
+      "url": "https://www.curseforge.com/wow/addons/bagnon-consolidator",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagnonium",
+      "title": "Bagnonium (formely Combuctor)",
+      "url": "https://www.curseforge.com/wow/addons/bagnonium",
+      "seenPages": [
+        4
+      ]
+    },
+    {
+      "slug": "bagpurge",
+      "title": "BagPurge",
+      "url": "https://www.curseforge.com/wow/addons/bagpurge",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "bagsync",
+      "title": "BagSync",
+      "url": "https://www.curseforge.com/wow/addons/bagsync",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "bam-forever",
+      "title": "Bam! Forever",
+      "url": "https://www.curseforge.com/wow/addons/bam-forever",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "bank-stack",
+      "title": "BankStack",
+      "url": "https://www.curseforge.com/wow/addons/bank-stack",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "bar-energy",
+      "title": "Bar Energy",
+      "url": "https://www.curseforge.com/wow/addons/bar-energy",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "barbershop-custom-textures",
+      "title": "Barbershop Custom Textures",
+      "url": "https://www.curseforge.com/wow/addons/barbershop-custom-textures",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "barshelf",
+      "title": "BarShelf",
+      "url": "https://www.curseforge.com/wow/addons/barshelf",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "bazui",
+      "title": "BazUI",
+      "url": "https://www.curseforge.com/wow/addons/bazui",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "beastandbow",
+      "title": "BeastAndBow",
+      "url": "https://www.curseforge.com/wow/addons/beastandbow",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "belphies-quest-log",
+      "title": "Belphie's Quest Log",
+      "url": "https://www.curseforge.com/wow/addons/belphies-quest-log",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "best-around-revisited",
+      "title": "Best Around (Revisited)",
+      "url": "https://www.curseforge.com/wow/addons/best-around-revisited",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-ability-bars",
+      "title": "Better Ability Bars",
+      "url": "https://www.curseforge.com/wow/addons/better-ability-bars",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-blizzard-meters",
+      "title": "Better Blizzard Meters",
+      "url": "https://www.curseforge.com/wow/addons/better-blizzard-meters",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-cast-bars",
+      "title": "Better Cast Bars",
+      "url": "https://www.curseforge.com/wow/addons/better-cast-bars",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-forever-chat",
+      "title": "Better Forever Chat",
+      "url": "https://www.curseforge.com/wow/addons/better-forever-chat",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-item-levels",
+      "title": "Better Item Levels",
+      "url": "https://www.curseforge.com/wow/addons/better-item-levels",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-music-player",
+      "title": "Better Music Player",
+      "url": "https://www.curseforge.com/wow/addons/better-music-player",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-name-plates-betternameplates",
+      "title": "Better Name Plates (BetterNamePlates)",
+      "url": "https://www.curseforge.com/wow/addons/better-name-plates-betternameplates",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-notepad",
+      "title": "Better Notepad",
+      "url": "https://www.curseforge.com/wow/addons/better-notepad",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "better-queue-timers",
+      "title": "Better Queue Timers",
+      "url": "https://www.curseforge.com/wow/addons/better-queue-timers",
+      "seenPages": [
+        5
+      ]
+    },
+    {
+      "slug": "betterauctionprice",
+      "title": "BetterAuctionPrice",
+      "url": "https://www.curseforge.com/wow/addons/betterauctionprice",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "better-bags",
+      "title": "BetterBags",
+      "url": "https://www.curseforge.com/wow/addons/better-bags",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-aio-all-in-one",
+      "title": "BetterBags - AIO (All-In-One)",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-aio-all-in-one",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-camping-fixtures",
+      "title": "BetterBags - Camping Fixtures",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-camping-fixtures",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-fishing",
+      "title": "BetterBags - Fishing",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-fishing",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-forever",
+      "title": "Betterbags - Forever",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-forever",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-ilvl",
+      "title": "BetterBags - iLvl",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-ilvl",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-legendary",
+      "title": "BetterBags - Legendary",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-legendary",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-quick-add",
+      "title": "BetterBags - Quick Add",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-quick-add",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-scrap",
+      "title": "BetterBags - Scrap",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-scrap",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-tabards",
+      "title": "BetterBags - Tabards",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-tabards",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterbags-vertical-layout",
+      "title": "BetterBags - Vertical Layout",
+      "url": "https://www.curseforge.com/wow/addons/betterbags-vertical-layout",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterblizzaddons",
+      "title": "BetterBlizzAddons",
+      "url": "https://www.curseforge.com/wow/addons/betterblizzaddons",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterblizzframes",
+      "title": "BetterBlizzFrames",
+      "url": "https://www.curseforge.com/wow/addons/betterblizzframes",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterblizzplates",
+      "title": "BetterBlizzPlates",
+      "url": "https://www.curseforge.com/wow/addons/betterblizzplates",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterdamagemeter",
+      "title": "BetterDamageMeter",
+      "url": "https://www.curseforge.com/wow/addons/betterdamagemeter",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterdamagereader",
+      "title": "BetterDamageReader",
+      "url": "https://www.curseforge.com/wow/addons/betterdamagereader",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterdungeonqueue",
+      "title": "BetterDungeonQueue",
+      "url": "https://www.curseforge.com/wow/addons/betterdungeonqueue",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "betterfriendlist",
+      "title": "BetterFriendlist",
+      "url": "https://www.curseforge.com/wow/addons/betterfriendlist",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "bettermerchant",
+      "title": "BetterMerchant",
+      "url": "https://www.curseforge.com/wow/addons/bettermerchant",
+      "seenPages": [
+        6
+      ]
+    },
+    {
+      "slug": "bettershields",
+      "title": "BetterShields",
+      "url": "https://www.curseforge.com/wow/addons/bettershields",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bettervaultrewards",
+      "title": "BetterVaultRewards",
+      "url": "https://www.curseforge.com/wow/addons/bettervaultrewards",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bigwigs",
+      "title": "BigWigs (Boss Timers & Tools)",
+      "url": "https://www.curseforge.com/wow/addons/bigwigs",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bis-healing",
+      "title": "BiS>Healing",
+      "url": "https://www.curseforge.com/wow/addons/bis-healing",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bis-memories",
+      "title": "BiS>Memories",
+      "url": "https://www.curseforge.com/wow/addons/bis-memories",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bleakfibers-quest-tracker-forever",
+      "title": "Bleakfiber's Quest Tracker - Forever",
+      "url": "https://www.curseforge.com/wow/addons/bleakfibers-quest-tracker-forever",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "blib",
+      "title": "BLib",
+      "url": "https://www.curseforge.com/wow/addons/blib",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "blizzhudtweaks",
+      "title": "BlizzHUDTweaks",
+      "url": "https://www.curseforge.com/wow/addons/blizzhudtweaks",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "blizzmove",
+      "title": "BlizzMove",
+      "url": "https://www.curseforge.com/wow/addons/blizzmove",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "blizzmove-forever",
+      "title": "BlizzMove Forever",
+      "url": "https://www.curseforge.com/wow/addons/blizzmove-forever",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "blizzmove-plugin-questtracker",
+      "title": "BlizzMove Plugin - QuestTracker",
+      "url": "https://www.curseforge.com/wow/addons/blizzmove-plugin-questtracker",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "boss-jukebox",
+      "title": "Boss Jukebox",
+      "url": "https://www.curseforge.com/wow/addons/boss-jukebox",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bottombar-forever",
+      "title": "BottomBar Forever",
+      "url": "https://www.curseforge.com/wow/addons/bottombar-forever",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "brokerpanels",
+      "title": "Broker Panels",
+      "url": "https://www.curseforge.com/wow/addons/brokerpanels",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "broker-portals",
+      "title": "Broker_Portals",
+      "url": "https://www.curseforge.com/wow/addons/broker-portals",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bshamel-ui",
+      "title": "Bshamel UI",
+      "url": "https://www.curseforge.com/wow/addons/bshamel-ui",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "buffalo-classic",
+      "title": "Buffalo-classic",
+      "url": "https://www.curseforge.com/wow/addons/buffalo-classic",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "buffwarden",
+      "title": "BuffWarden",
+      "url": "https://www.curseforge.com/wow/addons/buffwarden",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bug-grabber",
+      "title": "BugGrabber",
+      "url": "https://www.curseforge.com/wow/addons/bug-grabber",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bugjar-lua-error-browser",
+      "title": "BugJar | Lua Error Browser",
+      "url": "https://www.curseforge.com/wow/addons/bugjar-lua-error-browser",
+      "seenPages": [
+        7
+      ]
+    },
+    {
+      "slug": "bugsack",
+      "title": "BugSack",
+      "url": "https://www.curseforge.com/wow/addons/bugsack",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "bugtabs-all-in-one-lua-error-capture-viewer",
+      "title": "BugTabs - All-in-one Lua error capture & viewer",
+      "url": "https://www.curseforge.com/wow/addons/bugtabs-all-in-one-lua-error-capture-viewer",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "buh-emotes",
+      "title": "Buh Emotes",
+      "url": "https://www.curseforge.com/wow/addons/buh-emotes",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "c-everywhere",
+      "title": "C_Everywhere",
+      "url": "https://www.curseforge.com/wow/addons/c-everywhere",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "calendar-login-info",
+      "title": "Calendar Login Info",
+      "url": "https://www.curseforge.com/wow/addons/calendar-login-info",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "transpose",
+      "title": "Camera  & Pose Studio | TransPose",
+      "url": "https://www.curseforge.com/wow/addons/transpose",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "campfire-guildies-nearby",
+      "title": "Campfire - Guildies Nearby",
+      "url": "https://www.curseforge.com/wow/addons/campfire-guildies-nearby",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "camp-tracker",
+      "title": "Campfire Tracker",
+      "url": "https://www.curseforge.com/wow/addons/camp-tracker",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "can-opener",
+      "title": "Can Opener",
+      "url": "https://www.curseforge.com/wow/addons/can-opener",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "carbonite",
+      "title": "Carbonite All in One (Retail & Classic)",
+      "url": "https://www.curseforge.com/wow/addons/carbonite",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "care-about-your-eyes",
+      "title": "Care About Your Eyes",
+      "url": "https://www.curseforge.com/wow/addons/care-about-your-eyes",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "carrot-objective-tracker",
+      "title": "Carrot Objective Tracker",
+      "url": "https://www.curseforge.com/wow/addons/carrot-objective-tracker",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "ccam",
+      "title": "CCAM",
+      "url": "https://www.curseforge.com/wow/addons/ccam",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "centered",
+      "title": "Centered",
+      "url": "https://www.curseforge.com/wow/addons/centered",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "chairfaces-casino",
+      "title": "Chairface's Casino",
+      "url": "https://www.curseforge.com/wow/addons/chairfaces-casino",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "character-gear-optimizer",
+      "title": "Character Gear Optimizer",
+      "url": "https://www.curseforge.com/wow/addons/character-gear-optimizer",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "charactervolume",
+      "title": "CharacterVolume",
+      "url": "https://www.curseforge.com/wow/addons/charactervolume",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "chat-character-map",
+      "title": "Chat Character Map",
+      "url": "https://www.curseforge.com/wow/addons/chat-character-map",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "chat-copy-paste",
+      "title": "Chat Copy Paste",
+      "url": "https://www.curseforge.com/wow/addons/chat-copy-paste",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "chat-filter-forever",
+      "title": "Chat Filter (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/chat-filter-forever",
+      "seenPages": [
+        8
+      ]
+    },
+    {
+      "slug": "chat-invite-links",
+      "title": "Chat Invite Links",
+      "url": "https://www.curseforge.com/wow/addons/chat-invite-links",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chatbarblocks",
+      "title": "ChatBarBlocks",
+      "url": "https://www.curseforge.com/wow/addons/chatbarblocks",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chatify-chat-enhancer",
+      "title": "Chatify (Chat Enhancer)",
+      "url": "https://www.curseforge.com/wow/addons/chatify-chat-enhancer",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chatinputtop",
+      "title": "ChatInputTop",
+      "url": "https://www.curseforge.com/wow/addons/chatinputtop",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chattery",
+      "title": "Chattery",
+      "url": "https://www.curseforge.com/wow/addons/chattery",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chatty-little-npc",
+      "title": "Chatty Little NPC (AI Voiceovers)",
+      "url": "https://www.curseforge.com/wow/addons/chatty-little-npc",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chattynator",
+      "title": "Chattynator",
+      "url": "https://www.curseforge.com/wow/addons/chattynator",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chattynator-undo-redo",
+      "title": "Chattynator: Undo / Redo",
+      "url": "https://www.curseforge.com/wow/addons/chattynator-undo-redo",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "chatutils",
+      "title": "ChatUtils (Guild Invite, Party Invite, ...)",
+      "url": "https://www.curseforge.com/wow/addons/chatutils",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "checkmark",
+      "title": "CheckMark",
+      "url": "https://www.curseforge.com/wow/addons/checkmark",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classcolorednameplates",
+      "title": "Class Colored Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/classcolorednameplates",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-cast-bar-forever",
+      "title": "Classic cast bar Forever",
+      "url": "https://www.curseforge.com/wow/addons/classic-cast-bar-forever",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-frames",
+      "title": "Classic Frames",
+      "url": "https://www.curseforge.com/wow/addons/classic-frames",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-frames-forever",
+      "title": "Classic Frames Forever",
+      "url": "https://www.curseforge.com/wow/addons/classic-frames-forever",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classicportrait",
+      "title": "Classic Portrait Forever",
+      "url": "https://www.curseforge.com/wow/addons/classicportrait",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-ui-forever-reframed",
+      "title": "Classic UI - Forever Reframed",
+      "url": "https://www.curseforge.com/wow/addons/classic-ui-forever-reframed",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-ui-for-forever",
+      "title": "Classic UI for Forever",
+      "url": "https://www.curseforge.com/wow/addons/classic-ui-for-forever",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classic-ui-forever",
+      "title": "Classic UI Forever",
+      "url": "https://www.curseforge.com/wow/addons/classic-ui-forever",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classicon",
+      "title": "Classicons_reborn",
+      "url": "https://www.curseforge.com/wow/addons/classicon",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classicui-forever",
+      "title": "ClassicUI Forever",
+      "url": "https://www.curseforge.com/wow/addons/classicui-forever",
+      "seenPages": [
+        9
+      ]
+    },
+    {
+      "slug": "classymap",
+      "title": "ClassyMap",
+      "url": "https://www.curseforge.com/wow/addons/classymap",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "cleanchat-sentinel",
+      "title": "CleanChat Sentinel",
+      "url": "https://www.curseforge.com/wow/addons/cleanchat-sentinel",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "cleanupbars",
+      "title": "CleanUpBars",
+      "url": "https://www.curseforge.com/wow/addons/cleanupbars",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "coloured-enemy-nameplates",
+      "title": "Coloured Enemy Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/coloured-enemy-nameplates",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "combo-points-forever",
+      "title": "combo points forever",
+      "url": "https://www.curseforge.com/wow/addons/combo-points-forever",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "combo-points-on-plate",
+      "title": "Combo Points on Plate",
+      "url": "https://www.curseforge.com/wow/addons/combo-points-on-plate",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "combo-point-mover",
+      "title": "ComboPointMover",
+      "url": "https://www.curseforge.com/wow/addons/combo-point-mover",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "come-get-it",
+      "title": "Come & Get It // Herb, Ore, and Treasure Chest Location Announcer",
+      "url": "https://www.curseforge.com/wow/addons/come-get-it",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "commodum",
+      "title": "Commodum (Quality of Life \u2022 Auto Sell, Auto Repair, Loot Control & more)",
+      "url": "https://www.curseforge.com/wow/addons/commodum",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "companion-chronicle",
+      "title": "Companion Chronicle",
+      "url": "https://www.curseforge.com/wow/addons/companion-chronicle",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "conceal",
+      "title": "Conceal",
+      "url": "https://www.curseforge.com/wow/addons/conceal",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "conjure-bot",
+      "title": "ConjureBot",
+      "url": "https://www.curseforge.com/wow/addons/conjure-bot",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "consumable-connoisseur",
+      "title": "Connoisseur & Restocker // Automatically use Your Best Food, Water, Healthstone, Potions, Bandages, Scrolls, Poisons, & Pet Food",
+      "url": "https://www.curseforge.com/wow/addons/consumable-connoisseur",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "consumable-tracker",
+      "title": "Consumable Tracker",
+      "url": "https://www.curseforge.com/wow/addons/consumable-tracker",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "cooldown-cursor-manager-ui-forever-edition",
+      "title": "Cooldown Cursor Manager UI - Forever Edition",
+      "url": "https://www.curseforge.com/wow/addons/cooldown-cursor-manager-ui-forever-edition",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "cooldown-master",
+      "title": "Cooldown Master",
+      "url": "https://www.curseforge.com/wow/addons/cooldown-master",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "cooldownmanagerbuffonly",
+      "title": "CooldownManagerBuffOnly",
+      "url": "https://www.curseforge.com/wow/addons/cooldownmanagerbuffonly",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "coolinator",
+      "title": "Coolinator",
+      "url": "https://www.curseforge.com/wow/addons/coolinator",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "crafting-and-gathering-order-classic",
+      "title": "Crafting Order",
+      "url": "https://www.curseforge.com/wow/addons/crafting-and-gathering-order-classic",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "craftpresence",
+      "title": "CraftPresence",
+      "url": "https://www.curseforge.com/wow/addons/craftpresence",
+      "seenPages": [
+        10
+      ]
+    },
+    {
+      "slug": "crimson-coin",
+      "title": "Crimson Coin",
+      "url": "https://www.curseforge.com/wow/addons/crimson-coin",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "crit-sounds",
+      "title": "Crit Sounds",
+      "url": "https://www.curseforge.com/wow/addons/crit-sounds",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cursorcooldown-reloaded",
+      "title": "Cursor Cooldown Reloaded \u2014 Castbar & Cooldowns",
+      "url": "https://www.curseforge.com/wow/addons/cursorcooldown-reloaded",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cursor-glow-rgb",
+      "title": "Cursor Glow RGB",
+      "url": "https://www.curseforge.com/wow/addons/cursor-glow-rgb",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cursor-world-tooltip",
+      "title": "Cursor World Tooltip",
+      "url": "https://www.curseforge.com/wow/addons/cursor-world-tooltip",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cursorglow",
+      "title": "CursorGlow",
+      "url": "https://www.curseforge.com/wow/addons/cursorglow",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cursorring",
+      "title": "CursorRing",
+      "url": "https://www.curseforge.com/wow/addons/cursorring",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "custom-info-panel",
+      "title": "Custom Info Panel",
+      "url": "https://www.curseforge.com/wow/addons/custom-info-panel",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "custom-minimap-arrow",
+      "title": "Custom Minimap Arrow",
+      "url": "https://www.curseforge.com/wow/addons/custom-minimap-arrow",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "custom-xp-bar",
+      "title": "Custom XP Bar",
+      "url": "https://www.curseforge.com/wow/addons/custom-xp-bar",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "customsearch",
+      "title": "CustomSearch-1.0",
+      "url": "https://www.curseforge.com/wow/addons/customsearch",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "customtutorials",
+      "title": "CustomTutorials-2.1",
+      "url": "https://www.curseforge.com/wow/addons/customtutorials",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cvars",
+      "title": "CVARs (Console Variables)",
+      "url": "https://www.curseforge.com/wow/addons/cvars",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "cvarsbackup",
+      "title": "CVarsBackup",
+      "url": "https://www.curseforge.com/wow/addons/cvarsbackup",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "damage-meter-blizards-skins",
+      "title": "Damage Meter Blizzards Skins",
+      "url": "https://www.curseforge.com/wow/addons/damage-meter-blizards-skins",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "damagepreview-forever",
+      "title": "DamagePreview - Forever",
+      "url": "https://www.curseforge.com/wow/addons/damagepreview-forever",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "dangerquestalert",
+      "title": "DangerQuestAlert",
+      "url": "https://www.curseforge.com/wow/addons/dangerquestalert",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "darkfoxx-multitool",
+      "title": "Darkfoxx MultiTool",
+      "url": "https://www.curseforge.com/wow/addons/darkfoxx-multitool",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "darkmode",
+      "title": "DarkMode / Dark Mode (Color HUD, Ui & Windows)",
+      "url": "https://www.curseforge.com/wow/addons/darkmode",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "datamine",
+      "title": "Datamine",
+      "url": "https://www.curseforge.com/wow/addons/datamine",
+      "seenPages": [
+        11
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods",
+      "title": "DBM - Deadly Boss Mods (DBM-Core)",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-heroes-of-the-storm-hots",
+      "title": "DBM - Deadly Boss Mods - Heroes of the Storm (HotS) Countdown Pack - DBM",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods-dbm-heroes-of-the-storm-hots",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-overwatch-countdown-pack",
+      "title": "DBM - Deadly Boss Mods - Overwatch Countdown Pack - DBM",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods-dbm-overwatch-countdown-pack",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-dungeons",
+      "title": "DBM - Dungeons, Delves, Visions, & Events (Requires Deadly Boss Mods) - DBM",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods-dbm-dungeons",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dbm-vanilla",
+      "title": "DBM - SoD and Vanilla (Requires Deadly Boss Mods) - DBM",
+      "url": "https://www.curseforge.com/wow/addons/dbm-vanilla",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dbm-voicepack-vv",
+      "title": "DBM Voicepack - VV DBM\u8bed\u97f3\u5305",
+      "url": "https://www.curseforge.com/wow/addons/dbm-voicepack-vv",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-event-sound-pack",
+      "title": "Deadly Boss Mods (DBM) - Event Pack",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods-dbm-event-sound-pack",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-smoothmcgroove-event-pack",
+      "title": "Deadly Boss Mods (DBM) - SmoothMcGroove Event Pack",
+      "url": "https://www.curseforge.com/wow/addons/deadly-boss-mods-dbm-smoothmcgroove-event-pack",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "degreen-world-map-forever",
+      "title": "Degreen World Map Forever",
+      "url": "https://www.curseforge.com/wow/addons/degreen-world-map-forever",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dejachat",
+      "title": "DejaChat",
+      "url": "https://www.curseforge.com/wow/addons/dejachat",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dejamicrofader",
+      "title": "DejaMicroFader",
+      "url": "https://www.curseforge.com/wow/addons/dejamicrofader",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dejaminimap",
+      "title": "DejaMinimap",
+      "url": "https://www.curseforge.com/wow/addons/dejaminimap",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dejaquestfader",
+      "title": "DejaQuestFader",
+      "url": "https://www.curseforge.com/wow/addons/dejaquestfader",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "deltasync",
+      "title": "DeltaSync",
+      "url": "https://www.curseforge.com/wow/addons/deltasync",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "denizens",
+      "title": "Denizens",
+      "url": "https://www.curseforge.com/wow/addons/denizens",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "desync",
+      "title": "DeSync - Lag Monitor & Disconnect Alarm",
+      "url": "https://www.curseforge.com/wow/addons/desync",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dgks",
+      "title": "dG Killshot",
+      "url": "https://www.curseforge.com/wow/addons/dgks",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dialogkey-numy-edition",
+      "title": "DialogKey - Numy Edition",
+      "url": "https://www.curseforge.com/wow/addons/dialogkey-numy-edition",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dialogueui",
+      "title": "Dialogue UI",
+      "url": "https://www.curseforge.com/wow/addons/dialogueui",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dino-nameplates-forever",
+      "title": "Dino Nameplates  Forever",
+      "url": "https://www.curseforge.com/wow/addons/dino-nameplates-forever",
+      "seenPages": [
+        12
+      ]
+    },
+    {
+      "slug": "dino-unit-frames",
+      "title": "Dino Unit Frames",
+      "url": "https://www.curseforge.com/wow/addons/dino-unit-frames",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "disenchant-helper",
+      "title": "Disenchant Helper",
+      "url": "https://www.curseforge.com/wow/addons/disenchant-helper",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dragmods",
+      "title": "DragMods",
+      "url": "https://www.curseforge.com/wow/addons/dragmods",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dragonguildmaster",
+      "title": "DragonGuildMaster",
+      "url": "https://www.curseforge.com/wow/addons/dragonguildmaster",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dragonskill",
+      "title": "DragonSkill",
+      "url": "https://www.curseforge.com/wow/addons/dragonskill",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "draidframes",
+      "title": "DRaidFrames",
+      "url": "https://www.curseforge.com/wow/addons/draidframes",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "drinkbot",
+      "title": "DrinkBot",
+      "url": "https://www.curseforge.com/wow/addons/drinkbot",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dropthecheapestthing",
+      "title": "DropTheCheapestThing",
+      "url": "https://www.curseforge.com/wow/addons/dropthecheapestthing",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dunitframes",
+      "title": "DUnitFrames",
+      "url": "https://www.curseforge.com/wow/addons/dunitframes",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "dynamic-display-nameplate",
+      "title": "Dynamic Display Nameplate",
+      "url": "https://www.curseforge.com/wow/addons/dynamic-display-nameplate",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "easy-fishing",
+      "title": "Easy Fishing",
+      "url": "https://www.curseforge.com/wow/addons/easy-fishing",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "easyfind",
+      "title": "EasyFind - Search Everything",
+      "url": "https://www.curseforge.com/wow/addons/easyfind",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "easyguildinvite",
+      "title": "EasyGuildInvite \u2013 Smart Guild Recruitment for WoW",
+      "url": "https://www.curseforge.com/wow/addons/easyguildinvite",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "edit-mode-expanded",
+      "title": "Edit Mode Expanded",
+      "url": "https://www.curseforge.com/wow/addons/edit-mode-expanded",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "ellesmereui",
+      "title": "EllesmereUI",
+      "url": "https://www.curseforge.com/wow/addons/ellesmereui",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "emberstone",
+      "title": "Emberstone",
+      "url": "https://www.curseforge.com/wow/addons/emberstone",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "emberwell-forever",
+      "title": "Emberwell Forever",
+      "url": "https://www.curseforge.com/wow/addons/emberwell-forever",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "energy-rage-ticks-forever",
+      "title": "Energy rage ticks Forever",
+      "url": "https://www.curseforge.com/wow/addons/energy-rage-ticks-forever",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "energywatch-forever",
+      "title": "Energywatch Forever",
+      "url": "https://www.curseforge.com/wow/addons/energywatch-forever",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "english-item-names",
+      "title": "English Item Names",
+      "url": "https://www.curseforge.com/wow/addons/english-item-names",
+      "seenPages": [
+        13
+      ]
+    },
+    {
+      "slug": "eqol",
+      "title": "Enhance QoL",
+      "url": "https://www.curseforge.com/wow/addons/eqol",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "epic-damage-meter",
+      "title": "Epic Damage Meter Forever",
+      "url": "https://www.curseforge.com/wow/addons/epic-damage-meter",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "eq-objective-tracker",
+      "title": "EQ Objective Tracker",
+      "url": "https://www.curseforge.com/wow/addons/eq-objective-tracker",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "equip-recommended-gear",
+      "title": "Equip Recommended Gear",
+      "url": "https://www.curseforge.com/wow/addons/equip-recommended-gear",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "everything-quests",
+      "title": "Everything Quests",
+      "url": "https://www.curseforge.com/wow/addons/everything-quests",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "expansionutils",
+      "title": "ExpansionUtils",
+      "url": "https://www.curseforge.com/wow/addons/expansionutils",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "expositum",
+      "title": "Expositum (Item Tooltip Enhancement)",
+      "url": "https://www.curseforge.com/wow/addons/expositum",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "extremely-simple-healing-addon",
+      "title": "Extremely simple healing addon",
+      "url": "https://www.curseforge.com/wow/addons/extremely-simple-healing-addon",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fafo-fishing",
+      "title": "FAFO Fishing",
+      "url": "https://www.curseforge.com/wow/addons/fafo-fishing",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "farmboard-forever",
+      "title": "Farmboard Forever",
+      "url": "https://www.curseforge.com/wow/addons/farmboard-forever",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "farmer",
+      "title": "Farmer",
+      "url": "https://www.curseforge.com/wow/addons/farmer",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fast-guild-invite-revived",
+      "title": "Fast Guild Invite - Revived",
+      "url": "https://www.curseforge.com/wow/addons/fast-guild-invite-revived",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "faster-loot",
+      "title": "Faster Loot",
+      "url": "https://www.curseforge.com/wow/addons/faster-loot",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fastloot",
+      "title": "FastLoot",
+      "url": "https://www.curseforge.com/wow/addons/fastloot",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fcui-foreverclassicui",
+      "title": "FCUI - ForeverClassicUI",
+      "url": "https://www.curseforge.com/wow/addons/fcui-foreverclassicui",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "feed-me",
+      "title": "Feed Me",
+      "url": "https://www.curseforge.com/wow/addons/feed-me",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "firstnamebasis",
+      "title": "First Name Basis",
+      "url": "https://www.curseforge.com/wow/addons/firstnamebasis",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fishbringer",
+      "title": "Fishbringer",
+      "url": "https://www.curseforge.com/wow/addons/fishbringer",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fishfry-forever",
+      "title": "FishFry Forever",
+      "url": "https://www.curseforge.com/wow/addons/fishfry-forever",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fishing-buddy",
+      "title": "Fishing Buddy (Forever) (Crusade)",
+      "url": "https://www.curseforge.com/wow/addons/fishing-buddy",
+      "seenPages": [
+        14
+      ]
+    },
+    {
+      "slug": "fishing-buddy-forever-fix",
+      "title": "Fishing Buddy Forever Fix",
+      "url": "https://www.curseforge.com/wow/addons/fishing-buddy-forever-fix",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fishing-forever",
+      "title": "Fishing Forever",
+      "url": "https://www.curseforge.com/wow/addons/fishing-forever",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fishkeeper",
+      "title": "FishKeeper",
+      "url": "https://www.curseforge.com/wow/addons/fishkeeper",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fishmaster",
+      "title": "FishMaster",
+      "url": "https://www.curseforge.com/wow/addons/fishmaster",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fivesecondrule",
+      "title": "FiveSecondRule",
+      "url": "https://www.curseforge.com/wow/addons/fivesecondrule",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fix-stat-forever",
+      "title": "Fix Stats WoW Forever",
+      "url": "https://www.curseforge.com/wow/addons/fix-stat-forever",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "flames-spell-info",
+      "title": "Flame's Spell Info",
+      "url": "https://www.curseforge.com/wow/addons/flames-spell-info",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "floating-combat-alert",
+      "title": "Floating Combat Alert",
+      "url": "https://www.curseforge.com/wow/addons/floating-combat-alert",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "floating-combat-info",
+      "title": "Floating Combat Info",
+      "url": "https://www.curseforge.com/wow/addons/floating-combat-info",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "foggin-stupid",
+      "title": "Foggin Stupid",
+      "url": "https://www.curseforge.com/wow/addons/foggin-stupid",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "fojjicore",
+      "title": "FojjiCore",
+      "url": "https://www.curseforge.com/wow/addons/fojjicore",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-hunter-s-friend",
+      "title": "Forever - Hunter's Friend",
+      "url": "https://www.curseforge.com/wow/addons/forever-hunter-s-friend",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-quest-marker",
+      "title": "Forever - Quest Marker",
+      "url": "https://www.curseforge.com/wow/addons/forever-quest-marker",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-bag-mover",
+      "title": "Forever Bag Mover",
+      "url": "https://www.curseforge.com/wow/addons/forever-bag-mover",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-barber-fix",
+      "title": "Forever Barber Fix",
+      "url": "https://www.curseforge.com/wow/addons/forever-barber-fix",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "barbershop-fix",
+      "title": "Forever Barbershop Lua Fix",
+      "url": "https://www.curseforge.com/wow/addons/barbershop-fix",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-combo-points",
+      "title": "Forever Combo Points",
+      "url": "https://www.curseforge.com/wow/addons/forever-combo-points",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-contacts",
+      "title": "Forever Contacts",
+      "url": "https://www.curseforge.com/wow/addons/forever-contacts",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-cooldown-manager",
+      "title": "Forever Cooldown Manager",
+      "url": "https://www.curseforge.com/wow/addons/forever-cooldown-manager",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-beta-german-character-statsfix",
+      "title": "Forever German Character Stats Fix",
+      "url": "https://www.curseforge.com/wow/addons/forever-beta-german-character-statsfix",
+      "seenPages": [
+        15
+      ]
+    },
+    {
+      "slug": "forever-loot-manager",
+      "title": "Forever Loot Manager",
+      "url": "https://www.curseforge.com/wow/addons/forever-loot-manager",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-mouse-tooltip",
+      "title": "Forever Mouse Tooltip",
+      "url": "https://www.curseforge.com/wow/addons/forever-mouse-tooltip",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-ptr-server-world-map",
+      "title": "Forever PTR World Map",
+      "url": "https://www.curseforge.com/wow/addons/forever-ptr-server-world-map",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-quest-pins",
+      "title": "Forever Quest Pins",
+      "url": "https://www.curseforge.com/wow/addons/forever-quest-pins",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-quest-tint",
+      "title": "Forever Quest Tint",
+      "url": "https://www.curseforge.com/wow/addons/forever-quest-tint",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-scrolling-quest-text",
+      "title": "Forever Scrolling Quest Text",
+      "url": "https://www.curseforge.com/wow/addons/forever-scrolling-quest-text",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-single-quest-hint",
+      "title": "Forever Single Quest Hint",
+      "url": "https://www.curseforge.com/wow/addons/forever-single-quest-hint",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-skill-tracker",
+      "title": "Forever Skill Tracker",
+      "url": "https://www.curseforge.com/wow/addons/forever-skill-tracker",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-stats-by-leakerz",
+      "title": "Forever Stats by LeakerZ",
+      "url": "https://www.curseforge.com/wow/addons/forever-stats-by-leakerz",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-threat",
+      "title": "Forever Threat",
+      "url": "https://www.curseforge.com/wow/addons/forever-threat",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-tts",
+      "title": "Forever TTS",
+      "url": "https://www.curseforge.com/wow/addons/forever-tts",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-ui-character-info-fix-ru-loc",
+      "title": "Forever UI Character Info FIX Ru-loc",
+      "url": "https://www.curseforge.com/wow/addons/forever-ui-character-info-fix-ru-loc",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-world-map",
+      "title": "Forever World Map Reveal",
+      "url": "https://www.curseforge.com/wow/addons/forever-world-map",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-zhcn-level-text-fix",
+      "title": "Forever zhCN Level Text Fix",
+      "url": "https://www.curseforge.com/wow/addons/forever-zhcn-level-text-fix",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-zhcn-status-panel-fix",
+      "title": "Forever ZhCN Status panel Fix",
+      "url": "https://www.curseforge.com/wow/addons/forever-zhcn-status-panel-fix",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "classic-ui-restoration",
+      "title": "Forever/Retail Classic UI Restoration",
+      "url": "https://www.curseforge.com/wow/addons/classic-ui-restoration",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forever-druidmanabar",
+      "title": "Forever_DruidManaBar",
+      "url": "https://www.curseforge.com/wow/addons/forever-druidmanabar",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "foreverautoquest",
+      "title": "ForeverAutoQuest",
+      "url": "https://www.curseforge.com/wow/addons/foreverautoquest",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "foreverbags",
+      "title": "ForeverBags",
+      "url": "https://www.curseforge.com/wow/addons/foreverbags",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "foreverbeta-map-fix",
+      "title": "ForeverBeta Map Fix",
+      "url": "https://www.curseforge.com/wow/addons/foreverbeta-map-fix",
+      "seenPages": [
+        16
+      ]
+    },
+    {
+      "slug": "forevercharacterfix",
+      "title": "ForeverCharacterFix",
+      "url": "https://www.curseforge.com/wow/addons/forevercharacterfix",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverdiff-collector",
+      "title": "ForeverDiff Collector",
+      "url": "https://www.curseforge.com/wow/addons/foreverdiff-collector",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverfogbegone",
+      "title": "ForeverFogBeGone!",
+      "url": "https://www.curseforge.com/wow/addons/foreverfogbegone",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "forevergear",
+      "title": "ForeverGear",
+      "url": "https://www.curseforge.com/wow/addons/forevergear",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverlayoutfix",
+      "title": "ForeverLayoutFix",
+      "url": "https://www.curseforge.com/wow/addons/foreverlayoutfix",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "forever-metter",
+      "title": "ForeverMetter",
+      "url": "https://www.curseforge.com/wow/addons/forever-metter",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverplus",
+      "title": "ForeverPlus",
+      "url": "https://www.curseforge.com/wow/addons/foreverplus",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverquesttracker",
+      "title": "ForeverQuestTracker",
+      "url": "https://www.curseforge.com/wow/addons/foreverquesttracker",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverui",
+      "title": "ForeverUI",
+      "url": "https://www.curseforge.com/wow/addons/foreverui",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "foreverxp",
+      "title": "ForeverXP",
+      "url": "https://www.curseforge.com/wow/addons/foreverxp",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "fpn-foreverplayernotes",
+      "title": "FPN - ForeverPlayerNotes",
+      "url": "https://www.curseforge.com/wow/addons/fpn-foreverplayernotes",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "fps-always",
+      "title": "FPS Always",
+      "url": "https://www.curseforge.com/wow/addons/fps-always",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "frameunlocker",
+      "title": "FrameUnlocker",
+      "url": "https://www.curseforge.com/wow/addons/frameunlocker",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "friends-progress-tracker",
+      "title": "Friends Progress Tracker",
+      "url": "https://www.curseforge.com/wow/addons/friends-progress-tracker",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "friendsfinder",
+      "title": "FriendsFinder",
+      "url": "https://www.curseforge.com/wow/addons/friendsfinder",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "functionprofiler",
+      "title": "FunctionProfiler",
+      "url": "https://www.curseforge.com/wow/addons/functionprofiler",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "gathering",
+      "title": "Gathering",
+      "url": "https://www.curseforge.com/wow/addons/gathering",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "gathering-tracker",
+      "title": "Gathering Tracker",
+      "url": "https://www.curseforge.com/wow/addons/gathering-tracker",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "gatherlite",
+      "title": "GatherLite",
+      "url": "https://www.curseforge.com/wow/addons/gatherlite",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "gearquest-forever",
+      "title": "GearQuest - Forever",
+      "url": "https://www.curseforge.com/wow/addons/gearquest-forever",
+      "seenPages": [
+        17
+      ]
+    },
+    {
+      "slug": "gem-blast",
+      "title": "Gem Blast (GemBlast)",
+      "url": "https://www.curseforge.com/wow/addons/gem-blast",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "genxbagspace",
+      "title": "GenXBagSpace",
+      "url": "https://www.curseforge.com/wow/addons/genxbagspace",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "getsomefun-plates-gummies-party-edition",
+      "title": "GetSomeFun Plates - Gummies Party Edition",
+      "url": "https://www.curseforge.com/wow/addons/getsomefun-plates-gummies-party-edition",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "getsomefun-plates-matrix-edition",
+      "title": "GetSomeFun Plates - Matrix Edition",
+      "url": "https://www.curseforge.com/wow/addons/getsomefun-plates-matrix-edition",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "getsomefun-plates-saiyan-edition",
+      "title": "GetSomeFun Plates - Saiyan Edition",
+      "url": "https://www.curseforge.com/wow/addons/getsomefun-plates-saiyan-edition",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "giga-twitch-emotes",
+      "title": "GIGA Twitch Emotes",
+      "url": "https://www.curseforge.com/wow/addons/giga-twitch-emotes",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "gtfo-hazardguard",
+      "title": "GODMODE - GTFO",
+      "url": "https://www.curseforge.com/wow/addons/gtfo-hazardguard",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "godmode-messenger-midnight",
+      "title": "GODMODE Messenger WIM - Midnight",
+      "url": "https://www.curseforge.com/wow/addons/godmode-messenger-midnight",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "godmodenameplates",
+      "title": "GODMODE Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/godmodenameplates",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "gold-mail-counter-forever",
+      "title": "Gold mail counter Forever",
+      "url": "https://www.curseforge.com/wow/addons/gold-mail-counter-forever",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "goldwatch-gw",
+      "title": "GoldWatch",
+      "url": "https://www.curseforge.com/wow/addons/goldwatch-gw",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "great-catch",
+      "title": "Great Catch",
+      "url": "https://www.curseforge.com/wow/addons/great-catch",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "grind-tracker",
+      "title": "Grind Tracker",
+      "url": "https://www.curseforge.com/wow/addons/grind-tracker",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "grip-enhanced-macro-sequencer",
+      "title": "GRIP - EMS (Enhanced Macro Sequencer)",
+      "url": "https://www.curseforge.com/wow/addons/grip-enhanced-macro-sequencer",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "gudabags",
+      "title": "GudaBags",
+      "url": "https://www.curseforge.com/wow/addons/gudabags",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guild-craft-browser-by-muckli",
+      "title": "Guild Craft Browser by Muckli",
+      "url": "https://www.curseforge.com/wow/addons/guild-craft-browser-by-muckli",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guild-levels",
+      "title": "Guild Levels",
+      "url": "https://www.curseforge.com/wow/addons/guild-levels",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guild-social-button",
+      "title": "Guild Social Button",
+      "url": "https://www.curseforge.com/wow/addons/guild-social-button",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guildcraftsync",
+      "title": "GuildCraftSync",
+      "url": "https://www.curseforge.com/wow/addons/guildcraftsync",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guildhall",
+      "title": "Guildhall",
+      "url": "https://www.curseforge.com/wow/addons/guildhall",
+      "seenPages": [
+        18
+      ]
+    },
+    {
+      "slug": "guildkit",
+      "title": "GuildKit",
+      "url": "https://www.curseforge.com/wow/addons/guildkit",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "guildmap",
+      "title": "GuildMap",
+      "url": "https://www.curseforge.com/wow/addons/guildmap",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "guild-os",
+      "title": "GuildOS \u2014 Guild Management for WoW Forever (roster, attendance, loot council)",
+      "url": "https://www.curseforge.com/wow/addons/guild-os",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "guildwelcomer",
+      "title": "GuildWelcomer",
+      "url": "https://www.curseforge.com/wow/addons/guildwelcomer",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hammerlink",
+      "title": "HammerLink",
+      "url": "https://www.curseforge.com/wow/addons/hammerlink",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "handynotes-classic-and-cataclysm",
+      "title": "HandyNotes: Classic and Cataclysm",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-classic-and-cataclysm",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hangman-el-ahorcado-by-overcraft",
+      "title": "Hangman - El Ahorcado by OverCraft",
+      "url": "https://www.curseforge.com/wow/addons/hangman-el-ahorcado-by-overcraft",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hank-unitframes",
+      "title": "Hank UnitFrames",
+      "url": "https://www.curseforge.com/wow/addons/hank-unitframes",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hardcore-achievements",
+      "title": "Hardcore Achievements",
+      "url": "https://www.curseforge.com/wow/addons/hardcore-achievements",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hardcore-forever",
+      "title": "HARDCORE FOREVER",
+      "url": "https://www.curseforge.com/wow/addons/hardcore-forever",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "harvestgoal",
+      "title": "HarvestGoal",
+      "url": "https://www.curseforge.com/wow/addons/harvestgoal",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hated-casino",
+      "title": "Hated Casino",
+      "url": "https://www.curseforge.com/wow/addons/hated-casino",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hated-menu",
+      "title": "Hated Menu",
+      "url": "https://www.curseforge.com/wow/addons/hated-menu",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hatedtarget",
+      "title": "Hated Target",
+      "url": "https://www.curseforge.com/wow/addons/hatedtarget",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hatedtooltip",
+      "title": "Hated Tooltip",
+      "url": "https://www.curseforge.com/wow/addons/hatedtooltip",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hated-ui",
+      "title": "Hated UI",
+      "url": "https://www.curseforge.com/wow/addons/hated-ui",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hated-who",
+      "title": "Hated Who",
+      "url": "https://www.curseforge.com/wow/addons/hated-who",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "hdr-tuner",
+      "title": "HDR Tuner (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/hdr-tuner",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "healerhelper",
+      "title": "HealerHelper",
+      "url": "https://www.curseforge.com/wow/addons/healerhelper",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "healerprotection",
+      "title": "HealerProtection Healer Protection / Messages",
+      "url": "https://www.curseforge.com/wow/addons/healerprotection",
+      "seenPages": [
+        19
+      ]
+    },
+    {
+      "slug": "healforever",
+      "title": "HealForever",
+      "url": "https://www.curseforge.com/wow/addons/healforever",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "healium",
+      "title": "Healium",
+      "url": "https://www.curseforge.com/wow/addons/healium",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "healthbarcolor",
+      "title": "HealthBarColor - Health Bar Color",
+      "url": "https://www.curseforge.com/wow/addons/healthbarcolor",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hey-whats-your-ilvl-forever",
+      "title": "Hey whats your ilvl - Forever",
+      "url": "https://www.curseforge.com/wow/addons/hey-whats-your-ilvl-forever",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hide-anything",
+      "title": "Hide Anything",
+      "url": "https://www.curseforge.com/wow/addons/hide-anything",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hide-chat",
+      "title": "Hide Chat",
+      "url": "https://www.curseforge.com/wow/addons/hide-chat",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hide-friendly-nameplates",
+      "title": "Hide Friendly Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/hide-friendly-nameplates",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hidechatbuttonreborn",
+      "title": "HideChatButtonReborn (Hide Chat Button)",
+      "url": "https://www.curseforge.com/wow/addons/hidechatbuttonreborn",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "highlevelalert",
+      "title": "HighLevelAlert (High Level Alert-Elite) [Hardcore]",
+      "url": "https://www.curseforge.com/wow/addons/highlevelalert",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "highlightclick",
+      "title": "HighlightClick",
+      "url": "https://www.curseforge.com/wow/addons/highlightclick",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "holiday-reminders",
+      "title": "Holiday Reminders - Modern Event Tracker",
+      "url": "https://www.curseforge.com/wow/addons/holiday-reminders",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "horatum",
+      "title": "Horatum (Boss Combat Time Tracker)",
+      "url": "https://www.curseforge.com/wow/addons/horatum",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "horizon",
+      "title": "Horizon Suite",
+      "url": "https://www.curseforge.com/wow/addons/horizon",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hovercraft",
+      "title": "HoverCraft",
+      "url": "https://www.curseforge.com/wow/addons/hovercraft",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "hunterthreat",
+      "title": "Hunter Threat",
+      "url": "https://www.curseforge.com/wow/addons/hunterthreat",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "iwillremember",
+      "title": "i Will Remember - iWillRemember iWR Personalized Player Notes addOn",
+      "url": "https://www.curseforge.com/wow/addons/iwillremember",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "im-out-of-ammo-ammo-autobuy-refill",
+      "title": "I'm out of Ammo! (Ammo autobuy/refill)",
+      "url": "https://www.curseforge.com/wow/addons/im-out-of-ammo-ammo-autobuy-refill",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "icon-finder-plus",
+      "title": "Icon Finder Plus",
+      "url": "https://www.curseforge.com/wow/addons/icon-finder-plus",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "iddqd",
+      "title": "iddqd",
+      "url": "https://www.curseforge.com/wow/addons/iddqd",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "ilevelup",
+      "title": "iLevelUp",
+      "url": "https://www.curseforge.com/wow/addons/ilevelup",
+      "seenPages": [
+        20
+      ]
+    },
+    {
+      "slug": "improveany",
+      "title": "ImproveAny (QOL, Chat icons, Repaircosts, itemlevel, wide, ...)",
+      "url": "https://www.curseforge.com/wow/addons/improveany",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "improved-auto-shot-timer",
+      "title": "Improved Auto Shot Timer",
+      "url": "https://www.curseforge.com/wow/addons/improved-auto-shot-timer",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "improved-lfg-bulletin-board-with-chat-suppression",
+      "title": "Improved LFG Bulletin Board + Optional Chat Suppression of Boosters / Sellers",
+      "url": "https://www.curseforge.com/wow/addons/improved-lfg-bulletin-board-with-chat-suppression",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "incoming",
+      "title": "Incoming",
+      "url": "https://www.curseforge.com/wow/addons/incoming",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "inflame-xp-graph-by-overcraft",
+      "title": "Inflame XP Graph by OverCraft",
+      "url": "https://www.curseforge.com/wow/addons/inflame-xp-graph-by-overcraft",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "interrupttrack",
+      "title": "InterruptTrack (Party Interrupt Tracking, Kick Rotation)",
+      "url": "https://www.curseforge.com/wow/addons/interrupttrack",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "invite-on-whisper",
+      "title": "Invite On Whisper",
+      "url": "https://www.curseforge.com/wow/addons/invite-on-whisper",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "ircguildconnect",
+      "title": "iRC: Guild Connect - Guild Bank & Professions, Race Locked, Guild Found, Server Guild Leaderboard",
+      "url": "https://www.curseforge.com/wow/addons/ircguildconnect",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "issue-reporter-lock",
+      "title": "Issue Reporter Lock",
+      "url": "https://www.curseforge.com/wow/addons/issue-reporter-lock",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "item-level-inspector",
+      "title": "Item Level Inspector (Fast)",
+      "url": "https://www.curseforge.com/wow/addons/item-level-inspector",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "itemlevelnameplate",
+      "title": "ItemLevelNameplate",
+      "url": "https://www.curseforge.com/wow/addons/itemlevelnameplate",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "jamplates-accessories",
+      "title": "JamPlates Accessories",
+      "url": "https://www.curseforge.com/wow/addons/jamplates-accessories",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "john-cena-level",
+      "title": "John Cena Level Up",
+      "url": "https://www.curseforge.com/wow/addons/john-cena-level",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "jugoui",
+      "title": "Jugo UI",
+      "url": "https://www.curseforge.com/wow/addons/jugoui",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "junk-seller-forever",
+      "title": "Junk seller Forever",
+      "url": "https://www.curseforge.com/wow/addons/junk-seller-forever",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "k-big-debuffs",
+      "title": "K Big Debuffs & Buffs",
+      "url": "https://www.curseforge.com/wow/addons/k-big-debuffs",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "smartdebuff-reloaded",
+      "title": "K Decurse",
+      "url": "https://www.curseforge.com/wow/addons/smartdebuff-reloaded",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "k-hide-raid-realm-names",
+      "title": "K Hide Realm Names",
+      "url": "https://www.curseforge.com/wow/addons/k-hide-raid-realm-names",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "k-nameplate-color",
+      "title": "K Nameplate Color & Texture",
+      "url": "https://www.curseforge.com/wow/addons/k-nameplate-color",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "k-raid-fade",
+      "title": "K Raid Fade",
+      "url": "https://www.curseforge.com/wow/addons/k-raid-fade",
+      "seenPages": [
+        21
+      ]
+    },
+    {
+      "slug": "k-raid-icons",
+      "title": "K Raid Target Icons \ud83d\udfe6",
+      "url": "https://www.curseforge.com/wow/addons/k-raid-icons",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "k-solo-raid-frames",
+      "title": "K Solo Raid Frames",
+      "url": "https://www.curseforge.com/wow/addons/k-solo-raid-frames",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kallye-raid-frames",
+      "title": "Kallye Raid Frames \u2013 Bigger Debuffs, Low HP Highlights, Inverted HP Bars, Textures & Solo Frames",
+      "url": "https://www.curseforge.com/wow/addons/kallye-raid-frames",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kaosui-forever",
+      "title": "KaosUI - Forever",
+      "url": "https://www.curseforge.com/wow/addons/kaosui-forever",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kerzo-classic-quest-log",
+      "title": "Kerzo Classic Quest Log [Retail & Forever]",
+      "url": "https://www.curseforge.com/wow/addons/kerzo-classic-quest-log",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kerzos-gold-tracker",
+      "title": "Kerzo Gold Tracker [Retail & Forever]",
+      "url": "https://www.curseforge.com/wow/addons/kerzos-gold-tracker",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "keybindprofiles",
+      "title": "KeyBindProfiles",
+      "url": "https://www.curseforge.com/wow/addons/keybindprofiles",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "keycap",
+      "title": "Keycap",
+      "url": "https://www.curseforge.com/wow/addons/keycap",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "keystone-crew",
+      "title": "Keystone Crew",
+      "url": "https://www.curseforge.com/wow/addons/keystone-crew",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kickalert-forever",
+      "title": "kickAlert Forever",
+      "url": "https://www.curseforge.com/wow/addons/kickalert-forever",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "killdex",
+      "title": "KillDex | Mob Kill Tracker and Counter",
+      "url": "https://www.curseforge.com/wow/addons/killdex",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "koeenji-forever-map",
+      "title": "Koeenji Forever Map",
+      "url": "https://www.curseforge.com/wow/addons/koeenji-forever-map",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kp-castbar",
+      "title": "KP_CastBar",
+      "url": "https://www.curseforge.com/wow/addons/kp-castbar",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kp-idtip",
+      "title": "KP_idTip",
+      "url": "https://www.curseforge.com/wow/addons/kp-idtip",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kp-map",
+      "title": "KP_Map",
+      "url": "https://www.curseforge.com/wow/addons/kp-map",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kp-quest",
+      "title": "KP_Quest",
+      "url": "https://www.curseforge.com/wow/addons/kp-quest",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "kullthranui-forever",
+      "title": "KUI (KullThranUI): Forever",
+      "url": "https://www.curseforge.com/wow/addons/kullthranui-forever",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "lae",
+      "title": "LAE - Lore Accurate Elves",
+      "url": "https://www.curseforge.com/wow/addons/lae",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "lagbar",
+      "title": "LagBar",
+      "url": "https://www.curseforge.com/wow/addons/lagbar",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "lagbuddy-wow-performance-analyzer",
+      "title": "LagBuddy - WoW Performance Analyzer",
+      "url": "https://www.curseforge.com/wow/addons/lagbuddy-wow-performance-analyzer",
+      "seenPages": [
+        22
+      ]
+    },
+    {
+      "slug": "languagemarker",
+      "title": "LanguageMarker",
+      "url": "https://www.curseforge.com/wow/addons/languagemarker",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lanmiaobox",
+      "title": "LanMiaoBox",
+      "url": "https://www.curseforge.com/wow/addons/lanmiaobox",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lanmiao-rainbow-castbar",
+      "title": "LanMiaoRainbowCastbar",
+      "url": "https://www.curseforge.com/wow/addons/lanmiao-rainbow-castbar",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lastlife",
+      "title": "LastLife",
+      "url": "https://www.curseforge.com/wow/addons/lastlife",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lazy-buffing",
+      "title": "Lazy Buffing",
+      "url": "https://www.curseforge.com/wow/addons/lazy-buffing",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lazyconsumables",
+      "title": "Lazy Consumables",
+      "url": "https://www.curseforge.com/wow/addons/lazyconsumables",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "leatrix-maps",
+      "title": "Leatrix Maps",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-maps",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "leatrix-plus",
+      "title": "Leatrix Plus",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "leatrix-sounds",
+      "title": "Leatrix Sounds",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-sounds",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "leveltimetracker",
+      "title": "Level Time Tracker",
+      "url": "https://www.curseforge.com/wow/addons/leveltimetracker",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "levelprogress",
+      "title": "LevelProgress",
+      "url": "https://www.curseforge.com/wow/addons/levelprogress",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libs-addontools",
+      "title": "Lib's - Addon Tools",
+      "url": "https://www.curseforge.com/wow/addons/libs-addontools",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libs-timeplayed",
+      "title": "Lib's - Time Played",
+      "url": "https://www.curseforge.com/wow/addons/libs-timeplayed",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libaceguiwidgets",
+      "title": "LibAceGUIWidgets",
+      "url": "https://www.curseforge.com/wow/addons/libaceguiwidgets",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libdualspec-1-0",
+      "title": "LibDualSpec-1.0",
+      "url": "https://www.curseforge.com/wow/addons/libdualspec-1-0",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libgraph-2-0-revived",
+      "title": "LibGraph-2.0 - Revived",
+      "url": "https://www.curseforge.com/wow/addons/libgraph-2-0-revived",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libguildroster",
+      "title": "LibGuildRoster",
+      "url": "https://www.curseforge.com/wow/addons/libguildroster",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libitemsearch",
+      "title": "LibItemSearch-1.3",
+      "url": "https://www.curseforge.com/wow/addons/libitemsearch",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "liblocaleoverride",
+      "title": "LibLocaleOverride",
+      "url": "https://www.curseforge.com/wow/addons/liblocaleoverride",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "lib-master-addons",
+      "title": "LibMasterAddons",
+      "url": "https://www.curseforge.com/wow/addons/lib-master-addons",
+      "seenPages": [
+        23
+      ]
+    },
+    {
+      "slug": "libspecialization",
+      "title": "LibSpecialization",
+      "url": "https://www.curseforge.com/wow/addons/libspecialization",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "libtalenttree",
+      "title": "LibTalentTree | Retail",
+      "url": "https://www.curseforge.com/wow/addons/libtalenttree",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "libuidropdownmenu",
+      "title": "LibUIDropDownMenu",
+      "url": "https://www.curseforge.com/wow/addons/libuidropdownmenu",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "linfo",
+      "title": "Linfo",
+      "url": "https://www.curseforge.com/wow/addons/linfo",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "liontools",
+      "title": "LionTools",
+      "url": "https://www.curseforge.com/wow/addons/liontools",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "loot-battle-text-lootbt",
+      "title": "Loot Battle Text - LootBT",
+      "url": "https://www.curseforge.com/wow/addons/loot-battle-text-lootbt",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "loot-pro",
+      "title": "Loot Pro",
+      "url": "https://www.curseforge.com/wow/addons/loot-pro",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "loot-race-forever",
+      "title": "Loot Race Forever",
+      "url": "https://www.curseforge.com/wow/addons/loot-race-forever",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "loots-ui",
+      "title": "Loot's UI",
+      "url": "https://www.curseforge.com/wow/addons/loots-ui",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "lootrollmover",
+      "title": "LootRollMover",
+      "url": "https://www.curseforge.com/wow/addons/lootrollmover",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "lorewalker",
+      "title": "Lorewalker",
+      "url": "https://www.curseforge.com/wow/addons/lorewalker",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "lossofcontrolmessages",
+      "title": "LossOfControlMessages Loss Of Control Message",
+      "url": "https://www.curseforge.com/wow/addons/lossofcontrolmessages",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "loudandclear",
+      "title": "LoudAndClear",
+      "url": "https://www.curseforge.com/wow/addons/loudandclear",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "lozn64-levelup",
+      "title": "LoZN64 | Legend of Zelda LevelUp!",
+      "url": "https://www.curseforge.com/wow/addons/lozn64-levelup",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "luckyoneui",
+      "title": "LuckyoneUI + Damage Meter & Quality of Life",
+      "url": "https://www.curseforge.com/wow/addons/luckyoneui",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "macro-toolkit",
+      "title": "Macro Toolkit",
+      "url": "https://www.curseforge.com/wow/addons/macro-toolkit",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "macroanvil",
+      "title": "MacroAnvil",
+      "url": "https://www.curseforge.com/wow/addons/macroanvil",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "macroforge",
+      "title": "MacroForge",
+      "url": "https://www.curseforge.com/wow/addons/macroforge",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "macroide",
+      "title": "MacroIDE",
+      "url": "https://www.curseforge.com/wow/addons/macroide",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "macrolab-forever",
+      "title": "MacroLab Forever",
+      "url": "https://www.curseforge.com/wow/addons/macrolab-forever",
+      "seenPages": [
+        24
+      ]
+    },
+    {
+      "slug": "magic-eraser",
+      "title": "Magic Eraser | Delete & Auto-Sell Junk, Grays, Vendor Trash, and Completed Quest Items",
+      "url": "https://www.curseforge.com/wow/addons/magic-eraser",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "mail-and-gold-counter-forever",
+      "title": "Mail and Gold counter - Forever",
+      "url": "https://www.curseforge.com/wow/addons/mail-and-gold-counter-forever",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "makeroomclassic",
+      "title": "MakeRoomClassic",
+      "url": "https://www.curseforge.com/wow/addons/makeroomclassic",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "malitors-reputation-tracker",
+      "title": "Malitor's Reputation Tracker",
+      "url": "https://www.curseforge.com/wow/addons/malitors-reputation-tracker",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "maniatip",
+      "title": "ManiaTip",
+      "url": "https://www.curseforge.com/wow/addons/maniatip",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "map-pin-timers",
+      "title": "Map Pin Timers",
+      "url": "https://www.curseforge.com/wow/addons/map-pin-timers",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "mappy-continued",
+      "title": "Mappy Continued",
+      "url": "https://www.curseforge.com/wow/addons/mappy-continued",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "maputils",
+      "title": "MapUtils (Dungeon Maps, Dungeon Entrance, Travel-Routes, ...)",
+      "url": "https://www.curseforge.com/wow/addons/maputils",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "master-vendor",
+      "title": "Master Vendor",
+      "url": "https://www.curseforge.com/wow/addons/master-vendor",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "mateos-classic-frames",
+      "title": "Mateos Classic Frames",
+      "url": "https://www.curseforge.com/wow/addons/mateos-classic-frames",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "matts-action-bar-fonts",
+      "title": "Matt's Action Bar Fonts & UI QoL",
+      "url": "https://www.curseforge.com/wow/addons/matts-action-bar-fonts",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "max-camera-distance",
+      "title": "Max Camera Distance ( Auto Combat Zoom)",
+      "url": "https://www.curseforge.com/wow/addons/max-camera-distance",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "meetngreet",
+      "title": "MeetNGreet",
+      "url": "https://www.curseforge.com/wow/addons/meetngreet",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "meierhelpers",
+      "title": "MeierHelpers",
+      "url": "https://www.curseforge.com/wow/addons/meierhelpers",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "melloui",
+      "title": "MelloUI",
+      "url": "https://www.curseforge.com/wow/addons/melloui",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "memento",
+      "title": "Memento (Screenshots for Achievements, Raids, Dungeons, PvP & more)",
+      "url": "https://www.curseforge.com/wow/addons/memento",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "merchant-plus",
+      "title": "Merchant Plus - Improved Vendor UI",
+      "url": "https://www.curseforge.com/wow/addons/merchant-plus",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "merfinplus",
+      "title": "MerfinPlus",
+      "url": "https://www.curseforge.com/wow/addons/merfinplus",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "metagearsets",
+      "title": "MetaGearSets",
+      "url": "https://www.curseforge.com/wow/addons/metagearsets",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "metameters",
+      "title": "MetaMeters",
+      "url": "https://www.curseforge.com/wow/addons/metameters",
+      "seenPages": [
+        25
+      ]
+    },
+    {
+      "slug": "metaminimap",
+      "title": "MetaMiniMap",
+      "url": "https://www.curseforge.com/wow/addons/metaminimap",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "metathreattbc",
+      "title": "MetaThreat",
+      "url": "https://www.curseforge.com/wow/addons/metathreattbc",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "microgames",
+      "title": "MicroGames",
+      "url": "https://www.curseforge.com/wow/addons/microgames",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "midas",
+      "title": "Midas",
+      "url": "https://www.curseforge.com/wow/addons/midas",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "midnight-tooltip",
+      "title": "Midnight Tooltip",
+      "url": "https://www.curseforge.com/wow/addons/midnight-tooltip",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "midnightfishcounter",
+      "title": "MidnightFishCounter",
+      "url": "https://www.curseforge.com/wow/addons/midnightfishcounter",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "midnightsimpleunitframes",
+      "title": "MidnightSimpleUnitFrames (MSUF)",
+      "url": "https://www.curseforge.com/wow/addons/midnightsimpleunitframes",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "mikscrollingbattletext",
+      "title": "MikScrollingBattleText (New API)",
+      "url": "https://www.curseforge.com/wow/addons/mikscrollingbattletext",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minicc",
+      "title": "MiniAuras",
+      "url": "https://www.curseforge.com/wow/addons/minicc",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniauras-chinese-voice-pack",
+      "title": "MiniAuras - Chinese Voice Pack",
+      "url": "https://www.curseforge.com/wow/addons/miniauras-chinese-voice-pack",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniauras-french-voice-pack",
+      "title": "MiniAuras - French Voice Pack",
+      "url": "https://www.curseforge.com/wow/addons/miniauras-french-voice-pack",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniauras-korean-voice-pack",
+      "title": "MiniAuras - Korean Voice Pack",
+      "url": "https://www.curseforge.com/wow/addons/miniauras-korean-voice-pack",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniauras-spanish-voice-pack",
+      "title": "MiniAuras - Spanish Voice Pack",
+      "url": "https://www.curseforge.com/wow/addons/miniauras-spanish-voice-pack",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniauras-trump-voice-pack",
+      "title": "MiniAuras - Trump Voice Pack",
+      "url": "https://www.curseforge.com/wow/addons/miniauras-trump-voice-pack",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "miniclasscolors",
+      "title": "MiniClassColors",
+      "url": "https://www.curseforge.com/wow/addons/miniclasscolors",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minicombatnotifier",
+      "title": "MiniCombatNotifier",
+      "url": "https://www.curseforge.com/wow/addons/minicombatnotifier",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minidruidmana",
+      "title": "MiniDruidMana",
+      "url": "https://www.curseforge.com/wow/addons/minidruidmana",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minifader",
+      "title": "MiniFader",
+      "url": "https://www.curseforge.com/wow/addons/minifader",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minihealerrange",
+      "title": "MiniHealerRange",
+      "url": "https://www.curseforge.com/wow/addons/minihealerrange",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minihider",
+      "title": "MiniHider",
+      "url": "https://www.curseforge.com/wow/addons/minihider",
+      "seenPages": [
+        26
+      ]
+    },
+    {
+      "slug": "minihonorcapped",
+      "title": "MiniHonorCapped",
+      "url": "https://www.curseforge.com/wow/addons/minihonorcapped",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minihotkeyshider",
+      "title": "MiniHotKeysHider",
+      "url": "https://www.curseforge.com/wow/addons/minihotkeyshider",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minikillingblow",
+      "title": "MiniKillingBlow",
+      "url": "https://www.curseforge.com/wow/addons/minikillingblow",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "weapon-swing-timer-forever",
+      "title": "Minimalistic Weapon swing timer Forever",
+      "url": "https://www.curseforge.com/wow/addons/weapon-swing-timer-forever",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minimap-buttons",
+      "title": "Minimap Buttons",
+      "url": "https://www.curseforge.com/wow/addons/minimap-buttons",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minimapbuttenbag-reborn",
+      "title": "MinimapButtenBag Reborn",
+      "url": "https://www.curseforge.com/wow/addons/minimapbuttenbag-reborn",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minimapbuttonbutton",
+      "title": "MinimapButtonButton",
+      "url": "https://www.curseforge.com/wow/addons/minimapbuttonbutton",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minimarkers",
+      "title": "MiniMarkers",
+      "url": "https://www.curseforge.com/wow/addons/minimarkers",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minimeter",
+      "title": "MiniMeter",
+      "url": "https://www.curseforge.com/wow/addons/minimeter",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "miniovershields",
+      "title": "MiniOvershields",
+      "url": "https://www.curseforge.com/wow/addons/miniovershields",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "miniqueuetimer",
+      "title": "MiniQueueTimer",
+      "url": "https://www.curseforge.com/wow/addons/miniqueuetimer",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minirangefader",
+      "title": "MiniRangeFader",
+      "url": "https://www.curseforge.com/wow/addons/minirangefader",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "miniresourcedisplay",
+      "title": "MiniResourceDisplay",
+      "url": "https://www.curseforge.com/wow/addons/miniresourcedisplay",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "miniroleicons",
+      "title": "MiniRoleIcons",
+      "url": "https://www.curseforge.com/wow/addons/miniroleicons",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minitabtarget",
+      "title": "MiniTabTarget",
+      "url": "https://www.curseforge.com/wow/addons/minitabtarget",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minitotemcancel",
+      "title": "MiniTotemCancel",
+      "url": "https://www.curseforge.com/wow/addons/minitotemcancel",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "minitrinketglow",
+      "title": "MiniTrinketGlow",
+      "url": "https://www.curseforge.com/wow/addons/minitrinketglow",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "miniwinloss",
+      "title": "MiniWinLoss",
+      "url": "https://www.curseforge.com/wow/addons/miniwinloss",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "missingpower",
+      "title": "MissingPower (How often you can cast an action), FiveSecondRule, HpReg",
+      "url": "https://www.curseforge.com/wow/addons/missingpower",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "mobinfo2",
+      "title": "MobInfo2",
+      "url": "https://www.curseforge.com/wow/addons/mobinfo2",
+      "seenPages": [
+        27
+      ]
+    },
+    {
+      "slug": "moose-guild-forever",
+      "title": "Moose Guild Forever",
+      "url": "https://www.curseforge.com/wow/addons/moose-guild-forever",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "moosemode",
+      "title": "MooseMode",
+      "url": "https://www.curseforge.com/wow/addons/moosemode",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "morthentooltips",
+      "title": "MorthenTooltips",
+      "url": "https://www.curseforge.com/wow/addons/morthentooltips",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mouseover-action-settings-automtic-ui-fader",
+      "title": "Mouseover Action Settings - Automatic UI Fader - Mouseover Everything",
+      "url": "https://www.curseforge.com/wow/addons/mouseover-action-settings-automtic-ui-fader",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "movable-books",
+      "title": "Movable Books",
+      "url": "https://www.curseforge.com/wow/addons/movable-books",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "move-fps-counter",
+      "title": "Move FPS Counter",
+      "url": "https://www.curseforge.com/wow/addons/move-fps-counter",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "move-raidmanager",
+      "title": "Move Raid Manager",
+      "url": "https://www.curseforge.com/wow/addons/move-raidmanager",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "moveany",
+      "title": "MoveAny (Edit Mode, Windows and Ui)",
+      "url": "https://www.curseforge.com/wow/addons/moveany",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "movecasttime",
+      "title": "MoveCastTime",
+      "url": "https://www.curseforge.com/wow/addons/movecasttime",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "murlocrpg",
+      "title": "MurlocRPG (Murloc RPG) (with Hardcore mode)",
+      "url": "https://www.curseforge.com/wow/addons/murlocrpg",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mutesoundfile",
+      "title": "MuteSoundFile",
+      "url": "https://www.curseforge.com/wow/addons/mutesoundfile",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mutexdelay-1-0",
+      "title": "MutexDelay-1.0",
+      "url": "https://www.curseforge.com/wow/addons/mutexdelay-1-0",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mutt",
+      "title": "Mutt Macro Patcher",
+      "url": "https://www.curseforge.com/wow/addons/mutt",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "my-layer-tracker",
+      "title": "My Layer Tracker",
+      "url": "https://www.curseforge.com/wow/addons/my-layer-tracker",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mylootonly",
+      "title": "MyLootOnly",
+      "url": "https://www.curseforge.com/wow/addons/mylootonly",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mynotepad",
+      "title": "MyNotepad",
+      "url": "https://www.curseforge.com/wow/addons/mynotepad",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "myrepuviewer-forever",
+      "title": "MyRepuViewer-Forever",
+      "url": "https://www.curseforge.com/wow/addons/myrepuviewer-forever",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "mythicsim-forever-sim-exporter",
+      "title": "MythicSim - Forever Sim Exporter",
+      "url": "https://www.curseforge.com/wow/addons/mythicsim-forever-sim-exporter",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "myxpbar-forever",
+      "title": "MyXPBar Forever",
+      "url": "https://www.curseforge.com/wow/addons/myxpbar-forever",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "nameplate-font-position",
+      "title": "Nameplate Font & position",
+      "url": "https://www.curseforge.com/wow/addons/nameplate-font-position",
+      "seenPages": [
+        28
+      ]
+    },
+    {
+      "slug": "nauticusclassicresurrected",
+      "title": "NauticusClassicResurrected",
+      "url": "https://www.curseforge.com/wow/addons/nauticusclassicresurrected",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nchat",
+      "title": "Nchat",
+      "url": "https://www.curseforge.com/wow/addons/nchat",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nearby-buff-monitor",
+      "title": "Nearby Buff Monitor",
+      "url": "https://www.curseforge.com/wow/addons/nearby-buff-monitor",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "neatplates-community-edition-mop-classic",
+      "title": "NeatPlates Community Edition",
+      "url": "https://www.curseforge.com/wow/addons/neatplates-community-edition-mop-classic",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "necrosis-tbc-classic-bcc-for",
+      "title": "Necrosis all version",
+      "url": "https://www.curseforge.com/wow/addons/necrosis-tbc-classic-bcc-for",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nerzorsblacklistkeepercore",
+      "title": "NerzorsBlacklistKeeper (Core Only)",
+      "url": "https://www.curseforge.com/wow/addons/nerzorsblacklistkeepercore",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nicedamage-reloaded",
+      "title": "NiceDamage (Reloaded)",
+      "url": "https://www.curseforge.com/wow/addons/nicedamage-reloaded",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nicedamageredux",
+      "title": "NiceDamageRedux",
+      "url": "https://www.curseforge.com/wow/addons/nicedamageredux",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nkthreat",
+      "title": "NKThreat \u2013 Threat Meter & Threat Analysis",
+      "url": "https://www.curseforge.com/wow/addons/nkthreat",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "no-contact",
+      "title": "No Contact",
+      "url": "https://www.curseforge.com/wow/addons/no-contact",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "no-auto-close",
+      "title": "NoAutoClose",
+      "url": "https://www.curseforge.com/wow/addons/no-auto-close",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nocjkchat",
+      "title": "NoCJKChat",
+      "url": "https://www.curseforge.com/wow/addons/nocjkchat",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "noquesttooltips",
+      "title": "NoQuestTooltips",
+      "url": "https://www.curseforge.com/wow/addons/noquesttooltips",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "notchbar",
+      "title": "NotchBar",
+      "url": "https://www.curseforge.com/wow/addons/notchbar",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nova-instance-tracker",
+      "title": "Nova Instance Tracker",
+      "url": "https://www.curseforge.com/wow/addons/nova-instance-tracker",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nova-spell-rank-checker",
+      "title": "Nova Spell Rank Checker",
+      "url": "https://www.curseforge.com/wow/addons/nova-spell-rank-checker",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "npctime",
+      "title": "NPC Time",
+      "url": "https://www.curseforge.com/wow/addons/npctime",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "nutri-free-restedxp-forever-guide",
+      "title": "Nutri - Free RestedXP Forever Guide",
+      "url": "https://www.curseforge.com/wow/addons/nutri-free-restedxp-forever-guide",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "offhand",
+      "title": "Offhand - Dual-Screen and Multi-Monitor UI",
+      "url": "https://www.curseforge.com/wow/addons/offhand",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "offset",
+      "title": "Offset",
+      "url": "https://www.curseforge.com/wow/addons/offset",
+      "seenPages": [
+        29
+      ]
+    },
+    {
+      "slug": "omnicc-godmode-midnight",
+      "title": "OmniCC - GODMODE  - Midnight",
+      "url": "https://www.curseforge.com/wow/addons/omnicc-godmode-midnight",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "omnidash",
+      "title": "OmniDash",
+      "url": "https://www.curseforge.com/wow/addons/omnidash",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "onlygcd",
+      "title": "OnlyGCD",
+      "url": "https://www.curseforge.com/wow/addons/onlygcd",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "onnozele-addons-firmins-combo-points",
+      "title": "Onnozele Addons - Firmin's Combo Points",
+      "url": "https://www.curseforge.com/wow/addons/onnozele-addons-firmins-combo-points",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "open-sesame",
+      "title": "Open Sesame // Automatic Clam & Container Opener with Speedy Loot",
+      "url": "https://www.curseforge.com/wow/addons/open-sesame",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "orbit-media",
+      "title": "Orbit: Media",
+      "url": "https://www.curseforge.com/wow/addons/orbit-media",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "outlawdisplay",
+      "title": "OutlawDisplay",
+      "url": "https://www.curseforge.com/wow/addons/outlawdisplay",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "overcraft-ui",
+      "title": "Overcraft UI",
+      "url": "https://www.curseforge.com/wow/addons/overcraft-ui",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "oxed-hub-meme-pack",
+      "title": "Oxed Hub Meme Pack",
+      "url": "https://www.curseforge.com/wow/addons/oxed-hub-meme-pack",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "packmaster",
+      "title": "Packmaster",
+      "url": "https://www.curseforge.com/wow/addons/packmaster",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "parcel",
+      "title": "Parcel",
+      "url": "https://www.curseforge.com/wow/addons/parcel",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "partyarrow",
+      "title": "PartyArrow",
+      "url": "https://www.curseforge.com/wow/addons/partyarrow",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "partyhealingdisplay",
+      "title": "PartyHealingDisplay",
+      "url": "https://www.curseforge.com/wow/addons/partyhealingdisplay",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaverscastbar",
+      "title": "PeaversCastBar",
+      "url": "https://www.curseforge.com/wow/addons/peaverscastbar",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaverschat",
+      "title": "PeaversChat",
+      "url": "https://www.curseforge.com/wow/addons/peaverschat",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaverscommons",
+      "title": "PeaversCommons",
+      "url": "https://www.curseforge.com/wow/addons/peaverscommons",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaversconfig",
+      "title": "PeaversConfig",
+      "url": "https://www.curseforge.com/wow/addons/peaversconfig",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaversminimap",
+      "title": "PeaversMiniMap",
+      "url": "https://www.curseforge.com/wow/addons/peaversminimap",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaversperformance",
+      "title": "PeaversPerformance",
+      "url": "https://www.curseforge.com/wow/addons/peaversperformance",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaversscaler",
+      "title": "PeaversScaler",
+      "url": "https://www.curseforge.com/wow/addons/peaversscaler",
+      "seenPages": [
+        30
+      ]
+    },
+    {
+      "slug": "peaverssystembars",
+      "title": "PeaversSystemBars",
+      "url": "https://www.curseforge.com/wow/addons/peaverssystembars",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "peaverstooltip",
+      "title": "PeaversToolTip",
+      "url": "https://www.curseforge.com/wow/addons/peaverstooltip",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "peaversui",
+      "title": "PeaversUI",
+      "url": "https://www.curseforge.com/wow/addons/peaversui",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "peaversunitframes",
+      "title": "PeaversUnitFrames",
+      "url": "https://www.curseforge.com/wow/addons/peaversunitframes",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "personal-blacklist-manager",
+      "title": "Personal Blacklist Manager",
+      "url": "https://www.curseforge.com/wow/addons/personal-blacklist-manager",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "personalresourcereskin",
+      "title": "PersonalResourceReskin",
+      "url": "https://www.curseforge.com/wow/addons/personalresourcereskin",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "personal-shopper-classic",
+      "title": "PersonalShopper",
+      "url": "https://www.curseforge.com/wow/addons/personal-shopper-classic",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "pettooltipinfo",
+      "title": "PetTooltipInfo",
+      "url": "https://www.curseforge.com/wow/addons/pettooltipinfo",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "pivot",
+      "title": "Pivot",
+      "url": "https://www.curseforge.com/wow/addons/pivot",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "pixelperfectuiscale",
+      "title": "PixelPerfectUIScale",
+      "url": "https://www.curseforge.com/wow/addons/pixelperfectuiscale",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "plater-nameplates",
+      "title": "Plater Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/plater-nameplates",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "platynator",
+      "title": "Platynator (Nameplates)",
+      "url": "https://www.curseforge.com/wow/addons/platynator",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "playercastbar",
+      "title": "PlayerCastBars",
+      "url": "https://www.curseforge.com/wow/addons/playercastbar",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "playerhistory",
+      "title": "PlayerHistory",
+      "url": "https://www.curseforge.com/wow/addons/playerhistory",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "playertracker",
+      "title": "PlayerTracker",
+      "url": "https://www.curseforge.com/wow/addons/playertracker",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "poncho",
+      "title": "Poncho-2.0",
+      "url": "https://www.curseforge.com/wow/addons/poncho",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "portal-master",
+      "title": "Portal Master",
+      "url": "https://www.curseforge.com/wow/addons/portal-master",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "prat-3-0",
+      "title": "Prat 3.0",
+      "url": "https://www.curseforge.com/wow/addons/prat-3-0",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "priestly",
+      "title": "Priestly \u2013 Priest Buff Manager (Pally Power Style)",
+      "url": "https://www.curseforge.com/wow/addons/priestly",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "proctextures",
+      "title": "ProcTextures",
+      "url": "https://www.curseforge.com/wow/addons/proctextures",
+      "seenPages": [
+        31
+      ]
+    },
+    {
+      "slug": "profession-master",
+      "title": "Profession Master - Guild Craft & Personal Trade Skills",
+      "url": "https://www.curseforge.com/wow/addons/profession-master",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "professiondetective",
+      "title": "ProfessionDetective",
+      "url": "https://www.curseforge.com/wow/addons/professiondetective",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "profilemanager",
+      "title": "ProfileManager",
+      "url": "https://www.curseforge.com/wow/addons/profilemanager",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "profitprophet",
+      "title": "ProfitProphet - The Ultimate AH Companion",
+      "url": "https://www.curseforge.com/wow/addons/profitprophet",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "pugcheck",
+      "title": "PugCheck",
+      "url": "https://www.curseforge.com/wow/addons/pugcheck",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "timer",
+      "title": "Pull Timer",
+      "url": "https://www.curseforge.com/wow/addons/timer",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "pvptaunt",
+      "title": "PVPTaunt: Cross Faction Chat translation & Automated BG Messages",
+      "url": "https://www.curseforge.com/wow/addons/pvptaunt",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "qturnin",
+      "title": "QTurnIn",
+      "url": "https://www.curseforge.com/wow/addons/qturnin",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "quartz-updated",
+      "title": "Quartz  [Updated}",
+      "url": "https://www.curseforge.com/wow/addons/quartz-updated",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questhistory",
+      "title": "Quest History",
+      "url": "https://www.curseforge.com/wow/addons/questhistory",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "quest-marker",
+      "title": "quest marker",
+      "url": "https://www.curseforge.com/wow/addons/quest-marker",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "quest-master",
+      "title": "Quest Master Forever",
+      "url": "https://www.curseforge.com/wow/addons/quest-master",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "quest-xp-tracker",
+      "title": "Quest XP Tracker",
+      "url": "https://www.curseforge.com/wow/addons/quest-xp-tracker",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "quester-forever",
+      "title": "Quester Forever",
+      "url": "https://www.curseforge.com/wow/addons/quester-forever",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questguru",
+      "title": "QuestGuru",
+      "url": "https://www.curseforge.com/wow/addons/questguru",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questie-forever",
+      "title": "Questie Forever",
+      "url": "https://www.curseforge.com/wow/addons/questie-forever",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questit-forever",
+      "title": "QuestIT-Forever",
+      "url": "https://www.curseforge.com/wow/addons/questit-forever",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questprogresssound-revived",
+      "title": "QuestProgressSound (Revived)",
+      "url": "https://www.curseforge.com/wow/addons/questprogresssound-revived",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questwordhunter",
+      "title": "QuestWordHunter",
+      "url": "https://www.curseforge.com/wow/addons/questwordhunter",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questwordhunter-english-panel",
+      "title": "QuestWordHunter - English Quests panel text",
+      "url": "https://www.curseforge.com/wow/addons/questwordhunter-english-panel",
+      "seenPages": [
+        32
+      ]
+    },
+    {
+      "slug": "questwordhunter-german-dictionary",
+      "title": "QuestWordHunter - German Dictionary",
+      "url": "https://www.curseforge.com/wow/addons/questwordhunter-german-dictionary",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "queueinfo",
+      "title": "QueueInfo",
+      "url": "https://www.curseforge.com/wow/addons/queueinfo",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "quick-keybind-mode",
+      "title": "Quick Keybind Mode",
+      "url": "https://www.curseforge.com/wow/addons/quick-keybind-mode",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "quick-rl",
+      "title": "Quick RL",
+      "url": "https://www.curseforge.com/wow/addons/quick-rl",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "quiethud",
+      "title": "QuietHUD",
+      "url": "https://www.curseforge.com/wow/addons/quiethud",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "racesoundalert",
+      "title": "RaceSoundAlert",
+      "url": "https://www.curseforge.com/wow/addons/racesoundalert",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "raid-markers",
+      "title": "Raid Markers",
+      "url": "https://www.curseforge.com/wow/addons/raid-markers",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "raidify-loot",
+      "title": "Raidify Loot",
+      "url": "https://www.curseforge.com/wow/addons/raidify-loot",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "raidify",
+      "title": "Raidify | Raid Roster, Signups & Attendance for Classic, TBC & MoP",
+      "url": "https://www.curseforge.com/wow/addons/raidify",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "random-pet-summoner",
+      "title": "Random Pet Summoner",
+      "url": "https://www.curseforge.com/wow/addons/random-pet-summoner",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "rankswap",
+      "title": "RankSwap",
+      "url": "https://www.curseforge.com/wow/addons/rankswap",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "rankup",
+      "title": "RankUp",
+      "url": "https://www.curseforge.com/wow/addons/rankup",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "nameplate-highlight",
+      "title": "Rare Highlight",
+      "url": "https://www.curseforge.com/wow/addons/nameplate-highlight",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "rarescanner",
+      "title": "RareScanner",
+      "url": "https://www.curseforge.com/wow/addons/rarescanner",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "rateplayer",
+      "title": "RatePlayer Rate Player",
+      "url": "https://www.curseforge.com/wow/addons/rateplayer",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "reckless-abandon",
+      "title": "Reckless Abandon",
+      "url": "https://www.curseforge.com/wow/addons/reckless-abandon",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "regentimer",
+      "title": "RegenTimer",
+      "url": "https://www.curseforge.com/wow/addons/regentimer",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "reload",
+      "title": "Reload",
+      "url": "https://www.curseforge.com/wow/addons/reload",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "remove-questie",
+      "title": "Remove Questie",
+      "url": "https://www.curseforge.com/wow/addons/remove-questie",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "reno",
+      "title": "Reno Macro Patcher",
+      "url": "https://www.curseforge.com/wow/addons/reno",
+      "seenPages": [
+        33
+      ]
+    },
+    {
+      "slug": "repkeeper",
+      "title": "RepKeeper",
+      "url": "https://www.curseforge.com/wow/addons/repkeeper",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "requisition",
+      "title": "Requisition",
+      "url": "https://www.curseforge.com/wow/addons/requisition",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "better-world-map-resizable-movable",
+      "title": "Resizable World Map",
+      "url": "https://www.curseforge.com/wow/addons/better-world-map-resizable-movable",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "resonance",
+      "title": "Resonance",
+      "url": "https://www.curseforge.com/wow/addons/resonance",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "resourceding",
+      "title": "ResourceDing",
+      "url": "https://www.curseforge.com/wow/addons/resourceding",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "restedxpanchorfix",
+      "title": "RestedXP AnchorFix",
+      "url": "https://www.curseforge.com/wow/addons/restedxpanchorfix",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "restedxp-guide",
+      "title": "RestedXP Guide",
+      "url": "https://www.curseforge.com/wow/addons/restedxp-guide",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "restedxp-tomtom",
+      "title": "RestedXP TomTom",
+      "url": "https://www.curseforge.com/wow/addons/restedxp-tomtom",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "restocker-mop",
+      "title": "Restocker (MoP)",
+      "url": "https://www.curseforge.com/wow/addons/restocker-mop",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rexui-eternal",
+      "title": "RexUI Eternal",
+      "url": "https://www.curseforge.com/wow/addons/rexui-eternal",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "betterlevelup",
+      "title": "RGX | Better Level-Up!",
+      "url": "https://www.curseforge.com/wow/addons/betterlevelup",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "removenameplatedebuffs",
+      "title": "RGX | Remove Nameplate Debuffs!",
+      "url": "https://www.curseforge.com/wow/addons/removenameplatedebuffs",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rightclickselfcast",
+      "title": "RightClickSelfCast",
+      "url": "https://www.curseforge.com/wow/addons/rightclickselfcast",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rogueenergycombo",
+      "title": "RogueEnergyCombo",
+      "url": "https://www.curseforge.com/wow/addons/rogueenergycombo",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rollcall",
+      "title": "Roll Call - Smarter /rolls",
+      "url": "https://www.curseforge.com/wow/addons/rollcall",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "roosterloop",
+      "title": "RoosterLoop",
+      "url": "https://www.curseforge.com/wow/addons/roosterloop",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rotationanalyzer",
+      "title": "RotationAnalyzer",
+      "url": "https://www.curseforge.com/wow/addons/rotationanalyzer",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rpglootfeed",
+      "title": "RPGLootFeed",
+      "url": "https://www.curseforge.com/wow/addons/rpglootfeed",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "rqe-rhodans-quest-explorer",
+      "title": "RQE - Rhodan's Quest Explorer",
+      "url": "https://www.curseforge.com/wow/addons/rqe-rhodans-quest-explorer",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "ryoui",
+      "title": "RyoUI - Nameplates",
+      "url": "https://www.curseforge.com/wow/addons/ryoui",
+      "seenPages": [
+        34
+      ]
+    },
+    {
+      "slug": "smore-skills",
+      "title": "S'more Skills",
+      "url": "https://www.curseforge.com/wow/addons/smore-skills",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "safeguardgodmode",
+      "title": "SafeGuardGODMODE",
+      "url": "https://www.curseforge.com/wow/addons/safeguardgodmode",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "salve",
+      "title": "Salve",
+      "url": "https://www.curseforge.com/wow/addons/salve",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "scopefarm",
+      "title": "ScopeFarm",
+      "url": "https://www.curseforge.com/wow/addons/scopefarm",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "scout-pvp",
+      "title": "Scout - Player Locator",
+      "url": "https://www.curseforge.com/wow/addons/scout-pvp",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "scrap",
+      "title": "Scrap (Junk Seller)",
+      "url": "https://www.curseforge.com/wow/addons/scrap",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "scrolling-chat-text",
+      "title": "Scrolling Chat Text",
+      "url": "https://www.curseforge.com/wow/addons/scrolling-chat-text",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "scrolling-quest-text-forever",
+      "title": "Scrolling Quest Text (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/scrolling-quest-text-forever",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "securetabs",
+      "title": "SecureTabs-2.0",
+      "url": "https://www.curseforge.com/wow/addons/securetabs",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "sekhmet-forever",
+      "title": "Sekhmet Forever",
+      "url": "https://www.curseforge.com/wow/addons/sekhmet-forever",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "sell-junks-repair",
+      "title": "Sell Junks (& repair)",
+      "url": "https://www.curseforge.com/wow/addons/sell-junks-repair",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "shadowless-bam-crit-sound-alert-addon",
+      "title": "Shadowless Bam! Crit Sound Alert Addon",
+      "url": "https://www.curseforge.com/wow/addons/shadowless-bam-crit-sound-alert-addon",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "shard-source",
+      "title": "Shard Source",
+      "url": "https://www.curseforge.com/wow/addons/shard-source",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "sharpies-gear-judge",
+      "title": "Sharpie's Gear Judge",
+      "url": "https://www.curseforge.com/wow/addons/sharpies-gear-judge",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "sharpiesgearjudge-xp",
+      "title": "SharpiesGearJudge_XP",
+      "url": "https://www.curseforge.com/wow/addons/sharpiesgearjudge-xp",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "sift",
+      "title": "Sift",
+      "url": "https://www.curseforge.com/wow/addons/sift",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "signalfire",
+      "title": "SignalFire",
+      "url": "https://www.curseforge.com/wow/addons/signalfire",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "silver-dragon",
+      "title": "SilverDragon - Rare Scanner",
+      "url": "https://www.curseforge.com/wow/addons/silver-dragon",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "simple-arsenal-swap",
+      "title": "Simple Arsenal Swap",
+      "url": "https://www.curseforge.com/wow/addons/simple-arsenal-swap",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "simple-guild-manager",
+      "title": "Simple Guild Recruiter",
+      "url": "https://www.curseforge.com/wow/addons/simple-guild-manager",
+      "seenPages": [
+        35
+      ]
+    },
+    {
+      "slug": "simple-item-level",
+      "title": "Simple Item Levels",
+      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simple-mouse-cursor",
+      "title": "Simple Mouse Cursor",
+      "url": "https://www.curseforge.com/wow/addons/simple-mouse-cursor",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simple-over-the-shoulder-camera",
+      "title": "Simple Over the Shoulder Camera",
+      "url": "https://www.curseforge.com/wow/addons/simple-over-the-shoulder-camera",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simple-poisons",
+      "title": "Simple Poisons",
+      "url": "https://www.curseforge.com/wow/addons/simple-poisons",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simple-scrolling-loot",
+      "title": "Simple Scrolling Loot",
+      "url": "https://www.curseforge.com/wow/addons/simple-scrolling-loot",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simplebenikui",
+      "title": "SimpleBenikUI",
+      "url": "https://www.curseforge.com/wow/addons/simplebenikui",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "simplified-bag-frame",
+      "title": "Simplified Bag Frame",
+      "url": "https://www.curseforge.com/wow/addons/simplified-bag-frame",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "skillwright",
+      "title": "Skillwright",
+      "url": "https://www.curseforge.com/wow/addons/skillwright",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "slackers-addon-depot",
+      "title": "Slacker's Addon Depot",
+      "url": "https://www.curseforge.com/wow/addons/slackers-addon-depot",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "slackers-tweak-suite",
+      "title": "Slacker's Tweak Suite",
+      "url": "https://www.curseforge.com/wow/addons/slackers-tweak-suite",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "smartquesttracker",
+      "title": "SmartQuestTracker",
+      "url": "https://www.curseforge.com/wow/addons/smartquesttracker",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "smurankup",
+      "title": "SmuRankUp",
+      "url": "https://www.curseforge.com/wow/addons/smurankup",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "snapheal",
+      "title": "SnapHeal",
+      "url": "https://www.curseforge.com/wow/addons/snapheal",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "snapsnack",
+      "title": "SnapSnack",
+      "url": "https://www.curseforge.com/wow/addons/snapsnack",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "clean-chat-cjk-chinese-spam-blocker",
+      "title": "Spam Blocker",
+      "url": "https://www.curseforge.com/wow/addons/clean-chat-cjk-chinese-spam-blocker",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "specbistooltip",
+      "title": "SpecBisTooltip Spec Bis List Tooltip",
+      "url": "https://www.curseforge.com/wow/addons/specbistooltip",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "speedster",
+      "title": "Speedster",
+      "url": "https://www.curseforge.com/wow/addons/speedster",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "speedyautoloot",
+      "title": "Speedy AutoLoot",
+      "url": "https://www.curseforge.com/wow/addons/speedyautoloot",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "spoken-player",
+      "title": "Spoken Player",
+      "url": "https://www.curseforge.com/wow/addons/spoken-player",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "spoken-quests",
+      "title": "Spoken Quests",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests",
+      "seenPages": [
+        36
+      ]
+    },
+    {
+      "slug": "spoken-quests-audio-all",
+      "title": "Spoken Quests Audio: All (meta package)",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests-audio-all",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-quests-audio-alliance",
+      "title": "Spoken Quests Audio: Alliance",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests-audio-alliance",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-quests-audio-gossip",
+      "title": "Spoken Quests Audio: Gossip",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests-audio-gossip",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-quests-audio-horde",
+      "title": "Spoken Quests Audio: Horde",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests-audio-horde",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-quests-audio-shared",
+      "title": "Spoken Quests Audio: Shared quests",
+      "url": "https://www.curseforge.com/wow/addons/spoken-quests-audio-shared",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-zones",
+      "title": "Spoken Zones",
+      "url": "https://www.curseforge.com/wow/addons/spoken-zones",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spoken-zones-audio",
+      "title": "Spoken Zones Audio",
+      "url": "https://www.curseforge.com/wow/addons/spoken-zones-audio",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spy-god-mode",
+      "title": "Spy  - God Mode",
+      "url": "https://www.curseforge.com/wow/addons/spy-god-mode",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spy-forever",
+      "title": "Spy (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/spy-forever",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spy-guild-kos-sync",
+      "title": "Spy Guild KOS Sync",
+      "url": "https://www.curseforge.com/wow/addons/spy-guild-kos-sync",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "spy-stats-for-elvui",
+      "title": "Spy Stats for ElvUI",
+      "url": "https://www.curseforge.com/wow/addons/spy-stats-for-elvui",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "stalecheck",
+      "title": "StaleCheck-1.0",
+      "url": "https://www.curseforge.com/wow/addons/stalecheck",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "statcoach",
+      "title": "StatCoach",
+      "url": "https://www.curseforge.com/wow/addons/statcoach",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "stealth-alert-forever",
+      "title": "Stealth Alert (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/stealth-alert-forever",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "streamermode",
+      "title": "StreamerMode Streamer Mode",
+      "url": "https://www.curseforge.com/wow/addons/streamermode",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "stryks-emote-wheel",
+      "title": "Stryk's Emote Wheel",
+      "url": "https://www.curseforge.com/wow/addons/stryks-emote-wheel",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "stylish-notifications",
+      "title": "Stylish Notifications",
+      "url": "https://www.curseforge.com/wow/addons/stylish-notifications",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "stylish-zone-text",
+      "title": "Stylish Zone Text",
+      "url": "https://www.curseforge.com/wow/addons/stylish-zone-text",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "sushi",
+      "title": "Sushi-3.2",
+      "url": "https://www.curseforge.com/wow/addons/sushi",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "svenskawow",
+      "title": "SvenskaWoW",
+      "url": "https://www.curseforge.com/wow/addons/svenskawow",
+      "seenPages": [
+        37
+      ]
+    },
+    {
+      "slug": "swampman-enhancements",
+      "title": "Swampman Enhancements",
+      "url": "https://www.curseforge.com/wow/addons/swampman-enhancements",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "syndicator",
+      "title": "Syndicator",
+      "url": "https://www.curseforge.com/wow/addons/syndicator",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tacklebox",
+      "title": "Tacklebox",
+      "url": "https://www.curseforge.com/wow/addons/tacklebox",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "talent-tree-tweaks",
+      "title": "Talent Tree Tweaks",
+      "url": "https://www.curseforge.com/wow/addons/talent-tree-tweaks",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "talentsforever",
+      "title": "TalentsForever",
+      "url": "https://www.curseforge.com/wow/addons/talentsforever",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tankforever",
+      "title": "TankForever",
+      "url": "https://www.curseforge.com/wow/addons/tankforever",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tankhelper",
+      "title": "TankHelper (RaidIcons, Automark, Pulltimer) Tank",
+      "url": "https://www.curseforge.com/wow/addons/tankhelper",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tankilight",
+      "title": "TankiLight",
+      "url": "https://www.curseforge.com/wow/addons/tankilight",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "target-tooltip-forever",
+      "title": "Target Tooltip (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/target-tooltip-forever",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetcopy",
+      "title": "TargetCopy",
+      "url": "https://www.curseforge.com/wow/addons/targetcopy",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetedspells",
+      "title": "TargetedSpells",
+      "url": "https://www.curseforge.com/wow/addons/targetedspells",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetforge",
+      "title": "TargetForge",
+      "url": "https://www.curseforge.com/wow/addons/targetforge",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetpercent",
+      "title": "TargetPercent",
+      "url": "https://www.curseforge.com/wow/addons/targetpercent",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetrange",
+      "title": "TargetRange",
+      "url": "https://www.curseforge.com/wow/addons/targetrange",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "targetslayer",
+      "title": "TargetSlayer",
+      "url": "https://www.curseforge.com/wow/addons/targetslayer",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tavernboard",
+      "title": "TavernBoard",
+      "url": "https://www.curseforge.com/wow/addons/tavernboard",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "tectecs-dungeonfilter",
+      "title": "Tectecs Dungeonfilter",
+      "url": "https://www.curseforge.com/wow/addons/tectecs-dungeonfilter",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "textureatlasviewer",
+      "title": "TextureAtlasViewer",
+      "url": "https://www.curseforge.com/wow/addons/textureatlasviewer",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "the-fishing-log",
+      "title": "The Fishing Log",
+      "url": "https://www.curseforge.com/wow/addons/the-fishing-log",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "owl-pack",
+      "title": "The Owl Pack",
+      "url": "https://www.curseforge.com/wow/addons/owl-pack",
+      "seenPages": [
+        38
+      ]
+    },
+    {
+      "slug": "theaddon2-go-edition",
+      "title": "TheAddon2 - GO edition",
+      "url": "https://www.curseforge.com/wow/addons/theaddon2-go-edition",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "thewowdb-forever",
+      "title": "TheWoWDB - Forever",
+      "url": "https://www.curseforge.com/wow/addons/thewowdb-forever",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "threat-display",
+      "title": "Threat Display",
+      "url": "https://www.curseforge.com/wow/addons/threat-display",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "tidy-plates-threat-plates",
+      "title": "Threat Plates",
+      "url": "https://www.curseforge.com/wow/addons/tidy-plates-threat-plates",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "threat-watcher",
+      "title": "Threat Watcher",
+      "url": "https://www.curseforge.com/wow/addons/threat-watcher",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "threatmeter",
+      "title": "ThreatMeter [Hardcore]",
+      "url": "https://www.curseforge.com/wow/addons/threatmeter",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "ticket-checker",
+      "title": "Ticket Checker",
+      "url": "https://www.curseforge.com/wow/addons/ticket-checker",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "timbers-ding-pics",
+      "title": "Timber's Ding Pics",
+      "url": "https://www.curseforge.com/wow/addons/timbers-ding-pics",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "timbers-field-guide",
+      "title": "Timber's Field Guide",
+      "url": "https://www.curseforge.com/wow/addons/timbers-field-guide",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "time-to-level",
+      "title": "Time To Level",
+      "url": "https://www.curseforge.com/wow/addons/time-to-level",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "timestamp",
+      "title": "TimeStamp",
+      "url": "https://www.curseforge.com/wow/addons/timestamp",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "tinker",
+      "title": "Tinker",
+      "url": "https://www.curseforge.com/wow/addons/tinker",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "tinkerbox-forever",
+      "title": "TinkerBox Forever",
+      "url": "https://www.curseforge.com/wow/addons/tinkerbox-forever",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "tinytooltip-forever",
+      "title": "TinyTooltip Forever",
+      "url": "https://www.curseforge.com/wow/addons/tinytooltip-forever",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "titan-panel-reputation-continued",
+      "title": "Titan [Reputation Continued]",
+      "url": "https://www.curseforge.com/wow/addons/titan-panel-reputation-continued",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "titan-panel-mail-classic-retail",
+      "title": "Titan Panel [Mail] Classic & TBC & Retail",
+      "url": "https://www.curseforge.com/wow/addons/titan-panel-mail-classic-retail",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "titan-panel-weapon-skills",
+      "title": "Titan Panel [Weapon Skills]",
+      "url": "https://www.curseforge.com/wow/addons/titan-panel-weapon-skills",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "toastalerts",
+      "title": "ToastAlerts",
+      "url": "https://www.curseforge.com/wow/addons/toastalerts",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "togtools",
+      "title": "TOG Tools",
+      "url": "https://www.curseforge.com/wow/addons/togtools",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "togt",
+      "title": "TOGT",
+      "url": "https://www.curseforge.com/wow/addons/togt",
+      "seenPages": [
+        39
+      ]
+    },
+    {
+      "slug": "tomomod",
+      "title": "TomoMod",
+      "url": "https://www.curseforge.com/wow/addons/tomomod",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tomtom",
+      "title": "TomTom",
+      "url": "https://www.curseforge.com/wow/addons/tomtom",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tongues-of-azeroth",
+      "title": "Tongues of Azeroth",
+      "url": "https://www.curseforge.com/wow/addons/tongues-of-azeroth",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tooltipid-itemid-by-overcraft",
+      "title": "TooltipID ItemID ( spellid etc.. all tooltip and item ID ) by OverCraft",
+      "url": "https://www.curseforge.com/wow/addons/tooltipid-itemid-by-overcraft",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tt",
+      "title": "ToolTipped",
+      "url": "https://www.curseforge.com/wow/addons/tt",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tooltiputils",
+      "title": "TooltipUtils",
+      "url": "https://www.curseforge.com/wow/addons/tooltiputils",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "trp3-nbk-tooltip",
+      "title": "Total RP 3: NerzorsBlacklistKeeper Tooltip Support",
+      "url": "https://www.curseforge.com/wow/addons/trp3-nbk-tooltip",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "totemframemover",
+      "title": "TotemFrameMover",
+      "url": "https://www.curseforge.com/wow/addons/totemframemover",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tperl-unitframes",
+      "title": "TPerl UnitFrames",
+      "url": "https://www.curseforge.com/wow/addons/tperl-unitframes",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tracking-eye-classic",
+      "title": "Tracking Eye // Tracking Menu & Automated Tracking Switcher for Herbs and Minerals",
+      "url": "https://www.curseforge.com/wow/addons/tracking-eye-classic",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tracking-switcher-x",
+      "title": "Tracking Switcher X",
+      "url": "https://www.curseforge.com/wow/addons/tracking-switcher-x",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "trade-board",
+      "title": "Trade Board",
+      "url": "https://www.curseforge.com/wow/addons/trade-board",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "trainerspells",
+      "title": "TrainerSpells (Profession+Recipe/Class+Pet Spells) (What's Training Alternative)",
+      "url": "https://www.curseforge.com/wow/addons/trainerspells",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "transmog-id",
+      "title": "Transmog ID",
+      "url": "https://www.curseforge.com/wow/addons/transmog-id",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "transmog-inspector",
+      "title": "Transmog Inspector",
+      "url": "https://www.curseforge.com/wow/addons/transmog-inspector",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "transmog-loot-helper",
+      "title": "Transmog Loot Helper",
+      "url": "https://www.curseforge.com/wow/addons/transmog-loot-helper",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "trinketalarm",
+      "title": "TrinketAlarm",
+      "url": "https://www.curseforge.com/wow/addons/trinketalarm",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "ttell",
+      "title": "TTell",
+      "url": "https://www.curseforge.com/wow/addons/ttell",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "turn-in",
+      "title": "Turn In",
+      "url": "https://www.curseforge.com/wow/addons/turn-in",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "tweaks-and-qol",
+      "title": "Tweaks and QoL",
+      "url": "https://www.curseforge.com/wow/addons/tweaks-and-qol",
+      "seenPages": [
+        40
+      ]
+    },
+    {
+      "slug": "twilight-ui",
+      "title": "Twilight UI Forever",
+      "url": "https://www.curseforge.com/wow/addons/twilight-ui",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "twintops-insanity-bar",
+      "title": "Twintop's Resource Bar",
+      "url": "https://www.curseforge.com/wow/addons/twintops-insanity-bar",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "twitch-drops-watcher",
+      "title": "Twitch Drops Watcher",
+      "url": "https://www.curseforge.com/wow/addons/twitch-drops-watcher",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "twitch-emotes-v2",
+      "title": "Twitch Emotes v2",
+      "url": "https://www.curseforge.com/wow/addons/twitch-emotes-v2",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "unfit",
+      "title": "Unfit-1.0",
+      "url": "https://www.curseforge.com/wow/addons/unfit",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "unified-profile-manager",
+      "title": "Unified Profile Manager",
+      "url": "https://www.curseforge.com/wow/addons/unified-profile-manager",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "unitframeutils",
+      "title": "UnitFrameUtils (Language-Flag, M+ Rating, ilvl, Companion in Delve, ...)",
+      "url": "https://www.curseforge.com/wow/addons/unitframeutils",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "unitscan-hardcore",
+      "title": "UnitScan Hardcore",
+      "url": "https://www.curseforge.com/wow/addons/unitscan-hardcore",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "unlearned-spells",
+      "title": "Unlearned Spells",
+      "url": "https://www.curseforge.com/wow/addons/unlearned-spells",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "uwowea-selfbuftracker",
+      "title": "UWOWEA - SelfBuffTracker",
+      "url": "https://www.curseforge.com/wow/addons/uwowea-selfbuftracker",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vaultline",
+      "title": "Vaultline",
+      "url": "https://www.curseforge.com/wow/addons/vaultline",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vendor-item-filter",
+      "title": "Vendor Item Filter",
+      "url": "https://www.curseforge.com/wow/addons/vendor-item-filter",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vendor-price-plus",
+      "title": "Vendor Price Plus",
+      "url": "https://www.curseforge.com/wow/addons/vendor-price-plus",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "versioncheck",
+      "title": "VersionCheck",
+      "url": "https://www.curseforge.com/wow/addons/versioncheck",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vgambler",
+      "title": "vGambler",
+      "url": "https://www.curseforge.com/wow/addons/vgambler",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vital-frame",
+      "title": "Vital Frame",
+      "url": "https://www.curseforge.com/wow/addons/vital-frame",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "vitals",
+      "title": "Vitals",
+      "url": "https://www.curseforge.com/wow/addons/vitals",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "ai-voiceover-continued",
+      "title": "VoiceOver Continued",
+      "url": "https://www.curseforge.com/wow/addons/ai-voiceover-continued",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "voidbox",
+      "title": "VoidBox",
+      "url": "https://www.curseforge.com/wow/addons/voidbox",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "waawaasoundboard",
+      "title": "WaaWaaSoundboard",
+      "url": "https://www.curseforge.com/wow/addons/waawaasoundboard",
+      "seenPages": [
+        41
+      ]
+    },
+    {
+      "slug": "wabaquest",
+      "title": "WabaQuest",
+      "url": "https://www.curseforge.com/wow/addons/wabaquest",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wabaui",
+      "title": "WabaUI",
+      "url": "https://www.curseforge.com/wow/addons/wabaui",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wandrush",
+      "title": "WandRush",
+      "url": "https://www.curseforge.com/wow/addons/wandrush",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "warlock-grimoire-helper",
+      "title": "Warlock Grimoire Helper",
+      "url": "https://www.curseforge.com/wow/addons/warlock-grimoire-helper",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "watchtower",
+      "title": "Watchtower",
+      "url": "https://www.curseforge.com/wow/addons/watchtower",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wayfinder",
+      "title": "Wayfinder",
+      "url": "https://www.curseforge.com/wow/addons/wayfinder",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "waypointui",
+      "title": "Waypoint UI",
+      "url": "https://www.curseforge.com/wow/addons/waypointui",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "weaponswingtimer-queuing",
+      "title": "WeaponSwingTimer - Queuing",
+      "url": "https://www.curseforge.com/wow/addons/weaponswingtimer-queuing",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "weapontips",
+      "title": "WeaponTips",
+      "url": "https://www.curseforge.com/wow/addons/weapontips",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "whats-training-forever",
+      "title": "What's Training ? (Forever)",
+      "url": "https://www.curseforge.com/wow/addons/whats-training-forever",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "whats-training",
+      "title": "What's Training?",
+      "url": "https://www.curseforge.com/wow/addons/whats-training",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "where-do-i-get-it-forever",
+      "title": "Where Do I Get It? Forever",
+      "url": "https://www.curseforge.com/wow/addons/where-do-i-get-it-forever",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wheres-me-mouse",
+      "title": "Where's Me Mouse?!",
+      "url": "https://www.curseforge.com/wow/addons/wheres-me-mouse",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "what-the-whisper",
+      "title": "Whisper Chat Messenger (What The Whisper)",
+      "url": "https://www.curseforge.com/wow/addons/what-the-whisper",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "whostargeted",
+      "title": "Who's Targeted",
+      "url": "https://www.curseforge.com/wow/addons/whostargeted",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "whodoeswhat",
+      "title": "WhoDoesWhat",
+      "url": "https://www.curseforge.com/wow/addons/whodoeswhat",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wicks-survivors",
+      "title": "Wick's Survivors",
+      "url": "https://www.curseforge.com/wow/addons/wicks-survivors",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "wildaddon",
+      "title": "WildAddon-1.1",
+      "url": "https://www.curseforge.com/wow/addons/wildaddon",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "win95ui",
+      "title": "Win95UI",
+      "url": "https://www.curseforge.com/wow/addons/win95ui",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "window-mover",
+      "title": "Window Mover",
+      "url": "https://www.curseforge.com/wow/addons/window-mover",
+      "seenPages": [
+        42
+      ]
+    },
+    {
+      "slug": "worldmappin",
+      "title": "WorldMapPin World Map Pin / Marker",
+      "url": "https://www.curseforge.com/wow/addons/worldmappin",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "worldpvp-weizpvp-classic",
+      "title": "WorldPVP (weizPVP Classic)",
+      "url": "https://www.curseforge.com/wow/addons/worldpvp-weizpvp-classic",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "worldpvp-invite-helper",
+      "title": "WorldPVP Invite Helper",
+      "url": "https://www.curseforge.com/wow/addons/worldpvp-invite-helper",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-camera-tools",
+      "title": "WoW Camera Tools",
+      "url": "https://www.curseforge.com/wow/addons/wow-camera-tools",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-forever-addons",
+      "title": "WoW Forever Addons",
+      "url": "https://www.curseforge.com/wow/addons/wow-forever-addons",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-forever-issue-report-hide",
+      "title": "WoW Forever Issue Reporter Hide",
+      "url": "https://www.curseforge.com/wow/addons/wow-forever-issue-report-hide",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wowf-rep-tracker",
+      "title": "WoW Forever Rep & Skill Tracker",
+      "url": "https://www.curseforge.com/wow/addons/wowf-rep-tracker",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-task-manager",
+      "title": "WoW Task Manager",
+      "url": "https://www.curseforge.com/wow/addons/wow-task-manager",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-translator",
+      "title": "WoW Translator",
+      "url": "https://www.curseforge.com/wow/addons/wow-translator",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wowtr",
+      "title": "WoWTR - T\u00fcrk\u00e7e Yama",
+      "url": "https://www.curseforge.com/wow/addons/wowtr",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "wow-unit",
+      "title": "WoWUnit",
+      "url": "https://www.curseforge.com/wow/addons/wow-unit",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "x-and-y",
+      "title": "X and Y",
+      "url": "https://www.curseforge.com/wow/addons/x-and-y",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xanachievementmover",
+      "title": "xanAchievementMover",
+      "url": "https://www.curseforge.com/wow/addons/xanachievementmover",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xanbufftimers",
+      "title": "xanBuffTimers",
+      "url": "https://www.curseforge.com/wow/addons/xanbufftimers",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xanchat",
+      "title": "xanChat",
+      "url": "https://www.curseforge.com/wow/addons/xanchat",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xandebufftimers",
+      "title": "xanDebuffTimers",
+      "url": "https://www.curseforge.com/wow/addons/xandebufftimers",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xandurability",
+      "title": "xanDurability",
+      "url": "https://www.curseforge.com/wow/addons/xandurability",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xanerrordevourer",
+      "title": "xanErrorDevourer",
+      "url": "https://www.curseforge.com/wow/addons/xanerrordevourer",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xanexp",
+      "title": "xanExp",
+      "url": "https://www.curseforge.com/wow/addons/xanexp",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xangoldmine",
+      "title": "xanGoldMine",
+      "url": "https://www.curseforge.com/wow/addons/xangoldmine",
+      "seenPages": [
+        43
+      ]
+    },
+    {
+      "slug": "xansoundalerts",
+      "title": "xanSoundAlerts",
+      "url": "https://www.curseforge.com/wow/addons/xansoundalerts",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "xantooltiphoudini",
+      "title": "xanTooltipHoudini",
+      "url": "https://www.curseforge.com/wow/addons/xantooltiphoudini",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "xantooltipicon",
+      "title": "xanTooltipIcon",
+      "url": "https://www.curseforge.com/wow/addons/xantooltipicon",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "xloot",
+      "title": "XLoot",
+      "url": "https://www.curseforge.com/wow/addons/xloot",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "xp-bubbles",
+      "title": "XP Bubbles",
+      "url": "https://www.curseforge.com/wow/addons/xp-bubbles",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "xp-splash",
+      "title": "XP Splash",
+      "url": "https://www.curseforge.com/wow/addons/xp-splash",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "yarrr",
+      "title": "Yarrr - Talk Like a Pirate",
+      "url": "https://www.curseforge.com/wow/addons/yarrr",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "you-are-here",
+      "title": "You Are Here",
+      "url": "https://www.curseforge.com/wow/addons/you-are-here",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "z-perl-forever-fork-zperl-addon-rework-for-forever",
+      "title": "Z-perl Forever Fork - Zperl addon rework for Forever",
+      "url": "https://www.curseforge.com/wow/addons/z-perl-forever-fork-zperl-addon-rework-for-forever",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zephyr",
+      "title": "Zephyr",
+      "url": "https://www.curseforge.com/wow/addons/zephyr",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zeplaportraits",
+      "title": "Zepla 3D Portraits",
+      "url": "https://www.curseforge.com/wow/addons/zeplaportraits",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zoidstools-f",
+      "title": "ZoidsTools_F",
+      "url": "https://www.curseforge.com/wow/addons/zoidstools-f",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zone-level-forever",
+      "title": "Zone Level: Forever",
+      "url": "https://www.curseforge.com/wow/addons/zone-level-forever",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zonefog",
+      "title": "ZoneFog: Automatic Fog Settings for Every Zone",
+      "url": "https://www.curseforge.com/wow/addons/zonefog",
+      "seenPages": [
+        44
+      ]
+    },
+    {
+      "slug": "zoros-wayarrow",
+      "title": "ZoRos-WayArrow",
+      "url": "https://www.curseforge.com/wow/addons/zoros-wayarrow",
+      "seenPages": [
+        44
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=1&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:23:46.202Z",
+      "observedCount": 875
+    },
+    {
+      "page": 2,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=2&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:03.961Z",
+      "observedCount": 875
+    },
+    {
+      "page": 3,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=3&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:04.760Z",
+      "observedCount": 875
+    },
+    {
+      "page": 4,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=4&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:05.564Z",
+      "observedCount": 875
+    },
+    {
+      "page": 5,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=5&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:06.343Z",
+      "observedCount": 875
+    },
+    {
+      "page": 6,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=6&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:07.098Z",
+      "observedCount": 875
+    },
+    {
+      "page": 7,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=7&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:21.097Z",
+      "observedCount": 875
+    },
+    {
+      "page": 8,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=8&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:21.906Z",
+      "observedCount": 875
+    },
+    {
+      "page": 9,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=9&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:22.669Z",
+      "observedCount": 875
+    },
+    {
+      "page": 10,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=10&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:23.419Z",
+      "observedCount": 875
+    },
+    {
+      "page": 11,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=11&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:24.276Z",
+      "observedCount": 875
+    },
+    {
+      "page": 12,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=12&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:25.458Z",
+      "observedCount": 875
+    },
+    {
+      "page": 13,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=13&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:39.991Z",
+      "observedCount": 875
+    },
+    {
+      "page": 14,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=14&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:40.838Z",
+      "observedCount": 875
+    },
+    {
+      "page": 15,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=15&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:41.648Z",
+      "observedCount": 875
+    },
+    {
+      "page": 16,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=16&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:42.409Z",
+      "observedCount": 875
+    },
+    {
+      "page": 17,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=17&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:43.184Z",
+      "observedCount": 875
+    },
+    {
+      "page": 18,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=18&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:43.987Z",
+      "observedCount": 875
+    },
+    {
+      "page": 19,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=19&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:57.972Z",
+      "observedCount": 875
+    },
+    {
+      "page": 20,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=20&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:58.781Z",
+      "observedCount": 875
+    },
+    {
+      "page": 21,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=21&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:24:59.592Z",
+      "observedCount": 875
+    },
+    {
+      "page": 22,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=22&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:00.332Z",
+      "observedCount": 875
+    },
+    {
+      "page": 23,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=23&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:01.111Z",
+      "observedCount": 875
+    },
+    {
+      "page": 24,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=24&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:02.391Z",
+      "observedCount": 875
+    },
+    {
+      "page": 25,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=25&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:20.608Z",
+      "observedCount": 875
+    },
+    {
+      "page": 26,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=26&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:21.374Z",
+      "observedCount": 875
+    },
+    {
+      "page": 27,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=27&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:22.142Z",
+      "observedCount": 875
+    },
+    {
+      "page": 28,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=28&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:23.000Z",
+      "observedCount": 875
+    },
+    {
+      "page": 29,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=29&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:23.853Z",
+      "observedCount": 875
+    },
+    {
+      "page": 30,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=30&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:24.613Z",
+      "observedCount": 875
+    },
+    {
+      "page": 31,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=31&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:38.348Z",
+      "observedCount": 875
+    },
+    {
+      "page": 32,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=32&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:39.129Z",
+      "observedCount": 875
+    },
+    {
+      "page": 33,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=33&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:39.971Z",
+      "observedCount": 875
+    },
+    {
+      "page": 34,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=34&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:40.753Z",
+      "observedCount": 875
+    },
+    {
+      "page": 35,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=35&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:41.621Z",
+      "observedCount": 875
+    },
+    {
+      "page": 36,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=36&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:42.385Z",
+      "observedCount": 875
+    },
+    {
+      "page": 37,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=37&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:56.855Z",
+      "observedCount": 875
+    },
+    {
+      "page": 38,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=38&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:57.677Z",
+      "observedCount": 875
+    },
+    {
+      "page": 39,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=39&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:58.458Z",
+      "observedCount": 875
+    },
+    {
+      "page": 40,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=40&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:25:59.304Z",
+      "observedCount": 875
+    },
+    {
+      "page": 41,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=41&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:26:00.168Z",
+      "observedCount": 875
+    },
+    {
+      "page": 42,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=42&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:26:00.945Z",
+      "observedCount": 875
+    },
+    {
+      "page": 43,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=43&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:26:22.888Z",
+      "observedCount": 875
+    },
+    {
+      "page": 44,
+      "url": "https://www.curseforge.com/wow/search?class=addons&page=44&pageSize=20&sortBy=a-z&version=1.60.1&gameVersionTypeId=88568",
+      "capturedAt": "2026-09-21T04:26:23.699Z",
+      "observedCount": 875
+    }
+  ]
+}
