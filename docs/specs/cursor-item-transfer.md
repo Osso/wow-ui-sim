@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Execute EasyFishing's exact sequence: `C_Container.PickupContainerItem(0, 5)`, `PickupInventoryItem(16)`, then `C_Container.PickupContainerItem(0, 5)` only when `CursorHasItem()` is true. A fishing pole (6256) moves to main hand; the displaced weapon (19019) returns to the original bag slot; cursor clears; item IDs/counts are conserved.
-- [ ] Equip the held pole into an empty equipment slot without creating a displaced item.
-- [ ] Both namespaced and legacy container pickup entry points pick up occupied slots, exchange held items with occupied bag slots, and drop held stacks into empty slots without losing stack counts.
-- [ ] Empty-slot pickup with an empty cursor remains a no-op; existing equipment pickup and `EquipCursorItem` swap behavior remain available.
+- [x] Execute EasyFishing's exact sequence: `C_Container.PickupContainerItem(0, 5)`, `PickupInventoryItem(16)`, then `C_Container.PickupContainerItem(0, 5)` only when `CursorHasItem()` is true. A fishing pole (6256) moves to main hand; the displaced weapon (19019) returns to the original bag slot; cursor clears; item IDs/counts are conserved.
+- [x] Equip the held pole into an empty equipment slot without creating a displaced item.
+- [x] Both namespaced and legacy container pickup entry points pick up occupied slots, exchange held items with occupied bag slots, and drop held stacks into empty slots without losing stack counts.
+- [x] Empty-slot pickup with an empty cursor remains a no-op; existing equipment pickup and `EquipCursorItem` swap behavior remain available.
 
 ## How it works
 
@@ -47,6 +47,8 @@ Local Forever 1.60.1.69913 authored evidence:
 - `Blizzard_UIPanels_Game/Camelot/BankFrame.lua:382` and Mainline `ContainerFrame.lua` use namespaced bag pickup.
 
 These sources and focused tests establish the bounded transfer contract, not complete native inventory conformance or full EasyFishing compatibility.
+
+Development proof: exact-transfer RED 0/4 at `0f236b638` plus tests; focused inventory-module GREEN 25/25 at `215a4080a`, including four new regressions and existing pickup/equip tests. No full-addon runtime proof is claimed.
 
 ## Known gaps (current cycle)
 
