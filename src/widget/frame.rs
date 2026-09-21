@@ -42,6 +42,10 @@ pub struct Frame {
     /// pooled template instances.
     pub xml_set_all_points: bool,
     pub visible: bool,
+    /// Derived only from authenticated secret inputs, not declared secret aspects.
+    pub secret_shown: bool,
+    pub secret_text: bool,
+    pub secret_timing: bool,
     pub show_hide_depth: u16, // reentry depth for Show/Hide mutual recursion limit
     pub click_depth: u16,     // reentry depth for programmatic Button:Click recursion limit
     pub collapses_layout: bool,

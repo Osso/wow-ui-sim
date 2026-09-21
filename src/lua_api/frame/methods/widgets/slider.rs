@@ -194,6 +194,7 @@ pub(super) fn shared_set_value(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn shared_get_value(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let v = sim
         .widgets
@@ -238,6 +239,7 @@ pub(super) fn shared_set_min_max_values(state: &mut LuaState) -> LuaResult<u32> 
 
 pub(super) fn shared_get_min_max_values(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let (min, max) = sim
         .widgets

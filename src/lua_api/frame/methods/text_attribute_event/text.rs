@@ -66,12 +66,18 @@ struct LineCountProps {
 
 pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let text = read_text_arg(state, 2);
+    let (value, secret) =
+        crate::lua_api::frame::methods::secret_origin::unwrap_input(state, stack_val(state, 2))?;
+    if cfg!(feature = "client-wowforever") && matches!(value, Val::Userdata(_)) {
+        return Err(rilua::runtime_error("expected text, not userdata"));
+    }
+    let text = read_text_arg(state, value);
     let tooltip = read_tooltip_line_values(state);
     let stripped_text = stripped_text_for_frame(state, id, text.clone())?;
     let (is_tooltip, should_update_button_child) =
         update_text_frame(state, id, &text, &stripped_text)?;
     sync_button_text_child(state, id, &text, &stripped_text, should_update_button_child)?;
+    set_text_secret_origin(state, id, secret)?;
     refresh_text_measurements(state, id);
     if is_tooltip {
         sync_tooltip_text(state, id, text, tooltip)?;
@@ -460,8 +466,19 @@ fn sync_tooltip_text(
     replace_tooltip_lines(state, id, text, tooltip)
 }
 
-fn read_text_arg(state: &LuaState, index: i32) -> Option<String> {
-    match stack_val(state, index) {
+fn set_text_secret_origin(state: &LuaState, id: u64, secret: bool) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    let child = sim.widgets.get(id).and_then(button_text_child_id);
+    for frame_id in std::iter::once(id).chain(child) {
+        if let Some(frame) = sim.widgets.get_mut(frame_id) {
+            frame.secret_text = secret;
+        }
+    }
+    Ok(())
+}
+
+fn read_text_arg(state: &LuaState, value: Val) -> Option<String> {
+    match value {
         Val::Str(s) => state
             .gc
             .string_arena
@@ -474,8 +491,12 @@ fn read_text_arg(state: &LuaState, index: i32) -> Option<String> {
 
 pub(super) fn get_text(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_text_readable(state, id)?;
     let sim = borrow_state(state)?;
     let frame = sim.widgets.get(id);
+    if let Some(child) = frame.and_then(button_text_child_id) {
+        crate::lua_api::frame::methods::secret_origin::require_text_readable(state, child)?;
+    }
     let use_stripped = frame
         .map(|f| f.widget_type == WidgetType::SimpleHTML)
         .unwrap_or(false);
@@ -525,6 +546,7 @@ fn button_text_child_id(frame: &crate::widget::Frame) -> Option<u64> {
 
 fn clear_frame_text(sim: &mut SimState, id: u64) {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.secret_text = false;
         frame.text = Some(String::new());
         frame.text_stripped = Some(String::new());
         frame.text_segments.clear();
@@ -676,6 +698,7 @@ pub(super) fn get_content_height(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_text_data(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_text_readable(state, id)?;
     let text = {
         let sim = borrow_state(state)?;
         sim.widgets

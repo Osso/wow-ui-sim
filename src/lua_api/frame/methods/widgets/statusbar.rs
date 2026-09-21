@@ -1,6 +1,8 @@
 //! StatusBar widget methods.
 
 use super::shared::{opt_f32, rgba_from_stack, val_to_bool, val_to_f64};
+use crate::lua_api::frame::methods::secret_origin::{require_readable, require_timing_readable};
+use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref,
     get_or_create_frame_fields, sync_child_to_rilua, table_get_static, table_set_static,
@@ -284,6 +286,7 @@ pub(super) fn get_reverse_fill(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_interpolated_value(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let v = sim
         .widgets
@@ -320,13 +323,24 @@ pub(super) fn set_to_target_value(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn set_timer_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let duration = stack_val(state, 2);
+    if cfg!(feature = "client-wowforever") && matches!(duration, Val::Userdata(_)) {
+        return Err(rilua::runtime_error(
+            "expected duration object, not userdata",
+        ));
+    }
+    let secret = duration_has_secret_values(state, duration);
+    require_readable(state, secret)?;
     let fields = get_or_create_frame_fields(state, id);
     table_set_static(state, fields, TIMER_DURATION_FIELD, duration);
+    if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+        frame.secret_timing = secret;
+    }
     Ok(0)
 }
 
 pub(super) fn get_timer_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    require_timing_readable(state, id)?;
     let fields = get_or_create_frame_fields(state, id);
     let duration = table_get_static(state, fields, TIMER_DURATION_FIELD);
     state.push(duration);

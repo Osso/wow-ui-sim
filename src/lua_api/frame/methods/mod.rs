@@ -7,6 +7,7 @@ pub(crate) mod map_frames;
 pub(crate) mod methods_helpers;
 pub(crate) mod methods_hierarchy;
 pub(crate) mod misc;
+pub(crate) mod secret_origin;
 pub(crate) mod text_attribute_event;
 pub(crate) mod widget_scroll;
 pub(crate) mod widgets;

@@ -1,6 +1,8 @@
 //! Cooldown widget methods.
 
 use super::shared::{animation_group_id_for_frame, opt_string, val_to_bool, val_to_f64};
+use crate::lua_api::frame::methods::secret_origin::{require_readable, require_timing_readable};
+use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, call_function_state_multi,
     frame_id_from_stack, frame_ref, sync_child_to_rilua, table_get,
@@ -28,6 +30,7 @@ fn apply_cooldown_state(
 }
 
 fn clear_cooldown_timing(frame: &mut crate::widget::Frame) {
+    frame.secret_timing = false;
     frame.cooldown_start = 0.0;
     frame.cooldown_duration = 0.0;
     frame.cooldown_display_duration_ms = 0.0;
@@ -108,6 +111,7 @@ pub(super) fn set_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let mod_rate = normalize_mod_rate(val_to_f64(stack_val(state, 4)));
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
+        f.secret_timing = false;
         apply_cooldown_state(f, start, duration, mod_rate);
     }
     Ok(0)
@@ -125,6 +129,7 @@ pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResu
     let start = expiration - duration;
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
+        f.secret_timing = false;
         apply_cooldown_state(f, start, duration, mod_rate);
     }
     Ok(0)
@@ -144,6 +149,7 @@ pub(super) fn set_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_cooldown_times(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let (s, d) = sim
         .widgets
@@ -156,6 +162,7 @@ pub(super) fn get_cooldown_times(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let v = sim
         .widgets
@@ -168,6 +175,7 @@ pub(super) fn get_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_cooldown_display_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    require_timing_readable(state, id)?;
     let sim = borrow_state(state)?;
     let v = sim
         .widgets
@@ -545,6 +553,8 @@ fn read_duration_number(state: &mut LuaState, object: Val, name: &str) -> LuaRes
 pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let duration_object = stack_val(state, 2);
+    let secret = duration_has_secret_values(state, duration_object);
+    require_readable(state, secret)?;
     let zero = match call_duration_method(state, duration_object, "IsZero")? {
         Val::Bool(value) => value,
         _ => return Err(rilua::runtime_error("IsZero must return a boolean")),
@@ -555,6 +565,7 @@ pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
         }
         if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut_visual(id) {
             clear_cooldown_timing(frame);
+            frame.secret_timing = secret;
         }
         return Ok(0);
     }
@@ -567,6 +578,7 @@ pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     apply_cooldown_state(frame, start, duration, mod_rate);
+    frame.secret_timing = secret;
     Ok(0)
 }
 

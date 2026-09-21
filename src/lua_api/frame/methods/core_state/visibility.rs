@@ -4,9 +4,11 @@ use super::helpers::{arg_bool, frame_id};
 use crate::lua_api::frame::methods::methods_helpers::{
     can_change_protected_state_for, emit_addon_action_blocked,
 };
+use crate::lua_api::frame::methods::secret_origin::{require_shown_readable, unwrap_input};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::lua_api::script_helpers::get_script as get_rilua_script;
+use crate::lua_bridge::stack_val;
 use crate::widget::WidgetType;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -23,6 +25,9 @@ pub fn show(state: &mut LuaState) -> LuaResult<u32> {
         emit_addon_action_blocked(state, id, "Show");
         return Ok(0);
     }
+    if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+        frame.secret_shown = false;
+    }
     show_or_hide(state, id, true)?;
     Ok(0)
 }
@@ -33,16 +38,23 @@ pub fn hide(state: &mut LuaState) -> LuaResult<u32> {
         emit_addon_action_blocked(state, id, "Hide");
         return Ok(0);
     }
+    if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+        frame.secret_shown = false;
+    }
     show_or_hide(state, id, false)?;
     Ok(0)
 }
 
 pub fn set_shown(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
-    let shown = arg_bool(state, 2);
+    let (value, secret) = unwrap_input(state, stack_val(state, 2))?;
+    let shown = !matches!(value, Val::Nil | Val::Bool(false));
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetShown");
         return Ok(0);
+    }
+    if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+        frame.secret_shown = secret;
     }
     show_or_hide(state, id, shown)?;
     Ok(0)
@@ -206,6 +218,7 @@ fn fire_visibility_handler_recursive(
 
 pub fn is_visible(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    require_shown_readable(state, id, true)?;
     let sim = borrow_state(state)?;
     let result = sim.widgets.is_ancestor_visible(id)
         && sim.widgets.get(id).is_some_and(|frame| {
@@ -221,6 +234,7 @@ pub fn is_visible(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn is_shown(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    require_shown_readable(state, id, false)?;
     let sim = borrow_state(state)?;
     let result = sim.widgets.get(id).map(|f| f.visible).unwrap_or(false);
     drop(sim);
