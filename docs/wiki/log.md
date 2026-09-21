@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Start full Forever addon comparison audit
+
+Commit `7eb74d91e` records a complete public CurseForge Forever/1.60.1 corpus: 875 unique projects across 44 A–Z pages, no duplicate or missing rows, and a stable 875 count during capture. This is catalog coverage only; pairing, historical/source diffs, consumer reproduction, and broad addon compatibility remain in progress. Commit `bb83a4c0a` corrects the first source-documented producer discrepancy: Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and exact metadata. Two BetterBags-shaped consumer-loop tests were RED then GREEN; the result does not claim BetterBags loading, bank state, Warbank, or native conformance. Added [[forever-addon-comparison]], updated index and the Forever report.
+
 ## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
 
 Retail-only panel fixtures did not exercise Forever's real spellbook close path. `d06147537` and `389c3a2d5` add a production-shaped `S` keybinding regression shared by Retail, PTR, and Forever; each passes open, ten ticks, close, and ten ticks with zero collected Lua errors. Forever producer fixes cover LoadOnDemand bootstrap publication, `GetClassSkillLineInfo`, state-backed `GetPetIcon`, documented `ActionBarSet` and clear-transmog values, and exact spell `1247917`. Mists/Cata and legacy SpellBook contracts remain explicitly tracked rather than silently skipped. Added [[mainline-spellbook-lifecycle]], updated index, spec, and Forever report.
