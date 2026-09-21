@@ -7,9 +7,9 @@
 use crate::lua_api::frame::methods::text_attribute_event::callbacks::dispatch_unit_event_callbacks;
 use crate::lua_api::game_data::RACE_DATA;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, frame_ref, table_set,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
-use crate::lua_api::script_helpers::{get_event_listeners, get_script, protected_call_state};
+use crate::lua_api::script_helpers::{dispatch_named_event_handlers, get_event_listeners};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use crate::{c_api::item_spell::item_link_for_id, items};
 use rilua::vm::gc::arena::GcRef;
@@ -70,14 +70,7 @@ pub(crate) fn dispatch_event_now(
     let listeners = get_event_listeners(state, event_name);
     for widget_id in listeners {
         dispatch_unit_event_callbacks(state, widget_id, event_name, args);
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
-            continue;
-        };
-        let mut call_args = Vec::with_capacity(args.len() + 2);
-        call_args.push(frame_ref(state, widget_id)?);
-        call_args.push(create_string(state, event_name));
-        call_args.extend_from_slice(args);
-        let _ = protected_call_state(state, handler, &call_args);
+        dispatch_named_event_handlers(state, widget_id, event_name, args)?;
     }
     Ok(())
 }

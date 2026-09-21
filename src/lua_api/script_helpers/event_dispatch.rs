@@ -47,30 +47,30 @@ pub(crate) fn event_matches_unit_filter(
 
 pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Val]) {
     for widget_id in get_event_listeners(state, event_name) {
-        match event_matches_unit_filter(state, widget_id, event_name, args) {
-            Ok(true) => {}
-            Ok(false) => continue,
-            Err(error) => {
-                call_error_handler_state(state, &error.to_string());
-                return;
-            }
+        if let Err(error) = dispatch_named_event_handlers(state, widget_id, event_name, args) {
+            call_error_handler_state(state, &error.to_string());
+            return;
         }
-        dispatch_named_event_handlers(state, widget_id, event_name, args);
     }
 }
 
-fn dispatch_named_event_handlers(
+/// Dispatch one frame's filtered precall, normal and postcall event scripts.
+/// Per-frame callbacks have their own unit filters and are dispatched separately.
+pub(crate) fn dispatch_named_event_handlers(
     state: &mut LuaState,
     widget_id: u64,
     event_name: &str,
     args: &[Val],
-) {
+) -> rilua::LuaResult<()> {
+    if !event_matches_unit_filter(state, widget_id, event_name, args)? {
+        return Ok(());
+    }
     let handlers = get_scripts_for_dispatch(state, widget_id, "OnEvent");
     if handlers.is_empty() {
-        return;
+        return Ok(());
     }
     let Ok(frame) = frame_ref(state, widget_id) else {
-        return;
+        return Ok(());
     };
     let event_name_val = create_string(state, event_name);
     let mut call_args = Vec::with_capacity(args.len() + 2);
@@ -85,6 +85,7 @@ fn dispatch_named_event_handlers(
             call_error_handler_state(state, &error);
         }
     }
+    Ok(())
 }
 
 fn collect_individual_listeners(

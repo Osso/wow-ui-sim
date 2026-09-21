@@ -7,6 +7,151 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+fn env_with_intrinsic_event_frame() -> WowLuaEnv {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("SynchronousEventProbe.toc");
+    std::fs::write(&toc, "## Title: Synchronous event probe\nProbe.xml\n").unwrap();
+    std::fs::write(
+        root.path().join("Probe.xml"),
+        r#"
+        <Ui>
+            <Frame name="SynchronousEventPre" virtual="true">
+                <Scripts><OnEvent intrinsicOrder="precall">
+                    SynchronousEventProbe(self, 'pre', event, ...)
+                </OnEvent></Scripts>
+            </Frame>
+            <Frame name="SynchronousEventPost" virtual="true" inherits="SynchronousEventPre">
+                <Scripts><OnEvent intrinsicOrder="postcall">
+                    SynchronousEventProbe(self, 'post', event, ...)
+                </OnEvent></Scripts>
+            </Frame>
+            <Frame name="SynchronousEventFrame" parent="UIParent" inherits="SynchronousEventPost"/>
+        </Ui>
+    "#,
+    )
+    .unwrap();
+    let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.exec(
+        r#"
+        assert(type(SynchronousEventFrame:GetScript('OnEvent', 0)) == 'function')
+        assert(SynchronousEventFrame:GetScript('OnEvent', 1) == nil)
+        assert(type(SynchronousEventFrame:GetScript('OnEvent', 2)) == 'function')
+        assert(SynchronousEventFrame:GetScript('OnEvent') == nil)
+    "#,
+    )
+    .expect("real XML installs both intrinsic bindings independently of the normal script");
+    env
+}
+
+#[test]
+fn test_fire_event_intrinsic_order_and_unit_filter() {
+    let env = env_with_intrinsic_event_frame();
+    env.exec(
+        r#"
+        local calls = {}
+        local frame = SynchronousEventFrame
+        frame:RegisterUnitEvent('UNIT_AURA', 'player')
+        SynchronousEventProbe = function(self, label, event, ...)
+            local unit, serial, empty, flag = ...
+            assert(self == frame and event == 'UNIT_AURA')
+            assert(select('#', ...) == 4 and unit == 'player' and serial == 17)
+            assert(empty == nil and flag == false)
+            calls[#calls + 1] = label
+        end
+        frame:SetScript('OnEvent', function(self, event, ...)
+            SynchronousEventProbe(self, 'normal', event, ...)
+        end)
+        assert(frame:GetScript('OnEvent') == frame:GetScript('OnEvent', 1))
+        A_Admin.FireEvent('UNIT_AURA', 'target', 17, nil, false)
+        A_Admin.FireEvent('UNIT_AURA')
+        assert(#calls == 0, 'unit filter must cover every script binding')
+        FireEvent('UNIT_AURA', 'player', 17, nil, false)
+        A_Admin.FireEvent('UNIT_AURA', 'player', 17, nil, false)
+        assert(table.concat(calls, ',') == 'pre,normal,post,pre,normal,post')
+    "#,
+    )
+    .expect("synchronous events preserve binding order, payloads and unit filtering");
+}
+
+#[test]
+fn test_fire_event_frame_callbacks_keep_their_own_unit_filter() {
+    let env = env_with_intrinsic_event_frame();
+    env.exec(r#"
+        local calls = {}
+        local frame = SynchronousEventFrame
+        frame:RegisterUnitEventCallback('UNIT_HEALTH', function(owner, unit)
+            assert(owner == frame and unit == 'target')
+            calls[#calls + 1] = 'callback'
+        end, 'target')
+        frame:RegisterUnitEvent('UNIT_HEALTH', 'player')
+        SynchronousEventProbe = function(self, label, event, unit)
+            assert(self == frame and event == 'UNIT_HEALTH' and unit == 'player')
+            calls[#calls + 1] = label
+        end
+        assert(frame:GetScript('OnEvent') == nil)
+        assert(type(frame:GetScript('OnEvent', 0)) == 'function')
+        assert(type(frame:GetScript('OnEvent', 2)) == 'function')
+        A_Admin.FireEvent('UNIT_HEALTH', 'target')
+        assert(table.concat(calls, ',') == 'callback', 'frame filter must not suppress its separate callback')
+        A_Admin.FireEvent('UNIT_HEALTH', 'player')
+        assert(table.concat(calls, ',') == 'callback,pre,post')
+    "#).expect("intrinsic-only frames and independently filtered callbacks both receive events");
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn test_fire_event_global_callbacks_precede_frame_bindings() {
+    let env = env_with_intrinsic_event_frame();
+    env.exec(
+        r#"
+        local calls = {}
+        RegisterEventCallback('UNIT_HEALTH', function(owner, unit)
+            assert(owner == nil and unit == 'player')
+            calls[#calls + 1] = 'global'
+        end)
+        RegisterUnitEventCallback('UNIT_HEALTH', function(owner, unit)
+            assert(owner == nil and unit == 'player')
+            calls[#calls + 1] = 'global-unit'
+        end, 'player')
+        local frame = SynchronousEventFrame
+        frame:RegisterUnitEventCallback('UNIT_HEALTH', function(owner, unit)
+            assert(owner == frame and unit == 'player')
+            calls[#calls + 1] = 'frame-unit'
+        end, 'player')
+        frame:RegisterUnitEvent('UNIT_HEALTH', 'player')
+        SynchronousEventProbe = function(_, label) calls[#calls + 1] = label end
+        frame:SetScript('OnEvent', function() calls[#calls + 1] = 'normal' end)
+        A_Admin.FireEvent('UNIT_HEALTH', 'player')
+        assert(table.concat(calls, ',') == 'global,global-unit,frame-unit,pre,normal,post')
+    "#,
+    )
+    .expect("existing global and per-frame callback ordering precedes all script bindings");
+}
+
+#[test]
+fn test_fire_event_reports_intrinsic_errors_and_continues_bindings() {
+    let env = env_with_intrinsic_event_frame();
+    env.exec(
+        r#"
+        local reported, calls = {}, {}
+        seterrorhandler(function(message) reported[#reported + 1] = tostring(message) end)
+        local frame = SynchronousEventFrame
+        frame:RegisterEvent('PLAYER_LOGIN')
+        SynchronousEventProbe = function(_, label)
+            if label == 'pre' then error('synchronous-intrinsic-probe') end
+            calls[#calls + 1] = label
+        end
+        frame:SetScript('OnEvent', function() calls[#calls + 1] = 'normal' end)
+        A_Admin.FireEvent('PLAYER_LOGIN')
+        assert(#reported == 1 and reported[1]:find('synchronous-intrinsic-probe', 1, true))
+        assert(table.concat(calls, ',') == 'normal,post')
+    "#,
+    )
+    .expect("intrinsic failures reach the error handler without skipping later bindings");
+}
+
 // ============================================================================
 // FireEvent with string + number args
 // ============================================================================
@@ -401,8 +546,8 @@ fn test_fire_event_runs_matching_unit_event_callback() {
 #[test]
 fn test_register_unit_event_reports_registered_unit() {
     let env = env();
-    let (registered, unit, invalid_registered, invalid_unit_is_nil): (bool, String, bool, bool) = env
-        .eval(
+    let (registered, unit, invalid_registered, invalid_unit_is_nil): (bool, String, bool, bool) =
+        env.eval(
             r#"
             local f = CreateFrame("Frame")
             f:RegisterUnitEvent("UNIT_HEALTH", "player")

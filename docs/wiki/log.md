@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Correct synchronous intrinsic-event delivery
+
+Recorded the normal-only synchronous event root cause and shared dispatcher correction. New tests use real XML intrinsic bindings, preserve callback/filter ordering, and exercise two native AuraContainer add/remove cycles after construction. No loader/vendor changes; Cargo and GREEN remain integration-owned. See [[synchronous-intrinsic-events]].
+
 ## [2026-09-21] investigation | Record secret aura geometry and texture handoffs
 
 `fc83c50cc` accepts authenticated wrapped inputs only at demonstrated native AuraContainer boundaries: `SetPoint`, size setters, and `Texture:SetTexture`. It records anchor origin per point, independent width/height origins, and private texture-source origin; conservative tainted read guards cover demonstrated direct, parent, and relative-anchor paths. Native source proves the wrapped inputs; all origin/readout behavior remains an explicitly authorized simulator guess because Forever probes are unavailable. Focused endpoint tests cover authenticated point, size, and texture calls. No compiled GREEN or GUI replay is claimed. See [[ellesmereui-forever]] and [aura secret display](../specs/aura-secret-display.md).

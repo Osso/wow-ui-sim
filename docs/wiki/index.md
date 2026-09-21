@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Synchronous events omitted intrinsic bindings
+
+The admin/model event route dispatched only normal OnEvent scripts, leaving a settled native AuraContainer stale after aura removal. It now shares ordered precall/normal/postcall frame dispatch and unit filtering while preserving independent callbacks. XML-binding and repeated native aura-cycle regressions are added; compiled GREEN is pending. See [[synchronous-intrinsic-events]].
+
 ## [2026-09-21] investigation | EllesmereUI Forever producer defects
 
 Cached EllesmereUI 9.2.2 (`8936131`) records 14 startup error records / 31 occurrences, while 21 folders include intentional Camelot stand-downs. Scoped AuraContainer proof passes at `9476efcf5`; later runtime tracing fixed nil enumeration (`4dadf6a5a`), action `isActive` (`bff7719e3`), and malformed secure TOC paths (`ac9ce1897`). Latest GUI acceptance is 5/6: aura display reaches wrapped duration input. `e6b928a23` stores secret timing in authenticated wrappers; `a9fa01e18`, `3ba3bd429`, and `0f33ec35a` carry the explicitly guessed binding/widget handoff through wrapped formatter/text output and private direct-read flags. `fc83c50cc` adds narrow authenticated point, size, and texture handoffs with focused endpoint tests. Forever probes are unavailable; no general secrecy or native-conformance claim is made. Core/widget/binding/geometry GREEN remains pending. See [[ellesmereui-forever]].
