@@ -2,6 +2,111 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_binding_secret_duration_preserves_font_string_boundary() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeFromStart(secretwrap(10, 20, 1))
+        duration:SetClock(C_DurationUtil.CreateManualClock(12))
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
+        local label = CreateFrame('Frame'):CreateFontString()
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        binding:SetDuration(duration)
+        binding:SetFormatter(formatter)
+        binding:SetFontString(label)
+        binding:SetTextFormat('remaining %s')
+        assert(binding:HasSecretValues() and binding:Copy():HasSecretValues())
+        assert(binding:GetFormattedText() == 'remaining 18')
+        binding:UpdateFontString()
+        assert(label:GetText() == 'remaining 18')
+        local function untrusted()
+            assert(binding:HasSecretValues())
+            assert(not pcall(binding.GetFormattedText, binding))
+            assert(not pcall(binding.UpdateFontString, binding))
+            assert(not pcall(label.GetText, label))
+        end
+        debug.setobjecttaint(untrusted, 'BindingProbe')
+        untrusted()
+        assert(label:GetText() == 'remaining 18')
+        binding:SetDuration(secretwrap(12))
+        assert(binding:HasSecretValues())
+        assert(binding:GetFormattedText() == 'remaining 12')
+        binding:SetToDefaults()
+        assert(not binding:HasSecretValues())
+    "#,
+    )
+    .expect("secret duration and numeric input retain secrecy across formatting and text output");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_binding_secret_formatter_callback_receives_only_wrapped_number() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeFromStart(secretwrap(10, 20, 1))
+        duration:SetClock(C_DurationUtil.CreateManualClock(12))
+        local observed
+        local function format(_, value)
+            assert(not issecure())
+            assert(issecretvalue(value), 'formatter callback received plain timing')
+            assert(not pcall(secretunwrap, value))
+            observed = value
+            return 'opaque callback'
+        end
+        debug.setobjecttaint(format, 'FormatterProbe')
+        local formatter = newproxy(true)
+        getmetatable(formatter).__index = {FormatNumber=format}
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        binding:SetDuration(duration)
+        binding:SetFormatter(formatter)
+        assert(binding:GetFormattedText() == 'opaque callback')
+        assert(issecretvalue(observed))
+        assert(secretunwrap(observed) == 18)
+    "#,
+    )
+    .expect("addon userdata formatter cannot observe plain secret timing");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_binding_secret_callback_failures_are_not_replaced_with_text() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeSpan(secretwrap(10, 30))
+        duration:SetClock(C_DurationUtil.CreateManualClock(12))
+        local label = CreateFrame('Frame'):CreateFontString()
+        label:SetText('unchanged')
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        binding:SetDuration(duration)
+        binding:SetFontString(label)
+        local function format(value)
+            assert(not issecure())
+            assert(value == duration)
+            return value:GetRemainingDuration()
+        end
+        debug.setobjecttaint(format, 'FormatterProbe')
+        binding:SetFormatter(format)
+        assert(not pcall(binding.GetFormattedText, binding))
+        assert(not pcall(binding.UpdateFontString, binding))
+        assert(label:GetText() == 'unchanged')
+        local function failure() error('secret formatter failure') end
+        debug.setobjecttaint(failure, 'FormatterProbe')
+        binding:SetFormatter({Format=failure})
+        local ok, err = pcall(binding.GetFormattedText, binding)
+        assert(not ok and tostring(err):find('secret formatter failure', 1, true))
+    "#,
+    )
+    .expect("secret formatting errors propagate before changing the target text");
+}
+
 #[test]
 fn duration_binding_userdata_copy_retains_resources_through_collection() {
     let env = WowLuaEnv::new().unwrap();

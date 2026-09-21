@@ -125,7 +125,7 @@ fn formatter_mut(state: &mut LuaState) -> LuaResult<&mut NumericRuleFormatter> {
 }
 
 fn format_number(state: &mut LuaState) -> LuaResult<u32> {
-    let input = model::finite(f64::from_stack(state, 2)?)?;
+    let input = model::finite(read_format_input(state)?)?;
     let rules = &formatter(state)?.rules;
     let end = rules.partition_point(|rule| rule.threshold <= input);
     let rule = end
@@ -137,6 +137,19 @@ fn format_number(state: &mut LuaState) -> LuaResult<u32> {
     let result = apply_format(state, &rule.format, &numbers)?;
     state.push(result);
     Ok(1)
+}
+
+fn read_format_input(state: &LuaState) -> LuaResult<f64> {
+    let value = stack_val(state, 2);
+    if !rilua::table_security::is_secret_value(state, value) {
+        return f64::from_stack(state, 2);
+    }
+    match rilua::table_security::unwrap_secret(state, value)? {
+        Val::Num(number) => Ok(number),
+        _ => Err(runtime_error(
+            "NumericRuleFormatter secret input must contain a number",
+        )),
+    }
 }
 
 fn apply_format(state: &mut LuaState, format: &str, numbers: &[f64]) -> LuaResult<Val> {

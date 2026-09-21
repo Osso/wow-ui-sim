@@ -19,6 +19,19 @@
 
 These are simulator policies, not claims about native object layout or garbage collection. Configuration is independently owned by each binding; external resource handles remain shared. Existing assignment/copy tests cover configuration independence and receiver validation.
 
+## Bounded secret-duration handoff — informed guesses
+
+These are explicitly **simulator guesses**, not Forever-client probe results. The user cannot run Forever probes. Native aura code passes wrapped timing into duration objects and hands those objects to text bindings; the output/access policy below is chosen to avoid exposing plain timing to addon callbacks.
+
+- A binding reports secret state when its input is a VM-owned secret wrapper or a duration with secret timing. Copy/Assign retain the same input handle and therefore its secrecy; defaults replace it with ordinary duration state.
+- Formatting a secret input requires an untainted caller. Remaining-time reads and callback errors propagate; they are not replaced with `"0"` or prior/default text. Plain-input formatting keeps its existing behavior.
+- Userdata `FormatNumber` callbacks receive a wrapped number. Function/table formatters retain their existing duration-object/input argument, not a decoded numeric value. Callback closure taint is not cleared.
+- Native NumericRuleFormatter accepts only authenticated wrapped numbers through rilua's checked unwrap, then applies its existing finite validation and rounding model. Plain numbers retain their existing path. Returning a plain formatted result is permitted only after the secret argument's untainted authorization check; this is not a native-return-secrecy claim.
+- An untainted binding caller may receive plain formatted text. `UpdateFontString` wraps that text before invoking the widget setter, preserving the [secret-origin widget readout boundary](aura-secret-display.md). A tainted caller cannot format/update the secret binding or read its secret-origin text through the covered widget getter.
+- The secret branch captures bootstrap numeric/string conversion functions and private host wrap/unwrap callbacks. Later addon replacements must not receive plaintext timing through these conversions.
+
+The existing formatter choice/clock/update model is not redesigned. General secret arithmetic, arbitrary userdata coercion, and native output-secrecy equivalence are not established. Native default SecondsFormatter behavior remains the existing bounded model, not newly claimed native formatting parity.
+
 ## How it works
 
 - [Numeric rule formatter](numeric-rule-formatter.md)
@@ -32,7 +45,8 @@ These are simulator policies, not claims about native object layout or garbage c
 
 ## Tests asserting this spec
 
-- `tests/duration_text_binding_copy.rs` — configuration/copy cases plus `duration_binding_userdata_copy_retains_resources_through_collection` in the grouped integration target.
+- `tests/duration_text_binding_copy.rs` — configuration/copy cases plus retained resources; the `duration_binding_secret_` cases cover duration → formatter → FontString, tainted readout, wrapped-number input, malicious userdata callback capture, and unsuppressed callback failure. New secret cases await integrating compilation/GREEN.
+- `tests/numeric_rule_formatter.rs::numeric_rule_formatter_secret_numbers_require_untainted_caller` — authenticated input, arbitrary userdata/wrapped-string rejection, and tainted-caller rejection; integrating GREEN pending.
 - `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity` — retained identity and duration access; userdata expectation replaces the stale table expectation.
 - `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior, including Forever.
 - `src/c_api/duration_text_binding.rs::tests::duration_binding_availability_preserves_client_versions` — profile availability, modern-method boundary, and formatted FontString output.
@@ -50,4 +64,4 @@ Actual addon/SavedVariables startup returned `[]`, exit 0 after the separate dis
 
 ## Out of scope
 
-This retains existing best-effort formatting behavior. Native finalization, invalidation, metatable shape, ownership, and GC equivalence are not established; no finalizer or invalidation policy is added. Exact clocks, automatic scheduling, expiration policy, color-curve evaluation, and secret-value enforcement remain outside this representation proof.
+This retains existing best-effort formatting behavior. Native finalization, invalidation, metatable shape, ownership, and GC equivalence are not established; no finalizer or invalidation policy is added. Exact clocks, automatic scheduling, expiration policy, color-curve evaluation, and general secret-value enforcement remain outside this representation proof; only the explicitly guessed secret-duration handoff above is included.

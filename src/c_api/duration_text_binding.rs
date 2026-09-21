@@ -5,11 +5,16 @@
 //! secret-value parity.
 
 use crate::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
-use rilua::LuaApiMut;
+use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
+use crate::lua_bridge::stack_val;
+use rilua::vm::state::LuaState;
+use rilua::{LuaApiMut, LuaResult, Val};
 
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
-    local isPatch121 = ...
+    local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput = ...
+    -- Capture host bootstrap functions, not later addon replacements.
+    local secretToString, secretToNumber, secretStringFormat = tostring, tonumber, string.format
     local function ensure_namespace(name)
         _G[name] = _G[name] or __wow_namespace()
         return _G[name]
@@ -53,6 +58,32 @@ do
             end
         end
         return "0"
+    end
+    local function secret_duration_text(duration)
+        duration = readSecretInput(duration)
+        local value = duration
+        if type(duration) ~= "number" then value = duration:GetRemainingDuration() end
+        return secretToString(value)
+    end
+    local function format_secret_duration(binding, duration)
+        local text = secret_duration_text(duration)
+        local formatter = binding.formatter
+        local value
+        if type(formatter) == "userdata" and type(formatter.FormatNumber) == "function" then
+            value = formatter:FormatNumber(wrapSecretOutput(secretToNumber(text)))
+        elseif type(formatter) == "function" then
+            value = formatter(duration)
+        elseif type(formatter) == "table" and type(formatter.Format) == "function" then
+            value = formatter:Format(duration)
+        else
+            value = text
+        end
+        if value == nil then error("Secret duration formatter returned nil", 3) end
+        text = secretToString(readSecretInput(value))
+        if type(binding.textFormat) == "string" and binding.textFormat ~= "" then
+            text = secretStringFormat(binding.textFormat, text)
+        end
+        return text
     end
     local bindings = setmetatable({}, { __mode = "k" })
     local configurationFields = {
@@ -121,7 +152,9 @@ do
         function binding:GetExpiredText() return self.expiredText end
         function binding:GetFontString() return self.fontString end
         function binding:GetFormattedText()
-            local text = duration_value_to_text(self.duration)
+            local duration = self.duration
+            if hasSecretInput(duration) then return format_secret_duration(self, duration) end
+            local text = duration_value_to_text(duration)
             if type(self.formatter) == "userdata" and type(self.formatter.FormatNumber) == "function" then
                 text = self.formatter:FormatNumber(tonumber(text))
             elseif type(self.formatter) == "function" then
@@ -141,7 +174,7 @@ do
         function binding:GetUpdateInterval() return self.updateInterval end
         function binding:GetZeroDurationText() return self.zeroDurationText end
         function binding:HasExpired() return type(self.duration) == "number" and self.duration <= 0 end
-        function binding:HasSecretValues() return false end
+        function binding:HasSecretValues() return hasSecretInput(self.duration) end
         function binding:HasStarted() return true end
         function binding:IsActive() return self.enabled end
         function binding:IsEnabled() return self.enabled end
@@ -172,7 +205,10 @@ do
         function binding:SetZeroDurationText(text) self.zeroDurationText = text end
         function binding:UpdateFontString()
             if self:CanUpdateFontString() then
-                self.fontString:SetText(self:GetFormattedText())
+                local secret = hasSecretInput(self.duration)
+                local text = self:GetFormattedText()
+                if secret then text = wrapSecretOutput(text) end
+                self.fontString:SetText(text)
             end
         end
         if isPatch121 then
@@ -205,8 +241,54 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
         DURATION_TEXT_BINDING_LUA.as_bytes(),
         "@duration-text-binding-bootstrap",
     )?;
-    lua.call_function(&bootstrap, &[rilua::Val::Bool(modern_methods)])?;
+    let state = lua.state_mut();
+    let arguments = [
+        Val::Bool(modern_methods),
+        secret_callback(state, "DurationBinding.HasSecretInput", has_secret_input),
+        secret_callback(state, "DurationBinding.ReadSecretInput", read_secret_input),
+        secret_callback(
+            state,
+            "DurationBinding.WrapSecretOutput",
+            wrap_secret_output,
+        ),
+    ];
+    lua.call_function(&bootstrap, &arguments)?;
     Ok(())
+}
+
+fn secret_callback(state: &mut LuaState, name: &'static str, function: rilua::RustFn) -> Val {
+    use rilua::vm::closure::{Closure, RustClosure};
+    Val::Function(
+        state
+            .gc
+            .alloc_closure(Closure::Rust(RustClosure::new(function, name))),
+    )
+}
+
+fn has_secret_input(state: &mut LuaState) -> LuaResult<u32> {
+    let value = stack_val(state, 1);
+    let secret = rilua::table_security::is_secret_value(state, value)
+        || duration_has_secret_values(state, value);
+    state.push(Val::Bool(secret));
+    Ok(1)
+}
+
+fn read_secret_input(state: &mut LuaState) -> LuaResult<u32> {
+    // Guess: binding text from a secret duration is readable only by untainted callers.
+    if !rilua::api::state_is_secure(state) {
+        return Err(rilua::runtime_error(
+            "secret duration text requires an untainted caller",
+        ));
+    }
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    state.push(value);
+    Ok(1)
+}
+
+fn wrap_secret_output(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::wrap_secret(state, stack_val(state, 1))?;
+    state.push(value);
+    Ok(1)
 }
 
 #[cfg(test)]

@@ -2,6 +2,30 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn numeric_rule_formatter_secret_numbers_require_untainted_caller() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.1f'}})
+        local input = secretwrap(12.5)
+        assert(formatter:FormatNumber(input) == '12.5')
+        assert(not pcall(formatter.FormatNumber, formatter, newproxy()))
+        assert(not pcall(formatter.FormatNumber, formatter, secretwrap('12.5')))
+        local function untrusted()
+            assert(not pcall(formatter.FormatNumber, formatter, input))
+            assert(formatter:FormatNumber(7.5) == '7.5')
+        end
+        debug.setobjecttaint(untrusted, 'NumericFormatterProbe')
+        untrusted()
+        assert(formatter:FormatNumber(input) == '12.5')
+    "#,
+    )
+    .expect("only authenticated secret numbers from untainted callers reach native formatting");
+}
+
 #[test]
 fn numeric_rule_formatter_formats_ellesmere_aura_duration_breakpoints() {
     let env = WowLuaEnv::new().unwrap();
