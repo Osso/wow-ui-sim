@@ -3,12 +3,13 @@
   "acquisition": {
     "catalogProjects": 875,
     "metadataProjects": 875,
-    "archiveAttempts": 480,
+    "archiveFileRecords": 480,
     "archivesDownloaded": 477,
     "archiveErrors": 3,
     "cachedProjects": 269,
     "cachedPairsDiffed": 208,
-    "top20Ranking": "Not acquired; no total-download rank claim"
+    "top20Ranking": "Not acquired; no total-download rank claim",
+    "countBasis": "Indexed unique CurseForge file IDs, not HTTP requests or local duplicate copies. The browser download probe also produced a duplicate DBM 8925922 archive outside the batch cache."
   },
   "limitations": [
     "Candidate release pairing is not proof of Forever introduction ancestry.",

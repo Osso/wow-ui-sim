@@ -41,7 +41,7 @@ Static triage classified 58 packaging-only, 8 data-only, 33 mixed packaging/data
 
 ## Acquisition rules
 
-Acquisition is stopped for this pass. Existing archives remain local; no risk/flagging status is known. The successful count is archives, including comparison versions, not unique addons.
+Acquisition is stopped for this pass. Existing archives remain local; no risk/flagging status is known. The 477 count denotes indexed CurseForge file versions, including comparison versions—not unique addons or HTTP requests. The browser download probe also produced a duplicate DBM archive outside the batch cache.
 
 The completed acquisition used public browser pages for catalog and file metadata. The installed `curseforge` CLI currently exposes packaging/upload operations, not addon search or download; no publishing operations belong to this audit. Obtain archives through the public download link exposed by the file/download page and record their hashes. Do not execute package installers or change the user's installed addon directories.
 
