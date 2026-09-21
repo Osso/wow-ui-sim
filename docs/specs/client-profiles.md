@@ -15,7 +15,10 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
 - [x] `client-wowforever` selects a distinct `WowForever` profile with interface `16001`, cache `wowforever`, CASC product `wow_classic_beta`, and `_classic_beta_` install paths.
 - [x] Forever resolves `[Family]` to `Mainline` and `[Game]` to `Camelot`, accepting `mainline`/`camelot` annotations, not `classic`, `standard`, or `vanilla`; matching exclusion annotations suppress files and dependencies. This follows the authenticated 1.60.1.69913 source tree, not the product name: ActionBar's mainline annotations select present `AssistedCombatManager.lua` and `ActionButtonOverrides.lua`, while its classic annotation selects absent `Mainline/MainMenuBar.lua`.
-- [x] Forever selects `_Camelot.toc`, generic `.toc`, then `_Mainline.toc`, in that order for every addon. Mainline-only load-on-demand dependencies participate in discovery and dependency ordering; no WorldMap-specific exception is used. Other profiles retain their existing TOC precedence.
+- [ ] Forever selects Camelot variants, generic `.toc`, then Mainline variants. Each flavor tier supports underscore then hyphen spellings; retaining underscore precedence is simulator policy, not a claim about native tie-order when both exist. Mainline-only load-on-demand dependencies participate in discovery and dependency ordering; no WorldMap-specific exception is used.
+- [ ] Supported TOC names and `.toc` extensions match case-insensitively without demoting active-profile variants below generic. Exact spelling wins within a separator variant; remaining case collisions resolve lexically, independently of directory order. Unrelated folder names, foreign flavors, and unknown suffixes are not selected by an unrestricted scan.
+- [ ] Retail/PTR retain Mainline then generic then Standard; Wrath/Mists/Era/Anniversary retain their primary flavor then generic then Classic-family variants. Named Mists GameMenu/Mainline and UIParentPanelManager/Classic compatibility variants retain their priority.
+- [ ] A Carbonite-shaped package with incompatible Retail `Carbonite.toc` and compatible `Carbonite-Camelot.toc` admits the provider through discovery and the startup interface gate before its Info/Notes/Warehouse dependents load.
 - [x] Forever reports version `1.60.1`, build `69913`, and interface `16001` without enabling a retail API epoch or legacy compatibility bootstrap.
 
 ## How it works
@@ -39,7 +42,8 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 ## Tests asserting this spec
 
 - `src/client_profile.rs` — current retail, historical retail, PTR, and interface-version contracts.
-- `tests/wowforever_profile.rs` — Forever identity, manifest/cache isolation, game-type filters, source TOC substitution and discovery.
+- `tests/wowforever_profile.rs` — Forever identity, manifest/cache isolation, game-type filters, source TOC substitution, and Carbonite-shaped provider/dependent loading through the interface gate.
+- `src/loader/tests/toc_discovery.rs` — separator/case priority, foreign/unknown exclusion, folder identity, retained family aliases, and named Mists compatibility variants.
 - `src/paths.rs` and `src/asset_resolver_config.rs` — Forever install-root and CASC product selection.
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — post-startup strict-removal contract, including PTR-only `C_RecruitAFriend.IsEnabled` removal.
 - `tests/blizzard_recruit_a_friend_loads.rs` — retail `C_RecruitAFriend.IsEnabled` availability and behavior.

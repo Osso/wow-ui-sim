@@ -73,11 +73,16 @@ Local install discovery uses the active profile's WoW flavor directory. PTR read
 
 ### TOC discovery (`src/loader/mod.rs`)
 
-`find_toc_file()` picks the variant matching `ClientProfile::ACTIVE`:
+`find_toc_file()` matches an ordered list of supported filenames against sorted TOC candidates:
 
-1. `<addon><primary_suffix>.toc` (e.g. `Bartender4_Wrath.toc` under wrath)
-2. Plain `<addon>.toc`
-3. Any `.toc` whose name doesn't contain another profile's suffix — driven by helpers `active_profile_toc_suffix()` and `other_profile_toc_suffixes()` (`scan_for_compatible_flavor_toc()` is the fallback walker)
+1. Explicit Mists compatibility variants, when applicable: GameMenu/Mainline and UIParentPanelManager/Classic.
+2. Active flavor (`Mainline`, `Wrath`, `Mists`, `Vanilla`, or `Camelot`).
+3. Plain `<addon>.toc`.
+4. Retained compatible alias: Retail/PTR `Standard`, legacy profiles `Classic`, Forever `Mainline`.
+
+Each flavor tier tries `<addon>_<flavor>.toc` before `<addon>-<flavor>.toc`, including case-insensitive matches before proceeding to the next tier. Underscore precedence preserves simulator behavior; native ordering when both separator variants exist is not established. Exact case wins within a spelling, followed by lexical order for case collisions. Unknown/foreign suffixes and renamed folders cannot enter through an unordered scan.
+
+Cached Carbonite ships Retail `Carbonite.toc` alongside `Carbonite-Camelot.toc` (`Interface: 16001`, `X-Camelot-Toc: dash`). Previously generic selection caused the startup interface gate to omit Carbonite, leaving its Info/Notes/Warehouse dependents without their provider. The [profile contract](../../specs/client-profiles.md) covers the package-shaped discovery/filter/loading regression. Classic-family aliases are needed by existing Mists cache entries such as ChatFrameBase, GameTooltip, MoneyFrame, and ObjectAPI.
 
 ### TOC content (`src/toc/mod.rs`)
 
@@ -91,9 +96,9 @@ Local install discovery uses the active profile's WoW flavor directory. PTR read
 | Mists       | `mists`, `mists_classic`, `classic`               |
 | Era         | `vanilla`, `classic_era`, `classic`               |
 | Anniversary | `vanilla`, `classic_anniversary`, `classic`       |
-| WowForever  | `camelot`, `classic`                              |
+| WowForever  | `camelot`, `mainline`                             |
 
-`family_subdir()` substitutes the `[Family]` TOC token: retail/PTR/Forever → `Mainline`; wrath/mists/era/anniversary → `Classic`. Commit `5e26960b6` corrected Forever from `Classic` after its authenticated source showed that `Mainline/NineSliceLayouts.lua`, `Mainline/InputUtil.lua`, and `Mainline/SharedUIPanelTemplates.lua` are the base files before Camelot overrides. The `[Game]` token maps retail/PTR to `Standard`, wrath to `Wrath`, mists to `Mists`, era/anniversary to `Vanilla`, and Forever to `Camelot`. Both inline and header `ExcludeLoadGameType` filters reject matching game types. Forever continues to accept only `camelot`/`classic` annotations: the family-directory correction does not admit `mainline`-annotated TOC entries. Forever's FrameXML selects `Camelot/StackSplitFrame.xml` instead of the excluded Classic XML. Its WorldMap TOC retains the `_Mainline` filename while containing explicit Camelot entries; that single addon is selected explicitly, not by accepting all mainline-flavored TOCs.
+`family_subdir()` substitutes the `[Family]` TOC token: retail/PTR/Forever → `Mainline`; wrath/mists/era/anniversary → `Classic`. Commit `5e26960b6` corrected Forever from `Classic` after its authenticated source showed that `Mainline/NineSliceLayouts.lua`, `Mainline/InputUtil.lua`, and `Mainline/SharedUIPanelTemplates.lua` are the base files before Camelot overrides. The `[Game]` token maps retail/PTR to `Standard`, wrath to `Wrath`, mists to `Mists`, era/anniversary to `Vanilla`, and Forever to `Camelot`. Both inline and header `ExcludeLoadGameType` filters reject matching game types. Forever accepts `camelot`/`mainline` annotations, as covered by the existing profile tests; `classic` is excluded. Its FrameXML selects `Camelot/StackSplitFrame.xml` instead of the excluded Mainline XML. Mainline-only TOCs, including WorldMap and its shared providers, use the general profile precedence rather than an addon-specific exception.
 
 `TocFile::is_game_type_restricted()` evaluates the `## AllowLoadGameType` *header* line (separate from the inline annotation parser) using the same allow-list.
 
@@ -139,7 +144,7 @@ Captured in `docs/baselines/`:
 - `Cargo.toml` — mutually-exclusive `client-*` profile features and cumulative `retail-*` API epoch features
 - `src/client_profile.rs` — enum, `ACTIVE` const, profile path helpers, active API interface constants
 - `src/asset_resolver_config.rs` — profile-to-CASC-product mapping
-- `src/loader/mod.rs` — `find_toc_file`, `active_profile_toc_suffix`, `other_profile_toc_suffixes`
+- `src/loader/mod.rs` — `find_toc_file`, ordered profile suffixes, deterministic separator/case matching
 - `src/toc/mod.rs` — `is_allowed_game_type`, `family_subdir`, `TocFile::is_game_type_restricted`
 - `src/lib.rs` — `pub mod wrath`/`mists`/`era` cfg gates
 - `src/lua_api/env_init/mod.rs` — bootstrap call ordering

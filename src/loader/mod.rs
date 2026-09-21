@@ -187,84 +187,61 @@ fn implicit_blizzard_startup_dependencies() -> HashMap<String, Vec<String>> {
 fn active_profile_toc_suffixes() -> &'static [&'static str] {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail
-        | crate::client_profile::ClientProfile::Ptr => &["_Mainline", ""],
-        crate::client_profile::ClientProfile::Wrath => &["_Wrath", ""],
-        crate::client_profile::ClientProfile::Mists => &["_Mists", ""],
+        | crate::client_profile::ClientProfile::Ptr => &["_Mainline", "", "_Standard"],
+        crate::client_profile::ClientProfile::Wrath => &["_Wrath", "", "_Classic"],
+        crate::client_profile::ClientProfile::Mists => &["_Mists", "", "_Classic"],
         crate::client_profile::ClientProfile::Era
-        | crate::client_profile::ClientProfile::Anniversary => &["_Vanilla", ""],
+        | crate::client_profile::ClientProfile::Anniversary => &["_Vanilla", "", "_Classic"],
         crate::client_profile::ClientProfile::WowForever => &["_Camelot", "", "_Mainline"],
     }
 }
 
-/// TOC suffixes that target other client flavors and should be skipped when
-/// scanning for an addon's compatible flavor toc.
-fn other_profile_toc_suffixes() -> &'static [&'static str] {
-    match crate::client_profile::ACTIVE {
-        crate::client_profile::ClientProfile::Retail
-        | crate::client_profile::ClientProfile::Ptr => {
-            &["_Cata", "_Wrath", "_TBC", "_Vanilla", "_Mists"]
-        }
-        crate::client_profile::ClientProfile::Wrath => {
-            &["_Cata", "_Mainline", "_TBC", "_Vanilla", "_Mists"]
-        }
-        crate::client_profile::ClientProfile::Mists => {
-            &["_Cata", "_Wrath", "_TBC", "_Vanilla", "_Mainline"]
-        }
-        crate::client_profile::ClientProfile::Era
-        | crate::client_profile::ClientProfile::Anniversary => {
-            &["_Cata", "_Wrath", "_TBC", "_Mists", "_Mainline"]
-        }
-        crate::client_profile::ClientProfile::WowForever => {
-            &["_Cata", "_Wrath", "_TBC", "_Vanilla", "_Mists", "_Classic"]
-        }
+/// Read only TOC files, sorting case collisions independently of directory order.
+fn read_toc_candidates(addon_dir: &Path) -> Option<Vec<PathBuf>> {
+    let entries = std::fs::read_dir(addon_dir).ok()?;
+    let mut paths: Vec<_> = entries
+        .flatten()
+        .map(|entry| entry.path())
+        .filter(|path| {
+            let extension = path.extension().and_then(|value| value.to_str());
+            extension.is_some_and(|value| value.eq_ignore_ascii_case("toc")) && path.is_file()
+        })
+        .collect();
+    paths.sort();
+    Some(paths)
+}
+
+fn find_named_toc(candidates: &[PathBuf], filename: &str) -> Option<PathBuf> {
+    candidates
+        .iter()
+        .filter(|path| {
+            path.file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(|name| name.eq_ignore_ascii_case(filename))
+        })
+        .min_by_key(|path| path.file_name().and_then(|name| name.to_str()) != Some(filename))
+        .cloned()
+}
+
+/// Keep existing underscore precedence; native ordering between both separators
+/// is not established. Both spellings occupy the same profile-specific tier.
+fn build_toc_variant_filenames(addon_name: &str, suffix: &str) -> Vec<String> {
+    let underscore = format!("{addon_name}{suffix}.toc");
+    match suffix.strip_prefix('_') {
+        Some(flavor) => vec![underscore, format!("{addon_name}-{flavor}.toc")],
+        None => vec![underscore],
     }
 }
 
-/// Scan `addon_dir` for a .toc file matching the folder name that doesn't
-/// carry an excluded-flavor suffix (used as a last-resort fallback in
-/// `find_toc_file` for case mismatches and unusual flavor suffixes).
-///
-/// WoW only loads TOCs whose stem is the folder name plus an optional
-/// `_`/`-` flavor suffix. Renaming a folder (e.g. `MyAddon.disabled`) must
-/// disable the addon -- its `MyAddon.toc` no longer matches the folder name.
-fn scan_for_compatible_flavor_toc(addon_dir: &Path) -> Option<PathBuf> {
-    let exclude_suffixes = other_profile_toc_suffixes();
-    let folder_name = addon_dir.file_name()?.to_str()?.to_ascii_lowercase();
-    let entries = std::fs::read_dir(addon_dir).ok()?;
-    entries.flatten().find_map(|entry| {
-        let path = entry.path();
-        if path.extension().map(|e| e == "toc").unwrap_or(false) {
-            let name = path.file_name()?.to_str()?;
-            let stem = path.file_stem()?.to_str()?.to_ascii_lowercase();
-            if !toc_stem_matches_folder(&stem, &folder_name) {
-                return None;
-            }
-            if !exclude_suffixes.iter().any(|s| name.contains(s)) {
-                return Some(path);
-            }
-        }
-        None
-    })
-}
-
-/// Whether a lowercased TOC stem names the lowercased addon folder: an exact
-/// match or the folder name followed by a `_`/`-` flavor suffix.
-fn toc_stem_matches_folder(stem: &str, folder_name: &str) -> bool {
-    let Some(rest) = stem.strip_prefix(folder_name) else {
-        return false;
-    };
-    rest.is_empty() || rest.starts_with('_') || rest.starts_with('-')
-}
-
-fn profile_specific_fallback_toc(addon_name: &str) -> Option<String> {
+fn select_profile_specific_toc_suffix(addon_name: &str) -> Option<&'static str> {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Mists if addon_name == "Blizzard_GameMenu" => {
-            Some(format!("{addon_name}_Mainline.toc"))
+            Some("_Mainline")
         }
         crate::client_profile::ClientProfile::Mists
             if addon_name == "Blizzard_UIParentPanelManager" =>
         {
-            Some(format!("{addon_name}_Classic.toc"))
+            Some("_Classic")
         }
         _ => None,
     }
@@ -272,25 +249,18 @@ fn profile_specific_fallback_toc(addon_name: &str) -> Option<String> {
 
 /// Find the TOC file for an addon directory.
 ///
-/// Picks the variant matching the active client profile (e.g. `_Mists.toc`
-/// under `client-mists`, `_Wrath.toc` under `client-wrath`, `_Mainline.toc`
-/// under retail). Falls back to the bare `<addon>.toc`, then any compatible
-/// flavor toc.
+/// Uses ordered supported profile variants, with `_` then `-` spellings before
+/// moving to the next tier (including generic). Names are matched case-insensitively,
+/// preferring exact case within each spelling. Foreign and unknown flavors are not
+/// guessed from directory entries; renaming an addon folder still disables its TOC.
 pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
     let addon_name = addon_dir.file_name()?.to_str()?;
-    if let Some(fallback) = profile_specific_fallback_toc(addon_name) {
-        let toc_path = addon_dir.join(fallback);
-        if toc_path.exists() {
-            return Some(toc_path);
-        }
-    }
-    for suffix in active_profile_toc_suffixes() {
-        let toc_path = addon_dir.join(format!("{addon_name}{suffix}.toc"));
-        if toc_path.exists() {
-            return Some(toc_path);
-        }
-    }
-    scan_for_compatible_flavor_toc(addon_dir)
+    let candidates = read_toc_candidates(addon_dir)?;
+    select_profile_specific_toc_suffix(addon_name)
+        .into_iter()
+        .chain(active_profile_toc_suffixes().iter().copied())
+        .flat_map(|suffix| build_toc_variant_filenames(addon_name, suffix))
+        .find_map(|filename| find_named_toc(&candidates, &filename))
 }
 
 /// Resolve an XML script/include path with the same addon-root fallback and

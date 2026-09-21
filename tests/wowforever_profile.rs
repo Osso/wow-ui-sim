@@ -159,7 +159,73 @@ fn wowforever_profile_selects_camelot_then_generic_then_mainline_toc() {
         Some(addon.join("Example_Mainline.toc"))
     );
     std::fs::remove_file(addon.join("Example_Mainline.toc")).unwrap();
+    std::fs::write(addon.join("Example-Mainline.toc"), "Core.lua\n").unwrap();
+    assert_eq!(
+        wow_ui_sim::loader::find_toc_file(&addon),
+        Some(addon.join("Example-Mainline.toc"))
+    );
+    std::fs::remove_file(addon.join("Example-Mainline.toc")).unwrap();
     assert_eq!(wow_ui_sim::loader::find_toc_file(&addon), None);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_profile_loads_carbonite_dash_provider_before_dependents() {
+    use wow_ui_sim::{loader, lua_api::WowLuaEnv, screen::ScreenKind};
+    let root = tempfile::tempdir().unwrap();
+    let provider = root.path().join("Carbonite");
+    std::fs::create_dir(&provider).unwrap();
+    // Cached Carbonite package shape: incompatible Retail generic beside Camelot dash TOC.
+    std::fs::write(
+        provider.join("Carbonite.toc"),
+        "## Interface: 120007, 120100\nRetail.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        provider.join("Carbonite-Camelot.toc"),
+        "## Interface: 16001\n## X-Camelot-Toc: dash\n## LoadOnDemand: 0\nCamelot.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        provider.join("Retail.lua"),
+        "error('wrong Retail provider selected')",
+    )
+    .unwrap();
+    std::fs::write(provider.join("Camelot.lua"), "CarboniteFlavor = 'camelot'").unwrap();
+    let consumers = ["Carbonite.Info", "Carbonite.Notes", "Carbonite.Warehouse"];
+    for name in consumers {
+        let dir = root.path().join(name);
+        std::fs::create_dir(&dir).unwrap();
+        std::fs::write(
+            dir.join(format!("{name}.toc")),
+            "## Interface: 16001\n## Dependencies: Carbonite\nCore.lua\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("Core.lua"),
+            "assert(CarboniteFlavor == 'camelot'); CarboniteConsumers = (CarboniteConsumers or 0) + 1",
+        ).unwrap();
+    }
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+    let discovered = loader::discover_blizzard_addon_closure_for_screen(
+        root.path(),
+        ScreenKind::Game,
+        &consumers,
+    );
+    for (_, path) in discovered {
+        let toc = TocFile::from_file(&path).unwrap();
+        // The real third-party startup loader applies this interface gate before loading.
+        if toc.supports_interface_version(wow_ui_sim::toc::ACTIVE_INTERFACE_VERSION) {
+            let result = loader::load_addon(&env.loader_env(), &path).unwrap();
+            assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        }
+    }
+    assert_eq!(env.eval::<i32>("return CarboniteConsumers").unwrap(), 3);
+    assert_eq!(
+        env.eval::<String>("return CarboniteFlavor").unwrap(),
+        "camelot"
+    );
 }
 
 #[test]
