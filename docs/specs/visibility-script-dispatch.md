@@ -4,11 +4,11 @@ Runtime `Show`, `Hide`, and `SetShown` transitions in `src/lua_api/frame/methods
 
 ## What it must do
 
-- [ ] Deliver intrinsic precall, normal, and intrinsic postcall bindings for each affected frame, in that order.
-- [ ] Preserve children-first traversal and exclude children whose own shown state is false. Ancestor hiding must not change a shown child's own shown state.
-- [ ] Preserve existing parent transitions, unchanged-state no-ops, reentrant show/hide draining, and depth/cycle limits. A handler-selected opposite state is processed after the current frame's binding sequence completes.
-- [ ] Report handler errors through the existing error handler and continue remaining bindings and parent delivery.
-- [ ] A native Forever AuraContainer configured under a hidden parent must register `UNIT_AURA` when that parent is shown, unregister when hidden, and consume repeated post-construction aura add/remove cycles across repeated parent visibility transitions.
+- [x] Deliver intrinsic precall, normal, and intrinsic postcall bindings for each affected frame, in that order.
+- [x] Preserve children-first traversal and exclude children whose own shown state is false. Ancestor hiding must not change a shown child's own shown state.
+- [x] Preserve existing parent transitions, unchanged-state no-ops, reentrant show/hide draining, and depth/cycle limits. A handler-selected opposite state is processed after the current frame's binding sequence completes.
+- [x] Report handler errors through the existing error handler and continue remaining bindings and parent delivery.
+- [x] A native Forever AuraContainer configured under a hidden parent must register `UNIT_AURA` when that parent is shown, unregister when hidden, and consume repeated post-construction aura add/remove cycles across repeated parent visibility transitions.
 
 These are engine script/lifecycle requirements, not guessed aura data or a new security policy.
 
@@ -27,11 +27,11 @@ These are engine script/lifecycle requirements, not guessed aura data or a new s
 - `tests/frame_creation/visibility_scripts.rs` — real XML intrinsic bindings, children-first ordering, hidden-child exclusion, reentrant hide, error continuation, and existing recursion/depth controls.
 - `tests/forever_forbidden_consumers.rs` — real native container configured while its parent is hidden, followed by two show/add/remove/hide cycles and registration/assignment assertions.
 
-## Known gaps (current cycle)
+## Proof
 
-- [ ] Compilation and GREEN remain with the integrating caller; this task explicitly prohibits Cargo execution.
-- Runtime RED: `/tmp/ellesmere-forever/aura-post-removal-state-ledger.json` records a visible container without its required dynamic unit registration after the hidden-parent construction sequence.
-- Admin aura producers already use `fire_named_event_state`, which dispatches intrinsic bindings. The separate `c6d970cf3` correction to `FireEvent`/`A_Admin.FireEvent` was valid but did not fix this visibility-driven removal failure.
+At `9c223f8b7`, `frame_creation::visibility_scripts::` passes 9/9 and constructs synthetic bindings with explicit `Frame` templates after the earlier unknown-custom-frame-type fixture failure. `forever_forbidden_consumers::` passes 5/5, including the real hidden-parent AuraContainer lifecycle. `/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json` records the unchanged addon completing all five existing interaction groups plus trusted aura paint, removal, and cleanup, with zero Lua-error lines during the 90-second run; exit 124 is expected teardown.
+
+The earlier RED ledger remains root-cause history: it observed a visible but unregistered container after `ReloadFrames`. Admin aura producers already used all-binding `fire_named_event_state`; `c6d970cf3` independently corrects only `FireEvent`/`A_Admin.FireEvent`.
 
 ## Out of scope
 

@@ -20,7 +20,9 @@ The prior claim that normal-only `dispatch_event_now` caused the observed aura r
 
 `c6d970cf3` remains a valid `FireEvent`/`A_Admin.FireEvent` correction with API-level all-binding regressions. The passing native cold-event test is not RED-to-GREEN proof for the GUI removal.
 
-`1e1dfe7c0` changes recursive visibility delivery to run ordered precall/normal/postcall bindings, still children first. The actual sequence is `ReloadFrames` hiding the parent, configuring the native AuraContainer while hidden, then showing the parent. Normal-only recursive `OnShow` omitted the intrinsic handler that re-registers `UNIT_AURA`; all-binding delivery restores that route. New XML-binding and hidden-parent native-container tests are committed, but compiled GREEN and actual removal GREEN remain pending.
+`1e1dfe7c0` changes recursive visibility delivery to run ordered precall/normal/postcall bindings, still children first. The actual sequence is `ReloadFrames` hiding the parent, configuring the native AuraContainer while hidden, then showing the parent. Normal-only recursive `OnShow` omitted the intrinsic handler that re-registers `UNIT_AURA`; all-binding delivery restores that route.
+
+At `9c223f8b7`, XML visibility tests pass 9/9, synchronous `FireEvent` tests pass 12/12, and native Forever forbidden-consumer tests pass 5/5. The synthetic tests originally attempted nonexistent custom frame types; their corrected fixtures use explicit `Frame` templates with composed bindings. The trusted 90-second GUI replay records all five existing interaction groups plus `AURA_HOST_PAINTED_GREEN`, `AURA_HOST_REMOVED_GREEN`, and `AURA_HOST_CLEANUP_GREEN`, with zero Lua-error lines. Its timeout 124 is normal GUI teardown, not a test failure. This validates the simulator route, not native-client parity.
 
 ## Sources
 

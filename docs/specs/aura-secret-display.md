@@ -8,11 +8,11 @@ The user cannot run Forever probes and permits informed guesses when identified 
 
 ## Required behavior
 
-- [ ] `SetShown` decodes authenticated wrapped values before applying Lua truthiness; wrapped false/nil hide. Plain truthiness remains unchanged, including ordinary userdata.
-- [ ] `SetText` accepts authenticated wrapped text without exposing secret-origin metadata as Lua fields. Failed wrapped writes leave existing content unchanged. Unsupported userdata is rejected on Forever's text input path.
-- [ ] Cooldown and status-bar duration consumers retain the duration's secret origin. Tainted consumers reject secret duration input before mutating widgets.
-- [ ] Tainted `IsShown`, effective `IsVisible` (including secret-origin ancestors), `GetText`/`GetTextData`, cooldown numeric readouts, and status-bar timer/value readouts reject secret-origin state.
-- [ ] Plain complete replacement clears the corresponding origin flag; changing only cooldown duration preserves origin because the existing start time survives. Plain input behavior and other profiles remain unchanged.
+- [x] `SetShown` decodes authenticated wrapped values before applying Lua truthiness; wrapped false/nil hide. Plain truthiness remains unchanged, including ordinary userdata.
+- [x] `SetText` accepts authenticated wrapped text without exposing secret-origin metadata as Lua fields. Failed wrapped writes leave existing content unchanged. Unsupported userdata is rejected on Forever's text input path.
+- [x] Cooldown and status-bar duration consumers retain the duration's secret origin. Tainted consumers reject secret duration input before mutating widgets.
+- [x] Tainted `IsShown`, effective `IsVisible` (including secret-origin ancestors), `GetText`/`GetTextData`, cooldown numeric readouts, and status-bar timer/value readouts reject secret-origin state.
+- [x] Plain complete replacement clears the corresponding origin flag; changing only cooldown duration preserves origin because the existing start time survives. Plain input behavior and other profiles remain unchanged.
 
 ## Representation and boundaries
 
@@ -26,15 +26,15 @@ Native text binding must send secret-origin formatted strings through authentica
 
 Native `Blizzard_CustomAuraContainer.lua:796–800` wraps all anchor arguments and both dimensions; `Blizzard_AuraContainerUtil.lua:291` wraps aura icons. Actual runtime RED is `/tmp/ellesmere-forever/aura-layout-texture-secret-red.stderr`: wrapped anchors fail string conversion, wrapped dimensions become zero, and wrapped texture assignment/clearing silently retain the old icon.
 
-- [ ] Specific `SetPoint` decoding preserves overloads and original stack roots without modifying argument slots; authentication and parsing finish before anchor mutation. Every provided argument is decoded, including wrapped frame references and nil.
-- [ ] Size setters decode authenticated inputs and retain independent width/height origin flags, including unchanged-value replacements. Plain `SetWidth` does not clear secret height state.
-- [ ] Anchor origin is retained per point, so replacing/clearing one point does not declassify another. Tainted geometry readouts conservatively reject secret origins reachable through parent or relative-anchor dependencies; cycle-safe traversal includes size, rect, edge, center and anchor queries.
-- [ ] `SetTexture` accepts authenticated IDs, paths and nil, retaining a private origin flag. Direct texture source getters reject tainted readouts. Plain `SetTexture` replacement and color-texture source clearing remove that origin; partial atlas/source changes conservatively retain it.
+- [x] Specific `SetPoint` decoding preserves overloads and original stack roots without modifying argument slots; authentication and parsing finish before anchor mutation. Every provided argument is decoded, including wrapped frame references and nil.
+- [x] Size setters decode authenticated inputs and retain independent width/height origin flags, including unchanged-value replacements. Plain `SetWidth` does not clear secret height state.
+- [x] Anchor origin is retained per point, so replacing/clearing one point does not declassify another. Tainted geometry readouts conservatively reject secret origins reachable through parent or relative-anchor dependencies; cycle-safe traversal includes size, rect, edge, center and anchor queries.
+- [x] `SetTexture` accepts authenticated IDs, paths and nil, retaining a private origin flag. Direct texture source getters reject tainted readouts. Plain `SetTexture` replacement and color-texture source clearing remove that origin; partial atlas/source changes conservatively retain it.
 
 These readout restrictions and replacement rules are **guesses**, not native-verified semantics or general layout/visual side-channel isolation. Rust layout/rendering is unchanged and untainted native queries remain available. No VM or generic `FromStack` change is needed.
 
 ## Proof
 
-`fc83c50cc` adds focused `tests/aura_secret_display.rs` endpoints for authenticated `SetPoint`, `SetSize`, and `Texture:SetTexture`, alongside the existing wrapped shown/text, duration, and restricted-read coverage. The endpoint tests are source-level coverage only: compiled RED/GREEN and real GUI replay remain deferred to the integrating parent. Existing native duration-input RED and `CustomAuraButton` wrapped-boolean consumer establish the integration boundary, not every policy assertion.
+`fc83c50cc` adds focused `tests/aura_secret_display.rs` endpoints for authenticated `SetPoint`, `SetSize`, and `Texture:SetTexture`, alongside wrapped shown/text, duration, and restricted-read coverage. `/tmp/ellesmere-forever/secret-handoffs-tests-ledger.json` records 3/3 aura-secret-display cases and `/tmp/ellesmere-forever/secret-layout-tests-ledger.json` records the expanded 6/6 group. The final trusted GUI replay paints icon `135907`, stack `3`, a 30000 ms secret-duration cooldown, then removes it and cleans up with zero Lua-error lines. This substantiates the bounded simulator policy, not native secrecy, general side-channel isolation, or every policy assertion.
 
 Related: [duration core](duration-core.md), [Forever table security](forever-table-security.md), [script-object environments](script-object-environments.md).
