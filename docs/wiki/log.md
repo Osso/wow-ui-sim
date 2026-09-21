@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Record secret aura geometry and texture handoffs
+
+`fc83c50cc` accepts authenticated wrapped inputs only at demonstrated native AuraContainer boundaries: `SetPoint`, size setters, and `Texture:SetTexture`. It records anchor origin per point, independent width/height origins, and private texture-source origin; conservative tainted read guards cover demonstrated direct, parent, and relative-anchor paths. Native source proves the wrapped inputs; all origin/readout behavior remains an explicitly authorized simulator guess because Forever probes are unavailable. Focused endpoint tests cover authenticated point, size, and texture calls. No compiled GREEN or GUI replay is claimed. See [[ellesmereui-forever]] and [aura secret display](../specs/aura-secret-display.md).
+
 ## [2026-09-21] investigation | Record secret duration binding and widget handoffs
 
 `a9fa01e18` and `3ba3bd429` extend the explicitly guessed secret-duration policy into duration text binding: formatter inputs remain wrapped, addon conversion overrides do not receive decoded timing, and text output reaches `SetText` wrapped. `0f33ec35a` adds private Rust-only widget origin flags for shown/text/timing and guards only direct tainted reads of flagged modeled values. These commits do not establish general secrecy enforcement, aspect enforcement, native conformance, or GUI aura success. The user permits informed guesses when labeled and cannot run Forever probes; focused GREEN remains pending. See [[ellesmereui-forever]].

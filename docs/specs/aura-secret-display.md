@@ -35,6 +35,6 @@ These readout restrictions and replacement rules are **guesses**, not native-ver
 
 ## Proof
 
-`tests/aura_secret_display.rs` covers wrapped false, ancestor visibility, authenticated text, tainted input atomicity, unsupported text userdata, duration-to-widget handoffs, restricted direct readouts, and plain replacement. Tests were written before production edits; compiled RED/GREEN is deferred to the integrating parent. Existing native duration-input RED and `CustomAuraButton` wrapped-boolean consumer establish the integration boundary, not every new policy assertion.
+`fc83c50cc` adds focused `tests/aura_secret_display.rs` endpoints for authenticated `SetPoint`, `SetSize`, and `Texture:SetTexture`, alongside the existing wrapped shown/text, duration, and restricted-read coverage. The endpoint tests are source-level coverage only: compiled RED/GREEN and real GUI replay remain deferred to the integrating parent. Existing native duration-input RED and `CustomAuraButton` wrapped-boolean consumer establish the integration boundary, not every policy assertion.
 
 Related: [duration core](duration-core.md), [Forever table security](forever-table-security.md), [script-object environments](script-object-environments.md).
