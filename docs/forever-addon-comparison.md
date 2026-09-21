@@ -16,7 +16,7 @@ The [catalog](../data/forever-addon-audit/catalog.json) records browser-cli publ
 | Package differences | 208 complete cached pairs diffed | Exact archive hashes; release pairing does not prove introduction ancestry |
 | Static triage | 208/208 cached pairs classified | [Forever-hunk/API-reference triage](../data/forever-addon-audit/triage.json); unrelated large changes not fully reviewed |
 | Remaining acquisition | 61 cached projects lack a complete pair; 606 catalog projects have no successful cached archive | No further acquisition; no comparison/compatibility credit |
-| Simulator corrections | BagIndex committed; fishing cursor reproduction underway | Targeted behavior only; independent verification pending |
+| Simulator corrections | BagIndex and cursor transfers committed | Two enum regressions and 25 inventory tests pass in development; independent verification pending |
 | Full addon compatibility | Not established | Tags, static diffs, and startup alone are insufficient |
 
 ## Initial findings
@@ -33,8 +33,8 @@ Static triage classified 58 packaging-only, 8 data-only, 33 mixed packaging/data
 | --- | --- | --- |
 | BetterBags enum shape | Implemented; verification pending | Exact authored IDs and contiguous enumeration prove the publication mismatch |
 | BetterBags/Camelot bank capacities | Deferred | Nine enum members do not prove purchased tabs. Current purchased count is zero; inventing slot capacities would not fix the missing bank-state model |
-| EasyFishing cursor transfers | Reproduction/implementation underway | Exact cached consumer calls namespace pickup, inventory pickup, then namespace drop. Existing namespace is a no-op; legacy operations overwrite held items |
-| BeastAndBow ammo counts | Deferred | Addon claim lacks independent aggregate-count evidence. Its separate claim that Forever disallows event registration conflicts with authored Camelot consumers |
+| EasyFishing cursor transfers | Implemented; verification pending | Exact cached three-call sequence reproduced 0/4, then 25/25 focused inventory tests passed. Shared transfer operations replace the namespace no-op and preserve displaced item IDs/counts; [spec and existing model limits](specs/cursor-item-transfer.md) |
+| BeastAndBow ammo counts | Deferred | Addon claim lacks independent aggregate-count evidence. Its blanket event-registration prohibition is not adopted as simulator policy; authored Camelot consumers register those events |
 | AvoidanceStats | Deferred | UI rewrite does not isolate a producer failure |
 | Ackis cooking/core | No fix justified | Changed API references alone do not demonstrate failure in existing surfaces |
 | ChatBarBlocks/BugSack restrictions | Deferred | Documentation and defensive addon guards do not establish the missing lockdown/secret state transitions; no nil fallbacks or inferred API removals added |
