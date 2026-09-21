@@ -1,0 +1,1303 @@
+{
+  "scope": "Traceable follow-up for all71 initially confounded/needs-deeper rows; original triage remains a historical snapshot. Static dispositions are not full native/runtime proof.",
+  "network": "No further acquisition; cached source only",
+  "projects": [
+    {
+      "slug": "abattis-pugboard",
+      "disposition": "existing modeled contract",
+      "evidence": "Classify.lua/Data.lua add Forever LFG search/category/result handling; changed references are C_LFGList.*. Pinned simulator has C_LFGList registrations and existing LFG tests; no changed call argument/return shape is shown that contradicts the modeled surface. TOC/data also carry 16001.",
+      "sourceEvidence": "source: Classify.lua, Data.lua; simulator: src/lua_api/globals/lfg_list.rs and tests/lfg_info_premade.rs",
+      "pair": {
+        "beforeFileId": 8861089,
+        "foreverFileId": 8933365,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "4d52fa1b0ec3c7fec64b546db81a8f186244cab281cdb1d050e9dbff474cd3c6",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "ackis-recipe-list-classic-leatherworking",
+      "sourceFilename": [
+        "AckisRecipeList_Leatherworking.toc",
+        "Recipes.lua",
+        "Trainers.lua",
+        "Vendors.lua"
+      ],
+      "changedBranch": "Recipes.lua GetSpellName local helper calls C_Spell.GetSpellName; Trainers.lua/Vendors.lua share data/API adaptation.",
+      "counterpartAndTrace": "Existing simulator has modeled C_Spell.GetSpellName; no argument/result mismatch established.",
+      "disposition": "existing modeled behavior",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "3d424608d3b6ff35c373ffd5dfdb444cdb3eb8e47a6000374b43700b6dc2b50e"
+    },
+    {
+      "slug": "actionbarauras",
+      "disposition": "defer-unrelated-library-diff",
+      "foreverExecutableBranch": "The only Forever-marked executable file is the vendored AceDB-3.0 implementation; the hunk changes callback/registry internals, not a Forever branch or WoW API argument.",
+      "simulatorCounterpart": "No simulator counterpart is implicated; AceDB is addon library code.",
+      "missingOrLimitingFact": "No exact Forever API contract or failing consumer is identified; ancestry between paired releases is insufficient.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "alenyas-guides",
+      "classification": "packaging/addon policy",
+      "reason": "Interface-family detection and guide-family labeling; no simulator API producer identified.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "216f78ee1612107700a03907f3ff73becc9792d3fc200f18bdc68d5fd84b750c",
+      "foreverMarkedPaths": [
+        "AlenyaGuides/Compat.lua",
+        "AlenyaGuides/Core.lua"
+      ],
+      "changedFiles": 19,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "alias-rename-anyone",
+      "disposition": "packaging/changelog only",
+      "sourceTrace": "Alias.toc adds interface metadata; CHANGELOG is not executable. No Forever Lua branch or API call changed.",
+      "specificSourcePaths": "Alias.toc and CHANGELOG.md",
+      "simulatorOrNativeCounterpart": "No simulator counterpart required; no native mismatch established.",
+      "foreverMarkedPaths": [
+        "Alias.toc",
+        "CHANGELOG.md"
+      ],
+      "diffSha256": "ae89937065bbf1189a8c1d7192b18763b52b3b21e908878cea67bfa084cad1ae",
+      "pairEvidence": "Cached pair; Forever-marked files are metadata/changelog only.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Alias.toc metadata only; executable added functions CompileShape, BuildShapes, Alias:ShapesKnown, Unescape are unrelated alias-shape parsing and have no Forever branch."
+    },
+    {
+      "slug": "all-the-things",
+      "disposition": "unrelated change",
+      "evidence": "Forever-marked executable change is the Camelot database/category payload plus one C_QuestLog.IsOnQuest reference in WoW API wrappers. The bulk is game data and multi-flavor release drift; no isolated producer mismatch or stable source ancestry.",
+      "sourceEvidence": "source: db/Camelot/**, src/WoW API Wrappers.lua; local contract: src/lua_api/globals/missing_surface/quest_log.rs",
+      "pair": {
+        "beforeFileId": 8889337,
+        "foreverFileId": 8934207,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "2a740c7f23f9e8046f7b731447dc053ba4373f124704640b01e97d4853fef43a",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "altitude",
+      "sourceFilename": [
+        "Altitude.toc"
+      ],
+      "changedBranch": "Altitude.toc adds Interface 16001 only; no Lua Forever branch in marked hunk.",
+      "counterpartAndTrace": "Load metadata only; simulator Camelot interface/TOC routing already tested.",
+      "disposition": "packaging-only",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "a5ca95e5c511e564fbe6191ce6c614867b35f0a2d6554b8061b729becf5980b0"
+    },
+    {
+      "slug": "ame-infohub",
+      "disposition": "defer-addon-policy",
+      "foreverExecutableBranch": "Forever TOC plus Core/Client_Forever.lua selects a dedicated addon client path; changed panels/reminders/tooltips are addon feature policy and data gating, not a native API replacement.",
+      "simulatorCounterpart": "Relevant names are existing simulator surfaces (C_GameRules/C_AddOns/tooltips); no changed call has a documented mismatch in pinned cache.",
+      "missingOrLimitingFact": "Need an addon runtime trace or native API contract tying a specific call to a simulator failure.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "anglers-pocket",
+      "classification": "packaging-only evidence",
+      "reason": "Only TOC interface/changelog hunk retained; no isolated changed API contract.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "963498166c43ff6d51e59a52b46c253a18f9f748280004f2f3cf8b4fbb3dd0f2",
+      "foreverMarkedPaths": [
+        "AnglersPocket.toc",
+        "CHANGELOG.md"
+      ],
+      "changedFiles": 4,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "angleur",
+      "disposition": "packaging/data + addon policy",
+      "sourceTrace": "Angleur_Camelot.toc selects a Forever file set and forever_savedVariables.lua; remaining marked files are addon data/UI and no isolated native API change is attributable.",
+      "specificSourcePaths": "Angleur_Camelot.toc; forever_savedVariables.lua; init.lua",
+      "simulatorOrNativeCounterpart": "No specific native/API counterpart can be credited from this mixed 112-file release; ancestry is unavailable.",
+      "foreverMarkedPaths": [
+        "Angleur.toc",
+        "Angleur_Camelot.toc",
+        "Angleur_Mists.toc",
+        "Angleur_TBC.toc",
+        "Angleur_Vanilla.toc",
+        "CHANGELOG.md",
+        "FOREVER_README.txt",
+        "eqMan/eqMan_base.lua",
+        "forever_savedVariables.lua",
+        "init.lua",
+        "items/items_base.lua",
+        "modules/singular/audio.lua",
+        "modules/singular/visual.lua",
+        "secrets/secrets.lua",
+        "tabs/standard_base.lua",
+        "tabs/tiny_base.lua",
+        "thanks/thanks.lua",
+        "toys/toys_base.lua"
+      ],
+      "diffSha256": "e3db44cddaa80451fcbea55d95665908a967f17f7f847082a3e3b1210c8121a9",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "init.lua and tabs/standard_base.lua are the changed executable areas; Forever TOC selects them, but no changed function calls a simulator API uniquely."
+    },
+    {
+      "slug": "angleur-nicheoptions",
+      "disposition": "unrelated change",
+      "evidence": "Forever-marked files are TOCs, README/changelog, and SavedVariables. No executable API branch is changed; no simulator evidence can be derived.",
+      "sourceEvidence": "source: Angleur_NicheOptions_Camelot.toc, FOREVER_README.txt, forever_savedVariables.lua",
+      "pair": {
+        "beforeFileId": 8631711,
+        "foreverFileId": 8931516,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "d502d2f903fb6633014aa6254c35509e3b9d3d489aad2f68aef48abe0596631a",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "armoryutils",
+      "sourceFilename": [
+        "ArmoryUtils.toc"
+      ],
+      "changedBranch": "ArmoryUtils.toc adds Interface 16001 only.",
+      "counterpartAndTrace": "No runtime code/API change to trace.",
+      "disposition": "packaging-only",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "570224cec703fecf23119e74648541089f4804981ec1cfdd9e5f4bbf7ee343b3"
+    },
+    {
+      "slug": "atlasloot-continued",
+      "disposition": "defer-data-and-packaging",
+      "foreverExecutableBranch": "Camelot TOCs and data-forever/source-forever files are load/data selection; button/profession/set code changes are content tables and display policy.",
+      "simulatorCounterpart": "No simulator counterpart can be inferred from item/source data additions; C_Item/C_TradeSkillUI surfaces already have independent coverage.",
+      "missingOrLimitingFact": "No executable Forever-only API failure isolated from thousands of data changes.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "atlaslootforever",
+      "classification": "addon policy/data",
+      "reason": "Classic-vs-Forever data/model reset branches; Model_Reset absence is guarded by addon and does not prove a simulator defect.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "4e51d7dd558061270f4ffe4aefb74cef84c6e32793887052422460b375c4952d",
+      "foreverMarkedPaths": [
+        "AtlasLoot/AtlasLoot.lua",
+        "AtlasLoot/AtlasLoot_Forever.toc",
+        "AtlasLoot/AtlasLoot_Mainline.toc",
+        "AtlasLoot/Button/Item_type.lua",
+        "AtlasLoot/Button/Profession_type.lua",
+        "AtlasLoot/Button/Set_type.lua",
+        "AtlasLoot/Compat.lua",
+        "AtlasLoot/Constants.lua",
+        "AtlasLoot/GUI/GUI.lua",
+        "AtlasLoot/Init.lua",
+        "AtlasLoot_Collections/AtlasLoot_Collections_Forever.toc",
+        "AtlasLoot_Collections/AtlasLoot_Collections_Mainline.toc",
+        "AtlasLoot_Collections/data-forever.lua",
+        "AtlasLoot_Crafting/AtlasLoot_Crafting_Forever.toc",
+        "AtlasLoot_Crafting/AtlasLoot_Crafting_Mainline.toc",
+        "AtlasLoot_Crafting/data-forever.lua",
+        "AtlasLoot_Data/AtlasLoot_Data_Forever.toc",
+        "AtlasLoot_Data/AtlasLoot_Data_Mainline.toc",
+        "AtlasLoot_Data/source-forever.lua",
+        "AtlasLoot_DungeonsAndRaids/AtlasLoot_DungeonsAndRaids_Forever.toc",
+        "AtlasLoot_DungeonsAndRaids/AtlasLoot_DungeonsAndRaids_Mainline.toc",
+        "AtlasLoot_DungeonsAndRaids/data-forever.lua",
+        "AtlasLoot_Factions/AtlasLoot_Factions_Forever.toc",
+        "AtlasLoot_Factions/AtlasLoot_Factions_Mainline.toc",
+        "AtlasLoot_Favourites/AtlasLoot_Favourites_Forever.toc",
+        "AtlasLoot_Favourites/AtlasLoot_Favourites_Mainline.toc",
+        "AtlasLoot_Options/AtlasLoot_Options_Forever.toc",
+        "AtlasLoot_Options/AtlasLoot_Options_Mainline.toc",
+        "AtlasLoot_PvP/AtlasLoot_PvP_Forever.toc",
+        "AtlasLoot_PvP/AtlasLoot_PvP_Mainline.toc",
+        "AtlasLoot_PvP/data-forever.lua"
+      ],
+      "changedFiles": 82,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "aurashelf",
+      "disposition": "addon build detection/data",
+      "sourceTrace": "Core/Presets.lua adds build/interface detection and preset selection; the changed value controls addon presets, not a simulator API return.",
+      "specificSourcePaths": "Core/Presets.lua function/branch containing 16001 detection; AuraShelf.toc",
+      "simulatorOrNativeCounterpart": "GetBuildInfo is present in simulator; no producer discrepancy.",
+      "foreverMarkedPaths": [
+        "AuraShelf.toc",
+        "Core/Presets.lua"
+      ],
+      "diffSha256": "50b230e25a6ff7f371e3199359a568f2024d0bf190bc5dea08d5b852372db330",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Core/Presets.lua registerShelf(cfg) is the changed function; the 16001 branch chooses preset configuration only."
+    },
+    {
+      "slug": "autostow",
+      "disposition": "unrelated change",
+      "evidence": "Forever executable delta is load/profile selection in AutoStow.lua plus Camelot TOC; no changed API call or return handling is evidenced in the Forever hunk.",
+      "sourceEvidence": "source: AutoStow.toc, AutoStow_Camelot.toc, AutoStow.lua",
+      "pair": {
+        "beforeFileId": 8915720,
+        "foreverFileId": 8915731,
+        "pairBasis": "Nearest-dated non-Forever package in same project; not proof of branch ancestry or version equivalence."
+      },
+      "diffSha256": "e7f30fd0b34bbca2358bcdaa782079297ba4271d4d8d3170d507333c32e6bef1",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "azeriteui-junnez-edition-wow12",
+      "sourceFilename": [
+        "AzeriteUI5_JuNNeZ_Edition_Camelot.toc",
+        "CHANGELOG.md",
+        "Components/ActionBars/Compatibility/HideBlizzard.lua",
+        "Components/ActionBars/Elements/MicroMenu.lua",
+        "Components/ActionBars/Elements/StanceBar.lua",
+        "Components/ActionBars/Prototypes/ActionBar.lua",
+        "Components/Misc/ArcheologyBar.lua",
+        "Components/Misc/ErrorsFrame.lua",
+        "Components/Misc/Info.lua",
+        "Components/Misc/Minimap.lua",
+        "Components/Misc/TrackerWoW11.lua",
+        "Components/Misc/VehicleSeat.lua",
+        "Components/UnitFrames/GroupSpecCache.lua",
+        "Components/UnitFrames/Units/Arena.lua",
+        "Components/UnitFrames/Units/Party.lua",
+        "Components/UnitFrames/Units/PlayerClassPower.lua",
+        "Components/UnitFrames/Units/Raid25.lua",
+        "Components/UnitFrames/Units/Raid40.lua",
+        "Components/UnitFrames/Units/Raid5.lua",
+        "Core/Client.lua",
+        "Core/Common/Constants.lua",
+        "Core/Debugging.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua",
+        "Libs/LibActionButton-1.0-GE/LibActionButton-1.0-GE.lua",
+        "Libs/oUF/elements/classpower.lua",
+        "Libs/oUF_Plugins/oUF_PriorityDebuff.lua",
+        "Libs/oUF_Plugins/oUF_Trinket.lua",
+        "Locale/enUS.lua",
+        "Options/Changelog.lua",
+        "Options/Kit/Renderer.lua",
+        "Options/OptionsPages/Minimap.lua",
+        "Options/OptionsPages/UnitFrames.lua",
+        "WoW11/UnitFrames/ArenaFrames.lua"
+      ],
+      "changedBranch": "Core/Client.lua and Core/Common/Constants.lua add Camelot identity/capability gates; many Components conditionally omit Retail-only frames.",
+      "counterpartAndTrace": "Addon policy and beta workarounds; changed calls are not isolated to a missing simulator producer and no exact failing native contract is shown.",
+      "disposition": "exact runtime repro blocker",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "31852114506f306754cf508502baacc5c9f4ced77f26757e9e2ded9a99201969"
+    },
+    {
+      "slug": "azeroth-pilot-reloaded-route-recorder",
+      "disposition": "defer-packaging",
+      "foreverExecutableBranch": "Forever-marked change is APR-Recorder.toc metadata/dependency packaging; no executable Forever branch in the reviewed hunk.",
+      "simulatorCounterpart": "TOC Camelot routing is already covered by wowforever_profile tests.",
+      "missingOrLimitingFact": "No changed runtime expression to reproduce.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "baganator",
+      "classification": "candidate needs behavioral repro",
+      "reason": "Forever equipment-set and bank/category branches may consume bank/container state; no failing simulator boundary established from static diff.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "35bb27cefa6d0a868c61e3aad7c84beff38efca2e3c70bcf38d9d7294bbc60ac",
+      "foreverMarkedPaths": [
+        "API/EquipmentSets.lua",
+        "Baganator.toc",
+        "CHANGELOG.md",
+        "CategoryViews/Constants.lua",
+        "Core/Constants.lua",
+        "CustomiseDialog/Components.lua",
+        "CustomiseDialog/Main.lua",
+        "ItemViewCommon/BackpackView.lua",
+        "ItemViewCommon/ContainerSlots.lua",
+        "ItemViewCommon/Pools.lua",
+        "ItemViewCommon/Utilities.lua",
+        "Skins/Blizzard.lua",
+        "Skins/BlizzardBlack.lua",
+        "ViewManagement/Initialize.lua"
+      ],
+      "changedFiles": 23,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ],
+      "runtimeFollowup": {
+        "revision": "d40397025",
+        "exitCode": 1,
+        "artifact": "/tmp/forever-addon-runtime/baganator/startup-ledger.json",
+        "startupErrorRecords": 3,
+        "scope": "Actual cached addon startup with isolated enable state, no SavedVariables; not full addon compatibility",
+        "finding": "Required Syndicator package absent from cache; repo copy contains only Search fixture without TOC. LibStub nil follows missing dependency; not a simulator API defect."
+      }
+    },
+    {
+      "slug": "bagsync",
+      "disposition": "packaging/load metadata",
+      "sourceTrace": "BagSync and embedded library TOCs only add Interface 16001; no executable Lua branch changed in the Forever-marked paths.",
+      "specificSourcePaths": "BagSync.toc; libs/LibItemScout-1.0/LibItemScout-1.0.toc; libs/LibStub/LibStub.toc",
+      "simulatorOrNativeCounterpart": "No API counterpart or runtime mismatch established.",
+      "foreverMarkedPaths": [
+        "BagSync.toc",
+        "libs/LibItemScout-1.0/LibItemScout-1.0.toc",
+        "libs/LibStub/LibStub.toc"
+      ],
+      "diffSha256": "a1606914198fd15b9293c8506d4334585b1cd43343a6fb7b2945cd39f379e326",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "No executable Forever hunk: all marked paths are TOCs; the only nearby source drift is unrelated BagSync.lua release change."
+    },
+    {
+      "slug": "belphies-quest-log",
+      "disposition": "specific missing native/ancestry evidence",
+      "evidence": "Compat/Core/QuestLog add C_QuestLog.GetInfo, AddQuestWatch, GetLogIndexForQuestID, C_Map.GetMapInfo, and item-info calls, but the pair is a large quest DB/UI rewrite. Pinned docs and simulator expose these names; archive pair cannot establish whether a changed tuple is Forever-specific or unrelated release work. A runtime consumer fixture is required before any fix.",
+      "sourceEvidence": "source: BelphiesQuestLog/Compat.lua, QuestLog.lua, Tracker.lua; local: docs generated QuestLog/C_Map registrations; no exact mismatch proven",
+      "pair": {
+        "beforeFileId": 8012972,
+        "foreverFileId": 8936650,
+        "pairBasis": "Nearest-dated non-Forever package in same project; not proof of branch ancestry or version equivalence."
+      },
+      "diffSha256": "70194a250854310f41cebbc4625aced45f772f810ea1d7c6422bb4c4d1772160",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "best-around-revisited",
+      "sourceFilename": [
+        "BestAroundRevisited.toc",
+        "RELEASING.md"
+      ],
+      "changedBranch": "BestAroundRevisited.toc adds 16001; ChatThrottleLib.lua selects C_ChatInfo.SendChatMessage/hooksecurefunc when present.",
+      "counterpartAndTrace": "Simulator already registers C_ChatInfo and hooksecurefunc; no changed argument/result contract established.",
+      "disposition": "existing modeled behavior",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "7e2a6f59ba0a24058a5efdc66799d164777a07d8744c926c970a840c6866f02d"
+    },
+    {
+      "slug": "better-ability-bars",
+      "disposition": "defer-feature-detection",
+      "foreverExecutableBranch": "Forever branch uses EditModeManagerFrame/C_EditMode presence and modern action-bar layout; the package also changes broad addon UI code.",
+      "simulatorCounterpart": "Pinned Forever is Mainline and simulator exposes C_EditMode/profile loading, but no exact missing method or return contract is shown.",
+      "missingOrLimitingFact": "The pair is not an ancestry proof; need a failing BetterAbilityBars consumer before any fix.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "better-bags",
+      "classification": "deferred native bank-state gap",
+      "reason": "Exact enum shape is addressed by bb83a4c0a; bank capacity/purchased-tab semantics remain unmodeled and enum presence does not justify slot mapping.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "30fe1138c0784ed2128be99a5acde1b96a765fc2c818c27e8ed8f2143bc16f2f",
+      "foreverMarkedPaths": [
+        "BetterBags_Camelot.toc",
+        "CHANGELOG.md",
+        "bags/bank.lua",
+        "core/constants.lua",
+        "core/database.lua",
+        "core/forever.lua",
+        "core/hooks.lua",
+        "data/equipmentsets.lua",
+        "frames/bagslots.lua",
+        "frames/bankslots.lua",
+        "integrations/quickfind.lua",
+        "libs/AceDB-3.0/AceDB-3.0.lua",
+        "themes/themes.lua"
+      ],
+      "changedFiles": 33,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "better-item-levels",
+      "disposition": "addon API adaptation; defer",
+      "sourceTrace": "BetterBlizzStats.lua wraps C_Item.GetItemInfo/GetDetailedItemLevelInfo/IsEquippableItem for item-stat reads; these are addon-side replacements, not evidence of a wrong simulator producer.",
+      "specificSourcePaths": "BetterBlizzStats.lua Forever wrapper; BetterBlizzStats.toc",
+      "simulatorOrNativeCounterpart": "Pinned docs/simulator expose C_Item item-info surfaces; no concrete input/output mismatch isolated.",
+      "foreverMarkedPaths": [
+        "BetterBlizzStats.lua",
+        "BetterBlizzStats.toc",
+        "BetterBlizzStats_Mainline.toc"
+      ],
+      "diffSha256": "8e3f204bd0ac23751b691251538de77129ffe357ffcb059bb612312d913c8c49",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "BetterBlizzStats.lua GetItemInfoCompat, GetDetailedItemLevelInfoCompat, and IsEquippableItemCompat are wrappers around C_Item calls; no asserted argument/result mismatch."
+    },
+    {
+      "slug": "better-music-player",
+      "disposition": "unrelated change",
+      "evidence": "Forever-marked executable content is absent; the marked TOC is packaging/load metadata.",
+      "sourceEvidence": "source: BetterMusicPlayer.toc",
+      "pair": {
+        "beforeFileId": 8751166,
+        "foreverFileId": 8906512,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "40408885761df6fa98f08eb80c4d739b1bb97b2ac1d81b4bfcc1e1fe8b1a28e0",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "betterbags-aio-all-in-one",
+      "sourceFilename": [
+        "BetterBags_AIO.toc",
+        "CHANGELOG.md",
+        "Flavors/flavors.lua",
+        "Modules/Data/NameCache/Default/name_cache_df.lua",
+        "Modules/Data/NameCache/Default/name_cache_midnight.lua",
+        "Modules/Data/NameCache/Default/name_cache_mop.lua",
+        "Modules/Data/NameCache/Forever/name_cache_forever.lua",
+        "Modules/bootstrap.lua",
+        "Modules/branding.lua",
+        "Options/CustomUI/about_page.lua",
+        "Options/CustomUI/category_list.lua",
+        "Options/CustomUI/getting_started_page.lua",
+        "Options/CustomUI/helpers.lua",
+        "Options/CustomUI/sidebar.lua",
+        "Options/Dialogs/prefix_overrides.lua",
+        "Options/Dialogs/whats_new.lua",
+        "Options/Manifest/manifest_forever.lua"
+      ],
+      "changedBranch": "BetterBags_AIO.toc and manifest_forever.lua add Forever data/name-cache files; no independent runtime implementation beyond content.",
+      "counterpartAndTrace": "Data/package selection, not simulator API.",
+      "disposition": "data/package-only",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "18c11daedfc5a8a2a6dd551abeb3fb9d202037a8d821e7f64a92ccc46e4cb418"
+    },
+    {
+      "slug": "betterblizzframes",
+      "disposition": "defer-addon-frame-policy",
+      "foreverExecutableBranch": "Camelot TOC loads forever/modules/camelotFrames.lua and related UI/profile modules; changes are frame-selection, localization, and addon options.",
+      "simulatorCounterpart": "No missing Blizzard frame API is established; existing Mainline frame loading and widget methods are the relevant simulator surfaces.",
+      "missingOrLimitingFact": "No isolated nil/error or documented native mismatch.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "betterblizzplates",
+      "classification": "packaging/addon policy",
+      "reason": "Dedicated Camelot files/profile/UI data; no concrete simulator API mismatch isolated.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "8fb036db23729f32758432b790daf2d84dae5452ddc37e7678f0208c848ca1d8",
+      "foreverMarkedPaths": [
+        "BetterBlizzPlates_Camelot.toc",
+        "CHANGELOG.md",
+        "forever/BetterBlizzPlates.lua",
+        "forever/gui.lua",
+        "forever/modules/classIcon.lua",
+        "forever/modules/profiles.lua",
+        "init.lua"
+      ],
+      "changedFiles": 45,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "betterfriendlist",
+      "disposition": "addon routing/policy; defer",
+      "sourceTrace": "BetterFriendlist/Core.lua uses interface 16001 to route Who/social views and gates unsupported features; added C_GameRules/social calls select addon UI behavior.",
+      "specificSourcePaths": "BetterFriendlist/Core.lua IsMainline/Who routing; Modules/RecentAllies.lua",
+      "simulatorOrNativeCounterpart": "Simulator has C_GameRules and social namespaces, but no authored result mismatch was demonstrated; no addon predicate added.",
+      "foreverMarkedPaths": [
+        "!BetterFriendlist_MenuBridge/!BetterFriendlist_MenuBridge.toc",
+        "BetterFriendlist/BetterFriendlist.toc",
+        "BetterFriendlist/Core.lua",
+        "BetterFriendlist/Modules/Changelog.lua",
+        "BetterFriendlist/Modules/HouseListProxy.lua",
+        "BetterFriendlist/Modules/RecentAllies.lua",
+        "BetterFriendlist/Modules/TestSuite.lua",
+        "BetterFriendlist/Modules/WhoFrame.lua",
+        "BetterFriendlist/Utils/ClassicCompat.lua"
+      ],
+      "diffSha256": "f55d21764c27bd58a4db9861eb3571f8a2fc03cd14c69d190b30d9e36475357e",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "BetterFriendlist/Core.lua ShowBetterFriendsFrame and Who routing branches consume GetBuildInfo/social state; no direct simulator producer claim."
+    },
+    {
+      "slug": "bettermerchant",
+      "disposition": "existing modeled contract",
+      "evidence": "Changed runtime references are C_MerchantFrame.GetMerchantNumItems/GetItemInfo plus C_Item.GetItemInfo/GetItemCount. The pinned simulator already has C_MerchantFrame.GetItemInfo shape and C_Item item queries; diff has no isolated Forever-only return mismatch.",
+      "sourceEvidence": "source: BetterMerchant.lua; local: src/c_api/c_merchant_frame.rs, src/lua_api/workarounds/temporary/merchant_raid_defaults.rs, tests/c_item_api",
+      "pair": {
+        "beforeFileId": 8821990,
+        "foreverFileId": 8919827,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "1c3761b80563ebc1826e78486036c1101992b896a92996e27f53549574d1ee2d",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "bigwigs",
+      "sourceFilename": [
+        "BigWigs/BigWigs.toc",
+        "BigWigs/Init_Camelot.lua",
+        "BigWigs/Libs/AceDB-3.0/AceDB-3.0.lua",
+        "BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua",
+        "BigWigs/Libs/LibSpecialization/LibSpecialization.lua",
+        "BigWigs/Loader.lua",
+        "BigWigs_Core/BigWigs_Core.toc",
+        "BigWigs_Options/BigWigs_Options.toc",
+        "BigWigs_Plugins/Auras.lua",
+        "BigWigs_Plugins/BigWigs_Plugins.toc",
+        "BigWigs_Plugins/BossBlock.lua"
+      ],
+      "changedBranch": "BigWigs/Init_Camelot.lua sets tbl.isForever and Loader.lua gates C_GameRules and GetBuildInfo; TOCs add 16001.",
+      "counterpartAndTrace": "C_GameRules and build identity are modeled; predicates are addon classification, no producer mismatch shown.",
+      "disposition": "existing modeled behavior / addon policy",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "b7d617167a57737fdf81851bd8ca55c1e088a14a42f087dd4ed00b346671db0a"
+    },
+    {
+      "slug": "blib",
+      "disposition": "defer-feature-library",
+      "foreverExecutableBranch": "BLib adds a shared compatibility library and TOC for interface 16001; its feature-detection helpers intentionally avoid version assumptions.",
+      "simulatorCounterpart": "Simulator already models Camelot/Mainline TOC filtering and the referenced modern namespaces; library code is not a native contract.",
+      "missingOrLimitingFact": "Its comments explicitly say Forever API surface is uncertain; no failing call is evidence.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "blizzmove-plugin-questtracker",
+      "classification": "packaging-only evidence",
+      "reason": "TOC interface and initial support note only; no changed API behavior isolated.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "7193a07510bb1a8259f97ab589d434e551838b6757d84ff67af929f7d0139c76",
+      "foreverMarkedPaths": [
+        "BlizzMovePlugin_QuestTracker.toc",
+        "CHANGELOG.md"
+      ],
+      "changedFiles": 2,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "broker-portals",
+      "disposition": "packaging/changelog only",
+      "sourceTrace": "Broker_Portals.toc only adds Interface 16001; CHANGES updates release metadata.",
+      "specificSourcePaths": "Broker_Portals.toc; CHANGES.txt",
+      "simulatorOrNativeCounterpart": "No executable API branch changed.",
+      "foreverMarkedPaths": [
+        "Broker_Portals.toc",
+        "CHANGES.txt"
+      ],
+      "diffSha256": "299635edeb74750f67a12452d0f2a8a508091ec172121bb1758cf58caf94a192",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "No executable Forever hunk; only Broker_Portals.toc metadata."
+    },
+    {
+      "slug": "bshamel-ui",
+      "disposition": "existing modeled contract",
+      "evidence": "Forever branches add spell/tradeskill/aura/item lookups and a CurrencyConsts icon constant. These are existing modeled surfaces or compatibility data; no changed call is tied to a missing/incorrect Forever producer in the archive.",
+      "sourceEvidence": "source: Core/Forever.lua, Modules/BuffTracker.lua, Modules/GameSettings.lua; local: c_spell/c_trade_skill/c_unit_auras/item surfaces",
+      "pair": {
+        "beforeFileId": 8793764,
+        "foreverFileId": 8933399,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "b40aa7903127d3c4b45a189cc9fdb7306ec5610a452d7c4a6185fa0c2a63992d",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "buffalo-classic",
+      "sourceFilename": [
+        "Buffalo-Configuration.lua",
+        "Buffalo.toc",
+        "DigamAddonLib-Forever.lua",
+        "ReadMe.txt"
+      ],
+      "changedBranch": "Buffalo-Configuration.lua replaces legacy spell-name lookup with Buffalo.API.GetSpellName; Forever TOC/data includes the API wrapper.",
+      "counterpartAndTrace": "C_Spell.GetSpellName is modeled; no concrete bad result or missing spell metadata established.",
+      "disposition": "existing modeled behavior",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "62f217f59a5a605c946ce84c22f49c4ee9ba692e107fce4e6b424dcda145627f"
+    },
+    {
+      "slug": "bugjar-lua-error-browser",
+      "disposition": "defer-packaging",
+      "foreverExecutableBranch": "Changes add Camelot/Forever TOCs and interface declarations; Core/UI executable code is unchanged in the Forever-specific selection.",
+      "simulatorCounterpart": "TOC routing is covered by profile tests; no runtime API delta.",
+      "missingOrLimitingFact": "No executable Forever branch or failing consumer.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "carbonite",
+      "classification": "data/packaging with candidate consumers",
+      "reason": "Camelot data tables and TOC additions dominate; bank/container API consumers need a real fixture before any producer change.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "af5f6f8084809380c2fa5fcf112acf2f2bc5e0afa1e2ed0a0ef9ebf622f0a20f",
+      "foreverMarkedPaths": [
+        "Carbonite.Gathermate2_Data/Carbonite.Gathermate2_Data-Camelot.toc",
+        "Carbonite.Gathermate2_Data/Data/camelot/FishData.lua",
+        "Carbonite.Gathermate2_Data/Data/camelot/TreasureData.lua",
+        "Carbonite.Info/Carbonite.Info.toc",
+        "Carbonite.Info/NxInfo.lua",
+        "Carbonite.Notes/Carbonite.Notes.toc",
+        "Carbonite.Quests/Carbonite.Quests-Camelot.toc",
+        "Carbonite.Quests/CheckMapAndCom.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_esES.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_esMX.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_koKR.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_ptBR.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_ruRU.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_zhCN.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_zhTW.lua",
+        "Carbonite.Quests/Data/camelot/Quests51-60.lua",
+        "Carbonite.Quests/ObjectiveCapture.lua",
+        "Carbonite.Quests/WorldQuestWindow.lua",
+        "Carbonite.Warehouse/Carbonite.Warehouse.toc",
+        "Carbonite/Carbonite-Camelot.toc",
+        "Carbonite/Carbonite.lua",
+        "Carbonite/Compat/Expansion.lua",
+        "Carbonite/Data/camelot/MapData/WorldMapRecords.lua",
+        "Carbonite/Data/camelot/NxMapData.lua",
+        "Carbonite/Data/camelot/Zones.lua",
+        "Carbonite/Locales/enUS/Zones.lua",
+        "Carbonite/Modules/Comm/CommEngine.lua",
+        "Carbonite/Modules/InitFlow/EventRegistration.lua",
+        "Carbonite/Modules/Map/MapEngine.lua"
+      ],
+      "changedFiles": 150,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ],
+      "runtimeFollowup": {
+        "revision": "d40397025",
+        "exitCode": 1,
+        "artifact": "/tmp/forever-addon-runtime/carbonite/startup-ledger.json",
+        "startupErrorRecords": 3,
+        "scope": "Actual cached addon startup with isolated enable state, no SavedVariables; not full addon compatibility",
+        "finding": "Generic Retail TOC selected ahead of -Camelot.toc; dependency providers absent. Deterministic profile selection correction underway.",
+        "resolvedBy": "31ac46b3a (TOC selection only)",
+        "currentResult": "Provider/dependents now load. Actual OnUpdate reaches map2521(Zephras Isle); C_Map.GetMapArtLayers and GetMapArtLayerTextures returnnil because map-art metadata is absent. This triggers legacy FileName fallback; FileName absence alone is not an addon-data defect.",
+        "currentArtifacts": [
+          "/tmp/forever-addon-runtime/carbonite/startup-final-ledger.json",
+          "/tmp/forever-addon-runtime/carbonite/map-diagnostic.stdout"
+        ],
+        "missingEvidence": "Exact-build four UiMap-art CSV inputs and native2521 query/phase data are absent from acquired exports. Installed Beta exists, but no configured offline DB2 extraction+runtime-definitions-to-CSV chain is present. Dedicated ingestion/supplied exports required; no native art availability, filenames or dimensions inferred."
+      }
+    },
+    {
+      "slug": "centered",
+      "disposition": "packaging only",
+      "sourceTrace": "Centered.toc replaces interface 120100 with 16001; no Lua source changed.",
+      "specificSourcePaths": "Centered.toc",
+      "simulatorOrNativeCounterpart": "No runtime producer/API counterpart.",
+      "foreverMarkedPaths": [
+        "Centered.toc"
+      ],
+      "diffSha256": "e09a083aa071f301b5bff4de11c67cfaca954f3540d697d43fa1358fff9c6f56",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "No executable source; only Centered.toc."
+    },
+    {
+      "slug": "chat-copy-paste",
+      "disposition": "existing modeled contract",
+      "evidence": "Forever branch adds C_GameRules.IsGameRuleActive and GameRule enum checks for chat behavior plus timer scheduling. Simulator has game_rules.rs and the corresponding enum values; addon policy does not prove lockdown semantics or a missing event producer.",
+      "sourceEvidence": "source: ChatCopyPaste.lua, Lib/AceDB-3.0; local: src/lua_api/globals/game_rules.rs, src/lua_api/globals/enum_data/missing_enums.lua",
+      "pair": {
+        "beforeFileId": 8481447,
+        "foreverFileId": 8912928,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "877c452df0ac1241233442fb9e529ea47a4f7eea7c3d305eb3b4c2b9cae1c0d8",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "chatify-chat-enhancer",
+      "sourceFilename": [
+        "COMPATIBILITY.md",
+        "ChatAutoReply.lua",
+        "ChatMultiPost.lua",
+        "ChatQuickButtons.lua",
+        "ChatRouter.lua",
+        "Chatify_Camelot.toc",
+        "Compatibility.lua",
+        "Config.lua",
+        "Forever.lua",
+        "Settings.lua",
+        "locale/enUS.lua",
+        "locale/ukUA.lua"
+      ],
+      "changedBranch": "Forever.lua/ChatRouter.lua guard C_Secrets.HasSecretRestrictions and C_ChatInfo.InChatMessagingLockdown before protected chat paths.",
+      "counterpartAndTrace": "Pinned docs expose these APIs, but addon guards do not establish state transitions or expected values; no simulator fix justified.",
+      "disposition": "native semantics blocker",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "6ea84635b08b60f80cb707bdbbbb2f008e1635a8b0587a202a1b6aa1064984b0"
+    },
+    {
+      "slug": "chattynator-undo-redo",
+      "disposition": "defer-packaging",
+      "foreverExecutableBranch": "Only the generated TOC interface list changes to include 16001.",
+      "simulatorCounterpart": "TOC interface parsing is already tested; no runtime code changed.",
+      "missingOrLimitingFact": "No API/behavior fact.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "classcolorednameplates",
+      "classification": "packaging-only evidence",
+      "reason": "TOC interface declaration only.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "2802823b4015fe10d278fbe0b1f19d6e7a16702673fa4a450ccbd41c0eae34ff",
+      "foreverMarkedPaths": [
+        "ClassColoredNamePlates.toc"
+      ],
+      "changedFiles": 2,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "come-get-it",
+      "disposition": "addon chat/policy adaptation; defer",
+      "sourceTrace": "Features/Announcements.lua changes message construction to plain lines and drops raid-marker token formatting for Forever; C_GameRules enum additions are feature checks.",
+      "specificSourcePaths": "Features/Announcements.lua announcement formatter; Includes/Libraries/AceDB-3.0/AceDB-3.0.lua version branch",
+      "simulatorOrNativeCounterpart": "Chat lockdown/secret semantics are not established by this addon diff; no simulator patch justified.",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "ComeAndGetIt.toc",
+        "Features/Announcements.lua",
+        "Includes/Libraries/AceDB-3.0/AceDB-3.0.lua",
+        "Locales/deDE.lua",
+        "Locales/enUS.lua",
+        "Locales/esES.lua",
+        "Locales/esMX.lua",
+        "Locales/frFR.lua",
+        "Locales/itIT.lua",
+        "Locales/koKR.lua",
+        "Locales/ptBR.lua",
+        "Locales/ruRU.lua",
+        "Locales/zhCN.lua",
+        "Locales/zhTW.lua",
+        "README-Technical.md",
+        "README-Testing.md",
+        "README.md"
+      ],
+      "diffSha256": "0d84d9bfcb51305fd367876735ec3e806facf6bd31c98baf18df369b01d50e08",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Features/Announcements.lua changed its announcement formatting function/branch; the C_GameRules checks are addon guards, not simulator contract evidence."
+    },
+    {
+      "slug": "companion-chronicle",
+      "disposition": "specific missing native/ancestry evidence",
+      "evidence": "ClientForever.lua is a Forever-specific unit identity/name adaptation, but the pair provides no concrete changed call/return or pinned API documentation proving a simulator mismatch. Defer until a precise UnitName/identity fixture exists.",
+      "sourceEvidence": "source: CompanionChronicle/ClientForever.lua; local: Unit API source/docs; no exact mismatch established",
+      "pair": {
+        "beforeFileId": 8932610,
+        "foreverFileId": 8932535,
+        "pairBasis": "Nearest-dated non-Forever package in same project; not proof of branch ancestry or version equivalence."
+      },
+      "diffSha256": "4bfa9cdab83970f153d0a597ea9bd1090131995098c18b56e0c1b9b1abfacb84",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "conceal",
+      "sourceFilename": [
+        "Conceal_Camelot.toc"
+      ],
+      "changedBranch": "Conceal_Camelot.toc and frame initializers add Camelot load path/combat initializers; no isolated API replacement.",
+      "counterpartAndTrace": "Packaging and frame policy; no producer mismatch.",
+      "disposition": "packaging/policy-only",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "fcf97f9c48051b76a0b738b467483e370ac57f910d75b2887172954028772aaa"
+    },
+    {
+      "slug": "conjure-bot",
+      "disposition": "defer-addon-compatibility",
+      "foreverExecutableBranch": "Forever package adds wrappers preferring C_Spell/C_SpellBook/C_Item and fallback legacy calls, plus gameplay logic changes; wrappers are addon compatibility strategy, not proof any one method is absent.",
+      "simulatorCounterpart": "Simulator has the corresponding modern spell/item surfaces, but no exact call/return mismatch is isolated in the cached hunk.",
+      "missingOrLimitingFact": "The addon comments explicitly say the actual Forever surface was unconfirmed; need a reproducible call failure.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "cooldown-master",
+      "classification": "candidate needs behavioral repro",
+      "reason": "Addon reports Forever secret-buff/combat-log restrictions and changes tracking policy; addon policy is not proof of simulator secret semantics. No producer mismatch established.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "e8a2f9d623648ee64326d9f05b6cc173caddacf70ef38f7d4e979ac6ce60bc31",
+      "foreverMarkedPaths": [
+        "CooldownMaster_Camelot.toc",
+        "Core/Changelog.lua",
+        "Core/Compat.lua",
+        "Core/Engine.lua",
+        "Core/Init.lua",
+        "Core/Tags.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua",
+        "UI/Options.lua"
+      ],
+      "changedFiles": 13,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ],
+      "runtimeFollowup": {
+        "revision": "d40397025",
+        "exitCode": 0,
+        "artifact": "/tmp/forever-addon-runtime/cooldown-master/startup-ledger.json",
+        "startupErrorRecords": 0,
+        "scope": "Actual cached addon startup with isolated enable state, no SavedVariables; not full addon compatibility"
+      }
+    },
+    {
+      "slug": "coolinator",
+      "disposition": "addon secrecy/UI policy; defer",
+      "sourceTrace": "Core/AllSpellsAndItems.lua bypasses spec-name matching on Forever and Display/ClassResourceStatusBar.lua adds combo-point UI under secrecy constraints; this is addon policy.",
+      "specificSourcePaths": "Core/AllSpellsAndItems.lua IsForever branch; Display/ClassResourceStatusBar.lua",
+      "simulatorOrNativeCounterpart": "Enum.PowerType.ComboPoints and C_EventUtils are present/documented; no bad simulator value isolated.",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Coolinator.toc",
+        "Core/AllSpellsAndItems.lua",
+        "Core/Constants.lua",
+        "Core/ConstantsForever.lua",
+        "Core/Utilities.lua",
+        "CustomiseDialog/Components.lua",
+        "Display/ClassResourceStatusBar.lua"
+      ],
+      "diffSha256": "a35680a7f1c29f604b9e9872e817459f44a0cd94c44cc6200fc5605c5e1bed2d",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Core/AllSpellsAndItems.lua changed the class/spec matching branch; Display/ClassResourceStatusBar.lua changed combo-point display updates. Both consume state and deliberately avoid secret comparisons."
+    },
+    {
+      "slug": "crafting-and-gathering-order-classic",
+      "disposition": "specific missing native/ancestry evidence",
+      "evidence": "Camelot craft/profession module and large API rewrite include C_TradeSkillUI, C_ChatInfo.InChatMessagingLockdown, quest/map/item APIs. The 153-file pair mixes data, UI, and release changes; documentation confirms many names but does not identify one incorrect simulator producer.",
+      "sourceEvidence": "source: CraftingOrderClassic_ProfWindow_Camelot*.lua, CraftingOrderClassic_Compat.lua; local: c_trade_skill.rs, chat docs, quest/map/item APIs",
+      "pair": {
+        "beforeFileId": 8590703,
+        "foreverFileId": 8934713,
+        "pairBasis": "Nearest-dated non-Forever package in same project; not proof of branch ancestry or version equivalence."
+      },
+      "diffSha256": "15caf440773c795197e126b0bcd1036241db3280e611a5109820e34f91d244fb",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "craftpresence",
+      "sourceFilename": [
+        "CHANGELOG.md",
+        "CompatibilityUtils.lua",
+        "CraftPresence_Camelot.toc",
+        "Libraries/Ace3/AceDB-3.0/AceDB-3.0.lua",
+        "Libraries/Ace3/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua",
+        "Migration_Functions.lua",
+        "ProfileInfo.lua"
+      ],
+      "changedBranch": "CompatibilityUtils.lua detects build 16000\u201320000 and queries C_GameRules.IsGameRuleActive for realm labels.",
+      "counterpartAndTrace": "Build and game-rule surfaces are modeled; displayed realm policy is addon-specific.",
+      "disposition": "existing modeled behavior / addon policy",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "155f442b734c7538e65383c146a36338fa54538c62cf426786ed12d9cb147107"
+    },
+    {
+      "slug": "crit-sounds",
+      "disposition": "defer-event-policy",
+      "foreverExecutableBranch": "Executable branch changes COMBAT_LOG_EVENT_UNFILTERED vs UNIT_SPELLCAST_SUCCEEDED selection for interface 16001; this is addon event-policy choice.",
+      "simulatorCounterpart": "Pinned Forever UI registers both ordinary player/combat events where consumers need them; simulator event validation already accepts the covered events.",
+      "missingOrLimitingFact": "No evidence that either event is unavailable or has a different payload on Forever.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "cursor-world-tooltip",
+      "classification": "addon policy/UI behavior",
+      "reason": "Tooltip fade/color behavior and Classic-family implementation; no API producer mismatch isolated.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "a13b08db5952a1a061a1330bbb077fdcff6ac7fd2dba437025237ec959a1fb95",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CursorWorldTooltip.toc",
+        "CursorWorldTooltip_Classic.lua",
+        "README.md"
+      ],
+      "changedFiles": 9,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "cursorcooldown-reloaded",
+      "disposition": "packaging + addon game-rule compatibility",
+      "sourceTrace": "CursorCooldown.toc adds 16001; vendored AceDB branch treats 16000-19999 as modern. C_GameRules/DoesSpellExist references are not shown as a Forever-specific producer failure.",
+      "specificSourcePaths": "CursorCooldown.toc; Libs/AceDB-3.0/AceDB-3.0.lua",
+      "simulatorOrNativeCounterpart": "GetBuildInfo and listed namespaces are available; no exact failing return/argument established.",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CursorCooldown.toc",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "diffSha256": "dbcd0442cac947fe251a25f6d1af45544c052223334d6bc25c7ab4b592811c7b",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Libs/AceDB-3.0/AceDB-3.0.lua version branch treats 16001 as modern; CursorCooldown.lua changes are not isolated to a native API failure."
+    },
+    {
+      "slug": "cursorring",
+      "disposition": "unrelated change",
+      "evidence": "Only Forever-marked executable artifact is CursorRing.toc interface metadata; no runtime branch or API change.",
+      "sourceEvidence": "source: CursorRing.toc",
+      "pair": {
+        "beforeFileId": 8624491,
+        "foreverFileId": 8917790,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "9455d53b05ff5fd0a8d4c042766f8122293bd352f632f718126c25a157817223",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "custom-minimap-arrow",
+      "sourceFilename": [
+        "CustomMinimapArrow.toc"
+      ],
+      "changedBranch": "CustomMinimapArrow.toc adds Interface-Camelot 16001.",
+      "counterpartAndTrace": "TOC routing already supports Camelot.",
+      "disposition": "packaging-only",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "cbee35e139ef778450a7a7923e0d0544d1854b5ee2a5c7a7566ec93675a69b31"
+    },
+    {
+      "slug": "cvarsbackup",
+      "disposition": "defer-packaging",
+      "foreverExecutableBranch": "Forever change is interface-number/TOC and changelog metadata only.",
+      "simulatorCounterpart": "TOC parser/profile selection already covered.",
+      "missingOrLimitingFact": "No runtime branch.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-dungeons",
+      "classification": "content/data package",
+      "reason": "Forever encounter modules and TOC; no shared simulator API gap proven. DBM core audit found no unsupported TOC/API removal.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "f9dba9e3b2893257f399d3c0a1546421980cff88c665fa62f58ddaf1f7d65bdc",
+      "foreverMarkedPaths": [
+        "DBM-Party-Forever/DBM-Party-Forever.toc",
+        "DBM-Party-Forever/HallofThanes/DurgenDirgehammer.lua",
+        "DBM-Party-Forever/HallofThanes/FaldrimAnvilmar.lua",
+        "DBM-Party-Forever/HallofThanes/Infurnus.lua",
+        "DBM-Party-Forever/HallofThanes/Plunder.lua",
+        "DBM-Party-Forever/KroldokStronghold/HighlandHorror.lua",
+        "DBM-Party-Forever/KroldokStronghold/RelicGuardian.lua",
+        "DBM-Party-Forever/KroldokStronghold/Saltspine.lua",
+        "DBM-Party-Forever/KroldokStronghold/Shadetooth.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Bjork.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/LordaeronCaptain.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Rathmael.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/TheAbandoned.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/TheButcher.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/ViktortheVile.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Witherfang.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ArcaneAnomaly.lua",
+        "DBM-Party-Forever/TheShapersTerrace/AtrexistheGraveKnight.lua",
+        "DBM-Party-Forever/TheShapersTerrace/FelAncient.lua",
+        "DBM-Party-Forever/TheShapersTerrace/LyntheIgnored.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaDevourer.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaElemental.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaWraith.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ShadeoftheArchmage.lua",
+        "DBM-Party-Forever/TheShapersTerrace/UnstableSentinel.lua",
+        "DBM-Party-Vanilla/CHANGELOG.md",
+        "DBM-Party-Vanilla/DBM-Party-Vanilla.toc",
+        "DBM-Party-Vanilla/Shared/Gnomeregan/MekgineerThermaplugg.lua"
+      ],
+      "changedFiles": 378,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-heroes-of-the-storm-hots",
+      "disposition": "packaging/load metadata",
+      "sourceTrace": "DBM-CountPack-HotS.toc adds Interface 16001 and AllowLoadGameType classic,mainline; media count data and changelog only.",
+      "specificSourcePaths": "DBM-CountPack-HotS.toc CountLoadList.lua",
+      "simulatorOrNativeCounterpart": "TOC conditionals are supported; no simulator API mismatch.",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DBM-CountPack-HotS.toc"
+      ],
+      "diffSha256": "e315bd9d066d57d84f67c793af89a2e045951793b97862887786b8e7396379c4",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "No executable Forever hunk; CountLoadList.lua remains media data loader selected by TOC."
+    },
+    {
+      "slug": "deltasync",
+      "disposition": "specific missing native/ancestry evidence",
+      "evidence": "The actual runtime fix changes RegisterAddonMessagePrefix handling from boolean false to Enum.RegisterAddonMessagePrefixResult values; this is a cross-client addon bug, not proven Forever-only. The Forever-specific material is TOC 16001 and unverified sender/SavedVariables claims. Simulator surface is not justified for change without a concrete C_ChatInfo return fixture.",
+      "sourceEvidence": "source: DeltaSync.lua, DeltaSync.toc, README.md; local: C_ChatInfo registration surface; native Forever execution explicitly unverified by addon author",
+      "pair": {
+        "beforeFileId": 8899032,
+        "foreverFileId": 8934341,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "2eb91eecc0ac7c71413ea276059437d8d2d70aa47e83000eaf84945f6e65fe2a",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "desync",
+      "sourceFilename": [
+        "Changelog.md",
+        "DeSync.toc",
+        "README.md"
+      ],
+      "changedBranch": "DeSync.toc adds 16001; Changelog describes GetScreenHeightScale fallback, while tests are addon behavior.",
+      "counterpartAndTrace": "No exact pinned Forever authored contract proving missing scale API; fallback is addon defensive behavior.",
+      "disposition": "addon workaround; native blocker",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "245d58d04f8f8618660200ff6bae22ac6e8a1bf509ee11fa92592a8e9ea0b5cf"
+    },
+    {
+      "slug": "dialogueui",
+      "disposition": "defer-unrelated-release",
+      "foreverExecutableBranch": "No Forever-marked path exists in the exact diff; changed quest/gossip/UI code has no isolated Forever selector.",
+      "simulatorCounterpart": "No simulator counterpart can be attributed.",
+      "missingOrLimitingFact": "Pair contains unrelated release drift and no Forever evidence.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "dragonguildmaster",
+      "classification": "candidate needs behavioral repro",
+      "reason": "Addon fixes missing guild-member UI state and gates unavailable features; this is addon error handling, not proof of missing simulator guild API.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "c9931909d67b626d99f7dd0655cd76505a011d83677676d639d90adf4ee5fcc0",
+      "foreverMarkedPaths": [
+        "CHANGELOG.en.md",
+        "CHANGELOG.md",
+        "Core/Init.lua",
+        "DragonGildMaster.toc",
+        "UI/MythicPlus.lua",
+        "docs/03-MVP-Status.md"
+      ],
+      "changedFiles": 37,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ],
+      "runtimeFollowup": {
+        "revision": "d40397025",
+        "exitCode": 0,
+        "artifact": "/tmp/forever-addon-runtime/dragonguildmaster/startup-ledger.json",
+        "startupErrorRecords": 0,
+        "scope": "Actual cached addon startup with isolated enable state, no SavedVariables; not full addon compatibility"
+      }
+    },
+    {
+      "slug": "easyfind",
+      "disposition": "addon capability gating/data; defer",
+      "sourceTrace": "EasyFind/Core/Main.lua and Database/Dynamic.lua disable wardrobe, mount, journal, bank and collection providers based on observed client capabilities; the changed C_Bank/C_Map/C_Item calls are consumers of those capability decisions.",
+      "specificSourcePaths": "EasyFind/Core/Main.lua Caps/forever; Database/Dynamic.lua providers; Shared/Caps.lua",
+      "simulatorOrNativeCounterpart": "Pinned docs confirm selected namespaces but do not prove every capability value or missing system; no producer fix without a concrete consumer RED.",
+      "foreverMarkedPaths": [
+        "EasyFind/CHANGELOG.md",
+        "EasyFind/Core/Main.lua",
+        "EasyFind/Database/Dynamic.lua",
+        "EasyFind/Database/Main.lua",
+        "EasyFind/Database/StaticLocations.lua",
+        "EasyFind/Database/StaticLocations_Forever.lua",
+        "EasyFind/EasyFind.toc",
+        "EasyFind/MapSearch/MapTab.lua",
+        "EasyFind/Search/Filters/ClassSpecSelector.lua",
+        "EasyFind/Search/Filters/Config.lua",
+        "EasyFind/Search/Providers/Achievements.lua",
+        "EasyFind/Search/Results/Handlers/Character.lua",
+        "EasyFind/Search/Results/ResultsFrame.lua",
+        "EasyFind/Search/Results/Rows/Interactions.lua",
+        "EasyFind/Shared/Caps.lua",
+        "EasyFind/Shared/MapUtils.lua",
+        "EasyFind/Shared/Utils.lua",
+        "EasyFind_Calc/EasyFind_Calc.toc",
+        "EasyFind_Guide/EasyFind_Guide.toc",
+        "EasyFind_Guide/Highlight.lua",
+        "EasyFind_Icons/EasyFind_Icons.toc",
+        "EasyFind_Items/EasyFind_Items.toc",
+        "EasyFind_Onboarding/EasyFind_Onboarding.toc",
+        "EasyFind_Options/EasyFind_Options.toc",
+        "EasyFind_Settings/EasyFind_Settings.toc",
+        "EasyFind_Snippets/EasyFind_Snippets.toc"
+      ],
+      "diffSha256": "85d24de07352cfecf6a9d0919d57cbcad9ac12c077bc575c7ddffe10d3ce494c",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "EasyFind/Core/Main.lua ns.OfferTutorialInChat and ns.TutorialOpensItself are capability/UI policy; Database provider branches gate C_Bank.FetchPurchasedBankTabData and collection/map APIs based on observed availability."
+    },
+    {
+      "slug": "ellesmereui",
+      "disposition": "specific missing native/ancestry evidence",
+      "evidence": "Forever branches cover class-resource policy, combo-point target selection, swing timer, specialization absence, and optional APIs. These are addon behavior assumptions across a huge UI suite; pinned source confirms C_SwingTimer documentation exists but the archive does not establish any simulator mismatch. Needs focused vendor-consumer regression, not broad API additions.",
+      "sourceEvidence": "source: EllesmereUIResourceBars/EUI_ResourceBars_SwingTimer.lua, EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua, ClientGate.lua; local: SwingTimer docs and existing profile APIs",
+      "pair": {
+        "beforeFileId": 8848122,
+        "foreverFileId": 8936131,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "53c2434cc9c6feca03ec07b97e2c969e170a0a089194e4a130c7ff0408b95e1a",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    },
+    {
+      "slug": "epic-damage-meter",
+      "sourceFilename": [
+        "CHANGELOG.txt",
+        "Core/Constants.lua",
+        "Core/Core_Retail.lua",
+        "Core/Parser_Classic.lua",
+        "EpicDamageMeter_Camelot.toc",
+        "UI/Config.lua",
+        "UI/DebugConsole.lua",
+        "UserConfig.lua"
+      ],
+      "changedBranch": "Core/Constants.lua and Core/Core_Retail.lua route Forever to modern C_DamageMeter; changelog contrasts absent CombatLogGetCurrentEventInfo and saved-variable/spell-data observations.",
+      "counterpartAndTrace": "This is the strongest remaining candidate but static changelog/source is not a producer repro; must load the actual addon and exercise meter API/events before changing simulator.",
+      "disposition": "candidate needing real consumer repro",
+      "proofLevel": "Offline static source/diff evidence; no tests or runtime claim",
+      "diffSha256": "0ba400d8830ee44f1f9e52d7a93fdfa5a4cd16a726160f90ec973f3fc5098568",
+      "runtimeFollowup": {
+        "revision": "d40397025",
+        "exitCode": 0,
+        "artifact": "/tmp/forever-addon-runtime/epic-damage-meter/startup-ledger.json",
+        "startupErrorRecords": 0,
+        "scope": "Actual cached addon startup with isolated enable state, no SavedVariables; not full addon compatibility",
+        "finding": "Startup [] is not meter-path proof: direct consumer probe fails useMeterAPI assertion. Pinned docs place GetCurrentEventInfo in Internal/ Secure namespaces, not public C_CombatLog; producer correction underway.",
+        "resolvedBy": "9862dc7b3",
+        "currentResult": "At7eb0f4e55 actual package startup stdout[]; modern-path consumer completed60 updates on1instance with2visible named rows. Seeded data only, not live combat conformance.",
+        "currentArtifacts": [
+          "/tmp/forever-addon-runtime/epic-damage-meter/startup-final-ledger.json",
+          "/tmp/forever-addon-runtime/epic-damage-meter/consumer-final-ledger.json"
+        ]
+      }
+    },
+    {
+      "slug": "eq-objective-tracker",
+      "disposition": "defer-addon-availability-gates",
+      "foreverExecutableBranch": "Forever branch gates C_NeighborhoodInitiative requests and uses interface 16000-17000 selection; the tracker explicitly treats initiative/retail-only data as unavailable.",
+      "simulatorCounterpart": "Simulator has C_NeighborhoodInitiative registration; no pinned documentation or failing consumer proves a different Forever return/state contract.",
+      "missingOrLimitingFact": "Need actual C_NeighborhoodInitiative behavior evidence; addon\u2019s defensive gate is not proof of missing API.",
+      "proof": "Exact cached diff + local source/API inspection; no runtime addon conformance credit."
+    },
+    {
+      "slug": "eqol",
+      "classification": "confounded release drift",
+      "reason": "Dedicated Camelot package mixes UI/data, secret-value policy and many unrelated release changes; no small producer mismatch isolated.",
+      "pairProof": "Static comparison/triage only; no complete-addon runtime claim",
+      "pairDiffSha256": "39cbdbbe2468c54ed1a8c78a8515e4bc9d9396272ba1a65548847ffb9da2b249",
+      "foreverMarkedPaths": [
+        "EnhanceQoL/CHANGELOG.md",
+        "EnhanceQoL/Core/Streams/Streams_Camelot.xml",
+        "EnhanceQoL/EnhanceQoL_Camelot.lua",
+        "EnhanceQoL/EnhanceQoL_Camelot.toc",
+        "EnhanceQoL/GeneratedChangelog.lua",
+        "EnhanceQoL/Modules/Aura/DefensiveAuraPresets_Camelot.lua",
+        "EnhanceQoL/Modules/Food/ConsumableData_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Consumables_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Drinks_Camelot.lua",
+        "EnhanceQoL/Modules/Food/EnhanceQoLBandageMacro_Camelot.lua",
+        "EnhanceQoL/Modules/Food/EnhanceQoLHealthMacro_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Food_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Food_Camelot.xml",
+        "EnhanceQoL/Modules/Food/Health.lua",
+        "EnhanceQoL/Modules/Food/Health_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Init_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Settings_DrinkMacro_Camelot.lua",
+        "EnhanceQoL/NewSettingsTable.lua",
+        "EnhanceQoL/Settings/CombatDungeon_Camelot.lua",
+        "EnhanceQoL/Settings/MapNavigation_Camelot.lua",
+        "EnhanceQoL/Settings/Quest_Camelot.lua",
+        "EnhanceQoL/Settings/SettingsUI_Camelot.xml",
+        "EnhanceQoLBags/EnhanceQoLBags_Camelot.toc",
+        "EnhanceQoLChatSocial/ChatSocial_Camelot.xml",
+        "EnhanceQoLChatSocial/EnhanceQoLChatSocial_Camelot.toc",
+        "EnhanceQoLClassBuffReminder/ClassBuffReminder_Camelot.lua",
+        "EnhanceQoLClassBuffReminder/EnhanceQoLClassBuffReminder_Camelot.toc",
+        "EnhanceQoLClassBuffReminder/ForeverBuffs_Camelot.lua",
+        "EnhanceQoLClassBuffReminder/Settings_ClassBuffReminder_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_AuraPresetData_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_BlizzardEditor_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Camelot.xml",
+        "EnhanceQoLCooldownPanels/CooldownPanels_ClassFilters_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Potions_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_SpellGroupPresets_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_SpellRankData_Camelot.lua",
+        "EnhanceQoLCooldownPanels/EnhanceQoLCooldownPanels_Camelot.toc",
+        "EnhanceQoLDamageMeter/DamageMeter.lua",
+        "EnhanceQoLDamageMeter/DamageMeter_Camelot.lua",
+        "EnhanceQoLDamageMeter/DamageMeter_Camelot.xml",
+        "EnhanceQoLDamageMeter/EnhanceQoLDamageMeter_Camelot.toc",
+        "EnhanceQoLMover/EnhanceQoLMover_Camelot.toc",
+        "EnhanceQoLQuickActions/MicroMenu.lua",
+        "EnhanceQoLResourceBars/EnhanceQoLResourceBars_Camelot.toc",
+        "EnhanceQoLResourceBars/ResourceBars.lua",
+        "EnhanceQoLResourceBars/ResourceBarsProfiles_Camelot.lua",
+        "EnhanceQoLResourceBars/ResourceBars_Camelot.lua",
+        "EnhanceQoLResourceBars/ResourceBars_Camelot.xml",
+        "EnhanceQoLResourceBars/Settings_Ressourcebars_Camelot.lua",
+        "EnhanceQoLSharedMedia/EnhanceQoLSharedMedia_Camelot.toc",
+        "EnhanceQoLSkinner/EnhanceQoLSkinner_Camelot.toc",
+        "EnhanceQoLSound/EnhanceQoLSound_Camelot.toc",
+        "EnhanceQoLTooltip/EnhanceQoLTooltip_Camelot.lua",
+        "EnhanceQoLTooltip/EnhanceQoLTooltip_Camelot.toc",
+        "EnhanceQoLTooltip/Tooltip_Camelot.xml",
+        "EnhanceQoLUnitFrames/EnhanceQoLUnitFrames_Camelot.toc",
+        "EnhanceQoLUnitFrames/Settings_UF_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF.lua",
+        "EnhanceQoLUnitFrames/UF_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GlobalAuraIgnore_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames_HealerBuffs_Camelot.lua",
+        "EnhanceQoLUnitFrames/UnitFrames_Camelot.xml",
+        "EnhanceQoLVendor/EnhanceQoLVendor_Camelot.toc"
+      ],
+      "changedFiles": 203,
+      "evidenceLimits": [
+        "Static package comparison; no complete-addon runtime/conformance claim.",
+        "Release pair is a comparison boundary, not proof of ancestry unless separately sourced."
+      ]
+    },
+    {
+      "slug": "everything-quests",
+      "disposition": "addon data/policy and unverified feature scope",
+      "sourceTrace": "EverythingQuests_Camelot.toc chooses Classic-era files; MapPOI Provider/Available.lua intentionally combines Classic data with game quest data and changelog explicitly says several features are untested.",
+      "specificSourcePaths": "EverythingQuests_Camelot.toc; Modules/MapPOI/Available.lua; Modules/MapPOI/Provider.lua",
+      "simulatorOrNativeCounterpart": "Quest/world-map support already has separate simulator regression; this package diff does not expose a new API mismatch.",
+      "foreverMarkedPaths": [
+        "Core/Changelog.lua",
+        "EverythingQuests_Camelot.toc",
+        "Modules/MapPOI/Available.lua",
+        "Modules/MapPOI/Provider.lua",
+        "Modules/WhatsNew.lua"
+      ],
+      "diffSha256": "4784386fcbe17a913eff80819640edaab5db1961a718ed5beab970961f4acbd0",
+      "pairEvidence": "Cached before/Forever archive pair; no source ancestry proof.",
+      "limits": "The paired archives provide no upstream ancestry or native execution trace; disposition is limited to the changed source and pinned local Forever cache.",
+      "functionOrBranchTrace": "Modules/MapPOI/Available.lua and Provider.lua changed map marker provider selection; changelog explicitly labels untested features, so no producer contract is isolated."
+    },
+    {
+      "slug": "numy-addon-profiler",
+      "disposition": "unrelated change",
+      "evidence": "Only Forever-marked executable change is TOC interface metadata; no runtime/API branch.",
+      "sourceEvidence": "source: !!AddonProfiler.toc",
+      "pair": {
+        "beforeFileId": 8630897,
+        "foreverFileId": 8925732,
+        "pairBasis": "Newest observed non-Forever release before earliest observed Forever file; release type matched when available. Release changes may include unrelated work."
+      },
+      "diffSha256": "2ac31d914596de499b750ea34a8426323aa29e9b373ec7ed917538da0da926fb",
+      "proofLevel": "Offline source/archive inspection only; no addon runtime or native conformance claim"
+    }
+  ]
+}

@@ -49,7 +49,33 @@ Final Rust source `d40397025` passed independent offline verification:
 - Existing unchanged WorldMap/SpellBook sustained-lifecycle proof reused with its original scope; no fresh full-addon or GUI-runtime claim.
 - Previously verified catalog, 477 indexed archive hashes, and 208 diff hashes reused unchanged. Full ledger: `/tmp/verify-forever-addon-final-ledger.json`; prior artifact ledger: `/tmp/verify-forever-addon-cache-ledger.json`.
 
-This closes the bounded cached-comparison correction pass, not complete Forever compatibility. No push or deployment was performed.
+This verifies the initial two-correction checkpoint, not complete Forever compatibility. Further cached-consumer investigation is recorded below. No implementation push or deployment was performed.
+
+## Deeper cached-consumer follow-up
+
+The 71 initially confounded/needs-deeper rows now have [source-branch dispositions](../data/forever-addon-audit/deep-dispositions.json). These identify changed call sites, existing counterparts, addon-policy/data changes, or specific missing evidence; they are not blanket compatibility claims.
+
+Five actual cached packages were also loaded in isolated temporary addon roots using the already-built Forever binary, with SavedVariables disabled:
+
+| Package | Observed boundary at `d40397025` | Disposition |
+| --- | --- | --- |
+| EpicDamageMeter `8930362` | Startup `[]`, but direct consumer assertion shows the modern meter branch was not selected | Correction `9862dc7b3` prevents public getter synthesis; Internal/Secure remain available. Actual current-source replay selects the modern meter path and completes 60 consumer updates with two visible named rows; live combat/secrets remain unproven |
+| Carbonite `8926975` | Core provider absent, so three dependent addons fail | Selection `31ac46b3a` now loads the provider/dependents (44 focused selector/profile tests pass). Full package advances to a separate UIMap 2521 map-art boundary described below; it is not a full Carbonite pass |
+| Baganator | Missing Syndicator, then missing LibStub supplied by that dependency | Dependency-blocked, not a simulator API defect. The repository's Syndicator directory is only a partial Search fixture without a TOC; no new download is authorized |
+| CooldownMaster | Startup `[]` with the actual package loaded | Startup-only evidence; no full cooldown interaction claim |
+| DragonGildMaster | Startup `[]` with the actual package loaded | Startup-only evidence; no guild-service or chat-restriction claim |
+
+The combat-log finding also corrects an evidence trap: `Deprecated_CombatLog.lua` assigning a public member to a legacy global cannot prove that the member exists. `loadDeprecationFallbacks=1` does not make an absent source member callable. See the [client-oriented namespace explanation](wowforever-1.60.1-ui-api-deltas.md#2-combat-log-getter-ownership-do-not-reconstruct-a-public-superset).
+
+Logs, exact commands, archive identities and isolated enable-state files are retained under `/tmp/forever-addon-runtime/<slug>/`. No vendor or addon source was edited for these probes.
+
+### Carbonite's remaining map-art boundary
+
+The live diagnostic identifies Zephras Isle, UIMap `2521`, as the third continent. Camelot `MapEngine.lua` first requests modern art for roots above 1000; both `C_Map.GetMapArtLayers(2521)` and `GetMapArtLayerTextures(2521, 1)` return nil in the current data set. Only then does the addon fall back to a missing legacy `FileName`. An earlier static trace blaming the filename alone was incomplete: the preceding modern-API path matters.
+
+`data/db2/UiMapXMapArt.csv` has no 2521 row, and the acquired exact-build Forever CSVs cover atlases/global strings, not the four map-art tables. The installed Beta build is 69913, but there is no configured exact-build DB2-to-CSV/schema chain in this checkout: the map generator consumes pre-exported CSVs, while wowless's offline dumper needs extracted files and generated runtime definitions that are absent here. A dedicated map-data ingestion step or supplied exact-build exports is needed before deciding whether native 69913 provides this art and what IDs, dimensions and phases apply.
+
+No legacy filename, tile IDs, layer dimensions, synthetic capacity, player-map change, or vendor nil guard is fabricated. Full Carbonite compatibility remains blocked at this concrete evidence/data boundary, independently of the corrected TOC selection. The map also exposes a separate Retail-seeded player-map policy (2248); changing that does not supply continent 2521's missing art.
 
 ## Acquisition rules
 
