@@ -14,7 +14,7 @@ const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
     local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput = ...
     -- Capture host bootstrap functions, not later addon replacements.
-    local secretToString, secretToNumber, secretStringFormat = tostring, tonumber, string.format
+    local secretType, secretToString, secretToNumber, secretStringFormat = type, tostring, tonumber, string.format
     local function ensure_namespace(name)
         _G[name] = _G[name] or __wow_namespace()
         return _G[name]
@@ -62,25 +62,25 @@ do
     local function secret_duration_text(duration)
         duration = readSecretInput(duration)
         local value = duration
-        if type(duration) ~= "number" then value = duration:GetRemainingDuration() end
+        if secretType(duration) ~= "number" then value = duration:GetRemainingDuration() end
         return secretToString(value)
     end
     local function format_secret_duration(binding, duration)
         local text = secret_duration_text(duration)
         local formatter = binding.formatter
         local value
-        if type(formatter) == "userdata" and type(formatter.FormatNumber) == "function" then
+        if secretType(formatter) == "userdata" and secretType(formatter.FormatNumber) == "function" then
             value = formatter:FormatNumber(wrapSecretOutput(secretToNumber(text)))
-        elseif type(formatter) == "function" then
+        elseif secretType(formatter) == "function" then
             value = formatter(duration)
-        elseif type(formatter) == "table" and type(formatter.Format) == "function" then
+        elseif secretType(formatter) == "table" and secretType(formatter.Format) == "function" then
             value = formatter:Format(duration)
         else
             value = text
         end
         if value == nil then error("Secret duration formatter returned nil", 3) end
         text = secretToString(readSecretInput(value))
-        if type(binding.textFormat) == "string" and binding.textFormat ~= "" then
+        if secretType(binding.textFormat) == "string" and binding.textFormat ~= "" then
             text = secretStringFormat(binding.textFormat, text)
         end
         return text

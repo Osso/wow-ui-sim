@@ -107,6 +107,36 @@ fn duration_binding_secret_callback_failures_are_not_replaced_with_text() {
     .expect("secret formatting errors propagate before changing the target text");
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_binding_secret_formatting_does_not_use_addon_conversion_overrides() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        binding:SetDuration(secretwrap(18))
+        binding:SetTextFormat('remaining %s')
+        local originals = {type, tostring, tonumber, string.format}
+        local leaked = false
+        local function spy(original)
+            local function replacement(...)
+                for index = 1, select('#', ...) do
+                    local value = select(index, ...)
+                    if value == 18 or value == '18' then leaked = true end
+                end
+                return original(...)
+            end
+            debug.setobjecttaint(replacement, 'ConversionProbe')
+            return replacement
+        end
+        type, tostring, tonumber, string.format = spy(type), spy(tostring), spy(tonumber), spy(string.format)
+        local ok, value = pcall(binding.GetFormattedText, binding)
+        type, tostring, tonumber, string.format = unpack(originals)
+        assert(ok, tostring(value))
+        assert(value == 'remaining 18')
+        assert(not leaked, 'secret conversion passed timing into an addon override')
+    "#).expect("bootstrap conversions keep decoded timing away from later addon overrides");
+}
+
 #[test]
 fn duration_binding_userdata_copy_retains_resources_through_collection() {
     let env = WowLuaEnv::new().unwrap();
