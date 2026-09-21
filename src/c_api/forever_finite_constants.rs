@@ -5,6 +5,11 @@ use rilua::Val;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn register(state: &mut LuaState) {
+    register_enums(state);
+    register_constants(state);
+}
+
+fn register_enums(state: &mut LuaState) {
     let enums = super::helpers::ensure_global_table(state, "Enum");
     publish(
         state,
@@ -21,6 +26,10 @@ pub(crate) fn register(state: &mut LuaState) {
     register_bag_indices(state, enums);
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
+    register_gamepad_overrides(state, enums);
+}
+
+fn register_gamepad_overrides(state: &mut LuaState, enums: Val) {
     publish(state, enums, "GamepadPossessBarOverride", POSSESS_OVERRIDES);
     publish(
         state,
@@ -35,6 +44,9 @@ pub(crate) fn register(state: &mut LuaState) {
         "GamepadStanceBarOverrideMeta",
         &[("MinValue", 1), ("MaxValue", 12), ("NumValues", 12)],
     );
+}
+
+fn register_constants(state: &mut LuaState) {
     let constants = super::helpers::ensure_global_table(state, "Constants");
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
     publish(

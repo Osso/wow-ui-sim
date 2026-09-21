@@ -420,7 +420,6 @@ fn get_cursor_money(state: &mut LuaState) -> LuaResult<u32> {
 /// Install in the global table. Exposed for tests that want to bypass the
 /// full `register_globals` chain.
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
-    crate::c_api::container_inventory::register(lua.state_mut())?;
     LuaApiMut::register_function(lua, "PickupContainerItem", pickup_container_item)?;
     LuaApiMut::register_function(lua, "PickupInventoryItem", pickup_inventory_item)?;
     LuaApiMut::register_function(lua, "PickupBagFromSlot", pickup_bag_from_slot)?;

@@ -17,6 +17,7 @@
 ## Implementation inventory
 
 - `src/c_api/container_inventory.rs` — shared transfer operations and namespaced registration.
+- `src/c_api/item_spell/c_container.rs` — owning namespace registrar installs the transfer operation alongside container queries.
 - `src/lua_api/globals/inventory_verbs.rs` — legacy registrations route to the same operations.
 - `src/lua_api/workarounds/temporary/container_default_shapes.rs` — superseded pickup no-op removed; unrelated defaults unchanged.
 - `src/c_api/mod.rs` — module declaration.

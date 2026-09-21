@@ -39,7 +39,7 @@ fn c_item_upgrade_clear(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn register_c_container(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Container")?;
     register_container_query_methods(state, table_ref)?;
-    Ok(())
+    crate::c_api::container_inventory::register(state)
 }
 
 type ContainerScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
