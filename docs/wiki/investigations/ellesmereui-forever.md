@@ -1,6 +1,6 @@
 # EllesmereUI Forever compatibility
 
-Cached EllesmereUI 9.2.2 establishes bounded simulator defects from a real Forever startup, but not addon compatibility: several suite modules intentionally stand down on Camelot, and full startup revalidation remains open.
+Cached EllesmereUI 9.2.2 establishes bounded simulator defects from a real Forever startup, but not addon compatibility: several suite modules intentionally stand down on Camelot, the latest real GUI acceptance is 5/6, and full startup revalidation remains open.
 
 ## Runtime boundary
 
@@ -47,6 +47,12 @@ The same trace found `C_ActionBar.GetActionCooldown(1)` returned start, duration
 
 `ac9ce1897` separately fixes trailing TOC annotation parsing: tab-separated `[AllowLoadGameType mainline] [LoadIntoEnvironment secure]` had been retained in TargetFrame aura Lua paths, causing IO failures and the missing callback symptom. Its parser/secure-environment regressions are committed; compiled confirmation remains pending.
 
+### Secret duration follow-up
+
+After enumeration and action-cooldown publication, the real GUI reached five passing interactions: chat, options/unlock, casts/channels, action icon/cooldown, and target health. The sixth, player-aura display, now reaches native `AuraButton` duration setup. The trace shows helpful aura instance `6` for spell `19750`, public `HELPFUL` IDs including it, an empty private source, and a declared `pball|-` group with ten frames. `5903290d5` separately shares the existing `UnitIsPlayerControlledOrGroupMember` classifier through `aura-containers`; it is uncompiled.
+
+`e6b928a23` addresses the next demonstrated boundary: native `AuraButton` passes `secretwrap(expirationTime, duration, timeMod)` to duration setters, while all three previously rejected wrapped numerics as userdata from an untainted caller. Timing slots now retain authenticated wrappers rather than public numeric values, and setters use rilua's checked unwrap path. `HasSecretValues` derives public metadata from those slots. The following lifecycle/output policy is an **informed simulator guess**, explicitly authorized because Forever-client probes are unavailable: secret timing persists through ordinary reconfiguration and `Reset`; `Copy` preserves wrappers; `Assign` retains existing target secrecy; `SetToDefaults` clears it; and secret timing queries reject tainted callers but return ordinary computed values to untainted native callers. These are not native-conformance claims. Core-only tests and compilation remain pending; widget and duration-text-binding handoffs are separate active work.
+
 `c5f5da7fb` shares the existing `C_StringUtil.CreateNumericRuleFormatter` and rounding enum with Forever through a narrow capability. Ellesmere AuraKit first chooses this documented formatter and only uses its seconds formatter as fallback. Its exact breakpoint table is covered, including the modeled `59.9 → "60"` pre-rounding threshold behavior; native parity at that boundary is unmeasured. Existing-binary RED reports the missing constructor. Compiled GREEN and real AuraKit replay remain pending; no formatter model or fallback policy changed.
 
 ## Open boundaries
@@ -55,8 +61,8 @@ The same trace found `C_ActionBar.GetActionCooldown(1)` returned start, duration
 - `d93621f42` implements the narrow `on-update-modes` capability for Retail 12.1+ and Forever: numeric values 0–4, XML-name conversion, pre-callback one-shot reset, and removal of PTR's string/alias producer. All five focused tests are RED, including the real ManagedAuraContainer dirty path; GREEN and runtime replay remain pending.
 - `0b95bed3e` restores the native initial-anchor phase before simulator replay. Failure-time instrumentation from `/tmp/ellesmere-forever/queue-runtime/mutation-boundary.stderr` saw the 45×45 QueueStatusButton with zero anchors and nil center when earlier MicroMenu, action-bar and Minimap callbacks invoked Camelot `QueueStatusButtonMixin:UpdateDefaultAnchor`; final startup geometry was therefore not relevant evidence. Pinned `Blizzard_EditMode/Shared/EditModeManager.lua:995-1013` orders `InitSystemAnchors()` before `UpdateSystems()`, while `:1454-1466` initializes a `TOPLEFT` anchor for registered non-managed-default systems. The initial RED executes the exact regression Lua blocks in `/tmp/ellesmere-forever/queue-regression-red.stderr`; focused GREEN and real startup replay remain pending. No coordinate fabrication or vendor/addon edit is part of the fix.
 - Run compiled GREEN for `1604954a2` nested timer preservation, then rerun deferred options/action/aura acceptance paths.
-- Run one combined Forever compiled GREEN for duration binding, formatter restoration, `aura-containers` publication, and inbound projection before attributing later AuraContainer failures.
-- Re-run isolated startup and reachable Ellesmere interactions after those demonstrated producers are compiled. No full-startup or full-addon compatibility claim is current.
+- Compile and run focused GREEN for the uncompiled TOC/profile, TargetFrame diagnostic, unit-relationship, secret-duration-core, widget, and duration-text-binding slices.
+- Re-run isolated startup and all six reachable Ellesmere interactions after the secret duration/display handoffs are compiled. No full-startup or full-addon compatibility claim is current.
 
 ## Sources
 
@@ -70,7 +76,9 @@ The same trace found `C_ActionBar.GetActionCooldown(1)` returned start, duration
 - [OnUpdate-mode spec](../../specs/on-update-modes.md) — numeric contract, XML mapping, and pending focused proof
 - [Forever forbidden-aspect consumers](../../specs/forever-forbidden-aspects.md) — base masks, animation extension, exclusions, and pending GREEN
 - [Timer After callback dispatch](../../specs/timer-after-callback.md) — callback-created queue preservation and pending compiled GREEN
-- [Duration text binding](../../specs/duration-text-binding.md) — Forever availability boundary and pending compiled GREEN
+- [Duration text binding](../../specs/duration-text-binding.md) — Forever availability boundary and pending secret display handoff
+- [Duration core](../../specs/duration-core.md) — authenticated secret timing storage and explicitly guessed lifecycle/access policy
+- `/tmp/ellesmere-forever/traced-producers-gui-ledger.json` and `duration-secret-input-red.stderr` — 5/6 GUI boundary and wrapped-duration RED
 - [Aura container options](../../specs/aura-container-options.md) — narrow public/secure publication and intentionally unexpanded native fields
 - [Base spell aura secrecy](../../specs/spell-aura-secrecy.md) — shared classifier availability without Forever data-parity claim
 - [SecondsFormatter configuration](../../specs/seconds-formatter-configuration.md) — cleanup restoration contract and pending compiled GREEN
