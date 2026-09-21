@@ -10,6 +10,7 @@ Forever shares the existing forbidden-aspect model and query/mutation methods wi
 - [ ] Preserve existing hierarchy inheritance and reject later parent/anchor changes that would implicitly acquire forbidden aspects.
 - [ ] Project partitioned script objects into the destination environment across secure/global calls and returns. Secure callers receive the interned private table, global callers receive the original public table, and each partition retains its own fields and methods.
 - [ ] Return the matching parent partition from `GetParent`; `GetObjectTable` exposes the public object table without replacing the private native mixin.
+- [ ] Publish the existing `AddSecretAspect` mask mutation under `forbidden-aspects` (Retail 12.1 and Forever), preserving older-profile absence. Native CustomAuraButton duration setters must retain `Cooldown` and `Shown` on cooldowns and `BarValue` on status bars, observable through both public and private views. This does not expand masks or enforce secret values.
 
 ## How it works
 
@@ -24,6 +25,7 @@ Forever shares the existing forbidden-aspect model and query/mutation methods wi
 - `src/lua_api/frame/methods/text_attribute_event/mod.rs`: forbidden methods and the demonstrated `GetObjectTable` dependency shared independently of unrelated Retail APIs.
 - `src/lua_api/script_object_transfer.rs`: existing environment-transfer hook and parent projection enabled with the shared forbidden-aspect capability; no replacement aura display implementation.
 - `src/lua_api/frame/methods/forbidden_aspects.rs` and `button_anchor_hierarchy/{anchors,hierarchy}.rs`: existing state queries and relationship enforcement gates.
+- `src/lua_api/frame/methods/misc/secret.rs`: existing `AddSecretAspect` registration and mask mutation use the shared capability. Native Forever declares the method in `SimpleFrameScriptObjectAPIDocumentation.lua`; `Blizzard_CustomAuraButton.lua` calls it in duration cooldown/bar setters.
 
 ## Tests asserting this spec
 

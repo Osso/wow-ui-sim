@@ -229,7 +229,7 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
             |env, _| {
                 env.exec(
                     r#"
-                    local initializedButton, initializedCooldown
+                    local initializedButton, initializedCooldown, initializedBar
                     local publicDisplayCalls = 0
                     local function initialize(button)
                         initializedButton = button
@@ -239,6 +239,8 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                             "public and private tables remain distinct")
                         initializedCooldown = CreateFrame("Cooldown", nil, button)
                         button:SetDurationCooldown(initializedCooldown)
+                        initializedBar = CreateFrame("StatusBar", nil, button)
+                        button:SetDurationBar(initializedBar)
                         button.UpdateAuraDisplay = function()
                             publicDisplayCalls = publicDisplayCalls + 1
                             error("secure provider used an addon-supplied display method")
@@ -255,6 +257,15 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                     assert(child == initializedButton,
                         "public caller receives the same public view as the initializer")
                     assert(initializedCooldown:GetParent() == child)
+                    local aspects = Enum.SecretAspect
+                    assert(initializedCooldown:HasAnySecretAspect())
+                    assert(initializedCooldown:HasSecretAspect(aspects.Cooldown))
+                    assert(initializedCooldown:HasSecretAspect(aspects.Shown))
+                    assert(not initializedCooldown:HasSecretAspect(aspects.BarValue))
+                    assert(initializedBar:HasSecretAspect(aspects.BarValue))
+                    assert(not initializedBar:HasSecretAspect(aspects.Cooldown))
+                    assert(GetForbiddenObjectTable(initializedCooldown):HasSecretAspect(aspects.Cooldown))
+                    assert(GetForbiddenObjectTable(initializedBar):HasSecretAspect(aspects.BarValue))
                     assert(child:GetParent() == container)
                     local private = GetForbiddenObjectTable(child)
                     assert(private ~= child)

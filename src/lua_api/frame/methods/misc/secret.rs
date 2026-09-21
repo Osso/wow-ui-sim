@@ -5,7 +5,7 @@
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -15,7 +15,7 @@ use rilua::{LuaResult, Val};
 const OBJECT_SECRET_ASPECT: u32 = 1;
 
 pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     table_set_rust_fn_static(state, mt, "AddSecretAspect", add_secret_aspect)?;
     table_set_rust_fn_static(state, mt, "HasAnySecretAspect", has_any_secret_aspect)?;
     table_set_rust_fn_static(state, mt, "HasSecretAspect", has_secret_aspect)?;
@@ -38,7 +38,7 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub fn add_secret_aspect(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let aspect = u32::from_stack(state, 2)?;
