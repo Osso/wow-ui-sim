@@ -1,3 +1,5 @@
+local projectForbiddenDelegateArguments = ...
+
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
   if first == nil then
@@ -234,6 +236,8 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
   local target = __wow_xml_object_partition(object, targetName)
   local inboundName = inboundPartition
   local wrapInbound = inboundName ~= nil and inboundName ~= ""
+  local projectArguments = projectForbiddenDelegateArguments
+    and secureDelegates == true and inboundName == "forbidden"
 
   for key, value in pairs(__wow_resolve_secure_mixin_methods(mixin)) do
     local applied = value
@@ -241,6 +245,9 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
       local fn = value
       applied = function(_self, ...)
         local delegateSelf = wrapInbound and __wow_xml_object_partition(object, inboundName) or object
+        if projectArguments then
+          return fn(delegateSelf, __wow_project_forbidden_arguments(...))
+        end
         return fn(delegateSelf, ...)
       end
     end

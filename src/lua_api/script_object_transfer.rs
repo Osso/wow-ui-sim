@@ -10,6 +10,30 @@ use std::ops::Range;
 const FORBIDDEN_TABLES: &str = "__wow_forbidden_object_tables";
 const FORBIDDEN_CONSTRUCTOR: &str = "__wow_forbidden_object_constructor";
 
+pub(crate) fn register_delegate_projection(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(
+        lua,
+        "__wow_project_forbidden_arguments",
+        project_delegate_arguments,
+    )
+}
+
+fn project_delegate_arguments(state: &mut LuaState) -> LuaResult<u32> {
+    let first = state.base;
+    let count = state.top.saturating_sub(first);
+    let constructor = registry_get(state, FORBIDDEN_CONSTRUCTOR);
+    for index in 0..count {
+        let value = state.stack_get(first + index);
+        let projected = if native_frame_id_from_val(state, value).is_some() {
+            call_function_state(state, constructor, &[value])?
+        } else {
+            value
+        };
+        state.push(projected);
+    }
+    Ok(count as u32)
+}
+
 pub(crate) fn install(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
     let constructor = table_get(state, Val::Table(state.global), "GetForbiddenObjectTable");

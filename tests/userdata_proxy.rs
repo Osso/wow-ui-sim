@@ -112,6 +112,87 @@ fn forbidden_partition_transfer_preserves_ordinary_frame_fields() {
     "#, true).expect("unpartitioned frames retain their public fields");
 }
 
+#[test]
+fn forbidden_partition_secure_xml_delegate_preserves_argument_shape_and_isolation() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!(
+        "projectDelegateArguments = {}",
+        cfg!(feature = "forbidden-aspects")
+    ))
+    .unwrap();
+    env.exec(
+        r#"
+        local owner = CreateFrame('Frame')
+        local child = CreateFrame('Cooldown', nil, owner)
+        local texture = owner:CreateTexture()
+        local label = owner:CreateFontString()
+        local privateOwner = GetForbiddenObjectTable(owner)
+        local privateChild = GetForbiddenObjectTable(child)
+        child.value = 'public'
+        privateChild.value = 'private'
+        local nested = { child = child }
+        local spoof = { __wowPublicObject = child, [0] = rawget(child, 0) }
+        local incoming
+        local expectedPrivateValue = 'private'
+        local mixin = { Accept = function(self, ...)
+            assert(self == privateOwner)
+            assert(select('#', ...) == 9, 'nil slots and trailing nil must survive')
+            local c, empty, t, f, number, flag, tableArg, fake, trailing = ...
+            assert(empty == nil and trailing == nil and number == 23 and flag == false)
+            assert(tableArg == nested and tableArg.child == child, 'no recursive projection')
+            assert(fake == spoof, 'ordinary identity-shaped tables must remain unchanged')
+            if projectDelegateArguments then
+                assert(c == privateChild and c.value == expectedPrivateValue)
+                assert(t == GetForbiddenObjectTable(texture))
+                assert(f == GetForbiddenObjectTable(label))
+                c.value = 'changed-private'
+                expectedPrivateValue = 'changed-private'
+            else
+                assert(c == child and c.value == 'public', 'legacy XML behavior must remain')
+                assert(t == texture and f == label)
+            end
+            incoming = c
+            return 'accepted', nil, 23
+        end, Empty = function(self, ...)
+            assert(self == privateOwner and select('#', ...) == 0)
+            return 'empty'
+        end }
+        __wow_apply_xml_mixin(owner, mixin, 'public', 'forbidden', true)
+        assert(owner:Empty() == 'empty')
+        local result, empty, number = owner:Accept(child, nil, texture, label, 23, false, nested, spoof, nil)
+        assert(result == 'accepted' and empty == nil and number == 23)
+        assert(child.value == 'public', 'delegate must not write public instance fields')
+        assert(privateChild.value == (projectDelegateArguments and 'changed-private' or 'private'))
+        if projectDelegateArguments then
+            owner:Accept(privateChild, nil, GetForbiddenObjectTable(texture), GetForbiddenObjectTable(label), 23, false, nested, spoof, nil)
+            assert(incoming == privateChild, 'canonical private arguments stay interned')
+        end
+        "#,
+    )
+    .expect("secure XML delegates preserve direct argument shape and partition isolation");
+}
+
+#[test]
+fn forbidden_partition_nonsecure_xml_delegate_keeps_public_arguments() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local owner = CreateFrame('Frame')
+        local child = CreateFrame('Frame', nil, owner)
+        child.value = 17
+        local seen
+        __wow_apply_xml_mixin(owner, { Accept = function(self, argument)
+            assert(self == GetForbiddenObjectTable(owner))
+            assert(argument == child and argument.value == 17)
+            seen = true
+        end }, 'public', 'forbidden', false)
+        owner:Accept(child)
+        assert(seen)
+        "#,
+    )
+    .expect("receiver-only XML delegates retain public argument fields");
+}
+
 #[cfg(feature = "forbidden-aspects")]
 #[test]
 fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() {
