@@ -63,7 +63,7 @@ Loader source `31ac46b3a`: RED 4/9 TOC tests and 0/1 Carbonite provider/consumer
 
 ## Known gaps (current cycle)
 
-- [ ] Forever startup/UI compatibility is not established by profile selection. Targeted profile evidence passed 8/8, but startup smoke and a full Blizzard baseline remain pending. Its event registration starts with the finite known-event table; Forever-specific events still need source-backed coverage.
+- [ ] Full Forever UI/data compatibility is not established by profile selection. Profile tests and separate startup checks pass, but optional panels, game data and third-party dependencies retain explicit coverage limits; see the [Forever report](../wowforever-1.60.1.md). Event acceptance remains a finite, source-backed surface rather than accepting arbitrary names.
 - [ ] Forever `GetBuildInfo()` date and trailing fields retain existing temporary defaults, not a native build-date claim.
 
 - [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but the current startup baseline has six pixel-rounding error records; profile selection is not startup acceptance.

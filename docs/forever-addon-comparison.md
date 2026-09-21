@@ -77,6 +77,12 @@ The live diagnostic identifies Zephras Isle, UIMap `2521`, as the third continen
 
 No legacy filename, tile IDs, layer dimensions, synthetic capacity, player-map change, or vendor nil guard is fabricated. Full Carbonite compatibility remains blocked at this concrete evidence/data boundary, independently of the corrected TOC selection. The map also exposes a separate Retail-seeded player-map policy (2248); changing that does not supply continent 2521's missing art.
 
+### Follow-up verification
+
+Independent verification at `572f1c23c` passes the bounded selector and namespace claims. Valid development proof was reused: 44 selector/profile tests and 7 combat-namespace/shared-state tests. The previously unexecuted Forever combat-navigation unit also passes, for 52 focused cases across these scopes. Fresh formatting, default/Forever offline checks, changed-function readability, and Forever startup (`[]`) pass. Eight unrelated pre-existing lib-test warnings remain; production `cargo check` emits none.
+
+The verifier inspected and reused the actual Epic package startup/60-update consumer output and all 71 deeper dispositions. Carbonite's map-art boundary and Baganator's missing dependency remain explicitly unresolved, not hidden by fallback data. Ledger: `/tmp/verify-forever-followup-ledger.json`. Later documentation-only changes do not invalidate these source proofs.
+
 ## Acquisition rules
 
 Acquisition is stopped for this pass. Existing archives remain local; no risk/flagging status is known. The 477 count denotes indexed CurseForge file versions, including comparison versions—not unique addons or HTTP requests. The browser download probe also produced a duplicate DBM archive outside the batch cache.

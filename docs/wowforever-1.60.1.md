@@ -35,7 +35,7 @@ Cached EasyFishing comparison exposed a separate cursor transfer defect. Commit 
 
 `31ac46b3a` corrects cached Carbonite selection: the dash-form Camelot TOC wins before a generic Retail TOC, so its dependency providers and dependents load. The focused selector suite passes **44 targets**. Carbonite then reaches its actual `OnUpdate` map path, where UI map `2521` lacks map-art metadata: modern map-art API calls precede the legacy fallback. This is not a simple `mapFileName`/addon-file-name defect. Exact-build map-art data and its decoder chain are absent, so no metadata, asset filename, or fallback is invented.
 
-`9862dc7b3` stops publishing `GetCurrentEventInfo` on public `C_CombatLog` for Forever while retaining the documented Internal and Secure namespaces. **3 new and 4 existing** namespace checks pass. Cached EpicDamageMeter now starts cleanly and its modern path completes **60 updates** on **1 instance** with **2 named rows**. That is seeded meter rendering, not native combat conformance. The combined final integration gate remains pending.
+`9862dc7b3` stops publishing `GetCurrentEventInfo` on public `C_CombatLog` for Forever while retaining the documented Internal and Secure namespaces. **3 new and 4 existing** namespace checks pass. Cached EpicDamageMeter now starts cleanly and its modern path completes **60 updates** on **1 instance** with **2 named rows**. That is seeded meter rendering, not native combat conformance. The combined final gate passes at `572f1c23c`; see [exact proof and remaining limits](forever-addon-comparison.md#follow-up-verification).
 
 The public, native-POV [Forever UI/API delta notes](wowforever-1.60.1-ui-api-deltas.md) are separately published at `362b65c7f` on `forever-ui-api-report`; this report links to them but does not treat cached-addon outcomes as native proof.
 
@@ -140,7 +140,7 @@ The startup blocker list is empty at batch fifteen. Remaining scope limits:
 - A synchronized cache does not establish clean startup, panel interaction, rendering parity, gamepad input dispatch, or full UI compatibility.
 - `GetBuildInfo()` date and trailing return fields retain existing temporary defaults.
 - `require` preserves only the Warcraft Wiki contract covered by its [canonical spec](specs/addon-module-imports.md); unspecified native edge cases remain unmodeled.
-- The combined selector/combat final integration gate is pending. Carbonite’s map-art metadata/decoder-chain absence and Baganator’s missing Syndicator dependency remain parked, not fixed by fallbacks.
+- The combined selector/combat gate passes at `572f1c23c`; [the proof record](forever-addon-comparison.md#follow-up-verification) distinguishes reused tests, fresh checks, and eight pre-existing lib-test warnings. Carbonite’s exact-build map-art evidence/ingestion gap and Baganator’s missing Syndicator dependency remain unresolved; no fallback data or vendor guards were added.
 
 ## Canonical documents
 

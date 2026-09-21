@@ -12,7 +12,7 @@ Commit `6397eb7a3` freezes this pass to offline use of the already acquired arch
 
 `31ac46b3a` corrects TOC selection so dash/underscore Camelot variants precede generic TOCs. The focused selector suite passes 44 targets; cached Carbonite providers and dependents now load. Its later `OnUpdate` reaches map 2521 and first uses the modern map-art API path. Map-art metadata is absent, so the legacy path fails; this is not a simple addon filename defect. Exact-build map-art records and decoder inputs are unavailable, therefore no metadata, asset name, or fallback is invented.
 
-`9862dc7b3` removes the public Forever `C_CombatLog.GetCurrentEventInfo` exposure while retaining `C_CombatLogInternal` and `C_CombatLogSecure`. Three new and four existing namespace checks pass. Cached EpicDamageMeter starts cleanly and its modern path completes 60 updates on one instance with two named rows. This is seeded render-path evidence, not native combat evidence. The combined final integration gate remains pending.
+`9862dc7b3` removes the public Forever `C_CombatLog.GetCurrentEventInfo` exposure while retaining `C_CombatLogInternal` and `C_CombatLogSecure`. Three new and four existing namespace checks pass. Cached EpicDamageMeter starts cleanly and its modern path completes 60 updates on one instance with two named rows. This is seeded render-path evidence, not native combat evidence. The combined final gate passes at `572f1c23c`; [the shared proof record](../../forever-addon-comparison.md#follow-up-verification) records exact reuse, fresh checks, and remaining baseline warnings/blockers.
 
 ## Cursor transfer correction
 

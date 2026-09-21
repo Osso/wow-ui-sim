@@ -54,7 +54,7 @@ Retail is the executed representative of the unchanged non-Forever publication b
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned full-addon reproduction and final verification remain separate.
+Independent final verification at `572f1c23c` passes the bounded publication/fixture contract, including the profile-sensitive navigation unit. The actual cached EpicDamageMeter package starts without Lua errors and its modern consumer completes 60 updates with two visible named rows. This is seeded-data evidence, not native combat or secure-environment conformance. See the [follow-up proof record](../forever-addon-comparison.md#follow-up-verification).
 
 ## Out of scope
 
