@@ -216,7 +216,7 @@ mod tests {
     #[test]
     fn duration_binding_availability_preserves_client_versions() {
         let env = WowLuaEnv::new().unwrap();
-        let (interface, binding, modern): (u32, bool, bool) = env
+        let (interface, binding, modern): (i32, bool, bool) = env
             .eval(
                 r#"
                 local factory = C_DurationUtil and C_DurationUtil.CreateDurationTextBinding
