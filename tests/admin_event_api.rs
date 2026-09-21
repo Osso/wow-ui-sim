@@ -7,14 +7,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-fn env_with_intrinsic_event_frame() -> WowLuaEnv {
-    let env = env();
-    let root = tempfile::tempdir().unwrap();
-    let toc = root.path().join("SynchronousEventProbe.toc");
-    std::fs::write(&toc, "## Title: Synchronous event probe\nProbe.xml\n").unwrap();
-    std::fs::write(
-        root.path().join("Probe.xml"),
-        r#"
+const INTRINSIC_EVENT_FRAME_XML: &str = r#"
         <Ui>
             <Frame name="SynchronousEventPre" virtual="true">
                 <Scripts><OnEvent intrinsicOrder="precall">
@@ -28,9 +21,14 @@ fn env_with_intrinsic_event_frame() -> WowLuaEnv {
             </Frame>
             <Frame name="SynchronousEventFrame" parent="UIParent" inherits="SynchronousEventPost"/>
         </Ui>
-    "#,
-    )
-    .unwrap();
+    "#;
+
+fn env_with_intrinsic_event_frame() -> WowLuaEnv {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("SynchronousEventProbe.toc");
+    std::fs::write(&toc, "## Title: Synchronous event probe\nProbe.xml\n").unwrap();
+    std::fs::write(root.path().join("Probe.xml"), INTRINSIC_EVENT_FRAME_XML).unwrap();
     let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env.exec(
