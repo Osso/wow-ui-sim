@@ -28,6 +28,62 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    fn post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory() {
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        let expected = if cfg!(feature = "client-ptr") {
+            "12 seconds"
+        } else {
+            "12"
+        };
+        env.exec(
+            r#"
+            assert(type(C_StringUtil.CreateSecondsFormatter) == 'function',
+                'formatter must exist before restoration')
+            secondsRestore = {
+                namespace = C_StringUtil,
+                factory = C_StringUtil.CreateSecondsFormatter,
+                formatter = C_StringUtil.CreateSecondsFormatter(),
+            }
+            assert(__secureenv.C_StringUtil == secondsRestore.namespace)
+            assert(__secureenv.C_StringUtil.CreateSecondsFormatter == secondsRestore.factory)
+            "#,
+        )
+        .expect("initial public and secure environments share the formatter factory");
+        let initial: String = env
+            .eval("return secondsRestore.formatter:Format(12)")
+            .expect("initial formatter handles the numeric fixture");
+        assert_eq!(initial, expected);
+
+        env.restore_post_cleanup_globals();
+
+        env.exec(
+            r#"
+            assert(C_StringUtil == secondsRestore.namespace,
+                'restoration must preserve the namespace')
+            assert(C_StringUtil.CreateSecondsFormatter == secondsRestore.factory,
+                'restoration must preserve the existing factory')
+            assert(__secureenv.C_StringUtil == C_StringUtil,
+                'public and secure namespaces must remain consistent')
+            assert(__secureenv.C_StringUtil.CreateSecondsFormatter == secondsRestore.factory)
+            "#,
+        )
+        .expect("restoration preserves public and secure formatter publication");
+        let formatted: (String, String, String) = env
+            .eval(
+                r#"
+                return secondsRestore.formatter:Format(12),
+                    C_StringUtil.CreateSecondsFormatter():Format(12),
+                    __secureenv.C_StringUtil.CreateSecondsFormatter():Format(12)
+                "#,
+            )
+            .expect("existing and newly constructed formatters still format numeric input");
+        assert_eq!(
+            formatted,
+            (expected.into(), expected.into(), expected.into())
+        );
+    }
+
+    #[test]
     fn post_cleanup_restore_reinstalls_gamepad_cursor_defaults() {
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         env.exec(

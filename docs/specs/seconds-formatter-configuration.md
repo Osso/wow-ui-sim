@@ -11,6 +11,7 @@
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
 - [x] Existing factory identity and stored setter values remain intact; maximum-mode switching is specified below. PTR `Format` is modeled separately in [duration formatting](seconds-formatter-format.md); earlier retail retains placeholder output.
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
+- [ ] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
 
 ### Evaluation model (simulator assumptions)
 
@@ -34,12 +35,14 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 
 - `src/c_api/seconds_formatter.rs` — private per-proxy numeric configuration, validation, and eight configuration/evaluation methods.
 - `src/c_api/mod.rs` — internal module wiring.
+- `src/c_api/c_string_util.rs` — namespace registration must retain the already-installed formatter factory.
 - `src/lua_api/workarounds/temporary/proxy_object_factories.rs` — temporary factory integration; retire this connection when the modeled formatter owns the complete factory.
 
 ## Tests asserting this spec
 
 - `tests/seconds_formatter_configuration.rs` — independent storage, arity, updates, atomic validation, GC retention, unchanged existing methods, evaluation boundaries, and real/proxy curve dispatch/errors; grouped `integration` target.
 - `src/lua_api/workarounds/temporary/proxy_object_factories.rs::tests::installs_proxy_factories` — existing factory regression.
+- `src/lua_api/workarounds/temporary/environment_cleanup_restore.rs::tests::post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory` — initial availability, public/secure identity, and numeric formatting before/after the actual restoration entry point. External RED confirms the bootstrap snapshot formats `12` while post-cleanup public factory is nil and namespace identity differs; compiled GREEN remains pending.
 
 Focused development proof at `89fced131`: three new tests failed before implementation; the complete `seconds_formatter_configuration::` group passes six tests per profile with `--test integration --offline --no-default-features --features sound,gui,client-<ptr|retail>`. This includes the three existing configuration regressions. No broad, check, readability, or audit-artifact gates were run.
 

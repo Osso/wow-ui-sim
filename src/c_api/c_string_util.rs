@@ -1,23 +1,20 @@
 //! C_StringUtil: string escaping helpers used by Blizzard diagnostics.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{create_string, create_string_bytes, create_table, val_to_string};
+use crate::lua_api::methods::{create_string, create_string_bytes, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 #[cfg(feature = "retail-12-0-0")]
 use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-use super::helpers::set_global_val;
+use super::helpers::ensure_namespace;
 
 #[cfg(feature = "retail-12-0-0")]
 mod hyperlinks;
 
 pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
-    let c_string_util = create_table(state);
-    let Val::Table(c_string_util_ref) = c_string_util else {
-        unreachable!("create_table must return a table");
-    };
+    let c_string_util_ref = ensure_namespace(state, "C_StringUtil")?;
     table_set_rust_fn_static(
         state,
         c_string_util_ref,
@@ -67,7 +64,6 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
     )?;
     #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
-    set_global_val(state, "C_StringUtil", c_string_util);
     Ok(())
 }
 
