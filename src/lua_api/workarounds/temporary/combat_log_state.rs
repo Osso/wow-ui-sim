@@ -1,4 +1,4 @@
-//! Temporary `C_CombatLog` / `C_CombatLogSecure` state surface.
+//! Temporary combat-log state shared by profile-specific API publishers.
 //!
 //! Combat log history is not modeled yet. This keeps the small shared Lua state
 //! fixture explicit rather than presenting it as complete C API behavior.
@@ -133,13 +133,29 @@ if rawget(C_CombatLog, "GetCurrentEntryInfo") == nil then
     end
 end
 
-if rawget(C_CombatLog, "GetCurrentEventInfo") == nil then
-    function C_CombatLog.GetCurrentEventInfo()
-        local entry = CurrentEntry(CombatLogState())
-        if entry == nil then
-            return nil
-        end
-        return unpack(entry)
+local function GetCurrentEventInfo()
+    local entry = CurrentEntry(CombatLogState())
+    if entry == nil then
+        return nil
+    end
+    return unpack(entry)
+end
+
+-- Forever moved this getter out of C_CombatLog. Keep the existing temporary
+-- history fixture, but publish it only at its documented namespace locations.
+if publishLegacyCurrentEvent then
+    if rawget(C_CombatLog, "GetCurrentEventInfo") == nil then
+        C_CombatLog.GetCurrentEventInfo = GetCurrentEventInfo
+    end
+else
+    if type(C_CombatLogInternal) ~= "table" then
+        C_CombatLogInternal = {}
+    end
+    if rawget(C_CombatLogInternal, "GetCurrentEventInfo") == nil then
+        C_CombatLogInternal.GetCurrentEventInfo = GetCurrentEventInfo
+    end
+    if rawget(C_CombatLogSecure, "GetCurrentEventInfo") == nil then
+        C_CombatLogSecure.GetCurrentEventInfo = GetCurrentEventInfo
     end
 end
 
@@ -280,7 +296,7 @@ if rawget(_G, "CombatLogGetCurrentEntry") == nil then
     CombatLogGetCurrentEntry = C_CombatLog.GetCurrentEntryInfo
 end
 
-if rawget(_G, "CombatLogGetCurrentEventInfo") == nil then
+if publishLegacyCurrentEvent and rawget(_G, "CombatLogGetCurrentEventInfo") == nil then
     CombatLogGetCurrentEventInfo = C_CombatLog.GetCurrentEventInfo
 end
 
@@ -317,7 +333,10 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(COMBAT_LOG_STATE_LUA)?;
+    let publish_legacy = !cfg!(feature = "client-wowforever");
+    let source =
+        format!("local publishLegacyCurrentEvent = {publish_legacy}\n{COMBAT_LOG_STATE_LUA}");
+    lua.exec(&source)?;
     Ok(())
 }
 
@@ -497,7 +516,11 @@ mod tests {
                 if C_CombatLog.GetEntryCount() ~= 2 or C_CombatLogSecure.GetEntryCount() ~= 2 then
                     return "bad_count"
                 end
-                local message, value = C_CombatLog.GetCurrentEventInfo()
+                local currentEventNamespace = C_CombatLog
+                if select(4, GetBuildInfo()) == 16001 then
+                    currentEventNamespace = C_CombatLogInternal
+                end
+                local message, value = currentEventNamespace.GetCurrentEventInfo()
                 if message ~= "second" or value ~= 2 then
                     return "bad_current_event"
                 end

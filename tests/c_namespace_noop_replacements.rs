@@ -670,7 +670,13 @@ fn combat_log_globals_have_stable_stub_behavior() {
             local showCurrent = CombatLogShowCurrentEntry()
             local advanceResult = CombatLogAdvanceEntry(1)
             local retentionTime = CombatLogGetRetentionTime()
-            local eventInfoOk = pcall(CombatLogGetCurrentEventInfo)
+            local eventInfoOk
+            if select(4, GetBuildInfo()) == 16001 then
+                eventInfoOk = CombatLogGetCurrentEventInfo == nil
+                    and C_CombatLog.GetCurrentEventInfo == nil
+            else
+                eventInfoOk = pcall(CombatLogGetCurrentEventInfo)
+            end
 
             local objectMatch = CombatLog_Object_IsA(0x21, 0x01)
             local objectMiss = CombatLog_Object_IsA(0x20, 0x01)
@@ -722,7 +728,7 @@ fn combat_log_globals_have_stable_stub_behavior() {
     );
     assert!(
         event_info_ok,
-        "CombatLogGetCurrentEventInfo should stay callable"
+        "current-event publication must match the active profile"
     );
     assert!(object_match, "bitmask check should match overlapping flags");
     assert!(
@@ -829,7 +835,11 @@ fn combat_log_namespaces_iterate_seeded_entries_and_messages() {
 
             local publicCountBefore = C_CombatLog.GetEntryCount()
             local secureCountBefore = C_CombatLogSecure.GetEntryCount()
-            local publicCurrentEvent = { C_CombatLog.GetCurrentEventInfo() }
+            local currentEventNamespace = C_CombatLog
+            if select(4, GetBuildInfo()) == 16001 then
+                currentEventNamespace = C_CombatLogInternal
+            end
+            local publicCurrentEvent = { currentEventNamespace.GetCurrentEventInfo() }
             local publicShowCurrent = C_CombatLog.ShouldShowCurrentEntry()
 
             local secureNewestValid = C_CombatLogSecure.SeekToNewestEntry()
@@ -1810,5 +1820,82 @@ mod outfit_situations_enabled_tests {
             .unwrap();
         assert!(read(&first));
         assert!(!read(&second));
+    }
+}
+
+#[cfg(feature = "client-wowforever")]
+mod forever_combat_namespace {
+    use super::env;
+
+    fn assert_epic_meter_predicate(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+        env.exec(
+            r#"
+            assert(rawget(C_CombatLog, "GetCurrentEventInfo") == nil)
+            assert(C_CombatLog.GetCurrentEventInfo == nil)
+            assert(rawget(_G, "CombatLogGetCurrentEventInfo") == nil)
+            local _, _, _, tocVersion = GetBuildInfo()
+            local isRetail = tocVersion >= 120000
+            -- EpicDamageMeter 8930362, Core/Constants.lua: actual capability predicate.
+            local useMeterAPI = isRetail
+                or (CombatLogGetCurrentEventInfo == nil
+                    and C_DamageMeter ~= nil
+                    and type(C_DamageMeter.GetCombatSessionFromType) == "function")
+            assert(tocVersion == 16001 and useMeterAPI)
+        "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn direct_environment_selects_meter_without_legacy_getter() {
+        assert_epic_meter_predicate(&env());
+    }
+
+    #[test]
+    fn deprecated_publisher_does_not_restore_legacy_getter() {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_DeprecatedCombatLog"],
+            &[],
+            |env, loaded| {
+                assert!(
+                    loaded
+                        .iter()
+                        .any(|name| name == "Blizzard_DeprecatedCombatLog")
+                );
+                assert!(
+                    env.eval::<bool>("return GetCVarBool('loadDeprecationFallbacks')")
+                        .unwrap()
+                );
+                assert_epic_meter_predicate(env);
+                env.apply_post_load_workarounds();
+                assert_epic_meter_predicate(env);
+            },
+        );
+    }
+
+    #[test]
+    fn documented_getters_share_concrete_fixture_entries() {
+        let env = env();
+        env.exec(
+            r#"
+            assert(type(C_CombatLogInternal) == "table")
+            assert(type(C_CombatLogInternal.GetCurrentEventInfo) == "function")
+            assert(type(C_CombatLogSecure.GetCurrentEventInfo) == "function")
+            local state = C_CombatLog._state
+            state.entries = {{"SPELL_DAMAGE", 19750, 150}, {"SPELL_HEAL", 19750, 275}}
+            state.currentIndex = 1
+            local event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
+            assert(event == "SPELL_DAMAGE" and spell == 19750 and amount == 150)
+            assert(C_CombatLogSecure.SeekToNewestEntry())
+            event, spell, amount = C_CombatLogSecure.GetCurrentEventInfo()
+            assert(event == "SPELL_HEAL" and spell == 19750 and amount == 275)
+            event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
+            assert(event == "SPELL_HEAL" and spell == 19750 and amount == 275)
+            C_CombatLog.ClearEntries()
+            assert(C_CombatLogInternal.GetCurrentEventInfo() == nil)
+            assert(C_CombatLogSecure.GetCurrentEventInfo() == nil)
+        "#,
+        )
+        .unwrap();
     }
 }
