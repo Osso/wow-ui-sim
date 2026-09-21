@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

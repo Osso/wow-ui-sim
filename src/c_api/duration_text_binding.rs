@@ -4,8 +4,12 @@
 //! update behavior is retained; this does not establish native timing or
 //! secret-value parity.
 
+use crate::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
+use rilua::LuaApiMut;
+
 const DURATION_TEXT_BINDING_LUA: &str = r#"
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
+do
+    local isPatch121 = ...
     local function ensure_namespace(name)
         _G[name] = _G[name] or __wow_namespace()
         return _G[name]
@@ -18,7 +22,6 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
     end
 
     local durationUtil = ensure_namespace("C_DurationUtil")
-    local isPatch121 = type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100
     local function create_duration_clock(initialTime)
         local clock = { time = initialTime or 0 }
         function clock:GetTime() return self.time end
@@ -191,6 +194,48 @@ end
 "#;
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(DURATION_TEXT_BINDING_LUA)?;
+    let modern_methods = match ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr if ACTIVE_INTERFACE_VERSION >= 120007 => {
+            ACTIVE_INTERFACE_VERSION >= 120100
+        }
+        _ => return Ok(()),
+    };
+    let bootstrap = lua.load_bytes(
+        DURATION_TEXT_BINDING_LUA.as_bytes(),
+        "@duration-text-binding-bootstrap",
+    )?;
+    lua.call_function(&bootstrap, &[rilua::Val::Bool(modern_methods)])?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn duration_binding_availability_preserves_client_versions() {
+        let env = WowLuaEnv::new().unwrap();
+        let (interface, binding, modern): (u32, bool, bool) = env
+            .eval(
+                r#"
+                local factory = C_DurationUtil and C_DurationUtil.CreateDurationTextBinding
+                local binding = type(factory) == 'function' and factory() or nil
+                if binding then
+                    local label = CreateFrame('Frame'):CreateFontString()
+                    binding:SetDuration(12)
+                    binding:SetFontString(label)
+                    binding:SetFormatter({Format=function(_, value) return 'value:' .. value end})
+                    binding:UpdateFontString()
+                    assert(label:GetText() == 'value:12')
+                    assert(binding:Copy():GetFontString() == label)
+                end
+                return select(4, GetBuildInfo()), binding ~= nil,
+                    binding ~= nil and type(binding.SetTextColorCurve) == 'function'
+                "#,
+            )
+            .unwrap();
+        assert_eq!(binding, interface == 16001 || interface >= 120007);
+        assert_eq!(modern, interface == 16001 || interface >= 120100);
+    }
 }

@@ -4,6 +4,8 @@
 
 ## What it must do
 
+- [ ] Expose the existing binding factory on Forever and Retail-family 12.0.7+. Keep color-curve methods limited to Forever and Retail-family 12.1+; earlier profiles do not gain a modeled binding factory. Rust profile selection controls availability without changing `GetBuildInfo`.
+
 - [x] `Assign(other)` validates both binding objects before mutation, copies configuration into the receiver, and returns no values. Self-assignment preserves configuration and identity.
 - [x] `Copy()` returns a distinct binding with independent configuration. Duration, font-string, clock, formatter, and color-curve object handles remain shared references.
 - [x] Copy format-component containers and records while retaining formatter handles. Later source component mutations must not alter the assigned or copied binding.
@@ -32,9 +34,13 @@ These are simulator policies, not claims about native object layout or garbage c
 
 - `tests/duration_text_binding_copy.rs` — configuration/copy cases plus `duration_binding_userdata_copy_retains_resources_through_collection` in the grouped integration target.
 - `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity` — retained identity and duration access; userdata expectation replaces the stale table expectation.
-- `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior.
+- `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior, including Forever.
+- `src/c_api/duration_text_binding.rs::tests::duration_binding_availability_preserves_client_versions` — profile availability, modern-method boundary, and formatted FontString output.
+- Existing copy/configuration and native CustomAuraButton tests also run on Forever; unrelated native aura dependencies remain separate failures, not reasons to weaken these assertions.
 
 ## Known gaps (current cycle)
+
+Forever availability RED: `/tmp/ellesmere-forever/batch-numeric_rule_formatter.stderr` records a nil binding before formatting. Availability sharing and broadened regressions await parent-run compilation/GREEN. This slice changes no formatting, clock, color, scheduling, or copy semantics.
 
 The representation-retention test passed on `client-retail` at `9a8189612` (one focused integration test). This proves the chosen handle/reference policy only; the existing copy/configuration tests were not rerun for this slice.
 
