@@ -19,7 +19,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-fn slot_argument(state: &LuaState, index: i32) -> Option<i32> {
+fn read_slot_argument(state: &LuaState, index: i32) -> Option<i32> {
     match stack_val(state, index) {
         Val::Num(value) => Some(value as i32),
         _ => None,
@@ -27,11 +27,12 @@ fn slot_argument(state: &LuaState, index: i32) -> Option<i32> {
 }
 
 pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
-    let (Some(bag), Some(slot)) = (slot_argument(state, 1), slot_argument(state, 2)) else {
+    let (Some(bag), Some(slot)) = (read_slot_argument(state, 1), read_slot_argument(state, 2))
+    else {
         return Ok(0);
     };
     let mut sim = borrow_state_mut(state)?;
-    let held = bag_item_on_cursor(&sim);
+    let held = read_cursor_bag_item(&sim);
     let dropping = held.is_some();
     let displaced = match held {
         Some(item) => sim.bag_items.insert((bag, slot), item),
@@ -47,7 +48,7 @@ pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn bag_item_on_cursor(sim: &SimState) -> Option<BagItem> {
+fn read_cursor_bag_item(sim: &SimState) -> Option<BagItem> {
     match &sim.cursor_item {
         Some(CursorInfo::Item {
             item_id,
@@ -63,20 +64,20 @@ fn bag_item_on_cursor(sim: &SimState) -> Option<BagItem> {
 }
 
 pub(crate) fn pickup_inventory_item(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(slot) = slot_argument(state, 1) else {
+    let Some(slot) = read_slot_argument(state, 1) else {
         return Ok(0);
     };
     let mut sim = borrow_state_mut(state)?;
     if matches!(sim.cursor_item, Some(CursorInfo::Item { .. })) {
         equip_held_item(&mut sim, slot);
     } else if let Some(item) = sim.player.equipped_items.remove(&slot) {
-        sim.cursor_item = Some(equipped_cursor(item, slot));
+        sim.cursor_item = Some(create_equipped_cursor(item, slot));
     }
     Ok(0)
 }
 
 pub(crate) fn equip_cursor_item(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(slot) = slot_argument(state, 1) else {
+    let Some(slot) = read_slot_argument(state, 1) else {
         return Ok(0);
     };
     let mut sim = borrow_state_mut(state)?;
@@ -96,10 +97,10 @@ fn equip_held_item(sim: &mut SimState, slot: i32) {
         gem_ids: [0; 3],
     };
     let displaced = sim.player.equipped_items.insert(slot, incoming);
-    sim.cursor_item = displaced.map(|item| equipped_cursor(item, slot));
+    sim.cursor_item = displaced.map(|item| create_equipped_cursor(item, slot));
 }
 
-fn equipped_cursor(item: EquippedItem, slot: i32) -> CursorInfo {
+fn create_equipped_cursor(item: EquippedItem, slot: i32) -> CursorInfo {
     CursorInfo::Item {
         item_id: item.item_id,
         stack_count: 1,
