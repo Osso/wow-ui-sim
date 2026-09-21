@@ -1,6 +1,6 @@
 ## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
 
-`6397eb7a3` stops further acquisition after the bulk-download concern and records the offline cached-pair comparison/triage boundary. The [comparison audit](../forever-addon-comparison.md) remains the count and disposition source of truth; static source triage is neither runtime acceptance nor full addon compatibility. See [[forever-addon-comparison]].
+`6397eb7a3` stops further acquisition after the bulk-download concern and records the offline cached-pair comparison/triage boundary. `215a4080a` corrects the separately reproduced EasyFishing cursor transfer sequence; final verification remains active. The [comparison audit](../forever-addon-comparison.md) remains the count and disposition source of truth; static source triage is neither runtime acceptance nor full addon compatibility. See [[forever-addon-comparison]].
 
 ## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
 
@@ -1284,7 +1284,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 |------|---------|
 | [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
-| [[forever-addon-comparison]] | Complete 875-project / 44-page CurseForge corpus capture; paired package/source comparisons remain in progress. `bb83a4c0a` corrects only Forever `BagIndex` enum shape from the first documented consumer loop. |
+| [[forever-addon-comparison]] | Complete 875-project / 44-page CurseForge corpus capture; cached-pair triage is offline and incomplete. `bb83a4c0a` corrects Forever `BagIndex` shape; `215a4080a` corrects the bounded cached EasyFishing cursor transfer. |
 | [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 3410 rows with current status and proof boundaries recorded per slice; duration curve-evaluation implementation is pending GREEN and independent proof. |
 | [[duration-curve-evaluation]] | Four duration curve-evaluation methods now reuse modeled getters and existing scalar/color curves; RED evidence is recorded, while GREEN and independent proof remain pending. |
 | [[patch-12-0-5-api-audit]] | 12.0.5 probe-driven audit: 33 best-effort rows; 4 behavior gaps are evidence-required; 1 provenance-only exception-requested row is approved |

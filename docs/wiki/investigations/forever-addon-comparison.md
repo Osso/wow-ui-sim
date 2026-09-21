@@ -8,6 +8,14 @@ Commit `7eb74d91e` records the public CurseForge `1.60.1` / Forever catalog in [
 
 Commit `6397eb7a3` freezes this pass to offline use of the already acquired archive set after bulk acquisition stopped. [The comparison audit](../../forever-addon-comparison.md) is the single source for the acquisition boundary, cached-pair/triage coverage, parked remainder, and candidate dispositions. A Forever tag is a declaration, not an API contract or a passing simulator result.
 
+## Cursor transfer correction
+
+Cached EasyFishing packages identified an exact existing-API sequence for returning a fishing pole: `C_Container.PickupContainerItem(bag, slot)`, `PickupInventoryItem(MAINHAND)`, then `C_Container.PickupContainerItem(bag, slot)` when the cursor still holds the displaced weapon. Commit `215a4080a` moves namespaced and legacy bag pickup through one simulator-side transfer model, removing the namespace no-op and reusing the existing auto-equip swap path. `5dbd06ec8` names the extracted helpers by their operations only.
+
+The four new exact-sequence regressions were RED before production changes; the focused `inventory_verbs` module passed 25/25 in development afterward. This proves the bounded ID/count transfer behavior. It does not load EasyFishing, establish native inventory conformance, preserve hyperlinks/enchants/gems, implement stack merging or eligibility, model bank state, or add security/combat/event behavior. Final verification remains active.
+
+See the [cursor transfer contract](../../specs/cursor-item-transfer.md) for pinned archive identities, authored Camelot consumer evidence, and representation limits.
+
 ## BagIndex correction
 
 BetterBags commit `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` walks consecutive `Enum.BagIndex.CharacterBankTab_N` and `AccountBankTab_N` members. Pinned `BagIndexConstantsDocumentation.lua` confirms Forever’s character IDs `6..14`, account IDs `15..23`, and `BagIndexMeta {-3, 23, 27}`; shared publication instead left account IDs at Retail’s earlier positions.
@@ -18,6 +26,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 
 - [Forever comparison audit](../../forever-addon-comparison.md) — catalog provenance, scope, and incomplete comparison matrix
 - [Forever finite constants spec](../../specs/forever-finite-constants.md) — BagIndex contract and test boundary
+- [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values
 - BetterBags `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` — motivating consumer loop

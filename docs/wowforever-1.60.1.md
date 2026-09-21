@@ -27,7 +27,9 @@ The chronological development results below retain their original scope. This ac
 
 The public catalog capture remains corpus evidence only. After acquisition stopped, `6397eb7a3` records the offline cached-comparison boundary, static triage, parked remainder, and candidate dispositions in [the comparison audit](forever-addon-comparison.md). It does not establish full third-party compatibility; a Forever tag is not an API contract or a passing-addon result.
 
-`bb83a4c0a` corrects Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and metadata `-3/23/27`, matching `BagIndexConstantsDocumentation.lua`. Its two BetterBags-shaped contiguous-enumeration tests went RED then GREEN. This establishes enum shape only—not a BetterBags load, bank state, purchased tabs, account-bank availability, Warbank support, money-display lifecycle, or native conformance. See [the finite constants contract](specs/forever-finite-constants.md) and [[forever-addon-comparison]].
+`bb83a4c0a` corrects Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and metadata `-3/23/27`, matching `BagIndexConstantsDocumentation.lua`. Its two BetterBags-shaped contiguous-enumeration tests went RED then GREEN. This establishes enum shape only—not a BetterBags load, bank state, purchased tabs, account-bank availability, Warbank support, money-display lifecycle, or native conformance.
+
+Cached EasyFishing comparison exposed a separate cursor transfer defect. Commit `215a4080a` replaces the namespaced container-pickup no-op with shared bag/cursor/equipment transfer operations, so the addon's actual pickup → `PickupInventoryItem` auto-equip → pickup sequence returns the displaced weapon to its original bag slot. Development tests pass 25/25 for the focused inventory module; final verification remains pending. The correction does not claim full addon compatibility, native inventory fidelity, item hyperlink/enchant/gem preservation, stack merging, eligibility, bank state, combat/security, or event behavior. See [the cursor transfer contract](specs/cursor-item-transfer.md) and [[forever-addon-comparison]].
 
 ## Pinned external evidence
 

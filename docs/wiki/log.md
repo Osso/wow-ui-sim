@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Correct cached EasyFishing cursor transfer
+
+`215a4080a` replaces the no-op `C_Container.PickupContainerItem` workaround with shared simulator bag/cursor/equipment transfer behavior. Cached EasyFishing's actual pickup → auto-equip → pickup path went RED 0/4 and focused inventory proof GREEN 25/25. This is a bounded item-ID/count transfer result, not full addon or native inventory compatibility; final verification remains active. See [[forever-addon-comparison]] and the [cursor transfer contract](../specs/cursor-item-transfer.md).
+
 ## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
 
 Commit `6397eb7a3` records the offline-only boundary after further acquisition stopped. [The comparison audit](../forever-addon-comparison.md) remains the source of truth for cached coverage, parked work, and static candidate dispositions; none establishes runtime acceptance or full addon compatibility. Updated [[forever-addon-comparison]] and the running Forever report.
