@@ -1830,9 +1830,9 @@ mod forever_combat_namespace {
     fn assert_epic_meter_predicate(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         env.exec(
             r#"
-            assert(rawget(C_CombatLog, "GetCurrentEventInfo") == nil)
-            assert(C_CombatLog.GetCurrentEventInfo == nil)
-            assert(rawget(_G, "CombatLogGetCurrentEventInfo") == nil)
+            assert(rawget(C_CombatLog, "GetCurrentEventInfo") == nil, "raw public getter survived")
+            assert(C_CombatLog.GetCurrentEventInfo == nil, "public namespace synthesized getter")
+            assert(rawget(_G, "CombatLogGetCurrentEventInfo") == nil, "legacy global getter survived")
             local _, _, _, tocVersion = GetBuildInfo()
             local isRetail = tocVersion >= 120000
             -- EpicDamageMeter 8930362, Core/Constants.lua: actual capability predicate.
@@ -1840,7 +1840,7 @@ mod forever_combat_namespace {
                 or (CombatLogGetCurrentEventInfo == nil
                     and C_DamageMeter ~= nil
                     and type(C_DamageMeter.GetCombatSessionFromType) == "function")
-            assert(tocVersion == 16001 and useMeterAPI)
+            assert(tocVersion == 16001 and useMeterAPI, "Epic meter predicate rejected current surface")
         "#,
         )
         .unwrap();
