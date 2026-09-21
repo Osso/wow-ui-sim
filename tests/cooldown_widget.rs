@@ -4,33 +4,46 @@ use wow_ui_sim::widget::Color;
 #[test]
 fn cooldown_consumes_real_duration_proxy_and_updates() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local d = C_DurationUtil.CreateDuration()
         local cd = CreateFrame('Cooldown', 'DurationProxyCooldown')
         d:SetTimeFromStart(10, 20, 2)
         cd:SetCooldownFromDurationObject(d)
         local start, total = cd:GetCooldownTimes()
-        assert(start == 10 and total == 10)
+        assert(start == 10000 and total == 10000)
         CooldownDurationProbe = d
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     {
         let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("DurationProxyCooldown").unwrap();
+        let id = state
+            .widgets
+            .get_id_by_name("DurationProxyCooldown")
+            .unwrap();
         assert_eq!(state.widgets.get(id).unwrap().cooldown_mod_rate, 2.0);
     }
-    env.exec(r#"
+    env.exec(
+        r#"
         local d = CooldownDurationProbe
         local cd = DurationProxyCooldown
         d:SetTimeFromStart(30, 12, 3)
         cd:SetCooldownFromDurationObject(d)
         start, total = cd:GetCooldownTimes()
-        assert(start == 30 and total == 4)
-    "#).unwrap();
+        assert(start == 30000 and total == 4000)
+    "#,
+    )
+    .unwrap();
     let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("DurationProxyCooldown").unwrap();
+    let id = state
+        .widgets
+        .get_id_by_name("DurationProxyCooldown")
+        .unwrap();
     assert_eq!(state.widgets.get(id).unwrap().cooldown_mod_rate, 3.0);
     drop(state);
-    env.exec(r#"
+    env.exec(
+        r#"
         local d = C_DurationUtil.CreateDuration()
         DurationProxyCooldown:SetCooldownFromDurationObject(d)
         local start, total = DurationProxyCooldown:GetCooldownTimes()
@@ -41,7 +54,9 @@ fn cooldown_consumes_real_duration_proxy_and_updates() {
         DurationProxyCooldown:SetCooldownFromDurationObject(d)
         start, total = DurationProxyCooldown:GetCooldownTimes()
         assert(start == 0 and total == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 fn cooldown_timing(env: &WowLuaEnv, name: &str) -> (f64, f64, f64, f64) {
@@ -66,12 +81,16 @@ fn cooldown_clear_resets_timing_and_rate() {
         "#,
     )
     .unwrap();
-    assert_eq!(cooldown_timing(&env, "DirectClear"), (12.5, 6.25, 6250.0, 2.5));
+    assert_eq!(
+        cooldown_timing(&env, "DirectClear"),
+        (12.5, 6.25, 6250.0, 2.5)
+    );
     env.exec(
         r#"
         DirectClear:Clear()
         local start, duration = DirectClear:GetCooldownTimes()
         assert(start == 0 and duration == 0)
+        assert(DirectClear:GetCooldownDuration() == 0)
         assert(DirectClear:GetCooldownDisplayDuration() == 0)
         "#,
     )
@@ -87,15 +106,25 @@ fn cooldown_set_cooldown_stores_timing_and_defaults_rate() {
         DirectSet = CreateFrame("Cooldown", "DirectSet")
         DirectSet:SetCooldown(12.5, 6.25, 2.5)
         local start, duration = DirectSet:GetCooldownTimes()
-        assert(start == 12.5 and duration == 6.25)
+        assert(start == 12500 and duration == 6250)
+        -- RuneButtonMixin:ShowAsOnCooldown compares this sum with seconds input.
+        local oldEnd = (start + duration) / 1000
+        assert(oldEnd == 12.5 + 6.25)
+        assert(DirectSet:GetCooldownDuration() == 15625)
         assert(DirectSet:GetCooldownDisplayDuration() == 6250)
         "#,
     )
     .unwrap();
-    assert_eq!(cooldown_timing(&env, "DirectSet"), (12.5, 6.25, 6250.0, 2.5));
-    env.exec("DirectSet:SetCooldown(20.25, 3.5)")
+    assert_eq!(
+        cooldown_timing(&env, "DirectSet"),
+        (12.5, 6.25, 6250.0, 2.5)
+    );
+    env.exec("DirectSet:SetCooldown(20.25, 3.5); assert(DirectSet:GetCooldownDuration() == 3500)")
         .unwrap();
-    assert_eq!(cooldown_timing(&env, "DirectSet"), (20.25, 3.5, 3500.0, 1.0));
+    assert_eq!(
+        cooldown_timing(&env, "DirectSet"),
+        (20.25, 3.5, 3500.0, 1.0)
+    );
 }
 
 #[test]
@@ -107,15 +136,22 @@ fn cooldown_set_duration_preserves_start_and_defaults_rate() {
         DirectDuration:SetCooldown(12.5, 6.25, 2.5)
         DirectDuration:SetCooldownDuration(4.75, 1.5)
         local start, duration = DirectDuration:GetCooldownTimes()
-        assert(start == 12.5 and duration == 4.75)
+        assert(start == 12500 and duration == 4750)
+        assert(DirectDuration:GetCooldownDuration() == 7125)
         assert(DirectDuration:GetCooldownDisplayDuration() == 4750)
         "#,
     )
     .unwrap();
-    assert_eq!(cooldown_timing(&env, "DirectDuration"), (12.5, 4.75, 4750.0, 1.5));
+    assert_eq!(
+        cooldown_timing(&env, "DirectDuration"),
+        (12.5, 4.75, 4750.0, 1.5)
+    );
     env.exec("DirectDuration:SetCooldownDuration(2.25)")
         .unwrap();
-    assert_eq!(cooldown_timing(&env, "DirectDuration"), (12.5, 2.25, 2250.0, 1.0));
+    assert_eq!(
+        cooldown_timing(&env, "DirectDuration"),
+        (12.5, 2.25, 2250.0, 1.0)
+    );
 }
 
 #[test]
@@ -126,7 +162,7 @@ fn cooldown_set_unix_stores_literal_start_without_epoch_conversion() {
         DirectUnix = CreateFrame("Cooldown", "DirectUnix")
         DirectUnix:SetCooldownUNIX(1700000000.25, 8.5, 2)
         local start, duration = DirectUnix:GetCooldownTimes()
-        assert(start == 1700000000.25 and duration == 8.5)
+        assert(start == 1700000000250 and duration == 8500)
         assert(DirectUnix:GetCooldownDisplayDuration() == 8500)
         "#,
     )
@@ -157,15 +193,24 @@ fn cooldown_zero_duration_respects_clear_if_zero() {
         "#,
     )
     .unwrap();
-    assert_eq!(cooldown_timing(&env, "PreserveCooldown"), (7.0, 9.0, 9000.0, 2.0));
-    assert_eq!(cooldown_timing(&env, "ClearCooldown"), (11.0, 15.0, 15000.0, 3.0));
+    assert_eq!(
+        cooldown_timing(&env, "PreserveCooldown"),
+        (7.0, 9.0, 9000.0, 2.0)
+    );
+    assert_eq!(
+        cooldown_timing(&env, "ClearCooldown"),
+        (11.0, 15.0, 15000.0, 3.0)
+    );
     for arguments in ["ZeroDuration", "ZeroDuration, true"] {
         env.exec(&format!(
             "ClearCooldown:SetCooldown(11, 15, 3); ClearCooldown:SetCooldownFromDurationObject({arguments})"
         ))
         .unwrap();
         assert_eq!(cooldown_timing(&env, "ClearCooldown"), (0.0, 0.0, 0.0, 1.0));
-        assert_eq!(cooldown_timing(&env, "PreserveCooldown"), (7.0, 9.0, 9000.0, 2.0));
+        assert_eq!(
+            cooldown_timing(&env, "PreserveCooldown"),
+            (7.0, 9.0, 9000.0, 2.0)
+        );
     }
 }
 
@@ -182,20 +227,31 @@ fn cooldown_nonzero_duration_updates_regardless_of_clear_flag() {
         "#,
     )
     .unwrap();
-    for arguments in ["NonzeroDuration", "NonzeroDuration, true", "NonzeroDuration, false"] {
+    for arguments in [
+        "NonzeroDuration",
+        "NonzeroDuration, true",
+        "NonzeroDuration, false",
+    ] {
         env.exec(&format!(
             "UpdatedCooldown:SetCooldown(11, 15, 2); UpdatedCooldown:SetCooldownFromDurationObject({arguments})"
         ))
         .unwrap();
-        assert_eq!(cooldown_timing(&env, "UpdatedCooldown"), (30.0, 4.0, 4000.0, 3.0));
-        assert_eq!(cooldown_timing(&env, "OtherCooldown"), (7.0, 9.0, 9000.0, 2.0));
+        assert_eq!(
+            cooldown_timing(&env, "UpdatedCooldown"),
+            (30.0, 4.0, 4000.0, 3.0)
+        );
+        assert_eq!(
+            cooldown_timing(&env, "OtherCooldown"),
+            (7.0, 9.0, 9000.0, 2.0)
+        );
     }
 }
 
 #[test]
 fn cooldown_duration_method_errors_propagate() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local cd = CreateFrame('Cooldown')
         for _, name in ipairs({'IsZero', 'GetStartTime', 'GetTotalDuration', 'GetModRate'}) do
             for _, lookupError in ipairs({false, true}) do
@@ -216,10 +272,12 @@ fn cooldown_duration_method_errors_propagate() {
                 local ok, message = pcall(cd.SetCooldownFromDurationObject, cd, proxy)
                 assert(not ok and string.find(message, name, 1, true))
                 local start, total = cd:GetCooldownTimes()
-                assert(start == 7 and total == 9)
+                assert(start == 7000 and total == 9000)
             end
         end
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -238,7 +296,10 @@ fn cooldown_set_tex_coord_range_persists_vector_bounds() {
     .unwrap();
 
     let state = env.state().borrow();
-    let cooldown_id = state.widgets.get_id_by_name("CooldownTexCoordProbe").unwrap();
+    let cooldown_id = state
+        .widgets
+        .get_id_by_name("CooldownTexCoordProbe")
+        .unwrap();
     let cooldown = state.widgets.get(cooldown_id).unwrap();
 
     assert_eq!(
@@ -300,7 +361,7 @@ fn cooldown_widget_methods_persist_runtime_state() {
             cd:SetCooldownFromExpirationTime(20, 8, 1.25)
 
             local startTime, duration = cd:GetCooldownTimes()
-            if startTime ~= 12 or duration ~= 8 then
+            if startTime ~= 12000 or duration ~= 8000 then
                 return "expiration_time_should_convert_to_start_and_duration"
             end
             if cd:GetCooldownDisplayDuration() ~= 8000 then
@@ -341,7 +402,7 @@ fn cooldown_widget_methods_persist_runtime_state() {
             }
             cd:SetCooldownFromDurationObject(durationObject, true)
             startTime, duration = cd:GetCooldownTimes()
-            if startTime ~= 30 or duration ~= 4 then
+            if startTime ~= 30000 or duration ~= 4000 then
                 return "duration_object_should_update_cooldown"
             end
             if cd:GetCooldownDisplayDuration() ~= 4000 then

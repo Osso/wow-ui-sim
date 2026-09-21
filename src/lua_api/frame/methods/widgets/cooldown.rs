@@ -148,7 +148,7 @@ pub(super) fn get_cooldown_times(state: &mut LuaState) -> LuaResult<u32> {
     let (s, d) = sim
         .widgets
         .get(id)
-        .map(|f| (f.cooldown_start, f.cooldown_duration))
+        .map(|f| (f.cooldown_start * 1000.0, f.cooldown_duration * 1000.0))
         .unwrap_or((0.0, 0.0));
     drop(sim);
     (s, d).into_stack(state)
@@ -160,7 +160,7 @@ pub(super) fn get_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let v = sim
         .widgets
         .get(id)
-        .map(|f| f.cooldown_duration)
+        .map(|f| f.cooldown_duration * 1000.0 * f.cooldown_mod_rate)
         .unwrap_or(0.0);
     drop(sim);
     v.into_stack(state)

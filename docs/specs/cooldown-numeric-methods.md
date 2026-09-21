@@ -10,7 +10,11 @@ Ordinary simulator state behavior for cooldown methods in `src/lua_api/frame/met
 - [x] Direct `SetCooldownDuration` preserves start, replaces duration/rate, and defaults omitted rate to one.
 - [x] Direct `SetCooldownUNIX` preserves the supplied numeric start without epoch conversion; omitted rate becomes one.
 
-The existing simulator computes display duration as nonnegative duration × 1000, independently of rate. Tests deliberately record that model rather than infer native units or elapsed-time behavior. The large numeric UNIX fixture proves literal storage only, **not native UNIX-to-frame-time conversion**.
+- [ ] `GetCooldownTimes` returns start and duration in milliseconds, while setters and internal storage use seconds.
+- [ ] `GetCooldownDuration` returns duration × 1000 × modRate; `GetCooldownDisplayDuration` returns milliseconds independently of rate.
+- [ ] RuneFrame's `(start + duration) / 1000` end-time comparison matches the seconds supplied to `SetCooldown`.
+
+Pinned Forever `FrameAPICooldownDocumentation.lua:22,37` specifies the duration-query units and rate distinction. `GetCooldownTimes` has only numeric return declarations there; unchanged `Blizzard_UnitFrame/Mainline/RuneFrame.lua:250–252` explicitly documents milliseconds and divides the sum by 1000. Display duration remains nonnegative duration × 1000. The large numeric UNIX fixture proves literal storage only, **not native UNIX-to-frame-time conversion**.
 
 Pinned base and target both declare these four methods. PTR adds protection annotations to all four and changes the duration argument types of `SetCooldown`/`SetCooldownDuration` from `DurationSeconds` to `Seconds`; `SetCooldownUNIX` retains numeric arguments. Both profiles declare rate default one.
 
@@ -36,6 +40,7 @@ All rows below run through `cooldown_widget::` on PTR and retail. Existing cover
 | `SetCooldown` | `cooldown_set_cooldown_stores_timing_and_defaults_rate` | Fractional start/duration, explicit/default rate, display duration |
 | `SetCooldownDuration` | `cooldown_set_duration_preserves_start_and_defaults_rate` | Preserved start, replaced duration/rate, display duration |
 | `SetCooldownUNIX` | `cooldown_set_unix_stores_literal_start_without_epoch_conversion` | Literal large numeric start, explicit/default rate, display duration |
+| `GetCooldownTimes` / `GetCooldownDuration` | `cooldown_set_cooldown_stores_timing_and_defaults_rate` | `SetCooldown(12.5, 6.25, 2.5)` → `12500,6250`, rate-adjusted `15625`, display `6250`; RuneFrame end-time arithmetic |
 | `SetCooldownFromExpirationTime` | `cooldown_widget_methods_persist_runtime_state` | Expiration 20, duration 8 → start 12, display 8000 |
 | `GetMinimumCountdownDuration` | `cooldown_widget_methods_persist_runtime_state` | Default zero and round-trip 2500 |
 | `SetMinimumCountdownDuration` | `cooldown_widget_methods_persist_runtime_state` | Stores 2500 |
@@ -52,9 +57,10 @@ Commands use `cargo test --test integration --offline --no-default-features --fe
 ## Known gaps (current cycle)
 
 The shared-metatable `Clear` collision is repaired by one widget-type dispatcher. Cooldown and message-frame registrations no longer overwrite each other. No per-widget metatable redesign or method-allowlist change is involved.
-- [ ] Native units, epoch conversion, numeric coercion, and `Seconds`/`DurationSeconds` equivalence remain unverified.
+- [ ] Compiled GREEN for the output-unit correction remains pending. Existing-binary RED returns `12.5,6.25` from `GetCooldownTimes` and `6.25` from `GetCooldownDuration`; display `6250` already passes. Evidence: `/tmp/ellesmere-forever/cooldown-output-units-ledger.json`. Earlier passing counts above predate this correction.
+- [ ] Epoch conversion, numeric coercion, and `Seconds`/`DurationSeconds` equivalence remain unverified.
 - [ ] Protected-call, taint, secret-value, and restricted-access behavior remain unverified.
 
 ## Out of scope
 
-Native timing corrections, security enforcement, rendering effects, unrelated shared-method collisions, and audit-status updates. Unsupported-widget error behavior is simulator policy, not a native compatibility claim; parent audit owns later credit.
+Timing changes beyond the demonstrated output-unit conversions, security enforcement, rendering effects, unrelated shared-method collisions, and audit-status updates. Unsupported-widget error behavior is simulator policy, not a native compatibility claim; parent audit owns later credit.

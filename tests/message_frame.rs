@@ -64,7 +64,8 @@ fn test_add_msg_alias() {
 
 fn assert_clear_preserves_other_widgets(widget_type: &str) {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(&format!(r#"local frame = CreateFrame("{widget_type}")
+    env.exec(&format!(
+        r#"local frame = CreateFrame("{widget_type}")
         local other = CreateFrame("{widget_type}")
         local cooldown = CreateFrame("Cooldown")
         cooldown:SetCooldown(12, 8, 2)
@@ -78,14 +79,16 @@ fn assert_clear_preserves_other_widgets(widget_type: &str) {
         assert(other:GetNumMessages() == 1)
         assert(other:GetMessageInfo(1) == "Keep")
         local start, duration = cooldown:GetCooldownTimes()
-        assert(start == 12 and duration == 8)
+        assert(start == 12000 and duration == 8000)
         assert(cooldown:GetCooldownDisplayDuration() == 8000)
         frame:AddMessage("After clear")
         assert(frame:GetNumMessages() == 1)
         assert(frame:GetMessageInfo(1) == "After clear")
         frame:ClearText()
         assert(frame:GetNumMessages() == 0)
-    "#)).unwrap();
+    "#
+    ))
+    .unwrap();
 }
 
 #[test]
