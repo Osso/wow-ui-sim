@@ -1,6 +1,6 @@
 use super::{
-    fix_set_point_override_3arg, WowLuaEnv, APPLY_SYSTEM_ANCHORS_LUA, FIX_ACTION_BAR_NAN_SIZE_LUA,
-    SETUP_LAYOUT_INFO_LUA,
+    APPLY_SYSTEM_ANCHORS_LUA, FIX_ACTION_BAR_NAN_SIZE_LUA, SETUP_LAYOUT_INFO_LUA, WowLuaEnv,
+    fix_set_point_override_3arg,
 };
 
 #[path = "workarounds_editmode_tests/apply_system_anchors.rs"]
