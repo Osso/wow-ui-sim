@@ -47,6 +47,8 @@ The same trace found `C_ActionBar.GetActionCooldown(1)` returned start, duration
 
 `ac9ce1897` separately fixes trailing TOC annotation parsing: tab-separated `[AllowLoadGameType mainline] [LoadIntoEnvironment secure]` had been retained in TargetFrame aura Lua paths, causing IO failures and the missing callback symptom. Its parser/secure-environment regressions are committed; compiled confirmation remains pending.
 
+The trusted host observer recorded `PAINTED_GREEN` before removal, then a stale assignment after `A_Admin.RemoveBuff(19750)` although `UNIT_AURA(player)` was registered. `c6d970cf3` corrects the synchronous admin/model route: its legacy dispatcher selected only the normal binding, while native AuraContainer uses intrinsic bindings. It now shares unit filtering plus precall/normal/postcall dispatch. Per-frame unit callbacks retain their separate filtering and ordering. This is not a loader inheritance defect or an absent aura-group diagnosis; the group existed. Parent-owned compiled GREEN remains pending.
+
 ### Secret duration follow-up
 
 After enumeration and action-cooldown publication, the real GUI reached five passing interactions: chat, options/unlock, casts/channels, action icon/cooldown, and target health. The sixth, player-aura display, now reaches native `AuraButton` duration setup. The trace shows helpful aura instance `6` for spell `19750`, public `HELPFUL` IDs including it, an empty private source, and a declared `pball|-` group with ten frames. `5903290d5` separately shares the existing `UnitIsPlayerControlledOrGroupMember` classifier through `aura-containers`; it is uncompiled.
@@ -89,6 +91,7 @@ After enumeration and action-cooldown publication, the real GUI reached five pas
 - [Base spell aura secrecy](../../specs/spell-aura-secrecy.md) — shared classifier availability without Forever data-parity claim
 - [SecondsFormatter configuration](../../specs/seconds-formatter-configuration.md) — cleanup restoration contract and pending compiled GREEN
 - [Script-object environment crossings](../../specs/script-object-environments.md) — scoped direct-argument projection and pending Forever compiled GREEN
+- [[synchronous-intrinsic-events]] — intrinsic event-dispatch root cause, ordering, and pending compiled GREEN
 - `/tmp/ellesmere-forever/aura-audit-{load-graph,partitions,native-partition-diff,api-surface,duration-display,scheduling,nested-timers,gate-corrections,acceptance-boundary}.md` — read-only pinned-source and runtime-boundary audit artifacts
 - `src/lua_api/env_runtime.rs:230-237`, `src/c_api/duration_text_binding.rs:7-18`, `src/lua_api/globals/enum_data/widget.rs:143-153`, and pinned Forever `Blizzard_AuraContainer` sources — audited producer gates and contracts
 
