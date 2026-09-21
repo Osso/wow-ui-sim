@@ -1,3 +1,7 @@
+## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
+
+Retail-only fixtures missed Forever's real `S` open/close failure. `d06147537` and `389c3a2d5` add one production-shaped keybinding regression shared by Retail, PTR, and Forever; all three pass open → 10 ticks → close → 10 ticks with zero collected errors. Forever fixes remain producer-side: bootstrap publication, class skill-line and pet-icon queries, documented ActionBarSet/transmog values, and exact spell metadata. Mists/Cata and legacy SpellBook lifecycles remain explicit separate gaps. See [[mainline-spellbook-lifecycle]].
+
 ## [2026-09-20] acceptance | Clean Forever 1.60.1 sustained runtime
 
 Startup-only proof missed a repeated WorldMap update failure. Commit `ed4c97a8a` publishes the source-documented quest-log limit `40`, allowing the actual `WorldMapFrame:Show()` path to reach `SetMapID()` and initialize scroll `targetScale`. The consumer plus 60 GUI-style ticks passes 1/1 with zero collected errors; a fresh 20-second GUI run records no Lua error, update failure, nil comparison, or warning. Earlier startup and interaction proofs retain their narrower scope. See [[forever-clean-startup]] and the [Forever report](../wowforever-1.60.1.md).
@@ -1274,6 +1278,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
 | [[patch-12-0-0-api-audit]] | Retail 12.0.0 occurrence audit: 3410 rows with current status and proof boundaries recorded per slice; duration curve-evaluation implementation is pending GREEN and independent proof. |
 | [[duration-curve-evaluation]] | Four duration curve-evaluation methods now reuse modeled getters and existing scalar/color curves; RED evidence is recorded, while GREEN and independent proof remain pending. |

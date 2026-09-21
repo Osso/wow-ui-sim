@@ -1,3 +1,7 @@
+## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
+
+Retail-only panel fixtures did not exercise Forever's real spellbook close path. `d06147537` and `389c3a2d5` add a production-shaped `S` keybinding regression shared by Retail, PTR, and Forever; each passes open, ten ticks, close, and ten ticks with zero collected Lua errors. Forever producer fixes cover LoadOnDemand bootstrap publication, `GetClassSkillLineInfo`, state-backed `GetPetIcon`, documented `ActionBarSet` and clear-transmog values, and exact spell `1247917`. Mists/Cata and legacy SpellBook contracts remain explicitly tracked rather than silently skipped. Added [[mainline-spellbook-lifecycle]], updated index, spec, and Forever report.
+
 ## [2026-09-20] investigation | Fix Forever WorldMap sustained update failure
 
 Startup-only acceptance missed repeated `Blizzard_WorldMap` updates failing with nil `targetScale`. `WorldMapMixin:OnShow()` aborted before `SetMapID()` because the Camelot quest-count consumer lacked source-published `Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT = 40`. Commit `ed4c97a8a` publishes the Forever-only constant. Actual WorldMap Show plus 60 GUI-style ticks passes 1/1 with a positive target scale and zero errors; a fresh 20-second GUI run records no Lua error, update failure, nil comparison, or warning. Updated [[forever-clean-startup]], index, spec, and the Forever report.
