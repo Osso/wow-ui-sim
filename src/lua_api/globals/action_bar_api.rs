@@ -4,7 +4,7 @@ mod registration;
 pub use registration::register_all;
 
 use crate::Result;
-use crate::c_api::c_action_bar::{get_action_cooldown_duration, read_action_cooldown};
+use crate::c_api::c_action_bar::{get_action_cooldown, get_action_cooldown_duration};
 use crate::lua_api::SimState;
 use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
 use crate::lua_api::methods::{
@@ -21,7 +21,6 @@ use std::rc::Rc;
 
 const C_ACTION_BAR: &str = "C_ActionBar";
 const NUM_ACTIONBAR_PAGES: i32 = 6;
-const ACTION_COOLDOWN_HASH_FIELDS: usize = 4;
 const ACTION_CHARGES_HASH_FIELDS: usize = 5;
 const ACTION_LOC_COOLDOWN_HASH_FIELDS: usize = 5;
 
@@ -437,17 +436,6 @@ fn is_current_action(state: &mut LuaState) -> LuaResult<u32> {
         }
     };
     state.push(Val::Bool(is_current));
-    Ok(1)
-}
-
-fn get_action_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    let (start, duration) = read_action_cooldown(state)?;
-    let info = create_table_with_capacity(state, ACTION_COOLDOWN_HASH_FIELDS);
-    table_set(state, info, "startTime", Val::Num(start));
-    table_set(state, info, "duration", Val::Num(duration));
-    table_set(state, info, "isEnabled", Val::Bool(true));
-    table_set(state, info, "modRate", Val::Num(1.0));
-    state.push(info);
     Ok(1)
 }
 

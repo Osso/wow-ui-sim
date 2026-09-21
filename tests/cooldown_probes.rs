@@ -385,6 +385,116 @@ fn get_action_cooldown_empty_slot_returns_zero() {
     assert_eq!(enable, 1);
 }
 
+fn assert_action_cooldown_active(env: &WowLuaEnv, active: bool) {
+    use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
+
+    let has_active_field = match ACTIVE {
+        ClientProfile::WowForever => true,
+        ClientProfile::Retail | ClientProfile::Ptr => ACTIVE_INTERFACE_VERSION >= 120100,
+        _ => false,
+    };
+    let expected = if has_active_field {
+        active.to_string()
+    } else {
+        "nil".to_owned()
+    };
+    env.exec(&format!(
+        "assert(C_ActionBar.GetActionCooldown(1).isActive == {expected}, \
+         'action cooldown active field must match the profile contract')"
+    ))
+    .unwrap();
+}
+
+#[test]
+fn get_action_cooldown_active_tracks_admin_spell_assignment_and_clear() {
+    let env = env();
+    env.state().borrow_mut().gcd = None;
+    env.exec(
+        r#"
+        A_Admin.SetActionSlot(1, 19750)
+        A_Admin.SetSpellCooldown(19750, 5)
+        local kind, spellID = GetActionInfo(1)
+        assert(kind == 'spell' and spellID == 19750)
+        local action = C_ActionBar.GetActionCooldown(1)
+        local spell = C_Spell.GetSpellCooldown(19750)
+        assert(action.startTime > 0 and action.startTime == spell.startTime)
+        assert(action.duration == 5 and action.duration == spell.duration)
+        assert(action.isEnabled == true and action.modRate == 1)
+        assert(spell.isActive == true)
+        "#,
+    )
+    .unwrap();
+    assert_action_cooldown_active(&env, true);
+
+    env.exec(
+        r#"
+        A_Admin.SetSpellCooldown(19750, 0)
+        local action = C_ActionBar.GetActionCooldown(1)
+        assert(action.startTime == 0 and action.duration == 0)
+        assert(action.isEnabled == true and action.modRate == 1)
+        assert(C_Spell.GetSpellCooldown(19750).isActive == false)
+        local kind, spellID = GetActionInfo(1)
+        assert(kind == 'spell' and spellID == 19750)
+        "#,
+    )
+    .unwrap();
+    assert_action_cooldown_active(&env, false);
+}
+
+#[test]
+fn get_action_cooldown_active_is_false_after_expiration() {
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.start_time = std::time::Instant::now() - std::time::Duration::from_secs(30);
+        state.gcd = None;
+        state.action_bars.insert(1, 19750);
+        state.spell_cooldowns.insert(
+            19750,
+            SpellCooldownState {
+                start: 20.0,
+                duration: 5.0,
+            },
+        );
+    }
+    env.exec(
+        r#"
+        local action = C_ActionBar.GetActionCooldown(1)
+        assert(action.startTime == 0 and action.duration == 0)
+        assert(action.isEnabled == true and action.modRate == 1)
+        "#,
+    )
+    .unwrap();
+    assert_action_cooldown_active(&env, false);
+}
+
+#[test]
+fn get_action_cooldown_active_is_false_for_zero_start() {
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.start_time = std::time::Instant::now() - std::time::Duration::from_secs(1);
+        state.gcd = None;
+        state.action_bars.insert(1, 19750);
+        state.spell_cooldowns.insert(
+            19750,
+            SpellCooldownState {
+                start: 0.0,
+                duration: 5.0,
+            },
+        );
+    }
+    env.exec(
+        r#"
+        local action = C_ActionBar.GetActionCooldown(1)
+        assert(action.startTime == 0 and action.duration == 5)
+        assert(action.isEnabled == true and action.modRate == 1)
+        "#,
+    )
+    .unwrap();
+    assert_action_cooldown_active(&env, false);
+}
+
 // ── C_ActionBar.GetActionCooldownDuration ──────────────────────────────────────
 
 #[test]
