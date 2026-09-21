@@ -48,7 +48,7 @@ fn get_player_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(7)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "player-cast-durations")]
 fn unit_name_from_guid(state: &mut LuaState) -> LuaResult<u32> {
     let guid = String::from_stack(state, 1)?;
     if guid != SEEDED_LOCAL_CHARACTER_GUID {
@@ -101,10 +101,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         regional_unique_names_enabled,
     )?;
     LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
+    #[cfg(feature = "player-cast-durations")]
+    LuaApiMut::register_function(lua, "UnitNameFromGUID", unit_name_from_guid)?;
     #[cfg(feature = "retail-12-1-0")]
-    {
-        LuaApiMut::register_function(lua, "UnitNameFromGUID", unit_name_from_guid)?;
-        LuaApiMut::register_function(lua, "UnitClassFromGUID", unit_class_from_guid)?;
-    }
+    LuaApiMut::register_function(lua, "UnitClassFromGUID", unit_class_from_guid)?;
     Ok(())
 }

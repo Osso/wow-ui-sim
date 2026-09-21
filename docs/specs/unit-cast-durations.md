@@ -10,6 +10,7 @@ Modeled player cast and channel duration queries live in `src/lua_api/channeling
 - [ ] Empowered duration defaults to including hold-at-max; explicit false excludes hold. Ordinary channel duration uses the base channel end (inferred from the native CastingBar's separate hold adjustment).
 - [ ] Replacement, cancellation and natural completion change duration availability through existing simulator lifecycle inputs.
 - [ ] Numeric cast-bar IDs in casting/channel tuples match update/stop event payloads so consumer identity guards work.
+- [ ] `UnitNameFromGUID` resolves the modeled player interrupt actor to current name and simulator realm; unknown GUIDs return no values. `UnitClassFromGUID` availability is unchanged.
 
 ## How it works
 
@@ -24,6 +25,7 @@ Modeled player cast and channel duration queries live in `src/lua_api/channeling
 - `src/lua_api/{mod.rs,on_update.rs,spellcast_events.rs}`: lifecycle availability and event identity.
 - `src/lua_api/globals/{admin.rs,combat_verbs.rs}`: channel input and replacement/cancel availability.
 - `src/lua_api/globals/utility_system_spell/spell_api.rs`: query registration and identity tuples.
+- `src/lua_api/globals/real/player_identity.rs`: shared interrupt actor name query.
 
 ## Tests asserting this spec
 

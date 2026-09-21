@@ -26,6 +26,21 @@ fn advance(env: &WowLuaEnv, seconds: u64) {
 }
 
 #[test]
+fn unit_cast_durations_resolve_self_interrupt_name() {
+    let env = setup();
+    env.state().borrow_mut().player.name = "Interrupt Actor".to_owned();
+    env.exec(
+        r#"
+        local name, realm = UnitNameFromGUID(UnitGUID('player'))
+        assert(name == 'Interrupt Actor' and name == UnitName('player'))
+        assert(realm == 'SimRealm')
+        assert(select('#', UnitNameFromGUID('unknown')) == 0)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn unit_cast_durations_idle_and_nonplayer_return_no_results() {
     let env = setup();
     env.exec(r#"
