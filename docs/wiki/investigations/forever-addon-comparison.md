@@ -8,6 +8,12 @@ Commit `7eb74d91e` records the public CurseForge `1.60.1` / Forever catalog in [
 
 Commit `6397eb7a3` freezes this pass to offline use of the already acquired archive set after bulk acquisition stopped. [The comparison audit](../../forever-addon-comparison.md) is the single source for the acquisition boundary, cached-pair/triage coverage, parked remainder, and candidate dispositions. A Forever tag is a declaration, not an API contract or a passing simulator result.
 
+## Cached consumer follow-up
+
+`31ac46b3a` corrects TOC selection so dash/underscore Camelot variants precede generic TOCs. The focused selector suite passes 44 targets; cached Carbonite providers and dependents now load. Its later `OnUpdate` reaches map 2521 and first uses the modern map-art API path. Map-art metadata is absent, so the legacy path fails; this is not a simple addon filename defect. Exact-build map-art records and decoder inputs are unavailable, therefore no metadata, asset name, or fallback is invented.
+
+`9862dc7b3` removes the public Forever `C_CombatLog.GetCurrentEventInfo` exposure while retaining `C_CombatLogInternal` and `C_CombatLogSecure`. Three new and four existing namespace checks pass. Cached EpicDamageMeter starts cleanly and its modern path completes 60 updates on one instance with two named rows. This is seeded render-path evidence, not native combat evidence. The combined final integration gate remains pending.
+
 ## Cursor transfer correction
 
 Cached EasyFishing packages identified an exact existing-API sequence for returning a fishing pole: `C_Container.PickupContainerItem(bag, slot)`, `PickupInventoryItem(MAINHAND)`, then `C_Container.PickupContainerItem(bag, slot)` when the cursor still holds the displaced weapon. Commit `215a4080a` moves namespaced and legacy bag pickup through one simulator-side transfer model, removing the namespace no-op and reusing the existing auto-equip swap path. `5dbd06ec8` names the extracted helpers by their operations only. `d40397025` splits the touched finite-constant registration phases and registers `C_Container.PickupContainerItem` through its existing `c_container` owner rather than global inventory registration; no transfer contract changed.
@@ -31,8 +37,11 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values
 - BetterBags `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` — motivating consumer loop
 - `/tmp/forever-bag-index-development-ledger.json` — RED/GREEN command and revision evidence
+- `data/forever-addon-audit/deep-dispositions.json` — offline Carbonite, EpicDamageMeter, and parked-runtime dispositions
+- [Forever running report](../../wowforever-1.60.1.md) — current cached-consumer boundaries and final-gate status
 
 ## See Also
 
 - [[forever-clean-startup]] — distinct sustained Blizzard-runtime proof
 - [[client-profiles]] — Camelot/Forever profile selection
+- [Forever UI/API delta notes](../../wowforever-1.60.1-ui-api-deltas.md) — separately published native-POV report (`362b65c7f`, branch `forever-ui-api-report`)
