@@ -16,6 +16,8 @@ The specialization diagnosis is an incorrectly exposed `GetSpecialization`, not 
 
 A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua compiler error: `LOADNIL` coalescing crossed a deferred conditional-jump target, leaving locals stale. Rilua commit `1a6d3e44d4bca99f6f5cfa38bf85b3df610b9ef9` adds the pending-jump barrier and was published to `Osso/rilua:main` at user direction. wow-ui-sim pin `88be5d1fa` updates the dependency. `8ddf0908d` now binds bytecode headers and keys to the exact locked Rilua revision and ignores legacy artifacts, so an old compiler pack cannot replay automatically. This remains implementation evidence: the parent-owned real Ellesmere cold/stale/warm replay has not run.
 
+`cc57bea8d` makes the existing base forbidden-aspect capability available to Forever with its thirteen native masks and FrameRef query/mutation methods. The animation masks (`QueryAnimationProgress`, `AddAnimations`) are a distinct PTR 12.1.5+/Forever extension; Retail 12.1 retains its eleven-bit surface. This does not enable unrelated access restrictions, `GetObjectTable`, or `ClearScripts`. Existing `SetParent`/`SetPoint` inheritance enforcement is shared. RED evidence reaches the unchanged `SecureHandlers.lua:592` static query and tainted AuraKit's `UntrustedScriptExecution` enum lookup; compiled GREEN and full replay remain pending. `HasAnyForbiddenAspects` still ignores its optional mask argument, which the demonstrated SecureHandlers call does not supply.
+
 ## Open boundaries
 
 - Implement source-backed nilable cast/channel duration producers over existing state; no fabricated active cast.
@@ -33,6 +35,7 @@ A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua
 - [compiler bytecode cache spec](../../specs/compiler-bytecode-cache.md) — locked-compiler cache contract and pending replay acceptance
 - [Edit Mode initial-anchor spec](../../specs/edit-mode-initial-anchors.md) — native initialization ordering and pending regression proof
 - [OnUpdate-mode spec](../../specs/on-update-modes.md) — numeric contract, XML mapping, and pending focused proof
+- [Forever forbidden-aspect consumers](../../specs/forever-forbidden-aspects.md) — base masks, animation extension, exclusions, and pending GREEN
 
 ## See Also
 
@@ -41,3 +44,4 @@ A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua
 - [[client-profiles]] — Forever/Camelot profile routing
 - [[bytecode-cache-growth]] — persisted-pack identity and storage bounds
 - [[on-update-dirty]] — existing update-dispatch behavior and dirty scheduling
+- [Forbidden-aspect inheritance](../../specs/forbidden-aspect-inheritance.md) — shared propagation and relationship constraints
