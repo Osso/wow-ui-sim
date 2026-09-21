@@ -2,6 +2,8 @@
 
 Compatibility report for the authenticated `wow_classic_beta` build with interface `16001`.
 
+For a shareable description of the **WoW UI/API changes themselves**, rather than simulator implementation history, see [Forever UI/API delta notes](wowforever-1.60.1-ui-api-deltas.md).
+
 ## Verified acceptance — 2026-09-20
 
 The earlier batch-fifteen proof covered startup and scripted interactions but not sustained GUI ticks. A later GUI run exposed repeated `Blizzard_WorldMap` `OnUpdate` failures because `WorldMapMixin:OnShow()` aborted before `SetMapID()`: `QuestLogQuests_ShowQuestCount()` compared the quest count with the missing `Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT`, leaving `ScrollContainer.targetScale` nil.
