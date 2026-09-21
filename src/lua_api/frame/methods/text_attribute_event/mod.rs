@@ -3,7 +3,7 @@
 //! Each function is a `RustFn` (`fn(&mut LuaState) -> LuaResult<u32>`) that mirrors
 //! the corresponding mlua method. Complex operations are stubbed with TODO.
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 mod access_restrictions;
 mod attributes;
 pub(crate) mod callbacks;
@@ -49,14 +49,13 @@ pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> 
 
 #[cfg(feature = "retail-12-1-0")]
 fn register_patch_12_1_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
-    access_restrictions::register(state, table)?;
-    table_set_rust_fn_static(state, table, "GetObjectTable", get_object_table)?;
     table_set_rust_fn_static(state, table, "ClearScripts", clear_scripts)?;
     Ok(())
 }
 
 #[cfg(feature = "forbidden-aspects")]
 fn register_forbidden_aspect_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    access_restrictions::register(state, table)?;
     table_set_rust_fn_static(state, table, "AddForbiddenAspects", add_forbidden_aspects)?;
     table_set_rust_fn_static(state, table, "GetForbiddenAspects", get_forbidden_aspects)?;
     table_set_rust_fn_static(

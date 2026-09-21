@@ -1,6 +1,6 @@
 # Script-object access restrictions
 
-Retail-family 12.1 script objects store conditional access-restriction flags separately from their forbidden flag. The contract comes from cached `Blizzard_APIDocumentationGenerated/SimpleFrameScriptObjectAPIDocumentation.lua`; `Blizzard_AuraContainerUtil.lua` applies the flags while creating aura buttons.
+Retail-family 12.1+ and Forever script objects store conditional access-restriction flags separately from their forbidden flag, published through the shared `forbidden-aspects` capability. The contract comes from cached `Blizzard_APIDocumentationGenerated/SimpleFrameScriptObjectAPIDocumentation.lua`; `Blizzard_AuraContainerUtil.lua` applies the flags while creating aura buttons.
 
 ## What it must do
 
@@ -9,6 +9,7 @@ Retail-family 12.1 script objects store conditional access-restriction flags sep
 - [ ] `HasAnyAccessRestrictions()` and an explicit nil argument test for any stored restriction; a supplied mask tests for any intersecting bit, with zero matching none.
 - [ ] `HasAccessConstraints()` reports true for either the existing forbidden flag or a nonzero conditional-restriction mask.
 - [ ] Restrictions remain per-object and do not change the forbidden flag or another object's mask.
+- [ ] Native `AuraContainerUtil.ApplyAccessRestrictions` defers pre-login requests until `PLAYER_ENTERING_WORLD`, not `PLAYER_LOGIN`; calls after login apply immediately. Sharing mask methods must preserve both native branches without changing Blizzard Lua.
 
 ## How it works
 
@@ -19,16 +20,16 @@ Retail-family 12.1 script objects store conditional access-restriction flags sep
 
 - `src/widget/frame.rs`, `frame_defaults.rs` — zero-default `access_restrictions` mask.
 - `src/lua_api/frame/methods/text_attribute_event/access_restrictions.rs` — mask mutation and queries.
-- `src/lua_api/frame/methods/text_attribute_event/mod.rs` — registration under `retail-12-1-0`.
+- `src/lua_api/frame/methods/text_attribute_event/mod.rs` — registration under `forbidden-aspects`; `ClearScripts` remains Retail-12.1-only and `GetObjectTable` has one shared registration.
 - `src/lua_api/frame/methods/text_attribute_event/attributes.rs` — combined `HasAccessConstraints` query.
 
 ## Tests asserting this spec
 
-- `tests/forbidden_frames.rs` — mask accumulation/filtering, object isolation, and combination with forbidden state.
+- `tests/forbidden_frames.rs` — shared-capability mask accumulation/filtering, object isolation, combination with forbidden state, and actual native AuraContainer pre-login/world-entry/post-login application.
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted Rust tests await compilation; an existing-binary RED reproduced missing `AddAccessRestrictions`.
+- [ ] Shared-capability tests await parent compilation/GREEN. Existing Forever GUI RED: `/tmp/ellesmere-forever/secure-chain-gui.stderr`, native `Blizzard_AuraContainerUtil.lua:421` reports missing `AddAccessRestrictions` after login. No new enforcement or mask semantics are introduced.
 - Aura-secrecy activation and conditional API-access enforcement are not implemented by this mask/query slice. Existing taint and forbidden-state checks are unchanged. No claim of complete security enforcement is made.
 
 ## Out of scope

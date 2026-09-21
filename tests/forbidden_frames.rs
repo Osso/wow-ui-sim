@@ -110,7 +110,7 @@ fn has_access_constraints_reports_forbidden_frames_without_restrictions() {
     assert_eq!(result, ("boolean".to_string(), false, true));
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn access_restrictions_accumulate_masks_and_support_filtered_queries() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
@@ -139,7 +139,7 @@ fn access_restrictions_accumulate_masks_and_support_filtered_queries() {
     "#).expect("restriction masks and optional query masks");
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn access_restrictions_are_per_frame_and_combine_with_forbidden_state() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
@@ -165,6 +165,63 @@ fn access_restrictions_are_per_frame_and_combine_with_forbidden_state() {
     "#,
     )
     .expect("frame isolation and forbidden/restriction union");
+}
+
+#[cfg(feature = "forbidden-aspects")]
+#[test]
+fn access_restrictions_native_aura_consumer_defers_until_world_entry_then_applies_immediately() {
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let (env, _) = common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_AuraContainer"],
+        &[],
+    );
+    env.set_logged_in(false);
+    env.exec_maybe_secure(
+        r#"
+        RestrictionDeferred = CreateFrame('Frame')
+        RestrictionUnchanged = CreateFrame('Frame')
+        local mask = Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret
+        assert(not IsLoggedIn())
+        AuraContainerUtil.ApplyAccessRestrictions(RestrictionDeferred, mask)
+        assert(RestrictionDeferred:GetAccessRestrictions() == 0,
+            'pre-login native application must wait for world entry')
+        "#,
+        true,
+    )
+    .unwrap();
+
+    env.set_logged_in(true);
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.exec_maybe_secure(
+        r#"
+        assert(IsLoggedIn())
+        assert(RestrictionDeferred:GetAccessRestrictions() == 0,
+            'PLAYER_LOGIN must not apply the deferred restriction')
+        RestrictionImmediate = CreateFrame('Frame')
+        local mask = Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret
+        AuraContainerUtil.ApplyAccessRestrictions(RestrictionImmediate, mask)
+        assert(RestrictionImmediate:GetAccessRestrictions() == mask,
+            'post-login native application must not wait for world entry')
+        "#,
+        true,
+    )
+    .unwrap();
+
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec_maybe_secure(
+        r#"
+        local mask = Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret
+        assert(RestrictionDeferred:GetAccessRestrictions() == mask)
+        assert(RestrictionImmediate:GetAccessRestrictions() == mask)
+        assert(RestrictionUnchanged:GetAccessRestrictions() == 0)
+        assert(RestrictionDeferred:HasAccessConstraints())
+        assert(not RestrictionDeferred:IsForbidden())
+        "#,
+        true,
+    )
+    .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
 }
 
 #[test]
