@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(feature = "aura-containers")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -10,6 +10,12 @@ fn player_controlled_or_group_member_classifies_native_token_families() {
     env.state().borrow_mut().party_members.clear();
     env.exec(
         r#"
+        assert(type(UnitIsPlayerControlledOrGroupMember) == 'function')
+        assert(__secureenv.UnitIsPlayerControlledOrGroupMember == UnitIsPlayerControlledOrGroupMember)
+        for _, unit in ipairs({ 'party1', 'partypet1', 'raid1', 'raidpet1' }) do
+            assert(not UnitExists(unit), 'fixture requires absent group unit: ' .. unit)
+            assert(UnitIsPlayerControlledOrGroupMember(unit) == true, unit)
+        end
         for _, unit in ipairs({
             "player", "pet", "vehicle", "party1", "party4",
             "partypet1", "partypet4", "raid1", "raid40", "raidpet1", "raidpet40"
@@ -47,7 +53,9 @@ fn player_controlled_or_group_member_supports_secure_aura_identity_filtering() {
             |env, _| {
                 env.exec_maybe_secure(
                     r#"
-                    local aura = { spellId = 35395, isHelpful = true, isHarmful = false }
+                    local aura = { spellId = 19750, isHelpful = true, isHarmful = false }
+                    assert(C_Secrets.GetSpellAuraSecrecy(aura.spellId) ~= Enum.SecrecyLevel.NeverSecret,
+                        'fixture must reach the controlled/group predicate, not the secrecy exemption')
                     for _, unit in ipairs({ "player", "pet", "party1", "partypet1", "raid1", "raidpet1" }) do
                         assert(AuraContainerUtil.CanApplyIdentityCandidateFilters(unit, aura), unit)
                     end

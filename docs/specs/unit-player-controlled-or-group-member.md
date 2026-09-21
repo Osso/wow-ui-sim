@@ -1,6 +1,6 @@
 # Controlled-player and group unit tokens
 
-`UnitIsPlayerControlledOrGroupMember` classifies the native controlled-player/group token families for retail 12.1 aura filtering. Implementation belongs in `src/lua_api/globals/real/unit_relationships.rs`; it does not infer unit existence, ownership, or target aliases.
+`UnitIsPlayerControlledOrGroupMember` classifies the native controlled-player/group token families for Retail 12.1+ and Forever aura filtering through the shared `aura-containers` capability. Implementation belongs in `src/lua_api/globals/real/unit_relationships.rs`; it does not infer unit existence, ownership, or target aliases.
 
 ## What it must do
 
@@ -16,7 +16,7 @@
 ## Implementation inventory
 
 - `src/lua_api/globals/real/unit_relationships.rs` — native token classification and registration.
-- `src/lua_api/globals/real/mod.rs` and `src/lua_api/globals/register.rs` — retail 12.1 registration wiring.
+- `src/lua_api/globals/real/mod.rs` and `src/lua_api/globals/register.rs` — `aura-containers` registration wiring. Its existing feature membership adds Forever while preserving Retail 12.1+ availability and excluding earlier epochs/profiles.
 
 ## Tests asserting this spec
 
@@ -24,7 +24,8 @@
 
 ## Known gaps (current cycle)
 
-- Targeted RED/GREEN passed 3/3. Actual addon/SavedVariables startup later returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`; this does not add UnitExists, ownership, or secret-argument semantics.
+- Forever runtime RED: `/tmp/ellesmere-forever/traced-producers-gui.stderr` reports a nil call at native `Blizzard_AuraContainerUtil.lua:77`, the controlled/group predicate. Helpful spell 19750 is already enumerated; this is publication, not aura-state or candidate-filter semantics. Existing grouped tests now cover Forever, absent group units, public/secure function identity, and the native helpful-aura branch without its secrecy-exemption shortcut. Compiled GREEN remains integration-owned; no Cargo was run for this publication slice.
+- Earlier Retail targeted RED/GREEN passed 3/3. Actual addon/SavedVariables startup later returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`; this does not add UnitExists, ownership, or secret-argument semantics.
 
 ## Out of scope
 
@@ -32,4 +33,4 @@ Unit existence, target/focus identity aliases, pet ownership state, and secret-a
 
 ## Native sources
 
-Cached retail `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2197–2212` specifies: “Returns true for 'player', 'pet', 'vehicle', or any of 'partyn', 'partypetn', 'raidn', 'raidpetn'”. Existing `src/lua_api/globals/strings/string_data/core_strings.rs` supplies native `MAX_PARTY_MEMBERS=4` and `MAX_RAID_MEMBERS=40`.
+Cached retail `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2197–2212` specifies: “Returns true for 'player', 'pet', 'vehicle', or any of 'partyn', 'partypetn', 'raidn', 'raidpetn'”. Pinned Forever `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2287–2299` declares the same token contract; its `Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua:77` directly calls the helper. Existing `src/lua_api/globals/strings/string_data/core_strings.rs` supplies native `MAX_PARTY_MEMBERS=4` and `MAX_RAID_MEMBERS=40`.
