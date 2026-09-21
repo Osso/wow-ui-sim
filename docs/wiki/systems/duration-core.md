@@ -18,8 +18,15 @@ The core stores `start`, base duration, and rate. Its rate/modifier formulas, ze
 
 `FrameAPICooldown.SetCooldownFromDurationObject` resolves proxy methods through Lua indexing. A zero duration preserves existing cooldown timing when `clearIfZero = false`; omitted/true clears it. This is tested simulator behavior, not native confirmation. Protected, secret, and forbidden semantics remain unresolved.
 
+## Player cast duration queries
+
+`180d08b69` reuses the core factory for `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` under the narrow `player-cast-durations` capability shared by Retail 12.1+ and Forever. The queries snapshot simulator-owned player cast/channel timestamps; idle and unmodeled units return no result. Empower defaults to hold-at-max inclusion, while explicit `false` uses the base empowered end. The latter boundary is an inference from the pinned Forever CastingBar consumer, which separately adds hold to `UnitChannelInfo` endpoints.
+
+The same capability exposes the existing player channel lifecycle and uses numeric cast-bar IDs in cast/channel query tuples consistent with update and stop payloads. `tests/unit_cast_durations.rs` recorded RED 0/5 before the producer work; integrated GREEN and real Ellesmere acceptance remain pending. This establishes simulator behavior, not native timing, secrecy, other-unit state, or complete castbar conformance.
+
 ## Sources
 
+- [Unit cast duration queries](../../specs/unit-cast-durations.md) — modeled query contract and explicit inference boundary.
 - [Duration core spec](../../specs/duration-core.md) — modeled contract and explicit assumptions.
 - [`core.rs`](../../../src/lua_api/globals/lua_duration_object/core.rs) — state and query implementation.
 - [`duration_core.rs`](../../../tests/duration_core.rs) — focused ordinary behavior proof.

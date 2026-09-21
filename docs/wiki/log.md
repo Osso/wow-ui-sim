@@ -1,3 +1,7 @@
+## [2026-09-21] system | Model shared player cast duration queries
+
+`180d08b69` adds the narrow `player-cast-durations` capability for Retail 12.1+ and Forever. It exposes nullable player-only casting, channel, and empowered-channel duration objects over simulator-owned timestamps, shares the existing channel lifecycle without enabling an unrelated Retail epoch, and aligns numeric cast-bar tuple IDs with update/stop event payloads. The pinned Forever Unit documentation supplies nullable query shapes; the ordinary-channel hold boundary is an inference from the pinned CastingBar consumer's separate hold adjustment. Focused RED is 0/5; GREEN and real Ellesmere acceptance remain pending. Updated [[duration-core]], [the duration spec](../specs/unit-cast-durations.md), [combat admin API](../admin-api/combat.md), and index; parent report unchanged.
+
 ## [2026-09-21] investigation | Implement numeric shared OnUpdate modes
 
 `d93621f42` introduces `on-update-modes` for Retail 12.1+ and Forever without enabling a broader Retail epoch. It publishes native numeric `Enum.OnUpdateMode` values and metadata, stores numeric mode state, maps XML names, resets one-shot modes before callbacks so rearming survives, and replaces PTR string/undocumented-alias publication with the shared Rust producer. Five focused cases are RED, including the real inherited ManagedAuraContainer dirty path; GREEN and runtime replay are pending. Updated [[ellesmereui-forever]], [the OnUpdate-mode spec](../specs/on-update-modes.md), and index; parent report unchanged.
