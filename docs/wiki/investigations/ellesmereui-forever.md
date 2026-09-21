@@ -35,7 +35,17 @@ Four independently demonstrated simulator boundaries remain:
 
 The combined Forever `--lib --test integration --no-run` build succeeded at `248f665fd`; it is compile proof, not behavior proof for the later `d0d6a346d`, `9476efcf5`, `9d1174236`, or `2bf64b02c` slices. GUI acceptance at `248f665fd` completed four of six interactions: chat, options/unlock, casts, and target passed. Action and aura acceptance remain unproven; the aura fixture's broad empty-helpful-list assertion was corrected to reject only its own spell ID. The audit does not claim secret/access enforcement, private-aura callback parity, complete custom-button rendering, or full Ellesmere compatibility.
 
-`a31e12d50` shares the existing local-player `UnitClassFromGUID` model with the same Retail 12.1+/Forever cast-duration capability as `UnitNameFromGUID`. The actual native interrupt-label consumer reaches `CastingBarFrame.lua:622`; unknown GUIDs return no values. External RED records both the missing query and native consumer. Compiled GREEN and replay remain pending; this is not general GUID identity modeling.
+`a31e12d50` shares the existing local-player `UnitClassFromGUID` model with the same Retail 12.1+/Forever cast-duration capability as `UnitNameFromGUID`. The actual native interrupt-label consumer reaches `CastingBarFrame.lua:622`; unknown GUIDs return no values. External RED records both the missing query and native consumer. This is not general GUID identity modeling.
+
+### Runtime enumeration and action cooldown follow-up
+
+At `9476efcf5`, scoped native AuraContainer evidence is GREEN: the initializer/partition group passes 8/8, tainted forbidden consumers pass 3/3, and secure XML delegate tests pass 2/2. This does **not** establish full GUI aura display.
+
+The subsequent real GUI trace injected helpful aura instance `7` (`spellId=19750`, icon `135907`, stacks `3`) and found both public and secure `C_UnitAuras.GetUnitAuraInstanceIDs` plus `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs` returned nil. Public/secure namespace identity matched, so this was a registration-gate defect rather than a filter, candidate, partition, or fixture-input defect. `4dadf6a5a` shares the existing public/private enumeration through `aura-instance-enumeration` / `aura-containers`; compiled GREEN remains pending.
+
+The same trace found `C_ActionBar.GetActionCooldown(1)` returned start, duration `5`, enabled, and rate but omitted `isActive` while the matching spell query reported true after only 0.665 seconds. Forever declares `SpellCooldownInfo`, which requires `isActive`; the fixture was not wrong. `bff7719e3` publishes the modeled active field on current Retail-family/Forever shapes while retaining the historical four-field payload. Compiled GREEN remains pending.
+
+`ac9ce1897` separately fixes trailing TOC annotation parsing: tab-separated `[AllowLoadGameType mainline] [LoadIntoEnvironment secure]` had been retained in TargetFrame aura Lua paths, causing IO failures and the missing callback symptom. Its parser/secure-environment regressions are committed; compiled confirmation remains pending.
 
 `c5f5da7fb` shares the existing `C_StringUtil.CreateNumericRuleFormatter` and rounding enum with Forever through a narrow capability. Ellesmere AuraKit first chooses this documented formatter and only uses its seconds formatter as fallback. Its exact breakpoint table is covered, including the modeled `59.9 → "60"` pre-rounding threshold behavior; native parity at that boundary is unmeasured. Existing-binary RED reports the missing constructor. Compiled GREEN and real AuraKit replay remain pending; no formatter model or fallback policy changed.
 
