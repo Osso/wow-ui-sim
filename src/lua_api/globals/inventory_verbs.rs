@@ -18,11 +18,14 @@
 //! Registered from `register_tail_globals` after `missing_surface` so the
 //! Rust impls supersede any `stub_nil` entries that slipped through.
 
+use crate::c_api::container_inventory::{
+    equip_cursor_item, pickup_container_item, pickup_inventory_item,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref, table_get,
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_api::state_types::{CursorInfo, CursorItemOrigin, EquippedItem};
+use crate::lua_api::state_types::{CursorInfo, CursorItemOrigin};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -121,46 +124,6 @@ fn store_cursor_item_in_backpack(state: &mut LuaState, slot: i32, item_id: u32, 
         );
         st.cursor_item = None;
     }
-}
-
-/// `PickupContainerItem(bag, slot)` — take an item out of a bag slot and
-/// place it on the cursor. If the slot is empty the call is a silent no-op.
-fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
-    let (Some(bag), Some(slot)) = (stack_i32(state, 1), stack_i32(state, 2)) else {
-        return Ok(0);
-    };
-    let Ok(mut st) = borrow_state_mut(state) else {
-        return Ok(0);
-    };
-    let Some(item) = st.bag_items.remove(&(bag, slot)) else {
-        return Ok(0);
-    };
-    st.cursor_item = Some(CursorInfo::Item {
-        item_id: item.item_id,
-        stack_count: item.stack_count,
-        origin: CursorItemOrigin::Bag { bag, slot },
-    });
-    Ok(0)
-}
-
-/// `PickupInventoryItem(slot)` — take an equipped item onto the cursor.
-/// Silent no-op when the slot is empty.
-fn pickup_inventory_item(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(slot) = stack_i32(state, 1) else {
-        return Ok(0);
-    };
-    let Ok(mut st) = borrow_state_mut(state) else {
-        return Ok(0);
-    };
-    let Some(equipped) = st.player.equipped_items.remove(&slot) else {
-        return Ok(0);
-    };
-    st.cursor_item = Some(CursorInfo::Item {
-        item_id: equipped.item_id,
-        stack_count: 1,
-        origin: CursorItemOrigin::Equipped { slot },
-    });
-    Ok(0)
 }
 
 /// `PickupBagFromSlot(slot)` — alias for `PickupInventoryItem` targeted at
@@ -292,38 +255,6 @@ fn put_item_in_bag(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     place_cursor_item_in_backpack(state)
-}
-
-/// `EquipCursorItem(slot)` — write the cursor's item into `equipped_items[slot]`.
-/// Any previously-equipped item returns to the cursor (WoW's swap behaviour).
-/// Silent no-op when the cursor isn't holding an item.
-fn equip_cursor_item(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(slot) = stack_i32(state, 1) else {
-        return Ok(0);
-    };
-    let Ok(mut st) = borrow_state_mut(state) else {
-        return Ok(0);
-    };
-    let Some(cursor) = st.cursor_item.clone() else {
-        return Ok(0);
-    };
-    let CursorInfo::Item { item_id, .. } = cursor else {
-        return Ok(0);
-    };
-    let displaced = st.player.equipped_items.insert(
-        slot,
-        EquippedItem {
-            item_id,
-            enchant_id: 0,
-            gem_ids: [0; 3],
-        },
-    );
-    st.cursor_item = displaced.map(|old| CursorInfo::Item {
-        item_id: old.item_id,
-        stack_count: 1,
-        origin: CursorItemOrigin::Equipped { slot },
-    });
-    Ok(0)
 }
 
 /// `DeleteCursorItem()` — clear the cursor. If the cursor was carrying a
@@ -489,6 +420,7 @@ fn get_cursor_money(state: &mut LuaState) -> LuaResult<u32> {
 /// Install in the global table. Exposed for tests that want to bypass the
 /// full `register_globals` chain.
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    crate::c_api::container_inventory::register(lua.state_mut())?;
     LuaApiMut::register_function(lua, "PickupContainerItem", pickup_container_item)?;
     LuaApiMut::register_function(lua, "PickupInventoryItem", pickup_inventory_item)?;
     LuaApiMut::register_function(lua, "PickupBagFromSlot", pickup_bag_from_slot)?;

@@ -76,6 +76,144 @@ fn pickup_inventory_item_moves_equipped_slot_to_cursor() {
     ));
 }
 
+// Cached EasyFishing 1.7.6 EquipBagPole uses these three calls, with no
+// EquipCursorItem call between them. Exercise the legacy entry point too.
+#[test]
+fn fishing_cursor_transfer_preserves_both_items() {
+    for pickup in ["C_Container.PickupContainerItem", "PickupContainerItem"] {
+        let env = fishing_inventory(true);
+        env.exec(&format!(
+            "{pickup}(0, 5); PickupInventoryItem(16); \
+             if CursorHasItem() then {pickup}(0, 5) end"
+        ))
+        .unwrap();
+        let st = env.state().borrow();
+        assert_eq!(
+            st.player.equipped_items.get(&16).map(|item| item.item_id),
+            Some(6256),
+            "{pickup}"
+        );
+        let bag_item = st
+            .bag_items
+            .get(&(0, 5))
+            .expect("displaced weapon returns to bag");
+        assert_eq!((bag_item.item_id, bag_item.stack_count), (19019, 1));
+        assert_eq!(st.bag_items.len(), 1);
+        assert!(
+            st.cursor_item.is_none(),
+            "{pickup} must clear cursor after returning weapon"
+        );
+    }
+}
+
+#[test]
+fn fishing_cursor_transfer_equips_empty_destination() {
+    for pickup in ["C_Container.PickupContainerItem", "PickupContainerItem"] {
+        let env = fishing_inventory(false);
+        env.exec(&format!(
+            "{pickup}(0, 5); PickupInventoryItem(16); \
+             if CursorHasItem() then {pickup}(0, 5) end"
+        ))
+        .unwrap();
+        let st = env.state().borrow();
+        assert_eq!(
+            st.player.equipped_items.get(&16).map(|item| item.item_id),
+            Some(6256),
+            "{pickup}"
+        );
+        assert!(st.bag_items.is_empty());
+        assert!(st.cursor_item.is_none());
+    }
+}
+
+#[test]
+fn fishing_cursor_transfer_swaps_and_drops_bag_stacks() {
+    for pickup in ["C_Container.PickupContainerItem", "PickupContainerItem"] {
+        let env = fishing_inventory(false);
+        env.state().borrow_mut().bag_items.insert(
+            (0, 6),
+            BagItem {
+                item_id: 2589,
+                stack_count: 7,
+                hyperlink: None,
+            },
+        );
+        env.exec(&format!("{pickup}(0, 5); {pickup}(0, 6)"))
+            .unwrap();
+        {
+            let st = env.state().borrow();
+            let placed = st
+                .bag_items
+                .get(&(0, 6))
+                .expect("pole replaces cloth stack");
+            assert_eq!((placed.item_id, placed.stack_count), (6256, 1), "{pickup}");
+            assert!(matches!(
+                st.cursor_item,
+                Some(CursorInfo::Item {
+                    item_id: 2589,
+                    stack_count: 7,
+                    origin: CursorItemOrigin::Bag { bag: 0, slot: 6 },
+                })
+            ));
+        }
+        env.exec(&format!("{pickup}(0, 5)")).unwrap();
+        let st = env.state().borrow();
+        let cloth = st
+            .bag_items
+            .get(&(0, 5))
+            .expect("held stack drops into empty slot");
+        assert_eq!((cloth.item_id, cloth.stack_count), (2589, 7));
+        assert_eq!(st.bag_items.len(), 2);
+        assert!(st.cursor_item.is_none());
+    }
+}
+
+#[test]
+fn fishing_cursor_transfer_namespace_preserves_pickup_and_empty_slot_behavior() {
+    let env = fishing_inventory(false);
+    env.exec("C_Container.PickupContainerItem(0, 6)").unwrap();
+    assert!(env.state().borrow().cursor_item.is_none());
+    env.exec("C_Container.PickupContainerItem(0, 5)").unwrap();
+    let st = env.state().borrow();
+    assert!(st.bag_items.is_empty());
+    assert!(matches!(
+        st.cursor_item,
+        Some(CursorInfo::Item {
+            item_id: 6256,
+            stack_count: 1,
+            origin: CursorItemOrigin::Bag { bag: 0, slot: 5 },
+        })
+    ));
+}
+
+fn fishing_inventory(equipped: bool) -> WowLuaEnv {
+    let env = env();
+    {
+        let mut st = env.state().borrow_mut();
+        st.bag_items.clear();
+        st.bag_items.insert(
+            (0, 5),
+            BagItem {
+                item_id: 6256,
+                stack_count: 1,
+                hyperlink: None,
+            },
+        );
+        st.player.equipped_items.remove(&16);
+        if equipped {
+            st.player.equipped_items.insert(
+                16,
+                EquippedItem {
+                    item_id: 19019,
+                    enchant_id: 0,
+                    gem_ids: [0; 3],
+                },
+            );
+        }
+    }
+    env
+}
+
 // ── PickupMerchantItem ────────────────────────────────────────────────────────
 
 #[test]

@@ -41,11 +41,6 @@ if rawget(C_Container, "UseContainerItem") == nil then
     end
 end
 
-if rawget(C_Container, "PickupContainerItem") == nil then
-    function C_Container.PickupContainerItem(_bag, _slot)
-    end
-end
-
 if rawget(C_Container, "SplitContainerItem") == nil then
     function C_Container.SplitContainerItem(_bag, _slot, _amount)
     end

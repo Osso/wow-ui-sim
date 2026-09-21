@@ -31,6 +31,7 @@ mod c_combat_audio_alert;
 mod c_combat_text;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
+pub(crate) mod container_inventory;
 pub mod c_curve_util;
 pub mod c_death_recap;
 pub mod c_discord;
