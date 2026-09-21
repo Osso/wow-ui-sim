@@ -4,16 +4,17 @@ Forever publishes the existing temporary combat-history fixture getter under its
 
 ## What it must do
 
-- [ ] A fresh Forever environment exposes neither `C_CombatLog.GetCurrentEventInfo` nor `CombatLogGetCurrentEventInfo`.
-- [ ] Loading the unchanged `Blizzard_DeprecatedCombatLog` publisher with `loadDeprecationFallbacks` enabled does not create either missing getter; reapplying simulator bootstrap does not resurrect them.
-- [ ] `C_CombatLogInternal.GetCurrentEventInfo` and `C_CombatLogSecure.GetCurrentEventInfo` read the same existing concrete fixture entries, follow its current-entry navigation, and return nil after clearing entries.
-- [ ] EpicDamageMeter's unmodified capability predicate selects the meter API on Forever.
-- [ ] Other profiles retain their existing public getter and deprecated-global compatibility behavior.
+- [x] A fresh Forever environment exposes neither `C_CombatLog.GetCurrentEventInfo` nor `CombatLogGetCurrentEventInfo`.
+- [x] Loading the unchanged `Blizzard_DeprecatedCombatLog` publisher with `loadDeprecationFallbacks` enabled does not create either missing getter; reapplying simulator bootstrap does not resurrect them.
+- [x] `C_CombatLogInternal.GetCurrentEventInfo` and `C_CombatLogSecure.GetCurrentEventInfo` read the same existing concrete fixture entries, follow its current-entry navigation, and return nil after clearing entries.
+- [x] EpicDamageMeter's unmodified capability predicate selects the meter API on Forever.
+- [x] Other profiles retain their existing public getter and deprecated-global compatibility behavior.
 
 ## How it works
 
 - [Cached addon comparison](../forever-addon-comparison.md) — investigation scope and evidence boundaries.
 - Publication is selected from the compiled client profile before executing the temporary fixture's producer. No post-vendor global deletion or addon flag override occurs.
+- The existing generic namespace synthesizer honors the C API's `__wow_removed_keys` declaration, so reading the deliberately absent public member cannot manufacture a replacement function.
 
 ## Implementation inventory
 
@@ -45,9 +46,14 @@ Pinned Forever 1.60.1.69913 source cache:
 
 Cached EpicDamageMeter file `8930362`, SHA-256 `46e66770c867f57a51de4726f858bfc6b88dfa2e7935312023d80e494700ab22`, `Core/Constants.lua`: checks the legacy getter's absence before selecting `C_DamageMeter` on non-Retail clients. This is the consumer motivation, not authority for removing other APIs.
 
+## Development proof
+
+At `9862dc7b3`, the three new Forever tests pass, as do the two existing shared combat-log tests under both Forever and Retail (7 executions total). Initial RED was 0/3. Moving the fixture getter alone reached 1/3: the generic namespace synthesizer still invented the missing public member. Declaring that member absent at C API registration completed GREEN 3/3.
+
+Retail is the executed representative of the unchanged non-Forever publication branch; other non-Forever profiles were not separately run. The existing unit navigation test was updated for the profile-specific getter but not executed in this slice. A cancelled diagnostic has no proof credit. Commands, revisions, and full logs: `/tmp/forever-combat-namespace-development-ledger.json`.
+
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN and other-profile development proof pending.
 - [ ] Parent-owned full-addon reproduction and final verification remain separate.
 
 ## Out of scope
