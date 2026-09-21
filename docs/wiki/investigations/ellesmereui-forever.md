@@ -1,6 +1,6 @@
 # EllesmereUI Forever compatibility
 
-Cached EllesmereUI 9.2.2 establishes bounded simulator defects from a real Forever startup, but not addon compatibility: several suite modules intentionally stand down on Camelot, and warm-cache identity plus full startup revalidation remain open.
+Cached EllesmereUI 9.2.2 establishes bounded simulator defects from a real Forever startup, but not addon compatibility: several suite modules intentionally stand down on Camelot, and full startup revalidation remains open.
 
 ## Runtime boundary
 
@@ -14,7 +14,7 @@ At the initial reproduction, real startup recorded 14 error records and 31 occur
 
 The specialization diagnosis is an incorrectly exposed `GetSpecialization`, not a missing `GetSpecializationInfo`. Ellesmere takes its legacy branch because the simulator exposes the first global while the second is absent. The native `Blizzard_DeprecatedSpecialization` TOC excludes Camelot, so adding the excluded legacy alias would model the wrong runtime. The remaining correction is to remove or profile-gate the extra global.
 
-A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua compiler error: `LOADNIL` coalescing crossed a deferred conditional-jump target, leaving locals stale. Rilua commit `1a6d3e44d4bca99f6f5cfa38bf85b3df610b9ef9` adds the pending-jump barrier and was published to `Osso/rilua:main` at user direction. wow-ui-sim pin `88be5d1fa` updates the dependency. This does not prove old compiled chunks are rejected or rebuilt: warm-cache identity remains pending.
+A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua compiler error: `LOADNIL` coalescing crossed a deferred conditional-jump target, leaving locals stale. Rilua commit `1a6d3e44d4bca99f6f5cfa38bf85b3df610b9ef9` adds the pending-jump barrier and was published to `Osso/rilua:main` at user direction. wow-ui-sim pin `88be5d1fa` updates the dependency. `8ddf0908d` now binds bytecode headers and keys to the exact locked Rilua revision and ignores legacy artifacts, so an old compiler pack cannot replay automatically. This remains implementation evidence: the parent-owned real Ellesmere cold/stale/warm replay has not run.
 
 ## Open boundaries
 
@@ -30,9 +30,11 @@ A pure Lua reduction of Ellesmere chat's disabled-timestamp path exposed a rilua
 - [Forever addon comparison](../../forever-addon-comparison.md) — separate cached-addon audit boundary
 - `Blizzard_DeprecatedSpecialization/Blizzard_DeprecatedSpecialization.toc` in the pinned Forever cache — Camelot exclusion
 - `/tmp/ellesmere-forever/nil-initialization.lua` and `/tmp/ellesmere-forever/rilua-nil-ledger.json` — reduced compiler reproduction and focused proof
+- [compiler bytecode cache spec](../../specs/compiler-bytecode-cache.md) — locked-compiler cache contract and pending replay acceptance
 
 ## See Also
 
 - [[forever-clean-startup]] — distinct Blizzard-only sustained runtime proof
 - [[forever-addon-comparison]] — broader cached-addon comparison, not Ellesmere acceptance
 - [[client-profiles]] — Forever/Camelot profile routing
+- [[bytecode-cache-growth]] — persisted-pack identity and storage bounds

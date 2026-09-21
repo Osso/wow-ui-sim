@@ -1,3 +1,7 @@
+## [2026-09-21] system | Bind persisted Lua bytecode to locked Rilua
+
+`8ddf0908d` updates [[bytecode-cache-growth]] and [[ellesmereui-forever]]. Pack headers and content keys now carry the exact Git revision resolved from `Cargo.lock`; malformed, missing, or ambiguous compiler identity fails the build. `WOWBC003` rejects earlier packs, and loose `.luac` plus legacy keys are ignored instead of imported. Existing bounded storage, read-only, and prefork behavior remain in scope. This records implementation only: parent-owned Ellesmere stale-cache rejection, cold compilation, and warm replay acceptance remain pending.
+
 ## [2026-09-21] investigation | Record EllesmereUI Forever producer defects
 
 Added [[ellesmereui-forever]] from the unchanged cached EllesmereUI 9.2.2 file `8936131`. It separates 14 records / 31 occurrences, intentional Camelot stand-downs, the 13-target special-bar correction, the extra-legacy-specialization diagnosis, and rilua's published conditional-`LOADNIL` correction from open warm-cache and end-to-end startup proof. Updated the index; parent-owned runtime report/spec/source files remain untouched.

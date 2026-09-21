@@ -12,7 +12,7 @@ An isolated `Blizzard_AchievementUI` smoke test stalled while loading the first 
 
 `MAX_PACK_SIZE` was enforced only when a process first loaded an existing pack. The loader called `read_to_end` before checking the file size, so an oversized valid pack could be materialized in memory before compaction or deletion. During the process lifetime, `put()` and legacy-key promotion appended entries without checking the serialized pack size, and mutated in-memory state before persistence succeeded. Repeated generated chunks could therefore grow both the file and `CacheState` without a bound.
 
-### Fix
+### Size-bound fix
 
 `39caf2662` applies the bound at both load and store boundaries:
 
@@ -26,25 +26,28 @@ An isolated `Blizzard_AchievementUI` smoke test stalled while loading the first 
 
 This keeps the warm full-addon cache path while preventing unbounded in-process growth. It does not claim a broader cache eviction policy or a new generated-chunk persistence policy.
 
+### Compiler identity
+
+`8ddf0908d` binds persisted chunks to the exact 40-hex Rilua Git revision resolved from `Cargo.lock`. The revision is part of both the pack header and each content key, alongside the existing whitelist ABI. A compiler correction therefore invalidates stale bytecode without a manual cache-version bump or user-cache deletion.
+
+The build fails when the lock record has no uniquely identified Git-sourced Rilua revision. `WOWBC003` rejects older/unidentified packs before replay. Loose `.luac` artifacts and legacy/unversioned keys are ignored instead of migrated or promoted. Exact-revision packs retain normal replay, bounded storage, read-only behavior, and prefork modes.
+
+This closes the implementation gap only. Real Ellesmere cold/rejected-stale/warm replay remains parent-owned acceptance work.
+
 ### Proof
 
-Focused tests live in `src/loader/bytecode_cache.rs`:
+The `39caf2662` focused proof covered bounded oversized-pack rejection, compaction, rebuild, oversized entries, and failed-append rollback in `src/loader/bytecode_cache.rs`. Its legacy-promotion case is historical: `8ddf0908d` deliberately removes that behavior.
 
-- `bounded_store_rejects_oversized_pack_before_payload_read`
-- `bounded_store_compacts_stale_entries_before_adding_new_entry`
-- `bounded_store_rebuilds_with_only_new_entry_when_unique_set_exceeds_limit`
-- `bounded_store_rejects_entry_larger_than_pack_limit`
-- `bounded_store_failed_append_leaves_in_memory_state_unchanged`
-- `bounded_store_legacy_lookup_promotion_uses_same_limit`
-
-Existing pack-header, torn-entry, compaction, and discard tests remain in the same module. The failing isolated loader boundary was reproduced with `WOW_SIM_TRACE_LOAD_ADDON=1`; after the fix, the focused cache tests provide the bounded-read, serialized-cap, compaction/rebuild, promotion, and persistence-order proof.
+Current cache tests cover exact compiler-key replay, foreign-compiler pack rejection, ignored loose legacy files, read-only snapshots, pack bounds, torn entries, and prefork modes. `tests/locked_rilua_identity.rs` separately proves exact lock-record extraction and rejects missing or ambiguous compiler identity. The failing isolated loader boundary was reproduced with `WOW_SIM_TRACE_LOAD_ADDON=1`; parent-owned real Ellesmere replay remains the acceptance boundary.
 
 ## Sources
 
-- [bytecode_cache.rs](../../../src/loader/bytecode_cache.rs) — packed cache format, bounded load/store paths, and focused regression tests
+- [bytecode_cache.rs](../../../src/loader/bytecode_cache.rs) — packed cache format, bounded load/store paths, compiler identity, and focused regression tests
+- [compiler bytecode cache spec](../../specs/compiler-bytecode-cache.md) — compiler-identity contract and pending real-addon acceptance
 - [Track 3 global-slot ABI](../design/track-3-global-slot-abi.md) — bytecode-cache versioning and slot-ABI invalidation context
 
 ## See Also
 
-- [[track-3-global-slot-abi]] — cache versioning protects the global-slot ABI; this page covers size and persistence bounds
+- [[track-3-global-slot-abi]] — cache versioning protects the global-slot ABI; this page covers size, compiler identity, and persistence bounds
+- [[ellesmereui-forever]] — compiler correction consumer with pending cold/stale/warm replay acceptance
 - [[talent-performance]] — earlier startup profiling identified cold bytecode-cache reuse as a performance concern
