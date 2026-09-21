@@ -1,6 +1,6 @@
 ## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
 
-`6397eb7a3` stops further acquisition after the bulk-download concern and records the offline cached-pair comparison/triage boundary. `215a4080a` corrects the separately reproduced EasyFishing cursor transfer sequence; final verification remains active. The [comparison audit](../forever-addon-comparison.md) remains the count and disposition source of truth; static source triage is neither runtime acceptance nor full addon compatibility. See [[forever-addon-comparison]].
+`6397eb7a3` stops further acquisition after the bulk-download concern and records the offline cached-pair comparison/triage boundary. `215a4080a` corrects the separately reproduced EasyFishing cursor transfer sequence; final source `d40397025` passes independent bounded verification. The [comparison audit](../forever-addon-comparison.md) remains the count and disposition source of truth; static source triage is neither runtime acceptance nor full addon compatibility. See [[forever-addon-comparison]].
 
 ## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
 

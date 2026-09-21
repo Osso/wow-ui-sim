@@ -16,12 +16,12 @@ The [catalog](../data/forever-addon-audit/catalog.json) records browser-cli publ
 | Package differences | 208 complete cached pairs diffed | Exact archive hashes; release pairing does not prove introduction ancestry |
 | Static triage | 208/208 cached pairs classified | [Forever-hunk/API-reference triage](../data/forever-addon-audit/triage.json); unrelated large changes not fully reviewed |
 | Remaining acquisition | 61 cached projects lack a complete pair; 606 catalog projects have no successful cached archive | No further acquisition; no comparison/compatibility credit |
-| Simulator corrections | BagIndex and cursor transfers committed | Two enum regressions and 25 inventory tests pass in development; independent verification pending |
+| Simulator corrections | Independently verified at `d40397025` | 34 focused tests, format/readability, default/Forever checks, and Forever startup pass |
 | Full addon compatibility | Not established | Tags, static diffs, and startup alone are insufficient |
 
 ## Initial findings
 
-- **BetterBags:** introduction commit `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` replaces hard-coded bank-tab lists with contiguous `Enum.BagIndex` enumeration. Pinned Forever `BagIndexConstantsDocumentation.lua` confirms character tab IDs 6–14 and account tab IDs 15–23. Commit `bb83a4c0a` corrects the Forever-only publication and metadata. Two focused behavioral tests went RED then GREEN; independent final verification remains pending. The addon's private `hasWarbank` flag and its event-unregistration workaround are not simulator API requirements.
+- **BetterBags:** introduction commit `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` replaces hard-coded bank-tab lists with contiguous `Enum.BagIndex` enumeration. Pinned Forever `BagIndexConstantsDocumentation.lua` confirms character tab IDs 6–14 and account tab IDs 15–23. Commit `bb83a4c0a` corrects the Forever-only publication and metadata. Two focused behavioral tests went RED then GREEN; the final eight-test Forever constants module passes independently. The addon's private `hasWarbank` flag and its event-unregistration workaround are not simulator API requirements.
 - **DBM:** Forever introduction `6ffd4a1136e806177e1496cc5649b085b6be0c32` and subsequent fixes distinguish restricted Mainline behavior from content-era decisions. Its TOC conditionals are already supported. Avoid inferring API removal from optional calls: pinned Forever documentation still includes the ChallengeMode and Encounter Timeline surfaces that DBM elects not to use in some paths.
 - **Auctionator:** file `8925257` carries Forever-aware copper pricing. Current simulator pricing already preserves copper values; no discrepancy established. Source-repository acquisition failed, so a current-package inspection is not credited as a historical diff.
 
@@ -31,13 +31,25 @@ Static triage classified 58 packaging-only, 8 data-only, 33 mixed packaging/data
 
 | Candidate | Disposition | Reason |
 | --- | --- | --- |
-| BetterBags enum shape | Implemented; verification pending | Exact authored IDs and contiguous enumeration prove the publication mismatch |
+| BetterBags enum shape | Implemented and verified | Exact authored IDs and contiguous enumeration prove the publication mismatch |
 | BetterBags/Camelot bank capacities | Deferred | Nine enum members do not prove purchased tabs. Current purchased count is zero; inventing slot capacities would not fix the missing bank-state model |
-| EasyFishing cursor transfers | Implemented; verification pending | Exact cached three-call sequence reproduced 0/4, then 25/25 focused inventory tests passed. Shared transfer operations replace the namespace no-op and preserve displaced item IDs/counts; [spec and existing model limits](specs/cursor-item-transfer.md) |
+| EasyFishing cursor transfers | Implemented and verified | Exact cached three-call sequence reproduced 0/4, then 25/25 focused inventory tests passed. Shared transfer operations replace the namespace no-op and preserve displaced item IDs/counts; [spec and existing model limits](specs/cursor-item-transfer.md) |
 | BeastAndBow ammo counts | Deferred | Addon claim lacks independent aggregate-count evidence. Its blanket event-registration prohibition is not adopted as simulator policy; authored Camelot consumers register those events |
 | AvoidanceStats | Deferred | UI rewrite does not isolate a producer failure |
 | Ackis cooking/core | No fix justified | Changed API references alone do not demonstrate failure in existing surfaces |
 | ChatBarBlocks/BugSack restrictions | Deferred | Documentation and defensive addon guards do not establish the missing lockdown/secret state transitions; no nil fallbacks or inferred API removals added |
+
+## Independent verification
+
+Final Rust source `d40397025` passed independent offline verification:
+
+- 25 inventory-transfer tests, 8 Forever finite-constant tests, and 1 existing container-shape regression: **34/34**.
+- `cargo fmt --check`, default and Forever `cargo check --offline`, and changed-code readability: pass, no compiler warnings or readability findings.
+- Separately built Forever `wow-sim --no-addons --no-saved-vars lua-errors`: exit 0, stdout `[]`.
+- Existing unchanged WorldMap/SpellBook sustained-lifecycle proof reused with its original scope; no fresh full-addon or GUI-runtime claim.
+- Previously verified catalog, 477 indexed archive hashes, and 208 diff hashes reused unchanged. Full ledger: `/tmp/verify-forever-addon-final-ledger.json`; prior artifact ledger: `/tmp/verify-forever-addon-cache-ledger.json`.
+
+This closes the bounded cached-comparison correction pass, not complete Forever compatibility. No push or deployment was performed.
 
 ## Acquisition rules
 

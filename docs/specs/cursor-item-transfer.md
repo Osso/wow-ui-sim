@@ -53,7 +53,7 @@ Development proof: exact-transfer RED 0/4 at `0f236b638` plus tests; focused inv
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned final verification remains separate from targeted development RED/GREEN.
+None for the bounded transfer contract. Independent verification at `d40397025` passed all 25 inventory regressions, the existing C_Container shape test, formatting/readability, default/Forever compilation, and Forever startup with `[]` Lua errors. See the [comparison verification record](../forever-addon-comparison.md#independent-verification).
 
 ## Out of scope
 
