@@ -9,6 +9,64 @@ fn load(env: &WowLuaEnv, path: &str) {
 }
 
 #[test]
+fn forever_bag_index_enumerates_disjoint_bank_tabs() {
+    let env = WowLuaEnv::new().unwrap();
+    // Exact enumeration loop from BetterBags core/constants.lua at 411a6f6ee1ea.
+    // Expected IDs come from Forever 69913 BagIndexConstantsDocumentation.
+    env.exec(
+        r#"
+        local function enumerateBagIndices(prefix)
+            local ids = {}
+            local n = 1
+            while Enum.BagIndex[prefix .. n] ~= nil do
+                ids[#ids + 1] = Enum.BagIndex[prefix .. n]
+                n = n + 1
+            end
+            return ids
+        end
+        local seen = {}
+        for prefix, first in pairs({CharacterBankTab_ = 6, AccountBankTab_ = 15}) do
+            local ids = enumerateBagIndices(prefix)
+            assert(#ids == 9, prefix .. " must enumerate nine tabs")
+            assert(Enum.BagIndex[prefix .. 10] == nil, "unexpected tenth tab")
+            for index, id in ipairs(ids) do
+                assert(id == first + index - 1, prefix .. index .. " has wrong ID")
+                assert(not seen[id], "bank tab IDs overlap")
+                seen[id] = true
+            end
+        end
+        for id = 6, 23 do assert(seen[id], "missing bank tab ID " .. id) end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn forever_bag_index_preserves_non_bank_values_and_exact_metadata() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local expected = {
+            Accountbanktab = -3, Characterbanktab = -2, Keyring = -1,
+            Backpack = 0, Bag_1 = 1, Bag_2 = 2, Bag_3 = 3, Bag_4 = 4,
+            ReagentBag = 5,
+        }
+        for name, value in pairs(expected) do
+            assert(Enum.BagIndex[name] == value, name)
+        end
+        local count = 0
+        for _ in pairs(Enum.BagIndex) do count = count + 1 end
+        assert(count == 27, "BagIndex must publish exactly 27 members")
+        local meta = Enum.BagIndexMeta
+        assert(meta.MinValue == -3)
+        assert(meta.MaxValue == 23)
+        assert(meta.NumValues == 27)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_finite_constants_publish_legacy_and_level_values() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

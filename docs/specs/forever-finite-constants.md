@@ -33,6 +33,14 @@ Forever `QuestConstantsDocumentation.lua` publishes `Constants.QuestLogConsts.MA
 
 The world-map runtime regression shows the real failure boundary: without the constant, `QuestLogQuests_ShowQuestCount()` aborts `WorldMapMixin:OnShow()` before `SetMapID()`. The scroll container consequently retains a nil `targetScale`, and every later `OnUpdate` fails in `IsZoomingOut()`. The test shows the map and runs sixty GUI-style updates, asserting a positive target scale and no collected errors; no vendor guard or scale fallback is added.
 
+## Bag indices
+
+Forever alone publishes nine character-bank tabs (`CharacterBankTab_1..9 = 6..14`) and nine account-bank enum slots (`AccountBankTab_1..9 = 15..23`). `BagIndexMeta` has MinValue=-3, MaxValue=23, NumValues=27. The nine non-bank-tab members retain their shared values (-3 through 5); enumeration terminates at each missing tenth tab. Other profiles retain their existing publication.
+
+Authoritative evidence: `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the Forever 1.60.1.69913 cache, sourced from Gethe/wow-ui-source revision `70ef1b2fd78061a73f886c4a1e79dc5b5cff6d5e`, lines 18–51. BetterBags [Forever introduction `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941`](https://github.com/Cidan/BetterBags/commit/411a6f6ee1ea40eca8ac96927ccdd49a6aab3941), `core/constants.lua`, motivated the audit: its `enumerateBagIndices` consumer walks contiguous named members. The regression uses that exact loop, asserting exact values, disjoint IDs, termination, all non-bank-tab values, member count, and metadata through `WowLuaEnv`.
+
+Implementation: `src/c_api/forever_finite_constants.rs`, registered only for `client-wowforever`. Tests: `forever_bag_index_enumerates_disjoint_bank_tabs` and `forever_bag_index_preserves_non_bank_values_and_exact_metadata` in the existing grouped `tests/wowforever_finite_constants.rs` module. This is enum-publication coverage, not a full BetterBags load or proof of account-bank availability, purchased tabs, bank events, or money-display lifecycle.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.

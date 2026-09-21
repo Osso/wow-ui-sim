@@ -1,4 +1,4 @@
-//! Source-published Forever 1.60.1 minimap, ping, transmog and possess-bar data.
+//! Source-published Forever 1.60.1 bag, minimap, ping, transmog and possess-bar data.
 
 use crate::lua_api::methods::{create_table, table_get, table_set};
 use rilua::Val;
@@ -18,6 +18,7 @@ pub(crate) fn register(state: &mut LuaState) {
         "WeaponSlotMeta",
         &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
     );
+    register_bag_indices(state, enums);
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
     publish(state, enums, "GamepadPossessBarOverride", POSSESS_OVERRIDES);
@@ -58,6 +59,36 @@ pub(crate) fn register(state: &mut LuaState) {
             ("MIN_ACHIEVEMENT_LEVEL", 10),
             ("MIN_TALENT_LEVEL", 10),
         ],
+    );
+}
+
+fn register_bag_indices(state: &mut LuaState, enums: Val) {
+    // Forever 1.60.1.69913 BagIndexConstantsDocumentation.lua. Character tabs
+    // 1–6 retain their shared IDs; account tabs shift beyond all nine of them.
+    publish(
+        state,
+        enums,
+        "BagIndex",
+        &[
+            ("CharacterBankTab_7", 12),
+            ("CharacterBankTab_8", 13),
+            ("CharacterBankTab_9", 14),
+            ("AccountBankTab_1", 15),
+            ("AccountBankTab_2", 16),
+            ("AccountBankTab_3", 17),
+            ("AccountBankTab_4", 18),
+            ("AccountBankTab_5", 19),
+            ("AccountBankTab_6", 20),
+            ("AccountBankTab_7", 21),
+            ("AccountBankTab_8", 22),
+            ("AccountBankTab_9", 23),
+        ],
+    );
+    publish(
+        state,
+        enums,
+        "BagIndexMeta",
+        &[("MinValue", -3), ("MaxValue", 23), ("NumValues", 27)],
     );
 }
 
