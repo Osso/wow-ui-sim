@@ -1,3 +1,7 @@
+## [2026-09-21] investigation | Commit bounded AuraContainer follow-up producers
+
+`c3d11eb23` shares existing base AuraContainer processors, aura secrecy, and documented enum publication through `aura-containers`; native-present caster-name options and `minApplications` remain intentionally unexpanded. `0a6330816` preserves the existing `C_StringUtil` namespace/factory across EnvironmentCleanup restoration. `b9dcb571a` projects only direct native-frame arguments at explicit forbidden XML delegates, preserving ordinary tables, nil/vararg positions, and the public initializer contract. Source/spec/test commits only: combined Forever compiled GREEN and real replay remain pending. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
 ## [2026-09-21] investigation | Preserve deferred timer and duration-binding availability
 
 `1604954a2` preserves timers created by `After`, `NewTimer`, or `NewTicker` callbacks after the active queue pass; the nested fixture covers deferred dispatch, repeating timers, pending entries, and cancellation. `9c56b683d` replaces the `GetBuildInfo` availability guard for the existing duration-text binding with explicit profile selection: Forever and Retail-family 12.0.7+ receive the factory, while color methods stay Forever/12.1+. Both are source/test/spec commits only: compiled GREEN and real Ellesmere replay remain pending. See [[ellesmereui-forever]].
