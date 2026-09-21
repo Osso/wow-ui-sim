@@ -32,7 +32,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - `src/lua_api/on_update.rs`: shared update boundary.
 - `src/lua_api/spellcast_events.rs`: stable existing cast identity and cross-mode START handling.
 - `src/lua_api/globals/admin.rs`: input registration and existing casting integration.
-- `src/lua_api/globals/real/player_identity.rs`: current local-player `UnitNameFromGUID`/`UnitClassFromGUID` lookup required by the Blizzard cancellation label; other GUIDs remain unmodeled.
+- `src/lua_api/globals/real/player_identity.rs`: local-player `UnitNameFromGUID` supports Blizzard cancellation labels under the shared cast-duration capability; `UnitClassFromGUID` remains Retail-only. Other GUIDs remain unmodeled.
 
 ## Tests asserting this spec
 
@@ -49,7 +49,7 @@ Development proof at `7a34d3891`: 11 library + 63 integration cases passed per p
 - [ ] Native channel/empower stage values, automatic updates, stage achievements, target units, secret/restricted events and interruptedBy attribution are unverified.
 - [ ] The unmodified Blizzard empower UPDATE handler omits hold when recomputing `maxValue` and does not rebuild stage pips. After updating stages/hold, public queries and natural deadline remain coherent, but that handler retains old pips and a charging-only display maximum. `channel_blizzard_empower_update_exposes_vendor_hold_boundary` records this observed ambiguity. No vendor patch, fake global, or unit distortion is applied; native update semantics remain unresolved.
 - [ ] Earlier epochs before `retail-12-1-0` were not executed; feature gating preserves their previous query/input surface by construction.
-- [ ] Local-player `UnitNameFromGUID`/`UnitClassFromGUID` now supports self-cancel labels. Other GUID identity resolution and secret-value behavior remain unmodeled.
+- [ ] Local-player `UnitNameFromGUID` supports self-cancel labels on Retail 12.1+ and Forever. `UnitClassFromGUID`, other GUID identity resolution and secret-value behavior remain unmodeled on Forever.
 
 ## Out of scope
 
