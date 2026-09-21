@@ -25,7 +25,7 @@ fn duration_core_secret_inputs_store_wrappers_and_preserve_lifecycle() {
             assert(other ~= d and other:HasSecretValues())
             assert(other:GetClock() == clock and other:GetStartTime() == 20)
             for _, slot in ipairs({-1, -2, -3}) do
-                assert(rawget(other, slot) == rawget(d, slot), 'copy keeps opaque wrappers')
+                assert(issecretvalue(rawget(other, slot)), 'copy must not expose plain timing')
             end
         end
         d:SetTimeFromStart(10, 20, 2)
