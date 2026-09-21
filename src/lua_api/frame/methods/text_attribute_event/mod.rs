@@ -18,7 +18,7 @@ use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::methods::call_function_state;
 #[cfg(any(feature = "on-update-modes", feature = "forbidden-aspects"))]
 use crate::lua_api::methods::frame_id_from_stack;
-#[cfg(feature = "on-update-modes")]
+#[cfg(any(feature = "on-update-modes", feature = "forbidden-aspects"))]
 use crate::lua_api::methods::{get_or_create_frame_fields, table_get, table_set};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::api::LuaApiMut;
@@ -71,10 +71,11 @@ fn register_forbidden_aspect_methods(state: &mut LuaState, table: GcRef<Table>) 
         "HasAnyForbiddenAspects",
         has_any_forbidden_aspects,
     )?;
+    table_set_rust_fn_static(state, table, "GetObjectTable", get_object_table)?;
     Ok(())
 }
 
-#[cfg(feature = "on-update-modes")]
+#[cfg(any(feature = "on-update-modes", feature = "forbidden-aspects"))]
 fn frame_fields_from_stack(state: &mut LuaState) -> LuaResult<Val> {
     let id = frame_id_from_stack(state, 1)?;
     Ok(get_or_create_frame_fields(state, id))
@@ -128,7 +129,7 @@ fn get_inheritable_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn get_object_table(state: &mut LuaState) -> LuaResult<u32> {
     let fields = frame_fields_from_stack(state)?;
     state.push(fields);
