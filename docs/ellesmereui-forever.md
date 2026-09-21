@@ -1,5 +1,23 @@
 # EllesmereUI Forever compatibility
 
+## Verified checkpoint — 2026-09-21
+
+Actual EllesmereUI 9.2.2 passes the six exercised startup/interaction groups with **zero Lua errors over 90 seconds**. Production visibility fix: `1e1dfe7c0`; final test-fixture correction: `9c223f8b7`. This is bounded simulator acceptance, not full-addon or native Forever conformance.
+
+| Exercised behavior | Proof | Limits |
+| --- | --- | --- |
+| Chat rebuild | Timestamp off/on/off; history count preserved | Not every chat feature |
+| Settings/navigation/unlock | Options lifecycle, module/page selection, unlock/restore | Not arbitrary layout editing |
+| Player and target | Health/power, cast/channel/empower, target show/health/hide | Not every unit or combat state |
+| Action slot | Icon `135907`, cooldown paint and reset | Not every action-bar configuration |
+| Aura lifecycle | Visible `19750`, icon `135907`, stack `3`, 30000 ms cooldown, secret metadata, removal and settings cleanup | One concrete helpful-aura path; secret policies remain documented guesses |
+
+Seventeen eligible package folders load; excluded game types/locales are distinguished below. Module presence is not proof of every module workflow. Fresh trusted IPC observes secret-origin widget outputs without clearing taint or bypassing authorization. The GUI's exit 124 is the bounded teardown, **not** its pass criterion: explicit fixture results and painted/removed/cleanup markers establish acceptance.
+
+Independent verification: visibility **9/9**, synchronous events **12/12**, native Forever consumers **5/5**; `cargo fmt --check`, default `cargo check`, historical Retail 12.0 and Mists checks pass. Default check has no warnings; the two no-default-feature checks each report six identical pre-existing warnings outside this slice. Earlier focused duration/formatter/aura proofs are retained for unchanged paths. Source/spec audit found no concrete contradiction in the bounded handoffs; four function-length maintenance suggestions are deferred, not behavior blockers.
+
+All **666** addon files retain original hashes, with no additions or removals. No simulator push or deployment is part of this checkpoint. Evidence: `/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json`, `final-visibility-verifier-ledger.json`, `final-secret-dispatch-source-audit.md`, and `package-immutability-final.json`. The historical checkpoints below preserve earlier failures and diagnosis corrections.
+
 ## Package and scope
 
 - EllesmereUI **9.2.2**, CurseForge project **1477613**, file **8936131**; latest Forever-tagged release observed with browser-cli on 2026-09-21 at 07:56 UTC.
@@ -81,7 +99,7 @@ After opening options, 17 of the 21 package folders are loaded. Friends, MythicT
 
 ### Bounded secret-value assumptions
 
-The user authorized informed guesses and explicitly ruled out user-run Forever probes. [Duration core](specs/duration-core.md) records the selected non-native-verified policy: retain authenticated wrappers in timing storage, restrict timing reads to untainted callers, preserve secrecy through copying/reconfiguration/reset, and clear it with `SetToDefaults`. Plaintext timing must not be exposed through raw Lua fields or addon formatter arguments. Widget/text-binding handoffs retain secret origin and restrict direct readouts. These changes are committed. Focused proof covers duration core 28/28, duration binding 11/11, numeric formatter 8/8, and expanded aura secret display 6/6. Authenticated native handoffs accept wrapped shown/text/timing/geometry/texture inputs while guarding addon-tainted direct reads. General VM secret arithmetic and complete secrecy enforcement are not claimed; final integrated verification remains open.
+The user authorized informed guesses and explicitly ruled out user-run Forever probes. [Duration core](specs/duration-core.md) records the selected non-native-verified policy: retain authenticated wrappers in timing storage, restrict timing reads to untainted callers, preserve secrecy through copying/reconfiguration/reset, and clear it with `SetToDefaults`. Plaintext timing must not be exposed through raw Lua fields or addon formatter arguments. Widget/text-binding handoffs retain secret origin and restrict direct readouts. These changes are committed. Focused proof covers duration core 28/28, duration binding 11/11, numeric formatter 8/8, and expanded aura secret display 6/6. Authenticated native handoffs accept wrapped shown/text/timing/geometry/texture inputs while guarding addon-tainted direct reads. Final integrated runtime and independent source verification are recorded above. General VM secret arithmetic and complete secrecy enforcement are not claimed.
 
 ## Secret-display and event-routing checkpoint
 
@@ -93,13 +111,18 @@ Actual removal remains RED at this checkpoint: the aura producer removes `19750`
 
 The latest full GUI replay preserves all five other interaction passes and records the painted marker, but never records the removed marker. Zero Lua-error lines do not override failed state assertions. Evidence: `/tmp/ellesmere-forever/intrinsic-events-gui-acceptance-ledger.json`, `aura-post-removal-state-ledger.json`, `secret-handoffs-tests-ledger.json`, and `secret-layout-tests-ledger.json`.
 
-## Coverage still required
+## Integrated visibility correction
 
-- Initialization/active-path assertions for eligible modules, explicitly reporting intentional Forever stand-down.
-- Preserve the observed settings/navigation/unlock and cast/channel/target passes through final integration; broader layout editing is not covered.
-- Close aura creation/update/removal with observable real-button icon, stack, and cooldown assertions.
-- Action-bar/cooldown/resource consumers and sustained updates, including errors swallowed by addon-level protected calls.
-- Independent final verification after the last applicable source change; no full-addon compatibility claim from startup alone.
+`1e1dfe7c0` restores precall/normal/postcall delivery during recursive runtime visibility transitions, preserving children-first ordering and existing reentrancy/error handling. The real native regression configures its container under a hidden parent, then verifies registration, aura add/remove, and unregistration through two show/hide cycles. Its GREEN and the actual addon removal GREEN identify the visibility registration boundary, not the separate synchronous `FireEvent` route, as the observed removal cause.
+
+Synthetic binding fixtures initially used unsupported custom frame-type names. `9c223f8b7` constructs ordinary `Frame` objects with explicit precall/postcall template lists instead. Binding-installation assertions remain, and all 21 visibility/synchronous-event tests pass. No loader or vendor change was needed.
+
+## Coverage limits
+
+- Full workflows for all 17 loaded modules, arbitrary settings/layouts, sustained combat, and alternate aura/resource/action configurations remain untested.
+- No claim covers errors swallowed internally without observable effects; acceptance asserts specific state transitions and inspects emitted Lua errors.
+- Historical Retail/Mists checks establish compilation, not exhaustive cross-profile runtime parity. Full-project/Wowless suites were not run.
+- Secret lifecycle/readout behavior is a bounded simulator model with explicit guesses, not native Forever security conformance. User-run Forever probes are unavailable.
 
 ## Sources
 
