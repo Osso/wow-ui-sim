@@ -16,6 +16,7 @@ use crate::spells;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+const CLASS_SKILL_LINE_INDEX: i32 = 2;
 const SPELLBOOK_SKILL_LINE_INFO_HASH_FIELDS: usize = 7;
 const SPELLBOOK_ITEM_INFO_HASH_FIELDS: usize = 9;
 
@@ -498,7 +499,7 @@ fn c_spell_book_get_spell_book_skill_line_info(state: &mut LuaState) -> LuaResul
 }
 
 fn c_spell_book_get_class_skill_line_info(state: &mut LuaState) -> LuaResult<u32> {
-    push_spell_book_skill_line_info(state, 2)
+    push_spell_book_skill_line_info(state, CLASS_SKILL_LINE_INDEX)
 }
 
 fn push_spell_book_skill_line_info(state: &mut LuaState, index: i32) -> LuaResult<u32> {
