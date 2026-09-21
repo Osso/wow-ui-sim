@@ -3,6 +3,9 @@
         local emm = EditModeManagerFrame
         if not emm.layoutInfo then return end
         emm.layoutApplyInProgress = true
+        -- Match UpdateLayoutInfo: dependent callbacks can read another system's
+        -- geometry before that system receives its saved anchor in this pass.
+        emm:InitSystemAnchors()
 
         local function system_frame_name(systemFrame)
             if not systemFrame then
