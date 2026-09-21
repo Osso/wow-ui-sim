@@ -21,7 +21,7 @@ Forever exposes specialization queries through `C_SpecializationInfo`, without t
 
 ## Tests asserting this spec
 
-The three `wowforever_specialization_visibility_*` tests in `tests/wowforever_profile.rs` reproduce the legacy guards and retain concrete namespace output for modeled Paladin specialization fixtures. These fixtures do not establish native Forever specialization IDs.
+The three `wowforever_specialization_visibility_*` tests in `tests/wowforever_profile.rs` reproduce the legacy guards and retain concrete namespace output for explicitly seeded Paladin specialization fixtures. Replay checks index, ID, name and role before and after restoration, not Lua function identity or the default character's specialization. These fixtures do not establish native Forever specialization IDs.
 
 ## Evidence
 

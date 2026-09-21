@@ -68,35 +68,36 @@ fn wowforever_specialization_visibility_keeps_namespace_state() {
 #[cfg(feature = "client-wowforever")]
 fn wowforever_specialization_visibility_survives_bootstrap_replay() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 2;
+        state.player.active_spec_index = 1;
+    }
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let toc = TocFile::from_file(
         &ui.join("Blizzard_DeprecatedSpecialization/Blizzard_DeprecatedSpecialization.toc"),
     )
     .unwrap();
     assert!(toc.is_game_type_restricted());
-    env.exec(
-        r#"
-        assert(GetCVarBool("loadDeprecationFallbacks"))
-        SpecNamespaceBefore = {
-            C_SpecializationInfo.GetSpecialization,
-            C_SpecializationInfo.GetSpecializationInfo,
-        }
-        "#,
-    )
-    .unwrap();
+    env.exec(r#"assert(GetCVarBool("loadDeprecationFallbacks"))"#)
+        .unwrap();
+    let query = r#"
+        local index = C_SpecializationInfo.GetSpecialization()
+        local id, name, _, _, role = C_SpecializationInfo.GetSpecializationInfo(index)
+        return index, id, name, role
+    "#;
+    let expected = (1, 65, "Holy".to_owned(), "HEALER".to_owned());
+    assert_eq!(
+        env.eval::<(i32, i32, String, String)>(query).unwrap(),
+        expected
+    );
     for _ in 0..2 {
         env.loader_env().restore_post_cleanup_globals().unwrap();
         assert_ellesmere_specialization_guards(&env);
-        env.exec(
-            r#"
-            assert(C_SpecializationInfo.GetSpecialization == SpecNamespaceBefore[1])
-            assert(C_SpecializationInfo.GetSpecializationInfo == SpecNamespaceBefore[2])
-            local index = C_SpecializationInfo.GetSpecialization()
-            local id, name = C_SpecializationInfo.GetSpecializationInfo(index)
-            assert(id == 65 and name == "Holy")
-            "#,
-        )
-        .unwrap();
+        assert_eq!(
+            env.eval::<(i32, i32, String, String)>(query).unwrap(),
+            expected
+        );
     }
 }
 
