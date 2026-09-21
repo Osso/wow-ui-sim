@@ -79,7 +79,8 @@ pub(crate) fn equip_cursor_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = slot_argument(state, 1) else {
         return Ok(0);
     };
-    equip_held_item(&mut borrow_state_mut(state)?, slot);
+    let mut sim = borrow_state_mut(state)?;
+    equip_held_item(&mut sim, slot);
     Ok(0)
 }
 
