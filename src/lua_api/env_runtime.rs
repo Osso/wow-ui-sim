@@ -232,8 +232,10 @@ impl WowLuaEnv {
 
         let now = Instant::now();
         let timers = take_pending_timers(self);
-        let (timer_fired, requeue) = process_timer_queue(self, timers, now);
-        self.state.borrow_mut().rilua_timers = requeue;
+        let (timer_fired, mut requeue) = process_timer_queue(self, timers, now);
+        let mut state = self.state.borrow_mut();
+        requeue.append(&mut state.rilua_timers);
+        state.rilua_timers = requeue;
         Ok(signal_fired + timer_fired)
     }
 

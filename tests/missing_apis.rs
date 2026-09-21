@@ -170,6 +170,43 @@ fn timer_after_new_ticker_control_receives_handle_proxy_per_tick() {
     .unwrap();
 }
 
+#[test]
+fn timer_nested_callbacks_preserve_children_and_existing_tickers() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(include_str!("fixtures/nested_timers.lua"))
+        .unwrap();
+    for (pass, expected_fired) in [(1, 2), (2, 4), (3, 2), (4, 0)] {
+        assert_eq!(env.process_timers().unwrap(), expected_fired);
+        env.exec(&format!("CheckNestedTimerPass({pass})")).unwrap();
+    }
+}
+
+#[test]
+fn timer_nested_callbacks_preserve_pending_timers_and_cancel_taken_timers() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        pendingCalls, childCalls, cancelledCalls = 0, 0, 0
+        C_Timer.NewTimer(0.2, function() pendingCalls = pendingCalls + 1 end)
+        local cancelled
+        C_Timer.After(0, function()
+            cancelled:Cancel()
+            C_Timer.NewTimer(0, function() childCalls = childCalls + 1 end)
+        end)
+        cancelled = C_Timer.NewTimer(0, function() cancelledCalls = cancelledCalls + 1 end)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(env.process_timers().unwrap(), 1);
+    env.exec("assert(pendingCalls == 0 and childCalls == 0 and cancelledCalls == 0)")
+        .unwrap();
+    std::thread::sleep(std::time::Duration::from_millis(250));
+    assert_eq!(env.process_timers().unwrap(), 2);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    env.exec("assert(pendingCalls == 1 and childCalls == 1 and cancelledCalls == 0)")
+        .unwrap();
+}
+
 /// Game API functions that need mocking.
 #[test]
 #[ignore = "Game APIs not implemented"]
