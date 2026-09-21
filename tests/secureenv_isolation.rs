@@ -20,6 +20,42 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
+fn toc_multiannotations_load_files_in_order_with_secure_environment() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("AnnotationProbe.toc");
+    std::fs::write(
+        &toc,
+        "## Title: AnnotationProbe\n\
+         Before.lua\n\
+         Secure.lua\t\t[Bootstrap] [LoadIntoEnvironment secure]\n\
+         After.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Before.lua"),
+        "local _, addon = ...; addon.order = {'before'}",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Secure.lua"),
+        "local _, addon = ...; assert(addon.order[1] == 'before'); \
+         addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("After.lua"),
+        "local _, addon = ...; assert(table.concat(addon.order, ',') == 'before,secure'); \
+         assert(rawget(_G, 'annotationSecureValue') == nil); \
+         assert(__secureenv.annotationSecureValue == 37); annotationLoadComplete = true",
+    )
+    .unwrap();
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    env.exec("assert(annotationLoadComplete == true)").unwrap();
+}
+
+#[test]
 fn secure_primitive_write_stays_inside_secureenv() {
     let env = env();
 
@@ -223,7 +259,10 @@ fn shared_table_mutation_propagates_both_ways() {
         )
         .unwrap();
 
-    assert!(!shared_key.is_empty(), "expected one table shared by the shallow copy");
+    assert!(
+        !shared_key.is_empty(),
+        "expected one table shared by the shallow copy"
+    );
     assert_eq!(
         from_g, "from-secure",
         "mutations to a table still shared after initialization should be visible from _G"
@@ -268,7 +307,10 @@ fn late_global_is_not_visible_to_secure_without_explicit_export() {
         in_secureenv_own_slot, "nil",
         "late global must NOT be in secureenv's own slot"
     );
-    assert_eq!(secure_sees_type, "nil", "secure code must not see late _G globals");
+    assert_eq!(
+        secure_sees_type, "nil",
+        "secure code must not see late _G globals"
+    );
 }
 
 #[test]
@@ -285,7 +327,10 @@ fn late_global_rebind_stays_invisible_to_secure() {
     let second: String = env
         .eval(&SECURE_READ_PROBE.replace("%NAME%", "liveLinkProbe"))
         .unwrap();
-    assert_eq!(second, "nil", "secure reads must remain independent from _G rebinds");
+    assert_eq!(
+        second, "nil",
+        "secure reads must remain independent from _G rebinds"
+    );
 }
 
 #[test]
@@ -364,7 +409,10 @@ fn global_copied_at_creation_is_frozen_against_later_g_rebind() {
     let (secure_value, g_value, secure_equals_sentinel): (String, String, String) =
         env.eval(&probe).unwrap();
 
-    assert_eq!(g_value, "__frozen_sentinel__", "_G rebind must have applied");
+    assert_eq!(
+        g_value, "__frozen_sentinel__",
+        "_G rebind must have applied"
+    );
     assert_eq!(
         secure_equals_sentinel, "false",
         "secureenv's copied value (key {key}) must NOT follow the _G rebind"

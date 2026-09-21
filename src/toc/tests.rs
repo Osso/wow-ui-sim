@@ -298,6 +298,93 @@ Debug.lua [AllowLoadEnvironment Global, SomeFlag]
 }
 
 #[test]
+fn test_parse_native_target_aura_multiannotations() {
+    let toc = TocFile::parse(
+        Path::new("/addons/Blizzard_UnitFrame"),
+        "Before.lua\n\
+         Shared\\TargetFrameAuraContainer.lua\t\t[AllowLoadGameType mainline] [LoadIntoEnvironment secure]\n\
+         Shared\\TargetFrameAuraButton.lua\t\t[AllowLoadGameType mainline] [LoadIntoEnvironment secure]\n\
+         After.lua\n",
+    );
+    let mut expected = vec![PathBuf::from("Before.lua")];
+    if matches_active_game_type("mainline") {
+        expected.extend([
+            PathBuf::from("Shared/TargetFrameAuraContainer.lua"),
+            PathBuf::from("Shared/TargetFrameAuraButton.lua"),
+        ]);
+        assert_eq!(toc.file_use_secure_env(1), Some(true));
+        assert_eq!(toc.file_use_secure_env(2), Some(true));
+    }
+    expected.push(PathBuf::from("After.lua"));
+    assert_eq!(toc.files, expected);
+    assert_eq!(toc.file_use_secure_env(0), None);
+    assert_eq!(toc.file_use_secure_env(toc.files.len() - 1), None);
+}
+
+#[test]
+fn test_parse_multiannotation_permutations_preserve_flags_and_order() {
+    let active = active_game_types()[0];
+    let annotations = [
+        format!("[AllowLoadGameType {active}]"),
+        "[LoadIntoEnvironment secure]".to_string(),
+        "[Bootstrap]".to_string(),
+        "[ExcludeLoadGameType plunderstorm]".to_string(),
+        "[AllowLoadEnvironment secure]".to_string(),
+    ];
+    for reverse in [false, true] {
+        for rotation in 0..annotations.len() {
+            let mut ordered = annotations.clone();
+            ordered.rotate_left(rotation);
+            if reverse {
+                ordered.reverse();
+            }
+            let suffix = ordered.join(" \t");
+            let toc = TocFile::parse(
+                Path::new("/addons/AnnotationProbe"),
+                &format!("Before.lua\n[Game]\\Bootstrap.lua\t\t{suffix}\nAfter.lua\n"),
+            );
+            assert_eq!(
+                toc.files,
+                vec![
+                    PathBuf::from("Before.lua"),
+                    PathBuf::from(format!("{}/Bootstrap.lua", game_subdir())),
+                    PathBuf::from("After.lua"),
+                ],
+                "{suffix}",
+            );
+            assert_eq!(toc.file_is_bootstrap, vec![false, true, false]);
+            assert_eq!(toc.file_env_overrides, vec![None, Some(true), None]);
+            assert_eq!(toc.file_env_allows, vec![None, Some(true), None]);
+        }
+    }
+}
+
+#[test]
+fn test_parse_multiannotations_preserve_game_type_exclusions() {
+    let active = active_game_types()[0];
+    let toc = TocFile::parse(
+        Path::new("/addons/AnnotationProbe"),
+        &format!(
+            "Before.lua\n\
+             Excluded.lua\t[LoadIntoEnvironment secure] [AllowLoadGameType {active}] [ExcludeLoadGameType {active}] [Bootstrap]\n\
+             OtherGame.lua\t[Bootstrap] [AllowLoadGameType plunderstorm] [LoadIntoEnvironment secure]\n\
+             Public.lua\t[LoadIntoEnvironment global] [AllowLoadGameType {active}]\n\
+             After.lua\n"
+        ),
+    );
+    assert_eq!(
+        toc.files,
+        vec![
+            PathBuf::from("Before.lua"),
+            PathBuf::from("Public.lua"),
+            PathBuf::from("After.lua")
+        ],
+    );
+    assert_eq!(toc.file_env_overrides, vec![None, Some(false), None]);
+    assert_eq!(toc.file_is_bootstrap, vec![false, false, false]);
+}
+
+#[test]
 fn test_parse_bootstrap_annotation_keeps_regular_file_order() {
     let contents = r#"
 ## Title: TestAddon

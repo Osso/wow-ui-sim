@@ -32,19 +32,19 @@ pub struct TocFile {
     pub file_env_allows: Vec<Option<bool>>,
 }
 
-/// Strip inline annotations like `[AllowLoadEnvironment Global]` from a TOC line.
+/// Strip trailing annotations separated by whitespace, preserving path placeholders.
 fn strip_annotations(line: &str) -> &str {
-    if let Some(pos) = line.find(" [") {
-        line[..pos].trim()
-    } else if line.ends_with(']') {
-        if let Some(pos) = line.find('[') {
-            line[..pos].trim()
-        } else {
-            line.trim()
+    let mut path = line.trim();
+    while path.ends_with(']') {
+        let Some((prefix, _annotation)) = path.rsplit_once('[') else {
+            break;
+        };
+        if !prefix.ends_with(char::is_whitespace) {
+            break;
         }
-    } else {
-        line.trim()
+        path = prefix.trim_end();
     }
+    path
 }
 
 fn active_game_types() -> &'static [&'static str] {
