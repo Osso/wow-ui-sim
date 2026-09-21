@@ -1,5 +1,144 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+// Secret lifecycle/access expectations below are explicit simulator guesses, not native proof.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_core_secret_inputs_store_wrappers_and_preserve_lifecycle() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local d = C_DurationUtil.CreateDuration()
+        local clock = C_DurationUtil.CreateManualClock(25)
+        d:SetClock(clock)
+        assert(not d:HasSecretValues())
+        d:SetTimeFromEnd(secretwrap(50, 30, nil))
+        assert(d:HasSecretValues() and d:GetStartTime() == 20)
+        assert(d:GetEndTime() == 50 and d:GetTotalDuration() == 30)
+        assert(d:GetRemainingDuration() == 25 and d:GetModRate() == 1)
+        for _, slot in ipairs({-1, -2, -3}) do
+            assert(issecretvalue(rawget(d, slot)), 'timing must not leak through rawget')
+        end
+        local copy = d:Copy()
+        local assigned = C_DurationUtil.CreateDuration()
+        assigned:Assign(d)
+        for _, other in ipairs({copy, assigned}) do
+            assert(other ~= d and other:HasSecretValues())
+            assert(other:GetClock() == clock and other:GetStartTime() == 20)
+            for _, slot in ipairs({-1, -2, -3}) do
+                assert(rawget(other, slot) == rawget(d, slot), 'copy keeps opaque wrappers')
+            end
+        end
+        d:SetTimeFromStart(10, 20, 2)
+        assert(d:HasSecretValues() and d:GetEndTime() == 20)
+        d:SetTimeSpan(secretwrap(12), 18)
+        assert(d:GetTotalDuration() == 6 and d:HasSecretValues())
+        d:Reset()
+        assert(d:IsZero() and d:HasSecretValues() and d:GetClock() == clock)
+        for _, slot in ipairs({-1, -2, -3}) do assert(issecretvalue(rawget(d, slot))) end
+        local plain = C_DurationUtil.CreateDuration()
+        plain:SetTimeFromStart(3, 4)
+        d:Assign(plain)
+        assert(d:HasSecretValues() and d:GetStartTime() == 3)
+        assert(d:GetClock() == nil and d:GetTotalDuration() == 4)
+        d:SetToDefaults()
+        assert(not d:HasSecretValues() and d:IsZero() and d:GetClock() == nil)
+        for _, slot in ipairs({-1, -2, -3}) do assert(type(rawget(d, slot)) == 'number') end
+        assert(copy:HasSecretValues() and copy:GetStartTime() == 20)
+        assert(assigned:HasSecretValues() and assigned:GetTotalDuration() == 30)
+    "#,
+    )
+    .expect("secret duration lifecycle preserves opaque timing until defaults clear it");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_core_secret_tainted_queries_and_mutations_reject_atomically() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local d = C_DurationUtil.CreateDuration()
+        local clock = C_DurationUtil.CreateManualClock(25)
+        d:SetClock(clock)
+        d:SetTimeFromStart(secretwrap(20, 30, 1))
+        local wrapped = secretwrap(12)
+        local plain = C_DurationUtil.CreateDuration()
+        plain:SetTimeFromStart(2, 3)
+        local saved = {rawget(d,-1), rawget(d,-2), rawget(d,-3)}
+        local function tainted()
+            assert(not issecure() and d:HasSecretValues())
+            local copied = d:Copy()
+            assert(copied:HasSecretValues())
+            for _, name in ipairs({
+                'GetStartTime', 'GetEndTime', 'GetTotalDuration', 'GetElapsedDuration',
+                'GetRemainingDuration', 'GetElapsedPercent', 'GetRemainingPercent',
+                'GetModRate', 'GetClockTime', 'IsZero', 'HasStarted', 'HasExpired', 'IsActive'
+            }) do
+                local ok = pcall(d[name], d)
+                assert(not ok, name .. ' disclosed secret timing')
+                assert(not pcall(copied[name], copied), name .. ' copy bypass')
+            end
+            for _, mutate in ipairs({
+                function() d:SetTimeFromStart(1,2) end,
+                function() d:SetTimeFromEnd(9,2) end,
+                function() d:SetTimeSpan(1,2) end,
+                function() plain:SetTimeFromStart(wrapped,2) end,
+                function() plain:Assign(d) end,
+                function() d:Assign(plain) end,
+                function() d:Reset() end,
+                function() d:SetToDefaults() end,
+                function() d:SetClock({time=30}) end,
+            }) do assert(not pcall(mutate), 'tainted mutation accepted') end
+            assert(not plain:HasSecretValues() and plain:GetStartTime() == 2)
+            assert(plain:GetTotalDuration() == 3)
+            for index, slot in ipairs({-1,-2,-3}) do
+                assert(rawget(d,slot) == saved[index], 'rejection mutated timing')
+                assert(not pcall(secretunwrap, rawget(d,slot)), 'raw slot bypass')
+            end
+        end
+        debug.setobjecttaint(tainted, 'DurationCoreProbe')
+        tainted()
+        assert(issecure() and d:GetStartTime() == 20 and d:GetTotalDuration() == 30)
+        assert(d:GetClock() == clock and d:GetClockTime() == 25)
+    "#,
+    )
+    .expect("tainted callers cannot disclose or mutate secret duration timing");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn duration_core_secret_invalid_arguments_leave_all_slots_unchanged() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local d = C_DurationUtil.CreateDuration()
+        d:SetTimeFromStart(secretwrap(20,30,2))
+        local saved = {rawget(d,-1),rawget(d,-2),rawget(d,-3)}
+        local invalid = newproxy(true)
+        for _, mutate in ipairs({
+            function() d:SetTimeFromStart(invalid, 2) end,
+            function() d:SetTimeFromEnd(secretwrap(40, -1, 1)) end,
+            function() d:SetTimeFromStart(secretwrap(10, 20, 0)) end,
+            function() d:SetTimeFromStart(secretwrap(10, 20, math.huge)) end,
+            function() d:SetTimeFromEnd(secretwrap(0/0, 2, 1)) end,
+            function() d:SetTimeSpan(secretwrap(5,4)) end,
+            function() d:SetTimeFromStart(10,20,invalid) end,
+        }) do
+            assert(not pcall(mutate))
+            assert(d:HasSecretValues())
+            for index,slot in ipairs({-1,-2,-3}) do assert(rawget(d,slot) == saved[index]) end
+            assert(d:GetStartTime() == 20 and d:GetTotalDuration() == 15 and d:GetModRate() == 2)
+        end
+        local plain = C_DurationUtil.CreateDuration()
+        plain:SetTimeFromStart(1,2)
+        assert(not pcall(plain.SetTimeFromStart, plain, secretwrap(3), -1))
+        assert(not plain:HasSecretValues() and plain:GetStartTime() == 1)
+        plain:SetTimeSpan(secretwrap(10,20))
+        assert(plain:HasSecretValues() and plain:GetTotalDuration() == 10)
+    "#,
+    )
+    .expect("invalid secret duration inputs preserve timing and secrecy atomically");
+}
+
 // Fraction, zero-span, and validation expectations are simulator policies, not native proof.
 #[test]
 fn duration_percent_tracks_clock_boundaries_and_rewind() {

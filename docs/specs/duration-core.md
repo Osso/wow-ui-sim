@@ -1,6 +1,6 @@
 # Duration core
 
-Ordinary clock-driven duration state for the existing Lua table proxy in `src/lua_api/globals/lua_duration_object.rs`. This models duration configuration and numeric queries; formulas below are simulator choices, not confirmed native WoW semantics.
+Clock-driven duration state for the existing Lua table proxy in `src/lua_api/globals/lua_duration_object.rs`. Formulas and the bounded secret-duration policy below are simulator choices, not confirmed native WoW semantics.
 
 ## What it must do
 
@@ -22,6 +22,23 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 
 Cached `LuaDurationObjectAPIDocumentation.lua` describes copying a duration and assigning another duration into the receiver. Clock-reference handling, custom-field retention, and validation above are simulator policies, not native historical-client evidence. Only modeled timing and clock state transfer; arbitrary source fields are not part of duration state.
 
+### Bounded secret timing — explicit simulator guesses
+
+Forever's cached `LuaDurationObjectAPIDocumentation.lua` declares the three timing setters as `SecretArguments = "AllowedWhenUntainted"`, describes `HasSecretValues` as non-secret metadata, and explicitly says `SetToDefaults` clears secret state. Native `Blizzard_AuraButton.lua:167–169` passes `secretwrap(...)` into timing setters. `/tmp/ellesmere-forever/duration-secret-input-red.stderr` reproduces all three setters rejecting those wrappers while the caller is untainted. User-run Forever probes are unavailable.
+
+The following choices are **informed simulator guesses**, not native-verified lifecycle or output semantics:
+
+- [ ] Timing setters accept authenticated rilua wrappers through `unwrap_secret`; arbitrary userdata still fails numeric validation. A wrapped nil optional rate means the ordinary default rate of one. All arguments validate before timing changes.
+- [ ] Any wrapped timing argument makes all three stored timing slots secret. Slots `-1`, `-2`, and `-3` contain VM-owned wrappers, never plaintext plus a public flag; `rawget` therefore does not disclose their numeric payloads. `HasSecretValues` derives its non-secret boolean from these wrappers.
+- [ ] Secret configuration persists through ordinary timing reconfiguration, `Reset`, and assignment from a plain source. Only `SetToDefaults` clears it through the duration-method surface. Reset retains the selected clock; defaults clears it.
+- [ ] `Copy` can copy opaque wrapped slot values and the clock reference without unwrapping, including from a tainted caller. `Assign` requires an untainted caller when either source or destination contains secret timing, and retains existing destination secrecy.
+- [ ] Timing getters, including zero/activity predicates, reject tainted callers for secret-configured durations. Untainted callers receive ordinary computed values after authenticated unwrapping. No plaintext query cache bypasses this check. `GetClock` retains its ordinary clock-reference behavior; it does not read timing payloads.
+- [ ] Timing mutations, resets/defaults, assignment, and clock rebinding require an untainted caller when existing secret timing is involved. Failed authorization or argument validation leaves stored timing and clock unchanged.
+
+These checkboxes await compiled integration proof. `tests/duration_core.rs` adds concrete wrapper-storage, lifecycle, tainted-access, and atomic-failure regressions. Plain duration behavior and other profiles retain their existing surface; the grouped secret-wrapper tests run only on Forever, where rilua's wrapper functions are published.
+
+This policy does not claim native secret-return tagging. Widget and text-binding handoffs must preserve the access boundary separately; a successful core setter is not proof of complete aura rendering. Numeric-slot write immutability and general VM secret arithmetic remain outside this slice.
+
 ### Chosen formulas — native-unverified
 
 Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T = D / r`; end `e = s + T`. `SetTimeFromEnd(e,D,r)` derives `s=e-D/r`. `SetTimeSpan(s,e)` stores `D=e-s`, `r=1`.
@@ -42,7 +59,8 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 ## Implementation inventory
 
 - `src/lua_api/globals/lua_duration_object.rs`: existing proxy factory, clock binding, method registration.
-- `src/lua_api/globals/lua_duration_object/core.rs`: ordinary timing configuration and queries.
+- `src/lua_api/globals/lua_duration_object/core.rs`: timing configuration, authenticated wrapped-slot storage, access checks, and queries.
+- `duration_has_secret_values(&LuaState, Val) -> bool`: crate-private metadata helper for consumer handoffs; no payload exposure.
 
 ## Tests asserting this spec
 
@@ -64,5 +82,5 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 ## Out of scope
 
 - Curve evaluation is specified separately in [duration curve evaluation](duration-curve-evaluation.md); rendering remains outside this slice. Native copy/assignment identity, clock, coercion/error, custom-field, and lifecycle/GC semantics remain unverified.
-- Secret values, taint, protected/forbidden calls, and immutable proxy internals: not inferred from ordinary numeric behavior.
+- General secret-value propagation, native getter-return secrecy, protected/forbidden enforcement, and immutable proxy internals are not inferred from this bounded core policy.
 - Consumer redesign or changes to duration-text-binding identity: preserve current proxy representation.

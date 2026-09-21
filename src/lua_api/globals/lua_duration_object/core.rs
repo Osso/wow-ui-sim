@@ -1,7 +1,8 @@
-//! Ordinary duration state; formulas are simulator assumptions (see duration-core spec).
+//! Duration timing and bounded secret-access policy; native-unverified choices are in the spec.
 use super::{install_method, table_get, table_set};
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::{FromStack, stack_val};
+use rilua::table_security::{is_secret_value, unwrap_secret, wrap_secret};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -27,46 +28,88 @@ impl Timing {
     }
 }
 
-fn read_number(state: &LuaState, object: Val, slot: i64) -> f64 {
+fn read_slot(state: &LuaState, object: Val, slot: i64) -> Val {
     let Val::Table(reference) = object else {
-        return 0.0;
+        return Val::Nil;
     };
-    match state
+    state
         .gc
         .tables
         .get(reference)
         .map(|table| table.get_int(slot))
-    {
-        Some(Val::Num(value)) => value,
-        _ => 0.0,
+        .unwrap_or(Val::Nil)
+}
+
+fn read_slots(state: &LuaState, object: Val) -> [Val; 3] {
+    [START, BASE_DURATION, RATE].map(|slot| read_slot(state, object, slot))
+}
+
+pub(super) fn has_secret_values(state: &LuaState, object: Val) -> bool {
+    read_slots(state, object)
+        .into_iter()
+        .any(|value| is_secret_value(state, value))
+}
+
+pub(super) fn require_secret_access(state: &LuaState, object: Val) -> LuaResult<()> {
+    for value in read_slots(state, object) {
+        unwrap_secret(state, value)?;
+    }
+    Ok(())
+}
+
+fn read_number(state: &LuaState, object: Val, slot: i64) -> LuaResult<f64> {
+    match unwrap_secret(state, read_slot(state, object, slot))? {
+        Val::Num(value) => Ok(value),
+        _ => Ok(0.0),
     }
 }
 
-fn read_timing(state: &LuaState, object: Val) -> Timing {
-    Timing {
-        start: read_number(state, object, START),
-        base: read_number(state, object, BASE_DURATION),
-        rate: read_number(state, object, RATE),
-    }
+fn read_timing(state: &LuaState, object: Val) -> LuaResult<Timing> {
+    Ok(Timing {
+        start: read_number(state, object, START)?,
+        base: read_number(state, object, BASE_DURATION)?,
+        rate: read_number(state, object, RATE)?,
+    })
 }
 
-fn write_timing(state: &mut LuaState, object: Val, timing: Timing) {
-    if let Val::Table(reference) = object {
-        if let Some(table) = state.gc.tables.get_mut(reference) {
-            for (slot, value) in [
-                (START, timing.start),
-                (BASE_DURATION, timing.base),
-                (RATE, timing.rate),
-            ] {
-                let _ = table.raw_set(
-                    Val::Num(slot as f64),
-                    Val::Num(value),
-                    &state.gc.string_arena,
-                );
-            }
+fn write_slots(state: &mut LuaState, object: Val, values: [Val; 3]) -> LuaResult<()> {
+    let Val::Table(reference) = object else {
+        return Err(rilua::runtime_error("invalid duration object"));
+    };
+    let table = state
+        .gc
+        .tables
+        .get_mut(reference)
+        .ok_or_else(|| rilua::runtime_error("duration object has been collected"))?;
+    for (slot, value) in [START, BASE_DURATION, RATE].into_iter().zip(values) {
+        table.raw_set(Val::Num(slot as f64), value, &state.gc.string_arena)?;
+    }
+    state.gc.barrier_back(reference);
+    Ok(())
+}
+
+fn write_protected_slots(
+    state: &mut LuaState,
+    object: Val,
+    mut values: [Val; 3],
+    secret: bool,
+) -> LuaResult<()> {
+    let previous_top = state.top;
+    if secret {
+        for value in &mut values {
+            *value = wrap_secret(state, *value)?;
+            // Root each allocation before wrapping the next timing component.
+            state.push(*value);
         }
-        state.gc.barrier_back(reference);
     }
+    let result = write_slots(state, object, values);
+    state.top = previous_top;
+    result
+}
+
+fn write_timing(state: &mut LuaState, object: Val, timing: Timing, secret: bool) -> LuaResult<()> {
+    let values = [timing.start, timing.base, timing.rate].map(Val::Num);
+    write_protected_slots(state, object, values, secret)
 }
 
 pub(super) fn initialize(state: &mut LuaState, object: Val) {
@@ -78,14 +121,28 @@ pub(super) fn initialize(state: &mut LuaState, object: Val) {
             base: 0.0,
             rate: 1.0,
         },
-    );
+        false,
+    )
+    .expect("new duration table accepts its numeric timing slots");
 }
 
-pub(super) fn copy_state(state: &mut LuaState, source: Val, target: Val) {
-    let timing = read_timing(state, source);
+pub(super) fn copy_state(state: &mut LuaState, source: Val, target: Val) -> LuaResult<()> {
+    let values = read_slots(state, source);
     let clock = table_get(state, source, "clock");
-    write_timing(state, target, timing);
+    write_slots(state, target, values)?;
     table_set(state, target, "clock", clock);
+    Ok(())
+}
+
+pub(super) fn assign_state(state: &mut LuaState, source: Val, target: Val) -> LuaResult<()> {
+    require_secret_access(state, source)?;
+    require_secret_access(state, target)?;
+    let secret = has_secret_values(state, source) || has_secret_values(state, target);
+    let values = read_slots(state, source);
+    let clock = table_get(state, source, "clock");
+    write_protected_slots(state, target, values, secret)?;
+    table_set(state, target, "clock", clock);
+    Ok(())
 }
 
 pub(super) fn current_time(state: &LuaState) -> LuaResult<f64> {
@@ -109,12 +166,27 @@ fn read_clock_time(state: &mut LuaState, clock: Val) -> LuaResult<Val> {
     state.gettable(clock, Val::Str(key))
 }
 
-fn finite_arg(state: &mut LuaState, index: i32) -> LuaResult<f64> {
-    let value = f64::from_stack(state, index)?;
-    if !value.is_finite() {
+fn finite_arg(state: &LuaState, index: i32, default: Option<f64>) -> LuaResult<f64> {
+    let value = unwrap_secret(state, stack_val(state, index))?;
+    let number = match (value, default) {
+        (Val::Num(number), _) => number,
+        (Val::Nil, Some(default)) => default,
+        _ => {
+            return Err(rilua::runtime_error(format!(
+                "expected number, got {} at argument {index}",
+                value.type_name()
+            )));
+        }
+    };
+    if !number.is_finite() {
         return Err(rilua::runtime_error("duration argument must be finite"));
     }
-    Ok(value)
+    Ok(number)
+}
+
+fn configuration_is_secret(state: &LuaState, object: Val, last_argument: i32) -> bool {
+    has_secret_values(state, object)
+        || (2..=last_argument).any(|index| is_secret_value(state, stack_val(state, index)))
 }
 
 fn validate(timing: Timing) -> LuaResult<Timing> {
@@ -134,34 +206,51 @@ fn validate(timing: Timing) -> LuaResult<Timing> {
 }
 
 fn set_time(state: &mut LuaState, from_end: bool) -> LuaResult<u32> {
-    let endpoint = finite_arg(state, 2)?;
-    let base = finite_arg(state, 3)?;
-    let rate = Option::<f64>::from_stack(state, 4)?.unwrap_or(1.0);
+    let object = stack_val(state, 1);
+    require_secret_access(state, object)?;
+    let endpoint = finite_arg(state, 2, None)?;
+    let base = finite_arg(state, 3, None)?;
+    let rate = finite_arg(state, 4, Some(1.0))?;
     let start = if from_end {
         endpoint - base / rate
     } else {
         endpoint
     };
     let timing = validate(Timing { start, base, rate })?;
-    write_timing(state, stack_val(state, 1), timing);
+    let secret = configuration_is_secret(state, object, 4);
+    write_timing(state, object, timing, secret)?;
     Ok(0)
 }
 
 fn set_span(state: &mut LuaState) -> LuaResult<u32> {
-    let start = finite_arg(state, 2)?;
-    let end = finite_arg(state, 3)?;
+    let object = stack_val(state, 1);
+    require_secret_access(state, object)?;
+    let start = finite_arg(state, 2, None)?;
+    let end = finite_arg(state, 3, None)?;
     let timing = validate(Timing {
         start,
         base: end - start,
         rate: 1.0,
     })?;
-    write_timing(state, stack_val(state, 1), timing);
+    let secret = configuration_is_secret(state, object, 3);
+    write_timing(state, object, timing, secret)?;
     Ok(0)
 }
 
 fn reset(state: &mut LuaState, defaults: bool) -> LuaResult<u32> {
     let object = stack_val(state, 1);
-    initialize(state, object);
+    require_secret_access(state, object)?;
+    let secret = !defaults && has_secret_values(state, object);
+    write_timing(
+        state,
+        object,
+        Timing {
+            start: 0.0,
+            base: 0.0,
+            rate: 1.0,
+        },
+        secret,
+    )?;
     if defaults {
         table_set(state, object, "clock", Val::Nil);
     }
@@ -218,7 +307,7 @@ fn duration_value(
 
 fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
     let object = stack_val(state, 1);
-    let timing = read_timing(state, object);
+    let timing = read_timing(state, object)?;
     let value = match kind {
         Query::Start => Val::Num(timing.start),
         Query::End => Val::Num(timing.end()),

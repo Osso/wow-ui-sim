@@ -374,7 +374,7 @@ fn require_duration(state: &mut LuaState, index: i32) -> LuaResult<Val> {
 fn m_assign(state: &mut LuaState) -> LuaResult<u32> {
     let target = require_duration(state, 1)?;
     let source = require_duration(state, 2)?;
-    core::copy_state(state, source, target);
+    core::assign_state(state, source, target)?;
     Ok(0)
 }
 
@@ -382,7 +382,7 @@ fn m_copy(state: &mut LuaState) -> LuaResult<u32> {
     let source = require_duration(state, 1)?;
     let obj = new_duration_object(state);
     state.push(obj);
-    core::copy_state(state, source, obj);
+    core::copy_state(state, source, obj)?;
     Ok(1)
 }
 
@@ -395,13 +395,20 @@ fn m_get_clock(state: &mut LuaState) -> LuaResult<u32> {
 
 fn m_set_clock(state: &mut LuaState) -> LuaResult<u32> {
     let object = crate::lua_bridge::stack_val(state, 1);
+    core::require_secret_access(state, object)?;
     let clock = crate::lua_bridge::stack_val(state, 2);
     table_set(state, object, "clock", clock);
     Ok(0)
 }
 
+/// Inspect authenticated timing wrappers without exposing their payloads.
+pub(crate) fn duration_has_secret_values(state: &LuaState, value: Val) -> bool {
+    core::has_secret_values(state, value)
+}
+
 fn m_has_secret_values(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    let object = crate::lua_bridge::stack_val(state, 1);
+    state.push(Val::Bool(duration_has_secret_values(state, object)));
     Ok(1)
 }
 
