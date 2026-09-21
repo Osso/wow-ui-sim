@@ -14,11 +14,9 @@ pub fn load_chunk<L: LuaApiMut>(
     let chunk_name = format!("@generated/{tag}/{hash:016x}");
 
     if !bytecode_cache::is_disabled() {
-        if let Some(result) = bytecode_cache::with_cached_bytecode_deferred(
-            hash,
-            || tagged_hash(code.as_bytes(), tag),
-            |bytecode| LuaApiMut::load_bytes(lua, bytecode, &chunk_name),
-        ) && let Ok(func) = result
+        if let Some(result) = bytecode_cache::with_cached_bytecode(hash, |bytecode| {
+            LuaApiMut::load_bytes(lua, bytecode, &chunk_name)
+        }) && let Ok(func) = result
         {
             return Ok(func);
         }
@@ -31,16 +29,6 @@ pub fn load_chunk<L: LuaApiMut>(
         bytecode_cache::put(hash, &bytecode);
     }
     Ok(func)
-}
-
-fn tagged_hash(bytes: &[u8], tag: &str) -> u64 {
-    use std::collections::hash_map::DefaultHasher;
-    use std::hash::{Hash, Hasher};
-
-    let mut hasher = DefaultHasher::new();
-    bytes.hash(&mut hasher);
-    tag.hash(&mut hasher);
-    hasher.finish()
 }
 
 #[cfg(test)]
@@ -67,8 +55,7 @@ mod tests {
         let results = lua.call_function(&func, &[]).unwrap();
         let value = results.into_iter().next().expect("chunk returns a value");
         assert_eq!(lua.val_as_bytes(value).unwrap(), tag.as_bytes());
-        let cached =
-            crate::loader::bytecode_cache::with_cached_bytecode_deferred(hash, || hash, |_| ());
+        let cached = crate::loader::bytecode_cache::with_cached_bytecode(hash, |_| ());
         assert!(
             cached.is_some(),
             "generated chunk should be written to bytecode cache"

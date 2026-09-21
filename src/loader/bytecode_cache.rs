@@ -3,11 +3,10 @@
 //! Stores compiled Lua 5.1 bytecode on disk, keyed by content hash. Warm
 //! startup can then skip reparsing and recompiling loader chunks entirely.
 //!
-//! The pack file header carries the current [`crate::lua_api::hot_literals::WHITELIST_VERSION`]
-//! so that when the Track 3 slot ABI changes, stale entries are
-//! rejected atomically rather than accidentally interpreted against the
-//! new whitelist. Bumping `WHITELIST_VERSION` discards the entire pack
-//! on next load.
+//! Pack headers validate both the locked Rilua compiler revision and the
+//! simulator's slot/whitelist ABI. Compiler updates invalidate persisted code
+//! automatically, including corrections that leave the bytecode format unchanged.
+//! Unknown-compiler loose files and legacy cache keys are never imported.
 
 use crate::lua_api::hot_literals::WHITELIST_VERSION;
 use std::collections::HashMap;
@@ -20,10 +19,11 @@ use std::sync::atomic::{AtomicU8, AtomicU64, Ordering};
 use std::sync::{Mutex, OnceLock};
 
 const PACK_FILE: &str = "pack.bin";
-// Bumped from `WOWBC001` when the version-header field was introduced.
-// Old packs without a version header are rejected on load.
-const PACK_MAGIC: &[u8; 8] = b"WOWBC002";
-const PACK_HEADER_LEN: usize = PACK_MAGIC.len() + 4;
+// Version 3 adds the compiler identity to the existing whitelist ABI header.
+const PACK_MAGIC: &[u8; 8] = b"WOWBC003";
+const RILUA_COMPILER_REVISION: &str = env!("WOW_SIM_RILUA_COMPILER_REVISION");
+const PACK_VERSION_END: usize = PACK_MAGIC.len() + 4;
+const PACK_HEADER_LEN: usize = PACK_VERSION_END + RILUA_COMPILER_REVISION.len();
 const PACK_ENTRY_HEADER_LEN: usize = 8 + 4;
 const MAX_PACK_SIZE: u64 = 768 * 1024 * 1024;
 static NEXT_TEMP_PACK_ID: AtomicU64 = AtomicU64::new(1);
@@ -152,19 +152,15 @@ pub fn is_disabled() -> bool {
 
 /// Compute a cache key from file content and chunk name.
 pub fn content_hash(bytes: &[u8], chunk_name: &str) -> u64 {
+    content_hash_for_compiler(bytes, chunk_name, RILUA_COMPILER_REVISION)
+}
+
+fn content_hash_for_compiler(bytes: &[u8], chunk_name: &str, revision: &str) -> u64 {
     let mut hasher = DefaultHasher::new();
     bytes.hash(&mut hasher);
     chunk_name.hash(&mut hasher);
     WHITELIST_VERSION.hash(&mut hasher);
-    hasher.finish()
-}
-
-/// Legacy cache key used by standalone `.luac` files before the slot
-/// ABI version became part of the hash.
-pub fn legacy_content_hash(bytes: &[u8], chunk_name: &str) -> u64 {
-    let mut hasher = DefaultHasher::new();
-    bytes.hash(&mut hasher);
-    chunk_name.hash(&mut hasher);
+    revision.hash(&mut hasher);
     hasher.finish()
 }
 
@@ -193,23 +189,17 @@ fn pack_path() -> Option<PathBuf> {
 
 /// Load cached bytecode and pass it to a callback.
 ///
-/// Current-key hits borrow directly from the in-memory pack instead of cloning
-/// the cached chunk. Legacy hits still clone once because writable mode promotes
-/// them under the current hash. The legacy key is computed only after a current-key
-/// miss.
-pub fn with_cached_bytecode_deferred<R>(
-    hash: u64,
-    legacy_hash: impl FnOnce() -> u64,
-    callback: impl FnOnce(&[u8]) -> R,
-) -> Option<R> {
+/// Exact-key hits borrow directly from a compiler-validated pack.
+pub fn with_cached_bytecode<R>(hash: u64, callback: impl FnOnce(&[u8]) -> R) -> Option<R> {
     let mode = CacheMode::current();
     if !mode.allows_reads() {
         return None;
     }
 
     let mut state = cache_state().lock().ok()?;
-    ensure_loaded(&mut state, mode);
-    with_cached_bytecode_from_state(&mut state, mode, hash, legacy_hash, callback)
+    let path = pack_path();
+    ensure_loaded(&mut state, mode, path.as_deref());
+    with_cached_bytecode_from_state(&state, hash, callback)
 }
 
 /// Save compiled bytecode to cache.
@@ -223,27 +213,22 @@ pub fn put(hash: u64, bytecode: &[u8]) -> PutResult {
         Ok(state) => state,
         Err(_) => return PutResult::Failed,
     };
-    ensure_loaded(&mut state, mode);
+    let path = pack_path();
+    ensure_loaded(&mut state, mode, path.as_deref());
 
-    let Some(path) = pack_path() else {
+    let Some(path) = path else {
         return PutResult::Failed;
     };
     store_entry_at_path_with_max(&mut state, &path, MAX_PACK_SIZE, mode, hash, bytecode)
 }
 
-fn ensure_loaded(state: &mut CacheState, mode: CacheMode) {
+fn ensure_loaded(state: &mut CacheState, mode: CacheMode, pack: Option<&Path>) {
     if state.initialized {
         return;
     }
-
-    if let Some(pack) = pack_path() {
-        state.pack_exists = load_pack_from_path(state, &pack, mode);
+    if let Some(pack) = pack {
+        state.pack_exists = load_pack_from_path(state, pack, mode);
     }
-
-    if !state.pack_exists {
-        let _ = migrate_legacy_cache(state, mode);
-    }
-
     state.initialized = true;
 }
 
@@ -262,7 +247,7 @@ fn load_pack_from_path_with_max(
     };
     let original_len = bytes.len();
     let Some(valid_len) = load_pack_bytes(state, bytes) else {
-        // Pack file existed but was wrong magic or wrong whitelist version.
+        // Unknown format, slot ABI, or compiler revision: never replay its chunks.
         // Remove it so the next write starts a clean file.
         drop(file);
         if mode.allows_writes() {
@@ -309,60 +294,26 @@ fn remove_rejected_pack(file: std::fs::File, pack: &Path, mode: CacheMode) {
     }
 }
 
-fn lookup_with_legacy_fallback(
-    state: &mut CacheState,
-    mode: CacheMode,
-    hash: u64,
-    legacy_hash: impl FnOnce() -> u64,
-) -> Option<Vec<u8>> {
-    let path = pack_path()?;
-    lookup_with_legacy_fallback_at_path(state, &path, MAX_PACK_SIZE, mode, hash, legacy_hash)
-}
-
-fn lookup_with_legacy_fallback_at_path(
-    state: &mut CacheState,
-    path: &Path,
-    max_pack_size: u64,
-    mode: CacheMode,
-    hash: u64,
-    legacy_hash: impl FnOnce() -> u64,
-) -> Option<Vec<u8>> {
-    if let Some((offset, len)) = state.index.get(&hash).copied() {
-        return Some(state.values[offset..offset + len].to_vec());
-    }
-
-    let legacy_hash = legacy_hash();
-    let (offset, len) = state.index.get(&legacy_hash).copied()?;
-    let bytecode = state.values[offset..offset + len].to_vec();
-    let _ = store_entry_at_path_with_max(state, path, max_pack_size, mode, hash, &bytecode);
-    Some(bytecode)
-}
-
 fn with_cached_bytecode_from_state<R>(
-    state: &mut CacheState,
-    mode: CacheMode,
+    state: &CacheState,
     hash: u64,
-    legacy_hash: impl FnOnce() -> u64,
     callback: impl FnOnce(&[u8]) -> R,
 ) -> Option<R> {
-    if let Some((offset, len)) = state.index.get(&hash).copied() {
-        return Some(callback(&state.values[offset..offset + len]));
-    }
-
-    let bytecode = lookup_with_legacy_fallback(state, mode, hash, legacy_hash)?;
-    Some(callback(&bytecode))
+    let (offset, len) = state.index.get(&hash).copied()?;
+    Some(callback(&state.values[offset..offset + len]))
 }
 
 fn load_pack_bytes(state: &mut CacheState, mut bytes: Vec<u8>) -> Option<usize> {
     if bytes.len() < PACK_HEADER_LEN || &bytes[..PACK_MAGIC.len()] != PACK_MAGIC {
         return None;
     }
-    let version_bytes: [u8; 4] = bytes[PACK_MAGIC.len()..PACK_HEADER_LEN]
+    let version_bytes: [u8; 4] = bytes[PACK_MAGIC.len()..PACK_VERSION_END]
         .try_into()
-        .expect("PACK_HEADER_LEN - PACK_MAGIC == 4");
-    if u32::from_le_bytes(version_bytes) != WHITELIST_VERSION {
-        // Slot ABI / whitelist version changed since this pack was
-        // written. Discard the whole pack so fresh entries replace it.
+        .expect("pack whitelist ABI is four bytes");
+    let compiler_revision = &bytes[PACK_VERSION_END..PACK_HEADER_LEN];
+    if u32::from_le_bytes(version_bytes) != WHITELIST_VERSION
+        || compiler_revision != RILUA_COMPILER_REVISION.as_bytes()
+    {
         return None;
     }
 
@@ -572,6 +523,7 @@ fn empty_pack() -> Vec<u8> {
     let mut bytes = Vec::with_capacity(PACK_HEADER_LEN);
     bytes.extend_from_slice(PACK_MAGIC);
     bytes.extend_from_slice(&WHITELIST_VERSION.to_le_bytes());
+    bytes.extend_from_slice(RILUA_COMPILER_REVISION.as_bytes());
     bytes
 }
 
@@ -613,62 +565,6 @@ fn truncate_pack(path: &Path, len: usize) -> std::io::Result<()> {
         .set_len(len as u64)
 }
 
-fn migrate_legacy_cache(state: &mut CacheState, mode: CacheMode) -> std::io::Result<()> {
-    let Some(dir) = cache_dir() else {
-        return Ok(());
-    };
-    let Some(pack) = pack_path() else {
-        return Ok(());
-    };
-    migrate_legacy_cache_from_dir(state, &dir, &pack, mode)
-}
-
-fn migrate_legacy_cache_from_dir(
-    state: &mut CacheState,
-    dir: &Path,
-    pack: &Path,
-    mode: CacheMode,
-) -> std::io::Result<()> {
-    let Ok(entries) = std::fs::read_dir(dir) else {
-        return Ok(());
-    };
-
-    for entry in entries.flatten() {
-        let Some((hash, bytecode)) = legacy_cache_entry(&entry.path()) else {
-            continue;
-        };
-        if mode.allows_writes() {
-            let _ = store_entry_at_path_with_max(state, pack, MAX_PACK_SIZE, mode, hash, &bytecode);
-        } else {
-            append_entry_to_state(state, hash, &bytecode);
-        }
-    }
-    Ok(())
-}
-
-fn append_entry_to_state(state: &mut CacheState, hash: u64, bytecode: &[u8]) {
-    if state.values.is_empty() {
-        state.values = empty_pack();
-    }
-    let offset = state.values.len() + PACK_ENTRY_HEADER_LEN;
-    append_entry_bytes(&mut state.values, hash, bytecode);
-    state.index.insert(hash, (offset, bytecode.len()));
-}
-
-fn legacy_cache_entry(path: &Path) -> Option<(u64, Vec<u8>)> {
-    if path.file_name() == Some(OsStr::new(PACK_FILE)) {
-        return None;
-    }
-    if path.extension() != Some(OsStr::new("luac")) {
-        return None;
-    }
-
-    let stem = path.file_stem()?.to_str()?;
-    let hash = u64::from_str_radix(stem, 16).ok()?;
-    let bytecode = std::fs::read(path).ok()?;
-    Some((hash, bytecode))
-}
-
 fn write_pack_entry(file: &mut std::fs::File, hash: u64, bytecode: &[u8]) -> std::io::Result<()> {
     file.write_all(&hash.to_le_bytes())?;
     file.write_all(&(bytecode.len() as u32).to_le_bytes())?;
@@ -689,6 +585,7 @@ mod tests {
         let mut buf = Vec::new();
         buf.extend_from_slice(magic);
         buf.extend_from_slice(&version.to_le_bytes());
+        buf.extend_from_slice(RILUA_COMPILER_REVISION.as_bytes());
         for (hash, bytecode) in entries {
             buf.extend_from_slice(&hash.to_le_bytes());
             buf.extend_from_slice(&(bytecode.len() as u32).to_le_bytes());
@@ -716,6 +613,137 @@ mod tests {
             .copied()
             .expect("expected hash in cache index");
         assert_eq!(&state.values[offset..offset + len], expected);
+    }
+
+    fn compile_cache_fixture(value: &str) -> Vec<u8> {
+        use rilua::LuaApiMut;
+        let mut lua = rilua::Lua::new().unwrap();
+        let source = format!("return {value:?}");
+        let function = LuaApiMut::load_bytes(&mut lua, source.as_bytes(), "@cache-fixture")
+            .expect("compile fixture");
+        crate::loader::bytecode::dump_function(lua.state_mut(), &function).unwrap()
+    }
+
+    fn replay_cache_fixture(state: &mut CacheState, hash: u64) -> Option<String> {
+        use rilua::LuaApiMut;
+        with_cached_bytecode_from_state(state, hash, |bytes| {
+            let mut lua = rilua::Lua::new().unwrap();
+            let function = LuaApiMut::load_bytes(&mut lua, bytes, "@cache-fixture").unwrap();
+            let values = lua.call_function(&function, &[]).unwrap();
+            String::from_utf8(lua.val_as_bytes(values[0]).unwrap().to_vec()).unwrap()
+        })
+    }
+
+    #[test]
+    fn compiler_identity_rejects_unversioned_pack_without_replay_or_readonly_mutation() {
+        let (_dir, path) = temp_pack_path("compiler-unversioned");
+        let bytecode = compile_cache_fixture("stale compiler executed");
+        let hash = content_hash(b"fixture", "@cache-fixture");
+        let mut old_pack = b"WOWBC002".to_vec();
+        old_pack.extend_from_slice(&WHITELIST_VERSION.to_le_bytes());
+        append_entry_bytes(&mut old_pack, hash, &bytecode);
+        std::fs::write(&path, old_pack).unwrap();
+        let before = snapshot_file(&path);
+
+        let mut reopened = CacheState::default();
+        let loaded = load_pack_from_path(&mut reopened, &path, CacheMode::ReadOnly);
+        let replay = loaded
+            .then(|| replay_cache_fixture(&mut reopened, hash))
+            .flatten();
+        assert_eq!(replay, None, "unknown compiler bytecode must never execute");
+        assert!(!loaded);
+        assert_eq!(snapshot_file(&path), before);
+    }
+
+    #[test]
+    fn compiler_identity_rejects_different_compiler_on_reopen_and_replaces_on_write() {
+        let (_dir, path) = temp_pack_path("compiler-mismatch");
+        let hash = content_hash(b"fixture", "@cache-fixture");
+        let stale = compile_cache_fixture("stale compiler executed");
+        let mut pack = single_entry_pack(hash, &stale);
+        // The previous format has no compiler identity; it must also miss.
+        pack[PACK_MAGIC.len() + 4..PACK_HEADER_LEN].fill(b'0');
+        std::fs::write(&path, pack).unwrap();
+        let before = snapshot_file(&path);
+
+        let mut readonly = CacheState::default();
+        let loaded = load_pack_from_path(&mut readonly, &path, CacheMode::ReadOnly);
+        let replay = loaded
+            .then(|| replay_cache_fixture(&mut readonly, hash))
+            .flatten();
+        assert_eq!(replay, None, "foreign compiler chunk must not execute");
+        assert_eq!(snapshot_file(&path), before);
+
+        let mut writable = CacheState::default();
+        assert!(!load_pack_from_path(
+            &mut writable,
+            &path,
+            CacheMode::Writable
+        ));
+        let fresh = compile_cache_fixture("fresh compiler executed");
+        assert_eq!(
+            store_entry_at_path_with_max(
+                &mut writable,
+                &path,
+                4096,
+                CacheMode::Writable,
+                hash,
+                &fresh
+            ),
+            PutResult::Stored
+        );
+        let mut reopened = CacheState::default();
+        assert!(load_pack_from_path(
+            &mut reopened,
+            &path,
+            CacheMode::ReadOnly
+        ));
+        assert_eq!(
+            replay_cache_fixture(&mut reopened, hash).as_deref(),
+            Some("fresh compiler executed")
+        );
+    }
+
+    #[test]
+    fn compiler_identity_same_compiler_warm_reopen_preserves_stored_bytes() {
+        let (_dir, path) = temp_pack_path("compiler-warm");
+        let hash = content_hash(b"fixture", "@cache-fixture");
+        let bytecode = compile_cache_fixture("same compiler warm hit");
+        let mut writer = CacheState::default();
+        assert_eq!(
+            store_entry_at_path_with_max(
+                &mut writer,
+                &path,
+                4096,
+                CacheMode::Writable,
+                hash,
+                &bytecode
+            ),
+            PutResult::Stored
+        );
+        let before = snapshot_file(&path);
+        let mut reader = CacheState::default();
+        assert!(load_pack_from_path(&mut reader, &path, CacheMode::ReadOnly));
+        assert_cached_bytes(&reader, hash, &bytecode);
+        assert_eq!(
+            replay_cache_fixture(&mut reader, hash).as_deref(),
+            Some("same compiler warm hit")
+        );
+        assert_eq!(snapshot_file(&path), before);
+    }
+
+    #[test]
+    fn compiler_identity_ignores_unversioned_loose_bytecode() {
+        let (dir, path) = temp_pack_path("compiler-loose");
+        let hash = content_hash(b"fixture", "@cache-fixture");
+        let loose = dir.path().join(format!("{hash:016x}.luac"));
+        std::fs::write(&loose, compile_cache_fixture("unversioned loose chunk")).unwrap();
+        let before = snapshot_file(&loose);
+        let mut reader = CacheState::default();
+        ensure_loaded(&mut reader, CacheMode::ReadOnly, Some(&path));
+        assert_eq!(replay_cache_fixture(&mut reader, hash), None);
+        assert_eq!(snapshot_file(&loose), before);
+        assert!(!path.exists());
     }
 
     #[test]
@@ -1052,31 +1080,22 @@ mod tests {
     }
 
     #[test]
-    fn read_only_legacy_hit_is_returned_without_promotion() {
-        let legacy_hash = legacy_content_hash(b"abc", "=@chunk");
-        let current_hash = content_hash(b"abc", "=@chunk");
-        let bytes = synth_pack_bytes(PACK_MAGIC, WHITELIST_VERSION, &[(legacy_hash, b"compiled")]);
-        let (_temp_dir, path) = temp_pack_path("read-only-legacy-hit");
-        std::fs::write(&path, &bytes).expect("write legacy-key pack");
+    fn compiler_identity_foreign_keys_in_current_pack_never_replay_or_promote() {
+        let current_hash = content_hash(b"fixture", "@cache-fixture");
+        let foreign_hash = content_hash_for_compiler(b"fixture", "@cache-fixture", &"0".repeat(40));
+        assert_ne!(current_hash, foreign_hash);
+        let stale = compile_cache_fixture("foreign compiler key executed");
+        let bytes = single_entry_pack(foreign_hash, &stale);
+        let (_dir, path) = temp_pack_path("compiler-foreign-key");
+        std::fs::write(&path, bytes).unwrap();
         let before = snapshot_file(&path);
-        let mut state = CacheState::default();
-        load_pack_bytes(&mut state, bytes).expect("load legacy-key pack state");
-        state.pack_exists = true;
-
-        let loaded = lookup_with_legacy_fallback_at_path(
-            &mut state,
-            &path,
-            1024,
-            CacheMode::ReadOnly,
-            current_hash,
-            || legacy_hash,
-        )
-        .expect("legacy entry should be returned");
-
-        assert_eq!(loaded, b"compiled");
-        assert!(state.index.contains_key(&legacy_hash));
-        assert!(!state.index.contains_key(&current_hash));
-        assert_eq!(snapshot_file(&path), before);
+        for mode in [CacheMode::ReadOnly, CacheMode::Writable] {
+            let mut state = CacheState::default();
+            ensure_loaded(&mut state, mode, Some(&path));
+            assert_eq!(replay_cache_fixture(&mut state, current_hash), None);
+            assert!(!state.index.contains_key(&current_hash));
+            assert_eq!(snapshot_file(&path), before);
+        }
     }
 
     #[test]
@@ -1088,13 +1107,12 @@ mod tests {
         let entries_before = directory_entry_names(temp_dir.path());
         let mut state = CacheState::default();
 
-        migrate_legacy_cache_from_dir(&mut state, temp_dir.path(), &pack, CacheMode::ReadOnly)
-            .expect("read-only legacy scan");
+        ensure_loaded(&mut state, CacheMode::ReadOnly, Some(&pack));
 
         assert!(!pack.exists());
         assert_eq!(snapshot_file(&legacy), legacy_before);
         assert_eq!(directory_entry_names(temp_dir.path()), entries_before);
-        assert_cached_bytes(&state, 1, b"legacy-bytecode");
+        assert!(state.index.is_empty());
         assert!(!state.pack_exists);
     }
 
@@ -1172,15 +1190,6 @@ mod tests {
     }
 
     #[test]
-    fn legacy_content_hash_matches_pre_versioned_key() {
-        let legacy = legacy_content_hash(b"abc", "=@chunk");
-        let mut hasher = DefaultHasher::new();
-        b"abc".hash(&mut hasher);
-        "=@chunk".hash(&mut hasher);
-        assert_eq!(legacy, hasher.finish());
-    }
-
-    #[test]
     fn max_pack_size_allows_full_addon_warm_cache() {
         let full_addon_pack_budget = 512 * 1024 * 1024;
 
@@ -1192,43 +1201,33 @@ mod tests {
 
     #[test]
     fn put_reports_stored_and_unchanged_entries() {
-        let unique = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .expect("system time before unix epoch")
-            .as_nanos();
-        let hash = content_hash(format!("source-{unique}").as_bytes(), "=@put-test");
-
-        assert_eq!(put(hash, b"compiled"), PutResult::Stored);
-        assert_eq!(put(hash, b"compiled"), PutResult::Unchanged);
-    }
-
-    #[test]
-    fn bounded_store_legacy_lookup_promotion_uses_same_limit() {
-        let legacy_hash = legacy_content_hash(b"abc", "=@chunk");
-        let current_hash = content_hash(b"abc", "=@chunk");
-        let bytes = synth_pack_bytes(PACK_MAGIC, WHITELIST_VERSION, &[(legacy_hash, b"compiled")]);
-        let (_temp_dir, path) = temp_pack_path("legacy-promotion");
-        std::fs::write(&path, &bytes).expect("write legacy-key pack");
+        let (_dir, path) = temp_pack_path("unchanged-entry");
+        let hash = content_hash(b"source", "=@put-test");
         let mut state = CacheState::default();
-        load_pack_bytes(&mut state, bytes).expect("load legacy-key pack state");
-        state.pack_exists = true;
-
-        let max = serialized_pack_len(&[b"compiled".as_slice()]);
-        let loaded = lookup_with_legacy_fallback_at_path(
-            &mut state,
-            &path,
-            max,
-            CacheMode::Writable,
-            current_hash,
-            || legacy_hash,
-        )
-        .expect("legacy entry should be found");
-
-        assert_eq!(loaded, b"compiled");
-        assert_eq!(state.index.len(), 1);
-        assert!(!state.index.contains_key(&legacy_hash));
-        assert_cached_bytes(&state, current_hash, b"compiled");
-        assert_eq!(std::fs::metadata(&path).unwrap().len(), max);
+        assert_eq!(
+            store_entry_at_path_with_max(
+                &mut state,
+                &path,
+                1024,
+                CacheMode::Writable,
+                hash,
+                b"compiled"
+            ),
+            PutResult::Stored
+        );
+        let before = snapshot_file(&path);
+        assert_eq!(
+            store_entry_at_path_with_max(
+                &mut state,
+                &path,
+                1024,
+                CacheMode::Writable,
+                hash,
+                b"compiled"
+            ),
+            PutResult::Unchanged
+        );
+        assert_eq!(snapshot_file(&path), before);
     }
 
     #[test]
@@ -1238,13 +1237,9 @@ mod tests {
         state.index.insert(SENTINEL_HASH, (0, state.values.len()));
         let pack_ptr = state.values.as_ptr();
 
-        let borrowed = with_cached_bytecode_from_state(
-            &mut state,
-            CacheMode::Writable,
-            SENTINEL_HASH,
-            || SENTINEL_HASH,
-            |bytes| bytes.as_ptr() == pack_ptr,
-        )
+        let borrowed = with_cached_bytecode_from_state(&state, SENTINEL_HASH, |bytes| {
+            bytes.as_ptr() == pack_ptr
+        })
         .expect("current cache hit should call callback");
 
         assert!(

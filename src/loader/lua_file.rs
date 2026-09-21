@@ -268,11 +268,9 @@ fn load_cached_or_compile(
     let hash = bytecode_cache::content_hash(bytes, chunk_name);
 
     if !bytecode_cache::is_disabled() {
-        match bytecode_cache::with_cached_bytecode_deferred(
-            hash,
-            || bytecode_cache::legacy_content_hash(bytes, chunk_name),
-            |bytecode| compile_with_rilua(lua, bytecode, chunk_name),
-        ) {
+        match bytecode_cache::with_cached_bytecode(hash, |bytecode| {
+            compile_with_rilua(lua, bytecode, chunk_name)
+        }) {
             Some(result) => match result {
                 Ok(func) => {
                     timing.cache_hits += 1;
