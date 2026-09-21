@@ -110,7 +110,7 @@ intern-stats = ["rilua/intern-stats"]
 # Retail API epoch features are cumulative patch gates. Client-channel
 # features select one runtime profile and point at the current API epoch for
 # that channel.
-retail-12-0-0 = []
+retail-12-0-0 = ["aura-instance-enumeration"]
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
@@ -120,7 +120,9 @@ timed-signal-maps = []
 # Shared XML aliases and intrinsic mappings for aura frames/buttons.
 aura-xml-widgets = []
 # Shared modeled AuraContainer option processors, enums and base aura secrecy queries.
-aura-containers = []
+aura-containers = ["aura-instance-enumeration"]
+# Public aura ID queries shared by Retail 12.0+ and native aura containers.
+aura-instance-enumeration = []
 # Shared numeric frame update scheduling for Mainline and Forever.
 on-update-modes = []
 # Shared modeled player cast/channel lifecycle, identity tuples and duration queries.

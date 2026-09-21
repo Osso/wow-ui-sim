@@ -69,7 +69,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Must run after stubs so the fixture aura data overrides the
     // stub_nil registrations for C_UnitAuras.GetAuraSlots & friends.
     super::auras::register_all(lua.state_mut());
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "aura-instance-enumeration")]
     crate::c_api::c_unit_auras::register(lua.state_mut())?;
     Ok(())
 }

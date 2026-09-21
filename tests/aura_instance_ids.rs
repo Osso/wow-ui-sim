@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(feature = "aura-instance-enumeration")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -88,11 +88,12 @@ fn aura_instance_ids_apply_documented_sorting_and_limits() {
     "#).unwrap();
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 #[test]
 fn aura_instance_ids_private_queries_follow_existing_private_state() {
     let env = seeded_env();
-    env.exec(r#"
+    env.exec(
+        r#"
         C_UnitAurasPrivate._state.privateAurasByUnit.player = {
             { auraInstanceID = 903, spellID = 123 },
             { auraInstanceID = 901, spellID = 456 },
@@ -100,16 +101,21 @@ fn aura_instance_ids_private_queries_follow_existing_private_state() {
         C_UnitAurasPrivate._state.privateAurasByUnit.target = {
             { auraInstanceID = 905, spellID = 789 },
         }
-        local ids = C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs('player')
-        assert(table.concat(ids, ',') == '903,901')
-        ids[1] = 0
-        assert(C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs('player')[1] == 903)
-        assert(table.concat(C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs('target'), ',') == '905')
-        assert(#C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs('missing-unit') == 0)
-    "#).unwrap();
+        for _, scope in ipairs({_G, __secureenv}) do
+            local query = scope.C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs
+            local ids = query('player')
+            assert(table.concat(ids, ',') == '903,901')
+            ids[1] = 0
+            assert(query('player')[1] == 903)
+            assert(table.concat(query('target'), ',') == '905')
+            assert(#query('missing-unit') == 0)
+        end
+    "#,
+    )
+    .unwrap();
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 #[test]
 fn aura_instance_ids_source_reports_filter_match_separately() {
     let env = seeded_env();
@@ -127,6 +133,41 @@ fn aura_instance_ids_source_reports_filter_match_separately() {
         ids, matched = AuraContainerPrivateAuraSource:GetAllAuraInstanceIDs('player', 'HARMFUL')
         assert(table.concat(ids, ',') == '903' and matched == false)
     "#).unwrap();
+}
+
+#[cfg(feature = "aura-containers")]
+#[test]
+fn aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().player.buffs.clear();
+    env.exec(
+        r#"
+        assert(C_UnitAuras == __secureenv.C_UnitAuras)
+        assert(C_UnitAurasPrivate == __secureenv.C_UnitAurasPrivate)
+        A_Admin.AddBuff(19750, 'EUI acceptance aura', '135907', 30, 3)
+        for _, scope in ipairs({_G, __secureenv}) do
+            local public = scope.C_UnitAuras
+            local private = scope.C_UnitAurasPrivate
+            local ids = public.GetUnitAuraInstanceIDs('player', 'HELPFUL')
+            assert(type(ids) == 'table' and #ids == 1 and ids[1] == 1)
+            assert(select('#', public.GetUnitAuraInstanceIDs('player', 'HELPFUL')) == 1)
+            local aura = public.GetAuraDataByAuraInstanceID('player', ids[1])
+            assert(aura.spellId == 19750 and aura.name == 'EUI acceptance aura')
+            assert(aura.icon == 135907 and aura.applications == 3)
+            local harmful = public.GetUnitAuraInstanceIDs('player', 'HARMFUL')
+            assert(type(harmful) == 'table' and #harmful == 0)
+            local privateIDs = private.GetAllPrivateAuraInstanceIDs('player')
+            assert(type(privateIDs) == 'table' and #privateIDs == 0)
+            assert(select('#', private.GetAllPrivateAuraInstanceIDs('player')) == 1)
+        end
+        A_Admin.RemoveBuff(19750)
+        for _, scope in ipairs({_G, __secureenv}) do
+            local ids = scope.C_UnitAuras.GetUnitAuraInstanceIDs('player', 'HELPFUL')
+            assert(type(ids) == 'table' and #ids == 0)
+        end
+        "#,
+    )
+    .expect("shared namespaces enumerate real admin aura additions and removals");
 }
 
 #[cfg(feature = "retail-12-1-0")]

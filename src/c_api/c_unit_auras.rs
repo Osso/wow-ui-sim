@@ -2,9 +2,11 @@
 
 use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
-use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
+#[cfg(feature = "aura-containers")]
+use crate::lua_api::methods::table_get;
 #[cfg(feature = "retail-12-1-0")]
-use crate::lua_api::methods::{table_get, table_set};
+use crate::lua_api::methods::table_set;
+use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -27,12 +29,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetUnitAuraInstanceIDs",
         get_unit_aura_instance_ids,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     register_private_enumeration(state)?;
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 fn register_private_enumeration(state: &mut LuaState) -> LuaResult<()> {
     let private = super::ensure_namespace(state, "C_UnitAurasPrivate")?;
     table_set_rust_fn_static(
@@ -179,7 +181,7 @@ fn is_other_player_source(sim: &SimState, aura: &AuraInfo) -> bool {
             .is_some_and(|target| target.is_player)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 fn get_private_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let namespace = super::global_val(state, "C_UnitAurasPrivate");
@@ -207,7 +209,7 @@ fn get_private_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 fn private_instance_id(state: &mut LuaState, aura: Val) -> LuaResult<i32> {
     match table_get(state, aura, "auraInstanceID") {
         Val::Num(id) => Ok(id as i32),
