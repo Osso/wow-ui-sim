@@ -61,6 +61,16 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
     ),
     (456574, spell("Cinder Nectar", 132805, 1)),
     (461063, spell("Quiet Contemplation", 1499566, 1)),
+    (
+        1247917,
+        SpellInfo {
+            name: "Clear Current Transmogrifications",
+            subtext: "",
+            icon_file_data_id: 7539422,
+            school_mask: 1,
+            implicit_target: 1,
+        },
+    ),
 ];
 
 const fn spell(name: &'static str, icon_file_data_id: u32, implicit_target: u8) -> SpellInfo {

@@ -18,6 +18,7 @@
 //! - `CancelPetPossess()` → clears the active flag on every slot, fires
 //!   `PET_BAR_UPDATE`. Possession state itself is not modeled.
 //! - `PetHasActionBar()` → true when any slot has `has_action = true`.
+//! - `GetPetIcon()` → the current summoned pet portrait texture, or nil.
 //! - `HasPetUI()` → `(hasPetUI, canGainXP)` from action slots / pet XP state.
 //!
 //! The `runtime_surface_bootstrap.lua` `if ... == nil` guards on
@@ -220,6 +221,14 @@ fn pet_has_action_bar(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// `GetPetIcon()` — current summoned pet portrait texture, or nil when no pet
+/// is summoned.
+fn get_pet_icon(state: &mut LuaState) -> LuaResult<u32> {
+    let icon = borrow_state(state)?.pet.icon.clone();
+    push_optional_string(state, icon.as_deref());
+    Ok(1)
+}
+
 /// `HasPetUI()` — `(hasPetUI, canGainXP)`. The first return controls
 /// CharacterFrame's pet tab visibility; the second controls XP/info widgets
 /// in Cataclysm/Mists pet paper-doll code.
@@ -243,6 +252,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "TogglePetAutocast", toggle_pet_autocast)?;
     LuaApiMut::register_function(lua, "CancelPetPossess", cancel_pet_possess)?;
     LuaApiMut::register_function(lua, "PetHasActionBar", pet_has_action_bar)?;
+    LuaApiMut::register_function(lua, "GetPetIcon", get_pet_icon)?;
     LuaApiMut::register_function(lua, "HasPetUI", has_pet_ui)?;
     Ok(())
 }

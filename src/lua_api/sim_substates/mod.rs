@@ -257,6 +257,9 @@ impl PetBattlePet {
 /// retail's modern shape unless a test seeds the struct.
 #[derive(Debug, Default, Clone)]
 pub struct PetState {
+    /// Current summoned pet portrait texture. Drives `GetPetIcon`; `None`
+    /// represents no summoned pet.
+    pub icon: Option<String>,
     /// Current XP within the pet's level. Drives `GetPetExperience`
     /// (first return).
     pub xp: i32,

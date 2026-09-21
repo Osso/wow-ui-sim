@@ -1,7 +1,9 @@
 use std::path::PathBuf;
 
-use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
-use wow_ui_sim::loader::{find_toc_file, load_addon};
+use wow_ui_sim::loader::{
+    StartupAddonLoadKind, discover_all_blizzard_addons, discover_blizzard_addons_for_screen,
+    discover_blizzard_startup_addons_for_screen, find_toc_file, load_addon, load_startup_addon,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -128,6 +130,46 @@ const PVP_AND_WARMODE_MIXINS: &[&str] = &[
     "WarmodeIncentiveMixin",
 ];
 
+fn load_runtime_game_ui() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+
+    let ui = blizzard_ui_dir();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    wow_ui_sim::xml::register_intrinsic_templates();
+
+    if let Some(framexml_toc) = wow_ui_sim::client_profile::blizzard_ui_framexml_toc() {
+        load_startup_addon(
+            &env.loader_env(),
+            &framexml_toc,
+            StartupAddonLoadKind::Full,
+            None,
+        )
+        .expect("profile FrameXML startup addon loads");
+        env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("FrameXML")])
+            .expect("FrameXML ADDON_LOADED dispatch succeeds");
+    }
+
+    for addon in discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game) {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("[load {}] FAILED: {error}", addon.name));
+        if addon.kind == StartupAddonLoadKind::Full {
+            env.fire_event_with_args("ADDON_LOADED", &[env.lua_string(&addon.name)])
+                .unwrap_or_else(|error| panic!("[ADDON_LOADED {}] FAILED: {error}", addon.name));
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+
+    env.sync_string_metatable_to_global_string();
+    env.sync_addon_names_to_lua();
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env
+}
+
 fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -154,6 +196,51 @@ fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+// Retail, PTR, and Forever share the Mainline PlayerSpells keybinding lifecycle.
+// Mists uses its Cata panel implementation; older profiles use legacy SpellBookFrame.
+#[test]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
+    let env = load_runtime_game_ui();
+    env.state().borrow_mut().lua_errors.clear();
+
+    env.send_key_press("S", None)
+        .expect("first spellbook keybind dispatch succeeds");
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);
+
+    let (spellbook_exists, spellbook_shown): (bool, bool) = env
+        .eval(
+            r#"
+            local frame = PlayerSpellsFrame or SpellBookFrame
+            return frame ~= nil, frame ~= nil and frame:IsShown() or false
+            "#,
+        )
+        .expect("active profile spellbook visibility is readable");
+    assert!(spellbook_exists, "active profile publishes a spellbook frame");
+    assert!(spellbook_shown, "first S press opens the spellbook");
+
+    env.send_key_press("S", None)
+        .expect("second spellbook keybind dispatch succeeds");
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);
+
+    let spellbook_shown: bool = env
+        .eval(
+            r#"
+            local frame = PlayerSpellsFrame or SpellBookFrame
+            return frame ~= nil and frame:IsShown() or false
+            "#,
+        )
+        .expect("active profile spellbook visibility remains readable");
+    assert!(!spellbook_shown, "second S press closes the spellbook");
+
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "opening and closing the active profile spellbook emitted Lua errors:\n{}",
+        errors.join("\n")
+    );
 }
 
 #[test]

@@ -36,6 +36,12 @@ pub(crate) fn register(state: &mut LuaState) {
     );
     let constants = super::helpers::ensure_global_table(state, "Constants");
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
+    publish(
+        state,
+        constants,
+        "TransmogOutfitDataConsts",
+        &[("CLEAR_TRANSMOG_OUTFIT_MANUAL_SPELL_ID", 1_247_917)],
+    );
     publish(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
     publish(
         state,

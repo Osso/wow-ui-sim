@@ -11,6 +11,8 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
 )) {
     (
         &[
+            ACTION_BAR_SET,
+            ACTION_BAR_SET_META,
             BATTLE_NET_FRIEND_LEVEL,
             BATTLE_NET_FRIEND_TAG,
             BATTLE_NET_FRIEND_TAG_META,
@@ -31,6 +33,16 @@ pub const ENUMS: (&[EnumDef], &[SeqEnumDef]) = if cfg!(any(
 } else {
     (&[], &[])
 };
+
+const ACTION_BAR_SET: EnumDef = (
+    "ActionBarSet",
+    &[("None", 0), ("Mkb", 1), ("Gamepad", 2), ("All", 3)],
+);
+
+const ACTION_BAR_SET_META: EnumDef = (
+    "ActionBarSetMeta",
+    &[("MinValue", 0), ("MaxValue", 3), ("NumValues", 4)],
+);
 
 // Forever 1.60.1.69913 CombatAudioAlertSharedDocumentation.lua.
 #[cfg(feature = "client-wowforever")]

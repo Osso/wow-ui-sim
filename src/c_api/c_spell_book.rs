@@ -47,6 +47,12 @@ fn register_spell_book_skill_line_queries(
         "GetSpellBookSkillLineInfo",
         c_spell_book_get_spell_book_skill_line_info,
     )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetClassSkillLineInfo",
+        c_spell_book_get_class_skill_line_info,
+    )?;
     Ok(())
 }
 
@@ -488,6 +494,14 @@ fn c_spell_book_get_num_spell_book_skill_lines(state: &mut LuaState) -> LuaResul
 
 fn c_spell_book_get_spell_book_skill_line_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
+    push_spell_book_skill_line_info(state, index)
+}
+
+fn c_spell_book_get_class_skill_line_info(state: &mut LuaState) -> LuaResult<u32> {
+    push_spell_book_skill_line_info(state, 2)
+}
+
+fn push_spell_book_skill_line_info(state: &mut LuaState, index: i32) -> LuaResult<u32> {
     let Some(skill_line) = spellbook_data::get_skill_line(index) else {
         state.push(Val::Nil);
         return Ok(1);
