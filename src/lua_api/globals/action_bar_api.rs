@@ -148,38 +148,18 @@ fn get_multicast_bar_index(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_vehicle_bar_index(state: &mut LuaState) -> LuaResult<u32> {
-    let (has_vehicle_bar, vehicle_bar_index) = {
-        let sim = borrow_state(state)?;
-        (sim.has_vehicle_action_bar, sim.vehicle_bar_index)
-    };
-    push_special_bar_index(state, has_vehicle_bar, vehicle_bar_index)
+    let index = borrow_state(state)?.vehicle_bar_index;
+    push_i32(state, index)
 }
 
 fn get_override_bar_index(state: &mut LuaState) -> LuaResult<u32> {
-    let (has_override_bar, override_bar_index) = {
-        let sim = borrow_state(state)?;
-        (sim.has_override_action_bar, sim.override_bar_index)
-    };
-    push_special_bar_index(state, has_override_bar, override_bar_index)
+    let index = borrow_state(state)?.override_bar_index;
+    push_i32(state, index)
 }
 
 fn get_temp_shapeshift_bar_index(state: &mut LuaState) -> LuaResult<u32> {
-    let (has_temp_shapeshift_bar, temp_shapeshift_bar_index) = {
-        let sim = borrow_state(state)?;
-        (
-            sim.has_temp_shapeshift_action_bar,
-            sim.temp_shapeshift_bar_index,
-        )
-    };
-    push_special_bar_index(state, has_temp_shapeshift_bar, temp_shapeshift_bar_index)
-}
-
-fn push_special_bar_index(state: &mut LuaState, has_bar: bool, index: i32) -> LuaResult<u32> {
-    if has_bar {
-        push_i32(state, index)
-    } else {
-        push_nil(state)
-    }
+    let index = borrow_state(state)?.temp_shapeshift_bar_index;
+    push_i32(state, index)
 }
 
 fn get_bonus_bar_index(state: &mut LuaState) -> LuaResult<u32> {

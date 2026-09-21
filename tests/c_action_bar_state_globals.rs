@@ -102,20 +102,71 @@ fn vehicle_bar_index_reads_state() {
 }
 
 #[test]
-fn special_bar_indexes_are_nil_when_inactive() {
+fn special_bar_indexes_build_paging_conditions_independently_of_availability() {
     let env = WowLuaEnv::new().expect("env");
+    {
+        let mut state = env.state().borrow_mut();
+        state.override_bar_index = 14;
+        state.vehicle_bar_index = 12;
+        state.temp_shapeshift_bar_index = 10;
+    }
 
-    let indexes: (Option<i32>, Option<i32>, Option<i32>) = env
-        .eval(
-            r#"
-            return C_ActionBar.GetVehicleBarIndex(),
-                C_ActionBar.GetOverrideBarIndex(),
-                C_ActionBar.GetTempShapeshiftBarIndex()
-            "#,
-        )
-        .unwrap();
+    for active in [false, true, false] {
+        {
+            let mut state = env.state().borrow_mut();
+            state.has_override_action_bar = active;
+            state.has_vehicle_action_bar = active;
+            state.has_temp_shapeshift_action_bar = active;
+        }
+        // EllesmereUIActionBars builds these strings before a special bar is active.
+        let conditions: String = env
+            .eval(
+                r#"
+                return "[overridebar] " .. C_ActionBar.GetOverrideBarIndex() .. "; "
+                    .. "[vehicleui] " .. C_ActionBar.GetVehicleBarIndex() .. "; "
+                    .. "[shapeshift] " .. C_ActionBar.GetTempShapeshiftBarIndex() .. "; "
+                "#,
+            )
+            .unwrap();
+        assert_eq!(
+            conditions,
+            "[overridebar] 14; [vehicleui] 12; [shapeshift] 10; "
+        );
+        let availability: (bool, bool, bool) = env
+            .eval("return C_ActionBar.HasOverrideActionBar(), C_ActionBar.HasVehicleActionBar(), C_ActionBar.HasTempShapeshiftActionBar()")
+            .unwrap();
+        assert_eq!(availability, (active, active, active));
+    }
+}
 
-    assert_eq!(indexes, (None, None, None));
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn special_bar_indexes_legacy_vendor_wrappers_share_the_numeric_producer() {
+    let env = WowLuaEnv::new().expect("env");
+    let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source =
+        std::fs::read_to_string(root.join("Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua"))
+            .unwrap();
+    env.exec(&source).unwrap();
+    for active in [false, true, false] {
+        {
+            let mut state = env.state().borrow_mut();
+            state.override_bar_index = 15;
+            state.vehicle_bar_index = 11;
+            state.temp_shapeshift_bar_index = 8;
+            state.has_override_action_bar = active;
+            state.has_vehicle_action_bar = active;
+            state.has_temp_shapeshift_action_bar = active;
+        }
+        let legacy: (i32, i32, i32) = env
+            .eval("return GetOverrideBarIndex(), GetVehicleBarIndex(), GetTempShapeshiftBarIndex()")
+            .unwrap();
+        assert_eq!(legacy, (15, 11, 8));
+        let current: (i32, i32, i32) = env
+            .eval("return C_ActionBar.GetOverrideBarIndex(), C_ActionBar.GetVehicleBarIndex(), C_ActionBar.GetTempShapeshiftBarIndex()")
+            .unwrap();
+        assert_eq!(legacy, current);
+    }
 }
 
 #[test]
