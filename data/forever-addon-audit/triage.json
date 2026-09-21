@@ -1,0 +1,3104 @@
+{
+  "scope": "208 cached package pairs; static triage of Forever-marked hunks and API-reference deltas, not full review of every unrelated change",
+  "classificationCounts": {
+    "candidate runtime gap": 8,
+    "confounded pair": 46,
+    "needs deeper review": 25,
+    "packaging-only": 58,
+    "data-only": 8,
+    "packaging-only/data-only": 33,
+    "no new gap established by source inspection": 30
+  },
+  "projects": [
+    {
+      "slug": "abattis-pugboard",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4d52fa1b0ec3c7fec64b546db81a8f186244cab281cdb1d050e9dbff474cd3c6",
+      "foreverMarkedPaths": [
+        "Classify.lua",
+        "Data.lua",
+        "PugBoard.toc",
+        "PugBoard_Vanilla.toc",
+        "README.md"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "abgesattelt",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a75c02679178cd47cbe98d3fe7f593403ad40589216579e35fd34f66b3a9af25",
+      "foreverMarkedPaths": [
+        "Abgesattelt.lua",
+        "Abgesattelt.toc",
+        "README.txt"
+      ],
+      "reason": "Standalone addon data and client-bug/policy notes; no native API proof."
+    },
+    {
+      "slug": "accentchat",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7b1a67c76816b98327ab60a1c26ec1383fa18e8d43dadd59a41fd6900c37e93b",
+      "foreverMarkedPaths": [
+        "AccentChat_FVR.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "account-wide-ui",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d0fb2828adc4cccb0fc8a2f759209e6d3d4c9125deeb6bce7b7a994a08b20507",
+      "foreverMarkedPaths": [
+        "AccWideUILayoutSelection.toc",
+        "ChatChannels.lua",
+        "HelperFunctions.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Interface detection plus GameRules/channel APIs; no source-backed mismatch found."
+    },
+    {
+      "slug": "accountant-classic",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3f4ee59a7818449e2b0ef578d26af6f8de3f7cc24a26b29de6d5b920eab4884b",
+      "foreverMarkedPaths": [
+        "Accountant_Classic.toc",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever changes use C_GameRules rule predicates and modern metadata/settings/timer APIs already present in simulator; static diff supplies no failing native contract."
+    },
+    {
+      "slug": "acecommqueue",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "9aabf0d59bcbbd6d59e1b294473928f44d6b88220748c7b88f3a78d2e8253f49",
+      "foreverMarkedPaths": [
+        "AceCommQueue-1.0.toc",
+        "CHANGELOG.md",
+        "README.md"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "achievement-guild-rank",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "806f73f82e943c0d482f06113d85120a675b8c8891e831638535f8b187c878be",
+      "foreverMarkedPaths": [],
+      "rationale": "No Forever-marked source hunks in this pair."
+    },
+    {
+      "slug": "achievementsutils",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a3d51a63e0a92ec8690d06dd09c264d88a29506e1ee8082544bccdb8bbf718f9",
+      "foreverMarkedPaths": [
+        "AchievementsUtils.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "ackis-recipe-list-classic",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "64e01844afa28355395370b94aa0d5027ed95fe0b1989a0732d831d7121db7d1",
+      "foreverMarkedPaths": [
+        "AckisRecipeList.toc",
+        "Objects/Location.lua",
+        "libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "ackis-recipe-list-classic-cooking",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7243df24c92d1d75b225f3148acdcd2b25914a805721f73e31ed3ef4ec6f6c6c",
+      "foreverMarkedPaths": [
+        "AckisRecipeList_Cooking.toc",
+        "Quests.lua",
+        "Recipes.lua",
+        "Trainers.lua",
+        "Vendors.lua"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "ackis-recipe-list-classic-leatherworking",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3d424608d3b6ff35c373ffd5dfdb444cdb3eb8e47a6000374b43700b6dc2b50e",
+      "foreverMarkedPaths": [
+        "AckisRecipeList_Leatherworking.toc",
+        "Recipes.lua",
+        "Trainers.lua",
+        "Vendors.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "ackis-recipe-list-classic-tailoring",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "26f218e256cf4fe88bf38ad763818cbe4cd5230bfd374b5712c015e924ba5e81",
+      "foreverMarkedPaths": [
+        "AckisRecipeList_Tailoring.toc",
+        "Recipes.lua",
+        "Trainers.lua",
+        "Vendors.lua"
+      ],
+      "reason": "Forever recipe/trainer/vendor data and TOC only."
+    },
+    {
+      "slug": "actionbarauras",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6b7da12b9030d0030ca8510badfab569c2d22a4e7e7e3afb9c0a929c064531ef",
+      "foreverMarkedPaths": [
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "actionbarinterrupthighlight",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fdeef18cb2ccc551e6725f5e8c459dfd339bc7e7901219b2bfff4713251f6568",
+      "foreverMarkedPaths": [
+        "ActionBarInterruptHighlight.toc",
+        "CHANGELOG.md",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Interface declaration and Ace version detection; no simulator mismatch established."
+    },
+    {
+      "slug": "actionhud",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "67706d85aeaf6635ac7a03c2fb5aabbd9d29aa410d09ddd08e123790bb86baf7",
+      "foreverMarkedPaths": [
+        "ActionHud.toc",
+        "CHANGES.txt",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Interface declaration and Ace version detection; changelog explicitly says behavior untested, not a native contract."
+    },
+    {
+      "slug": "addonprofiles",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4d2c4f98a10a2b5901a14be57655edca00658b24267617e74d4bee872f8710cc",
+      "foreverMarkedPaths": [
+        "AddonProfiles_Camelot.toc",
+        "CHANGELOG.md"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "adhd-quest",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a053eb14799b31647f30249a1ed01391a0bdaca2b34db3f5f95bec1a66575ed4",
+      "foreverMarkedPaths": [
+        "Summaries.lua"
+      ],
+      "rationale": "Forever-marked changes do not yet establish a simulator producer discrepancy."
+    },
+    {
+      "slug": "adibags-fishing",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "0572f2c3a7d43218667d81105dc626995f9954c4e766a08ad241770e23a5b0c7",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "aemote-drwho-sounds",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "db2234f2907b0e3458c2e9d8888120a4d6675bd943ab7d69c36d6bd861672bda",
+      "foreverMarkedPaths": [
+        "AEmotes_DrWho.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "aemote-sound-pack-from-holyfrey",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2447b802e884af84a95e094a0fe30ee3c509b0d46c303191d1432cf46acd381e",
+      "foreverMarkedPaths": [
+        "AEmotes_Holyfrey.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "aemotes-classic",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a4ff912735ec78bbe3cca887f63123996c665dc5c7eb6e203551e9953e9de0b3",
+      "foreverMarkedPaths": [
+        "AEmotes/AEmotes.lua",
+        "AEmotes/AEmotes.toc",
+        "AEmotes_Sounds/AEmotes_Sounds.toc",
+        "AEmotes_UI/AEmotes_UI.lua",
+        "AEmotes_UI/AEmotes_UI.toc"
+      ],
+      "reason": "Dedicated Forever TOCs/sound/UI package; no simulator API evidence."
+    },
+    {
+      "slug": "aemotes-full-metal-jacket-sound-pack-from-holyfrey",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a2e6ccf4de281b34ac0495752df826f15f8605d0c1ad7b4425566d78fdf380ab",
+      "foreverMarkedPaths": [
+        "AEmotes_FullMetalJ.toc"
+      ],
+      "reason": "Sound-pack metadata and static content only."
+    },
+    {
+      "slug": "aemotes-laugh-sounds-pack-from-holyfrey",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "96a5db8f6cd27cd84b788f428774e8d6c9eb461a046caf17022bf7f16c9a60ee",
+      "foreverMarkedPaths": [
+        "AEmotes_Laugh.toc"
+      ],
+      "reason": "Sound-pack metadata and dependency only."
+    },
+    {
+      "slug": "aemotes-leeroy-sound-pack-from-holyfrey",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e3c82c9e9e72e087c627d9317675a94e276cc2390d849e0cbc96448f517d4402",
+      "foreverMarkedPaths": [
+        "AEmotes_Leeroy.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "aemotes-lynge-sound-pack-from-holyfrey",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "91e5866c6e2af2013421ff9022236765e0757348e00319ca2384b564d858789c",
+      "foreverMarkedPaths": [
+        "AEmotes_Lynge.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "aemotes-millhouse-manastorm-sound-pack",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c66993be29480847207c09cf74d232e523c98817479b20e08c25e6cb3071e7d5",
+      "foreverMarkedPaths": [
+        "AEmotes_Millhouse.toc"
+      ],
+      "reason": "Sound-pack metadata/dependency only."
+    },
+    {
+      "slug": "aemotes-wonderwoman-sound-pack-from-holyfrey",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "53a3624f041b4ef7327b02bef86f6e1ac4beb940683564884720a48bf17b0a16",
+      "foreverMarkedPaths": [
+        "AEmotes_WonderWoman.toc"
+      ],
+      "reason": "Separate sound-pack TOC/version only."
+    },
+    {
+      "slug": "alenyas-guides",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "216f78ee1612107700a03907f3ff73becc9792d3fc200f18bdc68d5fd84b750c",
+      "foreverMarkedPaths": [
+        "AlenyaGuides/Compat.lua",
+        "AlenyaGuides/Core.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "alenyas-guides-writer",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "756e36a3d4a336985080481f7e8090e8ed0bb9652612614bddbc04cfc56ea92f",
+      "foreverMarkedPaths": [],
+      "rationale": "No Forever-marked source hunks in this pair."
+    },
+    {
+      "slug": "alias-rename-anyone",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "ae89937065bbf1189a8c1d7192b18763b52b3b21e908878cea67bfa084cad1ae",
+      "foreverMarkedPaths": [
+        "Alias.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Mail/menu changes may consume modern APIs, but diff does not isolate a pinned Forever mismatch."
+    },
+    {
+      "slug": "all-the-things",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2a740c7f23f9e8046f7b731447dc053ba4373f124704640b01e97d4853fef43a",
+      "foreverMarkedPaths": [
+        "AllTheThings.lua",
+        "AllTheThings.toc",
+        "CHANGELOG.md",
+        "db/Camelot/Categories/Character.lua",
+        "db/Camelot/Categories/Craftables.lua",
+        "db/Camelot/Categories/Holidays.lua",
+        "db/Camelot/Categories/Instances.lua",
+        "db/Camelot/Categories/PVP.lua",
+        "db/Camelot/Categories/WorldDrops.lua",
+        "db/Camelot/Categories/Zones.lua",
+        "db/Cata/Categories/Craftables.lua",
+        "db/Cata/Categories/Holidays.lua",
+        "db/Cata/Categories/Instances.lua",
+        "db/Cata/Categories/PVP.lua",
+        "db/Cata/Categories/Zones.lua",
+        "db/Mists/Categories/Craftables.lua",
+        "db/Mists/Categories/Holidays.lua",
+        "db/Mists/Categories/Instances.lua",
+        "db/Mists/Categories/PVP.lua",
+        "db/Mists/Categories/Zones.lua",
+        "db/Standard/Categories/Character.lua",
+        "db/Standard/Categories/Craftables.lua",
+        "db/Standard/Categories/Holidays.lua",
+        "db/Standard/Categories/Instances.lua",
+        "db/Standard/Categories/NeverImplemented.lua",
+        "db/Standard/Categories/Promotions.lua",
+        "db/Standard/Categories/Zones.lua",
+        "db/Standard/LocalizationDB.lua",
+        "db/TBC/Categories/Craftables.lua",
+        "db/TBC/Categories/Holidays.lua",
+        "db/TBC/Categories/Instances.lua",
+        "db/TBC/Categories/Zones.lua",
+        "db/Vanilla/Categories/Craftables.lua",
+        "db/Vanilla/Categories/Holidays.lua",
+        "db/Vanilla/Categories/Instances.lua",
+        "db/Vanilla/Categories/WorldDrops.lua",
+        "db/Vanilla/Categories/Zones.lua",
+        "db/VanillaSOD/Categories/Craftables.lua",
+        "db/VanillaSOD/Categories/Holidays.lua",
+        "db/VanillaSOD/Categories/Instances.lua",
+        "db/VanillaSOD/Categories/WorldDrops.lua",
+        "db/VanillaSOD/Categories/Zones.lua",
+        "db/Wrath/Categories/Craftables.lua",
+        "db/Wrath/Categories/Holidays.lua",
+        "db/Wrath/Categories/Instances.lua",
+        "db/Wrath/Categories/Zones.lua",
+        "src/Classes/Achievement Data.lua",
+        "src/Classes/Achievement.Classic.lua",
+        "src/Classes/Achievement.lua",
+        "src/Modules/Tooltip.lua",
+        "src/Settings/Settings.lua",
+        "src/UI/Window Definitions.lua",
+        "src/WoW API Wrappers.lua"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "altitude",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a5ca95e5c511e564fbe6191ce6c614867b35f0a2d6554b8061b729becf5980b0",
+      "foreverMarkedPaths": [
+        "Altitude.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "ambidextrous-by-overcraft",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c210dc21293795646c4fa53005e655a4d58b17dc4bee97d92481491ee3805514",
+      "foreverMarkedPaths": [
+        "Ambidextrous.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "ame-infohub",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b08b8be0b4043f59a62ccfff49c00f3a08ca3f980aa0b8a489a3b233ae0741d0",
+      "foreverMarkedPaths": [
+        "AME_InfoHub.toc",
+        "Core/Bootstrap.lua",
+        "Core/Client.lua",
+        "Core/Client_Forever.lua",
+        "Modules/InfoHub/ExtraPanels_Sides.lua",
+        "Modules/InfoHub/InfoBarsHub.lua",
+        "Modules/InfoHub/MainButtons_Registry.lua",
+        "Modules/InfoHub/MainButtons_Update.lua",
+        "Modules/InfoHub/MainCore.lua",
+        "Modules/ReminderHub/ReminderEvents.lua",
+        "Modules/Tooltips/ButtonsGuildTooltip.lua",
+        "UI/Settings.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "anglers-pocket",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "963498166c43ff6d51e59a52b46c253a18f9f748280004f2f3cf8b4fbb3dd0f2",
+      "foreverMarkedPaths": [
+        "AnglersPocket.toc",
+        "CHANGELOG.md"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "angleur",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e3db44cddaa80451fcbea55d95665908a967f17f7f847082a3e3b1210c8121a9",
+      "foreverMarkedPaths": [
+        "Angleur.toc",
+        "Angleur_Camelot.toc",
+        "Angleur_Mists.toc",
+        "Angleur_TBC.toc",
+        "Angleur_Vanilla.toc",
+        "CHANGELOG.md",
+        "FOREVER_README.txt",
+        "eqMan/eqMan_base.lua",
+        "forever_savedVariables.lua",
+        "init.lua",
+        "items/items_base.lua",
+        "modules/singular/audio.lua",
+        "modules/singular/visual.lua",
+        "secrets/secrets.lua",
+        "tabs/standard_base.lua",
+        "tabs/tiny_base.lua",
+        "thanks/thanks.lua",
+        "toys/toys_base.lua"
+      ],
+      "reason": "112-file release drift and mixed client/data changes; Forever markers do not isolate a native contract."
+    },
+    {
+      "slug": "angleur-nicheoptions",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d502d2f903fb6633014aa6254c35509e3b9d3d489aad2f68aef48abe0596631a",
+      "foreverMarkedPaths": [
+        "Angleur_NicheOptions.toc",
+        "Angleur_NicheOptions_Camelot.toc",
+        "Angleur_NicheOptions_Mists.toc",
+        "Angleur_NicheOptions_TBC.toc",
+        "Angleur_NicheOptions_Vanilla.toc",
+        "CHANGELOG.md",
+        "FOREVER_README.txt",
+        "forever_savedVariables.lua"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "animated-blizzard-portraits",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c94a8d53d008abeb9e48bff4b9939a64c26033f0325197d1523c018830290d11",
+      "foreverMarkedPaths": [
+        "AnimatedBlizzPortrait.lua",
+        "AnimatedBlizzPortrait\\AnimatedBlizzPortrait.lua",
+        "AnimatedBlizzPortrait\\AnimatedBlizzPortrait.toc",
+        "AnimatedBlizzPortrait\\AnimatedBlizzPortrait_Mainline.toc"
+      ],
+      "reason": "TOC duplication/comment edits; no isolated runtime contract."
+    },
+    {
+      "slug": "antisocial",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "43d5258da930c0525221e9046be175548bbfe75eb04556c636b75f0a77d0b521",
+      "foreverMarkedPaths": [],
+      "reason": "Interface declaration only."
+    },
+    {
+      "slug": "arcane-wizard-library",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c8fc470a7249bd593c5fdbdf46c500e7993bb85b594ab1edb29a7bcb4dc62e97",
+      "foreverMarkedPaths": [
+        "ArcaneWizardLibrary.toc",
+        "CHANGELOG.md",
+        "FULL-CHANGELOG.md"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "armoryutils",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "570224cec703fecf23119e74648541089f4804981ec1cfdd9e5f4bbf7ee343b3",
+      "foreverMarkedPaths": [
+        "ArmoryUtils.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "atlasloot-continued",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c157f8000ea860aaab2d5db8c2d5af1256cc0d6c78106d86462507b7da117828",
+      "foreverMarkedPaths": [
+        "AtlasLoot/AtlasLoot.lua",
+        "AtlasLoot/AtlasLoot_Camelot.toc",
+        "AtlasLoot/Button/Item_type.lua",
+        "AtlasLoot/Button/Profession_type.lua",
+        "AtlasLoot/Button/Set_type.lua",
+        "AtlasLoot/Compat.lua",
+        "AtlasLoot/Constants.lua",
+        "AtlasLoot/Data/Profession.lua",
+        "AtlasLoot/Data/VendorPrice.lua",
+        "AtlasLoot/GUI/GUI.lua",
+        "AtlasLoot/Init.lua",
+        "AtlasLootClassic/Data/Profession.lua",
+        "AtlasLootClassic/Data/VendorPrice.lua",
+        "AtlasLootClassic_Collections/data-wrath.lua",
+        "AtlasLootClassic_Data/source-sod.lua",
+        "AtlasLootClassic_Data/source-tbc.lua",
+        "AtlasLootClassic_Data/source.lua",
+        "AtlasLootClassic_DungeonsAndRaids/data-sod.lua",
+        "AtlasLootClassic_DungeonsAndRaids/data.lua",
+        "AtlasLootClassic_DungeonsAndRaids/data_p1_p4.lua",
+        "AtlasLoot_Collections/AtlasLoot_Collections_Camelot.toc",
+        "AtlasLoot_Collections/data-forever.lua",
+        "AtlasLoot_Collections/data-wrath.lua",
+        "AtlasLoot_Crafting/AtlasLoot_Crafting_Camelot.toc",
+        "AtlasLoot_Crafting/data-forever.lua",
+        "AtlasLoot_Data/AtlasLoot_Data_Camelot.toc",
+        "AtlasLoot_Data/source-forever.lua",
+        "AtlasLoot_Data/source-sod.lua",
+        "AtlasLoot_Data/source-tbc.lua",
+        "AtlasLoot_Data/source.lua",
+        "AtlasLoot_DungeonsAndRaids/AtlasLoot_DungeonsAndRaids_Camelot.toc",
+        "AtlasLoot_DungeonsAndRaids/data-forever.lua",
+        "AtlasLoot_DungeonsAndRaids/data-sod.lua",
+        "AtlasLoot_DungeonsAndRaids/data.lua",
+        "AtlasLoot_DungeonsAndRaids/data_p1_p4.lua",
+        "AtlasLoot_Factions/AtlasLoot_Factions_Camelot.toc",
+        "AtlasLoot_Factions/data-forever.lua",
+        "AtlasLoot_Favourites/AtlasLoot_Favourites_Camelot.toc",
+        "AtlasLoot_Options/AtlasLoot_Options_Camelot.toc",
+        "AtlasLoot_PvP/AtlasLoot_PvP_Camelot.toc",
+        "AtlasLoot_PvP/data-forever.lua"
+      ],
+      "rationale": "Large release drift; Forever-marked subset is not isolated enough for runtime attribution."
+    },
+    {
+      "slug": "atlasloot-forever",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "022ae7ed90ca86dc3b03ec5ac52f084b6e9eb10eef32abe398491ba7e2368f15",
+      "foreverMarkedPaths": [
+        "AtlasBIStooltips/AtlasBIStooltips.toc",
+        "AtlasLootClassic/AtlasLootClassic.toc",
+        "AtlasLootClassic/AtlasLootClassic_Forever.toc",
+        "AtlasLootClassic/AtlasLoot_BiS_GUI.lua",
+        "AtlasLootClassic/GUI/GUI.lua",
+        "AtlasLootClassic_Collections/AtlasLootClassic_Collections.toc",
+        "AtlasLootClassic_Collections/AtlasLootClassic_Collections_Forever.toc",
+        "AtlasLootClassic_Collections/data-wrath.lua",
+        "AtlasLootClassic_Crafting/AtlasLootClassic_Crafting.toc",
+        "AtlasLootClassic_Crafting/AtlasLootClassic_Crafting_Forever.toc",
+        "AtlasLootClassic_Data/AtlasLootClassic_Data.toc",
+        "AtlasLootClassic_Data/AtlasLootClassic_Data_Forever.toc",
+        "AtlasLootClassic_DungeonsAndRaids/AtlasLootClassic_DungeonsAndRaids.toc",
+        "AtlasLootClassic_DungeonsAndRaids/AtlasLootClassic_DungeonsAndRaids_Forever.toc",
+        "AtlasLootClassic_DungeonsAndRaids/data.lua",
+        "AtlasLootClassic_Factions/AtlasLootClassic_Factions.toc",
+        "AtlasLootClassic_Factions/AtlasLootClassic_Factions_Forever.toc",
+        "AtlasLootClassic_Options/AtlasLootClassic_Options.toc",
+        "AtlasLootClassic_Options/AtlasLootClassic_Options_Forever.toc",
+        "AtlasLootClassic_PvP/AtlasLootClassic_PvP.toc",
+        "AtlasLootClassic_PvP/AtlasLootClassic_PvP_Forever.toc"
+      ],
+      "reason": "Forever fork/package and game data; no isolated simulator API producer evidence."
+    },
+    {
+      "slug": "atlaslootforever",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4e51d7dd558061270f4ffe4aefb74cef84c6e32793887052422460b375c4952d",
+      "foreverMarkedPaths": [
+        "AtlasLoot/AtlasLoot.lua",
+        "AtlasLoot/AtlasLoot_Forever.toc",
+        "AtlasLoot/AtlasLoot_Mainline.toc",
+        "AtlasLoot/Button/Item_type.lua",
+        "AtlasLoot/Button/Profession_type.lua",
+        "AtlasLoot/Button/Set_type.lua",
+        "AtlasLoot/Compat.lua",
+        "AtlasLoot/Constants.lua",
+        "AtlasLoot/GUI/GUI.lua",
+        "AtlasLoot/Init.lua",
+        "AtlasLoot_Collections/AtlasLoot_Collections_Forever.toc",
+        "AtlasLoot_Collections/AtlasLoot_Collections_Mainline.toc",
+        "AtlasLoot_Collections/data-forever.lua",
+        "AtlasLoot_Crafting/AtlasLoot_Crafting_Forever.toc",
+        "AtlasLoot_Crafting/AtlasLoot_Crafting_Mainline.toc",
+        "AtlasLoot_Crafting/data-forever.lua",
+        "AtlasLoot_Data/AtlasLoot_Data_Forever.toc",
+        "AtlasLoot_Data/AtlasLoot_Data_Mainline.toc",
+        "AtlasLoot_Data/source-forever.lua",
+        "AtlasLoot_DungeonsAndRaids/AtlasLoot_DungeonsAndRaids_Forever.toc",
+        "AtlasLoot_DungeonsAndRaids/AtlasLoot_DungeonsAndRaids_Mainline.toc",
+        "AtlasLoot_DungeonsAndRaids/data-forever.lua",
+        "AtlasLoot_Factions/AtlasLoot_Factions_Forever.toc",
+        "AtlasLoot_Factions/AtlasLoot_Factions_Mainline.toc",
+        "AtlasLoot_Favourites/AtlasLoot_Favourites_Forever.toc",
+        "AtlasLoot_Favourites/AtlasLoot_Favourites_Mainline.toc",
+        "AtlasLoot_Options/AtlasLoot_Options_Forever.toc",
+        "AtlasLoot_Options/AtlasLoot_Options_Mainline.toc",
+        "AtlasLoot_PvP/AtlasLoot_PvP_Forever.toc",
+        "AtlasLoot_PvP/AtlasLoot_PvP_Mainline.toc",
+        "AtlasLoot_PvP/data-forever.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "auctionator",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "cf6283294ffeca5bf70c67ec73fa484a314f4a0d20d624653a7a310344b9b23f",
+      "foreverMarkedPaths": [
+        "Auctionator.toc",
+        "CHANGELOG.md",
+        "Source/Constants/Main.lua",
+        "Source/Groups/Constants.lua",
+        "Source_Mainline/CraftingInfo/Professions.lua",
+        "Source_ModernAH/Selling/ItemPrice.lua",
+        "Source_ModernAH/Tabs/Selling/Mixins/SaleItem.lua"
+      ],
+      "reason": "Changed API calls are modeled or compatibility fallbacks are already present; package diff alone does not demonstrate incorrect Forever behavior."
+    },
+    {
+      "slug": "auctionhouseconfirmquantity",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c38d16f32e6068c5a48ee49344505c50ba110f4330a7f18263f2f3d20a612063",
+      "foreverMarkedPaths": [
+        "AuctionHouseConfirmQuantity.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Interface/changelog-only Forever support."
+    },
+    {
+      "slug": "aurarium",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "56c1da42124f48726f0d5985dc229fdf669c16e022e8ef2d0afc39977d728b32",
+      "foreverMarkedPaths": [
+        "Aurarium.toc",
+        "CHANGELOG.md",
+        "FULL-CHANGELOG.md",
+        "data/ChangelogData.lua"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "aurashelf",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "50b230e25a6ff7f371e3199359a568f2024d0bf190bc5dea08d5b852372db330",
+      "foreverMarkedPaths": [
+        "AuraShelf.toc",
+        "Core/Presets.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "auto-grats",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "df665ff80e8e29ca84a30bca4beab2328ae508a9a845cdc219275806d9d009aa",
+      "foreverMarkedPaths": [
+        "AutoGrats-Mainline.toc"
+      ],
+      "reason": "New Forever TOC; no API delta."
+    },
+    {
+      "slug": "auto-queue",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "28f94dbb13beb863eccd8ea38d74be9d4141e0975d6c931a7d78b40095cb1f5c",
+      "foreverMarkedPaths": [
+        "AutoQueue.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "auto-trackers",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "087bf855cc74689c150ceaf8e1baa9c0e05e3c1420c88f2867c489196ad6ac5e",
+      "foreverMarkedPaths": [
+        "AutoTrackers.toc",
+        "CHANGES.txt"
+      ],
+      "reason": "Tracking/spell/timer APIs are present; static diff does not prove a bad return."
+    },
+    {
+      "slug": "autoloot-by-overcraft",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "74aef46790cb69d81edb4a713ccc09a788c4ca7f5f5109b0671c1870cdce45c4",
+      "foreverMarkedPaths": [
+        "Autoloot_by-OverCraft.toc"
+      ],
+      "reason": "TOC/interface expansion only."
+    },
+    {
+      "slug": "autolooter-continued",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "9edb3ff3201832d5c43e20b41b28b680508d721567a223cdba4ed15634b11a12",
+      "foreverMarkedPaths": [
+        "AutoLooter.toc",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever changes use C_GameRules rule predicates and modern metadata/settings/timer APIs already present in simulator; static diff supplies no failing native contract."
+    },
+    {
+      "slug": "automated-consumables",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e344afbdf1ca9beb39879fa577242680d103dded5c590570b3a8d171a64ceb03",
+      "foreverMarkedPaths": [
+        "Automated-Consumables.toc",
+        "CHANGES.txt"
+      ],
+      "reason": "Item and macro constants referenced; no reproduced Forever mismatch."
+    },
+    {
+      "slug": "autometerreset",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6c5bbc9656f29ea51c9984fb1660968a57383eb21d0a803142ec38ace4fd0af1",
+      "foreverMarkedPaths": [],
+      "reason": "TOC/minor release adjustment; no API delta."
+    },
+    {
+      "slug": "autostow",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e7f30fd0b34bbca2358bcdaa782079297ba4271d4d8d3170d507333c32e6bef1",
+      "foreverMarkedPaths": [
+        "AutoStow.lua",
+        "AutoStow.toc",
+        "AutoStow_Camelot.toc",
+        "README.txt"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "avoidancestats-tbc",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "80f3a0f62c0a90ea539e06960e9eb472fb6bce74f54af884d203b3730100bcb8",
+      "foreverMarkedPaths": [
+        "AvoidanceStatsForever/AvoidanceStatsForever_Camelot.toc",
+        "AvoidanceStatsForever/CharacterPanel.lua",
+        "AvoidanceStatsForever/Core.lua",
+        "AvoidanceStatsForever/Stats.lua",
+        "AvoidanceStatsTBC/Frame.lua",
+        "Frame.lua"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "azeriteui-junnez-edition-wow12",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "31852114506f306754cf508502baacc5c9f4ced77f26757e9e2ded9a99201969",
+      "foreverMarkedPaths": [
+        "AzeriteUI5_JuNNeZ_Edition_Camelot.toc",
+        "CHANGELOG.md",
+        "Components/ActionBars/Compatibility/HideBlizzard.lua",
+        "Components/ActionBars/Elements/MicroMenu.lua",
+        "Components/ActionBars/Elements/StanceBar.lua",
+        "Components/ActionBars/Prototypes/ActionBar.lua",
+        "Components/Misc/ArcheologyBar.lua",
+        "Components/Misc/ErrorsFrame.lua",
+        "Components/Misc/Info.lua",
+        "Components/Misc/Minimap.lua",
+        "Components/Misc/TrackerWoW11.lua",
+        "Components/Misc/VehicleSeat.lua",
+        "Components/UnitFrames/GroupSpecCache.lua",
+        "Components/UnitFrames/Units/Arena.lua",
+        "Components/UnitFrames/Units/Party.lua",
+        "Components/UnitFrames/Units/PlayerClassPower.lua",
+        "Components/UnitFrames/Units/Raid25.lua",
+        "Components/UnitFrames/Units/Raid40.lua",
+        "Components/UnitFrames/Units/Raid5.lua",
+        "Core/Client.lua",
+        "Core/Common/Constants.lua",
+        "Core/Debugging.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua",
+        "Libs/LibActionButton-1.0-GE/LibActionButton-1.0-GE.lua",
+        "Libs/oUF/elements/classpower.lua",
+        "Libs/oUF_Plugins/oUF_PriorityDebuff.lua",
+        "Libs/oUF_Plugins/oUF_Trinket.lua",
+        "Locale/enUS.lua",
+        "Options/Changelog.lua",
+        "Options/Kit/Renderer.lua",
+        "Options/OptionsPages/Minimap.lua",
+        "Options/OptionsPages/UnitFrames.lua",
+        "WoW11/UnitFrames/ArenaFrames.lua"
+      ],
+      "reason": "Large release drift with many Retail 12.x changes; Forever markers do not isolate a contract."
+    },
+    {
+      "slug": "azeroth-pilot-reloaded-route-recorder",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e49da3c423f0e3519c6cb00fc1b23eeea824acad7d4b36009e98874adff5ab5f",
+      "foreverMarkedPaths": [
+        "APR-Recorder.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "baganator",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "35bb27cefa6d0a868c61e3aad7c84beff38efca2e3c70bcf38d9d7294bbc60ac",
+      "foreverMarkedPaths": [
+        "API/EquipmentSets.lua",
+        "Baganator.toc",
+        "CHANGELOG.md",
+        "CategoryViews/Constants.lua",
+        "Core/Constants.lua",
+        "CustomiseDialog/Components.lua",
+        "CustomiseDialog/Main.lua",
+        "ItemViewCommon/BackpackView.lua",
+        "ItemViewCommon/ContainerSlots.lua",
+        "ItemViewCommon/Pools.lua",
+        "ItemViewCommon/Utilities.lua",
+        "Skins/Blizzard.lua",
+        "Skins/BlizzardBlack.lua",
+        "ViewManagement/Initialize.lua"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "bagbrother",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "24517549e73b8488a5c7a54beb97c47400e4f8f09a64de927288b57ccf0c0b45",
+      "foreverMarkedPaths": [
+        "BagBrother.toc"
+      ],
+      "reason": "TOC/interface expansion only."
+    },
+    {
+      "slug": "bagmeter",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2da3cf876607196b5bc5167aa1955b3112cdd71d7a41c7469c5c56b7e7198844",
+      "foreverMarkedPaths": [
+        "Bagmeter_Forever.toc",
+        "CHANGES.txt"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "bagnon",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fbeb28a69c919e74c9216a2510d8cb6b1f90456654b6622b82ef182123320e9b",
+      "foreverMarkedPaths": [
+        "BagBrother/BagBrother.toc",
+        "Bagnon/Bagnon.toc",
+        "Bagnon_Bank/Bagnon_Bank.toc",
+        "Bagnon_Config/Bagnon_Config.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "bagnon-consolidator",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "00ea0bf36c8acda3fa81efd03cf67ba91fc43f2e672bf433a3efd6c2941cf429",
+      "foreverMarkedPaths": [
+        "Bagnon_Consolidator.toc",
+        "Bagnon_Consolidator_Camelot.toc",
+        "CHANGELOG.md",
+        "README.md",
+        "libs/libItemMove/README.md",
+        "libs/libItemMove/libItemMove.toc"
+      ],
+      "reason": "Tiny diff, no API delta or isolated runtime behavior."
+    },
+    {
+      "slug": "bagnonium",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7f74b5da146362c204df6e489d4e59b9af5f4903a4435a52629f85f8c22e49f7",
+      "foreverMarkedPaths": [
+        "BagBrother/BagBrother.toc",
+        "Bagnonium/Bagnonium.toc",
+        "Bagnonium_Bank/Bagnonium_Bank.toc",
+        "Bagnonium_Config/Bagnonium_Config.toc"
+      ],
+      "reason": "No API delta; release/package adjustments."
+    },
+    {
+      "slug": "bagsync",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a1606914198fd15b9293c8506d4334585b1cd43343a6fb7b2945cd39f379e326",
+      "foreverMarkedPaths": [
+        "BagSync.toc",
+        "libs/LibItemScout-1.0/LibItemScout-1.0.toc",
+        "libs/LibStub/LibStub.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "bank-stack",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "9d01089323366de7f706975b164b532586726103d0b94857db0a56343ac6d9c7",
+      "foreverMarkedPaths": [
+        "BankStack.toc",
+        "CHANGELOG.md",
+        "lib/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever branch adds build/ruleset selection and C_Item calls; local C_GameRules and C_Item surfaces exist. No concrete output mismatch established offline."
+    },
+    {
+      "slug": "barbershop-custom-textures",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "64030c28f45714a56df31e9922c51c65f38bd0f613e52a94bf4f44405d583c90",
+      "foreverMarkedPaths": [
+        "BarbershopCustomTextures_Mainline.toc"
+      ],
+      "reason": "Mainline TOC and existing texture/addon APIs; no mismatch isolated."
+    },
+    {
+      "slug": "barshelf",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a7228bf9b22dfe4cd5c5ef05bf13246f7b45e28baed312ba23435f498c1352a5",
+      "foreverMarkedPaths": [
+        "Barshelf_Camelot.toc",
+        "CHANGELOG.md",
+        "Compat.lua",
+        "Core.lua",
+        "CustomMicroMenu.lua",
+        "Data_Camelot.lua",
+        "Dock.lua",
+        "KeyringShelf.lua"
+      ],
+      "reason": "Forever compatibility is load metadata; no isolated API behavior change."
+    },
+    {
+      "slug": "beastandbow",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fd1de9b1655a0d4e9d7186dc4c7cf22497bd0185bbea84a1d0796a31e8db7a94",
+      "foreverMarkedPaths": [
+        "BeastAndBow.lua",
+        "BeastAndBow.toc",
+        "BeastAndBow_Forever.toc",
+        "Loadings/BeastAndBow_Version.lua"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "belphies-quest-log",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "70194a250854310f41cebbc4625aced45f772f810ea1d7c6422bb4c4d1772160",
+      "foreverMarkedPaths": [
+        "BelphiesQuestLog\\BelphiesQuestLog.toc",
+        "BelphiesQuestLog\\Compat.lua",
+        "BelphiesQuestLog\\Core.lua",
+        "BelphiesQuestLog\\DB\\BQL_DB_Lookup.lua",
+        "BelphiesQuestLog\\DB\\tbcNpcDB.lua",
+        "BelphiesQuestLog\\DB\\tbcQuestDB.lua",
+        "BelphiesQuestLog\\GUI.lua",
+        "BelphiesQuestLog\\ItemTooltipHook.lua",
+        "BelphiesQuestLog\\QuestLog.lua",
+        "BelphiesQuestLog\\Tracker.lua",
+        "DB/tbcNpcDB.lua",
+        "DB/tbcQuestDB.lua"
+      ],
+      "reason": "Large quest UI/data diff with seven added API references; requires consumer reproduction to distinguish quest data from runtime gap."
+    },
+    {
+      "slug": "best-around-revisited",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7e2a6f59ba0a24058a5efdc66799d164777a07d8744c926c970a840c6866f02d",
+      "foreverMarkedPaths": [
+        "BestAroundRevisited.toc",
+        "RELEASING.md"
+      ],
+      "reason": "Secret chat and C_ChatInfo handling are plausible consumer evidence, but native restriction transition is unproven here."
+    },
+    {
+      "slug": "better-ability-bars",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "64978eae7fb4a8e01460117065fde10355a6e4fff5d136aea7d4019e74469350",
+      "foreverMarkedPaths": [
+        "BetterAbilityBars.lua",
+        "BetterAbilityBars.toc"
+      ],
+      "reason": "Large visual/layout workaround and feature detection; addon comments/feature predicates are not native API proof and no isolated producer failure is established."
+    },
+    {
+      "slug": "better-bags",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "30fe1138c0784ed2128be99a5acde1b96a765fc2c818c27e8ed8f2143bc16f2f",
+      "foreverMarkedPaths": [
+        "BetterBags_Camelot.toc",
+        "CHANGELOG.md",
+        "bags/bank.lua",
+        "core/constants.lua",
+        "core/database.lua",
+        "core/forever.lua",
+        "core/hooks.lua",
+        "data/equipmentsets.lua",
+        "frames/bagslots.lua",
+        "frames/bankslots.lua",
+        "integrations/quickfind.lua",
+        "libs/AceDB-3.0/AceDB-3.0.lua",
+        "themes/themes.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "better-blizzard-meters",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d145f30344a0b74ecce2bc32d6367ce47df53c3b5545a476993884767fe202f6",
+      "foreverMarkedPaths": [
+        "BetterBlizzardDamageMeter\\BetterBlizzardDamageMeter.toc"
+      ],
+      "reason": "Interface-only."
+    },
+    {
+      "slug": "better-cast-bars",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e4337c33116e0560f3d88e1dea9cc0b581a84b9a22240c48ab997f51155b8a30",
+      "foreverMarkedPaths": [
+        "BetterCastBars\\BetterCastBars.toc",
+        "BetterCastBars\\BetterInterupts.toc"
+      ],
+      "reason": "TOC/client packaging changes; no native contract mismatch."
+    },
+    {
+      "slug": "better-item-levels",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "8e3f204bd0ac23751b691251538de77129ffe357ffcb059bb612312d913c8c49",
+      "foreverMarkedPaths": [
+        "BetterBlizzStats.lua",
+        "BetterBlizzStats.toc",
+        "BetterBlizzStats_Mainline.toc"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "better-music-player",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "40408885761df6fa98f08eb80c4d739b1bb97b2ac1d81b4bfcc1e1fe8b1a28e0",
+      "foreverMarkedPaths": [
+        "BetterMusicPlayer\\BetterMusicPlayer.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "better-name-plates-betternameplates",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7c6bb18e94437eeb6dea29187e85ae4c29925d508bb6c193e47ead9859c9c43c",
+      "foreverMarkedPaths": [
+        "DisplayText.lua"
+      ],
+      "reason": "TOC/metadata and small release changes; no API delta."
+    },
+    {
+      "slug": "better-notepad",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4c5ebb13b7397ea2506a02fc7a05d25d50443f916e10074e2a23aa1d3a1d3dca",
+      "foreverMarkedPaths": [
+        "Notepad++\\Notepad++.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "better-queue-timers",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1005561269726f79a5e15eabb2ed227d4dceafb555530d9156e8d545fcdb180a",
+      "foreverMarkedPaths": [
+        "BetterQueueTimers\\BetterQueueTimers.toc"
+      ],
+      "reason": "TOC only."
+    },
+    {
+      "slug": "betterauctionprice",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6adb3ee17123fc0ee8c4656fb38b4de50d8c4ceb49a406b8d768dc728d87cb04",
+      "foreverMarkedPaths": [],
+      "reason": "Defensive C_Item continuation is corroborated by existing C_Item surface; no simulator mismatch found."
+    },
+    {
+      "slug": "betterbags-aio-all-in-one",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "18c11daedfc5a8a2a6dd551abeb3fb9d202037a8d821e7f64a92ccc46e4cb418",
+      "foreverMarkedPaths": [
+        "BetterBags_AIO.toc",
+        "CHANGELOG.md",
+        "Flavors/flavors.lua",
+        "Modules/Data/NameCache/Default/name_cache_df.lua",
+        "Modules/Data/NameCache/Default/name_cache_midnight.lua",
+        "Modules/Data/NameCache/Default/name_cache_mop.lua",
+        "Modules/Data/NameCache/Forever/name_cache_forever.lua",
+        "Modules/bootstrap.lua",
+        "Modules/branding.lua",
+        "Options/CustomUI/about_page.lua",
+        "Options/CustomUI/category_list.lua",
+        "Options/CustomUI/getting_started_page.lua",
+        "Options/CustomUI/helpers.lua",
+        "Options/CustomUI/sidebar.lua",
+        "Options/Dialogs/prefix_overrides.lua",
+        "Options/Dialogs/whats_new.lua",
+        "Options/Manifest/manifest_forever.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "betterbags-fishing",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fd709ce6cc500f470c16705150050f26819f102c9fe02f8425184af09855930d",
+      "foreverMarkedPaths": [],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "betterbags-forever",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a0700ed81c59508a5473bf7464b793e24898fadf75c78d1c1a024e341e28f462",
+      "foreverMarkedPaths": [
+        "BetterBags_Forever.toc",
+        "CHANGELOG.md",
+        "Database/Default/Expansions/Classic/Collectibles/classic_collectibles.lua",
+        "Database/Default/Expansions/Classic/Consumables/classic_consumables.lua",
+        "Database/Default/Expansions/Classic/Encounters/Dungeons/classic_dungeons.lua",
+        "Database/Default/Expansions/Classic/Encounters/PvP/classic_pvp.lua",
+        "Database/Default/Expansions/Classic/Encounters/Raids/classic_raids.lua",
+        "Database/Default/Expansions/Classic/General/classic_general.lua",
+        "Database/Default/Expansions/Classic/TradeSkills/Crafted/classic_crafted.lua",
+        "Database/Default/Expansions/Classic/TradeSkills/Materials/classic_materials.lua",
+        "Database/Default/Expansions/Classic/TradeSkills/Professions/classic_professions.lua",
+        "Database/Default/Expansions/Classic/Vendor/classic_vendor_gear.lua",
+        "Database/Default/Expansions/Classic/World/classic_world_drops.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_arathi_highlands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_ashenvale.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_badlands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_blasted_lands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_desolace.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_dun_morogh.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_duskwood.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_dustwallow_marsh.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_eastern_plaguelands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_elwynn_forest.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_feralas.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_hillsbrad_foothills.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_northern_barrens.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_northern_stranglethorn.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_redridge_mountains.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_searing_gorge.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_silithus.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_southern_barrens.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_stonetalon_mountains.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_swamp_of_sorrows.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_teldrassil.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_the_cape_of_stranglethorn.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_the_hinterlands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_tirisfal_glades.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_un_goro_crater.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_western_plaguelands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_westfall.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_wetlands.lua",
+        "Database/Default/Expansions/Classic/Zones/classic_zone_winterspring.lua",
+        "Database/Default/WorldEvents/Holidays/brewfest.lua",
+        "Database/Default/WorldEvents/Holidays/childrens_week.lua",
+        "Database/Default/WorldEvents/Holidays/day_of_the_dead.lua",
+        "Database/Default/WorldEvents/Holidays/feast_of_winter_veil.lua",
+        "Database/Default/WorldEvents/Holidays/hallowsend.lua",
+        "Database/Default/WorldEvents/Holidays/harvest_festival.lua",
+        "Database/Default/WorldEvents/Holidays/love_in_the_air.lua",
+        "Database/Default/WorldEvents/Holidays/lunar_festival.lua",
+        "Database/Default/WorldEvents/Holidays/midsummer_fire_festival.lua",
+        "Database/Default/WorldEvents/Holidays/noblegarden.lua",
+        "Database/Default/WorldEvents/Holidays/pilgrims_bounty.lua",
+        "Database/Default/WorldEvents/Holidays/pirates_day.lua",
+        "Database/Default/WorldEvents/Holidays/wow_anniversary.lua",
+        "Database/Default/WorldEvents/MonthlyEvents/darkmoon_faire.lua",
+        "Database/Expansions/Classic/TradeSkills/Professions/classic_professions.lua",
+        "Flavors/_shared/meta_base.lua",
+        "Flavors/flavors.lua",
+        "Modules/Data/NameCache/Default/name_cache_bfa.lua",
+        "Modules/Data/NameCache/Default/name_cache_cata.lua",
+        "Modules/Data/NameCache/Default/name_cache_classic.lua",
+        "Modules/Data/NameCache/Default/name_cache_df.lua",
+        "Modules/Data/NameCache/Default/name_cache_legion.lua",
+        "Modules/Data/NameCache/Default/name_cache_midnight.lua",
+        "Modules/Data/NameCache/Default/name_cache_mop.lua",
+        "Modules/Data/NameCache/Default/name_cache_sl.lua",
+        "Modules/Data/NameCache/Default/name_cache_tbc.lua",
+        "Modules/Data/NameCache/Default/name_cache_tww.lua",
+        "Modules/Data/NameCache/Default/name_cache_wod.lua",
+        "Modules/Data/NameCache/Default/name_cache_wotlk.lua",
+        "Modules/Data/NameCache/Forever/name_cache_forever.lua",
+        "Modules/Data/NameCache/name_cache_init.lua",
+        "Modules/Data/display.lua",
+        "Modules/Data/item_names.lua",
+        "Modules/Dev/preview.lua",
+        "Modules/Integration/api.lua",
+        "Modules/Integration/hooks.lua",
+        "Modules/Sorting/pin_logic.lua",
+        "Modules/bootstrap.lua",
+        "Modules/branding.lua",
+        "Modules/version_guard.lua",
+        "Options/CustomUI/about_page.lua",
+        "Options/CustomUI/category_detail.lua",
+        "Options/CustomUI/category_list.lua",
+        "Options/CustomUI/category_manager.lua",
+        "Options/CustomUI/core.lua",
+        "Options/CustomUI/dev_tools_page.lua",
+        "Options/CustomUI/helpers.lua",
+        "Options/CustomUI/quickadd_page.lua",
+        "Options/CustomUI/sidebar.lua",
+        "Options/Dialogs/prefix_overrides.lua",
+        "Options/Dialogs/rename.lua",
+        "Options/Dialogs/whats_new.lua",
+        "Options/Manifest/manifest_classic.lua",
+        "Options/Manifest/manifest_events.lua",
+        "Options/Manifest/manifest_forever.lua",
+        "main.lua"
+      ],
+      "rationale": "Known authored BagIndex 9+9 mismatch; bb83a4c0a addresses enum publication only; bank state/container mapping remains separate."
+    },
+    {
+      "slug": "betterbags-ilvl",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7fcd53cf75f121cc3e074d44e4c6ef0c77e8d461f4120412f88e08b77a9e84aa",
+      "foreverMarkedPaths": [
+        "BetterBags_iLvl.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "betterbags-legendary",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "15928da3f856bfeb2553c6d7af7391d09c84948eaf99430595ce5376e9ec0dee",
+      "foreverMarkedPaths": [
+        "BetterBags_Legendary.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Companion TOC/version declaration only."
+    },
+    {
+      "slug": "betterbags-quick-add",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f4d41f068270ec81a97c6d3c63dce765c3309987a789cb23ab4258d5923345b6",
+      "foreverMarkedPaths": [
+        "BetterBags_QuickAdd.toc",
+        "BetterBags_QuickAdd_Camelot.toc",
+        "BetterBags_QuickAdd_Cata.toc",
+        "BetterBags_QuickAdd_Mists.toc",
+        "BetterBags_QuickAdd_TBC.toc",
+        "BetterBags_QuickAdd_Vanilla.toc",
+        "BetterBags_QuickAdd_Wrath.toc",
+        "CHANGELOG.md",
+        "Data/NameCache/Default/name_cache_bfa.lua",
+        "Data/NameCache/Default/name_cache_classic.lua",
+        "Data/NameCache/Default/name_cache_wod.lua",
+        "Data/NameCache/name_cache_init.lua",
+        "Data/item_names.lua"
+      ],
+      "reason": "Addon-facing bag integration changes; BagIndex producer correction is handled separately and no additional isolated gap here."
+    },
+    {
+      "slug": "betterbags-scrap",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "44ee48aa0a1b66418981d3d40a36f535ff2f098497dc3913693488b271962579",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; no candidate."
+    },
+    {
+      "slug": "betterbags-tabards",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1cf4d6afc1f23148633d375ed32756423c4c7d9474a9c44765a135c07a8f7454",
+      "foreverMarkedPaths": [
+        "BetterBags_Tabards.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "betterblizzaddons",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "adaefb565c610a07df08e471b1be889d01376dd0c21292c19a0dd593fcc484a0",
+      "foreverMarkedPaths": [
+        "BetterBlizzAddons.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "TOC/version declaration only."
+    },
+    {
+      "slug": "betterblizzframes",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "68fb9e88a628813ead02aa4e3c0ff5d12ab932a6cf05c16d5d08fcde34e78432",
+      "foreverMarkedPaths": [
+        "BetterBlizzFrames_Camelot.toc",
+        "CHANGELOG.md",
+        "classics/gui.lua",
+        "forever/BetterBlizzFrames.lua",
+        "forever/gui.lua",
+        "forever/modules/camelotFrames.lua",
+        "forever/modules/profiles.lua",
+        "init.lua",
+        "locales/deDE.lua",
+        "locales/enUS.lua",
+        "locales/esES.lua",
+        "locales/esMX.lua",
+        "locales/frFR.lua",
+        "locales/itIT.lua",
+        "locales/koKR.lua",
+        "locales/ptBR.lua",
+        "locales/ruRU.lua",
+        "locales/zhCN.lua",
+        "locales/zhTW.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "betterblizzplates",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "8fb036db23729f32758432b790daf2d84dae5452ddc37e7678f0208c848ca1d8",
+      "foreverMarkedPaths": [
+        "BetterBlizzPlates_Camelot.toc",
+        "CHANGELOG.md",
+        "forever/BetterBlizzPlates.lua",
+        "forever/gui.lua",
+        "forever/modules/classIcon.lua",
+        "forever/modules/profiles.lua",
+        "init.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "betterdamagereader",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "61b725710bb8c58d1de678779f9df2a7adb225364f1c71231b7b070c19f199c6",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "betterdungeonqueue",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c14c46264e2db38e54a2749446325192b1aa3204d7a961a0a6e4b824be87178b",
+      "foreverMarkedPaths": [],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "betterfriendlist",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f55d21764c27bd58a4db9861eb3571f8a2fc03cd14c69d190b30d9e36475357e",
+      "foreverMarkedPaths": [
+        "!BetterFriendlist_MenuBridge/!BetterFriendlist_MenuBridge.toc",
+        "BetterFriendlist/BetterFriendlist.toc",
+        "BetterFriendlist/Core.lua",
+        "BetterFriendlist/Modules/Changelog.lua",
+        "BetterFriendlist/Modules/HouseListProxy.lua",
+        "BetterFriendlist/Modules/RecentAllies.lua",
+        "BetterFriendlist/Modules/TestSuite.lua",
+        "BetterFriendlist/Modules/WhoFrame.lua",
+        "BetterFriendlist/Utils/ClassicCompat.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "bettermerchant",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1c3761b80563ebc1826e78486036c1101992b896a92996e27f53549574d1ee2d",
+      "foreverMarkedPaths": [
+        "BetterMerchant.toc",
+        "changelog.txt"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "bettershields",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4d9b5809ce7e81a8d065cdbe37c8b317757b7d74023624420d8aae078d48c5ee",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "bettervaultrewards",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "efb780287ef9a1c6770086e338672fac1f3d71a0e235b7056ef6426eaec28972",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; API list is inherited release drift."
+    },
+    {
+      "slug": "bigwigs",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b7d617167a57737fdf81851bd8ca55c1e088a14a42f087dd4ed00b346671db0a",
+      "foreverMarkedPaths": [
+        "BigWigs/BigWigs.toc",
+        "BigWigs/Init_Camelot.lua",
+        "BigWigs/Libs/AceDB-3.0/AceDB-3.0.lua",
+        "BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua",
+        "BigWigs/Libs/LibSpecialization/LibSpecialization.lua",
+        "BigWigs/Loader.lua",
+        "BigWigs_Core/BigWigs_Core.toc",
+        "BigWigs_Options/BigWigs_Options.toc",
+        "BigWigs_Plugins/Auras.lua",
+        "BigWigs_Plugins/BigWigs_Plugins.toc",
+        "BigWigs_Plugins/BossBlock.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "blib",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "ec54faa5ba516ee546fda1c073d6d7667f03ef976e21978edcb3941cf57b1e5c",
+      "foreverMarkedPaths": [
+        "BLib\\BLib.toc",
+        "BLib\\BLib_Compat.lua"
+      ],
+      "reason": "Bank/container scanner explicitly uses legacy container IDs and C_Container; pinned Camelot bank consumers show a different contract, but no isolated repro in this read-only audit."
+    },
+    {
+      "slug": "blizzhudtweaks",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e8a83f4c47c845e3115bc7420d339a349918467b9745238df4b7b829aac61bf0",
+      "foreverMarkedPaths": [
+        "BlizzHUDTweaks.toc",
+        "CHANGELOG.md",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever changes use C_GameRules rule predicates and modern metadata/settings/timer APIs already present in simulator; static diff supplies no failing native contract."
+    },
+    {
+      "slug": "blizzmove",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6a847d1bc747f27c88079b5166c27af7f315dd295d3cabe0b877d0e809b91003",
+      "foreverMarkedPaths": [
+        "BlizzMove/BlizzMove.lua",
+        "BlizzMove/BlizzMove.toc",
+        "BlizzMove/BlizzMoveAPI.lua",
+        "BlizzMove/Frames.lua"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "blizzmove-plugin-questtracker",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7193a07510bb1a8259f97ab589d434e551838b6757d84ff67af929f7d0139c76",
+      "foreverMarkedPaths": [
+        "BlizzMovePlugin_QuestTracker.toc",
+        "CHANGELOG.md"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "boss-jukebox",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3fef6e7bca32dda6e42c31cc974bb027533e87567deaf77e964a74ae885939ea",
+      "foreverMarkedPaths": [],
+      "rationale": "No Forever-marked source hunks in this pair."
+    },
+    {
+      "slug": "bottombar-forever",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "97bc13954d0952de099cf27fac0f183b2c052ec313c8b415a1740ed0f6ded90c",
+      "foreverMarkedPaths": [
+        "BottomBar.toc",
+        "Frame.lua",
+        "readme.txt"
+      ],
+      "reason": "Dedicated package/version and UI assets; no API discrepancy."
+    },
+    {
+      "slug": "broker-portals",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "299635edeb74750f67a12452d0f2a8a508091ec172121bb1758cf58caf94a192",
+      "foreverMarkedPaths": [
+        "Broker_Portals.toc",
+        "CHANGES.txt"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "bshamel-ui",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b40aa7903127d3c4b45a189cc9fdb7306ec5610a452d7c4a6185fa0c2a63992d",
+      "foreverMarkedPaths": [
+        "BshamelUI.toc",
+        "CHANGELOG.md",
+        "Core/DB.lua",
+        "Core/Forever.lua",
+        "Core/Init.lua",
+        "Core/Module.lua",
+        "Locales/enUS.lua",
+        "Locales/frFR.lua",
+        "Modules/Beta.lua",
+        "Modules/BuffTracker.lua",
+        "Modules/BuffTrackerData.lua",
+        "Modules/Character.lua",
+        "Modules/GameSettings.lua",
+        "Modules/UnitFrames.lua",
+        "UI/Move.lua",
+        "UI/Shade.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "buffalo-classic",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "62f217f59a5a605c946ce84c22f49c4ee9ba692e107fce4e6b424dcda145627f",
+      "foreverMarkedPaths": [
+        "Buffalo-Configuration.lua",
+        "Buffalo.toc",
+        "DigamAddonLib-Forever.lua",
+        "ReadMe.txt"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "bug-grabber",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d0418d547f50711101c0f301ee956182261644705325cc5bf6c6a30de0e77781",
+      "foreverMarkedPaths": [
+        "!BugGrabber.toc"
+      ],
+      "reason": "TOC/interface expansion only."
+    },
+    {
+      "slug": "bugjar-lua-error-browser",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "8740ba6c0b2442e482bab8d358632afb220ff9c0220b41b094a140c2d6468068",
+      "foreverMarkedPaths": [
+        "!BugJar.toc",
+        "!BugJar_Camelot.toc",
+        "!BugJar_Forever.toc",
+        "!BugJar_Mainline.toc",
+        "Core.lua",
+        "UI.lua"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "bugsack",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1aa81ebdf214e5fb56079c2e61180b7874cb247c37dd3fa6025f5e4db5a0cd49",
+      "foreverMarkedPaths": [
+        "BugSack.toc",
+        "forever.lua",
+        "sack.lua"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "bugtabs-all-in-one-lua-error-capture-viewer",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6c170ff3ad91f18a8ed621ab85fa550c979c544b208fdd76995108f48b9650af",
+      "foreverMarkedPaths": [
+        "BugTabs.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "buh-emotes",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "81b316081a85cbcda216c411bf1e8c9d01b620edca3e7e5091d9fbff64cae415",
+      "foreverMarkedPaths": [
+        "TwitchEmotes_Buh-Forever.toc"
+      ],
+      "reason": "Separate Forever TOC only."
+    },
+    {
+      "slug": "c-everywhere",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3dc4e030cd710adef1d28e215985e057b3362499e26598d9f92905af31d89b57",
+      "foreverMarkedPaths": [
+        "CHANGES.txt",
+        "C_Everywhere.toc"
+      ],
+      "reason": "TOC and documentation only."
+    },
+    {
+      "slug": "calendar-login-info",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a830e4f48d0adfa8477e96c5805bdfd0d916d7ab19808bee6987a049691d0962",
+      "foreverMarkedPaths": [],
+      "rationale": "No Forever-marked source hunks in this pair."
+    },
+    {
+      "slug": "can-opener",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "5b7a832e60a7c0dde1c8f0e571d0f9ab81de7d10676e7cb5722cc2a4c78f22b3",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CanOpener.toc",
+        "Helpers.lua",
+        "Openables.lua",
+        "Openables/BattleForAzeroth.lua",
+        "Openables/BurningCrusade.lua",
+        "Openables/Cataclysm.lua",
+        "Openables/Classic.lua",
+        "Openables/Dragonflight.lua",
+        "Openables/Forever.lua",
+        "Openables/Legion.lua",
+        "Openables/Midnight.lua",
+        "Openables/MistsOfPandaria.lua",
+        "Openables/Shadowlands.lua",
+        "Openables/TheWarWithin.lua",
+        "Openables/WarlordsOfDraenor.lua",
+        "Openables/WrathOfTheLichKing.lua"
+      ],
+      "reason": "Forever conditional compatibility changes use existing C_* and Enum surfaces; no concrete mismatch."
+    },
+    {
+      "slug": "carbonite",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "af5f6f8084809380c2fa5fcf112acf2f2bc5e0afa1e2ed0a0ef9ebf622f0a20f",
+      "foreverMarkedPaths": [
+        "Carbonite.Gathermate2_Data/Carbonite.Gathermate2_Data-Camelot.toc",
+        "Carbonite.Gathermate2_Data/Data/camelot/FishData.lua",
+        "Carbonite.Gathermate2_Data/Data/camelot/TreasureData.lua",
+        "Carbonite.Info/Carbonite.Info.toc",
+        "Carbonite.Info/NxInfo.lua",
+        "Carbonite.Notes/Carbonite.Notes.toc",
+        "Carbonite.Quests/Carbonite.Quests-Camelot.toc",
+        "Carbonite.Quests/CheckMapAndCom.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_esES.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_esMX.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_koKR.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_ptBR.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_ruRU.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_zhCN.lua",
+        "Carbonite.Quests/Data/camelot/QuestStartEndNPC_zhTW.lua",
+        "Carbonite.Quests/Data/camelot/Quests51-60.lua",
+        "Carbonite.Quests/ObjectiveCapture.lua",
+        "Carbonite.Quests/WorldQuestWindow.lua",
+        "Carbonite.Warehouse/Carbonite.Warehouse.toc",
+        "Carbonite/Carbonite-Camelot.toc",
+        "Carbonite/Carbonite.lua",
+        "Carbonite/Compat/Expansion.lua",
+        "Carbonite/Data/camelot/MapData/WorldMapRecords.lua",
+        "Carbonite/Data/camelot/NxMapData.lua",
+        "Carbonite/Data/camelot/Zones.lua",
+        "Carbonite/Locales/enUS/Zones.lua",
+        "Carbonite/Modules/Comm/CommEngine.lua",
+        "Carbonite/Modules/InitFlow/EventRegistration.lua",
+        "Carbonite/Modules/Map/MapEngine.lua"
+      ],
+      "reason": "Large 150-file drift with bank/guild/container consumers; potential modern API path, but no isolated Forever producer failure."
+    },
+    {
+      "slug": "care-about-your-eyes",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fb0b14a687309b34345714f84164d376d3a9c52f7b2649562a6c02218ba5eace",
+      "foreverMarkedPaths": [],
+      "reason": "Interface declaration only."
+    },
+    {
+      "slug": "carrot-objective-tracker",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6b51d28eae7134f56628b49d6dc79bc425c4ef061d7e6b63fd265deb3c24efcc",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Carrot_Camelot.toc",
+        "Compat.lua",
+        "Config.lua",
+        "Core.lua",
+        "DefaultTrackerHider.lua",
+        "ForeverLegacy.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua",
+        "Options.lua",
+        "TrackerFrame.lua"
+      ],
+      "reason": "Consumer adjustments only; referenced APIs are already modeled or no mismatch established."
+    },
+    {
+      "slug": "ccam",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f2cca98e09be7c78c3455f4b5727cc1b31031296af36a805d01f2252e0c3a982",
+      "foreverMarkedPaths": [
+        "CCAM.lua",
+        "CCAM.toc",
+        "changelog.md"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "centered",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e09a083aa071f301b5bff4de11c67cfaca954f3540d697d43fa1358fff9c6f56",
+      "foreverMarkedPaths": [
+        "Centered.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "chairfaces-casino",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e43714b134f158be4e20631e32541f7c18dfcb69bf0715597d94d82882f71e09",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CHANGELOG.txt"
+      ],
+      "reason": "No isolated native API change established."
+    },
+    {
+      "slug": "character-gear-optimizer",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "53851e694023ae751b2994e4e28d99294a9391a1b81e4d6e89e73d0654a9cc8b",
+      "foreverMarkedPaths": [
+        "CharacterGearOptimizer_Cata.toc",
+        "CharacterGearOptimizer_Forever_Integration_Guide.md",
+        "CharacterGearOptimizer_Mainline.toc",
+        "CharacterGearOptimizer_Mists.toc",
+        "CharacterGearOptimizer_TBC.toc",
+        "CharacterGearOptimizer_Vanilla.toc",
+        "CharacterGearOptimizer_Wrath.toc",
+        "LegacyAPI.lua"
+      ],
+      "reason": "TOCs and removed-global compatibility package; no proven native contract."
+    },
+    {
+      "slug": "charactervolume",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "324b2ad6489e97470dd754599e297d41cba47766ab33335a4302cceb5cdfbb1b",
+      "foreverMarkedPaths": [
+        "CharacterVolume.lua",
+        "CharacterVolume.toc"
+      ],
+      "reason": "Dedicated Forever panel package; no simulator contract evidence."
+    },
+    {
+      "slug": "chat-copy-paste",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "877c452df0ac1241233442fb9e529ea47a4f7eea7c3d305eb3b4c2b9cae1c0d8",
+      "foreverMarkedPaths": [
+        "ChatCopyPaste.toc",
+        "Lib/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "chat-invite-links",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f748ea77bab8d82af70a4e78791a8505d25018c51c9d9d711e92351e53fe90b4",
+      "foreverMarkedPaths": [
+        "ChatInviteLinks_Forever.toc"
+      ],
+      "reason": "Separate Forever TOC only."
+    },
+    {
+      "slug": "chatbarblocks",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d9b9341474c3d4f44fe59bc2b43b8917f6334bdb5030b90bd7a42c93bffff1ef",
+      "foreverMarkedPaths": [
+        "ChatBarBlocks.toc",
+        "README.txt",
+        "TESTING.md"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "chatify-chat-enhancer",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6ea84635b08b60f80cb707bdbbbb2f008e1635a8b0587a202a1b6aa1064984b0",
+      "foreverMarkedPaths": [
+        "COMPATIBILITY.md",
+        "ChatAutoReply.lua",
+        "ChatMultiPost.lua",
+        "ChatQuickButtons.lua",
+        "ChatRouter.lua",
+        "Chatify_Camelot.toc",
+        "Compatibility.lua",
+        "Config.lua",
+        "Forever.lua",
+        "Settings.lua",
+        "locale/enUS.lua",
+        "locale/ukUA.lua"
+      ],
+      "reason": "Forever-marked chat changes need exact consumer review; addon secret handling is not proof of simulator deficiency."
+    },
+    {
+      "slug": "chatinputtop",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7d39a3160c0892dedc7bc670ac438b713eef0295c1d99f385b46bac2412f9260",
+      "foreverMarkedPaths": [
+        "ChatInputTop.toc"
+      ],
+      "reason": "TOC/interface expansion only."
+    },
+    {
+      "slug": "chattery",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "83f9baddb0b3f5767bb99f6486012813fc71fb647dc19182c8630e72b82a6d01",
+      "foreverMarkedPaths": [
+        "Chattery.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "chatty-little-npc",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "618752a5949f0e2be6665b31f91115611ed8ea613ba277413a3dc920ca15aa6b",
+      "foreverMarkedPaths": [
+        "ChattyLittleNpc.toc"
+      ],
+      "reason": "Changed API calls are modeled or compatibility fallbacks are already present; package diff alone does not demonstrate incorrect Forever behavior."
+    },
+    {
+      "slug": "chattynator",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "93e348ee972649d14e20a7836ce4fe55cffb5168ba5c0c3e81a267f7eada3457",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Chattynator.toc",
+        "Skins/Blizzard.lua",
+        "Skins/Dark.lua"
+      ],
+      "reason": "No API delta; compatibility/load changes."
+    },
+    {
+      "slug": "chattynator-undo-redo",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "147558eb2385d336507a96d5c67b8712f798959573cf43d4961790d767c83bfd",
+      "foreverMarkedPaths": [
+        "Chattynator_Undo_Redo.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "chatutils",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3a7e4928203915a9c10acf122b7ad176b76e387cb6f8055bd43333f521a19ba0",
+      "foreverMarkedPaths": [
+        "ChatUtils.toc"
+      ],
+      "reason": "Interface-only."
+    },
+    {
+      "slug": "checkmark",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2078a25b8235c2f8fe8d0a86ac4db334eeba289232ad18a55ffd60b4eb96550e",
+      "foreverMarkedPaths": [
+        "CheckMark_Camelot.toc",
+        "Core.lua",
+        "RELEASE_NOTES.md"
+      ],
+      "reason": "Separate Camelot TOC and load-order/package notes."
+    },
+    {
+      "slug": "classcolorednameplates",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2802823b4015fe10d278fbe0b1f19d6e7a16702673fa4a450ccbd41c0eae34ff",
+      "foreverMarkedPaths": [
+        "ClassColoredNamePlates.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "classic-frames",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4d894fe8b11fcb4118a8c69824cbd609a59122392705b81e6afd25ad8a112a27",
+      "foreverMarkedPaths": [
+        "ClassicFrames.toc"
+      ],
+      "reason": "Skin/file selection changes; no API delta."
+    },
+    {
+      "slug": "classicon",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "22d49b181d742873dd5470b499f3b0a35477bf5b46d5ef72c140c9bbcd0f1937",
+      "foreverMarkedPaths": [
+        "CHANGES.txt",
+        "ClassIcons.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "classymap",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b03df1ad543162d9d1a2b75c9e9192d2a6c3da2417f82c13aa0faa6b525323c2",
+      "foreverMarkedPaths": [
+        "ClassyMap.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "cleanchat-sentinel",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "9a8e1ab805f0dd947c5fe891f57673d0ba45781a60d69214288310ece6bb4629",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CleanChatSentinel.toc",
+        "README.md"
+      ],
+      "reason": "Beta package metadata explicitly says runtime validation pending; no usable contract evidence."
+    },
+    {
+      "slug": "coloured-enemy-nameplates",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f25290e91310f9848072e7611d38d569534c26240f51b4e07f40123b68a3092e",
+      "foreverMarkedPaths": [
+        "ColouredEnemyNameplates.toc",
+        "Nameplates.lua"
+      ],
+      "reason": "Changed API calls are modeled or compatibility fallbacks are already present; package diff alone does not demonstrate incorrect Forever behavior."
+    },
+    {
+      "slug": "combo-point-mover",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "60285eedbc75bd20d2bcad8959be9b5f2f54001bfba0a81303f14ddbd19c9486",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "come-get-it",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "0d84d9bfcb51305fd367876735ec3e806facf6bd31c98baf18df369b01d50e08",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "ComeAndGetIt.toc",
+        "Features/Announcements.lua",
+        "Includes/Libraries/AceDB-3.0/AceDB-3.0.lua",
+        "Locales/deDE.lua",
+        "Locales/enUS.lua",
+        "Locales/esES.lua",
+        "Locales/esMX.lua",
+        "Locales/frFR.lua",
+        "Locales/itIT.lua",
+        "Locales/koKR.lua",
+        "Locales/ptBR.lua",
+        "Locales/ruRU.lua",
+        "Locales/zhCN.lua",
+        "Locales/zhTW.lua",
+        "README-Technical.md",
+        "README-Testing.md",
+        "README.md"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "commodum",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "744a4e42f107b22221463386b1ab57a89e761d449cad3f35cfb9e01ea2005074",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Commodum.toc",
+        "FULL-CHANGELOG.md",
+        "data/ChangelogData.lua"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "companion-chronicle",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4bfa9cdab83970f153d0a597ea9bd1090131995098c18b56e0c1b9b1abfacb84",
+      "foreverMarkedPaths": [
+        "CompanionChronicle/ClientForever.lua",
+        "CompanionChronicle/CompanionChronicle.toc",
+        "CompanionChronicle_TotalRP3/CompanionChronicle_TotalRP3.toc"
+      ],
+      "reason": "Forever-specific unit identity/name handling is an addon claim; requires pinned API behavior probe before any simulator change."
+    },
+    {
+      "slug": "conceal",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fcf97f9c48051b76a0b738b467483e370ac57f910d75b2887172954028772aaa",
+      "foreverMarkedPaths": [
+        "Conceal_Camelot.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "conjure-bot",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "d8eb72cc388cde3738c6a9060783ee27b64188e823e6be0201bcdeb83ef74054",
+      "foreverMarkedPaths": [
+        "ConjureBot.lua",
+        "ConjureBot.toc"
+      ],
+      "reason": "Secret-value handling and C_Spell usage are addon workarounds; no producer mismatch proven."
+    },
+    {
+      "slug": "cooldown-master",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e8a2f9d623648ee64326d9f05b6cc173caddacf70ef38f7d4e979ac6ce60bc31",
+      "foreverMarkedPaths": [
+        "CooldownMaster_Camelot.toc",
+        "Core/Changelog.lua",
+        "Core/Compat.lua",
+        "Core/Engine.lua",
+        "Core/Init.lua",
+        "Core/Tags.lua",
+        "Libs/AceDB-3.0/AceDB-3.0.lua",
+        "UI/Options.lua"
+      ],
+      "reason": "Small package but Forever lines are mixed with unrelated release changes; no reproducible native gap."
+    },
+    {
+      "slug": "cooldownmanagerbuffonly",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6bcf8c7b3e2dc24aa1196a81586e5b5ce2ddaaf85db3305579b1602ac90954b8",
+      "foreverMarkedPaths": [],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "coolinator",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a35680a7f1c29f604b9e9872e817459f44a0cd94c44cc6200fc5605c5e1bed2d",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Coolinator.toc",
+        "Core/AllSpellsAndItems.lua",
+        "Core/Constants.lua",
+        "Core/ConstantsForever.lua",
+        "Core/Utilities.lua",
+        "CustomiseDialog/Components.lua",
+        "Display/ClassResourceStatusBar.lua"
+      ],
+      "reason": "Large or multi-flavor diff mixes unrelated release work, data/content, comments, and Forever changes; no isolated simulator producer discrepancy can be attributed offline."
+    },
+    {
+      "slug": "crafting-and-gathering-order-classic",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "15caf440773c795197e126b0bcd1036241db3280e611a5109820e34f91d244fb",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CHANGES.txt",
+        "CraftingOrderClassic.lua",
+        "CraftingOrderClassic.toc",
+        "CraftingOrderClassic_Compat.lua",
+        "CraftingOrderClassic_Craft.lua",
+        "CraftingOrderClassic_Craft_Mainline.lua",
+        "CraftingOrderClassic_Enchant_Trade.lua",
+        "CraftingOrderClassic_LazyGold.lua",
+        "CraftingOrderClassic_Locale_News_deDE.lua",
+        "CraftingOrderClassic_Locale_News_enUS.lua",
+        "CraftingOrderClassic_Locale_News_esES.lua",
+        "CraftingOrderClassic_Locale_deDE_2.lua",
+        "CraftingOrderClassic_Locale_enUS_2.lua",
+        "CraftingOrderClassic_Locale_esES_2.lua",
+        "CraftingOrderClassic_Minimap.lua",
+        "CraftingOrderClassic_Moderation.lua",
+        "CraftingOrderClassic_ProfOrders.lua",
+        "CraftingOrderClassic_ProfWindow.lua",
+        "CraftingOrderClassic_ProfWindow_Camelot.lua",
+        "CraftingOrderClassic_ProfWindow_Camelot_Open.lua",
+        "CraftingOrderClassic_ProfWindow_Camelot_PageArt.lua",
+        "CraftingOrderClassic_ProfWindow_DockViews.lua",
+        "CraftingOrderClassic_ProfWindow_Geo.lua",
+        "CraftingOrderClassic_ProfWindow_Layout.lua",
+        "CraftingOrderClassic_ProfWindow_Learn.lua",
+        "CraftingOrderClassic_ProfWindow_Orders.lua",
+        "CraftingOrderClassic_ProfWindow_Orders_Card.lua",
+        "CraftingOrderClassic_ProfWindow_Route.lua",
+        "CraftingOrderClassic_Social.lua",
+        "CraftingOrderClassic_Sources.lua",
+        "CraftingOrderClassic_Tracker.lua",
+        "CraftingOrderClassic_Trainers.lua",
+        "CraftingOrderClassic_UI_MyArtisans_Reroll.lua",
+        "CraftingOrderClassic_UI_News.lua",
+        "CraftingOrderClassic_UI_Post.lua",
+        "CraftingOrderClassic_UI_Post_Artisans.lua",
+        "CraftingOrderClassic_UI_Skin.lua",
+        "CraftingOrderClassic_UI_Skin_Dropdown.lua",
+        "CraftingOrderClassic_UI_Skin_HelpPlate.lua",
+        "CraftingOrderClassic_UI_Skin_Native.lua",
+        "Directory.lua",
+        "Directory_Club.lua",
+        "Directory_Recipes.lua",
+        "Directory_Relay.lua",
+        "Directory_Skills.lua",
+        "Libs/CraftLink-1.0/CraftLink-1.0.lua",
+        "Libs/CraftLink-1.0/CraftLink_Cooldowns.lua",
+        "Libs/CraftLink-1.0/CraftLink_Recipes.lua",
+        "Libs/CraftLink-1.0/CraftLink_RegistryIDs.lua",
+        "Libs/CraftLink-1.0/CraftLink_Transport.lua",
+        "Libs/CraftLink-1.0/Data/Camelot.xml",
+        "Libs/CraftLink-1.0/Data/Camelot/Alchemy.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Blacksmithing.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Cooking.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Enchanting.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Engineering.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/FirstAid.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Leatherworking.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Mining.lua",
+        "Libs/CraftLink-1.0/Data/Camelot/Tailoring.lua",
+        "Libs/CraftLink-1.0/Data/Smelting.lua",
+        "Orders_Net.lua"
+      ],
+      "reason": "Large 153-file release drift; Forever lines mix Secret Values fallbacks and API rewrites. No isolated native mismatch established."
+    },
+    {
+      "slug": "craftpresence",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "155f442b734c7538e65383c146a36338fa54538c62cf426786ed12d9cb147107",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CompatibilityUtils.lua",
+        "CraftPresence_Camelot.toc",
+        "Libraries/Ace3/AceDB-3.0/AceDB-3.0.lua",
+        "Libraries/Ace3/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua",
+        "Migration_Functions.lua",
+        "ProfileInfo.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "crit-sounds",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1444ce90f95e1f69c2af9ad614700089a027a6941cede74c96013eeba1ad9167",
+      "foreverMarkedPaths": [
+        "Core.lua",
+        "CritSounds.toc"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "cursor-glow-rgb",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "cce1ca08e5d1d3b13af6db6660915a8e98f88f3b52f83baa4cb0143a53255d64",
+      "foreverMarkedPaths": [
+        "RGBCursor\\Compat.lua",
+        "RGBCursor\\RGBCursor_Camelot.toc"
+      ],
+      "reason": "Changed API calls are modeled or compatibility fallbacks are already present; package diff alone does not demonstrate incorrect Forever behavior."
+    },
+    {
+      "slug": "cursor-world-tooltip",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a13b08db5952a1a061a1330bbb077fdcff6ac7fd2dba437025237ec959a1fb95",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CursorWorldTooltip.toc",
+        "CursorWorldTooltip_Classic.lua",
+        "README.md"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "cursorcooldown-reloaded",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "dbcd0442cac947fe251a25f6d1af45544c052223334d6bc25c7ab4b592811c7b",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "CursorCooldown.toc",
+        "Libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "cursorglow",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e2683d9b68c82ede0fccab1611e8cbbe7651688076fb75baa06f94e3cd36ffb5",
+      "foreverMarkedPaths": [
+        "CursorGlow.lua",
+        "CursorGlow.toc"
+      ],
+      "reason": "Timer-only compatibility change; C_Timer is modeled."
+    },
+    {
+      "slug": "cursorring",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "9455d53b05ff5fd0a8d4c042766f8122293bd352f632f718126c25a157817223",
+      "foreverMarkedPaths": [
+        "CursorRing.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "custom-minimap-arrow",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "cbee35e139ef778450a7a7923e0d0544d1854b5ee2a5c7a7566ec93675a69b31",
+      "foreverMarkedPaths": [
+        "CustomMinimapArrow.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "custom-xp-bar",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "46ea5528b9f187a952d5f1d82640c57dbbaee3bde3fe86694158fb263256d3f2",
+      "foreverMarkedPaths": [
+        "Compatibility.lua",
+        "Core.lua",
+        "CustomXPBar.toc",
+        "FloatingText.lua",
+        "Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua",
+        "README.md"
+      ],
+      "reason": "Interface detection and Mainline picker selection; existing profile/GUI surfaces cover this."
+    },
+    {
+      "slug": "customsearch",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fe55533f0ce13dc2292c1b0f3ffe1979f138d742bd2095151011603e17a187ec",
+      "foreverMarkedPaths": [
+        "CustomSearch-1.0.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "customtutorials",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f165b7c0191e01d88a5641e38d8df0b6e651b2a5d722325ea738d0c6b44e5c5d",
+      "foreverMarkedPaths": [
+        "CustomTutorials-2.1.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "cvars",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "6bf4b2484f52ae3e20582236a5d666ff1910ec1a70aa5e54f708842321188fa9",
+      "foreverMarkedPaths": [
+        "CVARs.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "cvarsbackup",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "0599892ecc29277b6471dc217bc8da59e84992b8842f624553b6c1b6f122d55b",
+      "foreverMarkedPaths": [
+        "CVarsBackup.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "damage-meter-blizards-skins",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "0cb458e924f4748406f3a423244995d8ffb9cc0b94eb4a6f11ed9737ef7a61d5",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; API list is inherited release drift, not a Forever diff."
+    },
+    {
+      "slug": "dangerquestalert",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "853541ef37653d6fdcb1415f4d74bea72f6ead1cace26ad135ce1900dc83ae50",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; no candidate."
+    },
+    {
+      "slug": "darkmode",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b71b0cde44a60c871317dd923d47e3e02c6d810048e7959265e15a2c6603bd3f",
+      "foreverMarkedPaths": [
+        "DarkMode.toc"
+      ],
+      "reason": "TOC only."
+    },
+    {
+      "slug": "datamine",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "58fd9a094b19bfac6c6f1a8859602f0ac38532daa234b24795bb5de51ce88239",
+      "foreverMarkedPaths": [
+        "Datamine/Datamine.toc",
+        "Datamine_Data/Datamine_Data.toc",
+        "Datamine_Maps/Datamine_Maps.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "dbm-vanilla",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "cbde9a292483f9c283736aa714c5a2f25f4e32ccd9e0c9ddd3491dd3a5044015",
+      "foreverMarkedPaths": [
+        "DBM-Raids-Vanilla/DBM-Raids-Vanilla.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "dbm-voicepack-vv",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "ebc57179579d38c8e5a1ef9cb0237e6d9f3c316f82c8a456c5f189deb0d60676",
+      "foreverMarkedPaths": [
+        "DBM-VPVV_Camelot.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "deadly-boss-mods",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "42e7d06632a4c1c726f669137c5a903a4b444b2028a23248ed1e63bc58eed80b",
+      "foreverMarkedPaths": [
+        "DBM-Core/CHANGELOG.md",
+        "DBM-Core/DBM-Core.lua",
+        "DBM-Core/DBM-Core.toc",
+        "DBM-Core/DBM-RangeCheck.lua",
+        "DBM-Core/Libs/LibSpecialization/LibSpecialization.lua",
+        "DBM-Core/modules/CombatDetection.lua",
+        "DBM-Core/modules/objects/Difficulties.lua",
+        "DBM-Core/modules/objects/GameVersion.lua",
+        "DBM-Core/modules/objects/SpecRole.lua",
+        "DBM-Core/tools/GenerateEncounterLocales.lua",
+        "DBM-GUI/DBM-GUI.toc",
+        "DBM-GUI/modules/options/alerts/SpecialAnnouncements.lua",
+        "DBM-GUI/modules/options/filters/GlobalDisables.lua",
+        "DBM-GUI/modules/options/filters/HideBlizzard.lua",
+        "DBM-StatusBarTimers/DBM-StatusBarTimers.toc",
+        "DBM-VPVEM/DBM-VPVEM.toc"
+      ],
+      "reason": "TOC and addon policy changes corroborated by DBM source audit; local Camelot/Mainline routing and documented APIs exist; no simulator mismatch."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-dungeons",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f9dba9e3b2893257f399d3c0a1546421980cff88c665fa62f58ddaf1f7d65bdc",
+      "foreverMarkedPaths": [
+        "DBM-Party-Forever/DBM-Party-Forever.toc",
+        "DBM-Party-Forever/HallofThanes/DurgenDirgehammer.lua",
+        "DBM-Party-Forever/HallofThanes/FaldrimAnvilmar.lua",
+        "DBM-Party-Forever/HallofThanes/Infurnus.lua",
+        "DBM-Party-Forever/HallofThanes/Plunder.lua",
+        "DBM-Party-Forever/KroldokStronghold/HighlandHorror.lua",
+        "DBM-Party-Forever/KroldokStronghold/RelicGuardian.lua",
+        "DBM-Party-Forever/KroldokStronghold/Saltspine.lua",
+        "DBM-Party-Forever/KroldokStronghold/Shadetooth.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Bjork.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/LordaeronCaptain.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Rathmael.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/TheAbandoned.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/TheButcher.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/ViktortheVile.lua",
+        "DBM-Party-Forever/RuinsofLordaeron/Witherfang.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ArcaneAnomaly.lua",
+        "DBM-Party-Forever/TheShapersTerrace/AtrexistheGraveKnight.lua",
+        "DBM-Party-Forever/TheShapersTerrace/FelAncient.lua",
+        "DBM-Party-Forever/TheShapersTerrace/LyntheIgnored.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaDevourer.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaElemental.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ManaWraith.lua",
+        "DBM-Party-Forever/TheShapersTerrace/ShadeoftheArchmage.lua",
+        "DBM-Party-Forever/TheShapersTerrace/UnstableSentinel.lua",
+        "DBM-Party-Vanilla/CHANGELOG.md",
+        "DBM-Party-Vanilla/DBM-Party-Vanilla.toc",
+        "DBM-Party-Vanilla/Shared/Gnomeregan/MekgineerThermaplugg.lua"
+      ],
+      "reason": "DBM module/package diff contains encounter data and shared runtime changes; separate DBM core audit found TOC support correct and no proven API removal."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-event-sound-pack",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f2f14b5ec42fb073e6ca3ba2599a02ff8422057d5c229050a2bf73405ce65ff2",
+      "foreverMarkedPaths": [
+        "DBM-SoundEventsPack.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-heroes-of-the-storm-hots",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e315bd9d066d57d84f67c793af89a2e045951793b97862887786b8e7396379c4",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DBM-CountPack-HotS.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-overwatch-countdown-pack",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "1149ea30820282f64ea5af48f598d4bbbc6e60c1c3a65a0588eaf40d8e16ee17",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DBM-CountPack-Overwatch.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-smoothmcgroove-event-pack",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f8bb6f510e586e01625606b402df70321a91fcbdfb342fcf604cd9af6b24e748",
+      "foreverMarkedPaths": [
+        "DBM-SMGEventsPack.toc"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "dejachat",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "65dfdfe597d2425d7b63d467e5bbfad570d1f62aed906052b4b48cf2b088afb6",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; no candidate."
+    },
+    {
+      "slug": "dejamicrofader",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "e78d18511c2e5f5e105e5219162b62d40c013b853a17aea0b3e25f698bbbc873",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "dejaminimap",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "effdd7cdbdd3e673957bb23684561bc39f97864443b340c6dc6099bd55f441e6",
+      "foreverMarkedPaths": [],
+      "reason": "Changed API calls are modeled or compatibility fallbacks are already present; package diff alone does not demonstrate incorrect Forever behavior."
+    },
+    {
+      "slug": "dejaquestfader",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4d3707ff7829ced97b9fa2eb7f1bad485017bd3c4992171557fbd1c485d3288e",
+      "foreverMarkedPaths": [],
+      "rationale": "No Forever-marked source hunks in this pair."
+    },
+    {
+      "slug": "deltasync",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2eb91eecc0ac7c71413ea276059437d8d2d70aa47e83000eaf84945f6e65fe2a",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DeltaSync.lua",
+        "DeltaSync.toc",
+        "README.md"
+      ],
+      "reason": "Small API delta mixed with release drift; no pinned-doc mismatch."
+    },
+    {
+      "slug": "desync",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "245d58d04f8f8618660200ff6bae22ac6e8a1bf509ee11fa92592a8e9ea0b5cf",
+      "foreverMarkedPaths": [
+        "Changelog.md",
+        "DeSync.toc",
+        "README.md"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "dgks",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "77de6ddfa5757432a31840b0ac599071401636419a64c2b66dde87f2c6979de5",
+      "foreverMarkedPaths": [
+        "CHANGES.txt",
+        "dgks.toc"
+      ],
+      "reason": "Version/interface declarations; no API delta."
+    },
+    {
+      "slug": "dialogkey-numy-edition",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "ed8d5fb99c826e172bef1b56026cf947a48094ade51e6bd017b6da06e4ddd1da",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DialogKey_Numy.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "dialogueui",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7afd0c5308b8acc6e9095ddb1bbf0557a05669e3c2ab2d5f13e310ca33949dd6",
+      "foreverMarkedPaths": [],
+      "reason": "Data/UI changes and removed APIs are mixed with broad release drift; no isolated native mismatch."
+    },
+    {
+      "slug": "disenchant-helper",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "bf4fbd353f08bb363a13bcc6ebbab13217614cde1eb7b47965cbca9509e514fa",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked file changes; no candidate."
+    },
+    {
+      "slug": "dragonguildmaster",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c9931909d67b626d99f7dd0655cd76505a011d83677676d639d90adf4ee5fcc0",
+      "foreverMarkedPaths": [
+        "CHANGELOG.en.md",
+        "CHANGELOG.md",
+        "Core/Init.lua",
+        "DragonGildMaster.toc",
+        "UI/MythicPlus.lua",
+        "docs/03-MVP-Status.md"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "dragonskill",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f4ddb849c9c1b7ccf55df2fcd4ac884cc7ed7d89876687a5b158b16198406b53",
+      "foreverMarkedPaths": [],
+      "reason": "No Forever-marked source hunk; cached differences are not attributed runtime changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "draidframes",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "c94c443612b91ae3068bb8fc623bb7a8ec80eb65e235fcd42bae9677039be7aa",
+      "foreverMarkedPaths": [
+        "DRaidFrames.toc"
+      ],
+      "rationale": "Forever-marked changes appear limited to package selection/version metadata."
+    },
+    {
+      "slug": "drinkbot",
+      "classification": "data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "374a264af161a38c83f1333746dc252a17f24f1a524506a04e21e8db8a844d00",
+      "foreverMarkedPaths": [
+        "CHANGELOG.txt",
+        "CLASSIC_SUPPORT.md",
+        "Core/Regex/Fixtures/README.md",
+        "Core/Regex/Fixtures/forever.lua",
+        "DrinkBot.toc",
+        "README.md",
+        "Tools/tests/classic_compatibility.lua"
+      ],
+      "reason": "Forever fixtures/restoration data and interface packaging; no simulator producer discrepancy."
+    },
+    {
+      "slug": "dropthecheapestthing",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "318d2ffa14368b4ca24c6735fc7328cc08bc97e9235f19a2a5dd6132205f5ff1",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "DropTheCheapestThing.toc",
+        "libs/AceDB-3.0/AceDB-3.0.lua"
+      ],
+      "reason": "Forever version detection/AceDB and existing item/game-rule surfaces; no concrete failure."
+    },
+    {
+      "slug": "dunitframes",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "60cf809cb886f52100ab6b7cd13b9113dc792957437e1a30c76653b17b169f25",
+      "foreverMarkedPaths": [
+        "DUnitFrames.toc"
+      ],
+      "reason": "TOC only."
+    },
+    {
+      "slug": "easy-fishing",
+      "classification": "candidate runtime gap",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b0c86f7e009c868a2b28bcd46d097d64e460773dc58ce567a319e903db154ffc",
+      "foreverMarkedPaths": [
+        "EasyFishing.lua",
+        "EasyFishing.toc"
+      ],
+      "reason": "Forever hunk changes an API/event/input path; requires producer-side reproduction.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "easyfind",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "85d24de07352cfecf6a9d0919d57cbcad9ac12c077bc575c7ddffe10d3ce494c",
+      "foreverMarkedPaths": [
+        "EasyFind/CHANGELOG.md",
+        "EasyFind/Core/Main.lua",
+        "EasyFind/Database/Dynamic.lua",
+        "EasyFind/Database/Main.lua",
+        "EasyFind/Database/StaticLocations.lua",
+        "EasyFind/Database/StaticLocations_Forever.lua",
+        "EasyFind/EasyFind.toc",
+        "EasyFind/MapSearch/MapTab.lua",
+        "EasyFind/Search/Filters/ClassSpecSelector.lua",
+        "EasyFind/Search/Filters/Config.lua",
+        "EasyFind/Search/Providers/Achievements.lua",
+        "EasyFind/Search/Results/Handlers/Character.lua",
+        "EasyFind/Search/Results/ResultsFrame.lua",
+        "EasyFind/Search/Results/Rows/Interactions.lua",
+        "EasyFind/Shared/Caps.lua",
+        "EasyFind/Shared/MapUtils.lua",
+        "EasyFind/Shared/Utils.lua",
+        "EasyFind_Calc/EasyFind_Calc.toc",
+        "EasyFind_Guide/EasyFind_Guide.toc",
+        "EasyFind_Guide/Highlight.lua",
+        "EasyFind_Icons/EasyFind_Icons.toc",
+        "EasyFind_Items/EasyFind_Items.toc",
+        "EasyFind_Onboarding/EasyFind_Onboarding.toc",
+        "EasyFind_Options/EasyFind_Options.toc",
+        "EasyFind_Settings/EasyFind_Settings.toc",
+        "EasyFind_Snippets/EasyFind_Snippets.toc"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "easyguildinvite",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "7341f536620bcfdc63006f0c72f6e1ff0d7a85815549836e70e41450b97f666a",
+      "foreverMarkedPaths": [
+        "CHANGELOG-FOREVER.md",
+        "EGI_ForeverCompatibility.lua",
+        "EGI_ForeverPreload.lua",
+        "EGI_RetailCompatibility.lua",
+        "EasyGuildInvite.toc"
+      ],
+      "reason": "No API delta; Forever load declaration only."
+    },
+    {
+      "slug": "edit-mode-expanded",
+      "classification": "no new gap established by source inspection",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "a071ce835543f9c3f401f0ec66e48e129d88b25a5f4696a9042ecdfcb1d62dfa",
+      "foreverMarkedPaths": [
+        "EditModeExpanded.toc"
+      ],
+      "reason": "Camelot TOC conditionals use supported load-game-type routing; no parser/runtime gap shown."
+    },
+    {
+      "slug": "ellesmereui",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "53c2434cc9c6feca03ec07b97e2c969e170a0a089194e4a130c7ff0408b95e1a",
+      "foreverMarkedPaths": [
+        "EllesmereUI/CHANGELOG.md",
+        "EllesmereUI/EUI_UnlockMode.lua",
+        "EllesmereUI/EllesmereUI.lua",
+        "EllesmereUI/EllesmereUI.toc",
+        "EllesmereUI/EllesmereUI_ClientGate.lua",
+        "EllesmereUI/EllesmereUI_FirstInstall.lua",
+        "EllesmereUI/EllesmereUI_ForeverLaunchPopup.lua",
+        "EllesmereUI/EllesmereUI_ForeverLayout.lua",
+        "EllesmereUI/EllesmereUI_ForeverNotice.lua",
+        "EllesmereUI/EllesmereUI_Lite.lua",
+        "EllesmereUI/EllesmereUI_StyleChoicePopup.lua",
+        "EllesmereUI/EllesmereUI_VideoGuides.lua",
+        "EllesmereUI/Libs/LibSpecialization/LibSpecialization.lua",
+        "EllesmereUIActionBars/EllesmereUIActionBars.lua",
+        "EllesmereUIActionBars/EllesmereUIActionBars.toc",
+        "EllesmereUIAuraBuffReminders/EllesmereUIABR_TalentReminders.lua",
+        "EllesmereUIAuraBuffReminders/EllesmereUIAuraBuffReminders.lua",
+        "EllesmereUIAuraBuffReminders/EllesmereUIAuraBuffReminders.toc",
+        "EllesmereUIBags/EllesmereUIBags.lua",
+        "EllesmereUIBags/EllesmereUIBags.toc",
+        "EllesmereUIBags/EllesmereUIBags_Bank.lua",
+        "EllesmereUIBags/EllesmereUIBags_Categories.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin.toc",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_CharacterSheet.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_CharacterSheetForever.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_DragonRiding.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_FriendsForever.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_SocketPanel.lua",
+        "EllesmereUIBlizzardSkin/EllesmereUIBlizzardSkin_WindowPacks.lua",
+        "EllesmereUIChat/EllesmereUIChat.lua",
+        "EllesmereUIChat/EllesmereUIChat.toc",
+        "EllesmereUICooldownManager/EllesmereUICooldownManager.lua",
+        "EllesmereUICooldownManager/EllesmereUICooldownManager.toc",
+        "EllesmereUIDamageMeters/EllesmereUIDamageMeters.toc",
+        "EllesmereUIDataBars/EllesmereUIDataBars.lua",
+        "EllesmereUIDataBars/EllesmereUIDataBars.toc",
+        "EllesmereUIDataBars/EllesmereUIDataBars_Blocks.lua",
+        "EllesmereUIFriends/EllesmereUIFriends.toc",
+        "EllesmereUILocales/EllesmereUILocales.toc",
+        "EllesmereUILocales/koKR.lua",
+        "EllesmereUILocales/zhTW.lua",
+        "EllesmereUIMinimap/EllesmereUIMinimap.lua",
+        "EllesmereUIMinimap/EllesmereUIMinimap.toc",
+        "EllesmereUIMythicTimer/EllesmereUIMythicTimer.toc",
+        "EllesmereUINameplates/EllesmereUINameplates.lua",
+        "EllesmereUINameplates/EllesmereUINameplates.toc",
+        "EllesmereUIOptions/EUI_ActionBars_Options.lua",
+        "EllesmereUIOptions/EUI_AuraBuffReminders_Options.lua",
+        "EllesmereUIOptions/EUI_BlizzardSkin_Options.lua",
+        "EllesmereUIOptions/EUI_CooldownManager_Options.lua",
+        "EllesmereUIOptions/EUI_Minimap_Options.lua",
+        "EllesmereUIOptions/EUI_Nameplates_Options.lua",
+        "EllesmereUIOptions/EUI_QoL_AutoLogging_Options.lua",
+        "EllesmereUIOptions/EUI_QoL_Options.lua",
+        "EllesmereUIOptions/EUI_Quickdraw_Options.lua",
+        "EllesmereUIOptions/EUI_RaidFrames_ManagerPages.lua",
+        "EllesmereUIOptions/EUI_RaidFrames_Options.lua",
+        "EllesmereUIOptions/EUI_ResourceBars_Options.lua",
+        "EllesmereUIOptions/EUI_UnitFrames_Options.lua",
+        "EllesmereUIOptions/EUI_UpgradeCalc_Options.lua",
+        "EllesmereUIOptions/EUI__General_Options.lua",
+        "EllesmereUIOptions/EllesmereUIOptions.toc",
+        "EllesmereUIQoL/EUI_UpgradeCalc.lua",
+        "EllesmereUIQoL/EllesmereUIQoL.lua",
+        "EllesmereUIQoL/EllesmereUIQoL.toc",
+        "EllesmereUIQoL/EllesmereUIQoL_Keys.lua",
+        "EllesmereUIQoL/EllesmereUIQoL_RaidTools.lua",
+        "EllesmereUIQuestTracker/EllesmereUIQuestTracker.toc",
+        "EllesmereUIQuickdraw/EllesmereUIQuickdraw.lua",
+        "EllesmereUIQuickdraw/EllesmereUIQuickdraw.toc",
+        "EllesmereUIRaidFrames/EllesmereUIRaidFrames.lua",
+        "EllesmereUIRaidFrames/EllesmereUIRaidFrames.toc",
+        "EllesmereUIResourceBars/EUI_ResourceBars_Helpers.lua",
+        "EllesmereUIResourceBars/EUI_ResourceBars_SwingTimer.lua",
+        "EllesmereUIResourceBars/EllesmereUIResourceBars.lua",
+        "EllesmereUIResourceBars/EllesmereUIResourceBars.toc",
+        "EllesmereUIUnitFrames/EUI_UnitFrames_WeaponEnchants.lua",
+        "EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua",
+        "EllesmereUIUnitFrames/EllesmereUIUnitFrames.toc"
+      ],
+      "reason": "Large release drift; many Mainline APIs and secret-value changes, but no isolated Forever hunk establishes a simulator defect."
+    },
+    {
+      "slug": "english-item-names",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "f39c801b0d5338568225f7517b54ef721c6820162def7902dfb50d4d430f6af3",
+      "foreverMarkedPaths": [],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "epic-damage-meter",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "0ba400d8830ee44f1f9e52d7a93fdfa5a4cd16a726160f90ec973f3fc5098568",
+      "foreverMarkedPaths": [
+        "CHANGELOG.txt",
+        "Core/Constants.lua",
+        "Core/Core_Retail.lua",
+        "Core/Parser_Classic.lua",
+        "EpicDamageMeter_Camelot.toc",
+        "UI/Config.lua",
+        "UI/DebugConsole.lua",
+        "UserConfig.lua"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "eq-objective-tracker",
+      "classification": "needs deeper review",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b308bb0e6ab249f72fb3ef57d13ad3e1640be924a23425193c617b083fa1fd0b",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Core/Changelog.lua",
+        "Data/Providers/Initiative.lua",
+        "EQObjectiveTracker_Camelot.toc",
+        "README.md",
+        "UI/Row.lua",
+        "UI/RowMenu.lua",
+        "UI/Tracker.lua"
+      ],
+      "rationale": "API/code changes are present, but addon adaptation is not native-contract proof."
+    },
+    {
+      "slug": "eqol",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "39cbdbbe2468c54ed1a8c78a8515e4bc9d9396272ba1a65548847ffb9da2b249",
+      "foreverMarkedPaths": [
+        "EnhanceQoL/CHANGELOG.md",
+        "EnhanceQoL/Core/Streams/Streams_Camelot.xml",
+        "EnhanceQoL/EnhanceQoL_Camelot.lua",
+        "EnhanceQoL/EnhanceQoL_Camelot.toc",
+        "EnhanceQoL/GeneratedChangelog.lua",
+        "EnhanceQoL/Modules/Aura/DefensiveAuraPresets_Camelot.lua",
+        "EnhanceQoL/Modules/Food/ConsumableData_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Consumables_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Drinks_Camelot.lua",
+        "EnhanceQoL/Modules/Food/EnhanceQoLBandageMacro_Camelot.lua",
+        "EnhanceQoL/Modules/Food/EnhanceQoLHealthMacro_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Food_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Food_Camelot.xml",
+        "EnhanceQoL/Modules/Food/Health.lua",
+        "EnhanceQoL/Modules/Food/Health_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Init_Camelot.lua",
+        "EnhanceQoL/Modules/Food/Settings_DrinkMacro_Camelot.lua",
+        "EnhanceQoL/NewSettingsTable.lua",
+        "EnhanceQoL/Settings/CombatDungeon_Camelot.lua",
+        "EnhanceQoL/Settings/MapNavigation_Camelot.lua",
+        "EnhanceQoL/Settings/Quest_Camelot.lua",
+        "EnhanceQoL/Settings/SettingsUI_Camelot.xml",
+        "EnhanceQoLBags/EnhanceQoLBags_Camelot.toc",
+        "EnhanceQoLChatSocial/ChatSocial_Camelot.xml",
+        "EnhanceQoLChatSocial/EnhanceQoLChatSocial_Camelot.toc",
+        "EnhanceQoLClassBuffReminder/ClassBuffReminder_Camelot.lua",
+        "EnhanceQoLClassBuffReminder/EnhanceQoLClassBuffReminder_Camelot.toc",
+        "EnhanceQoLClassBuffReminder/ForeverBuffs_Camelot.lua",
+        "EnhanceQoLClassBuffReminder/Settings_ClassBuffReminder_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_AuraPresetData_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_BlizzardEditor_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Camelot.xml",
+        "EnhanceQoLCooldownPanels/CooldownPanels_ClassFilters_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_Potions_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_SpellGroupPresets_Camelot.lua",
+        "EnhanceQoLCooldownPanels/CooldownPanels_SpellRankData_Camelot.lua",
+        "EnhanceQoLCooldownPanels/EnhanceQoLCooldownPanels_Camelot.toc",
+        "EnhanceQoLDamageMeter/DamageMeter.lua",
+        "EnhanceQoLDamageMeter/DamageMeter_Camelot.lua",
+        "EnhanceQoLDamageMeter/DamageMeter_Camelot.xml",
+        "EnhanceQoLDamageMeter/EnhanceQoLDamageMeter_Camelot.toc",
+        "EnhanceQoLMover/EnhanceQoLMover_Camelot.toc",
+        "EnhanceQoLQuickActions/MicroMenu.lua",
+        "EnhanceQoLResourceBars/EnhanceQoLResourceBars_Camelot.toc",
+        "EnhanceQoLResourceBars/ResourceBars.lua",
+        "EnhanceQoLResourceBars/ResourceBarsProfiles_Camelot.lua",
+        "EnhanceQoLResourceBars/ResourceBars_Camelot.lua",
+        "EnhanceQoLResourceBars/ResourceBars_Camelot.xml",
+        "EnhanceQoLResourceBars/Settings_Ressourcebars_Camelot.lua",
+        "EnhanceQoLSharedMedia/EnhanceQoLSharedMedia_Camelot.toc",
+        "EnhanceQoLSkinner/EnhanceQoLSkinner_Camelot.toc",
+        "EnhanceQoLSound/EnhanceQoLSound_Camelot.toc",
+        "EnhanceQoLTooltip/EnhanceQoLTooltip_Camelot.lua",
+        "EnhanceQoLTooltip/EnhanceQoLTooltip_Camelot.toc",
+        "EnhanceQoLTooltip/Tooltip_Camelot.xml",
+        "EnhanceQoLUnitFrames/EnhanceQoLUnitFrames_Camelot.toc",
+        "EnhanceQoLUnitFrames/Settings_UF_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF.lua",
+        "EnhanceQoLUnitFrames/UF_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GlobalAuraIgnore_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames_Camelot.lua",
+        "EnhanceQoLUnitFrames/UF_GroupFrames_HealerBuffs_Camelot.lua",
+        "EnhanceQoLUnitFrames/UnitFrames_Camelot.xml",
+        "EnhanceQoLVendor/EnhanceQoLVendor_Camelot.toc"
+      ],
+      "reason": "Hunk mixes Forever detection/load selection with addon policy or release/data changes.",
+      "limits": "Reviewed Forever-marked hunks and API deltas; did not claim full large diff review or addon runtime compatibility."
+    },
+    {
+      "slug": "equip-recommended-gear",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "b4007ded71fdff9853538d9bafe4766b0aa9b7103777726b5c28c167b08665af",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "EquipRecommendedGear.toc",
+        "_Camelot.lua",
+        "_Standard.lua"
+      ],
+      "reason": "Camelot module selection and TOC metadata; no API change."
+    },
+    {
+      "slug": "everything-quests",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "4784386fcbe17a913eff80819640edaab5db1961a718ed5beab970961f4acbd0",
+      "foreverMarkedPaths": [
+        "Core/Changelog.lua",
+        "EverythingQuests_Camelot.toc",
+        "Modules/MapPOI/Available.lua",
+        "Modules/MapPOI/Provider.lua",
+        "Modules/WhatsNew.lua"
+      ],
+      "reason": "Forever support selects Classic quest data and documents addon feature limitations; this is addon data/policy, not proof of simulator API mismatch."
+    },
+    {
+      "slug": "expansionutils",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "fc84bff429c263b45ab17517cb1c6bc372ce086fb3f93b6e23c7b246f05ea7ca",
+      "foreverMarkedPaths": [
+        "ExpansionUtils.toc"
+      ],
+      "reason": "Interface-only."
+    },
+    {
+      "slug": "expositum",
+      "classification": "packaging-only/data-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "3780021823027916252ae7646b2402c5c977e9ea493610cdf5522792d3dff1f0",
+      "foreverMarkedPaths": [
+        "CHANGELOG.md",
+        "Expositum.toc",
+        "FULL-CHANGELOG.md",
+        "data/ChangelogData.lua"
+      ],
+      "reason": "Forever interface/TOC, release notes, content tables, sound pack, or addon metadata changes; no native simulator contract established."
+    },
+    {
+      "slug": "numy-addon-profiler",
+      "classification": "confounded pair",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "2ac31d914596de499b750ea34a8426323aa29e9b373ec7ed917538da0da926fb",
+      "foreverMarkedPaths": [
+        "!!AddonProfiler.toc"
+      ],
+      "reason": "Profiler fix plus interface metadata; no native mismatch isolated."
+    },
+    {
+      "slug": "transpose",
+      "classification": "packaging-only",
+      "proofLevel": "Static comparison/triage only; no complete-addon runtime claim",
+      "diffSha256": "42f2d6cf467f46419a6c9bdc33c0a64352ce2ee0bfe179246757b8681ad89776",
+      "foreverMarkedPaths": [
+        "TransPose\\CHANGELOG.md",
+        "TransPose\\CreatureLibrary_Camelot.lua",
+        "TransPose\\Probes.lua",
+        "TransPose\\TransPose.toc",
+        "TransPose\\TransPose_Camelot.toc",
+        "TransPose\\UI\\CameraWidget.lua",
+        "TransPose\\UI\\Welcome.lua"
+      ],
+      "reason": "Forever compatibility metadata with no concrete API contract change."
+    }
+  ]
+}
