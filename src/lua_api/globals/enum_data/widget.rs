@@ -82,19 +82,19 @@ pub const VALUE_ADDED_SERVICE_TYPE: EnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub const SCRIPT_OBJECT_PROPAGATION_PATH: EnumDef = (
     "ScriptObjectPropagationPath",
     &[("Hierarchy", 0), ("Layout", 1)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub const SCRIPT_OBJECT_PROPAGATION_PATH_META: EnumDef = (
     "ScriptObjectPropagationPathMeta",
     &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub const FORBIDDEN_ASPECT: EnumDef = (
     "ForbiddenAspect",
     &[
@@ -109,13 +109,35 @@ pub const FORBIDDEN_ASPECT: EnumDef = (
         ("ChangeAnimationTarget", 256),
         ("RemoveSecretAspects", 512),
         ("ChangeParent", 1024),
+        #[cfg(feature = "forbidden-animation-aspects")]
+        ("QueryAnimationProgress", 2048),
+        #[cfg(feature = "forbidden-animation-aspects")]
+        ("AddAnimations", 4096),
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub const FORBIDDEN_ASPECT_META: EnumDef = (
     "ForbiddenAspectMeta",
-    &[("MinValue", 1), ("MaxValue", 1024), ("NumValues", 11)],
+    &[
+        ("MinValue", 1),
+        (
+            "MaxValue",
+            if cfg!(feature = "forbidden-animation-aspects") {
+                4096
+            } else {
+                1024
+            },
+        ),
+        (
+            "NumValues",
+            if cfg!(feature = "forbidden-animation-aspects") {
+                13
+            } else {
+                11
+            },
+        ),
+    ],
 );
 
 #[cfg(feature = "retail-12-1-0")]

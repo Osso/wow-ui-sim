@@ -1,6 +1,6 @@
 //! Anchor methods: SetPoint, GetPoint, ClearAllPoints, line endpoints, etc.
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 use crate::lua_api::frame::methods::forbidden_aspects;
 use crate::lua_api::frame::methods::methods_helpers::{
     can_change_protected_state_for, emit_addon_action_blocked,
@@ -426,7 +426,7 @@ pub(super) fn set_point(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
 
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     if let Some(relative_to) = request.relative_to {
         forbidden_aspects::ensure_forbidden_aspects_already_owned(
             state,

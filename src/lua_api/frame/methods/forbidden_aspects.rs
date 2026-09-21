@@ -4,12 +4,12 @@ use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub(crate) const INHERITANCE_PARENT: u64 = 1;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub(crate) const INHERITANCE_LAYOUT: u64 = 2;
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub(crate) fn stored_forbidden_aspects(state: &LuaState, frame_id: u64) -> LuaResult<u64> {
     let sim = borrow_state(state)?;
     let frame = sim
@@ -113,7 +113,7 @@ fn resolve_aspect(state: &mut LuaState, name: &str) -> LuaResult<u64> {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub(crate) fn stored_inheritable_forbidden_aspects(
     state: &LuaState,
     frame_id: u64,
@@ -134,7 +134,7 @@ pub(crate) fn stored_inheritable_forbidden_aspects(
     Ok(mask)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 pub(crate) fn ensure_forbidden_aspects_already_owned(
     state: &mut LuaState,
     frame_id: u64,

@@ -195,10 +195,6 @@ end
 const RETAIL_12_1_5_ENUM_OVERRIDES_LUA: &str = r#"
 Enum.BagFlag.IgnoreSoulbound = nil
 Enum.BagFlagMeta.NumValues = 27
-Enum.ForbiddenAspect.QueryAnimationProgress = 2048
-Enum.ForbiddenAspect.AddAnimations = 4096
-Enum.ForbiddenAspectMeta.MaxValue = 4096
-Enum.ForbiddenAspectMeta.NumValues = 13
 Enum.CurioRarityMeta = {
     MaxValue = 5,
     MinValue = 1,

@@ -16,10 +16,10 @@ mod unit_event;
 #[cfg(feature = "on-update-modes")]
 use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::methods::call_function_state;
+#[cfg(any(feature = "on-update-modes", feature = "forbidden-aspects"))]
+use crate::lua_api::methods::frame_id_from_stack;
 #[cfg(feature = "on-update-modes")]
-use crate::lua_api::methods::{
-    frame_id_from_stack, get_or_create_frame_fields, table_get, table_set,
-};
+use crate::lua_api::methods::{get_or_create_frame_fields, table_get, table_set};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::api::LuaApiMut;
 use rilua::vm::gc::arena::GcRef;
@@ -40,6 +40,8 @@ pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> 
     }
     #[cfg(feature = "retail-12-1-0")]
     register_patch_12_1_methods(state, table)?;
+    #[cfg(feature = "forbidden-aspects")]
+    register_forbidden_aspect_methods(state, table)?;
     #[cfg(feature = "on-update-modes")]
     register_on_update_methods(state, table)?;
     Ok(())
@@ -48,6 +50,13 @@ pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> 
 #[cfg(feature = "retail-12-1-0")]
 fn register_patch_12_1_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     access_restrictions::register(state, table)?;
+    table_set_rust_fn_static(state, table, "GetObjectTable", get_object_table)?;
+    table_set_rust_fn_static(state, table, "ClearScripts", clear_scripts)?;
+    Ok(())
+}
+
+#[cfg(feature = "forbidden-aspects")]
+fn register_forbidden_aspect_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, table, "AddForbiddenAspects", add_forbidden_aspects)?;
     table_set_rust_fn_static(state, table, "GetForbiddenAspects", get_forbidden_aspects)?;
     table_set_rust_fn_static(
@@ -56,14 +65,12 @@ fn register_patch_12_1_methods(state: &mut LuaState, table: GcRef<Table>) -> Lua
         "GetInheritableForbiddenAspects",
         get_inheritable_forbidden_aspects,
     )?;
-    table_set_rust_fn_static(state, table, "GetObjectTable", get_object_table)?;
     table_set_rust_fn_static(
         state,
         table,
         "HasAnyForbiddenAspects",
         has_any_forbidden_aspects,
     )?;
-    table_set_rust_fn_static(state, table, "ClearScripts", clear_scripts)?;
     Ok(())
 }
 
@@ -73,7 +80,7 @@ fn frame_fields_from_stack(state: &mut LuaState) -> LuaResult<Val> {
     Ok(get_or_create_frame_fields(state, id))
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn stack_bitmask_arg(state: &mut LuaState, index: usize) -> u64 {
     match crate::lua_bridge::stack_val(state, index as i32) {
         Val::Num(value) if value > 0.0 => value as u64,
@@ -81,7 +88,7 @@ fn stack_bitmask_arg(state: &mut LuaState, index: usize) -> u64 {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn add_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let mut mask = 0;
@@ -93,7 +100,7 @@ fn add_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn get_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let mask =
@@ -102,7 +109,7 @@ fn get_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn get_inheritable_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     // ScriptObjectPropagationPath is an enum (0/1), not our internal bitmask (1/2).
@@ -128,7 +135,7 @@ fn get_object_table(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 fn has_any_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let aspects =

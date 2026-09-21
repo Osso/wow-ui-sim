@@ -1,6 +1,6 @@
 //! Hierarchy methods (parent/children/regions) and create-region methods.
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 use crate::lua_api::frame::methods::forbidden_aspects;
 use crate::lua_api::frame::methods::methods_helpers::{
     can_change_protected_state_for, emit_addon_action_blocked,
@@ -49,7 +49,7 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
         emit_addon_action_blocked(state, id, "SetParent");
         return Ok(0);
     }
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     if let Some(parent_id) = new_parent_id {
         forbidden_aspects::ensure_forbidden_aspects_already_owned(
             state,

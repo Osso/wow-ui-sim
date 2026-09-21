@@ -304,13 +304,13 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     PLAYER_MENTORSHIP_STATUS,
     CHARACTER_CREATE_TYPE,
     VALUE_ADDED_SERVICE_TYPE,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     SCRIPT_OBJECT_PROPAGATION_PATH,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     SCRIPT_OBJECT_PROPAGATION_PATH_META,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     FORBIDDEN_ASPECT,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "forbidden-aspects")]
     FORBIDDEN_ASPECT_META,
     #[cfg(feature = "retail-12-1-0")]
     CUSTOM_AURA_BUTTON_UPDATE_MODE,
