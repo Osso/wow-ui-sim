@@ -148,7 +148,7 @@ fn startup_keeps_action_bar_deprecation_fallbacks_non_recursive(env: &WowLuaEnv)
 }
 
 #[test]
-fn c_action_bar_matches_master_default_bar_indices() {
+fn c_action_bar_reads_configured_default_bar_indices() {
     test_timeout! {
         let env = WowLuaEnv::new().expect("Failed to create Lua environment");
         let result: (
@@ -177,8 +177,8 @@ fn c_action_bar_matches_master_default_bar_indices() {
 
         assert_eq!(
             result,
-            (1, 13, None, None, None, 7, 0, 0),
-            "C_ActionBar should match master default bar index semantics"
+            (1, 13, Some(12), Some(14), Some(1), 7, 0, 0),
+            "Inactive special bars still expose the simulator's configured indices"
         );
     }
 }

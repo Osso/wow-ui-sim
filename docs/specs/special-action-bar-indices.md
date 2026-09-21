@@ -4,15 +4,15 @@ The action-bar index queries in `src/lua_api/globals/action_bar_api.rs` expose c
 
 ## What it must do
 
-- [ ] `C_ActionBar.GetOverrideBarIndex`, `GetVehicleBarIndex`, and `GetTempShapeshiftBarIndex` return their configured numeric indices with inactive or active bars.
-- [ ] Toggling the corresponding `Has*ActionBar` state changes availability predicates without erasing or changing configured indices.
-- [ ] Blizzard's legacy wrappers forward the same values as the namespace methods.
-- [ ] Ellesmere's inactive-bar paging-condition construction succeeds without nil concatenation.
+- [x] `C_ActionBar.GetOverrideBarIndex`, `GetVehicleBarIndex`, and `GetTempShapeshiftBarIndex` return their configured numeric indices with inactive or active bars.
+- [x] Toggling the corresponding `Has*ActionBar` state changes availability predicates without erasing or changing configured indices.
+- [x] Blizzard's legacy wrappers forward the same values as the namespace methods.
+- [x] Ellesmere's inactive-bar paging-condition construction succeeds without nil concatenation.
 
 ## How it works
 
 - Existing special-bar state supplies the indices; availability predicates remain separate.
-- [Action-bar subsystem](../wiki/index.md) provides broader project context.
+- [Project wiki index](../wiki/index.md) provides broader project context.
 
 ## Implementation inventory
 
@@ -36,7 +36,7 @@ The action-bar index queries in `src/lua_api/globals/action_bar_api.rs` expose c
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN and parent-owned final verification pending.
+- [ ] Parent-owned final verification remains pending. Targeted development GREEN passed all 12 action-bar state tests at `3b00f9c5e`; an older startup assertion is updated separately to the same non-nil contract.
 
 ## Out of scope
 
