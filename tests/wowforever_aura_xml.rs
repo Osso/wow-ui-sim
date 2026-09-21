@@ -4,6 +4,111 @@
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn native_target_aura_callback_roundtrips_before_cleanup() {
+    use wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen_with_overrides;
+    use wow_ui_sim::screen::ScreenKind;
+
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    let closure = discover_blizzard_addon_closure_for_screen_with_overrides(
+        &ui,
+        ScreenKind::Game,
+        &["Blizzard_UnitFrame"],
+        &[],
+    );
+    let mut loaded = Vec::new();
+    let mut warnings = Vec::new();
+    // Load manually: the shared closure loader discards successful-load warnings.
+    // Do not settle startup or apply post-load cleanup before inspecting definitions.
+    for (name, toc) in closure {
+        assert!(
+            !name.contains("EnvironmentCleanup"),
+            "diagnostic closure must stop before cleanup: {name}; loaded={loaded:?}"
+        );
+        let result = load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| {
+            panic!("loading {name}: {error}; loaded={loaded:?}; warnings={warnings:?}")
+        });
+        warnings.extend(
+            result
+                .warnings
+                .into_iter()
+                .map(|warning| format!("{name}: {warning}")),
+        );
+        loaded.push(name);
+    }
+    let template = wow_ui_sim::xml::get_template("TargetFrameAuraContainerTemplate")
+        .map(|entry| (entry.name, entry.widget_type));
+    let result: Result<(bool, String), _> = env.eval(
+        r#"
+        local diagnostics = {}
+        local frame
+        local setter = 'SetAuraContainerAnchorsChangedCallback'
+        local getter = 'GetAuraContainerAnchorsChangedCallback'
+        local function describe(label, value)
+            local members = {}
+            if type(value) == 'table' then
+                for key, member in pairs(value) do
+                    if type(member) == 'function' then members[#members + 1] = tostring(key) end
+                end
+                table.sort(members)
+            end
+            diagnostics[#diagnostics + 1] = label .. ': type=' .. type(value)
+                .. ', setter=' .. type(value and value[setter])
+                .. ', getter=' .. type(value and value[getter])
+                .. ', functions=[' .. table.concat(members, ',') .. ']'
+        end
+        local function snapshot(phase)
+            for _, name in ipairs({
+                'TargetFrameAuraContainerSharedMixin',
+                'TargetFrameAuraContainerInboundMixin',
+                'TargetFrameAuraContainerPrivateMixin',
+            }) do
+                describe(phase .. '.public.' .. name, rawget(_G, name))
+                describe(phase .. '.secure.' .. name,
+                    __secureenv and rawget(__secureenv, name))
+            end
+        end
+        snapshot('before-template')
+        local ok, failure = xpcall(function()
+            frame = CreateFrame('AuraContainer', nil, UIParent, 'TargetFrameAuraContainerTemplate')
+            local private = GetForbiddenObjectTable(frame)
+            assert(type(frame[setter]) == 'function', 'public callback setter missing')
+            assert(type(frame[getter]) == 'function', 'public callback getter missing')
+            assert(private ~= frame, 'public and forbidden views must remain distinct')
+            local callback = function() end
+            frame:SetAuraContainerAnchorsChangedCallback(callback)
+            assert(frame:GetAuraContainerAnchorsChangedCallback() == callback)
+            assert(private.auraContainerAnchorsChangedCallback == callback,
+                'setter did not store callback in forbidden partition')
+            assert(frame.auraContainerAnchorsChangedCallback == nil,
+                'private callback storage leaked into public fields')
+            frame:SetAuraContainerAnchorsChangedCallback(nil)
+            assert(frame:GetAuraContainerAnchorsChangedCallback() == nil)
+            assert(private.auraContainerAnchorsChangedCallback == nil)
+        end, debug.traceback)
+        snapshot('after-template')
+        describe('instance.public', frame)
+        describe('instance.forbidden', frame and GetForbiddenObjectTable(frame))
+        if failure then diagnostics[#diagnostics + 1] = tostring(failure) end
+        return ok, table.concat(diagnostics, '\n')
+        "#,
+    );
+    let lua_errors = env.state().borrow().lua_errors.clone();
+    let (passed, diagnostics) = result.unwrap_or_else(|error| {
+        panic!(
+            "diagnostic evaluation failed: {error}; template={template:?}; \
+             loaded={loaded:?}; warnings={warnings:?}; lua_errors={lua_errors:?}"
+        )
+    });
+    assert!(
+        passed,
+        "native target aura callback failed before cleanup; template={template:?}; \
+         loaded={loaded:?}; warnings={warnings:?}; lua_errors={lua_errors:?}\n{diagnostics}"
+    );
+}
+
 #[test]
 fn aura_tags_create_nested_frames_with_mixin_scripts_and_factory_aliases() {
     let env = WowLuaEnv::new().unwrap();
