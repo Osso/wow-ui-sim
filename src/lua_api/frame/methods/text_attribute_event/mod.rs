@@ -13,10 +13,12 @@ mod rolesets;
 mod text;
 mod unit_event;
 
+#[cfg(feature = "on-update-modes")]
+use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::methods::call_function_state;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "on-update-modes")]
 use crate::lua_api::methods::{
-    frame_id_from_stack, get_or_create_frame_fields, table_get, table_set, val_to_string,
+    frame_id_from_stack, get_or_create_frame_fields, table_get, table_set,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::api::LuaApiMut;
@@ -38,6 +40,8 @@ pub fn register_all(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> 
     }
     #[cfg(feature = "retail-12-1-0")]
     register_patch_12_1_methods(state, table)?;
+    #[cfg(feature = "on-update-modes")]
+    register_on_update_methods(state, table)?;
     Ok(())
 }
 
@@ -59,13 +63,11 @@ fn register_patch_12_1_methods(state: &mut LuaState, table: GcRef<Table>) -> Lua
         "HasAnyForbiddenAspects",
         has_any_forbidden_aspects,
     )?;
-    table_set_rust_fn_static(state, table, "SetOnUpdateMode", set_on_update_mode)?;
-    table_set_rust_fn_static(state, table, "GetOnUpdateMode", get_on_update_mode)?;
     table_set_rust_fn_static(state, table, "ClearScripts", clear_scripts)?;
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "on-update-modes")]
 fn frame_fields_from_stack(state: &mut LuaState) -> LuaResult<Val> {
     let id = frame_id_from_stack(state, 1)?;
     Ok(get_or_create_frame_fields(state, id))
@@ -135,27 +137,25 @@ fn has_any_forbidden_aspects(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "on-update-modes")]
+fn register_on_update_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, table, "SetOnUpdateMode", set_on_update_mode)?;
+    table_set_rust_fn_static(state, table, "GetOnUpdateMode", get_on_update_mode)
+}
+
+#[cfg(feature = "on-update-modes")]
 fn set_on_update_mode(state: &mut LuaState) -> LuaResult<u32> {
     let fields = frame_fields_from_stack(state)?;
-    let value = crate::lua_bridge::stack_val(state, 2);
-    let mode = val_to_string(state, value)
-        .map(|mode| crate::lua_api::methods::create_string(state, &mode))
-        .unwrap_or(value);
-    table_set(state, fields, "__onUpdateMode", mode);
+    let mode = OnUpdateMode::from_value(crate::lua_bridge::stack_val(state, 2))?;
+    table_set(state, fields, "__onUpdateMode", mode.value());
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "on-update-modes")]
 fn get_on_update_mode(state: &mut LuaState) -> LuaResult<u32> {
     let fields = frame_fields_from_stack(state)?;
-    let mode = table_get(state, fields, "__onUpdateMode");
-    if matches!(mode, Val::Nil) {
-        let default_mode = crate::lua_api::methods::create_string(state, "RunWhenVisible");
-        state.push(default_mode);
-    } else {
-        state.push(mode);
-    }
+    let mode = OnUpdateMode::from_stored_value(table_get(state, fields, "__onUpdateMode"))?;
+    state.push(mode.value());
     Ok(1)
 }
 

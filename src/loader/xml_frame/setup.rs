@@ -464,27 +464,26 @@ fn apply_xml_properties_direct(
     direct::apply_xml_id(state, frame_id, frame);
     direct::apply_xml_letters(state, frame_id, frame, inherits);
     direct::apply_xml_slider_orientation(state, frame_id, frame, inherits);
-    apply_xml_on_update_mode(env, frame_id, frame);
+    apply_xml_on_update_mode(env, frame_id, frame)?;
     apply_xml_forbidden_aspects(env, frame_id, frame)
 }
 
-fn apply_xml_on_update_mode(env: &LoaderEnv<'_>, frame_id: u64, frame: &crate::xml::FrameXml) {
-    let Some(mode) = frame.on_update_mode.as_deref() else {
-        return;
+fn apply_xml_on_update_mode(
+    env: &LoaderEnv<'_>,
+    frame_id: u64,
+    frame: &crate::xml::FrameXml,
+) -> Result<(), LoadError> {
+    let Some(name) = frame.on_update_mode.as_deref() else {
+        return Ok(());
     };
-    let normalized = match mode.to_ascii_lowercase().as_str() {
-        "disabled" => "Disabled",
-        "runwhenvisibleonce" => "RunWhenVisibleOnce",
-        "runonce" => "RunOnce",
-        "runalways" => "RunAlways",
-        _ => "RunWhenVisible",
-    };
-    let _ = env.with_state(|state| {
+    let mode = crate::c_api::on_update_modes::OnUpdateMode::from_xml_name(name)
+        .ok_or_else(|| LoadError::Lua(format!("invalid XML onUpdateMode: {name}")))?;
+    env.with_state(|state| {
         let frame = frame_ref(state, frame_id)?;
-        let mode = create_string(state, normalized);
-        table_set(state, frame, "__onUpdateMode", mode);
+        table_set(state, frame, "__onUpdateMode", mode.value());
         Ok::<(), crate::Error>(())
-    });
+    })
+    .map_err(|error| LoadError::Lua(error.to_string()))
 }
 
 fn apply_xml_forbidden_aspects(

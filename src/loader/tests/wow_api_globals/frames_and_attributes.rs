@@ -75,7 +75,7 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
         String,
         String,
         String,
-        String,
+        i32,
         f64,
         bool,
         String,
@@ -125,7 +125,7 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
     assert_eq!(object_table_ty, "table");
     assert_eq!(roleset_ty, "function");
     assert_eq!(roleset_names_ty, "table");
-    assert_eq!(on_update_mode, "RunAlways");
+    assert_eq!(on_update_mode, 4);
     assert_eq!(radial_percent, 0.75);
     assert!(radial_reverse);
     assert_eq!(status_render_mode, "Standard");

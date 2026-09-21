@@ -104,6 +104,7 @@ pub mod legacy_spell_book;
 mod mists_talents;
 #[cfg(feature = "retail-12-1-0")]
 mod numeric_rule_formatter;
+pub(crate) mod on_update_modes;
 pub mod permanent_shims;
 pub(crate) mod seconds_formatter;
 #[cfg(feature = "timed-signal-maps")]

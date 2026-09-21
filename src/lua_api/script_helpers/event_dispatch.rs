@@ -2,6 +2,7 @@ use super::{
     call_error_handler, call_error_handler_state, get_script_handlers_for_dispatch,
     get_scripts_for_dispatch, protected_lua_pcall_state, registry_table, table_get_str,
 };
+use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::handler_timing;
 use crate::lua_api::methods::{borrow_state, create_string, frame_ref, table_get, val_to_string};
 use rilua::vm::closure::Closure;
@@ -219,7 +220,7 @@ pub fn dispatch_on_update(
     for &frame_id in frame_ids {
         let mode = {
             let state = lua.state_mut();
-            on_update_mode_for_frame(state, frame_id)
+            on_update_mode_for_frame(state, frame_id)?
         };
         let dispatch = {
             let state = lua.state_mut();
@@ -239,6 +240,9 @@ pub fn dispatch_on_update(
             let state = lua.state_mut();
             frame_ref(state, frame_id)?
         };
+        if mode.is_one_shot() {
+            disable_on_update_mode(lua.state_mut(), frame_id)?;
+        }
         for handler in handlers {
             let Val::Function(func_ref) = handler.handler else {
                 continue;
@@ -256,39 +260,12 @@ pub fn dispatch_on_update(
                 registered_source,
             );
         }
-        if mode.is_one_shot() {
-            let state = lua.state_mut();
-            disable_on_update_mode(state, frame_id);
-        }
     }
     Ok(())
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum OnUpdateDispatchMode {
-    Disabled,
-    RunWhenVisible,
-    RunWhenVisibleOnce,
-    RunOnce,
-    RunAlways,
-}
-
-impl OnUpdateDispatchMode {
-    fn is_one_shot(self) -> bool {
-        matches!(self, Self::RunWhenVisibleOnce | Self::RunOnce)
-    }
-
-    fn requires_visibility(self) -> bool {
-        matches!(self, Self::RunWhenVisible | Self::RunWhenVisibleOnce)
-    }
-}
-
-fn should_dispatch_on_update(
-    state: &mut LuaState,
-    frame_id: u64,
-    mode: OnUpdateDispatchMode,
-) -> bool {
-    if mode == OnUpdateDispatchMode::Disabled {
+fn should_dispatch_on_update(state: &mut LuaState, frame_id: u64, mode: OnUpdateMode) -> bool {
+    if mode == OnUpdateMode::Disabled {
         return false;
     }
     if !mode.requires_visibility() {
@@ -299,26 +276,20 @@ fn should_dispatch_on_update(
         .unwrap_or(false)
 }
 
-fn on_update_mode_for_frame(state: &mut LuaState, frame_id: u64) -> OnUpdateDispatchMode {
-    let Ok(frame) = frame_ref(state, frame_id) else {
-        return OnUpdateDispatchMode::RunWhenVisible;
-    };
-    let mode = table_get(state, frame, "__onUpdateMode");
-    match val_to_string(state, mode).as_deref() {
-        Some("Disabled") => OnUpdateDispatchMode::Disabled,
-        Some("RunWhenVisibleOnce") => OnUpdateDispatchMode::RunWhenVisibleOnce,
-        Some("RunOnce") => OnUpdateDispatchMode::RunOnce,
-        Some("RunAlways") => OnUpdateDispatchMode::RunAlways,
-        _ => OnUpdateDispatchMode::RunWhenVisible,
-    }
+fn on_update_mode_for_frame(state: &mut LuaState, frame_id: u64) -> rilua::LuaResult<OnUpdateMode> {
+    let frame = frame_ref(state, frame_id)?;
+    OnUpdateMode::from_stored_value(table_get(state, frame, "__onUpdateMode"))
 }
 
-fn disable_on_update_mode(state: &mut LuaState, frame_id: u64) {
-    let Ok(frame) = frame_ref(state, frame_id) else {
-        return;
-    };
-    let disabled = create_string(state, "Disabled");
-    crate::lua_api::methods::table_set(state, frame, "__onUpdateMode", disabled);
+fn disable_on_update_mode(state: &mut LuaState, frame_id: u64) -> rilua::LuaResult<()> {
+    let frame = frame_ref(state, frame_id)?;
+    crate::lua_api::methods::table_set(
+        state,
+        frame,
+        "__onUpdateMode",
+        OnUpdateMode::Disabled.value(),
+    );
+    Ok(())
 }
 
 fn dispatch_on_update_handler(

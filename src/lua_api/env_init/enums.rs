@@ -244,11 +244,12 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         lua.exec(RETAIL_12_0_0_POST_COMPAT_ENUM_OVERRIDES_LUA)?;
     }
+    #[cfg(feature = "on-update-modes")]
+    crate::c_api::on_update_modes::register(lua.state_mut());
     #[cfg(feature = "retail-12-1-0")]
     {
         let state = lua.state_mut();
         let enum_table = ensure_global_table(state, "Enum");
-        ensure_on_update_mode_enum(state, enum_table);
         crate::c_api::c_unit_auras::register_sound_trigger_enum(state, enum_table);
     }
     lua.exec(
@@ -282,27 +283,6 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(RETAIL_12_0_0_POST_COMPAT_CONSTANT_OVERRIDES_LUA)?;
     }
     Ok(())
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn ensure_on_update_mode_enum(state: &mut rilua::vm::state::LuaState, enum_table: Val) {
-    let existing = table_get(state, enum_table, "OnUpdateMode");
-    if matches!(existing, Val::Table(_)) {
-        return;
-    }
-    let mode = create_table(state);
-    for name in [
-        "Disabled",
-        "RunWhenVisible",
-        "RunWhenVisibleOnce",
-        "RunOnce",
-        "RunAlways",
-    ] {
-        let value = crate::lua_api::methods::create_string(state, name);
-        table_set(state, mode, name, value);
-    }
-    table_set(state, enum_table, "OnUpdateMode", mode);
-    table_set(state, enum_table, "ScriptObjectOnUpdateMode", mode);
 }
 
 fn ensure_global_table(state: &mut rilua::vm::state::LuaState, key: &str) -> Val {

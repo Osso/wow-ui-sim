@@ -71,20 +71,6 @@ if not Enum.ForbiddenAspectInheritance then
   })
 end
 
-if not Enum.OnUpdateMode then
-  rawset(Enum, "OnUpdateMode", {
-    Disabled = "Disabled",
-    RunWhenVisible = "RunWhenVisible",
-    RunWhenVisibleOnce = "RunWhenVisibleOnce",
-    RunOnce = "RunOnce",
-    RunAlways = "RunAlways",
-  })
-end
-
-if not Enum.ScriptObjectOnUpdateMode then
-  rawset(Enum, "ScriptObjectOnUpdateMode", Enum.OnUpdateMode)
-end
-
 if type(DifficultyUtil) ~= "table" then
   DifficultyUtil = {}
 end

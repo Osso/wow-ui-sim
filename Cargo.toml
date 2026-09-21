@@ -113,12 +113,14 @@ intern-stats = ["rilua/intern-stats"]
 retail-12-0-0 = []
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
-retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets"]
+retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes"]
 retail-12-1-5 = ["retail-12-1-0", "dep:cc", "dep:pkg-config", "dep:vcpkg", "timed-signal-maps"]
 # Shared keyed timer capability used by PTR and Forever.
 timed-signal-maps = []
 # Shared XML aliases and intrinsic mappings for aura frames/buttons.
 aura-xml-widgets = []
+# Shared numeric frame update scheduling for Mainline and Forever.
+on-update-modes = []
 
 # Client profile features — exactly one profile marker must be enabled. The
 # public client-retail bundle preserves the current retail epoch; profile-retail
@@ -130,7 +132,7 @@ client-wrath = []
 client-mists = []
 client-era = []
 client-anniversary = []
-client-wowforever = ["timed-signal-maps", "aura-xml-widgets"]
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes"]
 
 [profile.release]
 lto = false

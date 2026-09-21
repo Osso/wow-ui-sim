@@ -1,3 +1,5 @@
+use rilua::LuaApiMut;
+
 #[cfg(not(feature = "client-ptr"))]
 const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     "Enum.TieredEntranceTypeMeta = { MinValue = 0, MaxValue = 4, NumValues = 5 }\n",
@@ -33,6 +35,7 @@ const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua")
 
 pub fn init(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA)?;
+    crate::c_api::on_update_modes::register(lua.state_mut());
     Ok(())
 }
 
@@ -40,6 +43,7 @@ pub fn apply_post_load(env: &crate::lua_api::WowLuaEnv) {
     if let Err(err) = env.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA) {
         eprintln!("patch 12.1 compat bootstrap failed after load: {err}");
     }
+    crate::c_api::on_update_modes::register(env.rilua_mut().state_mut());
 }
 
 pub fn apply_strict_removals(env: &crate::lua_api::WowLuaEnv) {
@@ -126,7 +130,7 @@ mod tests {
 
         super::apply_post_load(&env);
 
-        let (on_update_mode, discord): (String, String) = env
+        let (on_update_mode, discord): (i32, String) = env
             .eval(
                 r#"
                 return Enum.OnUpdateMode.Disabled,
@@ -134,7 +138,7 @@ mod tests {
                 "#,
             )
             .expect("patch 12.1 enums");
-        assert_eq!(on_update_mode, "Disabled");
+        assert_eq!(on_update_mode, 0);
         assert_eq!(discord, "number");
     }
 }
