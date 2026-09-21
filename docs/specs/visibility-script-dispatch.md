@@ -29,7 +29,7 @@ These are engine script/lifecycle requirements, not guessed aura data or a new s
 
 ## Proof
 
-At `9c223f8b7`, `frame_creation::visibility_scripts::` passes 9/9 and constructs synthetic bindings with explicit `Frame` templates after the earlier unknown-custom-frame-type fixture failure. `forever_forbidden_consumers::` passes 5/5, including the real hidden-parent AuraContainer lifecycle. `/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json` records the unchanged addon completing all five existing interaction groups plus trusted aura paint, removal, and cleanup, with zero Lua-error lines during the 90-second run; exit 124 is expected teardown.
+At `9c223f8b7`, `frame_creation::visibility_scripts::` passes 9/9 and constructs synthetic bindings with explicit `Frame` templates after the earlier unknown-custom-frame-type fixture failure. `forever_forbidden_consumers::` passed 5/5 at `1582438c6`, including the real hidden-parent AuraContainer lifecycle; that unchanged proof remains valid after the synthetic-fixture-only correction. `/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json` records the unchanged addon completing all five existing interaction groups plus trusted aura paint, removal, and cleanup, with zero Lua-error lines during the 90-second run; exit 124 is expected teardown.
 
 The earlier RED ledger remains root-cause history: it observed a visible but unregistered container after `ReloadFrames`. Admin aura producers already used all-binding `fire_named_event_state`; `c6d970cf3` independently corrects only `FireEvent`/`A_Admin.FireEvent`.
 
