@@ -1,6 +1,6 @@
-## [2026-09-21] investigation | Correct synchronous intrinsic-event delivery
+## [2026-09-21] investigation | Correct `FireEvent` intrinsic-event delivery attribution
 
-Recorded the normal-only synchronous event root cause and shared dispatcher correction. New tests use real XML intrinsic bindings, preserve callback/filter ordering, and exercise two native AuraContainer add/remove cycles after construction. No loader/vendor changes; Cargo and GREEN remain integration-owned. See [[synchronous-intrinsic-events]].
+Recorded `c6d970cf3` as a normal-only `FireEvent`/`A_Admin.FireEvent` correction with shared all-binding dispatch and API-level ordering/filter regressions. Diagnosis correction: admin aura producers use `fire_named_event_state` already, so their passing cold-container lifecycle test is not proof for that commit. Post-`ReloadFrames` evidence instead points to normal-only recursive `OnShow` visibility dispatch skipping AuraContainer's intrinsic re-registration; implementation and GREEN remain pending. See [[synchronous-intrinsic-events]].
 
 ## [2026-09-21] investigation | Record secret aura geometry and texture handoffs
 

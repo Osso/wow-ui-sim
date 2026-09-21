@@ -7,7 +7,7 @@ The event system connects WoW-style game events (PLAYER_LOGIN, ADDON_LOADED, etc
 1. **Game events** -- Named string events (e.g., "PLAYER_LOGIN") dispatched to all frames that called `RegisterEvent()`. Routed through the frame's `OnEvent` handler.
 2. **Script handlers** -- Direct per-frame callbacks (OnClick, OnShow, OnUpdate, etc.) fired by specific Rust-side triggers like mouse input or visibility changes.
 
-Script handlers are stored by binding in the Lua registry: `__scripts_pre`, `__scripts`, and `__scripts_post`. Named-event frame delivery runs precall, normal, then postcall bindings through a shared unit-filtered dispatcher. Synchronous `FireEvent`/admin/model producers preserve global callbacks first, then each frame's independently filtered callbacks, then that frame's script bindings. A frame-script unit mismatch must not suppress its separately registered callback. See the [synchronous dispatch contract](specs/synchronous-event-dispatch.md); compiled verification of the synchronous-path correction is pending.
+Script handlers are stored by binding in the Lua registry: `__scripts_pre`, `__scripts`, and `__scripts_post`. Named-event frame delivery runs precall, normal, then postcall bindings through a shared unit-filtered dispatcher. Synchronous `FireEvent` and `A_Admin.FireEvent` preserve global callbacks first, then each frame's independently filtered callbacks, then that frame's script bindings. `A_Admin.AddBuff`/`RemoveBuff` use the named-event dispatcher directly. A frame-script unit mismatch must not suppress its separately registered callback. See the [synchronous dispatch contract](specs/synchronous-event-dispatch.md).
 
 ## Event Types and the Event Queue
 
