@@ -15,10 +15,10 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
 - [x] `client-wowforever` selects a distinct `WowForever` profile with interface `16001`, cache `wowforever`, CASC product `wow_classic_beta`, and `_classic_beta_` install paths.
 - [x] Forever resolves `[Family]` to `Mainline` and `[Game]` to `Camelot`, accepting `mainline`/`camelot` annotations, not `classic`, `standard`, or `vanilla`; matching exclusion annotations suppress files and dependencies. This follows the authenticated 1.60.1.69913 source tree, not the product name: ActionBar's mainline annotations select present `AssistedCombatManager.lua` and `ActionButtonOverrides.lua`, while its classic annotation selects absent `Mainline/MainMenuBar.lua`.
-- [ ] Forever selects Camelot variants, generic `.toc`, then Mainline variants. Each flavor tier supports underscore then hyphen spellings; retaining underscore precedence is simulator policy, not a claim about native tie-order when both exist. Mainline-only load-on-demand dependencies participate in discovery and dependency ordering; no WorldMap-specific exception is used.
-- [ ] Supported TOC names and `.toc` extensions match case-insensitively without demoting active-profile variants below generic. Exact spelling wins within a separator variant; remaining case collisions resolve lexically, independently of directory order. Unrelated folder names, foreign flavors, and unknown suffixes are not selected by an unrestricted scan.
-- [ ] Retail/PTR retain Mainline then generic then Standard; Wrath/Mists/Era/Anniversary retain their primary flavor then generic then Classic-family variants. Named Mists GameMenu/Mainline and UIParentPanelManager/Classic compatibility variants retain their priority.
-- [ ] A Carbonite-shaped package with incompatible Retail `Carbonite.toc` and compatible `Carbonite-Camelot.toc` admits the provider through discovery and the startup interface gate before its Info/Notes/Warehouse dependents load.
+- [x] Forever selects Camelot variants, generic `.toc`, then Mainline variants. Each flavor tier supports underscore then hyphen spellings; retaining underscore precedence is simulator policy, not a claim about native tie-order when both exist. Mainline-only load-on-demand dependencies participate in discovery and dependency ordering; no WorldMap-specific exception is used.
+- [x] Supported TOC names and `.toc` extensions match case-insensitively without demoting active-profile variants below generic. Exact spelling wins within a separator variant; remaining case collisions resolve lexically, independently of directory order. Unrelated folder names, foreign flavors, and unknown suffixes are not selected by an unrestricted scan.
+- [x] Retail/PTR retain Mainline then generic then Standard; Wrath/Mists/Era/Anniversary retain their primary flavor then generic then Classic-family variants. Named Mists GameMenu/Mainline and UIParentPanelManager/Classic compatibility variants retain their priority.
+- [x] A Carbonite-shaped package with incompatible Retail `Carbonite.toc` and compatible `Carbonite-Camelot.toc` admits the provider through discovery and the startup interface gate before its Info/Notes/Warehouse dependents load.
 - [x] Forever reports version `1.60.1`, build `69913`, and interface `16001` without enabling a retail API epoch or legacy compatibility bootstrap.
 
 ## How it works
@@ -49,6 +49,10 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - `tests/blizzard_recruit_a_friend_loads.rs` — retail `C_RecruitAFriend.IsEnabled` availability and behavior.
 - `src/lua_api/globals/register.rs` — exact retail 12.1 string values and intentional nil globals.
 - `src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs` — PTR 12.1.5 CurioRarity, vendor mapping, and build-identity contracts.
+
+### Carbonite TOC development proof
+
+Loader source `31ac46b3a`: RED 4/9 TOC tests and 0/1 Carbonite provider/consumer test; targeted offline GREEN 10/10 Forever TOC, 8/8 Forever profile, 12/12 Mists TOC, 3/3 existing Mists screen-selection, and 11/11 Retail TOC tests. These 44 tests cover the selected profiles, not a fresh runtime test of every client or the entire Carbonite addon. Eight pre-existing unrelated lib-test warnings occur under Forever/Mists, also present in RED. Commands, revision scopes, and complete logs are recorded in `/tmp/forever-carbonite-toc-development-ledger.json`; final checks and actual-package startup remain integration-owned.
 
 ## Forever event coverage
 
