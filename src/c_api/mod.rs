@@ -31,7 +31,6 @@ mod c_combat_audio_alert;
 mod c_combat_text;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
-pub(crate) mod container_inventory;
 pub mod c_curve_util;
 pub mod c_death_recap;
 pub mod c_discord;
@@ -92,6 +91,7 @@ pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
+pub(crate) mod container_inventory;
 pub(crate) mod duration_text_binding;
 #[cfg(feature = "retail-12-1-5")]
 pub mod intl_native;
