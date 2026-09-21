@@ -52,13 +52,27 @@ Actual player health/power and cast interactions progress beyond startup, exposi
 - Actual headless target fixture passes show → health 25000/50000 → hide. Real-time GUI wrapper records the chat test passing but does not progress to the queued next test within 65 seconds; options/unlock/actions are not credited. The earlier headless action test times out because 500 rapid ticks do not guarantee elapsed wall-clock timer time.
 - All 666 package files match the original hashes after producer implementation. No package additions, removals or modifications were found.
 
-Evidence: `/tmp/ellesmere-forever/producer-batch-build-retry-ledger.json`, `producer-batch-tests-ledger.json`, `major-interactions-first-ledger.json`, `gui-interactions-batch-ledger.json`, and `package-immutability.json`. Prior artifact verification failed; current source has not passed the final independent gate. Three aura-path passes have not closed the native dependency chain; further code changes need a diagnostic decision, not another isolated availability patch.
+Evidence: `/tmp/ellesmere-forever/producer-batch-build-retry-ledger.json`, `producer-batch-tests-ledger.json`, `major-interactions-first-ledger.json`, `gui-interactions-batch-ledger.json`, and `package-immutability.json`. Prior artifact verification failed; current source has not passed the final independent gate. After three aura-path passes, the user selected a full dependency-chain audit. The following checkpoint records its bounded fixes and remaining failures.
+
+## Audited-chain checkpoint: `9476efcf5`
+
+Nested timer queue preservation, duration-binding profile availability, formatter namespace restoration, AuraContainer API/enum publication, direct forbidden argument projection, `AddSecretAspect` publication, and explicit secure-delegate execution are committed. Native Lua remains unchanged.
+
+| Capability | Latest observed proof | Remaining boundary |
+| --- | --- | --- |
+| Nested timers; formatter restoration | 2 timer tests; cleanup identity regression and binding-availability regression pass at `248f665fd` | Final independent verification |
+| Numeric formatter / duration binding | Numeric formatter 7/7 at `248f665fd`; duration-binding copy/native consumer 7/7 after `9476efcf5` | Native formatter threshold parity is not established |
+| AuraContainer native initialization | Option processors 8/8, tainted forbidden consumers 3/3, object partitions 8/8, secure delegate taint tests 2/2 | Full addon path reaches missing `AddAccessRestrictions` after login |
+| Actual GUI interactions | Chat, options/navigation/unlock, cast/channel/empower, target show/health/hide pass | Action fixture compared a path with canonical file ID `135907`; corrected fixture awaits replay. Aura fixture cannot find its assigned button while native access registration fails |
+| Startup | Remaining native TargetFrame callback error reproduced | `SetAuraContainerAnchorsChangedCallback` ownership/load boundary remains under diagnosis; post-cleanup missing globals do not prove mixin-composition failure |
+
+Evidence: `/tmp/ellesmere-forever/audited-chain-tests-ledger.json`, `secure-chain-tests-ledger.json`, and `secure-chain-gui-ledger.json`. GUI completion means all six fixtures returned, **not** that all passed: the recorded result is 4/6. Existing eight profile-gating warnings remain pre-existing. No full compatibility, clean-startup, or independent final acceptance claim is made.
 
 ## Coverage still required
 
 - Initialization/active-path assertions for eligible modules, explicitly reporting intentional Forever stand-down.
-- Settings open/navigation/close through `/eui` and actual module pages; unlock/layout lifecycle.
-- Unit/target changes, aura updates and cast/channel transitions with observable output assertions.
+- Preserve the observed settings/navigation/unlock and cast/channel/target passes through final integration; broader layout editing is not covered.
+- Close aura creation/update/removal with observable real-button icon, stack, and cooldown assertions.
 - Action-bar/cooldown/resource consumers and sustained updates, including errors swallowed by addon-level protected calls.
 - Independent final verification after the last applicable source change; no full-addon compatibility claim from startup alone.
 
