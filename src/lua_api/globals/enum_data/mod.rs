@@ -127,9 +127,9 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     NAVIGATION_STATE,
     UI_FRAME_TYPE,
     COOLDOWN_VIEWER_CATEGORY,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER,
-    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE,
     #[cfg(feature = "retail-12-1-0")]
     RECENT_ALLIES_FRIEND_TAG,
@@ -200,9 +200,9 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
         "ClubStreamTypeMeta",
         &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
     ),
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META,
-    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_DISPEL_TYPE_TEXTURE_STYLE_META,
     #[cfg(feature = "client-wowforever")]
     (
@@ -312,9 +312,9 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     FORBIDDEN_ASPECT,
     #[cfg(feature = "forbidden-aspects")]
     FORBIDDEN_ASPECT_META,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_UPDATE_MODE,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     CUSTOM_AURA_BUTTON_UPDATE_MODE_META,
     CREATION_CLASS_DISABLED_REASON,
     CREATION_RACE_DISABLED_REASON,

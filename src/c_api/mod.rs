@@ -13,7 +13,7 @@ pub mod c_ardenweald_gardening;
 pub mod c_arrow_callout_manager;
 pub mod c_artifact_relic_forge_ui;
 pub mod c_artifact_ui;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub mod c_aura_container_util;
 pub mod c_auto_complete;
 pub mod c_azerite_empowered_item;
@@ -66,7 +66,7 @@ pub mod c_pvp;
 pub mod c_quest_hub;
 pub mod c_report_system;
 pub mod c_reputation;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
@@ -140,9 +140,9 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(feature = "retail-12-1-5")]
     c_encounter_timeline::register(state)?;
     c_intl::register(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     c_aura_container_util::register(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-containers")]
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;

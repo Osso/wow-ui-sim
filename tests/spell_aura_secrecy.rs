@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(feature = "aura-containers")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

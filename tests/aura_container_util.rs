@@ -1,6 +1,36 @@
-#![cfg(feature = "retail-12-1-0")]
+#![cfg(feature = "aura-containers")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[test]
+fn aura_update_and_texture_style_enums_match_native_contract() {
+    let env = WowLuaEnv::new().unwrap();
+    let contract = r#"
+        local function check(name, expected)
+            local actual = assert(Enum[name], name .. ' missing')
+            local count = 0
+            for key, value in pairs(actual) do
+                assert(expected[key] == value, name .. '.' .. key)
+                count = count + 1
+            end
+            local expectedCount = 0
+            for key, value in pairs(expected) do
+                assert(actual[key] == value)
+                expectedCount = expectedCount + 1
+            end
+            assert(count == expectedCount)
+            local meta = assert(Enum[name .. 'Meta'])
+            assert(meta.MinValue == 0 and meta.MaxValue == count - 1)
+            assert(meta.NumValues == count)
+        end
+        check('CustomAuraButtonUpdateMode', {Assignment = 0, Update = 1})
+        check('CustomAuraButtonDispelTypeTextureStyle', {
+            Border = 0, BorderWithIcon = 1, Icon = 2, PreserveAsset = 3, CustomAsset = 4,
+        })
+    "#;
+    env.exec(contract).unwrap();
+    env.exec_maybe_secure(contract, true).unwrap();
+}
 
 #[test]
 fn aura_stealable_filter_enum_and_options_match_native_contract() {
@@ -116,8 +146,10 @@ fn aura_duration_options_preserve_object_handles_and_copy_format_components() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         local formatter = C_StringUtil.CreateNumericRuleFormatter()
-        local binding = C_DurationUtil.CreateDurationTextBinding()
-        local curve = C_CurveUtil.CreateColorCurve()
+        local binding = assert(C_DurationUtil.CreateDurationTextBinding(),
+            'modeled duration binding factory must return a handle')
+        local curve = assert(C_CurveUtil.CreateColorCurve(),
+            'modeled color curve factory must return a handle')
         local options = { binding = binding, textFormatter = formatter,
             textFormat = { formatString = '%s remaining', components = {
                 { property = Enum.DurationTextBindingProperty.RemainingDuration, formatter = formatter } } },

@@ -140,13 +140,13 @@ pub const FORBIDDEN_ASPECT_META: EnumDef = (
     ],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub const CUSTOM_AURA_BUTTON_UPDATE_MODE: EnumDef = (
     "CustomAuraButtonUpdateMode",
     &[("Assignment", 0), ("Update", 1)],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub const CUSTOM_AURA_BUTTON_UPDATE_MODE_META: EnumDef = (
     "CustomAuraButtonUpdateModeMeta",
     &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],

@@ -1,11 +1,12 @@
 # Aura container options
 
-`C_AuraContainerUtil` normalizes the nine aura presentation option structures in `src/c_api/c_aura_container_util.rs`. The contract comes from the pinned retail `Blizzard_APIDocumentationGenerated/AuraContainerUtilDocumentation.lua`, plus its referenced duration-text, texture-slice, status-bar, and aura shared structures.
+`C_AuraContainerUtil` normalizes the nine base aura presentation option structures in `src/c_api/c_aura_container_util.rs`. The shared `aura-containers` capability exposes the existing processors and native aura enums to Retail 12.1+ and Forever. Contracts come from each pinned client's `Blizzard_APIDocumentationGenerated/AuraContainerUtilDocumentation.lua` and `AuraContainerSharedDocumentation.lua`, plus their referenced duration-text, texture-slice and status-bar structures.
 
 ## What it must do
 
-- [x] Register all nine processors before the secure environment is copied, under the cumulative `retail-12-1-0` epoch.
-- [x] Publish `Enum.CustomAuraButtonDispelTypeStealableFilter` (`Stealable=0`, `NotStealable=1`) and its `Meta` (`MinValue=0`, `MaxValue=1`, `NumValues=2`) in public and secure environments at that epoch, matching `AuraContainerSharedDocumentation.lua`. Dispel-texture option processing preserves either value, including zero.
+- [ ] Register the nine base processors before secure-environment copying for Retail 12.1+ and Forever, without enabling an entire Retail epoch for Forever.
+- [ ] Publish `Enum.CustomAuraButtonDispelTypeStealableFilter` (`Stealable=0`, `NotStealable=1`) and its metadata in both environments. Preserve either option value, including zero.
+- [ ] Publish `Enum.CustomAuraButtonUpdateMode` (`Assignment=0`, `Update=1`) and the five texture styles (`Border=0`, `BorderWithIcon=1`, `Icon=2`, `PreserveAsset=3`, `CustomAsset=4`), with exact membership and metadata in both environments.
 - [ ] Require tables for tooltip backdrop, nine-slice, texture-slice, and application-bar options; accept nil for application-count, dispel-text, dispel-texture, duration-bar, and duration-text options.
 - [ ] Return new structures and nested maps/arrays containing recognized fields; do not mutate input structures or return the input table unchanged.
 - [ ] Validate required fields, primitive types, documented enum values, string-keyed maps, and duration-format component arrays. Preserve false and zero rather than replacing them with defaults.
@@ -24,6 +25,7 @@ The module's local field lists describe only these documented structures. Primit
 
 - `src/c_api/c_aura_container_util.rs` — nine processors, field contracts, validation, copies, and color conversion.
 - `src/c_api/mod.rs` — pre-secure-copy namespace registration.
+- `Cargo.toml` and `src/lua_api/globals/enum_data/{mod,widget,addon_system}.rs` — shared capability and native enum publication.
 
 ## Tests asserting this spec
 
@@ -32,6 +34,10 @@ The module's local field lists describe only these documented structures. Primit
 
 ## Known gaps (current cycle)
 
+- [ ] Shared-capability grouped GREEN is pending; no Cargo was run for this publication slice. Existing Forever native-provider RED stops at missing `CustomAuraButtonUpdateMode`.
+- [ ] Duration-binding, formatter lifecycle and XML argument projection remain separate dependencies. The duration-options test now requires non-nil modeled factory handles instead of allowing nil identity comparisons to pass.
+- [ ] Pinned Forever documentation also declares `ProcessCustomAuraButtonCasterNameOptions` and application-bar `minApplications`. This slice leaves their existing `retail-12-1-5` gates unchanged: those native fields are unexpanded/unproven, not absent from the client.
+
 - Targeted enum/options proof passed 1/1 in `/tmp/pi-aura-stealable-enum-green.*`; related duration/curve identity has separate coverage.
 - Actual addon/SavedVariables startup returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`; it still records three loader warnings, so this is not a zero-warning claim.
 
@@ -39,4 +45,4 @@ This implementation does not establish exact native error wording or secret-argu
 
 ## Out of scope
 
-Formatter, duration-binding, and curve implementations; vendor/addon modifications; broader aura rendering or security-policy changes. RGB colors use the existing three-channel `CreateColor` conversion rather than introducing an aura-specific alpha default.
+Formatter, duration-binding, and curve implementations; vendor/addon modifications; broader aura rendering or security-policy changes. Publishing option/enumeration data does not authorize or establish full access-restriction or secret-value enforcement. RGB colors use the existing three-channel `CreateColor` conversion rather than introducing an aura-specific alpha default.

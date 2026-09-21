@@ -208,13 +208,13 @@ pub const COOLDOWN_VIEWER_CATEGORY_META: EnumDef = (
 
 pub const TTS_VOICE_TYPE: SeqEnumDef = ("TtsVoiceType", &["Standard", "Alternate"]);
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER: SeqEnumDef = (
     "CustomAuraButtonDispelTypeStealableFilter",
     &["Stealable", "NotStealable"],
 );
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-containers")]
 pub const CUSTOM_AURA_BUTTON_DISPEL_TYPE_STEALABLE_FILTER_META: EnumDef = (
     "CustomAuraButtonDispelTypeStealableFilterMeta",
     &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
