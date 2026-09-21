@@ -22,6 +22,7 @@ use rilua::{LuaResult, Val};
 
 pub fn get_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let ignore = bool::from_stack(state, 2).ok().unwrap_or(false);
     let (width, _) = frame_size(state, id, ignore)?;
     state.push(Val::Num(width as f64));
@@ -30,6 +31,7 @@ pub fn get_width(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn get_height(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let ignore = bool::from_stack(state, 2).ok().unwrap_or(false);
     let (_, height) = frame_size(state, id, ignore)?;
     state.push(Val::Num(height as f64));
@@ -38,6 +40,7 @@ pub fn get_height(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn get_size(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let ignore = bool::from_stack(state, 2).ok().unwrap_or(false);
     let (width, height) = frame_size(state, id, ignore)?;
     state.push(Val::Num(width as f64));
@@ -45,10 +48,31 @@ pub fn get_size(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+fn read_size_input(state: &LuaState, index: i32) -> LuaResult<(f32, bool)> {
+    let (value, secret) = super::super::secret_origin::unwrap_input(
+        state,
+        crate::lua_bridge::stack_val(state, index),
+    )?;
+    let number = if secret {
+        match value {
+            Val::Num(number) => number as f32,
+            Val::Nil => 0.0,
+            _ => {
+                return Err(rilua::runtime_error(
+                    "secret size input must contain a number or nil",
+                ));
+            }
+        }
+    } else {
+        opt_f32(state, index)
+    };
+    Ok((number, secret))
+}
+
 pub fn set_size(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
-    let width = opt_f32(state, 2);
-    let height = opt_f32(state, 3);
+    let (width, secret_width) = read_size_input(state, 2)?;
+    let (height, secret_height) = read_size_input(state, 3)?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetSize");
         return Ok(0);
@@ -58,6 +82,10 @@ pub fn set_size(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
 
+    if let Some(frame) = sim.widgets.get_mut(id) {
+        frame.secret_width = secret_width;
+        frame.secret_height = secret_height;
+    }
     let size_changed = current.width != width || current.height != height;
     if !size_changed {
         if current.width_is_text_auto {
@@ -83,7 +111,7 @@ pub fn set_fixed_size(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
-    let width = opt_f32(state, 2);
+    let (width, secret_width) = read_size_input(state, 2)?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetWidth");
         return Ok(0);
@@ -93,6 +121,9 @@ pub fn set_width(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
 
+    if let Some(frame) = sim.widgets.get_mut(id) {
+        frame.secret_width = secret_width;
+    }
     if current.width == width {
         if current.width_is_text_auto {
             clear_auto_width_flag(&mut sim, id);
@@ -113,7 +144,7 @@ pub fn set_width(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_height(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
-    let height = opt_f32(state, 2);
+    let (height, secret_height) = read_size_input(state, 2)?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetHeight");
         return Ok(0);
@@ -123,6 +154,9 @@ pub fn set_height(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
 
+    if let Some(frame) = sim.widgets.get_mut(id) {
+        frame.secret_height = secret_height;
+    }
     if current.height == height {
         if current.height_is_text_auto {
             clear_auto_height_flag(&mut sim, id);

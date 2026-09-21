@@ -46,6 +46,10 @@ pub struct Frame {
     pub secret_shown: bool,
     pub secret_text: bool,
     pub secret_timing: bool,
+    pub secret_width: bool,
+    pub secret_height: bool,
+    pub secret_anchor_points: Vec<AnchorPoint>,
+    pub secret_texture: bool,
     pub show_hide_depth: u16, // reentry depth for Show/Hide mutual recursion limit
     pub click_depth: u16,     // reentry depth for programmatic Button:Click recursion limit
     pub collapses_layout: bool,
@@ -667,6 +671,7 @@ impl Frame {
 
     pub fn clear_all_points(&mut self) {
         self.anchors.clear();
+        self.secret_anchor_points.clear();
     }
 
     pub fn register_event(&mut self, event: &str) {

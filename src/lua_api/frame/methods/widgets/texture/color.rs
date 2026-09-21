@@ -20,6 +20,7 @@ pub(super) fn set_color_texture(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn clear_texture_sources(frame: &mut crate::widget::Frame) {
+    frame.secret_texture = false;
     frame.texture = None;
     frame.texture_file_data_id = None;
     frame.atlas = None;

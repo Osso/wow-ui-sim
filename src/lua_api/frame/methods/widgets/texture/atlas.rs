@@ -263,13 +263,20 @@ fn button_texture_should_show(
 
 pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let texture_val = stack_val(state, 2);
+    let (texture_val, secret) =
+        crate::lua_api::frame::methods::secret_origin::unwrap_input(state, stack_val(state, 2))?;
+    let resolved = resolve_texture_value(state, texture_val);
+    if secret && resolved.is_none() {
+        return Err(runtime_error(
+            "secret texture must contain a file ID, path, or nil",
+        ));
+    }
     let horiz_tile = opt_bool(state, 3);
     let vert_tile = opt_bool(state, 4);
     let mut sim = borrow_state_mut(state)?;
     let mut order_changed = false;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        let Some((path, file_data_id)) = resolve_texture_value(state, texture_val) else {
+        let Some((path, file_data_id)) = resolved else {
             return Ok(0);
         };
         let had_render_source = texture_has_render_source(frame);
@@ -277,6 +284,7 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
         let changed = texture_assignment_changed(frame, &path, file_data_id, horiz_tile, vert_tile);
         frame.texture = path;
         frame.texture_file_data_id = file_data_id;
+        frame.secret_texture = secret;
         frame.color_texture = None;
         clear_atlas_owned_tex_coords(frame);
         frame.atlas = None;
@@ -380,6 +388,7 @@ fn resolve_file_data_id_path(file_data_id: u32) -> String {
 
 pub(super) fn get_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_texture_readable(state, id)?;
     let (file_id, path) = {
         let sim = borrow_state(state)?;
         let frame = sim.widgets.get(id);
@@ -401,6 +410,7 @@ pub(super) fn get_texture(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_texture_file_id(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_texture_readable(state, id)?;
     let file_id = borrow_state(state)?
         .widgets
         .get(id)
@@ -414,6 +424,7 @@ pub(super) fn get_texture_file_id(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_texture_file_path(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_texture_readable(state, id)?;
     let path = borrow_state(state)?
         .widgets
         .get(id)
@@ -430,6 +441,7 @@ pub(super) fn get_texture_file_path(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_atlas(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    crate::lua_api::frame::methods::secret_origin::require_texture_readable(state, id)?;
     let atlas = borrow_state(state)?
         .widgets
         .get(id)

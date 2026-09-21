@@ -1,8 +1,8 @@
 //! Bounded simulator policy for secret-origin aura widget readouts.
-#![cfg(feature = "client-wowforever")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn aura_secret_shown_preserves_false_and_restricts_ancestor_readout() {
     let env = WowLuaEnv::new().unwrap();
@@ -34,6 +34,7 @@ fn aura_secret_shown_preserves_false_and_restricts_ancestor_readout() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn aura_secret_text_rejects_tainted_reads_and_failed_writes_leave_text() {
     let env = WowLuaEnv::new().unwrap();
@@ -66,6 +67,7 @@ fn aura_secret_text_rejects_tainted_reads_and_failed_writes_leave_text() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn aura_secret_duration_widget_handoffs_keep_readout_restricted() {
     let env = WowLuaEnv::new().unwrap();
@@ -104,4 +106,122 @@ fn aura_secret_duration_widget_handoffs_keep_readout_restricted() {
         debug.setobjecttaint(read_plain, 'SecretDisplayProbe')
         read_plain()
     "#).unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn aura_secret_geometry_decodes_native_arguments_and_keeps_mixed_origins() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local f = CreateFrame('Frame', nil, UIParent)
+        f:SetPoint(secretwrap('CENTER', UIParent, 'CENTER', 3, 4))
+        f:SetSize(secretwrap(42, 24))
+        local point, relative, relativePoint, x, y = f:GetPoint()
+        assert(point == 'CENTER' and relative == UIParent and relativePoint == 'CENTER')
+        assert(x == 3 and y == 4 and f:GetWidth() == 42 and f:GetHeight() == 24)
+        local child = CreateFrame('Frame', nil, f)
+        child:SetAllPoints(f)
+        local relativeChild = CreateFrame('Frame', nil, UIParent)
+        relativeChild:SetPoint('CENTER', f, 'CENTER')
+        relativeChild:SetSize(3, 4)
+        local wrappedWidth, wrappedHeight = secretwrap(99, 88)
+        local wrappedPoint = secretwrap('LEFT')
+        local function addon()
+            for _, method in ipairs({'GetPoint','GetNumPoints','GetSize','GetWidth','GetHeight',
+                'GetRect','GetScaledRect','GetLeft','GetRight','GetTop','GetBottom','GetCenter'}) do
+                assert(not pcall(f[method], f), method)
+            end
+            assert(not pcall(child.GetRect, child), 'parent-derived geometry must remain secret')
+            assert(not pcall(relativeChild.GetCenter, relativeChild), 'anchor-derived geometry must remain secret')
+            assert(not pcall(f.SetPoint, f, wrappedPoint, UIParent, 'LEFT', 9, 8))
+            assert(not pcall(f.SetSize, f, wrappedWidth, wrappedHeight))
+            assert(not pcall(f.SetSize, f, 99, wrappedHeight))
+        end
+        debug.setobjecttaint(addon, 'SecretGeometryProbe')
+        addon()
+        assert(f:GetWidth() == 42 and f:GetHeight() == 24)
+        assert(select(4, f:GetPoint()) == 3)
+        assert(not pcall(f.SetPoint, f, secretwrap('BAD_POINT'), UIParent))
+        assert(select(4, f:GetPoint()) == 3)
+        f:ClearAllPoints()
+        f:SetPoint('CENTER', UIParent, 'CENTER', 0, 0)
+        f:SetWidth(42)
+        local function mixed() assert(not pcall(f.GetHeight, f)) end
+        debug.setobjecttaint(mixed, 'SecretGeometryProbe')
+        mixed()
+        f:SetHeight(24)
+        local function public() assert(f:GetWidth() == 42 and f:GetHeight() == 24) end
+        debug.setobjecttaint(public, 'SecretGeometryProbe')
+        public()
+        f:SetPoint(secretwrap('TOPLEFT', nil, nil, 7, 8))
+        assert(select(4, f:GetPointByName('TOPLEFT')) == 7)
+        f:SetPoint('TOPLEFT', nil, nil, 7, 8)
+        public()
+        f:SetPoint(secretwrap('CENTER', 11, 12))
+        assert(select(4, f:GetPointByName('CENTER')) == 11)
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local texture = CreateFrame('Frame'):CreateTexture()
+        texture:SetTexture(135907)
+        local wrapped = secretwrap(136243)
+        texture:SetTexture(wrapped)
+        assert(texture:GetTexture() == 136243 and texture:GetTextureFileID() == 136243)
+        local function addon()
+            for _, method in ipairs({'GetTexture','GetTextureFileID','GetTextureFilePath','GetAtlas'}) do
+                assert(not pcall(texture[method], texture), method)
+            end
+            assert(not pcall(texture.SetTexture, texture, wrapped))
+        end
+        debug.setobjecttaint(addon, 'SecretTextureProbe')
+        addon()
+        assert(texture:GetTexture() == 136243)
+        texture:SetTexture({})
+        addon()
+        assert(texture:GetTexture() == 136243, 'ignored input must retain old source and secrecy')
+        texture:SetTexture(secretwrap(nil))
+        assert(texture:GetTexture() == nil and texture:GetTextureFileID() == nil)
+        addon()
+        texture:SetTexture(secretwrap('Interface\\Icons\\Spell_Holy_FlashHeal'))
+        assert(texture:GetTexture() ~= nil)
+        texture:SetTexture(135907)
+        local function public() assert(texture:GetTexture() == 135907) end
+        debug.setobjecttaint(public, 'SecretTextureProbe')
+        public()
+        texture:SetTexture(wrapped)
+        texture:SetColorTexture(1, 0, 0, 1)
+        local function cleared() assert(texture:GetTexture() == nil) end
+        debug.setobjecttaint(cleared, 'SecretTextureProbe')
+        cleared()
+    "#).unwrap();
+}
+
+#[test]
+fn aura_geometry_texture_plain_handoffs_preserve_values() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local f = CreateFrame('Frame', nil, UIParent)
+        f:SetPoint('CENTER', UIParent, 'CENTER', 3, 4)
+        f:SetSize(42, 24)
+        assert(f:GetWidth() == 42 and f:GetHeight() == 24)
+        assert(select(4, f:GetPoint()) == 3)
+        f:SetWidth(43)
+        f:SetHeight(25)
+        assert(f:GetWidth() == 43 and f:GetHeight() == 25)
+        f:SetPoint('CENTER', 7, 8)
+        assert(select(4, f:GetPoint()) == 7)
+        local texture = f:CreateTexture()
+        texture:SetTexture(135907)
+        assert(texture:GetTexture() == 135907)
+        texture:SetTexture(nil)
+        assert(texture:GetTexture() == nil)
+    "#,
+    )
+    .unwrap();
 }

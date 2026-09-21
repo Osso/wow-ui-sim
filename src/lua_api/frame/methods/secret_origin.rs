@@ -23,6 +23,44 @@ pub(crate) fn unwrap_input(state: &LuaState, value: Val) -> LuaResult<(Val, bool
     Ok((value, secret))
 }
 
+/// Conservative guess: geometry depends on both parent and relative-anchor geometry.
+pub(crate) fn require_geometry_readable(state: &LuaState, id: u64) -> LuaResult<()> {
+    if rilua::api::state_is_secure(state) {
+        return Ok(());
+    }
+    let sim = borrow_state(state)?;
+    let mut pending = vec![id];
+    let mut visited = std::collections::HashSet::new();
+    while let Some(id) = pending.pop() {
+        if !visited.insert(id) {
+            continue;
+        }
+        let Some(frame) = sim.widgets.get(id) else {
+            continue;
+        };
+        require_readable(
+            state,
+            frame.secret_width || frame.secret_height || !frame.secret_anchor_points.is_empty(),
+        )?;
+        pending.extend(frame.parent_id);
+        pending.extend(
+            frame
+                .anchors
+                .iter()
+                .filter_map(|anchor| anchor.relative_to_id.map(|id| id as u64)),
+        );
+    }
+    Ok(())
+}
+
+pub(crate) fn require_texture_readable(state: &LuaState, id: u64) -> LuaResult<()> {
+    let secret = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.secret_texture);
+    require_readable(state, secret)
+}
+
 pub(crate) fn require_timing_readable(state: &LuaState, id: u64) -> LuaResult<()> {
     let secret = borrow_state(state)?
         .widgets

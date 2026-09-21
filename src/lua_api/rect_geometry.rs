@@ -45,6 +45,7 @@ fn resolve_queryable_rect(
     state: &mut LuaState,
     id: u64,
 ) -> LuaResult<Option<(crate::LayoutRect, f32, f32)>> {
+    crate::lua_api::frame::methods::secret_origin::require_geometry_readable(state, id)?;
     let needs_resolve = {
         let sim = borrow_state(state)?;
         if !crate::layout::frame_has_render_layout(&sim.widgets, id) {

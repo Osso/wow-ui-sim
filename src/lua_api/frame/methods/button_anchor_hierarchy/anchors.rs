@@ -143,16 +143,12 @@ type ParsedSetPointArgs = (
     f32,
 );
 
-pub(super) fn parse_set_point_args(
+fn parse_set_point_values(
     state: &mut LuaState,
     frame_id: u64,
     point: crate::widget::AnchorPoint,
+    [arg3, arg4, arg5, arg6]: [Val; 4],
 ) -> LuaResult<ParsedSetPointArgs> {
-    let arg3 = stack_val(state, 3);
-    let arg4 = stack_val(state, 4);
-    let arg5 = stack_val(state, 5);
-    let arg6 = stack_val(state, 6);
-
     if arg3 == Val::Nil {
         if arg4 == Val::Nil {
             let x_offset = num_opt(arg5).unwrap_or(0.0);
@@ -252,6 +248,9 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
     }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.anchors.retain(|a| a.point != point);
+        frame
+            .secret_anchor_points
+            .retain(|existing| *existing != point);
     }
     sim.widgets.mark_rect_dirty(id);
     Ok(0)
@@ -282,6 +281,7 @@ pub(super) fn adjust_points_offset(state: &mut LuaState) -> LuaResult<u32> {
 /// GetNumPoints() -> count
 pub(super) fn get_num_points(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let count = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).map(|f| f.anchors.len()).unwrap_or(0) as i32
@@ -292,6 +292,7 @@ pub(super) fn get_num_points(state: &mut LuaState) -> LuaResult<u32> {
 /// GetPoint([index]) -> point, relativeTo, relativePoint, xOfs, yOfs
 pub(super) fn get_point(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let index = opt_f32(state, 2).map(|n| n as i32).unwrap_or(1);
     let idx = (index - 1).max(0) as usize;
     let anchor_data = extract_anchor_by_index(state, id, idx)?;
@@ -342,6 +343,7 @@ fn extract_anchor_by_index(
 /// GetPointByName(pointName) -> point, relativeTo, relativePoint, xOfs, yOfs
 pub(super) fn get_point_by_name(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    super::super::secret_origin::require_geometry_readable(state, id)?;
     let point_name = String::from_stack(state, 2)?;
     let point_upper = point_name.to_uppercase();
     let anchor_data = {
@@ -415,14 +417,21 @@ struct SetPointRequest {
 /// SetPoint(point [, relativeTo [, relativePoint]] [, xOfs, yOfs])
 pub(super) fn set_point(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let point = set_point_anchor_from_stack(state)?;
+    let (arguments, secret) = decode_set_point_arguments(state)?;
+    let point = set_point_anchor_from_value(state, arguments[0])?;
     if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetPoint");
         return Ok(0);
     }
 
-    let request = set_point_request(state, id, point)?;
+    let request = set_point_request(
+        state,
+        id,
+        point,
+        [arguments[1], arguments[2], arguments[3], arguments[4]],
+    )?;
     if is_set_point_unchanged(state, id, &request)? {
+        update_point_secret_origin(state, id, point, secret)?;
         return Ok(0);
     }
 
@@ -440,11 +449,60 @@ pub(super) fn set_point(state: &mut LuaState) -> LuaResult<u32> {
     ensure_no_anchor_cycle(state, id, request.relative_to, "SetPoint")?;
 
     let mut sim = borrow_state_mut(state)?;
-    apply_set_point(&mut sim, id, request)
+    apply_set_point(&mut sim, id, request)?;
+    drop(sim);
+    update_point_secret_origin(state, id, point, secret)?;
+    Ok(0)
 }
 
-fn set_point_anchor_from_stack(state: &mut LuaState) -> LuaResult<crate::widget::AnchorPoint> {
-    let point_name = String::from_stack(state, 2)?;
+fn decode_set_point_arguments(state: &LuaState) -> LuaResult<([Val; 5], bool)> {
+    let mut arguments = [Val::Nil; 5];
+    let mut secret = false;
+    let count = state.top.saturating_sub(state.base);
+    for index in 2..=count {
+        let (value, wrapped) =
+            super::super::secret_origin::unwrap_input(state, stack_val(state, index as i32))?;
+        if let Some(argument) = arguments.get_mut(index - 2) {
+            *argument = value;
+        }
+        secret |= wrapped;
+    }
+    // Original arguments remain stack roots while the decoded values are parsed.
+    Ok((arguments, secret))
+}
+
+fn update_point_secret_origin(
+    state: &LuaState,
+    id: u64,
+    point: crate::widget::AnchorPoint,
+    secret: bool,
+) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut(id) {
+        frame
+            .secret_anchor_points
+            .retain(|existing| *existing != point);
+        if secret {
+            frame.secret_anchor_points.push(point);
+        }
+    }
+    Ok(())
+}
+
+fn set_point_anchor_from_value(
+    state: &mut LuaState,
+    value: Val,
+) -> LuaResult<crate::widget::AnchorPoint> {
+    let point_name = if value == stack_val(state, 2) {
+        String::from_stack(state, 2)?
+    } else {
+        val_to_string(state, value).ok_or_else(|| {
+            runtime_error(format!(
+                "expected string, got {} at argument 2",
+                value.type_name()
+            ))
+        })?
+    };
     let normalized = normalize_anchor_point_name(&point_name);
     let Some(point) = parse_anchor_point_with_compat_warning(state, normalized) else {
         return Err(runtime_error(format!(
@@ -465,9 +523,10 @@ fn set_point_request(
     state: &mut LuaState,
     id: u64,
     point: crate::widget::AnchorPoint,
+    arguments: [Val; 4],
 ) -> LuaResult<SetPointRequest> {
     let (relative_to, pending_key, relative_point, x_offset, y_offset) =
-        parse_set_point_args(state, id, point)?;
+        parse_set_point_values(state, id, point, arguments)?;
     // Pending keys keep relative_to_id unset: layout falls back to the parent
     // until the finalize pass resolves the key against the parent table.
     let resolved_relative_to = if pending_key.is_some() {
