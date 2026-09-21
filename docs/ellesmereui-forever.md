@@ -81,7 +81,17 @@ After opening options, 17 of the 21 package folders are loaded. Friends, MythicT
 
 ### Bounded secret-value assumptions
 
-The user authorized informed guesses and explicitly ruled out user-run Forever probes. [Duration core](specs/duration-core.md) records the selected non-native-verified policy: retain authenticated wrappers in timing storage, restrict timing reads to untainted callers, preserve secrecy through copying/reconfiguration/reset, and clear it with `SetToDefaults`. Plaintext timing must not be exposed through raw Lua fields or addon formatter arguments. Widget/text-binding handoffs retain secret origin and restrict direct readouts. These changes are committed or in progress; their combined compilation, behavioral GREEN, runtime acceptance and independent verification remain pending. General VM secret arithmetic and complete secrecy enforcement are not claimed.
+The user authorized informed guesses and explicitly ruled out user-run Forever probes. [Duration core](specs/duration-core.md) records the selected non-native-verified policy: retain authenticated wrappers in timing storage, restrict timing reads to untainted callers, preserve secrecy through copying/reconfiguration/reset, and clear it with `SetToDefaults`. Plaintext timing must not be exposed through raw Lua fields or addon formatter arguments. Widget/text-binding handoffs retain secret origin and restrict direct readouts. These changes are committed. Focused proof covers duration core 28/28, duration binding 11/11, numeric formatter 8/8, and expanded aura secret display 6/6. Authenticated native handoffs accept wrapped shown/text/timing/geometry/texture inputs while guarding addon-tainted direct reads. General VM secret arithmetic and complete secrecy enforcement are not claimed; final integrated verification remains open.
+
+## Secret-display and event-routing checkpoint
+
+The unchanged addon paints aura `19750` with icon `135907`, stack text `3`, a 30000 ms cooldown, and retained secret-duration metadata. Fresh untainted IPC observations inspect native widget state without clearing taint or using `securecall` to bypass read restrictions. Addon-tainted asynchronous assertions cannot serve as trusted readback of these fields.
+
+Actual removal remains RED at this checkpoint: the aura producer removes `19750`, but its assigned button remains. Runtime tracing after `ReloadFrames` finds the visible native container unregistered for `UNIT_AURA`. Its intrinsic `OnEvent` still exists. Recursive visibility dispatch calls only normal `OnShow`, skipping native registration refresh after hidden-parent configuration; that correction is in progress.
+
+`c6d970cf3` separately fixes intrinsic bindings and unit filtering for `FireEvent` / `A_Admin.FireEvent`. **It does not fix the AddBuff/RemoveBuff route**, which already uses all-binding `fire_named_event_state`. The native add/remove regression under an already-visible parent passes but misses the hidden-parent ordering. Three synthetic event tests failed fixture binding assertions; `471b7aa01` corrects fixture construction, with GREEN pending.
+
+The latest full GUI replay preserves all five other interaction passes and records the painted marker, but never records the removed marker. Zero Lua-error lines do not override failed state assertions. Evidence: `/tmp/ellesmere-forever/intrinsic-events-gui-acceptance-ledger.json`, `aura-post-removal-state-ledger.json`, `secret-handoffs-tests-ledger.json`, and `secret-layout-tests-ledger.json`.
 
 ## Coverage still required
 
