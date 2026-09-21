@@ -1,6 +1,6 @@
 # Script-object environment crossings
 
-Retail-family secure Blizzard functions use a distinct object-table partition for frame-private state. Public addon code must not obtain private mixin methods by overriding similarly named public fields. [XML mixin bindings](../xml-template-system.md) and the native AuraContainer frame provider exercise this boundary.
+Retail 12.1+ and Forever secure Blizzard functions use a distinct object-table partition for frame-private state. Public addon code must not obtain private mixin methods by overriding similarly named public fields. [XML mixin bindings](../xml-template-system.md) and the native AuraContainer frame provider exercise this boundary.
 
 ## Bounded non-secret identity and field-isolation policy
 
@@ -30,7 +30,8 @@ Focused proof must cover projection identity, field isolation, native parent/met
 ## Implementation inventory
 
 - `src/lua_api/script_object_transfer.rs` — direct frame-reference conversion.
-- `src/lua_api/env_init/mod.rs`, `src/lua_api/mod.rs` — retail-family installation.
+- `src/lua_api/env_init/mod.rs`, `src/lua_api/mod.rs` — installation under the shared `forbidden-aspects` capability.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` — parent return projection under the same capability.
 - `src/lua_api/env_init/shared_bootstrap.lua` — partition identity and projection.
 - `Cargo.toml`, `Cargo.lock` — published runtime dependency pin.
 
@@ -43,6 +44,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 
 - [x] Focused retail proof at `8787273ad`: six `forbidden_partition_` cases cover interned projection/field isolation, native parent identity, spoof rejection, ordinary frame transfer, and real AuraContainer provider/initializer boundaries.
 - [x] Three earlier-12.0.7 controls pass, preserving focused partition behavior outside 12.1.
+- [ ] Forever compiled GREEN remains pending. Before shared transfer installation, unchanged `CreateFrameOutbound` returns a public AuraButton to the secure provider, which then fails to find private `UpdateAuraDisplay` at `Blizzard_AuraContainerFrameProviders.lua:90`. Existing provider/initializer and ordinary-frame transfer regressions now run under `forbidden-aspects`; earlier Retail proof does not establish Forever GREEN.
 - Coroutine yield/resume conversion and recursive conversion of table contents are not implemented by this facility.
 - Conditional aura-secrecy access enforcement is separate from partition conversion and remains unmodeled.
 

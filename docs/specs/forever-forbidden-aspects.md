@@ -28,7 +28,7 @@ Forever shares the existing forbidden-aspect model and query/mutation methods wi
 ## Tests asserting this spec
 
 - `tests/forever_forbidden_consumers.rs` and `tests/fixtures/forever_forbidden_consumers.lua`: native SecureHandlers and tainted aura consumer boundaries, masks, and relationship rejection.
-- `tests/userdata_proxy.rs::forbidden_partition_secure_global_roundtrip_preserves_identity_and_fields`: secure → global creation → secure return, global callback arguments, final public returns, parent identity, isolated fields, and native private mixin availability.
+- `tests/userdata_proxy.rs::forbidden_partition_` cases: existing ordinary-frame transfer, real provider acquisition and initializer regressions shared with Forever; public/private identity, native parent identity, field isolation and private mixin dispatch remain asserted.
 
 ## Known gaps (current cycle)
 

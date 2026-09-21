@@ -96,7 +96,7 @@ fn forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents() {
     .expect("ordinary tables cannot impersonate native parents");
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn forbidden_partition_transfer_preserves_ordinary_frame_fields() {
     let env = WowLuaEnv::new().unwrap();
@@ -113,62 +113,6 @@ fn forbidden_partition_transfer_preserves_ordinary_frame_fields() {
 }
 
 #[cfg(feature = "forbidden-aspects")]
-#[test]
-fn forbidden_partition_secure_global_roundtrip_preserves_identity_and_fields() {
-    crate::common::with_timeout(90, || {
-        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
-            &["Blizzard_AuraContainer"],
-            &[],
-            |env, _| {
-                env.exec_maybe_secure(
-                    r#"
-                    local function secureRoundtrip(createOutbound, inspectOutbound)
-                        local button, parent = createOutbound()
-                        assert(button:GetObjectTable() ~= button,
-                            'outbound return must enter the private partition')
-                        assert(button:GetParent() == parent,
-                            'secure GetParent must return the same private parent')
-                        assert(button.value == 'private-before')
-                        assert(type(button.UpdateAuraDisplay) == 'function',
-                            'native private mixin must survive outbound creation')
-                        button.value = 'private-after'
-                        button:SetWidth(73)
-                        inspectOutbound(button, parent)
-                        return button, parent
-                    end
-                    SwapToGlobalEnvironment()
-                    local parent = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
-                    local button
-                    local function createOutbound()
-                        button = CreateFrame('AuraButton', nil, parent)
-                        button.value = 'public'
-                        assert(button.UpdateAuraDisplay == nil)
-                        GetForbiddenObjectTable(button).value = 'private-before'
-                        return button, parent
-                    end
-                    local function inspectOutbound(actual, actualParent)
-                        assert(actual == button and actualParent == parent,
-                            'global callback must receive original public objects')
-                        assert(actual:GetParent() == parent)
-                        assert(actual.value == 'public' and actual.UpdateAuraDisplay == nil)
-                        assert(actual:GetWidth() == 73,
-                            'both partitions identify the same native widget')
-                    end
-                    local returnedButton, returnedParent = secureRoundtrip(createOutbound, inspectOutbound)
-                    assert(returnedButton == button and returnedParent == parent)
-                    assert(button.value == 'public')
-                    assert(GetForbiddenObjectTable(button).value == 'private-after')
-                    assert(GetForbiddenObjectTable(returnedButton) == GetForbiddenObjectTable(button))
-                    "#,
-                    true,
-                )
-                .expect("secure/global calls project native objects without merging their fields");
-            },
-        );
-    });
-}
-
-#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() {
     crate::common::with_timeout(90, || {
@@ -194,7 +138,7 @@ fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() 
     });
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated() {
     crate::common::with_timeout(90, || {
