@@ -529,37 +529,53 @@ Cata\Mode.lua [AllowLoadGameType wrath, cata, mists]
 "#;
     let toc = TocFile::parse(Path::new("/addons/TestAddon"), contents);
 
-    assert_eq!(toc.files.len(), 4);
-    assert_eq!(toc.files[0], PathBuf::from("Core.lua"));
-    assert_eq!(toc.files[1], PathBuf::from("Mainline/Override.lua"));
-    assert_eq!(toc.files[2], PathBuf::from("Standard/Mode.lua"));
-    assert_eq!(toc.files[3], PathBuf::from("Standard/Multi.lua"));
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    let expected: &[&str] = match ACTIVE {
+        ClientProfile::Retail | ClientProfile::Ptr => &[
+            "Core.lua",
+            "Mainline/Override.lua",
+            "Standard/Mode.lua",
+            "Standard/Multi.lua",
+        ],
+        ClientProfile::WowForever => &["Core.lua", "Mainline/Override.lua"],
+        ClientProfile::Wrath | ClientProfile::Mists => {
+            &["Core.lua", "Classic/Mode.lua", "Cata/Mode.lua"]
+        }
+        ClientProfile::Era | ClientProfile::Anniversary => &["Core.lua", "Classic/Mode.lua"],
+    };
+    let expected: Vec<PathBuf> = expected.iter().map(PathBuf::from).collect();
+    assert_eq!(toc.files, expected);
+}
+
+fn expected_game_type_filters() -> [(&'static str, bool); 7] {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    // Mists' standard-tagged GameMenu exception is path-specific, not a game type.
+    let (mainline, standard, vanilla_or_mainline, classic, wrath_or_mists) = match ACTIVE {
+        ClientProfile::Retail | ClientProfile::Ptr => (true, true, true, false, false),
+        ClientProfile::WowForever => (true, false, true, false, false),
+        ClientProfile::Wrath | ClientProfile::Mists => (false, false, false, true, true),
+        ClientProfile::Era | ClientProfile::Anniversary => (false, false, true, true, false),
+    };
+    [
+        ("mainline", mainline),
+        ("standard", standard),
+        ("standard, wowhack", standard),
+        ("vanilla tbc mainline", vanilla_or_mainline),
+        ("plunderstorm", false),
+        ("classic", classic),
+        ("wrath, cata, mists", wrath_or_mists),
+    ]
 }
 
 #[test]
 fn test_is_allowed_game_type() {
     assert!(is_allowed_game_type("Core.lua"));
-    assert!(is_allowed_game_type(
-        "File.lua [AllowLoadGameType mainline]"
-    ));
-    assert!(is_allowed_game_type(
-        "File.lua [AllowLoadGameType standard]"
-    ));
-    assert!(is_allowed_game_type(
-        "File.lua [AllowLoadGameType standard, wowhack]"
-    ));
-    assert!(is_allowed_game_type(
-        "File.lua [AllowLoadGameType vanilla tbc mainline]"
-    ));
-    assert!(!is_allowed_game_type(
-        "File.lua [AllowLoadGameType plunderstorm]"
-    ));
-    assert!(!is_allowed_game_type(
-        "File.lua [AllowLoadGameType classic]"
-    ));
-    assert!(!is_allowed_game_type(
-        "File.lua [AllowLoadGameType wrath, cata, mists]"
-    ));
+    for (filter, expected) in expected_game_type_filters() {
+        let line = format!("File.lua [AllowLoadGameType {filter}]");
+        assert_eq!(is_allowed_game_type(&line), expected, "{filter}");
+    }
 }
 
 #[test]
@@ -582,23 +598,11 @@ Shared\Localization.lua
 
 #[test]
 fn test_is_game_type_restricted() {
-    let plunderstorm = TocFile::parse(
-        Path::new("/addons/Test"),
-        "## AllowLoadGameType: plunderstorm\nCore.lua",
-    );
-    assert!(plunderstorm.is_game_type_restricted());
-
-    let mainline = TocFile::parse(
-        Path::new("/addons/Test"),
-        "## AllowLoadGameType: mainline\nCore.lua",
-    );
-    assert!(!mainline.is_game_type_restricted());
-
-    let standard = TocFile::parse(
-        Path::new("/addons/Test"),
-        "## AllowLoadGameType: standard\nCore.lua",
-    );
-    assert!(!standard.is_game_type_restricted());
+    for (filter, allowed) in expected_game_type_filters() {
+        let contents = format!("## AllowLoadGameType: {filter}\nCore.lua");
+        let toc = TocFile::parse(Path::new("/addons/Test"), &contents);
+        assert_eq!(toc.is_game_type_restricted(), !allowed, "{filter}");
+    }
 
     let mixed = TocFile::parse(
         Path::new("/addons/Test"),
