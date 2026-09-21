@@ -17,6 +17,8 @@ Forever publishes the existing temporary combat-history fixture getter under its
 
 ## Implementation inventory
 
+- `src/c_api/c_combat_log.rs` — documented public-member absence, preventing generic namespace synthesis.
+- `src/c_api/mod.rs` and `src/c_api/registration.rs` — Forever-only publication-policy registration.
 - `src/lua_api/workarounds/temporary/combat_log_state.rs` — profile-specific fixture getter publication and legacy aliases.
 - `tests/c_namespace_noop_replacements.rs` — direct, actual deprecated-publisher, capability-selection, and shared-fixture regressions.
 
