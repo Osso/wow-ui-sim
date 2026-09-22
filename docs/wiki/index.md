@@ -1,6 +1,10 @@
 ## [2026-09-22] investigation | Model Forever target-bound combo points
 
-The CVar-enabled native ComboFrame exposes missing `GetComboPoints`; a clean fresh-data control only hides that inactive path. The bounded player-power/target-GUID model preserves UnitPower snapshots across target changes and leaves other profiles unchanged. Ownership/lifecycle guesses and unsupported nonplayer ownership are explicit; six grouped tests await parent compilation. See [[forever-combo-points]].
+The CVar-enabled native ComboFrame exposes missing `GetComboPoints`; a clean fresh-data control only hides that inactive path. At `c1e830ffa`, the bounded player-power/target-GUID model passes six Forever regressions, including unchanged CVar-enabled ComboFrame updates, while preserving UnitPower snapshots across target changes and leaving other profiles unchanged. Ownership/lifecycle guesses and unsupported nonplayer ownership remain explicit; isolated addon-path proof remains open. See [[forever-combo-points]].
+
+## [2026-09-22] investigation | Isolate cached addon runtime CVar state
+
+`d10d5dbd4` gives every staged package root an `XDG_DATA_HOME`. The writer/fresh-reader/same-root sentinel passes with empty Lua-error JSON and leaves the host CVar file unchanged. Earlier package startup results remain raw evidence only because shared CVar writes contaminated their environment; inventory-wide compatibility remains open.
 
 ## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
 

@@ -1,6 +1,10 @@
 ## [2026-09-22] investigation | Add bounded Forever GetComboPoints model
 
-Recorded the missing native API separately from shared-CVar audit contamination. Player secondary power remains the count source; one target-GUID assignment prevents stale UnitPower from being displayed on a different target. Explicit simulator guesses, unsupported-owner errors, and six unexecuted grouped regressions are documented in [[forever-combo-points]]. Parent owns compilation/runtime proof.
+Recorded the missing native API separately from shared-CVar audit contamination. Player secondary power remains the count source; one target-GUID assignment prevents stale UnitPower from being displayed on a different target. At `c1e830ffa`, the isolated Forever build and six grouped regressions pass, including unchanged CVar-enabled ComboFrame updates. Explicit simulator guesses and unsupported-owner errors remain documented in [[forever-combo-points]]; isolated addon-path proof remains open.
+
+## [2026-09-22] investigation | Isolate cached addon runtime CVar state
+
+`d10d5dbd4` makes each staged package root own `XDG_DATA_HOME`. The writer/fresh-reader/same-root sentinel passes with empty Lua-error JSON and preserves the host CVar hash. Earlier shared-CVar package baselines remain non-acceptance history; the inventory goal is open.
 
 ## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
 
