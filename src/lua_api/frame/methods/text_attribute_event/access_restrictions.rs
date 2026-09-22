@@ -1,7 +1,7 @@
 //! Per-object conditional access-restriction masks.
 //!
-//! Mask storage and queries do not enforce aura-secrecy access policy. The
-//! simulator does not yet model the context that activates that restriction.
+//! These mask APIs do not enforce access. Forever's context-access query reads
+//! an explicit aura-secret context input; automatic activation remains unmodeled.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};

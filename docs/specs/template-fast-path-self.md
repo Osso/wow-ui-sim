@@ -22,7 +22,7 @@ An XML child OnLoad assignment must resolve `self` and fields rooted at `self` a
 
 ## Proof
 
-`template-self-development-ledger.json` records the frozen `e11037217` source passing all three `runtime_template_child_onload_` tests. The regression began in BigWigs AceGUI child OnLoad code: a fast-path assignment treated lexical `self` as `_G.self`, causing post-`DONE` OnUpdate errors. Rejecting bare and dotted `self` roots from fast global literals sends them through authoritative Lua evaluation; it is not a Blizzard/vendor patch.
+`template-self-development-ledger.json` records `e11037217` passing all three `runtime_template_child_onload_` tests. `verify-context-readability-final-ledger.json` revalidates 3/3 after the `0bee9e939` readability refactor, plus formatting/default checking and the final BigWigs replay. The regression began in BigWigs AceGUI child OnLoad code: a fast-path assignment treated lexical `self` as `_G.self`, causing post-`DONE` OnUpdate errors. Rejecting bare and dotted `self` roots from fast global literals sends them through authoritative Lua evaluation; it is not a Blizzard/vendor patch.
 
 ## Known gaps (current cycle)
 

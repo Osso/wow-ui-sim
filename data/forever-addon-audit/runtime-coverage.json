@@ -7392,10 +7392,10 @@
         "covered": [
           "Real /bw loads BigWigs_Core, BigWigs_Plugins and BigWigs_Options; addon reports options open and emits DONE with zero Lua errors"
         ],
-        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-final-0qpdqxzu/ledger.json",
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-readability-kq4mjk0g/ledger.json",
         "fixture": "tools/forever-addon-fixtures/bigwigs-options-workflow.lua",
-        "binaryBuildRevision": "e3cafcc11cc1a1c77da58616a811c135d72bfaf1",
-        "binarySha256": "f4c83bfa7904215ef8e0f5be09aaaa18f6f18b9d01e709b81fd228d4a72838fa",
+        "binaryBuildRevision": "0bee9e939070a0d8ee2d712e12e2577d0e3b1da4",
+        "binarySha256": "9d3d0c54da123c75b90ad1a1749c06e22dae658b11425bf6a329755e34d03349",
         "limitations": "Options-open state only; five custom-sound reset warnings remain. Eight standard-only encounter roots excluded. No encounter/test-bar/sound/pixel/native/persistence or all-root startup acceptance.",
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
         "outputParsingLimitation": "Generic parser remains incomplete because five missing-custom-sound chat warnings follow the empty Lua-error JSON array; raw output, exit0 and exact markers independently audited."
