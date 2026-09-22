@@ -15,10 +15,9 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 5,
+      "bounded-pass": 6,
       "initialization-only": 1,
-      "not-run": 262,
-      "failed": 1
+      "not-run": 262
     }
   },
   "projects": [
@@ -1686,16 +1685,14 @@
         "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       },
       "interactions": {
-        "status": "failed",
+        "status": "bounded-pass",
         "covered": [
-          "Manager opens; real Add button normalizes and persists alias; command expansion reaches simulated chat; Remove clears saved entry"
+          "Eight checks: manager opens, UI Add normalization/storage, inputs clear, slash publication, expanded simulated chat output, UI Remove storage/dispatch removal, manager closes"
         ],
-        "failure": "After Remove, rawget(SlashCmdList,key) is nil but normal indexing still returns prior function. Cause unproven.",
-        "evidence": "/tmp/forever-addon-runtime/alias-ui-interaction-5ho_1_z5/ledger.json",
-        "diagnostic": "/tmp/forever-addon-runtime/alias-remove-diagnostic-vxrqrzvx/stdout",
+        "evidence": "/tmp/forever-addon-runtime/alias-ui-contract-j1qikr18/ledger.json",
         "fixture": "tools/forever-addon-fixtures/alias-interaction.lua",
         "binaryBuildRevision": "55ee20d7",
-        "limitations": "Initial failed proposal called local RegisterAlias as global; excluded from behavioral failure evidence. No native chat delivery or restart persistence proof."
+        "limitations": "No native chat transport or SavedVariables restart proof. Blizzard callback __index cache intentionally persists after removal."
       },
       "packageOnlyBaseline": {
         "status": "unloaded",
@@ -1724,6 +1721,19 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorInvalidInteractionProbe": {
+        "status": "invalid-assertion",
+        "covered": [
+          "Manager opens; real Add button normalizes and persists alias; command expansion reaches simulated chat; Remove clears saved entry"
+        ],
+        "failure": "After Remove, rawget(SlashCmdList,key) is nil but normal indexing still returns prior function. Cause unproven.",
+        "evidence": "/tmp/forever-addon-runtime/alias-ui-interaction-5ho_1_z5/ledger.json",
+        "diagnostic": "/tmp/forever-addon-runtime/alias-remove-diagnostic-vxrqrzvx/stdout",
+        "fixture": "tools/forever-addon-fixtures/alias-interaction.lua",
+        "binaryBuildRevision": "55ee20d7",
+        "limitations": "Initial failed proposal called local RegisterAlias as global; excluded from behavioral failure evidence. No native chat delivery or restart persistence proof.",
+        "reason": "Blizzard ChatFrameUtil.ImportListToHash deliberately stores callbacks in __index; normal indexing persistence is intended native Lua behavior, not simulator stale state."
       }
     },
     {

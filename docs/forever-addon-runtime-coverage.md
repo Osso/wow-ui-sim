@@ -42,11 +42,13 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records five bounded interaction passes, one failed interaction, one initialization-only result, and 262 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records six bounded interaction passes, one initialization-only result, and 262 not-run entries; historical evidence remains separate.
 
-## Alias interaction failure
+## Alias bounded interaction
 
-Alias `8260596` opens its manager, creates an alias through its real Add button, expands a slash invocation into simulated chat output, and removes its saved entry through the Remove button. A subsequent normal `SlashCmdList` lookup still returns the old handler while `rawget` returns nil. Root cause remains under investigation; this is a failed interaction, not a startup regression. Evidence: `/tmp/forever-addon-runtime/alias-ui-interaction-5ho_1_z5/ledger.json` and `/tmp/forever-addon-runtime/alias-remove-diagnostic-vxrqrzvx/stdout`.
+Alias `8260596` opens its manager, creates an alias through its real Add button, expands a slash invocation into simulated chat output, removes its saved entry and dispatch registration through the Remove button, then closes its manager. Eight assertions pass with zero Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/alias-ui-contract-j1qikr18/ledger.json`.
+
+An earlier probe incorrectly required normal `SlashCmdList` lookup to return nil after removal. Unchanged Blizzard `ChatFrameSetup.lua` and `ChatFrameUtil.lua:ImportListToHash` deliberately retain handlers in the table's `__index` cache. That assertion was invalid, not a simulator defect; the corrected probe checks removed command spelling/raw registration/dispatch hash. Native chat delivery and restart persistence remain untested.
 
 ## Acceptance discipline
 
