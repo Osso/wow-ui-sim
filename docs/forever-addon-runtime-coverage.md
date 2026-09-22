@@ -8,6 +8,12 @@ All 268 successfully downloaded Forever packages exist and match their indexed s
 
 The matrix separates current startup and interaction results from `priorEvidence`. A `not-run` current result does not erase an earlier scoped proof: it means that proof has not yet been reconciled or rerun for this inventory-wide pass. Current bounded batches add Abattis PugBoard open/close, Abgesattelt DB/event initialization, three clean startup observations, one intentional LoadOnDemand-not-requested module, one profile-excluded package, and one concrete ActionBarAuras startup failure. Ellesmere's existing six-group proof is retained. EpicDamageMeter also has historical bounded interaction proof; CooldownMaster and DragonGuildMaster have startup-only evidence. Carbonite and Baganator have recorded failures or dependency blockers.
 
+## Baseline isolation correction — 2026-09-22
+
+All 268 available packages were attempted in package-only batches. Those runs omitted `XDG_DATA_HOME`: `--no-saved-vars` and isolated WTF paths do not isolate simulator CVar overrides. Addons wrote to shared `/home/osso/.local/share/wow-sim/cvars.json`; enabling combo-point UI exposed missing `GetComboPoints`, after which unrelated packages repeated the native error. A no-addons shared-data control fails; the same control with fresh `XDG_DATA_HOME` returns `[]`.
+
+The matrix retains every raw baseline outcome but marks startup acceptance `needs-isolated-rerun`. Existing bounded interaction observations retain their original environment limits; they do not establish clean-room startup. The harness must isolate per-run data storage and explicitly compose cached dependencies before final acceptance. The post-batch shared CVar file is snapshotted, not reset: no pre-batch snapshot exists, so original values cannot be claimed restored.
+
 ## Acceptance discipline
 
 - Verify that intended addon roots actually load; empty error JSON with nothing loaded is not a pass.
