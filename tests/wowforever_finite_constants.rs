@@ -74,6 +74,42 @@ fn forever_player_swing_preserves_payload_order_and_rejects_unknown_events() {
 }
 
 #[test]
+fn forever_player_swing_range_preserves_boolean_payloads() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame")
+        local received = {}
+        frame:SetScript("OnEvent", function(self, event, ...)
+            assert(self == frame and event == "PLAYER_SWING_RANGE_UPDATE")
+            assert(select('#', ...) == 3)
+            local swingType, isInRange, checksRange = ...
+            assert(type(swingType) == "number")
+            assert(type(isInRange) == "boolean" and type(checksRange) == "boolean")
+            received[#received + 1] = {swingType, isInRange, checksRange}
+        end)
+        frame:RegisterEvent("PLAYER_SWING_RANGE_UPDATE")
+        local types = Enum.PlayerSwingType
+        local payloads = {
+            {types.MainHand, false, true},
+            {types.OffHand, true, true},
+            {types.Ranged, false, false},
+        }
+        for index, payload in ipairs(payloads) do
+            A_Admin.FireEvent("PLAYER_SWING_RANGE_UPDATE", unpack(payload))
+            assert(#received == index, "range callback was not synchronous")
+            for field = 1, 3 do assert(received[index][field] == payload[field]) end
+        end
+        frame:UnregisterEvent("PLAYER_SWING_RANGE_UPDATE")
+        A_Admin.FireEvent("PLAYER_SWING_RANGE_UPDATE", types.MainHand, true, false)
+        assert(#received == 3)
+        assert(not pcall(frame.RegisterEvent, frame, "WOW_SIM_INVENTED_SWING_RANGE"))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_player_swing_enum_and_registration_survive_bootstrap_cleanup() {
     let env = WowLuaEnv::new().unwrap();
     let check = r#"
@@ -88,6 +124,9 @@ fn forever_player_swing_enum_and_registration_survive_bootstrap_cleanup() {
         frame:RegisterEvent("PLAYER_SWING")
         assert(frame:IsEventRegistered("PLAYER_SWING"))
         frame:UnregisterEvent("PLAYER_SWING")
+        frame:RegisterEvent("PLAYER_SWING_RANGE_UPDATE")
+        assert(frame:IsEventRegistered("PLAYER_SWING_RANGE_UPDATE"))
+        frame:UnregisterEvent("PLAYER_SWING_RANGE_UPDATE")
     "#;
     env.exec(check).unwrap();
     env.exec("Enum.PlayerSwingType = nil; Enum.PlayerSwingTypeMeta = nil")
