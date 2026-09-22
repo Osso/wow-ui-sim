@@ -22,6 +22,14 @@ At binary build `c1e830ffa`, all 268 available project entries have dispositions
 
 A separate DBM-GUI replay at `55ee20d7` observes metadata, dependency and LoD status before execution, then explicitly loads the module and observes its table/options frame with zero Lua errors. This is loader evidence only—not DBM encounter, timer, alert or rendered-GUI acceptance. The replay requires the explicit out-of-date interface switch; its ledger is `/tmp/forever-addon-runtime/dbm-lod-native-e4hvi488/ledger.json`.
 
+## Explicit out-of-date replay of unloaded packages
+
+Replayed exactly the 72 previously unloaded/partial projects with `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` and the `55ee20d7` binary, which includes deferred-addon metadata registration. Result: 48 clean startups, 12 runtime failures, 12 still unloaded. Per-run data/WTF isolation preserved the shared host CVar hash. Default-interface attempts remain in each project's `priorDefaultInterfaceAttempt`.
+
+The latest per-project matrix therefore totals **209 clean startups, 44 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. These mixed-revision/configuration observations are not a single current-build certification. Batches: `/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json` and `batch1.json`.
+
+Ellesmere's expanded startup replay exposes a taint error in `AuraKit.RunJob`; an identical isolated replay with frozen `c1e830ffa` reproduces the same 56 occurrences. Thus the error is not introduced by the new formatter/LoD commits. Prior six-workflow evidence remains scoped historical proof, not acceptance of this expanded configuration.
+
 ## Cached LibStub composition and bounded library interactions
 
 C_Everywhere `8912546`, CustomSearch `8912549`, and CustomTutorials `8912550` start with the unchanged, TOC-bearing LibStub subtree from cached DBM `8925922`. The explicit `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` switch is required by these observations; it does not waive other loader restrictions. Original dependency-only attempts remain in the matrix. Provider provenance: `/tmp/forever-addon-audit/cached-libstub-subtree-provenance.json`.
