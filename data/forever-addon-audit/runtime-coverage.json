@@ -8,14 +8,17 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "not-run": 264,
       "blocked-package": 1,
+      "bounded-clean-startup": 3,
       "bounded-pass": 3,
-      "profile-excluded-or-not-registered": 1
+      "intentional-load-on-demand-not-requested": 1,
+      "not-run": 259,
+      "profile-excluded-or-not-registered": 1,
+      "startup-failure": 1
     },
     "interactionStatuses": {
-      "not-run": 266,
-      "bounded-pass": 3
+      "bounded-pass": 3,
+      "not-run": 266
     }
   },
   "projects": [
@@ -129,7 +132,11 @@
       "fileId": 8933894,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "bounded-clean-startup",
+        "archiveFileId": 8933894,
+        "evidence": "/tmp/forever-addon-runtime/batch2-achievementsutils-8933894/stdout",
+        "errors": [],
+        "limitations": "No major interaction probe run."
       },
       "interactions": {
         "status": "not-run",
@@ -153,7 +160,10 @@
       "fileId": 8930590,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "intentional-load-on-demand-not-requested",
+        "archiveFileId": 8930590,
+        "evidence": "/tmp/forever-addon-runtime/batch2-ackis-recipe-list-classic-cooking-8930590/stdout",
+        "reason": "TOC declares LoadOnDemand: 1 and required AckisRecipeList; isolated startup did not request the module."
       },
       "interactions": {
         "status": "not-run",
@@ -189,7 +199,20 @@
       "fileId": 8920553,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "startup-failure",
+        "archiveFileId": 8920553,
+        "evidence": "/tmp/forever-addon-runtime/batch2-actionbarauras-8920553/stderr",
+        "errors": [
+          {
+            "message": "@Interface/AddOns/ActionBarAuras/Core.lua: Interface/AddOns/ActionBarAuras/Core.lua:99: attempt to index field 'SecondsFormatterIntervalWhitespace' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+            "count": 1
+          },
+          {
+            "message": "Lua Error: @Interface/AddOns/ActionBarAuras/Core.lua: Interface/AddOns/ActionBarAuras/Core.lua:99: attempt to index field 'SecondsFormatterIntervalWhitespace' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+            "count": 1
+          }
+        ],
+        "reason": "Addon root fully loaded but startup emitted a concrete Lua error; not counted as compatibility pass."
       },
       "interactions": {
         "status": "not-run",
@@ -201,7 +224,11 @@
       "fileId": 8920442,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "bounded-clean-startup",
+        "archiveFileId": 8920442,
+        "evidence": "/tmp/forever-addon-runtime/batch2-actionbarinterrupthighlight-8920442/stdout",
+        "errors": [],
+        "limitations": "No major interaction probe run."
       },
       "interactions": {
         "status": "not-run",
@@ -225,7 +252,11 @@
       "fileId": 8920031,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "bounded-clean-startup",
+        "archiveFileId": 8920031,
+        "evidence": "/tmp/forever-addon-runtime/batch2-addonprofiles-8920031/stdout",
+        "errors": [],
+        "limitations": "No major interaction probe run."
       },
       "interactions": {
         "status": "not-run",
@@ -3347,6 +3378,17 @@
       "results": {
         "abgesattelt": "bounded startup+DB event pass",
         "achievement-guild-rank": "profile excluded/not registered"
+      }
+    },
+    {
+      "artifact": "/tmp/forever-addon-audit/batch-startup-2026-09-22-02.json",
+      "scope": "five small cached Forever startup observers",
+      "results": {
+        "actionbarauras": "failed",
+        "actionbarinterrupthighlight": "clean-startup",
+        "addonprofiles": "clean-startup",
+        "ackis-recipe-list-classic-cooking": "unloaded",
+        "achievementsutils": "clean-startup"
       }
     }
   ]
