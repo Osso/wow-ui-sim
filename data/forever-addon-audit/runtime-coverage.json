@@ -9882,12 +9882,12 @@
       "interactions": {
         "status": "bounded-pass",
         "covered": [
-          "Actual settings slider SetValue updates addon scale and CVar through OnValueChanged; icon toggle and reset restore state; DONE with zero Lua errors"
+          "Actual slider:SetValue callback changes scale1\u21921.35 across addon database/bar/CVar/character settings; real slash icon toggles and reset restore scale1/clear saved anchor"
         ],
         "evidence": "/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json",
-        "fixture": "/tmp/forever-addon-audit/classic-castbar-settings-workflow.lua",
+        "fixture": "tools/forever-addon-fixtures/classic-castbar-settings-workflow.lua",
         "binaryBuildRevision": "3d6017fe362a7c66e7de00a31b959e556401ca0f",
-        "limitations": "Synthetic settings interaction; casting visuals, drag/mouse-wheel, persistence and native client behavior remain untested."
+        "limitations": "Programmatic slider input and real addon slash handlers; no mouse dragging, actual casting, rendered pixels, settings navigation or restart persistence. Icon reenable asserts saved setting, not forced Show absent addon contract."
       },
       "packageOnlyBaseline": {
         "status": "failed",

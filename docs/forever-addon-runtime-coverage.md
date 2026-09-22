@@ -106,12 +106,6 @@ The fixture injects `ChatFrame.OnEditBoxPreSendText` with a synthetic editbox; i
 
 Aurarium `8915742` with cached ArcaneWizardLibrary `8915500` records balances `12345→54321`, opens its overview through `/aurarium overview`, and closes it through the real close button. All fixture assertions reach `DONE`, but the event dispatch also raises Blizzard StableUI errors; clean workflow acceptance is withheld. On frozen `d1e2487f6`, `PLAYER_MONEY` reaches `Blizzard_StableUI/Camelot/Blizzard_StableUI.lua:75` with missing `Constants.PetConsts.NUM_PET_SLOTS_HUNTER`. A fresh no-addons event control reproduces that error, so it is not attributed to Aurarium. Evidence: `/tmp/forever-addon-runtime/aurarium-money-lb9bsm7s/ledger.json` and `/tmp/forever-addon-runtime/money-event-control-f8bdxuvx/ledger.json`. Persistence, currencies, warband aggregation and rendered output remain untested.
 
-## ClassicCastBar settings interaction
-
-After restoring `Slider:SetValue`'s documented `OnValueChanged` dispatch, unchanged ClassicCastBarForever `8909724` exercises scale `1→1.35→1`, mirrors the scale CVar and character data, toggles the icon off/on, and resets position through the real slash handler. The frozen `3d6017fe3` replay reaches `DONE` with zero Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json`. Focused slider proof is 9/9; the no-addons control returns `[]` at `/tmp/forever-addon-runtime/slider-control-0uwemvbq/ledger.json`.
-
-Casting visuals, drag/mouse-wheel input, persistence and native client behavior remain untested.
-
 ## Acceptance discipline
 
 - Verify that intended addon roots actually load; empty error JSON with nothing loaded is not a pass.
