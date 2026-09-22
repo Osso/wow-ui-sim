@@ -52,7 +52,9 @@ fn read_player_combo_points(sim: &SimState, unit: &str, target: &str) -> LuaResu
 fn get_combo_points(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let target = String::from_stack(state, 2)?;
-    let points = read_player_combo_points(&borrow_state(state)?, &unit, &target)?;
+    let sim = borrow_state(state)?;
+    let points = read_player_combo_points(&sim, &unit, &target)?;
+    drop(sim);
     state.push(Val::Num(points as f64));
     Ok(1)
 }
