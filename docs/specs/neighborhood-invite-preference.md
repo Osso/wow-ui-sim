@@ -28,10 +28,11 @@ Cached Forever `PlayerScriptDocumentation.lua` documents getter return bool and 
 
 ## Known gaps (current cycle)
 
-Targeted development proof: 5/5 tests pass at `6eccec458`; two identical Lua bodies fail against the prior frozen binary. Commands, source hashes, build features and frozen executable SHA are recorded in `/tmp/forever-addon-audit/neighborhood-preference-development-ledger.json`.
+Independent verification reuses the 5/5 targeted proof, passes formatting, default offline checking, security and readability, and validates frozen `wow-sim-6eccec45`; see `/tmp/forever-addon-audit/verify-neighborhood-preference-ledger.json`.
 
-- [ ] Independent verification remains parent-owned.
-- [ ] Parent-owned unchanged AccountUI full-save/load replay remains required; this producer alone does not prove addon compatibility.
+The unchanged AccountUI replay prints `ACCOUNT_UI_WORKFLOW saved-zero`, resolving the former missing neighborhood getter at `SaveFunction.lua:894`, then fails at `LoadFunction.lua:259` on missing `SetAutoDeclineGuildInvites`. Its pre-observer error prevents trailing error-JSON parsing; raw stdout establishes the failed full workflow: `/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json`.
+
+- [ ] Model the separate guild-invite setter before crediting AccountUI save/load acceptance.
 
 ## Out of scope
 

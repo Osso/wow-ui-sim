@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Model Forever neighborhood invite preference
 
-`9733a87a8`, `6eccec458`, and `a923ce7cf` add independent Forever neighborhood auto-decline state. The optional setter argument defaults to `false` in cached API metadata, while stored initial `false` is an explicit simulator guess; existing VM secret checks remain and no undocumented event is emitted. Targeted development proof is 5/5. Unchanged Account-wide UI replay and independent verification remain pending, so no workflow or native-preference claim. See [neighborhood-invite-preference spec](../specs/neighborhood-invite-preference.md) and [[forever-addon-comparison]].
+`9733a87a8`, `6eccec458`, and `a923ce7cf` add independent Forever neighborhood auto-decline state. The optional setter argument defaults to `false` in cached API metadata, while stored initial `false` is an explicit simulator guess; existing VM secret checks remain and no undocumented event is emitted. Independent verification reuses 5/5 tests and passes formatting, default offline checking, security, and readability. The unchanged Account-wide UI replay prints `saved-zero`, then fails at `LoadFunction.lua:259` on missing `SetAutoDeclineGuildInvites`; no full workflow or native-preference claim. See [neighborhood-invite-preference spec](../specs/neighborhood-invite-preference.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Model Forever recent-allies location preference
 

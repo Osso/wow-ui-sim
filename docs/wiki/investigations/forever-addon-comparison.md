@@ -30,7 +30,7 @@ A changed value updates state before synchronously dispatching the event. Same-v
 
 `9733a87a8` adds five focused Forever regressions and `6eccec458` supplies the independent `GetAutoDeclineNeighborhoodInvites` / `SetAutoDeclineNeighborhoodInvites` state. Cached Forever documentation declares an `AllowedWhenUntainted` boolean setter with optional-argument default `false`. It does not establish the stored initial value; the per-environment initial `false` is an explicit simulator guess. The globals retain VM secret-argument validation and introduce no event because cached sources do not document one.
 
-The development ledger records 5/5 targeted GREEN proof and a frozen `wow-sim-6eccec45` artifact. The actual Account-wide UI replay and independent verification remain parent-owned; this producer does not yet establish that `/awi save` proceeds past line894, full save/load works, or any native preference semantics. See [neighborhood-invite-preference spec](../../specs/neighborhood-invite-preference.md).
+Independent verification reuses the 5/5 targeted GREEN proof, passes formatting, default offline checking, security, and readability, and authenticates frozen `wow-sim-6eccec45`. The actual Account-wide UI replay reaches `ACCOUNT_UI_WORKFLOW saved-zero`, so `/awi save` proceeds past line894. It then fails during load at `LoadFunction.lua:259` on missing `SetAutoDeclineGuildInvites`; raw stdout establishes failure because the pre-observer error prevents trailing error-JSON parsing. Full save/load and native preference semantics remain unproven. See [neighborhood-invite-preference spec](../../specs/neighborhood-invite-preference.md).
 
 ## Camelot stable-read follow-up
 
