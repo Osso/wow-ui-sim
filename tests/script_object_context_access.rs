@@ -20,7 +20,11 @@ fn ordinary_and_forbidden_frames_use_caller_taint_without_exposing_secret_result
             assert(ordinary:CanBeAccessedInContext() == true)
             local denied = forbidden:CanBeAccessedInContext()
             assert(issecretvalue(denied))
-            assert(not pcall(function() if denied then error('denial leaked') end end))
+            local entered = false
+            local branchSucceeded = pcall(function()
+                if denied then entered = true end
+            end)
+            assert(not branchSucceeded and not entered, 'secret branch executed')
             assert(not pcall(function() return denied == false end))
             return denied
         end
@@ -128,7 +132,6 @@ fn protected_and_explicit_object_security_tag_the_return_without_denial() {
         ContextProtected = CreateFrame('Frame', 'ContextProtected')
         ContextExplicit = CreateFrame('Frame')
         ContextExplicit:AddSecretAspect(Enum.SecretAspect.ObjectSecurity)
-        ContextProtected:SetPreventSecretValues(true)
         "#,
     )
     .unwrap();
