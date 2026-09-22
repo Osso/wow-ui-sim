@@ -15,8 +15,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 12,
-      "failed": 3,
+      "bounded-pass": 13,
+      "failed": 2,
       "not-run": 254
     }
   },
@@ -9858,9 +9858,9 @@
       "startup": {
         "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json",
-        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
-        "binarySha256": "35a2ee5985d05e4ff2a394191431335be94c78acbd845a589d25e668c08000cc",
+        "evidence": "/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json",
+        "binaryBuildRevision": "3d6017fe362a7c66e7de00a31b959e556401ca0f",
+        "binarySha256": "908cdecbd70a8b4ed8321276c7d08e25898952f7cc1d2ff76916271688c29dc1",
         "packageFileIds": [
           8909724
         ],
@@ -9880,12 +9880,14 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "failed",
-        "covered": [],
-        "evidence": "/tmp/forever-addon-runtime/classic-cvar-workflow-40twoqwp/ledger.json",
-        "diagnostic": "/tmp/forever-addon-runtime/classic-scale-diag-mkq10io_/ledger.json",
-        "currentFailure": "Slider:SetValue changes slider0.7\u21921.35 but missing OnValueChanged dispatch leaves addon database/bar/CVar scale1; icon/reset not reached.",
-        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1"
+        "status": "bounded-pass",
+        "covered": [
+          "Actual slider:SetValue callback changes scale1\u21921.35 across addon database/bar/CVar/character settings; real slash icon toggles and reset restore scale1/clear saved anchor"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/classic-castbar-settings-workflow.lua",
+        "binaryBuildRevision": "3d6017fe362a7c66e7de00a31b959e556401ca0f",
+        "limitations": "Programmatic slider input and real addon slash handlers; no mouse dragging, actual casting, rendered pixels, settings navigation or restart persistence. Icon reenable asserts saved setting, not forced Show absent addon contract."
       },
       "packageOnlyBaseline": {
         "status": "failed",
@@ -9937,6 +9939,38 @@
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
         "currentFailure": "[OnEvent] frame=#57945 addon=ClassicCastBarForever source=@Interface/AddOns/ClassicCastBarForever/ClassicCastBar.lua:656: Frame:SetScale(): Scale must be > 0 on PlayerCastingBarFrame [StatusBar] parent=<no-parent> grandparent=<no-grandparent> size=195x13"
+      },
+      "priorEmptyCvarFixedStartup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
+        "binarySha256": "35a2ee5985d05e4ff2a394191431335be94c78acbd845a589d25e668c08000cc",
+        "packageFileIds": [
+          8909724
+        ],
+        "configuration": {
+          "isolatedData": true
+        },
+        "observations": [
+          {
+            "name": "ClassicCastBarForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
+      },
+      "priorSliderCallbackAttempt": {
+        "status": "failed",
+        "covered": [],
+        "evidence": "/tmp/forever-addon-runtime/classic-cvar-workflow-40twoqwp/ledger.json",
+        "diagnostic": "/tmp/forever-addon-runtime/classic-scale-diag-mkq10io_/ledger.json",
+        "currentFailure": "Slider:SetValue changes slider0.7\u21921.35 but missing OnValueChanged dispatch leaves addon database/bar/CVar scale1; icon/reset not reached.",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1"
       }
     },
     {

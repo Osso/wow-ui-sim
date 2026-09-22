@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 12 bounded interaction passes, three failed workflows and 254 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 13 bounded interaction passes, two failed workflows and 254 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -84,11 +84,13 @@ DinoUnitFrames `8936218` clean-starts at frozen `d23cfe65c`; its options root re
 
 The actual GUI target unit-watch and addon event handlers display injected combo counts **0→2→5→1→0**, checking each of five blocks' alpha and transparent retained extras. All markers through `DONE` occur before 20-second timeout teardown, with zero Lua errors and unchanged host CVars. Startup: `/tmp/forever-addon-runtime/dino-curve-startup-ppa3m3fy/ledger.json`; workflow: `/tmp/forever-addon-runtime/dino-combo-alpha-icywlldv/ledger.json`. Earlier headless assertions ran before visibility updates; a later hidden-state assertion contradicted the addon's explicit Show/alpha behavior and was corrected with user approval. Those attempts are not credited. Options, other unit modules, secret gameplay production and rendered pixels remain untested.
 
-## ClassicCastBar startup and remaining workflow failure
+## ClassicCastBar startup and bounded settings workflow
 
 ClassicCastBarForever `8909724` now clean-starts after `d1e2487f6` preserves an explicitly empty `RegisterCVar` default. Previously the simulator changed empty to omitted, then substituted `"0"`; the unchanged addon's CVar fallback overwrote its authored scale `1` with zero. Omitted/nil default `"0"`, prior values and strict positive-scale validation remain unchanged. Independent verification passes 15 CVar tests, formatting and default compilation: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. Isolated addon startup and no-addons control return `[]`: `/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json` and `/tmp/forever-addon-runtime/empty-cvar-control-ci9ls5w9/ledger.json`.
 
-The settings workflow still fails: `Slider:SetValue(1.35)` updates the slider but never dispatches `OnValueChanged`, leaving addon database, bar scale and CVar at `1`. The consumer's handler exists; the simulator setter contains an explicit unimplemented dispatch. Diagnostic: `/tmp/forever-addon-runtime/classic-scale-diag-mkq10io_/ledger.json`. Icon/reset steps have not been reached; clean startup is not settings or casting acceptance.
+A second producer defect prevented `Slider:SetValue(1.35)` from dispatching `OnValueChanged`. `3d6017fe3` now dispatches ordered existing script bindings after storing the clamped value, with the documented mouse-event flag, unchanged-value suppression and existing error reporting. Nine focused tests pass. Frozen unchanged-addon replay reaches scale, icon, reset and `DONE` with zero Lua errors: database/bar/CVar/character scale changes **1→1.35→1**, icon settings toggle, and saved anchors clear. Evidence: `/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json`; matching no-addons control `/tmp/forever-addon-runtime/slider-control-0uwemvbq/ledger.json` returns `[]`. The prior failed callback diagnostic remains preserved in the matrix.
+
+This covers programmatic slider input and real slash handlers, not mouse dragging, actual casting, settings navigation, rendered pixels or restart persistence. Re-enabling the icon checks the saved setting; the addon does not explicitly show it in that path.
 
 ## Account-wide UI save/load failure
 
