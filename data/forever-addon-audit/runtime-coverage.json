@@ -16,8 +16,8 @@
     },
     "interactionStatuses": {
       "bounded-pass": 17,
-      "failed": 0,
-      "not-run": 252
+      "failed": 1,
+      "not-run": 251
     }
   },
   "projects": [
@@ -7384,12 +7384,18 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true,
-        "limitations": "BigWigs root fully loaded with zero Lua errors; Core, Options and Plugins remain deferred LoD, while Midnight raid/world roots are excluded by profile. Not an all-root clean startup or major workflow.",
+        "limitations": "BigWigs root fully loaded with zero Lua errors; Core, Options and Plugins remain deferred LoD, while all eight encounter-module TOCs declare AllowLoadGameType: standard and are excluded by the Forever profile. Not an all-root clean startup or major workflow.",
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-current-startup-4kd3gdo1/ledger.json"
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [],
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/bigwigs-options-workflow.lua",
+        "binaryBuildRevision": "fbcd9bb51471ed1216b6934996fe9304a269fda7",
+        "binarySha256": "aab8cb202667e41b2146cf4e53dd044b027d70530cd64c3325c530d40c61b811",
+        "currentFailure": "Real /bw deferred-plugin activation fails at BigWigs_Plugins/Auras.lua2408 calling missing CanBeAccessedInContext method; options-open and DONE not reached.",
+        "limitations": "Core startup partial/unloaded record retained; no options/test-bar/combat/native/rendering acceptance."
       },
       "packageOnlyBaseline": {
         "status": "failed",
