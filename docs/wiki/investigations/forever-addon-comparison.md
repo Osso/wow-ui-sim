@@ -26,6 +26,12 @@ These are bounded simulator-model changes. They do not certify ActionBarAuras, A
 
 A changed value updates state before synchronously dispatching the event. Same-value suppression is a simulator inference: the cached Settings listener writes the getter value back, so duplicate notification would recurse. Independent verification reuses the 5/5 target, passes formatting/default offline checking/readability, and validates the frozen `wow-sim-37da0f13` artifact. The exact unchanged Account-wide UI `8935141` archive loads and reaches beyond the former `SaveFunction.lua:457` getter failure, but its full save/change/load workflow next fails at `SaveFunction.lua:894` because `GetAutoDeclineNeighborhoodInvites` remains absent. The malformed trailing JSON is a consequence of the pre-observer error, not a clean run; the workflow remains unaccepted. No cross-process persistence, network visibility, native coercion parity, or other-profile behavior is established. See [location-preference spec](../../specs/recent-allies-location-preference.md).
 
+## Neighborhood-invite preference follow-up
+
+`9733a87a8` adds five focused Forever regressions and `6eccec458` supplies the independent `GetAutoDeclineNeighborhoodInvites` / `SetAutoDeclineNeighborhoodInvites` state. Cached Forever documentation declares an `AllowedWhenUntainted` boolean setter with optional-argument default `false`. It does not establish the stored initial value; the per-environment initial `false` is an explicit simulator guess. The globals retain VM secret-argument validation and introduce no event because cached sources do not document one.
+
+The development ledger records 5/5 targeted GREEN proof and a frozen `wow-sim-6eccec45` artifact. The actual Account-wide UI replay and independent verification remain parent-owned; this producer does not yet establish that `/awi save` proceeds past line894, full save/load works, or any native preference semantics. See [neighborhood-invite-preference spec](../../specs/neighborhood-invite-preference.md).
+
 ## Camelot stable-read follow-up
 
 `9a8e2a841` and `fffb25ae4` first publish only the two required Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Their frozen replay reached the next boundary: `Blizzard_StableUI.lua:219` compared `id - 2` with a nil `C_StableInfo.GetNumStableSlots()` result. Cached StableInfo documentation and the unchanged Camelot consumer identify four required reads: `GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo`.
