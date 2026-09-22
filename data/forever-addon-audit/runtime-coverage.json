@@ -15,8 +15,7 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 7,
-      "initialization-only": 1,
+      "bounded-pass": 8,
       "not-run": 261
     }
   },
@@ -89,13 +88,14 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "initialization-only",
+        "status": "bounded-pass",
         "covered": [
-          "SavedVariables DB initialization",
-          "PLAYER_ENTERING_WORLD event handler"
+          "Guild addon death message creates named player count3 with timestamp; lower2 does not regress; higher5 advances; second playercount2 retained"
         ],
-        "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
-        "limitations": "DB shape existed before and after PLAYER_ENTERING_WORLD; this is initialization evidence, not a demonstrated major interaction. Death counting, ranking, guild synchronization, and sound behavior remain untested."
+        "evidence": "/tmp/forever-addon-runtime/abgesattelt-major-0gezxdzq/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/abgesattelt-remote-death.lua",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "limitations": "Simulated incoming guild transport only; local death detection, sound playback, synchronization negotiation, displayed rankings and restart persistence untested."
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
@@ -103,6 +103,15 @@
         "runLedger": "/tmp/forever-addon-runtime/main-abgesattelt-8931441-v4g6b4dh/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorInitializationEvidence": {
+        "status": "initialization-only",
+        "covered": [
+          "SavedVariables DB initialization",
+          "PLAYER_ENTERING_WORLD event handler"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
+        "limitations": "DB shape existed before and after PLAYER_ENTERING_WORLD; this is initialization evidence, not a demonstrated major interaction. Death counting, ranking, guild synchronization, and sound behavior remain untested."
       }
     },
     {
