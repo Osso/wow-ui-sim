@@ -25,6 +25,8 @@ pub mod loot_method;
 pub mod math_extensions;
 pub mod modifier_keys;
 pub mod mouse_probes;
+#[cfg(feature = "client-wowforever")]
+pub mod neighborhood_invites;
 pub mod net_stats;
 pub mod pet_bar;
 pub mod pet_stats;
