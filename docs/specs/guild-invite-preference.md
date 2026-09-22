@@ -29,9 +29,10 @@ Cached Forever `PlayerScriptDocumentation.lua` documents `SetAutoDeclineGuildInv
 
 ## Known gaps (current cycle)
 
-Targeted development proof: 5/5 grouped tests pass at `6632d6373`; two identical Lua bodies reproduce the absent setter on frozen `6eccec458`. Commands, unchanged build source hashes, test fingerprint and frozen simulator provenance are recorded in `/tmp/forever-addon-audit/guild-preference-development-ledger.json`.
-- [ ] Parent-owned independent verification and unchanged AccountUI full workflow replay remain required. This producer does not establish addon compatibility.
+Independent verification reuses the 5/5 grouped proof, passes formatting, default offline checking, readability and security, and authenticates frozen `6632d6373`: `/tmp/forever-addon-audit/verify-guild-preference-ledger.json`. The exact unchanged AccountUI archive completes its self-cast save/change/load round trip with `DONE`, empty Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/account-guild-workflow-hgl3rw6d/ledger.json`.
+- [x] Parent-owned independent verification and bounded AccountUI replay.
+- [ ] All-settings fidelity, bag preferences, cross-character/restart persistence, native behavior and rendered UI remain unproven.
 
 ## Out of scope
 
-Invitation delivery, guild membership systems, cross-process persistence, native coercion/initial-state proof, other-profile setter publication and undocumented events.
+Invitation delivery, guild membership systems, all-settings or bag-preference fidelity, cross-process persistence, native coercion/initial-state proof, other-profile setter publication, rendered UI and undocumented events.
