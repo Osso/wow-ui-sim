@@ -10,8 +10,8 @@
     "startupStatuses": {
       "clean-startup": 222,
       "blocked-dependency": 3,
-      "unloaded": 13,
-      "failed": 30,
+      "unloaded": 14,
+      "failed": 29,
       "blocked-package": 1
     },
     "interactionStatuses": {
@@ -7284,15 +7284,18 @@
       "fileId": 8931513,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
-        "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
-        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
-        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "status": "unloaded",
+        "proofLevel": "observed-isolated-startup-partial",
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-classic-upper-h5inu3re/ledger.json",
+        "binaryBuildRevision": "ae045495a",
+        "binarySha256": "aca098321effa3a229c8da433009f353f7a0137a32c7a3d5582eca0287de5ae6",
         "packageFileIds": [
           8931513
         ],
-        "configuration": {},
+        "configuration": {
+          "isolatedData": true,
+          "packageFileId": 8931513
+        },
         "observations": [
           {
             "name": "BigWigs",
@@ -7379,9 +7382,10 @@
             "reason": ""
           }
         ],
-        "errorRecords": 2,
+        "errorRecords": 0,
         "hostCvarsUnchanged": true,
-        "currentFailure": "@Interface/AddOns/BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua: .../AddOns/BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua:372: attempt to call a nil value"
+        "limitations": "BigWigs root fully loaded with zero Lua errors; Core, Options and Plugins remain deferred LoD, while Midnight raid/world roots are excluded by profile. Not an all-root clean startup or major workflow.",
+        "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-current-startup-4kd3gdo1/ledger.json"
       },
       "interactions": {
         "status": "not-run",

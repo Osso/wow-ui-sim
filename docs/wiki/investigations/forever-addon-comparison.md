@@ -20,6 +20,12 @@ Three current Forever corrections are committed but have no GREEN verification a
 
 These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
 
+## BigWigs Classic-expansion predicate follow-up
+
+The unchanged BigWigs `8931513` archive failed during bundled LibDualSpec initialization at line 372 because `ClassicExpansionAtMost` was absent. Cached Forever API documentation requires a numeric argument, boolean result, and untainted caller for secret arguments. The focused `e11c0d792` tests and implementation `ae045495a` add only Forever's upper-bound comparison against the existing temporary Classic level `10`; the separate Forever current-expansion value remains the inferred `0`. The library itself notes its Classic AtLeast query is effectively true on Forever and uses build range to select dual specialization, so the two expansion identities are not conflated.
+
+The frozen BigWigs root loads without Lua errors from an exact 442-file staged archive, but Core/Options/Plugins remain deferred LoadOnDemand and Midnight encounter roots are excluded. The matrix changes the previous failure to **partial/unloaded**, not clean all-root startup; major workflows remain not run. Focused 3/3 tests, formatting and default-profile compilation pass. Native Classic expansion metadata is unavailable; level `10` remains a temporary compatibility policy. See [Classic expansion upper-bound predicate](../../specs/classic-expansion-at-most.md) and [the startup record](../../forever-addon-runtime-coverage.md#bigwigs-partial-startup-after-classic-expansion-comparison).
+
 ## Recent-allies location-preference follow-up
 
 `561943dd0` supplies five focused Forever regressions and `37da0f132` adds the per-environment `GetAllowRecentAlliesSeeLocation` / `SetAllowRecentAlliesSeeLocation` state. Cached Forever UI metadata documents the boolean setter and synchronous payload-free `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` event; cached Settings metadata supports the default `true`. Existing VM secret-argument validation remains the enforcement route, rather than a new security mechanism.

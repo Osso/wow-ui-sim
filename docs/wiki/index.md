@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Compare Forever Classic expansion upper bounds
+
+BigWigs `8931513` exposed missing `ClassicExpansionAtMost` at LibDualSpec line 372. Forever compares required numeric thresholds against its existing temporary Classic level `10`, distinct from inferred current level `0`; focused 3/3 and format/default checks pass. The exact 442-file root now loads with zero errors, while deferred and excluded roots leave startup partial/unloaded, and workflows untested. No native Classic level conformance. See [[forever-addon-comparison]] and [predicate spec](../specs/classic-expansion-at-most.md).
+
 ## [2026-09-22] investigation | Count merchant junk in modeled bags
 
 `67b32cddd`, `58b0072d1`, and `8260074a3` add the required Forever `C_MerchantFrame.GetNumJunkItems` read. Hash-matched focused proof is 11/11; fresh format/default checks and changed-Rust readability pass. Frozen generic-TOC BagMeter OOD replay and no-addons BAG_UPDATE control are clean, crediting only observed count transitions. Positive junk metadata remains fixture-only because the live catalog has no quality-0 records; eligibility and stack units are inferred. No catalog mutation, sale transaction, full repair flow, native behavior, or `_Forever`/Classic BagMeter coverage is credited. See [merchant junk count](../specs/merchant-junk-count.md) and [[forever-addon-comparison]].
