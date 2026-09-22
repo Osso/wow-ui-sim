@@ -4,10 +4,10 @@ Forever `GetPlayerFacing()` exposes nullable player orientation from simulator s
 
 ## What it must do
 
-- [ ] Return nil while player facing is unknown, and reflect each configured finite angle without normalization.
-- [ ] `A_Admin.SetPlayerFacing(number | nil)` updates or clears player facing. Invalid types and non-finite numbers fail before changing state.
-- [ ] Model-widget facing and other simulator environments remain independent of player facing.
-- [ ] Real frame OnUpdate consumers can read two successive angles and apply texture rotation; an unknown angle leaves the consumer's prior rotation unchanged.
+- [x] Return nil while player facing is unknown, and reflect each configured finite angle without normalization.
+- [x] `A_Admin.SetPlayerFacing(number | nil)` updates or clears player facing. Invalid types and non-finite numbers fail before changing state.
+- [x] Model-widget facing remains independent of player facing.
+- [x] Real frame OnUpdate consumers can read two successive angles and apply texture rotation; an unknown angle leaves the consumer's prior rotation unchanged.
 
 ## How it works
 
@@ -29,7 +29,8 @@ Forever `GetPlayerFacing()` exposes nullable player orientation from simulator s
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN and independent verification pending. Frozen `2c5bf78c7` RED: `/tmp/forever-addon-audit/player-facing-red-ddxm2ugk/ledger.json`.
+- Targeted GREEN at `5a1cc85103da1122364a9aa016cea7c64ace85b1`: 3/3 grouped tests, clean build and unchanged source hashes. Logs: `/tmp/forever-addon-audit/player-facing-green-89v5ll1e/{build,test}-ledger.json`. Frozen `2c5bf78c7` RED: `/tmp/forever-addon-audit/player-facing-red-ddxm2ugk/ledger.json`.
+- [ ] Independent final verification remains parent-owned; targeted implementation proof does not establish profile preservation or native conformance.
 - [ ] Parent-owned unchanged CustomMinimapArrow `8909385` startup and two-orientation replay remain pending.
 - [ ] Native Forever probes unavailable. Cached `PlayerScriptDocumentation.lua:761–768` proves only a nullable numeric return. Unknown initial state, admin validation and non-normalization are explicit simulator policies, not native-default or angle-domain conformance.
 
