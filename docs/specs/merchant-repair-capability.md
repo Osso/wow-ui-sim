@@ -4,10 +4,10 @@ Forever exposes `CanMerchantRepair` from `src/lua_api/globals/real/merchant_repa
 
 ## What it must do
 
-- [ ] Return exactly one boolean: `merchant_frame_open && merchant_repair_capable`. Closed merchants and open nonrepair merchants return false; a configured repair-capable open merchant returns true.
-- [ ] Default the distinct capability to false, an inferred simulator scenario rather than a native observed default. Opening a merchant does not imply repair capability.
-- [ ] Preserve existing merchant inventory, `CanMerchant`, open/close behavior, and environment independence. Closing the merchant makes the query false without changing the configured capability.
-- [ ] Retain query behavior after normal bootstrap restoration.
+- [x] Return exactly one boolean: `merchant_frame_open && merchant_repair_capable`. Closed merchants and open nonrepair merchants return false; a configured repair-capable open merchant returns true.
+- [x] Default the distinct capability to false, an inferred simulator scenario rather than a native observed default. Opening a merchant does not imply repair capability.
+- [x] Preserve existing merchant inventory, `CanMerchant`, open/close behavior, and environment independence. Closing the merchant makes the query false without changing the configured capability.
+- [x] Retain query behavior after normal bootstrap restoration.
 - [ ] Actual cached Blizzard startup followed by `ClearBags`, `AddBagItem`, and `BAG_UPDATE` completes without Lua errors and leaves all three repair buttons hidden when no merchant is open.
 
 Cached Forever `Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:988` consumes `CanMerchantRepair()` as a predicate. Local cached legacy API documentation is absent; the conjunction and default are explicitly inferred policy, not native-verified semantics. The observed global is absent (`type == nil`); misleading stack labels do not establish a callable wrapper.
@@ -29,7 +29,8 @@ Cached Forever `Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:988` consumes 
 
 ## Known gaps (current cycle)
 
-- [ ] Focused GREEN and frozen-binary provenance.
+- [x] Three focused query/state tests pass; build and frozen-binary provenance are recorded in `/tmp/forever-addon-audit/merchant-repair-development-ledger.json`.
+- [ ] Full cached bag-event regression remains failed: it advances past `CanMerchantRepair` and reaches missing `GetNumBuybackItems` at `MerchantFrame.lua:416`. No error suppression or buyback implementation is included.
 - [ ] Parent-owned independent verification and unchanged BagMeter replay.
 
 ## Out of scope
