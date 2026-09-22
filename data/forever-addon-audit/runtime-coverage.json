@@ -7286,9 +7286,9 @@
       "startup": {
         "status": "unloaded",
         "proofLevel": "observed-isolated-startup-partial",
-        "evidence": "/tmp/forever-addon-runtime/bigwigs-classic-upper-h5inu3re/ledger.json",
-        "binaryBuildRevision": "ae045495a",
-        "binarySha256": "aca098321effa3a229c8da433009f353f7a0137a32c7a3d5582eca0287de5ae6",
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-classic-upper-final-2k58pia8/ledger.json",
+        "binaryBuildRevision": "fbcd9bb51",
+        "binarySha256": "aab8cb202667e41b2146cf4e53dd044b027d70530cd64c3325c530d40c61b811",
         "packageFileIds": [
           8931513
         ],

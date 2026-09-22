@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Restore bounded BigWigs Classic expansion comparison
 
-`e11c0d792`, `ae045495a`, and `f8a87599e` add a Forever-only `ClassicExpansionAtMost` comparator against existing temporary Classic level `10`, preserving the distinct inferred current level `0` and other profiles. Frozen previous-binary RED reproduces missing publication; focused 3/3 GREEN, formatting, and default compilation pass. Exact unchanged BigWigs `8931513` (442 staged files) root loads with `[]`; deferred LoD and profile-excluded roots leave project partial/unloaded, not full clean startup. Documented scope: [predicate](../specs/classic-expansion-at-most.md) and [[forever-addon-comparison]]. Native numeric policy, deferred roots and workflows remain open.
+`e11c0d792`, `ae045495a`, `f8a87599e`, and `fbcd9bb51` add a Forever-only `ClassicExpansionAtMost` comparator against existing temporary Classic level `10`, preserving the distinct inferred current level `0` and other profiles. Frozen previous-binary RED reproduces missing publication; focused 3/3 GREEN, formatting, and default compilation pass. Exact unchanged BigWigs `8931513` (442 staged files) root loads with `[]`; deferred LoD and profile-excluded roots leave project partial/unloaded, not full clean startup. Documented scope: [predicate](../specs/classic-expansion-at-most.md) and [[forever-addon-comparison]]. Native numeric policy, deferred roots and workflows remain open.
 
 ## [2026-09-22] investigation | Count merchant junk in modeled bags
 
