@@ -88,6 +88,8 @@ pub struct AddonContext<'a> {
 }
 ```
 
+`AddonInfo` retains the loader-selected `TocFile.addon_dir` during directory scanning, startup discovery, and loading. Runtime APIs that need addon-local loose assets use this selected directory rather than searching another addon source; the loose-asset API behavior is implemented separately.
+
 **File Loading Process** (lines 59-124):
 1. Initialize SavedVariables (WTF first, then JSON fallback)
 2. Create addon private Lua table
