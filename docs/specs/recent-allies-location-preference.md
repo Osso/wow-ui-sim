@@ -4,11 +4,11 @@ Forever exposes a per-environment location preference through two real Lua globa
 
 ## What it must do
 
-- [ ] Expose `GetAllowRecentAlliesSeeLocation()` returning a boolean and `SetAllowRecentAlliesSeeLocation(bool)` returning no values, only under Forever.
-- [ ] Start at `true`; preserve false/true changes across bootstrap restoration and isolate separate simulator environments. The default follows cached `Blizzard_SettingsDefinitions_Frame/Social.lua:129`, not native observation.
-- [ ] Commit changed state before synchronously delivering `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` with no payload, through ordered existing frame handlers.
-- [ ] Suppress same-value notifications, including Settings-style feedback. This is an inferred policy motivated by the cached listener writing the getter value back through `setting:SetValue`.
-- [ ] Require a boolean using the existing strict typed-value convention. Reuse VM secret-argument validation: untainted callers can provide a wrapped boolean; tainted callers cannot. Public booleans remain usable by tainted addon code; rejected input changes neither state nor event count. Exact native coercions/errors remain unverified.
+- [x] Expose `GetAllowRecentAlliesSeeLocation()` returning a boolean and `SetAllowRecentAlliesSeeLocation(bool)` returning no values, only under Forever.
+- [x] Start at `true`; preserve false/true changes across bootstrap restoration and isolate separate simulator environments. The default follows cached `Blizzard_SettingsDefinitions_Frame/Social.lua`, not native observation.
+- [x] Commit changed state before synchronously delivering `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` with no payload, through ordered existing frame handlers.
+- [x] Suppress same-value notifications, including Settings-style feedback. This is an inferred policy motivated by the cached listener writing the getter value back through `setting:SetValue`.
+- [x] Require a boolean using the existing strict typed-value convention. Reuse VM secret-argument validation: untainted callers can provide a wrapped boolean; tainted callers cannot. Public booleans remain usable by tainted addon code; rejected input changes neither state nor event count. Exact native coercions/errors remain unverified.
 
 Cached Forever `PlayerScriptDocumentation.lua` documents the getter and required boolean setter (`SecretArguments = AllowedWhenUntainted`). `RecentAlliesDocumentation.lua` declares the event synchronous without a payload. Cached Account-wide UI `8935141` saves the getter at `SaveFunction.lua:457` and conditionally restores false as well as true at `LoadFunction.lua:786`.
 
@@ -29,7 +29,7 @@ Cached Forever `PlayerScriptDocumentation.lua` documents the getter and required
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN proof and frozen simulator provenance.
+Targeted development proof: `561943dd0` tests and `37da0f132` runtime pass 5/5 grouped tests after two identical Lua probes failed on the frozen pre-change simulator. Commands, source hashes, build features, and frozen executable hash: `/tmp/forever-addon-audit/location-preference-development-ledger.json`.
 - [ ] Parent-owned unchanged-addon full save/load replay and independent verification.
 
 ## Out of scope
