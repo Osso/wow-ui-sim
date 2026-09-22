@@ -20,6 +20,10 @@ An XML child OnLoad assignment must resolve `self` and fields rooted at `self` a
 
 - `src/loader/tests/runtime_template_parenting.rs` — child OnLoad bare-self, dotted-self, and dotted-global publication.
 
+## Proof
+
+`template-self-development-ledger.json` records the frozen `e11037217` source passing all three `runtime_template_child_onload_` tests. The regression began in BigWigs AceGUI child OnLoad code: a fast-path assignment treated lexical `self` as `_G.self`, causing post-`DONE` OnUpdate errors. Rejecting bare and dotted `self` roots from fast global literals sends them through authoritative Lua evaluation; it is not a Blizzard/vendor patch.
+
 ## Known gaps (current cycle)
 
 - [ ] Other Lua local names and expressions outside these cases are not covered by this bounded parser regression.
