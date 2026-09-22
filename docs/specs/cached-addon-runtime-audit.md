@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Preserve every indexed project; select only successfully cached Forever records. Projects with only comparison archives remain explicit blocked rows, with no substitution or acquisition.
-- [ ] Verify archive SHA-256 before staging. Reject absolute, drive-qualified, traversal and symlink members, conflicting normalized members, file/directory collisions, destination symlinks, and conflicting existing bytes before writing. Identical restaging preserves content and the original ZIP.
-- [ ] Stage package-root directories under a caller-supplied isolated root, with fake install/WTF directories, a load observer, and `AddOns.txt`. Disable repository addons except Admin, SimCommands, TestFramework and Blizzard_FrameXML; enable packaged roots.
-- [ ] Return argv for the already-built simulator with addon/WTF/install isolation, CASC disabled, inherited `WOW_SIM_NO_ADDONS` removed, SavedVariables disabled, a timeout of 1–90 seconds, and the observer followed by `lua-errors`. The caller supplies its execution context and cache environment.
-- [ ] Record each root's loading-or-loaded and fully-loaded flags separately, boolean LoadOnDemand state, and the reason returned by `GetAddOnInfo`; do not infer unavailable dependency or game-filter explanations.
-- [ ] Parse complete root observations and trailing Lua-error JSON. Clean startup requires exit zero, no recorded Lua errors, a completed observer, at least one fully loaded root, and no unloaded non-LoadOnDemand root. Report failed, unloaded or incomplete evidence explicitly; an unloaded LoadOnDemand root alone is not an error.
+- [x] Preserve every indexed project; select only successfully cached Forever records. Projects with only comparison archives remain explicit blocked rows, with no substitution or acquisition.
+- [x] Verify archive SHA-256 before staging. Reject absolute, drive-qualified, traversal and symlink members, conflicting normalized members, file/directory collisions, destination symlinks, and conflicting existing bytes before writing. Identical restaging preserves content and the original ZIP.
+- [x] Stage package-root directories under a caller-supplied isolated root, with fake install/WTF directories, a load observer, and `AddOns.txt`. Disable repository addons except Admin, SimCommands, TestFramework and Blizzard_FrameXML; enable packaged roots.
+- [x] Return argv for the already-built simulator with addon/WTF/install isolation, CASC disabled, inherited `WOW_SIM_NO_ADDONS` removed, SavedVariables disabled, a timeout of 1–90 seconds, and the observer followed by `lua-errors`. The caller supplies its execution context and cache environment.
+- [x] Record each root's loading-or-loaded and fully-loaded flags separately, boolean LoadOnDemand state, and the reason returned by `GetAddOnInfo`; do not infer unavailable dependency or game-filter explanations.
+- [x] Parse complete root observations and trailing Lua-error JSON. Clean startup requires exit zero, no recorded Lua errors, a completed observer, and at least one fully loaded root. Report failed, unloaded or incomplete evidence explicitly; retain every root observation so unloaded roots are not hidden. An unloaded LoadOnDemand root alone is not an error.
 
 ## How it works
 
@@ -26,7 +26,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted unittest GREEN pending implementation commit; runtime orchestration and integration verification belong to the caller.
+- [ ] Runtime orchestration and integration verification belong to the caller; this helper does not classify the loader's exact non-load reason.
 
 ## Out of scope
 
