@@ -260,6 +260,8 @@ pub struct SimState {
     pub current_guild_bank_tab: i32,
     pub guild_bank_items: HashMap<(i32, i32), BagItem>,
     pub merchant_frame_open: bool,
+    #[cfg(feature = "client-wowforever")]
+    pub merchant_repair_capable: bool,
     pub tabard_frame_open: bool,
     pub trainer_frame_open: bool,
     pub socket_frame_open: bool,

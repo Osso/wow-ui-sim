@@ -25,6 +25,8 @@ pub mod item_legacy;
 pub mod locale_info;
 pub mod loot_method;
 pub mod math_extensions;
+#[cfg(feature = "client-wowforever")]
+pub mod merchant_repair;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]

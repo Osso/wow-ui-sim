@@ -269,6 +269,9 @@ macro_rules! build_empty_sim_state {
             current_guild_bank_tab: 1,
             guild_bank_items: ::std::collections::HashMap::new(),
             merchant_frame_open: false,
+            // Inferred default scenario: no configured repair service.
+            #[cfg(feature = "client-wowforever")]
+            merchant_repair_capable: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
             socket_frame_open: false,
