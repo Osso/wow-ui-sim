@@ -20,6 +20,14 @@ Three current Forever corrections are committed but have no GREEN verification a
 
 These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
 
+## DinoUnitFrames curve producer follow-up
+
+The unchanged cached DinoUnitFrames `8936218` startup failed in `modules/basecombopoints.lua` because `UnitPowerPercent("player", 4, true, curve)` returned a number and the addon called `color:GetRGBA()`. Forever’s generated `UnitDocumentation.lua` documents an optional `LuaCurveObjectBase` and an evaluated result; the simulator’s existing typed evaluator already returns scalar or color results. The defect was profile gating: Forever skipped optional curve evaluation entirely.
+
+`17abf7071` adds focused Forever regressions; `d23cfe65c` evaluates supplied health and power curves on Forever. Curve input is normalized `current / max` only for Forever. This is an explicit inference, grounded in DinoUnitFrames’ unchanged `id / 5` color-curve thresholds and cached Blizzard `CurveConstants.ScaleTo100` mapping `[0, 1]` to `[0, 100]`, not a native-runtime proof. Omitted/nil curves still return the existing `0..100` numeric percentage, Retail retains its existing `0..100` curve-input policy, and other profiles are unchanged.
+
+Development tests establish the bounded simulator behavior only. Independent verification, an unchanged DinoUnitFrames startup replay, a curve-driven addon workflow, native scale/security semantics, and whole-inventory compatibility remain pending.
+
 ## Automatic duration-binding follow-up
 
 The September 22, 2026 ActionBarAuras interaction replay disproved a startup-only explanation: its player container, matching aura candidate, assigned AuraButton, and visibility state all existed after `A_Admin.AddBuff(19750, ...)`, yet the button's duration text remained nil. Manual binding coverage therefore did not establish automatic countdown behavior.
@@ -48,6 +56,8 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - [Forever finite constants spec](../../specs/forever-finite-constants.md) — BagIndex and finite-event boundaries
 - [Public base-spell lookup](../../specs/spell-base.md) — ActionBarAuras failure boundary and model limits
 - [Forever expansion identity](../../specs/forever-expansion-identity.md) — Angleur consumer basis and inferred policy limit
+- [UnitPowerPercent curves](../../specs/unit-power-percent-curves.md) — profile-specific curve input and result contract
+- [UnitHealthPercent curves](../../specs/unit-health-percent-curves.md) — matching Forever health-curve boundary
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values

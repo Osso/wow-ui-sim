@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Document DinoUnitFrames normalized curve producer
+
+Recorded bounded commits `17abf7071` and `d23cfe65c` in [[forever-addon-comparison]]. DinoUnitFrames `8936218` passed a color curve to Forever `UnitPowerPercent`, but the profile skipped evaluation and returned a number. Forever now uses normalized `current / max` input for supplied health/power curves; that unit is an inference from the unchanged addon's `id / 5` thresholds and cached Blizzard `CurveConstants`, not native verification. No-curve results remain numeric `0..100`; Retail's curve-input policy and other profiles remain unchanged. Independent verification, unchanged-addon replay, meaningful workflow proof, native semantics, and full-inventory acceptance remain pending.
+
 ## [2026-09-22] investigation | Register bounded Forever swing events
 
 `PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` are now finite documented Forever registrations with cleanup-aware payload tests. Independent verification passes 13 targeted tests, formatting, and default compilation. Frozen `ff19ecca` clean-starts AppelSwingsForever; an isolated injected four-second main-hand/six-second ranged workflow observes activation, progress, independent expiry, retained idle tracks, `DONE`, zero Lua errors, and unchanged host CVars. This does not model gameplay swings or range checks. See [[event-system]].

@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Stage DinoUnitFrames normalized curve evaluation
+
+DinoUnitFrames `8936218` exposed a Forever profile gate: `UnitPowerPercent(..., curve)` returned a number rather than the typed color result documented by the cached API. `17abf7071` adds focused regressions and `d23cfe65c` evaluates supplied health/power curves with normalized `current / max` input on Forever. Normalization is inferred from the unchanged addon's `id / 5` thresholds and cached `CurveConstants`, not native proof. Omitted/nil calls remain numeric `0..100`; Retail's existing curve-input policy and other profiles remain unchanged. Independent verification, unchanged-addon replay, workflow evidence, and inventory acceptance remain pending. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Register bounded Forever swing events
 
 `PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` now use the finite Forever event table with documented payloads and `PlayerSwingType` values. Independent verification passes 13 event/enum tests, formatting, and default compilation; the unchanged AppelSwingsForever package clean-starts and its injected main-hand/ranged workflow progresses then expires independently. Gameplay and range producers remain unmodeled. See [[event-system]] and [finite constants](../specs/forever-finite-constants.md).
