@@ -177,7 +177,7 @@ const C_EVENT_UTILS_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
 ];
 
 const C_CONSOLE_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
-    ("GetAllCommands", c_console_get_all_commands),
+    ("GetAllCommands", crate::c_api::c_console::get_all_commands),
     ("GetColorFromType", c_console_get_color_from_type),
 ];
 
@@ -422,12 +422,6 @@ fn c_event_utils_is_event_valid(state: &mut LuaState) -> LuaResult<u32> {
 fn c_event_utils_is_callback_event(state: &mut LuaState) -> LuaResult<u32> {
     let event_name = String::from_stack(state, 1).unwrap_or_default();
     state.push(Val::Bool(crate::event::is_callback_event(&event_name)));
-    Ok(1)
-}
-
-fn c_console_get_all_commands(state: &mut LuaState) -> LuaResult<u32> {
-    let commands = create_table(state);
-    state.push(commands);
     Ok(1)
 }
 

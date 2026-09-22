@@ -118,6 +118,11 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::string_extensions::register_all(lua)?;
     super::real::net_stats::register_all(lua)?;
     super::real::template_queries::register_all(lua)?;
+    LuaApiMut::register_function(
+        lua,
+        "ConsoleGetAllCommands",
+        crate::c_api::c_console::get_all_commands,
+    )?;
     super::store_frame::register_all(lua)?;
     Ok(())
 }
