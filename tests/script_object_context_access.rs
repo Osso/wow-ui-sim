@@ -13,23 +13,22 @@ fn ordinary_and_forbidden_frames_use_caller_taint_without_exposing_secret_result
         forbidden:SetForbidden()
         assert(ordinary:CanBeAccessedInContext() == true)
         local secureResult = forbidden:CanBeAccessedInContext()
-        assert(issecretvalue(secureResult) and secretunwrap(secureResult) == true)
+        assert(issecretvalue(secureResult) and secureResult == true)
         local function addon()
             assert(not issecure())
             assert(ordinary:CanBeAccessedInContext() == true)
             local denied = forbidden:CanBeAccessedInContext()
             assert(issecretvalue(denied))
-            assert(not pcall(secretunwrap, denied))
             assert(not pcall(function() if denied then error('denial leaked') end end))
             assert(not pcall(function() return denied == false end))
             ForbiddenAccessResult = denied
         end
         debug.setobjecttaint(addon, 'ContextAccessProbe')
         addon()
-        assert(secretunwrap(ForbiddenAccessResult) == false)
+        assert(ForbiddenAccessResult == false)
         local proxy = GetForbiddenObjectTable(forbidden)
         assert(issecretvalue(proxy:CanBeAccessedInContext()))
-        assert(secretunwrap(proxy:CanBeAccessedInContext()) == true)
+        assert(proxy:CanBeAccessedInContext() == true)
         "#,
     )
     .unwrap();
@@ -103,7 +102,7 @@ fn protected_and_explicit_object_security_tag_the_return_without_denial() {
         r#"
         local function checkSecure(frame)
             local result = frame:CanBeAccessedInContext()
-            assert(issecretvalue(result) and secretunwrap(result) == true)
+            assert(issecretvalue(result) and result == true)
         end
         checkSecure(ContextProtected)
         checkSecure(ContextExplicit)
@@ -111,7 +110,6 @@ fn protected_and_explicit_object_security_tag_the_return_without_denial() {
             for _, frame in ipairs({ContextProtected, ContextExplicit}) do
                 local result = frame:CanBeAccessedInContext()
                 assert(issecretvalue(result))
-                assert(not pcall(secretunwrap, result))
                 assert(not pcall(function() return not result end))
             end
         end
