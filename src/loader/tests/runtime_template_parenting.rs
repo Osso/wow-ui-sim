@@ -398,6 +398,38 @@ fn test_runtime_nested_wrapper_onload_can_publish_texture_to_named_ancestor() {
 }
 
 #[test]
+fn runtime_template_child_onload_can_publish_self_to_parent() {
+    let t = load_test_xml(
+        "runtime-template-child-self-parent-publication",
+        r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Button name="RuntimeChildOnLoadTemplate" virtual="true">
+                <Frames>
+                    <Button parentKey="Toggle">
+                        <Scripts>
+                            <OnLoad>
+                                self:GetParent().toggle = self;
+                                self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+                            </OnLoad>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Button>
+        </Ui>
+        "#,
+    );
+
+    t.env
+        .exec(
+            r#"
+            local button = CreateFrame("Button", "RuntimeChildOnLoadHost", UIParent, "RuntimeChildOnLoadTemplate")
+            assert(button.toggle == button.Toggle, "child OnLoad should publish itself to its parent")
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn test_synthetic_ui_theme_container_intrinsic_applies_theme_mixin() {
     let t = load_test_xml(
         "synthetic-theme-container-intrinsic",
