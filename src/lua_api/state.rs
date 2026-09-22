@@ -275,6 +275,8 @@ macro_rules! build_empty_sim_state {
             loot_frame_open: false,
             guild_registrar_open: false,
             pet_stables_open: false,
+            #[cfg(feature = "client-wowforever")]
+            stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
             loot_slots: Vec::new(),
             last_loot_roll_choice: None,
