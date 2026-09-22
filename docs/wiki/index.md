@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
+
+Accountant Classic `8919183` records injected `+250/-250` money events in Session, Day, and Total data, then reaches `DONE` with empty errors; independent verification authenticates 92 staged files and the recorded markers. BagMeter `8917130` displays observed generic-TOC bag counts through real bag-state events but remains failed because the same `BAG_UPDATE` reproduces unrelated missing `CanMerchantRepair` errors without addons. The loader selects generic `Bagmeter.toc`; `_Forever.toc` is untested. Matrix: 16 passes, one failure, 252 not run. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Model Forever guild invite preference
 
 `7529257de` and `6632d6373` add a Forever-only guild-invite setter that reuses the existing guild preference state and getter. Independent 5/5, formatting, default-check, readability and security proof passes. The exact unchanged Account-wide UI archive now completes `saved-zero → restored-zero → DONE` with empty errors; this credits only the self-cast round trip through complete handlers, not all settings, bag preferences, persistence, native behavior or rendered UI. See [guild-invite-preference spec](../specs/guild-invite-preference.md) and [[forever-addon-comparison]].
