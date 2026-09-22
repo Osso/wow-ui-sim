@@ -12,7 +12,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 3,
+      "bounded-pass": 2,
+      "initialization-only": 1,
       "not-run": 266
     }
   },
@@ -53,13 +54,13 @@
         "priorObservation": "/tmp/forever-addon-runtime/main-batch-000-032.json"
       },
       "interactions": {
-        "status": "bounded-pass",
+        "status": "initialization-only",
         "covered": [
           "SavedVariables DB initialization",
           "PLAYER_ENTERING_WORLD event handler"
         ],
         "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
-        "limitations": "Does not cover combat-log, guild sync, sounds, or ranking output."
+        "limitations": "DB shape existed before and after PLAYER_ENTERING_WORLD; this is initialization evidence, not a demonstrated major interaction. Death counting, ranking, guild synchronization, and sound behavior remain untested."
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
