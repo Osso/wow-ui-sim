@@ -9,6 +9,53 @@ fn load(env: &WowLuaEnv, path: &str) {
 }
 
 #[test]
+fn forever_stable_slot_constants_preserve_common_pet_values() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local pets = Constants.PetConsts
+        assert(pets.MAX_STABLE_SLOTS == 2, "missing Forever stable capacity")
+        assert(pets.NUM_PET_SLOTS_HUNTER == 3, "missing Forever hunter slot count")
+        assert(pets.MAX_SUMMONABLE_PETS == 25)
+        assert(pets.PETNUMBER_INVALIDPET == 0)
+        assert(pets.PETNUMBER_INVALIDSLOT == -1)
+        assert(pets.PETNUMBER_PENDINGPET == -1)
+        assert(Constants.PetConsts_PostCata.MAX_STABLE_SLOTS == 200)
+        assert(Constants.PetConsts_PostCata.NUM_PET_SLOTS_HUNTER == 205)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn forever_stable_slot_constants_survive_bootstrap_restore() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        stablePetConstants = Constants.PetConsts
+        stablePetConstants.addonMarker = "retained"
+        assert(stablePetConstants.MAX_STABLE_SLOTS == 2)
+        assert(stablePetConstants.NUM_PET_SLOTS_HUNTER == 3)
+        "#,
+    )
+    .unwrap();
+    for _ in 0..2 {
+        env.loader_env().restore_post_cleanup_globals().unwrap();
+        env.exec(
+            r#"
+            assert(Constants.PetConsts == stablePetConstants)
+            assert(Constants.PetConsts.addonMarker == "retained")
+            assert(Constants.PetConsts.MAX_STABLE_SLOTS == 2)
+            assert(Constants.PetConsts.NUM_PET_SLOTS_HUNTER == 3)
+            assert(Constants.PetConsts.MAX_SUMMONABLE_PETS == 25)
+            assert(Constants.PetConsts.PETNUMBER_INVALIDSLOT == -1)
+            "#,
+        )
+        .unwrap();
+    }
+}
+
+#[test]
 fn forever_finite_events_register_deliver_and_reject_unknown() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
