@@ -15,8 +15,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 14,
-      "failed": 1,
+      "bounded-pass": 15,
+      "failed": 0,
       "not-run": 254
     }
   },
@@ -236,16 +236,21 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "failed",
-        "covered": [],
-        "evidence": "/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json",
-        "currentFailure": "Actual /awi save completes and captures self-cast zero; /awi load fails at LoadFunction.lua259 calling missing SetAutoDeclineGuildInvites. Full workflow remains incomplete.",
+        "status": "bounded-pass",
+        "covered": [
+          "Real /awi save captures self-cast zero; after changing CVar to one, real /awi load restores zero with DONE and zero Lua errors"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/account-guild-workflow-hgl3rw6d/ledger.json",
         "priorFailureEvidence": [
           "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
-          "/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json"
+          "/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json",
+          "/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json"
         ],
-        "binaryBuildRevision": "6eccec458dbc63fad58d6e45a52a96f7bf1f1efa",
-        "binarySha256": "6798985bed1ee49d1f0088eec8b9ffc4f36a30b1cfbb433e4b8846839231462d"
+        "binaryBuildRevision": "6632d6373367f41b66b0985440fe9ef604feb7e6",
+        "binarySha256": "4b99d527d23de3a8761137d0aad38c2a6ba3b5bf451d232ea8cd6cb95e197fa5",
+        "controlEvidence": "/tmp/forever-addon-runtime/guild-preference-control-5ow8k98_/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/account-ui-selfcast-workflow.lua",
+        "limitations": "Self-cast assertion through complete save/load handlers only; no all-settings fidelity, bag preference correctness, cross-character/restart persistence, native-game or rendered UI proof."
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",

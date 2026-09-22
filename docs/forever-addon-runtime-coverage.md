@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 14 bounded interaction passes, one failed workflow and 254 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 15 bounded interaction passes, zero failed workflows and 254 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -92,9 +92,9 @@ A second producer defect prevented `Slider:SetValue(1.35)` from dispatching `OnV
 
 This covers programmatic slider input and real slash handlers, not mouse dragging, actual casting, settings navigation, rendered pixels or restart persistence. Re-enabling the icon checks the saved setting; the addon does not explicitly show it in that path.
 
-## Account-wide UI save/load failure
+## Account-wide UI bounded self-cast save/load
 
-The unchanged `8935141` package starts cleanly. Frozen `6eccec458` resolves the missing location and neighborhood preference globals: real `/awi save` completes and captures self-cast zero. The subsequent `/awi load` fails at `LoadFunction.lua:259` calling missing `SetAutoDeclineGuildInvites`; the reported nil-generator label does not describe the source call. The full save/change/load sequence remains incomplete: `/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json`. Prior failure evidence remains recorded; no workflow pass is credited.
+The unchanged `8935141` package completes its real `/awi save` and `/awi load` handlers on frozen `6632d6373`. The fixture saves self-cast `0`, changes it to `1`, then asserts load restores `0`, reaching `DONE` with zero Lua errors. Location/neighborhood preference models and the existing guild preference's missing setter resolve the earlier failure boundaries without disabling synchronization options. Evidence: `/tmp/forever-addon-runtime/account-guild-workflow-hgl3rw6d/ledger.json`; no-addons getter/setter control: `/tmp/forever-addon-runtime/guild-preference-control-5ow8k98_/ledger.json`. Host CVars remain unchanged; previous failures stay recorded. This proves only self-cast round-trip through complete handlers, not all-settings fidelity, bag preference correctness, cross-character/restart persistence, native behavior or rendered UI.
 
 ## AccentChat bounded pre-send interaction
 
