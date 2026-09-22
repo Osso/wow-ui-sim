@@ -70,7 +70,13 @@ This covers only the modeled helpful player-buff create/countdown/removal path. 
 
 Frozen `5a1cc851` supplies nullable player facing to the unchanged addon. In a 15-second GUI-style replay, its arrow rotates from `0.5` to `2.5` radians; after player facing becomes unknown, the arrow retains `2.5`. The probe emits `DONE`, records zero Lua errors, and leaves host CVars unchanged. Exit `124` is bounded teardown after completion: `/tmp/forever-addon-runtime/minimap-facing-gui-h7afvjws/{ledger.json,stdout}`.
 
-This covers two modeled finite angles and unknown-state retention only. Default/native facing behavior, player movement, minimap instance rotation, visual pixels, and broader addon settings remain untested. Independent verification of the player-facing implementation is still pending.
+This covers two modeled finite angles and unknown-state retention only. Default/native facing behavior, player movement, minimap instance rotation, visual pixels, and broader addon settings remain untested.
+
+## AppelSwingsForever bounded swing interaction
+
+AppelSwingsForever `8925606` now clean-starts with the documented swing events registered; a matching `--no-addons` control also returns `[]`. In an isolated 22-second GUI-style replay, injected `PLAYER_SWING` events for a four-second main-hand swing and six-second ranged swing activate both real fills, advance both, expire the main hand while ranged remains active, then clear both fills while leaving the idle bar tracks shown. The probe emits `DONE`, collects zero Lua errors, and preserves the host CVar hash. Exit `124` is timeout teardown after completion: `/tmp/forever-addon-runtime/player-swing-startup-controls-ledger.json` and `/tmp/forever-addon-runtime/appel-swing-final-gui-olh1svgs/ledger.json`.
+
+This is injected-event coverage, not a modeled gameplay swing producer or range-check implementation. Off-hand visuals, rendered pixels, range behavior, and native timing remain untested. An earlier timer-based assertion that ran before the addon’s first frame update is excluded as timing-fragile.
 
 ## Acceptance discipline
 

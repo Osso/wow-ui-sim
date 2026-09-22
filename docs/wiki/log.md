@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Register bounded Forever swing events
+
+`PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` are now finite documented Forever registrations with cleanup-aware payload tests. Frozen `ff19ecca` clean-starts AppelSwingsForever; an isolated injected four-second main-hand/six-second ranged workflow observes activation, progress, independent expiry, retained idle tracks, `DONE`, zero Lua errors, and unchanged host CVars. This does not model gameplay swings or range checks. See [[event-system]].
+
 ## [2026-09-22] investigation | Verify registered template existence
 
 Final independent verification confirms `DoesTemplateExist` formatting, default offline checking, registry/source/readability audit, and immutable replay provenance. Frozen `2c5bf78c7` passes the 3/3 lifecycle target; unchanged DRaidFrames `8922652` starts with no collected Lua errors at wow-sim SHA-256 `7d0ff153e1bf2149f670e09ba1eea253460bf58b6bb9d2f754c64f857f8ccfbf`. Added [[template-existence]].

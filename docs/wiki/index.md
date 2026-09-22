@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Register bounded Forever swing events
+
+`PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` now use the finite Forever event table with documented payloads and `PlayerSwingType` values. The unchanged AppelSwingsForever package clean-starts and its injected main-hand/ranged workflow progresses then expires independently; gameplay and range producers remain unmodeled. See [[event-system]] and [finite constants](../specs/forever-finite-constants.md).
+
 ## [2026-09-22] investigation | Verify registered template existence
 
 `DoesTemplateExist` now consults only the loaded XML virtual-template registry. Frozen `2c5bf78c7` lifecycle tests pass 3/3 and the unchanged cached DRaidFrames `8922652` replay is clean at the recorded binary SHA; layout and user workflows remain untested. See [[template-existence]].
