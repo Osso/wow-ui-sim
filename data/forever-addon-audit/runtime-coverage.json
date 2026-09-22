@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22T02:14:54.505142+00:00",
+  "updatedAt": "2026-09-22T00:00:00+00:00",
   "scope": "All269 cachedprojects; selectedForeverrelease only, no silent substitution of comparisonversions. Startup and boundedinteraction evidence are separate; no inventorywidecompatibility claim.",
   "archiveInventory": "data/forever-addon-audit/cached-comparisons.json",
   "archiveHashProof": "/tmp/forever-addon-audit/selected-archive-hash-proof.json",
@@ -7390,15 +7390,18 @@
       "interactions": {
         "status": "bounded-pass",
         "covered": [
-          "Real /bw loads BigWigs_Core, BigWigs_Plugins and BigWigs_Options; addon reports options open and emits DONE with zero Lua errors"
+          "Real /bw loads BigWigs_Core, BigWigs_Plugins and BigWigs_Options; addon reports options open and emits DONE with zero Lua errors",
+          "Real options TreeGroup Bars selection and AceGUI Create Test Bar click create a localized 21-second bar, observe progress to 20.80755216 seconds remaining, then observe expiry/hide and DONE"
         ],
-        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-readability-kq4mjk0g/ledger.json",
-        "fixture": "tools/forever-addon-fixtures/bigwigs-options-workflow.lua",
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-testbar-gui-8j_9l7s5/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/bigwigs-testbar-workflow.lua",
+        "fixtureRevision": "e826e801d",
         "binaryBuildRevision": "0bee9e939070a0d8ee2d712e12e2577d0e3b1da4",
         "binarySha256": "9d3d0c54da123c75b90ad1a1749c06e22dae658b11425bf6a329755e34d03349",
-        "limitations": "Options-open state only; five custom-sound reset warnings remain. Eight standard-only encounter roots excluded. No encounter/test-bar/sound/pixel/native/persistence or all-root startup acceptance.",
+        "priorInteractionEvidence": "/tmp/forever-addon-runtime/bigwigs-options-readability-kq4mjk0g/ledger.json",
+        "limitations": "Five custom-sound reset warnings and 73 missing textures with CASC disabled remain under investigation. Eight standard-only encounter roots excluded. No pixels, audio playback, raid/encounter, native, persistence, or all-root startup acceptance.",
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
-        "outputParsingLimitation": "Generic parser remains incomplete because five missing-custom-sound chat warnings follow the empty Lua-error JSON array; raw output, exit0 and exact markers independently audited."
+        "outputParsingLimitation": "Generic parser remains incomplete because five missing-custom-sound chat warnings follow the empty Lua-error JSON array; raw output, completion-before-timeout, and exact markers independently audited."
       },
       "packageOnlyBaseline": {
         "status": "failed",

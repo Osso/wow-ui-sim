@@ -36,6 +36,12 @@ The mixed-source `283029e6` binary is excluded. Frozen `e3cafcc11` proof covers 
 
 The final BigWigs replay exposed four post-`DONE` AceGUI child-OnUpdate errors after the first context-query correction. Its XML child OnLoad assignment used lexical `self`; the fast template path had classified bare and dotted `self` roots as `_G.self` globals. `103e6422c` and `e11037217` send those roots through authoritative Lua evaluation while preserving genuine dotted globals. The three bounded template-parenting tests pass. This is a simulator parser correction, not a Blizzard/vendor patch; other local-expression forms remain unmodeled. See [template child OnLoad self](../../specs/template-fast-path-self.md).
 
+## BigWigs Create Test Bar workflow
+
+Fixture `e826e801d` drives unchanged BigWigs `8931513` through the real `/bw` options route, requires the visible AceGUI TreeGroup, clicks its `general\u0001Bars` tree node, then clicks the enabled AceGUI Create Test Bar button. It does not invoke a saved callback or a BigWigs bar producer directly. Frozen `0bee9e939` with the exact 442-file archive records a new localized bar at `21` seconds, progress to `20.80755216` seconds remaining, expiry/hide, and `DONE` before the external timeout. The read-only audit confirms raw output contains zero Lua errors and the host CVar hash is unchanged: `/tmp/forever-addon-audit/verify-bigwigs-testbar-ledger.json`.
+
+This is a second bounded BigWigs interaction inside the unchanged 18-pass / 251-not-run matrix, not a startup reclassification. It does not prove pixels, texture correctness, audio playback, raid or encounter behavior, native Forever behavior, persistence, or all-root loading. CASC was disabled with 73 missing textures; five custom-sound warnings remain under investigation. See [runtime coverage](../../forever-addon-runtime-coverage.md#bigwigs-partial-startup-after-classic-expansion-comparison).
+
 ## Recent-allies location-preference follow-up
 
 `561943dd0` supplies five focused Forever regressions and `37da0f132` adds the per-environment `GetAllowRecentAlliesSeeLocation` / `SetAllowRecentAlliesSeeLocation` state. Cached Forever UI metadata documents the boolean setter and synchronous payload-free `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` event; cached Settings metadata supports the default `true`. Existing VM secret-argument validation remains the enforcement route, rather than a new security mechanism.
