@@ -8,15 +8,15 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 217,
+      "clean-startup": 219,
       "blocked-dependency": 3,
-      "unloaded": 12,
-      "failed": 36,
+      "unloaded": 13,
+      "failed": 33,
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 8,
-      "not-run": 261
+      "bounded-pass": 9,
+      "not-run": 260
     }
   },
   "projects": [
@@ -925,10 +925,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8921014
         ],
@@ -948,7 +948,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "AdiBags_Fishing missing required TOC dependencies: AdiBags"
       },
       "interactions": {
         "status": "not-run",
@@ -981,6 +981,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8921014
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AdiBags_Fishing",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -1663,6 +1690,69 @@
       "fileId": 8909275,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "unloaded",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8909275,
+          8909267
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AlenyaGuides",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuidesWriter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Pack1",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Pack2",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Training",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "currentFailure": null
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-alenyas-guides-writer-8909275-709k8ouh/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-000-032.json",
@@ -1711,17 +1801,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-alenyas-guides-writer-8909275-709k8ouh/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -2320,10 +2399,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8925606
         ],
@@ -2343,7 +2422,7 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "@Interface/AddOns/AppelSwingsForever/Swing.lua: AppelSwingsForeverCoreFrame:RegisterEvent(): AppelSwingsForeverCoreFrame:RegisterEvent(): Attempt to register unknown event \"PLAYER_SWING\""
       },
       "interactions": {
         "status": "not-run",
@@ -2376,6 +2455,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8925606
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AppelSwingsForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -2596,10 +2702,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8923279
         ],
@@ -2675,7 +2781,7 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "@Interface/AddOns/AtlasLootClassic_DungeonsAndRaids/data.lua: Interface/AddOns/AtlasLootClassic_DungeonsAndRaids/data.lua:1203: attempt to concatenate a nil value"
       },
       "interactions": {
         "status": "not-run",
@@ -2764,6 +2870,89 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8923279
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AtlasBIStooltips",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_DungeonsAndRaids",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -2771,6 +2960,96 @@
       "fileId": 8935273,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8935273
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AtlasLoot",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_DungeonsAndRaids",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Favourites",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/AtlasLoot_DungeonsAndRaids/data.lua: Interface/AddOns/AtlasLoot_DungeonsAndRaids/data.lua:1201: attempt to concatenate a nil value"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlasloot-continued-8935273-095nhk8p/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-032-064.json",
@@ -2846,17 +3125,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-atlasloot-continued-8935273-095nhk8p/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -2865,10 +3133,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8932404
         ],
@@ -2944,7 +3212,7 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "@Interface/AddOns/AtlasLootClassic_DungeonsAndRaids/data.lua: Interface/AddOns/AtlasLootClassic_DungeonsAndRaids/data.lua:1203: attempt to concatenate a nil value"
       },
       "interactions": {
         "status": "not-run",
@@ -3033,6 +3301,89 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8932404
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AtlasBIStooltips",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_DungeonsAndRaids",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -3040,6 +3391,96 @@
       "fileId": 8931207,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8931207
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AtlasLoot",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_DungeonsAndRaids",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Favourites",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/AtlasLoot_DungeonsAndRaids/data.lua: Interface/AddOns/AtlasLoot_DungeonsAndRaids/data.lua:1201: attempt to concatenate a nil value"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlaslootforever-8931207-kzmpngv9/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-032-064.json",
@@ -3115,17 +3556,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-atlaslootforever-8931207-kzmpngv9/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -3604,6 +4034,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8922028
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AutoLooter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 3,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "Lua Error: .../AutoLooter/Modules/common/ToggleableModulePrototype.lua:16: attempt to index local 'self' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autolooter-continued-8922028-e96vdzwp/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-032-064.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -3621,17 +4085,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-autolooter-continued-8922028-e96vdzwp/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -3778,10 +4231,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8915696
         ],
@@ -3806,9 +4259,9 @@
             "reason": ""
           }
         ],
-        "errorRecords": 4,
+        "errorRecords": 2,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "[OnEvent] frame=#57950 addon=AvoidanceStatsTBC source=@Interface/AddOns/AvoidanceStatsTBC/Durability.lua:102: Interface/AddOns/AvoidanceStatsTBC/CharacterStats.lua:1657: attempt to index field 'leftRows' (a nil value)"
       },
       "interactions": {
         "status": "not-run",
@@ -3848,6 +4301,40 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8915696
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AvoidanceStatsForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AvoidanceStatsTBC",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -3855,6 +4342,40 @@
       "fileId": 8928231,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8928231
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AzeriteUI5_JuNNeZ_Edition",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 9,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "Lua Error: ...s/AzeriteUI5_JuNNeZ_Edition/Components/Misc/WorldMap.lua:137: attempt to index global 'WorldMapFrameBg' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeriteui-junnez-edition-wow12-8928231-sirdluro/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
@@ -3874,6 +4395,34 @@
         ],
         "errorRecords": 7,
         "hostCvarsUnchanged": true
+      }
+    },
+    {
+      "slug": "azeroth-idle-forever",
+      "fileId": 8929297,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8929297
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "AzerothIdle",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/AzerothIdle/Data.lua: wrong number of arguments to 'insert'"
       },
       "interactions": {
         "status": "not-run",
@@ -3882,16 +4431,11 @@
       "packageOnlyBaseline": {
         "status": "failed",
         "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-azeriteui-junnez-edition-wow12-8928231-sirdluro/startup-ledger.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeroth-idle-forever-8929297-vdbpuno4/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
-      }
-    },
-    {
-      "slug": "azeroth-idle-forever",
-      "fileId": 8929297,
-      "archiveStatus": "downloaded",
-      "startup": {
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
@@ -3911,17 +4455,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-azeroth-idle-forever-8929297-vdbpuno4/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -4005,12 +4538,13 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
-        "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
-        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8924604
         ],
+        "configuration": {},
         "observations": [
           {
             "name": "Baganator",
@@ -4021,7 +4555,8 @@
           }
         ],
         "errorRecords": 3,
-        "hostCvarsUnchanged": true
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Baganator/ItemViewCommon/Layouts.lua: Interface/AddOns/Baganator/ItemViewCommon/Layouts.lua:31: attempt to call a nil value"
       },
       "interactions": {
         "status": "not-run",
@@ -4042,6 +4577,27 @@
         "runLedger": "/tmp/forever-addon-runtime/main-baganator-8924604-39dgmbas/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
+        "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "packageFileIds": [
+          8924604
+        ],
+        "observations": [
+          {
+            "name": "Baganator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 3,
+        "hostCvarsUnchanged": true
       }
     },
     {
@@ -4272,6 +4828,76 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8917178,
+          8912897
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "BagBrother",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_Bank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_Config",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_Consolidator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_GuildBank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Bagnon_Consolidator/libs/libItemMove/LibItemMove.lua: ...Ons/Bagnon_Consolidator/libs/libItemMove/LibItemMove.lua:5: LibItemMove-1.0 requires LibStub."
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagnon-consolidator-8917178-gltrghgw/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -4325,17 +4951,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-bagnon-consolidator-8917178-gltrghgw/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -4778,6 +5393,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8936363
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "BazUI",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "Interface/AddOns/Blizzard_SharedXMLBase/FrameUtil.lua:247: attempt to perform arithmetic on local 'centerX' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bazui-8936363-dq59go74/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-064-096.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -4795,17 +5444,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-bazui-8936363-dq59go74/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -5394,10 +6032,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8923225
         ],
@@ -5417,7 +6055,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "BetterBags_AIO missing required TOC dependencies: BetterBags"
       },
       "interactions": {
         "status": "not-run",
@@ -5460,6 +6098,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8923225
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "BetterBags_AIO",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -5513,10 +6178,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8921039
         ],
@@ -5536,7 +6201,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "BetterBags_Fishing missing required TOC dependencies: BetterBags"
       },
       "interactions": {
         "status": "not-run",
@@ -5569,6 +6234,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8921039
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "BetterBags_Fishing",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -5757,10 +6449,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8922319
         ],
@@ -5780,7 +6472,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "BetterBags_Scrap missing required TOC dependencies: BetterBags"
       },
       "interactions": {
         "status": "not-run",
@@ -5813,6 +6505,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8922319
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "BetterBags_Scrap",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -6215,6 +6934,47 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8913175
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "!BetterFriendlist_MenuBridge",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BetterFriendlist",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnLoad] __BetterFriendlist_45731: Interface/AddOns/BetterFriendlist/Modules/RaidFrame.lua:905: attempt to index field 'RoleSummary' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterfriendlist-8913175-lwocmklr/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-096-128.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -6239,17 +6999,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-betterfriendlist-8913175-lwocmklr/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -6424,6 +7173,117 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8931513
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "BigWigs",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Core",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MarchOnQuelDanas",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MidnightLairs",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MidnightWorld",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Plugins",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Sporefall",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheDreamrift",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheUnbindingOfKithix",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheVenomousAbyss",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheVoidspire",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua: .../AddOns/BigWigs/Libs/LibDualSpec-1.0/LibDualSpec-1.0.lua:372: attempt to call a nil value"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bigwigs-8931513-9_o7n_1i/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-096-128.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -6518,17 +7378,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-bigwigs-8931513-9_o7n_1i/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -7214,21 +8063,14 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8934103
         ],
-        "observations": [
-          {
-            "name": "Buffalo",
-            "loadingOrLoaded": true,
-            "fullyLoaded": true,
-            "loadOnDemand": false,
-            "reason": ""
-          }
-        ],
+        "configuration": {},
+        "observations": [],
         "errorRecords": 6,
         "hostCvarsUnchanged": true,
         "currentFailure": "@Interface/AddOns/Buffalo/Buffalo-Configuration.lua: table index is nil"
@@ -7264,6 +8106,28 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8934103
+        ],
+        "observations": [
+          {
+            "name": "Buffalo",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 6,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Buffalo/Buffalo-Configuration.lua: table index is nil"
       }
     },
     {
@@ -7457,10 +8321,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8929003
         ],
@@ -7480,7 +8344,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "TwitchEmotes_Buh missing required TOC dependencies: TwitchEmotes"
       },
       "interactions": {
         "status": "not-run",
@@ -7513,6 +8377,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8929003
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "TwitchEmotes_Buh",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -7776,6 +8667,86 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8926975
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "Carbonite",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Carbonite.Gathermate2_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "Carbonite.Info",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Carbonite.Notes",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Carbonite.Quests",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Carbonite.Warehouse",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnUpdate] frame=NxFrame addon=Carbonite source=generated/loader-exec-no-global-slots/2fd6a935769b2f21:17: Interface/AddOns/Carbonite/Modules/Map/MapEngine.lua:2252: attempt to concatenate local 'mapFileName' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_partial_failure",
+        "proofRevision": "7eb0f4e55f59cc3dd17335c10a749cb6f560cef6",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/carbonite/startup-final-ledger.json",
+          "/tmp/forever-addon-runtime/carbonite/map-diagnostic.stdout",
+          "/tmp/forever-addon-audit/carbonite-map-boundary.json"
+        ],
+        "result": "FAIL startup final exit 1; corrected Camelot TOC selection loads providers/dependents, then map UI 2521 reaches missing map-art data",
+        "limits": "native 69913 map-art return unobserved; no fabricated asset/data; not compatible claim"
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-carbonite-8926975-1kwp0lny/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-128-160.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -7828,28 +8799,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "priorEvidence": {
-        "class": "runtime_startup_partial_failure",
-        "proofRevision": "7eb0f4e55f59cc3dd17335c10a749cb6f560cef6",
-        "proofPaths": [
-          "/tmp/forever-addon-runtime/carbonite/startup-final-ledger.json",
-          "/tmp/forever-addon-runtime/carbonite/map-diagnostic.stdout",
-          "/tmp/forever-addon-audit/carbonite-map-boundary.json"
-        ],
-        "result": "FAIL startup final exit 1; corrected Camelot TOC selection loads providers/dependents, then map UI 2521 reaches missing map-art data",
-        "limits": "native 69913 map-art return unobserved; no fabricated asset/data; not compatible claim"
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-carbonite-8926975-1kwp0lny/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8637,6 +9586,48 @@
       "fileId": 8914716,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8914716,
+          8913945
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "Chattynator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Chattynator_Undo_Redo",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "currentFailure": null
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-chattynator-undo-redo-8914716-stilsyoo/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-160-192.json",
@@ -8664,17 +9655,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-chattynator-undo-redo-8914716-stilsyoo/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8795,6 +9775,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8909724
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "ClassicCastBarForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=#57945 addon=ClassicCastBarForever source=@Interface/AddOns/ClassicCastBarForever/ClassicCastBar.lua:656: Frame:SetScale(): Scale must be > 0 on PlayerCastingBarFrame [StatusBar] parent=<no-parent> grandparent=<no-grandparent> size=195x13"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-classic-cast-bar-forever-8909724-45yti8uu/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-160-192.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -8812,17 +9826,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-classic-cast-bar-forever-8909724-45yti8uu/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8906,6 +9909,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8936344
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "ForeverClassicUI",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "...s/Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua:52: Invalid 'self' frame handle"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-classic-ui-for-forever-8936344-4c6i3ktm/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-160-192.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -8923,17 +9960,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-classic-ui-for-forever-8936344-4c6i3ktm/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -9709,6 +10735,131 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8934911
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "!!!CooldownCursorManager_Guard",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_ActionBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_BlizzCDM",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_Castbars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_Config",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_CustomBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_Debuffs",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_GroupFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_Nameplates",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_PRB",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_QOL",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_UIEnhancement",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "CooldownCursorManager_UnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/CooldownCursorManager/ccm_core.lua: Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PLAYER_EQUIPED_SPELLS_CHANGED\""
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-cooldown-cursor-manager-ui-forever-edition-8934911-qbfdar43/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-160-192.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -9817,17 +10968,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-cooldown-cursor-manager-ui-forever-edition-8934911-qbfdar43/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -10233,6 +11373,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8922770
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "CursorCooldown",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 6,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/CursorCooldown/GCD.lua: table security operation requires an untainted caller"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-cursorcooldown-reloaded-8922770-y0uwr10i/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -10250,17 +11424,6 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-cursorcooldown-reloaded-8922770-y0uwr10i/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -10406,6 +11569,46 @@
       "fileId": 8909385,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8909385
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "CustomMinimapArrow",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "currentFailure": null
+      },
+      "interactions": {
+        "status": "bounded-pass",
+        "covered": [
+          "Natural addon OnUpdate rotates actual minimap texture to0.5then2.5 radians; unknown facing retains2.5"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/minimap-facing-gui-h7afvjws/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/custom-minimap-arrow-facing.lua",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "limitations": "15second GUI run, timeout124 after DONE. No world-map arrow, rotating-instance branch, live movement/camera input or rendered pixels proof; defaultunknown is explicitmodel policy."
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-custom-minimap-arrow-8909385-2w4294qj/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
@@ -10425,17 +11628,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-custom-minimap-arrow-8909385-2w4294qj/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -10677,6 +11869,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8925285
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "CVarsBackup",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 8,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnUpdate] frame=CVarsBackup_save_button addon=CVarsBackup source=Interface/AddOns/CVarsBackup/CVarsBackup.lua:254: Interface/AddOns/CVarsBackup/CVarsBackup.lua:150: attempt to call a nil value"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-cvarsbackup-8925285-kzi7p4_q/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -10694,17 +11920,6 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-cvarsbackup-8925285-kzi7p4_q/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -10953,6 +12168,54 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8936714
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "Datamine",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Datamine_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "Datamine_Maps",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 16,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Datamine/Libs/LibDevConsole/LibDevConsole-1.0.lua: ...AddOns/Datamine/Libs/LibDevConsole/LibDevConsole-1.0.lua:50: attempt to call local 'GetAllBaseCommands' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-datamine-8936714-bi6r2_j0/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -10984,17 +12247,6 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-datamine-8936714-bi6r2_j0/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -13153,6 +14405,61 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8933289
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "Dino_Media",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Dino_Nameplates",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Dino_Nameplates_Core",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Dino_Nameplates_Core_Config",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 26,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Dino_Nameplates_Core_Config/main.lua: assertion failed!"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-dino-nameplates-forever-8933289-ih359xzj/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -13191,6 +14498,41 @@
         ],
         "errorRecords": 26,
         "hostCvarsUnchanged": true
+      }
+    },
+    {
+      "slug": "dino-unit-frames",
+      "fileId": 8936218,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8936218
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "DinoUF_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "DinoUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "Interface/AddOns/DinoUnitFrames/modules/basecombopoints.lua:207: attempt to index local 'color' (a number value)"
       },
       "interactions": {
         "status": "not-run",
@@ -13199,16 +14541,11 @@
       "packageOnlyBaseline": {
         "status": "failed",
         "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-dino-nameplates-forever-8933289-ih359xzj/startup-ledger.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-dino-unit-frames-8936218-ateja1i5/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
-      }
-    },
-    {
-      "slug": "dino-unit-frames",
-      "fileId": 8936218,
-      "archiveStatus": "downloaded",
-      "startup": {
+      },
+      "priorSharedProducerReplay": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
@@ -13235,17 +14572,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-dino-unit-frames-8936218-ateja1i5/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -13254,10 +14580,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8639907
         ],
@@ -13277,7 +14603,7 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "...zzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:79: attempt to call upvalue 'loadstring_untainted' (a nil value)"
       },
       "interactions": {
         "status": "not-run",
@@ -13310,6 +14636,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch1.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8639907
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "DisenchantHelper",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -13619,6 +14972,40 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8922640
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "DUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=#58057 addon=DUnitFrames source=@Interface/AddOns/DUnitFrames/settings.lua:300: Interface/AddOns/DUnitFrames/unitframe/playerframe.lua:449: attempt to index global 'PlayerFrameManaBar' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-dunitframes-8922640-ayb9_989/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -13636,17 +15023,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-dunitframes-8922640-ayb9_989/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -13989,10 +15365,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8936131
         ],
@@ -14152,7 +15528,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "Lua Error: table security operation requires an untainted caller"
       },
       "interactions": {
         "status": "bounded-pass",
@@ -14345,6 +15721,173 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8936131
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "EllesmereUI",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIActionBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIAuraBuffReminders",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIBags",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIBlizzardSkin",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIChat",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUICooldownManager",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIDamageMeters",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIDataBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIFriends",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUILocales",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIMinimap",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIMythicTimer",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUINameplates",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIOptions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIQoL",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIQuestTracker",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIQuickdraw",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIRaidFrames",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIResourceBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EllesmereUIUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
@@ -14528,10 +16071,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8805988
         ],
@@ -14551,7 +16094,7 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "currentFailure": "WordHunterWoW-ENPanel-Items missing required TOC dependencies: WordHunterWoW-ENPanel"
       },
       "interactions": {
         "status": "not-run",
@@ -14584,6 +16127,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8805988
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "WordHunterWoW-ENPanel-Items",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
