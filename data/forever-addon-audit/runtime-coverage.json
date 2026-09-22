@@ -15,9 +15,9 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 15,
-      "failed": 0,
-      "not-run": 254
+      "bounded-pass": 16,
+      "failed": 1,
+      "not-run": 252
     }
   },
   "projects": [
@@ -286,8 +286,15 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "binaryBuildRevision": "6632d6373367f41b66b0985440fe9ef604feb7e6",
+        "binarySha256": "4b99d527d23de3a8761137d0aad38c2a6ba3b5bf451d232ea8cd6cb95e197fa5",
+        "status": "bounded-pass",
+        "covered": [
+          "PLAYER_MONEY records +250 income then250 expense in OTHER Session/Day/Total, saved balance restored, DONE and zero errors"
+        ],
+        "fixture": "tools/forever-addon-fixtures/accountant-money-workflow.lua",
+        "evidence": "/tmp/forever-addon-runtime/accountant-workflow-1yx01j63/ledger.json",
+        "limitations": "Injected money events only; no merchant/loot categories, accounting rollover, persistence, settings or rendered UI proof."
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
@@ -4759,8 +4766,24 @@
         "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "binaryBuildRevision": "6632d6373367f41b66b0985440fe9ef604feb7e6",
+        "binarySha256": "4b99d527d23de3a8761137d0aad38c2a6ba3b5bf451d232ea8cd6cb95e197fa5",
+        "status": "failed",
+        "covered": [
+          "Add/add/remove bag0 items updates text15/16\u219214/16\u219215/16 and aggregate79/80\u219278/80\u219279/80; DONE but shared merchant errors invalidate acceptance"
+        ],
+        "fixture": "tools/forever-addon-fixtures/bagmeter-count-workflow.lua",
+        "evidence": "/tmp/forever-addon-runtime/bagmeter-counts-actual-nuqbwfcx/ledger.json",
+        "controlEvidence": "/tmp/forever-addon-runtime/bag-event-control-z1cghrs8/ledger.json",
+        "sourceEvidence": "/tmp/forever-addon-runtime/bag-event-source-3x481uub/ledger.json",
+        "currentFailure": "BAG_UPDATE triggers shared Blizzard MerchantFrame.lua988 missing CanMerchantRepair; reproduced without addons.",
+        "configuration": {
+          "outOfDate": true,
+          "selectedToc": "Bagmeter.toc",
+          "activeLua": "Bagmeter.lua",
+          "notSelected": "Bagmeter_Forever.toc"
+        },
+        "limitations": "Generic TOC selected under current loader policy; explicit Forever variant untested. No clean workflow, bank, rendering, persistence or native proof."
       },
       "packageOnlyBaseline": {
         "status": "unloaded",

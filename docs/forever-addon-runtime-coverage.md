@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 15 bounded interaction passes, zero failed workflows and 254 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 16 bounded interaction passes, one failed workflow and 252 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -105,6 +105,14 @@ The fixture injects `ChatFrame.OnEditBoxPreSendText` with a synthetic editbox; i
 ## Aurarium bounded money/overview interaction
 
 Aurarium `8915742` with cached ArcaneWizardLibrary `8915500` records injected balances `12345→54321`, opens its overview through `/aurarium overview`, and closes it through the real close button. Frozen `a6fbf432e` reaches `DONE` with zero Lua errors; a fresh no-addons money-event control also returns `[]`. Documented pet-slot constants and the Forever StableInfo read model resolve the two previously reproduced shared Blizzard errors without changing either addon. The model's empty, fully unlocked two-slot default and count interpretation are explicit simulator guesses, not native evidence. Evidence: `/tmp/forever-addon-runtime/stable-read-aurarium-vwhnppg7/ledger.json` and `/tmp/forever-addon-runtime/stable-read-money-control-trow38aa/ledger.json`. Host CVars remain unchanged. Persistence, currencies, warband aggregation, pet mutations and rendered output remain untested.
+
+## Accountant Classic bounded money accounting
+
+Unchanged `8919183` on frozen `6632d6373` primes its current balance through `PLAYER_MONEY`, records `250` income and `250` expense in `OTHER` Session/Day/Total, restores the recorded balance, and reaches `DONE` with zero errors. Evidence: `/tmp/forever-addon-runtime/accountant-workflow-1yx01j63/ledger.json`. This excludes transaction categories, accounting-period rollover, persistence and rendered UI.
+
+## BagMeter bag-event blocker
+
+Unchanged `8917130` requires explicit out-of-date loading. Runtime source inspection confirms generic `Bagmeter.toc`/`Bagmeter.lua`, not `Bagmeter_Forever.toc`/Classic source; current loader suffix policy does not recognize `_Forever`. Native suffix compatibility is not established. The corrected fixture checks add/add/remove text transitions `15/16 → 14/16 → 15/16` and totals `79/80 → 78/80 → 79/80`, reaching `DONE`. Shared Blizzard `MerchantFrame.lua:988` errors on missing `CanMerchantRepair` invalidate acceptance, reproduced without addons. Evidence: `/tmp/forever-addon-runtime/bagmeter-counts-actual-nuqbwfcx/ledger.json`, `/tmp/forever-addon-runtime/bag-event-control-z1cghrs8/ledger.json`, and source trace `/tmp/forever-addon-runtime/bag-event-source-3x481uub/ledger.json`. Earlier unloaded and incorrect Classic-fixture attempts are excluded. No intended Forever-variant, bank, persistence or pixel proof.
 
 ## Acceptance discipline
 
