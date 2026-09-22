@@ -10,7 +10,7 @@
 - [x] Stage an explicit list of `(archive path, expected SHA-256)` pairs together. Validate every archive and destination before writes; reject duplicate roots and contradictory file content. Generate one union-root observer and enable file without dependency discovery, downloads, or version substitution.
 - [x] Stage package-root directories under a caller-supplied isolated root, with fake install/WTF directories, a load observer, and `AddOns.txt`. Disable repository addons except Admin, SimCommands, TestFramework and Blizzard_FrameXML; enable packaged roots.
 - [x] Return argv for the already-built simulator with addon/WTF/install isolation, CASC disabled, inherited `WOW_SIM_NO_ADDONS` removed, SavedVariables disabled, a timeout of 1–90 seconds, and the observer followed by `lua-errors`. The caller supplies its execution context and cache environment.
-- [ ] Create `<isolated-root>/xdg-data` and set `XDG_DATA_HOME` to that path in the returned argv. Separate staging roots must use separate CVar and fallback SavedVariables storage, preserve their local files when restaged, and leave inherited host data untouched. Do not override the caller's shared `XDG_CACHE_HOME`.
+- [x] Create `<isolated-root>/xdg-data` and set `XDG_DATA_HOME` to that path in the returned argv. Separate staging roots must use separate CVar and fallback SavedVariables storage, preserve their local files when restaged, and leave inherited host data untouched. Do not override the caller's shared `XDG_CACHE_HOME`.
 - [x] Record each root's loading-or-loaded and fully-loaded flags separately, boolean LoadOnDemand state, and the reason returned by `GetAddOnInfo`; do not infer unavailable dependency or game-filter explanations.
 - [x] Parse complete root observations and trailing Lua-error JSON. Clean startup requires exit zero, no recorded Lua errors, a completed observer, and at least one fully loaded root. Report failed, unloaded or incomplete evidence explicitly; retain every root observation so unloaded roots are not hidden. An unloaded LoadOnDemand root alone is not an error.
 
@@ -27,13 +27,12 @@
 
 - `tools/tests/test_cached_addon_runtime.py` — concrete temporary archives and hashes, normalized backslash directories, explicit consumer/provider composition, invalid second-archive hash and collision rejection before writes, exact argv contract, distinct data-home paths, host-data preservation, independent CVar-file restaging, loaded/LoadOnDemand observations, malformed/incomplete output and Lua-error handling.
 
-Targeted development proof: 22/22 tests pass. The two previously rejected cached ZIPs (`8906484`, `8934390`) stage unchanged after directory normalization; `/tmp/forever-addon-audit/backslash-directory-ledger.json` records the reproduction and real-archive results. This is staging proof, not simulator execution.
+Targeted development proof at `d10d5dbd4`: 25/25 tests pass, including unique data-home argv, host-data preservation, and independent CVar files preserved through restaging. The four isolation assertions failed before implementation; `/tmp/forever-addon-audit/harness-data-isolation-ledger.json` records RED/GREEN commands, revisions, source hashes, and full output paths. The two previously rejected cached ZIPs (`8906484`, `8934390`) stage unchanged after directory normalization; `/tmp/forever-addon-audit/backslash-directory-ledger.json` records the reproduction and real-archive results. This is staging proof, not simulator execution.
 
 `--no-saved-vars` does not disable CVar persistence: `src/cvars.rs` uses the local data directory independently of the isolated WTF path. Per-root `XDG_DATA_HOME` prevents audit processes from sharing that state. Python tests cover staging, argv, and file preservation; the caller owns the cross-process simulator sentinel and invalidated inventory reruns.
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted Python GREEN for the new data-home isolation assertions is pending.
 - [ ] Runtime orchestration and integration verification belong to the caller; this helper does not classify the loader's exact non-load reason.
 
 ## Out of scope
