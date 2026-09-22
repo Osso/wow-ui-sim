@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Deliver `(self, clampedValue, treatAsMouseEvent)` before returning, with the updated value readable inside the callback; omitted mouse flag is `false`, explicit `true` is forwarded.
-- [ ] Retain existing clamping and suppress calls whose clamped value is unchanged, including same-value reentry from a callback.
-- [ ] Dispatch pre/normal/post bindings in order, including intrinsic bindings when no normal script exists.
-- [ ] Report each handler error through the existing error handler and continue later bindings.
-- [ ] Permit callbacks to update other widgets and CVars without a held simulator-state borrow; hidden sliders still dispatch.
+- [x] Deliver `(self, clampedValue, treatAsMouseEvent)` before returning, with the updated value readable inside the callback; omitted mouse flag is `false`, explicit `true` is forwarded.
+- [x] Retain existing clamping and suppress calls whose clamped value is unchanged, including same-value reentry from a callback.
+- [x] Dispatch pre/normal/post bindings in order, including intrinsic bindings when no normal script exists.
+- [x] Report each handler error through the existing error handler and continue later bindings.
+- [x] Permit callbacks to update other widgets and CVars without a held simulator-state borrow; hidden sliders still dispatch.
 
 The cached Forever `SimpleSliderAPIDocumentation.lua` documents `SetValue(value, treatAsMouseEvent=false)`. Dispatch/order/error behavior follows the simulator's existing script model and unchanged addon usage, not a new native-client probe claim.
 
@@ -30,7 +30,7 @@ The cached Forever `SimpleSliderAPIDocumentation.lua` documents `SetValue(value,
 - `set_value_dispatches_intrinsic_bindings_after_reported_errors`
 - `set_value_updates_castbar_style_scale_and_cvar_consumer`
 
-Frozen `d1e2487f` executes identical test bodies and XML intrinsic templates: four expected missing-dispatch failures. Development GREEN and independent verification are pending. Commands and artifact hashes: `/tmp/forever-addon-audit/slider-value-development-ledger.json`.
+Frozen `d1e2487f` executes identical test bodies and XML intrinsic templates: four expected missing-dispatch failures. Committed producer `3d6017fe3` passes all nine grouped slider tests, including the four new callbacks and five existing slider regressions. Independent verification and unchanged-addon replay remain pending. Commands, source hashes and frozen executable provenance: `/tmp/forever-addon-audit/slider-value-development-ledger.json`.
 
 ## Known gaps (current cycle)
 
