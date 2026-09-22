@@ -21,11 +21,11 @@ fn ordinary_and_forbidden_frames_use_caller_taint_without_exposing_secret_result
             assert(issecretvalue(denied))
             assert(not pcall(function() if denied then error('denial leaked') end end))
             assert(not pcall(function() return denied == false end))
-            ForbiddenAccessResult = denied
+            return denied
         end
         debug.setobjecttaint(addon, 'ContextAccessProbe')
-        addon()
-        assert(ForbiddenAccessResult == false)
+        local deniedResult = addon()
+        assert(deniedResult == false)
         local proxy = GetForbiddenObjectTable(forbidden)
         assert(issecretvalue(proxy:CanBeAccessedInContext()))
         assert(proxy:CanBeAccessedInContext() == true)
