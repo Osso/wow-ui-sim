@@ -17,6 +17,8 @@ pub mod frame_level_helpers;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub mod guild_logo;
+#[cfg(feature = "client-wowforever")]
+pub mod input_interface;
 pub mod item_legacy;
 pub mod locale_info;
 pub mod loot_method;
