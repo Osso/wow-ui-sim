@@ -475,6 +475,11 @@ fn is_fast_passthrough_args(args: &str) -> bool {
         .all(|arg| arg.is_empty() || arg == "..." || is_fast_identifier(arg))
 }
 
+fn is_fast_global_path(path: &str) -> bool {
+    let root = path.split('.').next();
+    root != Some("self") && is_fast_handler_path(path)
+}
+
 fn parse_fast_literal_value(raw_value: &str) -> Option<FastLiteralValue<'_>> {
     if raw_value.eq("nil") {
         Some(FastLiteralValue::Nil)
@@ -484,10 +489,7 @@ fn parse_fast_literal_value(raw_value: &str) -> Option<FastLiteralValue<'_>> {
         Some(FastLiteralValue::Bool(false))
     } else if let Ok(number) = raw_value.parse::<f64>() {
         Some(FastLiteralValue::Number(number))
-    } else if raw_value != "self"
-        && !raw_value.starts_with("self.")
-        && is_fast_handler_path(raw_value)
-    {
+    } else if is_fast_global_path(raw_value) {
         Some(FastLiteralValue::Global(raw_value))
     } else {
         None
