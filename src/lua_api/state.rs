@@ -131,6 +131,8 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            base_spell_relationships: Default::default(),
             spell_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
             action_profession_quality: HashMap::new(),

@@ -109,6 +109,8 @@ mod numeric_rule_formatter;
 pub(crate) mod on_update_modes;
 pub mod permanent_shims;
 pub(crate) mod seconds_formatter;
+#[cfg(feature = "client-wowforever")]
+pub mod spell_base;
 #[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
 pub mod weapon_enchants;

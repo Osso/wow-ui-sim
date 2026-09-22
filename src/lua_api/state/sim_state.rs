@@ -117,6 +117,8 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    #[cfg(feature = "client-wowforever")]
+    pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,
     pub spell_loss_of_control: HashMap<u32, LossOfControlInfo>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,
