@@ -238,9 +238,11 @@
       "interactions": {
         "status": "failed",
         "covered": [],
-        "evidence": "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
-        "currentFailure": "Actual /awi save handler fails in SaveFunction.lua457: attempt to call local (for state) (a nil value); self-cast save/load workflow did not complete. Exact producer unproven.",
-        "binaryBuildRevision": "d23cfe65c417e9e99b0f963bccc02764d8e09ab6"
+        "evidence": "/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json",
+        "currentFailure": "Location preference getter resolves previous SaveFunction.lua457 failure. Actual /awi save now fails at SaveFunction.lua894 calling missing GetAutoDeclineNeighborhoodInvites; self-cast save/load workflow remains incomplete.",
+        "priorFailureEvidence": "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
+        "binaryBuildRevision": "37da0f132",
+        "binarySha256": "e0af29a8cb5a28d62ea2ea99c3bae1e3397d41157f6a1acd3efe73f9266fa58f"
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
