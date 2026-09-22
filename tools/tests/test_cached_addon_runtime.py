@@ -1,11 +1,13 @@
 import hashlib
 import importlib.util
 import json
+import os
 import stat
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 SOURCE = Path(__file__).resolve().parents[1] / "cached_addon_runtime.py"
 HELPER = None
@@ -291,6 +293,65 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         self.assertEqual(observer.read_text(), "caller-owned")
         self.assertFalse((self.staging / "Interface").exists())
 
+    def test_argv_sets_distinct_data_homes_without_overriding_shared_cache(self):
+        digest = self.make_zip()
+        host_data = self.root / "host-data"
+        shared_cache = self.root / "shared-cache"
+        data_homes = []
+        with patch.dict(
+            os.environ,
+            {"XDG_DATA_HOME": str(host_data), "XDG_CACHE_HOME": str(shared_cache)},
+        ):
+            for name in ("first", "second"):
+                root = self.root / name
+                staged = HELPER.stage_packages(
+                    [(self.archive, digest)], root, self.repo_addons
+                )
+                argv = HELPER.build_argv(staged, self.root / "wow-sim")
+                homes = [arg for arg in argv if arg.startswith("XDG_DATA_HOME=")]
+                self.assertEqual(homes, [f"XDG_DATA_HOME={root}/xdg-data"])
+                data_homes.append(homes[0])
+                self.assertFalse(any(arg.startswith("XDG_CACHE_HOME=") for arg in argv))
+            self.assertEqual(os.environ["XDG_DATA_HOME"], str(host_data))
+            self.assertEqual(os.environ["XDG_CACHE_HOME"], str(shared_cache))
+        self.assertNotEqual(data_homes[0], data_homes[1])
+
+    def test_staging_leaves_inherited_host_data_untouched(self):
+        digest = self.make_zip()
+        host_data = self.root / "host-data"
+        host_cvars = host_data / "wow-sim/cvars.json"
+        host_cvars.parent.mkdir(parents=True)
+        original = '{"combopointlocation": "2"}\n'
+        host_cvars.write_text(original)
+        with patch.dict(os.environ, {"XDG_DATA_HOME": str(host_data)}):
+            staged = self.stage(digest)
+            HELPER.build_argv(staged, self.root / "wow-sim")
+        self.assertEqual(host_cvars.read_text(), original)
+        self.assertEqual(
+            sorted(path.relative_to(host_data) for path in host_data.rglob("*")),
+            [Path("wow-sim"), Path("wow-sim/cvars.json")],
+        )
+        data_home = self.staging / "xdg-data"
+        self.assertTrue(data_home.is_dir())
+        self.assertEqual(list(data_home.iterdir()), [])
+
+    def test_independent_cvar_files_survive_restage(self):
+        digest = self.make_zip()
+        expected = [(self.root / "first", "0"), (self.root / "second", "1")]
+        for root, value in expected:
+            HELPER.stage_packages([(self.archive, digest)], root, self.repo_addons)
+            data_home = root / "xdg-data"
+            self.assertTrue(data_home.is_dir())
+            cvars = data_home / "wow-sim/cvars.json"
+            cvars.parent.mkdir()
+            cvars.write_text(json.dumps({"combopointlocation": value}))
+        for root, value in expected:
+            HELPER.stage_packages([(self.archive, digest)], root, self.repo_addons)
+            cvars = root / "xdg-data/wow-sim/cvars.json"
+            self.assertEqual(
+                json.loads(cvars.read_text()), {"combopointlocation": value}
+            )
+
     def test_argv_is_exact_bounded_isolated_command_without_execution(self):
         staged = self.stage(self.make_zip())
         binary = self.root / "wow-sim"
@@ -301,6 +362,7 @@ class CachedAddonRuntimeTests(unittest.TestCase):
                 "env",
                 "-u",
                 "WOW_SIM_NO_ADDONS",
+                f"XDG_DATA_HOME={self.staging}/xdg-data",
                 f"WOW_SIM_ADDONS_PATH={self.staging}/Interface/AddOns",
                 f"WOW_SIM_ADDONS_TXT={self.staging}/AddOns.txt",
                 f"WOW_INSTALL_PATH={self.staging}/fake-install",

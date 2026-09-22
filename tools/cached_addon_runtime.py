@@ -149,7 +149,7 @@ def stage_packages(packages, isolated_root, repo_addons):
         for name, enabled in sorted(states.items())
     ).encode()
     files[root / "load-observer.lua"] = build_observer(roots).encode()
-    directories = {root / "fake-install", root / "wtf"}
+    directories = {root / "fake-install", root / "wtf", root / "xdg-data"}
     for path in files:
         directories.update(path.parents)
     validate_writes(files, directories)
@@ -170,6 +170,7 @@ def build_argv(staged, simulator, timeout=60):
         "env",
         "-u",
         "WOW_SIM_NO_ADDONS",
+        f"XDG_DATA_HOME={root}/xdg-data",
         f"WOW_SIM_ADDONS_PATH={root}/Interface/AddOns",
         f"WOW_SIM_ADDONS_TXT={root}/AddOns.txt",
         f"WOW_INSTALL_PATH={root}/fake-install",
