@@ -31,6 +31,7 @@ pub fn is_registerable_event(name: &str) -> bool {
 #[cfg(feature = "client-wowforever")]
 const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
     "CHAT_MSG_COLLECTED_APPEARANCE",
+    "CHAT_MSG_GUILD_DISCORD",
     "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW",
     "DIEL_CYCLE_CHANGED",
     "DISCORD_GUILD_LOBBY_UPDATE",

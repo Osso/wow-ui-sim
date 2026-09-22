@@ -4,9 +4,7 @@ use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
 #[cfg(feature = "aura-containers")]
 use crate::lua_api::methods::table_get;
-#[cfg(feature = "retail-12-1-0")]
-use crate::lua_api::methods::table_set;
-use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
+use crate::lua_api::methods::{borrow_state, create_table, table_set, table_set_num};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -45,8 +43,13 @@ fn register_private_enumeration(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(feature = "retail-12-1-0")]
 pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
+    if !cfg!(any(
+        feature = "retail-12-1-0",
+        feature = "client-wowforever"
+    )) {
+        return;
+    }
     let values = create_table(state);
     for (name, value) in [("Added", 0), ("ApplicationsIncreased", 1), ("Removed", 2)] {
         table_set(state, values, name, Val::Num(value as f64));

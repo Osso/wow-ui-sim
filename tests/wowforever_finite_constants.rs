@@ -13,7 +13,7 @@ fn forever_finite_events_register_deliver_and_reject_unknown() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        local events = {"CHAT_MSG_COLLECTED_APPEARANCE", "UNIT_AURA_BLOCKED"}
+        local events = {"CHAT_MSG_COLLECTED_APPEARANCE", "CHAT_MSG_GUILD_DISCORD", "UNIT_AURA_BLOCKED"}
         for _, event in ipairs(events) do
             local frame = CreateFrame("Frame")
             local received = {}
@@ -38,6 +38,29 @@ fn forever_finite_events_register_deliver_and_reject_unknown() {
         "#,
     )
     .unwrap();
+}
+
+#[test]
+fn forever_aura_sound_trigger_values_survive_cleanup() {
+    let env = WowLuaEnv::new().unwrap();
+    let check = r#"
+        local triggers = assert(Enum.UnitAuraSoundTrigger, "missing aura sound triggers")
+        assert(triggers.Added == 0)
+        assert(triggers.ApplicationsIncreased == 1)
+        assert(triggers.Removed == 2)
+        local count = 0
+        for _ in pairs(triggers) do count = count + 1 end
+        assert(count == 3)
+        local meta = assert(Enum.UnitAuraSoundTriggerMeta)
+        assert(meta.MinValue == 0 and meta.MaxValue == 2 and meta.NumValues == 3)
+    "#;
+    env.exec(check).unwrap();
+    for _ in 0..2 {
+        env.exec("Enum.UnitAuraSoundTrigger = nil; Enum.UnitAuraSoundTriggerMeta = nil")
+            .unwrap();
+        env.loader_env().restore_post_cleanup_globals().unwrap();
+        env.exec(check).unwrap();
+    }
 }
 
 #[test]

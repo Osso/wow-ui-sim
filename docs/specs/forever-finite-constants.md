@@ -47,6 +47,14 @@ Forever additionally accepts `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOC
 
 `forever_finite_events_register_deliver_and_reject_unknown` tests registration, injected callback delivery with payload preservation, unregistration, and unknown-name rejection in the existing grouped integration module. Injection proves simulator dispatch, not native event production or payload secrecy. The frozen pre-patch binary rejects both names (RED, isolated ledger `/tmp/forever-addon-audit/forever-finite-events-red-ww5p10a5/ledger.json`); compiled GREEN and addon replay remain pending.
 
+## Guild Discord event and aura sound trigger enum
+
+Forever also accepts `CHAT_MSG_GUILD_DISCORD`, explicitly published by cached `ChatInfoDocumentation.lua:1676–1680` and consumed by Chattynator. Registration, injected delivery, unregister suppression, and arbitrary-name rejection are covered by the existing finite-event regression. Other documented residual events are not added by this change.
+
+`UnitAuraConstantsDocumentation.lua:6–16` publishes `Enum.UnitAuraSoundTrigger`: `Added=0`, `ApplicationsIncreased=1`, `Removed=2`, with `UnitAuraSoundTriggerMeta` MinValue=0, MaxValue=2, NumValues=3. Forever shares the existing retail 12.1 enum producer; other profiles retain their previous publication policy. The grouped regression checks all three values, exact member count, metadata, and repeated restoration after cleanup removes both tables. This proves enum publication, not aura sound playback.
+
+Frozen `b8f0982be` rejects the event and lacks both enum tables: `/tmp/forever-addon-audit/next-registration-red-fc0so85f/ledger.json`. Targeted compiled GREEN and independent acceptance remain pending.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.
