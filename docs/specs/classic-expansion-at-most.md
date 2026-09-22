@@ -11,7 +11,8 @@
 
 ## Implementation inventory
 
-- `src/lua_api/globals/stubs/global_stubs.rs` — one shared temporary Classic level policy for existing helpers and the Forever-only upper-bound predicate. No replacement for current-expansion identity or other-profile behavior.
+- `src/lua_api/workarounds/temporary/client_info_defaults.rs` — one shared temporary Classic level compatibility policy with a retirement condition, separate from current-expansion identity.
+- `src/lua_api/globals/stubs/global_stubs.rs` — existing Classic getter/AtLeast behavior and Forever-only upper-bound predicate consult that same policy; no other-profile behavior changes.
 - `tests/classic_expansion_at_most.rs` — numeric boundaries, fractional threshold, BigWigs-shaped branch, argument security and bootstrap retention in the grouped integration target.
 
 ## Known gaps

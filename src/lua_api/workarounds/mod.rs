@@ -5,6 +5,7 @@ mod permanent;
 mod runtime_surfaces;
 mod temporary;
 
+pub(crate) use temporary::client_info_defaults::CLASSIC_EXPANSION_LEVEL;
 pub(crate) use temporary::environment_cleanup_restore::restore_post_cleanup_globals;
 pub(crate) use temporary::source_patches::patch_lua_source;
 
