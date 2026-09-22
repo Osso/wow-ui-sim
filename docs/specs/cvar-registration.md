@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Preserve an explicit empty string as the default and current value of a previously unknown CVar, through global and namespace getters.
-- [ ] Keep omitted/nil defaults at the existing simulator value `"0"`, distinct from an explicit empty string.
-- [ ] Preserve the first registered default and existing overrides on re-registration.
-- [ ] Let ClassicCastBarForever's empty-value filtering retain its scale default `1`; continue accepting a stored nonempty scale `1.25`.
+- [x] Preserve an explicit empty string as the default and current value of a previously unknown CVar, through global and namespace getters.
+- [x] Keep omitted/nil defaults at the existing simulator value `"0"`, distinct from an explicit empty string.
+- [x] Preserve the first registered default and existing overrides on re-registration.
+- [x] Let ClassicCastBarForever's empty-value filtering retain its scale default `1`; continue accepting a stored nonempty scale `1.25`.
 
 Cached Forever `CVarDocumentation.lua` declares a nullable string `value`. Wowless `wowless/modules/cvars.lua` retains the supplied value, including an empty string. These support the distinction but are not native-client probe evidence. Omitted/nil `"0"` and re-registration behavior remain existing simulator policy, not claims derived from Wowless.
 
@@ -28,11 +28,11 @@ Cached Forever `CVarDocumentation.lua` declares a nullable string `value`. Wowle
 - `register_cvar_nil_default_retains_zero_policy` and existing `register_cvar_makes_unknown_cvar_visible_with_zero_default`: nil/omitted defaults.
 - `empty_cvar_registration_preserves_classic_castbar_scale_default`: fresh unknown CVar through the addon's read/register/filter/scale-selection sequence and strict frame scale setter.
 
-Development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. Compiled GREEN and independent acceptance are pending.
+Development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. At `d1e2487f6`, grouped `set_cvar_global` tests pass 15/15, including all three new tests. Independent acceptance and unchanged-addon replay remain pending.
 
 ## Known gaps (current cycle)
 
-- [ ] Verify compiled focused regressions and unchanged-addon startup/workflow in isolated data storage.
+- [ ] Obtain independent verification and unchanged-addon startup/workflow in isolated data storage.
 
 ## Out of scope
 
