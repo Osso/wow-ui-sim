@@ -286,7 +286,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 /// Run after frame OnUpdate assignment, retaining callback taint and secret checks.
 pub(crate) fn tick(lua: &mut rilua::Lua, elapsed: f64) -> crate::Result<()> {
-    let callback = registry_get(lua.state(), SCHEDULER_KEY);
+    let callback = registry_get(lua.state_mut(), SCHEDULER_KEY);
     if callback != Val::Nil {
         call_function(lua, callback, &[Val::Num(elapsed)])?;
     }
