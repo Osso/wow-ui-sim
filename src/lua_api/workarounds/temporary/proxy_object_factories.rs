@@ -474,7 +474,6 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    use rilua::LuaApiMut;
     lua.exec(PROXY_OBJECT_FACTORIES_LUA)?;
     Ok(())
 }
