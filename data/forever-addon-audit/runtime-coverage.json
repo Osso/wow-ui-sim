@@ -7391,7 +7391,8 @@
         "status": "bounded-pass",
         "covered": [
           "Real /bw loads BigWigs_Core, BigWigs_Plugins and BigWigs_Options; addon reports options open and emits DONE with zero Lua errors",
-          "Real options TreeGroup Bars selection and AceGUI Create Test Bar click create a localized 21-second bar, observe progress to 20.80755216 seconds remaining, then observe expiry/hide and DONE"
+          "Real options TreeGroup Bars selection and AceGUI Create Test Bar click create a localized 21-second bar, observe progress to 20.80755216 seconds remaining, then observe expiry/hide and DONE",
+          "Real /bw loads the deferred Sounds plugin; five staged BigWigs loose .ogg paths are known/loose with nil IDs, remain registered at their exact paths, and no reset warnings occur"
         ],
         "evidence": "/tmp/forever-addon-runtime/bigwigs-testbar-gui-8j_9l7s5/ledger.json",
         "fixture": "tools/forever-addon-fixtures/bigwigs-testbar-workflow.lua",
@@ -7399,9 +7400,15 @@
         "binaryBuildRevision": "0bee9e939070a0d8ee2d712e12e2577d0e3b1da4",
         "binarySha256": "9d3d0c54da123c75b90ad1a1749c06e22dae658b11425bf6a329755e34d03349",
         "priorInteractionEvidence": "/tmp/forever-addon-runtime/bigwigs-options-readability-kq4mjk0g/ledger.json",
-        "limitations": "Five custom-sound reset warnings and 73 missing textures with CASC disabled remain under investigation. Eight standard-only encounter roots excluded. No pixels, audio playback, raid/encounter, native, persistence, or all-root startup acceptance.",
+        "limitations": "CASC-disabled 73 missing textures remain. Eight standard-only encounter roots excluded. No pixels, texture correctness, audio playback, raid/encounter, native, persistence, or all-root startup acceptance.",
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
-        "outputParsingLimitation": "Generic parser remains incomplete because five missing-custom-sound chat warnings follow the empty Lua-error JSON array; raw output, completion-before-timeout, and exact markers independently audited."
+        "outputParsingLimitation": "Historical 0bee9e939 output had five missing-custom-sound chat warnings after the empty Lua-error JSON array, so the generic parser remains incomplete for that output. Frozen 963a3b791 sound-asset replay has zero reset warnings; independent verification remains pending.",
+        "soundAssetEvidence": "/tmp/forever-addon-runtime/bigwigs-sound-assets-public-_wheduwi/ledger.json",
+        "soundAssetFixture": "tools/forever-addon-fixtures/bigwigs-sound-assets-workflow.lua",
+        "soundAssetFixtureRevision": "1618b532c",
+        "soundAssetBinaryBuildRevision": "963a3b79112454ca8af6148d10f770f7093f0d6f",
+        "soundAssetBinarySha256": "2f24d4f37840873536bd6fa68f785a3f11e8606969eb32f5e552e644b2d72a13",
+        "soundAssetVerification": "independent verification pending: /tmp/forever-addon-audit/verify-ui-file-assets-ledger.json"
       },
       "packageOnlyBaseline": {
         "status": "failed",

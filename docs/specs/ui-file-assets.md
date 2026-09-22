@@ -30,7 +30,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Verify unchanged BigWigs sound registration after this fix, distinguishing asset recognition from actual audio playback.
+- [ ] Independently verify frozen `963a3b791` BigWigs sound-registration replay. The observed replay has zero reset warnings; audio playback remains out of scope.
 
 ## Out of scope
 

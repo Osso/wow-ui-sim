@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Exercise BigWigs Create Test Bar
 
-Fixture `e826e801d` opens unchanged BigWigs `8931513` options through `/bw`, selects the actual Bars TreeGroup node, and clicks the enabled AceGUI Create Test Bar button. Frozen `0bee9e939` records a localized 21-second bar, progress, expiry/hide, `DONE` before timeout, zero Lua errors, and unchanged host CVars. This adds bounded test-bar coverage only: no pixels, audio, raid/encounter, native, persistence, or all-root claim. CASC-disabled 73-texture misses and five sound warnings remain open. Matrix remains 18 bounded passes / 251 not run. See [[forever-addon-comparison]].
+Fixture `e826e801d` opens unchanged BigWigs `8931513` options through `/bw`, selects the actual Bars TreeGroup node, and clicks the enabled AceGUI Create Test Bar button. Frozen `0bee9e939` records a localized 21-second bar, progress, expiry/hide, `DONE` before timeout, zero Lua errors, and unchanged host CVars. A later frozen `963a3b791` loose-asset replay registers five staged BigWigs sounds at exact paths with zero reset warnings; independent verification remains pending. This remains bounded: no pixels, audio playback, raid/encounter, native, persistence, or all-root claim. CASC-disabled 73-texture misses remain. Matrix remains 18 bounded passes / 251 not run. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Model script-object context access
 
