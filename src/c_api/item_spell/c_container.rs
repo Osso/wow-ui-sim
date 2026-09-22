@@ -47,7 +47,7 @@ type ContainerMethod = (&'static str, ContainerScriptFn);
 
 const BACKPACK_BAG_INDEX: i32 = 0;
 const BAG_SLOT_FLAG_DISABLE_AUTO_SORT: i32 = 1;
-const BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL: i32 = 64;
+pub(crate) const BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL: i32 = 64;
 
 fn register_container_query_methods(
     state: &mut LuaState,
@@ -86,7 +86,7 @@ fn register_container_query_methods(
     )
 }
 
-fn container_slot_count(bag: i32) -> i32 {
+pub(crate) fn container_slot_count(bag: i32) -> i32 {
     match bag {
         -4 => 7,
         -1 => 28,
@@ -296,7 +296,7 @@ fn bag_slot_flag_key(bag: i32, flag: i32) -> String {
     format!("{bag}:{flag}")
 }
 
-fn bag_slot_flag_is_set(state: &mut LuaState, bag: i32, flag: i32) -> bool {
+pub(crate) fn bag_slot_flag_is_set(state: &mut LuaState, bag: i32, flag: i32) -> bool {
     let storage = bag_slot_flags_storage(state);
     let key = bag_slot_flag_key(bag, flag);
     let value = crate::lua_api::methods::table_get(state, storage, &key);
