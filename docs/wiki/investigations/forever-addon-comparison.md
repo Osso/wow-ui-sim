@@ -34,7 +34,9 @@ This is injected modeled-power/event evidence, not native gameplay production, s
 
 Cached ClassicCastBarForever `8909724` calls `C_CVar.RegisterCVar(name, "")` only after an unknown read, then treats an empty read as unavailable so its authored `scale = 1` default survives. Before `d1e2487f6`, simulator registration filtered the explicit empty string into an omitted default; storage then substituted `"0"`. The unchanged addon read that value, converted it with `tonumber`, and passed `0` to the correctly strict `PlayerCastingBarFrame:SetScale`, causing startup failure.
 
-`2530fcf56` supplies the targeted regression boundary; `d1e2487f6` preserves explicit empty defaults while retaining existing omitted-default `"0"` behavior. No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. Development compilation is pending, so this does not yet establish tests, startup, settings behavior, persistence, or inventory acceptance.
+`2530fcf56` supplies the targeted regression boundary; `d1e2487f6` preserves explicit empty defaults while retaining existing omitted-default `"0"` behavior. Independent verification reuses the matching grouped 15/15 target and passes formatting plus default offline checking: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. Frozen `wow-sim-d1e2487f` clean-starts unchanged archive `8909724` in isolated data; the matching no-addons control returns `[]`.
+
+No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate settings workflow remains failed at the simulator's missing Slider `SetValue` → `OnValueChanged` dispatch, which is being implemented separately; it neither invalidates the CVar startup proof nor establishes settings, persistence, or inventory acceptance.
 
 ## Automatic duration-binding follow-up
 

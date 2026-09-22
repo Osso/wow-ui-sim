@@ -28,11 +28,12 @@ Cached Forever `CVarDocumentation.lua` declares a nullable string `value`. Wowle
 - `register_cvar_nil_default_retains_zero_policy` and existing `register_cvar_makes_unknown_cvar_visible_with_zero_default`: nil/omitted defaults.
 - `empty_cvar_registration_preserves_classic_castbar_scale_default`: fresh unknown CVar through the addon's read/register/filter/scale-selection sequence and strict frame scale setter.
 
-Development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. At `d1e2487f6`, grouped `set_cvar_global` tests pass 15/15, including all three new tests. Independent acceptance and unchanged-addon replay remain pending.
+Development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. At `d1e2487f6`, grouped `set_cvar_global` tests pass 15/15, including all three new tests. Independent verification passes the matching target, `cargo fmt --check`, and default `cargo check --offline`: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. The unchanged cached ClassicCastBarForever `8909724` clean-starts in isolated data, while its no-addons control returns `[]`: `/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json` and `/tmp/forever-addon-runtime/empty-cvar-control-ci9ls5w9/ledger.json`.
 
 ## Known gaps (current cycle)
 
-- [ ] Obtain independent verification and unchanged-addon startup/workflow in isolated data storage.
+- [ ] Separate Slider `SetValue` → `OnValueChanged` dispatch currently fails the settings workflow; it is outside this CVar producer proof.
+- [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified.
 
 ## Out of scope
 

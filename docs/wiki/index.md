@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 
-ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` adds the regression boundary and `d1e2487f6` preserves explicit empty strings while retaining omitted-default `"0"`. This is inferred from cached docs/Wowless, not a native probe; development compilation and runtime acceptance remain pending. See [[forever-addon-comparison]].
+ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. This is inferred from cached docs/Wowless, not a native probe. A separate Slider callback gap still blocks settings-workflow acceptance. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 
