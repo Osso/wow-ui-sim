@@ -1,10 +1,10 @@
 ## [2026-09-22] investigation | Count merchant junk in modeled bags
 
-`67b32cddd`, `58b0072d1`, and `8260074a3` add the required Forever `C_MerchantFrame.GetNumJunkItems` read. Targeted proof is 11/11, including cached BAG_UPDATE, now clean. Positive junk metadata is fixture-only because the live catalog has no quality-0 records; eligibility and stack units are inferred. No catalog mutation, sale transaction, full repair flow, native behavior, independent verification, or BagMeter acceptance is credited. See [merchant junk count](../specs/merchant-junk-count.md) and [[forever-addon-comparison]].
+`67b32cddd`, `58b0072d1`, and `8260074a3` add the required Forever `C_MerchantFrame.GetNumJunkItems` read. Hash-matched focused proof is 11/11; fresh format/default checks and changed-Rust readability pass. Frozen generic-TOC BagMeter OOD replay and no-addons BAG_UPDATE control are clean, crediting only observed count transitions. Positive junk metadata remains fixture-only because the live catalog has no quality-0 records; eligibility and stack units are inferred. No catalog mutation, sale transaction, full repair flow, native behavior, or `_Forever`/Classic BagMeter coverage is credited. See [merchant junk count](../specs/merchant-junk-count.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
 
-Accountant Classic `8919183` records injected `+250/-250` money events in Session, Day, and Total data, then reaches `DONE` with empty errors; independent verification authenticates 92 staged files and the recorded markers. BagMeter `8917130` displays observed generic-TOC bag counts through real bag-state events but remains failed because the same `BAG_UPDATE` reproduces unrelated missing `CanMerchantRepair` errors without addons. The loader selects generic `Bagmeter.toc`; `_Forever.toc` is untested. Matrix: 16 passes, one failure, 252 not run. See [[forever-addon-comparison]].
+Accountant Classic `8919183` records injected `+250/-250` money events in Session, Day, and Total data, then reaches `DONE` with empty errors; independent verification authenticates 92 staged files and markers. BagMeter `8917130` generic-TOC/OOD bag counts also reach `DONE` with zero errors after the merchant read family is completed; the loader selects generic `Bagmeter.toc`, while `_Forever.toc` remains untested. Matrix: 17 passes, zero failures, 252 not run. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Model Forever guild invite preference
 
