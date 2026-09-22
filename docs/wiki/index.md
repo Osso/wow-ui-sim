@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Compare Forever Classic expansion upper bounds
 
-BigWigs `8931513` exposed missing `ClassicExpansionAtMost` at LibDualSpec line 372. Forever compares required numeric thresholds against its existing temporary Classic level `10`, distinct from inferred current level `0`; focused 3/3 and format/default checks pass. The exact 442-file root now loads with zero errors, while deferred and excluded roots leave startup partial/unloaded, and workflows untested. No native Classic level conformance. See [[forever-addon-comparison]] and [predicate spec](../specs/classic-expansion-at-most.md).
+BigWigs `8931513` exposed missing `ClassicExpansionAtMost` at LibDualSpec line 372. Forever compares required numeric thresholds against temporary Classic level `10`, distinct from inferred current level `0`; independent verification reuses 3/3 focused proof plus format/default checks. The exact 442-file root loads with zero errors; Core/Options/Plugins remain deferred and all eight `AllowLoadGameType: standard` encounter TOCs are excluded by Forever. `/bw` now reaches a separate missing `CanBeAccessedInContext` method. Startup remains partial/unloaded; no native Classic level conformance. See [[forever-addon-comparison]] and [predicate spec](../specs/classic-expansion-at-most.md).
 
 ## [2026-09-22] investigation | Count merchant junk in modeled bags
 

@@ -18,5 +18,6 @@
 ## Known gaps
 
 - [ ] Native Forever Classic level and predicate results are unverified. The `10` policy is a compatibility default, not proof of native metadata; replace it when authoritative per-client Classic expansion metadata is available.
+- [x] Independent verification reuses the hash-matched 3/3 focused proof, formatting, default compilation, frozen binary, exact 442-file archive, and isolated root replay: `/tmp/forever-addon-audit/verify-classic-expansion-at-most-ledger.json`.
 - [x] The unchanged 442-file BigWigs archive loads its root with zero Lua errors on frozen `fbcd9bb51`; `/tmp/forever-addon-runtime/bigwigs-classic-upper-final-2k58pia8/ledger.json` records the exact binary, roots, and isolated state.
-- [ ] BigWigs Core/Options/Plugins remain deferred LoadOnDemand; profile-excluded Midnight roots and major workflows are untested. The package is partial/unloaded, not a clean all-root startup.
+- [ ] BigWigs Core/Options/Plugins remain deferred LoadOnDemand. All eight encounter TOCs use `AllowLoadGameType: standard`, which Forever excludes; they are not only Midnight roots. `/bw` now reaches deferred plugin activation but fails at `BigWigs_Plugins/Auras.lua:2408` on missing `CanBeAccessedInContext`. Major workflows remain untested. The package is partial/unloaded, not a clean all-root startup.
