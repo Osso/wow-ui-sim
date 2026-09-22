@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Preserve explicit empty CVar registration
+
+ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` adds the regression boundary and `d1e2487f6` preserves explicit empty strings while retaining omitted-default `"0"`. This is inferred from cached docs/Wowless, not a native probe; development compilation and runtime acceptance remain pending. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 
 DinoUnitFrames `8936218` exposed a Forever profile gate: `UnitPowerPercent(..., curve)` returned a number rather than the typed color result documented by the cached API. `17abf7071` and `d23cfe65c` now have independent 8/8 focused proof plus fmt/default checking. Frozen `d23cfe65` clean-starts unchanged DinoUnitFrames and its injected modeled-power GUI workflow verifies alpha transitions `0 → 2 → 5 → 1 → 0`, `DONE`, no Lua errors, and unchanged host CVars. Normalized input is inferred from unchanged `id / 5` thresholds and cached `CurveConstants`, not native proof. No-curve calls remain `0..100`; Retail and other profiles retain prior policy. No native gameplay, secret, pixel, or inventory-wide claim. See [[forever-addon-comparison]].

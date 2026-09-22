@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Preserve explicit empty CVar registration
+
+Audited `2530fcf56` and `d1e2487f6`: ClassicCastBarForever’s fresh explicit-empty CVar registration became simulator-default `"0"`, overriding its authored scale. Recorded only the producer distinction and inferred source/Wowless basis; development compilation and runtime acceptance remain pending. Updated [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve producer
 
 `17abf7071` and `d23cfe65c` pass independent bounded verification: fresh grouped Forever curves 8/8, formatting, and default offline checking. Frozen `d23cfe65` clean-starts unchanged DinoUnitFrames `8936218`; a no-addons control returns `[]`. Its GUI modeled-power workflow observes segment alpha transitions `0 → 2 → 5 → 1 → 0`, `DONE` before timeout 124, no Lua errors, and unchanged host CVars. Normalized `current / max` curve input remains an inference from unchanged `id / 5` thresholds and cached Blizzard `CurveConstants`; native runtime scale, secrets, gameplay production, and pixel rendering remain unproven. No-curve results remain `0..100`; Retail and other profiles retain prior policy. Inventory acceptance remains open. See [[forever-addon-comparison]].

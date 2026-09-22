@@ -30,6 +30,12 @@ Independent verification at `d23cfe65c` reuses the fresh grouped 8/8 target (six
 
 This is injected modeled-power/event evidence, not native gameplay production, secret semantics, rendered-pixel proof, native scale/security semantics, or whole-inventory compatibility.
 
+## ClassicCastBar empty-CVar producer follow-up
+
+Cached ClassicCastBarForever `8909724` calls `C_CVar.RegisterCVar(name, "")` only after an unknown read, then treats an empty read as unavailable so its authored `scale = 1` default survives. Before `d1e2487f6`, simulator registration filtered the explicit empty string into an omitted default; storage then substituted `"0"`. The unchanged addon read that value, converted it with `tonumber`, and passed `0` to the correctly strict `PlayerCastingBarFrame:SetScale`, causing startup failure.
+
+`2530fcf56` supplies the targeted regression boundary; `d1e2487f6` preserves explicit empty defaults while retaining existing omitted-default `"0"` behavior. No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. Development compilation is pending, so this does not yet establish tests, startup, settings behavior, persistence, or inventory acceptance.
+
 ## Automatic duration-binding follow-up
 
 The September 22, 2026 ActionBarAuras interaction replay disproved a startup-only explanation: its player container, matching aura candidate, assigned AuraButton, and visibility state all existed after `A_Admin.AddBuff(19750, ...)`, yet the button's duration text remained nil. Manual binding coverage therefore did not establish automatic countdown behavior.
@@ -60,6 +66,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - [Forever expansion identity](../../specs/forever-expansion-identity.md) — Angleur consumer basis and inferred policy limit
 - [UnitPowerPercent curves](../../specs/unit-power-percent-curves.md) — profile-specific curve input and result contract
 - [UnitHealthPercent curves](../../specs/unit-health-percent-curves.md) — matching Forever health-curve boundary
+- [CVar registration](../../specs/cvar-registration.md) — explicit-empty versus omitted registration boundary
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values
