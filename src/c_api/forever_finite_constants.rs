@@ -23,14 +23,15 @@ fn register_enums(state: &mut LuaState) {
         "WeaponSlotMeta",
         &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
     );
-    register_player_swing_type(state, enums);
     register_bag_indices(state, enums);
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
     register_gamepad_overrides(state, enums);
 }
 
-fn register_player_swing_type(state: &mut LuaState, enums: Val) {
+pub(crate) fn register_player_swing_type(state: &mut LuaState) {
+    // Shared enum bootstrap also restores this publication after cleanup.
+    let enums = super::helpers::ensure_global_table(state, "Enum");
     // Forever SwingTimerDocumentation.lua publishes the event payload enum.
     publish(
         state,

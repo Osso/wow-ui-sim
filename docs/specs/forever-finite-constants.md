@@ -57,7 +57,7 @@ Frozen `b8f0982be` rejects the event and lacks both enum tables: `/tmp/forever-a
 
 ## Player swing event
 
-Forever accepts exactly the documented `PLAYER_SWING` event with payload order `(swingDuration: number, swingType: PlayerSwingType)`. `Enum.PlayerSwingType` publishes `MainHand=0`, `OffHand=1`, `Ranged=2`; `PlayerSwingTypeMeta` publishes MinValue=0, MaxValue=2, NumValues=3. Source: cached `Blizzard_APIDocumentationGenerated/SwingTimerDocumentation.lua:43–51, 72–84`. Publication remains Forever-only and unknown event names remain rejected.
+Forever accepts exactly the documented `PLAYER_SWING` event with payload order `(swingDuration: number, swingType: PlayerSwingType)`. `Enum.PlayerSwingType` publishes `MainHand=0`, `OffHand=1`, `Ranged=2`; `PlayerSwingTypeMeta` publishes MinValue=0, MaxValue=2, NumValues=3. Source: cached `Blizzard_APIDocumentationGenerated/SwingTimerDocumentation.lua:43–51, 72–84`. The C API-owned enum producer runs through shared enum bootstrap so cleanup restoration republishes the same values. Publication remains Forever-only and unknown event names remain rejected.
 
 AppelSwingsForever `8925606`, `Swing.lua:23–60`, registers this event and routes its duration/type payload to independent main-hand, off-hand, and ranged state. It ignores nonpositive durations and clears completed progress rather than holding a full bar. This change does not modify that addon, synthesize gameplay swings, add `PLAYER_SWING_RANGE_UPDATE`, or implement unused `C_SwingTimer` range methods.
 
