@@ -8,15 +8,15 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 220,
+      "clean-startup": 221,
       "blocked-dependency": 3,
       "unloaded": 13,
-      "failed": 32,
+      "failed": 31,
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 10,
-      "not-run": 259
+      "bounded-pass": 11,
+      "not-run": 258
     }
   },
   "projects": [
@@ -14545,15 +14545,17 @@
       "fileId": 8936218,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
-        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
-        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "evidence": "/tmp/forever-addon-runtime/dino-curve-startup-ppa3m3fy/ledger.json",
+        "binaryBuildRevision": "d23cfe65c417e9e99b0f963bccc02764d8e09ab6",
+        "binarySha256": "f7319afdfc06df39f9224d09e0e72111295202653ae9ae2e3726f75a5fca6b8c",
         "packageFileIds": [
           8936218
         ],
-        "configuration": {},
+        "configuration": {
+          "isolatedData": true
+        },
         "observations": [
           {
             "name": "DinoUF_Options",
@@ -14570,13 +14572,18 @@
             "reason": ""
           }
         ],
-        "errorRecords": 4,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "Interface/AddOns/DinoUnitFrames/modules/basecombopoints.lua:207: attempt to index local 'color' (a number value)"
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "bounded-pass",
+        "covered": [
+          "Injected combo power0\u21922\u21925\u21921\u21920; actual target unit-watch visibility and addon event handlers update all five block alphas; retained extra blocks remain transparent"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/dino-combo-alpha-icywlldv/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/dino-combo-workflow.lua",
+        "binaryBuildRevision": "d23cfe65c417e9e99b0f963bccc02764d8e09ab6",
+        "limitations": "GUI injected modeled power/events; no secret gameplay production or rendered-pixel proof. Initial headless assertions observed before unit-watch visibility; later hidden-state assertion contradicted addon alpha contract and was corrected with user approval. Options, other unit modules, native conformance and full addon compatibility remain untested."
       },
       "packageOnlyBaseline": {
         "status": "failed",
@@ -14612,6 +14619,36 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorCurveGateAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8936218
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "DinoUF_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "DinoUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "Interface/AddOns/DinoUnitFrames/modules/basecombopoints.lua:207: attempt to index local 'color' (a number value)"
       }
     },
     {
