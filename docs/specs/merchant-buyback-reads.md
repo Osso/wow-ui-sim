@@ -4,11 +4,11 @@ Forever exposes three legacy buyback queries from `src/lua_api/globals/real/merc
 
 ## What it must do
 
-- [ ] `GetNumBuybackItems()` returns exactly one number equal to the buyback collection length, independently of merchant stock, open state, and repair capability. The initial empty collection is an explicit simulator scenario, not a native account-state default.
-- [ ] `GetBuybackItemInfo(index)` returns name, icon, total copper price, stack quantity, availability, usability, and binding for a populated one-based slot. Name/icon use existing modeled item metadata; remaining fields come from the configured stack snapshot.
-- [ ] `GetBuybackItemLink(index)` returns the existing item-link formatter's link for the same slot. No invented item name, icon, or link fallback is permitted; a configured unknown item raises a descriptive error.
-- [ ] Zero, negative, and out-of-range slots return no values from either indexed read (thus nil in a single-value expression). Required numeric indices use existing integer argument conversion. Missing/malformed arguments fail without changing state.
-- [ ] Preserve configured snapshots across bootstrap restoration and merchant closing; environments and merchant stock remain independent. Reads do not buy, sell, reorder, or remove stacks.
+- [x] `GetNumBuybackItems()` returns exactly one number equal to the buyback collection length, independently of merchant stock, open state, and repair capability. The initial empty collection is an explicit simulator scenario, not a native account-state default.
+- [x] `GetBuybackItemInfo(index)` returns name, icon, total copper price, stack quantity, availability, usability, and binding for a populated one-based slot. Name/icon use existing modeled item metadata; remaining fields come from the configured stack snapshot.
+- [x] `GetBuybackItemLink(index)` returns the existing item-link formatter's link for the same slot. No invented item name, icon, or link fallback is permitted; a configured unknown item raises a descriptive error.
+- [x] Zero, negative, and out-of-range slots return no values from either indexed read (thus nil in a single-value expression). Required numeric indices use existing integer argument conversion. Missing/malformed arguments fail without changing state.
+- [x] Preserve configured snapshots across bootstrap restoration and merchant closing; environments and merchant stock remain independent. Reads do not buy, sell, reorder, or remove stacks.
 - [ ] The existing actual cached startup plus `BAG_UPDATE` regression passes with no Lua errors and hidden repair buttons for the closed merchant scenario.
 
 ### Evidence and inferred boundaries
@@ -36,7 +36,8 @@ One-based collection order, zero-result absence, persistence across merchant clo
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted combined buyback/repair GREEN and frozen-build provenance: `/tmp/forever-addon-audit/merchant-buyback-development-ledger.json`.
+- [x] Four focused buyback tests pass; one compilation produced both focused filters and the frozen simulator. Exact revision, source/test/binary hashes and outputs are in `/tmp/forever-addon-audit/merchant-buyback-development-ledger.json`.
+- [ ] Existing repair suite remains 3/4: cached `BAG_UPDATE` passes the buyback reads but next fails at `MerchantFrame.lua:210`, where `C_MerchantFrame.GetNumJunkItems()` returns nil. The failing regression is unchanged; this separate `C_*` producer is not implemented here.
 - [ ] Parent-owned independent verification and unchanged addon replay.
 
 ## Out of scope
