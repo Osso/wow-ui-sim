@@ -27,8 +27,9 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and run the focused tests; Cargo was not authorized for this implementation slice.
-- [ ] Replay unchanged DrinkBot after rebuilding. Frozen `b8f0982be` reproduces the missing-function failure using the new tests' Lua assertions: `/tmp/forever-addon-audit/macro-name-red-oli620t2/ledger.json`.
+- [x] Focused macro verbs pass 14/14 at exact producer revision `ebff90517`; `cargo fmt --check` and default `cargo check --offline` also pass.
+- [x] Exact-binary `ebff90517` replay clean-starts unchanged DrinkBot. Frozen `b8f0982be` reproduces the missing-function failure using the new tests' Lua assertions: `/tmp/forever-addon-audit/macro-name-red-oli620t2/ledger.json`.
+- [ ] Native macro persistence, UI editing, and broader DrinkBot execution remain unverified.
 
 The local Forever generated macro documentation does not describe this legacy getter. Local wowless `data/products/wow/apis.yaml` records its string input and numeric slot output; the zero-on-miss contract is the requested compatibility behavior. Exact matching and first occupied match preserve the existing simulator model, not independently verified native duplicate-name semantics.
 
