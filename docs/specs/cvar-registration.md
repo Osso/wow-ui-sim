@@ -6,6 +6,8 @@
 
 - [x] Preserve an explicit empty string as the default and current value of a previously unknown CVar, through global and namespace getters.
 - [x] Keep omitted/nil defaults at the existing simulator value `"0"`, distinct from an explicit empty string.
+- [x] Accept finite Lua numeric defaults through both registration surfaces as their decimal strings, including `0` and fractions, without changing stored overrides or first defaults. Numeric acceptance is inferred from Datamine's unchanged `C_CVar.RegisterCVar("debugTargetInfo", 0)` call, not native-verified semantics.
+- [x] Reject non-finite numbers and unsupported types without registering a CVar; preserve typed/secret argument rejection.
 - [x] Preserve the first registered default and existing overrides on re-registration.
 - [x] Let ClassicCastBarForever's empty-value filtering retain its scale default `1`; continue accepting a stored nonempty scale `1.25`.
 
@@ -26,12 +28,14 @@ Cached Forever `CVarDocumentation.lua` declares a nullable string `value`. Wowle
 
 - `register_cvar_preserves_explicit_empty_default_lifecycle`: both registration surfaces, current/default reads, re-registration and overrides.
 - `register_cvar_nil_default_retains_zero_policy` and existing `register_cvar_makes_unknown_cvar_visible_with_zero_default`: nil/omitted defaults.
+- `register_cvar_accepts_finite_numeric_defaults_from_both_surfaces`, `register_cvar_numeric_default_preserves_existing_override_and_first_default`, and `register_cvar_rejects_nonfinite_and_unsupported_defaults`: numeric/string conversion and rejected values.
 - `empty_cvar_registration_preserves_classic_castbar_scale_default`: fresh unknown CVar through the addon's read/register/filter/scale-selection sequence and strict frame scale setter.
 
-Development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. At `d1e2487f6`, grouped `set_cvar_global` tests pass 15/15, including all three new tests. Independent verification passes the matching target, `cargo fmt --check`, and default `cargo check --offline`: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. The unchanged cached ClassicCastBarForever `8909724` clean-starts in isolated data, while its no-addons control returns `[]`: `/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json` and `/tmp/forever-addon-runtime/empty-cvar-control-ci9ls5w9/ledger.json`.
+Numeric-default development proof: `/tmp/forever-addon-audit/register-cvar-numeric-red/ledger.json` and `/tmp/forever-addon-audit/register-cvar-numeric-green/ledger.json` (18/18 grouped tests; final verification pending). Existing empty-default development proof: `/tmp/forever-addon-audit/empty-cvar-development-ledger.json`. Frozen pre-fix runtime fails both empty-default regressions and passes nil-default preservation. At `d1e2487f6`, grouped `set_cvar_global` tests pass 15/15, including all three new tests. Independent verification passes the matching target, `cargo fmt --check`, and default `cargo check --offline`: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. The unchanged cached ClassicCastBarForever `8909724` clean-starts in isolated data, while its no-addons control returns `[]`: `/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json` and `/tmp/forever-addon-runtime/empty-cvar-control-ci9ls5w9/ledger.json`.
 
 ## Known gaps (current cycle)
 
+- [ ] Confirm the numeric-default change against the unchanged Datamine archive; its separate missing `ConsoleGetAllCommands` failure remains open.
 - [ ] Separate Slider `SetValue` → `OnValueChanged` dispatch currently fails the settings workflow; it is outside this CVar producer proof.
 - [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified.
 

@@ -106,6 +106,72 @@ fn register_cvar_exposes_runtime_default_through_global_and_namespace() {
 }
 
 #[test]
+fn register_cvar_accepts_finite_numeric_defaults_from_both_surfaces() {
+    env()
+        .exec(
+            r#"
+            for index, register in ipairs({ RegisterCVar, C_CVar.RegisterCVar }) do
+                for _, entry in ipairs({
+                    { 'zero', 0, '0' },
+                    { 'positive', 17, '17' },
+                    { 'fraction', 0.75, '0.75' },
+                    { 'negative', -2.5, '-2.5' },
+                }) do
+                    local name = '__numeric_default_' .. index .. '_' .. entry[1]
+                    register(name, entry[2])
+                    assert(GetCVar(name) == entry[3], name .. ' current')
+                    assert(C_CVar.GetCVar(name) == entry[3], name .. ' namespace current')
+                    assert(GetCVarDefault(name) == entry[3], name .. ' default')
+                    assert(C_CVar.GetCVarDefault(name) == entry[3], name .. ' namespace default')
+                end
+            end
+            -- Datamine SettingsCore's actual call must register a readable string value.
+            C_CVar.RegisterCVar('debugTargetInfo', 0)
+            assert(C_CVar.GetCVar('debugTargetInfo') == '0')
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn register_cvar_numeric_default_preserves_existing_override_and_first_default() {
+    env()
+        .exec(
+            r#"
+            for index, register in ipairs({ RegisterCVar, C_CVar.RegisterCVar }) do
+                local name = '__numeric_override_' .. index
+                SetCVar(name, '1.25')
+                register(name, 0)
+                assert(GetCVar(name) == '1.25')
+                assert(GetCVarDefault(name) == '0')
+                register(name, 6)
+                assert(GetCVar(name) == '1.25')
+                assert(GetCVarDefault(name) == '0')
+            end
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn register_cvar_rejects_nonfinite_and_unsupported_defaults() {
+    env()
+        .exec(
+            r#"
+            for index, register in ipairs({ RegisterCVar, C_CVar.RegisterCVar }) do
+                for suffix, value in pairs({ bool = true, table = {}, infinite = math.huge }) do
+                    local name = '__invalid_register_' .. index .. '_' .. suffix
+                    local ok = pcall(register, name, value)
+                    assert(not ok, name .. ' should reject unsupported default')
+                    assert(GetCVar(name) == nil, name .. ' should remain unknown')
+                end
+            end
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn register_cvar_makes_unknown_cvar_visible_with_zero_default() {
     let env = env();
     let (value, default, enabled): (String, String, bool) = env

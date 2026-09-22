@@ -173,7 +173,11 @@ fn register_cvar(state: &mut LuaState) -> LuaResult<u32> {
     let Some(name) = required_string(state, 1) else {
         return Ok(0);
     };
-    let default = Option::<String>::from_stack(state, 2)?;
+    let default = match stack_val(state, 2) {
+        Val::Num(value) if value.is_finite() => Some(value.to_string()),
+        Val::Num(_) => return Err(rilua::runtime_error("RegisterCVar default must be finite")),
+        _ => Option::<String>::from_stack(state, 2)?,
+    };
     borrow_state(state)?
         .cvars
         .register(&name, default.as_deref());
