@@ -6,6 +6,8 @@ The initial request covered all projects in the CurseForge Forever / 1.60.1 cata
 
 The [catalog](../data/forever-addon-audit/catalog.json) records browser-cli public-page provenance, UTC capture times, project identities, and page coverage. Its 44 pages contain 875 unique projects without duplicate rows. Each page reported 875; an end-of-run first-page check retained the count and ordering. This is a live-catalog observation, not an atomic snapshot or a claim that every tagged addon works.
 
+Static comparison and runtime acceptance now have separate tracked records. [Downloaded Forever addon runtime coverage](forever-addon-runtime-coverage.md) links the per-project runtime matrix for the cached archive set; it keeps the inventory goal open while projects or major workflows lack runtime evidence.
+
 ## Coverage
 
 | Work | Coverage | Evidence level |

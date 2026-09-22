@@ -1,3 +1,7 @@
+## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
+
+`2cb544376` adds the tracked per-project [runtime coverage matrix](../forever-addon-runtime-coverage.md) for all 269 cached projects. It keeps static comparison distinct from runtime acceptance and leaves the inventory goal open. The selected Forever package is hash-verified for 268 projects; ConsumableTracker's selected archive is unavailable and is not substituted. See [[forever-addon-comparison]].
+
 ## [2026-09-21] investigation | Intrinsic event and visibility dispatch routes
 
 `c6d970cf3` corrects only `FireEvent`/`A_Admin.FireEvent`: normal-only OnEvent lookup became ordered, unit-filtered all-binding dispatch. `AddBuff`/`RemoveBuff` already used all-binding `fire_named_event_state`. The actual stale-aura route was `ReloadFrames`: a hidden configured AuraContainer missed intrinsic `OnShow` re-registration when recursive visibility delivery invoked only normal bindings. `1e1dfe7c0` delivers all visibility bindings children-first. At `9c223f8b7`, visibility tests pass 9/9, synchronous-event tests 12/12, native Forever consumers 5/5, and the 90-second trusted replay passes all five interactions plus aura paint/removal/cleanup with zero Lua errors. See [[synchronous-intrinsic-events]].

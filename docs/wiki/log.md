@@ -1,3 +1,7 @@
+## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
+
+`2cb544376` adds the runtime-coverage matrix for the exact cached project set and links it from the comparison audit. Static comparisons remain non-runtime evidence; the inventory-wide compatibility goal stays open until projects and their major workflows have explicit runtime results. The selected Forever archive is hash-verified for 268 projects; ConsumableTracker's unavailable selected archive remains a blocker without substitution. See [runtime coverage](../forever-addon-runtime-coverage.md) and [[forever-addon-comparison]].
+
 ## [2026-09-21] investigation | Dispatch intrinsic visibility bindings after `ReloadFrames`
 
 `1e1dfe7c0` changes recursive visibility delivery from normal-only to ordered precall/normal/postcall bindings, preserving children-first order. Root cause: `ReloadFrames` hides the parent, configures the native AuraContainer, then shows the parent; normal-only recursive `OnShow` skipped its intrinsic `UNIT_AURA` re-registration. `c6d970cf3` remains only the `FireEvent`/`A_Admin.FireEvent` fix; `AddBuff`/`RemoveBuff` already used `fire_named_event_state`. At `9c223f8b7`, visibility tests pass 9/9, synchronous-event tests 12/12, and native Forever consumers 5/5. Trusted 90-second GUI acceptance passes five interactions plus aura paint/removal/cleanup with zero Lua errors; timeout 124 is teardown. See [[synchronous-intrinsic-events]].
