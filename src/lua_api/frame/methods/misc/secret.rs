@@ -150,12 +150,13 @@ fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
             .widgets
             .get(id)
             .ok_or_else(|| rilua::runtime_error("invalid frame"))?;
-        let denied = !secure
-            && (frame.forbidden
-                || (frame.access_restrictions & DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET != 0
-                    && sim.auras_secret_in_context));
+        let has_aura_restriction =
+            frame.access_restrictions & DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET != 0;
+        let aura_restriction_active = has_aura_restriction && sim.auras_secret_in_context;
+        let frame_denies_access = frame.forbidden || aura_restriction_active;
+        let accessible = secure || !frame_denies_access;
         (
-            !denied,
+            accessible,
             frame_secret_aspects(&sim.widgets, id) & OBJECT_SECRET_ASPECT != 0,
         )
     };
