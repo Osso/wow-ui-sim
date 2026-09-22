@@ -42,6 +42,12 @@ Fixture `e826e801d` drives unchanged BigWigs `8931513` through the real `/bw` op
 
 This is a second bounded BigWigs interaction inside the unchanged 18-pass / 251-not-run matrix, not a startup reclassification. It does not prove pixels, texture correctness, audio playback, raid or encounter behavior, native Forever behavior, persistence, or all-root loading. CASC was disabled with 73 missing textures; five custom-sound warnings remain under investigation. See [runtime coverage](../../forever-addon-runtime-coverage.md#bigwigs-partial-startup-after-classic-expansion-comparison).
 
+## BigWigs loose sound-asset root cause
+
+Frozen `0bee9e939` queried all five existing BigWigs sound paths and returned `IsKnownFile=false`, `IsLooseFile=false`, and `GetFileID=nil`; the unchanged package then emitted five custom-sound reset warnings. The cached `C_UIFileAsset` documentation says known files include loose files, while the pre-fix simulator only consulted its shipped listfile and hard-coded `IsLooseFile=false`. Commits `77513cbed` and `a9afe0231` retain the loader-selected TOC directory and add selected-root loose-file recognition; the 3/3 development proof covers load-time/later `.ogg` queries, selected-root isolation, extensionless textures, and traversal/symlink rejection.
+
+This is not final acceptance: changed-Rust readability and independent verification remain pending, and the unchanged BigWigs registration replay has not yet confirmed warning removal. The simulator's regular-file existence probe and `nil` loose-file ID are bounded inferred policies: cached native docs explicitly say loose-file existence/openability is not verified and do not specify loose IDs. No audio-playback or native-filesystem claim follows. See [UI file asset spec](../../specs/ui-file-assets.md).
+
 ## Recent-allies location-preference follow-up
 
 `561943dd0` supplies five focused Forever regressions and `37da0f132` adds the per-environment `GetAllowRecentAlliesSeeLocation` / `SetAllowRecentAlliesSeeLocation` state. Cached Forever UI metadata documents the boolean setter and synchronous payload-free `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` event; cached Settings metadata supports the default `true`. Existing VM secret-argument validation remains the enforcement route, rather than a new security mechanism.

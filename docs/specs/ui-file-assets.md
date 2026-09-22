@@ -21,6 +21,7 @@
 - `src/lua_api/state_types/runtime.rs` — selected addon directory in addon metadata.
 - `src/loader/addon.rs` — associates loaded TOC with its selected directory.
 - `src/lua_api/addon_scan.rs` — records scanned addon directory before loading.
+- `src/bin/wow_sim/addon_loading.rs` — preserves the selected discovered TOC directory before runtime loading.
 
 ## Tests asserting this spec
 
