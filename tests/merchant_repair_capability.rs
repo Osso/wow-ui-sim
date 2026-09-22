@@ -52,7 +52,10 @@ fn merchant_repair_requires_open_and_configured_capability() {
     let state = env.state().borrow();
     assert!(state.merchant_repair_capable);
     assert_eq!(state.merchant_items, vec![6948, 117]);
-    assert_eq!(state.events.last().unwrap().name, "MERCHANT_CLOSED");
+    assert_eq!(
+        state.events.pending().last().unwrap().name,
+        "MERCHANT_CLOSED"
+    );
 }
 
 #[test]
