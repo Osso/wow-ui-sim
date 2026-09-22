@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
+
+Frozen `963a3b791` reproduces CVarsBackup `8925285` calling missing `GetNumBattlefieldScores()` from button `OnUpdate`; exact archive/CVar isolation is recorded in `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json`. Existing queue/active-battlefield state is not a score-row producer. No shim, implementation, native claim, or matrix update.
+
 ## [2026-09-22] investigation | Trace BigWigs loose sound assets
 
 Frozen `0bee9e939` confirms all five present BigWigs sound paths were rejected by listfile-only `C_UIFileAsset`, followed by five reset warnings. `77513cbed` retains the selected TOC directory and `a9afe0231` adds bounded loose-asset recognition. Frozen `963a3b791` then registers all five unchanged staged sounds at exact paths with zero reset warnings, `DONE`, `[]`, unchanged CVars, and extensionless Otravi preserved: `/tmp/forever-addon-runtime/bigwigs-sound-assets-public-_wheduwi/ledger.json`. Independent audit passes focused loader/API checks 3/3, warning-free formatting/default checks, readability, and the exact replay: `/tmp/forever-addon-audit/verify-ui-file-assets-ledger.json`. Final `5913de433` only removes an unused classification payload, so frozen behavior proof is reused. Existing-file probing and loose-ID `nil` are simulator policies, not native-tested behavior. Updated [UI file assets](../specs/ui-file-assets.md) and [[forever-addon-comparison]].

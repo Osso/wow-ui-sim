@@ -134,6 +134,12 @@ BetterBags commit `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` walks consecutive `
 
 Commit `bb83a4c0a` publishes the corrected values and metadata only under `client-wowforever`. Its two exact consumer-loop enum-shape tests were RED before the producer change and GREEN after it. This proves enum names, values, boundaries, disjointness, and metadata only. It does not load BetterBags, model bank state, prove purchased tabs or account-bank availability, add Warbank behavior, or establish native conformance.
 
+## CVarsBackup scoreboard producer gap
+
+Unchanged CVarsBackup `8925285` remains a startup failure on frozen `963a3b791`: its save, restore, and reload button `OnUpdate` handlers call `IsInBG()`, whose `CVarsBackup.lua:150` invokes missing legacy global `GetNumBattlefieldScores()`. The isolated exact 15-file archive exits `1`; raw errors identify that call and host CVars remain unchanged: `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json`.
+
+The simulator has queue/active-battlefield state but no modeled scoreboard-row producer. That flag cannot establish a score count, so no zero-return shim or active-flag substitution is proposed. This remains an unresolved scoreboard producer gap, not a native contract claim or a matrix change.
+
 ## Sources
 
 - [Forever comparison audit](../../forever-addon-comparison.md) — catalog provenance, scope, and incomplete comparison matrix
@@ -150,6 +156,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - BetterBags `411a6f6ee1ea40eca8ac96927ccdd49a6aab3941` — motivating consumer loop
 - `/tmp/forever-bag-index-development-ledger.json` — RED/GREEN command and revision evidence
 - `data/forever-addon-audit/deep-dispositions.json` — offline Carbonite, EpicDamageMeter, and parked-runtime dispositions
+- `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json` — frozen CVarsBackup `GetNumBattlefieldScores` failure
 - [Forever running report](../../wowforever-1.60.1.md) — current cached-consumer boundaries and final-gate status
 
 ## See Also

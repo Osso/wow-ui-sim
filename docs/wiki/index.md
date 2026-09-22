@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
+
+Frozen `963a3b791` reproduces CVarsBackup `8925285` calling missing `GetNumBattlefieldScores()` from button `OnUpdate`. Queue/active-battlefield state is not a score-row producer, so this remains an unresolved scoreboard-model gap; no zero shim, native claim, or matrix change. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Exercise BigWigs Create Test Bar
 
 Fixture `e826e801d` opens unchanged BigWigs `8931513` options through `/bw`, selects the actual Bars TreeGroup node, and clicks the enabled AceGUI Create Test Bar button. Frozen `0bee9e939` records a localized 21-second bar, progress, expiry/hide, `DONE` before timeout, zero Lua errors, and unchanged host CVars. A later frozen `963a3b791` loose-asset replay registers five staged BigWigs sounds at exact paths with zero reset warnings; independent verification remains pending. This remains bounded: no pixels, audio playback, raid/encounter, native, persistence, or all-root claim. CASC-disabled 73-texture misses remain. Matrix remains 18 bounded passes / 251 not run. See [[forever-addon-comparison]].
