@@ -18,7 +18,9 @@ The polluted baseline remains historical evidence only. The corrected harness us
 
 At binary build `c1e830ffa`, all 268 available project entries have dispositions: 161 clean startups, 32 runtime failures, 72 unloaded/partial loads, and three unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
 
-`GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. ActionBarAuras advances to a separate SecondsFormatter/NumericFormatter object boundary; formatted-output behavior remains open. Full per-addon major workflows remain mostly untested.
+`GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. The later `55ee20d7` build passes formatter-focused tests (native 7/7, configuration 7/7, binding 11/11, numeric 8/8). ActionBarAuras advances past its formatter/container-initialization failures but still fails: `C_Spell.GetBaseSpell` returns nil for its action spells. Its real duration-text workflow remains unproven. Full per-addon major workflows remain mostly untested.
+
+A separate DBM-GUI replay at `55ee20d7` observes metadata, dependency and LoD status before execution, then explicitly loads the module and observes its table/options frame with zero Lua errors. This is loader evidence only—not DBM encounter, timer, alert or rendered-GUI acceptance. The replay requires the explicit out-of-date interface switch; its ledger is `/tmp/forever-addon-runtime/dbm-lod-native-e4hvi488/ledger.json`.
 
 ## Cached LibStub composition and bounded library interactions
 

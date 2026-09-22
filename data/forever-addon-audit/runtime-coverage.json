@@ -483,6 +483,41 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/actionbarauras-native-formatter-malg6_wg/ledger.json",
+        "binaryBuildRevision": "55ee20d7ab95b318b1016681e0c07c38ba5733f3",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8920553
+        ],
+        "observations": [
+          {
+            "name": "ActionBarAuras",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json",
+        "currentFailure": "GetIncludeSpellIDs passes nil C_Spell.GetBaseSpell result to GetLinkedSpellIDs table key; NumericFormatter validation and buttonContainers nil errors no longer observed.",
+        "diagnosticEvidence": "/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/ledger.json"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-actionbarauras-8920553-clnet52_/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorFormatterAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-000-032.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -501,17 +536,6 @@
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
         "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json"
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-actionbarauras-8920553-clnet52_/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -9378,7 +9402,16 @@
         "runLedger": "/tmp/forever-addon-runtime/main-deadly-boss-mods-8925922-1hil_gxt/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
-      }
+      },
+      "supplementalEvidence": [
+        {
+          "scope": "DBM-GUI metadata and explicit load only",
+          "evidence": "/tmp/forever-addon-runtime/dbm-lod-native-e4hvi488/ledger.json",
+          "fixture": "tools/forever-addon-fixtures/dbm-lod-load.lua",
+          "observed": "Metadata/LoD/dependency visible before execution; DBM_GUI absent and loaded=false; explicit load creates DBM_GUI and options frame; zero Lua errors.",
+          "limitations": "Not major encounter/timer/alert or rendered GUI proof; requires explicit out-of-date switch; other deferred modules not exercised."
+        }
+      ]
     },
     {
       "slug": "deadly-boss-mods-dbm-dungeons",
