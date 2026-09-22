@@ -20,11 +20,13 @@ Three current Forever corrections are committed but have no GREEN verification a
 
 These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
 
-## Camelot stable-slot publication follow-up
+## Camelot stable-read follow-up
 
-`9a8e2a841` adds regressions and `fffb25ae4` publishes only `Constants.PetConsts.MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3` for Forever, merging them into the existing common table. Cached `PetConstantsDocumentation.lua:46–54` gives the source relationship: two stable slots plus one learned-spell slot. Unchanged Camelot `Blizzard_StableUI.lua:75,150,249` reads these two published fields on its stable update path.
+`9a8e2a841` and `fffb25ae4` first publish only the two required Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Their frozen replay reached the next boundary: `Blizzard_StableUI.lua:219` compared `id - 2` with a nil `C_StableInfo.GetNumStableSlots()` result. Cached StableInfo documentation and the unchanged Camelot consumer identify four required reads: `GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo`.
 
-This records a missing-publication boundary, not a full pet model. Initial checks fail on frozen `3d6017fe3`; independent proof at `fffb25ae4` passes 15/15 focused tests, formatting, and default offline checking: `/tmp/forever-addon-audit/verify-stable-constants-ledger.json`. Frozen `wow-sim-fffb25ae` prints hunter count `3` on the no-addons `PLAYER_MONEY` control, then reaches `Blizzard_StableUI.lua:219`, where callable `C_StableInfo.GetNumStableSlots()` returns nil. The unchanged Aurarium plus ArcaneWizardLibrary replay fully loads both packages and reaches money `12345 → 54321`, overview open/close, and `DONE`, but exits `1` with the same StableUI error. It remains failed, not clean acceptance. No pet ownership, purchasing, additional pet constants, other-profile changes, or vendor behavior is certified; a state-backed stable-slot query is the remaining boundary.
+`e6f5e5792` adds the targeted read-state regression and `a6fbf432e` models those four calls only for Forever. Its explicit default is two owned stable slots, empty pet storage, and unavailable next purchase at cost `0`; that fully unlocked state is a simulator guess, not native evidence. Configured pet records expose documented fields as snapshot tables on public one-based slots, while the inferred pet count includes the current-pet slot. Existing `IsAtPetStable` behavior, the open stable-bonus-slot probe, and other-profile publication remain unchanged.
+
+Targeted GREEN execution, frozen provenance, no-addons `PLAYER_MONEY` replay, unchanged Aurarium replay, and independent verification are pending. This is neither native pet behavior nor runtime acceptance: purchases, swaps, favorites, food, gameplay producers, persistence, and inventory-wide compatibility remain out of scope. See [stable read state](../../specs/forever-stable-read-state.md).
 
 ## DinoUnitFrames curve producer follow-up
 

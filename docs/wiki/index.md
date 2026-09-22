@@ -1,6 +1,6 @@
-## [2026-09-22] investigation | Stage Camelot stable-slot constants
+## [2026-09-22] investigation | Model Camelot stable reads
 
-`9a8e2a841` and `fffb25ae4` add exactly two Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Independent proof passes 15/15, formatting, and default offline checking. The no-addons event now prints `3` but reaches a later StableUI nil result from callable `C_StableInfo.GetNumStableSlots`; unchanged Aurarium reaches `DONE` but fails on that same error. This is a missing-publication boundary, not a pet model or acceptance. See [[forever-addon-comparison]].
+`e6f5e5792` and `a6fbf432e` add Forever-only state-backed `C_StableInfo.GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo` for Camelot StableUI's money-event path. Default two owned empty stable slots and cost `0` are explicit simulator guesses, not native proof; the existing open probe and other profiles remain unchanged. Targeted GREEN, replay, and independent checks remain pending. See [stable read state](../specs/forever-stable-read-state.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Restore Slider value callbacks
 

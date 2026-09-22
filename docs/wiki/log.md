@@ -1,6 +1,6 @@
-## [2026-09-22] investigation | Stage Camelot stable-slot constants
+## [2026-09-22] investigation | Model Camelot stable reads
 
-Audited `9a8e2a841`, `fffb25ae4`, and `7c90232e9`. They add only Forever `Constants.PetConsts.MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`, preserving the common table. Cached `PetConstantsDocumentation.lua:46–54` defines the count as two stable slots plus one learned-spell slot; unchanged Camelot StableUI consumes both. Independent proof passes 15/15 focused tests, formatting, and default offline checking. Frozen `fffb25ae4` control prints `3` then fails at `Blizzard_StableUI.lua:219` because callable `C_StableInfo.GetNumStableSlots()` returns nil; unchanged Aurarium reaches money history, overview open/close, and `DONE` but fails on the same error. The publication is verified; runtime acceptance remains failed/open pending a state-backed stable-slot query. Updated [[forever-addon-comparison]].
+Audited `e6f5e5792` and `a6fbf432e` after the two-field PetConsts publication reached StableUI's next nil read. Forever now has only the four state-backed calls consumed by that money-event path: `GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo`. Two empty owned stable slots with next cost `0` are an explicit simulator scenario guess, not native evidence; the current-pet-inclusive count is likewise inferred. Existing open probe and other-profile behavior remain untouched. Targeted GREEN, frozen provenance, no-addons and unchanged-Aurarium replays, and independent checks are pending. Updated [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Restore Slider value callbacks
 
