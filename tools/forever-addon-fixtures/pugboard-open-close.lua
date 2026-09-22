@@ -1,0 +1,8 @@
+local loading, loaded = C_AddOns.IsAddOnLoaded("PugBoard")
+assert(loading and loaded, "PugBoard is not fully loaded")
+assert(type(SlashCmdList.PUGBOARD) == "function", "PugBoard slash command missing")
+SlashCmdList.PUGBOARD("")
+assert(PugBoardFrame and PugBoardFrame:IsShown(), "PugBoard window did not open")
+SlashCmdList.PUGBOARD("")
+assert(not PugBoardFrame:IsShown(), "PugBoard window did not close")
+print("AUDIT_INTERACTION_GREEN", "pugboard-open-close")
