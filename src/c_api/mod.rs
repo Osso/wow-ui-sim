@@ -120,7 +120,7 @@ mod c_gamepad_ui;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_edit_mode_enums;
 #[cfg(feature = "client-wowforever")]
-mod forever_finite_constants;
+pub(crate) mod forever_finite_constants;
 #[cfg(feature = "client-wowforever")]
 mod gamepad_action_bar_constants;
 
