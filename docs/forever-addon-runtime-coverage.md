@@ -16,9 +16,23 @@ The polluted baseline remains historical evidence only. The corrected harness us
 
 ## Isolated startup checkpoint
 
-At binary build `c1e830ffa`, all 268 available project entries have dispositions: 158 clean startups, 32 runtime failures, 72 unloaded/partial loads, and six unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
+At binary build `c1e830ffa`, all 268 available project entries have dispositions: 161 clean startups, 32 runtime failures, 72 unloaded/partial loads, and three unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
 
 `GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. ActionBarAuras advances to a separate SecondsFormatter/NumericFormatter object boundary; formatted-output behavior remains open. Full per-addon major workflows remain mostly untested.
+
+## Cached LibStub composition and bounded library interactions
+
+C_Everywhere `8912546`, CustomSearch `8912549`, and CustomTutorials `8912550` start with the unchanged, TOC-bearing LibStub subtree from cached DBM `8925922`. The explicit `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` switch is required by these observations; it does not waive other loader restrictions. Original dependency-only attempts remain in the matrix. Provider provenance: `/tmp/forever-addon-audit/cached-libstub-subtree-provenance.json`.
+
+At the frozen `c1e830ffa` binary, isolated interaction probes observed:
+
+| Package | Covered behavior | Still untested |
+| --- | --- | --- |
+| CustomSearch | 16 positive/negative accent, AND/OR/NOT, tag and numeric query checks | Consumer integration; native-client comparison |
+| CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
+| C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
+
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records five bounded interaction passes, one initialization-only result, and 263 not-run entries; historical evidence remains separate.
 
 ## Acceptance discipline
 

@@ -8,16 +8,16 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 158,
+      "clean-startup": 161,
       "unloaded": 72,
-      "blocked-dependency": 6,
+      "blocked-dependency": 3,
       "failed": 32,
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 2,
+      "bounded-pass": 5,
       "initialization-only": 1,
-      "not-run": 266
+      "not-run": 263
     }
   },
   "projects": [
@@ -6079,6 +6079,59 @@
       "fileId": 8912546,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/cached-libstub-startup-probes.json",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "packageFileIds": [
+          8912546,
+          8925922
+        ],
+        "providerProvenance": "/tmp/forever-addon-audit/cached-libstub-subtree-provenance.json",
+        "configuration": {
+          "loadOutOfDateAddons": true,
+          "isolatedDataHome": true
+        },
+        "observations": [
+          {
+            "name": "C_Everywhere",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "LibStub",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "limitations": "Requires exact unchanged LibStub subtree from cached DBM8925922 and explicit out-of-date interface switch."
+      },
+      "interactions": {
+        "status": "bounded-pass",
+        "covered": [
+          "Lazy CVar namespace callable parity; populated item6948 stack3, five empty slots, removal"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/c-everywhere-interaction-q9qrk5q1/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/c-everywhere-interaction.lua",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "limitations": "Native table-return container path only; legacy scalar packing and remaining namespaces untested."
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-c-everywhere-8912546-ar5gvg0u/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorDependencyAttempt": {
         "status": "blocked-dependency",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-128-160.json",
@@ -6098,17 +6151,6 @@
             "reason": "no cached provider"
           }
         ]
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-c-everywhere-8912546-ar5gvg0u/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8630,6 +8672,59 @@
       "fileId": 8912549,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/cached-libstub-startup-probes.json",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "packageFileIds": [
+          8912549,
+          8925922
+        ],
+        "providerProvenance": "/tmp/forever-addon-audit/cached-libstub-subtree-provenance.json",
+        "configuration": {
+          "loadOutOfDateAddons": true,
+          "isolatedDataHome": true
+        },
+        "observations": [
+          {
+            "name": "CustomSearch-1.0",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "LibStub",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "limitations": "Requires exact unchanged LibStub subtree from cached DBM8925922 and explicit out-of-date interface switch."
+      },
+      "interactions": {
+        "status": "bounded-pass",
+        "covered": [
+          "16 positive/negative checks: accent search, AND/OR/NOT, tags, numeric filters"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/customsearch-interaction-xftykvdn/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/customsearch-interaction.lua",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "limitations": "Bounded library query semantics only; no consumer addon integration or native-client comparison."
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-customsearch-8912549-700o5uf1/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorDependencyAttempt": {
         "status": "blocked-dependency",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
@@ -8649,17 +8744,6 @@
             "reason": "no cached provider"
           }
         ]
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-customsearch-8912549-700o5uf1/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8667,6 +8751,59 @@
       "fileId": 8912550,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/cached-libstub-startup-probes.json",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "packageFileIds": [
+          8912550,
+          8925922
+        ],
+        "providerProvenance": "/tmp/forever-addon-audit/cached-libstub-subtree-provenance.json",
+        "configuration": {
+          "loadOutOfDateAddons": true,
+          "isolatedDataHome": true
+        },
+        "observations": [
+          {
+            "name": "CustomTutorials-2.1",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "LibStub",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "limitations": "Requires exact unchanged LibStub subtree from cached DBM8925922 and explicit out-of-date interface switch."
+      },
+      "interactions": {
+        "status": "bounded-pass",
+        "covered": [
+          "Register/get data; trigger progress 1,2,3; already-seen no-op; reset/hide and retrigger1; onShow callbacks"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/customtutorials-interaction-edekhstd/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/customtutorials-interaction.lua",
+        "binaryBuildRevision": "c1e830ffa",
+        "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
+        "limitations": "Programmatic progress and frame visibility only; no rendered appearance, button clicks, shine/image behavior, or persisted restart proof."
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-customtutorials-8912550-tj18846x/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorDependencyAttempt": {
         "status": "blocked-dependency",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-192-224.json",
@@ -8686,17 +8823,6 @@
             "reason": "no cached provider"
           }
         ]
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-192-224.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-customtutorials-8912550-tj18846x/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
