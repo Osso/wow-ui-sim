@@ -1,6 +1,6 @@
-## [2026-09-22] investigation | Bound merchant repair capability
+## [2026-09-22] investigation | Bound merchant buyback reads
 
-`CanMerchantRepair` now queries open merchant state and an explicitly configured repair capability; default `false` is a simulator policy, not native evidence. Three focused predicate/state checks pass, but the cached Blizzard BAG_UPDATE regression advances to a separate missing `GetNumBuybackItems` failure at `MerchantFrame.lua:416`. No independent verification or BagMeter acceptance is credited. See [merchant repair capability](../specs/merchant-repair-capability.md) and [[forever-addon-comparison]].
+`cc6567131` and `88d84bc0` add three Forever legacy buyback reads backed by a distinct empty-by-default collection; item metadata reuses existing sources while transaction fields are configured scenario data. Four focused tests pass. The cached BAG_UPDATE regression advances beyond buyback count/info to `MerchantFrame.lua:210`, where `C_MerchantFrame.GetNumJunkItems()` returns nil. No independent proof or BagMeter acceptance is credited. See [merchant buyback reads](../specs/merchant-buyback-reads.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
 
