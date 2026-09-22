@@ -17,7 +17,8 @@
     "interactionStatuses": {
       "bounded-pass": 5,
       "initialization-only": 1,
-      "not-run": 263
+      "not-run": 262,
+      "failed": 1
     }
   },
   "projects": [
@@ -1685,8 +1686,16 @@
         "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [
+          "Manager opens; real Add button normalizes and persists alias; command expansion reaches simulated chat; Remove clears saved entry"
+        ],
+        "failure": "After Remove, rawget(SlashCmdList,key) is nil but normal indexing still returns prior function. Cause unproven.",
+        "evidence": "/tmp/forever-addon-runtime/alias-ui-interaction-5ho_1_z5/ledger.json",
+        "diagnostic": "/tmp/forever-addon-runtime/alias-remove-diagnostic-vxrqrzvx/stdout",
+        "fixture": "tools/forever-addon-fixtures/alias-interaction.lua",
+        "binaryBuildRevision": "55ee20d7",
+        "limitations": "Initial failed proposal called local RegisterAlias as global; excluded from behavioral failure evidence. No native chat delivery or restart persistence proof."
       },
       "packageOnlyBaseline": {
         "status": "unloaded",
