@@ -77,10 +77,10 @@ This models registration and injected payload delivery only—not range detectio
 
 Forever publishes `Constants.PetConsts.MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`, merging into the existing common table. Cached `Blizzard_APIDocumentationGenerated/PetConstantsDocumentation.lua:46–54` specifies two stable slots plus one learned-spell slot; unchanged Camelot `Blizzard_StableUI.lua:75,150,249` consumes these two fields. The dependency value is source evidence for the sum, not an additional published field in this slice.
 
-- [ ] Publish both documented values without replacing common pet sentinels or `MAX_SUMMONABLE_PETS`.
-- [ ] Preserve table identity, addon fields and slot values through normal bootstrap restoration.
+- [x] Publish both documented values without replacing common pet sentinels or `MAX_SUMMONABLE_PETS`.
+- [x] Preserve table identity, addon fields and slot values through normal bootstrap restoration.
 
-Implementation: `src/c_api/forever_finite_constants.rs`, behind its existing Forever-only registration. Tests: `forever_stable_slot_constants_preserve_common_pet_values` and `forever_stable_slot_constants_survive_bootstrap_restore` in the existing grouped integration module. Frozen `3d6017fe3` fails both initial Lua checks; GREEN and parent full native money-event/addon replay remain pending. Development ledger: `/tmp/forever-addon-audit/stable-slot-constants-development-ledger.json`.
+Implementation: `src/c_api/forever_finite_constants.rs`, behind its existing Forever-only registration. Tests: `forever_stable_slot_constants_preserve_common_pet_values` and `forever_stable_slot_constants_survive_bootstrap_restore` in the existing grouped integration module. Frozen `3d6017fe3` fails both initial Lua checks. At `fffb25ae4`, the grouped finite-constants target passes 15/15, including both new regressions and repeated normal bootstrap restoration; build source hashes remain unchanged. Parent full native money-event/addon replay and independent verification remain pending. Development ledger: `/tmp/forever-addon-audit/stable-slot-constants-development-ledger.json`.
 
 No pet ownership, stable purchasing, extra Camelot constants, other-profile publication or vendor behavior changes. Bootstrap already retains this table; no duplicate restoration producer is introduced.
 
