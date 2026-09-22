@@ -16,9 +16,9 @@ The polluted baseline remains historical evidence only. The corrected harness us
 
 ## Isolated startup checkpoint
 
-At binary build `c1e830ffa`, all 268 available project entries have dispositions: 161 clean startups, 32 runtime failures, 72 unloaded/partial loads, and three unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
+The initial isolated checkpoint at binary build `c1e830ffa` recorded 161 clean startups, 32 runtime failures, 72 unloaded/partial loads, and three unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
 
-`GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. Later focused proof at revision `9e20a29d` passes native formatter 7/7, configuration 7/7, binding 11/11, numeric 8/8, public base-spell 3/3, documented finite events 9/9, and expansion identity 2/2. ActionBarAuras now clean-starts under `b8f0982be`; its real duration-text workflow remains unproven. Full per-addon major workflows remain mostly untested.
+`GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. Focused proof through `ebff90517` passes native formatter 7/7, configuration 7/7, binding 11/11, numeric 8/8, public base-spell 3/3, finite constants/events 10/10, input style 4/4, named duplicates 5/5, legacy identity 1/1, macro verbs 14/14, and placeholder migration 21/21. `cargo fmt --check` and default `cargo check --offline` pass. ActionBarAuras clean-starts under `ebff90517`, but its real duration-text workflow fails after modeled buff insertion; it is not accepted. Full per-addon major workflows remain mostly untested.
 
 A separate DBM-GUI replay at `55ee20d7` observes metadata, dependency and LoD status before execution, then explicitly loads the module and observes its table/options frame with zero Lua errors. This is loader evidence only—not DBM encounter, timer, alert or rendered-GUI acceptance. The replay requires the explicit out-of-date interface switch; its ledger is `/tmp/forever-addon-runtime/dbm-lod-native-e4hvi488/ledger.json`.
 
@@ -26,11 +26,11 @@ A separate DBM-GUI replay at `55ee20d7` observes metadata, dependency and LoD st
 
 Replayed exactly the 72 previously unloaded/partial projects with `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` and the `55ee20d7` binary, which includes deferred-addon metadata registration. Result: 48 clean startups, 12 runtime failures, 12 still unloaded. Per-run data/WTF isolation preserved the shared host CVar hash. Default-interface attempts remain in each project's `priorDefaultInterfaceAttempt`.
 
-The historical explicit-interface checkpoint totals **209 clean startups, 44 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. A later seven-package producer replay at `b8f0982be` changes the current matrix to **211 clean startups, 42 failed, 12 unloaded, three dependency-blocked, one unavailable archive**: ActionBarAuras and dgks now start cleanly. These mixed-revision/configuration observations are not a single current-build certification. Historical batches: `/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json` and `batch1.json`; current producer ledger: `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
+The historical explicit-interface checkpoint totals **209 clean startups, 44 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. Later producer replays at `b8f0982be` and exact-binary `ebff90517` change the current matrix to **216 clean startups, 37 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. ActionBarAuras, dgks, Angleur, Angleur NicheOptions, Chattynator, DrinkBot, and EnhanceQoL now clean-start in their recorded compositions. These mixed-revision/configuration observations are not a single current-build certification. Historical batches: `/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json` and `batch1.json`; current producer ledger: `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 
 Ellesmere's expanded startup replay exposes a taint error in `AuraKit.RunJob`; an identical isolated replay with frozen `c1e830ffa` reproduces the same 56 occurrences. Thus the error is not introduced by the formatter/LoD commits. Prior six-workflow evidence remains scoped historical proof, not acceptance of this expanded configuration.
 
-The current producer replay leaves Angleur and Angleur NicheOptions blocked at an unmodeled gamepad call, Buffalo at configuration/class data initialization, Chattynator at documented-but-unregistered `CHAT_MSG_GUILD_DISCORD` plus a later chat-frame state gap, and EnhanceQoL at a missing `UnitAuraSoundTrigger` enum value. These are observed simulator gaps, not addon patches or exclusions.
+Current residuals include Buffalo's unavailable local spell record 9910 and unresolved downstream configuration data. The successful producer replays do not establish their major workflows. These are observed simulator gaps, not addon patches or exclusions.
 
 ## Cached LibStub composition and bounded library interactions
 
@@ -44,13 +44,17 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records six bounded interaction passes, one initialization-only result, and 262 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records six bounded interaction passes, one failed interaction, one initialization-only result, and 261 not-run entries; historical evidence remains separate.
 
 ## Alias bounded interaction
 
 Alias `8260596` opens its manager, creates an alias through its real Add button, expands a slash invocation into simulated chat output, removes its saved entry and dispatch registration through the Remove button, then closes its manager. Eight assertions pass with zero Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/alias-ui-contract-j1qikr18/ledger.json`.
 
 An earlier probe incorrectly required normal `SlashCmdList` lookup to return nil after removal. Unchanged Blizzard `ChatFrameSetup.lua` and `ChatFrameUtil.lua:ImportListToHash` deliberately retain handlers in the table's `__index` cache. That assertion was invalid, not a simulator defect; the corrected probe checks removed command spelling/raw registration/dispatch hash. Native chat delivery and restart persistence remain untested.
+
+## ActionBarAuras interaction failure
+
+The named-container lifecycle fix retains separate player and target AuraContainers. In a GUI-style replay, the enabled player slot accepts the modeled aura candidate but remains unassigned and has no duration text after a timed `A_Admin.AddBuff`. This is a real addon interaction failure, not formatter acceptance. Evidence: `/tmp/forever-addon-runtime/aba-duration-gui-opjr2iye/ledger.json`.
 
 ## Acceptance discipline
 

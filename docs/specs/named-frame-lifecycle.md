@@ -30,8 +30,8 @@ Named frame creation in `src/lua_api/globals/create_frame/helpers_shared.rs` dis
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted compilation/GREEN and independent verification pending Cargo authorization. Existing frozen-binary RED at `/tmp/forever-addon-runtime/duplicate-explicit-frames-e8uv6mc6/stdout` proves the first explicit frame is detached/hidden and its child migrated.
-- [ ] Replay actual ActionBarAuras duration display after confirming both native containers survive; startup-only success is insufficient.
+- [x] Targeted proof passes named duplicates 5/5, legacy identity 1/1, and placeholder migration 21/21 at exact producer revision `ebff90517`; `cargo fmt --check` and default `cargo check --offline` pass. The frozen-binary RED remains at `/tmp/forever-addon-runtime/duplicate-explicit-frames-e8uv6mc6/stdout`.
+- [ ] Exact `ebff90517` replay confirms both ActionBarAuras containers survive, but its player slot remains unassigned after a modeled timed aura. Duration-display acceptance remains open.
 
 ## Out of scope
 
