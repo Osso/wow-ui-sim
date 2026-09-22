@@ -640,14 +640,14 @@
       "interactions": {
         "status": "failed",
         "covered": [
-          "Separate addon player/target containers survive; modeled8second playerbuff added"
+          "Separate addon player/target containers survive; modeled8second playerbuff naturally assigned to shown addon aura button"
         ],
-        "failure": "Actual enabled player container does not show its aura slot or duration text after0.4seconds. Root cause remains unproven.",
+        "failure": "Assigned aura button is shown with spell19750, but duration text remains nil: enabled DurationTextBinding has no automatic scheduler in simulator.",
         "evidence": "/tmp/forever-addon-runtime/aba-duration-gui-opjr2iye/ledger.json",
-        "diagnostic": "/tmp/forever-addon-runtime/aba-visible-buttons-ogjbg3uy/stdout",
+        "diagnostic": "/tmp/forever-addon-runtime/aba-button-gui-c7tsjook/stdout",
         "fixture": "tools/forever-addon-fixtures/actionbarauras-duration.lua",
         "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
-        "limitations": "Duration progression/removal assertions not reached; no nativeconformance or visual rendering claim."
+        "limitations": "Duration progression/removal assertions not reached; earlier immediate headless slot observation occurred before scheduled native dirty processing. No native-conformance or visual-rendering claim."
       },
       "packageOnlyBaseline": {
         "status": "failed",
