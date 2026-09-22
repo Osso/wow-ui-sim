@@ -1,6 +1,6 @@
-## [2026-09-22] investigation | Stage DinoUnitFrames normalized curve evaluation
+## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 
-DinoUnitFrames `8936218` exposed a Forever profile gate: `UnitPowerPercent(..., curve)` returned a number rather than the typed color result documented by the cached API. `17abf7071` adds focused regressions and `d23cfe65c` evaluates supplied health/power curves with normalized `current / max` input on Forever. Normalization is inferred from the unchanged addon's `id / 5` thresholds and cached `CurveConstants`, not native proof. Omitted/nil calls remain numeric `0..100`; Retail's existing curve-input policy and other profiles remain unchanged. Independent verification, unchanged-addon replay, workflow evidence, and inventory acceptance remain pending. See [[forever-addon-comparison]].
+DinoUnitFrames `8936218` exposed a Forever profile gate: `UnitPowerPercent(..., curve)` returned a number rather than the typed color result documented by the cached API. `17abf7071` and `d23cfe65c` now have independent 8/8 focused proof plus fmt/default checking. Frozen `d23cfe65` clean-starts unchanged DinoUnitFrames and its injected modeled-power GUI workflow verifies alpha transitions `0 → 2 → 5 → 1 → 0`, `DONE`, no Lua errors, and unchanged host CVars. Normalized input is inferred from unchanged `id / 5` thresholds and cached `CurveConstants`, not native proof. No-curve calls remain `0..100`; Retail and other profiles retain prior policy. No native gameplay, secret, pixel, or inventory-wide claim. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Register bounded Forever swing events
 

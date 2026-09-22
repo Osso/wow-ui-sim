@@ -26,7 +26,9 @@ The unchanged cached DinoUnitFrames `8936218` startup failed in `modules/basecom
 
 `17abf7071` adds focused Forever regressions; `d23cfe65c` evaluates supplied health and power curves on Forever. Curve input is normalized `current / max` only for Forever. This is an explicit inference, grounded in DinoUnitFrames’ unchanged `id / 5` color-curve thresholds and cached Blizzard `CurveConstants.ScaleTo100` mapping `[0, 1]` to `[0, 100]`, not a native-runtime proof. Omitted/nil curves still return the existing `0..100` numeric percentage, Retail retains its existing `0..100` curve-input policy, and other profiles are unchanged.
 
-Development tests establish the bounded simulator behavior only. Independent verification, an unchanged DinoUnitFrames startup replay, a curve-driven addon workflow, native scale/security semantics, and whole-inventory compatibility remain pending.
+Independent verification at `d23cfe65c` reuses the fresh grouped 8/8 target (six Forever curve cases plus two numeric regressions), and passes formatting plus default offline checking. Frozen `wow-sim-d23cfe65` (SHA-256 `f7319afdfc06df39f9224d09e0e72111295202653ae9ae2e3726f75a5fca6b8c`) clean-starts unchanged archive `8936218` in isolated data; its optional options package remains unloaded on demand. A no-addons control returns `[]`. The unchanged addon's GUI workflow drives modeled combo power `0 → 2 → 5 → 1 → 0`, observing the corresponding segment alpha transitions and `DONE` before timeout 124 with no Lua errors and unchanged host CVars.
+
+This is injected modeled-power/event evidence, not native gameplay production, secret semantics, rendered-pixel proof, native scale/security semantics, or whole-inventory compatibility.
 
 ## Automatic duration-binding follow-up
 
