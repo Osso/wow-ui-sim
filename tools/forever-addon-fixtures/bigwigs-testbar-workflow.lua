@@ -11,6 +11,8 @@ for _, name in ipairs({'BigWigs_Core', 'BigWigs_Plugins', 'BigWigs_Options'}) do
     assert(loaded, name .. ' did not load')
 end
 mark('options-open', true)
+local expectedLabel = BigWigsAPI:GetLocale('BigWigs: Common').count:format(
+    BigWigsAPI:GetLocale('BigWigs').test, 1)
 
 local function each_frame(visit)
     local frame = EnumerateFrames()
@@ -107,13 +109,14 @@ local function observe()
     elseif phase == 'bar' then
         bar = each_frame(function(frame)
             return is_running_bar(frame) and not previousBars[frame]
+                and frame:GetLabel() == expectedLabel
         end)
         if bar then
             local duration = bar.exp - bar.start
-            assert(duration >= 11 and duration <= 30, 'test bar duration outside 11..30 seconds')
+            assert(duration >= 11 - 0.001 and duration <= 30 + 0.001,
+                'test bar duration outside 11..30 seconds')
             assert(bar:IsShown(), 'test bar did not show')
-            assert(type(bar.candyBarLabel.text) == 'string' and bar.candyBarLabel.text ~= '',
-                'test bar label missing')
+            assert(bar.candyBarLabel:GetText() == expectedLabel, 'test bar label mismatch')
             initialRemaining = bar.remaining
             initialValue = bar.candyBarBar:GetValue()
             assert(type(initialRemaining) == 'number' and initialRemaining > 0,
