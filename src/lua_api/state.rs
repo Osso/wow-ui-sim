@@ -45,6 +45,8 @@ macro_rules! build_empty_sim_state {
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
+            #[cfg(feature = "client-wowforever")]
+            auras_secret_in_context: false,
             quest_blobs: $collections.quest_blobs,
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,

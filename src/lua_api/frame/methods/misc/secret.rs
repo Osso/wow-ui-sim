@@ -1,7 +1,7 @@
 //! Secret, protected, and anchoring restriction methods.
 //!
-//! Explicit masks track declarations; they do not implement per-aspect secret
-//! return tagging or context-dependent enforcement.
+//! Explicit masks track declarations. Forever's context-access query uses the
+//! ObjectSecurity mask for its return, but does not enforce other methods.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -13,6 +13,8 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 const OBJECT_SECRET_ASPECT: u32 = 1;
+#[cfg(feature = "client-wowforever")]
+const DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET: u32 = 1;
 
 pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     #[cfg(feature = "forbidden-aspects")]
@@ -29,6 +31,13 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
         is_preventing_secret_values,
     )?;
     table_set_rust_fn_static(state, mt, "IsProtected", is_protected)?;
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(
+        state,
+        mt,
+        "CanBeAccessedInContext",
+        can_be_accessed_in_context,
+    )?;
     table_set_rust_fn_static(
         state,
         mt,
@@ -129,6 +138,34 @@ pub fn set_prevent_secret_values(state: &mut LuaState) -> LuaResult<u32> {
         frame.prevent_secret_values = prevent;
     }
     Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let secure = rilua::api::state_is_secure(state);
+    let (accessible, secret) = {
+        let sim = borrow_state(state)?;
+        let frame = sim
+            .widgets
+            .get(id)
+            .ok_or_else(|| rilua::runtime_error("invalid frame"))?;
+        let denied = !secure
+            && (frame.forbidden
+                || (frame.access_restrictions & DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET != 0
+                    && sim.auras_secret_in_context));
+        (
+            !denied,
+            frame_secret_aspects(&sim.widgets, id) & OBJECT_SECRET_ASPECT != 0,
+        )
+    };
+    let result = if secret {
+        rilua::table_security::wrap_host_secret_bool(state, accessible)
+    } else {
+        Val::Bool(accessible)
+    };
+    state.push(result);
+    Ok(1)
 }
 
 fn frame_secret_aspects(widgets: &crate::widget::WidgetRegistry, id: u64) -> u32 {

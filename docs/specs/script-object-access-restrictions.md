@@ -30,7 +30,7 @@ Retail-family 12.1+ and Forever script objects store conditional access-restrict
 ## Known gaps (current cycle)
 
 - [ ] Shared-capability tests await parent compilation/GREEN. Existing Forever GUI RED: `/tmp/ellesmere-forever/secure-chain-gui.stderr`, native `Blizzard_AuraContainerUtil.lua:421` reports missing `AddAccessRestrictions` after login. No new enforcement or mask semantics are introduced.
-- Aura-secrecy activation and conditional API-access enforcement are not implemented by this mask/query slice. Existing taint and forbidden-state checks are unchanged. No claim of complete security enforcement is made.
+- The separate [Forever context-access query](script-object-context-access.md) uses an explicit per-environment aura-secret scenario to evaluate this mask on that query only. It does not derive live aura secrecy or enforce restrictions on other frame methods. No claim of complete security enforcement is made.
 
 ## Out of scope
 
