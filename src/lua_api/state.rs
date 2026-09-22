@@ -276,6 +276,8 @@ macro_rules! build_empty_sim_state {
             guild_registrar_open: false,
             pet_stables_open: false,
             #[cfg(feature = "client-wowforever")]
+            allow_recent_allies_see_location: true,
+            #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
             loot_slots: Vec::new(),

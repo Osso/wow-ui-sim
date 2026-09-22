@@ -33,6 +33,8 @@ pub mod player_facing;
 pub mod player_identity;
 pub mod player_probes;
 pub mod preferred_interact;
+#[cfg(feature = "client-wowforever")]
+pub mod recent_allies_location;
 pub mod shapeshift;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
