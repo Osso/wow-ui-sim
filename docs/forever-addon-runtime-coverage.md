@@ -12,7 +12,13 @@ The matrix separates current startup and interaction results from `priorEvidence
 
 All 268 available packages were attempted in package-only batches. Those runs omitted `XDG_DATA_HOME`: `--no-saved-vars` and isolated WTF paths do not isolate simulator CVar overrides. Addons wrote to shared `/home/osso/.local/share/wow-sim/cvars.json`; enabling combo-point UI exposed missing `GetComboPoints`, after which unrelated packages repeated the native error. A no-addons shared-data control fails; the same control with fresh `XDG_DATA_HOME` returns `[]`.
 
-The matrix retains every raw baseline outcome but marks startup acceptance `needs-isolated-rerun`. Existing bounded interaction observations retain their original environment limits; they do not establish clean-room startup. The harness must isolate per-run data storage and explicitly compose cached dependencies before final acceptance. The post-batch shared CVar file is snapshotted, not reset: no pre-batch snapshot exists, so original values cannot be claimed restored.
+The polluted baseline remains historical evidence only. The corrected harness uses per-run data storage and explicit cached-provider composition. Cross-process tests prove writer persistence, independent reader defaults, and an unchanged shared host CVar hash. The post-batch shared CVar file is snapshotted, not reset: no exact pre-batch snapshot exists, so original values cannot be claimed restored.
+
+## Isolated startup checkpoint
+
+At binary build `c1e830ffa`, all 268 available project entries have dispositions: 158 clean startups, 32 runtime failures, 72 unloaded/partial loads, and six unresolved dependency cases. The unavailable archive is the 269th entry. Every isolated batch preserved the shared host CVar hash. These are startup observations, not full compatibility acceptance; 14 of the 72 unloaded cases contain some successfully loaded roots, and intentionally excluded or deferred modules must not be mistaken for failures.
+
+`GetComboPoints` and whitespace enum/configuration regressions pass 6/6 and 1/1 respectively; format/default compile checks pass. Classic UI Forever now starts without its prior combo-point failure. ActionBarAuras advances to a separate SecondsFormatter/NumericFormatter object boundary; formatted-output behavior remains open. Full per-addon major workflows remain mostly untested.
 
 ## Acceptance discipline
 
