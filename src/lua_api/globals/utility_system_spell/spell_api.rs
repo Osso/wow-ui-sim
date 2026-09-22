@@ -121,19 +121,13 @@ fn unit_health_missing(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_health_percent(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
-    let percent = if vitals.health_max > 0 {
-        (vitals.health as f64 / vitals.health_max as f64) * 100.0
+    let ratio = if vitals.health_max > 0 {
+        vitals.health as f64 / vitals.health_max as f64
     } else {
         0.0
     };
-    // Prediction is unmodeled. The existing 0..100 scale, including curve input,
-    // is simulator policy; native input units remain unverified.
-    let result = Val::Num(percent);
-    #[cfg(feature = "retail-12-0-0")]
-    let result = match stack_val(state, 3) {
-        Val::Nil => result,
-        curve => crate::c_api::c_curve_util::evaluate_curve_value(state, curve, percent)?,
-    };
+    // Prediction remains unmodeled; use current health.
+    let result = evaluate_unit_percent(state, ratio, 3)?;
     state.push(result);
     Ok(1)
 }
@@ -168,21 +162,38 @@ fn unit_power_percent(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
     let power = requested_power_values(state, &unit, &vitals);
-    let percent = if power.max > 0 {
-        (power.current as f64 / power.max as f64) * 100.0
+    let ratio = if power.max > 0 {
+        power.current as f64 / power.max as f64
     } else {
         0.0
     };
-    // Unmodified scaling is unmodeled. The existing 0..100 curve input is
-    // simulator policy; native input units remain unverified.
-    let result = Val::Num(percent);
-    #[cfg(feature = "retail-12-0-0")]
-    let result = match stack_val(state, 4) {
-        Val::Nil => result,
-        curve => crate::c_api::c_curve_util::evaluate_curve_value(state, curve, percent)?,
-    };
+    // Unmodified resource scaling remains unmodeled.
+    let result = evaluate_unit_percent(state, ratio, 4)?;
     state.push(result);
     Ok(1)
+}
+
+fn evaluate_unit_percent(state: &mut LuaState, ratio: f64, curve_index: i32) -> LuaResult<Val> {
+    let percent = ratio * 100.0;
+    if !cfg!(any(
+        feature = "retail-12-0-0",
+        feature = "client-wowforever"
+    )) {
+        return Ok(Val::Num(percent));
+    }
+    let curve = stack_val(state, curve_index);
+    if matches!(curve, Val::Nil) {
+        return Ok(Val::Num(percent));
+    }
+    // Forever's normalized input is inferred from Dino's id/5 thresholds and
+    // Blizzard CurveConstants.ScaleTo100, not native-verified. Retail retains
+    // its existing 0..100 input policy; uncurved results stay 0..100 everywhere.
+    let input = if cfg!(feature = "client-wowforever") {
+        ratio
+    } else {
+        percent
+    };
+    crate::c_api::c_curve_util::evaluate_curve_value(state, curve, input)
 }
 
 fn requested_power_values(

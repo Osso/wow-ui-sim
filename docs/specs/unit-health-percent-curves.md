@@ -1,6 +1,6 @@
 # UnitHealthPercent curves
 
-`UnitHealthPercent` evaluates supplied scalar and color curves from retail 12.0.0. Source: `src/lua_api/globals/utility_system_spell/spell_api.rs`. See [curve objects](curve-objects.md) and [Lua API architecture](../lua-api.md).
+`UnitHealthPercent` evaluates supplied scalar and color curves from retail 12.0.0 and on Forever. Source: `src/lua_api/globals/utility_system_spell/spell_api.rs`. See [curve objects](curve-objects.md) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -9,9 +9,10 @@
 - [x] Reflect explicit player and target health updates on subsequent queries.
 - [x] Preserve omitted/nil-curve numeric results and one-result arity.
 - [x] Reject non-nil values that are not supported curve objects with the existing evaluator error.
-- [x] Verify retail 12.0.0/12.0.5/12.0.7 behavior; curve evaluation starts at `retail-12-0-0`.
+- [x] Verify retail 12.0.0/12.0.5/12.0.7 behavior.
+- [x] Enable Forever argument-3 evaluation with normalized `health / healthMax` curve input while preserving ordinary 0–100 results.
 
-The existing `health / healthMax * 100` scale is simulator policy for both ordinary results and curve input, not native-scale evidence. A zero maximum retains the existing zero result/input policy. `usePredicted` remains unmodeled and uses current health.
+Retail retains its existing `health / healthMax * 100` curve-input policy. Forever uses normalized `health / healthMax` input, inferred from unchanged DinoUnitFrames `8936218` power-curve thresholds `id / 5` and cached Blizzard `CurveConstants.ScaleTo100` points `(0, 0)` and `(1, 100)`, applied to the analogous documented health contract. This is not native-verified scale evidence. Omitted/nil curves still return `health / healthMax * 100` on every profile. A zero maximum retains zero ratio/input (a supplied curve may map zero to a nonzero result). `usePredicted` remains unmodeled and uses current health; other profiles retain their prior behavior.
 
 ## How it works
 
@@ -36,6 +37,8 @@ The existing `health / healthMax * 100` scale is simulator policy for both ordin
 
 Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-preservation pass. Invalid-curve test `b31004297` reached RED because invalid values were accepted. Runtime `92b4f8c4f` passes all five `unit_health_percent_` tests on retail 12.0.0/12.0.5/12.0.7; 12.0.0 exact-byte proof was reused and later profiles were fresh. Independent fmt/check/build/startup proof passed; startup returned `[]`. Full proof: `/tmp/verify-unit-health-percent-curves-ledger.json`. Metadata proof `68ad13265`: 15,063 fresh hashes, zero stale, 59 renewals, seven additions, one credit, validator exit 0 and all 3,410 rows matching. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**.
 
+Forever regressions in the same grouped integration target (`admin_health_power_api::forever_percent`) cover live scalar health, target color `GetRGBA`, one-result arity, omitted/nil numeric queries, zero maximum, and unsupported curves. Development evidence is recorded separately in `/tmp/forever-addon-audit/forever-percent-development-ledger.json`; independent verification and unchanged-addon replay belong to the parent integration slice.
+
 ## Known gaps (current cycle)
 
 - [ ] Earlier-profile curve behavior remains unverified.
@@ -45,4 +48,4 @@ Committed curve tests `13bf5219f` reached RED: two curve failures, one nil-prese
 
 - Predicted-health modeling, supported/unknown-unit semantics and native validation fidelity: no new backing behavior in this slice.
 - Secrets/security and full-LoD availability: deferred audit obligations, not established by ordinary curve tests.
-- Changes to `UnitPowerPercent`, interpolation algorithms or vendor code: unrelated to this integration.
+- Interpolation algorithms, extrapolation, security and vendor code are unchanged. The shared Forever power integration is specified in [UnitPowerPercent curves](unit-power-percent-curves.md).
