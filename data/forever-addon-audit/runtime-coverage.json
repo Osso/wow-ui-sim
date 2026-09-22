@@ -8,10 +8,10 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 216,
+      "clean-startup": 217,
       "blocked-dependency": 3,
       "unloaded": 12,
-      "failed": 37,
+      "failed": 36,
       "blocked-package": 1
     },
     "interactionStatuses": {
@@ -13464,6 +13464,38 @@
       "fileId": 8922652,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/draidframes-template-gqfplb1k/ledger.json",
+        "binaryBuildRevision": "2c5bf78c7",
+        "binarySha256": "7d0ff153e1bf2149f670e09ba1eea253460bf58b6bb9d2f754c64f857f8ccfbf",
+        "packageFileIds": [
+          8922652
+        ],
+        "observations": [
+          {
+            "name": "DRaidFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-draidframes-8922652-_rqhef0y/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorTemplatePredicateAttempt": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
@@ -13483,17 +13515,6 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-draidframes-8922652-_rqhef0y/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
