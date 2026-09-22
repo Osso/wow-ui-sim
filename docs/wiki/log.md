@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
+
+Cached Buffalo/dgks failures trace to rilua rejecting unknown short-string escapes that the local Lua 5.1-derived Elune lexer accepts. User authorized publication: `15b52249` is published on `Osso/rilua` branch `fix-lua51-unknown-escapes`, and wow-ui-sim `b8f0982be` pins it. Development proof is 52 lexer tests plus one compile/execute regression; independent verification and addon replay remain pending. Added [[lua51-unknown-escapes]].
+
 ## [2026-09-22] investigation | Stage bounded Forever event, base-spell, and expansion producers
 
 Audited `232bc7e72`, `f1c0a19a8`, and `374c2c6c7`. The event list gains only generated-documentation `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED`; it remains finite, and native production/payload semantics are unproven. `C_Spell.GetBaseSpell` uses explicit per-specialization relationships with no seeded live data, no alias reversal, and secret rejection despite the documented tainted-input allowance. Forever current expansion becomes an inferred Classic `0` policy for Angleur's authored Camelot predicate; native numeric identity remains unknown. Targeted compilation, tests, and unchanged addon replays are pending. Updated [[event-system]], [[lua-api]], [[client-profiles]], and [[forever-addon-comparison]].

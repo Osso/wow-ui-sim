@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
+
+Rilua rejected Lua 5.1-compatible unknown short-string escapes before Buffalo/dgks code executed. Published `15b52249` consumes the backslash and preserves the following byte while retaining malformed structured-escape errors; wow-ui-sim `b8f0982be` pins it. Development tests pass, but independent verification and addon startup replay remain pending. See [[lua51-unknown-escapes]].
+
 ## [2026-09-22] investigation | Stage Forever event, spell-base, and expansion producers
 
 `232bc7e72` adds two source-documented Forever event registrations without permitting arbitrary names; `UNIT_AURA_BLOCKED` was previously retail-only. `f1c0a19a8` gives public `C_Spell.GetBaseSpell` identity for unconfigured relationships while keeping real override data and secret support out of scope. `374c2c6c7` gives Forever an inferred Classic current expansion identity so cached Angleur selects its Camelot branch. All targeted GREEN/replays remain pending; none certifies the full addon inventory. See [[event-system]], [[lua-api]], [[client-profiles]], and [[forever-addon-comparison]].
