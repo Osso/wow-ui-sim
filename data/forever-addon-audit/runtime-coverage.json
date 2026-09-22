@@ -8063,14 +8063,22 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-parser-corrections.json",
         "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
         "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
         "packageFileIds": [
           8934103
         ],
         "configuration": {},
-        "observations": [],
+        "observations": [
+          {
+            "name": "Buffalo",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true,
         "currentFailure": "@Interface/AddOns/Buffalo/Buffalo-Configuration.lua: table index is nil"
