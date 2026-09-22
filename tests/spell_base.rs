@@ -47,7 +47,7 @@ fn configured_relations_follow_explicit_and_current_specialization() {
     .unwrap();
     env.state().borrow_mut().player.active_spec_index = 3;
     assert_eq!(
-        env.eval::<u32>("return C_Spell.GetBaseSpell(19750)")
+        env.eval::<i64>("return C_Spell.GetBaseSpell(19750)")
             .unwrap(),
         853
     );
