@@ -41,6 +41,62 @@ fn forever_finite_events_register_deliver_and_reject_unknown() {
 }
 
 #[test]
+fn forever_player_swing_preserves_payload_order_and_rejects_unknown_events() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame")
+        local received = {}
+        frame:SetScript("OnEvent", function(self, event, ...)
+            assert(self == frame and event == "PLAYER_SWING")
+            assert(select('#', ...) == 2, "swing payload arity changed")
+            local duration, swingType = ...
+            assert(type(duration) == "number" and type(swingType) == "number")
+            received[#received + 1] = {duration, swingType}
+        end)
+        frame:RegisterEvent("PLAYER_SWING")
+        local payloads = {{1.60, 0}, {0.80, 1}, {2.091, 2}}
+        for index, payload in ipairs(payloads) do
+            A_Admin.FireEvent("PLAYER_SWING", payload[1], payload[2])
+            assert(#received == index, "swing callback was not synchronous")
+            assert(received[index][1] == payload[1], "duration moved or changed")
+            assert(received[index][2] == payload[2], "swing type moved or changed")
+        end
+        frame:UnregisterEvent("PLAYER_SWING")
+        A_Admin.FireEvent("PLAYER_SWING", 3.0, 0)
+        assert(#received == 3, "swing callback ran after unregister")
+        local unknown = "WOW_SIM_INVENTED_PLAYER_SWING"
+        assert(not pcall(frame.RegisterEvent, frame, unknown))
+        assert(not frame:IsEventRegistered(unknown))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn forever_player_swing_enum_and_registration_survive_bootstrap_cleanup() {
+    let env = WowLuaEnv::new().unwrap();
+    let check = r#"
+        local types = assert(Enum.PlayerSwingType, "missing player swing enum")
+        assert(types.MainHand == 0 and types.OffHand == 1 and types.Ranged == 2)
+        local count = 0
+        for _ in pairs(types) do count = count + 1 end
+        assert(count == 3)
+        local meta = assert(Enum.PlayerSwingTypeMeta, "missing player swing metadata")
+        assert(meta.MinValue == 0 and meta.MaxValue == 2 and meta.NumValues == 3)
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("PLAYER_SWING")
+        assert(frame:IsEventRegistered("PLAYER_SWING"))
+        frame:UnregisterEvent("PLAYER_SWING")
+    "#;
+    env.exec(check).unwrap();
+    env.exec("Enum.PlayerSwingType = nil; Enum.PlayerSwingTypeMeta = nil")
+        .unwrap();
+    env.loader_env().restore_post_cleanup_globals().unwrap();
+    env.exec(check).unwrap();
+}
+
+#[test]
 fn forever_aura_sound_trigger_values_survive_cleanup() {
     let env = WowLuaEnv::new().unwrap();
     let check = r#"

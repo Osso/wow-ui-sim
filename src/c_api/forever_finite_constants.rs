@@ -23,10 +23,27 @@ fn register_enums(state: &mut LuaState) {
         "WeaponSlotMeta",
         &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
     );
+    register_player_swing_type(state, enums);
     register_bag_indices(state, enums);
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
     register_gamepad_overrides(state, enums);
+}
+
+fn register_player_swing_type(state: &mut LuaState, enums: Val) {
+    // Forever SwingTimerDocumentation.lua publishes the event payload enum.
+    publish(
+        state,
+        enums,
+        "PlayerSwingType",
+        &[("MainHand", 0), ("OffHand", 1), ("Ranged", 2)],
+    );
+    publish(
+        state,
+        enums,
+        "PlayerSwingTypeMeta",
+        &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
+    );
 }
 
 fn register_gamepad_overrides(state: &mut LuaState, enums: Val) {
