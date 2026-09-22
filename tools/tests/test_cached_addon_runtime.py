@@ -109,6 +109,28 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         self.assertEqual(self.stage(digest), staged)
         self.assertTrue((self.staging / "load-observer.lua").is_file())
 
+    def test_backslash_directory_members_stage_as_directories(self):
+        with zipfile.ZipFile(self.archive, "w") as archive:
+            directory = zipfile.ZipInfo("AnimatedBlizzPortrait\\media\\")
+            archive.writestr(directory, b"")
+            directory.external_attr = 0
+            archive.writestr("AnimatedBlizzPortrait\\media\\icon.txt", b"icon bytes")
+            archive.writestr(
+                "AnimatedBlizzPortrait\\AnimatedBlizzPortrait.toc", b"Main.lua"
+            )
+        with zipfile.ZipFile(self.archive) as archive:
+            directory = archive.infolist()[0]
+            self.assertEqual(directory.external_attr, 0)
+            self.assertEqual(directory.file_size, 0)
+            self.assertFalse(directory.is_dir())
+        digest = hashlib.sha256(self.archive.read_bytes()).hexdigest()
+        staged = self.stage(digest)
+        self.assertEqual(staged["roots"], ["AnimatedBlizzPortrait"])
+        media = self.staging / "Interface/AddOns/AnimatedBlizzPortrait/media"
+        self.assertTrue(media.is_dir())
+        self.assertEqual((media / "icon.txt").read_bytes(), b"icon bytes")
+        self.assertEqual(hashlib.sha256(self.archive.read_bytes()).hexdigest(), digest)
+
     def test_hash_mismatch_does_not_create_staging_root(self):
         self.make_zip()
         with self.assertRaisesRegex(ValueError, "SHA-256"):

@@ -60,7 +60,7 @@ def read_package_files(content):
     with zipfile.ZipFile(io.BytesIO(content)) as archive:
         for info in archive.infolist():
             path = checked_member_path(info)
-            if info.is_dir():
+            if info.filename.replace("\\", "/").endswith("/"):
                 directories.add(path)
                 continue
             data = archive.read(info)
