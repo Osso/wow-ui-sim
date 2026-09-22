@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Verify registered template existence
+
+Final independent verification confirms `DoesTemplateExist` formatting, default offline checking, registry/source/readability audit, and immutable replay provenance. Frozen `2c5bf78c7` passes the 3/3 lifecycle target; unchanged DRaidFrames `8922652` starts with no collected Lua errors at wow-sim SHA-256 `7d0ff153e1bf2149f670e09ba1eea253460bf58b6bb9d2f754c64f857f8ccfbf`. Added [[template-existence]].
+
 ## [2026-09-22] investigation | Observe bounded ActionBarAuras duration lifecycle
 
 Frozen build `748e3668` observes the unchanged ActionBarAuras player-buff path after automatic duration-binding scheduling: `7s` → `6s`, then hidden after removal, with a completion marker, no collected Lua errors, and unchanged host CVars. The 20-second timeout follows completion. Target-debuff, colors/rendering, native timing parity, and final scheduler formatter-error isolation/independent verification remain open. Updated [[duration-core]] and [[forever-addon-comparison]].

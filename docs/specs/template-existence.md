@@ -27,9 +27,9 @@
 
 ## Known gaps (current cycle)
 
-- Targeted development GREEN: 3/3 at `2c5bf78c7`, with unchanged source hashes across the build. Ledger: `/tmp/forever-addon-audit/template-existence-green-emlklwik/test-ledger.json`. Frozen runtime RED: `/tmp/forever-addon-audit/template-existence-red-qovikc1y/ledger.json` reports `DoesTemplateExist missing`.
-- [ ] Independent verification remains pending; targeted development proof is not a final gate.
-- [ ] Parent-owned unchanged DRaidFrames `8922652` replay remains pending.
+- Frozen targeted GREEN: 3/3 at `2c5bf78c7`, with unchanged source hashes across the build. Ledgers: `/tmp/forever-addon-audit/template-existence-green-emlklwik/{build-ledger.json,test-ledger.json}`. Frozen runtime RED: `/tmp/forever-addon-audit/template-existence-red-qovikc1y/ledger.json` reports `DoesTemplateExist missing`.
+- [x] Independent final verification confirms `cargo fmt --check`, default offline `cargo check`, registry/source/readability review, and immutable replay provenance.
+- [x] Parent-owned unchanged DRaidFrames `8922652` replay exits 0 with `AUDIT_ADDON DRaidFrames true true false`, `AUDIT_DONE`, and no collected Lua errors. Ledger: `/tmp/forever-addon-runtime/draidframes-template-gqfplb1k/ledger.json`; its wow-sim SHA-256 is `7d0ff153e1bf2149f670e09ba1eea253460bf58b6bb9d2f754c64f857f8ccfbf`, matching targeted proof.
 - [ ] Local wowless API inventories list `DoesTemplateExist` for retail/PTR and Classic variants, but provide no input/output specification. Cached generated API documentation has no entry. Cross-profile publication follows that presence evidence; string validation and case folding follow simulator conventions, not native probes.
 
 ## Out of scope

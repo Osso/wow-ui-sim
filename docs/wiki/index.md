@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Verify registered template existence
+
+`DoesTemplateExist` now consults only the loaded XML virtual-template registry. Frozen `2c5bf78c7` lifecycle tests pass 3/3 and the unchanged cached DRaidFrames `8922652` replay is clean at the recorded binary SHA; layout and user workflows remain untested. See [[template-existence]].
+
 ## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
 
 Rilua rejected Lua 5.1-compatible unknown short-string escapes before Buffalo/dgks code executed. Published `15b52249` consumes the backslash and preserves the following byte while retaining malformed structured-escape errors; wow-ui-sim `b8f0982be` pins it. Development tests pass, but independent verification and addon startup replay remain pending. See [[lua51-unknown-escapes]].
@@ -1310,6 +1314,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[template-existence]] | `DoesTemplateExist` queries only the registered XML virtual-template registry; frozen lifecycle 3/3 and unchanged DRaidFrames startup proof pass, while native edge semantics and workflows remain open. |
 | [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
 | [[forever-addon-comparison]] | Complete 875-project / 44-page CurseForge corpus capture; cached-pair triage is offline and incomplete. `bb83a4c0a` corrects Forever `BagIndex` shape; `215a4080a` corrects the bounded cached EasyFishing cursor transfer. |
