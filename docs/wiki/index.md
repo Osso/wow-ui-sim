@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Model Forever recent-allies location preference
 
-`561943dd0` and `37da0f132` add state-backed Forever location visibility getter/setter with default `true`, strict existing VM secret checks, and synchronous event delivery only on changes. The default follows cached UI metadata; same-value suppression is inferred from cached Settings feedback. Development proof passes 5/5, but unchanged Account-wide UI replay and independent verification remain pending. No persistence, network visibility, native coercion, or other-profile claim. See [location-preference spec](../specs/recent-allies-location-preference.md) and [[forever-addon-comparison]].
+`561943dd0` and `37da0f132` add state-backed Forever location visibility getter/setter with default `true`, strict existing VM secret checks, and synchronous event delivery only on changes. Independent verification reuses 5/5 tests and passes formatting, default offline checking, and readability. The unchanged Account-wide UI replay resolves its prior line457 getter failure but next fails at `SaveFunction.lua:894` on absent `GetAutoDeclineNeighborhoodInvites`; it remains unaccepted. No persistence, network visibility, native coercion, or other-profile claim. See [location-preference spec](../specs/recent-allies-location-preference.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Model Camelot stable reads
 

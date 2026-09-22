@@ -29,8 +29,8 @@ Cached Forever `PlayerScriptDocumentation.lua` documents the getter and required
 
 ## Known gaps (current cycle)
 
-Targeted development proof: `561943dd0` tests and `37da0f132` runtime pass 5/5 grouped tests after two identical Lua probes failed on the frozen pre-change simulator. Commands, source hashes, build features, and frozen executable hash: `/tmp/forever-addon-audit/location-preference-development-ledger.json`.
-- [ ] Parent-owned unchanged-addon full save/load replay and independent verification.
+`561943dd0` tests and `37da0f132` runtime pass 5/5 grouped tests after two identical Lua probes failed on the frozen pre-change simulator. Independent verification reuses those tests and passes formatting, default offline checking, and readability: `/tmp/forever-addon-audit/verify-location-preference-ledger.json`. Commands, source hashes, build features, and frozen executable hash remain in `/tmp/forever-addon-audit/location-preference-development-ledger.json`.
+- [ ] The unchanged Account-wide UI `8935141` full save/load replay remains unaccepted. It resolves the prior getter failure at `SaveFunction.lua:457` but next fails at `SaveFunction.lua:894` because `GetAutoDeclineNeighborhoodInvites` is absent: `/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json`.
 
 ## Out of scope
 
