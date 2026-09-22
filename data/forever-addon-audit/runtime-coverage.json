@@ -8,16 +8,17 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 211,
+      "clean-startup": 216,
       "blocked-dependency": 3,
       "unloaded": 12,
-      "failed": 42,
+      "failed": 37,
       "blocked-package": 1
     },
     "interactionStatuses": {
       "bounded-pass": 6,
       "initialization-only": 1,
-      "not-run": 262
+      "not-run": 261,
+      "failed": 1
     }
   },
   "projects": [
@@ -618,9 +619,9 @@
       "startup": {
         "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
         "packageFileIds": [
           8920553
         ],
@@ -634,12 +635,19 @@
           }
         ],
         "errorRecords": 0,
-        "hostCvarsUnchanged": true,
-        "currentFailure": null
+        "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [
+          "Separate addon player/target containers survive; modeled8second playerbuff added"
+        ],
+        "failure": "Actual enabled player container does not show its aura slot or duration text after0.4seconds. Root cause remains unproven.",
+        "evidence": "/tmp/forever-addon-runtime/aba-duration-gui-opjr2iye/ledger.json",
+        "diagnostic": "/tmp/forever-addon-runtime/aba-visible-buttons-ogjbg3uy/stdout",
+        "fixture": "tools/forever-addon-fixtures/actionbarauras-duration.lua",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "limitations": "Duration progression/removal assertions not reached; no nativeconformance or visual rendering claim."
       },
       "packageOnlyBaseline": {
         "status": "failed",
@@ -693,6 +701,28 @@
         "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json",
         "currentFailure": "GetIncludeSpellIDs passes nil C_Spell.GetBaseSpell result to GetLinkedSpellIDs table key; NumericFormatter validation and buttonContainers nil errors no longer observed.",
         "diagnosticEvidence": "/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/ledger.json"
+      },
+      "priorEbffAttempt": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8920553
+        ],
+        "observations": [
+          {
+            "name": "ActionBarAuras",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "currentFailure": null
       }
     },
     {
@@ -1985,11 +2015,11 @@
       "fileId": 8932166,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
         "packageFileIds": [
           8932166
         ],
@@ -2002,9 +2032,8 @@
             "reason": ""
           }
         ],
-        "errorRecords": 2,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
         "status": "not-run",
@@ -2037,6 +2066,28 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorEbffAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8932166
+        ],
+        "observations": [
+          {
+            "name": "Angleur",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
       }
     },
     {
@@ -2044,11 +2095,11 @@
       "fileId": 8931516,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
         "packageFileIds": [
           8931516,
           8932166
@@ -2069,9 +2120,8 @@
             "reason": ""
           }
         ],
-        "errorRecords": 2,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
         "status": "not-run",
@@ -2112,6 +2162,36 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorEbffAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8931516,
+          8932166
+        ],
+        "observations": [
+          {
+            "name": "Angleur",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Angleur_NicheOptions",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
       }
     },
     {
@@ -8458,11 +8538,11 @@
       "fileId": 8913945,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
         "packageFileIds": [
           8913945
         ],
@@ -8475,9 +8555,8 @@
             "reason": ""
           }
         ],
-        "errorRecords": 4,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "[OnEvent] frame=#57958 addon=Chattynator source=@Interface/AddOns/Chattynator/Core/Initialize.lua:243: Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_GUILD_DISCORD\""
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
         "status": "not-run",
@@ -8510,6 +8589,28 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorEbffAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8913945
+        ],
+        "observations": [
+          {
+            "name": "Chattynator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=#57958 addon=Chattynator source=@Interface/AddOns/Chattynator/Core/Initialize.lua:243: Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_GUILD_DISCORD\""
       }
     },
     {
@@ -13381,6 +13482,38 @@
       "fileId": 8934774,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
+        "packageFileIds": [
+          8934774
+        ],
+        "observations": [
+          {
+            "name": "DrinkBot",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-drinkbot-8934774-dxm6564f/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorEbffAttempt": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
@@ -13400,17 +13533,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-drinkbot-8934774-dxm6564f/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -14513,11 +14635,11 @@
       "fileId": 8934436,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
-        "binaryBuildRevision": "b8f0982be",
-        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "evidence": "/tmp/forever-addon-runtime/producer-ebff-startup-ledger.json",
+        "binaryBuildRevision": "ebff905177fae709611664e925a7ac4e500d198e",
+        "binarySha256": "e398320296653c24426ae978493698a5bc4d1653e3493a66591409c38c8b425b",
         "packageFileIds": [
           8934436
         ],
@@ -14621,9 +14743,8 @@
             "reason": ""
           }
         ],
-        "errorRecords": 2,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "@Interface/AddOns/EnhanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua: ...hanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua:79: attempt to index field 'UnitAuraSoundTrigger' (a nil value)"
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
         "status": "not-run",
@@ -14747,6 +14868,119 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorEbffAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8934436
+        ],
+        "observations": [
+          {
+            "name": "EnhanceQoL",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLBags",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLChatSocial",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLClassBuffReminder",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLCooldownPanels",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLDamageMeter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLMover",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLResourceBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSharedMedia",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSkinner",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSound",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLTooltip",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLVendor",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/EnhanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua: ...hanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua:79: attempt to index field 'UnitAuraSoundTrigger' (a nil value)"
       }
     },
     {
