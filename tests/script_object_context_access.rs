@@ -1,6 +1,7 @@
 //! Caller-context access queries on the shared Forever script-object method surface.
 #![cfg(feature = "client-wowforever")]
 
+use rilua::{LuaApi, Val};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -32,6 +33,45 @@ fn ordinary_and_forbidden_frames_use_caller_taint_without_exposing_secret_result
         "#,
     )
     .unwrap();
+}
+
+#[test]
+fn trusted_host_can_inspect_exact_secret_access_result_without_clearing_caller_taint() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        ContextSecureFrame = CreateFrame('Frame')
+        ContextSecureFrame:SetForbidden()
+        local function addon()
+            return ContextSecureFrame:CanBeAccessedInContext()
+        end
+        debug.setobjecttaint(addon, 'ContextAccessProbe')
+        ContextTaintedCaller = addon
+        "#,
+    )
+    .unwrap();
+
+    let allowed: Val = env
+        .eval("return ContextSecureFrame:CanBeAccessedInContext()")
+        .unwrap();
+    {
+        let lua = env.lua();
+        let state = lua.state();
+        assert!(rilua::table_security::is_secret_value(state, allowed));
+        assert_eq!(
+            rilua::table_security::unwrap_secret(state, allowed).unwrap(),
+            Val::Bool(true)
+        );
+    }
+
+    let denied: Val = env.eval("return ContextTaintedCaller()").unwrap();
+    let lua = env.lua();
+    let state = lua.state();
+    assert!(rilua::table_security::is_secret_value(state, denied));
+    assert_eq!(
+        rilua::table_security::unwrap_secret(state, denied).unwrap(),
+        Val::Bool(false)
+    );
 }
 
 #[test]
