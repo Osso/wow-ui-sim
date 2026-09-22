@@ -430,6 +430,71 @@ fn runtime_template_child_onload_can_publish_self_to_parent() {
 }
 
 #[test]
+fn runtime_template_child_onload_uses_local_self_for_dotted_value() {
+    let t = load_test_xml(
+        "runtime-template-child-dotted-self-parent-publication",
+        r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Button name="RuntimeChildDottedSelfTemplate" virtual="true">
+                <Frames>
+                    <Button parentKey="Toggle">
+                        <Frames>
+                            <Frame parentKey="Part"/>
+                        </Frames>
+                        <Scripts>
+                            <OnLoad>self:GetParent().publishedPart = self.Part</OnLoad>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Button>
+        </Ui>
+        "#,
+    );
+
+    t.env
+        .exec(
+            r#"
+            local previous = _G.self
+            _G.self = { Part = "global sentinel" }
+            local button = CreateFrame("Button", "RuntimeChildDottedSelfHost", UIParent, "RuntimeChildDottedSelfTemplate")
+            _G.self = previous
+            assert(button.publishedPart == button.Toggle.Part, "child OnLoad must use its local self field")
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn runtime_template_child_onload_preserves_dotted_global_value() {
+    let t = load_test_xml(
+        "runtime-template-child-dotted-global-parent-publication",
+        r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Button name="RuntimeChildDottedGlobalTemplate" virtual="true">
+                <Frames>
+                    <Button parentKey="Toggle">
+                        <Scripts>
+                            <OnLoad>self:GetParent().publishedGlobal = RuntimeLiteralFixture.Part</OnLoad>
+                        </Scripts>
+                    </Button>
+                </Frames>
+            </Button>
+        </Ui>
+        "#,
+    );
+
+    t.env
+        .exec(
+            r#"
+            RuntimeLiteralFixture = { Part = "global marker" }
+            local button = CreateFrame("Button", "RuntimeChildDottedGlobalHost", UIParent, "RuntimeChildDottedGlobalTemplate")
+            assert(button.publishedGlobal == RuntimeLiteralFixture.Part, "genuine global path must remain available")
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn test_synthetic_ui_theme_container_intrinsic_applies_theme_mixin() {
     let t = load_test_xml(
         "synthetic-theme-container-intrinsic",
