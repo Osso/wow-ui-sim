@@ -98,6 +98,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(feature = "client-wowforever")]
+    let b = b.set_function(
+        "SetPlayerFacing",
+        super::real::player_facing::set_player_facing,
+    )?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?

@@ -171,6 +171,9 @@ pub struct PlayerState {
     pub honor_level: i32,
     pub buffs: Vec<AuraInfo>,
     pub movement: MovementState,
+    /// Explicit player orientation; unknown initially by simulator policy.
+    #[cfg(feature = "client-wowforever")]
+    pub facing: Option<f64>,
     pub active_spec_index: i32,
     pub pending_spec_change: Option<i32>,
     /// Mail inbox.
