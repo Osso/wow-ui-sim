@@ -38,9 +38,9 @@ The existing formatter choice/clock/update model is not redesigned. General secr
 - New bindings, configuration writes, Assign/Copy, defaults, and re-enabling request an update on the next tick. Otherwise `updateInterval` measures accumulated engine elapsed time since the previous automatic update. Disabled bindings do not update; missed intervals are not replayed in a burst.
 - Duration-object clocks still determine the displayed remaining duration. The binding's existing default manual clock does not drive scheduler cadence. These timing choices are simulator policy, not native-probe results.
 - Scheduling state is private and independent from copied configuration. The existing weak-key binding registry must not retain otherwise unreachable handles or their display targets.
-- The engine invokes a privately retained bootstrap callback without clearing taint. Secret conversion captures, formatter callback taint, and secret-origin FontString read restrictions remain in force. Existing plain-input formatter error handling is unchanged; this slice does not redesign it.
+- The engine invokes a privately retained bootstrap callback without clearing taint. Secret conversion captures, formatter callback taint, and secret-origin FontString read restrictions remain in force. A propagated binding-update error is sent to the existing Lua error handler; other bindings and later engine-tick/GC work still run. The failed update does not replace its label text. Existing plain-input function/table formatter error suppression is a pre-existing limitation, unchanged by this slice.
 
-Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records six failing automatic-update cases before scheduler implementation, including the real native CustomAuraButton initializer/assignment. GREEN and independent acceptance remain pending.
+Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records six failing automatic-update cases before scheduler implementation, including the real native CustomAuraButton initializer/assignment. At `748e36687`, those six targeted tests pass. A seventh error-isolation RED at `/tmp/forever-addon-audit/binding-tick-error-red-corrected-lk6be6q3/` shows a propagated formatter error aborting the tick. Final seven-test GREEN and independent acceptance remain pending.
 
 ## How it works
 

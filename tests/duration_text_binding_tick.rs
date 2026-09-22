@@ -166,6 +166,50 @@ fn automatic_binding_secret_callback_keeps_taint_and_blocks_conversion_leaks() {
 }
 
 #[test]
+fn automatic_binding_reports_formatter_failure_without_aborting_other_updates() {
+    let env = setup();
+    env.exec(
+        r#"
+        BadLabel = CreateFrame('Frame'):CreateFontString()
+        BadLabel:SetText('unchanged')
+        Bad = Binding:Copy()
+        Bad:SetFontString(BadLabel)
+        Bad:SetDuration(secretwrap(8))
+        local fail = function(_, value)
+            assert(not issecure() and issecretvalue(value))
+            error('scheduled formatter failure')
+        end
+        debug.setobjecttaint(fail, 'FailingAutomaticFormatter')
+        local formatter = newproxy(true)
+        getmetatable(formatter).__index = {FormatNumber=fail}
+        Bad:SetFormatter(formatter)
+    "#,
+    )
+    .unwrap();
+    let previous_frames = env.state().borrow().app_frame_metrics.session_frame_count;
+    env.fire_on_update(0.125)
+        .expect("one formatter failure must not abort the engine tick");
+    assert_eq!(
+        env.state().borrow().app_frame_metrics.session_frame_count,
+        previous_frames + 1
+    );
+    env.exec(
+        r#"
+        assert(Label:GetText() == '8s', 'healthy binding starved')
+        assert(BadLabel:GetText() == 'unchanged', 'failure mutated text')
+    "#,
+    )
+    .unwrap();
+    assert!(
+        env.state()
+            .borrow()
+            .lua_errors
+            .iter()
+            .any(|error| error.contains("scheduled formatter failure"))
+    );
+}
+
+#[test]
 fn automatic_binding_updates_native_custom_aura_button_after_assignment() {
     crate::common::with_timeout(90, || {
         crate::common::blizzard_addon_harness::with_blizzard_addon_closure(

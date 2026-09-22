@@ -5,7 +5,7 @@
 
 use crate::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
 use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
-use crate::lua_api::methods::{call_function, registry_get, registry_set};
+use crate::lua_api::methods::{call_function, registry_get, registry_set, val_to_string};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -14,7 +14,7 @@ const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
-    local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput = ...
+    local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput, reportUpdateError = ...
     -- Capture host bootstrap functions, not later addon replacements.
     local secretType, secretToString, secretToNumber, secretStringFormat = type, tostring, tonumber, string.format
     local function ensure_namespace(name)
@@ -88,7 +88,7 @@ do
         return text
     end
     local bindings = setmetatable({}, { __mode = "k" })
-    local nextBinding = next
+    local nextBinding, protectedCall = next, pcall
     local configurationFields = {
         "duration", "fontString", "enabled", "updateInterval", "timeModifier",
         "expiredText", "zeroDurationText", "formatter", "textFormat", "clock",
@@ -238,16 +238,20 @@ do
 
     -- This closure is retained only in the host registry, not a Lua global.
     -- Cadence uses engine elapsed time; duration objects retain their own clocks.
+    local function update_binding(binding, schedule, elapsed)
+        if binding:IsEnabled() and binding:CanUpdateFontString() then
+            schedule.elapsed = schedule.elapsed + elapsed
+            if schedule.dirty or schedule.elapsed >= binding:GetUpdateInterval() then
+                schedule.dirty = false
+                schedule.elapsed = 0
+                binding:UpdateFontString()
+            end
+        end
+    end
     return function(elapsed)
         for binding, schedule in nextBinding, bindings do
-            if binding:IsEnabled() and binding:CanUpdateFontString() then
-                schedule.elapsed = schedule.elapsed + elapsed
-                if schedule.dirty or schedule.elapsed >= binding:GetUpdateInterval() then
-                    schedule.dirty = false
-                    schedule.elapsed = 0
-                    binding:UpdateFontString()
-                end
-            end
+            local ok, errorValue = protectedCall(update_binding, binding, schedule, elapsed)
+            if not ok then reportUpdateError(errorValue) end
         end
     end
 end
@@ -275,6 +279,11 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             "DurationBinding.WrapSecretOutput",
             wrap_secret_output,
         ),
+        secret_callback(
+            state,
+            "DurationBinding.ReportUpdateError",
+            report_update_error,
+        ),
     ];
     let callback = lua.call_function(&bootstrap, &arguments)?;
     let callback = callback.into_iter().next().ok_or_else(|| {
@@ -291,6 +300,14 @@ pub(crate) fn tick(lua: &mut rilua::Lua, elapsed: f64) -> crate::Result<()> {
         call_function(lua, callback, &[Val::Num(elapsed)])?;
     }
     Ok(())
+}
+
+fn report_update_error(state: &mut LuaState) -> LuaResult<u32> {
+    let message = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| {
+        "duration text binding update failed with a non-string error".to_owned()
+    });
+    crate::lua_api::script_helpers::call_error_handler_state(state, &message);
+    Ok(0)
 }
 
 fn secret_callback(state: &mut LuaState, name: &'static str, function: rilua::RustFn) -> Val {
