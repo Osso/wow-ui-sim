@@ -173,7 +173,7 @@ fn register_cvar(state: &mut LuaState) -> LuaResult<u32> {
     let Some(name) = required_string(state, 1) else {
         return Ok(0);
     };
-    let default = Option::<String>::from_stack(state, 2)?.filter(|value| !value.is_empty());
+    let default = Option::<String>::from_stack(state, 2)?;
     borrow_state(state)?
         .cvars
         .register(&name, default.as_deref());
