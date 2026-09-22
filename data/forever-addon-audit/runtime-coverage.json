@@ -15,8 +15,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 17,
-      "failed": 1,
+      "bounded-pass": 18,
+      "failed": 0,
       "not-run": 251
     }
   },
@@ -7388,14 +7388,17 @@
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-current-startup-4kd3gdo1/ledger.json"
       },
       "interactions": {
-        "status": "failed",
-        "covered": [],
-        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
+        "status": "bounded-pass",
+        "covered": [
+          "Real /bw loads BigWigs_Core, BigWigs_Plugins and BigWigs_Options; addon reports options open and emits DONE with zero Lua errors"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/bigwigs-options-final-0qpdqxzu/ledger.json",
         "fixture": "tools/forever-addon-fixtures/bigwigs-options-workflow.lua",
-        "binaryBuildRevision": "fbcd9bb51471ed1216b6934996fe9304a269fda7",
-        "binarySha256": "aab8cb202667e41b2146cf4e53dd044b027d70530cd64c3325c530d40c61b811",
-        "currentFailure": "Real /bw deferred-plugin activation fails at BigWigs_Plugins/Auras.lua2408 calling missing CanBeAccessedInContext method; options-open and DONE not reached.",
-        "limitations": "Core startup partial/unloaded record retained; no options/test-bar/combat/native/rendering acceptance."
+        "binaryBuildRevision": "e3cafcc11cc1a1c77da58616a811c135d72bfaf1",
+        "binarySha256": "f4c83bfa7904215ef8e0f5be09aaaa18f6f18b9d01e709b81fd228d4a72838fa",
+        "limitations": "Options-open state only; five custom-sound reset warnings remain. Eight standard-only encounter roots excluded. No encounter/test-bar/sound/pixel/native/persistence or all-root startup acceptance.",
+        "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
+        "outputParsingLimitation": "Generic parser remains incomplete because five missing-custom-sound chat warnings follow the empty Lua-error JSON array; raw output, exit0 and exact markers independently audited."
       },
       "packageOnlyBaseline": {
         "status": "failed",
