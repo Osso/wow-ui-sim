@@ -94,7 +94,7 @@ This covers programmatic slider input and real slash handlers, not mouse draggin
 
 ## Account-wide UI save/load failure
 
-The unchanged `8935141` package starts cleanly. Frozen `37da0f132` resolves the missing recent-allies location preference getter at `SaveFunction.lua:457`, but the real `/awi save` handler now fails at line894 calling missing `GetAutoDeclineNeighborhoodInvites`. The self-cast CVar save/change/load sequence remains incomplete: `/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json`. Prior failure evidence remains recorded; no workflow pass is credited.
+The unchanged `8935141` package starts cleanly. Frozen `6eccec458` resolves the missing location and neighborhood preference globals: real `/awi save` completes and captures self-cast zero. The subsequent `/awi load` fails at `LoadFunction.lua:259` calling missing `SetAutoDeclineGuildInvites`; the reported nil-generator label does not describe the source call. The full save/change/load sequence remains incomplete: `/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json`. Prior failure evidence remains recorded; no workflow pass is credited.
 
 ## AccentChat bounded pre-send interaction
 

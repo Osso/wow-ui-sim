@@ -238,11 +238,14 @@
       "interactions": {
         "status": "failed",
         "covered": [],
-        "evidence": "/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json",
-        "currentFailure": "Location preference getter resolves previous SaveFunction.lua457 failure. Actual /awi save now fails at SaveFunction.lua894 calling missing GetAutoDeclineNeighborhoodInvites; self-cast save/load workflow remains incomplete.",
-        "priorFailureEvidence": "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
-        "binaryBuildRevision": "37da0f132",
-        "binarySha256": "e0af29a8cb5a28d62ea2ea99c3bae1e3397d41157f6a1acd3efe73f9266fa58f"
+        "evidence": "/tmp/forever-addon-runtime/account-neighborhood-workflow-st74nz2w/ledger.json",
+        "currentFailure": "Actual /awi save completes and captures self-cast zero; /awi load fails at LoadFunction.lua259 calling missing SetAutoDeclineGuildInvites. Full workflow remains incomplete.",
+        "priorFailureEvidence": [
+          "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
+          "/tmp/forever-addon-runtime/account-location-workflow-nmsc23tn/ledger.json"
+        ],
+        "binaryBuildRevision": "6eccec458dbc63fad58d6e45a52a96f7bf1f1efa",
+        "binarySha256": "6798985bed1ee49d1f0088eec8b9ffc4f36a30b1cfbb433e4b8846839231462d"
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
