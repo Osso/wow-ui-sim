@@ -67,7 +67,7 @@ fn unit_health_percent_uses_player_health_values() {
     assert_eq!(percent, 25.0);
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
 #[test]
 fn unit_health_percent_ignores_legacy_truthy_curve_argument() {
     let env = env();
@@ -690,4 +690,136 @@ fn unit_health_percent_supplied_nil_preserves_uncurved_queries() {
         "#,
     )
     .expect("nil and omitted curves preserve ordinary numeric queries");
+}
+
+#[cfg(feature = "client-wowforever")]
+mod forever_percent {
+    use super::env;
+
+    #[test]
+    fn health_scalar_tracks_live_normalized_health() {
+        env()
+            .exec(
+                r#"
+            local curve = C_CurveUtil.CreateCurve()
+            curve:AddPoint(0, 7)
+            curve:AddPoint(0.25, 80)
+            curve:AddPoint(1, 20)
+            for _, sample in ipairs({{5000, 80}, {12500, 50}, {20000, 20}}) do
+                A_Admin.SetPlayerHealth(sample[1], 20000)
+                assert(select('#', UnitHealthPercent('player', false, curve)) == 1)
+                assert(UnitHealthPercent('player', false, curve) == sample[2],
+                    'health curve must receive normalized current/max')
+            end
+        "#,
+            )
+            .unwrap();
+    }
+
+    #[test]
+    fn health_color_tracks_live_target_health() {
+        env()
+            .exec(
+                r#"
+            local curve = C_CurveUtil.CreateColorCurve()
+            curve:AddPoint(0, CreateColor(1, 0, 0, 1))
+            curve:AddPoint(1, CreateColor(0, 1, 1, 0))
+            A_Admin.SetTarget('Boss', 63, 1, true)
+            for _, fraction in ipairs({0.25, 0.75, 1}) do
+                A_Admin.SetTargetHealth(fraction * 20000, 20000)
+                assert(select('#', UnitHealthPercent('target', false, curve)) == 1)
+                local color = UnitHealthPercent('target', false, curve)
+                local r, g, b, a = color:GetRGBA()
+                assert(r == 1 - fraction and g == fraction and b == fraction and a == 1 - fraction,
+                    'health color must reflect live normalized target health')
+            end
+        "#,
+            )
+            .unwrap();
+    }
+
+    #[test]
+    fn power_scalar_tracks_live_primary_power() {
+        env()
+            .exec(
+                r#"
+            local curve = C_CurveUtil.CreateCurve()
+            curve:AddPoint(0, 10)
+            curve:AddPoint(1, 90)
+            for _, sample in ipairs({{2500, 30}, {7500, 70}, {10000, 90}}) do
+                A_Admin.SetPlayerPower(sample[1], 10000, 0)
+                assert(select('#', UnitPowerPercent('player', 0, false, curve)) == 1)
+                assert(UnitPowerPercent('player', 0, false, curve) == sample[2],
+                    'power curve must receive normalized current/max')
+            end
+        "#,
+            )
+            .unwrap();
+    }
+
+    #[test]
+    fn power_color_tracks_secondary_combo_points() {
+        env().exec(r#"
+            local curve = C_CurveUtil.CreateColorCurve()
+            curve:SetType(Enum.LuaCurveType.Step)
+            for id = 1, 5 do
+                curve:AddPoint(id / 5, CreateColor(id / 5, 1 - id / 5, 0.5, 1))
+            end
+            A_Admin.SetPlayerPower(2500, 10000, 0)
+            for _, points in ipairs({1, 3, 5, 2}) do
+                A_Admin.SetPlayerPower(points, 5, 4)
+                assert(select('#', UnitPowerPercent('player', 4, true, curve)) == 1)
+                local color = UnitPowerPercent('player', 4, true, curve)
+                local r, g, b, a = color:GetRGBA()
+                assert(r == points / 5 and g == 1 - points / 5 and b == 0.5 and a == 1,
+                    'Dino-style color thresholds must follow secondary combo power')
+                assert(UnitPowerPercent('player') == 25, 'secondary query must preserve primary power')
+            end
+        "#).unwrap();
+    }
+
+    #[test]
+    fn no_curve_and_zero_max_preserve_numeric_policy() {
+        env().exec(r#"
+            for _, fraction in ipairs({0.25, 0.75}) do
+                A_Admin.SetPlayerHealth(fraction * 10000, 10000)
+                A_Admin.SetPlayerPower(fraction * 10000, 10000, 0)
+                assert(UnitHealthPercent('player') == fraction * 100)
+                assert(UnitHealthPercent('player', false, nil) == fraction * 100)
+                assert(UnitPowerPercent('player') == fraction * 100)
+                assert(UnitPowerPercent('player', 0, true, nil) == fraction * 100)
+                assert(select('#', UnitHealthPercent('player')) == 1)
+                assert(select('#', UnitHealthPercent('player', false, nil)) == 1)
+                assert(select('#', UnitPowerPercent('player')) == 1)
+                assert(select('#', UnitPowerPercent('player', 0, true, nil)) == 1)
+            end
+            local curve = C_CurveUtil.CreateCurve()
+            curve:AddPoint(0, 7)
+            curve:AddPoint(1, 90)
+            A_Admin.SetPlayerHealth(0, 0)
+            A_Admin.SetPlayerPower(0, 0, 0)
+            assert(UnitHealthPercent('player') == 0)
+            assert(UnitPowerPercent('player') == 0)
+            assert(UnitHealthPercent('player', false, curve) == 7, 'zero max must evaluate at zero')
+            assert(UnitPowerPercent('player', 0, false, curve) == 7, 'zero max must evaluate at zero')
+        "#).unwrap();
+    }
+
+    #[test]
+    fn invalid_curves_are_rejected() {
+        env()
+            .exec(
+                r#"
+            for _, curve in ipairs({true, false, 17, {}}) do
+                local healthOK, healthError = pcall(UnitHealthPercent, 'player', false, curve)
+                assert(not healthOK, 'health must reject unsupported curves')
+                assert(string.find(healthError, 'expected LuaCurveObjectBase', 1, true))
+                local powerOK, powerError = pcall(UnitPowerPercent, 'player', 0, false, curve)
+                assert(not powerOK, 'power must reject unsupported curves')
+                assert(string.find(powerError, 'expected LuaCurveObjectBase', 1, true))
+            end
+        "#,
+            )
+            .unwrap();
+    }
 }
