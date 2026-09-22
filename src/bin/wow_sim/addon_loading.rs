@@ -262,7 +262,6 @@ pub fn load_third_party_addons(
         let test_addons_path = PathBuf::from(TEST_ADDONS_PATH);
         addons.extend(scan_addons(&test_addons_path, &[], screen));
     }
-    load_required_blizzard_dependencies_for_addons(env, saved_vars, screen, &addons);
     wow_ui_sim::loader::sort_addons_by_dependencies(&mut addons);
     if skip_addons {
         addons.retain(|(name, _)| TEST_ADDONS.iter().any(|t| t == name));
@@ -271,19 +270,18 @@ pub fn load_third_party_addons(
         return;
     }
 
-    logging::println_elapsed(&format!("Loading {} addons...", addons.len()));
     let enable_overrides = merged_addon_enable_overrides(env, saved_vars);
     let effective_enable_overrides =
         dependency_aware_enable_overrides(&addons, enable_overrides.as_ref());
     let mut stats = LoadStats::default();
-    load_discovered_addons(
+    let startup_count = load_discovered_addons(
         env,
         &addons,
         saved_vars,
         effective_enable_overrides.as_ref(),
         &mut stats,
     );
-    print_load_summary(&addons, &stats);
+    print_load_summary(startup_count, &stats);
 }
 
 fn merged_addon_enable_overrides(
@@ -372,9 +370,15 @@ fn loadable_toc_path(path: &Path, screen: ScreenKind) -> Option<PathBuf> {
     let supported_game_type = !toc.is_ptr_only() && !toc.is_game_type_restricted();
     let supported_interface = load_out_of_date_addons()
         || toc.supports_interface_version(wow_ui_sim::toc::ACTIVE_INTERFACE_VERSION);
-    let startup_loadable = !toc.is_load_on_demand() || startup_bootstrap_eligible(&toc);
-    (supports_screen && supported_game_type && supported_interface && startup_loadable)
-        .then_some(toc_path)
+    (supports_screen && supported_game_type && supported_interface).then_some(toc_path)
+}
+
+fn read_startup_eligibility(toc_path: &Path) -> bool {
+    match TocFile::from_file(toc_path) {
+        Ok(toc) => !toc.is_load_on_demand() || startup_bootstrap_eligible(&toc),
+        // Keep unreadable TOCs in the execution stream for normal load-error reporting.
+        Err(_) => true,
+    }
 }
 
 fn load_out_of_date_addons() -> bool {
@@ -449,13 +453,22 @@ fn load_discovered_addons(
     saved_vars: &mut Option<SavedVariablesManager>,
     enable_overrides: Option<&HashMap<String, bool>>,
     stats: &mut LoadStats,
-) {
-    let first_error = env.state().borrow().lua_error_records.len();
+) -> usize {
     register_discovered_addons(env, addons, enable_overrides);
-    for (name, toc_path) in addons {
+    let startup_addons: Vec<_> = addons
+        .iter()
+        .filter(|(_, toc_path)| read_startup_eligibility(toc_path))
+        .cloned()
+        .collect();
+    let screen = env.state().borrow().screen_kind;
+    load_required_blizzard_dependencies_for_addons(env, saved_vars, screen, &startup_addons);
+    let first_error = env.state().borrow().lua_error_records.len();
+    logging::println_elapsed(&format!("Loading {} addons...", startup_addons.len()));
+    for (name, toc_path) in &startup_addons {
         load_registered_single_addon(env, name, toc_path, saved_vars, stats);
     }
     record_lua_failure_addons(env, first_error, stats);
+    startup_addons.len()
 }
 
 fn record_lua_failure_addons(env: &WowLuaEnv, first_error: usize, stats: &mut LoadStats) {
@@ -683,9 +696,9 @@ fn format_load_outcomes(addon_count: usize, stats: &LoadStats) -> String {
     )
 }
 
-fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
+fn print_load_summary(startup_count: usize, stats: &LoadStats) {
     println!("\n=== Addon loading summary (before startup events) ===");
-    println!("{}", format_load_outcomes(addons.len(), stats));
+    println!("{}", format_load_outcomes(startup_count, stats));
     println!(
         "Total: {} Lua files, {} XML files, {} warnings",
         stats.total_lua, stats.total_xml, stats.total_warnings

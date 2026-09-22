@@ -35,6 +35,156 @@ fn write_addon_with_lua(root: &Path, name: &str, metadata: &str, lua: &str) -> P
     toc_path
 }
 
+#[test]
+fn third_party_lod_metadata_precedes_startup_and_explicit_load_runs_once() {
+    let temp = tempfile::tempdir().unwrap();
+    write_addon_with_lua(
+        temp.path(),
+        "Blizzard_LodMetadataDependency",
+        "## LoadOnDemand: 1\n",
+        "LodDependencyRuns = (LodDependencyRuns or 0) + 1",
+    );
+    let lazy_toc = write_addon_with_lua(
+        temp.path(),
+        "LazyMetadata",
+        "## LoadOnDemand: 1\n## Title: Deferred settings\n## Notes: Metadata before code\n## Dependencies: Blizzard_LodMetadataDependency\n",
+        "assert(LodDependencyRuns == 1); LazyMetadataRuns = (LazyMetadataRuns or 0) + 1",
+    );
+    let mut toc = std::fs::read_to_string(&lazy_toc).unwrap();
+    toc.push_str("panel.xml\n");
+    std::fs::write(&lazy_toc, toc).unwrap();
+    std::fs::write(
+        lazy_toc.parent().unwrap().join("panel.xml"),
+        r#"<Ui><Frame name="LazyMetadataPanel"><Scripts><OnLoad>LazyMetadataXmlRuns = (LazyMetadataXmlRuns or 0) + 1</OnLoad></Scripts></Frame></Ui>"#,
+    )
+    .unwrap();
+    write_addon_with_lua(
+        temp.path(),
+        "A_MetadataObserver",
+        "",
+        r#"
+        EagerMetadataRuns = (EagerMetadataRuns or 0) + 1
+        assert(C_AddOns.IsAddOnLoadOnDemand('LazyMetadata'))
+        assert(C_AddOns.IsAddOnLoadOnDemand('Blizzard_LodMetadataDependency'))
+        local name, title, notes, enabled = C_AddOns.GetAddOnInfo('LazyMetadata')
+        assert(name == 'LazyMetadata' and title == 'Deferred settings')
+        assert(notes == 'Metadata before code' and enabled)
+        assert(C_AddOns.GetAddOnEnableState('LazyMetadata') == 2)
+        assert(C_AddOns.GetAddOnDependencies('LazyMetadata') == 'Blizzard_LodMetadataDependency')
+        local loading, loaded = C_AddOns.IsAddOnLoaded('LazyMetadata')
+        assert(not loading and not loaded)
+        assert(LazyMetadataRuns == nil and LazyMetadataPanel == nil)
+        assert(LodDependencyRuns == nil)
+        MetadataAddonCount = C_AddOns.GetNumAddOns()
+        "#,
+    );
+    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
+    let mut stats = LoadStats::default();
+    load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+    env.exec(
+        r#"
+        assert(EagerMetadataRuns == 1)
+        assert(LazyMetadataRuns == nil and LazyMetadataXmlRuns == nil)
+        assert(LazyMetadataPanel == nil and LodDependencyRuns == nil)
+        assert(not C_AddOns.IsAddOnLoaded('Blizzard_LodMetadataDependency'))
+        assert(C_AddOns.LoadAddOn('LazyMetadata'))
+        local loading, loaded = C_AddOns.IsAddOnLoaded('LazyMetadata')
+        assert(loading and loaded and LazyMetadataRuns == 1)
+        assert(LazyMetadataXmlRuns == 1 and LazyMetadataPanel:GetName() == 'LazyMetadataPanel')
+        assert(LodDependencyRuns == 1)
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_LodMetadataDependency'))
+        assert(C_AddOns.GetNumAddOns() == MetadataAddonCount)
+        local name, title, notes, enabled = C_AddOns.GetAddOnInfo('LazyMetadata')
+        assert(name == 'LazyMetadata' and title == 'Deferred settings')
+        assert(notes == 'Metadata before code' and enabled)
+        assert(C_AddOns.IsAddOnLoadOnDemand('LazyMetadata'))
+        assert(C_AddOns.GetAddOnDependencies('LazyMetadata') == 'Blizzard_LodMetadataDependency')
+        assert(C_AddOns.LoadAddOn('LazyMetadata'))
+        assert(LazyMetadataRuns == 1 and LazyMetadataXmlRuns == 1 and LodDependencyRuns == 1)
+        assert(C_AddOns.GetNumAddOns() == MetadataAddonCount and EagerMetadataRuns == 1)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(stats.success_count, 1);
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn third_party_disabled_lod_metadata_retains_enable_state_and_dependencies() {
+    let temp = tempfile::tempdir().unwrap();
+    write_addon_with_lua(
+        temp.path(),
+        "DisabledLazyMetadata",
+        "## LoadOnDemand: 1\n## Dependencies: AbsentLibrary\n",
+        "error('disabled LoD files must not execute')",
+    );
+    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
+    let overrides = HashMap::from([("DisabledLazyMetadata".to_string(), false)]);
+    let mut stats = LoadStats::default();
+    load_discovered_addons(&env, &addons, &mut None, Some(&overrides), &mut stats);
+    env.exec(
+        r#"
+        assert(C_AddOns.IsAddOnLoadOnDemand('DisabledLazyMetadata'))
+        local name, _, _, enabled, reason = C_AddOns.GetAddOnInfo('DisabledLazyMetadata')
+        assert(name == 'DisabledLazyMetadata' and not enabled and reason == 'DISABLED')
+        assert(C_AddOns.GetAddOnEnableState('DisabledLazyMetadata') == 0)
+        assert(C_AddOns.GetAddOnDependencies('DisabledLazyMetadata') == 'AbsentLibrary')
+        local before = C_AddOns.GetNumAddOns()
+        local loaded, failure = C_AddOns.LoadAddOn('DisabledLazyMetadata')
+        assert(not loaded and failure == 'DISABLED')
+        assert(not C_AddOns.IsAddOnLoaded('DisabledLazyMetadata'))
+        assert(C_AddOns.GetNumAddOns() == before)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(stats.success_count, 0);
+    assert_eq!(stats.fail_count, 0);
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn third_party_lod_discovery_preserves_screen_game_and_interface_filters() {
+    let temp = tempfile::tempdir().unwrap();
+    for (name, metadata) in [
+        ("GameLazy", "## AllowLoad: Game\n"),
+        ("GlueLazy", "## AllowLoad: Glue\n"),
+        (
+            "ExcludedLazy",
+            "## ExcludeLoadGameType: mainline, classic\n",
+        ),
+    ] {
+        write_addon_with_lua(
+            temp.path(),
+            name,
+            &format!("## LoadOnDemand: 1\n{metadata}"),
+            "error('discovery must not run Lua')",
+        );
+    }
+    write_addon_with_toc(
+        temp.path(),
+        "IncompatibleLazy",
+        "## Interface: 999999\n## LoadOnDemand: 1\nmain.lua\n",
+    );
+    let game = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let glue = scan_addons(temp.path(), &[], ScreenKind::CharacterSelect);
+    assert_eq!(
+        game.iter()
+            .map(|(name, _)| name.as_str())
+            .collect::<Vec<_>>(),
+        ["GameLazy"]
+    );
+    assert_eq!(
+        glue.iter()
+            .map(|(name, _)| name.as_str())
+            .collect::<Vec<_>>(),
+        ["GlueLazy"]
+    );
+}
+
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn startup_bootstrap_runs_inline_without_full_load_or_event() {
@@ -163,7 +313,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
     let mut stats = LoadStats::default();
-    load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+    let startup_count = load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
 
     let state = env.state().borrow();
     let recorded: HashSet<_> = state
@@ -204,7 +354,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
         "file, callback, nested child, and missing dependency must not report one failure"
     );
     assert_eq!(
-        format_load_outcomes(addons.len(), &stats),
+        format_load_outcomes(startup_count, &stats),
         "Loaded: 4/5 addons\nFailed during loading: 4\nLoad failures: 1\nLoaded with Lua errors during loading: 3"
     );
 }
