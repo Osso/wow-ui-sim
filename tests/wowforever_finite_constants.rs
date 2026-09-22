@@ -9,6 +9,38 @@ fn load(env: &WowLuaEnv, path: &str) {
 }
 
 #[test]
+fn forever_finite_events_register_deliver_and_reject_unknown() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local events = {"CHAT_MSG_COLLECTED_APPEARANCE", "UNIT_AURA_BLOCKED"}
+        for _, event in ipairs(events) do
+            local frame = CreateFrame("Frame")
+            local received = {}
+            frame:SetScript("OnEvent", function(self, name, first, second)
+                assert(self == frame)
+                received[#received + 1] = {name, first, second}
+            end)
+            frame:RegisterEvent(event)
+            assert(frame:IsEventRegistered(event), event)
+            A_Admin.FireEvent(event, "player", 42)
+            assert(#received == 1, event .. " callback missing")
+            assert(received[1][1] == event)
+            assert(received[1][2] == "player" and received[1][3] == 42)
+            frame:UnregisterEvent(event)
+            A_Admin.FireEvent(event, "player", 43)
+            assert(#received == 1, event .. " callback after unregister")
+        end
+        local frame = CreateFrame("Frame")
+        local unknown = "WOW_SIM_INVENTED_FOREVER_EVENT"
+        assert(not pcall(frame.RegisterEvent, frame, unknown))
+        assert(not frame:IsEventRegistered(unknown))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn forever_bag_index_enumerates_disjoint_bank_tabs() {
     let env = WowLuaEnv::new().unwrap();
     // Exact enumeration loop from BetterBags core/constants.lua at 411a6f6ee1ea.

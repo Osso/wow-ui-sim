@@ -30,6 +30,7 @@ pub fn is_registerable_event(name: &str) -> bool {
 // Forever extends the finite table with events published by its API docs.
 #[cfg(feature = "client-wowforever")]
 const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
+    "CHAT_MSG_COLLECTED_APPEARANCE",
     "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW",
     "DIEL_CYCLE_CHANGED",
     "DISCORD_GUILD_LOBBY_UPDATE",
@@ -52,6 +53,7 @@ const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
     "SHARD_TRANSFER_IMMINENT",
     "SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED",
     "SOCIAL_UI_SYSTEM_STATUS_UPDATED",
+    "UNIT_AURA_BLOCKED",
     "UNIT_HAPPINESS",
     "UNIT_PET_TRAINING_POINTS",
     "UNIT_PING_PIN_ADDED",

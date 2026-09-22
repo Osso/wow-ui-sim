@@ -41,6 +41,12 @@ Authoritative evidence: `Blizzard_APIDocumentationGenerated/BagIndexConstantsDoc
 
 Implementation: `src/c_api/forever_finite_constants.rs`, registered only for `client-wowforever`. Tests: `forever_bag_index_enumerates_disjoint_bank_tabs` and `forever_bag_index_preserves_non_bank_values_and_exact_metadata` in the existing grouped `tests/wowforever_finite_constants.rs` module. This is enum-publication coverage, not a full BetterBags load or proof of account-bank availability, purchased tabs, bank events, or money-display lifecycle.
 
+## Finite event registration
+
+Forever additionally accepts `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED`, published by cached `ChatInfoDocumentation.lua:1348–1351` and `UnitAuraDocumentation.lua:641–645`. Both belong to the sorted Forever-only event list; arbitrary unknown names remain rejected. Other profiles and the undocumented `PLAYER_EQUIPED_SPELLS_CHANGED` name remain unchanged.
+
+`forever_finite_events_register_deliver_and_reject_unknown` tests registration, injected callback delivery with payload preservation, unregistration, and unknown-name rejection in the existing grouped integration module. Injection proves simulator dispatch, not native event production or payload secrecy. The frozen pre-patch binary rejects both names (RED, isolated ledger `/tmp/forever-addon-audit/forever-finite-events-red-ww5p10a5/ledger.json`); compiled GREEN and addon replay remain pending.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.
