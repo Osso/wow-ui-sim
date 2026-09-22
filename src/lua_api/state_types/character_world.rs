@@ -158,6 +158,9 @@ pub struct PlayerState {
     pub power_type: i32,
     /// Secondary power pools keyed by Enum.PowerType value (e.g. Holy Power).
     pub secondary_powers: HashMap<i32, SecondaryPowerState>,
+    /// Forever simulator policy: target owning the last combo-point power input.
+    #[cfg(feature = "client-wowforever")]
+    pub combo_points_target_guid: Option<String>,
     pub in_combat: bool,
     pub is_resting: bool,
     pub money: i64,

@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Add bounded Forever GetComboPoints model
+
+Recorded the missing native API separately from shared-CVar audit contamination. Player secondary power remains the count source; one target-GUID assignment prevents stale UnitPower from being displayed on a different target. Explicit simulator guesses, unsupported-owner errors, and six unexecuted grouped regressions are documented in [[forever-combo-points]]. Parent owns compilation/runtime proof.
+
 ## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
 
 `2cb544376` adds the runtime-coverage matrix for the exact cached project set and links it from the comparison audit. Static comparisons remain non-runtime evidence; the inventory-wide compatibility goal stays open until projects and their major workflows have explicit runtime results. The selected Forever archive is hash-verified for 268 projects; ConsumableTracker's unavailable selected archive remains a blocker without substitution. See [runtime coverage](../forever-addon-runtime-coverage.md) and [[forever-addon-comparison]].

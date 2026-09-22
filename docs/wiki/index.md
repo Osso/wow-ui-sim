@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Model Forever target-bound combo points
+
+The CVar-enabled native ComboFrame exposes missing `GetComboPoints`; a clean fresh-data control only hides that inactive path. The bounded player-power/target-GUID model preserves UnitPower snapshots across target changes and leaves other profiles unchanged. Ownership/lifecycle guesses and unsupported nonplayer ownership are explicit; six grouped tests await parent compilation. See [[forever-combo-points]].
+
 ## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
 
 `2cb544376` adds the tracked per-project [runtime coverage matrix](../forever-addon-runtime-coverage.md) for all 269 cached projects. It keeps static comparison distinct from runtime acceptance and leaves the inventory goal open. The selected Forever package is hash-verified for 268 projects; ConsumableTracker's selected archive is unavailable and is not substituted. See [[forever-addon-comparison]].

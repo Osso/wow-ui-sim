@@ -569,6 +569,10 @@ fn set_player_power(state: &mut LuaState) -> LuaResult<u32> {
             st.player
                 .secondary_powers
                 .insert(pt, SecondaryPowerState { current: cur, max });
+            #[cfg(feature = "client-wowforever")]
+            if pt == super::real::combo_points::COMBO_POINTS_POWER_TYPE {
+                super::real::combo_points::bind_player_combo_points(&mut st);
+            }
             return Ok(0);
         }
         st.player.power_type = pt;

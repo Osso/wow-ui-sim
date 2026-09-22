@@ -123,6 +123,8 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
 
 fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::unit_probes::register_all(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    super::real::combo_points::register_all(lua)?;
     super::real::unit_interaction::register_all(lua)?;
     super::real::preferred_interact::register_all(lua)?;
     super::unit_misc::register_all(lua)?;
