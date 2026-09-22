@@ -8,15 +8,15 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 219,
+      "clean-startup": 220,
       "blocked-dependency": 3,
       "unloaded": 13,
-      "failed": 33,
+      "failed": 32,
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 9,
-      "not-run": 260
+      "bounded-pass": 10,
+      "not-run": 259
     }
   },
   "projects": [
@@ -2398,11 +2398,11 @@
       "fileId": 8925606,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
-        "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
-        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
-        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/player-swing-startup-controls-ledger.json",
+        "binaryBuildRevision": "ff19ecca24d398580584d08f258e9a4134b2abae",
+        "binarySha256": "3787d3968c82259143340b64f9c2e867889aecbac8b0552428d2ca882dd51c4c",
         "packageFileIds": [
           8925606
         ],
@@ -2420,13 +2420,18 @@
             "reason": ""
           }
         ],
-        "errorRecords": 4,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "@Interface/AddOns/AppelSwingsForever/Swing.lua: AppelSwingsForeverCoreFrame:RegisterEvent(): AppelSwingsForeverCoreFrame:RegisterEvent(): Attempt to register unknown event \"PLAYER_SWING\""
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "bounded-pass",
+        "covered": [
+          "Injected documented main-hand4second and ranged6second events; real addon fills activate/progress; independent expiry clears fills while idle tracks remain shown"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/appel-swing-final-gui-olh1svgs/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/appelswings-event-workflow.lua",
+        "binaryBuildRevision": "ff19ecca24d398580584d08f258e9a4134b2abae",
+        "limitations": "22second GUI run; timeout124 after DONE. Simulated injected events only, no gameplay/range-check producer, off-hand visual or rendered-pixel proof. Earlier0.2second timer assertion was timing-fragile and excluded."
       },
       "packageOnlyBaseline": {
         "status": "unloaded",
@@ -2482,6 +2487,33 @@
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
         "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+      },
+      "priorSwingRegistrationAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8925606
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AppelSwingsForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/AppelSwingsForever/Swing.lua: AppelSwingsForeverCoreFrame:RegisterEvent(): AppelSwingsForeverCoreFrame:RegisterEvent(): Attempt to register unknown event \"PLAYER_SWING\""
       }
     },
     {
