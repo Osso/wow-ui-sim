@@ -26,7 +26,7 @@ A separate DBM-GUI replay at `55ee20d7` observes metadata, dependency and LoD st
 
 Replayed exactly the 72 previously unloaded/partial projects with `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` and the `55ee20d7` binary, which includes deferred-addon metadata registration. Result: 48 clean startups, 12 runtime failures, 12 still unloaded. Per-run data/WTF isolation preserved the shared host CVar hash. Default-interface attempts remain in each project's `priorDefaultInterfaceAttempt`.
 
-The historical explicit-interface checkpoint totals **209 clean startups, 44 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. Later producer replays at `b8f0982be` and exact-binary `ebff90517` reached **216 clean startups, 37 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. A later frozen `2c5bf78c7` replay adds DRaidFrames after its registered-template query, producing the current matrix: **217 clean startups, 36 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. ActionBarAuras, dgks, Angleur, Angleur NicheOptions, Chattynator, DrinkBot, EnhanceQoL, and DRaidFrames now clean-start in their recorded compositions. These mixed-revision/configuration observations are not a single current-build certification. Historical batches: `/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json` and `batch1.json`; producer ledgers: `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json` and `/tmp/forever-addon-runtime/draidframes-template-gqfplb1k/ledger.json`.
+The historical explicit-interface checkpoint totals **209 clean startups, 44 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. Later producer replays at `b8f0982be` and exact-binary `ebff90517` reached **216 clean startups, 37 failed, 12 unloaded, three dependency-blocked, one unavailable archive**. A frozen `2c5bf78c7` replay added DRaidFrames after its registered-template query. The later frozen `5a1cc851` replay re-used 24 valid prior outcomes and retried only 12 launcher failures caused by invalid `env` argument ordering; exit 127 was never counted as an addon failure. The current mixed-provenance matrix is **219 clean startups, 33 failed, 13 unloaded, three dependency-blocked, one unavailable archive**. These observations are not a single current-build certification. Historical batches: `/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json` and `batch1.json`; later replay evidence: `/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json` and `/tmp/forever-addon-runtime/failed-replay-5a1-env-corrected-ledger.json`.
 
 Ellesmere's expanded startup replay exposes a taint error in `AuraKit.RunJob`; an identical isolated replay with frozen `c1e830ffa` reproduces the same 56 occurrences. Thus the error is not introduced by the formatter/LoD commits. Prior six-workflow evidence remains scoped historical proof, not acceptance of this expanded configuration.
 
@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records eight bounded interaction passes and 261 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records nine bounded interaction passes and 260 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -64,7 +64,13 @@ An earlier probe incorrectly required normal `SlashCmdList` lookup to return nil
 
 The named-container lifecycle fix retains separate player and target AuraContainers. Frozen build `748e3668775274cf26facb6b5587237effb36935` observes the real player-container workflow after `A_Admin.AddBuff`: duration text changes from `7s` to `6s`, `RemoveBuff` hides the aura button, and the probe emits `DONE`. The 20-second process timeout (`124`) is teardown after completion, not a test failure; collected Lua errors are empty and the shared host CVar hash is unchanged. Evidence: `/tmp/forever-addon-runtime/aba-duration-automatic-4rgzhxxk/{ledger.json,stdout}`.
 
-This covers only the modeled helpful player-buff create/countdown/removal path. Target debuffs, color behavior, rendered pixels, broader ActionBarAuras settings, native timing parity, and final scheduler formatter-error isolation/independent verification remain open.
+This covers only the modeled helpful player-buff create/countdown/removal path. Target debuffs, color behavior, rendered pixels, broader ActionBarAuras settings, and native timing parity remain open.
+
+## CustomMinimapArrow bounded rotation interaction
+
+Frozen `5a1cc851` supplies nullable player facing to the unchanged addon. In a 15-second GUI-style replay, its arrow rotates from `0.5` to `2.5` radians; after player facing becomes unknown, the arrow retains `2.5`. The probe emits `DONE`, records zero Lua errors, and leaves host CVars unchanged. Exit `124` is bounded teardown after completion: `/tmp/forever-addon-runtime/minimap-facing-gui-h7afvjws/{ledger.json,stdout}`.
+
+This covers two modeled finite angles and unknown-state retention only. Default/native facing behavior, player movement, minimap instance rotation, visual pixels, and broader addon settings remain untested. Independent verification of the player-facing implementation is still pending.
 
 ## Acceptance discipline
 
