@@ -67,7 +67,7 @@ Two grouped regressions assert exact two-value synchronous Admin-injected delive
 
 Forever also accepts the documented synchronous `PLAYER_SWING_RANGE_UPDATE(swingType, isInRange, checksRange)` event (`SwingTimerDocumentation.lua:54–63`). Both boolean positions retain false/true values independently; `checksRange=false` does not mean an out-of-range observation. Registration survives bootstrap cleanup, and arbitrary unknown events remain rejected.
 
-Frozen `c818f1b9` reproduces rejection in Blizzard SwingTimer OnLoad and the focused delivery probe: `/tmp/forever-addon-audit/swing-range-red-u9ot06pm/ledger.json`. Grouped delivery/cleanup verification remains pending. This models registration and injected payload delivery only—not range detection, `C_SwingTimer` methods, or a gameplay event producer.
+Frozen `c818f1b9` reproduces rejection in Blizzard SwingTimer OnLoad and the focused delivery probe: `/tmp/forever-addon-audit/swing-range-red-u9ot06pm/ledger.json`. At clean `ff19ecca24d398580584d08f258e9a4134b2abae`, the grouped finite-constants target passes 13/13, including range payload and cleanup tests; source hashes match before/after the build. Evidence: `/tmp/forever-addon-audit/swing-range-green-8s22zw34/{build,test}-ledger.json`. Independent final verification and parent GUI replay remain pending. This models registration and injected payload delivery only—not range detection, `C_SwingTimer` methods, or a gameplay event producer.
 
 ## Verification
 
