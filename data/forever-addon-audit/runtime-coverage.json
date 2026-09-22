@@ -8,14 +8,14 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "not-run": 265,
+      "not-run": 264,
       "blocked-package": 1,
-      "bounded-pass": 2,
+      "bounded-pass": 3,
       "profile-excluded-or-not-registered": 1
     },
     "interactionStatuses": {
-      "not-run": 267,
-      "bounded-pass": 2
+      "not-run": 266,
+      "bounded-pass": 3
     }
   },
   "projects": [
@@ -24,11 +24,19 @@
       "fileId": 8933365,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "bounded-pass",
+        "revision": "0e7af0df7ec0da2dea2c9053e21ea368f6a9e82a",
+        "archiveFileId": 8933365,
+        "evidence": "/tmp/forever-addon-runtime/abattis-pugboard-8933365-m9brrp30/startup-ledger.json"
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "bounded-pass",
+        "covered": [
+          "/pugboard open",
+          "/pugboard close"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/abattis-pugboard-8933365-m9brrp30/startup-ledger.json",
+        "limitations": "Does not cover PugBoard group/search/network workflows."
       }
     },
     {
