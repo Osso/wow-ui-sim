@@ -30,7 +30,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify frozen `963a3b791` BigWigs sound-registration replay. The observed replay has zero reset warnings; audio playback remains out of scope.
+- [x] Independent audit passes focused loader/API checks 3/3, warning-free formatting/default checks, readability, and the exact 442-file BigWigs replay: `/tmp/forever-addon-audit/verify-ui-file-assets-ledger.json`. Frozen `963a3b791` behavior is reused at final source `5913de433` because that final change only removes an unused classification payload.
 
 ## Out of scope
 

@@ -7402,13 +7402,13 @@
         "priorInteractionEvidence": "/tmp/forever-addon-runtime/bigwigs-options-readability-kq4mjk0g/ledger.json",
         "limitations": "CASC-disabled 73 missing textures remain. Eight standard-only encounter roots excluded. No pixels, texture correctness, audio playback, raid/encounter, native, persistence, or all-root startup acceptance.",
         "priorFailureEvidence": "/tmp/forever-addon-runtime/bigwigs-options-workflow-alvjn6q_/ledger.json",
-        "outputParsingLimitation": "Historical 0bee9e939 output had five missing-custom-sound chat warnings after the empty Lua-error JSON array, so the generic parser remains incomplete for that output. Frozen 963a3b791 sound-asset replay has zero reset warnings; independent verification remains pending.",
+        "outputParsingLimitation": "Historical 0bee9e939 output had five missing-custom-sound chat warnings after the empty Lua-error JSON array, so the generic parser remains incomplete for that output. Independent verification confirms frozen 963a3b791 sound-asset replay has zero reset warnings; final source 5913de433 differs only by an unused classification payload cleanup.",
         "soundAssetEvidence": "/tmp/forever-addon-runtime/bigwigs-sound-assets-public-_wheduwi/ledger.json",
         "soundAssetFixture": "tools/forever-addon-fixtures/bigwigs-sound-assets-workflow.lua",
         "soundAssetFixtureRevision": "1618b532c",
         "soundAssetBinaryBuildRevision": "963a3b79112454ca8af6148d10f770f7093f0d6f",
         "soundAssetBinarySha256": "2f24d4f37840873536bd6fa68f785a3f11e8606969eb32f5e552e644b2d72a13",
-        "soundAssetVerification": "independent verification pending: /tmp/forever-addon-audit/verify-ui-file-assets-ledger.json"
+        "soundAssetVerification": "/tmp/forever-addon-audit/verify-ui-file-assets-ledger.json (PASS: focused loader/API 3/3, fmt/default check warning-free, exact 442-file replay; frozen 963a3b791 reused because final 5913de433 only removes an unused classification payload)"
       },
       "packageOnlyBaseline": {
         "status": "failed",
