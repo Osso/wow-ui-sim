@@ -410,6 +410,7 @@ struct AddonTiming {
 }
 
 struct AddonMetadata {
+    addon_dir: Option<PathBuf>,
     title: String,
     notes: String,
     metadata: HashMap<String, String>,
@@ -422,6 +423,7 @@ struct AddonMetadata {
 fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
     let Some(toc) = TocFile::from_file(toc_path).ok() else {
         return AddonMetadata {
+            addon_dir: None,
             title: name.to_string(),
             notes: String::new(),
             metadata: HashMap::new(),
@@ -433,6 +435,7 @@ fn parse_addon_metadata(name: &str, toc_path: &Path) -> AddonMetadata {
     };
 
     AddonMetadata {
+        addon_dir: Some(toc.addon_dir.clone()),
         title: toc
             .metadata
             .get("Title")
@@ -508,6 +511,7 @@ fn register_or_update_addon(env: &WowLuaEnv, name: &str, metadata: AddonMetadata
         .iter_mut()
         .find(|addon| addon.folder_name == name)
     {
+        addon.addon_dir = metadata.addon_dir;
         addon.title = metadata.title;
         addon.notes = metadata.notes;
         addon.enabled = enabled;
@@ -521,6 +525,7 @@ fn register_or_update_addon(env: &WowLuaEnv, name: &str, metadata: AddonMetadata
 
     state.addons.push(AddonInfo {
         folder_name: name.to_string(),
+        addon_dir: metadata.addon_dir,
         title: metadata.title,
         notes: metadata.notes,
         enabled,

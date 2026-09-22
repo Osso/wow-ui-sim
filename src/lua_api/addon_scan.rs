@@ -25,6 +25,7 @@ fn addon_info_from_toc(name: &str, toc: Option<&TocFile>) -> AddonInfo {
         .unwrap_or(false);
     AddonInfo {
         folder_name: name.to_string(),
+        addon_dir: Some(t.addon_dir.clone()),
         title,
         notes,
         enabled: true,

@@ -103,6 +103,8 @@ pub struct AddonPerformanceMessageKey {
 pub struct AddonInfo {
     /// Folder name (used as addon identifier).
     pub folder_name: String,
+    /// Directory selected by the loader for this addon's TOC and loose assets.
+    pub addon_dir: Option<std::path::PathBuf>,
     /// Display title from TOC metadata.
     pub title: String,
     /// Notes/description from TOC metadata.
@@ -139,6 +141,7 @@ impl Default for AddonInfo {
     fn default() -> Self {
         Self {
             folder_name: String::new(),
+            addon_dir: None,
             title: String::new(),
             notes: String::new(),
             enabled: false,

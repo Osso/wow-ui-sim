@@ -426,6 +426,7 @@ fn update_addon_metadata(state: &mut SimState, addon_idx: u16, folder_name: &str
         return;
     };
 
+    addon.addon_dir = Some(toc.addon_dir.clone());
     addon.title = toc
         .metadata
         .get("Title")
