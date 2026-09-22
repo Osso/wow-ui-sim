@@ -4,8 +4,7 @@ end
 assert(Bagmeter_Used == 0, "BagMeter must display free slots")
 assert(Bagmeter_Total == 1 and Bagmeter_Subtotal == 1 and Bagmeter_Subcount == 1,
     "BagMeter free/total display settings differ")
-assert(Bagmeter_CountCraft == 1 and Bagmeter_CountAmmo == 1,
-    "BagMeter must include all bag types")
+assert(C_Container.GetContainerNumSlots(5) == 0, "unexpected reagent bag capacity")
 
 local bag0 = assert(BM_Bag0Txt, "bag 0 text missing")
 local total = assert(BM_BagXTxt, "aggregate text missing")
