@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 13 bounded interaction passes, two failed workflows and 254 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 14 bounded interaction passes, one failed workflow and 254 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -102,9 +102,9 @@ AccentChat `8935580` registers its actual pre-send callback. With the explicit o
 
 The fixture injects `ChatFrame.OnEditBoxPreSendText` with a synthetic editbox; it does not call the translator directly. Network send, settings UI, other accents, secret/lockdown handling and restart persistence remain untested. An initial run omitted the required interface switch and did not load the addon; it is excluded rather than credited as a workflow failure.
 
-## Aurarium money-event blocker
+## Aurarium bounded money/overview interaction
 
-Aurarium `8915742` with cached ArcaneWizardLibrary `8915500` records balances `12345→54321`, opens its overview through `/aurarium overview`, and closes it through the real close button. All fixture assertions reach `DONE`, but the event dispatch also raises Blizzard StableUI errors; clean workflow acceptance is withheld. Frozen `fffb25ae4` publishes the documented pet-slot constants, resolving the previous line75 failure. `PLAYER_MONEY` now reaches `Blizzard_StableUI/Camelot/Blizzard_StableUI.lua:219`, where the placeholder `C_StableInfo.GetNumStableSlots()` returns nil. A fresh no-addons event control reproduces that error, so it is not attributed to Aurarium. Evidence: `/tmp/forever-addon-runtime/stable-aurarium-30j_53l9/ledger.json` and `/tmp/forever-addon-runtime/stable-money-control-77lru858/ledger.json`. Persistence, currencies, warband aggregation and rendered output remain untested.
+Aurarium `8915742` with cached ArcaneWizardLibrary `8915500` records injected balances `12345→54321`, opens its overview through `/aurarium overview`, and closes it through the real close button. Frozen `a6fbf432e` reaches `DONE` with zero Lua errors; a fresh no-addons money-event control also returns `[]`. Documented pet-slot constants and the Forever StableInfo read model resolve the two previously reproduced shared Blizzard errors without changing either addon. The model's empty, fully unlocked two-slot default and count interpretation are explicit simulator guesses, not native evidence. Evidence: `/tmp/forever-addon-runtime/stable-read-aurarium-vwhnppg7/ledger.json` and `/tmp/forever-addon-runtime/stable-read-money-control-trow38aa/ledger.json`. Host CVars remain unchanged. Persistence, currencies, warband aggregation, pet mutations and rendered output remain untested.
 
 ## Acceptance discipline
 

@@ -15,8 +15,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 13,
-      "failed": 2,
+      "bounded-pass": 14,
+      "failed": 1,
       "not-run": 254
     }
   },
@@ -3760,16 +3760,21 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "failed",
+        "status": "bounded-pass",
         "covered": [
-          "Money history updates12345\u219254321 and actual overview open/close assertions reach DONE, but shared Blizzard money-event errors invalidate clean acceptance"
+          "Injected money changes12345\u219254321 update balance history through PLAYER_MONEY",
+          "Actual overview slash-open and close-button click complete with DONE and zero Lua errors"
         ],
-        "evidence": "/tmp/forever-addon-runtime/stable-aurarium-30j_53l9/ledger.json",
-        "controlEvidence": "/tmp/forever-addon-runtime/stable-money-control-77lru858/ledger.json",
+        "evidence": "/tmp/forever-addon-runtime/stable-read-aurarium-vwhnppg7/ledger.json",
+        "controlEvidence": "/tmp/forever-addon-runtime/stable-read-money-control-trow38aa/ledger.json",
         "fixture": "tools/forever-addon-fixtures/aurarium-money-workflow.lua",
-        "binaryBuildRevision": "fffb25ae44f7b40276ac043f6bacd07d0c7ed1f6",
-        "currentFailure": "Documented pet-slot constants resolve the previous line75 failure; PLAYER_MONEY now reaches Blizzard_StableUI/Camelot/Blizzard_StableUI.lua219, where C_StableInfo.GetNumStableSlots() returns nil. Reproduced without addons.",
-        "limitations": "Not attributed to Aurarium; no clean workflow acceptance, native gameplay/persistence/currency/warband/rendering proof."
+        "binaryBuildRevision": "a6fbf432e9cbf669d1001895864ef984f05af84a",
+        "limitations": "Simulator-injected workflow only; stable scenario defaults inferred. No native gameplay, persistence, currencies, warband aggregation or rendering proof.",
+        "binarySha256": "9b418d8ec0ca6fd46d59f2786e1ac6a66214fa0e5d3cb0a4a28542b12d6c4e5f",
+        "priorFailureEvidence": [
+          "/tmp/forever-addon-runtime/aurarium-money-lb9bsm7s/ledger.json",
+          "/tmp/forever-addon-runtime/stable-aurarium-30j_53l9/ledger.json"
+        ]
       },
       "packageOnlyBaseline": {
         "status": "failed",
