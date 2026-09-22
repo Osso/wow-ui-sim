@@ -24,6 +24,12 @@ The core stores `start`, base duration, and rate. Its rate/modifier formulas, ze
 
 The same capability exposes the existing player channel lifecycle and uses numeric cast-bar IDs in cast/channel query tuples consistent with update and stop payloads. `tests/unit_cast_durations.rs` recorded RED 0/5 before the producer work; integrated GREEN and real Ellesmere acceptance remain pending. This establishes simulator behavior, not native timing, secrecy, other-unit state, or complete castbar conformance.
 
+## Automatic duration-text binding boundary
+
+A real ActionBarAuras replay on September 22, 2026 reached an assigned, shown CustomAuraButton for a modeled player aura but observed no duration text. This falsified the earlier event/filter/container hypotheses: `UNIT_AURA` dispatch, candidate filtering, slot assignment, and aura-button visibility all occurred. The missing boundary is automatic duration-binding updates on engine ticks, distinct from earlier manual `UpdateFontString()` binding proof.
+
+`bf073db38` and follow-up `d6a3859e4` introduce scheduler-side binding work during engine OnUpdate processing. Verification remains pending; this wiki does not claim that the real addon duration text now advances or that its removal lifecycle works. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
+
 ## Sources
 
 - [Unit cast duration queries](../../specs/unit-cast-durations.md) — modeled query contract and explicit inference boundary.
@@ -35,4 +41,4 @@ The same capability exposes the existing player channel lifecycle and uses numer
 ## See Also
 
 - [[patch-12-1-5-api-audit]] — exact changed API occurrences and evidence boundary.
-- [Duration text binding](../../specs/duration-text-binding.md) — separate consumer path.
+- [Duration text binding](../../specs/duration-text-binding.md) — separate consumer path and pending automatic scheduler proof.
