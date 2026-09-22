@@ -21,7 +21,7 @@ Pinned current Retail, PTR, and Forever `SecondsFormatterSharedDocumentation.lua
 - [x] Store validated numeric modes independently per formatter; setters return no values and getters return exactly one number. Preserve mode `0` as numeric zero, not Lua truthiness.
 - [x] Reject nil, booleans, strings, fractional values, nonfinite values, and numbers outside `0..2` without changing the stored mode. This validation policy and initial `Preserve` mode are simulator guesses, not native-tested defaults/coercion.
 
-The real ActionBarAuras RED in `/tmp/forever-addon-runtime/main-batch-000-032.json` reaches `Core.lua:99` with the enum absent. The earlier slice added publication and configuration state only. `930726316` additionally implements modeled formatted whitespace effects through the opaque formatter and shared ICU backend, but its runtime and focused-test evidence is pending. It does not establish ActionBarAuras compatibility; the integrating caller must separately prove observable unit-string whitespace behavior, including locale override versus `StripIgnoreLocale`.
+The real ActionBarAuras RED in `/tmp/forever-addon-runtime/main-batch-000-032.json` reaches `Core.lua:99` with the enum absent. The earlier slice added publication and configuration state only. At `55ee20d7`, the isolated replay in `/tmp/forever-addon-runtime/actionbarauras-native-formatter-malg6_wg/ledger.json` advances past the `NumericFormatter` validation and prior `pairs(nil)` boundary, then fails during `Core.lua:37` because `C_Spell.GetBaseSpell` produces a nil spell ID. It remains a failed startup, not an interaction acceptance. The integrating caller must separately prove observable unit-string whitespace behavior, including locale override versus `StripIgnoreLocale`.
 
 ### Evaluation model (simulator assumptions)
 
@@ -57,12 +57,15 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 
 Focused development proof at `89fced131`: three new tests failed before implementation; the complete `seconds_formatter_configuration::` group passes six tests per profile with `--test integration --offline --no-default-features --features sound,gui,client-<ptr|retail>`. This includes the three existing configuration regressions. No broad, check, readability, or audit-artifact gates were run.
 
-At `c1e830ffa`, before the opaque-handle implementation, the isolated Forever integration build and `seconds_formatter_whitespace` filter passed 1/1. The selected Forever filter did not execute the cfg-excluded older-profile publication test. That evidence remains valid for the earlier enum/configuration slice only; it is not GREEN evidence for `930726316`'s opaque handle, ICU renderer, ActionBarAuras replay, restoration test, secret boundaries, or other profiles. All newly added focused and runtime tests remain pending.
+At `c1e830ffa`, before the opaque-handle implementation, the isolated Forever integration build and `seconds_formatter_whitespace` filter passed 1/1. The selected Forever filter did not execute the cfg-excluded older-profile publication test. That evidence remains valid for the earlier enum/configuration slice only.
+
+At `55ee20d7`, isolated Forever focused integration filters recorded `seconds_formatter_native::` 7/7, `seconds_formatter_configuration::` 7/7, `duration_text_binding_copy::` 11/11, and `numeric_rule_formatter::` 8/8 passing in `/tmp/forever-addon-audit/verify-930726316-focused-integration-ledger.json` and its linked stdout files. This is GREEN evidence for the modeled opaque-handle, formatter binding, secret-handoff, and numeric-regression behaviors under `gui,client-wowforever`; it is not native conformance, restoration proof, other-profile proof, or ActionBarAuras acceptance. The integration-target restoration filter ran zero tests; the correct lib-target attempt timed out before output, so restoration remains pending.
 
 ## Known gaps (current cycle)
 
-- [ ] Run the `930726316` focused formatter, restoration, and profile-preservation tests, then replay ActionBarAuras with isolated data. No newly added test or runtime replay is GREEN yet.
-- [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified.
+- [ ] Run the actual lib-target restoration test and profile-preservation tests. The focused Forever groups are GREEN, but restoration and non-Forever profiles remain pending.
+- [ ] Diagnose ActionBarAuras's post-formatter `C_Spell.GetBaseSpell` nil spell-ID failure, then replay its real workflow with isolated data. Its current replay is failed startup, not interaction acceptance.
+- [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified despite bounded simulator tests.
 - [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.
 - [ ] Existing numeric curves currently interpolate linearly even when configured as Step. These evaluators call that existing engine unchanged and explicitly reject a fractional interval result. Vendor AuraContainer's Step curve therefore still requires a separate curve-engine correction; no broader redesign was attempted.
 
