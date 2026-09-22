@@ -153,9 +153,10 @@ fn automatic_binding_secret_callback_keeps_taint_and_blocks_conversion_leaks() {
     env.exec(
         r#"
         tostring, tonumber = Originals[1], Originals[2]
+        -- Read the protected label before reading callback-tainted globals.
+        assert(Label:GetText() == 'opaque')
         assert(Observed and issecretvalue(Observed))
         assert(not ConversionLeak)
-        assert(Label:GetText() == 'opaque')
         local read = function() return Label:GetText() end
         debug.setobjecttaint(read, 'AutomaticBindingReader')
         assert(not pcall(read), 'secret text became public')
