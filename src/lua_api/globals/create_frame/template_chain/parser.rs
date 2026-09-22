@@ -484,7 +484,10 @@ fn parse_fast_literal_value(raw_value: &str) -> Option<FastLiteralValue<'_>> {
         Some(FastLiteralValue::Bool(false))
     } else if let Ok(number) = raw_value.parse::<f64>() {
         Some(FastLiteralValue::Number(number))
-    } else if raw_value != "self" && is_fast_handler_path(raw_value) {
+    } else if raw_value != "self"
+        && !raw_value.starts_with("self.")
+        && is_fast_handler_path(raw_value)
+    {
         Some(FastLiteralValue::Global(raw_value))
     } else {
         None

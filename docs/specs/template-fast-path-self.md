@@ -1,0 +1,29 @@
+# XML child OnLoad local `self`
+
+An XML child OnLoad assignment must resolve `self` and fields rooted at `self` against the executing child, not a same-named global. The fast-literal parser is in `src/lua_api/globals/create_frame/template_chain/parser.rs`.
+
+## What it must do
+
+- [x] Publishing bare `self` to a parent retains the child frame handle.
+- [x] Publishing `self.Part` to a parent retains the child's field even if `_G.self.Part` differs.
+- [x] A genuinely global dotted value remains available to an OnLoad parent assignment.
+
+## How it works
+
+- [XML template system](../xml-template-system.md)
+
+## Implementation inventory
+
+- `src/lua_api/globals/create_frame/template_chain/parser.rs` — accepts literal global paths only when they do not start at local `self`.
+
+## Tests asserting this spec
+
+- `src/loader/tests/runtime_template_parenting.rs` — child OnLoad bare-self, dotted-self, and dotted-global publication.
+
+## Known gaps (current cycle)
+
+- [ ] Other Lua local names and expressions outside these cases are not covered by this bounded parser regression.
+
+## Out of scope
+
+No broader local-name analysis, XML handler redesign, or changes to Blizzard/vendor code.
