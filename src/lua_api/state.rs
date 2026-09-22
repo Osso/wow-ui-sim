@@ -283,6 +283,9 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            // Explicit empty buyback scenario; not a native account-state default.
+            #[cfg(feature = "client-wowforever")]
+            merchant_buyback_items: Vec::new(),
             loot_slots: Vec::new(),
             last_loot_roll_choice: None,
             auction_browse_items: Vec::new(),

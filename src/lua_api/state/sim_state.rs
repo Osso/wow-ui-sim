@@ -273,6 +273,8 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    #[cfg(feature = "client-wowforever")]
+    pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
     pub loot_slots: Vec<BagItem>,
     pub last_loot_roll_choice: Option<i32>,
     pub auction_browse_items: Vec<u32>,
