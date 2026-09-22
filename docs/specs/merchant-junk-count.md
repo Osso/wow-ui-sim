@@ -4,11 +4,12 @@
 
 ## What it must do
 
-- [ ] Return exactly one numeric count on Forever, including zero for empty or non-junk inventory; retain registration after bootstrap cleanup.
-- [ ] Sum positive stack quantities only for known quality-0 items with positive `sell_price`, carried bags 0–4, and valid slots according to existing container capacities.
-- [ ] Exclude banks, unmodeled bags, invalid slots, nonpositive quantities, and bags marked with existing junk-exclusion flag 64.
-- [ ] Read current inventory without modifying it or sharing per-environment state; unknown metadata does not establish known-junk eligibility.
-- [ ] Preserve other profiles and pass the existing cached Blizzard merchant `BAG_UPDATE` regression.
+- [x] Return exactly one numeric count on Forever, including zero for empty or non-junk inventory; retain registration after bootstrap cleanup.
+- [x] Sum positive stack quantities only for known quality-0 items with positive `sell_price`, carried bags 0–4, and valid slots according to existing container capacities.
+- [x] Exclude banks, unmodeled bags, invalid slots, nonpositive quantities, and bags marked with existing junk-exclusion flag 64.
+- [x] Read current inventory without modifying it or sharing per-environment state; unknown metadata does not establish known-junk eligibility.
+- [ ] Preserve other profiles (registration is Forever-gated; other-profile verification remains separate).
+- [x] Pass the existing cached Blizzard merchant `BAG_UPDATE` regression.
 
 Eligibility and stack-unit counting are explicit simulator inferences, not native-verified rules. The required non-nil number is supported by cached `MerchantFrame.lua:210`; no broader sell-all behavior is implied.
 
@@ -32,7 +33,7 @@ Eligibility and stack-unit counting are explicit simulator inferences, not nativ
 
 - [ ] Positive junk through the live Lua/catalog path is unproven: generated item data and profession overrides currently contain no quality-0 entries. Positive behavior is covered by concrete metadata unit fixtures, not production catalog additions or metadata overrides.
 - [ ] Native eligibility/count-unit conformance and incomplete-catalog classifications remain unverified.
-- [ ] Targeted GREEN build and existing merchant event regression pending.
+Targeted development proof at `58b0072d1`: junk count 3/3, merchant repair/event 4/4, buyback 4/4. Single offline `gui,client-wowforever` build; exact commands, source hashes, test output and frozen simulator provenance: `/tmp/forever-addon-audit/merchant-junk-development-ledger.json`. Independent final checks and addon acceptance were not run.
 
 ## Out of scope
 
