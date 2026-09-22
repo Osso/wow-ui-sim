@@ -24,7 +24,9 @@ These are bounded simulator-model changes. They do not certify ActionBarAuras, A
 
 The September 22, 2026 ActionBarAuras interaction replay disproved a startup-only explanation: its player container, matching aura candidate, assigned AuraButton, and visibility state all existed after `A_Admin.AddBuff(19750, ...)`, yet the button's duration text remained nil. Manual binding coverage therefore did not establish automatic countdown behavior.
 
-`bf073db38` plus `d6a3859e4` add engine-tick scheduling for enabled duration text bindings. This is an in-progress simulator correction, not GREEN evidence: the source may not be treated as a passing ActionBarAuras duration/removal workflow until its targeted tests and a fresh isolated real-addon replay pass. See [duration text binding](../../specs/duration-text-binding.md).
+`bf073db38` plus `d6a3859e4` add engine-tick scheduling for enabled duration text bindings. At frozen build `748e3668`, a fresh isolated ActionBarAuras replay now observes `7s` → `6s`, then a hidden aura button after `RemoveBuff`, with the probe completion marker, no collected Lua errors, and an unchanged host CVar hash. Its timeout `124` follows completion. Evidence: `/tmp/forever-addon-runtime/aba-duration-automatic-4rgzhxxk/{ledger.json,stdout}`.
+
+This is a bounded helpful-player-buff path, not full ActionBarAuras or native conformance. Target debuffs, colors/rendering, timing parity, and final scheduler formatter-error isolation/independent verification remain pending. See [duration text binding](../../specs/duration-text-binding.md).
 
 ## Cursor transfer correction
 

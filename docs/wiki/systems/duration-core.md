@@ -28,7 +28,9 @@ The same capability exposes the existing player channel lifecycle and uses numer
 
 A real ActionBarAuras replay on September 22, 2026 reached an assigned, shown CustomAuraButton for a modeled player aura but observed no duration text. This falsified the earlier event/filter/container hypotheses: `UNIT_AURA` dispatch, candidate filtering, slot assignment, and aura-button visibility all occurred. The missing boundary is automatic duration-binding updates on engine ticks, distinct from earlier manual `UpdateFontString()` binding proof.
 
-`bf073db38` and follow-up `d6a3859e4` introduce scheduler-side binding work during engine OnUpdate processing. Verification remains pending; this wiki does not claim that the real addon duration text now advances or that its removal lifecycle works. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
+`bf073db38` and follow-up `d6a3859e4` introduce scheduler-side binding work during engine OnUpdate processing. At frozen build `748e3668`, an isolated ActionBarAuras replay observes the real helpful player-buff path: `7s` becomes `6s`, `RemoveBuff` hides the assigned aura button, and the probe completes with no collected Lua errors. The 20-second process timeout occurs after completion; the shared host CVar hash is unchanged. Evidence: `/tmp/forever-addon-runtime/aba-duration-automatic-4rgzhxxk/{ledger.json,stdout}`.
+
+This is bounded simulator evidence only. Target-debuff and rendering paths, native timing parity, and final scheduler formatter-error isolation/independent verification remain pending. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
 
 ## Sources
 
@@ -41,4 +43,4 @@ A real ActionBarAuras replay on September 22, 2026 reached an assigned, shown Cu
 ## See Also
 
 - [[patch-12-1-5-api-audit]] — exact changed API occurrences and evidence boundary.
-- [Duration text binding](../../specs/duration-text-binding.md) — separate consumer path and pending automatic scheduler proof.
+- [Duration text binding](../../specs/duration-text-binding.md) — separate consumer path, bounded automatic-update proof, and pending final scheduler verification.

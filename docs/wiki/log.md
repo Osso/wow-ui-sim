@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Observe bounded ActionBarAuras duration lifecycle
+
+Frozen build `748e3668` observes the unchanged ActionBarAuras player-buff path after automatic duration-binding scheduling: `7s` → `6s`, then hidden after removal, with a completion marker, no collected Lua errors, and unchanged host CVars. The 20-second timeout follows completion. Target-debuff, colors/rendering, native timing parity, and final scheduler formatter-error isolation/independent verification remain open. Updated [[duration-core]] and [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
 
 Cached Buffalo/dgks failures trace to rilua rejecting unknown short-string escapes that the local Lua 5.1-derived Elune lexer accepts. User authorized publication: `15b52249` is published on `Osso/rilua` branch `fix-lua51-unknown-escapes`, and wow-ui-sim `b8f0982be` pins it. Development proof is 52 lexer tests plus one compile/execute regression; independent verification and addon replay remain pending. Added [[lua51-unknown-escapes]].
