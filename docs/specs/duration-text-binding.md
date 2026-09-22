@@ -32,6 +32,16 @@ These are explicitly **simulator guesses**, not Forever-client probe results. Th
 
 The existing formatter choice/clock/update model is not redesigned. General secret arithmetic, arbitrary userdata coercion, and native output-secrecy equivalence are not established. Native default SecondsFormatter behavior remains the existing bounded model, not newly claimed native formatting parity.
 
+## Automatic engine updates — inferred timing policy
+
+- Enabled bindings with a writable FontString update on the engine tick after frame OnUpdate handlers, so native aura assignment/configuration takes effect without explicit `UpdateFontString` calls.
+- New bindings, configuration writes, Assign/Copy, defaults, and re-enabling request an update on the next tick. Otherwise `updateInterval` measures accumulated engine elapsed time since the previous automatic update. Disabled bindings do not update; missed intervals are not replayed in a burst.
+- Duration-object clocks still determine the displayed remaining duration. The binding's existing default manual clock does not drive scheduler cadence. These timing choices are simulator policy, not native-probe results.
+- Scheduling state is private and independent from copied configuration. The existing weak-key binding registry must not retain otherwise unreachable handles or their display targets.
+- The engine invokes a privately retained bootstrap callback without clearing taint. Secret conversion captures, formatter callback taint, and secret-origin FontString read restrictions remain in force. Existing plain-input formatter error handling is unchanged; this slice does not redesign it.
+
+Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records six failing automatic-update cases before scheduler implementation, including the real native CustomAuraButton initializer/assignment. GREEN and independent acceptance remain pending.
+
 ## How it works
 
 - [Numeric rule formatter](numeric-rule-formatter.md)
@@ -39,11 +49,14 @@ The existing formatter choice/clock/update model is not redesigned. General secr
 
 ## Implementation inventory
 
-- `src/c_api/duration_text_binding.rs` — binding factory and configuration copy model.
+- `src/c_api/duration_text_binding.rs` — binding factory, configuration copy model, weak scheduling metadata, and private engine callback.
+- `src/lua_api/on_update.rs` — automatic binding updates after frame OnUpdate dispatch.
 - `src/c_api/mod.rs` — module declaration.
 - `src/lua_api/env_init/mod.rs` — initialization after existing bootstrap defaults and before secure-environment copying.
 
 ## Tests asserting this spec
+
+- `tests/duration_text_binding_tick.rs` — automatic native CustomAuraButton display, manual duration-clock progression, engine interval boundaries, disable/re-enable/configuration invalidation, independent copy/reset schedules, weak lifetime, and tainted callback/conversion boundaries.
 
 - `tests/duration_text_binding_copy.rs` — configuration/copy cases plus retained resources; the `duration_binding_secret_` cases cover duration → formatter → FontString, tainted readout, wrapped-number input, malicious userdata callback capture, and unsuppressed callback failure. New secret cases await integrating compilation/GREEN.
 - `tests/numeric_rule_formatter.rs::numeric_rule_formatter_secret_numbers_require_untainted_caller` — authenticated input, arbitrary userdata/wrapped-string rejection, and tainted-caller rejection; integrating GREEN pending.
@@ -64,4 +77,4 @@ Actual addon/SavedVariables startup returned `[]`, exit 0 after the separate dis
 
 ## Out of scope
 
-This retains existing best-effort formatting behavior. Native finalization, invalidation, metatable shape, ownership, and GC equivalence are not established; no finalizer or invalidation policy is added. Exact clocks, automatic scheduling, expiration policy, color-curve evaluation, and general secret-value enforcement remain outside this representation proof; only the explicitly guessed secret-duration handoff above is included.
+This retains existing best-effort formatting behavior. Native finalization, invalidation, metatable shape, ownership, and GC equivalence are not established; no finalizer or invalidation policy is added. Exact native clock/scheduling parity, expiration policy, color-curve evaluation, and general secret-value enforcement remain outside this proof. The bounded automatic engine scheduling and explicitly guessed secret-duration handoff above are included.

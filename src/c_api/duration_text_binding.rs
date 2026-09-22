@@ -1,14 +1,16 @@
 //! Userdata duration text binding handles exposed by C_DurationUtil.
 //!
-//! Configuration copying is modeled here. Existing formatting, clock, and
-//! update behavior is retained; this does not establish native timing or
-//! secret-value parity.
+//! Configuration copying and automatic engine-tick updates are modeled here.
+//! Tick cadence and first-update policy are inferred, not native-verified.
 
 use crate::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
 use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
+use crate::lua_api::methods::{call_function, registry_get, registry_set};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
+
+const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
@@ -86,11 +88,14 @@ do
         return text
     end
     local bindings = setmetatable({}, { __mode = "k" })
+    local nextBinding = next
     local configurationFields = {
         "duration", "fontString", "enabled", "updateInterval", "timeModifier",
         "expiredText", "zeroDurationText", "formatter", "textFormat", "clock",
         "textColorCurve", "textColorProperty",
     }
+    local scheduledFields = {textFormatComponents = true}
+    for _, field in ipairs(configurationFields) do scheduledFields[field] = true end
     local function require_binding(value)
         if type(value) ~= "userdata" or not bindings[value] then
             error("DurationTextBinding expected", 3)
@@ -127,9 +132,13 @@ do
         -- Native handles survive securecopy(options); configuration tables do not.
         local binding = newproxy(true)
         local metatable = getmetatable(binding)
+        local schedule = {dirty = true, elapsed = 0}
         metatable.__index = configuration
-        metatable.__newindex = configuration
-        bindings[binding] = true
+        metatable.__newindex = function(_, key, value)
+            configuration[key] = value
+            if scheduledFields[key] then schedule.dirty = true end
+        end
+        bindings[binding] = schedule
         function binding:Assign(other)
             require_binding(self)
             require_binding(other)
@@ -226,6 +235,21 @@ do
         return binding
     end
     set_default(durationUtil, "CreateDurationTextBinding", create_duration_text_binding)
+
+    -- This closure is retained only in the host registry, not a Lua global.
+    -- Cadence uses engine elapsed time; duration objects retain their own clocks.
+    return function(elapsed)
+        for binding, schedule in nextBinding, bindings do
+            if binding:IsEnabled() and binding:CanUpdateFontString() then
+                schedule.elapsed = schedule.elapsed + elapsed
+                if schedule.dirty or schedule.elapsed >= binding:GetUpdateInterval() then
+                    schedule.dirty = false
+                    schedule.elapsed = 0
+                    binding:UpdateFontString()
+                end
+            end
+        end
+    end
 end
 "#;
 
@@ -252,7 +276,20 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             wrap_secret_output,
         ),
     ];
-    lua.call_function(&bootstrap, &arguments)?;
+    let callback = lua.call_function(&bootstrap, &arguments)?;
+    let callback = callback.into_iter().next().ok_or_else(|| {
+        rilua::runtime_error("duration binding bootstrap did not return its scheduler")
+    })?;
+    registry_set(lua.state_mut(), SCHEDULER_KEY, callback);
+    Ok(())
+}
+
+/// Run after frame OnUpdate assignment, retaining callback taint and secret checks.
+pub(crate) fn tick(lua: &mut rilua::Lua, elapsed: f64) -> crate::Result<()> {
+    let callback = registry_get(lua.state(), SCHEDULER_KEY);
+    if callback != Val::Nil {
+        call_function(lua, callback, &[Val::Num(elapsed)])?;
+    }
     Ok(())
 }
 

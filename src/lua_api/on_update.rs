@@ -55,6 +55,8 @@ pub(crate) fn fire(
         timings.dispatch_handlers = started.elapsed();
     }
 
+    crate::c_api::duration_text_binding::tick(&mut env.rilua_mut(), elapsed)?;
+
     let started = Instant::now();
     advance_animation_groups(env, elapsed)?;
     timings.animation_groups = started.elapsed();
