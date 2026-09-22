@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Restore Slider value callbacks
 
-ClassicCastBarForever exposed missing simulator `Slider:SetValue` delivery: its slider value changed while `OnValueChanged` did not update addon scale, cast bar, or CVar. `20318baf7` and `3d6017fe3` dispatch changed clamped values through existing bindings after widget-state borrowing is released, passing documented mouse-event boolean and preserving same-value suppression; StatusBars are unchanged. GREEN verification and unchanged-addon settings replay remain pending. See [[forever-addon-comparison]].
+ClassicCastBarForever exposed missing simulator `Slider:SetValue` delivery: its slider value changed while `OnValueChanged` did not update addon scale, cast bar, or CVar. `20318baf7` and `3d6017fe3` dispatch changed clamped values through existing bindings after widget-state borrowing is released, passing documented mouse-event boolean and preserving same-value suppression; StatusBars are unchanged. Independent proof reuses 9/9 focused tests, passes formatting/default offline checking and direct StatusBar regression. Frozen unchanged ClassicCastBar completes scale `1 → 1.35 → 1`, icon/reset and `DONE` with no Lua errors; no-addons control returns `[]`. Mouse dragging, native timing/security, pixels, navigation and persistence remain unproven; inventory acceptance stays open. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 

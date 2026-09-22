@@ -44,7 +44,7 @@ The unchanged ClassicCastBar settings slider installed `OnValueChanged`, but `Se
 
 `20318baf7` adds focused regressions and `3d6017fe3` synchronously dispatches existing pre/normal/post `OnValueChanged` bindings after releasing widget-state borrowing. Handlers receive the frame, clamped value, and documented `treatAsMouseEvent` boolean; same clamped values remain suppressed. Handler failures use the established error route and do not stop later bindings. StatusBars continue through their existing value path.
 
-This is a bounded callback binding model, not a new mouse-drag producer or native timing/security claim. Development GREEN, independent verification, and unchanged ClassicCastBar scale/icon/reset workflow replay remain pending.
+This is a bounded callback binding model, not a new mouse-drag producer or native timing/security claim. Independent proof reuses 9/9 focused slider tests, passes formatting/default offline checking, and includes a direct StatusBar regression: `/tmp/forever-addon-audit/verify-slider-value-ledger.json`. Frozen `wow-sim-3d6017fe` runs unchanged ClassicCastBar `8909724` through scale `1 → 1.35 → 1`, icon toggles, reset and `DONE` with no Lua errors; the matching no-addons control returns `[]`: `/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json` and `/tmp/forever-addon-runtime/slider-control-0uwemvbq/ledger.json`. Mouse dragging, native timing/security, rendered pixels, settings navigation and restart persistence remain unproven; the inventory stays open.
 
 ## Automatic duration-binding follow-up
 

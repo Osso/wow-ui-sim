@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Restore Slider value callbacks
 
-`20318baf7` and `3d6017fe3` close the observed ClassicCastBar setter boundary: changed clamped Slider values now synchronously deliver existing `OnValueChanged` bindings after state borrowing is released. Payload includes self, value, and documented mouse-event boolean; unchanged values remain suppressed, error routing continues later bindings, and StatusBars are untouched. Development GREEN, independent proof, and unchanged-addon settings replay remain pending. Updated [[forever-addon-comparison]].
+`20318baf7` and `3d6017fe3` close the observed ClassicCastBar setter boundary: changed clamped Slider values now synchronously deliver existing `OnValueChanged` bindings after state borrowing is released. Payload includes self, value, and documented mouse-event boolean; unchanged values remain suppressed, error routing continues later bindings, and StatusBars are untouched. Independent verification reuses 9/9 focused tests, passes formatting/default offline checking and direct StatusBar regression. Frozen unchanged ClassicCastBar completes scale `1 → 1.35 → 1`, icon/reset and `DONE` with no Lua errors; no-addons control returns `[]`. Mouse dragging, native timing/security, pixels, navigation and persistence remain unproven; inventory acceptance stays open. Updated [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 

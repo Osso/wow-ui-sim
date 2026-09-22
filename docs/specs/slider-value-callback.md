@@ -30,11 +30,13 @@ The cached Forever `SimpleSliderAPIDocumentation.lua` documents `SetValue(value,
 - `set_value_dispatches_intrinsic_bindings_after_reported_errors`
 - `set_value_updates_castbar_style_scale_and_cvar_consumer`
 
-Frozen `d1e2487f` executes identical test bodies and XML intrinsic templates: four expected missing-dispatch failures. Committed producer `3d6017fe3` passes all nine grouped slider tests, including the four new callbacks and five existing slider regressions. Independent verification and unchanged-addon replay remain pending. Commands, source hashes and frozen executable provenance: `/tmp/forever-addon-audit/slider-value-development-ledger.json`.
+Frozen `d1e2487f` executes identical test bodies and XML intrinsic templates: four expected missing-dispatch failures. Committed producer `3d6017fe3` passes all nine grouped slider tests, including the four new callbacks and five existing slider regressions. Independent verification reuses that 9/9 proof, passes `cargo fmt --check` and default `cargo check --offline`, and runs a direct StatusBar regression: `/tmp/forever-addon-audit/verify-slider-value-ledger.json`.
+
+Frozen `3d6017fe` runs unchanged ClassicCastBar `8909724` through scale `1 → 1.35 → 1`, icon toggles, reset and `DONE` with no Lua errors; the no-addons control returns `[]`: `/tmp/forever-addon-runtime/classic-slider-workflow-q675457h/ledger.json` and `/tmp/forever-addon-runtime/slider-control-0uwemvbq/ledger.json`.
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify committed implementation and replay unchanged ClassicCastBar settings workflow.
+- [ ] Mouse dragging, settings navigation, casting behavior, rendered pixels and restart persistence remain unverified.
 
 ## Out of scope
 
