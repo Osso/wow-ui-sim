@@ -68,7 +68,10 @@ pub const EXPANSION_CONSTANTS: &[IntDef] = &[
     ("LE_EXPANSION_SHADOWLANDS", 8),
     ("LE_EXPANSION_DRAGONFLIGHT", 9),
     ("LE_EXPANSION_WAR_WITHIN", 10),
-    ("LE_EXPANSION_LEVEL_CURRENT", 11),
+    (
+        "LE_EXPANSION_LEVEL_CURRENT",
+        crate::client_profile::ACTIVE.current_expansion_level(),
+    ),
 ];
 
 // ============================================================================

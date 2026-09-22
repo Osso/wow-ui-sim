@@ -240,7 +240,12 @@ fn test_wrong_constant_snapshot_matches_expected_values() {
     let env = WowLuaEnv::new().unwrap();
 
     let expansion_level: i32 = env.eval("return LE_EXPANSION_LEVEL_CURRENT").unwrap();
-    assert_eq!(expansion_level, 11);
+    let expected_expansion = if cfg!(feature = "client-wowforever") {
+        0
+    } else {
+        11
+    };
+    assert_eq!(expansion_level, expected_expansion);
 
     let autocomplete: (i32, i32, i32, i32, i32, i32, i32) = env
         .eval(

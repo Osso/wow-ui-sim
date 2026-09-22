@@ -67,7 +67,7 @@ end
 
 if GetExpansionLevel == nil then
   function GetExpansionLevel()
-    return 10
+    return __WOW_EXPANSION_LEVEL__
   end
 end
 
@@ -230,7 +230,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let code = CLIENT_INFO_DEFAULTS_LUA
         .replace("__WOW_CLIENT_VERSION__", &version)
         .replace("__WOW_CLIENT_BUILD__", &build)
-        .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string());
+        .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string())
+        .replace(
+            "__WOW_EXPANSION_LEVEL__",
+            &crate::client_profile::ACTIVE.expansion_level().to_string(),
+        );
     lua.exec(&code)?;
     Ok(())
 }
@@ -253,7 +257,7 @@ mod tests {
                 end
                 if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
                 if GetRealmID() ~= 1 then return "realm_id" end
-                if GetExpansionLevel() ~= 10 then return "expansion" end
+                if GetExpansionLevel() ~= {} then return "expansion" end
                 if GetUpgradeExpansionLevel() ~= 80 then return "upgrade_expansion" end
                 if IsExpansionTrial() ~= false then return "expansion_trial" end
                 local isExpansionTrial, expansionTrialRemaining = GetExpansionTrialInfo()
@@ -279,7 +283,10 @@ mod tests {
                 if GetWebTicket() ~= nil then return "web_ticket" end
                 return "ok"
                 "#,
-            expected_version, expected_build, expected_interface
+            expected_version,
+            expected_build,
+            expected_interface,
+            crate::client_profile::ACTIVE.expansion_level()
         );
         let result: String = env
             .eval(&script)

@@ -90,6 +90,23 @@ pub const ACTIVE_INTERFACE_VERSION: u32 = 11507;
 pub const ACTIVE_INTERFACE_VERSION: u32 = 16001;
 
 impl ClientProfile {
+    /// Forever Classic identity is an inferred cached-addon compatibility policy,
+    /// not a native-client measurement. Preserve other profiles' existing values.
+    pub const fn current_expansion_level(self) -> i32 {
+        match self {
+            Self::WowForever => 0,
+            _ => 11,
+        }
+    }
+
+    /// Keep the legacy API's existing default outside the modeled Forever scope.
+    pub const fn expansion_level(self) -> i32 {
+        match self {
+            Self::WowForever => self.current_expansion_level(),
+            _ => 10,
+        }
+    }
+
     pub fn subdir(self) -> &'static str {
         match self {
             ClientProfile::Retail => "Retail",

@@ -3,6 +3,67 @@
 use std::path::{Path, PathBuf};
 use wow_ui_sim::toc::TocFile;
 
+#[test]
+fn expansion_identity_policy_preserves_other_profiles() {
+    use wow_ui_sim::client_profile::ClientProfile;
+
+    for profile in [
+        ClientProfile::Retail,
+        ClientProfile::Ptr,
+        ClientProfile::Wrath,
+        ClientProfile::Mists,
+        ClientProfile::Era,
+        ClientProfile::Anniversary,
+    ] {
+        assert_eq!(profile.current_expansion_level(), 11);
+        assert_eq!(profile.expansion_level(), 10);
+    }
+    assert_eq!(ClientProfile::WowForever.current_expansion_level(), 0);
+    assert_eq!(ClientProfile::WowForever.expansion_level(), 0);
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_expansion_identity_selects_angleur_camelot_after_cleanup() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    let check = r#"
+        local function angleurVersion()
+            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+                if LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_MIDNIGHT then
+                    return 1
+                elseif LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_CLASSIC then
+                    return 4
+                end
+            elseif WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC or WOW_PROJECT_ID == 19 then
+                return 2
+            elseif WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
+                return 3
+            end
+            return 0
+        end
+        assert(angleurVersion() == 4, 'Angleur must choose its Camelot branch')
+        assert(LE_EXPANSION_LEVEL_CURRENT == 0 and GetExpansionLevel() == 0)
+        assert(LE_EXPANSION_MIDNIGHT == 11 and LE_EXPANSION_LEVEL_PREVIOUS == 10)
+    "#;
+    env.exec(check).unwrap();
+    for _ in 0..2 {
+        env.exec("LE_EXPANSION_LEVEL_CURRENT = nil").unwrap();
+        env.loader_env().restore_post_cleanup_globals().unwrap();
+        env.exec(check).unwrap();
+    }
+}
+
+#[test]
+#[cfg(not(feature = "client-wowforever"))]
+fn non_forever_expansion_identity_keeps_existing_runtime_values() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    assert_eq!(
+        env.eval::<(i32, i32)>("return LE_EXPANSION_LEVEL_CURRENT, GetExpansionLevel()")
+            .unwrap(),
+        (11, 10)
+    );
+}
+
 #[cfg(feature = "client-wowforever")]
 fn assert_ellesmere_specialization_guards(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
