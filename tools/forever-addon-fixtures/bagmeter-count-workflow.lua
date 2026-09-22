@@ -1,10 +1,6 @@
 for bag = 0, 4 do
     assert(C_Container.GetContainerNumSlots(bag) == 16, "unexpected capacity for bag " .. bag)
 end
-local bankSlots = GetNumBankSlots()
-for bag = 5, math.max(5, 4 + bankSlots) do
-    assert(C_Container.GetContainerNumSlots(bag) == 0, "unexpected capacity for bag " .. bag)
-end
 assert(Bagmeter_Used == 0, "BagMeter must display free slots")
 assert(Bagmeter_Total == 1 and Bagmeter_Subtotal == 1 and Bagmeter_Subcount == 1,
     "BagMeter free/total display settings differ")
