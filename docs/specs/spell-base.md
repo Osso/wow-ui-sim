@@ -4,12 +4,12 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 
 ## What it must do
 
-- [ ] Return the supplied positive spell ID when no relationship is modeled, including the twelve observed default action spells. The pinned Forever `SpellDocumentation.lua:90–104` explicitly documents no-override identity.
-- [ ] Resolve public numeric strings and known spell names through the existing spell identifier resolver; case-insensitive names follow existing simulator behavior.
-- [ ] Resolve an explicitly configured relationship for the requested specialization. Omitted/zero specialization uses the player's current class specialization. Treating explicit specialization numbers as specialization IDs is a simulator policy, not native-probed behavior.
-- [ ] Keep specialization relationships separate from identifier aliases; never infer a base by reversing arbitrary aliases.
-- [ ] Reject invalid identifiers, malformed specialization arguments, and secret arguments explicitly without unwrapping secrets. Invalid-input errors are bounded simulator policy.
-- [ ] Leave non-Forever profile registrations unchanged.
+- [x] Return the supplied positive spell ID when no relationship is modeled, including the twelve observed default action spells. The pinned Forever `SpellDocumentation.lua:90–104` explicitly documents no-override identity.
+- [x] Resolve public numeric strings and known spell names through the existing spell identifier resolver; case-insensitive names follow existing simulator behavior.
+- [x] Resolve an explicitly configured relationship for the requested specialization. Omitted/zero specialization uses the player's current class specialization. Treating explicit specialization numbers as specialization IDs is a simulator policy, not native-probed behavior.
+- [x] Keep specialization relationships separate from identifier aliases; never infer a base by reversing arbitrary aliases.
+- [x] Reject invalid identifiers, malformed specialization arguments, and secret arguments explicitly without unwrapping secrets. Invalid-input errors are bounded simulator policy.
+- [x] Leave non-Forever profile registrations unchanged.
 
 ## How it works
 
@@ -25,7 +25,7 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 
 - `tests/spell_base.rs` — grouped into the existing generated integration target; twelve default action IDs, public names, configured relationships, explicit/current specialization, alias independence, malformed inputs and secret rejection.
 - Existing RED: `/tmp/forever-addon-audit/base-spell-red.lua`; `/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/stdout` observes nil for all twelve action spells and the unchanged addon failure.
-- Targeted Rust compilation/tests and real addon replay remain pending; implementation performed without Cargo authorization.
+- Focused Forever proof at revision `9e20a29d`: `spell_base::` 3/3. The `b8f0982be` producer replay starts unchanged ActionBarAuras cleanly. Evidence: `/tmp/forever-addon-audit/verify-b8-focused-ledger.json`; `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 
 ## Known gaps (current cycle)
 

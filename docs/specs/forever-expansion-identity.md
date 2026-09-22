@@ -4,11 +4,11 @@ The simulator's Forever profile exposes a Classic current-expansion identity thr
 
 ## What it must do
 
-- [ ] Forever publishes `LE_EXPANSION_LEVEL_CURRENT = 0` and `GetExpansionLevel() = 0` from one profile policy.
-- [ ] The unchanged Angleur version predicate selects Camelot (`4`), not retail (`1`).
-- [ ] Clearing and restoring the current-expansion constant after environment cleanup preserves that identity.
-- [ ] Other profiles retain their existing current constant (`11`) and legacy API value (`10`). This preservation does not claim those defaults are native-correct.
-- [ ] Existing previous/max/upgrade/account/client-display expansion values remain untouched.
+- [x] Forever publishes `LE_EXPANSION_LEVEL_CURRENT = 0` and `GetExpansionLevel() = 0` from one profile policy.
+- [x] The unchanged Angleur version predicate selects Camelot (`4`), not retail (`1`).
+- [x] Clearing and restoring the current-expansion constant after environment cleanup preserves that identity.
+- [x] Other profiles retain their existing current constant (`11`) and legacy API value (`10`). This preservation does not claim those defaults are native-correct.
+- [x] Existing previous/max/upgrade/account/client-display expansion values remain untouched.
 
 ## How it works
 
@@ -30,8 +30,8 @@ The simulator's Forever profile exposes a Classic current-expansion identity thr
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and execute grouped tests; no Cargo authorization in the implementation slice.
-- [ ] Replay unchanged Angleur/Camelot startup with the new binary. Frozen build `55ee20d7` reproduces `11`, API `10`, and retail branch `1`: `/tmp/forever-addon-audit/expansion-identity-red-e5_paz46/ledger.json`.
+- Focused Forever proof at revision `9e20a29d`: `expansion_identity` 2/2. The former `55ee20d7` RED reproduces `11`, API `10`, and retail branch `1`: `/tmp/forever-addon-audit/expansion-identity-red-e5_paz46/ledger.json`.
+- [ ] Replay unchanged Angleur/Camelot startup beyond its corrected branch. The `b8f0982be` replay reaches a later unmodeled gamepad call, so it remains startup-failed: `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 - [ ] Native Forever numeric identity is unverified; user cannot run a native probe.
 - [ ] Other Forever addons affected by expansion thresholds need separate replay; this patch is not inventory-wide acceptance.
 
