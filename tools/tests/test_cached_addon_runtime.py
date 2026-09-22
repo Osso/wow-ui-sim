@@ -45,8 +45,8 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         return hashlib.sha256(self.archive.read_bytes()).hexdigest()
 
     def stage(self, digest):
-        return HELPER.stage_package(
-            self.archive, digest, self.staging, self.repo_addons
+        return HELPER.stage_packages(
+            [(self.archive, digest)], self.staging, self.repo_addons
         )
 
     def test_selection_preserves_project_with_only_comparison_archive(self):
@@ -130,6 +130,88 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         self.assertTrue(media.is_dir())
         self.assertEqual((media / "icon.txt").read_bytes(), b"icon bytes")
         self.assertEqual(hashlib.sha256(self.archive.read_bytes()).hexdigest(), digest)
+
+    def make_packages(self, contents):
+        packages = []
+        for index, members in enumerate(contents):
+            path = self.root / f"package-{index}.zip"
+            with zipfile.ZipFile(path, "w") as archive:
+                for name, content in members.items():
+                    archive.writestr(name, content)
+            packages.append((path, hashlib.sha256(path.read_bytes()).hexdigest()))
+        return packages
+
+    def test_explicit_consumer_provider_packages_stage_together(self):
+        packages = self.make_packages(
+            [
+                {
+                    "Consumer/Consumer.toc": "## Dependencies: Provider\nMain.lua",
+                    "Consumer/Main.lua": "ConsumerReady = true",
+                },
+                {
+                    "Provider/Provider.toc": "Main.lua",
+                    "Provider/Main.lua": "ProviderReady = true",
+                },
+            ]
+        )
+        staged = HELPER.stage_packages(packages, self.staging, self.repo_addons)
+        self.assertEqual(staged["roots"], ["Consumer", "Provider"])
+        addons = self.staging / "Interface/AddOns"
+        self.assertEqual(
+            (addons / "Consumer/Main.lua").read_text(), "ConsumerReady = true"
+        )
+        self.assertEqual(
+            (addons / "Provider/Main.lua").read_text(), "ProviderReady = true"
+        )
+        states = dict(
+            line.split(": ")
+            for line in (self.staging / "AddOns.txt").read_text().splitlines()
+        )
+        self.assertEqual(states["Consumer"], "enabled")
+        self.assertEqual(states["Provider"], "enabled")
+        self.assertEqual(states["Other"], "disabled")
+        self.assertTrue((self.staging / "load-observer.lua").is_file())
+        self.assertEqual(
+            list(self.staging.glob("*observer*")), [self.staging / "load-observer.lua"]
+        )
+        for archive, digest in packages:
+            self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), digest)
+
+    def test_invalid_second_package_hash_leaves_no_partial_staging(self):
+        packages = self.make_packages(
+            [
+                {"Consumer/Consumer.toc": "Main.lua"},
+                {"Provider/Provider.toc": "Main.lua"},
+            ]
+        )
+        packages[1] = (packages[1][0], "0" * 64)
+        with self.assertRaisesRegex(ValueError, "SHA-256"):
+            HELPER.stage_packages(packages, self.staging, self.repo_addons)
+        self.assertFalse(self.staging.exists())
+
+    def test_duplicate_package_roots_rejected_before_writes(self):
+        for second in ("first", "different"):
+            with self.subTest(second=second):
+                packages = self.make_packages(
+                    [
+                        {"Shared/Shared.toc": "first"},
+                        {"Shared/Shared.toc": second},
+                    ]
+                )
+                with self.assertRaisesRegex(ValueError, "root.*collision"):
+                    HELPER.stage_packages(packages, self.staging, self.repo_addons)
+                self.assertFalse(self.staging.exists())
+
+    def test_conflicting_package_files_rejected_before_writes(self):
+        packages = self.make_packages(
+            [
+                {"Consumer/Consumer.toc": "Main.lua", "README.txt": "consumer"},
+                {"Provider/Provider.toc": "Main.lua", "README.txt": "provider"},
+            ]
+        )
+        with self.assertRaisesRegex(ValueError, "content conflict"):
+            HELPER.stage_packages(packages, self.staging, self.repo_addons)
+        self.assertFalse(self.staging.exists())
 
     def test_hash_mismatch_does_not_create_staging_root(self):
         self.make_zip()

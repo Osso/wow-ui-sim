@@ -6,7 +6,8 @@
 
 - [x] Preserve every indexed project; select only successfully cached Forever records. Projects with only comparison archives remain explicit blocked rows, with no substitution or acquisition.
 - [x] Verify archive SHA-256 before staging. Reject absolute, drive-qualified, traversal and symlink members, conflicting normalized members, file/directory collisions, destination symlinks, and conflicting existing bytes before writing. Identical restaging preserves content and the original ZIP.
-- [ ] Treat ZIP names ending in a slash after backslash normalization as directories, including zero-attribute directory entries; preserve path-security checks and original archive bytes.
+- [x] Treat ZIP names ending in a slash after backslash normalization as directories, including zero-attribute directory entries; preserve path-security checks and original archive bytes.
+- [x] Stage an explicit list of `(archive path, expected SHA-256)` pairs together. Validate every archive and destination before writes; reject duplicate roots and contradictory file content. Generate one union-root observer and enable file without dependency discovery, downloads, or version substitution.
 - [x] Stage package-root directories under a caller-supplied isolated root, with fake install/WTF directories, a load observer, and `AddOns.txt`. Disable repository addons except Admin, SimCommands, TestFramework and Blizzard_FrameXML; enable packaged roots.
 - [x] Return argv for the already-built simulator with addon/WTF/install isolation, CASC disabled, inherited `WOW_SIM_NO_ADDONS` removed, SavedVariables disabled, a timeout of 1–90 seconds, and the observer followed by `lua-errors`. The caller supplies its execution context and cache environment.
 - [x] Record each root's loading-or-loaded and fully-loaded flags separately, boolean LoadOnDemand state, and the reason returned by `GetAddOnInfo`; do not infer unavailable dependency or game-filter explanations.
@@ -19,11 +20,13 @@
 
 ## Implementation inventory
 
-- `tools/cached_addon_runtime.py` — inventory selection, authenticated safe staging, observer/argv generation and result classification.
+- `tools/cached_addon_runtime.py` — inventory selection, authenticated `stage_packages(packages, isolated_root, repo_addons)` staging, observer/argv generation and result classification. Single-package callers supply a one-element list; the old `stage_package` API is removed.
 
 ## Tests asserting this spec
 
-- `tools/tests/test_cached_addon_runtime.py` — concrete temporary archives and hashes, safe extraction and conflict rejection, exact argv contract, loaded/LoadOnDemand observations, malformed/incomplete output and Lua-error handling.
+- `tools/tests/test_cached_addon_runtime.py` — concrete temporary archives and hashes, normalized backslash directories, explicit consumer/provider composition, invalid second-archive hash and collision rejection before writes, exact argv contract, loaded/LoadOnDemand observations, malformed/incomplete output and Lua-error handling.
+
+Targeted development proof: 22/22 tests pass. The two previously rejected cached ZIPs (`8906484`, `8934390`) stage unchanged after directory normalization; `/tmp/forever-addon-audit/backslash-directory-ledger.json` records the reproduction and real-archive results. This is staging proof, not simulator execution.
 
 ## Known gaps (current cycle)
 

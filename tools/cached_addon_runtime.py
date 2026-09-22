@@ -100,6 +100,8 @@ def reject_symlink_path(path):
 
 def validate_writes(files, directories):
     """Validate the complete write set before creating or replacing any content."""
+    if directories.intersection(files):
+        raise ValueError("Staging file/directory conflict")
     for directory in directories:
         reject_symlink_path(directory)
         if directory.exists() and not directory.is_dir():
@@ -110,10 +112,29 @@ def validate_writes(files, directories):
             raise ValueError(f"Staging content conflict: {path}")
 
 
-def stage_package(archive_path, expected_sha256, isolated_root, repo_addons):
-    """Hash-check and stage one package plus its isolated observer/environment."""
-    content = verify_archive(archive_path, expected_sha256)
-    package_files, roots = read_package_files(content)
+def read_packages(packages):
+    """Authenticate explicit archives and reject conflicting package contents."""
+    files = {}
+    roots = set()
+    for archive_path, expected_sha256 in packages:
+        content = verify_archive(archive_path, expected_sha256)
+        package_files, package_roots = read_package_files(content)
+        overlap = roots.intersection(package_roots)
+        if overlap:
+            raise ValueError(f"Package root collision: {', '.join(sorted(overlap))}")
+        for path, data in package_files.items():
+            if path in files and files[path] != data:
+                raise ValueError(f"Package content conflict: {path}")
+            files[path] = data
+        roots.update(package_roots)
+    if not roots:
+        raise ValueError("No packages supplied")
+    return files, sorted(roots)
+
+
+def stage_packages(packages, isolated_root, repo_addons):
+    """Stage explicit (archive path, SHA-256) pairs in one isolated environment."""
+    package_files, roots = read_packages(packages)
     root = Path(isolated_root).absolute()
     addons = root / "Interface" / "AddOns"
     files = {addons / path: data for path, data in package_files.items()}
@@ -137,7 +158,7 @@ def stage_package(archive_path, expected_sha256, isolated_root, repo_addons):
     for path, data in files.items():
         if not path.exists():
             path.write_bytes(data)
-    return {"root": str(root), "roots": roots, "archiveSha256": expected_sha256}
+    return {"root": str(root), "roots": roots}
 
 
 def build_argv(staged, simulator, timeout=60):
