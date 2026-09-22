@@ -8,15 +8,16 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 221,
+      "clean-startup": 222,
       "blocked-dependency": 3,
       "unloaded": 13,
-      "failed": 31,
+      "failed": 30,
       "blocked-package": 1
     },
     "interactionStatuses": {
       "bounded-pass": 11,
-      "not-run": 258
+      "not-run": 256,
+      "failed": 2
     }
   },
   "projects": [
@@ -204,8 +205,11 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [],
+        "evidence": "/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json",
+        "currentFailure": "Actual /awi save handler fails in SaveFunction.lua457: attempt to call local (for state) (a nil value); self-cast save/load workflow did not complete. Exact producer unproven.",
+        "binaryBuildRevision": "d23cfe65c417e9e99b0f963bccc02764d8e09ab6"
       },
       "packageOnlyBaseline": {
         "status": "clean-startup",
@@ -9813,15 +9817,17 @@
       "fileId": 8909724,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
-        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
-        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "evidence": "/tmp/forever-addon-runtime/classic-empty-startup-eqn0uw2u/ledger.json",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
+        "binarySha256": "35a2ee5985d05e4ff2a394191431335be94c78acbd845a589d25e668c08000cc",
         "packageFileIds": [
           8909724
         ],
-        "configuration": {},
+        "configuration": {
+          "isolatedData": true
+        },
         "observations": [
           {
             "name": "ClassicCastBarForever",
@@ -9831,13 +9837,16 @@
             "reason": ""
           }
         ],
-        "errorRecords": 4,
-        "hostCvarsUnchanged": true,
-        "currentFailure": "[OnEvent] frame=#57945 addon=ClassicCastBarForever source=@Interface/AddOns/ClassicCastBarForever/ClassicCastBar.lua:656: Frame:SetScale(): Scale must be > 0 on PlayerCastingBarFrame [StatusBar] parent=<no-parent> grandparent=<no-grandparent> size=195x13"
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [],
+        "evidence": "/tmp/forever-addon-runtime/classic-cvar-workflow-40twoqwp/ledger.json",
+        "diagnostic": "/tmp/forever-addon-runtime/classic-scale-diag-mkq10io_/ledger.json",
+        "currentFailure": "Slider:SetValue changes slider0.7\u21921.35 but missing OnValueChanged dispatch leaves addon database/bar/CVar scale1; icon/reset not reached.",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1"
       },
       "packageOnlyBaseline": {
         "status": "failed",
@@ -9866,6 +9875,29 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      },
+      "priorEmptyCvarAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
+        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
+        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "packageFileIds": [
+          8909724
+        ],
+        "configuration": {},
+        "observations": [
+          {
+            "name": "ClassicCastBarForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=#57945 addon=ClassicCastBarForever source=@Interface/AddOns/ClassicCastBarForever/ClassicCastBar.lua:656: Frame:SetScale(): Scale must be > 0 on PlayerCastingBarFrame [StatusBar] parent=<no-parent> grandparent=<no-grandparent> size=195x13"
       }
     },
     {
