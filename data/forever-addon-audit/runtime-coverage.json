@@ -8,13 +8,14 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "not-run": 267,
+      "not-run": 265,
       "blocked-package": 1,
-      "bounded-pass": 1
+      "bounded-pass": 2,
+      "profile-excluded-or-not-registered": 1
     },
     "interactionStatuses": {
-      "not-run": 268,
-      "bounded-pass": 1
+      "not-run": 267,
+      "bounded-pass": 2
     }
   },
   "projects": [
@@ -35,11 +36,20 @@
       "fileId": 8931441,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "bounded-pass",
+        "revision": "0e7af0df7ec0da2dea2c9053e21ea368f6a9e82a",
+        "archiveFileId": 8931441,
+        "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
+        "errors": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stderr"
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "bounded-pass",
+        "covered": [
+          "SavedVariables DB initialization",
+          "PLAYER_ENTERING_WORLD event handler"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
+        "limitations": "Does not cover combat-log, guild sync, sounds, or ranking output."
       }
     },
     {
@@ -95,11 +105,15 @@
       "fileId": 7070807,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "profile-excluded-or-not-registered",
+        "archiveFileId": 7070807,
+        "evidence": "/tmp/forever-addon-runtime/achievement-guild-rank-7070807-e4nn8pod/stdout",
+        "reason": "TOC has Interface 100014 and no Forever LoadGameType; C_AddOns reports fullyLoaded=false in active Forever runtime. This is not counted as simulator API failure."
       },
       "interactions": {
         "status": "not-run",
-        "covered": []
+        "covered": [],
+        "reason": "Addon was not registered/loaded under active Forever profile."
       }
     },
     {
@@ -3315,6 +3329,16 @@
       "interactions": {
         "status": "not-run",
         "covered": []
+      }
+    }
+  ],
+  "evidenceBatches": [
+    {
+      "artifact": "/tmp/forever-addon-audit/batch-2026-09-22-01.json",
+      "scope": "Abgesattelt and AchievementGuildRank",
+      "results": {
+        "abgesattelt": "bounded startup+DB event pass",
+        "achievement-guild-rank": "profile excluded/not registered"
       }
     }
   ]
