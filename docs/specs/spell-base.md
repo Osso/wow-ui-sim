@@ -25,7 +25,7 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 
 - `tests/spell_base.rs` — grouped into the existing generated integration target; twelve default action IDs, public names, configured relationships, explicit/current specialization, alias independence, malformed inputs and secret rejection.
 - Existing RED: `/tmp/forever-addon-audit/base-spell-red.lua`; `/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/stdout` observes nil for all twelve action spells and the unchanged addon failure.
-- Focused Forever proof at revision `9e20a29d`: `spell_base::` 3/3. The `b8f0982be` producer replay starts unchanged ActionBarAuras cleanly. Evidence: `/tmp/forever-addon-audit/verify-b8-focused-ledger.json`; `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
+- Focused Forever proof at revision `9e20a29d`: `spell_base::` 3/3. The subsequent `b8f0982be` profile ledger preserves that focused proof, compiles the Forever library with `CARGO_INCREMENTAL=0` after an ENOSPC remediation, and passes default `cargo check`; it does not turn the policy into native conformance. The `b8f0982be` producer replay starts unchanged ActionBarAuras cleanly. Evidence: `/tmp/forever-addon-audit/verify-b8-{focused,profile}-ledger.json`; `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 
 ## Known gaps (current cycle)
 

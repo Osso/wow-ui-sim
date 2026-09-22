@@ -30,7 +30,7 @@ The simulator's Forever profile exposes a Classic current-expansion identity thr
 
 ## Known gaps (current cycle)
 
-- Focused Forever proof at revision `9e20a29d`: `expansion_identity` 2/2. The former `55ee20d7` RED reproduces `11`, API `10`, and retail branch `1`: `/tmp/forever-addon-audit/expansion-identity-red-e5_paz46/ledger.json`.
+- Focused Forever proof at revision `9e20a29d`: `expansion_identity` 2/2. The profile ledger also passes the affected Forever library checks, default `cargo check`, and focused PTR formatter/configuration checks after rebuilding with `CARGO_INCREMENTAL=0`; it does not establish a native Forever numeric value. The former `55ee20d7` RED reproduces `11`, API `10`, and retail branch `1`: `/tmp/forever-addon-audit/expansion-identity-red-e5_paz46/ledger.json`. Evidence: `/tmp/forever-addon-audit/verify-b8-{focused,profile}-ledger.json`.
 - [ ] Replay unchanged Angleur/Camelot startup beyond its corrected branch. The `b8f0982be` replay reaches a later unmodeled gamepad call, so it remains startup-failed: `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 - [ ] Native Forever numeric identity is unverified; user cannot run a native probe.
 - [ ] Other Forever addons affected by expansion thresholds need separate replay; this patch is not inventory-wide acceptance.
