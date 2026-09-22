@@ -20,6 +20,12 @@ Three current Forever corrections are committed but have no GREEN verification a
 
 These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
 
+## Recent-allies location-preference follow-up
+
+`561943dd0` supplies five focused Forever regressions and `37da0f132` adds the per-environment `GetAllowRecentAlliesSeeLocation` / `SetAllowRecentAlliesSeeLocation` state. Cached Forever UI metadata documents the boolean setter and synchronous payload-free `LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED` event; cached Settings metadata supports the default `true`. Existing VM secret-argument validation remains the enforcement route, rather than a new security mechanism.
+
+A changed value updates state before synchronously dispatching the event. Same-value suppression is a simulator inference: the cached Settings listener writes the getter value back, so duplicate notification would recurse. The development target passes 5/5, including strict boolean/secret input boundaries and Account-wide UI-shaped save/change/load data. This is development evidence only: unchanged-addon replay and independent verification remain pending. No cross-process persistence, network visibility, native coercion parity, or other-profile behavior is established. See [location-preference spec](../../specs/recent-allies-location-preference.md).
+
 ## Camelot stable-read follow-up
 
 `9a8e2a841` and `fffb25ae4` first publish only the two required Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Their frozen replay reached the next boundary: `Blizzard_StableUI.lua:219` compared `id - 2` with a nil `C_StableInfo.GetNumStableSlots()` result. Cached StableInfo documentation and the unchanged Camelot consumer identify four required reads: `GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo`.
