@@ -6,7 +6,7 @@ use crate::lua_api::methods::{
     sync_child_to_rilua, table_get,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler_state, get_script, protected_lua_pcall_state,
+    call_error_handler_state, get_script, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
 use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn, table_set_rust_fn_static};
 use crate::widget::WidgetType;
@@ -176,8 +176,10 @@ pub(super) fn shared_set_value(state: &mut LuaState) -> LuaResult<u32> {
                 let mut sim = borrow_state_mut(state)?;
                 apply_slider_value(&mut sim, id, value)
             };
-            // TODO: fire OnValueChanged (needs rilua script dispatch)
-            let _ = clamped;
+            if let Some(value) = clamped {
+                let treat_as_mouse_event = val_to_bool(stack_val(state, 3));
+                fire_slider_value_changed(state, id, value, treat_as_mouse_event)?;
+            }
         }
         Some(WidgetType::StatusBar) => {
             let mut sim = borrow_state_mut(state)?;
@@ -190,6 +192,26 @@ pub(super) fn shared_set_value(state: &mut LuaState) -> LuaResult<u32> {
         _ => {}
     }
     Ok(0)
+}
+
+fn fire_slider_value_changed(
+    state: &mut LuaState,
+    id: u64,
+    value: f64,
+    treat_as_mouse_event: bool,
+) -> LuaResult<()> {
+    let handlers = get_scripts_for_dispatch(state, id, "OnValueChanged");
+    if handlers.is_empty() {
+        return Ok(());
+    }
+    let frame = frame_ref(state, id)?;
+    let args = [frame, Val::Num(value), Val::Bool(treat_as_mouse_event)];
+    for handler in handlers {
+        if let Err(error_msg) = protected_lua_pcall_state(state, handler, &args) {
+            call_error_handler_state(state, &error_msg);
+        }
+    }
+    Ok(())
 }
 
 pub(super) fn shared_get_value(state: &mut LuaState) -> LuaResult<u32> {
