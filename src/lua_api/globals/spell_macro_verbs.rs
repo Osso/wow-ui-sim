@@ -19,7 +19,9 @@
 //!
 //! Registered from `register_tail_globals` after `missing_surface`.
 
-use crate::lua_api::methods::{borrow_state_mut, call_function_state, create_string, create_table};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
+};
 use crate::lua_api::state::MacroInfo;
 use crate::lua_api::state_types::CursorInfo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -234,6 +236,20 @@ fn edit_macro(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// Look up an occupied macro slot using the same exact names as EditMacro.
+fn get_macro_index_by_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let index = {
+        let sim = borrow_state(state)?;
+        sim.macros
+            .iter()
+            .position(|entry| !entry.name.is_empty() && entry.name == name)
+            .map_or(0, |slot| slot + 1)
+    };
+    state.push(Val::Num(index as f64));
+    Ok(1)
+}
+
 /// Allocates the first unused slot in the simulator's account/character range.
 fn create_macro(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
@@ -284,6 +300,7 @@ fn delete_macro(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "GetMacroIndexByName", get_macro_index_by_name)?;
     LuaApiMut::register_function(lua, "CreateMacro", create_macro)?;
     LuaApiMut::register_function(lua, "DeleteMacro", delete_macro)?;
     LuaApiMut::register_function(lua, "PickupSpell", pickup_spell)?;

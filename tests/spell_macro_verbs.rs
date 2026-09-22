@@ -7,6 +7,57 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
 }
 
+#[test]
+fn macro_name_lookup_tracks_create_rename_delete_and_slot_reuse() {
+    let env = env();
+    env.exec(
+        r#"
+        assert(GetMacroIndexByName("DrinkBot") == 0)
+        local first = CreateMacro("DrinkBot", "icon", "/use water")
+        local second = CreateMacro("SnackBot", "icon", "/use food")
+        assert(first == 1 and second == 2)
+        assert(GetMacroIndexByName("DrinkBot") == first)
+        assert(GetMacroIndexByName("drinkbot") == 0)
+        EditMacro("DrinkBot", "DrinkBot Water", nil, "/use better water")
+        assert(GetMacroIndexByName("DrinkBot") == 0)
+        assert(GetMacroIndexByName("DrinkBot Water") == first)
+        DeleteMacro("DrinkBot Water")
+        assert(GetMacroIndexByName("DrinkBot Water") == 0)
+        assert(GetMacroIndexByName("SnackBot") == second)
+        assert(GetMacroIndexByName("") == 0)
+        assert(CreateMacro("RefillBot", "icon", "/use water") == first)
+        assert(GetMacroIndexByName("RefillBot") == first)
+        assert(GetMacroIndexByName("MissingBot") == 0)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn macro_name_lookup_preserves_account_and_character_slots() {
+    let env = env();
+    env.exec(
+        r#"
+        local character = CreateMacro("Character Drink", "icon", "/use water", true)
+        assert(character == 121)
+        assert(GetMacroIndexByName("Character Drink") == character)
+        assert(GetMacroIndexByName("") == 0)
+        local account = CreateMacro("Account Drink", "icon", "/use water", false)
+        assert(account == 1)
+        assert(GetMacroIndexByName("Account Drink") == account)
+        EditMacro(character, "Character Refill", nil, "/use better water")
+        assert(GetMacroIndexByName("Character Drink") == 0)
+        assert(GetMacroIndexByName("Character Refill") == character)
+        DeleteMacro(account)
+        assert(GetMacroIndexByName("Account Drink") == 0)
+        assert(GetMacroIndexByName("Character Refill") == character)
+        DeleteMacro(character)
+        assert(GetMacroIndexByName("Character Refill") == 0)
+        "#,
+    )
+    .unwrap();
+}
+
 // ── PickupSpell ───────────────────────────────────────────────────────────────
 
 #[test]
