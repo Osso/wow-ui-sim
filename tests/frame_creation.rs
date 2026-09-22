@@ -3,10 +3,12 @@
 //! These tests cover frame creation, parent-child relationships, strata inheritance,
 //! and widget-type defaults (button textures, slider fontstrings).
 
-#[path = "frame_creation/visibility_scripts.rs"]
-mod visibility_scripts;
+#[path = "frame_creation/named_duplicates.rs"]
+mod named_duplicates;
 #[path = "frame_creation/set_point_overrides.rs"]
 mod set_point_overrides;
+#[path = "frame_creation/visibility_scripts.rs"]
+mod visibility_scripts;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::WidgetType;

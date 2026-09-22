@@ -112,26 +112,26 @@ fn test_recreated_named_parent_drops_lua_child_field() {
 }
 
 #[test]
-fn test_recreated_named_frame_retires_old_widget_and_reparents_children() {
+fn test_authored_definition_retires_bootstrap_placeholder_and_reparents_children() {
     let (t, _) = load_test_lua(
         "test-g-recreate-retires-old-frame",
         r#"
-        local oldParent = CreateFrame("Frame", "RecreatedVisibleParent", UIParent)
+        local oldParent = HelpFrame
         oldParent:Show()
         local child = CreateFrame("Frame", "RecreatedVisibleParentChild", oldParent)
         oldParent.Child = child
 
-        local newParent = CreateFrame("Frame", "RecreatedVisibleParent", UIParent)
+        local newParent = CreateFrame("Frame", "HelpFrame", UIParent)
 
         OLD_PARENT_HIDDEN = not oldParent:IsShown()
         CHILD_PARENT_IS_NEW = child:GetParent() == newParent
         NEW_PARENT_CHILD_FIELD_FRESH = newParent.Child == nil
-        GLOBAL_IS_NEW_PARENT = _G.RecreatedVisibleParent == newParent
+        GLOBAL_IS_NEW_PARENT = _G.HelpFrame == newParent
         "#,
     );
     t.assert_lua_true(
         "return OLD_PARENT_HIDDEN",
-        "recreated named frame should retire the stale old widget",
+        "authored definition should retire the simulator bootstrap placeholder",
     );
     t.assert_lua_true(
         "return CHILD_PARENT_IS_NEW",

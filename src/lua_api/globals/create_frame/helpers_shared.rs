@@ -189,7 +189,7 @@ fn register_and_attach_parent(
 ) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     let replaced_frame_id =
-        find_replaced_frame_id(&sim, &frame, frame_id, preserve_existing_name_binding);
+        find_replaced_placeholder_id(&sim, &frame, frame_id, preserve_existing_name_binding);
     if preserve_existing_name_binding {
         sim.widgets.register_preserving_existing_name(frame);
     } else {
@@ -207,7 +207,7 @@ fn register_and_attach_parent(
     Ok(())
 }
 
-fn find_replaced_frame_id(
+fn find_replaced_placeholder_id(
     sim: &SimState,
     frame: &Frame,
     frame_id: u64,
@@ -221,6 +221,11 @@ fn find_replaced_frame_id(
         .as_deref()
         .and_then(|name| sim.widgets.get_id_by_name(name))
         .filter(|existing_id| *existing_id != frame_id)
+        .filter(|existing_id| {
+            sim.widgets
+                .get(*existing_id)
+                .is_some_and(|existing| existing.is_simulator_placeholder)
+        })
 }
 
 fn inherit_parent_render_state(

@@ -31,6 +31,18 @@ pub(crate) fn init_builtin_frames(state: &Rc<RefCell<SimState>>) {
     create_builtin_frames(&mut s.widgets, w, h, owner);
 }
 
+/// Only simulator bootstrap has run here; addon Lua/XML definitions start later.
+/// Include Lua-created workaround frames as well as the Rust builtin stand-ins.
+pub(super) fn mark_bootstrap_frame_placeholders(state: &Rc<RefCell<SimState>>) {
+    let mut sim = state.borrow_mut();
+    let ids: Vec<_> = sim.widgets.iter_ids().collect();
+    for id in ids {
+        if let Some(frame) = sim.widgets.get_mut(id) {
+            frame.is_simulator_placeholder = true;
+        }
+    }
+}
+
 pub(super) fn init_frame_metatable(lua: &mut rilua::Lua) -> crate::Result<()> {
     let state = lua.state_mut();
     let frame_mt = Val::Table(state.gc.alloc_table(rilua::vm::table::Table::new()));

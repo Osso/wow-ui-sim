@@ -98,6 +98,7 @@ pub(super) fn init_lua_state(
         freeze_globals::freeze_globals_with_live_shadow(lua)?;
     }
     install_global_slots(lua);
+    frames::mark_bootstrap_frame_placeholders(&state);
     Ok(())
 }
 

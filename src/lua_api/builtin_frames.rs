@@ -55,6 +55,7 @@ fn register_builtin_frame(
     fixed_strata: Option<FrameStrata>,
 ) -> u64 {
     let mut frame = Frame::new(widget_type, Some(name.to_string()), parent);
+    frame.is_simulator_placeholder = true;
     frame.owner_addon = Some(owner);
     frame.visible = visible;
     if let Some(strata) = fixed_strata {

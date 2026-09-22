@@ -12,6 +12,7 @@ macro_rules! frame_defaults {
             widget_type: WidgetType::Frame,
             object_type_name: None,
             name: None,
+            is_simulator_placeholder: false,
             parent_id: None,
             children: Vec::new(),
             width: 0.0,

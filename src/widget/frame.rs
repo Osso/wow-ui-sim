@@ -20,6 +20,8 @@ pub struct Frame {
     pub object_type_name: Option<String>,
     /// Global name (optional).
     pub name: Option<String>,
+    /// Simulator bootstrap stand-in, eligible for replacement by an authored definition.
+    pub is_simulator_placeholder: bool,
     /// Parent widget ID.
     pub parent_id: Option<u64>,
     /// Child widget IDs.
