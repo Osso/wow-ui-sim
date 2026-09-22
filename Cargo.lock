@@ -4967,7 +4967,7 @@ dependencies = [
 [[package]]
 name = "rilua"
 version = "0.1.21"
-source = "git+https://github.com/Osso/rilua.git?rev=15b52249be4b830a359a14b79a20d29bc8d84516#15b52249be4b830a359a14b79a20d29bc8d84516"
+source = "git+https://github.com/Osso/rilua.git?rev=a5edc4c8154c5120a8e5c5a91a33d02582519d89#a5edc4c8154c5120a8e5c5a91a33d02582519d89"
 dependencies = [
  "smallvec",
 ]
