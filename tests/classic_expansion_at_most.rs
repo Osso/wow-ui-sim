@@ -58,8 +58,9 @@ fn classic_expansion_at_most_retains_existing_bootstrap_and_rejects_bad_argument
         end
         assert(ClassicExpansionAtMost(secretwrap(10.5)) == true)
         assert(not pcall(ClassicExpansionAtMost, secretwrap('8')))
+        local secretEight = secretwrap(8)
         local function taintedCaller()
-            local ok, err = pcall(ClassicExpansionAtMost, secretwrap(8))
+            local ok, err = pcall(ClassicExpansionAtMost, secretEight)
             assert(not ok and err:find('untainted caller', 1, true))
             assert(ClassicExpansionAtMost(10) == true)
         end
