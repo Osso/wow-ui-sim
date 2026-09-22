@@ -16,8 +16,8 @@
     },
     "interactionStatuses": {
       "bounded-pass": 12,
-      "failed": 2,
-      "not-run": 255
+      "failed": 3,
+      "not-run": 254
     }
   },
   "projects": [
@@ -3760,8 +3760,16 @@
         "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [
+          "Money history updates12345\u219254321 and actual overview open/close assertions reach DONE, but shared Blizzard money-event errors invalidate clean acceptance"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/aurarium-money-lb9bsm7s/ledger.json",
+        "controlEvidence": "/tmp/forever-addon-runtime/money-event-control-f8bdxuvx/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/aurarium-money-workflow.lua",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
+        "currentFailure": "PLAYER_MONEY triggers Blizzard_StableUI/Camelot/Blizzard_StableUI.lua75 for-limit error because Constants.PetConsts.NUM_PET_SLOTS_HUNTER is nil; reproduced without addons.",
+        "limitations": "Not attributed to Aurarium; no clean workflow acceptance, native gameplay/persistence/currency/warband/rendering proof."
       },
       "packageOnlyBaseline": {
         "status": "failed",

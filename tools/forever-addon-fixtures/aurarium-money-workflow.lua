@@ -1,0 +1,18 @@
+local guid = assert(ArcaneWizardLibrary.Utils:GetCharacterGUID())
+local today = date("%Y-%m-%d")
+assert(Aurarium and Aurarium:GetScript("OnEvent"), "money event frame missing")
+assert(Aurarium_DataBalance_v2, "balance storage missing")
+for _, copper in ipairs({12345, 54321}) do
+    A_Admin.SetMoney(copper)
+    A_Admin.FireEvent("PLAYER_MONEY")
+    assert(Aurarium_DataBalance_v2[guid][today].gold == copper, "gold history not updated")
+    print("AURARIUM_WORKFLOW", "money", copper)
+end
+SlashCmdList.Aurarium("overview")
+local overview = assert(Aurarium_OverviewFrame, "overview missing")
+assert(overview:IsShown(), "overview did not open")
+print("AURARIUM_WORKFLOW", "overview-open")
+assert(overview.CloseButton, "overview close button missing"):Click()
+assert(not overview:IsShown(), "overview did not close")
+print("AURARIUM_WORKFLOW", "overview-close")
+print("AURARIUM_WORKFLOW", "DONE")
