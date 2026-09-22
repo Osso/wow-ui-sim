@@ -29,7 +29,7 @@
 
 Targeted development proof at `d10d5dbd4`: 25/25 tests pass, including unique data-home argv, host-data preservation, and independent CVar files preserved through restaging. The four isolation assertions failed before implementation; `/tmp/forever-addon-audit/harness-data-isolation-ledger.json` records RED/GREEN commands, revisions, source hashes, and full output paths. The two previously rejected cached ZIPs (`8906484`, `8934390`) stage unchanged after directory normalization; `/tmp/forever-addon-audit/backslash-directory-ledger.json` records the reproduction and real-archive results. This is staging proof, not simulator execution.
 
-`--no-saved-vars` does not disable CVar persistence: `src/cvars.rs` uses the local data directory independently of the isolated WTF path. Per-root `XDG_DATA_HOME` prevents audit processes from sharing that state. Python tests cover staging, argv, and file preservation; the caller owns the cross-process simulator sentinel and invalidated inventory reruns.
+`--no-saved-vars` does not disable CVar persistence: `src/cvars.rs` uses the local data directory independently of the isolated WTF path. Per-root `XDG_DATA_HOME` prevents audit processes from sharing that state. The cross-process sentinel records one writer, a fresh reader, and a same-root reader: all exit with empty Lua-error JSON, the fresh root does not inherit the writer's value, the same root retains it, and the host CVar hash is unchanged. Evidence: `/tmp/forever-addon-runtime/cross-process-data-isolation-ledger.json`. Python tests cover staging, argv, and file preservation; inventory reruns remain separate acceptance work.
 
 ## Known gaps (current cycle)
 

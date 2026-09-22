@@ -12,7 +12,7 @@ Classic UI Forever enables the combo-point CVar. The audit initially shared pers
 
 The [spec](../../specs/forever-combo-points.md) owns the explicit guessed lifecycle/ownership rules. Nonplayer-owned pools are unsupported and reported rather than replaced with fake counts. Other profiles retain existing behavior; no new native secrecy or combat-generation claim follows.
 
-Six grouped regressions are written, including a target-change callback before a new power input and a real native ComboFrame initialized with the CVar enabled. Compilation and GREEN remain pending with the integrating parent; this slice performs no Cargo or simulator run.
+At `c1e830ffa`, the isolated Forever integration build passes and the six grouped regressions pass 6/6, including the target-change callback and real native ComboFrame CVar-enabled update. This is bounded simulator proof only; affected package paths still require isolated reruns.
 
 ## Sources
 

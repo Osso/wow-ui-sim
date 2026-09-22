@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Publish the legacy global on Forever only, requiring both unit-token arguments and returning one number for modeled queries. Leave other profiles and their existing compatibility behavior unchanged.
-- [ ] Read the existing `PlayerState.secondary_powers[4]` count. `A_Admin.SetPlayerPower(count, max, 4)` also assigns that snapshot to the selected target GUID; unrelated power inputs do not alter the assignment.
-- [ ] Return the pool count only for its assigned target. During `PLAYER_TARGET_CHANGED`, a different target must already report zero even when `UnitPower("player", 4)` still reports the earlier snapshot.
-- [ ] Resolve owner/target aliases through existing unit snapshots and GUID identity. An absent owner or target has no combo points and returns zero.
-- [ ] Preserve read-only queries, clear target assignment on a zero input, and leave a nonzero input made without a target unassigned. A new nonzero input replaces the single assignment.
-- [ ] Report unsupported resolved nonplayer ownership explicitly instead of fabricating its count. Exercise unchanged native ComboFrame initialization/update with `comboPointLocation=1`, including nonzero display and zero hiding.
+- [x] Publish the legacy global on Forever only, requiring both unit-token arguments and returning one number for modeled queries. Leave other profiles and their existing compatibility behavior unchanged.
+- [x] Read the existing `PlayerState.secondary_powers[4]` count. `A_Admin.SetPlayerPower(count, max, 4)` also assigns that snapshot to the selected target GUID; unrelated power inputs do not alter the assignment.
+- [x] Return the pool count only for its assigned target. During `PLAYER_TARGET_CHANGED`, a different target must already report zero even when `UnitPower("player", 4)` still reports the earlier snapshot.
+- [x] Resolve owner/target aliases through existing unit snapshots and GUID identity. An absent owner or target has no combo points and returns zero.
+- [x] Preserve read-only queries, clear target assignment on a zero input, and leave a nonzero input made without a target unassigned. A new nonzero input replaces the single assignment.
+- [x] Report unsupported resolved nonplayer ownership explicitly instead of fabricating its count. Exercise unchanged native ComboFrame initialization/update with `comboPointLocation=1`, including nonzero display and zero hiding.
 
 ### Evidence and explicit guesses
 
@@ -36,11 +36,11 @@ Cached EllesmereUI 9.2.2's changelog reports `UnitPower=3` while `GetComboPoints
 
 `tests/combo_points.rs` joins the existing grouped integration target. It covers changing/zero inputs, primary-power independence, callback ordering across a target swap before a power update, GUID aliases, no-target input, explicit unsupported ownership, and unchanged native ComboFrame with its CVar enabled.
 
-Runtime RED exists in `/tmp/forever-addon-audit/batch-combo-error-transition.json` and the parent's no-addons shared-data control. Compilation and GREEN are pending the parent's serialized build; this implementation task does not run Cargo or runtime probes.
+Runtime RED exists in `/tmp/forever-addon-audit/batch-combo-error-transition.json` and the parent's no-addons shared-data control. At `c1e830ffa`, the isolated Forever integration build and `combo_points::` filter pass 6/6, including unchanged native ComboFrame updates with its CVar enabled. This proves the bounded simulator model, not native client behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and run the grouped regressions plus affected Forever addon paths.
+- [ ] Verify affected addon paths under per-process CVar isolation; the shared-CVar baseline is invalidated and cannot provide this proof.
 - [ ] Native PvP/secret-return semantics, nonplayer ownership, and combat generation/consumption remain unmodeled; affected workflows must remain explicit gaps.
 
 ## Out of scope

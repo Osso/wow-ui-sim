@@ -1,6 +1,6 @@
 # SecondsFormatter numeric configuration
 
-`C_StringUtil.CreateSecondsFormatter()` proxies retain independent approximation and milliseconds-threshold configuration. The model lives in `src/c_api/seconds_formatter.rs`; the existing simulator factory remains temporary. The four evaluators expose configured decisions without implementing time formatting.
+`C_StringUtil.CreateSecondsFormatter()` creates opaque C API-owned formatter handles with independent approximation and milliseconds-threshold configuration. The model lives in `src/c_api/seconds_formatter.rs`; `930726316` replaces the former temporary SecondsFormatter factory with private formatter state and shared ICU duration rendering where the native-duration feature is enabled. The four evaluators expose configured decisions; formatter rendering is specified separately.
 
 ## What it must do
 
@@ -9,7 +9,7 @@
 - [x] Each getter returns exactly one number; each setter returns no values.
 - [x] Missing, nil, nonnumeric, NaN, and infinite setter arguments raise an error without changing either stored value. This validation policy is a simulator choice; numeric strings are not coerced.
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
-- [x] Existing factory identity and stored setter values remain intact; maximum-mode switching is specified below. PTR `Format` is modeled separately in [duration formatting](seconds-formatter-format.md); earlier retail retains placeholder output.
+- [x] Formatter identity and stored setter values remain intact; maximum-mode switching is specified below. PTR and Forever formatting use the shared native-duration backend; profiles without that feature retain their existing placeholder behavior. Formatting policy is specified separately in [duration formatting](seconds-formatter-format.md).
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
 - [ ] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
 
@@ -17,11 +17,11 @@
 
 Pinned current Retail, PTR, and Forever `SecondsFormatterSharedDocumentation.lua` declare `Preserve=0`, `Strip=1`, and `StripIgnoreLocale=2`. `SecondsFormatterAPIDocumentation.lua` defines the proxy setter/getter argument/result as this enum, not a boolean. Native `SecondsFormatterMixin` is a separate Lua utility with a boolean setting; it is unchanged.
 
-- [ ] Publish `Enum.SecondsFormatterIntervalWhitespace` and its `EnumMeta` bounds `0/2/3` from `c_api::seconds_formatter`, registered with `C_StringUtil`, for Retail 12.1+, PTR, and Forever. Preserve the historical Retail and classic publication surface.
-- [ ] Store validated numeric modes independently per formatter; setters return no values and getters return exactly one number. Preserve mode `0` as numeric zero, not Lua truthiness.
-- [ ] Reject nil, booleans, strings, fractional values, nonfinite values, and numbers outside `0..2` without changing the stored mode. This validation policy and initial `Preserve` mode are simulator guesses, not native-tested defaults/coercion.
+- [x] Publish `Enum.SecondsFormatterIntervalWhitespace` and its `EnumMeta` bounds `0/2/3` from `c_api::seconds_formatter`, registered with `C_StringUtil`, for Retail 12.1+, PTR, and Forever. Preserve the historical Retail and classic publication surface.
+- [x] Store validated numeric modes independently per formatter; setters return no values and getters return exactly one number. Preserve mode `0` as numeric zero, not Lua truthiness.
+- [x] Reject nil, booleans, strings, fractional values, nonfinite values, and numbers outside `0..2` without changing the stored mode. This validation policy and initial `Preserve` mode are simulator guesses, not native-tested defaults/coercion.
 
-The real ActionBarAuras RED in `/tmp/forever-addon-runtime/main-batch-000-032.json` reaches `Core.lua:99` with the enum absent. This first slice adds publication and genuine configuration state only. **It does not implement whitespace effects on `Format` or establish ActionBarAuras compatibility.** Forever/current Retail retain their existing numeric-string placeholder; PTR's unit renderer is unchanged and does not yet consume this setting. The integrating caller must separately prove observable unit-string whitespace behavior, including locale override versus `StripIgnoreLocale`.
+The real ActionBarAuras RED in `/tmp/forever-addon-runtime/main-batch-000-032.json` reaches `Core.lua:99` with the enum absent. The earlier slice added publication and configuration state only. `930726316` additionally implements modeled formatted whitespace effects through the opaque formatter and shared ICU backend, but its runtime and focused-test evidence is pending. It does not establish ActionBarAuras compatibility; the integrating caller must separately prove observable unit-string whitespace behavior, including locale override versus `StripIgnoreLocale`.
 
 ### Evaluation model (simulator assumptions)
 
@@ -43,25 +43,26 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 
 ## Implementation inventory
 
-- `src/c_api/seconds_formatter.rs` — private per-proxy numeric configuration, validation, configuration/evaluation methods, and profile-scoped native whitespace enum publication.
-- `src/c_api/mod.rs` — internal module wiring.
-- `src/c_api/c_string_util.rs` — namespace registration retains the already-installed formatter factory and registers the formatter-owned enum.
-- `src/lua_api/workarounds/temporary/proxy_object_factories.rs` — temporary factory integration; retire this connection when the modeled formatter owns the complete factory.
+- `src/c_api/seconds_formatter.rs` — opaque formatter factory, private configuration, validation, configuration/evaluation methods, and native-duration rendering hookup.
+- `src/c_api/seconds_formatter/{configuration.lua,format.lua,render.rs,units.rs}` and `src/c_api/native_icu.rs` — private handle behavior and shared ICU duration rendering.
+- `src/lua_api/env_init/mod.rs` — formatter bootstrap wiring.
+- `src/c_api/c_string_util.rs` — namespace and formatter-owned enum registration; it does not own the formatter factory.
+- `src/lua_api/workarounds/temporary/proxy_object_factories.rs` — unrelated temporary proxy factories remain there; it no longer implements SecondsFormatter.
 
 ## Tests asserting this spec
 
-- `tests/seconds_formatter_configuration.rs` — independent storage, arity, updates, atomic validation, GC retention, unchanged existing methods, evaluation boundaries, and real/proxy curve dispatch/errors; grouped `integration` target.
-- `src/lua_api/workarounds/temporary/proxy_object_factories.rs::tests::installs_proxy_factories` — existing factory regression.
-- `src/lua_api/workarounds/temporary/environment_cleanup_restore.rs::tests::post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory` — initial availability, public/secure identity, and numeric formatting before/after the actual restoration entry point. External RED confirms the bootstrap snapshot formats `12` while post-cleanup public factory is nil and namespace identity differs; compiled GREEN remains pending.
+- `tests/seconds_formatter_configuration.rs` — independent storage, arity, updates, atomic validation, GC retention, evaluation boundaries, and curve dispatch/errors; grouped `integration` target.
+- `tests/seconds_formatter_native.rs` — opaque identity, `FormatNumber`, actual AuraContainer binding, modeled duration text, locale whitespace, validation, and bounded secret/curve handoffs.
+- `src/lua_api/workarounds/temporary/environment_cleanup_restore.rs::tests::post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory` — initial availability, public/secure identity, and existing/new formatter behavior across the actual restoration entry point.
 
 Focused development proof at `89fced131`: three new tests failed before implementation; the complete `seconds_formatter_configuration::` group passes six tests per profile with `--test integration --offline --no-default-features --features sound,gui,client-<ptr|retail>`. This includes the three existing configuration regressions. No broad, check, readability, or audit-artifact gates were run.
 
+At `c1e830ffa`, before the opaque-handle implementation, the isolated Forever integration build and `seconds_formatter_whitespace` filter passed 1/1. The selected Forever filter did not execute the cfg-excluded older-profile publication test. That evidence remains valid for the earlier enum/configuration slice only; it is not GREEN evidence for `930726316`'s opaque handle, ICU renderer, ActionBarAuras replay, restoration test, secret boundaries, or other profiles. All newly added focused and runtime tests remain pending.
+
 ## Known gaps (current cycle)
 
-- [ ] Compile and run new grouped whitespace publication/state/older-profile tests. Cargo and runtime execution were explicitly excluded from this implementation slice; only existing addon RED is credited.
-- [ ] Implement and verify required whitespace effects on real formatted output. Numeric setter/getter tests are not formatting proof; a PTR-only test would not prove Forever behavior.
-
-- [ ] Native defaults, validation/coercion, `Seconds` representation, and secret/taint enforcement remain unverified.
+- [ ] Run the `930726316` focused formatter, restoration, and profile-preservation tests, then replay ActionBarAuras with isolated data. No newly added test or runtime replay is GREEN yet.
+- [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified.
 - [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.
 - [ ] Existing numeric curves currently interpolate linearly even when configured as Step. These evaluators call that existing engine unchanged and explicitly reject a fractional interval result. Vendor AuraContainer's Step curve therefore still requires a separate curve-engine correction; no broader redesign was attempted.
 
