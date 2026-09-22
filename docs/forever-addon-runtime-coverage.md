@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 11 bounded interaction passes, two failed workflows and 256 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 12 bounded interaction passes, two failed workflows and 255 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -93,6 +93,12 @@ The settings workflow still fails: `Slider:SetValue(1.35)` updates the slider bu
 ## Account-wide UI save/load failure
 
 The unchanged `8935141` package starts cleanly, but its real `/awi save` handler fails at `SaveFunction.lua:457` with `attempt to call local '(for state)' (a nil value)`. The self-cast CVar save/change/load sequence does not complete. Exact producer remains unproven; do not treat it as a successful self-cast workflow: `/tmp/forever-addon-runtime/account-ui-selfcast-ov9yd3_u/ledger.json`.
+
+## AccentChat bounded pre-send interaction
+
+AccentChat `8935580` registers its actual pre-send callback. With the explicit out-of-date switch, isolated `d1e2487f6` replay translates deterministic Dwarf text `you are and the` to `ye be an' tha` for PARTY and PARTY_LEADER, preserves slash input and disabled-channel/addon text, and resumes translation after re-enable. Six checks and `DONE` pass with zero Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/accentchat-presend-ood-qrzg720v/ledger.json`.
+
+The fixture injects `ChatFrame.OnEditBoxPreSendText` with a synthetic editbox; it does not call the translator directly. Network send, settings UI, other accents, secret/lockdown handling and restart persistence remain untested. An initial run omitted the required interface switch and did not load the addon; it is excluded rather than credited as a workflow failure.
 
 ## Acceptance discipline
 

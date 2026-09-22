@@ -15,9 +15,9 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 11,
-      "not-run": 256,
-      "failed": 2
+      "bounded-pass": 12,
+      "failed": 2,
+      "not-run": 255
     }
   },
   "projects": [
@@ -122,16 +122,15 @@
       "startup": {
         "status": "clean-startup",
         "proofLevel": "observed-isolated-startup-explicit-out-of-date",
-        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
-        "binaryBuildRevision": "55ee20d7",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "evidence": "/tmp/forever-addon-runtime/accentchat-presend-ood-qrzg720v/ledger.json",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
+        "binarySha256": "35a2ee5985d05e4ff2a394191431335be94c78acbd845a589d25e668c08000cc",
         "packageFileIds": [
           8935580
         ],
         "configuration": {
           "outOfDate": true,
-          "isolatedData": true,
-          "fixedLoDMetadata": true
+          "isolatedData": true
         },
         "observations": [
           {
@@ -143,12 +142,17 @@
           }
         ],
         "errorRecords": 0,
-        "hostCvarsUnchanged": true,
-        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
+        "hostCvarsUnchanged": true
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "bounded-pass",
+        "covered": [
+          "Actual registered pre-send callback translates deterministic Dwarf text for party/party-leader; preserves slash input and disabled channel/addon text; reenable resumes translation"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/accentchat-presend-ood-qrzg720v/ledger.json",
+        "fixture": "tools/forever-addon-fixtures/accentchat-presend-workflow.lua",
+        "binaryBuildRevision": "d1e2487f6452a1e200044a94cc93cff2ca46eaf1",
+        "limitations": "Synthetic editbox and injected actual EventRegistry pre-send notification; no network send, settings UI, other accents, secret/lockdown or restart persistence. Explicit out-of-date switch required; unloaded preliminary attempt excluded."
       },
       "packageOnlyBaseline": {
         "status": "unloaded",
@@ -177,6 +181,33 @@
         ],
         "errorRecords": 0,
         "hostCvarsUnchanged": true
+      },
+      "priorSharedProducerReplay": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup-explicit-out-of-date",
+        "evidence": "/tmp/forever-addon-runtime/unloaded-ood-55ee20d7-batch0.json",
+        "binaryBuildRevision": "55ee20d7",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8935580
+        ],
+        "configuration": {
+          "outOfDate": true,
+          "isolatedData": true,
+          "fixedLoDMetadata": true
+        },
+        "observations": [
+          {
+            "name": "AccentChat",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       }
     },
     {
