@@ -30,7 +30,7 @@ A real ActionBarAuras replay on September 22, 2026 reached an assigned, shown Cu
 
 `bf073db38` and follow-up `d6a3859e4` introduce scheduler-side binding work during engine OnUpdate processing. At frozen build `748e3668`, an isolated ActionBarAuras replay observes the real helpful player-buff path: `7s` becomes `6s`, `RemoveBuff` hides the assigned aura button, and the probe completes with no collected Lua errors. The 20-second process timeout occurs after completion; the shared host CVar hash is unchanged. Evidence: `/tmp/forever-addon-runtime/aba-duration-automatic-4rgzhxxk/{ledger.json,stdout}`.
 
-This is bounded simulator evidence only. Target-debuff and rendering paths, native timing parity, and final scheduler formatter-error isolation/independent verification remain pending. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
+This is bounded simulator evidence only. Final scheduler proof at `71d73ed81` reuses the exact `a61c6080d` source build and records binding-copy 11/11, native formatter 7/7, numeric formatter 8/8, visibility and event error continuation 1/1 each, format/default checks, PTR integration compilation, PTR binding-copy 7/7, and PTR native formatter 3/3: `/tmp/forever-addon-audit/verify-binding-tick-final-ledger.json`. PTR automatic scheduler runtime remains unproven because the scheduler test is Forever-gated. Target-debuff and rendering paths, native timing parity, first-update/expiry behavior, and native output equivalence remain open. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
 
 ## Sources
 
