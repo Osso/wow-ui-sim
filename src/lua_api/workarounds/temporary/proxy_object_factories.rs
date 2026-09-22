@@ -8,10 +8,6 @@ C_FunctionContainers = C_FunctionContainers or __wow_namespace({
   CreateCallback = nil,
 })
 
-C_StringUtil = C_StringUtil or __wow_namespace({
-  CreateSecondsFormatter = nil,
-})
-
 ProxyUtil = ProxyUtil or {}
 ProxyConvertableMixin = ProxyConvertableMixin or {}
 ProxyUtil.CreateProxy = ProxyUtil.CreateProxy or function(value) return value end
@@ -113,50 +109,6 @@ local function __wow_copy_proxy_table(source)
     copy[key] = value
   end
   return copy
-end
-
-if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then
-  local secondsFormatterMethods = {}
-
-  function secondsFormatterMethods:SetDefaultAbbreviation(abbreviation)
-    self.defaultAbbreviation = abbreviation
-  end
-
-  function secondsFormatterMethods:SetRounding(rounding)
-    self.rounding = rounding
-  end
-
-  function secondsFormatterMethods:SetCanRoundUpLastUnit(canRoundUp)
-    self.canRoundUpLastUnit = canRoundUp
-  end
-
-  function secondsFormatterMethods:SetMinInterval(interval)
-    self.minInterval = interval
-  end
-
-  function secondsFormatterMethods:SetMaxInterval(interval)
-    self.maxInterval = interval
-    self.maxIntervalCurve = nil
-  end
-
-  function secondsFormatterMethods:SetMaxIntervalCurve(curve)
-    self.maxIntervalCurve = curve
-  end
-
-  function secondsFormatterMethods:SetDesiredUnitCount(count)
-    self.desiredUnitCount = count
-  end
-
-  function secondsFormatterMethods:Format(seconds)
-    return tostring(seconds or 0)
-  end
-
-  -- Numeric configuration is modeled in c_api::seconds_formatter. Keep this
-  -- integration temporary until that model owns the complete formatter factory.
-  local initializeConfiguration = __wow_install_seconds_formatter_configuration(secondsFormatterMethods, render_duration_units)
-  function C_StringUtil.CreateSecondsFormatter()
-    return initializeConfiguration(__wow_make_proxy_object("SecondsFormatter", secondsFormatterMethods, {}))
-  end
 end
 
 if rawget(C_FunctionContainers, "CreateCallback") == nil then
@@ -523,20 +475,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     use rilua::LuaApiMut;
-    let bootstrap = format!(
-        "local render_duration_units = ...\n{}\n{}\n{PROXY_OBJECT_FACTORIES_LUA}",
-        crate::c_api::seconds_formatter::FORMAT_LUA,
-        crate::c_api::seconds_formatter::CONFIGURATION_LUA
-    );
-    let function = lua.load_bytes(bootstrap.as_bytes(), "@seconds-formatter-proxy-bootstrap")?;
-    let saved_top = lua.state_mut().top;
-    // Root the loaded chunk while allocating its private native callback.
-    lua.state_mut()
-        .push(rilua::Val::Function(function.gc_ref()));
-    let renderer = crate::c_api::seconds_formatter::renderer(lua.state_mut());
-    let result = lua.call_function(&function, &[renderer]);
-    lua.state_mut().top = saved_top;
-    result?;
+    lua.exec(PROXY_OBJECT_FACTORIES_LUA)?;
     Ok(())
 }
 
@@ -569,7 +508,7 @@ mod tests {
                 curve:AddPoint(10, 20)
                 if curve:Evaluate(5) ~= 15 then return "evaluate" end
                 local formatter = C_StringUtil.CreateSecondsFormatter()
-                if type(formatter) ~= "table" then return "seconds_formatter_type" end
+                if type(formatter) ~= "userdata" then return "seconds_formatter_type" end
                 formatter:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
                 formatter:SetMinInterval(Enum.SecondsFormatterInterval.Seconds)
                 formatter:SetMaxIntervalCurve(curve)

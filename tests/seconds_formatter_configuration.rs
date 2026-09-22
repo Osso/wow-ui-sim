@@ -94,7 +94,7 @@ fn seconds_formatter_evaluation_uses_current_configuration() {
         "#
         .replace(
             "EXPECTED_FORMAT",
-            if cfg!(feature = "retail-12-1-5") {
+            if cfg!(feature = "native-duration-formatting") {
                 "'0 minutes'"
             } else {
                 "'2.5'"
@@ -293,7 +293,7 @@ fn seconds_formatter_configuration_survives_gc_and_preserves_existing_methods() 
         assert(formatter:GetApproximationSeconds() == 0.125)
         assert(formatter:GetMillisecondsThreshold() == -8.5)
         assert(C_StringUtil.CreateSecondsFormatter():GetApproximationSeconds() == 0)
-        "#.replace("FORMAT_ASSERTION", if cfg!(feature = "retail-12-1-5") {
+        "#.replace("FORMAT_ASSERTION", if cfg!(feature = "native-duration-formatting") {
             "assert(not pcall(formatter.Format, formatter, 2.5)) -- Invalid max interval remains stored."
         } else { "assert(formatter:Format(2.5) == '2.5')" }),
     )

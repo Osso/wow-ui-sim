@@ -55,6 +55,7 @@ pub(super) fn init_lua_state(
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     crate::c_api::c_curve_util::register(lua)?;
+    crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)?;
     #[cfg(feature = "client-wrath")]
     {

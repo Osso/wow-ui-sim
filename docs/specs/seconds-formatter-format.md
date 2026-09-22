@@ -1,56 +1,77 @@
-# PTR SecondsFormatter.Format
+# SecondsFormatter handles and duration formatting
 
-PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consumes existing formatter configuration and renders duration units through ICU4C C APIs. The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes only the parent seconds alias from `DurationSecondsDouble` to `Seconds`, while retaining the string result; that change establishes no runtime behavior. This document defines simulator behavior, not native WoW conformance.
+`src/c_api/seconds_formatter.rs` owns `C_StringUtil.CreateSecondsFormatter`. PTR and Forever use the existing ICU duration-unit backend through a private `native-duration-formatting` capability. Other profiles retain their previous formatting output; no failed native operation falls back to that output. This is a bounded simulator model, not native-client conformance.
 
 ## What it must do
 
-- [x] Publish exactly the pinned PTR abbreviation map `None=0`, `Truncate=1`, `OneLetter=2`, with metadata `0/2/3`, before and after compatibility bootstrap. Reject value `3`; do not publish `TwoLetters` or `Full` on PTR.
-- [x] Preserve actual earlier-retail abbreviation publication (`None=0`, `OneLetter=1`, `TwoLetters=2`, `Full=3`, metadata `0/3/4`) and its placeholder output. This is baseline preservation, not pinned-source conformance.
-- [x] PTR returns exactly one localized duration string; earlier retail retains its existing `tostring(seconds or 0)` output, including ignored settings. That earlier output is a known baseline gap, not formatting conformance.
-- [x] Consume only registered settings: minimum/maximum interval, maximum curve, desired unit count, default/explicit abbreviation, rounding, final-unit round-up permission, approximation seconds, and millisecond threshold. Existing configuration accessors/evaluators remain unchanged.
-- [x] Use a private bootstrap argument captured by the formatter closure for native rendering. Do not expose a public helper global or C namespace method. Keep the callback alive through collection without pinning instances.
-- [x] Render actual localized plural-sensitive second/minute/hour/day units with `unumf` measure-unit skeletons and join them with `ulistfmt` units. Reuse checked native buffers, explicit lengths, locale parsing, and cleanup; no C++ ABI or new dependency.
-- [x] Validate input/settings and propagate configured curve/ICU errors without falling back to static settings or placeholder output.
-- [x] Preserve per-instance state and the six existing configuration/evaluation tests, with only profile-specific placeholder assertions updated for the new PTR contract.
+- [ ] Return opaque userdata with protected, read-only methods and independent configuration. `securecopy` preserves the same handle, including configuration and retained curve references through GC. Borrowed methods and cloned/foreign userdata cannot impersonate a registered instance.
+- [ ] Support the `NumericFormatter.FormatNumber` interface required by `ProcessCustomAuraButtonDurationTextOptions`, without changing that validator or accepting a generic table in place of the handle.
+- [ ] On PTR and Forever, publish `None=0`, `Truncate=1`, `OneLetter=2`, with abbreviation metadata `0/2/3`; reject value `3`. Preserve the earlier-retail four-member enum and placeholder output outside the capability.
+- [ ] Format real localized second/minute/hour/day units using the existing interval-selection/rounding Lua code and ICU `unumf`/`ulistfmt`. Consume min/max interval, maximum curve, desired count, abbreviation, rounding, approximation, millisecond threshold, and whitespace mode.
+- [ ] Strip Unicode whitespace inside individual formatted unit strings for mode `Strip`, except documented German/Russian locale families; `Preserve` leaves units unchanged and `StripIgnoreLocale` strips even those families. Keep ICU's inter-unit list separators.
+- [ ] Accept only authenticated wrapped numeric format inputs from untainted callers. Return wrapped text for wrapped input; tainted calls cannot decode it through the formatter. Keep wrapped time at configurable curve callbacks and never pass decoded time to addon conversion overrides.
+- [ ] Native AuraContainer option copying and `SetDurationText` retain the formatter. A real binding/FontString follows remaining time through one minute, five seconds, and sub-second values; secret-derived text retains its existing read guard.
+- [ ] Reject invalid format numbers and receivers without changing configuration or visible text; reject invalid whitespace-mode writes atomically. Preserve existing deferred validation for older interval/count setters. Curve and ICU failures propagate; there is no placeholder/error-to-zero rendering path on PTR/Forever.
+- [ ] Share only the private native backend capability. Forever must not publish `C_Intl` or enable the complete `retail-12-1-5` API epoch.
 
-## Simulator policies
+## Evidence and explicit simulator guesses
 
-- Intervals are seconds/minutes/hours/days (`0..3`) with lengths `1/60/3600/86400`. Select the largest allowed interval fitting the magnitude, or the minimum if none fits. Desired count selects a contiguous interval window, capped at four. Omit zero components, but always render one unit for zero.
-- Evaluate min/max/count at the selected magnitude; configured maximum curves are consulted on every call. A minimum larger than maximum is an error.
-- Default rounding is Truncate (`1`). RoundUp (`0`) rounds the last selected unit upward only when `canRoundUpLastUnit` is true (default true). Earlier components use integer decomposition. Normalize carries into allowed larger units and reselect the window; do not exceed configured maximum.
-- Abbreviation defaults to `None=0`. Pinned target `49b69918` `SecondsFormatterSharedDocumentation.lua` defines exactly `None=0`, `Truncate=1`, `OneLetter=2`, with metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. PTR maps `0` to ICU wide/full-name, `1` to short, and `2` to narrow unit/list widths. `TwoLetters`, `Full`, and value `3` are absent/rejected on PTR. These width choices do not guarantee literal string length or exact native wording in every locale. A valid explicit argument still overrides the stored abbreviation.
-- For `0 < seconds < approximationSeconds`, format the threshold magnitude with the literal prefix `< `. Equality is not approximate. Zero and negative inputs are not approximated.
-- If the formatted magnitude is positive and below `millisecondsThreshold`, seconds in the last position retain up to three fractional digits (trailing zeros removed). Other intervals remain integral. The threshold is tested against the entire magnitude, not a residual component.
-- Negative inputs format their absolute magnitude with a single literal `-` prefix, including a truncated `-0 seconds`. No special negative unit arithmetic or locale-specific prefix is claimed.
-- Rendering follows current `GetLocale()` each call, including supported locale extensions. Numeric precision overflow and malformed settings fail explicitly. ICU/CLDR versions can change wording and spacing.
+Pinned Forever `SecondsFormatterSharedDocumentation.lua` declares the three abbreviation values and whitespace values `Preserve=0`, `Strip=1`, `StripIgnoreLocale=2`. Its Strip description names `deDE` and `ruRU` as examples of locale overrides. The generated SecondsFormatter documentation declares a userdata script object. Unchanged ActionBarAuras file `8920553`, `Core.lua:94–120`, constructs this object and passes it as `textFormatter`; the native AuraContainer field requires `NumericFormatter` with `FormatNumber`.
+
+The NumericFormatter relationship is **inferred from this unchanged consumer and typed field**, not declared inheritance or native-probe evidence. User-run Forever probes are unavailable. The following remain explicit simulator guesses:
+
+- Applying the documented `deDE`/`ruRU` exceptions to their language families, and stripping for other languages, is not a complete native exception list. Stripping applies to Unicode whitespace within unit strings, not ICU's list separator.
+- Authenticated wrapped format input produces wrapped text. An authenticated wrapped maximum-curve result also keeps the final text wrapped. Scalar evaluator reads require authorization when decoding wrapped inputs/results. Secret configuration values are rejected rather than silently decoded into ordinary settings; full native secret-configuration semantics are not implemented.
+- Existing interval/default/rounding/negative/approximation policies below are retained, not claimed native behavior.
+
+Configuration resides in a private weak-key Lua table keyed by userdata. Captured host primitives allocate and write this native-owned storage without turning settings into addon-owned Lua slots. These primitives do not unwrap configuration values, clear stack taint, or alter callback closure taint. Format inputs use a separate authenticated numeric decoder. The factory no longer resides in the temporary proxy-factory bootstrap.
+
+## Formatting policies retained from the PTR model
+
+- Intervals `0..3` have lengths `1/60/3600/86400`. Select the largest allowed interval fitting the magnitude, or the minimum. Desired count selects a contiguous window capped at four; omit zero components but render one unit for zero.
+- Evaluate min/max/count at the selected magnitude; consult configured maximum curves on every call. A minimum exceeding maximum is an error. Secret input remains wrapped when passed to a configurable curve; a curve that cannot consume it fails explicitly.
+- Default rounding is Truncate (`1`). RoundUp (`0`) rounds the last selected unit upward when `canRoundUpLastUnit` is true (default true). Normalize carries into allowed larger units and reselect the window.
+- Abbreviation defaults to `None=0`. ICU widths map to wide/full-name, short, and narrow for `0/1/2`. These choices do not guarantee literal string length or exact native wording.
+- For `0 < seconds < approximationSeconds`, use the threshold magnitude with `< `; equality, zero, and negative inputs are not approximated.
+- A positive magnitude below `millisecondsThreshold` retains up to three fractional digits for seconds in the last position. Other intervals are integral. The threshold applies to the entire magnitude.
+- Negative values use absolute magnitude plus `-`, including a truncated negative zero. Locale-specific sign/approximation prefixes are not modeled.
+- Rendering reads current `GetLocale()` without passing it any timing argument. Captured numeric/conversion functions cannot be replaced by later addon overrides. Malformed state and precision overflow fail explicitly; ICU/CLDR versions may change text.
 
 ## How it works
 
 - [Numeric configuration](seconds-formatter-configuration.md)
 - [Native ICU boundary](intl-native-linking.md)
+- [Duration text binding](duration-text-binding.md)
+- [Secret display policy](aura-secret-display.md)
 
 ## Implementation inventory
 
-- `src/ptr/seconds_formatter_abbreviation.lua`, `src/ptr/compat_bootstrap.rs`: exact PTR abbreviation publication at initialization and post-load bootstrap; earlier-retail compatibility enums remain unchanged.
-- `src/c_api/seconds_formatter/format.lua`: private selection, decomposition, rounding, and prefix policy.
-- `src/c_api/seconds_formatter/render.rs`: private Rust callback, part validation, and current locale lookup.
-- `src/c_api/seconds_formatter.rs`: configuration integration and feature-scoped callback construction.
-- `src/lua_api/workarounds/temporary/proxy_object_factories.rs`: bootstrap argument/rooting and existing factory.
-- `src/c_api/intl_native.rs`, `src/c_api/intl_native/ffi.rs`: checked native duration-part call and output ownership.
-- `native/intl/duration_units.c`, `native/intl/bridge.h`, `build/intl_native.rs`: ICU >=72 C formatter/list APIs and build inputs.
+- `src/c_api/seconds_formatter.rs`, `seconds_formatter/configuration.lua`: authentic handle membership, private configuration, enum publication, captured callbacks, and factory.
+- `seconds_formatter/format.lua`: shared interval/rounding/prefix selection and NumericFormatter interface.
+- `seconds_formatter/render.rs`, `seconds_formatter/units.rs`: private validated duration rendering and C ABI.
+- `src/c_api/native_icu.rs`: shared checked buffers, diagnostics, and input validation, also reused by PTR Intl.
+- `native/intl/duration_units.c`, `native/intl/bridge.h`: localized units, per-unit whitespace, and list joining.
+- `Cargo.toml`, `build.rs`, `build/intl_native.rs`: the shared duration capability builds only `text.c` and `duration_units.c` on Forever; remaining Intl shims stay PTR-only.
+- `src/lua_api/env_init/mod.rs`: model installation; the replaced SecondsFormatter block is removed from temporary proxy factories.
+
+### Build dependency
+
+No crate versions are added. Forever now activates the existing optional `cc`, `pkg-config`, and `vcpkg` build dependencies and requires ICU4C >=72 for real duration formatting. Unix uses `icu-uc`/`icu-i18n` through pkg-config. MSVC retains the existing explicit static `icu:x64-windows-static-md` requirement. No alternate backend is provided. Local read-only pkg-config observation: ICU 78.3; cross-target build/link verification remains with the integrating caller.
 
 ## Tests asserting this spec
 
-- `tests/seconds_formatter_format.rs`: boundary values, window selection, settings, locale/width/plurals, validation, private lifetime, and retail baseline.
-- `tests/seconds_formatter_configuration.rs`: six existing configuration/evaluation regressions.
-
-Correction commits `ab2972d99` and `4901c9255` replace stale `TwoLetters`/`Full`, reversed width, and accepted-value-`3` claims with the pinned PTR map. Existing focused proof covers complete profile maps/metadata before and after bootstrap, distinct numeric `0/1/2` output, stored/explicit value `3` rejection, locale/GC behavior, and configuration behavior. Earlier retail intentionally retains its legacy four-member enum and `tostring(seconds or 0)` placeholder; that is a baseline gap, not formatter conformance. No final check/readability/smoke gate is claimed here.
+- `tests/seconds_formatter_native.rs`: userdata/securecopy/type acceptance, live binding/FontString output, locale whitespace, tainted configuration, secret conversion/curve boundaries, and the actual CustomAuraButton consumer.
+- `tests/seconds_formatter_format.rs`: existing PTR formatting, locale, validation, GC, and earlier-retail preservation.
+- `tests/seconds_formatter_configuration.rs`: existing state/arity/evaluation regressions with shared-capability output expectations.
+- `environment_cleanup_restore.rs` and `proxy_object_factories.rs` existing library tests retain factory/namespace and native-handle assertions.
 
 ## Known gaps (current cycle)
-- [ ] Earlier retail intentionally retains the stale four-member compatibility enum and placeholder formatting; this slice does not upgrade that profile.
-- [ ] Native numeric/`Seconds` representation, unit-width semantics, defaults, selection, rounding, negative and approximation policy, millisecond precision, exact ICU/CLDR output, coercion, and security/taint behavior remain unverified.
-- [ ] Numeric Step curves retain the existing engine limitation; `Format` propagates invalid fractional interval results rather than changing curve behavior.
+
+- [ ] New tests and code are unexecuted in this implementation slice: Cargo/runtime execution was prohibited. Parent must compile, run relevant grouped tests and the actual ActionBarAuras path, then perform independent verification before checking the requirements above.
+- [ ] Earlier retail/historical formatting remains its prior placeholder behavior, explicitly outside the shared real-rendering capability.
+- [ ] Native inheritance, complete locale exception lists, exact native wording/defaults/rounding, arbitrary secret configuration, and general VM/debug secrecy are unverified.
+- [ ] Numeric curves retain existing engine limitations; errors propagate rather than changing their behavior or declassifying secret callback inputs.
 
 ## Out of scope
 
-Vendor mixins, unregistered formatter methods, native-userdata conversion, Step-curve engine changes, native security enforcement, final check/readability/smoke gates, audit artifacts, deployment, and publishing.
+Addon/vendor/native-cache edits, validator loosening, generic conversion changes, unrelated C_Intl namespace publication, new formatting backends, broader curve/VM/security redesign, downloads, deployment, or an overall ActionBarAuras/addon compatibility claim.

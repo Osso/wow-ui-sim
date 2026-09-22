@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unicode/uchar.h>
 #include <unicode/ulistformatter.h>
+#include <unicode/uloc.h>
 #include <unicode/unumberformatter.h>
 
 static UListFormatterWidth list_width(int32_t width) {
@@ -114,12 +116,43 @@ static UBool join_units(const UListFormatter *formatter,
   return success;
 }
 
-static UBool format_unit_list(const char *locale, const WowIcuDurationPart *parts,
-                              int32_t count, int32_t width,
+static int32_t should_strip_units(const char *locale, int32_t whitespace,
+                                  WowIcuError *error) {
+  if (whitespace != 1)
+    return whitespace == 2;
+  char language[ULOC_LANG_CAPACITY];
+  UErrorCode status = U_ZERO_ERROR;
+  uloc_getLanguage(locale, language, ULOC_LANG_CAPACITY, &status);
+  if (U_FAILURE(status)) {
+    wow_icu_fail(error, status, "read duration whitespace locale");
+    return -1;
+  }
+  /* Pinned documentation names deDE/ruRU. Applying their language families
+   * and stripping elsewhere is an explicit simulator policy, not a complete
+   * native exception list. */
+  return strcmp(language, "de") != 0 && strcmp(language, "ru") != 0;
+}
+
+static void strip_unit_whitespace(UChar *text, int32_t *length) {
+  int32_t output = 0;
+  for (int32_t input = 0; input < *length; ++input) {
+    if (!u_isUWhiteSpace(text[input]))
+      text[output++] = text[input];
+  }
+  text[output] = 0;
+  *length = output;
+}
+
+static UBool format_unit_list(const char *locale,
+                              const WowIcuDurationPart *parts, int32_t count,
+                              int32_t width, int32_t whitespace,
                               WowIcuString *output, WowIcuError *error) {
+  int32_t strip = should_strip_units(locale, whitespace, error);
+  if (strip < 0)
+    return 0;
   UErrorCode status = U_ZERO_ERROR;
   UListFormatter *formatter = ulistfmt_openForType(locale, ULISTFMT_TYPE_UNITS,
-                                                 list_width(width), &status);
+                                                   list_width(width), &status);
   if (U_FAILURE(status) || formatter == NULL) {
     if (formatter != NULL)
       ulistfmt_close(formatter);
@@ -136,10 +169,12 @@ static UBool format_unit_list(const char *locale, const WowIcuDurationPart *part
                                    &lengths[completed], error);
     if (owned[completed] == NULL)
       break;
+    if (strip)
+      strip_unit_whitespace(owned[completed], &lengths[completed]);
     views[completed] = owned[completed];
   }
   UBool success = completed == count &&
-      join_units(formatter, views, lengths, count, output, error);
+                  join_units(formatter, views, lengths, count, output, error);
   for (int32_t i = 0; i < count; ++i)
     free(owned[i]);
   ulistfmt_close(formatter);
@@ -147,24 +182,29 @@ static UBool format_unit_list(const char *locale, const WowIcuDurationPart *part
 }
 
 int32_t wow_icu_duration_units(const char *locale, int32_t locale_length,
-                                const WowIcuDurationPart *parts, int32_t count,
-                                int32_t width, WowIcuString *output,
-                                WowIcuError *error) {
+                               const WowIcuDurationPart *parts, int32_t count,
+                               int32_t width, int32_t whitespace,
+                               WowIcuString *output, WowIcuError *error) {
   output->data = NULL;
   output->length = 0;
-  if (count < 1 || count > 4 || width < 0 || width > 2)
-    return wow_icu_fail(error, U_ILLEGAL_ARGUMENT_ERROR, "validate duration unit list");
+  if (count < 1 || count > 4 || width < 0 || width > 2 || whitespace < 0 ||
+      whitespace > 2)
+    return wow_icu_fail(error, U_ILLEGAL_ARGUMENT_ERROR,
+                        "validate duration unit list");
   for (int32_t i = 0; i < count; ++i) {
     const WowIcuDurationPart *part = &parts[i];
-    UBool valid_precision = part->fraction_digits == 0 || part->fraction_digits == 3;
+    UBool valid_precision =
+        part->fraction_digits == 0 || part->fraction_digits == 3;
     if (!isfinite(part->value) || part->value < 0 || part->unit < 0 ||
         part->unit > 3 || !valid_precision)
-      return wow_icu_fail(error, U_ILLEGAL_ARGUMENT_ERROR, "validate duration unit");
+      return wow_icu_fail(error, U_ILLEGAL_ARGUMENT_ERROR,
+                          "validate duration unit");
   }
   char *parsed_locale = wow_icu_locale(locale, locale_length, error);
   if (parsed_locale == NULL)
     return WOW_ICU_ERROR;
-  UBool success = format_unit_list(parsed_locale, parts, count, width, output, error);
+  UBool success = format_unit_list(parsed_locale, parts, count, width,
+                                   whitespace, output, error);
   free(parsed_locale);
   return success ? WOW_ICU_OK : WOW_ICU_ERROR;
 }

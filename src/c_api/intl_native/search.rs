@@ -1,8 +1,8 @@
 //! Native search owns ICU resources; this module owns the returned range buffer.
 use std::ffi::c_char;
 
-use super::ffi::NativeError;
 use super::{Error, checked_length, locale_string};
+use crate::c_api::native_icu::NativeError;
 
 #[repr(i32)]
 #[derive(Clone, Copy, Debug)]

@@ -114,7 +114,9 @@ retail-12-0-0 = ["aura-instance-enumeration"]
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
-retail-12-1-5 = ["retail-12-1-0", "dep:cc", "dep:pkg-config", "dep:vcpkg", "timed-signal-maps", "forbidden-animation-aspects"]
+retail-12-1-5 = ["retail-12-1-0", "native-duration-formatting", "timed-signal-maps", "forbidden-animation-aspects"]
+# Private ICU duration rendering; this capability does not publish C_Intl.
+native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
 # Shared keyed timer capability used by PTR and Forever.
 timed-signal-maps = []
 # Shared XML aliases and intrinsic mappings for aura frames/buttons.
@@ -143,7 +145,7 @@ client-wrath = []
 client-mists = []
 client-era = []
 client-anniversary = []
-client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers"]
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting"]
 
 [profile.release]
 lto = false
@@ -253,7 +255,7 @@ path = "tests/classic_guild_roster_selection.rs"
 iced-layout-inspector = { git = "https://github.com/Osso/iced-layout-inspector.git", tag = "v0.2.0", features = ["server"], optional = true }
 
 [build-dependencies]
-# Compile/probe the PTR-only ICU4C C ABI shim; never activated by older profiles.
+# Compile/probe the shared private ICU4C shim; older profiles do not activate it.
 cc = { version = "=1.2.52", optional = true }
 pkg-config = { version = "=0.3.32", optional = true }
 vcpkg = { version = "=0.2.15", optional = true }

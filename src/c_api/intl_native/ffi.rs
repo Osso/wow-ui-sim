@@ -3,72 +3,9 @@ use std::ffi::{CStr, c_char};
 
 use super::{CurrencyNameStyle, DateTimeStyle, Error, NumberStyle, ParsedCurrency, checked_length};
 
-#[repr(C)]
-#[derive(Default)]
-struct NativeString {
-    data: *mut u8,
-    length: i32,
-}
-
-impl Drop for NativeString {
-    fn drop(&mut self) {
-        // SAFETY: data is null or was allocated by the shim; this owner frees it once.
-        unsafe { wow_icu_string_free(self.data) };
-    }
-}
-
-impl NativeString {
-    fn copy_string(&self) -> Result<String, Error> {
-        if self.data.is_null() || self.length < 0 {
-            return Err(Error("ICU4C returned an invalid output buffer".into()));
-        }
-        // SAFETY: successful shim output owns at least length bytes until this guard drops.
-        let bytes = unsafe { std::slice::from_raw_parts(self.data, self.length as usize) };
-        String::from_utf8(bytes.to_vec())
-            .map_err(|error| Error(format!("ICU4C produced invalid UTF-8: {error}")))
-    }
-}
-
-#[repr(C)]
-#[derive(Default)]
-pub(super) struct NativeError {
-    code: i32,
-    operation: *const c_char,
-}
-
-impl NativeError {
-    pub(super) fn into_error(self, context: &CStr) -> Error {
-        // SAFETY: the shim supplies static NUL-terminated diagnostic strings.
-        let operation = unsafe { diagnostic(self.operation) };
-        // SAFETY: any integer code is accepted; ICU returns a static diagnostic name.
-        let name = unsafe { diagnostic(wow_icu_error_name(self.code)) };
-        Error(format!(
-            "ICU4C {operation} for {context:?}: {name} ({})",
-            self.code
-        ))
-    }
-}
-
-unsafe fn diagnostic(pointer: *const c_char) -> String {
-    if pointer.is_null() {
-        return "unspecified native error".into();
-    }
-    // SAFETY: callers supply ICU/shim static diagnostic pointers or null.
-    unsafe { CStr::from_ptr(pointer) }
-        .to_string_lossy()
-        .into_owned()
-}
+use crate::c_api::native_icu::{NativeError, NativeString};
 
 unsafe extern "C" {
-    fn wow_icu_duration_units(
-        locale: *const c_char,
-        locale_length: i32,
-        parts: *const super::DurationPart,
-        count: i32,
-        width: i32,
-        output: *mut NativeString,
-        error: *mut NativeError,
-    ) -> i32;
     fn wow_icu_format(
         locale: *const c_char,
         locale_length: i32,
@@ -129,36 +66,7 @@ unsafe extern "C" {
         output: *mut NativeString,
         error: *mut NativeError,
     ) -> i32;
-    fn wow_icu_string_free(data: *mut u8);
-    fn wow_icu_error_name(code: i32) -> *const c_char;
     fn wow_icu_version(version: *mut u8);
-}
-
-pub(super) fn duration_units(
-    locale: &CStr,
-    parts: &[super::DurationPart],
-    width: i32,
-) -> Result<String, Error> {
-    let locale_length = checked_length(locale.to_bytes().len(), "locale")?;
-    let count = checked_length(parts.len(), "duration unit count")?;
-    let mut output = NativeString::default();
-    let mut error = NativeError::default();
-    // SAFETY: repr(C) parts and locale live through the call; output has one RAII owner.
-    let status = unsafe {
-        wow_icu_duration_units(
-            locale.as_ptr(),
-            locale_length,
-            parts.as_ptr(),
-            count,
-            width,
-            &mut output,
-            &mut error,
-        )
-    };
-    if status != 0 {
-        return Err(error.into_error(locale));
-    }
-    output.copy_string()
 }
 
 pub(super) fn format(

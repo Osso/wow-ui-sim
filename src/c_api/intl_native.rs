@@ -7,6 +7,9 @@ pub use search::{SearchStrength, find_string_matches};
 
 use std::ffi::CString;
 
+pub use super::native_icu::Error;
+use super::native_icu::{checked_length, locale_string, validate_finite};
+
 #[repr(i32)]
 #[derive(Clone, Copy, Debug)]
 pub enum NumberStyle {
@@ -43,10 +46,6 @@ pub struct ParsedCurrency {
     pub amount: f64,
     pub currency_code: String,
 }
-
-#[derive(Debug, thiserror::Error)]
-#[error("{0}")]
-pub struct Error(String);
 
 /// ICU defaults for the selected locale/style. Integer uses zero fraction digits,
 /// half-even rounding, and integer-only parsing; Currency uses the locale currency.
@@ -137,58 +136,9 @@ pub fn transliterate(text: &str, id: &str) -> Result<String, Error> {
     ffi::transliterate(text, id)
 }
 
-/// One already-selected duration unit; rendering does not select or round intervals.
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub(crate) struct DurationPart {
-    pub value: f64,
-    pub unit: i32,
-    pub fraction_digits: i32,
-}
-
-pub(crate) fn format_duration_units(
-    locale: &str,
-    parts: &[DurationPart],
-    width: i32,
-) -> Result<String, Error> {
-    let valid_part_count = (1..=4).contains(&parts.len());
-    let valid_width = (0..=2).contains(&width);
-    if !valid_part_count || !valid_width {
-        return Err(Error("invalid duration unit list or width".into()));
-    }
-    for part in parts {
-        validate_finite(part.value)?;
-        let valid_unit = (0..=3).contains(&part.unit);
-        let valid_precision = matches!(part.fraction_digits, 0 | 3);
-        let valid_value = part.value >= 0.0;
-        let valid_part = valid_value && valid_unit && valid_precision;
-        if !valid_part {
-            return Err(Error(
-                "invalid duration unit value, interval, or precision".into(),
-            ));
-        }
-    }
-    ffi::duration_units(&locale_string(locale)?, parts, width)
-}
-
 /// Runtime ICU library version, as four dot-separated numeric components.
 pub fn version() -> String {
     ffi::version()
-}
-
-fn validate_finite(value: f64) -> Result<(), Error> {
-    if !value.is_finite() {
-        return Err(Error("ICU4C formatting requires a finite number".into()));
-    }
-    Ok(())
-}
-
-fn locale_string(locale: &str) -> Result<CString, Error> {
-    checked_length(locale.len(), "locale")?;
-    if locale.is_empty() {
-        return Err(Error("ICU4C locale must not be empty".into()));
-    }
-    CString::new(locale).map_err(|_| Error("ICU4C locale must not contain NUL".into()))
 }
 
 fn currency_string(currency: &str) -> Result<CString, Error> {
@@ -200,16 +150,6 @@ fn currency_string(currency: &str) -> Result<CString, Error> {
     }
     CString::new(currency.to_ascii_uppercase())
         .map_err(|_| Error("ICU4C currency code must not contain NUL".into()))
-}
-
-fn checked_length(length: usize, field: &str) -> Result<i32, Error> {
-    // Leave one i32-representable unit for C/ICU's trailing terminator.
-    if length >= i32::MAX as usize {
-        return Err(Error(format!(
-            "ICU4C {field} exceeds the supported i32 length"
-        )));
-    }
-    Ok(length as i32)
 }
 
 #[cfg(test)]

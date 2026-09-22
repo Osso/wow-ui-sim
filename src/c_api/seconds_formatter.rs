@@ -1,180 +1,196 @@
-//! Modeled numeric configuration for simulator-owned SecondsFormatter proxies.
-//!
-//! This source shares the temporary factory's Lua chunk so the installer stays
-//! local rather than exposing a new global or C_StringUtil helper API.
-
-#[cfg(feature = "retail-12-1-5")]
+//! C API-owned opaque SecondsFormatter handles and private native rendering.
+#[cfg(feature = "native-duration-formatting")]
 mod render;
+#[cfg(feature = "native-duration-formatting")]
+mod units;
 
-/// The pinned current Retail, PTR, and Forever API declares this numeric mode.
-/// Historical profiles retain their existing formatter surface.
-pub(crate) fn register_enums(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
-    if !cfg!(any(
-        feature = "retail-12-1-0",
-        feature = "client-wowforever"
-    )) {
-        return Ok(());
-    }
-    use crate::lua_api::methods::{create_table, table_set_static};
-    use rilua::Val;
+use crate::lua_api::methods::{create_table, table_set, table_set_static};
+use crate::lua_bridge::{FromStack, stack_val};
+use rilua::vm::closure::{Closure, RustClosure};
+use rilua::vm::state::LuaState;
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
+fn publish_values(
+    state: &mut LuaState,
+    name: &'static str,
+    fields: &[(&'static str, f64)],
+) -> LuaResult<()> {
     let enums = super::helpers::ensure_namespace(state, "Enum")?;
     let values = create_table(state);
-    for (name, value) in [
-        ("Preserve", 0.0),
-        ("Strip", 1.0),
-        ("StripIgnoreLocale", 2.0),
-    ] {
-        table_set_static(state, values, name, Val::Num(value));
+    state.push(values);
+    for &(key, value) in fields {
+        table_set_static(state, values, key, Val::Num(value));
     }
-    table_set_static(
-        state,
-        Val::Table(enums),
-        "SecondsFormatterIntervalWhitespace",
-        values,
-    );
-    let metadata = create_table(state);
-    for (name, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
-        table_set_static(state, metadata, name, Val::Num(value));
-    }
-    let enum_meta = super::helpers::ensure_namespace(state, "EnumMeta")?;
-    table_set_static(
-        state,
-        Val::Table(enum_meta),
-        "SecondsFormatterIntervalWhitespace",
-        metadata,
-    );
+    table_set_static(state, Val::Table(enums), name, values);
+    state.pop();
     Ok(())
 }
 
-pub(crate) const FORMAT_LUA: &str = include_str!("seconds_formatter/format.lua");
+fn publish_metadata(
+    state: &mut LuaState,
+    namespace: &'static str,
+    name: &'static str,
+) -> LuaResult<()> {
+    let namespace = super::helpers::ensure_namespace(state, namespace)?;
+    let metadata = create_table(state);
+    state.push(metadata);
+    for (key, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
+        table_set_static(state, metadata, key, Val::Num(value));
+    }
+    table_set_static(state, Val::Table(namespace), name, metadata);
+    state.pop();
+    Ok(())
+}
 
-pub(crate) fn renderer(state: &mut rilua::vm::state::LuaState) -> rilua::Val {
-    #[cfg(feature = "retail-12-1-5")]
+pub(crate) fn register_enums(state: &mut LuaState) -> LuaResult<()> {
+    if cfg!(any(
+        feature = "retail-12-1-0",
+        feature = "client-wowforever"
+    )) {
+        publish_values(
+            state,
+            "SecondsFormatterIntervalWhitespace",
+            &[
+                ("Preserve", 0.0),
+                ("Strip", 1.0),
+                ("StripIgnoreLocale", 2.0),
+            ],
+        )?;
+        publish_metadata(state, "EnumMeta", "SecondsFormatterIntervalWhitespace")?;
+    }
+    #[cfg(feature = "native-duration-formatting")]
+    {
+        publish_values(
+            state,
+            "SecondsFormatterAbbreviation",
+            &[("None", 0.0), ("Truncate", 1.0), ("OneLetter", 2.0)],
+        )?;
+        publish_metadata(state, "Enum", "SecondsFormatterAbbreviationMeta")?;
+    }
+    Ok(())
+}
+
+fn private_callback(state: &mut LuaState, name: &'static str, function: rilua::RustFn) -> Val {
+    let closure = Closure::Rust(RustClosure::new(function, name));
+    let callback = Val::Function(state.gc.alloc_closure(closure));
+    state.push(callback);
+    callback
+}
+
+fn new_configuration(state: &mut LuaState) -> LuaResult<u32> {
+    let values = create_table(state);
+    state.push(values);
+    for (key, value) in [
+        ("approximationSeconds", 0.0),
+        ("millisecondsThreshold", 0.0),
+        ("stripIntervalWhitespace", 0.0),
+        ("minInterval", 0.0),
+        ("maxInterval", 3.0),
+        ("desiredUnitCount", 1.0),
+    ] {
+        table_set_static(state, values, key, Val::Num(value));
+    }
+    Ok(1)
+}
+
+fn write_configuration(state: &mut LuaState) -> LuaResult<u32> {
+    let values @ Val::Table(_) = stack_val(state, 1) else {
+        return Err(runtime_error(
+            "SecondsFormatter requires private configuration storage",
+        ));
+    };
+    let key = String::from_stack(state, 2)?;
+    let valid = matches!(
+        key.as_str(),
+        "approximationSeconds"
+            | "millisecondsThreshold"
+            | "stripIntervalWhitespace"
+            | "minInterval"
+            | "maxInterval"
+            | "desiredUnitCount"
+            | "defaultAbbreviation"
+            | "rounding"
+            | "canRoundUpLastUnit"
+            | "maxIntervalCurve"
+    );
+    if !valid {
+        return Err(runtime_error(
+            "unknown SecondsFormatter configuration field",
+        ));
+    }
+    let value = stack_val(state, 3);
+    if rilua::table_security::is_secret_value(state, value) {
+        return Err(runtime_error(
+            "secret SecondsFormatter configuration is not modeled",
+        ));
+    }
+    // Native-owned configuration is not an addon Lua slot. This private write
+    // never unwraps values or clears stack/closure taint; callback objects keep
+    // their original identity and taint. Format input has its own checked path.
+    table_set(state, values, &key, value);
+    Ok(0)
+}
+
+fn read_number(state: &mut LuaState) -> LuaResult<u32> {
+    let input = stack_val(state, 1);
+    let secret = rilua::table_security::is_secret_value(state, input);
+    let value = rilua::table_security::unwrap_secret(state, input)?;
+    let Val::Num(number) = value else {
+        return Err(runtime_error("SecondsFormatter requires a finite number"));
+    };
+    if !number.is_finite() {
+        return Err(runtime_error("SecondsFormatter requires a finite number"));
+    }
+    state.push(Val::Num(number));
+    state.push(Val::Bool(secret));
+    Ok(2)
+}
+
+fn wrap_value(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::wrap_secret(state, stack_val(state, 1))?;
+    state.push(value);
+    Ok(1)
+}
+
+pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let source = concat!(
+        include_str!("seconds_formatter/format.lua"),
+        "\n",
+        include_str!("seconds_formatter/configuration.lua"),
+    );
+    let function = lua.load_bytes(source.as_bytes(), "@seconds-formatter-bootstrap")?;
+    let state = lua.state_mut();
+    let saved_top = state.top;
+    state.push(Val::Function(function.gc_ref()));
+    let arguments = [
+        private_callback(
+            state,
+            "SecondsFormatter.NewConfiguration",
+            new_configuration,
+        ),
+        private_callback(
+            state,
+            "SecondsFormatter.WriteConfiguration",
+            write_configuration,
+        ),
+        private_callback(state, "SecondsFormatter.ReadNumber", read_number),
+        private_callback(state, "SecondsFormatter.WrapValue", wrap_value),
+        renderer(state),
+    ];
+    let result = lua.call_function(&function, &arguments);
+    lua.state_mut().top = saved_top;
+    result?;
+    Ok(())
+}
+
+fn renderer(state: &mut LuaState) -> Val {
+    #[cfg(feature = "native-duration-formatting")]
     {
         render::callback(state)
     }
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(not(feature = "native-duration-formatting"))]
     {
         let _ = state;
-        rilua::Val::Nil
+        Val::Nil
     }
 }
-
-pub(crate) const CONFIGURATION_LUA: &str = r#"
-local function __wow_install_seconds_formatter_configuration(methods, render_duration_units)
-  local configurations = setmetatable({}, { __mode = "k" })
-
-  local function configuration(object)
-    local values = configurations[object]
-    if values == nil then
-      error("SecondsFormatter configuration requires a formatter receiver", 3)
-    end
-    return values
-  end
-
-  local function require_number(value)
-    local is_number = type(value) == "number"
-    local is_nan = value ~= value
-    local is_infinite = value == math.huge or value == -math.huge
-    local is_finite_number = is_number and not is_nan and not is_infinite
-    if not is_finite_number then
-      error("SecondsFormatter configuration requires a finite number", 3)
-    end
-    return value
-  end
-
-  local function set_number(object, key, value)
-    configuration(object)[key] = require_number(value)
-  end
-
-  local function require_interval(value)
-    require_number(value)
-    local is_integer = value == math.floor(value)
-    local in_range = value >= 0 and value <= 3
-    if not is_integer or not in_range then
-      error("SecondsFormatter interval must be an integer from 0 to 3", 3)
-    end
-    return value
-  end
-
-  local function require_evaluation(object, seconds)
-    local values = configuration(object)
-    require_number(seconds)
-    return values
-  end
-
-  if Enum.SecondsFormatterIntervalWhitespace ~= nil then
-    function methods:SetStripIntervalWhitespace(mode)
-      require_number(mode)
-      if mode ~= 0 and mode ~= 1 and mode ~= 2 then
-        error("SecondsFormatter whitespace mode must be an integer from 0 to 2", 2)
-      end
-      configuration(self).stripIntervalWhitespace = mode
-    end
-
-    function methods:GetStripIntervalWhitespace()
-      return configuration(self).stripIntervalWhitespace
-    end
-  end
-
-  function methods:SetApproximationSeconds(seconds)
-    set_number(self, "approximationSeconds", seconds)
-  end
-
-  function methods:GetApproximationSeconds()
-    return configuration(self).approximationSeconds
-  end
-
-  function methods:SetMillisecondsThreshold(threshold)
-    set_number(self, "millisecondsThreshold", threshold)
-  end
-
-  function methods:GetMillisecondsThreshold()
-    return configuration(self).millisecondsThreshold
-  end
-
-  function methods:CanApproximate(seconds)
-    local values = require_evaluation(self, seconds)
-    return seconds > 0 and seconds < values.approximationSeconds
-  end
-
-  function methods:EvaluateMinInterval(seconds)
-    require_evaluation(self, seconds)
-    return require_interval(self.minInterval)
-  end
-
-  function methods:EvaluateMaxInterval(seconds)
-    require_evaluation(self, seconds)
-    local curve = self.maxIntervalCurve
-    if curve ~= nil then
-      return require_interval(curve:Evaluate(seconds))
-    end
-    return require_interval(self.maxInterval)
-  end
-
-  function methods:EvaluateDesiredUnitCount(seconds)
-    require_evaluation(self, seconds)
-    local count = require_number(self.desiredUnitCount)
-    local is_integer = count == math.floor(count)
-    if not is_integer or count < 1 then
-      error("SecondsFormatter desired unit count must be a positive integer", 3)
-    end
-    return count
-  end
-
-  if render_duration_units ~= nil then
-    __wow_install_seconds_formatter_format(methods, render_duration_units)
-  end
-
-  return function(object)
-    configurations[object] = {
-      approximationSeconds = 0, millisecondsThreshold = 0, stripIntervalWhitespace = 0,
-    }
-    object.minInterval = 0 -- Seconds
-    object.maxInterval = 3 -- Days
-    object.desiredUnitCount = 1
-    return object
-  end
-end
-"#;

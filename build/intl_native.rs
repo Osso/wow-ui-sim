@@ -1,4 +1,4 @@
-//! Native ICU discovery is compiled and invoked only for retail-12-1-5.
+//! Shared private ICU duration backend; the remaining Intl shims stay PTR-only.
 use std::env;
 use std::path::PathBuf;
 
@@ -19,14 +19,14 @@ pub(super) fn build() {
         println!("cargo:rerun-if-changed={path}");
     }
     let mut compiler = cc::Build::new();
+    compiler.files(["native/intl/text.c", "native/intl/duration_units.c"]);
+    #[cfg(feature = "retail-12-1-5")]
     compiler.files([
-        "native/intl/text.c",
         "native/intl/number_format.c",
         "native/intl/currency_metadata.c",
         "native/intl/date_format.c",
         "native/intl/display_transliteration.c",
         "native/intl/string_search.c",
-        "native/intl/duration_units.c",
     ]);
     compiler.include("native/intl").std("c11");
     let target = env::var("TARGET").expect("Cargo TARGET is required for ICU4C");
@@ -46,7 +46,9 @@ fn build_unix_icu(mut compiler: cc::Build) {
             .atleast_version("72")
             .cargo_metadata(false)
             .probe(package)
-            .unwrap_or_else(|error| panic!("PTR requires {package} >= 72 via pkg-config: {error}"));
+            .unwrap_or_else(|error| {
+                panic!("native ICU formatting requires {package} >= 72 via pkg-config: {error}")
+            });
         compiler.includes(library.include_paths);
     }
     compiler.compile("wow_intl_native");
@@ -54,7 +56,7 @@ fn build_unix_icu(mut compiler: cc::Build) {
         pkg_config::Config::new()
             .atleast_version("72")
             .probe(package)
-            .unwrap_or_else(|error| panic!("link PTR {package} >= 72: {error}"));
+            .unwrap_or_else(|error| panic!("link native formatting {package} >= 72: {error}"));
     }
 }
 
@@ -73,7 +75,7 @@ fn find_windows_icu() -> vcpkg::Library {
     validate_windows_configuration();
     let root = env::var_os("VCPKG_ROOT")
         .map(PathBuf::from)
-        .expect("PTR MSVC requires explicit VCPKG_ROOT with icu:x64-windows-static-md installed");
+        .expect("native ICU formatting on MSVC requires VCPKG_ROOT with icu:x64-windows-static-md installed");
     let library = vcpkg::Config::new()
         .vcpkg_root(root)
         .target_triplet(WINDOWS_TRIPLET)
@@ -82,7 +84,7 @@ fn find_windows_icu() -> vcpkg::Library {
         .unwrap_or_else(|error| panic!("find static ICU4C in {WINDOWS_TRIPLET}: {error}"));
     assert!(
         library.is_static && library.found_dlls.is_empty(),
-        "PTR MSVC ICU4C must be static, without DLL imports"
+        "MSVC ICU4C must be static, without DLL imports"
     );
     assert_eq!(library.vcpkg_triplet, WINDOWS_TRIPLET);
     library
@@ -94,12 +96,12 @@ fn validate_windows_configuration() {
     }
     assert!(
         env::var_os("VCPKGRS_DYNAMIC").is_none(),
-        "PTR MSVC forbids VCPKGRS_DYNAMIC; install icu:x64-windows-static-md"
+        "native ICU formatting on MSVC forbids VCPKGRS_DYNAMIC; install icu:x64-windows-static-md"
     );
     if let Some(triplet) = env::var_os("VCPKGRS_TRIPLET") {
         assert_eq!(
             triplet, WINDOWS_TRIPLET,
-            "PTR MSVC requires VCPKGRS_TRIPLET=x64-windows-static-md"
+            "native ICU formatting on MSVC requires VCPKGRS_TRIPLET=x64-windows-static-md"
         );
     }
     let features = env::var("CARGO_CFG_TARGET_FEATURE").unwrap_or_default();

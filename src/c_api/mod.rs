@@ -102,6 +102,8 @@ pub mod item_spell;
 pub mod legacy_spell_book;
 #[cfg(feature = "client-mists")]
 mod mists_talents;
+#[cfg(feature = "native-duration-formatting")]
+pub(crate) mod native_icu;
 #[cfg(feature = "numeric-rule-formatters")]
 mod numeric_rule_formatter;
 pub(crate) mod on_update_modes;

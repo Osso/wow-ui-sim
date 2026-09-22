@@ -7,7 +7,7 @@ use syn::{
     ReturnType, Type, Visibility,
 };
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "native-duration-formatting")]
 #[path = "build/intl_native.rs"]
 mod intl_native;
 #[path = "build/locked_rilua.rs"]
@@ -15,7 +15,7 @@ mod locked_rilua;
 
 fn main() {
     publish_rilua_compiler_revision();
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "native-duration-formatting")]
     intl_native::build();
 
     println!("cargo:rerun-if-changed=installer/wow-sim.ico");

@@ -3,7 +3,7 @@ use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-use crate::c_api::intl_native::{DurationPart, format_duration_units};
+use super::units::{DurationPart, format_duration_units};
 use crate::lua_api::methods::call_function_state;
 use crate::lua_bridge::stack_val;
 
@@ -85,8 +85,14 @@ fn render(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error("duration renderer requires a numeric width"));
     };
     let width = integer(width, 0, 2)?;
+    let Val::Num(whitespace) = stack_val(state, 3) else {
+        return Err(runtime_error(
+            "duration renderer requires a numeric whitespace mode",
+        ));
+    };
+    let whitespace = integer(whitespace, 0, 2)?;
     let locale = current_locale(state)?;
-    let text = format_duration_units(&locale, &parts, width)
+    let text = format_duration_units(&locale, &parts, width, whitespace)
         .map_err(|error| runtime_error(error.to_string()))?;
     let result = state.gc.intern_string(text.as_bytes());
     state.push(Val::Str(result));
