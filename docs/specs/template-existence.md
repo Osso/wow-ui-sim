@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Report whether a single virtual-frame template name is currently registered; missing and empty names return false.
-- [ ] Reflect actual XML loading and preserve the answer after creating an instance from the template.
-- [ ] Do not treat ordinary named Lua/XML frames as templates or interpret comma-separated inheritance lists as one template.
-- [ ] Use the existing case-insensitive registry lookup and typed string argument convention; reject missing/non-string arguments. These are simulator policies, not native-verified edge semantics.
-- [ ] Observe loaded Blizzard virtual templates without scanning disk, loading addons, or maintaining another registry.
+- [x] Report whether a single virtual-frame template name is currently registered; missing and empty names return false.
+- [x] Reflect actual XML loading and preserve the answer after creating an instance from the template.
+- [x] Do not treat ordinary named Lua/XML frames as templates or interpret comma-separated inheritance lists as one template.
+- [x] Use the existing case-insensitive registry lookup and typed string argument convention; reject missing/non-string arguments. These are simulator policies, not native-verified edge semantics.
+- [x] Observe loaded Blizzard virtual templates without scanning disk, loading addons, or maintaining another registry.
 
 ## How it works
 
@@ -27,7 +27,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN and independent verification pending. Frozen runtime RED: `/tmp/forever-addon-audit/template-existence-red-qovikc1y/ledger.json` reports `DoesTemplateExist missing`.
+- Targeted development GREEN: 3/3 at `2c5bf78c7`, with unchanged source hashes across the build. Ledger: `/tmp/forever-addon-audit/template-existence-green-emlklwik/test-ledger.json`. Frozen runtime RED: `/tmp/forever-addon-audit/template-existence-red-qovikc1y/ledger.json` reports `DoesTemplateExist missing`.
+- [ ] Independent verification remains pending; targeted development proof is not a final gate.
 - [ ] Parent-owned unchanged DRaidFrames `8922652` replay remains pending.
 - [ ] Local wowless API inventories list `DoesTemplateExist` for retail/PTR and Classic variants, but provide no input/output specification. Cached generated API documentation has no entry. Cross-profile publication follows that presence evidence; string validation and case folding follow simulator conventions, not native probes.
 
