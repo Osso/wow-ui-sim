@@ -11,7 +11,9 @@ pub struct Event { pub name: String, pub args: Vec<EventArg> }
 pub enum EventArg { String(String), Number(f64), Boolean(bool), Nil }
 ```
 
-Predefined constants include PLAYER_LOGIN, PLAYER_ENTERING_WORLD, ADDON_LOADED, VARIABLES_LOADED, UPDATE_BINDINGS, DISPLAY_SIZE_CHANGED, UNIT_HEALTH, UNIT_POWER_UPDATE, COMBAT_LOG_EVENT, BAG_UPDATE. Retail/PTR `RegisterEvent()` validates names against generated and epoch-specific strict tables; retail 12.1 includes `EXTERNAL_EVENT_LAUNCH_URL_FAILED` for current `Blizzard_GameMenu` loading. Classic profiles accept any non-empty name. Registerability does not model an event producer, payload, or `C_ExternalEventURL` behavior.
+Predefined constants include PLAYER_LOGIN, PLAYER_ENTERING_WORLD, ADDON_LOADED, VARIABLES_LOADED, UPDATE_BINDINGS, DISPLAY_SIZE_CHANGED, UNIT_HEALTH, UNIT_POWER_UPDATE, COMBAT_LOG_EVENT, BAG_UPDATE. Retail/PTR `RegisterEvent()` validates names against generated and epoch-specific strict tables; retail 12.1 includes `EXTERNAL_EVENT_LAUNCH_URL_FAILED` for current `Blizzard_GameMenu` loading. Classic profiles accept any non-empty name. Forever otherwise uses a finite extension table over the generated mainline list. Commit `232bc7e72` adds only source-documented `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED`; the latter had been present only in the retail-12.1 cfg list, so it was not registered by the Forever binary. `PLAYER_EQUIPED_SPELLS_CHANGED` remains rejected because it has no checked Forever documentation. This records registration and simulator-admin dispatch only; native producers, payload secrecy, and delivery are unverified while GREEN is pending.
+
+Registerability does not model an event producer, payload, or `C_ExternalEventURL` behavior.
 
 ## Script Handler Types (36+, `src/event/mod.rs`)
 
@@ -61,9 +63,12 @@ Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self
 ## Sources
 
 - [event-system.md](../../event-system.md) — EventQueue, ScriptHandler types, dispatch, OnUpdate, input flow, startup sequence
+- [Forever finite constants](../../specs/forever-finite-constants.md) — source-backed finite event additions and limits
+- `Blizzard_APIDocumentationGenerated/{ChatInfoDocumentation,UnitAuraDocumentation}.lua` in the pinned Forever cache — event literals
 
 ## See Also
 
 - [[lua-api]] — SetScript, RegisterEvent, timer system
+- [[client-profiles]] — Forever-specific finite registration boundary
 - [[widget-system]] — Frame.registered_events, on_update_frames set
 - [[frame-data-flow]] — __scripts table layout, method lookup chain

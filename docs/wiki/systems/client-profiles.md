@@ -31,6 +31,12 @@ Helper functions/constants in `src/client_profile.rs`:
 - `blizzard_ui_addons_dir_under(root)` — test fallback path anchored at `root`
 - `blizzard_ui_framexml_toc()` → wrath-only `<cache>/FrameXML/FrameXML.toc`; retail/PTR/mists/era/anniversary collapsed FrameXML into `Blizzard_*` addons
 
+## Forever expansion identity
+
+`374c2c6c7` gives `WowForever` one profile policy for both `LE_EXPANSION_LEVEL_CURRENT` and legacy `GetExpansionLevel()`: `0` / Classic. This is an explicitly **inferred compatibility policy**, not native Forever evidence. Cached Angleur `8932166` runs under `WOW_PROJECT_MAINLINE`, but its Camelot TOC omits retail producer files and its authored predicate chooses the Camelot branch only when the current expansion equals `LE_EXPANSION_CLASSIC`. The prior inherited retail values (`current=11`, legacy API=10) selected the retail branch and reached those absent producers.
+
+The policy leaves all non-Forever current constants at `11` and legacy API defaults at `10`; previous/max/account/display expansion state is unchanged. Grouped tests and an unchanged Angleur replay remain pending, so this page does not claim native numeric parity or general expansion-threshold compatibility.
+
 ## Retail API epochs
 
 Mainline API additions/removals use cumulative Cargo features named after the patch epoch. Current chain:
@@ -142,7 +148,8 @@ Captured in `docs/baselines/`:
 ## Sources
 
 - `Cargo.toml` — mutually-exclusive `client-*` profile features and cumulative `retail-*` API epoch features
-- `src/client_profile.rs` — enum, `ACTIVE` const, profile path helpers, active API interface constants
+- `src/client_profile.rs` — enum, `ACTIVE` const, profile path helpers, active API interface constants, inferred Forever expansion identity
+- [Forever expansion identity](../../specs/forever-expansion-identity.md) — Angleur consumer basis and explicit native-evidence limit
 - `src/asset_resolver_config.rs` — profile-to-CASC-product mapping
 - `src/loader/mod.rs` — `find_toc_file`, ordered profile suffixes, deterministic separator/case matching
 - `src/toc/mod.rs` — `is_allowed_game_type`, `family_subdir`, `TocFile::is_game_type_restricted`

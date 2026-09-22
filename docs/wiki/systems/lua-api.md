@@ -93,6 +93,8 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 ## C_* Namespaces
 
+**Base spell lookup** — `f1c0a19a8` adds Forever-only `C_Spell.GetBaseSpell`. Public numeric IDs, numeric strings, and existing known-name resolution return identity when no explicit specialization relationship exists, matching the local documentation's no-override rule. Relationships are per-environment test/model inputs; no live override dataset is seeded and aliases are not reversed. Secret inputs are rejected rather than unwrapped, despite native documentation allowing tainted arguments. Focused GREEN and real ActionBarAuras replay remain pending. See [base-spell contract](../../specs/spell-base.md).
+
 **Base spell aura secrecy** — `C_Secrets.GetSpellAuraSecrecy` uses generated native aura attributes and the existing spell-identifier resolver, not a combat-policy guess. Dual-flag data is retained and rejected explicitly when queried. `UnitIsPlayerControlledOrGroupMember` implements only the documented player/pet/vehicle and bounded party/raid token families used by current aura filtering. Four secrecy and three token-classification focused cases passed; conditional aura secrecy enforcement remains unmodeled. See [secrecy](../../specs/spell-aura-secrecy.md) and [controlled-player tokens](../../specs/unit-player-controlled-or-group-member.md).
 
 **Aura object identity and forbidden aspects** — Duration bindings and scalar/color curves are validated userdata handles. `Assign`/`Copy` copy binding configuration while retaining documented object handles; `securecopy(options)` preserves registered binding/curve handles without accepting copied tables. XML forbidden-aspect names resolve through active enums; creation-time hierarchy/layout propagation applies to literal/runtime templates and new children. Focused duration (6), curve (9), and forbidden-aspect (4) cases passed; dynamic propagation over existing graphs and unsupported curve modes remain unmodeled. See [duration binding](../../specs/duration-text-binding.md), [curve objects](../../specs/curve-objects.md), and [forbidden aspects](../../specs/forbidden-aspect-inheritance.md).
@@ -130,6 +132,9 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 ## Sources
 
 - [lua-api.md](../../lua-api.md) — WowLuaEnv, FrameHandle, method categories, globals, C_* namespaces, timers
+- [spell_base.rs](../../../src/c_api/spell_base.rs) — explicit specialization relationship model and public/secret boundary
+- [Public base-spell lookup](../../specs/spell-base.md) — documented identity contract and unverified native gaps
+- `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua` in the pinned Forever cache — `GetBaseSpell` signature and no-override identity
 - [spell_description_resolver.rs](../../../src/spell_description_resolver.rs) — shared spell-description token resolver
 - [container_portrait_texture.rs](../../../src/lua_api/workarounds/temporary/container_portrait_texture.rs) — retail texture fileDataID proof
 - [item_button_helper_defaults.rs](../../../src/lua_api/workarounds/temporary/item_button_helper_defaults.rs) — item-button texture fileDataID proof

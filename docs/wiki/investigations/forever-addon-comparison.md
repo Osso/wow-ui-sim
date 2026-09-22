@@ -14,6 +14,12 @@ Commit `6397eb7a3` freezes this pass to offline use of the already acquired arch
 
 `9862dc7b3` removes the public Forever `C_CombatLog.GetCurrentEventInfo` exposure while retaining `C_CombatLogInternal` and `C_CombatLogSecure`. Three new and four existing namespace checks pass. Cached EpicDamageMeter starts cleanly and its modern path completes 60 updates on one instance with two named rows. This is seeded render-path evidence, not native combat evidence. The combined final gate passes at `572f1c23c`; [the shared proof record](../../forever-addon-comparison.md#follow-up-verification) records exact reuse, fresh checks, and remaining baseline warnings/blockers.
 
+## Current producer follow-up
+
+Three current Forever corrections are committed but have no GREEN verification at this audit point. `232bc7e72` adds only the generated-documentation events `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED` to the finite Forever registration list; the latter was retail-only before this change, not already deployed to Forever. `f1c0a19a8` models public `C_Spell.GetBaseSpell` identity for unconfigured relationships after cached ActionBarAuras passed a nil result into a table key. It intentionally ships no live override data and rejects secret identifiers. `374c2c6c7` assigns Forever current expansion `0` as an inferred policy so cached Angleur's `WOW_PROJECT_MAINLINE` predicate selects its Camelot branch instead of consumer code whose retail producers are outside the Camelot TOC.
+
+These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
+
 ## Cursor transfer correction
 
 Cached EasyFishing packages identified an exact existing-API sequence for returning a fishing pole: `C_Container.PickupContainerItem(bag, slot)`, `PickupInventoryItem(MAINHAND)`, then `C_Container.PickupContainerItem(bag, slot)` when the cursor still holds the displaced weapon. Commit `215a4080a` moves namespaced and legacy bag pickup through one simulator-side transfer model, removing the namespace no-op and reusing the existing auto-equip swap path. `5dbd06ec8` names the extracted helpers by their operations only. `d40397025` splits the touched finite-constant registration phases and registers `C_Container.PickupContainerItem` through its existing `c_container` owner rather than global inventory registration; no transfer contract changed.
@@ -31,7 +37,9 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 ## Sources
 
 - [Forever comparison audit](../../forever-addon-comparison.md) — catalog provenance, scope, and incomplete comparison matrix
-- [Forever finite constants spec](../../specs/forever-finite-constants.md) — BagIndex contract and test boundary
+- [Forever finite constants spec](../../specs/forever-finite-constants.md) — BagIndex and finite-event boundaries
+- [Public base-spell lookup](../../specs/spell-base.md) — ActionBarAuras failure boundary and model limits
+- [Forever expansion identity](../../specs/forever-expansion-identity.md) — Angleur consumer basis and inferred policy limit
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values
@@ -43,5 +51,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 ## See Also
 
 - [[forever-clean-startup]] — distinct sustained Blizzard-runtime proof
-- [[client-profiles]] — Camelot/Forever profile selection
+- [[client-profiles]] — Camelot/Forever profile selection and inferred expansion identity
+- [[lua-api]] — bounded `C_Spell.GetBaseSpell` model
+- [[event-system]] — finite Forever event registration
 - [Forever UI/API delta notes](../../wowforever-1.60.1-ui-api-deltas.md) — separately published native-POV report (`362b65c7f`, branch `forever-ui-api-report`)

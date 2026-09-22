@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Stage Forever event, spell-base, and expansion producers
+
+`232bc7e72` adds two source-documented Forever event registrations without permitting arbitrary names; `UNIT_AURA_BLOCKED` was previously retail-only. `f1c0a19a8` gives public `C_Spell.GetBaseSpell` identity for unconfigured relationships while keeping real override data and secret support out of scope. `374c2c6c7` gives Forever an inferred Classic current expansion identity so cached Angleur selects its Camelot branch. All targeted GREEN/replays remain pending; none certifies the full addon inventory. See [[event-system]], [[lua-api]], [[client-profiles]], and [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Model Forever target-bound combo points
 
 The CVar-enabled native ComboFrame exposes missing `GetComboPoints`; a clean fresh-data control only hides that inactive path. At `c1e830ffa`, the bounded player-power/target-GUID model passes six Forever regressions, including unchanged CVar-enabled ComboFrame updates, while preserving UnitPower snapshots across target changes and leaving other profiles unchanged. Ownership/lifecycle guesses and unsupported nonplayer ownership remain explicit; isolated addon-path proof remains open. See [[forever-combo-points]].
