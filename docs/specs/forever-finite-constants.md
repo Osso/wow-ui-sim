@@ -71,7 +71,7 @@ Frozen `c818f1b9` reproduces rejection in Blizzard SwingTimer OnLoad and the foc
 
 The unchanged AppelSwingsForever package clean-starts at frozen `ff19ecca`; its matching `--no-addons` control also returns `[]`. An isolated GUI-style replay injects a four-second main-hand and six-second ranged `PLAYER_SWING`, observes fill activation and progress, then observes independent main-hand expiry before ranged expiry and idle tracks retained after both clear. It emits `DONE`, collects zero Lua errors, and preserves host CVars; timeout `124` occurs after completion. Evidence: `/tmp/forever-addon-runtime/player-swing-startup-controls-ledger.json` and `/tmp/forever-addon-runtime/appel-swing-final-gui-olh1svgs/ledger.json`.
 
-This models registration and injected payload delivery only—not range detection, `C_SwingTimer` methods, a gameplay event producer, off-hand visuals, or native timing. Independent verification remains pending.
+This models registration and injected payload delivery only—not range detection, `C_SwingTimer` methods, a gameplay event producer, off-hand visuals, or native timing. Independent verification at `aad86deb7` passes the 13-targeted-test group, `cargo fmt --check`, and default `cargo check --offline`; it validates the frozen GUI evidence. Ledger: `/tmp/forever-addon-audit/verify-player-swing-ledger.json`.
 
 ## Verification
 

@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Register bounded Forever swing events
 
-`PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` are now finite documented Forever registrations with cleanup-aware payload tests. Frozen `ff19ecca` clean-starts AppelSwingsForever; an isolated injected four-second main-hand/six-second ranged workflow observes activation, progress, independent expiry, retained idle tracks, `DONE`, zero Lua errors, and unchanged host CVars. This does not model gameplay swings or range checks. See [[event-system]].
+`PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` are now finite documented Forever registrations with cleanup-aware payload tests. Independent verification passes 13 targeted tests, formatting, and default compilation. Frozen `ff19ecca` clean-starts AppelSwingsForever; an isolated injected four-second main-hand/six-second ranged workflow observes activation, progress, independent expiry, retained idle tracks, `DONE`, zero Lua errors, and unchanged host CVars. This does not model gameplay swings or range checks. See [[event-system]].
 
 ## [2026-09-22] investigation | Verify registered template existence
 
