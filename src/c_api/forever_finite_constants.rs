@@ -66,6 +66,13 @@ fn register_gamepad_overrides(state: &mut LuaState, enums: Val) {
 
 fn register_constants(state: &mut LuaState) {
     let constants = super::helpers::ensure_global_table(state, "Constants");
+    // Forever PetConstantsDocumentation: two stable slots plus one learned slot.
+    publish(
+        state,
+        constants,
+        "PetConsts",
+        &[("MAX_STABLE_SLOTS", 2), ("NUM_PET_SLOTS_HUNTER", 3)],
+    );
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
     publish(
         state,

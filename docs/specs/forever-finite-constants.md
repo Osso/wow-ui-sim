@@ -73,6 +73,17 @@ The unchanged AppelSwingsForever package clean-starts at frozen `ff19ecca`; its 
 
 This models registration and injected payload delivery only—not range detection, `C_SwingTimer` methods, a gameplay event producer, off-hand visuals, or native timing. Independent verification at `aad86deb7` passes the 13-targeted-test group, `cargo fmt --check`, and default `cargo check --offline`; it validates the frozen GUI evidence. Ledger: `/tmp/forever-addon-audit/verify-player-swing-ledger.json`.
 
+## Camelot stable slot counts
+
+Forever publishes `Constants.PetConsts.MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`, merging into the existing common table. Cached `Blizzard_APIDocumentationGenerated/PetConstantsDocumentation.lua:46–54` specifies two stable slots plus one learned-spell slot; unchanged Camelot `Blizzard_StableUI.lua:75,150,249` consumes these two fields. The dependency value is source evidence for the sum, not an additional published field in this slice.
+
+- [ ] Publish both documented values without replacing common pet sentinels or `MAX_SUMMONABLE_PETS`.
+- [ ] Preserve table identity, addon fields and slot values through normal bootstrap restoration.
+
+Implementation: `src/c_api/forever_finite_constants.rs`, behind its existing Forever-only registration. Tests: `forever_stable_slot_constants_preserve_common_pet_values` and `forever_stable_slot_constants_survive_bootstrap_restore` in the existing grouped integration module. Frozen `3d6017fe3` fails both initial Lua checks; GREEN and parent full native money-event/addon replay remain pending. Development ledger: `/tmp/forever-addon-audit/stable-slot-constants-development-ledger.json`.
+
+No pet ownership, stable purchasing, extra Camelot constants, other-profile publication or vendor behavior changes. Bootstrap already retains this table; no duplicate restoration producer is introduced.
+
 ## Verification
 
 `tests/wowforever_finite_constants.rs` checks publication, actual Camelot minimap filter construction, and full PingManager/TransmogShared source loading in an initialized simulator environment. Initial tests reproduced missing PingResult data and the MinimapConstants nil table key (0/2); both passed after publication. TransmogShared loaded in the focused fixture, so its full-startup failure is not proven to arise solely from NoTransmogID. These additions do not establish complete Transmog initialization or gamepad possession behavior; remaining consumer failures must be diagnosed independently.
