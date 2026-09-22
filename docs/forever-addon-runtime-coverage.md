@@ -54,7 +54,7 @@ An earlier probe incorrectly required normal `SlashCmdList` lookup to return nil
 
 ## ActionBarAuras interaction failure
 
-The named-container lifecycle fix retains separate player and target AuraContainers. In a GUI-style replay, the enabled player slot accepts the modeled aura candidate but remains unassigned and has no duration text after a timed `A_Admin.AddBuff`. This is a real addon interaction failure, not formatter acceptance. Evidence: `/tmp/forever-addon-runtime/aba-duration-gui-opjr2iye/ledger.json`.
+The named-container lifecycle fix retains separate player and target AuraContainers. Natural GUI updates assign the modeled buff to a shown addon aura button, but duration text remains nil. The simulator binding currently requires explicit `UpdateFontString`; automatic binding updates are missing. Earlier immediate headless observations preceded native dirty processing and did not establish an assignment failure. Evidence: `/tmp/forever-addon-runtime/aba-duration-gui-opjr2iye/ledger.json` and `/tmp/forever-addon-runtime/aba-button-gui-c7tsjook/stdout`. Automatic scheduling and the create/countdown/remove workflow remain open.
 
 ## Acceptance discipline
 
