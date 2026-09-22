@@ -16,10 +16,10 @@ for _, entry in ipairs(files) do
     assert(C_UIFileAsset.IsKnownFile(path), file .. " not known")
     assert(C_UIFileAsset.IsLooseFile(path), file .. " not loose")
     assert(C_UIFileAsset.GetFileID(path) == nil, file .. " has fabricated file ID")
-    local name = assert(sounds.defaultDB.media[key], "default sound missing")
+    local name = assert(sounds:GetDefaultSound(key), "default sound missing")
     assert(media:IsValid("sound", name), name .. " not registered")
     assert(media:Fetch("sound", name, true) == path, name .. " resolves to wrong file")
-    assert(sounds.db.profile.media[key] == name, name .. " profile changed")
+    assert(sounds:GetDefaultSoundFile(key) == path, name .. " default resolves to wrong file")
     print("BIGWIGS_SOUND_ASSETS", file, "registered", name)
 end
 assert(media:IsValid("statusbar", "Otravi"), "extensionless Otravi not registered")
