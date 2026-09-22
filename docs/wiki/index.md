@@ -1,6 +1,10 @@
+## [2026-09-22] investigation | Restore Slider value callbacks
+
+ClassicCastBarForever exposed missing simulator `Slider:SetValue` delivery: its slider value changed while `OnValueChanged` did not update addon scale, cast bar, or CVar. `20318baf7` and `3d6017fe3` dispatch changed clamped values through existing bindings after widget-state borrowing is released, passing documented mouse-event boolean and preserving same-value suppression; StatusBars are unchanged. GREEN verification and unchanged-addon settings replay remain pending. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 
-ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. This is inferred from cached docs/Wowless, not a native probe. A separate Slider callback gap still blocks settings-workflow acceptance. See [[forever-addon-comparison]].
+ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. This is inferred from cached docs/Wowless, not a native probe. The separately committed Slider callback correction remains pending verification/settings replay. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 

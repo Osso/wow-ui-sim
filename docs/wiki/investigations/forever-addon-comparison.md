@@ -36,7 +36,15 @@ Cached ClassicCastBarForever `8909724` calls `C_CVar.RegisterCVar(name, "")` onl
 
 `2530fcf56` supplies the targeted regression boundary; `d1e2487f6` preserves explicit empty defaults while retaining existing omitted-default `"0"` behavior. Independent verification reuses the matching grouped 15/15 target and passes formatting plus default offline checking: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. Frozen `wow-sim-d1e2487f` clean-starts unchanged archive `8909724` in isolated data; the matching no-addons control returns `[]`.
 
-No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate settings workflow remains failed at the simulator's missing Slider `SetValue` → `OnValueChanged` dispatch, which is being implemented separately; it neither invalidates the CVar startup proof nor establishes settings, persistence, or inventory acceptance.
+No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate settings workflow had failed at the simulator's missing Slider `SetValue` → `OnValueChanged` dispatch; its committed callback implementation remains pending GREEN verification and replay. It neither invalidates the CVar startup proof nor establishes settings, persistence, or inventory acceptance.
+
+## Slider value callback follow-up
+
+The unchanged ClassicCastBar settings slider installed `OnValueChanged`, but `SetValue(1.35)` previously changed only the simulator slider field: addon database scale, cast-bar scale, and persisted CVar stayed `1`. The defect was simulator-side: the Slider arm stored a changed clamped value then stopped at an explicit dispatch TODO.
+
+`20318baf7` adds focused regressions and `3d6017fe3` synchronously dispatches existing pre/normal/post `OnValueChanged` bindings after releasing widget-state borrowing. Handlers receive the frame, clamped value, and documented `treatAsMouseEvent` boolean; same clamped values remain suppressed. Handler failures use the established error route and do not stop later bindings. StatusBars continue through their existing value path.
+
+This is a bounded callback binding model, not a new mouse-drag producer or native timing/security claim. Development GREEN, independent verification, and unchanged ClassicCastBar scale/icon/reset workflow replay remain pending.
 
 ## Automatic duration-binding follow-up
 
@@ -69,6 +77,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - [UnitPowerPercent curves](../../specs/unit-power-percent-curves.md) — profile-specific curve input and result contract
 - [UnitHealthPercent curves](../../specs/unit-health-percent-curves.md) — matching Forever health-curve boundary
 - [CVar registration](../../specs/cvar-registration.md) — explicit-empty versus omitted registration boundary
+- [Slider value callbacks](../../specs/slider-value-callback.md) — changed-value script delivery scope and pending proof
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values
