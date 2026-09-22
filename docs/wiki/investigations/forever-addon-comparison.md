@@ -20,6 +20,12 @@ Three current Forever corrections are committed but have no GREEN verification a
 
 These are bounded simulator-model changes. They do not certify ActionBarAuras, Angleur, event delivery, native override/secret behavior, native expansion identity, or the inventory.
 
+## Camelot stable-slot publication follow-up
+
+`9a8e2a841` adds regressions and `fffb25ae4` publishes only `Constants.PetConsts.MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3` for Forever, merging them into the existing common table. Cached `PetConstantsDocumentation.lua:46–54` gives the source relationship: two stable slots plus one learned-spell slot. Unchanged Camelot `Blizzard_StableUI.lua:75,150,249` reads these two published fields on its stable update path.
+
+This records a missing-publication boundary, not a full pet model. Initial checks fail on frozen `3d6017fe3`; current GREEN, build, no-addons money-event control, unchanged Aurarium replay, and independent verification remain pending. No pet ownership, purchasing, additional pet constants, other-profile changes, or vendor behavior is certified.
+
 ## DinoUnitFrames curve producer follow-up
 
 The unchanged cached DinoUnitFrames `8936218` startup failed in `modules/basecombopoints.lua` because `UnitPowerPercent("player", 4, true, curve)` returned a number and the addon called `color:GetRGBA()`. Forever’s generated `UnitDocumentation.lua` documents an optional `LuaCurveObjectBase` and an evaluated result; the simulator’s existing typed evaluator already returns scalar or color results. The defect was profile gating: Forever skipped optional curve evaluation entirely.
@@ -36,7 +42,7 @@ Cached ClassicCastBarForever `8909724` calls `C_CVar.RegisterCVar(name, "")` onl
 
 `2530fcf56` supplies the targeted regression boundary; `d1e2487f6` preserves explicit empty defaults while retaining existing omitted-default `"0"` behavior. Independent verification reuses the matching grouped 15/15 target and passes formatting plus default offline checking: `/tmp/forever-addon-audit/verify-empty-cvar-ledger.json`. Frozen `wow-sim-d1e2487f` clean-starts unchanged archive `8909724` in isolated data; the matching no-addons control returns `[]`.
 
-No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate settings workflow had failed at the simulator's missing Slider `SetValue` → `OnValueChanged` dispatch; its committed callback implementation remains pending GREEN verification and replay. It neither invalidates the CVar startup proof nor establishes settings, persistence, or inventory acceptance.
+No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate Slider callback correction now has independent verification and a bounded unchanged-ClassicCastBar replay; it neither invalidates the CVar startup proof nor establishes mouse interaction, settings navigation, restart persistence, or inventory acceptance.
 
 ## Slider value callback follow-up
 
@@ -77,7 +83,7 @@ Commit `bb83a4c0a` publishes the corrected values and metadata only under `clien
 - [UnitPowerPercent curves](../../specs/unit-power-percent-curves.md) — profile-specific curve input and result contract
 - [UnitHealthPercent curves](../../specs/unit-health-percent-curves.md) — matching Forever health-curve boundary
 - [CVar registration](../../specs/cvar-registration.md) — explicit-empty versus omitted registration boundary
-- [Slider value callbacks](../../specs/slider-value-callback.md) — changed-value script delivery scope and pending proof
+- [Slider value callbacks](../../specs/slider-value-callback.md) — changed-value script delivery scope and bounded proof
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
 - `Blizzard_APIDocumentationGenerated/BagIndexConstantsDocumentation.lua` in the pinned Forever 1.60.1.69913 cache — authoritative enum values

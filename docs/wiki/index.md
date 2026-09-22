@@ -1,10 +1,14 @@
+## [2026-09-22] investigation | Stage Camelot stable-slot constants
+
+`9a8e2a841` and `fffb25ae4` add exactly two Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Cached pet documentation defines the latter as two stable slots plus one learned-spell slot; unchanged Camelot StableUI consumes both. This is a missing-publication boundary, not a pet model. Initial RED is recorded; GREEN/build/money-event and Aurarium replays/independent verification remain pending. See [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Restore Slider value callbacks
 
 ClassicCastBarForever exposed missing simulator `Slider:SetValue` delivery: its slider value changed while `OnValueChanged` did not update addon scale, cast bar, or CVar. `20318baf7` and `3d6017fe3` dispatch changed clamped values through existing bindings after widget-state borrowing is released, passing documented mouse-event boolean and preserving same-value suppression; StatusBars are unchanged. Independent proof reuses 9/9 focused tests, passes formatting/default offline checking and direct StatusBar regression. Frozen unchanged ClassicCastBar completes scale `1 → 1.35 → 1`, icon/reset and `DONE` with no Lua errors; no-addons control returns `[]`. Mouse dragging, native timing/security, pixels, navigation and persistence remain unproven; inventory acceptance stays open. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 
-ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. This is inferred from cached docs/Wowless, not a native probe. The separately committed Slider callback correction remains pending verification/settings replay. See [[forever-addon-comparison]].
+ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. This is inferred from cached docs/Wowless, not a native probe. The separate Slider callback correction now has independent verification and a bounded replay; it does not establish mouse interaction, navigation, or restart persistence. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 
