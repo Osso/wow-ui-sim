@@ -48,7 +48,7 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 16 bounded interaction passes, one failed workflow and 252 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records 17 bounded interaction passes, zero failed workflows and 252 not-run entries; historical evidence remains separate.
 
 ## Abgesattelt bounded interaction
 
@@ -110,9 +110,9 @@ Aurarium `8915742` with cached ArcaneWizardLibrary `8915500` records injected ba
 
 Unchanged `8919183` on frozen `6632d6373` primes its current balance through `PLAYER_MONEY`, records `250` income and `250` expense in `OTHER` Session/Day/Total, restores the recorded balance, and reaches `DONE` with zero errors. Evidence: `/tmp/forever-addon-runtime/accountant-workflow-1yx01j63/ledger.json`. This excludes transaction categories, accounting-period rollover, persistence and rendered UI.
 
-## BagMeter bag-event blocker
+## BagMeter bounded generic-source bag counts
 
-Unchanged `8917130` requires explicit out-of-date loading. Runtime source inspection confirms generic `Bagmeter.toc`/`Bagmeter.lua`, not `Bagmeter_Forever.toc`/Classic source; current loader suffix policy does not recognize `_Forever`. Native suffix compatibility is not established. The corrected fixture checks add/add/remove text transitions `15/16 → 14/16 → 15/16` and totals `79/80 → 78/80 → 79/80`, reaching `DONE`. Shared Blizzard `MerchantFrame.lua:988` errors on missing `CanMerchantRepair` invalidate acceptance, reproduced without addons. Evidence: `/tmp/forever-addon-runtime/bagmeter-counts-actual-nuqbwfcx/ledger.json`, `/tmp/forever-addon-runtime/bag-event-control-z1cghrs8/ledger.json`, and source trace `/tmp/forever-addon-runtime/bag-event-source-3x481uub/ledger.json`. Earlier unloaded and incorrect Classic-fixture attempts are excluded. No intended Forever-variant, bank, persistence or pixel proof.
+Unchanged `8917130` requires explicit out-of-date loading. Runtime source inspection confirms generic `Bagmeter.toc`/`Bagmeter.lua`, not `Bagmeter_Forever.toc`/Classic source; current loader suffix policy does not recognize `_Forever`. Native suffix compatibility is not established. Frozen `58b0072d1` completes actual add/add/remove events with shown-text transitions `15/16 → 14/16 → 15/16` and totals `79/80 → 78/80 → 79/80`, `DONE` and zero errors. Shared merchant capability, buyback and junk-count reads resolve prior no-addons-reproducible errors. Evidence: `/tmp/forever-addon-runtime/merchant-final-bagmeter-sv7_uvyw/ledger.json`, clean control `/tmp/forever-addon-runtime/merchant-final-control-s34oi05w/ledger.json`, and source trace `/tmp/forever-addon-runtime/bag-event-source-3x481uub/ledger.json`. Earlier unloaded and incorrect Classic-fixture attempts are excluded. Merchant defaults/count policies are explicit simulator inferences; positive junk metadata uses test fixtures because the live catalog contains no poor-quality items. No intended Forever-variant, bank, transaction, persistence or pixel proof.
 
 ## Acceptance discipline
 

@@ -15,8 +15,8 @@
       "blocked-package": 1
     },
     "interactionStatuses": {
-      "bounded-pass": 16,
-      "failed": 1,
+      "bounded-pass": 17,
+      "failed": 0,
       "not-run": 252
     }
   },
@@ -4766,24 +4766,24 @@
         "limitations": "Explicit out-of-date interface loading; deferred roots remain unexecuted unless observed fullyLoaded. Not major-interaction acceptance."
       },
       "interactions": {
-        "binaryBuildRevision": "6632d6373367f41b66b0985440fe9ef604feb7e6",
-        "binarySha256": "4b99d527d23de3a8761137d0aad38c2a6ba3b5bf451d232ea8cd6cb95e197fa5",
-        "status": "failed",
+        "binaryBuildRevision": "58b0072d17a630c7b755188abab3ff855f1f775e",
+        "binarySha256": "6a10fcfd4d5be7aabc1b96e2d7627b8fa4db13b4171a5abb0b0bb3f9a8fd0d94",
+        "status": "bounded-pass",
         "covered": [
-          "Add/add/remove bag0 items updates text15/16\u219214/16\u219215/16 and aggregate79/80\u219278/80\u219279/80; DONE but shared merchant errors invalidate acceptance"
+          "Real BAG_UPDATE after add/add/remove yields bag text15/16\u219214/16\u219215/16 and aggregate79/80\u219278/80\u219279/80, shown text widgets, DONE with zero errors"
         ],
         "fixture": "tools/forever-addon-fixtures/bagmeter-count-workflow.lua",
-        "evidence": "/tmp/forever-addon-runtime/bagmeter-counts-actual-nuqbwfcx/ledger.json",
-        "controlEvidence": "/tmp/forever-addon-runtime/bag-event-control-z1cghrs8/ledger.json",
+        "evidence": "/tmp/forever-addon-runtime/merchant-final-bagmeter-sv7_uvyw/ledger.json",
+        "controlEvidence": "/tmp/forever-addon-runtime/merchant-final-control-s34oi05w/ledger.json",
         "sourceEvidence": "/tmp/forever-addon-runtime/bag-event-source-3x481uub/ledger.json",
-        "currentFailure": "BAG_UPDATE triggers shared Blizzard MerchantFrame.lua988 missing CanMerchantRepair; reproduced without addons.",
         "configuration": {
           "outOfDate": true,
           "selectedToc": "Bagmeter.toc",
           "activeLua": "Bagmeter.lua",
           "notSelected": "Bagmeter_Forever.toc"
         },
-        "limitations": "Generic TOC selected under current loader policy; explicit Forever variant untested. No clean workflow, bank, rendering, persistence or native proof."
+        "limitations": "Explicit out-of-date generic TOC only; Bagmeter_Forever.toc/Classic variant remains untested. No bank, transaction, rendering, persistence or native proof.",
+        "priorFailureEvidence": "/tmp/forever-addon-runtime/bagmeter-counts-actual-nuqbwfcx/ledger.json"
       },
       "packageOnlyBaseline": {
         "status": "unloaded",
