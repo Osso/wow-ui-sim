@@ -8,10 +8,10 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 209,
+      "clean-startup": 211,
       "blocked-dependency": 3,
       "unloaded": 12,
-      "failed": 44,
+      "failed": 42,
       "blocked-package": 1
     },
     "interactionStatuses": {
@@ -616,11 +616,11 @@
       "fileId": 8920553,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/actionbarauras-native-formatter-malg6_wg/ledger.json",
-        "binaryBuildRevision": "55ee20d7ab95b318b1016681e0c07c38ba5733f3",
-        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
         "packageFileIds": [
           8920553
         ],
@@ -633,11 +633,9 @@
             "reason": ""
           }
         ],
-        "errorRecords": 2,
+        "errorRecords": 0,
         "hostCvarsUnchanged": true,
-        "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json",
-        "currentFailure": "GetIncludeSpellIDs passes nil C_Spell.GetBaseSpell result to GetLinkedSpellIDs table key; NumericFormatter validation and buttonContainers nil errors no longer observed.",
-        "diagnosticEvidence": "/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/ledger.json"
+        "currentFailure": null
       },
       "interactions": {
         "status": "not-run",
@@ -671,6 +669,30 @@
         "errorRecords": 4,
         "hostCvarsUnchanged": true,
         "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json"
+      },
+      "priorProducerAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/actionbarauras-native-formatter-malg6_wg/ledger.json",
+        "binaryBuildRevision": "55ee20d7ab95b318b1016681e0c07c38ba5733f3",
+        "binarySha256": "df0f1c68ae5dc69b0b775d2ab8062f776dea536ac9b562649b73dc3da2618166",
+        "packageFileIds": [
+          8920553
+        ],
+        "observations": [
+          {
+            "name": "ActionBarAuras",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "reusedEvidence": "/tmp/forever-addon-runtime/c1-combo-whitespace-addon-smokes.json",
+        "currentFailure": "GetIncludeSpellIDs passes nil C_Spell.GetBaseSpell result to GetLinkedSpellIDs table key; NumericFormatter validation and buttonContainers nil errors no longer observed.",
+        "diagnosticEvidence": "/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/ledger.json"
       }
     },
     {
@@ -1965,6 +1987,39 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8932166
+        ],
+        "observations": [
+          {
+            "name": "Angleur",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-angleur-8932166-5z26prli/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorProducerAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-032-064.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -1982,6 +2037,41 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
+      }
+    },
+    {
+      "slug": "angleur-nicheoptions",
+      "fileId": 8931516,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8931516,
+          8932166
+        ],
+        "observations": [
+          {
+            "name": "Angleur",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Angleur_NicheOptions",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=Angleur addon=Angleur source=@Interface/AddOns/Angleur/init.lua:710: ...e/AddOns/Angleur/modules/bobberScanner/bobberScanner.lua:518: attempt to call a nil value"
       },
       "interactions": {
         "status": "not-run",
@@ -1990,16 +2080,11 @@
       "packageOnlyBaseline": {
         "status": "failed",
         "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-angleur-8932166-5z26prli/startup-ledger.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-angleur-nicheoptions-8931516-4cyqheye/startup-ledger.json",
         "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
         "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
-      }
-    },
-    {
-      "slug": "angleur-nicheoptions",
-      "fileId": 8931516,
-      "archiveStatus": "downloaded",
-      "startup": {
+      },
+      "priorProducerAttempt": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-032-064.json",
@@ -2027,17 +2112,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-angleur-nicheoptions-8931516-4cyqheye/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -7041,6 +7115,39 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8934103
+        ],
+        "observations": [
+          {
+            "name": "Buffalo",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 6,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/Buffalo/Buffalo-Configuration.lua: table index is nil"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-buffalo-classic-8934103-i0vvu9yz/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorProducerAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-128-160.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -7058,17 +7165,6 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-128-160.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-buffalo-classic-8934103-i0vvu9yz/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -8364,6 +8460,39 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8913945
+        ],
+        "observations": [
+          {
+            "name": "Chattynator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "[OnEvent] frame=#57958 addon=Chattynator source=@Interface/AddOns/Chattynator/Core/Initialize.lua:243: Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_GUILD_DISCORD\""
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-chattynator-8913945-04d_8ant/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorProducerAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-160-192.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -8381,17 +8510,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-160-192.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-chattynator-8913945-04d_8ant/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -12753,6 +12871,39 @@
       "fileId": 8929612,
       "archiveStatus": "downloaded",
       "startup": {
+        "status": "clean-startup",
+        "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8929612
+        ],
+        "observations": [
+          {
+            "name": "dgks",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "hostCvarsUnchanged": true,
+        "currentFailure": null
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-dgks-8929612-801yyv_s/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorProducerAttempt": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-224-256.json",
@@ -12772,17 +12923,6 @@
         ],
         "errorRecords": 2,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-224-256.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-dgks-8929612-801yyv_s/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
@@ -14375,6 +14515,130 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-startup",
+        "evidence": "/tmp/forever-addon-runtime/producer-b8-startup-ledger.json",
+        "binaryBuildRevision": "b8f0982be",
+        "binarySha256": "db566a2979fabc20c5db91aa53d8686a0363d4efc83419842d2af6765301c28e",
+        "packageFileIds": [
+          8934436
+        ],
+        "observations": [
+          {
+            "name": "EnhanceQoL",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLBags",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLChatSocial",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLClassBuffReminder",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLCooldownPanels",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLDamageMeter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLMover",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLResourceBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSharedMedia",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSkinner",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLSound",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLTooltip",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLUnitFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          },
+          {
+            "name": "EnhanceQoLVendor",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": true,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "hostCvarsUnchanged": true,
+        "currentFailure": "@Interface/AddOns/EnhanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua: ...hanceQoLCooldownPanels/CooldownPanels_AuraContainers.lua:79: attempt to index field 'UnitAuraSoundTrigger' (a nil value)"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "packageOnlyBaseline": {
+        "status": "failed",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-256-268.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-eqol-8934436-7125ink4/startup-ledger.json",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
+      },
+      "priorProducerAttempt": {
+        "status": "failed",
+        "proofLevel": "observed-isolated-startup",
         "evidence": "/tmp/forever-addon-runtime/isolated-batch-256-268.json",
         "binaryBuildRevision": "c1e830ffaefcc71ccf75a5aa279dae864ff24990",
         "binarySha256": "2502557577a31e7499d7eacdc972d545dec0926035b5d7bc65e77828f2fe67fa",
@@ -14483,17 +14747,6 @@
         ],
         "errorRecords": 4,
         "hostCvarsUnchanged": true
-      },
-      "interactions": {
-        "status": "not-run",
-        "covered": []
-      },
-      "packageOnlyBaseline": {
-        "status": "failed",
-        "evidence": "/tmp/forever-addon-runtime/main-batch-256-268.json",
-        "runLedger": "/tmp/forever-addon-runtime/main-eqol-8934436-7125ink4/startup-ledger.json",
-        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
-        "limitation": "Shared simulator CVar state was not isolated; not valid clean-room startup acceptance. External dependencies were not composed."
       }
     },
     {
