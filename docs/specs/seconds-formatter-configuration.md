@@ -11,7 +11,7 @@
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
 - [x] Formatter identity and stored setter values remain intact; maximum-mode switching is specified below. PTR and Forever formatting use the shared native-duration backend; profiles without that feature retain their existing placeholder behavior. Formatting policy is specified separately in [duration formatting](seconds-formatter-format.md).
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
-- [ ] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
+- [x] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
 
 ### Interval whitespace modes
 
@@ -59,13 +59,15 @@ Focused development proof at `89fced131`: three new tests failed before implemen
 
 At `c1e830ffa`, before the opaque-handle implementation, the isolated Forever integration build and `seconds_formatter_whitespace` filter passed 1/1. The selected Forever filter did not execute the cfg-excluded older-profile publication test. That evidence remains valid for the earlier enum/configuration slice only.
 
-At `55ee20d7`, isolated Forever focused integration filters recorded `seconds_formatter_native::` 7/7, `seconds_formatter_configuration::` 7/7, `duration_text_binding_copy::` 11/11, and `numeric_rule_formatter::` 8/8 passing in `/tmp/forever-addon-audit/verify-930726316-focused-integration-ledger.json` and its linked stdout files. This is GREEN evidence for the modeled opaque-handle, formatter binding, secret-handoff, and numeric-regression behaviors under `gui,client-wowforever`; it is not native conformance, restoration proof, other-profile proof, or ActionBarAuras acceptance. The integration-target restoration filter ran zero tests; the correct lib-target attempt timed out before output, so restoration remains pending.
+At `55ee20d7`, isolated Forever focused integration filters recorded `seconds_formatter_native::` 7/7, `seconds_formatter_configuration::` 7/7, `duration_text_binding_copy::` 11/11, and `numeric_rule_formatter::` 8/8 passing in `/tmp/forever-addon-audit/verify-930726316-focused-integration-ledger.json` and its linked stdout files. This is GREEN evidence for the modeled opaque-handle, formatter binding, secret-handoff, and numeric-regression behaviors under `gui,client-wowforever`; it is not native conformance, other-profile proof, or ActionBarAuras acceptance.
+
+After the import-only `0e23609d6`, the isolated library restoration test passed 1/1 and `installs_proxy_factories` passed 1/1. At `350f5444a`, the integration, library, and `wow-sim` targets compiled; third-party LoD passed 3/3 and all `addon_loading::tests::` passed 8/8. Forever `cargo check --offline --no-default-features --features gui,client-wowforever` and `cargo fmt --check` passed. Evidence: `/tmp/forever-addon-audit/verify-0e23609d6-{integration-no-run,lib-no-run,wow-sim-no-run}-ledger.json`, `/tmp/forever-addon-audit/verify-0e23609d6-cleanup-direct.stdout`, `/tmp/forever-addon-audit/verify-350f5444-direct-tests-ledger.json`, and `/tmp/forever-addon-audit/verify-350f5444-cargo-check-ledger.json`.
 
 ## Known gaps (current cycle)
 
-- [ ] Run the actual lib-target restoration test and profile-preservation tests. The focused Forever groups are GREEN, but restoration and non-Forever profiles remain pending.
+- [ ] Run profile-preservation proof for PTR/default profiles. The current GREEN evidence is Forever-only.
 - [ ] Diagnose ActionBarAuras's post-formatter `C_Spell.GetBaseSpell` nil spell-ID failure, then replay its real workflow with isolated data. Its current replay is failed startup, not interaction acceptance.
-- [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified despite bounded simulator tests.
+- [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified despite bounded simulator tests. In particular, the modeled `FormatNumber` secret-input route rejects tainted callers; this is an explicit simulator limitation, not a claim to match the API's allowed-tainted native contract.
 - [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.
 - [ ] Existing numeric curves currently interpolate linearly even when configured as Step. These evaluators call that existing engine unchanged and explicitly reject a fractional interval result. Vendor AuraContainer's Step curve therefore still requires a separate curve-engine correction; no broader redesign was attempted.
 
