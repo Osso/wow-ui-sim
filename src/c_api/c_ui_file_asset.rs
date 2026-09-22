@@ -47,14 +47,14 @@ fn c_ui_file_asset_is_loose_file(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 enum Asset {
-    FileId(u32),
+    Shipped,
     Loose,
     Missing,
 }
 
 fn query_asset(state: &LuaState) -> Asset {
-    if let Some(file_id) = file_id_from_asset_arg(state) {
-        return Asset::FileId(file_id);
+    if file_id_from_asset_arg(state).is_some() {
+        return Asset::Shipped;
     }
     let Some(path) = val_to_string(state, stack_val(state, 1)) else {
         return Asset::Missing;
