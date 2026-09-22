@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Stage Camelot stable-slot constants
 
-`9a8e2a841` and `fffb25ae4` add exactly two Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Cached pet documentation defines the latter as two stable slots plus one learned-spell slot; unchanged Camelot StableUI consumes both. This is a missing-publication boundary, not a pet model. Initial RED is recorded; GREEN/build/money-event and Aurarium replays/independent verification remain pending. See [[forever-addon-comparison]].
+`9a8e2a841` and `fffb25ae4` add exactly two Forever `Constants.PetConsts` fields: `MAX_STABLE_SLOTS = 2` and `NUM_PET_SLOTS_HUNTER = 3`. Independent proof passes 15/15, formatting, and default offline checking. The no-addons event now prints `3` but reaches a later StableUI nil result from callable `C_StableInfo.GetNumStableSlots`; unchanged Aurarium reaches `DONE` but fails on that same error. This is a missing-publication boundary, not a pet model or acceptance. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Restore Slider value callbacks
 
