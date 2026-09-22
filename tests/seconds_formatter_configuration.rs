@@ -1,5 +1,52 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+#[test]
+fn seconds_formatter_whitespace_modes_preserve_numeric_configuration() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local modes = Enum.SecondsFormatterIntervalWhitespace
+        assert(modes.Preserve == 0 and modes.Strip == 1 and modes.StripIgnoreLocale == 2)
+        local metadata = EnumMeta.SecondsFormatterIntervalWhitespace
+        assert(metadata.MinValue == 0 and metadata.MaxValue == 2 and metadata.NumValues == 3)
+        local first = C_StringUtil.CreateSecondsFormatter()
+        local second = C_StringUtil.CreateSecondsFormatter()
+        for _, mode in ipairs({modes.Strip, modes.Preserve, modes.StripIgnoreLocale}) do
+            assert(select('#', first:SetStripIntervalWhitespace(mode)) == 0)
+            assert(first:GetStripIntervalWhitespace() == mode)
+            assert(select('#', first:GetStripIntervalWhitespace()) == 1)
+        end
+        assert(second:GetStripIntervalWhitespace() == modes.Preserve)
+        for _, invalid in ipairs({false, true, '1', -1, 3, 0.5, math.huge}) do
+            assert(not pcall(first.SetStripIntervalWhitespace, first, invalid))
+            assert(first:GetStripIntervalWhitespace() == modes.StripIgnoreLocale)
+        end
+        assert(not pcall(first.SetStripIntervalWhitespace, first, nil))
+        assert(first:GetStripIntervalWhitespace() == modes.StripIgnoreLocale)
+        collectgarbage('collect')
+        assert(first:GetStripIntervalWhitespace() == modes.StripIgnoreLocale)
+        assert(second:GetStripIntervalWhitespace() == modes.Preserve)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(not(any(feature = "retail-12-1-0", feature = "client-wowforever")))]
+#[test]
+fn seconds_formatter_older_profiles_keep_whitespace_publication_unchanged() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(Enum.SecondsFormatterIntervalWhitespace == nil)
+        local formatter = C_StringUtil.CreateSecondsFormatter()
+        assert(formatter.SetStripIntervalWhitespace == nil)
+        assert(formatter:Format(90) == '90')
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn seconds_formatter_evaluation_uses_current_configuration() {
     let env = WowLuaEnv::new().unwrap();
@@ -44,7 +91,15 @@ fn seconds_formatter_evaluation_uses_current_configuration() {
             assert(select('#', method(first, 0.25)) == 1)
         end
         assert(first:Format(2.5) == EXPECTED_FORMAT)
-        "#.replace("EXPECTED_FORMAT", if cfg!(feature = "retail-12-1-5") { "'0 minutes'" } else { "'2.5'" }),
+        "#
+        .replace(
+            "EXPECTED_FORMAT",
+            if cfg!(feature = "retail-12-1-5") {
+                "'0 minutes'"
+            } else {
+                "'2.5'"
+            },
+        ),
     )
     .unwrap();
 }

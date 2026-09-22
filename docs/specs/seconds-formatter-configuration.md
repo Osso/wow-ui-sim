@@ -13,6 +13,16 @@
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
 - [ ] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
 
+### Interval whitespace modes
+
+Pinned current Retail, PTR, and Forever `SecondsFormatterSharedDocumentation.lua` declare `Preserve=0`, `Strip=1`, and `StripIgnoreLocale=2`. `SecondsFormatterAPIDocumentation.lua` defines the proxy setter/getter argument/result as this enum, not a boolean. Native `SecondsFormatterMixin` is a separate Lua utility with a boolean setting; it is unchanged.
+
+- [ ] Publish `Enum.SecondsFormatterIntervalWhitespace` and its `EnumMeta` bounds `0/2/3` from `c_api::seconds_formatter`, registered with `C_StringUtil`, for Retail 12.1+, PTR, and Forever. Preserve the historical Retail and classic publication surface.
+- [ ] Store validated numeric modes independently per formatter; setters return no values and getters return exactly one number. Preserve mode `0` as numeric zero, not Lua truthiness.
+- [ ] Reject nil, booleans, strings, fractional values, nonfinite values, and numbers outside `0..2` without changing the stored mode. This validation policy and initial `Preserve` mode are simulator guesses, not native-tested defaults/coercion.
+
+The real ActionBarAuras RED in `/tmp/forever-addon-runtime/main-batch-000-032.json` reaches `Core.lua:99` with the enum absent. This first slice adds publication and genuine configuration state only. **It does not implement whitespace effects on `Format` or establish ActionBarAuras compatibility.** Forever/current Retail retain their existing numeric-string placeholder; PTR's unit renderer is unchanged and does not yet consume this setting. The integrating caller must separately prove observable unit-string whitespace behavior, including locale override versus `StripIgnoreLocale`.
+
 ### Evaluation model (simulator assumptions)
 
 - [x] `CanApproximate(s)` returns `s > 0 and s < approximationSeconds`. Equality at either boundary is false. This agrees with the separate Blizzard Lua mixin's ordinary predicate, but is not native-object conformance evidence.
@@ -33,9 +43,9 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 
 ## Implementation inventory
 
-- `src/c_api/seconds_formatter.rs` — private per-proxy numeric configuration, validation, and eight configuration/evaluation methods.
+- `src/c_api/seconds_formatter.rs` — private per-proxy numeric configuration, validation, configuration/evaluation methods, and profile-scoped native whitespace enum publication.
 - `src/c_api/mod.rs` — internal module wiring.
-- `src/c_api/c_string_util.rs` — namespace registration must retain the already-installed formatter factory.
+- `src/c_api/c_string_util.rs` — namespace registration retains the already-installed formatter factory and registers the formatter-owned enum.
 - `src/lua_api/workarounds/temporary/proxy_object_factories.rs` — temporary factory integration; retire this connection when the modeled formatter owns the complete factory.
 
 ## Tests asserting this spec
@@ -47,6 +57,9 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 Focused development proof at `89fced131`: three new tests failed before implementation; the complete `seconds_formatter_configuration::` group passes six tests per profile with `--test integration --offline --no-default-features --features sound,gui,client-<ptr|retail>`. This includes the three existing configuration regressions. No broad, check, readability, or audit-artifact gates were run.
 
 ## Known gaps (current cycle)
+
+- [ ] Compile and run new grouped whitespace publication/state/older-profile tests. Cargo and runtime execution were explicitly excluded from this implementation slice; only existing addon RED is credited.
+- [ ] Implement and verify required whitespace effects on real formatted output. Numeric setter/getter tests are not formatting proof; a PTR-only test would not prove Forever behavior.
 
 - [ ] Native defaults, validation/coercion, `Seconds` representation, and secret/taint enforcement remain unverified.
 - [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.

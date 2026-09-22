@@ -14,6 +14,7 @@ use super::helpers::ensure_namespace;
 mod hyperlinks;
 
 pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
+    super::seconds_formatter::register_enums(state)?;
     let c_string_util_ref = ensure_namespace(state, "C_StringUtil")?;
     table_set_rust_fn_static(
         state,

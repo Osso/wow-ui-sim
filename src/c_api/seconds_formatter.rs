@@ -6,6 +6,47 @@
 #[cfg(feature = "retail-12-1-5")]
 mod render;
 
+/// The pinned current Retail, PTR, and Forever API declares this numeric mode.
+/// Historical profiles retain their existing formatter surface.
+pub(crate) fn register_enums(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
+    if !cfg!(any(
+        feature = "retail-12-1-0",
+        feature = "client-wowforever"
+    )) {
+        return Ok(());
+    }
+    use crate::lua_api::methods::{create_table, table_set_static};
+    use rilua::Val;
+
+    let enums = super::helpers::ensure_namespace(state, "Enum")?;
+    let values = create_table(state);
+    for (name, value) in [
+        ("Preserve", 0.0),
+        ("Strip", 1.0),
+        ("StripIgnoreLocale", 2.0),
+    ] {
+        table_set_static(state, values, name, Val::Num(value));
+    }
+    table_set_static(
+        state,
+        Val::Table(enums),
+        "SecondsFormatterIntervalWhitespace",
+        values,
+    );
+    let metadata = create_table(state);
+    for (name, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
+        table_set_static(state, metadata, name, Val::Num(value));
+    }
+    let enum_meta = super::helpers::ensure_namespace(state, "EnumMeta")?;
+    table_set_static(
+        state,
+        Val::Table(enum_meta),
+        "SecondsFormatterIntervalWhitespace",
+        metadata,
+    );
+    Ok(())
+}
+
 pub(crate) const FORMAT_LUA: &str = include_str!("seconds_formatter/format.lua");
 
 pub(crate) fn renderer(state: &mut rilua::vm::state::LuaState) -> rilua::Val {
@@ -63,6 +104,20 @@ local function __wow_install_seconds_formatter_configuration(methods, render_dur
     return values
   end
 
+  if Enum.SecondsFormatterIntervalWhitespace ~= nil then
+    function methods:SetStripIntervalWhitespace(mode)
+      require_number(mode)
+      if mode ~= 0 and mode ~= 1 and mode ~= 2 then
+        error("SecondsFormatter whitespace mode must be an integer from 0 to 2", 2)
+      end
+      configuration(self).stripIntervalWhitespace = mode
+    end
+
+    function methods:GetStripIntervalWhitespace()
+      return configuration(self).stripIntervalWhitespace
+    end
+  end
+
   function methods:SetApproximationSeconds(seconds)
     set_number(self, "approximationSeconds", seconds)
   end
@@ -113,7 +168,9 @@ local function __wow_install_seconds_formatter_configuration(methods, render_dur
   end
 
   return function(object)
-    configurations[object] = { approximationSeconds = 0, millisecondsThreshold = 0 }
+    configurations[object] = {
+      approximationSeconds = 0, millisecondsThreshold = 0, stripIntervalWhitespace = 0,
+    }
     object.minInterval = 0 -- Seconds
     object.maxInterval = 3 -- Days
     object.desiredUnitCount = 1
