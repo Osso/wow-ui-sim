@@ -53,7 +53,7 @@ Forever also accepts `CHAT_MSG_GUILD_DISCORD`, explicitly published by cached `C
 
 `UnitAuraConstantsDocumentation.lua:6–16` publishes `Enum.UnitAuraSoundTrigger`: `Added=0`, `ApplicationsIncreased=1`, `Removed=2`, with `UnitAuraSoundTriggerMeta` MinValue=0, MaxValue=2, NumValues=3. Forever shares the existing retail 12.1 enum producer; other profiles retain their previous publication policy. The grouped regression checks all three values, exact member count, metadata, and repeated restoration after cleanup removes both tables. This proves enum publication, not aura sound playback.
 
-Frozen `b8f0982be` rejects the event and lacks both enum tables: `/tmp/forever-addon-audit/next-registration-red-fc0so85f/ledger.json`. Targeted compiled GREEN and independent acceptance remain pending.
+Frozen `b8f0982be` rejects the event and lacks both enum tables: `/tmp/forever-addon-audit/next-registration-red-fc0so85f/ledger.json`. At `319725248`, the existing grouped integration filter passes 10/10, including repeated enum restoration and guild Discord delivery/unregistration. Build and test ledgers: `/tmp/forever-addon-audit/next-registration-green-q_hgyboa/`. Independent acceptance, profile preservation checks, and actual addon replay remain parent-owned pending work.
 
 ## Verification
 
