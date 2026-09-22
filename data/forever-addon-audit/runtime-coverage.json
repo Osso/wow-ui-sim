@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22T00:45:02.871989+00:00",
+  "updatedAt": "2026-09-22T01:03:37.573296+00:00",
   "scope": "All269 cachedprojects; selectedForeverrelease only, no silent substitution of comparisonversions. Startup and boundedinteraction evidence are separate; no inventorywidecompatibility claim.",
   "archiveInventory": "data/forever-addon-audit/cached-comparisons.json",
   "archiveHashProof": "/tmp/forever-addon-audit/selected-archive-hash-proof.json",
@@ -8,13 +8,13 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
+      "clean-startup": 59,
+      "unloaded": 34,
+      "failed": 33,
+      "staging-or-run-error": 2,
+      "not-run": 139,
       "blocked-package": 1,
-      "bounded-clean-startup": 3,
-      "bounded-pass": 3,
-      "intentional-load-on-demand-not-requested": 1,
-      "not-run": 259,
-      "profile-excluded-or-not-registered": 1,
-      "startup-failure": 1
+      "bounded-pass": 1
     },
     "interactionStatuses": {
       "bounded-pass": 3,
@@ -27,19 +27,32 @@
       "fileId": 8933365,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "bounded-pass",
-        "revision": "0e7af0df7ec0da2dea2c9053e21ea368f6a9e82a",
-        "archiveFileId": 8933365,
-        "evidence": "/tmp/forever-addon-runtime/abattis-pugboard-8933365-m9brrp30/startup-ledger.json"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-abattis-pugboard-8933365-4xxk2tha/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "PugBoard",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "bounded-pass",
         "covered": [
-          "/pugboard open",
-          "/pugboard close"
+          "PugBoard slash window open/close"
         ],
-        "evidence": "/tmp/forever-addon-runtime/abattis-pugboard-8933365-m9brrp30/startup-ledger.json",
-        "limitations": "Does not cover PugBoard group/search/network workflows."
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "fixture": "/syncthing/Sync/Projects/wow/wow-ui-sim/tools/forever-addon-fixtures/pugboard-open-close.lua",
+        "limitations": "No group-message parsing, filtering, or matchmaking proof."
       }
     },
     {
@@ -47,11 +60,23 @@
       "fileId": 8931441,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "bounded-pass",
-        "revision": "0e7af0df7ec0da2dea2c9053e21ea368f6a9e82a",
-        "archiveFileId": 8931441,
-        "evidence": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stdout",
-        "errors": "/tmp/forever-addon-runtime/abgesattelt-8931441-8llv5yre/stderr"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-abgesattelt-8931441-v4g6b4dh/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Abgesattelt",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "bounded-pass",
@@ -68,7 +93,23 @@
       "fileId": 8935580,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-accentchat-8935580-q1qr0uaj/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AccentChat",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -80,7 +121,23 @@
       "fileId": 8935141,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-account-wide-ui-8935141-hczp832m/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AccWideUILayoutSelection",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -92,7 +149,23 @@
       "fileId": 8919183,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-accountant-classic-8919183-g2dq_8ec/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Accountant_Classic",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -104,7 +177,23 @@
       "fileId": 8932577,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-acecommqueue-8932577-trim75kb/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AceCommQueue-1.0",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -116,10 +205,23 @@
       "fileId": 7070807,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "profile-excluded-or-not-registered",
-        "archiveFileId": 7070807,
-        "evidence": "/tmp/forever-addon-runtime/achievement-guild-rank-7070807-e4nn8pod/stdout",
-        "reason": "TOC has Interface 100014 and no Forever LoadGameType; C_AddOns reports fullyLoaded=false in active Forever runtime. This is not counted as simulator API failure."
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-achievement-guild-rank-7070807-xpqolik1/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AchievementGuildRank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -132,11 +234,23 @@
       "fileId": 8933894,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "bounded-clean-startup",
-        "archiveFileId": 8933894,
-        "evidence": "/tmp/forever-addon-runtime/batch2-achievementsutils-8933894/stdout",
-        "errors": [],
-        "limitations": "No major interaction probe run."
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-achievementsutils-8933894-3ae2trb4/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AchievementsUtils",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -148,7 +262,23 @@
       "fileId": 8929677,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ackis-recipe-list-classic-8929677-z_nokvbl/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AckisRecipeList",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -160,10 +290,23 @@
       "fileId": 8930590,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "intentional-load-on-demand-not-requested",
-        "archiveFileId": 8930590,
-        "evidence": "/tmp/forever-addon-runtime/batch2-ackis-recipe-list-classic-cooking-8930590/stdout",
-        "reason": "TOC declares LoadOnDemand: 1 and required AckisRecipeList; isolated startup did not request the module."
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ackis-recipe-list-classic-cooking-8930590-rgphf4wl/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AckisRecipeList_Cooking",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -175,7 +318,23 @@
       "fileId": 8921839,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ackis-recipe-list-classic-leatherworking-8921839-rl1x52q_/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AckisRecipeList_Leatherworking",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -187,7 +346,23 @@
       "fileId": 8929694,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ackis-recipe-list-classic-tailoring-8929694-hstkr6pt/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AckisRecipeList_Tailoring",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -199,20 +374,23 @@
       "fileId": 8920553,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "startup-failure",
-        "archiveFileId": 8920553,
-        "evidence": "/tmp/forever-addon-runtime/batch2-actionbarauras-8920553/stderr",
-        "errors": [
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-actionbarauras-8920553-clnet52_/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
           {
-            "message": "@Interface/AddOns/ActionBarAuras/Core.lua: Interface/AddOns/ActionBarAuras/Core.lua:99: attempt to index field 'SecondsFormatterIntervalWhitespace' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
-            "count": 1
-          },
-          {
-            "message": "Lua Error: @Interface/AddOns/ActionBarAuras/Core.lua: Interface/AddOns/ActionBarAuras/Core.lua:99: attempt to index field 'SecondsFormatterIntervalWhitespace' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
-            "count": 1
+            "name": "ActionBarAuras",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
           }
         ],
-        "reason": "Addon root fully loaded but startup emitted a concrete Lua error; not counted as compatibility pass."
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -224,11 +402,23 @@
       "fileId": 8920442,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "bounded-clean-startup",
-        "archiveFileId": 8920442,
-        "evidence": "/tmp/forever-addon-runtime/batch2-actionbarinterrupthighlight-8920442/stdout",
-        "errors": [],
-        "limitations": "No major interaction probe run."
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-actionbarinterrupthighlight-8920442-qj4mi0sf/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ActionBarInterruptHighlight",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -240,7 +430,23 @@
       "fileId": 8915273,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-actionhud-8915273-om01oaqi/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ActionHud",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -252,11 +458,23 @@
       "fileId": 8920031,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "bounded-clean-startup",
-        "archiveFileId": 8920031,
-        "evidence": "/tmp/forever-addon-runtime/batch2-addonprofiles-8920031/stdout",
-        "errors": [],
-        "limitations": "No major interaction probe run."
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-addonprofiles-8920031-pzkd27fv/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AddonProfiles",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -268,7 +486,23 @@
       "fileId": 8930420,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-adhd-quest-8930420-rekd8gvm/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ADHDQuest",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -280,7 +514,23 @@
       "fileId": 8921014,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-adibags-fishing-8921014-1iid_a_y/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AdiBags_Fishing",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -292,7 +542,23 @@
       "fileId": 8924936,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-adventurers-codex-8924936-q0syu7oj/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AdventurersCodex",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -304,7 +570,23 @@
       "fileId": 8908783,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemote-drwho-sounds-8908783-rt9ay5m3/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_DrWho",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -316,7 +598,23 @@
       "fileId": 8908795,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemote-sound-pack-from-holyfrey-8908795-2887yl5c/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_Holyfrey",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -328,7 +626,37 @@
       "fileId": 8908767,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-classic-8908767-ujev_8pb/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AEmotes_Sounds",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AEmotes_UI",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -340,7 +668,23 @@
       "fileId": 8908790,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-full-metal-jacket-sound-pack-from-holyfrey-8908790-_qj_u1is/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_FullMetalJ",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -352,7 +696,23 @@
       "fileId": 8908830,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-laugh-sounds-pack-from-holyfrey-8908830-1qgeqrsm/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_Laugh",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -364,7 +724,23 @@
       "fileId": 8908838,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-leeroy-sound-pack-from-holyfrey-8908838-lvlkjwwc/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_Leeroy",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -376,7 +752,23 @@
       "fileId": 8908855,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-lynge-sound-pack-from-holyfrey-8908855-q9sg87vj/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_Lynge",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -388,7 +780,23 @@
       "fileId": 8908871,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-millhouse-manastorm-sound-pack-8908871-51vmtz_5/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_Millhouse",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -400,7 +808,23 @@
       "fileId": 8908915,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aemotes-wonderwoman-sound-pack-from-holyfrey-8908915-ghctwcil/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AEmotes_WonderWoman",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -412,7 +836,23 @@
       "fileId": 8916418,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ahledger-8916418-aztfvkuf/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AHledger",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -424,7 +864,30 @@
       "fileId": 8909267,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-alenyas-guides-8909267-r35lebev/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AlenyaGuides",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Training",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -436,7 +899,37 @@
       "fileId": 8909275,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-alenyas-guides-writer-8909275-709k8ouh/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AlenyaGuidesWriter",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Pack1",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AlenyaGuides_Pack2",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -448,7 +941,23 @@
       "fileId": 8260596,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-000-032.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-alias-8260596-qmvwnxaf/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Alias",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -460,7 +969,23 @@
       "fileId": 8924697,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-alias-rename-anyone-8924697-cc64uq11/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Alias",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -472,7 +997,23 @@
       "fileId": 8934207,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-all-the-things-8934207-iffvv6co/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AllTheThings",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -484,7 +1025,23 @@
       "fileId": 8912448,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-altitude-8912448-ts0u0a7k/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Altitude",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -496,7 +1053,23 @@
       "fileId": 8908131,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ambidextrous-by-overcraft-8908131-z2zmguv3/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Ambidextrous",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -508,7 +1081,23 @@
       "fileId": 8934065,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-ame-infohub-8934065-6139htl8/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AME_InfoHub",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -520,7 +1109,23 @@
       "fileId": 8918953,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-anglers-pocket-8918953-vve391wt/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AnglersPocket",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -532,7 +1137,23 @@
       "fileId": 8932166,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-angleur-8932166-5z26prli/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Angleur",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -544,7 +1165,23 @@
       "fileId": 8931516,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-angleur-nicheoptions-8931516-4cyqheye/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Angleur_NicheOptions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -556,7 +1193,16 @@
       "fileId": 8906484,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "staging-or-run-error",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-animated-blizzard-portraits-8906484-i8lptlc8/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false,
+        "reason": "Archive file/directory conflict"
       },
       "interactions": {
         "status": "not-run",
@@ -568,7 +1214,23 @@
       "fileId": 8921031,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-antisocial-8921031-atdhidc5/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AntiSocial",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -580,7 +1242,23 @@
       "fileId": 8925606,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-appelswingsforever-8925606-8bjyppfp/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AppelSwingsForever",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -592,7 +1270,23 @@
       "fileId": 8917384,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-arc-track-8917384-w6zm9e5o/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ArcTrack",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -604,7 +1298,23 @@
       "fileId": 8915500,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-arcane-wizard-library-8915500-9nuutkrr/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ArcaneWizardLibrary",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -616,7 +1326,16 @@
       "fileId": 8934390,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "staging-or-run-error",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-archindulas-jump-habit-8934390-kjg963yg/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false,
+        "reason": "Archive file/directory conflict"
       },
       "interactions": {
         "status": "not-run",
@@ -628,7 +1347,23 @@
       "fileId": 8909303,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-arena-ranked-duels-8909303-__1z_k17/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Arena Ranked Duels",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -640,7 +1375,23 @@
       "fileId": 8921901,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-armoryutils-8921901-cl8blidg/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "ArmoryUtils",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -652,7 +1403,79 @@
       "fileId": 8923279,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlasloot-classic-forever-8923279-r_htn0vz/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AtlasBIStooltips",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_DungeonsAndRaids",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -664,7 +1487,79 @@
       "fileId": 8935273,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlasloot-continued-8935273-095nhk8p/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AtlasLoot",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_DungeonsAndRaids",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Favourites",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -676,7 +1571,79 @@
       "fileId": 8932404,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlasloot-forever-8932404-wrkzsjow/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AtlasBIStooltips",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_DungeonsAndRaids",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLootClassic_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -688,7 +1655,79 @@
       "fileId": 8931207,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-atlaslootforever-8931207-kzmpngv9/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AtlasLoot",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Collections",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Crafting",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Data",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_DungeonsAndRaids",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Factions",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Favourites",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AtlasLoot_PvP",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -700,7 +1739,23 @@
       "fileId": 8925257,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auctionator-8925257-a1xryddx/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Auctionator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -712,7 +1767,23 @@
       "fileId": 8921105,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auctionhouseconfirmquantity-8921105-cnuy61mg/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AuctionHouseConfirmQuantity",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -724,7 +1795,23 @@
       "fileId": 8915742,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aurarium-8915742-ejsp4fpg/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Aurarium",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -736,7 +1823,23 @@
       "fileId": 8925235,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-aurashelf-8925235-zp4suho9/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AuraShelf",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -748,7 +1851,23 @@
       "fileId": 8918490,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auto-forever-8918490-cear49_x/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoForever",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -760,7 +1879,23 @@
       "fileId": 8919535,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auto-grats-8919535-obauk72t/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "autograts",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -772,7 +1907,23 @@
       "fileId": 8921907,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auto-queue-8921907-h4mmpvme/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoQueue",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -784,7 +1935,23 @@
       "fileId": 8929529,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auto-restock-8929529-l_dmco7a/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoRestock",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -796,7 +1963,23 @@
       "fileId": 8924087,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-auto-trackers-8924087-r5ird40t/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoTrackers",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -808,7 +1991,23 @@
       "fileId": 8925804,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autofeed-8925804-cd_il4oi/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoFeed",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -820,7 +2019,23 @@
       "fileId": 8908120,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autoloot-by-overcraft-8908120-etdx6leu/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Autoloot_by-OverCraft",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -832,7 +2047,23 @@
       "fileId": 8922028,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-032-064.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autolooter-continued-8922028-e96vdzwp/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoLooter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -844,7 +2075,23 @@
       "fileId": 8915420,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-automated-consumables-8915420-3wtlc_0n/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Automated-Consumables",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -856,7 +2103,23 @@
       "fileId": 7548631,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autometerreset-7548631-ipf1iwgh/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoMeterReset",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -868,7 +2131,23 @@
       "fileId": 8915731,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-autostow-8915731-9xnhe13_/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AutoStow",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -880,7 +2159,30 @@
       "fileId": 8915696,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-avoidancestats-tbc-8915696-h5lbchc0/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AvoidanceStatsForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "AvoidanceStatsTBC",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -892,7 +2194,23 @@
       "fileId": 8928231,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeriteui-junnez-edition-wow12-8928231-sirdluro/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AzeriteUI5_JuNNeZ_Edition",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 6,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -904,7 +2222,23 @@
       "fileId": 8929297,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeroth-idle-forever-8929297-vdbpuno4/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "AzerothIdle",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -916,7 +2250,23 @@
       "fileId": 8921061,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeroth-pilot-reloaded-route-recorder-8921061-68dughql/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "APR-Recorder",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -928,7 +2278,23 @@
       "fileId": 8914938,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-azeroth-public-library-forever-8914938-hqdzi8sa/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "APLForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -940,7 +2306,23 @@
       "fileId": 8924604,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-baganator-8924604-39dgmbas/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Baganator",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 3,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -961,7 +2343,23 @@
       "fileId": 8912908,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagbrother-8912908-zxz9vask/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BagBrother",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -973,7 +2371,23 @@
       "fileId": 8917130,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagmeter-8917130-6lvlvyr6/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Bagmeter",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -985,7 +2399,51 @@
       "fileId": 8912897,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagnon-8912897-xl40de1x/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BagBrother",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_Bank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_Config",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnon_GuildBank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -997,7 +2455,23 @@
       "fileId": 8917178,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagnon-consolidator-8917178-gltrghgw/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Bagnon_Consolidator",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1009,7 +2483,51 @@
       "fileId": 8912916,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagnonium-8912916-hroz9npw/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BagBrother",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnonium",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnonium_Bank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnonium_Config",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "Bagnonium_GuildBank",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1021,7 +2539,23 @@
       "fileId": 8936410,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagpurge-8936410-v8fynkq6/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BagPurge",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1033,7 +2567,23 @@
       "fileId": 8925194,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bagsync-8925194-bv5excpr/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BagSync",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1045,7 +2595,23 @@
       "fileId": 8929092,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bam-forever-8929092-wimb4skc/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BamForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1057,7 +2623,23 @@
       "fileId": 8934759,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bank-stack-8934759-ynfnrmfj/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BankStack",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1069,7 +2651,23 @@
       "fileId": 8914905,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bar-energy-8914905-tcm6qivl/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BarEnergy",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1081,7 +2679,23 @@
       "fileId": 8913872,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-barbershop-custom-textures-8913872-m1l4v1jd/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BarbershopCustomTextures",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1093,7 +2707,23 @@
       "fileId": 8935519,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-barshelf-8935519-0yqbf94o/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Barshelf",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1105,7 +2735,23 @@
       "fileId": 8936363,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bazui-8936363-dq59go74/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BazUI",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 4,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1117,7 +2763,23 @@
       "fileId": 8933666,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-beastandbow-8933666-_hrdgv_8/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BeastAndBow",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1129,7 +2791,23 @@
       "fileId": 8936650,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-belphies-quest-log-8936650-4zzyzj6u/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BelphiesQuestLog",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1141,7 +2819,23 @@
       "fileId": 8917798,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-best-around-revisited-8917798-2p7pctqj/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BestAroundRevisited",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1153,7 +2847,23 @@
       "fileId": 8926866,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-ability-bars-8926866-egsxl3tp/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterAbilityBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1165,7 +2875,23 @@
       "fileId": 8932961,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-bags-8932961-yc2mo22x/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1177,7 +2903,23 @@
       "fileId": 8916721,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-blizzard-meters-8916721-sgz8a7qe/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBlizzardDamageMeter",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1189,7 +2931,23 @@
       "fileId": 8927798,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-cast-bars-8927798-cpx_8bit/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterCastBars",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1201,7 +2959,23 @@
       "fileId": 8933302,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-forever-chat-8933302-3bn7oyvm/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterForeverChat",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1213,7 +2987,23 @@
       "fileId": 8926597,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-item-levels-8926597-h6xahi8b/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBlizzStats",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1225,7 +3015,23 @@
       "fileId": 8906512,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-064-096.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-music-player-8906512-ugbz6_9_/startup-ledger.json",
+        "repositoryRevision": "a46563b56bdc340e34ae75ce24882298a89b3ee1",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterMusicPlayer",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1237,7 +3043,23 @@
       "fileId": 8914658,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-name-plates-betternameplates-8914658-ebnerpbt/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterNamePlates",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1249,7 +3071,23 @@
       "fileId": 8906523,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-notepad-8906523-l23gmzqn/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "Notepad++",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1261,7 +3099,23 @@
       "fileId": 8906504,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-better-queue-timers-8906504-8o_acl00/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterQueueTimers",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1273,7 +3127,23 @@
       "fileId": 7940153,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterauctionprice-7940153-ou7b6mc6/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterAuctionPrice",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1285,11 +3155,37 @@
       "fileId": 8923225,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-aio-all-in-one-8923225-exqcb99n/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_AIO",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
         "covered": []
+      },
+      "priorEvidence": {
+        "class": "api_or_fixture_only",
+        "proofRevision": "d40397025",
+        "proofPaths": [
+          "docs/wowforever-1.60.1.md",
+          "docs/forever-addon-comparison.md"
+        ],
+        "result": "BetterBags-shaped Enum.BagIndex publication tests pass; no BetterBags load/runtime proof",
+        "limits": "No bank state, purchased tabs, account-bank, Warbank, money lifecycle, or full addon claim"
       }
     },
     {
@@ -1297,7 +3193,23 @@
       "fileId": 8921065,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-camping-fixtures-8921065-_oli64uo/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags-CampingFixtures",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1309,7 +3221,23 @@
       "fileId": 8921039,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-fishing-8921039-5hhidz_x/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_Fishing",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1321,7 +3249,23 @@
       "fileId": 8933211,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-forever-8933211-qfavlbik/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_Forever",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1333,7 +3277,23 @@
       "fileId": 8922949,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-ilvl-8922949-4h6u2lr0/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_iLvl",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1345,7 +3305,23 @@
       "fileId": 8916076,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-legendary-8916076-itytnh4s/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_Legendary",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1357,7 +3333,23 @@
       "fileId": 8912976,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-quick-add-8912976-jnx20cgi/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_QuickAdd",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1369,7 +3361,23 @@
       "fileId": 8922319,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-scrap-8922319-pc0xatwk/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_Scrap",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1381,7 +3389,23 @@
       "fileId": 8916075,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-tabards-8916075-pdvgna15/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_Tabards",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1393,7 +3417,23 @@
       "fileId": 8917520,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterbags-vertical-layout-8917520-ve5xxany/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBags_VerticalLayout",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 1,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1405,7 +3445,23 @@
       "fileId": 8925778,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterblizzaddons-8925778-l295n_w7/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBlizzAddons",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1417,7 +3473,23 @@
       "fileId": 8925566,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterblizzframes-8925566-c731n8uo/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBlizzFrames",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1429,7 +3501,23 @@
       "fileId": 8925620,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterblizzplates-8925620-doifiqlb/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterBlizzPlates",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1441,7 +3529,23 @@
       "fileId": 8935358,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterdamagemeter-8935358-ixxm8aor/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterDamageMeter",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1453,7 +3557,23 @@
       "fileId": 7548712,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterdamagereader-7548712-4i3mxzf9/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "DamageMeterReader",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1465,7 +3585,23 @@
       "fileId": 7548719,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterdungeonqueue-7548719-rytgmb3e/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterDungeonQueue",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1477,7 +3613,30 @@
       "fileId": 8913175,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-betterfriendlist-8913175-lwocmklr/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "!BetterFriendlist_MenuBridge",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BetterFriendlist",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1489,7 +3648,23 @@
       "fileId": 8919827,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bettermerchant-8919827-xcbndc9s/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterMerchant",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1501,7 +3676,23 @@
       "fileId": 7548592,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bettershields-7548592-qfx407hl/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterShields",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1513,7 +3704,23 @@
       "fileId": 7912476,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bettervaultrewards-7912476-9_zdsuix/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BetterVaultRewards",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1525,7 +3732,100 @@
       "fileId": 8931513,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "failed",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bigwigs-8931513-9_o7n_1i/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BigWigs",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Core",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MarchOnQuelDanas",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MidnightLairs",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_MidnightWorld",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Options",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Plugins",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_Sporefall",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheDreamrift",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheUnbindingOfKithix",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheVenomousAbyss",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BigWigs_TheVoidspire",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 2,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1537,7 +3837,23 @@
       "fileId": 8936469,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bis-healing-8936469-5l5msh3t/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BiSHealing",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1549,7 +3865,23 @@
       "fileId": 8936444,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bis-memories-8936444-6r8lsdw9/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BiSMemories",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1561,7 +3893,23 @@
       "fileId": 8914278,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-bleakfibers-quest-tracker-forever-8914278-_xy2d2dh/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BleakfibersQuestTracker-Forever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1573,7 +3921,23 @@
       "fileId": 8931256,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-blib-8931256-tu6l8i3m/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BLib",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1585,7 +3949,23 @@
       "fileId": 8922457,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-blizzhudtweaks-8922457-fk0h51mr/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BlizzHUDTweaks",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1597,7 +3977,30 @@
       "fileId": 8934501,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "unloaded",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-blizzmove-8934501-smlmcf1t/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BlizzMove",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          },
+          {
+            "name": "BlizzMove_Debug",
+            "loadingOrLoaded": false,
+            "fullyLoaded": false,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -1609,7 +4012,23 @@
       "fileId": 8917371,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "not-run"
+        "status": "clean-startup",
+        "proofLevel": "observed-package-only-baseline",
+        "evidence": "/tmp/forever-addon-runtime/main-batch-096-128.json",
+        "runLedger": "/tmp/forever-addon-runtime/main-blizzmove-forever-8917371-lvb_zksm/startup-ledger.json",
+        "repositoryRevision": "9bd76f3ff4bca6d790f78875b0b828c28efc81d8",
+        "binarySha256": "ec95f18f8275bddecbbe00e7f64563da774dae96e8fb5760dcb51bcd62fab449",
+        "observations": [
+          {
+            "name": "BlizzMoveForever",
+            "loadingOrLoaded": true,
+            "fullyLoaded": true,
+            "loadOnDemand": false,
+            "reason": ""
+          }
+        ],
+        "errorRecords": 0,
+        "externalDependenciesStaged": false
       },
       "interactions": {
         "status": "not-run",
@@ -3072,6 +5491,16 @@
       "interactions": {
         "status": "not-run",
         "covered": []
+      },
+      "priorEvidence": {
+        "class": "api_or_fixture_only",
+        "proofRevision": "d40397025",
+        "proofPaths": [
+          "docs/wowforever-1.60.1.md",
+          "docs/forever-addon-comparison.md"
+        ],
+        "result": "Exact cursor-transfer sequence reproduced and focused inventory tests pass; no EasyFishing addon runtime proof",
+        "limits": "No full addon startup/UI/events/security/native fidelity claim"
       }
     },
     {
