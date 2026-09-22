@@ -1,6 +1,6 @@
-## [2026-09-22] investigation | Bound merchant buyback reads
+## [2026-09-22] investigation | Count merchant junk in modeled bags
 
-Audited `cc6567131`, `88d84bc0`, and `/tmp/forever-addon-audit/merchant-buyback-development-ledger.json`. Three legacy Forever buyback reads use a distinct per-environment collection; empty state, ordering, absent indexed results, and configured transaction fields are explicit simulator policy. Four focused buyback tests pass. The retained cached BAG_UPDATE regression advances through buyback count/info and now fails at `MerchantFrame.lua:210` because `C_MerchantFrame.GetNumJunkItems()` returns nil. Independent verification and BagMeter acceptance remain open. Updated [[forever-addon-comparison]].
+Audited `67b32cddd`, `58b0072d1`, `8260074a3`, and `/tmp/forever-addon-audit/merchant-junk-development-ledger.json`. Eleven targeted tests now cover required repair, buyback, and junk reads plus the cached BAG_UPDATE route, which is clean. `GetNumJunkItems` derives from carried modeled items, known positive sell prices, quality 0, and existing junk-sale exclusions; eligibility and stack-unit semantics are explicit inferences. Positive junk metadata is fixture-only because the live catalog has no quality-0 records. No item-catalog change, sell transaction, full repair system, native claim, independent verification, or BagMeter acceptance follows. Updated [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
 
