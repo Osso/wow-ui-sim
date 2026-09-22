@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Bound merchant repair capability
+
+Audited `4024a6444`, `9acd62a82`, `0d6f9cea`, `5d89adfde`, and `/tmp/forever-addon-audit/merchant-repair-development-ledger.json`. Forever-only `CanMerchantRepair` queries open state plus configured repair capability; default `false` and the conjunction are explicit simulator policy. Three focused predicate/state checks pass, while cached Blizzard BAG_UPDATE advances from missing `CanMerchantRepair` to separate missing `GetNumBuybackItems` at `MerchantFrame.lua:416`. Independent verification, BagMeter replay, and acceptance remain open. Updated [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
 
 Audited fixtures `e8d4cf879`, their BagMeter corrections `bc498d6cf` and `a26fc043b`, and `/tmp/forever-addon-audit/verify-accountant-bagmeter-ledger.json`. Exact unchanged Accountant Classic `8919183` (92 staged files) records `+250/-250` `PLAYER_MONEY` deltas in Session, Day, and Total records, with `DONE` and empty errors; this is bounded simulator event evidence only. Exact unchanged BagMeter `8917130` (23 files) reaches observed count markers and `DONE`, but shared `MerchantFrame.lua:988` errors from missing `CanMerchantRepair` reproduce in the no-addons control, so it remains failed. Current loader policy selects generic `Bagmeter.toc`; `_Forever.toc` remains untested. Matrix is 16 bounded passes, one failed workflow, 252 not run; startup totals unchanged. Updated [[forever-addon-comparison]]. Inventory goal remains open.

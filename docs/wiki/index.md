@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Bound merchant repair capability
+
+`CanMerchantRepair` now queries open merchant state and an explicitly configured repair capability; default `false` is a simulator policy, not native evidence. Three focused predicate/state checks pass, but the cached Blizzard BAG_UPDATE regression advances to a separate missing `GetNumBuybackItems` failure at `MerchantFrame.lua:416`. No independent verification or BagMeter acceptance is credited. See [merchant repair capability](../specs/merchant-repair-capability.md) and [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
 
 Accountant Classic `8919183` records injected `+250/-250` money events in Session, Day, and Total data, then reaches `DONE` with empty errors; independent verification authenticates 92 staged files and the recorded markers. BagMeter `8917130` displays observed generic-TOC bag counts through real bag-state events but remains failed because the same `BAG_UPDATE` reproduces unrelated missing `CanMerchantRepair` errors without addons. The loader selects generic `Bagmeter.toc`; `_Forever.toc` is untested. Matrix: 16 passes, one failure, 252 not run. See [[forever-addon-comparison]].
