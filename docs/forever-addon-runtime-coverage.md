@@ -6,7 +6,7 @@ Overall compatibility remains **unverified**. The [per-project matrix](../data/f
 
 All 268 successfully downloaded Forever packages exist and match their indexed sizes and SHA-256 hashes. ConsumableTracker's selected Forever file `8924598` is unavailable; its older comparison archive is not silently substituted. Missing cached dependencies remain separate blockers. No further downloads are authorized by this audit.
 
-The matrix separates current startup and interaction results from `priorEvidence`. A `not-run` current result does not erase earlier scoped proof: it means that proof has not yet been reconciled or rerun for this inventory-wide pass. Current bounded batches include Abattis PugBoard open/close, Abgesattelt DB/event initialization, one intentional LoadOnDemand-not-requested module, one profile-excluded package, and ActionBarAuras duration create/countdown/removal evidence. Ellesmere's existing six-group proof is retained. EpicDamageMeter also has historical bounded interaction proof; CooldownMaster and DragonGuildMaster have startup-only evidence. Carbonite and Baganator have recorded failures or dependency blockers.
+The matrix separates current startup and interaction results from `priorEvidence`. A `not-run` current result does not erase earlier scoped proof: it means that proof has not yet been reconciled or rerun for this inventory-wide pass. Current bounded batches include Abattis PugBoard open/close, Abgesattelt named remote-death count updates, one intentional LoadOnDemand-not-requested module, one profile-excluded package, and ActionBarAuras duration create/countdown/removal evidence. Ellesmere's existing six-group proof is retained. EpicDamageMeter also has historical bounded interaction proof; CooldownMaster and DragonGuildMaster have startup-only evidence. Carbonite and Baganator have recorded failures or dependency blockers.
 
 ## Baseline isolation correction — 2026-09-22
 
@@ -44,7 +44,11 @@ At the frozen `c1e830ffa` binary, isolated interaction probes observed:
 | CustomTutorials | Progress 1→2→3, callback delivery, already-seen no-op, reset/hide, retrigger1 | Button clicks, rendered appearance, images/shine, restart persistence |
 | C_Everywhere | CVar namespace/call parity; occupied item6948 stack3, five empty slots, removal | Legacy scalar packing; remaining namespaces |
 
-Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records seven bounded interaction passes, one initialization-only result, and 261 not-run entries; historical evidence remains separate.
+Each probe returned its completion marker and zero recorded Lua errors; shared host CVars remained unchanged. Fixtures live in `tools/forever-addon-fixtures/`; exact commands, binary hashes, and outputs are linked per project. These add bounded evidence, not whole-addon certification. The matrix now records eight bounded interaction passes and 261 not-run entries; historical evidence remains separate.
+
+## Abgesattelt bounded interaction
+
+Simulated guild addon messages create a named player's count at three, reject a lower count, advance it to five, and retain a second player's count at two. Timestamps are recorded. Nine assertions and the completion marker pass with zero Lua errors and unchanged host CVars: `/tmp/forever-addon-runtime/abgesattelt-major-0gezxdzq/ledger.json`. This replaces the current initialization-only classification, not its preserved historical evidence. Local death detection, real transport/audio, synchronization negotiation, displayed rankings and restart persistence remain untested.
 
 ## Alias bounded interaction
 
