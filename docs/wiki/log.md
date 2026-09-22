@@ -1,3 +1,7 @@
+## [2026-09-22] investigation | Record finite numeric CVar defaults
+
+`19c11e551` converts finite Lua numeric `RegisterCVar` defaults through both global and `C_CVar` surfaces while preserving existing first-default/override behavior and typed/secret rejection. Development RED contains two expected failures; GREEN has 18/18 grouped tests: `/tmp/forever-addon-audit/register-cvar-numeric-{red,green}/ledger.json`. The Datamine `8936714` numeric `debugTargetInfo = 0` call motivates this inferred policy, but final independent verification, unchanged-package replay, and its separate `ConsoleGetAllCommands` correction remain pending. No startup/matrix credit. Updated [CVar registration](../specs/cvar-registration.md) and [[forever-addon-comparison]].
+
 ## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
 
 Frozen `963a3b791` reproduces CVarsBackup `8925285` calling missing `GetNumBattlefieldScores()` from button `OnUpdate`; exact archive/CVar isolation is recorded in `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json`. Existing queue/active-battlefield state is not a score-row producer. No shim, implementation, native claim, or matrix update.

@@ -104,6 +104,8 @@ Cached ClassicCastBarForever `8909724` calls `C_CVar.RegisterCVar(name, "")` onl
 
 No addon code, scale validation, or generic fallback changed. The empty-string contract is inferred from cached API signatures and Wowless behavior, not a Forever-client probe. The separate Slider callback correction now has independent verification and a bounded unchanged-ClassicCastBar replay; it neither invalidates the CVar startup proof nor establishes mouse interaction, settings navigation, restart persistence, or inventory acceptance.
 
+`19c11e551` additionally accepts finite Lua numeric registration defaults through both CVar surfaces, retaining the existing first-default and override behavior while rejecting non-finite and unsupported values. This follows unchanged Datamine `8936714` registering `debugTargetInfo` with numeric `0`; it is an inferred conversion policy, not native evidence. Development RED recorded two expected failures and GREEN records 18/18 grouped tests: `/tmp/forever-addon-audit/register-cvar-numeric-{red,green}/ledger.json`. Final independent verification and an unchanged Datamine replay remain pending. Datamine's separate missing global `ConsoleGetAllCommands` correction is in progress, so this does not change startup status, interaction coverage, or the matrix.
+
 ## Slider value callback follow-up
 
 The unchanged ClassicCastBar settings slider installed `OnValueChanged`, but `SetValue(1.35)` previously changed only the simulator slider field: addon database scale, cast-bar scale, and persisted CVar stayed `1`. The defect was simulator-side: the Slider arm stored a changed clamped value then stopped at an explicit dispatch TODO.

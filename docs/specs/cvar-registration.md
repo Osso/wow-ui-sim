@@ -36,8 +36,7 @@ Numeric-default development proof: `/tmp/forever-addon-audit/register-cvar-numer
 ## Known gaps (current cycle)
 
 - [ ] Confirm the numeric-default change against the unchanged Datamine archive; its separate missing `ConsoleGetAllCommands` failure remains open.
-- [ ] Separate Slider `SetValue` → `OnValueChanged` dispatch currently fails the settings workflow; it is outside this CVar producer proof.
-- [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified.
+- [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified; Datamine also still needs its separate console-catalog correction.
 
 ## Out of scope
 
