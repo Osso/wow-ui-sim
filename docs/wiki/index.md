@@ -1,6 +1,6 @@
 ## [2026-09-22] investigation | Model Camelot stable reads
 
-`e6f5e5792` and `a6fbf432e` add Forever-only state-backed `C_StableInfo.GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo` for Camelot StableUI's money-event path. Default two owned empty stable slots and cost `0` are explicit simulator guesses, not native proof; the existing open probe and other profiles remain unchanged. Targeted GREEN, replay, and independent checks remain pending. See [stable read state](../specs/forever-stable-read-state.md) and [[forever-addon-comparison]].
+`e6f5e5792` and `a6fbf432e` add Forever-only state-backed `C_StableInfo.GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo` for Camelot StableUI's money-event path. Default two owned empty stable slots and cost `0` are explicit simulator guesses, not native proof; the existing open probe and other profiles remain unchanged. Independent proof reuses 4/4 tests, passes formatting/default offline checking, and validates the frozen binary, exact 109+28-member archives, fixture, and host-CVar isolation. No-addons `PLAYER_MONEY` and unchanged Aurarium money/overview replay exit 0 with `[]` and `DONE`; Aurarium is now a bounded pass, not native pet or inventory acceptance. See [stable read state](../specs/forever-stable-read-state.md) and [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Restore Slider value callbacks
 

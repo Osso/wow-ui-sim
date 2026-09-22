@@ -10,7 +10,7 @@
 - [x] Returned tables are snapshots: edits do not mutate stored pets. Separate environments have independent slot, cost, and pet state.
 - [x] Inferred count policy includes all stored pets, including current slot 1. Missing/wrong-type required index arguments fail through the existing argument conversion; absent nonpositive/out-of-range slots return nil. Native coercion details remain unproven.
 - [x] Existing `IsAtPetStable` remains tied to `pet_stables_open`.
-- [ ] Non-Forever profiles retain their existing surface (profile-gated source; independent profile verification pending).
+- [x] Non-Forever profiles retain their existing surface through the profile-gated registration; this is source/compile verification, not runtime-profile proof.
 - [x] Actual cached Camelot `PLAYER_MONEY` dispatch completes with zero Lua errors, hides the purchase button in the fully unlocked scenario, and populates all three empty-slot tooltips.
 
 ## How it works
@@ -28,11 +28,12 @@
 ## Tests asserting this spec
 
 - `tests/wowforever_stable_reads.rs` — grouped integration tests for defaults/restoration, configured fields and snapshot isolation, absent slots, derived count/environment isolation/open probe, and actual simulator cached-UI money-event execution.
-- Development proof: 4/4 pass at `a6fbf432e`; two identical Lua regression bodies failed against frozen pre-model `fffb25ae`. Build `gui,client-wowforever` completed with unchanged source hashes and no warnings; provenance and frozen simulator recorded in `/tmp/forever-addon-audit/stable-read-development-ledger.json`. This is targeted development proof, not final acceptance.
+- Development proof: 4/4 pass at `a6fbf432e`; two identical Lua regression bodies failed against frozen pre-model `fffb25ae`. Build `gui,client-wowforever` completed with unchanged source hashes and no warnings; provenance and frozen simulator recorded in `/tmp/forever-addon-audit/stable-read-development-ledger.json`.
+- Independent verification reuses 4/4, passes `cargo fmt --check` and default offline `cargo check`, and audits wiring/readability. Frozen `wow-sim-a6fbf432` passes the no-addons money control and exact Aurarium `8915742` plus ArcaneWizardLibrary `8915500` replay: both exit 0 with `[]`; Aurarium records both money values, overview open/close, and `DONE`. Archive staging, binary, fixture, and host-CVar hashes are verified in `/tmp/forever-addon-audit/verify-stable-read-ledger.json`.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned independent verification and unchanged Aurarium replay.
+- No additional current-cycle stable-read gaps within the bounded read path.
 
 ## Out of scope
 
