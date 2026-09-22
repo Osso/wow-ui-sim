@@ -142,6 +142,12 @@ Unchanged CVarsBackup `8925285` remains a startup failure on frozen `963a3b791`:
 
 The simulator has queue/active-battlefield state but no modeled scoreboard-row producer. That flag cannot establish a score count, so no zero-return shim or active-flag substitution is proposed. This remains an unresolved scoreboard producer gap, not a native contract claim or a matrix change.
 
+## Datamine CVar and console startup follow-up
+
+Datamine `8936714` previously failed at a local alias of missing global `ConsoleGetAllCommands` and at numeric `C_CVar.RegisterCVar("debugTargetInfo", 0)`. `19c11e551` accepts finite numeric registration defaults while retaining first-default/override and invalid-type behavior; `2c78bff73` derives fresh CVar-only command records from supported storage for both global and `C_Console` calls. RED/GREEN proof is numeric 16/18→18/18 and console 0/2→2/2; the independent audit also passes format/default checking and Rust readability: `/tmp/forever-addon-audit/verify-datamine-catalog-ledger.json`.
+
+Frozen `e511053b2` then clean-starts the exact 863-member archive: root `Datamine` fully loads with zero warnings and `[]`, while Data and Maps remain LoadOnDemand; host CVars are unchanged. This reclassifies Datamine startup only. A real `ChatFrame1EditBox:SendText("/dm ui")` attempt reaches its registered slash handler and records open/close/DONE, but the opening path emits observed nil enum input in `EnumUtil` and nil `tagToActor` in `ModelSceneMixin` errors; ScriptErrors duplicates diagnostics. It remains a failed interaction, not a bounded pass. The missing state is pending trace; this does not claim either runtime function is absent. Independent audit authenticates the fixture, frozen binary, 863 staged members and host-CVar preservation: `/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json`. No 3D/model, rendered-pixel, settings, persistence, audio, native-client, or full-catalog claim follows. See [console catalog](../../specs/console-command-catalog.md), [CVar registration](../../specs/cvar-registration.md), and [runtime coverage](../../forever-addon-runtime-coverage.md).
+
 ## Sources
 
 - [Forever comparison audit](../../forever-addon-comparison.md) — catalog provenance, scope, and incomplete comparison matrix
@@ -150,7 +156,8 @@ The simulator has queue/active-battlefield state but no modeled scoreboard-row p
 - [Forever expansion identity](../../specs/forever-expansion-identity.md) — Angleur consumer basis and inferred policy limit
 - [UnitPowerPercent curves](../../specs/unit-power-percent-curves.md) — profile-specific curve input and result contract
 - [UnitHealthPercent curves](../../specs/unit-health-percent-curves.md) — matching Forever health-curve boundary
-- [CVar registration](../../specs/cvar-registration.md) — explicit-empty versus omitted registration boundary
+- [CVar registration](../../specs/cvar-registration.md) — explicit-empty, numeric and omitted registration boundaries
+- [Console command catalog](../../specs/console-command-catalog.md) — modeled CVar-only console records and limits
 - [Slider value callbacks](../../specs/slider-value-callback.md) — changed-value script delivery scope and bounded proof
 - [Cursor transfer spec](../../specs/cursor-item-transfer.md) — cached EasyFishing transfer contract and limits
 - [Forever running report](../../wowforever-1.60.1.md) — profile-wide committed behavior and proof boundaries
@@ -159,6 +166,10 @@ The simulator has queue/active-battlefield state but no modeled scoreboard-row p
 - `/tmp/forever-bag-index-development-ledger.json` — RED/GREEN command and revision evidence
 - `data/forever-addon-audit/deep-dispositions.json` — offline Carbonite, EpicDamageMeter, and parked-runtime dispositions
 - `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json` — frozen CVarsBackup `GetNumBattlefieldScores` failure
+- `/tmp/forever-addon-audit/verify-datamine-catalog-ledger.json` — independent Datamine CVar/catalog proof
+- `/tmp/forever-addon-runtime/datamine-catalog-startup-b4hktcva/ledger.json` — clean exact-archive root startup
+- `/tmp/forever-addon-runtime/datamine-ui-workflow-w3edrpd4/ledger.json` — failed chat-dispatched UI attempt
+- `/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json` — independent failure classification and provenance audit
 - [Forever running report](../../wowforever-1.60.1.md) — current cached-consumer boundaries and final-gate status
 
 ## See Also

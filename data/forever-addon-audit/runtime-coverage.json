@@ -8,16 +8,16 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 222,
+      "clean-startup": 223,
       "blocked-dependency": 3,
       "unloaded": 14,
-      "failed": 29,
+      "failed": 28,
       "blocked-package": 1
     },
     "interactionStatuses": {
       "bounded-pass": 18,
-      "failed": 0,
-      "not-run": 251
+      "failed": 1,
+      "not-run": 250
     }
   },
   "projects": [
@@ -12372,15 +12372,18 @@
       "fileId": 8936714,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "failed",
+        "status": "clean-startup",
         "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/failed-replay-5a1-ledger.json",
-        "binaryBuildRevision": "5a1cc85103da1122364a9aa016cea7c64ace85b1",
-        "binarySha256": "cc434170e513400bba1d6e7f84c9d39e11196be99b9b07921a6eb366a996259d",
+        "evidence": "/tmp/forever-addon-runtime/datamine-catalog-startup-b4hktcva/ledger.json",
+        "binaryBuildRevision": "e511053b21853959aaf80b7d4824e47fab749752",
+        "binarySha256": "d40d5fb21b6701ba7c6b4a820bf5272c833575ef6cc314141e6ca6e11374d25a",
         "packageFileIds": [
           8936714
         ],
-        "configuration": {},
+        "configuration": {
+          "isolatedData": true,
+          "casc": false
+        },
         "observations": [
           {
             "name": "Datamine",
@@ -12404,13 +12407,22 @@
             "reason": ""
           }
         ],
-        "errorRecords": 16,
+        "errorRecords": 0,
+        "addonLoadWarnings": 0,
         "hostCvarsUnchanged": true,
-        "currentFailure": "@Interface/AddOns/Datamine/Libs/LibDevConsole/LibDevConsole-1.0.lua: ...AddOns/Datamine/Libs/LibDevConsole/LibDevConsole-1.0.lua:50: attempt to call local 'GetAllBaseCommands' (a nil value)"
+        "limitations": "Datamine_Data and Datamine_Maps remain LoadOnDemand; this is root startup only."
       },
       "interactions": {
-        "status": "not-run",
-        "covered": []
+        "status": "failed",
+        "covered": [
+          "ChatFrame1EditBox:SendText dispatches /dm ui; Datamine UI opens then closes through its registered slash handler and animation lifecycle"
+        ],
+        "evidence": "/tmp/forever-addon-runtime/datamine-ui-workflow-w3edrpd4/ledger.json",
+        "independentFailureAudit": "/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json",
+        "fixture": "tools/forever-addon-fixtures/datamine-ui-workflow.lua",
+        "binaryBuildRevision": "e511053b21853959aaf80b7d4824e47fab749752",
+        "failure": "Two distinct Lua errors occur while opening: EnumUtil receives a nil enum value from Datamine ItemViewer help text, and ModelSceneMixin:GetActorByTag reads nil tagToActor; Blizzard ScriptErrors duplicates each diagnostic. UI markers open/close/DONE do not establish a passing workflow.",
+        "limitations": "No full Datamine UI, settings, data/maps LoadOnDemand, pixel, 3D/model, persistence, audio, native-client, or command-catalog completeness claim."
       },
       "packageOnlyBaseline": {
         "status": "failed",
