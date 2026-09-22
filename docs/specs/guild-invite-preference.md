@@ -4,11 +4,11 @@ Forever exposes `SetAutoDeclineGuildInvites` in `src/lua_api/globals/real/guild_
 
 ## What it must do
 
-- [ ] Setter stores true/false in existing `SimState.auto_decline_guild_invites` and returns no values; the existing getter immediately observes the change.
-- [ ] Omitted/nil setter arguments default to false. Other nonboolean public values fail without changing state.
-- [ ] Existing VM `AllowedWhenUntainted` checks run before argument default/type conversion. Untainted secret booleans are accepted; tainted secret arguments fail, while public arguments remain usable by tainted callers.
-- [ ] State remains independent of neighborhood invites, location visibility and other environments; setter/getter remain usable after bootstrap restoration.
-- [ ] AccountUI-shaped save/change/load and `hooksecurefunc` observe updated guild preference state.
+- [x] Setter stores true/false in existing `SimState.auto_decline_guild_invites` and returns no values; the existing getter immediately observes the change.
+- [x] Omitted/nil setter arguments default to false. Other nonboolean public values fail without changing state.
+- [x] Existing VM `AllowedWhenUntainted` checks run before argument default/type conversion. Untainted secret booleans are accepted; tainted secret arguments fail, while public arguments remain usable by tainted callers.
+- [x] State remains independent of neighborhood invites, location visibility and other environments; setter/getter remain usable after bootstrap restoration.
+- [x] AccountUI-shaped save/change/load and `hooksecurefunc` observe updated guild preference state.
 
 Cached Forever `PlayerScriptDocumentation.lua` documents `SetAutoDeclineGuildInvites(allow)` with `Type=bool`, `Nilable=false`, `Default=false`, and `SecretArguments=AllowedWhenUntainted`. Nil follows the existing simulator optional-argument convention. The existing stored initial false is preserved, not newly asserted as native behavior. No undocumented event is introduced. Getter registration and non-Forever behavior are unchanged.
 
@@ -29,7 +29,7 @@ Cached Forever `PlayerScriptDocumentation.lua` documents `SetAutoDeclineGuildInv
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted GREEN proof pending; two identical Lua bodies reproduce the absent setter on frozen `6eccec458`.
+Targeted development proof: 5/5 grouped tests pass at `6632d6373`; two identical Lua bodies reproduce the absent setter on frozen `6eccec458`. Commands, unchanged build source hashes, test fingerprint and frozen simulator provenance are recorded in `/tmp/forever-addon-audit/guild-preference-development-ledger.json`.
 - [ ] Parent-owned independent verification and unchanged AccountUI full workflow replay remain required. This producer does not establish addon compatibility.
 
 ## Out of scope
