@@ -1,0 +1,3321 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-22T00:45:02.871989+00:00",
+  "scope": "All269 cachedprojects; selectedForeverrelease only, no silent substitution of comparisonversions. Startup and boundedinteraction evidence are separate; no inventorywidecompatibility claim.",
+  "archiveInventory": "data/forever-addon-audit/cached-comparisons.json",
+  "archiveHashProof": "/tmp/forever-addon-audit/selected-archive-hash-proof.json",
+  "summary": {
+    "projects": 269,
+    "availableForeverArchives": 268,
+    "startupStatuses": {
+      "not-run": 267,
+      "blocked-package": 1,
+      "bounded-pass": 1
+    },
+    "interactionStatuses": {
+      "not-run": 268,
+      "bounded-pass": 1
+    }
+  },
+  "projects": [
+    {
+      "slug": "abattis-pugboard",
+      "fileId": 8933365,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "abgesattelt",
+      "fileId": 8931441,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "accentchat",
+      "fileId": 8935580,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "account-wide-ui",
+      "fileId": 8935141,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "accountant-classic",
+      "fileId": 8919183,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "acecommqueue",
+      "fileId": 8932577,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "achievement-guild-rank",
+      "fileId": 7070807,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "achievementsutils",
+      "fileId": 8933894,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ackis-recipe-list-classic",
+      "fileId": 8929677,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ackis-recipe-list-classic-cooking",
+      "fileId": 8930590,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ackis-recipe-list-classic-leatherworking",
+      "fileId": 8921839,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ackis-recipe-list-classic-tailoring",
+      "fileId": 8929694,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "actionbarauras",
+      "fileId": 8920553,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "actionbarinterrupthighlight",
+      "fileId": 8920442,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "actionhud",
+      "fileId": 8915273,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "addonprofiles",
+      "fileId": 8920031,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "adhd-quest",
+      "fileId": 8930420,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "adibags-fishing",
+      "fileId": 8921014,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "adventurers-codex",
+      "fileId": 8924936,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemote-drwho-sounds",
+      "fileId": 8908783,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemote-sound-pack-from-holyfrey",
+      "fileId": 8908795,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-classic",
+      "fileId": 8908767,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-full-metal-jacket-sound-pack-from-holyfrey",
+      "fileId": 8908790,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-laugh-sounds-pack-from-holyfrey",
+      "fileId": 8908830,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-leeroy-sound-pack-from-holyfrey",
+      "fileId": 8908838,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-lynge-sound-pack-from-holyfrey",
+      "fileId": 8908855,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-millhouse-manastorm-sound-pack",
+      "fileId": 8908871,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aemotes-wonderwoman-sound-pack-from-holyfrey",
+      "fileId": 8908915,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ahledger",
+      "fileId": 8916418,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "alenyas-guides",
+      "fileId": 8909267,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "alenyas-guides-writer",
+      "fileId": 8909275,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "alias",
+      "fileId": 8260596,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "alias-rename-anyone",
+      "fileId": 8924697,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "all-the-things",
+      "fileId": 8934207,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "altitude",
+      "fileId": 8912448,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ambidextrous-by-overcraft",
+      "fileId": 8908131,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ame-infohub",
+      "fileId": 8934065,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "anglers-pocket",
+      "fileId": 8918953,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "angleur",
+      "fileId": 8932166,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "angleur-nicheoptions",
+      "fileId": 8931516,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "animated-blizzard-portraits",
+      "fileId": 8906484,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "antisocial",
+      "fileId": 8921031,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "appelswingsforever",
+      "fileId": 8925606,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "arc-track",
+      "fileId": 8917384,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "arcane-wizard-library",
+      "fileId": 8915500,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "archindulas-jump-habit",
+      "fileId": 8934390,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "arena-ranked-duels",
+      "fileId": 8909303,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "armoryutils",
+      "fileId": 8921901,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "atlasloot-classic-forever",
+      "fileId": 8923279,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "atlasloot-continued",
+      "fileId": 8935273,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "atlasloot-forever",
+      "fileId": 8932404,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "atlaslootforever",
+      "fileId": 8931207,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auctionator",
+      "fileId": 8925257,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auctionhouseconfirmquantity",
+      "fileId": 8921105,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aurarium",
+      "fileId": 8915742,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "aurashelf",
+      "fileId": 8925235,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auto-forever",
+      "fileId": 8918490,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auto-grats",
+      "fileId": 8919535,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auto-queue",
+      "fileId": 8921907,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auto-restock",
+      "fileId": 8929529,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "auto-trackers",
+      "fileId": 8924087,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "autofeed",
+      "fileId": 8925804,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "autoloot-by-overcraft",
+      "fileId": 8908120,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "autolooter-continued",
+      "fileId": 8922028,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "automated-consumables",
+      "fileId": 8915420,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "autometerreset",
+      "fileId": 7548631,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "autostow",
+      "fileId": 8915731,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "avoidancestats-tbc",
+      "fileId": 8915696,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "azeriteui-junnez-edition-wow12",
+      "fileId": 8928231,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "azeroth-idle-forever",
+      "fileId": 8929297,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "azeroth-pilot-reloaded-route-recorder",
+      "fileId": 8921061,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "azeroth-public-library-forever",
+      "fileId": 8914938,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "baganator",
+      "fileId": 8924604,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_blocked_dependency",
+        "proofRevision": "d40397025",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/baganator/startup-ledger.json"
+        ],
+        "result": "BLOCKED/FAIL startup exit 1 with Syndicator disabled/missing; simulator API defect not established",
+        "limits": "No Baganator runtime interaction proof; repository Syndicator fixture is partial and not a substitute dependency"
+      }
+    },
+    {
+      "slug": "bagbrother",
+      "fileId": 8912908,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagmeter",
+      "fileId": 8917130,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagnon",
+      "fileId": 8912897,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagnon-consolidator",
+      "fileId": 8917178,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagnonium",
+      "fileId": 8912916,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagpurge",
+      "fileId": 8936410,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bagsync",
+      "fileId": 8925194,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bam-forever",
+      "fileId": 8929092,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bank-stack",
+      "fileId": 8934759,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bar-energy",
+      "fileId": 8914905,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "barbershop-custom-textures",
+      "fileId": 8913872,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "barshelf",
+      "fileId": 8935519,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bazui",
+      "fileId": 8936363,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "beastandbow",
+      "fileId": 8933666,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "belphies-quest-log",
+      "fileId": 8936650,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "best-around-revisited",
+      "fileId": 8917798,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-ability-bars",
+      "fileId": 8926866,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-bags",
+      "fileId": 8932961,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-blizzard-meters",
+      "fileId": 8916721,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-cast-bars",
+      "fileId": 8927798,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-forever-chat",
+      "fileId": 8933302,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-item-levels",
+      "fileId": 8926597,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-music-player",
+      "fileId": 8906512,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-name-plates-betternameplates",
+      "fileId": 8914658,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-notepad",
+      "fileId": 8906523,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "better-queue-timers",
+      "fileId": 8906504,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterauctionprice",
+      "fileId": 7940153,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-aio-all-in-one",
+      "fileId": 8923225,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-camping-fixtures",
+      "fileId": 8921065,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-fishing",
+      "fileId": 8921039,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-forever",
+      "fileId": 8933211,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-ilvl",
+      "fileId": 8922949,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-legendary",
+      "fileId": 8916076,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-quick-add",
+      "fileId": 8912976,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-scrap",
+      "fileId": 8922319,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-tabards",
+      "fileId": 8916075,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterbags-vertical-layout",
+      "fileId": 8917520,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterblizzaddons",
+      "fileId": 8925778,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterblizzframes",
+      "fileId": 8925566,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterblizzplates",
+      "fileId": 8925620,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterdamagemeter",
+      "fileId": 8935358,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterdamagereader",
+      "fileId": 7548712,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterdungeonqueue",
+      "fileId": 7548719,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "betterfriendlist",
+      "fileId": 8913175,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bettermerchant",
+      "fileId": 8919827,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bettershields",
+      "fileId": 7548592,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bettervaultrewards",
+      "fileId": 7912476,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bigwigs",
+      "fileId": 8931513,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bis-healing",
+      "fileId": 8936469,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bis-memories",
+      "fileId": 8936444,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bleakfibers-quest-tracker-forever",
+      "fileId": 8914278,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "blib",
+      "fileId": 8931256,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "blizzhudtweaks",
+      "fileId": 8922457,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "blizzmove",
+      "fileId": 8934501,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "blizzmove-forever",
+      "fileId": 8917371,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "blizzmove-plugin-questtracker",
+      "fileId": 8921107,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "boss-jukebox",
+      "fileId": 8550603,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bottombar-forever",
+      "fileId": 8925755,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "broker-portals",
+      "fileId": 8931698,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "brokerpanels",
+      "fileId": 8932388,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bshamel-ui",
+      "fileId": 8933399,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "buffalo-classic",
+      "fileId": 8934103,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "buffwarden",
+      "fileId": 8925806,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bug-grabber",
+      "fileId": 8907587,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bugjar-lua-error-browser",
+      "fileId": 8923840,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bugsack",
+      "fileId": 8921013,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "bugtabs-all-in-one-lua-error-capture-viewer",
+      "fileId": 8915408,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "buh-emotes",
+      "fileId": 8929003,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "c-everywhere",
+      "fileId": 8912546,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "calendar-login-info",
+      "fileId": 7070820,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "camp-tracker",
+      "fileId": 8925997,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "campfire-guildies-nearby",
+      "fileId": 8925809,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "can-opener",
+      "fileId": 8934653,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "carbonite",
+      "fileId": 8926975,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_partial_failure",
+        "proofRevision": "7eb0f4e55f59cc3dd17335c10a749cb6f560cef6",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/carbonite/startup-final-ledger.json",
+          "/tmp/forever-addon-runtime/carbonite/map-diagnostic.stdout",
+          "/tmp/forever-addon-audit/carbonite-map-boundary.json"
+        ],
+        "result": "FAIL startup final exit 1; corrected Camelot TOC selection loads providers/dependents, then map UI 2521 reaches missing map-art data",
+        "limits": "native 69913 map-art return unobserved; no fabricated asset/data; not compatible claim"
+      }
+    },
+    {
+      "slug": "care-about-your-eyes",
+      "fileId": 7070824,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "carrot-objective-tracker",
+      "fileId": 8935512,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ccam",
+      "fileId": 8912523,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "centered",
+      "fileId": 8921974,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chairfaces-casino",
+      "fileId": 8454827,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "character-gear-optimizer",
+      "fileId": 8935584,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "charactervolume",
+      "fileId": 8932173,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chat-character-map",
+      "fileId": 8919025,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chat-copy-paste",
+      "fileId": 8912928,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chat-filter-forever",
+      "fileId": 8916339,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chat-invite-links",
+      "fileId": 8901407,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chatbarblocks",
+      "fileId": 8918032,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chatify-chat-enhancer",
+      "fileId": 8935336,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chatinputtop",
+      "fileId": 8925286,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chattery",
+      "fileId": 8936713,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chatty-little-npc",
+      "fileId": 8928592,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chattynator",
+      "fileId": 8913945,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chattynator-undo-redo",
+      "fileId": 8914716,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "chatutils",
+      "fileId": 8921986,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "checkmark",
+      "fileId": 8918513,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classcolorednameplates",
+      "fileId": 8935047,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-cast-bar-forever",
+      "fileId": 8909724,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-frames",
+      "fileId": 8932974,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-frames-forever",
+      "fileId": 8919794,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-ui-for-forever",
+      "fileId": 8936344,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-ui-forever",
+      "fileId": 8912635,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classic-ui-forever-reframed",
+      "fileId": 8920825,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classicon",
+      "fileId": 8918792,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classicportrait",
+      "fileId": 8919172,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classicui-forever",
+      "fileId": 8936763,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "classymap",
+      "fileId": 8915191,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cleanchat-sentinel",
+      "fileId": 8906815,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cleanupbars",
+      "fileId": 7561907,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "coloured-enemy-nameplates",
+      "fileId": 8928721,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "combo-point-mover",
+      "fileId": 8935267,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "combo-points-forever",
+      "fileId": 8922909,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "combo-points-on-plate",
+      "fileId": 8924120,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "come-get-it",
+      "fileId": 8909811,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "commodum",
+      "fileId": 8926315,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "companion-chronicle",
+      "fileId": 8932535,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "conceal",
+      "fileId": 8921353,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "conjure-bot",
+      "fileId": 8922265,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "consumable-tracker",
+      "fileId": 8924598,
+      "archiveStatus": "download-error",
+      "startup": {
+        "status": "blocked-package",
+        "reason": "Selected Forever archive is absent; older comparison archive is not substituted."
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cooldown-cursor-manager-ui-forever-edition",
+      "fileId": 8934911,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cooldown-master",
+      "fileId": 8936656,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_only",
+        "proofRevision": "d40397025",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/cooldown-master/startup-ledger.json"
+        ],
+        "result": "PASS startup lua-errors exit 0",
+        "limits": "No cooldown interaction proof; startup only"
+      }
+    },
+    {
+      "slug": "cooldownmanagerbuffonly",
+      "fileId": 7070830,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "coolinator",
+      "fileId": 8914623,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "crafting-and-gathering-order-classic",
+      "fileId": 8934713,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "craftpresence",
+      "fileId": 8918326,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "crimson-coin",
+      "fileId": 8917335,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "crit-sounds",
+      "fileId": 8913001,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cursor-glow-rgb",
+      "fileId": 8910482,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cursor-world-tooltip",
+      "fileId": 8929036,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cursorcooldown-reloaded",
+      "fileId": 8922770,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cursorglow",
+      "fileId": 8908606,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cursorring",
+      "fileId": 8917790,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "custom-info-panel",
+      "fileId": 8920627,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "custom-minimap-arrow",
+      "fileId": 8909385,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "custom-xp-bar",
+      "fileId": 8928364,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "customsearch",
+      "fileId": 8912549,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "customtutorials",
+      "fileId": 8912550,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cvars",
+      "fileId": 8921996,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "cvarsbackup",
+      "fileId": 8925285,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "damage-meter-blizards-skins",
+      "fileId": 8911617,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "damagepreview-forever",
+      "fileId": 8928753,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dangerquestalert",
+      "fileId": 7070925,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "darkfoxx-multitool",
+      "fileId": 8912127,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "darkmode",
+      "fileId": 8921962,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "datamine",
+      "fileId": 8936714,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dbm-vanilla",
+      "fileId": 8934485,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dbm-voicepack-vv",
+      "fileId": 8916174,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods",
+      "fileId": 8925922,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-dungeons",
+      "fileId": 8934525,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-event-sound-pack",
+      "fileId": 8925921,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-heroes-of-the-storm-hots",
+      "fileId": 8925916,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-overwatch-countdown-pack",
+      "fileId": 8925912,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deadly-boss-mods-dbm-smoothmcgroove-event-pack",
+      "fileId": 8925918,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "degreen-world-map-forever",
+      "fileId": 8916658,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dejachat",
+      "fileId": 7611973,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dejamicrofader",
+      "fileId": 7287718,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dejaminimap",
+      "fileId": 7461286,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dejaquestfader",
+      "fileId": 7287776,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "deltasync",
+      "fileId": 8934341,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "denizens",
+      "fileId": 8909836,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "desync",
+      "fileId": 8914551,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dgks",
+      "fileId": 8929612,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dialogkey-numy-edition",
+      "fileId": 8921110,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dialogueui",
+      "fileId": 8865218,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dino-nameplates-forever",
+      "fileId": 8933289,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dino-unit-frames",
+      "fileId": 8936218,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "disenchant-helper",
+      "fileId": 8639907,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dragmods",
+      "fileId": 8909277,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dragonguildmaster",
+      "fileId": 8933347,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_only",
+        "proofRevision": "d40397025",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/dragonguildmaster/startup-ledger.json"
+        ],
+        "result": "PASS startup lua-errors exit 0",
+        "limits": "No guild/chat interaction proof; startup only"
+      }
+    },
+    {
+      "slug": "dragonskill",
+      "fileId": 8921033,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "draidframes",
+      "fileId": 8922652,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "drinkbot",
+      "fileId": 8934774,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dropthecheapestthing",
+      "fileId": 8934084,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dunitframes",
+      "fileId": 8922640,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "dynamic-display-nameplate",
+      "fileId": 8915282,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "easy-fishing",
+      "fileId": 8935539,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "easyfind",
+      "fileId": 8915336,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "easyguildinvite",
+      "fileId": 8925910,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "edit-mode-expanded",
+      "fileId": 8934121,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "ellesmereui",
+      "fileId": 8936131,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "bounded-pass",
+        "revision": "dff698c4b",
+        "evidence": "/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json"
+      },
+      "interactions": {
+        "status": "bounded-pass",
+        "covered": [
+          "chat timestamp rebuild",
+          "options/navigation/unlock",
+          "player health/power/cast/channel/empower",
+          "action icon/cooldown/reset",
+          "target show/health/hide",
+          "helpful aura paint/removal/cleanup"
+        ],
+        "limitations": "Not every module workflow/configuration or native secrecy conformance.",
+        "evidence": "/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json"
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_and_interaction",
+        "proofRevision": "dff698c4b / production 1e1dfe7c0 / tests 9c223f8b7",
+        "proofPaths": [
+          "/tmp/ellesmere-forever/visibility-gui-acceptance-ledger.json",
+          "/tmp/ellesmere-forever/final-visibility-verifier-ledger.json",
+          "docs/ellesmereui-forever.md"
+        ],
+        "result": "PASS bounded six-group acceptance; 5 fixtures plus aura paint/remove/cleanup; zero Lua errors in 90-second run",
+        "limits": "17 eligible folders loaded; not every module/configuration; secret policy is explicitly guessed; no full addon/native conformance claim"
+      }
+    },
+    {
+      "slug": "emberstone",
+      "fileId": 8935768,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "emberwell-forever",
+      "fileId": 8929589,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "energy-rage-ticks-forever",
+      "fileId": 8909689,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "energywatch-forever",
+      "fileId": 8914548,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "english-item-names",
+      "fileId": 8805988,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "epic-damage-meter",
+      "fileId": 8930362,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      },
+      "priorEvidence": {
+        "class": "runtime_startup_and_interaction",
+        "proofRevision": "7eb0f4e55",
+        "proofPaths": [
+          "/tmp/forever-addon-runtime/epic-damage-meter/startup-final-ledger.json",
+          "/tmp/forever-addon-runtime/epic-damage-meter/consumer-final-ledger.json"
+        ],
+        "result": "PASS startup exit 0; modern meter path completed 60 updates on one instance with two named rows",
+        "limits": "seeded consumer path only; no live combat/secrets/native conformance"
+      }
+    },
+    {
+      "slug": "eq-objective-tracker",
+      "fileId": 8928222,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "eqol",
+      "fileId": 8934436,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "equip-recommended-gear",
+      "fileId": 8923065,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "everything-quests",
+      "fileId": 8917659,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "expansionutils",
+      "fileId": 8922465,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "expositum",
+      "fileId": 8915739,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "extremely-simple-healing-addon",
+      "fileId": 8927900,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "fafo-fishing",
+      "fileId": 8924467,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "farmboard-forever",
+      "fileId": 8918366,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "numy-addon-profiler",
+      "fileId": 8925732,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "quest-tldr",
+      "fileId": 8930646,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    },
+    {
+      "slug": "transpose",
+      "fileId": 8910175,
+      "archiveStatus": "downloaded",
+      "startup": {
+        "status": "not-run"
+      },
+      "interactions": {
+        "status": "not-run",
+        "covered": []
+      }
+    }
+  ]
+}
