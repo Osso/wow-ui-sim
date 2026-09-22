@@ -29,45 +29,49 @@ pub(crate) fn register_c_ui_file_asset(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn c_ui_file_asset_get_file_id(state: &mut LuaState) -> LuaResult<u32> {
-    match classify_asset(state) {
-        Asset::FileId(file_id) => state.push(Val::Num(file_id as f64)),
-        Asset::Loose | Asset::Missing => state.push(Val::Nil),
+    match file_id_from_asset_arg(state) {
+        Some(file_id) => state.push(Val::Num(file_id as f64)),
+        None => state.push(Val::Nil),
     }
     Ok(1)
 }
 
 fn c_ui_file_asset_is_known_file(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(!matches!(classify_asset(state), Asset::Missing)));
+    state.push(Val::Bool(!matches!(query_asset(state), Asset::Missing)));
     Ok(1)
 }
 
 fn c_ui_file_asset_is_loose_file(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(matches!(classify_asset(state), Asset::Loose)));
+    state.push(Val::Bool(matches!(query_asset(state), Asset::Loose)));
     Ok(1)
 }
 
-#[derive(Clone, Copy)]
 enum Asset {
     FileId(u32),
     Loose,
     Missing,
 }
 
-fn classify_asset(state: &LuaState) -> Asset {
-    if let Some(file_id) = numeric_file_id_arg(state) {
+fn query_asset(state: &LuaState) -> Asset {
+    if let Some(file_id) = file_id_from_asset_arg(state) {
         return Asset::FileId(file_id);
     }
     let Some(path) = val_to_string(state, stack_val(state, 1)) else {
         return Asset::Missing;
     };
-    if let Some(file_id) = crate::limited_listfile::lookup_path(&path) {
-        return Asset::FileId(file_id);
-    }
-    if is_selected_addon_file(state, &path) {
+    if query_selected_addon_file(state, &path) {
         Asset::Loose
     } else {
         Asset::Missing
     }
+}
+
+fn file_id_from_asset_arg(state: &LuaState) -> Option<u32> {
+    if let Some(file_id) = numeric_file_id_arg(state) {
+        return Some(file_id);
+    }
+    let path = val_to_string(state, stack_val(state, 1))?;
+    crate::limited_listfile::lookup_path(&path)
 }
 
 fn numeric_file_id_arg(state: &LuaState) -> Option<u32> {
@@ -75,18 +79,11 @@ fn numeric_file_id_arg(state: &LuaState) -> Option<u32> {
     (file_id > 0).then_some(file_id)
 }
 
-fn is_selected_addon_file(state: &LuaState, path: &str) -> bool {
+fn query_selected_addon_file(state: &LuaState, path: &str) -> bool {
     let normalized = path.replace('\\', "/");
-    let parts: Vec<_> = normalized.split('/').collect();
-    if parts.len() < 4
-        || !parts[0].eq_ignore_ascii_case("Interface")
-        || !parts[1].eq_ignore_ascii_case("AddOns")
-        || parts
-            .iter()
-            .any(|part| part.is_empty() || *part == "." || *part == ".." || part.contains(':'))
-    {
+    let Some(parts) = valid_addon_parts(&normalized) else {
         return false;
-    }
+    };
     let root = {
         let Ok(sim) = borrow_state(state) else {
             return false;
@@ -102,18 +99,32 @@ fn is_selected_addon_file(state: &LuaState, path: &str) -> bool {
     let Ok(canonical_root) = root.canonicalize() else {
         return false;
     };
-    let relative = &parts[3..];
+    texture_candidates(&parts[3..])
+        .iter()
+        .any(|candidate| read_selected_addon_file(&root, &canonical_root, candidate))
+}
+
+fn valid_addon_parts(path: &str) -> Option<Vec<&str>> {
+    let parts: Vec<_> = path.split('/').collect();
+    let valid_prefix = parts.len() >= 4
+        && parts[0].eq_ignore_ascii_case("Interface")
+        && parts[1].eq_ignore_ascii_case("AddOns");
+    let valid_components = parts
+        .iter()
+        .all(|part| !part.is_empty() && *part != "." && *part != ".." && !part.contains(':'));
+    (valid_prefix && valid_components).then_some(parts)
+}
+
+fn texture_candidates(relative: &[&str]) -> Vec<String> {
     let base = relative.join("/");
     let mut candidates = vec![base.clone()];
     if !relative.last().is_some_and(|name| name.contains('.')) {
         candidates.extend(["blp", "tga", "png"].map(|ext| format!("{base}.{ext}")));
     }
     candidates
-        .iter()
-        .any(|candidate| selected_file_exists(&root, &canonical_root, candidate))
 }
 
-fn selected_file_exists(root: &Path, canonical_root: &Path, candidate: &str) -> bool {
+fn read_selected_addon_file(root: &Path, canonical_root: &Path, candidate: &str) -> bool {
     let mut file = PathBuf::from(root);
     for part in candidate.split('/') {
         let Ok(entries) = std::fs::read_dir(&file) else {
