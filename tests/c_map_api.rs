@@ -61,18 +61,35 @@ fn test_get_map_info_has_shadowlands_compat_maps() {
 }
 
 #[test]
-fn test_get_map_info_returns_generic_details_for_unseeded_retail_maps() {
+fn test_get_map_info_answers_unseeded_retail_maps_from_the_ui_map_table() {
     let env = env();
-    let (map_id, name, parent_id): (i32, String, i32) = env
+    let (map_id, name, parent_id, map_type): (i32, String, i32, i32) = env
         .eval(
             r#"
             local info = C_Map.GetMapInfo(630)
-            return info.mapID, info.name, info.parentMapID
+            return info.mapID, info.name, info.parentMapID, info.mapType
             "#,
         )
         .unwrap();
     assert_eq!(map_id, 630);
-    assert_eq!(name, "Map 630");
+    assert_eq!(name, "Azsuna", "UiMap.db2 row, not a placeholder");
+    assert_eq!(parent_id, 619, "Broken Isles");
+    assert_eq!(map_type, 3, "Zone");
+}
+
+#[test]
+fn test_get_map_info_returns_generic_details_for_maps_the_table_lacks() {
+    let env = env();
+    let (map_id, name, parent_id): (i32, String, i32) = env
+        .eval(
+            r#"
+            local info = C_Map.GetMapInfo(9999)
+            return info.mapID, info.name, info.parentMapID
+            "#,
+        )
+        .unwrap();
+    assert_eq!(map_id, 9999);
+    assert_eq!(name, "Map 9999");
     assert_eq!(parent_id, 0);
 }
 

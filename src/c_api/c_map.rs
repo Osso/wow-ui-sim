@@ -183,10 +183,13 @@ fn c_map_get_map_info(state: &mut LuaState) -> LuaResult<u32> {
     let map = borrow_state(state)?.maps.get(&ui_map_id).cloned();
     let details = match map {
         Some(map) => push_map_details_table(state, &map),
-        None if should_return_generic_map_info(ui_map_id) => {
-            push_generic_map_details_table(state, ui_map_id)
-        }
-        None => return Ok(0),
+        None => match ui_map_table_entry(ui_map_id) {
+            Some(info) => push_ui_map_table_details(state, ui_map_id, info),
+            None if should_return_generic_map_info(ui_map_id) => {
+                push_generic_map_details_table(state, ui_map_id)
+            }
+            None => return Ok(0),
+        },
     };
     state.push(details);
     Ok(1)
@@ -300,6 +303,30 @@ fn push_map_details_table(state: &mut LuaState, map: &MapData) -> Val {
     table_set_static(state, t, "mapType", Val::Num(map.map_type as f64));
     table_set_static(state, t, "parentMapID", Val::Num(map.parent_map_id as f64));
     table_set_static(state, t, "flags", Val::Num(map.flags as f64));
+    t
+}
+
+/// The client's UiMap row for a map the hand seeds do not carry. Seeded maps
+/// win because they also carry rects and children; this table only knows
+/// name, type, parent and flags, which is what `GetMapInfo` reports.
+fn ui_map_table_entry(ui_map_id: i32) -> Option<&'static crate::ui_maps::UiMapInfo> {
+    u32::try_from(ui_map_id)
+        .ok()
+        .and_then(crate::ui_maps::get_ui_map)
+}
+
+fn push_ui_map_table_details(
+    state: &mut LuaState,
+    ui_map_id: i32,
+    info: &crate::ui_maps::UiMapInfo,
+) -> Val {
+    let t = create_table_with_capacity(state, MAP_DETAILS_HASH_FIELDS);
+    let name = create_string(state, info.name);
+    table_set_static(state, t, "mapID", Val::Num(ui_map_id as f64));
+    table_set_static(state, t, "name", name);
+    table_set_static(state, t, "mapType", Val::Num(info.map_type as f64));
+    table_set_static(state, t, "parentMapID", Val::Num(info.parent_map_id as f64));
+    table_set_static(state, t, "flags", Val::Num(info.flags as f64));
     t
 }
 
