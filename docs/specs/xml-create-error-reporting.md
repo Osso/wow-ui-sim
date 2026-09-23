@@ -4,8 +4,8 @@ XML frame creation reports failed nested-template initialization through the add
 
 ## What it must do
 
-- [ ] A failed nested template creation is reported in addon load warnings with its original error, even when the partially created frame has parentKey and parentArray links.
-- [ ] A partially created frame does not turn an unsuccessful XML load into healthy loading.
+- [x] A failed nested template creation is reported in addon load warnings with its original error, even when the partially created frame has parentKey and parentArray links.
+- [x] A partially created frame does not turn an unsuccessful XML load into healthy loading.
 
 ## How it works
 
