@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Accept required boolean `true` and `false` on XML-created MovieFrames, returning no Lua values.
-- [ ] Keep the value independently for each MovieFrame without changing visibility or starting playback.
-- [ ] Reject missing, nil, or non-boolean arguments through typed Lua conversion; reject calls on ordinary frames without changing their state.
-- [ ] Initialize each preference to `false` as explicit simulator policy, not native-verified behavior.
+- [x] Accept required boolean `true` and `false` on XML-created MovieFrames, returning no Lua values.
+- [x] Keep the value independently for each MovieFrame without changing visibility.
+- [x] Reject missing, nil, or non-boolean arguments through strict type validation; reject calls on ordinary frames without changing their state.
+- [x] Initialize each preference to `false` as explicit simulator policy, not native-verified behavior.
 
 ## How it works
 
