@@ -205,3 +205,56 @@ fn inherited_texture_instance_key_values_reach_parent_onload() {
     )
     .unwrap();
 }
+
+#[test]
+fn texture_template_info_sizes_datamine_map_canvas() {
+    let root = tempfile::tempdir().unwrap();
+    let toc = write_addon(
+        root.path(),
+        "DatamineMapInfo",
+        r#"
+        MapCanvasMixin = {}
+        function MapCanvasMixin:OnLoad()
+            local info = C_XMLUtil.GetTemplateInfo('MapTileTemplate')
+            self:SetSize(info.width * 64, info.height * 64)
+            self.Initialized = true
+        end
+        "#,
+        r#"<Ui>
+            <Texture name="BaseMapTileTemplate" virtual="true">
+                <Size x="32" y="64"/>
+                <KeyValues><KeyValue key="TileRole" value="terrain"/></KeyValues>
+            </Texture>
+            <Texture name="MapTileTemplate" inherits="BaseMapTileTemplate" virtual="true">
+                <Size x="64" y="64"/>
+                <KeyValues><KeyValue key="TileIndex" value="0" type="number"/></KeyValues>
+            </Texture>
+            <Frame name="OrdinaryFrameTemplate" virtual="true"><Size x="90" y="45"/></Frame>
+            <Frame name="MapCanvasProbe" mixin="MapCanvasMixin" parent="UIParent">
+                <Scripts><OnLoad method="OnLoad"/></Scripts>
+            </Frame>
+        </Ui>"#,
+    );
+    let env = WowLuaEnv::new().unwrap();
+    let loaded = load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.exec(
+        r#"
+        local info = C_XMLUtil.GetTemplateInfo('MapTileTemplate')
+        assert(info and info.type == 'Texture')
+        assert(info.width == 64 and info.height == 64)
+        local values = {}
+        for _, entry in ipairs(info.keyValues) do values[entry.key] = entry end
+        assert(values.TileRole.value == 'terrain')
+        assert(values.TileIndex.value == '0' and values.TileIndex.type == 'number')
+        assert(MapCanvasProbe.Initialized)
+        assert(MapCanvasProbe:GetWidth() == 4096 and MapCanvasProbe:GetHeight() == 4096)
+        info.width = 1
+        assert(C_XMLUtil.GetTemplateInfo('MapTileTemplate').width == 64)
+        local ordinary = C_XMLUtil.GetTemplateInfo('OrdinaryFrameTemplate')
+        assert(ordinary.type == 'Frame' and ordinary.width == 90 and ordinary.height == 45)
+        assert(C_XMLUtil.GetTemplateInfo('NeverRegisteredTemplate') == nil)
+        "#,
+    )
+    .unwrap();
+}

@@ -132,7 +132,7 @@ pub struct TemplateInfo {
 pub fn get_template_info(name: &str) -> Option<TemplateInfo> {
     let chain = get_template_chain(name);
     if chain.is_empty() {
-        return None;
+        return get_texture_template_info(name);
     }
     let frame_type = resolve_frame_type(&chain);
     let (width, height) = resolve_chain_size(&chain);
@@ -466,6 +466,29 @@ pub fn register_texture_template(name: &str, texture: TextureXml) {
     with_texture_template_registry_mut(|registry| {
         registry.insert(name.to_string(), texture);
     });
+}
+
+fn get_texture_template_info(name: &str) -> Option<TemplateInfo> {
+    let template = with_texture_template_registry(|registry| registry.get(name).cloned())?;
+    let texture = resolve_texture_inheritance(&template);
+    let size = texture.size.as_ref();
+    let key_values = texture
+        .key_values
+        .iter()
+        .flat_map(|values| &values.values)
+        .map(|value| TemplateKeyValueInfo {
+            key: value.key.clone(),
+            value: value.value.clone(),
+            value_type: value.value_type.clone(),
+        })
+        .collect();
+    Some(TemplateInfo {
+        frame_type: "Texture".to_string(),
+        template_name: name.to_string(),
+        width: size.and_then(|size| size.x).unwrap_or(0.0),
+        height: size.and_then(|size| size.y).unwrap_or(0.0),
+        key_values,
+    })
 }
 
 /// Get size from a texture template by name. Returns (width, height) if found.
