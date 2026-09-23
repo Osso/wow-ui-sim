@@ -384,6 +384,9 @@ fn collect_required_spell_ids() -> Result<BTreeSet<u32>, Box<dyn std::error::Err
     all.extend(&spellbook_ids);
     all.extend(&baseline_ids);
     all.extend(&addon_compat_ids);
+    // Everything that teleports: the use spells of toys and teleport items,
+    // and the teleport spells on class skill lines.
+    all.extend(super::gen_teleport_selection::collect(&wow_data_dir()).spells);
     println!("Required spell IDs (deduplicated): {}", all.len());
     Ok(all)
 }
@@ -403,6 +406,11 @@ const ADDON_COMPAT_SPELL_IDS: &[u32] = &[
     132404, // Cell/Defaults/ClickCasting_DefaultSpells.lua
     61999, 20484, 50769, 212040, 361227, 361178, 115178, 212051, 391054, 7328, 212056, 2006,
     212036, 2008, 212048, 20707,
+    // QuickRoute/Data/TeleportItems.lua: teleports the effect rule cannot
+    // see -- a housing teleport off any class line, summons and scripted
+    // returns (Cantrips, Mole Machine, Return to Camp) and the Death Gate,
+    // which opens a portal object rather than teleporting the caster.
+    1233637, 255661, 265225, 312372, 50977,
 ];
 
 fn collect_ids_from_file(
