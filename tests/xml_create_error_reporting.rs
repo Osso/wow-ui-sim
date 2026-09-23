@@ -58,4 +58,8 @@ fn partially_created_parent_key_and_array_child_reports_original_nested_failure(
         "nested creation failed, but addon reported healthy loading: {:?}",
         loaded.warnings
     );
+    let state = env.state();
+    let state = state.borrow();
+    assert_eq!(state.lua_errors.len(), 1, "{:?}", state.lua_errors);
+    assert!(state.lua_errors[0].contains("Missing FileName or FilePath"));
 }

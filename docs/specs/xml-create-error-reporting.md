@@ -6,6 +6,7 @@ XML frame creation reports failed nested-template initialization through the add
 
 - [x] A failed nested template creation is reported in addon load warnings with its original error, even when the partially created frame has parentKey and parentArray links.
 - [x] A partially created frame does not turn an unsuccessful XML load into healthy loading.
+- [ ] Nested XML creation Lua failures enter the canonical Lua error collector once as well as addon warnings, so `lua-errors` cannot report clean solely because the exception escaped a Rust creation path. Non-Lua warning categories are unchanged.
 
 ## How it works
 
@@ -19,7 +20,7 @@ XML frame creation reports failed nested-template initialization through the add
 
 ## Tests asserting this spec
 
-- `tests/xml_create_error_reporting.rs`: loads a real temporary addon whose nested template OnLoad fails under parentKey and parentArray; inspects public load diagnostics.
+- `tests/xml_create_error_reporting.rs`: loads a real temporary addon whose nested template OnLoad fails under parentKey and parentArray; inspects load warnings and requires exactly one matching canonical Lua error.
 
 ## Known gaps (current cycle)
 

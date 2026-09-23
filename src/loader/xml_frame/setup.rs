@@ -39,7 +39,14 @@ pub(super) fn setup_frame(
 ) -> Result<(), LoadError> {
     let setup_start = Instant::now();
     let exec_start = Instant::now();
-    exec_create_frame_code(env, &setup)?;
+    if let Err(error) = exec_create_frame_code(env, &setup) {
+        return env.with_state(|state| {
+            if let LoadError::Lua(message) = &error {
+                crate::lua_api::script_helpers::call_error_handler_state(state, message);
+            }
+            Err(error)
+        });
+    }
     timing.frame_exec_lua_time += exec_start.elapsed();
     let props_start = Instant::now();
     let frame_id = created_frame_id(env, setup.name)?;
