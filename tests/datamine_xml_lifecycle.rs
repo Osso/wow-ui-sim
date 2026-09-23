@@ -144,3 +144,64 @@ fn nested_model_scene_runs_inherited_onload_before_prepended_custom_handler() {
     )
     .unwrap();
 }
+
+#[test]
+fn inherited_texture_instance_key_values_reach_parent_onload() {
+    let root = tempfile::tempdir().unwrap();
+    let toc = write_addon(
+        root.path(),
+        "DatamineAtlasLifecycle",
+        r#"
+        AtlasMixin = {}
+        function AtlasMixin:ApplyAtlas()
+            assert(self.FileName == 'Blizzard_UITools.blp', 'Missing FileName or FilePath')
+            assert(self.AtlasName == 'uitools-icon-highlight')
+            assert(self.TemplateFlag == true, 'inherited key lost')
+            assert(self.Enabled == false, 'false override lost')
+            self.Applied = true
+        end
+        ControlMixin = {}
+        function ControlMixin:OnLoad()
+            self.Button.Icon:ApplyAtlas()
+            self.Initialized = true
+        end
+        "#,
+        r#"<Ui>
+            <Texture name="AtlasTextureTemplate" mixin="AtlasMixin" virtual="true">
+                <KeyValues>
+                    <KeyValue key="TemplateFlag" value="true" type="boolean"/>
+                    <KeyValue key="Enabled" value="true" type="boolean"/>
+                    <KeyValue key="FileName" value="wrong.blp"/>
+                </KeyValues>
+            </Texture>
+            <Button name="AtlasButtonTemplate" virtual="true">
+                <Layers><Layer level="OVERLAY">
+                    <Texture parentKey="Icon" inherits="AtlasTextureTemplate">
+                        <KeyValues>
+                            <KeyValue key="FileName" value="Blizzard_UITools.blp"/>
+                            <KeyValue key="AtlasName" value="uitools-icon-highlight"/>
+                            <KeyValue key="Enabled" value="false" type="boolean"/>
+                        </KeyValues>
+                    </Texture>
+                </Layer></Layers>
+            </Button>
+            <Frame name="AtlasControlTemplate" mixin="ControlMixin" virtual="true">
+                <Frames><Button parentKey="Button" inherits="AtlasButtonTemplate"/></Frames>
+                <Scripts><OnLoad method="OnLoad"/></Scripts>
+            </Frame>
+            <Frame name="AtlasRoot" parent="UIParent" hidden="true">
+                <Frames><Frame parentKey="Controls" inherits="AtlasControlTemplate"/></Frames>
+            </Frame>
+        </Ui>"#,
+    );
+    let env = WowLuaEnv::new().unwrap();
+    let loaded = load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.exec(
+        r#"
+        assert(AtlasRoot.Controls.Initialized, 'control initialization aborted')
+        assert(AtlasRoot.Controls.Button.Icon.Applied, 'texture keyvalues did not reach consumer')
+        "#,
+    )
+    .unwrap();
+}

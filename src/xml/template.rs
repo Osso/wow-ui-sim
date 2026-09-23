@@ -551,7 +551,18 @@ fn merge_texture_fields(dst: &mut TextureXml, src: &TextureXml) {
     merge_opt!(alpha);
     merge_opt!(set_all_points);
     merge_opt!(mixin);
+    merge_texture_key_values(dst, src);
     merge_texture_blend_mode(dst, src);
+}
+
+fn merge_texture_key_values(dst: &mut TextureXml, src: &TextureXml) {
+    let Some(values) = &src.key_values else {
+        return;
+    };
+    match &mut dst.key_values {
+        Some(inherited) => inherited.values.extend(values.values.iter().cloned()),
+        None => dst.key_values = Some(values.clone()),
+    }
 }
 
 fn merge_texture_blend_mode(dst: &mut TextureXml, src: &TextureXml) {
