@@ -35,8 +35,8 @@ Numeric-default proof: `/tmp/forever-addon-audit/register-cvar-numeric-red/ledge
 
 ## Known gaps (current cycle)
 
-- [x] Confirm numeric registration and the separate console catalog against unchanged Datamine root startup: 863 byte-identical files load with zero warnings and `[]` (`/tmp/forever-addon-runtime/datamine-catalog-startup-b4hktcva/ledger.json`).
-- [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified. The real `/dm ui` attempt exposes separate EnumUtil and ModelScene errors.
+- [ ] Confirm numeric registration and the separate console catalog against unchanged Datamine root startup. The prior 863-member `[]` observation is a false negative: diagnostic trace recovered and discarded `__Datamine_45253` after `Missing FileName or FilePath` (`/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr`).
+- [ ] Settings/persistence, native-client parity and full-addon acceptance remain unverified. The real `/dm ui` attempt exposes nil SearchMode/EnumUtil input and ModelScene errors.
 
 ## Out of scope
 

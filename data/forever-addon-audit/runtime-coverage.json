@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22T00:00:00+00:00",
+  "updatedAt": "2026-09-23T00:00:00+00:00",
   "scope": "All269 cachedprojects; selectedForeverrelease only, no silent substitution of comparisonversions. Startup and boundedinteraction evidence are separate; no inventorywidecompatibility claim.",
   "archiveInventory": "data/forever-addon-audit/cached-comparisons.json",
   "archiveHashProof": "/tmp/forever-addon-audit/selected-archive-hash-proof.json",
@@ -8,10 +8,10 @@
     "projects": 269,
     "availableForeverArchives": 268,
     "startupStatuses": {
-      "clean-startup": 223,
+      "clean-startup": 222,
       "blocked-dependency": 3,
       "unloaded": 14,
-      "failed": 28,
+      "failed": 29,
       "blocked-package": 1
     },
     "interactionStatuses": {
@@ -12372,9 +12372,9 @@
       "fileId": 8936714,
       "archiveStatus": "downloaded",
       "startup": {
-        "status": "clean-startup",
-        "proofLevel": "observed-isolated-startup",
-        "evidence": "/tmp/forever-addon-runtime/datamine-catalog-startup-b4hktcva/ledger.json",
+        "status": "failed",
+        "proofLevel": "observed-recovery-discard",
+        "evidence": "/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr",
         "binaryBuildRevision": "e511053b21853959aaf80b7d4824e47fab749752",
         "binarySha256": "d40d5fb21b6701ba7c6b4a820bf5272c833575ef6cc314141e6ca6e11374d25a",
         "packageFileIds": [
@@ -12407,10 +12407,10 @@
             "reason": ""
           }
         ],
-        "errorRecords": 0,
+        "errorRecords": 1,
         "addonLoadWarnings": 0,
         "hostCvarsUnchanged": true,
-        "limitations": "Datamine_Data and Datamine_Maps remain LoadOnDemand; this is root startup only."
+        "limitations": "The prior trailing [] is a false negative: diagnostic load trace records recovery from Failed to create frame __Datamine_45253: Missing FileName or FilePath, and setup recovery silently discards the deferred child. Datamine_Data and Datamine_Maps remain LoadOnDemand."
       },
       "interactions": {
         "status": "failed",

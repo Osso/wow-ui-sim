@@ -28,7 +28,7 @@
 
 ## Known gaps (current cycle)
 
-- [x] Validate unchanged Datamine root startup: 863 byte-identical files load with zero warnings and trailing `[]`; Data and Maps remain LoadOnDemand (`/tmp/forever-addon-runtime/datamine-catalog-startup-b4hktcva/ledger.json`).
+- [ ] Validate unchanged Datamine root startup. The prior 863-member `[]` observation is invalidated: diagnostic trace recovered and silently discarded `__Datamine_45253` after `Missing FileName or FilePath` (`/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr`).
 - [ ] Resolve the observed nil enum input and nil `tagToActor` errors exposed by the real chat-dispatched `/dm ui` open/close attempt before crediting a bounded interaction; no missing-function cause is established (`/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json`).
 
 ## Out of scope

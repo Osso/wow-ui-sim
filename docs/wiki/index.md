@@ -48,7 +48,7 @@ ClassicCastBarForever exposed missing simulator `Slider:SetValue` delivery: its 
 
 ## [2026-09-22] investigation | Preserve explicit empty CVar registration
 
-ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. `19c11e551` adds finite numeric registration defaults with development 18/18 proof, but final verification and unchanged Datamine replay remain pending. Frozen `d1e2487f` clean-starts unchanged ClassicCastBarForever in isolated data; its no-addons control returns `[]`. CVar conversion remains inferred from cached docs/Wowless, not a native probe. Datamine's separate console catalog is in progress; no startup or matrix credit. See [[forever-addon-comparison]].
+ClassicCastBarForever `8909724` registered an explicit empty CVar default, but the simulator conflated it with an omitted default and stored `"0"`; the unchanged addon converted that to an invalid scale. `2530fcf56` and `d1e2487f6` pass independent 15/15 focused proof, formatting, and default offline checking. `19c11e551` adds finite numeric registration defaults with independent 18/18 proof, while `2c78bff73` adds the bounded modeled-CVar console catalog with 2/2 proof. CVar conversion remains inferred from cached docs/Wowless, not a native probe. Datamine's prior `[]` root-startup result is invalid: diagnostic recovery silently discarded a failed frame, so no startup/matrix credit remains. See [[forever-addon-comparison]].
 
 ## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
 
