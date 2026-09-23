@@ -170,6 +170,7 @@ macro_rules! frame_defaults {
             mask_textures: Vec::new(),
             rotation: 0.0,
             model_state: None,
+            movie_subtitles_enabled: false,
             mouse_motion_enabled: false,
             user_id: 0,
             button_state: 0,

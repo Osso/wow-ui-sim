@@ -14,6 +14,7 @@ mod cooldown;
 mod editbox;
 pub mod message_frame;
 mod model;
+mod movie;
 pub(super) mod shared;
 mod slider;
 mod statusbar;
@@ -72,6 +73,7 @@ pub fn register_all(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<
     slider::register_scrollframe(state, metatable)?;
     statusbar::register_statusbar(state, metatable)?;
     model::register_model(state, metatable)?;
+    movie::register_movie(state, metatable)?;
     tooltip::register_tooltip(state, metatable)?;
     message_frame::register_message_frame(state, metatable)?;
     table_set_rust_fn_static(state, metatable, "Clear", clear)

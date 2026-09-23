@@ -333,6 +333,8 @@ pub struct Frame {
     pub rotation: f32,
     /// Lazily allocated model, actor, scene, and player-model state.
     pub model_state: Option<Box<ModelWidgetState>>,
+    /// MovieFrame subtitle preference; playback and subtitles are not rendered.
+    pub movie_subtitles_enabled: bool,
     /// Whether mouse motion events are enabled.
     pub mouse_motion_enabled: bool,
     /// User-set frame ID (from XML `id` attribute or SetID()).
