@@ -1,4 +1,4 @@
-//! Frame setup: CreateFrame execution, XML property application, error recovery.
+//! Frame setup: CreateFrame execution, XML property application, error propagation.
 
 use std::collections::BTreeMap;
 use std::sync::{Mutex, OnceLock};
@@ -39,18 +39,7 @@ pub(super) fn setup_frame(
 ) -> Result<(), LoadError> {
     let setup_start = Instant::now();
     let exec_start = Instant::now();
-    match exec_create_frame_code(env, &setup) {
-        Ok(()) => {}
-        Err(_)
-            if recover_frame_after_partial_create_error(
-                env,
-                setup.name,
-                setup.frame,
-                setup.inherits,
-                setup.parent,
-            )? => {}
-        Err(error) => return Err(error),
-    }
+    exec_create_frame_code(env, &setup)?;
     timing.frame_exec_lua_time += exec_start.elapsed();
     let props_start = Instant::now();
     let frame_id = created_frame_id(env, setup.name)?;
@@ -129,98 +118,6 @@ fn parent_array_contains_child(
             })
         })
         .unwrap_or(false))
-}
-
-fn recover_frame_after_partial_create_error(
-    env: &LoaderEnv<'_>,
-    name: &str,
-    frame: &crate::xml::FrameXml,
-    inherits: &str,
-    parent: &str,
-) -> Result<bool, LoadError> {
-    let frame_exists = env.state().borrow().widgets.get_id_by_name(name).is_some();
-    if !frame_exists {
-        return Ok(false);
-    }
-    let parent_key = resolve_inherited_parent_key(frame, inherits);
-    let parent_array = resolve_inherited_parent_array(frame, inherits);
-    if parent_key.is_none() && parent_array.is_none() {
-        return Ok(false);
-    }
-    let repair = build_parent_link_repair_script(
-        parent,
-        name,
-        parent_key.as_deref(),
-        parent_array.as_deref(),
-    );
-    env.exec(&repair).map_err(|repair_error| {
-        LoadError::Lua(format!(
-            "Recovered frame {name} exists but failed to repair parent links after partial CreateFrame error: {repair_error}"
-        ))
-    })?;
-    Ok(true)
-}
-
-/// Build a Lua snippet that re-links `child` into `parent[parent_key]` and/or
-/// `parent[parent_array]` after a partial CreateFrame error left the frame disconnected.
-fn build_parent_link_repair_script(
-    parent: &str,
-    name: &str,
-    parent_key: Option<&str>,
-    parent_array: Option<&str>,
-) -> String {
-    let parent_ref = crate::loader::helpers::lua_global_ref(parent);
-    let child_ref = crate::loader::helpers::lua_global_ref(name);
-    let mut repair = format!("local parent = {parent_ref}\nlocal child = {child_ref}\n");
-    repair.push_str("if parent and child then\n");
-    if let Some(parent_key) = parent_key {
-        repair.push_str(&format!("  parent[{parent_key:?}] = child\n"));
-    }
-    if let Some(parent_array) = parent_array {
-        repair.push_str(&format!(
-            "  parent[{parent_array:?}] = parent[{parent_array:?}] or {{}}\n"
-        ));
-        repair.push_str("  local already_present = false\n");
-        repair.push_str(&format!(
-            "  for _, existing in ipairs(parent[{parent_array:?}]) do\n"
-        ));
-        repair.push_str("    if existing == child then\n");
-        repair.push_str("      already_present = true\n");
-        repair.push_str("      break\n");
-        repair.push_str("    end\n");
-        repair.push_str("  end\n");
-        repair.push_str("  if not already_present then\n");
-        repair.push_str(&format!(
-            "    table.insert(parent[{parent_array:?}], child)\n"
-        ));
-        repair.push_str("  end\n");
-    }
-    repair.push_str("end\n");
-    repair
-}
-
-fn resolve_inherited_parent_key(frame: &crate::xml::FrameXml, inherits: &str) -> Option<String> {
-    frame.parent_key.clone().or_else(|| {
-        if inherits.is_empty() {
-            return None;
-        }
-        crate::xml::get_template_chain(inherits)
-            .iter()
-            .rev()
-            .find_map(|entry| entry.frame.parent_key.clone())
-    })
-}
-
-fn resolve_inherited_parent_array(frame: &crate::xml::FrameXml, inherits: &str) -> Option<String> {
-    frame.parent_array.clone().or_else(|| {
-        if inherits.is_empty() {
-            return None;
-        }
-        crate::xml::get_template_chain(inherits)
-            .iter()
-            .rev()
-            .find_map(|entry| entry.frame.parent_array.clone())
-    })
 }
 
 /// Execute CreateFrame Lua with OnLoad suppression (depth-counted for recursion).
