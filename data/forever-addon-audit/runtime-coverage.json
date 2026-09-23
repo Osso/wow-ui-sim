@@ -12373,10 +12373,10 @@
       "archiveStatus": "downloaded",
       "startup": {
         "status": "failed",
-        "proofLevel": "observed-recovery-discard",
-        "evidence": "/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr",
-        "binaryBuildRevision": "e511053b21853959aaf80b7d4824e47fab749752",
-        "binarySha256": "d40d5fb21b6701ba7c6b4a820bf5272c833575ef6cc314141e6ca6e11374d25a",
+        "proofLevel": "observed-isolated-warning",
+        "evidence": "/tmp/forever-addon-runtime/datamine-keyvalues-startup-8oof2qa6/ledger.json",
+        "binaryBuildRevision": "f7e83f4f78b2d5d6949cef41bab0844478c585cf",
+        "binarySha256": "415f151aad356b1daeda3375d6da00589cdcf750677f6f51ed7dd3c97f9ca83f",
         "packageFileIds": [
           8936714
         ],
@@ -12408,20 +12408,20 @@
           }
         ],
         "errorRecords": 1,
-        "addonLoadWarnings": 0,
+        "addonLoadWarnings": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "The prior trailing [] is a false negative: diagnostic load trace records recovery from Failed to create frame __Datamine_45253: Missing FileName or FilePath, and setup recovery silently discards the deferred child. Datamine_Data and Datamine_Maps remain LoadOnDemand."
+        "limitations": "Texture instance KeyValues and XML error propagation are focused-green, but the exact 863-member replay still has one XML warning: MapController.lua:92 indexes nil templateInfo from C_XMLUtil.GetTemplateInfo(TILE_TEMPLATE_NAME). Trailing [] does not establish healthy startup. Datamine_Data and Datamine_Maps remain LoadOnDemand."
       },
       "interactions": {
         "status": "failed",
         "covered": [
           "ChatFrame1EditBox:SendText dispatches /dm ui; Datamine UI opens then closes through its registered slash handler and animation lifecycle"
         ],
-        "evidence": "/tmp/forever-addon-runtime/datamine-ui-workflow-w3edrpd4/ledger.json",
+        "evidence": "/tmp/forever-addon-runtime/datamine-keyvalues-ui-zcycbmnp/ledger.json",
         "independentFailureAudit": "/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json",
         "fixture": "tools/forever-addon-fixtures/datamine-ui-workflow.lua",
-        "binaryBuildRevision": "e511053b21853959aaf80b7d4824e47fab749752",
-        "failure": "Two distinct Lua errors occur while opening: EnumUtil receives a nil enum value from Datamine ItemViewer help text, and ModelSceneMixin:GetActorByTag reads nil tagToActor; Blizzard ScriptErrors duplicates each diagnostic. UI markers open/close/DONE do not establish a passing workflow.",
+        "binaryBuildRevision": "f7e83f4f78b2d5d6949cef41bab0844478c585cf",
+        "failure": "The current normal chat-dispatched /dm ui attempt fails before opening: DatamineUnifiedFrame.ShowAnim is nil after the remaining MapController XML warning aborts construction. No DONE marker occurred; timeout exit 124. Earlier open/close/DONE evidence is superseded for current-source acceptance.",
         "limitations": "No full Datamine UI, settings, data/maps LoadOnDemand, pixel, 3D/model, persistence, audio, native-client, or command-catalog completeness claim."
       },
       "packageOnlyBaseline": {

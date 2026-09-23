@@ -4,9 +4,9 @@ XML textures retain inherited and instance `KeyValues` when resolving texture te
 
 ## What it must do
 
-- [ ] Keep template KeyValues not overridden by the texture instance.
-- [ ] Apply instance KeyValues after template values so duplicate keys use the instance value, including explicit `false`.
-- [ ] Expose the resulting fields before the parent's `OnLoad` consumes the texture; do not bypass or manually initialize the consumer.
+- [x] Keep template KeyValues not overridden by the texture instance.
+- [x] Apply instance KeyValues after template values so duplicate keys use the instance value, including explicit `false`.
+- [x] Expose the resulting fields before the parent's `OnLoad` consumes the texture; do not bypass or manually initialize the consumer.
 
 These are simulator XML inheritance requirements supported by the unchanged Datamine control templates, not native-client probe evidence.
 
