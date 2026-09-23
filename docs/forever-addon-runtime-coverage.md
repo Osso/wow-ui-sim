@@ -130,6 +130,8 @@ The previous Datamine `8936714` startup credit is invalid. Frozen `e511053b2` ob
 
 The exact current replay remains **failed**. It reports trailing `[]` but one XML warning: `MapController.lua:92` indexes nil `templateInfo` returned by `C_XMLUtil.GetTemplateInfo(TILE_TEMPLATE_NAME)`: `/tmp/forever-addon-runtime/datamine-keyvalues-startup-8oof2qa6/ledger.json`; diagnostic attribution is `/tmp/forever-addon-runtime/datamine-warning-trace-cvydydyd/stderr`. The current normal `ChatFrame1EditBox:SendText("/dm ui")` fixture fails before opening because `DatamineUnifiedFrame.ShowAnim` is nil, emits no `DONE`, and times out: `/tmp/forever-addon-runtime/datamine-keyvalues-ui-zcycbmnp/ledger.json`. Earlier open/close/DONE evidence predates the current source and cannot establish current acceptance. No pixel, 3D/model, settings, persistence, audio, native-client, or full-addon claim follows.
 
+The warning-only observation is superseded by clean `f095f24c6` build `/tmp/forever-addon-audit/xml-collector-clean-build-2e1thpb8/ledger.json` and exact replay `/tmp/forever-addon-runtime/datamine-collected-error-mzafz9ai/ledger.json`: canonical `lua-errors` exits `1` with the nested XML `CreateFrame` error from `MovieFrame.lua:270` calling missing `EnableSubtitles`, plus its Blizzard ScriptErrors mirror. The archive has 863 byte-identical members and unchanged host CVars. This corrects diagnostics only; it does not implement MovieFrame subtitles or establish startup/UI acceptance.
+
 ## Acceptance discipline
 
 - Verify that intended addon roots actually load; empty error JSON with nothing loaded is not a pass.

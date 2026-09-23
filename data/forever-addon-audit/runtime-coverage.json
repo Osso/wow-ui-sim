@@ -12374,9 +12374,9 @@
       "startup": {
         "status": "failed",
         "proofLevel": "observed-isolated-warning",
-        "evidence": "/tmp/forever-addon-runtime/datamine-keyvalues-startup-8oof2qa6/ledger.json",
-        "binaryBuildRevision": "f7e83f4f78b2d5d6949cef41bab0844478c585cf",
-        "binarySha256": "415f151aad356b1daeda3375d6da00589cdcf750677f6f51ed7dd3c97f9ca83f",
+        "evidence": "/tmp/forever-addon-runtime/datamine-collected-error-mzafz9ai/ledger.json",
+        "binaryBuildRevision": "f095f24c6",
+        "binarySha256": "27a1ee2147dad4f2f216f717c311a6068d3dbfb577843e670fe7817bc1b21972",
         "packageFileIds": [
           8936714
         ],
@@ -12407,10 +12407,10 @@
             "reason": ""
           }
         ],
-        "errorRecords": 1,
+        "errorRecords": 2,
         "addonLoadWarnings": 1,
         "hostCvarsUnchanged": true,
-        "limitations": "Texture instance KeyValues and XML error propagation are focused-green, but the exact 863-member replay still has one XML warning: MapController.lua:92 indexes nil templateInfo from C_XMLUtil.GetTemplateInfo(TILE_TEMPLATE_NAME). Trailing [] does not establish healthy startup. Datamine_Data and Datamine_Maps remain LoadOnDemand."
+        "limitations": "The exact 863-member replay now exits 1 because canonical collection exposes MovieFrame.lua:270 calling missing EnableSubtitles, with a Blizzard ScriptErrors mirror and one addon-load warning. This diagnostics correction does not implement MovieFrame behavior or establish startup health. Datamine_Data and Datamine_Maps remain LoadOnDemand."
       },
       "interactions": {
         "status": "failed",

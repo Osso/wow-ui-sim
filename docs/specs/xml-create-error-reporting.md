@@ -6,7 +6,7 @@ XML frame creation reports failed nested-template initialization through the add
 
 - [x] A failed nested template creation is reported in addon load warnings with its original error, even when the partially created frame has parentKey and parentArray links.
 - [x] A partially created frame does not turn an unsuccessful XML load into healthy loading.
-- [ ] Nested XML creation Lua failures enter the canonical Lua error collector once as well as addon warnings, so `lua-errors` cannot report clean solely because the exception escaped a Rust creation path. Non-Lua warning categories are unchanged.
+- [x] Nested XML creation Lua failures enter the canonical Lua error collector once as well as addon warnings, so `lua-errors` cannot report clean solely because the exception escaped a Rust creation path. Non-Lua warning categories are unchanged.
 
 ## How it works
 
@@ -24,7 +24,7 @@ XML frame creation reports failed nested-template initialization through the add
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify the unchanged Datamine archive exposes its original nested texture creation error instead of a false-clean startup.
+- [ ] Fix the collected unchanged Datamine `MovieFrame:EnableSubtitles` failure; collection exposes it but does not make startup healthy.
 
 ## Out of scope
 
