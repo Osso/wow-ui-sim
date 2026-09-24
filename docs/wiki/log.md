@@ -1,3 +1,7 @@
+## [2026-09-24] investigation | Index Cooldown widgets for tick checks
+
+Settled no-addons GUI profile: ~46% of main-thread self time went to finding Cooldown widgets by scanning the whole registry from `compute_tick_interval` (after every message), `drop_stale_timer_tick`, and `mark_active_cooldown_widgets_dirty`. Draw p50 was 3.8ms; rendering was not the bottleneck. `77089bb12` adds a registry `cooldown_ids` index; focused `app_tests` pass. Shared asset-resolver listfile cache thrash across projects recorded, unfixed. See [[tick-cooldown-scan]].
+
 ## [2026-09-23] investigation | Collect Datamine XML creation failure
 
 `f095f24c6` makes the nested XML `CreateFrame` Lua failure enter canonical collection once while retaining the addon-load warning. Focused `xml_create_error_reporting` passes with one matching collector entry: `/tmp/forever-addon-audit/xml-error-collector-green-ftxo0ffp/ledger.json`. Clean `f095f24c6` replay of exact Datamine `8936714` now exits `1` with `MovieFrame.lua:270` calling missing `EnableSubtitles` and the Blizzard ScriptErrors mirror; 863 staged members and host CVars remain unchanged: `/tmp/forever-addon-runtime/datamine-collected-error-mzafz9ai/ledger.json`. Diagnostics are corrected; startup and `/dm ui` remain failed. See [[forever-addon-comparison]].
