@@ -1,3 +1,7 @@
+## [2026-09-24] investigation | Record Forever character-panel blocker
+
+Added [[forever-character-panel]] from `/tmp/wow-character-bug/proof-ledger.json` and pending regression commit `5ca35ab62`. Records only cached-binary reproduction, listfile/resolution/index/archive observations, and cache timing; no API/cache fix or final proof claim.
+
 ## [2026-09-24] investigation | Stop cross-project listfile cache rebuilds
 
 asset-resolver `3088dee` keys the community listfile SQLite cache by canonical source path; wow-ui-sim pins it in `c3e373f9c`. Projects with different sources, and symlinked worktree sources, no longer force ~2.1M-row rebuilds on the GUI thread. RED/GREEN listfile tests 6/6; full asset-resolver tests pass; second headless run reused the cache. See [[tick-cooldown-scan]].
