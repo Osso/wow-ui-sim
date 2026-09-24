@@ -58,8 +58,9 @@ EXTENSIONS = ["blp", "BLP", "tga", "TGA", "ttf", "TTF", "otf", "OTF"]
 def main() -> None:
     args = parse_args()
     by_path, by_fdid = load_source(args.source)
-    load_listfile_overrides(by_path, by_fdid)
+    override_fdids = load_listfile_overrides(by_path, by_fdid)
     requested_paths, requested_fdids = collect_requests()
+    requested_fdids.update(override_fdids)
     blizzard_files = collect_blizzard_ui_files()
     rows = resolve_rows(
         by_path,
@@ -92,9 +93,10 @@ def load_source(path: Path) -> tuple[dict[str, tuple[int, str]], dict[int, str]]
 
 def load_listfile_overrides(
     by_path: dict[str, tuple[int, str]], by_fdid: dict[int, str]
-) -> None:
+) -> set[int]:
     if LISTFILE_OVERRIDES.exists():
-        load_listfile_rows(LISTFILE_OVERRIDES, by_path, by_fdid, authoritative=True)
+        return load_listfile_rows(LISTFILE_OVERRIDES, by_path, by_fdid, authoritative=True)
+    return set()
 
 
 def load_listfile_rows(
@@ -103,7 +105,8 @@ def load_listfile_rows(
     by_fdid: dict[int, str],
     *,
     authoritative: bool,
-) -> None:
+) -> set[int]:
+    fdids: set[int] = set()
     with path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
         for raw in handle:
             raw = raw.rstrip("\r\n")
@@ -114,6 +117,8 @@ def load_listfile_rows(
                 fdid = int(fdid_text)
             except ValueError:
                 continue
+            if authoritative:
+                fdids.add(fdid)
             normalized = normalize_path(asset_path)
             display_path = normalize_slashes(asset_path) if authoritative else normalized
             by_path[normalized] = (fdid, display_path)
@@ -121,6 +126,7 @@ def load_listfile_rows(
                 by_fdid[fdid] = display_path
             else:
                 by_fdid.setdefault(fdid, display_path)
+    return fdids
 
 
 def collect_requests() -> tuple[set[str], set[int]]:

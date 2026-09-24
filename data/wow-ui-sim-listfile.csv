@@ -993,6 +993,7 @@
 8187491;interface/addons/blizzard_auracontainer/blizzard_auracontainerframeproviders.lua
 8187492;interface/addons/blizzard_auracontainer/blizzard_auracontainergroups.lua
 8154512;interface/addons/blizzard_auracontainer/blizzard_auracontainerinbound.lua
+8187495;interface/addons/blizzard_auracontainer/blizzard_auracontainermanaged.lua
 8154518;interface/addons/blizzard_auracontainer/blizzard_auracontainershared.lua
 8202011;interface/addons/blizzard_auracontainer/blizzard_auracontainerslots.lua
 8187493;interface/addons/blizzard_auracontainer/blizzard_auracontainersources.lua
@@ -71461,6 +71462,10 @@
 2001829;interface/icons/inv_shoulders_plate_warfrontsalliance_c_01.blp
 2001892;interface/icons/inv_shoulders_plate_warfrontsalliance_d_01.blp
 1672321;interface/icons/inv_shoulders_plate_zandalarquest_b_01.blp
+8197078;Interface/Icons/INV_SideTab_Currency_c60.blp
+8197097;Interface/Icons/INV_SideTab_Honor_Alliance_c60.blp
+8197103;Interface/Icons/INV_SideTab_Reputation2_c60.blp
+8197104;Interface/Icons/INV_SideTab_Stats_c60.blp
 254882;interface/icons/inv_sigil_freya.blp
 254883;interface/icons/inv_sigil_hodir.blp
 254884;interface/icons/inv_sigil_mimiron.blp

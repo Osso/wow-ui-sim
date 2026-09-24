@@ -1,6 +1,10 @@
 615960;Fonts/FRIZQT__.TTF
 130828;Interface/Buttons/UI-Panel-Button-Up.blp
 136243;Interface/Icons/Trade_Engineering.blp
+8197078;Interface/Icons/INV_SideTab_Currency_c60.blp
+8197097;Interface/Icons/INV_SideTab_Honor_Alliance_c60.blp
+8197103;Interface/Icons/INV_SideTab_Reputation2_c60.blp
+8197104;Interface/Icons/INV_SideTab_Stats_c60.blp
 8154509;interface/addons/blizzard_auracontainer/blizzard_aurabutton.lua
 8154510;interface/addons/blizzard_auracontainer/blizzard_auracontainer.xml
 8154511;interface/addons/blizzard_auracontainer/blizzard_auracontainer.toc

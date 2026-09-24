@@ -1,3 +1,4 @@
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,6 +8,39 @@ from tools import gen_limited_listfile
 
 
 class LimitedListfileGenerationTests(unittest.TestCase):
+    def test_generates_override_missing_from_source_and_requests(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "community-listfile.csv"
+            override = root / "listfile-overrides.csv"
+            output = root / "generated.csv"
+            source.write_text("1;Interface/Icons/Other.blp\n", encoding="utf-8")
+            override.write_text(
+                "8197078;Interface/Icons/INV_SideTab_Currency_c60.blp\n",
+                encoding="utf-8",
+            )
+            (root / "manifest.rs").write_text("", encoding="utf-8")
+            (root / "atlas.rs").write_text("", encoding="utf-8")
+
+            with (
+                patch.object(gen_limited_listfile, "LISTFILE_OVERRIDES", override),
+                patch.object(gen_limited_listfile, "MANIFEST_PATH", root / "manifest.rs"),
+                patch.object(gen_limited_listfile, "ATLAS_PATH", root / "atlas.rs"),
+                patch.object(gen_limited_listfile, "SCAN_PATHS", [root / "empty"]),
+                patch.object(gen_limited_listfile, "BLIZZARD_UI_FILE_MANIFEST_DIR", root / "empty"),
+                patch.object(
+                    sys,
+                    "argv",
+                    ["gen_limited_listfile.py", "--source", str(source), "--output", str(output)],
+                ),
+            ):
+                gen_limited_listfile.main()
+
+            self.assertEqual(
+                "8197078;Interface/Icons/INV_SideTab_Currency_c60.blp\n",
+                output.read_text(encoding="utf-8"),
+            )
+
     def test_collects_blizzard_ui_files_from_profile_manifests(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

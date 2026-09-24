@@ -78,7 +78,16 @@ The generator stores ordinary community rows with normalized lowercase paths. An
 entry in `data/listfile-overrides.csv` is authoritative for its normalized path
 and FDID: it replaces the source display path while preserving slash-normalized
 canonical casing. Generated rows sort by normalized path, so canonical casing
-does not change output ordering.
+does not change output ordering. Every valid override FDID is included in the
+subset even when its path is absent from community data, literal scans, atlas
+entries, and Blizzard UI manifests.
+
+The Forever `INV_SideTab_{Currency,Honor_Alliance,Reputation2,Stats}_c60`
+icon overrides (FDIDs 8197078, 8197097, 8197103, 8197104) were verified
+against the active Forever CASC root's name hashes. That root uses uppercase
+backslash paths with direct Jenkins96 ordering; control paths resolved to
+FDIDs 134400 and 2447783. This identifies names, not extraction availability:
+the first three content keys were locally indexed, while Stats was not.
 
 On September 20, 2026, refreshing the community listfile and regenerating this
 file added 592 `wowforever` path-to-FDID rows. Every one of the 4,398 paths in
