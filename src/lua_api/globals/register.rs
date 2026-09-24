@@ -4,10 +4,10 @@
 //! registering all WoW API globals, plus core Lua utilities like print,
 //! type, ipairs, pairs, getmetatable, and setmetatable.
 
+use super::super::SimState;
 use super::super::env::WowLuaAppData;
 use super::super::hot_literals::HotLiteralRegistry;
 use super::super::methods::publish_frame_ref_cache_alias;
-use super::super::SimState;
 use crate::lua_api::methods::borrow_state;
 use rilua::LuaApiMut;
 use std::cell::RefCell;
