@@ -60,7 +60,7 @@ bytemuck = { version = "1.21", features = ["derive"], optional = true }
 pollster = { version = "0.4", optional = true }
 webp = { version = "0.3.1", optional = true }
 rustc-hash = "2.1.2"
-asset-resolver = { git = "https://github.com/world-of-osso/asset-resolver", rev = "292bea963293a8445b58fb80af25ae5f843f1574", optional = true }
+asset-resolver = { git = "https://github.com/world-of-osso/asset-resolver", rev = "3088dee6b961408f8ba76497aaedfdc9c026bf13", optional = true }
 cascette-client-storage = { git = "https://github.com/Osso/cascette-rs", rev = "3992ef0fb9a81f10841a763619440a68647611ff", features = ["local-install"], optional = true }
 cascette-crypto = { git = "https://github.com/Osso/cascette-rs", rev = "3992ef0fb9a81f10841a763619440a68647611ff", optional = true }
 cascette-formats = { git = "https://github.com/Osso/cascette-rs", rev = "3992ef0fb9a81f10841a763619440a68647611ff", optional = true }
