@@ -147,6 +147,8 @@ fn sync_blizzard_ui_entries<'a>(
     }
 
     write_complete_marker(root, expected_provenance)?;
+    #[cfg(feature = "casc")]
+    release_cdn_downloader()?;
     Ok(summary)
 }
 
@@ -403,6 +405,16 @@ fn fetch_cdn_encoding_key(
 
 #[cfg(feature = "casc")]
 static CDN_DOWNLOADER: std::sync::Mutex<Option<CdnDownloader>> = std::sync::Mutex::new(None);
+
+#[cfg(feature = "casc")]
+fn release_cdn_downloader() -> crate::Result<()> {
+    let downloader = CDN_DOWNLOADER
+        .lock()
+        .map_err(|_| crate::Error::Other("Blizzard CDN downloader lock poisoned".to_string()))?
+        .take();
+    drop(downloader);
+    Ok(())
+}
 
 #[cfg(feature = "casc")]
 struct CdnDownloader {

@@ -15,7 +15,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ### Source sync transport
 
-- [ ] A sync process reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file.
+- [ ] A sync operation reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file, then releases them before GUI startup.
 - [ ] Initialization checks every archive index in the selected CDN configuration, reusing individual cached index files; an interrupted index download is not accepted as a complete set.
 - [ ] Encoding-key downloads retry typed transport failures at most three times with exponential backoff and jitter. HTTP status and decode failures remain explicit failures.
 - [ ] Linux Zenity startup errors render as plain text, including literal `<profile>` paths.
