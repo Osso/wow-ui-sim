@@ -68,11 +68,13 @@ fn push_regen(state: &mut LuaState, contribution: f64) -> LuaResult<u32> {
 }
 
 fn get_health_regen_from_spirit(state: &mut LuaState) -> LuaResult<u32> {
-    push_regen(state, health_regen_from_spirit(spirit(state)?))
+    let contribution = health_regen_from_spirit(spirit(state)?);
+    push_regen(state, contribution)
 }
 
 fn get_mana_regen_from_spirit(state: &mut LuaState) -> LuaResult<u32> {
-    push_regen(state, mana_regen_from_spirit(spirit(state)?))
+    let contribution = mana_regen_from_spirit(spirit(state)?);
+    push_regen(state, contribution)
 }
 
 fn get_health_regen(state: &mut LuaState) -> LuaResult<u32> {
