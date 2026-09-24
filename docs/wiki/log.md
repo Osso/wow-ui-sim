@@ -1,3 +1,7 @@
+## [2026-09-24] investigation | Stop cross-project listfile cache rebuilds
+
+asset-resolver `3088dee` keys the community listfile SQLite cache by canonical source path; wow-ui-sim pins it in `c3e373f9c`. Projects with different sources, and symlinked worktree sources, no longer force ~2.1M-row rebuilds on the GUI thread. RED/GREEN listfile tests 6/6; full asset-resolver tests pass; second headless run reused the cache. See [[tick-cooldown-scan]].
+
 ## [2026-09-24] investigation | Index Cooldown widgets for tick checks
 
 Settled no-addons GUI profile: ~46% of main-thread self time went to finding Cooldown widgets by scanning the whole registry from `compute_tick_interval` (after every message), `drop_stale_timer_tick`, and `mark_active_cooldown_widgets_dirty`. Draw p50 was 3.8ms; rendering was not the bottleneck. `77089bb12` adds a registry `cooldown_ids` index; focused `app_tests` pass. Shared asset-resolver listfile cache thrash across projects recorded, unfixed. See [[tick-cooldown-scan]].

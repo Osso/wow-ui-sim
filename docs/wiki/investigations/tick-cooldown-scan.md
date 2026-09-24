@@ -37,7 +37,9 @@ Tests (`src/iced_app/app_tests.rs`): active/slow/fast mod-rate tick intervals, h
 
 ### Shared listfile cache thrash (asset-resolver)
 
-`~/.cache/asset-resolver/data/community-listfile.sqlite` is shared across projects, but freshness compares the recorded source CSV path and mtime. game-engine worktrees record their own `data/community-listfile.csv`; wow-ui-sim records `~/.cache/asset-resolver/data/community-listfile.csv`. Each project therefore rebuilds all ~2.1M rows on first lookup, on the GUI thread; a run killed before `COMMIT` restarts the rebuild next launch. Fix belongs in asset-resolver; not yet addressed.
+`~/.cache/asset-resolver/data/community-listfile.sqlite` is shared across projects, but freshness compares the recorded source CSV path and mtime. game-engine worktrees record their own `data/community-listfile.csv`; wow-ui-sim records `~/.cache/asset-resolver/data/community-listfile.csv`. Each project therefore rebuilt all ~2.1M rows on first lookup, on the GUI thread; a run killed before `COMMIT` restarted the rebuild next launch. Worktrees symlinking one CSV also thrashed, because the unresolved symlink path was recorded.
+
+Fixed in asset-resolver `3088dee` (pinned by `c3e373f9c`): the cache file is `community-listfile-<fnv1a(canonical source path)>.sqlite`, and sources are canonicalized so symlinks share their target's cache. Verified: first headless run built the new cache (30.6s), second reused it (11.9s, file untouched). The legacy `community-listfile.sqlite` stays in use by game-engine builds that predate the fix.
 
 ## Sources
 

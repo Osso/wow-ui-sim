@@ -1456,7 +1456,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[micro-menu-atlas-revert]] | Micro menu normal icons could disappear after hover because button atlas setters skipped child `atlas_tex_coords`, preventing restored normal textures from using isolated atlas crop requests |
 | [[minimap]] | Basic circular placeholder; missing real content/mask/blips/POIs |
 | [[on-update-dirty]] | Blanket dirty discard suppresses cast bar; now tracks compact-raid cleanup, the `GameTimeFrame_SetDate()` calendar-atlas no-op fix, and the AuraButton OnUpdate lock-down (`~0.86ms` → `31.44us`, budgeted at `<=0.5ms`) |
-| [[tick-cooldown-scan]] | Per-tick Cooldown detection scanned the whole registry (~46% main-thread self time); registry now indexes Cooldown IDs. Also records shared asset-resolver listfile cache thrash |
+| [[tick-cooldown-scan]] | Per-tick Cooldown detection scanned the whole registry (~46% main-thread self time); registry now indexes Cooldown IDs; also the per-source asset-resolver listfile cache fix |
 | [[startup-createframe-profile]] | Runtime `CreateFrame` profiling started with action-bar button template expansion, then widened into the XML loader fast path; current safe loader state lands around 4.8s-5.8s on debug no-addons/no-saved-vars runs, with remaining misses dominated by XML script bodies |
 | [[table-rehashing]] | 97K rehashes on startup; 98% from non-frame Lua tables, 81% land at hash size ≤16; root cause is `OP_NEWTABLE(0,0)` for addon `local t = {}` patterns |
 | [[layout-profile]] | Layout was 7.5% of release startup; `LayoutCache` siphash dominated. `FxHashMap` switch drops to 5.0%, −170M layout samples, −219M total siphash samples |
