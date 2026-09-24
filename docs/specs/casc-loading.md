@@ -16,7 +16,8 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 ### GUI resolution-cache preparation
 
 - [ ] Before `run_iced_ui`, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
-- [ ] A fresh cache is built before GUI rendering; a warm cache is reused without rebuilding. Preparation failure stops GUI startup with an explicit error.
+- [ ] A fresh resolution cache is built before GUI rendering; a warm cache is reused without rebuilding. Resolution-cache preparation failure stops GUI startup with an explicit error.
+- [ ] The community lookup catalog initializes before rendering too; catalog-load errors retain the resolver's explicit diagnostic. This moves initialization to startup, not out of total startup time.
 - [ ] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
 - [ ] Preparation does not initialize the lazy runtime archive reader or extract textures before the first render.
 
@@ -53,7 +54,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Implementation inventory
 
-- `src/asset_resolver_config.rs` — GUI resolution-cache preparation using the active install and product
+- `src/asset_resolver_config.rs` — GUI resolution-cache and community-catalog preparation using the active install and product. Until the dependency exposes catalog preparation, an empty-path lookup initializes it without extracting an asset; retire that query when an explicit API exists.
 - `src/bin/wow_sim/gui_commands.rs` — GUI startup preparation before `run_iced_ui`
 - `src/texture/resolve.rs` — CASC tier for textures (`casc_enabled`, `casc_extract_dir`, `try_casc_resolve`)
 - `src/render/font.rs` — CASC tier for fonts (`casc_enabled`, `try_casc_font_bytes`) and known core-font encoding-key fallback for CASC cache misses

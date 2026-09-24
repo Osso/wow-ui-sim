@@ -68,14 +68,17 @@ pub fn prepare_gui_casc_resolution_cache() -> Result<(), String> {
     };
 
     configure_casc_product_env();
-    asset_resolver::casc_resolver::open_resolution_cache_for_install(install)
-        .map(|_| ())
-        .map_err(|error| {
-            format!(
-                "prepare GUI CASC resolution cache for {}: {error}",
-                install.display()
-            )
-        })
+    asset_resolver::casc_resolver::open_resolution_cache_for_install(install).map_err(|error| {
+        format!(
+            "prepare GUI CASC resolution cache for {}: {error}",
+            install.display()
+        )
+    })?;
+    // The dependency has no catalog-preparation API. An empty-path lookup loads
+    // the community catalog without extracting an asset; lookup errors are logged
+    // by the resolver. Replace this query when an explicit preparation API exists.
+    let _ = resolver().lookup_path("");
+    Ok(())
 }
 
 #[cfg(all(test, feature = "casc"))]
