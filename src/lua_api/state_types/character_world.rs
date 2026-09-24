@@ -20,6 +20,19 @@ pub struct CharacterStats {
     /// Forever-only unseeded spirit; zero is an explicit simulator default.
     #[cfg(feature = "client-wowforever")]
     pub spirit: f64,
+    /// Forever-only explicit row modifiers; zero means no modeled source contributes.
+    #[cfg(feature = "client-wowforever")]
+    pub ranged_hit_modifier_pct: f64,
+    #[cfg(feature = "client-wowforever")]
+    pub armor_penetration: f64,
+    #[cfg(feature = "client-wowforever")]
+    pub spell_penetration: f64,
+    #[cfg(feature = "client-wowforever")]
+    pub spell_power_to_attack_power: f64,
+    #[cfg(feature = "client-wowforever")]
+    pub attack_power_to_spell_power: f64,
+    #[cfg(feature = "client-wowforever")]
+    pub quiver_haste_pct: f64,
     pub armor: i32,
     pub crit_rating: i32,
     pub haste_rating: i32,

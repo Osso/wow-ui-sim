@@ -127,7 +127,91 @@ fn get_melee_haste(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_ranged_haste(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-wowforever")]
+    {
+        let sim = borrow_state(state)?;
+        let haste = sim.player.stats.haste_pct();
+        let quiver = sim.player.stats.quiver_haste_pct;
+        drop(sim);
+        state.push(Val::Num(haste));
+        state.push(Val::Num(quiver));
+        Ok(2)
+    }
+    #[cfg(not(feature = "client-wowforever"))]
     get_haste(state)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_ranged_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.player.stats.ranged_hit_modifier_pct;
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_armor_penetration(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.player.stats.armor_penetration;
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_spell_penetration(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.player.stats.spell_penetration;
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_override_ap_by_spell_power(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?
+        .player
+        .stats
+        .spell_power_to_attack_power;
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_override_spell_power_by_ap(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?
+        .player
+        .stats
+        .attack_power_to_spell_power;
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn equipped_item_inv_type(state: &LuaState, slot: i32) -> Option<u8> {
+    let sim = borrow_state(state).ok()?;
+    let item_id = sim.player.equipped_items.get(&slot)?.item_id;
+    crate::items::get_item(item_id).map(|item| item.inventory_type)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn is_dual_wielding(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::c_api::item_spell::helpers::inv_type_to_class_id;
+
+    let main = equipped_item_inv_type(state, 16);
+    let off = equipped_item_inv_type(state, 17);
+    let weapon = |inv_type: Option<u8>| {
+        inv_type.is_some_and(|kind| matches!(kind, 13 | 21 | 22) && inv_type_to_class_id(kind) == 2)
+    };
+    state.push(Val::Bool(weapon(main) && weapon(off)));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn is_ranged_weapon(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::c_api::item_spell::helpers::inv_type_to_class_id;
+
+    let inv_type = equipped_item_inv_type(state, 18);
+    let ranged = inv_type.is_some_and(|inv_type| {
+        matches!(inv_type, 15 | 25 | 26) && inv_type_to_class_id(inv_type) == 2
+    });
+    state.push(Val::Bool(ranged));
+    Ok(1)
 }
 
 fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
@@ -238,6 +322,20 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("GetHaste", get_haste),
     ("GetMeleeHaste", get_melee_haste),
     ("GetRangedHaste", get_ranged_haste),
+    #[cfg(feature = "client-wowforever")]
+    ("GetRangedHitModifier", get_ranged_hit_modifier),
+    #[cfg(feature = "client-wowforever")]
+    ("GetArmorPenetration", get_armor_penetration),
+    #[cfg(feature = "client-wowforever")]
+    ("GetSpellPenetration", get_spell_penetration),
+    #[cfg(feature = "client-wowforever")]
+    ("GetOverrideAPBySpellPower", get_override_ap_by_spell_power),
+    #[cfg(feature = "client-wowforever")]
+    ("GetOverrideSpellPowerByAP", get_override_spell_power_by_ap),
+    #[cfg(feature = "client-wowforever")]
+    ("IsDualWielding", is_dual_wielding),
+    #[cfg(feature = "client-wowforever")]
+    ("IsRangedWeapon", is_ranged_weapon),
     ("GetHitModifier", get_hit_modifier),
     ("GetSpellHitModifier", get_spell_hit_modifier),
     ("GetExpertise", get_expertise),

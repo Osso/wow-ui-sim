@@ -397,9 +397,20 @@ fn unit_ranged_attack(state: &mut LuaState) -> LuaResult<u32> {
 /// `UnitDefense(unit)` — retail's old API, returns skill rating. We
 /// approximate as `level * 5` (the pre-MoP formula).
 fn unit_defense(state: &mut LuaState) -> LuaResult<u32> {
-    let stats = stats_for(state);
-    state.push(Val::Num((stats.level * 5).max(0) as f64));
+    state.push(Val::Num(defense_skill(stats_for(state))));
     Ok(1)
+}
+
+fn defense_skill(stats: UnitStats) -> f64 {
+    (stats.level * 5).max(0) as f64
+}
+
+/// Forever's `UnitDefenseSkill(unit)` exposes base skill and modifier.
+#[cfg(feature = "client-wowforever")]
+fn unit_defense_skill(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Num(defense_skill(stats_for(state))));
+    state.push(Val::Num(0.0)); // No defense bonus source is modeled.
+    Ok(2)
 }
 
 /// `UnitDodge(unit)` — retail returns a percent-chance number.
@@ -648,6 +659,8 @@ const UNIT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("UnitAttackSpeed", unit_attack_speed),
     ("UnitRangedAttack", unit_ranged_attack),
     ("UnitDefense", unit_defense),
+    #[cfg(feature = "client-wowforever")]
+    ("UnitDefenseSkill", unit_defense_skill),
     ("UnitDodge", unit_dodge),
     ("UnitParry", unit_parry),
     ("UnitReaction", unit_reaction),

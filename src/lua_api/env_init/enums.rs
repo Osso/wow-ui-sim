@@ -263,6 +263,8 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         "#,
     )?;
     lua.exec(MISSING_CONSTANTS_LUA)?;
+    #[cfg(feature = "client-wowforever")]
+    lua.exec("LE_UNIT_STAT_SPIRIT = 5")?;
     lua.exec(CONSTANTS_VALUES_LUA)?;
     lua.exec(COMPAT_CONSTANTS_LUA)?;
     #[cfg(feature = "client-wowforever")]
