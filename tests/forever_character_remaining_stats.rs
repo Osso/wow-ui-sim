@@ -75,7 +75,7 @@ mod forever {
             (haste, quiver, melee),
             (baseline_haste, 3.5, baseline_haste)
         );
-        let fresh = env();
+        let fresh = WowLuaEnv::new().expect("independent Forever environment");
         let (hit, armor, spell, ap, sp, quiver): (f64, f64, f64, f64, f64, f64) = fresh
             .eval("local _, q = GetRangedHaste(); return GetRangedHitModifier(), GetArmorPenetration(), GetSpellPenetration(), GetOverrideAPBySpellPower(), GetOverrideSpellPowerByAP(), q")
             .unwrap();
