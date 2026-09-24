@@ -1,6 +1,6 @@
 ## [2026-09-24] investigation | Model Camelot primary-stat contributions
 
-After the speed API tests passed 5/5, unchanged full-UI `ToggleCharacter` reaches missing `GetCritChanceFromStat` at `PaperDollFrameStats.lua:291`; the cached documentation and tooltip identify six directly consumed missing stat/regen globals. A bounded Forever-only spirit and primary-stat model with explicit non-native coefficients is pending batched GREEN and full-UI replay. See [[forever-character-panel]] and [stat contribution contract](../specs/forever-character-stat-contributions.md).
+After the speed API tests passed 5/5, unchanged full-UI `ToggleCharacter` reached missing `GetCritChanceFromStat` at `PaperDollFrameStats.lua:291`; commits `6a076ed46`/`b871b7083` add the bounded non-native stat/regen model, pending batched GREEN and replay. Cold evidence also attributes 7.3 seconds of initial texture work to the community catalog; `79382f3b6` prewarms it before GUI drawing, with next cold proof pending. See [[forever-character-panel]] and [stat contribution contract](../specs/forever-character-stat-contributions.md).
 
 ## [2026-09-24] investigation | Record Forever character-panel blocker
 

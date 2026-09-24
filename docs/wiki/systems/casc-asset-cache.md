@@ -15,6 +15,12 @@ The resolution sqlite is generated cache data, not repo data. wow-ui-sim constru
 
 Without the resolution sqlite, first CASC use reads the local build config, extracts fresh `root.bin` and `encoding.bin` from the WoW install into the cache directory, and builds the sqlite. Warm starts become a single `Connection::open` plus per-FDID sqlite SELECTs.
 
+## GUI preparation
+
+Before `run_iced_ui`, enabled CASC startup opens or builds the resolution cache, then forces the community lookup catalog to initialize with an empty-path query. The dependency has no catalog-preparation API; this query does not extract an asset and should be replaced if one becomes available. `WOW_SIM_CASC=0` and a missing install skip both steps.
+
+Cold evidence from `/tmp/wow-character-bug/cold-gui/` on September 24, 2026 recorded a 19.6-second resolution-cache build after post-load workarounds at 17.5 seconds and before font initialization at 47.0 seconds. A separate first-draw trace attributed 7.3 seconds of texture work (8.7 seconds total) to the first community-catalog lookup; commit `79382f3b6` moves that lookup before GUI drawing. A later forced fresh CASC extract for FDID `2447783` took 266 ms. The next cold GUI run is pending, so this is not evidence of a complete startup-stall fix.
+
 ## Lookup flow
 
 ```
@@ -125,6 +131,7 @@ When removing an unavailable entry, first prove it is not reachable from the ret
 - `asset-resolver/src/casc_cache.rs` — `CascResolutionCache::open`, freshness check, `build_resolution_cache`, `resolve_fdid`
 - `asset-resolver/src/paths.rs` — source-data resolution, cache-root resolution, and `remap_to_shared_data_path`
 - `examples/casc_bench.rs` — reproduction harness for the timing table
+- `/tmp/wow-character-bug/cold-gui/{stderr,result.json}` — bounded September 24, 2026 cold GUI timing evidence
 
 ## See Also
 

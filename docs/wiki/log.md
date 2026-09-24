@@ -1,3 +1,7 @@
+## [2026-09-24] audit | Record pending Camelot stat and catalog-prewarm follow-ups
+
+Audited `6a076ed46`, `b871b7083`, and `79382f3b6`. The stat contract keeps 100-points-to-1%-crit, class-specific ranged-AP, spirit 0.2/0.1 regen rates, and unseeded spirit 0 as explicit simulator policies; all new GREEN remains pending. Cold evidence records the 19.6-second pre-GUI resolution build, 7.3-second initial catalog lookup, and 266-ms forced FDID `2447783` extract; catalog prewarming has no post-change cold proof yet. Updated [[forever-character-panel]], [[casc-asset-cache]], and [CASC asset loading](../specs/casc-loading.md); four local content blockers remain unchanged.
+
 ## [2026-09-24] investigation | Scope the next Camelot character-panel failure
 
 Updated [[forever-character-panel]] for `GetCritChanceFromStat` at cached Camelot line 291 and the six documented missing stat/regen globals. Recorded guessed simulator coefficients in [stat contribution contract](../specs/forever-character-stat-contributions.md). Code and tests await batched GREEN and full-UI replay; no native or complete-panel claim.

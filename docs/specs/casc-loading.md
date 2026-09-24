@@ -54,7 +54,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Implementation inventory
 
-- `src/asset_resolver_config.rs` — GUI resolution-cache and community-catalog preparation using the active install and product. Until the dependency exposes catalog preparation, an empty-path lookup initializes it without extracting an asset; retire that query when an explicit API exists.
+- `src/asset_resolver_config.rs` — GUI resolution-cache and community-catalog preparation using the active install and product.
 - `src/bin/wow_sim/gui_commands.rs` — GUI startup preparation before `run_iced_ui`
 - `src/texture/resolve.rs` — CASC tier for textures (`casc_enabled`, `casc_extract_dir`, `try_casc_resolve`)
 - `src/render/font.rs` — CASC tier for fonts (`casc_enabled`, `try_casc_font_bytes`) and known core-font encoding-key fallback for CASC cache misses
