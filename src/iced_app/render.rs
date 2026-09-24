@@ -204,6 +204,7 @@ impl App {
             self.mark_all_strata_dirty();
             // Invalidate per-strata cache — screen size changed.
             *self.cached_strata_quads.borrow_mut() = std::array::from_fn(|_| None);
+            self.bump_strata_generation();
             // Invalidate hit grid — frame positions change with screen size.
             *self.cached_hittable.borrow_mut() = None;
         }
@@ -510,6 +511,12 @@ impl App {
                 elapsed_secs,
             },
         );
+        self.bump_strata_generation();
+    }
+
+    fn bump_strata_generation(&self) {
+        self.strata_generation
+            .set(self.strata_generation.get().wrapping_add(1));
     }
 
     fn update_hit_grid_after_render(

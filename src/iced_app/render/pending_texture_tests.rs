@@ -286,3 +286,76 @@ fn rebuilt_requests_reuse_ready_path_cache_without_redecode() {
         "ready-cache hydrated request should not re-enter the pending queue"
     );
 }
+
+fn write_test_png(dir: &std::path::Path, name: &str) {
+    let image = image::RgbaImage::from_pixel(4, 4, image::Rgba([0x44, 0x88, 0xcc, 0xff]));
+    image.save(dir.join(format!("{name}.png"))).unwrap();
+}
+
+/// Stand-in for the draw-side GPU upload: mark every cached request ready and
+/// clear the pending flag, as a completed draw does.
+fn complete_draw_uploads(app: &App) {
+    for batch in app.cached_strata_quads.borrow().iter().flatten() {
+        for request in batch
+            .texture_requests
+            .iter()
+            .chain(&batch.mask_texture_requests)
+        {
+            request.handle.mark_ready();
+        }
+    }
+    app.textures_pending.set(false);
+}
+
+fn run_idle_tick_warmup(app: &App) {
+    let mut stage_timings = crate::iced_app::update::TickStageTimings::default();
+    app.preload_visible_textures_for_tick(&mut stage_timings);
+}
+
+#[test]
+fn settled_idle_warmup_still_loads_textures_from_rebuilt_strata() {
+    let temp_dir = tempdir().unwrap();
+    write_test_png(temp_dir.path(), "warmup-alpha");
+    write_test_png(temp_dir.path(), "warmup-beta");
+    let app = super::test_support::build_test_app_with_addons(Some(temp_dir.path()));
+    let size = Size::new(800.0, 600.0);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            WarmupTexture = UIParent:CreateTexture(nil, "ARTWORK")
+            WarmupTexture:SetSize(32, 32)
+            WarmupTexture:SetPoint("CENTER")
+            WarmupTexture:SetTexture("Interface/AddOns/warmup-alpha")
+        "#,
+        )
+        .unwrap();
+    app.mark_all_strata_dirty();
+    app.rebuild_draw_quads(size);
+    complete_draw_uploads(&app);
+
+    run_idle_tick_warmup(&app);
+    assert!(
+        app.texture_manager
+            .borrow()
+            .is_cached("Interface/AddOns/warmup-alpha")
+    );
+    complete_draw_uploads(&app);
+    run_idle_tick_warmup(&app);
+
+    app.env
+        .borrow()
+        .exec(r#"WarmupTexture:SetTexture("Interface/AddOns/warmup-beta")"#)
+        .unwrap();
+    app.mark_all_strata_dirty();
+    app.rebuild_draw_quads(size);
+    complete_draw_uploads(&app);
+    run_idle_tick_warmup(&app);
+
+    assert!(
+        app.texture_manager
+            .borrow()
+            .is_cached("Interface/AddOns/warmup-beta"),
+        "a settled warmup must rescan after strata rebuild introduces a new texture"
+    );
+}

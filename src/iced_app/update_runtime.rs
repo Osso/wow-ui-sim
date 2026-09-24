@@ -334,6 +334,7 @@ impl App {
             }
         }
         if retried {
+            self.texture_warmup_settled_generation.set(None);
             self.seed_pending_texture_paths_from_cached_strata();
         }
     }
@@ -409,8 +410,13 @@ impl App {
         true
     }
 
-    fn preload_visible_textures_for_tick(&self, stage_timings: &mut TickStageTimings) -> bool {
-        if self.textures_pending.get() || self.has_pending_render_work() {
+    pub(super) fn preload_visible_textures_for_tick(
+        &self,
+        stage_timings: &mut TickStageTimings,
+    ) -> bool {
+        let warmup_settled =
+            self.texture_warmup_settled_generation.get() == Some(self.strata_generation.get());
+        if self.textures_pending.get() || self.has_pending_render_work() || warmup_settled {
             return false;
         }
 
@@ -418,7 +424,22 @@ impl App {
         let loaded =
             self.preload_visible_textures_with_budget(std::time::Duration::from_millis(10));
         stage_timings.preload += started.elapsed();
+        self.record_texture_warmup_outcome(loaded);
         loaded
+    }
+
+    /// Settle only when cached strata supplied the warmup paths: before the
+    /// first rebuild, warmup reads registry-visible paths, which change
+    /// without a strata generation bump.
+    fn record_texture_warmup_outcome(&self, loaded: bool) {
+        let has_cached_strata = self
+            .cached_strata_quads
+            .borrow()
+            .iter()
+            .any(Option::is_some);
+        let settled = !loaded && !self.textures_pending.get() && has_cached_strata;
+        self.texture_warmup_settled_generation
+            .set(settled.then(|| self.strata_generation.get()));
     }
 
     fn has_pending_render_work(&self) -> bool {
