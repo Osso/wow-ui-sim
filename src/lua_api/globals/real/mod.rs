@@ -13,6 +13,8 @@ pub mod combo_points;
 pub mod container_legacy;
 #[cfg(feature = "retail-12-0-0")]
 pub mod event_callbacks;
+#[cfg(feature = "client-wowforever")]
+pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub mod glyph_state;
 pub mod gossip_probes;

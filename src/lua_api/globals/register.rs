@@ -4,10 +4,10 @@
 //! registering all WoW API globals, plus core Lua utilities like print,
 //! type, ipairs, pairs, getmetatable, and setmetatable.
 
-use super::super::SimState;
 use super::super::env::WowLuaAppData;
 use super::super::hot_literals::HotLiteralRegistry;
 use super::super::methods::publish_frame_ref_cache_alias;
+use super::super::SimState;
 use crate::lua_api::methods::borrow_state;
 use rilua::LuaApiMut;
 use std::cell::RefCell;
@@ -245,6 +245,8 @@ fn register_actor_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::player_identity::register_all(lua)?;
     super::unit_stats::register_all(lua)?;
     super::real::combat_stats::register_all(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    super::real::forever_stat_contributions::register_all(lua)?;
     super::real::pet_stats::register_all(lua)?;
     super::cooldown_probes::register_all(lua)?;
     Ok(())

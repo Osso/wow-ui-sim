@@ -1,3 +1,7 @@
+## [2026-09-24] investigation | Scope the next Camelot character-panel failure
+
+Updated [[forever-character-panel]] for `GetCritChanceFromStat` at cached Camelot line 291 and the six documented missing stat/regen globals. Recorded guessed simulator coefficients in [stat contribution contract](../specs/forever-character-stat-contributions.md). Code and tests await batched GREEN and full-UI replay; no native or complete-panel claim.
+
 ## [2026-09-24] audit | Align pending GUI cache and Forever speed contracts
 
 Audited `57ffc3d01` and `7be534fff` against [CASC asset loading](../specs/casc-loading.md) and [Forever unit speed](../specs/unit-speed.md). Both contracts remain unchecked pending focused GREEN results. [[forever-character-panel]] now links the cache-preparation contract without duplicating its behavior.

@@ -194,9 +194,18 @@ fn get_avoidance(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_mana_regen(state: &mut LuaState) -> LuaResult<u32> {
-    let intellect = borrow_state(state)?.player.stats.intellect.max(0.0);
+    let sim = borrow_state(state)?;
+    let intellect = sim.player.stats.intellect.max(0.0);
     let base = 1.0 + intellect / 500.0;
-    state.push(Val::Num(base));
+    #[cfg(feature = "client-wowforever")]
+    let total = base
+        + super::forever_stat_contributions::mana_regen_from_spirit(
+            sim.player.stats.spirit.max(0.0),
+        );
+    #[cfg(not(feature = "client-wowforever"))]
+    let total = base;
+    drop(sim);
+    state.push(Val::Num(total));
     state.push(Val::Num(base * 0.5));
     Ok(2)
 }

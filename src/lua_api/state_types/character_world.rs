@@ -17,6 +17,9 @@ pub struct CharacterStats {
     pub agility: f64,
     pub stamina: f64,
     pub intellect: f64,
+    /// Forever-only unseeded spirit; zero is an explicit simulator default.
+    #[cfg(feature = "client-wowforever")]
+    pub spirit: f64,
     pub armor: i32,
     pub crit_rating: i32,
     pub haste_rating: i32,

@@ -470,7 +470,7 @@ fn unit_xp_max(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UnitStat(unit, statIndex)` — retail: `(stat, base, positive, negative)`.
 /// `statIndex` 1 = Strength, 2 = Agility, 3 = Stamina, 4 = Intellect,
-/// 5 = Spirit (unused in modern WoW — falls through to 0).
+/// 5 = Spirit (Forever player state only; zero in other profiles).
 fn unit_stat(state: &mut LuaState) -> LuaResult<u32> {
     let stat_index = match stack_val(state, 2) {
         Val::Num(n) => n as i32,
@@ -482,6 +482,8 @@ fn unit_stat(state: &mut LuaState) -> LuaResult<u32> {
         2 => stats.agility,
         3 => stats.stamina,
         4 => stats.intellect,
+        #[cfg(feature = "client-wowforever")]
+        5 if unit_token(state) == "player" => borrow_state(state)?.player.stats.spirit,
         _ => 0.0,
     };
     state.push(Val::Num(value));

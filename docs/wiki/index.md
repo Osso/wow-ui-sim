@@ -1,3 +1,7 @@
+## [2026-09-24] investigation | Model Camelot primary-stat contributions
+
+After the speed API tests passed 5/5, unchanged full-UI `ToggleCharacter` reaches missing `GetCritChanceFromStat` at `PaperDollFrameStats.lua:291`; the cached documentation and tooltip identify six directly consumed missing stat/regen globals. A bounded Forever-only spirit and primary-stat model with explicit non-native coefficients is pending batched GREEN and full-UI replay. See [[forever-character-panel]] and [stat contribution contract](../specs/forever-character-stat-contributions.md).
+
 ## [2026-09-24] investigation | Record Forever character-panel blocker
 
 Cached binary `2ef368d3…` reproduces the exact user `GetUnitSpeed` nil traceback through `ToggleCharacter`; source provenance is unproven. Complete active-root parsing now authoritatively maps four formerly absent sidetab names through uppercase-backslash direct Jenkins hashes; `34975b1c2` commits Currency `8197078`, Honor Alliance `8197097`, Reputation `8197103`, and Stats `8197104`. Mapping is not extraction: Stats and original FDIDs `8175455`, `8245174`, `8254784` remain unindexed content blockers. API/cache verifier proof, icon extraction/runtime GREEN, native, pixels, and full-panel pass remain pending. See [[forever-character-panel]].
