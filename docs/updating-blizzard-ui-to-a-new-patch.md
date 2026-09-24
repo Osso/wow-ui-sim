@@ -29,7 +29,21 @@ Profile → Gethe branch:
 | mists | `classic` (current Classic = Mists of Pandaria) |
 | era | `classic_era` |
 | anniversary | `classic_anniversary` |
-| wowforever | `forever` (1.60.1.69913; distinct runtime profile, cache, and manifest) |
+| wowforever | `forever` (selected 1.60.1.69977; distinct runtime profile, cache, and manifest) |
+
+## Matching the installed Forever build
+
+On September 24, 2026, the installed `wow_classic_beta` build is `1.60.1.69977`
+(`3bd89ce2721f7c75e7525dc83741076f`). Gethe commit
+`c6e89983189e4f626f549204a23c2d2bea93080a` has that exact `version.txt`;
+the branch tip already reports `70009` and must not replace this selected target.
+Prepare the source cache from the matching commit, then use the generator's
+`wowforever --no-refresh` mode. Its 4,398-file manifest is unchanged from `69913`;
+the source diff changes only three Mainline GlueXML files. The runtime cache
+still requires the normal CASC sync and new provenance, not a manual source copy.
+The simulator's temporary `GetBuildInfo()` default and profile regression track
+build `69977`; historical captures and atlas-data provenance retain their original
+build labels.
 
 ## Steps
 

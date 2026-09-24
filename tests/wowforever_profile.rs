@@ -206,7 +206,7 @@ fn wowforever_profile_reports_build_identity_and_finite_event_validation() {
             "local version, build, _, interface = GetBuildInfo(); return version, build, interface",
         )
         .unwrap();
-    assert_eq!(identity, ("1.60.1".to_owned(), "69913".to_owned(), 16001));
+    assert_eq!(identity, ("1.60.1".to_owned(), "69977".to_owned(), 16001));
     assert!(wow_ui_sim::event::is_registerable_event("PLAYER_LOGIN"));
     for event in [
         "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW",

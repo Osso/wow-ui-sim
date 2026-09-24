@@ -19,7 +19,7 @@ const CLIENT_VERSION: &str = if cfg!(feature = "client-wowforever") {
 
 #[cfg(not(feature = "client-ptr"))]
 const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
-    "69913"
+    "69977"
 } else {
     "68256"
 };
