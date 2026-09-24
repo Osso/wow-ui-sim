@@ -183,18 +183,22 @@ fn get_override_spell_power_by_ap(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 #[cfg(feature = "client-wowforever")]
-fn equipped_item_inv_type(state: &LuaState, slot: i32) -> Option<u8> {
-    let sim = borrow_state(state).ok()?;
-    let item_id = sim.player.equipped_items.get(&slot)?.item_id;
-    crate::items::get_item(item_id).map(|item| item.inventory_type)
+fn equipped_item_inv_type(state: &LuaState, slot: i32) -> LuaResult<Option<u8>> {
+    let sim = borrow_state(state)?;
+    Ok(sim
+        .player
+        .equipped_items
+        .get(&slot)
+        .and_then(|equipped| crate::items::get_item(equipped.item_id))
+        .map(|item| item.inventory_type))
 }
 
 #[cfg(feature = "client-wowforever")]
 fn is_dual_wielding(state: &mut LuaState) -> LuaResult<u32> {
     use crate::c_api::item_spell::helpers::inv_type_to_class_id;
 
-    let main = equipped_item_inv_type(state, 16);
-    let off = equipped_item_inv_type(state, 17);
+    let main = equipped_item_inv_type(state, 16)?;
+    let off = equipped_item_inv_type(state, 17)?;
     let weapon = |inv_type: Option<u8>| {
         inv_type.is_some_and(|kind| matches!(kind, 13 | 21 | 22) && inv_type_to_class_id(kind) == 2)
     };
@@ -206,7 +210,7 @@ fn is_dual_wielding(state: &mut LuaState) -> LuaResult<u32> {
 fn is_ranged_weapon(state: &mut LuaState) -> LuaResult<u32> {
     use crate::c_api::item_spell::helpers::inv_type_to_class_id;
 
-    let inv_type = equipped_item_inv_type(state, 18);
+    let inv_type = equipped_item_inv_type(state, 18)?;
     let ranged = inv_type.is_some_and(|inv_type| {
         matches!(inv_type, 15 | 25 | 26) && inv_type_to_class_id(inv_type) == 2
     });
