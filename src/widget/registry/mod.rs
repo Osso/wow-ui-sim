@@ -140,16 +140,20 @@ impl WidgetRegistry {
         for &child_id in &widget.children {
             self.child_links.insert((id, child_id));
         }
-        if matches!(widget.widget_type, super::WidgetType::Cooldown) {
-            self.cooldown_ids.insert(id);
-        } else {
-            self.cooldown_ids.remove(&id);
-        }
+        self.sync_cooldown_index(id, widget.widget_type);
         self.widgets.insert(id, widget);
         if is_new {
             self.ordered_ids.push(id);
         }
         id
+    }
+
+    fn sync_cooldown_index(&mut self, id: u64, widget_type: super::WidgetType) {
+        if matches!(widget_type, super::WidgetType::Cooldown) {
+            self.cooldown_ids.insert(id);
+        } else {
+            self.cooldown_ids.remove(&id);
+        }
     }
 
     fn inherit_creation_forbidden_aspects(&self, widget: &mut Frame) {
