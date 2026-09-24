@@ -126,6 +126,101 @@ fn fast_mod_rate_completed_cooldown_returns_to_idle_tick() {
 }
 
 #[test]
+fn active_cooldown_under_hidden_parent_keeps_idle_tick() {
+    let app = build_test_app(ScreenKind::Game);
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            local parent = CreateFrame("Frame", "HiddenCooldownParent", UIParent)
+            parent:Hide()
+            local cooldown = CreateFrame("Cooldown", "HiddenParentCooldown", parent)
+            cooldown:SetCooldown(GetTime(), 30)
+        "#,
+        )
+        .expect("hidden cooldown should be created");
+
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_secs(1)),
+    );
+}
+
+#[test]
+fn tick_marks_active_cooldown_dirty_until_it_finishes() {
+    let app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            DirtyTickCooldown = CreateFrame("Cooldown", "DirtyTickCooldown", UIParent)
+            DirtyTickCooldown:SetCooldown(GetTime(), 30)
+            IdleTickCooldown = CreateFrame("Cooldown", "IdleTickCooldown", UIParent)
+        "#,
+        )
+        .expect("cooldowns should be created");
+    let (active_id, idle_id) = {
+        let env = app.env.borrow();
+        let state = env.state().borrow();
+        let _ = state.widgets.take_render_dirty_with_ids();
+        (
+            state.widgets.get_id_by_name("DirtyTickCooldown").unwrap(),
+            state.widgets.get_id_by_name("IdleTickCooldown").unwrap(),
+        )
+    };
+    let take_dirty_ids = || {
+        let env = app.env.borrow();
+        let state = env.state().borrow();
+        state
+            .widgets
+            .take_render_dirty_with_ids()
+            .1
+            .unwrap_or_default()
+    };
+
+    app.mark_active_cooldown_widgets_dirty();
+    let dirty = take_dirty_ids();
+    assert!(dirty.contains(&active_id), "active cooldown must redraw");
+    assert!(!dirty.contains(&idle_id), "idle cooldown must not redraw");
+
+    app.env
+        .borrow()
+        .exec("DirtyTickCooldown:Clear()")
+        .expect("cooldown should clear");
+    let _ = take_dirty_ids();
+    app.mark_active_cooldown_widgets_dirty();
+    assert!(
+        take_dirty_ids().contains(&active_id),
+        "just-finished cooldown gets one final redraw"
+    );
+
+    app.mark_active_cooldown_widgets_dirty();
+    assert!(!take_dirty_ids().contains(&active_id));
+}
+
+#[test]
+fn registry_tracks_cooldown_ids_across_reregistration() {
+    use crate::widget::{Frame, WidgetRegistry, WidgetType};
+    let mut registry = WidgetRegistry::new();
+    let cooldown = Frame::new(WidgetType::Cooldown, None, None);
+    let cooldown_id = cooldown.id;
+    registry.register(cooldown);
+    registry.register(Frame::new(WidgetType::Frame, None, None));
+    assert_eq!(
+        registry.cooldown_ids().collect::<Vec<_>>(),
+        vec![cooldown_id]
+    );
+
+    let mut replacement = Frame::new(WidgetType::Frame, None, None);
+    replacement.id = cooldown_id;
+    registry.register(replacement);
+    assert_eq!(registry.cooldown_ids().count(), 0);
+}
+
+#[test]
 fn gui_startup_uses_first_real_canvas_size_for_display_size_changed() {
     let app = build_test_app(ScreenKind::Game);
     app.env

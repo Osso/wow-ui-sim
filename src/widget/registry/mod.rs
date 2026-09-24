@@ -54,6 +54,8 @@ pub struct WidgetRegistry {
     hit_grid_dirty_ids: FxHashSet<u64>,
     /// Frames with `layout_rect = None` that need layout computation.
     pending_layout_ids: FxHashSet<u64>,
+    /// Cooldown widget IDs, so per-tick cooldown checks skip the full registry.
+    cooldown_ids: FxHashSet<u64>,
 }
 
 impl WidgetRegistry {
@@ -94,6 +96,7 @@ impl WidgetRegistry {
             rect_dirty_ids: Self::initial_id_set(),
             hit_grid_dirty_ids: Self::initial_id_set(),
             pending_layout_ids: Self::initial_id_set(),
+            cooldown_ids: FxHashSet::default(),
         }
     }
 
@@ -136,6 +139,11 @@ impl WidgetRegistry {
         }
         for &child_id in &widget.children {
             self.child_links.insert((id, child_id));
+        }
+        if matches!(widget.widget_type, super::WidgetType::Cooldown) {
+            self.cooldown_ids.insert(id);
+        } else {
+            self.cooldown_ids.remove(&id);
         }
         self.widgets.insert(id, widget);
         if is_new {
@@ -380,6 +388,11 @@ impl WidgetRegistry {
     /// Iterate over all widget IDs.
     pub fn iter_ids(&self) -> impl Iterator<Item = u64> + '_ {
         self.widgets.keys().copied()
+    }
+
+    /// IDs of all registered `Cooldown` widgets.
+    pub fn cooldown_ids(&self) -> impl Iterator<Item = u64> + '_ {
+        self.cooldown_ids.iter().copied()
     }
 
     pub fn storage_estimate_bytes(&self) -> usize {

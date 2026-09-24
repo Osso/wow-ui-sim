@@ -646,7 +646,7 @@ pub(super) fn active_cooldown_widget_ids(state: &crate::lua_api::SimState) -> Ve
     let now = state.start_time.elapsed().as_secs_f64();
     state
         .widgets
-        .iter_ids()
+        .cooldown_ids()
         .filter(|&id| is_visible_active_cooldown_widget(state, id, now))
         .collect()
 }
@@ -654,7 +654,7 @@ pub(super) fn active_cooldown_widget_ids(state: &crate::lua_api::SimState) -> Ve
 fn has_active_cooldown_widget(state: &crate::lua_api::SimState, now: f64) -> bool {
     state
         .widgets
-        .iter_ids()
+        .cooldown_ids()
         .any(|id| is_visible_active_cooldown_widget(state, id, now))
 }
 
