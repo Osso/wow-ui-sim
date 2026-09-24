@@ -13,6 +13,13 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] `WOW_INSTALL_PATH` (install root) and `WOW_DATA_PATH` (`Data/` dir) override discovery; both are validated by checking that `<root>/Data/data` exists before they win.
 - [ ] wow-ui-sim creates `asset_resolver::CascListfileResolver` with an explicit cache/shared-data location; runtime loading does not set or require `GAME_ENGINE_SHARED_ROOT`.
 
+### GUI resolution-cache preparation
+
+- [x] Before entering GUI rendering, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
+- [x] A fresh cache is built before GUI rendering; a warm cache is reused without rebuilding. Preparation failures stop GUI startup with an explicit error.
+- [x] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
+- [x] Preparation does not promise to initialize the lazy runtime archive reader or extract textures before the first render.
+
 ### Texture resolution
 
 - [ ] WoW paths with backslashes (`Interface\Buttons\UI-Panel-Button-Up`) are normalised to forward slashes and extension-stripped before lookup.
@@ -46,6 +53,8 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Implementation inventory
 
+- `src/asset_resolver_config.rs` — GUI resolution-cache preparation using the active install and product
+- `src/bin/wow_sim/gui_commands.rs` — GUI startup preparation before `run_iced_ui`
 - `src/texture/resolve.rs` — CASC tier for textures (`casc_enabled`, `casc_extract_dir`, `try_casc_resolve`)
 - `src/render/font.rs` — CASC tier for fonts (`casc_enabled`, `try_casc_font_bytes`) and known core-font encoding-key fallback for CASC cache misses
 - `examples/casc_smoke.rs` — verification harness for textures + fonts
@@ -54,6 +63,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Tests asserting this spec
 
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled and error boundaries (cold/warm skip without an install)
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC

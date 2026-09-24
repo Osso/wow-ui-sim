@@ -8,6 +8,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{apply_delay, run_extra_update_ticks, settle_headless_startup};
 
 pub(super) fn run_gui(dispatch: CommandDispatch) -> Result<(), Box<dyn std::error::Error>> {
+    #[cfg(feature = "casc")]
+    wow_ui_sim::asset_resolver_config::prepare_gui_casc_resolution_cache()?;
     let debug_options = dispatch.debug_options();
     wow_ui_sim::run_iced_ui(
         dispatch.env,

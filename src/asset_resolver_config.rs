@@ -58,8 +58,117 @@ fn default_cache_root() -> PathBuf {
         .join("asset-resolver")
 }
 
+#[cfg(feature = "casc")]
+pub fn prepare_gui_casc_resolution_cache() -> Result<(), String> {
+    if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
+        return Ok(());
+    }
+    let Some(install) = asset_resolver::wow_install_path() else {
+        return Ok(());
+    };
+
+    configure_casc_product_env();
+    asset_resolver::casc_resolver::open_resolution_cache_for_install(install)
+        .map(|_| ())
+        .map_err(|error| {
+            format!(
+                "prepare GUI CASC resolution cache for {}: {error}",
+                install.display()
+            )
+        })
+}
+
 #[cfg(all(test, feature = "casc"))]
 mod tests {
+    use std::path::Path;
+    use std::process::Command;
+
+    #[test]
+    fn gui_resolution_cache_preparation() {
+        if let Ok(mode) = std::env::var("WOW_SIM_GUI_CACHE_TEST_MODE") {
+            match mode.as_str() {
+                "cold" => {
+                    let install = asset_resolver::wow_install_path().expect("test install");
+                    let cache_root = std::path::PathBuf::from(
+                        std::env::var_os("ASSET_RESOLVER_CACHE_DIR").unwrap(),
+                    );
+                    assert!(!cache_root.join("casc").exists());
+                    super::prepare_gui_casc_resolution_cache().expect("cold preparation");
+                    let cache_dir =
+                        asset_resolver::casc_resolver::casc_cache_dir_for_install(install)
+                            .expect("active build");
+                    assert!(
+                        cache_dir.join("resolution.sqlite").exists(),
+                        "preparation must build the resolution cache"
+                    );
+                    let cache =
+                        asset_resolver::casc_resolver::open_resolution_cache_for_install(install)
+                            .expect("prepared cache is usable");
+                    drop(cache);
+                    let first_modified = std::fs::metadata(cache_dir.join("resolution.sqlite"))
+                        .unwrap()
+                        .modified()
+                        .unwrap();
+                    super::prepare_gui_casc_resolution_cache().expect("warm preparation");
+                    eprintln!("prepared CASC cache at {}", cache_dir.display());
+                    assert_eq!(
+                        std::fs::metadata(cache_dir.join("resolution.sqlite"))
+                            .unwrap()
+                            .modified()
+                            .unwrap(),
+                        first_modified,
+                        "warm preparation must reuse the cache"
+                    );
+                }
+                "disabled" => super::prepare_gui_casc_resolution_cache()
+                    .expect("disabled CASC must not open an invalid install"),
+                "failure" => {
+                    let error = super::prepare_gui_casc_resolution_cache()
+                        .expect_err("enabled CASC must report preparation failure");
+                    assert!(error.contains("CASC"), "{error}");
+                }
+                _ => panic!("unknown cache test mode: {mode}"),
+            }
+            return;
+        }
+
+        let fixture = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(fixture.path().join("Data/data")).unwrap();
+        run_gui_cache_test("disabled", fixture.path(), fixture.path(), true);
+        run_gui_cache_test("failure", fixture.path(), fixture.path(), false);
+
+        if let Some(install) = asset_resolver::wow_install_path() {
+            let cache = tempfile::tempdir().unwrap();
+            run_gui_cache_test("cold", install, cache.path(), false);
+        } else {
+            eprintln!("skipping cold/warm CASC preparation: no WoW install discovered");
+        }
+    }
+
+    fn run_gui_cache_test(mode: &str, install: &Path, cache: &Path, disabled: bool) {
+        let output = Command::new("timeout")
+            .arg("90")
+            .arg(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                "asset_resolver_config::tests::gui_resolution_cache_preparation",
+                "--nocapture",
+            ])
+            .env("WOW_SIM_GUI_CACHE_TEST_MODE", mode)
+            .env("WOW_INSTALL_PATH", install)
+            .env("ASSET_RESOLVER_CACHE_DIR", cache)
+            .env("WOW_SIM_CASC", if disabled { "0" } else { "1" })
+            .output()
+            .unwrap();
+        eprintln!("{mode} child: {}", String::from_utf8_lossy(&output.stderr));
+        assert!(
+            output.status.success(),
+            "{mode} preparation failed:\n{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+
     #[test]
     fn resolver_can_be_created_without_game_engine_root() {
         let resolver = super::new_test_resolver();
