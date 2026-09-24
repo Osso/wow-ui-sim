@@ -389,18 +389,72 @@ fn extract_fdid_from_cdn(fdid: u32, out_path: &Path) -> crate::Result<bool> {
 fn fetch_cdn_encoding_key(
     encoding_key: &cascette_crypto::EncodingKey,
 ) -> std::result::Result<Vec<u8>, String> {
-    let product = crate::asset_resolver_config::active_profile_casc_product();
-    retry_cdn_fetch(
-        || casc_extract::fetch_encoding_key_blocking(product, encoding_key),
-        |error| {
-            error.chain().any(|cause| {
-                cause
-                    .downcast_ref::<reqwest::Error>()
-                    .is_some_and(is_retryable_cdn_transport_error)
-            })
-        },
-    )
-    .map_err(|error| format!("{error:#}"))
+    let mut cached = CDN_DOWNLOADER
+        .lock()
+        .map_err(|_| "Blizzard CDN downloader lock poisoned".to_string())?;
+    if cached.is_none() {
+        *cached = Some(CdnDownloader::connect()?);
+    }
+    let downloader = cached
+        .as_ref()
+        .ok_or_else(|| "Blizzard CDN downloader was not initialized".to_string())?;
+    downloader.download(encoding_key)
+}
+
+#[cfg(feature = "casc")]
+static CDN_DOWNLOADER: std::sync::Mutex<Option<CdnDownloader>> = std::sync::Mutex::new(None);
+
+#[cfg(feature = "casc")]
+struct CdnDownloader {
+    session: casc_extract::cdn::CdnSession,
+    archives: casc_extract::archive::ArchiveManager,
+    runtime: tokio::runtime::Runtime,
+}
+
+#[cfg(feature = "casc")]
+impl CdnDownloader {
+    fn download(&self, key: &cascette_crypto::EncodingKey) -> Result<Vec<u8>, String> {
+        retry_cdn_fetch(
+            || {
+                self.runtime.block_on(casc_extract::download::download_file(
+                    &self.archives,
+                    &self.session,
+                    key,
+                ))
+            },
+            |error| {
+                error.chain().any(|cause| {
+                    cause
+                        .downcast_ref::<reqwest::Error>()
+                        .is_some_and(is_retryable_cdn_transport_error)
+                })
+            },
+        )
+        .map_err(|error| format!("{error:#}"))
+    }
+
+    fn connect() -> Result<Self, String> {
+        let runtime = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .map_err(|error| format!("create Blizzard CDN runtime: {error}"))?;
+        let product =
+            casc_extract::Product::new(crate::asset_resolver_config::active_profile_casc_product())
+                .map_err(|error| format!("select Blizzard CDN product: {error:#}"))?;
+        let session = runtime
+            .block_on(casc_extract::cdn::CdnSession::connect_product(product))
+            .map_err(|error| format!("connect Blizzard CDN session: {error:#}"))?;
+        // init checks every configured index and reuses each cached file. A
+        // partially downloaded directory must not be treated as a complete set.
+        let archives = runtime
+            .block_on(casc_extract::archive::ArchiveManager::init(&session))
+            .map_err(|error| format!("initialize Blizzard CDN archive indices: {error:#}"))?;
+        Ok(Self {
+            session,
+            archives,
+            runtime,
+        })
+    }
 }
 
 #[cfg(feature = "casc")]

@@ -408,7 +408,17 @@ fn show_linux_error_message(message: &str) {
     // stderr already carries the message.
     let title = "wow-ui-sim startup error";
     let attempts: &[(&str, &[&str])] = &[
-        ("zenity", &["--error", "--title", title, "--text", message]),
+        (
+            "zenity",
+            &[
+                "--error",
+                "--no-markup",
+                "--title",
+                title,
+                "--text",
+                message,
+            ],
+        ),
         ("kdialog", &["--error", message, "--title", title]),
         ("xmessage", &["-center", message]),
     ];

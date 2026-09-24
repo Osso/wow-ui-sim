@@ -13,6 +13,13 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] `WOW_INSTALL_PATH` (install root) and `WOW_DATA_PATH` (`Data/` dir) override discovery; both are validated by checking that `<root>/Data/data` exists before they win.
 - [ ] wow-ui-sim creates `asset_resolver::CascListfileResolver` with an explicit cache/shared-data location; runtime loading does not set or require `GAME_ENGINE_SHARED_ROOT`.
 
+### Source sync transport
+
+- [ ] A sync process reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file.
+- [ ] Initialization checks every archive index in the selected CDN configuration, reusing individual cached index files; an interrupted index download is not accepted as a complete set.
+- [ ] Encoding-key downloads retry typed transport failures at most three times with exponential backoff and jitter. HTTP status and decode failures remain explicit failures.
+- [ ] Linux Zenity startup errors render as plain text, including literal `<profile>` paths.
+
 ### GUI resolution-cache preparation
 
 - [ ] Before `run_iced_ui`, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
