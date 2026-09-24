@@ -1,3 +1,7 @@
+## [2026-09-24] audit | Record pending Forever remaining-stat coverage
+
+Audited `1a841388d` and `2b3a96d10` against [Forever character-panel remaining stat rows](../specs/forever-character-remaining-stats.md). Exact cached diagnostic `/tmp/wow-character-bug/stat-handlers.stdout` predates both commits and records 15 passes / 10 failures across 25 visible handlers. The same-path Spirit, weapon-predicate, modifier-read, ranged-haste second-return, and defense-tuple gaps are now implemented, while four focused tests await verifier GREEN. Armor penetration remains flat from cached tooltip evidence; cfg preserves other profiles. No handler, full-panel, native, or pixel pass is credited; four asset-content blockers remain. Updated [[forever-character-panel]] and index.
+
 ## [2026-09-24] audit | Record pending Camelot stat and catalog-prewarm follow-ups
 
 Audited `6a076ed46`, `b871b7083`, and `79382f3b6`. The stat contract keeps 100-points-to-1%-crit, class-specific ranged-AP, spirit 0.2/0.1 regen rates, and unseeded spirit 0 as explicit simulator policies; all new GREEN remains pending. Cold evidence records the 19.6-second pre-GUI resolution build, 7.3-second initial catalog lookup, and 266-ms forced FDID `2447783` extract; catalog prewarming has no post-change cold proof yet. Updated [[forever-character-panel]], [[casc-asset-cache]], and [CASC asset loading](../specs/casc-loading.md); four local content blockers remain unchanged.

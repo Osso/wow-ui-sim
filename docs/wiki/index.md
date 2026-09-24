@@ -1,3 +1,7 @@
+## [2026-09-24] audit | Record pending Forever remaining-stat coverage
+
+The pre-change 25-handler diagnostic passed 15 and failed 10 visible Camelot handlers. `1a841388d`/`2b3a96d10` implement the same-path Spirit, weapon-predicate, modifier, ranged-haste, and defense-tuple inputs without altering other profiles; four focused tests await verifier GREEN. Full-panel and handler acceptance remain unproven; four asset-content blockers remain. See [[forever-character-panel]] and [remaining-stat contract](../specs/forever-character-remaining-stats.md).
+
 ## [2026-09-24] investigation | Model Camelot primary-stat contributions
 
 After the speed API tests passed 5/5, unchanged full-UI `ToggleCharacter` reached missing `GetCritChanceFromStat` at `PaperDollFrameStats.lua:291`; commits `6a076ed46`/`b871b7083` add the bounded non-native stat/regen model, pending batched GREEN and replay. Cold evidence also attributes 7.3 seconds of initial texture work to the community catalog; `79382f3b6` prewarms it before GUI drawing, with next cold proof pending. See [[forever-character-panel]] and [stat contribution contract](../specs/forever-character-stat-contributions.md).

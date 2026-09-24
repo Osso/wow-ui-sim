@@ -1,6 +1,6 @@
 # Forever character panel investigation
 
-Opening the Forever character panel first exposed `GetUnitSpeed`, then a separate Camelot primary-stat contribution failure at `GetCritChanceFromStat` after the speed fix. Four formerly unmapped sidetab names are now authoritative; content extraction and complete runtime proof remain pending.
+Opening the Forever character panel first exposed `GetUnitSpeed`, then primary-stat and remaining-stat handler gaps. Four formerly unmapped sidetab names are now authoritative; four asset-content blockers, full-panel acceptance, and complete runtime proof remain pending.
 
 ## Evidence
 
@@ -18,6 +18,8 @@ Mapping is not content availability. Currency, Honor Alliance, and Reputation no
 
 Cached PlayerScriptDocumentation supplies signatures and return counts for six missing Camelot globals: `GetCritChanceFromStat`, `GetSpellCritChanceFromStat`, `GetRangedAttackPowerForStat`, `GetHealthRegenFromSpirit`, `GetManaRegenFromSpirit`, and `GetHealthRegen`. The tooltip multiplies crit fractions by 100 and displays spirit regeneration; the previous `GetManaRegen` intellect baseline does not incorporate spirit. The [bounded model contract](../../specs/forever-character-stat-contributions.md) defines `100` primary-stat points per `1%` crit, class-specific ranged-AP coefficients, `0.2` health and `0.1` mana spirit rates, and default spirit `0` as explicit simulator policies, not native-verified values. Behavioral tests and the unchanged replay still require GREEN verification.
 
+Before the remaining-stat commits, exact cached handler diagnostic `/tmp/wow-character-bug/stat-handlers.stdout` recorded 15 passes and 10 failures across 25 visible vendor handlers. The failures correspond to now-implemented same-path inputs: Spirit constant, dual-wield/ranged-weapon predicates, modifier reads, `GetRangedHaste` second return, and `UnitDefenseSkill` tuple. `1a841388d` adds that bounded Forever-only surface and four focused tests; `2b3a96d10` preserves state-borrow errors from the weapon predicates. Verifier GREEN has not run, so this is implementation coverage, not a new handler or panel pass. `ARMOR_PENETRATION_TOOLTIP` identifies armor penetration as a flat amount, not a percentage. Existing profile contracts remain cfg-gated.
+
 The user's earlier panel log spent 15.4 seconds building the resolution cache during an 18.4-second draw. New cold GUI evidence records a 19.6-second resolution-cache build after post-load workarounds at 17.5 seconds and before font initialization at 47.0 seconds. Initial first draw then spent 7.3 seconds in texture work (8.7 seconds total), attributed to the first community-catalog lookup; commit `79382f3b6` prewarms that catalog before GUI drawing. A later forced fresh CASC extract for FDID `2447783` took 266 ms. The next cold run is pending, so no full startup-stall fix is claimed.
 
 ## Limits and next boundary
@@ -30,10 +32,12 @@ Commits `7be534fff` and `57ffc3d01` add the player-speed and GUI resolution-cach
 | Generator behavioral RED/GREEN | passed |
 | Icon extraction and character-panel runtime | pending GREEN |
 | Remaining content availability | blocked: Stats `8197104`, plus `8175455`, `8245174`, `8254784` |
-| Speed API tests | 5/5 GREEN; full UI hits next missing stat global |
-| Six stat/regen global model tests | committed; batched GREEN pending |
+| Earlier independent proof | cache 1/1, listfile 3/3, primary-stat 4/4, speed 5/5 GREEN |
+| Remaining-stat handler baseline | 15/25 passed before `1a841388d`/`2b3a96d10`; 10 same-path gaps now implemented, unverified |
+| Four remaining-stat tests | committed; verifier GREEN pending |
+| Full panel and 25-handler diagnostic | not yet passing after the commits |
 | API/cache slice tests and next cold GUI run | pending verifier |
-| Native, pixels, full-panel pass | not run |
+| Native, pixels | not run |
 
 No complete-panel, successful-regression, native, source-provenance, asset-extraction, or pixel claim follows from this record.
 
@@ -46,6 +50,8 @@ No complete-panel, successful-regression, native, source-provenance, asset-extra
 - `5ca35ab62` — Forever character movement-stat regression test.
 - `6a076ed46`, `b871b7083` — bounded Forever stat/regen model and borrow-order correction.
 - `79382f3b6` — community-catalog prewarm before GUI drawing.
+- `1a841388d`, `2b3a96d10` — remaining-stat surface and predicate state-error propagation.
+- `/tmp/wow-character-bug/stat-handlers.stdout` — pre-change 25-handler diagnostic (15 pass, 10 fail).
 - `/tmp/wow-character-bug/verify-speed.stderr` and `stat-surface-red.stdout` — previous full-UI failure and six missing-global probes.
 - `/tmp/wow-character-bug/cold-gui/{stderr,result.json}` — bounded cold GUI timing evidence.
 - Cached `Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua` and `Blizzard_UIPanels_Game/Camelot/PaperDollFrameStats.lua` — signatures, return counts, and tooltip consumption.

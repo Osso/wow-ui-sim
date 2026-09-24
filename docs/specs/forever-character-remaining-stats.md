@@ -1,20 +1,41 @@
 # Forever character-panel remaining stat rows
 
+Forever Camelot character-panel handlers consume these Forever-only stat globals and state reads. This is the contract; implementation details and diagnostic history are in [[forever-character-panel]].
+
 ## What it must do
 
-- [ ] Forever publishes `LE_UNIT_STAT_SPIRIT = 5` without changing other profiles. The existing `UnitStat('player', 5)` reads the explicitly unseeded spirit value.
-- [ ] Forever `IsDualWielding()` is true only when equipped main-hand slot 16 and off-hand slot 17 both resolve to one-hand weapons in the item catalog; a shield, missing item, or two-hand weapon is not a dual-wield pair. `IsRangedWeapon()` is true when slot 18 resolves to a ranged weapon. Both respond to item removal/replacement using existing item inventory-type classification, not class guesses.
-- [ ] Forever `GetRangedHitModifier()`, `GetArmorPenetration()`, `GetSpellPenetration()`, `GetOverrideAPBySpellPower()`, and `GetOverrideSpellPowerByAP()` each return one number from their own player CharacterStats fields: `ranged_hit_modifier_pct`, `armor_penetration`, `spell_penetration`, `spell_power_to_attack_power`, and `attack_power_to_spell_power`. These fields start at explicit simulator zero, not claimed native defaults. Armor and spell penetration are flat amounts; ranged hit is a percent; override coefficients are direct configured numbers.
-- [ ] Forever `GetRangedHaste()` returns `(haste_pct(), quiver_haste_pct)`; other profiles retain their existing single haste return. Unseeded quiver haste is explicitly zero.
-- [ ] Forever `UnitDefenseSkill(unit)` uses the same modeled unit/level resolution as `UnitDefense(unit)` and returns `(max(level * 5, 0), 0)`. The second value is an explicit zero because defense bonuses have no modeled source. Existing `UnitDefense` retains one return on all profiles.
+- [ ] **Spirit.** Forever publishes `LE_UNIT_STAT_SPIRIT = 5`; existing `UnitStat('player', 5)` reads the explicitly unseeded spirit value without changing other profiles.
+- [ ] **Equipment predicates.** `IsDualWielding()` is true only when slots 16 and 17 both resolve through the item catalog to one-hand weapons. A shield, missing item, or two-hand weapon is not a pair. `IsRangedWeapon()` is true when slot 18 resolves to a ranged weapon. Both reflect item replacement and removal through existing inventory-type classification, not class guesses.
+- [ ] **Modifier reads.** `GetRangedHitModifier()`, `GetArmorPenetration()`, `GetSpellPenetration()`, `GetOverrideAPBySpellPower()`, and `GetOverrideSpellPowerByAP()` each return one number from the corresponding player `CharacterStats` field. These fields start at explicit simulator zero. Armor and spell penetration are flat amounts; ranged hit is a percent; override values are direct configured coefficients.
+- [ ] **Ranged haste.** Forever `GetRangedHaste()` returns `(haste_pct(), quiver_haste_pct)` with unseeded quiver haste zero. Other profiles retain their existing one-return shape.
+- [ ] **Defense skill.** `UnitDefenseSkill(unit)` shares `UnitDefense(unit)`'s modeled unit/level resolution and returns `(max(level * 5, 0), 0)`. The second value is explicit zero because defense bonuses have no modeled source. `UnitDefense` retains one return on every profile.
 
-Cached `PlayerScriptDocumentation.lua` supplies the two-argument return shapes and `UnitDocumentation.lua` the defense tuple. Cached `ARMOR_PENETRATION_TOOLTIP` says attacks ignore `%d` armor, establishing flat units. The item catalog and `C_Item`'s inventory-type classifier supply equipment classification. These are simulator model inputs, not native-verified stat formulas.
+Cached `PlayerScriptDocumentation.lua` supplies the two-return shapes and `UnitDocumentation.lua` the defense tuple. Cached `ARMOR_PENETRATION_TOOLTIP` establishes flat armor-penetration units. These inputs and zero defaults are simulator policy, not native-verified formulas.
 
-## Limits
+## How it works
 
-No combat resolution, talents, auras, quiver simulation, native coefficient claim, vendor changes, or global implementations of vendor-local `GetEffectiveDefenseSkill` and `GetRangedDamage`.
+- [[forever-character-panel]] — handler diagnostic and current proof boundary.
+- [Lua API](../lua-api.md) — global registration and state boundary.
+- [Forever character stat contributions](forever-character-stat-contributions.md) — adjacent primary-stat and regeneration contract.
 
-## Tests
+## Implementation inventory
 
-- `tests/forever_character_remaining_stats.rs`: grouped observable Lua constant/arity, configured modifiers and isolation, unit-resolution tuple, equipped-item lifecycle (one-hand, shield, bow, ranged-right, removal). Execution deferred to main's final verifier under the explicit no-Cargo batch instruction.
-- `tests/wowforever_character_panel.rs`: main-owned unchanged full-panel acceptance, followed by all 25 actual cached vendor handlers.
+- `src/lua_api/env_init/enums.rs` — Forever spirit constant.
+- `src/lua_api/globals/real/combat_stats.rs` — modifier reads, predicates, ranged-haste shape, and state-error propagation.
+- `src/lua_api/globals/unit_stats.rs` — spirit and defense-skill reads.
+- `src/lua_api/state_types/character_world.rs` — modeled modifier and quiver-haste fields.
+
+## Tests asserting this spec
+
+- `tests/forever_character_remaining_stats.rs` — four observable Lua tests: global/arity, modifier isolation, defense tuple, and equipped-item lifecycle. Pending verifier GREEN.
+- `tests/wowforever_character_panel.rs` — main-owned full-panel acceptance and 25 cached vendor handlers. Not yet passing.
+
+## Known gaps (current cycle)
+
+- [ ] Obtain verifier GREEN for the four remaining-stat tests.
+- [ ] Re-run the unchanged full panel and all 25 cached vendor handlers after the remaining-stat proof.
+- [ ] Resolve four asset-content blockers: Stats `8197104`, `8175455`, `8245174`, and `8254784`.
+
+## Out of scope
+
+Combat resolution; talents, auras, or quiver simulation; native coefficient equivalence; vendor Lua changes; global implementations of vendor-local `GetEffectiveDefenseSkill` or `GetRangedDamage`; and changes to non-Forever profiles.
