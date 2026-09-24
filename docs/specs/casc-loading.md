@@ -15,10 +15,10 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ### GUI resolution-cache preparation
 
-- [x] Before entering GUI rendering, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
-- [x] A fresh cache is built before GUI rendering; a warm cache is reused without rebuilding. Preparation failures stop GUI startup with an explicit error.
-- [x] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
-- [x] Preparation does not promise to initialize the lazy runtime archive reader or extract textures before the first render.
+- [ ] Before `run_iced_ui`, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
+- [ ] A fresh cache is built before GUI rendering; a warm cache is reused without rebuilding. Preparation failure stops GUI startup with an explicit error.
+- [ ] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
+- [ ] Preparation does not initialize the lazy runtime archive reader or extract textures before the first render.
 
 ### Texture resolution
 
@@ -63,7 +63,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Tests asserting this spec
 
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled and error boundaries (cold/warm skip without an install)
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled, and error boundaries; not yet verified in this cycle (cold/warm skip without an install)
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC
@@ -72,7 +72,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Known gaps (current cycle)
 
-- [ ] No regression coverage for the `WOW_SIM_CASC=0` opt-out path — the OnceLock state is process-global and hard to flip mid-test.
+- [ ] Run `asset_resolver_config::tests::gui_resolution_cache_preparation`; no GREEN result is recorded yet.
 - [ ] No assertion that the warm-cache path (`out_path.exists()` short-circuit in `try_casc_resolve`) is actually faster than the cold path.
 - [ ] `asset_resolver::lookup_path` is not backslash-tolerant; the loader normalises but consumers calling the resolver directly hit `None` on `Fonts\\FRIZQT__.TTF`. Consider lifting normalisation into `asset-resolver` upstream.
 

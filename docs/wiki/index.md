@@ -1,6 +1,6 @@
 ## [2026-09-24] investigation | Record Forever character-panel blocker
 
-Cached binary `2ef368d3…` reproduces the exact user `GetUnitSpeed` nil traceback through `ToggleCharacter`; source provenance is unproven. `5ca35ab62` adds a pending Forever open/close/reopen movement-stat regression. Fresh 146,353-row listfile regeneration retains four absent sidetab icons; resolution/index/archive evidence and the 15.4s cache-build / 18.4s draw observation remain diagnostic only. No fix, passing regression, native, source, asset, or pixel claim. See [[forever-character-panel]].
+Cached binary `2ef368d3…` reproduces the exact user `GetUnitSpeed` nil traceback through `ToggleCharacter`; source provenance is unproven. `7be534fff` adds player-speed modeling and `57ffc3d01` prepares the GUI resolution cache, but neither has recorded GREEN proof. `5ca35ab62` adds a pending Forever open/close/reopen movement-stat regression. Fresh 146,353-row listfile regeneration retains four absent sidetab icons; resolution/index/archive evidence and the 15.4s cache-build / 18.4s draw observation remain diagnostic only. No passing regression, native, source, asset, or pixel claim. See [[forever-character-panel]].
 
 ## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
 

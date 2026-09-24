@@ -1,3 +1,7 @@
+## [2026-09-24] audit | Align pending GUI cache and Forever speed contracts
+
+Audited `57ffc3d01` and `7be534fff` against [CASC asset loading](../specs/casc-loading.md) and [Forever unit speed](../specs/unit-speed.md). Both contracts remain unchecked pending focused GREEN results. [[forever-character-panel]] now links the cache-preparation contract without duplicating its behavior.
+
 ## [2026-09-24] investigation | Record Forever character-panel blocker
 
 Added [[forever-character-panel]] from `/tmp/wow-character-bug/proof-ledger.json` and pending regression commit `5ca35ab62`. Records only cached-binary reproduction, listfile/resolution/index/archive observations, and cache timing; no API/cache fix or final proof claim.

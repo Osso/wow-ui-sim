@@ -16,7 +16,7 @@ The user's panel log spent 15.4 seconds building the resolution cache during an 
 
 ## Limits and next boundary
 
-The missing API and startup-cache fixes are pending. No complete-panel, successful-regression, native, source-provenance, asset-resolution, or pixel claim follows from this record.
+Commits `7be534fff` and `57ffc3d01` add the player-speed and GUI resolution-cache-preparation slices, respectively; their tests have no recorded GREEN result. The cache-preparation contract is [CASC asset loading](../../specs/casc-loading.md). No complete-panel, successful-regression, native, source-provenance, asset-resolution, or pixel claim follows from this record.
 
 ## Sources
 
@@ -28,3 +28,4 @@ The missing API and startup-cache fixes are pending. No complete-panel, successf
 
 - [[forever-addon-comparison]] — bounded cached-addon compatibility evidence.
 - [[tick-cooldown-scan]] — separate asset-resolver cache investigation.
+- [CASC asset loading](../../specs/casc-loading.md) — GUI resolution-cache-preparation contract.
