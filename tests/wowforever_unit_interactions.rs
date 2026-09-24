@@ -2,6 +2,103 @@
 #![cfg(feature = "client-wowforever")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+fn unit_speed_stationary_and_translation_lifecycle() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local current, run, flight, swim = GetUnitSpeed("player")
+        assert(current == 0 and run == 7 and flight == 7 and swim == 4.722222)
+        MoveForwardStart()
+        assert(IsPlayerMoving())
+        current, run, flight, swim = GetUnitSpeed("self")
+        assert(current == 7 and run == 7 and flight == 7 and swim == 4.722222)
+        TargetUnit("player")
+        assert(select(1, GetUnitSpeed("target")) == 7)
+        MoveForwardStop()
+        assert(not IsPlayerMoving())
+        assert(select(1, GetUnitSpeed("player")) == 0)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn unit_speed_prefers_swim_then_flight_and_only_moves_when_moving() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        A_Admin.SetFlying(true)
+        assert(select(1, GetUnitSpeed("player")) == 0)
+        A_Admin.SetMoving(true)
+        assert(select(1, GetUnitSpeed("player")) == 7)
+        A_Admin.SetSwimming(true)
+        assert(select(1, GetUnitSpeed("player")) == 4.722222)
+        A_Admin.SetSwimming(false)
+        assert(select(1, GetUnitSpeed("player")) == 7)
+        A_Admin.SetFlying(false)
+        assert(select(1, GetUnitSpeed("player")) == 7)
+        A_Admin.SetMoving(false)
+        assert(select(1, GetUnitSpeed("player")) == 0)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn unit_speed_reads_configured_capabilities() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.player.movement_speeds.run = 9.0;
+        state.player.movement_speeds.flight = 15.0;
+        state.player.movement_speeds.swim = 5.0;
+    }
+    env.exec(
+        r#"
+        local current, run, flight, swim = GetUnitSpeed("player")
+        assert(current == 0 and run == 9 and flight == 15 and swim == 5)
+        A_Admin.SetMoving(true)
+        assert(select(1, GetUnitSpeed("player")) == 9)
+        A_Admin.SetFlying(true)
+        assert(select(1, GetUnitSpeed("player")) == 15)
+        A_Admin.SetSwimming(true)
+        current, run, flight, swim = GetUnitSpeed("player")
+        assert(current == 5 and run == 9 and flight == 15 and swim == 5)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn unit_speed_unknown_and_nonplayer_tokens_have_no_player_speed() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        A_Admin.SetMoving(true)
+        A_Admin.SetTarget("Other", 70, 2, false)
+        for _, token in ipairs({"unknown", "target", "pet", "party1"}) do
+            local current, run, flight, swim = GetUnitSpeed(token)
+            assert(current == 0 and run == 0 and flight == 0 and swim == 0, token)
+        end
+        assert(not pcall(GetUnitSpeed))
+        assert(not pcall(GetUnitSpeed, {}))
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn unit_speed_survives_post_cleanup_restoration() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(select(2, GetUnitSpeed('player')) == 7)")
+        .unwrap();
+    env.loader_env().restore_post_cleanup_globals().unwrap();
+    env.exec("MoveForwardStart(); assert(select(1, GetUnitSpeed('player')) == 7)")
+        .unwrap();
+}
+
 fn consumer() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()

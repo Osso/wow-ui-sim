@@ -132,6 +132,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-wowforever")]
     super::real::combo_points::register_all(lua)?;
     super::real::unit_interaction::register_all(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    super::real::unit_speed::register_all(lua)?;
     super::real::preferred_interact::register_all(lua)?;
     super::unit_misc::register_all(lua)?;
     #[cfg(feature = "aura-containers")]

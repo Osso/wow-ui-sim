@@ -136,6 +136,26 @@ pub struct MovementState {
     pub swimming: bool,
 }
 
+/// Simulator-assumed speed capabilities, in yards per second.
+#[cfg(feature = "client-wowforever")]
+#[derive(Debug, Clone)]
+pub struct MovementSpeeds {
+    pub run: f64,
+    pub flight: f64,
+    pub swim: f64,
+}
+
+#[cfg(feature = "client-wowforever")]
+impl Default for MovementSpeeds {
+    fn default() -> Self {
+        Self {
+            run: 7.0,
+            flight: 7.0,
+            swim: 4.722222,
+        }
+    }
+}
+
 /// Player character state: identity, combat, power, health, buffs, spec.
 ///
 /// `Default` is derived: every field is its zero/empty value. The seeded
@@ -171,6 +191,8 @@ pub struct PlayerState {
     pub honor_level: i32,
     pub buffs: Vec<AuraInfo>,
     pub movement: MovementState,
+    #[cfg(feature = "client-wowforever")]
+    pub movement_speeds: MovementSpeeds,
     /// Explicit player orientation; unknown initially by simulator policy.
     #[cfg(feature = "client-wowforever")]
     pub facing: Option<f64>,

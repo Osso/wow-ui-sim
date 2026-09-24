@@ -58,6 +58,8 @@ pub mod ui_widget_container;
 pub mod unit_interaction;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
+#[cfg(feature = "client-wowforever")]
+pub mod unit_speed;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
 pub mod xp_honor_rest;
