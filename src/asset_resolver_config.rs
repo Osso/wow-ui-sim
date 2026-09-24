@@ -88,6 +88,7 @@ mod tests {
         if let Ok(mode) = std::env::var("WOW_SIM_GUI_CACHE_TEST_MODE") {
             match mode.as_str() {
                 "cold" => {
+                    super::configure_casc_product_env();
                     let install = asset_resolver::wow_install_path().expect("test install");
                     let cache_root = std::path::PathBuf::from(
                         std::env::var_os("ASSET_RESOLVER_CACHE_DIR").unwrap(),
