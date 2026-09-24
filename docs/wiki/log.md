@@ -2,9 +2,9 @@
 
 Audited `57ffc3d01` and `7be534fff` against [CASC asset loading](../specs/casc-loading.md) and [Forever unit speed](../specs/unit-speed.md). Both contracts remain unchecked pending focused GREEN results. [[forever-character-panel]] now links the cache-preparation contract without duplicating its behavior.
 
-## [2026-09-24] investigation | Record Forever character-panel blocker
+## [2026-09-24] investigation | Resolve Forever character-panel sidetab mappings
 
-Added [[forever-character-panel]] from `/tmp/wow-character-bug/proof-ledger.json` and pending regression commit `5ca35ab62`. Records only cached-binary reproduction, listfile/resolution/index/archive observations, and cache timing; no API/cache fix or final proof claim.
+Updated [[forever-character-panel]] after auditing `34975b1c2` and complete active-root evidence. Uppercase-backslash direct Jenkins hashes resolve the four formerly unmapped sidetab names; the generator now preserves explicit override FDIDs. Supersedes all-four-unmapped blocker status, but leaves extraction/runtime GREEN pending and four content blockers: Stats plus `8175455`, `8245174`, and `8254784`. API/cache verifier proof, native, pixels, and full-panel pass remain uncredited.
 
 ## [2026-09-24] investigation | Stop cross-project listfile cache rebuilds
 
