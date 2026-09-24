@@ -8,9 +8,11 @@ The cached binary with SHA-256 `2ef368d3a4587a2a1ae820afc62e64ad9c4138c21612a155
 
 Commit `5ca35ab62` adds a Forever-only regression test for opening, closing, and reopening the character panel; it exercises movement-stat discovery plus run/swim updates. Final proof for that test is pending, so it is not credited as passing.
 
-The active installation identifies as Forever `1.60.1.69977`, build `3bd89ce2721f7c75e7525dc83741076f`. A fresh upstream community CSV regenerated 146,353 rows identical to the tracked limited listfile, but it lacks `inv_sidetab_currency_c60`, `inv_sidetab_honor_alliance_c60`, `inv_sidetab_reputation2_c60`, and `inv_sidetab_stats_c60`.
+The active installation identifies as Forever `1.60.1.69977`, build `3bd89ce2721f7c75e7525dc83741076f`; cached UI provenance still identifies `1.60.1.69913`, build `6c0df97e8e481a9a41600e373367c200`. That difference is not by itself proof of the texture failures. A fresh upstream community CSV regenerated 146,353 rows identical to the tracked limited listfile, but it lacks `inv_sidetab_currency_c60`, `inv_sidetab_honor_alliance_c60`, `inv_sidetab_reputation2_c60`, and `inv_sidetab_stats_c60`.
 
-The local resolution database contains matching FDIDs `8175455`, `8245174`, and `8254784` for user-supplied encoding keys, while their raw nine-byte key prefixes occur in none of 40 local `.idx` files. This is not evidence that the files are unavailable: 220 local `data.*` archives exist. The observed panel run spent 15.4 seconds building cache during an 18.4-second draw.
+The local resolution database contains matching FDIDs `8175455`, `8245174`, and `8254784` for user-supplied encoding keys. Parsing their content entries from active `encoding.bin`, with page MD5 verification, finds exactly one encoding key each: no alternate encoding was discarded for these failures. Their nine-byte key prefixes occur in none of 40 local `.idx` files; control FDID `2447783` matches two indices. Although 220 local `data.*` archives exist, these three textures have no indexed local archive location. No resolver substitution or speculative FDID override was added.
+
+The user's panel log spent 15.4 seconds building the resolution cache during an 18.4-second draw. This timing is user-supplied evidence, not a newly measured benchmark.
 
 ## Limits and next boundary
 
@@ -19,6 +21,7 @@ The missing API and startup-cache fixes are pending. No complete-panel, successf
 ## Sources
 
 - `/tmp/wow-character-bug/proof-ledger.json` — cached-binary reproduction, listfile regeneration, build, resolution, index, and archive observations.
+- `/tmp/wow-character-bug/all-encoding-keys.json` and `local-index-evidence.json` — complete encoding-key lists, page checksum validation and indexed control.
 - `5ca35ab62` — pending Forever character movement-stat regression test.
 
 ## See Also
