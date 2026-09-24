@@ -109,7 +109,7 @@ fn wait_before_response_retry(
     Ok(())
 }
 
-fn retry_delay(retry_after: Option<&str>, attempt: u32) -> crate::Result<Duration> {
+pub(super) fn retry_delay(retry_after: Option<&str>, attempt: u32) -> crate::Result<Duration> {
     let now = SystemTime::now();
     let jitter = now
         .duration_since(SystemTime::UNIX_EPOCH)

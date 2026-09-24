@@ -6,6 +6,119 @@ use std::cell::RefCell;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+#[cfg(feature = "casc")]
+fn serve_cdn_responses(
+    responses: Vec<Option<(&'static str, &'static [u8])>>,
+) -> (String, std::thread::JoinHandle<usize>) {
+    use std::io::{Read, Write};
+    use std::time::{Duration, Instant};
+
+    let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+    let url = format!("http://{}/source", listener.local_addr().unwrap());
+    let server = std::thread::spawn(move || {
+        listener.set_nonblocking(true).unwrap();
+        let mut requests = 0;
+        let mut last_request = Instant::now();
+        while last_request.elapsed() < Duration::from_secs(1) {
+            match listener.accept() {
+                Ok((mut socket, _)) => {
+                    socket
+                        .set_read_timeout(Some(Duration::from_secs(2)))
+                        .unwrap();
+                    let mut request = Vec::new();
+                    let mut byte = [0];
+                    while !request.ends_with(b"\r\n\r\n") {
+                        socket.read_exact(&mut byte).unwrap();
+                        request.push(byte[0]);
+                    }
+                    assert!(request.starts_with(b"GET /source HTTP/1.1\r\n"));
+                    let response = responses.get(requests).expect("unexpected retry");
+                    requests += 1;
+                    last_request = Instant::now();
+                    if let Some((status, body)) = response {
+                        write!(
+                            socket,
+                            "HTTP/1.1 {status}\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                            body.len()
+                        )
+                        .unwrap();
+                        socket.write_all(body).unwrap();
+                    }
+                }
+                Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                    std::thread::sleep(Duration::from_millis(10));
+                }
+                Err(error) => panic!("accept source request: {error}"),
+            }
+        }
+        requests
+    });
+    (url, server)
+}
+
+#[cfg(feature = "casc")]
+fn fetch_fixture_json(url: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let client = reqwest::blocking::Client::builder()
+        .no_proxy()
+        .timeout(std::time::Duration::from_secs(2))
+        .build()?;
+    let response = client.get(url).send()?.error_for_status()?;
+    Ok(serde_json::from_slice(&response.bytes()?)?)
+}
+
+#[test]
+#[cfg(feature = "casc")]
+fn cdn_transport_failure_retries_and_returns_verified_response() {
+    let (url, server) = serve_cdn_responses(vec![None, Some(("200 OK", b"[79,75]"))]);
+    let result = super::retry_cdn_fetch(
+        || fetch_fixture_json(&url),
+        |error: &Box<dyn std::error::Error>| {
+            error
+                .downcast_ref::<reqwest::Error>()
+                .is_some_and(super::is_retryable_cdn_transport_error)
+        },
+    );
+    assert_eq!(result.unwrap(), b"OK");
+    assert_eq!(server.join().unwrap(), 2);
+}
+
+#[test]
+#[cfg(feature = "casc")]
+fn cdn_transport_failure_stops_after_three_attempts() {
+    let (url, server) = serve_cdn_responses(vec![None, None, None]);
+    let result = super::retry_cdn_fetch(
+        || fetch_fixture_json(&url),
+        |error: &Box<dyn std::error::Error>| {
+            error
+                .downcast_ref::<reqwest::Error>()
+                .is_some_and(super::is_retryable_cdn_transport_error)
+        },
+    );
+    assert!(result.is_err());
+    assert_eq!(server.join().unwrap(), 3);
+}
+
+#[test]
+#[cfg(feature = "casc")]
+fn cdn_http_status_and_decode_failures_do_not_retry() {
+    for response in [
+        ("404 Not Found", b"missing".as_slice()),
+        ("200 OK", b"invalid json".as_slice()),
+    ] {
+        let (url, server) = serve_cdn_responses(vec![Some(response)]);
+        let result = super::retry_cdn_fetch(
+            || fetch_fixture_json(&url),
+            |error: &Box<dyn std::error::Error>| {
+                error
+                    .downcast_ref::<reqwest::Error>()
+                    .is_some_and(super::is_retryable_cdn_transport_error)
+            },
+        );
+        assert!(result.is_err());
+        assert_eq!(server.join().unwrap(), 1);
+    }
+}
+
 fn unique_temp_dir(label: &str) -> PathBuf {
     let unique = SystemTime::now()
         .duration_since(UNIX_EPOCH)

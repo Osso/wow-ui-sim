@@ -390,8 +390,45 @@ fn fetch_cdn_encoding_key(
     encoding_key: &cascette_crypto::EncodingKey,
 ) -> std::result::Result<Vec<u8>, String> {
     let product = crate::asset_resolver_config::active_profile_casc_product();
-    casc_extract::fetch_encoding_key_blocking(product, encoding_key)
-        .map_err(|error| format!("{error:#}"))
+    retry_cdn_fetch(
+        || casc_extract::fetch_encoding_key_blocking(product, encoding_key),
+        |error| {
+            error.chain().any(|cause| {
+                cause
+                    .downcast_ref::<reqwest::Error>()
+                    .is_some_and(is_retryable_cdn_transport_error)
+            })
+        },
+    )
+    .map_err(|error| format!("{error:#}"))
+}
+
+#[cfg(feature = "casc")]
+fn is_retryable_cdn_transport_error(error: &reqwest::Error) -> bool {
+    error.status().is_none()
+        && !error.is_decode()
+        && (error.is_connect() || error.is_timeout() || error.is_request() || error.is_body())
+}
+
+#[cfg(feature = "casc")]
+fn retry_cdn_fetch<E: std::fmt::Display>(
+    mut fetch: impl FnMut() -> std::result::Result<Vec<u8>, E>,
+    is_retryable: impl Fn(&E) -> bool,
+) -> std::result::Result<Vec<u8>, E> {
+    for attempt in 0..3 {
+        match fetch() {
+            Ok(data) => return Ok(data),
+            Err(error) if attempt < 2 && is_retryable(&error) => {
+                eprintln!("Retrying Blizzard CDN fetch after transport error: {error}");
+                std::thread::sleep(
+                    pinned_download::retry_delay(None, attempt)
+                        .expect("retry delay without Retry-After is valid"),
+                );
+            }
+            Err(error) => return Err(error),
+        }
+    }
+    unreachable!("each final CDN attempt returns")
 }
 
 #[cfg(not(feature = "casc"))]
