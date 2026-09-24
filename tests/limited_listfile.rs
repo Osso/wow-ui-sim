@@ -15,6 +15,24 @@ fn bundled_limited_listfile_resolves_common_assets_case_insensitively() {
 }
 
 #[test]
+fn bundled_limited_listfile_resolves_forever_character_tab_icons() {
+    // Verified against the active Forever 1.60.1.69977 CASC root name hashes.
+    for (name, fdid) in [
+        ("Currency", 8197078),
+        ("Honor_Alliance", 8197097),
+        ("Reputation2", 8197103),
+        ("Stats", 8197104),
+    ] {
+        let path = format!("Interface\\Icons\\INV_SideTab_{name}_c60");
+        assert_eq!(
+            wow_ui_sim::limited_listfile::lookup_texture_path(&path),
+            Some(fdid),
+            "{path}"
+        );
+    }
+}
+
+#[test]
 fn bundled_limited_listfile_preserves_canonical_override_path_casing() {
     let expected_entries = [
         ("fonts/frizqt__.ttf", 615960, "Fonts/FRIZQT__.TTF"),
