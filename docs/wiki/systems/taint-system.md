@@ -47,7 +47,7 @@ Blizzard source also matches this: outbound bridge files explicitly capture `loc
 
 For shared Blizzard libraries, publication into secureenv is an explicit loader allowlist, not generic global mirroring. The allowlist replays `Blizzard_CombatLogBase` and `Blizzard_CatalogShopSharedUtil` so secure consumers receive `CombatLogUtil` and `CatalogShopUtil`; focused tests verify both `_G` and `__secureenv` bindings. See [[addon-loading]] for the complete allowlist and replay lifecycle.
 
-`C_ClickBindings` now has a per-environment interaction profile. Its initial unmodified LeftButton target and RightButton context-menu entries are inferred simulator policy, not native-probed defaults; `GetProfileInfo`, `SetProfileByInfo`, `GetBindingType`, `GetEffectiveInteractionButton`, and `ResetCurrentProfile` operate on that profile. `ExecuteBinding()` remains an inert temporary gap. Commit `c00f44d0e` records targeted profile coverage 2/2 and unchanged Blizzard `SecureUnitButton_OnClick` player/party coverage 1/1. The full PlayerFrame click-chain test currently fails because `*type1` is nil; a runtime release `target` attribute does not establish a whole-click or GUI pass.
+`C_ClickBindings` has a per-environment interaction profile. Its unmodified defaults are inferred simulator policy, not native-probed behavior; `ExecuteBinding()` remains an inert temporary gap. The [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) is the current contract and proof SSOT.
 
 `set_in_both_envs_rilua(key, value)` registers named frames in both environments so frame globals are visible from both.
 
@@ -140,7 +140,7 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - `tests/protected_frame_enforcement.rs` — combat lockdown coverage
 - `tests/secure_handler_fallback.rs` — SecureHandler fallback coverage
 - `tests/security_api.rs` — state driver and `securecallmethod` coverage
-- [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) — bounded profile contract and current full-chain failure
+- [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) — bounded profile contract and current proof
 
 Removed/stale paths that older docs may mention:
 

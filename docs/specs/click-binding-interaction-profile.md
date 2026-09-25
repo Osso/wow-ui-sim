@@ -22,17 +22,16 @@
 
 ## Tested scope
 
-Commit `c00f44d0e` records targeted simulator tests only:
-
-- Profile queries, replacement, copied results, effective-button mapping, and reset: 2/2.
-- Unchanged Blizzard `SecureUnitButton_OnClick` targets `player` and `party1` through the modeled profile: 1/1.
-
-The full Blizzard UI click-chain test currently fails: `PlayerFrame:GetAttribute("*type1")` is nil. Main integration is investigating that frame-attribute path. A runtime release had a `target` attribute, but that does not prove the full click chain, GUI hit testing, or a successful PlayerFrame target action.
+- Commit `c00f44d0e`: profile queries, replacement, copied results, effective-button mapping, and reset: 2/2; unchanged Blizzard `SecureUnitButton_OnClick` targets `player` and `party1`: 1/1.
+- Commit `dfcacefbe` replaces the handpicked fixture startup list with production Blizzard Game-screen discovery/loading. Independent inspection of `/tmp/wow-unit-frame-bug/click-production-fixture.log` records `blizzard_full_ui_click_chain_targets_and_casts` PASS 1/1: PlayerFrame and PartyFrame target their units, and spell/action paths cast Flash of Light. The PlayerFrame assertion has no direct `TargetUnit` fallback.
+- The owned prior-release probe `/tmp/wow-unit-frame-bug/aura-global/probe.txt` records PlayerFrame `target` and `menu` attributes. Those attributes are supporting configuration evidence, not separate GUI or native proof.
+- Final Rust checks remain pending.
 
 ## Known gaps (current cycle)
 
 - [ ] Modifier assignments beyond the unmodified default are simulator-defined; native modifier semantics are unverified.
-- [ ] Full PlayerFrame/PartyFrame click-chain coverage remains failing at PlayerFrame `*type1`; no whole-click or GUI pass is established.
+- [ ] New-release GUI hit-testing proof remains pending.
+- [ ] A separate target-aura `OnUpdate` error is under investigation; it is outside the click-chain result.
 
 ## Out of scope
 
