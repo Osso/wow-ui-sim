@@ -1,7 +1,92 @@
+use std::fs;
+
+use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
+}
+
+#[test]
+fn frozen_addon_namespace_does_not_freeze_callback_state_or_later_addons() {
+    let directory = tempfile::tempdir().unwrap();
+    let first = directory.path().join("FreezeNamespaceProbe");
+    let second = directory.path().join("AfterFreezeProbe");
+    fs::create_dir(&first).unwrap();
+    fs::create_dir(&second).unwrap();
+    fs::write(
+        first.join("FreezeNamespaceProbe.toc"),
+        "## Title: Freeze namespace probe\nFreezeNamespaceProbe.lua\n",
+    )
+    .unwrap();
+    fs::write(
+        first.join("FreezeNamespaceProbe.lua"),
+        r#"
+        local _, addon = ...
+        local pending = { AfterFreezeProbe = "waiting" }
+        local child = { label = "child-alive" }
+        addon.child = child
+        addon.onLoaded = function(name)
+            if name == "AfterFreezeProbe" then
+                pending[name] = nil
+                return child.label
+            end
+        end
+        FreezeNamespaceProbe = addon
+        FreezeLoadedEvents = {}
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("ADDON_LOADED")
+        frame:SetScript("OnEvent", function(_, _, name)
+            FreezeLoadedEvents[#FreezeLoadedEvents + 1] = name
+            if name == "AfterFreezeProbe" then
+                FreezeCallbackResult = addon.onLoaded(name)
+                FreezePendingCleared = pending[name] == nil
+            end
+        end)
+        table.freeze(addon)
+        "#,
+    )
+    .unwrap();
+    fs::write(
+        second.join("AfterFreezeProbe.toc"),
+        "## Title: After freeze probe\nAfterFreezeProbe.lua\n",
+    )
+    .unwrap();
+    fs::write(
+        second.join("AfterFreezeProbe.lua"),
+        r#"
+        AfterFreezeGlobal = "loaded-after-freeze"
+        AfterFreezeMatch = string.match("callback-alive", "callback")
+        "#,
+    )
+    .unwrap();
+
+    let env = env();
+    let loaded = load_addon(&env.loader_env(), &first.join("FreezeNamespaceProbe.toc"))
+        .expect("first addon chunk should load");
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("FreezeNamespaceProbe")])
+        .expect("first addon callback should dispatch");
+    let loaded = load_addon(&env.loader_env(), &second.join("AfterFreezeProbe.toc"))
+        .expect("later addon chunk should load after freeze");
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("AfterFreezeProbe")])
+        .expect("later addon callback should dispatch");
+    env.exec(
+        r#"
+        assert(table.concat(FreezeLoadedEvents, ",") == "FreezeNamespaceProbe,AfterFreezeProbe")
+        assert(FreezePendingCleared == true)
+        assert(FreezeCallbackResult == "child-alive")
+        assert(AfterFreezeGlobal == "loaded-after-freeze")
+        assert(AfterFreezeMatch == "callback")
+        collectgarbage("collect")
+        assert(FreezeNamespaceProbe.onLoaded("AfterFreezeProbe") == "child-alive")
+        assert(FreezeNamespaceProbe.child.label == "child-alive")
+        assert(string.match("still-alive", "alive") == "alive")
+        "#,
+    )
+    .expect("callback state, closure strings and children survive full GC");
+    assert!(env.state().borrow().lua_errors.is_empty());
 }
 
 #[test]
