@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Scope generated template scripts to XML origin
+
+Updated [[windows-casc-blizzard-taint]], the index, and [template origin contract](../specs/template-script-declaration-taint.md). Supplied `/tmp/retail-regression/taint-provenance.stdout` records generated Blizzard method handlers tainted by BetterBlizzFrames/DandersFrames constructors; registry declaration origin now scopes fast/fallback script generation while restoring constructor taint. Grouped behavior tests cover trusted/addon XML and addon method overrides; Cargo GREEN and startup replay remain with the sole build owner.
+
 ## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
 
 Updated [[patch-12-1-5-api-audit]], index, and this log for `ec661653b` and `d9e524204` with rilua `77e0f76`. The committed scope is protected/forbidden visibility-handler taint suspension/restoration plus wrapped-table/nil guards, deepest-active closure taint, and weak GC-safe closure stamps. Actual vendor protected-visibility and custom-asset artifacts remain RED; `/tmp/retail-regression/taint-after.*` predates the latest pin and is only a two-unique/four-occurrence historical baseline. A preceding-source runtime-only build took 208.8s (197.17s shared library, 6.5s binary), distinct from ~16s test execution; no latency claim. Rebuilt replay and independent proof remain pending.

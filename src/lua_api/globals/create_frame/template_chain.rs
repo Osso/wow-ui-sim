@@ -254,7 +254,13 @@ fn apply_chain_entries(
         restore_template_local_source(state, previous_local_source);
         let entry_is_intrinsic = entry.frame.intrinsic == Some(true);
         if let Some(scripts) = entry.frame.scripts() {
-            apply_template_scripts_impl(state, frame_id, scripts, entry_is_intrinsic)?;
+            apply_scripts_with_declaration_taint(
+                state,
+                entry,
+                frame_id,
+                scripts,
+                entry_is_intrinsic,
+            )?;
         }
     }
     Ok(())
@@ -411,6 +417,23 @@ fn apply_template_key_value(state: &mut LuaState, frame: Val, key: &str, value: 
     let helper = resolve_global_path(state, "__wow_xml_set_key_value");
     let key = create_string(state, key);
     let _ = call_function_state(state, helper, &[frame, key, value]);
+}
+
+fn apply_scripts_with_declaration_taint(
+    state: &mut LuaState,
+    entry: &crate::xml::TemplateEntry,
+    frame_id: u64,
+    scripts: &crate::xml::ScriptsXml,
+    intrinsic_default_scripts: bool,
+) -> LuaResult<()> {
+    // Generated handlers are closures created while constructing a frame. Rilua
+    // inherits taint from all active callers, so isolate the XML declaration's
+    // origin for their creation, then restore the constructor's stack intact.
+    let saved_taints = crate::lua_api::taint::clear_active_stack_taint(state);
+    crate::lua_api::taint::set_frame_taint(state, entry.declaration_taint.as_deref());
+    let result = apply_template_scripts_impl(state, frame_id, scripts, intrinsic_default_scripts);
+    crate::lua_api::taint::restore_active_stack_taint(state, saved_taints);
+    result
 }
 
 pub(crate) fn apply_template_scripts(

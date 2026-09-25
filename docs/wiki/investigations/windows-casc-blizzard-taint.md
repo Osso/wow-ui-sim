@@ -10,6 +10,8 @@ The first fix was to classify cached Blizzard UI by TOC metadata instead of path
 
 Runtime `C_AddOns.LoadAddOn()` has an extra boundary: it can be called from a tainted Lua stack. Blizzard/secure TOCs must load with active stack taint cleared and restored immediately after loading, otherwise closures created by XML `OnLoad` handlers can inherit caller taint even though the source addon itself is first-party Blizzard UI.
 
+A separate `CreateFrame(..., template)` boundary persists after XML load: generated method-only/fallback script closures were created under the constructor's active addon taint. `/tmp/retail-regression/taint-provenance.stdout` records BetterBlizzFrames/DandersFrames taint on generated handlers even when the bound Blizzard method is untainted. The template registry now records declaration taint at XML registration; script generation temporarily uses that origin and restores the constructor's stack. Addon overrides remain independently tainted. The grouped behavioral regressions and current startup replay await the sole Cargo build owner; this is not a GREEN claim.
+
 Verification on Windows:
 
 ```powershell
@@ -29,6 +31,8 @@ Expected `lua-errors` output is `[]`.
 - [src/loader/addon.rs](../../../src/loader/addon.rs) — addon context taint stamping.
 - [src/c_api/c_addons.rs](../../../src/c_api/c_addons.rs) — runtime `C_AddOns.LoadAddOn()` stack-taint boundary.
 - [src/lua_api/taint.rs](../../../src/lua_api/taint.rs) — active stack taint save/restore helpers.
+- [template declaration taint](../../specs/template-script-declaration-taint.md) — source-origin contract and grouped regressions.
+- `/tmp/retail-regression/taint-provenance.stdout` — pre-fix generated-handler runtime provenance.
 
 ## See Also
 

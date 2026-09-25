@@ -88,11 +88,13 @@ pub(super) fn register_virtual_or_intrinsic(
             });
         }
         let local_source = template_local_source(env);
+        let declaration_taint = current_loading_template_taint(env);
         crate::xml::register_template_with_local_source(
             name,
             widget_type,
             registered,
             local_source,
+            declaration_taint,
         );
     }
     if let Some(ref sm) = frame.secure_mixin {
@@ -102,6 +104,18 @@ pub(super) fn register_virtual_or_intrinsic(
         Some(None) // skip instantiation for top-level virtual frames
     } else {
         None // child virtual frames are still created
+    }
+}
+
+fn current_loading_template_taint(env: &LoaderEnv<'_>) -> Option<String> {
+    let state = env.state().borrow();
+    let addon = state
+        .loading_addon_index
+        .and_then(|index| state.addons.get(index as usize))?;
+    if addon.metadata.contains_key("AllowLoad") || addon.use_secure_env {
+        None
+    } else {
+        Some(addon.folder_name.clone())
     }
 }
 

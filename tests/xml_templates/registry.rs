@@ -366,6 +366,115 @@ fn sibling_virtual_button_templates_do_not_share_onclick_scripts() {
     );
 }
 
+#[test]
+fn trusted_template_scripts_keep_their_origin_when_addon_constructs_frame() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("TrustedTemplateMixin = { OnShow = function(self) self.fastSecure = issecure() end }")
+        .unwrap();
+    register_first_template(
+        r#"<Ui><Frame name="TrustedOriginFastTemplate" virtual="true" protected="true" hidden="true" mixin="TrustedTemplateMixin">
+            <Scripts><OnShow method="OnShow"/></Scripts>
+        </Frame></Ui>"#,
+        "TrustedOriginFastTemplate",
+        "Frame",
+    );
+    register_first_template(
+        r#"<Ui><Frame name="TrustedOriginFallbackTemplate" virtual="true" protected="true" hidden="true">
+            <Scripts><OnShow>self.fallbackSecure = issecure(); self.fallbackRan = true</OnShow></Scripts>
+        </Frame></Ui>"#,
+        "TrustedOriginFallbackTemplate",
+        "Frame",
+    );
+    let (fast, fallback, caller_still_tainted): (bool, bool, bool) = env
+        .eval(
+            r#"local function addon()
+                local fast = CreateFrame('Frame', nil, UIParent, 'TrustedOriginFastTemplate')
+                local fallback = CreateFrame('Frame', nil, UIParent, 'TrustedOriginFallbackTemplate')
+                fast:Show()
+                fallback:Show()
+                return fast.fastSecure == true, fallback.fallbackSecure == true and fallback.fallbackRan == true, not issecure()
+            end
+            debug.setobjecttaint(addon, 'TemplateConstructorProbe')
+            return addon()"#,
+        )
+        .unwrap();
+    assert!(fast, "trusted method-only XML script should remain secure");
+    assert!(fallback, "trusted fallback XML script should remain secure");
+    assert!(caller_still_tainted, "constructor must retain addon taint");
+}
+
+#[test]
+fn addon_template_scripts_stay_tainted_when_clean_code_constructs_frame() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "AddonOriginMixin = { OnShow = function(self) self.addonMethodSecure = issecure() end }",
+    )
+    .unwrap();
+    let dir = create_test_addon(
+        r#"<Ui>
+            <Frame name="AddonOriginFastTemplate" virtual="true" protected="true" hidden="true" mixin="AddonOriginMixin">
+                <Scripts><OnShow method="OnShow"/></Scripts>
+            </Frame>
+            <Frame name="AddonOriginFallbackTemplate" virtual="true" protected="true" hidden="true">
+                <Scripts><OnShow>self.addonFallbackSecure = issecure(); self.addonFallbackRan = true</OnShow></Scripts>
+            </Frame>
+        </Ui>"#,
+        "TemplateOriginAddon",
+    );
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TemplateOriginAddon.toc"),
+    )
+    .unwrap();
+    let (fast, fallback): (bool, bool) = env
+        .eval(
+            r#"local fast = CreateFrame('Frame', nil, UIParent, 'AddonOriginFastTemplate')
+            local fallback = CreateFrame('Frame', nil, UIParent, 'AddonOriginFallbackTemplate')
+            fast:Show()
+            fallback:Show()
+            return fast.addonMethodSecure == false, fallback.addonFallbackSecure == false and fallback.addonFallbackRan == true"#,
+        )
+        .unwrap();
+    assert!(fast, "addon XML method-only script must stay tainted");
+    assert!(fallback, "addon XML fallback script must stay tainted");
+}
+
+#[test]
+fn addon_method_override_stays_tainted_under_trusted_template_script() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "OverrideOriginMixin = { OnShow = function(self) self.methodSecure = issecure() end }",
+    )
+    .unwrap();
+    register_first_template(
+        r#"<Ui><Frame name="OverrideOriginTemplate" virtual="true" protected="true" hidden="true" mixin="OverrideOriginMixin">
+            <Scripts><OnShow method="OnShow"/></Scripts>
+        </Frame></Ui>"#,
+        "OverrideOriginTemplate",
+        "Frame",
+    );
+    let (override_insecure, caller_insecure): (bool, bool) = env
+        .eval(
+            r#"local function addon()
+                local frame = CreateFrame('Frame', nil, UIParent, 'OverrideOriginTemplate')
+                frame.OnShow = function(self) self.methodSecure = issecure() end
+                frame:Show()
+                return frame.methodSecure == false, not issecure()
+            end
+            debug.setobjecttaint(addon, 'TemplateOverrideProbe')
+            return addon()"#,
+        )
+        .unwrap();
+    assert!(
+        override_insecure,
+        "addon method override must not become trusted"
+    );
+    assert!(caller_insecure, "constructor must retain addon taint");
+}
+
 // ============================================================================
 // CreateFrame with XML Template Tests
 // ============================================================================

@@ -13,6 +13,8 @@ pub struct TemplateEntry {
     pub widget_type: String,
     pub frame: FrameXml,
     pub local_source: Option<Val>,
+    /// Taint of the XML declaration, independent of the frame constructor's caller.
+    pub declaration_taint: Option<String>,
 }
 
 #[derive(Default)]
@@ -62,7 +64,7 @@ fn with_anim_group_template_registry_mut<R>(
 
 /// Register a template (virtual frame) in the global registry.
 pub fn register_template(name: &str, widget_type: &str, frame: FrameXml) {
-    register_template_with_local_source(name, widget_type, frame, None);
+    register_template_with_local_source(name, widget_type, frame, None, None);
 }
 
 pub fn register_template_with_local_source(
@@ -70,6 +72,7 @@ pub fn register_template_with_local_source(
     widget_type: &str,
     frame: FrameXml,
     local_source: Option<Val>,
+    declaration_taint: Option<String>,
 ) {
     with_template_registry_mut(|registry| {
         let lower = name.to_ascii_lowercase();
@@ -80,6 +83,7 @@ pub fn register_template_with_local_source(
                 widget_type: widget_type.to_string(),
                 frame,
                 local_source,
+                declaration_taint,
             }),
         );
         registry.entries_ci.insert(lower, name.to_string());
