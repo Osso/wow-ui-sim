@@ -24,7 +24,7 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use categories::{
     AchievementCriterion, CategoryListKind, achievement_categories, categories_for,
     categories_for_view, category_id_for_achievement, collect_category_achievement_ids,
-    criteria_for_achievement, criterion_at, find_category, next_achievement_id,
+    criteria_for_achievement, criterion_at, criterion_by_id, find_category, next_achievement_id,
     previous_achievement_id,
 };
 use category_points::get_category_achievement_points;
@@ -224,7 +224,29 @@ fn get_achievement_num_criteria(state: &mut LuaState) -> LuaResult<u32> {
 fn get_achievement_criteria_info(state: &mut LuaState) -> LuaResult<u32> {
     let achievement_id = i32::from_stack(state, 1)?;
     let criterion_index = i32::from_stack(state, 2)?;
-    let Some(criterion) = criterion_at(achievement_id, criterion_index) else {
+    push_criterion_result(
+        state,
+        achievement_id,
+        criterion_at(achievement_id, criterion_index),
+    )
+}
+
+fn get_achievement_criteria_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let achievement_id = i32::from_stack(state, 1)?;
+    let criterion_id = i32::from_stack(state, 2)?;
+    push_criterion_result(
+        state,
+        achievement_id,
+        criterion_by_id(achievement_id, criterion_id),
+    )
+}
+
+fn push_criterion_result(
+    state: &mut LuaState,
+    achievement_id: i32,
+    criterion: Option<&AchievementCriterion>,
+) -> LuaResult<u32> {
+    let Some(criterion) = criterion else {
         state.push(Val::Nil);
         return Ok(1);
     };
@@ -708,7 +730,7 @@ fn push_criterion_multiret(
     state.push(Val::Num(0.0));
     state.push(Val::Num(0.0));
     state.push(quantity_string);
-    state.push(Val::Num(0.0));
+    state.push(Val::Num(criterion.id as f64));
     state.push(Val::Bool(true));
     state.push(Val::Num(0.0));
     state.push(Val::Num(0.0));

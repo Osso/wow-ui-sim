@@ -220,6 +220,12 @@ fn register_criteria_globals(state: &mut LuaState, globals: GcRef<Table>) -> Lua
         "GetAchievementCriteriaInfo",
         get_achievement_criteria_info,
     )?;
+    table_set_rust_fn_static(
+        state,
+        globals,
+        "GetAchievementCriteriaInfoByID",
+        get_achievement_criteria_info_by_id,
+    )?;
     Ok(())
 }
 

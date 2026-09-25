@@ -537,7 +537,7 @@ fn test_achievement_criteria_info_matches_blizzard_multiret_shape() {
     assert_eq!(criteria_flags, 0);
     assert_eq!(asset_id, 0);
     assert_eq!(quantity_string, "0/1");
-    assert_eq!(criteria_id, 0);
+    assert_eq!(criteria_id, 5331);
     assert!(eligible);
     assert_eq!(duration, 0);
     assert_eq!(elapsed, 0);
@@ -594,6 +594,73 @@ fn test_achievement_criteria_nil_for_unknown_achievement() {
         .eval("return GetAchievementCriteriaInfo(999999, 1) == nil")
         .unwrap();
     assert!(is_nil);
+}
+
+#[test]
+fn test_achievement_criteria_by_id_matches_index_tuple_not_index_position() {
+    let env = env();
+    let (stormwind_id, ironforge_id, tuples_equal): (i32, i32, bool) = env
+        .eval(
+            r#"
+            local function same_tuple(achievementID, index, criteriaID)
+                local indexed = { GetAchievementCriteriaInfo(achievementID, index) }
+                local byID = { GetAchievementCriteriaInfoByID(achievementID, criteriaID) }
+                for i = 1, 13 do
+                    if indexed[i] ~= byID[i] then return false end
+                end
+                return true
+            end
+            local _, _, _, _, _, _, _, _, _, stormwindID = GetAchievementCriteriaInfo(948, 1)
+            local _, _, _, _, _, _, _, _, _, ironforgeID = GetAchievementCriteriaInfo(948, 2)
+            return stormwindID, ironforgeID,
+                same_tuple(948, 1, 5331) and same_tuple(948, 2, 5330)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(stormwind_id, 5331);
+    assert_eq!(ironforge_id, 5330);
+    assert!(tuples_equal);
+}
+
+#[test]
+fn test_achievement_criteria_by_id_tracks_completion_of_same_criterion() {
+    let env = env();
+    env.exec("A_Admin.SetAchievementEarned(513, true)").unwrap();
+    let (name, completed, quantity, required, criteria_id): (String, bool, i32, i32, i32) = env
+        .eval(
+            r#"
+            local name, _, completed, quantity, required, _, _, _, _, criteriaID =
+                GetAchievementCriteriaInfoByID(513, 13253)
+            return name, completed, quantity, required, criteriaID
+            "#,
+        )
+        .unwrap();
+    assert_eq!(name, "Honorable kills");
+    assert!(completed);
+    assert_eq!((quantity, required, criteria_id), (100, 100, 13253));
+}
+
+#[test]
+fn test_achievement_criteria_by_id_returns_nil_for_missing_id_or_achievement() {
+    let env = env();
+    let (index_not_id, foreign_id, unknown_id, unknown_achievement, no_criteria): (
+        bool,
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            return GetAchievementCriteriaInfoByID(948, 1) == nil,
+                GetAchievementCriteriaInfoByID(513, 5331) == nil,
+                GetAchievementCriteriaInfoByID(948, 999999) == nil,
+                GetAchievementCriteriaInfoByID(999999, 5331) == nil,
+                GetAchievementCriteriaInfoByID(6, 5331) == nil
+            "#,
+        )
+        .unwrap();
+    assert!(index_not_id && foreign_id && unknown_id && unknown_achievement && no_criteria);
 }
 
 // ============================================================================

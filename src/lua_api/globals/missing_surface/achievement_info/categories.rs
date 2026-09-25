@@ -34,13 +34,15 @@ impl CategoryBucket {
 
 #[derive(Clone, Copy)]
 pub(super) struct AchievementCriterion {
+    pub(super) id: i32,
     pub(super) name: &'static str,
     pub(super) required_quantity: i32,
 }
 
 impl AchievementCriterion {
-    const fn new(name: &'static str, required_quantity: i32) -> Self {
+    const fn new(id: i32, name: &'static str, required_quantity: i32) -> Self {
         Self {
+            id,
             name,
             required_quantity,
         }
@@ -96,15 +98,15 @@ const STATISTICS_CATEGORIES: &[CategoryBucket] = &[
 ];
 
 const AMBASSADOR_CRITERIA: &[AchievementCriterion] = &[
-    AchievementCriterion::new("Exalted with Stormwind", 1),
-    AchievementCriterion::new("Exalted with Ironforge", 1),
-    AchievementCriterion::new("Exalted with Darnassus", 1),
-    AchievementCriterion::new("Exalted with Gnomeregan", 1),
-    AchievementCriterion::new("Exalted with Exodar", 1),
+    AchievementCriterion::new(5331, "Exalted with Stormwind", 1),
+    AchievementCriterion::new(5330, "Exalted with Ironforge", 1),
+    AchievementCriterion::new(5328, "Exalted with Darnassus", 1),
+    AchievementCriterion::new(5329, "Exalted with Gnomeregan", 1),
+    AchievementCriterion::new(5332, "Exalted with Exodar", 1),
 ];
 
 const VETERAN_CRITERIA: &[AchievementCriterion] =
-    &[AchievementCriterion::new("Honorable kills", 100)];
+    &[AchievementCriterion::new(13253, "Honorable kills", 100)];
 
 pub(super) fn categories_for_view(is_guild_view: bool) -> &'static [CategoryBucket] {
     if is_guild_view {
@@ -201,4 +203,13 @@ pub(super) fn criterion_at(
 ) -> Option<&'static AchievementCriterion> {
     let index = usize::try_from(criterion_index.checked_sub(1)?).ok()?;
     criteria_for_achievement(achievement_id)?.get(index)
+}
+
+pub(super) fn criterion_by_id(
+    achievement_id: i32,
+    criterion_id: i32,
+) -> Option<&'static AchievementCriterion> {
+    criteria_for_achievement(achievement_id)?
+        .iter()
+        .find(|criterion| criterion.id == criterion_id)
 }
