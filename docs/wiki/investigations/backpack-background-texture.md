@@ -22,14 +22,15 @@ The earlier cold fixture omitted the community listfile CSV; GUI startup changes
 
 `/tmp/wow-character-bug/release-mapping-build.result` is `0`; the completed release binary SHA-256 is `0dd8413215a619ce6b5a64c11ff3798931a7cb6c9afd31cce18aacd9a8009861`. In the isolated historical 69977 fixture, the observer reported `RELEASE_READY=true` for Character, PaperDoll, and Backpack; screenshot capture exited `0`, while the enclosing GUI timeout exited the expected `124`. Backpack measured 178×280 with 16 slots, portrait width 36, top corner/top edge height 95, and bottom corner height 100. Main inspected the screenshot: correct bag geometry and slot art are present.
 
-The cold replay used a real community CSV symlink at `resolver/data/community-listfile.csv` with initially absent resolver SQLite and resolution caches. CASC built 1,441,761 resolution entries in 13.6 seconds before GUI font initialization at 30.409 seconds. First draw stalled 1.2 seconds (18.6ms quads, 12.1ms textures, 1.2s other), with no later draw stall. The intentionally excluded FDID `2447783` extracted from local CASC after `--exec-lua`. stderr has no Lua errors; only `ui-hud-minimap-frame-generic-mask` remains `Not found`. This is isolated-fixture release-binary evidence, not texture completeness, default startup, or registered-host startup acceptance. The registered installed source remains blocked by missing `wow_classic_beta` metadata.
+That historical replay remains fixture-only. Current default-install-selected evidence uses no `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or `WOW_PRODUCT`, but isolates fresh resolver/catalog SQLite under `ASSET_RESOLVER_CACHE_DIR`; the actual community CSV and 1,460 other extracted UI assets are linked, so it is not fully cold all-assets evidence. CASC built 1,441,761 entries in 7.8s before font initialization at 17.447s. `COLD_GUI_READY=true` confirms both panels; the inspected PNG retains the 178×280, 16-slot Backpack and c60 art. First draw stalled 850.4ms (14.4ms quads, 11.0ms textures, 825.0ms other), and no later observed draw exceeded 500ms. Excluded local FDID `2447783` extracted after GUI without a subsequent 500ms draw stall. `.build.info` and `.product.db` metadata were unchanged; stderr has no Lua errors and only `ui-hud-minimap-frame-generic-mask` remains `Not found`. This is bounded simulator/default-install evidence, not texture completeness, native behavior, or other-profile acceptance.
 
 ## Sources
 
 - `/tmp/wow-character-bug/assets-staged/backpack-promoted.json` — exact asset identity, MD5, and cache path.
 - `/tmp/wow-character-bug/release-mapping-build.result` — final release build exit status.
 - `d0f525630` — deterministic bundled mapping and 4/4 limited-listfile regression.
-- `/tmp/wow-character-bug/release-cold-complete/{result.json,observer.json,stderr,stdout,release-character-backpack.png}` — completed cold isolated release GUI proof, cache boundary, timing, measurements, and inspected screenshot.
+- `/tmp/wow-character-bug/release-cold-complete/{result.json,observer.json,stderr,stdout,release-character-backpack.png}` — historical isolated release GUI proof.
+- `/tmp/wow-character-bug/product-db-cold-gui/{setup.json,result.json,observer.json,stderr,metadata-before.json,metadata-after.json,character-backpack.png}` — current default-install-selected cold resolver/catalog GUI proof.
 - `Blizzard_UIPanels_Game/Mainline/ContainerFrame.xml` and `Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml` — static public source structure only.
 
 ## See Also

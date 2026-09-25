@@ -23,7 +23,7 @@ Before `run_iced_ui`, enabled CASC startup opens or builds the resolution cache,
 
 Historical cold evidence from `/tmp/wow-character-bug/cold-gui/` on September 24, 2026 recorded a 19.6-second resolution-cache build after post-load workarounds at 17.5 seconds and before font initialization at 47.0 seconds. A separate first-draw trace attributed 7.3 seconds of texture work (8.7 seconds total) to the first community-catalog lookup; commit `79382f3b6` moves that lookup before GUI drawing. This remains historical, different-revision cold-GUI timing.
 
-At `4eb32befa`, `gui_resolution_cache_preparation` passed 1/1 in 12.80 seconds: an isolated process builds a cold cache, reuses it warm without changing `resolution.sqlite`, skips preparation when disabled, and reports an enabled-CASC preparation failure. The actual default-install GUI used no install, product, or resolver-cache override and reached IPC readiness for Forever 1.60.1.69977; its single first-draw stall was 814.3ms (13.2ms quads, 13.4ms textures, 787.8ms other). This does not establish a current cold-GUI duration or a universal stall-free claim.
+At `4eb32befa`, `gui_resolution_cache_preparation` passed 1/1 in 12.80 seconds: an isolated process builds a cold cache, reuses it warm without changing `resolution.sqlite`, skips preparation when disabled, and reports an enabled-CASC preparation failure. Current default-install-selected GUI evidence has no `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or `WOW_PRODUCT`, but intentionally uses isolated XDG plus a fresh `ASSET_RESOLVER_CACHE_DIR` resolver/catalog SQLite. It links the actual community CSV and 1,460 other extracted UI assets, so it does not measure fully cold all-assets startup. CASC built 1,441,761 entries in 7.8s before font initialization at 17.447s. First draw stalled 850.4ms (14.4ms quads, 11.0ms textures, 825.0ms other); no later observed draw exceeded 500ms, including after excluded local FDID `2447783` extracted after GUI. This is one bounded trace, not a universal stall-free claim.
 
 ## Lookup flow
 
@@ -137,7 +137,7 @@ When removing an unavailable entry, first prove it is not reachable from the ret
 - `examples/casc_bench.rs` — reproduction harness for the timing table
 - `/tmp/wow-character-bug/cold-gui/{stderr,result.json}` — historical September 24, 2026 cold-GUI timing evidence
 - `/tmp/wow-character-bug/product-db-sim-verify-report.json` — `4eb32befa` format/check, identity 2/2, and GUI-cache preparation 1/1 proof
-- `/tmp/wow-character-bug/product-db-default-gui/{result.json,observer.json,stderr,stdout,metadata-before.json,metadata-after.json,character-backpack.png}` — default-install GUI evidence without install/product/cache overrides
+- `/tmp/wow-character-bug/product-db-cold-gui/{setup.json,result.json,observer.json,stderr,metadata-before.json,metadata-after.json,character-backpack.png}` — current default-install-selected GUI evidence with fresh isolated resolver/catalog state, linked community CSV and 1,460 extracted UI assets
 
 ## See Also
 

@@ -88,6 +88,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC
 - `src/render/font.rs::tests::unknown_font_falls_back_to_default` — asserts unknown path → FRIZQT family
 - `src/render/font.rs::tests::resolves_case_insensitive` — asserts WoW-path normalisation
+- `/tmp/wow-character-bug/product-db-cold-gui/{setup.json,result.json,observer.json,stderr,metadata-before.json,metadata-after.json,character-backpack.png}` — default-install-selected GUI: no install/data/product override; fresh isolated resolver/catalog state; 1,460 linked UI extracts; metadata non-mutation and inspected panel readiness. This is not fully cold all-assets proof.
 - `/tmp/wow-character-bug/product-db-error-dialog/{result.json,observer.json,stderr,error-dialog.png,metadata-bracket.json}` — actual Linux Zenity missing-`.product.db` dialog; inspected literal `<profile>` rendering, expected timeout cleanup, and metadata unchanged from before the default GUI through the dialog/parser checks
 
 ## Known gaps (current cycle)
