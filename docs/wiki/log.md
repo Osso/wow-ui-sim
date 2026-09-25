@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Document bounded click-binding interaction profile
+
+Audited `c00f44d0e`. `C_ClickBindings` now owns a per-environment modeled interaction profile with inferred unmodified LeftButton target and RightButton context-menu defaults; profile reads are copied, replacement/reset and effective-button queries share that state, while `ExecuteBinding()` remains inert. Targeted profile coverage is 2/2 and unchanged Blizzard `SecureUnitButton_OnClick` player/party coverage is 1/1. The full UI click-chain test currently fails at `PlayerFrame:GetAttribute("*type1") == nil`; main integration is investigating. A runtime release `target` attribute does not prove the click chain, physical GUI hit testing, or targeting success. Updated [[lua-api]], [[taint-system]], [click-binding interaction profile](../specs/click-binding-interaction-profile.md), and the index; no new wiki page.
+
 ## [2026-09-24] investigation | Scope idle texture warmup to rebuilt strata
 
 `7535af12e` and `946d8255b` stop per-tick full texture-request path scans: warmup now checks only strata rebuilt since it last settled, and emptiness checks no longer clone every path. `HashSet<String>::insert` self time 4.3% → 0.13%; preload p90 1.51ms → 0.62ms. See [[tick-cooldown-scan]].

@@ -47,7 +47,7 @@ Blizzard source also matches this: outbound bridge files explicitly capture `loc
 
 For shared Blizzard libraries, publication into secureenv is an explicit loader allowlist, not generic global mirroring. The allowlist replays `Blizzard_CombatLogBase` and `Blizzard_CatalogShopSharedUtil` so secure consumers receive `CombatLogUtil` and `CatalogShopUtil`; focused tests verify both `_G` and `__secureenv` bindings. See [[addon-loading]] for the complete allowlist and replay lifecycle.
 
-When no click-binding profile is modeled, `C_ClickBindings.GetBindingType()` reports `Enum.ClickBindingType.None` and `ExecuteBinding()` does nothing. This leaves Blizzard secure-button `type`/`*typeN` attributes in control; fabricated fallback targeting would bypass focus/assist dispatch.
+`C_ClickBindings` now has a per-environment interaction profile. Its initial unmodified LeftButton target and RightButton context-menu entries are inferred simulator policy, not native-probed defaults; `GetProfileInfo`, `SetProfileByInfo`, `GetBindingType`, `GetEffectiveInteractionButton`, and `ResetCurrentProfile` operate on that profile. `ExecuteBinding()` remains an inert temporary gap. Commit `c00f44d0e` records targeted profile coverage 2/2 and unchanged Blizzard `SecureUnitButton_OnClick` player/party coverage 1/1. The full PlayerFrame click-chain test currently fails because `*type1` is nil; a runtime release `target` attribute does not establish a whole-click or GUI pass.
 
 `set_in_both_envs_rilua(key, value)` registers named frames in both environments so frame globals are visible from both.
 
@@ -132,13 +132,15 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - [protected-frame-enforcement.md](../../protected-frame-enforcement.md) — protected-frame behavior and remaining gaps
 - `src/lua_api/frame/methods/methods_helpers.rs` — protected-state gating and `ADDON_ACTION_BLOCKED`
 - `src/lua_api/globals/security.rs` — taint helpers, `securecallmethod`, SecureHandler fallback, state/attribute drivers, secure environment
-- `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — no-profile click-binding behavior
+- `src/c_api/c_click_bindings.rs` — modeled per-environment interaction profile
+- `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — inert `ExecuteBinding` and remaining temporary helpers
 - `src/lua_api/state.rs` — `secure_attribute_drivers` storage
 - `src/loader/lua_file.rs` — per-addon compiled-closure taint stamping
 - `src/lua_api/env.rs` — frame script-handler taint stamping
 - `tests/protected_frame_enforcement.rs` — combat lockdown coverage
 - `tests/secure_handler_fallback.rs` — SecureHandler fallback coverage
 - `tests/security_api.rs` — state driver and `securecallmethod` coverage
+- [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) — bounded profile contract and current full-chain failure
 
 Removed/stale paths that older docs may mention:
 
