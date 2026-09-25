@@ -67,6 +67,65 @@ fn atlas_csv_rejects_truncated_rows_without_panicking() {
 }
 
 #[test]
+fn member_csv_rejects_missing_canvas_instead_of_silently_dropping_member() {
+    let file = atlas_fixture(
+        "CommittedName,ID,UiTextureAtlasID,Width,Height,CommittedLeft,CommittedRight,CommittedTop,CommittedBottom,UiTextureAtlasElementID,OverrideWidth,OverrideHeight,CommittedFlags,UiCanvasID\ncorner,1,1,190,190,1,191,1,191,10,0,0,0\n",
+    );
+    let error = load_members(file.path()).err().unwrap().to_string();
+    assert!(error.contains("row 2"), "{error}");
+    assert!(error.contains("UiCanvasID"), "{error}");
+}
+
+#[test]
+fn element_alias_uses_member_canvas_for_logical_dimensions_without_changing_explicit_members() {
+    let temp = tempfile::tempdir().unwrap();
+    let dir = temp.path();
+    for (name, content) in [
+        (
+            "UiTextureAtlas.csv",
+            "ID,FileDataID,UiTextureAtlasSetID,AtlasWidth,AtlasHeight,UiCanvasID\n1,800,1,512,512,1\n",
+        ),
+        (
+            "UiTextureAtlasElement.csv",
+            "Name,ID\nCorner,10\nEdge,11\nPlain,12\n",
+        ),
+        (
+            "UiTextureAtlasMember.csv",
+            "CommittedName,ID,UiTextureAtlasID,Width,Height,CommittedLeft,CommittedRight,CommittedTop,CommittedBottom,UiTextureAtlasElementID,OverrideWidth,OverrideHeight,CommittedFlags,UiCanvasID\ncorner-c60-2x,1,1,190,200,1,191,1,201,10,0,0,0,2\nedge-c60-2x,2,1,256,190,0,256,201,391,11,64,0,0,2\nplain-c60-2x,4,1,84,84,235,319,1,85,12,0,0,0,2\nplain-c60,3,1,42,42,192,234,1,43,12,0,0,0,1\n",
+        ),
+        (
+            "UiTextureAtlasElementSliceData.csv",
+            "ID,UiTextureAtlasElementID,Left,Top,Right,Bottom,SliceMode\n",
+        ),
+        ("listfile.csv", "800;interface/frame/metal.blp\n"),
+    ] {
+        std::fs::write(dir.join(name), content).unwrap();
+    }
+    let output = dir.join("atlas.rs");
+    run(Options {
+        csv_dir: Some(dir.to_owned()),
+        listfile: None,
+        output: output.clone(),
+        elements_output: dir.join("elements.rs"),
+    })
+    .unwrap();
+    let generated = std::fs::read_to_string(output).unwrap();
+    let entry = |name: &str| {
+        generated
+            .lines()
+            .find(|line| line.contains(&format!("\"{name}\" => AtlasInfo")))
+            .unwrap()
+    };
+    assert!(entry("corner").contains("width: 95, height: 100"));
+    assert!(entry("corner-c60-2x").contains("width: 190, height: 200"));
+    assert!(entry("edge").contains("width: 64, height: 95"));
+    assert!(entry("edge-c60-2x").contains("width: 64, height: 190"));
+    assert!(entry("plain").contains("width: 42, height: 42"));
+    assert!(entry("plain-c60-2x").contains("width: 84, height: 84"));
+    assert!(entry("corner").contains("left_tex_coord: 0.001953, right_tex_coord: 0.373047"));
+}
+
+#[test]
 fn explicit_csv_generation_uses_canvas_geometry_and_local_slices() {
     let temp = tempfile::tempdir().unwrap();
     let dir = temp.path();

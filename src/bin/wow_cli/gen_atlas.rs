@@ -106,8 +106,21 @@ fn load_atlas_data(
 }
 
 // Element names are public API names; committed names identify canvas variants.
-// The default atlas set's 1x canvas supplies logical API geometry.
+// Atlas canvas 1 can hold member canvas 2 artwork; only unpaired 2x members
+// need logical alias dimensions when their override dimensions are absent.
 fn add_element_names(data: &mut AtlasData) {
+    let default_1x_elements: std::collections::HashSet<_> = data
+        .members
+        .iter()
+        .filter(|member| {
+            member.canvas_id != 2
+                && data
+                    .atlases
+                    .get(&member.atlas_id)
+                    .is_some_and(|atlas| atlas.set_id == 1 && atlas.canvas_id == 1)
+        })
+        .map(|member| member.element_id)
+        .collect();
     let aliases: Vec<_> = data
         .members
         .iter()
@@ -117,11 +130,21 @@ fn add_element_names(data: &mut AtlasData) {
                 return None;
             }
             let name = data.elements.get(&member.element_id)?;
-            if name.eq_ignore_ascii_case(&member.name) {
+            if name.eq_ignore_ascii_case(&member.name)
+                || (member.canvas_id == 2 && default_1x_elements.contains(&member.element_id))
+            {
                 return None;
             }
             let mut alias = member.clone();
             alias.name = name.clone();
+            if member.canvas_id == 2 {
+                if alias.override_width == 0 {
+                    alias.width /= 2;
+                }
+                if alias.override_height == 0 {
+                    alias.height /= 2;
+                }
+            }
             Some(alias)
         })
         .collect();
@@ -474,6 +497,7 @@ struct MemberEntry {
     override_width: u32,
     override_height: u32,
     flags: u32,
+    canvas_id: u32,
 }
 
 struct SliceEntry {
@@ -669,22 +693,31 @@ fn load_members(path: &Path) -> Result<Vec<MemberEntry>, Box<dyn std::error::Err
         }
 
         let fields = parse_csv_line(&line);
-        if fields.len() >= 13 {
-            entries.push(MemberEntry {
-                name: fields[0].clone(),
-                element_id: fields[9].parse()?,
-                atlas_id: fields[2].parse()?,
-                width: fields[3].parse()?,
-                height: fields[4].parse()?,
-                left: fields[5].parse()?,
-                right: fields[6].parse()?,
-                top: fields[7].parse()?,
-                bottom: fields[8].parse()?,
-                override_width: fields[10].parse().unwrap_or(0),
-                override_height: fields[11].parse().unwrap_or(0),
-                flags: fields[12].parse().unwrap_or(0),
-            });
+        if fields.len() < 14 {
+            return Err(format!(
+                "member CSV row {}: missing UiCanvasID (expected at least 14 columns, got {})",
+                i + 1,
+                fields.len()
+            )
+            .into());
         }
+        entries.push(MemberEntry {
+            name: fields[0].clone(),
+            element_id: fields[9].parse()?,
+            atlas_id: fields[2].parse()?,
+            width: fields[3].parse()?,
+            height: fields[4].parse()?,
+            left: fields[5].parse()?,
+            right: fields[6].parse()?,
+            top: fields[7].parse()?,
+            bottom: fields[8].parse()?,
+            override_width: fields[10].parse().unwrap_or(0),
+            override_height: fields[11].parse().unwrap_or(0),
+            flags: fields[12].parse().unwrap_or(0),
+            canvas_id: fields[13]
+                .parse()
+                .map_err(|error| format!("member CSV row {}, UiCanvasID: {error}", i + 1))?,
+        });
     }
     Ok(entries)
 }
