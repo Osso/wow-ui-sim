@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [ ] A recipe absent from the static model returns nil rather than an incomplete, truthy schematic. A consumer checking `if not schematicInfo then return end` can skip reagent construction before iterating `reagentSlotSchematics`.
-- [ ] A modeled recipe returns its ID, name, output item, output quantities, and populated reagent-slot schematics.
+- [x] A recipe absent from the static model returns nil rather than an incomplete, truthy schematic. A consumer checking `if not schematicInfo then return end` can skip reagent construction before iterating `reagentSlotSchematics`.
+- [x] A modeled recipe returns its ID, name, output item, output quantities, and populated reagent-slot schematics.
 
 ## How it works
 
@@ -23,7 +23,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Focused RED/GREEN execution is blocked by unrelated compilation failure in `src/lua_api/globals/real/modifier_keys.rs` until that concurrent change is corrected.
+None in this bounded change.
 
 ## Out of scope
 
