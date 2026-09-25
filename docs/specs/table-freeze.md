@@ -9,8 +9,8 @@
 - [x] `isfrozen(t)` returns exactly one boolean reflecting the VM flag, false before freezing and true afterward.
 - [x] Preserve reads, iteration, array length, and object identity.
 - [x] Reject assignment, `rawset`, `table.insert/remove/sort`, global `tinsert/tremove/wipe`, and PTR `table.removeunordered/removevalue` on already-frozen tables without partial mutation. Mutable-table operations retain ordinary behavior.
-- [ ] Freeze only the supplied table. Referenced tables, keys, metatables, closure environments and captured state remain mutable; freezing an addon namespace must not freeze `_G` or later addon state.
-- [ ] Keep ordinary GC tracing and collection: reachable values survive collection, but freezing does not permanently pin the table or its graph.
+- [x] Freeze only the supplied table. Referenced tables, keys, metatables, closure environments and captured state remain mutable; freezing an addon namespace must not freeze `_G` or later addon state.
+- [x] Keep ordinary GC tracing and collection: reachable values survive collection, but freezing does not permanently pin the table or its graph.
 - [x] **Simulator validation choice:** both profiles require real Lua tables and reject missing/nil/non-table arguments. The broader earlier `LuaValueReference` domain is not claimed.
 
 ## How it works
@@ -36,7 +36,7 @@
 
 - [ ] Earlier non-table `LuaValueReference` inputs and cross-addon ownership/taint behavior remain unverified.
 - [ ] Shallow semantics are supported by QuestieTDB's direct Classic Era 1.15.9.68808 probe (`docs/table.freeze.md` in `Questie/QuestieTDB`), not a retail native probe. Retail unchanged Syndicator's namespace freeze followed by callback cleanup establishes the simulator regression boundary.
-- [ ] Final dependency pin, focused verification and retail startup replay pending.
+- `748d4df0c` pins published rilua `1788318`; at `9b8d44b06`, independent default-profile verification passes table utilities 11/11 (including the two-addon lifecycle regression), freeze library tests 4/4, attribute recovery 11/11, `cargo fmt --check` and `cargo check`. Rilua has independent shallow-GC/write proof. See [bounded retail replay and residual failures](../wiki/investigations/patch-12-1-5-api-audit.md#table-freeze-corrective-boundary); this is not zero-error or full native conformance.
 - [ ] The VM can forward missing-key writes through `__newindex`; this does not mutate the frozen table itself. Metatable replacement, reentrant freezing during comparator callbacks, and arbitrary Rust-side mutation paths are not covered by these tests.
 
 ## Out of scope

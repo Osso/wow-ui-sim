@@ -11,7 +11,7 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 
 ### Attribute callback recovery
 
-- [ ] Report a failing `OnAttributeChanged` callback without corrupting its active caller, captured locals, or subsequent attribute callbacks, for both registered scripts and direct frame methods. Attribute dispatch retains its existing secure-delegate taint boundary.
+- [x] Report a failing `OnAttributeChanged` callback without corrupting its active caller, captured locals, or subsequent attribute callbacks, for both registered scripts and direct frame methods. Attribute dispatch retains its existing secure-delegate taint boundary.
 
 ### Addon load summary
 

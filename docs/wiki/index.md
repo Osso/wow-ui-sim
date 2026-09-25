@@ -1,6 +1,6 @@
 ## [2026-09-25] investigation | Correct table.freeze recursive GC cascade
 
-`748d4df0c` pins rilua `1788318c20d400a8339f3e7125aa40c9e54ea435` and replaces public recursive GC freezing with shallow `Table::read_only`. Recursive traversal from Syndicator's frozen Search/API/root namespace reached closure environments, `_G`, `callbacksPending`, and later addon state; traversal skipping also damaged references. `/tmp/claude/table-freeze-red-addon.out` remains RED for the addon lifecycle boundary. `87f2a48af` separately restored attribute-error call state (11 verified tests) but did not repair the cascade: 480 records before, 484 after. QuestieTDB's direct Classic Era probe supports shallow semantics, not retail native behavior. Main report GREEN and retail startup replay remain pending. See [[patch-12-1-5-api-audit]] and [table freezing](../specs/table-freeze.md).
+`748d4df0c` separates shallow table immutability from recursive GC freezing; `87f2a48af` separately repairs attribute-error recovery. At `9b8d44b06`, 26 focused simulator tests and format/check pass; owned default GUI replay confirms three panel open/close/reopen sequences and two microbutton pressed states. No-SavedVariables startup falls from 480 to 8 unique errors; default settings still produce 9. Residual secure-handler, API/input and missing-file failures remain explicit; no zero-error or native-conformance claim. See [[patch-12-1-5-api-audit]] and [table freezing](../specs/table-freeze.md).
 
 ## [2026-09-25] investigation | Finalize bounded unit-frame click and aura evidence
 

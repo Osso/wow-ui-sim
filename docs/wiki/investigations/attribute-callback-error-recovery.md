@@ -1,6 +1,6 @@
 # Attribute Callback Error Recovery
 
-Commit `87f2a48af` replaces raw attribute-callback calls with `protected_lua_pcall_state`, so a handled callback failure preserves its caller state. This records RED evidence only; GREEN verification is pending.
+Commit `87f2a48af` replaces raw attribute-callback calls with `protected_lua_pcall_state`, so a handled callback failure preserves its caller state. Both regressions are GREEN in the independently verified 11-test attribute batch; this correction alone did not remove the separate table-freeze cascade.
 
 ## Content
 
@@ -16,12 +16,12 @@ Both registered and direct `OnAttributeChanged` dispatch called `LuaState::call_
 
 ### Status
 
-The committed regression covers caller values, captured locals, later callbacks, and error recording for both paths. No GREEN test, full-startup replay, or clean-startup claim is recorded yet.
+The committed regression covers caller values, captured locals, later callbacks, and error recording for both paths. At `9b8d44b06`, the independent attribute batch passes 11/11 with the updated dependency, alongside format/check. Full-startup recovery and remaining errors are tracked in [[patch-12-1-5-api-audit]]; no clean-startup claim.
 
 ## Sources
 
 - [attribute dispatch](../../../src/lua_api/frame/methods/text_attribute_event/attributes.rs) — both protected callback paths
-- [Lua error reporting spec](../../specs/lua-error-reporting.md) — pending attribute-callback recovery contract
+- [Lua error reporting spec](../../specs/lua-error-reporting.md) — verified attribute-callback recovery contract
 - [lua-call-frame-restoration](lua-call-frame-restoration.md) — prior call-state recovery boundary
 
 ## See Also
