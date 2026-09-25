@@ -6,6 +6,10 @@
 
 `4eb32befa` release build exited `0`; current evidence uses default install discovery with no `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or `WOW_PRODUCT`, plus isolated XDG and a fresh `ASSET_RESOLVER_CACHE_DIR` resolver/catalog SQLite. The community CSV and 1,460 other extracted UI assets were linked, so this is cold resolver/catalog evidence, not fully cold all-assets evidence. CASC built 1,441,761 entries in 7.8s before font initialization at 17.447s. IPC reported `COLD_GUI_READY=true` for Character, PaperDoll, and Backpack; inspected c60 art and Backpack geometry are 178×280, 16 slots, portrait 36, top 95, bottom 100. First draw stalled 850.4ms (14.4ms quads, 11.0ms textures, 825.0ms other); no later observed draw exceeded 500ms. Deliberately excluded local FDID `2447783` extracted after GUI without a later 500ms draw stall. Metadata hashes/mtimes were unchanged; stderr has no Lua errors and only the unrelated generic minimap-mask miss. This remains simulator evidence, not native-launcher, texture-completeness, or all-profile proof. See [[forever-character-panel]], [[casc-local-index-generations]], and [[casc-asset-cache]].
 
+## [2026-09-25] investigation | Keep XML-hidden animated status-bar textures hidden on atlas changes
+
+`83a43ca61` fixes `SetAtlas` treating every parentKey as a Button texture slot: non-button XP/reputation bar flipbook textures were made visible by an unrelated button-visibility default. Actual unchanged Forever template creation starts hidden; `SetAnimationTextures` reproduced the failure before animation playback; focused 6/6 tests pass after the fix. Full UI screenshot remains unverified. See [[animated-status-bar-atlas-visibility]] and [texture atlas visibility](../specs/texture-atlas-visibility.md).
+
 ## [2026-09-25] maintenance | Document installed-product discovery
 
 `692e36936`/`4eb32befa` replace non-pinned `.build.info` identity selection with the exact requested `.product.db` record via cascette's shared parser: version field 7, active build key field 14, optional install key field 16. The real Forever product DB, PE metadata, and 69977 build config agree; no metadata repair, Battle.net action, `.build.info` fallback, or other-product fallback is required. This is simulator policy, not native-launcher behavior or a full-content guarantee. The then-pending default real-install GUI proof is superseded by the entry above. See [[casc-asset-cache]] and [[forever-character-panel]].
@@ -1406,6 +1410,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[animated-status-bar-atlas-visibility]] | Atlas assignment on a non-button XML-hidden animated status-bar texture incorrectly showed it; recognized Button/CheckButton slots alone update visibility. Actual Forever template RED/GREEN proof; full UI visual pending. |
 | [[template-existence]] | `DoesTemplateExist` queries only the registered XML virtual-template registry; frozen lifecycle 3/3 and unchanged DRaidFrames startup proof pass, while native edge semantics and workflows remain open. |
 | [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
