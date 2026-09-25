@@ -36,7 +36,7 @@ pub struct TocFile {
 
 **File Processing** (lines 69-104):
 - Skips `#` comment lines
-- Strips `[AllowLoadTextLocale]` annotations (only loads enUS)
+- Filters `[AllowLoadTextLocale]` entries to enUS and strips trailing annotations from selected paths
 - Splits `[AllowLoadGameType]` values on commas or whitespace, then keeps files matching the active profile (for example, `vanilla tbc mainline` includes retail `mainline`)
 - Replaces placeholders: `[Family]` -> "Mainline", `[Game]` -> "Standard"
 - Normalizes backslashes, strips inline annotations
@@ -141,7 +141,7 @@ Uses `quick_xml` (serde deserialize) to parse WoW XML files into typed structure
 | **Animations** | `AnimationGroup`, `Actor` |
 
 **Processing Order** (lines 38-73):
-1. Script/Include -> load file or execute inline code
+1. Script/Include -> filter annotated file references by the same enUS text-locale rule as TOC entries, strip trailing annotations before resolving paths, then load file or execute inline code
 2. Font/FontFamily -> create font object
 3. ScopedModifier -> recurse on children
 4. Everything else -> `process_frame_element()`

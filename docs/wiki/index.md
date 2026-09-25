@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Select XML file locale before resolution
+
+The unchanged SimpleItemLevel XML reference `deDE.lua [AllowLoadTextLocale deDE]` reached filesystem resolution literally. XML Script/Include now reuse TOC's enUS locale gate and trailing-annotation stripping; a temporary addon exercises selected/unselected Lua and nested XML references in order. The focused RED failed on the annotated enUS path and GREEN passed 1/1 (`/tmp/simpleitemlevel-locale-red.log`, `/tmp/simpleitemlevel-locale-green.log`). This is simulator policy, not native locale selection. See [[addon-loading]] and [XML locale spec](../specs/xml-file-locale-annotations.md).
+
 ## [2026-09-25] investigation | Correct table.freeze recursive GC cascade
 
 `748d4df0c` separates shallow table immutability from recursive GC freezing; `87f2a48af` separately repairs attribute-error recovery. At `9b8d44b06`, 26 focused simulator tests and format/check pass; owned default GUI replay confirms three panel open/close/reopen sequences and two microbutton pressed states. No-SavedVariables startup falls from 480 to 8 unique errors; default settings still produce 9. Residual secure-handler, API/input and missing-file failures remain explicit; no zero-error or native-conformance claim. See [[patch-12-1-5-api-audit]] and [table freezing](../specs/table-freeze.md).

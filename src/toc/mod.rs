@@ -32,6 +32,14 @@ pub struct TocFile {
     pub file_env_allows: Vec<Option<bool>>,
 }
 
+/// Apply the simulator's text-locale gate, then remove trailing file annotations.
+pub(crate) fn selected_file_path(line: &str) -> Option<&str> {
+    if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
+        return None;
+    }
+    Some(strip_annotations(line))
+}
+
 /// Strip trailing annotations separated by whitespace, preserving path placeholders.
 fn strip_annotations(line: &str) -> &str {
     let mut path = line.trim();
@@ -247,16 +255,16 @@ struct ParsedFileEntries {
 impl ParsedFileEntries {
     /// Process a non-metadata, non-comment TOC line as a file path entry.
     fn push_file_entry(&mut self, addon_dir: &Path, line: &str) {
-        if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
-            return;
-        }
         if !is_allowed_game_type(line) && !is_mists_game_menu_shared_file(addon_dir, line) {
             return;
         }
         let line = line.replace("[TextLocale]", "enUS");
         let line = line.replace("[Family]", family_subdir());
         let line = line.replace("[Game]", game_subdir());
-        let file_path = strip_annotations(&line).replace('\\', "/");
+        let Some(file_path) = selected_file_path(&line) else {
+            return;
+        };
+        let file_path = file_path.replace('\\', "/");
         if file_path.is_empty() {
             return;
         }

@@ -56,7 +56,7 @@ During startup, discovery loads non-LoadOnDemand roots plus explicit LoadOnDeman
 `AddonContext` holds `name`, private Lua `table`, and `addon_root`. Per-file process:
 1. Check local overlay at `./Interface/AddOns/{addon}/{file}` first, fall back to addon root
 2. `.lua` → `load_lua_file()`: strip BOM, transform path to `@Interface/AddOns/...` for debugstack, execute with `(addonName, addonTable)` varargs
-3. `.xml` → `load_xml_file()`: parse with quick_xml, dispatch elements (Script/Include → load file; Font/FontFamily → create font object; ScopedModifier → recurse; frames → `create_frame_from_xml()`)
+3. `.xml` → `load_xml_file()`: parse with quick_xml, dispatch elements (Script/Include → load file; Font/FontFamily → create font object; ScopedModifier → recurse; frames → `create_frame_from_xml()`). XML Script/Include file attributes use the TOC text-locale filter and trailing-annotation stripping before path resolution; selected enUS references execute in order, while non-enUS references are skipped. The temporary-addon [regression](../../../src/loader/tests/xml_basics_extra.rs) covers both Lua Script and nested XML Include.
 4. After each `.lua` file: inject C++ mixin stubs (empty `ModelSceneControlButtonMixin.OnLoad`, etc.)
 
 `LoadResult` includes per-addon timing breakdown: `io_time`, `xml_parse_time`, `lua_exec_time`, `saved_vars_time`.

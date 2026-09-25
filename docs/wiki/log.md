@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Filter XML file references by text locale
+
+Updated [[addon-loading]], [pipeline](../addon-loading-pipeline.md), and [XML locale contract](../specs/xml-file-locale-annotations.md). Temporary-addon regression failed on literal annotated path, then passed 1/1 after XML Script/Include reused TOC filtering and annotation stripping. RED `/tmp/simpleitemlevel-locale-red.log`; GREEN `/tmp/simpleitemlevel-locale-green.log`. No native or broad-suite claim.
+
 ## [2026-09-25] verification | Bound retail cascade recovery and residual failures
 
 At `9b8d44b06`, independent default verification passes 26 focused simulator tests, format and check; published rilua `1788318` has separate bounded write/GC proof. Owned GUI PID `1505333` confirms Character/Friends/PlayerSpells open-close-reopen and Housing/PlayerSpells microbutton pressed state. No-SavedVariables startup falls 480→8 unique errors; default settings plus replay retain 9 errors. Updated [[patch-12-1-5-api-audit]] with exact artifacts, residual classifications and limits, [[attribute-callback-error-recovery]], specs and index. No full-suite, zero-error, native or pixel-equivalence claim.

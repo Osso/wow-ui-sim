@@ -317,6 +317,9 @@ fn process_script(
     timing: &mut LoadTiming,
 ) -> Result<usize, LoadError> {
     if let Some(file) = &s.file {
+        let Some(file) = crate::toc::selected_file_path(file) else {
+            return Ok(0);
+        };
         let script_path = resolve_path_with_fallback(xml_dir, ctx.addon_root, file);
         load_lua_file(env, &script_path, ctx, timing)?;
         return Ok(1);
@@ -431,8 +434,11 @@ fn process_include(
     ctx: &AddonContext,
     timing: &mut LoadTiming,
 ) -> Result<usize, LoadError> {
-    let include_path = resolve_path_with_fallback(xml_dir, ctx.addon_root, &i.file);
-    if i.file.ends_with(".lua") {
+    let Some(file) = crate::toc::selected_file_path(&i.file) else {
+        return Ok(0);
+    };
+    let include_path = resolve_path_with_fallback(xml_dir, ctx.addon_root, file);
+    if file.ends_with(".lua") {
         // In WoW, Lua errors in <Script file="..."> includes are caught and don't
         // abort XML file processing — same as inline <Script> elements.
         if let Err(e) = load_lua_file(env, &include_path, ctx, timing) {

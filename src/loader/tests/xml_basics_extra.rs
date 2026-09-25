@@ -1,6 +1,47 @@
 use super::*;
 
 #[test]
+fn xml_file_locale_annotations_load_only_selected_scripts_and_includes() {
+    let env = WowLuaEnv::new().unwrap();
+    let addon = tempfile::tempdir().unwrap();
+    let root = addon.path();
+    std::fs::write(root.join("LocaleProbe.toc"), "LocaleProbe.xml\n").unwrap();
+    std::fs::write(
+        root.join("LocaleProbe.xml"),
+        r#"<Ui>
+            <Script file="enUS.lua [AllowLoadTextLocale enUS]"/>
+            <Script file="deDE.lua [AllowLoadTextLocale deDE]"/>
+            <Include file="enUS.xml [AllowLoadTextLocale enUS]"/>
+            <Include file="deDE.xml [AllowLoadTextLocale deDE]"/>
+        </Ui>"#,
+    )
+    .unwrap();
+    std::fs::write(root.join("enUS.lua"), "_G.XML_LOCALE_ORDER = 'script'\n").unwrap();
+    std::fs::write(
+        root.join("deDE.lua"),
+        "_G.XML_LOCALE_ORDER = 'wrong script'\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("enUS.xml"),
+        r#"<Ui><Script>_G.XML_LOCALE_ORDER = _G.XML_LOCALE_ORDER .. ',include'</Script></Ui>"#,
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("deDE.xml"),
+        r#"<Ui><Script>_G.XML_LOCALE_ORDER = 'wrong include'</Script></Ui>"#,
+    )
+    .unwrap();
+
+    let result = load_addon(&env.loader_env(), &root.join("LocaleProbe.toc")).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert_eq!(
+        env.eval::<String>("return XML_LOCALE_ORDER").unwrap(),
+        "script,include"
+    );
+}
+
+#[test]
 fn xml_process_time_excludes_script_file_load_time() {
     let env = WowLuaEnv::new().unwrap();
     let temp_dir = tempfile::tempdir().unwrap();
