@@ -285,7 +285,7 @@ dependencies = [
 [[package]]
 name = "asset-resolver"
 version = "0.1.0"
-source = "git+https://github.com/world-of-osso/asset-resolver?rev=3088dee6b961408f8ba76497aaedfdc9c026bf13#3088dee6b961408f8ba76497aaedfdc9c026bf13"
+source = "git+https://github.com/world-of-osso/asset-resolver?rev=b2bd6c88303b4db9cd620f66a1a8fc28a4737651#b2bd6c88303b4db9cd620f66a1a8fc28a4737651"
 dependencies = [
  "binrw",
  "cascette-client-storage",
@@ -742,7 +742,7 @@ dependencies = [
 [[package]]
 name = "casc-extract"
 version = "0.1.0"
-source = "git+https://github.com/Osso/casc-extract?rev=14579a656414778ce376f776f612e0f6eef58b54#14579a656414778ce376f776f612e0f6eef58b54"
+source = "git+https://github.com/Osso/casc-extract?rev=b25e415a3aab00d0758e3d615ba5a9107a6465df#b25e415a3aab00d0758e3d615ba5a9107a6465df"
 dependencies = [
  "anyhow",
  "cascette-client-storage",
@@ -758,7 +758,7 @@ dependencies = [
 [[package]]
 name = "cascette-cache"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=3992ef0fb9a81f10841a763619440a68647611ff#3992ef0fb9a81f10841a763619440a68647611ff"
+source = "git+https://github.com/Osso/cascette-rs?rev=d8ec31f4dabaaff80af64b2510c54104a1871fec#d8ec31f4dabaaff80af64b2510c54104a1871fec"
 dependencies = [
  "async-trait",
  "base64",
@@ -785,7 +785,7 @@ dependencies = [
 [[package]]
 name = "cascette-client-storage"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=3992ef0fb9a81f10841a763619440a68647611ff#3992ef0fb9a81f10841a763619440a68647611ff"
+source = "git+https://github.com/Osso/cascette-rs?rev=d8ec31f4dabaaff80af64b2510c54104a1871fec#d8ec31f4dabaaff80af64b2510c54104a1871fec"
 dependencies = [
  "binrw",
  "cascette-crypto",
@@ -809,7 +809,7 @@ dependencies = [
 [[package]]
 name = "cascette-crypto"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=3992ef0fb9a81f10841a763619440a68647611ff#3992ef0fb9a81f10841a763619440a68647611ff"
+source = "git+https://github.com/Osso/cascette-rs?rev=d8ec31f4dabaaff80af64b2510c54104a1871fec#d8ec31f4dabaaff80af64b2510c54104a1871fec"
 dependencies = [
  "binrw",
  "cipher",
@@ -822,7 +822,7 @@ dependencies = [
 [[package]]
 name = "cascette-formats"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=3992ef0fb9a81f10841a763619440a68647611ff#3992ef0fb9a81f10841a763619440a68647611ff"
+source = "git+https://github.com/Osso/cascette-rs?rev=d8ec31f4dabaaff80af64b2510c54104a1871fec#d8ec31f4dabaaff80af64b2510c54104a1871fec"
 dependencies = [
  "binrw",
  "cascette-crypto",
@@ -838,7 +838,7 @@ dependencies = [
 [[package]]
 name = "cascette-protocol"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=3992ef0fb9a81f10841a763619440a68647611ff#3992ef0fb9a81f10841a763619440a68647611ff"
+source = "git+https://github.com/Osso/cascette-rs?rev=d8ec31f4dabaaff80af64b2510c54104a1871fec#d8ec31f4dabaaff80af64b2510c54104a1871fec"
 dependencies = [
  "asn1",
  "async-trait",
@@ -1552,7 +1552,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -3538,7 +3538,7 @@ version = "0.50.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -4581,7 +4581,7 @@ dependencies = [
  "once_cell",
  "socket2",
  "tracing",
- "windows-sys 0.60.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -5093,7 +5093,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.11.0",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -5150,7 +5150,7 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "webpki-root-certs",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -5899,7 +5899,7 @@ dependencies = [
  "getrandom 0.3.4",
  "once_cell",
  "rustix 1.1.3",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -7003,7 +7003,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
