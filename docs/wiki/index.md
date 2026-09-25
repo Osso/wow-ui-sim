@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
+
+[[patch-12-1-5-api-audit]] records `ec661653b` clearing caller taint only during protected/forbidden visibility-handler dispatch, and `d9e524204` pinning rilua `77e0f76` for wrapped-table/nil guards, deepest-active closure taint, and weak GC-safe stamps. Actual vendor protected-visibility and custom-asset artifacts remain RED. `/tmp/retail-regression/taint-after.*` predates the latest pin and records two unique errors / four occurrences; no zero-error, reduction, GREEN, or build-latency claim. Rebuilt replay and independent proof remain pending.
+
 ## [2026-09-25] audit | Record retail secrecy and closure-taint correction limits
 
 [[patch-12-1-5-api-audit]] now records `b982e9165` separating table slot taint from value secrecy, `924276644` retail native secret wrapping, and `089d016f7` pinning rilua `f1ddc1b` weak closure-key stamps. Upstream logs are 5/5 closure-lifetime and 9/9 taint-stdlib; the no-addons secure-environment diagnostic passes 19 assertions. No simulator GREEN, build, or combined replay ran. Default residual remains four unique errors / 55 occurrences, including ObjectiveTracker `SecureMap` pooled-key rejection and secure-frame failures; no reduction credited.
