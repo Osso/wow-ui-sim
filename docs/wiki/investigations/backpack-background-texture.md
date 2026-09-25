@@ -1,140 +1,35 @@
-# Backpack Background Texture
+# Backpack background and slot texture investigation
 
-User reported the backpack body in the simulator displays as flat gray, while
-their retail screenshot of the open Backpack window shows a textured tan/brown
-body very similar to the BankFrame. Investigation found that the public
-`Gethe/wow-ui-source` XML — both the pinned `12.0.5` vendor and the current
-`live` branch — defines `ContainerFrame1` and `ContainerFrameCombinedBags` as
-solid `PANEL_BACKGROUND_COLOR` panels with no body texture, so our simulator
-matches the published source. The mismatch with retail therefore points at
-something outside the public source: an addon overlay, a recent live-client
-patch not yet mirrored, or a runtime path we haven't located. Closed without a
-sim-side fix; reopen if the externally-applied texture path is identified.
+The current bounded GUI run renders a ready 178×280, 16-slot Backpack. An exact 69977 `bagsitemslot2xc60` CASC asset was missing from the byte cache, fetched by its immutable source key, MD5-verified, and cached; no render fallback or substitute was added.
 
-## Symptom
+## Earlier source reading
 
-- User screenshot: open `Backpack` window (combined-bags view, all bags grouped
-  under #1 Backpack, #2-#5 Linen Bag, #6 Simply Stitched Reagent Bag) renders
-  with a dark tan/brown tiled body, similar visual style to the bank panel.
-- Simulator: same combined-bags / per-bag windows render with solid
-  `PANEL_BACKGROUND_COLOR` (≈0.15, 0.15, 0.15) body and atlas-rounded bottom
-  corners only.
+Published Gethe XML still describes the panel body through `FlatPanelBackgroundTemplate`: solid `PANEL_BACKGROUND_COLOR` fill plus rounded bottom-corner atlases. That source reading remains useful for the static panel-body contract, but it was not sufficient to establish current 69977 visual completeness. It must not be used to claim a native retail texture path, an English-source match, or that a missing runtime asset is intentionally absent.
 
-## Investigation
+`BankFrame` separately declares the tiled `bank-frame-background`; Backpack slot chrome is distinct from that body fill. The current work did not change Blizzard/vendor Lua or panel styling.
 
-### Render trace confirms the sim is rendering exactly what the XML asks
+## Exact 69977 acquisition
 
-Adding a debug eprintln to `build_texture_quads` (worktree-only,
-not committed) showed the `Bg.TopSection` and `Bg.BottomEdge` textures of
-`ContainerFrame1` reaching render time with `color_texture =
-Some(Color { r: 0.15, g: 0.15, b: 0.15, a: 1.0 })` and emitting solid quads
-covering the panel body. So:
+The missing Backpack slot asset is FDID `8187737`, cached at:
 
-1. XML codegen emits `tex:SetColorTexture(c:GetRGBA())` for those textures.
-2. The Lua call lands in `set_color_texture` with the right RGBA.
-3. `color_texture` survives to render and a solid quad is pushed.
-4. The visible gray *is* the rendered solid color, not a missing texture.
+`~/.cache/wow-ui-sim/casc-extract/Interface/containerframe/bagsitemslot2xc60.blp`
 
-### What the XML actually defines
+`/tmp/wow-character-bug/assets-staged/backpack-promoted.json` records 17,556 bytes and content MD5 `48bf37a9463a1819f0490662a4e407da`, marked verified. It was acquired from the exact 69977 CASC key and promoted into the standard CASC byte cache. No generated file, Gethe source copy, alternate texture, or new runtime fallback was introduced.
 
-`ContainerFrameTemplate` and `ContainerFrameCombinedBags` both inherit
-`PortraitFrameFlatTemplate` →
-`PortraitFrameFlatBaseTemplate` →
-`FlatPanelBackgroundTemplate`. That last one
-(`Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml:404`) is structured as:
+## Bounded visual proof
 
-- `BottomLeft` / `BottomRight`: atlas
-  `uiframebackground-nineslice-cornerbottomleft`/`-cornerbottomright`, vertex
-  color `PANEL_BACKGROUND_COLOR` — rendered as small rounded-corner sprites.
-- `BottomEdge` / `TopSection`: no atlas/file, `<Color
-  color="PANEL_BACKGROUND_COLOR"/>` — rendered as solid color quads via
-  `SetColorTexture`.
+The final GUI observer reports `VISUAL_READY=true`, a 178×280 Backpack with 16 slots, portrait width 36, top corner/top edge height 95, and bottom corner height 100. It completed in 8.14 seconds; screenshot capture exited 0. The outer GUI timeout was expected and result metadata records `ready=true` and `screenshot=true`. No Lua-error lines were reported for the exercised character/open-close-reopen and Backpack flow.
 
-There are no `edgetop`/`edgeleft`/`edgeright`/`cornertopleft`/`cornertopright`
-or `center` atlas pieces under the `uiframebackground-nineslice-` prefix in the
-listfile, so the `nineslice` naming is misleading — only the two bottom corners
-exist as atlases. The rest of the panel is intentionally a flat color fill.
-
-### Lua side does not add a body texture either
-
-- `ContainerFrameMixin:GetBackgroundColor()` returns
-  `PANEL_BACKGROUND_COLOR`.
-- `ContainerFrameMixin:UpdateBackground()` calls `SetBackgroundColor` with
-  that value, which is implemented by
-  `PortraitFrameFlatBaseMixin:SetBackgroundColor` (in
-  `Blizzard_SharedXML/PortraitFrame.lua:125`) — it tints the corner atlases
-  via `SetVertexColor` and refreshes the solid-color edges via
-  `SetColorTexture`. No atlas/file is applied.
-- `ContainerFrameCombinedBagsMixin:UpdateBackground()` is a no-op (`-- nop, the
-  background never changes`).
-- `ItemSlotBackgroundCombinedBagsTemplate` *is* a textured template (file
-  `Interface\ContainerFrame\UI-Bag-Components`, with explicit `<TexCoords>`),
-  but it is instantiated only **per item button** in
-  `ContainerFrameItemButtonMixin:Initialize` and `SetAllPoints(self)` is called
-  on the *button*, not the panel. It contributes the per-slot tile look, not a
-  panel-wide tiled body.
-
-### Live-branch verification
-
-WebFetch against
-`raw.githubusercontent.com/Gethe/wow-ui-source/live/.../ContainerFrame.xml` and
-`...ContainerFrame.lua` confirmed the same structure on `live` HEAD: no
-`Background`/`Bg` texture on `ContainerFrameCombinedBags`, no atlas
-applied via Lua to the panel body. Codex (gpt-5.5, high reasoning) reached the
-same conclusion citing the live branch line ranges:
-`SharedUIPanelTemplates.xml:404-435`,
-`ContainerFrame.xml:218-283`,
-`BankFrame.xml:673-684`.
-
-### Bank vs Backpack are genuinely different
-
-`BankFrame` defines its own body fill with
-`<Texture parentKey="Background" atlas="bank-frame-background" horizTile="true"
-vertTile="true">` (`BankFrame.xml:677`). The atlas resolves in the simulator to
-`Interface\bankframe\bankframebackground` 256×256. So the bank gets a tiled
-tan/marble body; the bag does not — by published-XML design.
-
-## Conclusion
-
-Per the public Blizzard source, the simulator's render matches what is
-authored: solid `PANEL_BACKGROUND_COLOR` body for both `ContainerFrame1` and
-`ContainerFrameCombinedBags`, atlas only for the two bottom corners.
-
-The user's retail screenshot nonetheless shows a textured body. Three
-candidate explanations remain unverified:
-
-1. An addon (e.g. BetterBags, Bagnon, ElvUI) reskinning the bag UI.
-2. A retail-client patch that adds a body texture but has not yet propagated
-   to `Gethe/wow-ui-source`.
-3. A code path in `Blizzard_Settings` / `Blizzard_EditMode` / a textureKit
-   system that swaps in a tiled background under some preset, which we have
-   not located.
-
-Closing the investigation without a simulator change. Reopen if/when the
-externally-applied texture path is identified — at that point the fix is to
-add the corresponding `<Texture>` (or runtime atlas application) to the
-simulator's container frame.
+This is not final release visual acceptance. The registered installed source remains blocked by missing `wow_classic_beta` metadata, and unrelated minimap mask misses remain outside this investigation.
 
 ## Sources
 
-- `vendor/wow-ui-source/Interface/AddOns/Blizzard_UIPanels_Game/Mainline/ContainerFrame.xml`
-- `vendor/wow-ui-source/Interface/AddOns/Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua`
-- `vendor/wow-ui-source/Interface/AddOns/Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml:404,618,643`
-- `vendor/wow-ui-source/Interface/AddOns/Blizzard_SharedXML/PortraitFrame.lua:123-135`
-- `vendor/wow-ui-source/Interface/AddOns/Blizzard_UIPanels_Game/Mainline/BankFrame.xml:673-684`
-- `Gethe/wow-ui-source` `live` branch (verified via WebFetch) and Codex citations
+- `/tmp/wow-character-bug/assets-staged/backpack-promoted.json` — exact asset identity, MD5, and cache path.
+- `/tmp/wow-character-bug/final-visual/{result.json,observer.json}` — bounded GUI and Backpack measurements.
+- `Blizzard_UIPanels_Game/Mainline/ContainerFrame.xml` and `Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml` — static public source structure only.
 
 ## See Also
 
-- [[hero-spec-dialog-anchors]] — another `PortraitFrameFlatTemplate`-derived
-  panel; useful for understanding how the Bg/NineSlice layers are wired.
-
-## Mists Note
-
-The Mists/Classic container path is different from the retail flat-panel path
-above. `ContainerFrame_GenerateFrame` selects
-`Interface\ContainerFrame\UI-BackpackBackground` for bag ID 0, and
-`ItemButtonTemplate` still gives every bag item button a `UI-Quickslot2`
-`NormalTexture`. Do not clear those normal textures in a post-load shim: doing
-so leaves only the baked backpack background wells and makes the main backpack
-slot chrome diverge from Blizzard's authored item-button template.
+- [[forever-character-panel]] — full bounded character-panel/source-cache matrix.
+- [[casc-local-index-generations]] — corrected local generation selection.
+- [[casc-asset-cache]] — byte-cache and source-sync architecture.

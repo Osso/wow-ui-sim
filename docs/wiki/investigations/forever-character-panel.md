@@ -1,64 +1,55 @@
 # Forever character panel investigation
 
-Opening the Forever character panel first exposed `GetUnitSpeed`, then primary-stat and remaining-stat handler gaps. Four formerly unmapped sidetab names are now authoritative; four asset-content blockers, full-panel acceptance, and complete runtime proof remain pending.
+The frozen Forever 1.60.1.69977 source/cache path now supports the bounded Camelot character-panel open, close, and reopen acceptance flow. This is simulator evidence, not native Forever behavior or registered-host startup proof.
 
-## Evidence
+## Confirmed coverage
 
-The cached binary with SHA-256 `2ef368d3a4587a2a1ae820afc62e64ad9c4138c21612a155dbbd838accff0b72` exits 1 when `ToggleCharacter` reaches the exact user `GetUnitSpeed` nil traceback. This proves the cached Camelot runtime behavior, not the binary's source revision or native Forever behavior.
+| Boundary | Status | Proof |
+|---|---|---|
+| Character panel lifecycle | passed | One unchanged full-panel acceptance case at `72d6d8b45`; opens, closes, and reopens. |
+| Relic-slot query | passed | Three focused cases at `7e7ce5fb0`/`72d6d8b45`; class changes and resolved units are covered. |
+| Atlas alias geometry | passed | Two focused cases at `72d6d8b45`. |
+| Character/stat API surface | partial | The pre-change cached diagnostic remains 15/25 visible handlers; it does not prove all handlers after the later changes. |
+| Four original panel assets | acquired | Exact 69977 encoding keys were fetched and MD5-verified into the normal CASC byte cache; no runtime fallback or substitute was added. |
+| Visual lifecycle | bounded pass | Character open/close/reopen and Backpack reported ready with no Lua-error lines in the final GUI artifacts. |
 
-Commit `5ca35ab62` adds a Forever-only regression test for opening, closing, and reopening the character panel; it exercises movement-stat discovery plus run/swim updates. The previous speed-path tests passed 5/5, but the same full-UI replay then reached `PaperDollFrameStats.lua:291` and failed on missing `GetCritChanceFromStat`. Commits `6a076ed46` and `b871b7083` add that bounded API model and its borrow-order correction; post-change replay and complete-panel proof remain pending.
+Final scoped verification at `72d6d8b45efc0c012fc94cdea63a9becac534c02` passed 12/12: CDN retry/status (3), relic slot (3), atlas (2), profile identity (1), full panel (1), plus two incidental relic matches. `cargo fmt --check` and `cargo check` passed. The unchanged baseline has two Python casing failures, five dependency warnings, and eight older lib-test warnings; none is credited as fixed.
 
-The active installation identifies as Forever `1.60.1.69977`, build `3bd89ce2721f7c75e7525dc83741076f`; cached UI provenance still identifies `1.60.1.69913`, build `6c0df97e8e481a9a41600e373367c200`. That provenance difference does not itself explain the texture failures.
+## Source and cache boundary
 
-Complete active-root parsing verified its header against `56,735,783` bytes, `1,167` blocks, `2,741,566` records, and `235,575` names. Uppercase-backslash direct Jenkins hashes resolve controls `134400` and `2447783`, then authoritatively resolve the formerly unmapped names: Currency `8197078`, Honor Alliance `8197097`, Reputation `8197103`, and Stats `8197104`. This supersedes the earlier claim that all four were mapping blockers.
+The source is a CASC-first, isolated historical 69977 fixture at `/tmp/wow-character-bug/frozen-69977-install` with its `Data` tree symlinked to the real data. Sync acquired all 4,398 Forever manifest files: 4,068 local, 330 CDN, one reused session, in 91.279 seconds. The resulting source cache was byte-equal when promoted to the default wowforever cache. This proves the produced 69977 UI artifact only; it does not repair or register the desktop installation.
 
-Commit `34975b1c2` records those four overrides and changes generation so every explicit override FDID is requested even absent from community data, literal scans, atlas entries, and Blizzard UI manifests. Regeneration adds five override-backed rows, including existing `8187495`; the four sidetab mappings appear in the limited listfile. The fresh 146,353-row upstream community CSV still lacks all four names, so it remains insufficient as their source.
+Gethe `c6e899…` is manifest-only for this work. Its 4,397 comparable files match after CRLF normalization. `LoadLocale` differs because the selected source is `ptPT`, not `enUS`; this is an existing variant limitation, not native-English source fidelity.
 
-Mapping is not content availability. A confirmed local index-generation reader defect previously made known installed records appear absent; it is separate from this panel's blockers. Stats `8197104` has one verified encoding key, `4c7bd5a0d7e07775ff13ac62c07e3e18`, and remains genuinely unindexed, as do `8175455`, `8245174`, and `8254784`. Thus the remaining content blockers are Stats plus those original three; no alternate encoding was discarded and no resolver substitution is credited. See [[casc-local-index-generations]].
+The old false-absence diagnosis is superseded: for the affected local index buckets, generation `ac` is the latest numeric base entry evidenced by the 69977 fixture. Selection must use that newest generation and must not let later directory enumeration select `aa`, merge older generations, or invent a fallback. The four original records are now present in the normal byte cache:
 
-Cached PlayerScriptDocumentation supplies signatures and return counts for six missing Camelot globals: `GetCritChanceFromStat`, `GetSpellCritChanceFromStat`, `GetRangedAttackPowerForStat`, `GetHealthRegenFromSpirit`, `GetManaRegenFromSpirit`, and `GetHealthRegen`. The tooltip multiplies crit fractions by 100 and displays spirit regeneration; the previous `GetManaRegen` intellect baseline does not incorporate spirit. The [bounded model contract](../../specs/forever-character-stat-contributions.md) defines `100` primary-stat points per `1%` crit, class-specific ranged-AP coefficients, `0.2` health and `0.1` mana spirit rates, and default spirit `0` as explicit simulator policies, not native-verified values. Behavioral tests and the unchanged replay still require GREEN verification.
-
-Before the remaining-stat commits, exact cached handler diagnostic `/tmp/wow-character-bug/stat-handlers.stdout` recorded 15 passes and 10 failures across 25 visible vendor handlers. The failures correspond to now-implemented same-path inputs: Spirit constant, dual-wield/ranged-weapon predicates, modifier reads, `GetRangedHaste` second return, and `UnitDefenseSkill` tuple. `1a841388d` adds that bounded Forever-only surface and four focused tests; `2b3a96d10` preserves state-borrow errors from the weapon predicates. Verifier GREEN has not run, so this is implementation coverage, not a new handler or panel pass. `ARMOR_PENETRATION_TOOLTIP` identifies armor penetration as a flat amount, not a percentage. Existing profile contracts remain cfg-gated.
-
-The user's earlier panel log spent 15.4 seconds building the resolution cache during an 18.4-second draw. New cold GUI evidence records a 19.6-second resolution-cache build after post-load workarounds at 17.5 seconds and before font initialization at 47.0 seconds. Initial first draw then spent 7.3 seconds in texture work (8.7 seconds total), attributed to the first community-catalog lookup; commit `79382f3b6` prewarms that catalog before GUI drawing. A later forced fresh CASC extract for FDID `2447783` took 266 ms. The next cold run is pending, so no full startup-stall fix is claimed.
-
-## Limits and next boundary
-
-Commits `7be534fff` and `57ffc3d01` add the player-speed and GUI resolution-cache-preparation slices, respectively; their tests remain pending verifier confirmation. The mapping generator's behavioral RED/GREEN passed, but its Python module suite has two reported pre-existing canonical-case expectation failures that are not independently confirmed here; no all-suite pass is claimed. The cache-preparation contract is [CASC asset loading](../../specs/casc-loading.md).
-
-| Boundary | Status |
+| FDID | Cached path |
 |---|---|
-| Four sidetab name-to-FDID mappings | committed in `34975b1c2` |
-| Generator behavioral RED/GREEN | passed |
-| Icon extraction and character-panel runtime | pending GREEN |
-| Remaining content availability | blocked: Stats `8197104`, plus `8175455`, `8245174`, `8254784` |
-| Earlier independent proof | cache 1/1, listfile 3/3, primary-stat 4/4, speed 5/5 GREEN |
-| Remaining-stat handler baseline | 15/25 passed before `1a841388d`/`2b3a96d10`; 10 same-path gaps now implemented, unverified |
-| Four remaining-stat tests | committed; verifier GREEN pending |
-| Full panel and 25-handler diagnostic | not yet passing after the commits |
-| API/cache slice tests and next cold GUI run | pending verifier |
-| Native, pixels | not run |
+| 8175455 | `Interface/paperdollinfoframe/paperdollinfopart2c60.blp` |
+| 8245174 | `Interface/common/commonframedividerc60.blp` |
+| 8254784 | `Interface/common/commonsidetabmaskc60.blp` |
+| 8197104 | `Interface/Icons/INV_SideTab_Stats_c60.blp` |
 
-No complete-panel, successful-regression, native, source-provenance, asset-extraction, or pixel claim follows from this record.
+Each entry in `/tmp/wow-character-bug/assets-staged/promoted.json` records the exact cached path, byte count, and verified content MD5. No generated source, Gethe file copy, runtime fallback, or texture substitute is credited.
+
+## Visual evidence and limits
+
+`/tmp/wow-character-bug/final-visual/result.json` reports a ready screenshot run (the outer timeout is expected). Its observer completed in 8.14 seconds and reported `VISUAL_READY=true`; Backpack measured 178×280 with 16 slots, 36px portrait width, 95px top corner/top edge, and 100px bottom corner. Initial GPU stall was about 1.1 seconds elsewhere; initial texture work was about 13ms. This is bounded GUI evidence, not release acceptance.
+
+The current release build is running through the main alias with Forever features. The real installed `.build.info` is still missing `wow_classic_beta`; its desktop Syncthing debug record was modified on September 24, 2026 at 19:39 CDT. The team did not edit that metadata. Registered-install startup remains blocked, so no host-startup or final-release-visual completion claim follows. An unrelated minimap mask miss remains open.
 
 ## Sources
 
-- `/tmp/wow-character-bug/proof-ledger.json` — cached-binary reproduction and prior cache observations.
-- `/tmp/wow-character-bug/root-name-variants.json` and `name-hash-variants.tsv` — complete active-root totals, control FDIDs, and authoritative hash variant.
-- `/tmp/wow-character-bug/stats-encoding-keys.json`, `all-encoding-keys.json`, and `local-index-evidence.json` — verified encoding cardinality and local-index evidence; superseded for affected known-present records by [[casc-local-index-generations]].
-- `34975b1c2` — explicit overrides and generator request preservation.
-- `5ca35ab62` — Forever character movement-stat regression test.
-- `6a076ed46`, `b871b7083` — bounded Forever stat/regen model and borrow-order correction.
-- `79382f3b6` — community-catalog prewarm before GUI drawing.
-- `1a841388d`, `2b3a96d10` — remaining-stat surface and predicate state-error propagation.
-- `/tmp/wow-character-bug/stat-handlers.stdout` — pre-change 25-handler diagnostic (15 pass, 10 fail).
-- `/tmp/wow-character-bug/verify-speed.stderr` and `stat-surface-red.stdout` — previous full-UI failure and six missing-global probes.
-- `/tmp/wow-character-bug/cold-gui/{stderr,result.json}` — bounded cold GUI timing evidence.
-- Cached `Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua` and `Blizzard_UIPanels_Game/Camelot/PaperDollFrameStats.lua` — signatures, return counts, and tooltip consumption.
+- `/tmp/wow-character-bug/final-visual/{result.json,observer.json}` — final GUI lifecycle and Backpack metrics.
+- `/tmp/wow-character-bug/assets-staged/promoted.json` — four exact 69977 asset MD5/cache records.
+- `/tmp/wow-character-bug/verified-69977/cache-promotion.json` — 4,398-file byte-equal cache promotion scope.
+- `/tmp/wow-character-bug/frozen-69977-install` — isolated historical CASC fixture.
+- `72d6d8b45`, `7e7ce5fb0`, `9ac8d0554` — semantic atlas, relic, and published CASC-reader revisions.
 
 ## See Also
 
-- [[forever-addon-comparison]] — bounded cached-addon compatibility evidence.
-- [[tick-cooldown-scan]] — separate asset-resolver cache investigation.
-- [[casc-local-index-generations]] — confirmed reader defect versus the four remaining true content blockers.
-- [CASC asset loading](../../specs/casc-loading.md) — GUI resolution-cache-preparation contract.
+- [[casc-local-index-generations]] — newest-generation selection and source acquisition boundary.
+- [[casc-asset-cache]] — runtime cache layers and sync behavior.
+- [[backpack-background-texture]] — exact Backpack slot texture acquisition and visual scope.
+- [Forever character-panel remaining stat rows](../../specs/forever-character-remaining-stats.md) — remaining API contract.
+- [Forever atlas data](../../specs/forever-atlas-data.md) — atlas generation contract.

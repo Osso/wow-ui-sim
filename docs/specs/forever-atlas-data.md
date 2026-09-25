@@ -20,6 +20,6 @@ Generation emits 19,203 atlas entries and 20,684 element mappings; this canvas c
 
 ## Proof
 
-- `tests/wowforever_atlas.rs`: Lua lookup, `Texture:SetAtlas(true)` alias/explicit geometry, and element identity.
+- `tests/wowforever_atlas.rs`: Lua lookup, `Texture:SetAtlas(true)` alias/explicit geometry, and element identity. Two focused atlas cases passed in final scoped verification at `72d6d8b45`.
 - `src/bin/wow_cli/gen_atlas_tests.rs`: concrete CSV fixture, canvas choice, generated geometry and local slice output.
 - Full startup and rendering acceptance are separate integration gates.
