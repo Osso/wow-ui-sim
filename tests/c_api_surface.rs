@@ -888,21 +888,6 @@ fn shared_character_services_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn click_bindings_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api_registration = include_str!("../src/c_api/registration.rs");
-
-    assert!(
-        !temporary_shims.contains("c_click_bindings"),
-        "unmodeled C_ClickBindings profile defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api_registration.contains("c_click_bindings"),
-        "C_ClickBindings profile defaults should not be wired through c_api registration"
-    );
-}
-
-#[test]
 fn spell_book_static_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let item_spell = include_str!("../src/c_api/item_spell/mod.rs");

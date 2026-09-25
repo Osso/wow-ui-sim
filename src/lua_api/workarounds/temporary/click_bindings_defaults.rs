@@ -1,7 +1,4 @@
-//! Temporary `C_ClickBindings` profile defaults.
-//!
-//! Click-binding profiles are client/account state we do not model yet. Missing
-//! profile state reports no binding so secure unit buttons use their attributes.
+//! Temporary `C_ClickBindings` gaps outside the modeled interaction profile.
 
 const CLICK_BINDINGS_DEFAULTS_LUA: &str = r#"
 C_ClickBindings = C_ClickBindings or __wow_namespace()
@@ -14,24 +11,6 @@ end
 
 if rawget(C_ClickBindings, "ExecuteBinding") == nil then
     function C_ClickBindings.ExecuteBinding(_targetToken, _button, _modifiers)
-    end
-end
-
-if rawget(C_ClickBindings, "GetBindingType") == nil then
-    function C_ClickBindings.GetBindingType(_button, _modifiers)
-        return Enum.ClickBindingType.None
-    end
-end
-
-if rawget(C_ClickBindings, "GetEffectiveInteractionButton") == nil then
-    function C_ClickBindings.GetEffectiveInteractionButton(button)
-        return button
-    end
-end
-
-if rawget(C_ClickBindings, "GetProfileInfo") == nil then
-    function C_ClickBindings.GetProfileInfo()
-        return {}
     end
 end
 
@@ -79,16 +58,6 @@ if rawget(C_ClickBindings, "MakeModifiers") == nil then
     end
 end
 
-if rawget(C_ClickBindings, "ResetCurrentProfile") == nil then
-    function C_ClickBindings.ResetCurrentProfile()
-    end
-end
-
-if rawget(C_ClickBindings, "SetProfileByInfo") == nil then
-    function C_ClickBindings.SetProfileByInfo(_profileInfo)
-    end
-end
-
 if rawget(C_ClickBindings, "SetTutorialShown") == nil then
     function C_ClickBindings.SetTutorialShown(_shown)
     end
@@ -105,17 +74,17 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn no_profile_reports_no_binding_and_execute_is_inert() {
+    fn default_profile_reports_interaction_and_execute_remains_inert() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec("ClearTarget()").expect("target should clear");
 
         let binding_type: i32 = env
             .eval("return C_ClickBindings.GetBindingType('LeftButton', MakeModifiers())")
             .expect("binding type should be queryable");
-        assert_eq!(binding_type, 0);
+        assert_eq!(binding_type, 3);
 
         env.exec("C_ClickBindings.ExecuteBinding('party1', 'LeftButton', 0)")
-            .expect("missing click binding should be inert");
+            .expect("unmodeled click binding execution should remain inert");
 
         let target_exists: bool = env
             .eval("return UnitExists('target')")

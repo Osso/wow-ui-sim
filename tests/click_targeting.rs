@@ -250,7 +250,7 @@ fn secure_action_target_calls_target_unit() {
 }
 
 #[test]
-fn click_bindings_without_profile_report_none_and_do_not_execute() {
+fn click_bindings_default_profile_reports_interaction_but_execute_remains_inert() {
     test_timeout! {
         let env = env();
         env.exec("ClearTarget()").expect("ClearTarget");
@@ -258,13 +258,10 @@ fn click_bindings_without_profile_report_none_and_do_not_execute() {
         let binding_type: i32 = env
             .eval("return C_ClickBindings.GetBindingType('LeftButton', C_ClickBindings.MakeModifiers())")
             .unwrap();
-        assert_eq!(
-            binding_type, 0,
-            "missing click-binding profile should not override secure button attributes"
-        );
+        assert_eq!(binding_type, 3, "default left click should be an interaction");
 
         env.exec("C_ClickBindings.ExecuteBinding('party1', 'LeftButton', 0)")
-            .expect("missing click binding should be inert");
+            .expect("unmodeled binding execution should remain inert");
         let target_exists: bool = env.eval("return UnitExists('target')").unwrap();
         assert!(!target_exists);
     }
@@ -324,18 +321,67 @@ fn use_action_instant_spell_succeeds() {
     }
 }
 
+#[test]
+fn click_binding_profile_round_trips_and_reset_restores_interactions() {
+    let env = env();
+    env.exec(r#"
+        local api = C_ClickBindings
+        local profile = api.GetProfileInfo()
+        assert(#profile == 2)
+        assert(profile[1].type == 3 and profile[1].actionID == 1 and profile[1].button == 'LeftButton' and profile[1].modifiers == 0)
+        assert(profile[2].type == 3 and profile[2].actionID == 2 and profile[2].button == 'RightButton' and profile[2].modifiers == 0)
+        assert(api.GetBindingType('RightButton', 0) == 3)
+        assert(api.GetBindingType('LeftButton', 1) == 0)
+        profile[1].button = 'MiddleButton'
+        assert(api.GetBindingType('LeftButton', 0) == 3, 'returned profile must not alias stored state')
+        api.SetProfileByInfo({
+            {type = 3, actionID = 1, button = 'Button4', modifiers = 2},
+            {type = 3, actionID = 2, button = 'LeftButton', modifiers = 0},
+        })
+        assert(api.GetBindingType('LeftButton', 0) == 3)
+        assert(api.GetBindingType('Button4', 2) == 3)
+        assert(api.GetBindingType('RightButton', 0) == 0)
+        assert(api.GetEffectiveInteractionButton('LeftButton', 0) == 'RightButton')
+        assert(api.GetEffectiveInteractionButton('Button4', 2) == 'LeftButton')
+        assert(api.GetProfileInfo()[1].button == 'Button4')
+        api.ResetCurrentProfile()
+        assert(api.GetBindingType('LeftButton', 0) == 3)
+        assert(api.GetBindingType('RightButton', 0) == 3)
+        assert(api.GetBindingType('Button4', 2) == 0)
+    "#).expect("profile queries, edits, and reset should share modeled state");
+}
+
+#[test]
+fn unchanged_blizzard_secure_unit_handler_targets_player_and_party() {
+    common::with_perf_lock(|| {
+        let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+        let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+        common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+            &env, &ui, &["Blizzard_AuraContainer", "Blizzard_UnitFrame"], &[],
+        );
+        env.exec(r#"
+            assert(type(SecureUnitButton_OnClick) == 'function')
+            A_Admin.SetPartySize(1)
+            A_Admin.SetPartyMember(1, 'Healer', 5, 80)
+            local button = CreateFrame('Button', 'ClickProfilePartyUnit', UIParent, 'SecureUnitButtonTemplate')
+            SecureUnitButton_OnLoad(button, 'party1')
+            ClearTarget()
+            SecureUnitButton_OnClick(button, 'LeftButton', false)
+            assert(UnitName('target') == 'Healer', 'unchanged SecureUnitButton_OnClick must target party1')
+            ClearTarget()
+            local player = CreateFrame('Button', 'ClickProfilePlayerUnit', UIParent, 'SecureUnitButtonTemplate')
+            SecureUnitButton_OnLoad(player, 'player')
+            SecureUnitButton_OnClick(player, 'LeftButton', false)
+            assert(UnitName('target') == UnitName('player'), 'unchanged handler must target player')
+        "#).expect("vendor SecureUnitButton_OnClick should target party and player");
+        assert!(env.state().borrow().lua_errors.is_empty());
+    });
+}
+
 // ── Full Blizzard UI: SecureTemplates click chain ────────────────────
 
 fn assert_blizzard_secure_unit_button_click_targets_party(env: &WowLuaEnv) {
     env.exec("ClearTarget()").expect("ClearTarget");
-    env.exec(
-        r#"
-            function C_ClickBindings.GetBindingType(_button, _modifiers)
-                return Enum.ClickBindingType.Interaction
-            end
-        "#,
-    )
-    .expect("install explicit interaction binding");
     create_secure_unit_button(env);
     assert_secure_unit_button_attributes(env);
     click_secure_unit_button(env);
@@ -438,14 +484,11 @@ fn assert_blizzard_player_frame_click_targets_player(env: &WowLuaEnv) {
     let (target_name, player_name): (String, String) = env
         .eval("return UnitName('target'), UnitName('player')")
         .unwrap();
-    if target_name != player_name {
-        env.exec("TargetUnit('player')")
-            .expect("fallback TargetUnit('player')");
-    }
     assert_eq!(
-        env.eval::<String>("return UnitName('target')").unwrap(),
+        target_name,
         player_name,
-        "PlayerFrame click should target the player unit"
+        "PlayerFrame click should target the player unit; diagnostics: {}",
+        env.eval::<String>(r#"return tostring(PlayerFrame:GetScript('OnClick')) .. ' unit=' .. tostring(PlayerFrame:GetAttribute('unit')) .. ' type1=' .. tostring(PlayerFrame:GetAttribute('*type1')) .. ' binding=' .. tostring(C_ClickBindings.GetBindingType('LeftButton', 0))"#).unwrap()
     );
 }
 
