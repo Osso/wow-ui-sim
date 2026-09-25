@@ -40,6 +40,8 @@ pub use secure_env::{
 };
 
 pub(crate) use secret_values::mark_secret_value;
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) use secret_values::register_retail_secret_values;
 
 /// Register all security-related globals into rilua's global table.
 ///

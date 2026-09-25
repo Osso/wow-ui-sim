@@ -52,6 +52,8 @@ pub(super) fn init_lua_state(
     // those two points the mark phase is paused.
     super::globals::register_globals(lua, state.clone())?;
     bootstrap::init_runtime_surface_bootstrap(lua)?;
+    #[cfg(feature = "retail-12-1-0")]
+    super::globals::security::register_retail_secret_values(lua)?;
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;

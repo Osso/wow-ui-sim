@@ -4,6 +4,9 @@
 //! identity. Used by `issecretvalue` / `canaccess*` fallbacks and by C-side
 //! Rust code that wants to mark unit-name strings as tainted.
 
+#[cfg(feature = "retail-12-1-0")]
+use rilua::LuaApiMut;
+use rilua::table_security::is_secret_value;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
@@ -22,6 +25,34 @@ pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_if_missing(lua, "scrubsecretvalues", scrub_passthrough)?;
     register_if_missing(lua, "secretunwrap", secretunwrap_passthrough)?;
     Ok(())
+}
+
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
+    LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn secretwrap_native(state: &mut LuaState) -> LuaResult<u32> {
+    let count = state.top - state.base;
+    for index in 0..count {
+        let value = rilua::table_security::wrap_secret(state, state.stack_get(state.base + index))?;
+        state.push(value);
+    }
+    Ok(count as u32)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn secretunwrap_native(state: &mut LuaState) -> LuaResult<u32> {
+    let count = state.top - state.base;
+    for index in 0..count {
+        let value =
+            rilua::table_security::unwrap_secret(state, state.stack_get(state.base + index))?;
+        state.push(value);
+    }
+    Ok(count as u32)
 }
 
 /// `scrub(...)` / `scrubsecretvalues(...)` — return args unchanged.
@@ -57,7 +88,7 @@ pub(super) fn value_is_secret(
     value: Val,
     visited: &mut HashSet<rilua::vm::gc::arena::GcRef<Table>>,
 ) -> bool {
-    if value_has_secret_marker(state, value) {
+    if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
 
@@ -79,7 +110,7 @@ pub(super) fn value_is_secret(
 /// every released frame, plus SecureMap/SecureStack assertions on every
 /// reclaim).
 pub(super) fn value_is_secret_shallow(state: &mut LuaState, value: Val) -> bool {
-    if value_has_secret_marker(state, value) {
+    if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
 
