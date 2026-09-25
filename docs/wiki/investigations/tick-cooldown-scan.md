@@ -50,6 +50,14 @@ After the cooldown fix, ~8% of settled main-thread self time was `preload_visibl
 
 Result: `HashSet<String>::insert` 4.3% → 0.13% self time; preload p90 1.51ms → 0.62ms. Tests in `src/iced_app/render/pending_texture_tests.rs` (full and partial-stratum rebuild) fail under mutation of either invalidation site. `on_update` rose between measurements across 29 unrelated commits; unattributed.
 
+### Every-frame re-anchoring (follow-up)
+
+Dirty-frame probing showed the same frames dirty on idle ticks: `MicroMenu`, `QueueStatusButton`, `QueueStatusFrame`, `FramerateFrame`, `HelpOpenWebTicketButton`. Blizzard's `GridLayoutFrameMixin:Layout()` returns before `MarkClean()` when grid settings are unchanged, so `MicroMenu.dirty` stays true and its `OnUpdate` re-runs `MicroMenuMixin:Layout()` every frame, re-anchoring those frames to identical points (Blizzard behavior; not patched).
+
+`672c32aab`: anchor setters (`ClearAllPoints`, `ClearPoint`, `SetPoint`, `SetAllPoints`, `AdjustPointsOffset`) record the frame's anchors and rect before its first edit (`src/widget/registry/anchor_edits.rs`). When the dirty set is read, the frame is marked visually dirty only if its anchors changed or a freshly resolved rect differs — the rect check covers a same-anchor reapply after the target moved. Layout invalidation is unchanged. Tests: `src/loader/tests/anchor_render_dirty.rs`; the target-moved case fails under an anchors-only mutation.
+
+`bench_steady_state` A/B (host load 18–20, noisy): draw min p50 2.60/1.24ms → 0.41/0.46ms; draw/tick ratio per round 1.08–1.14 → 0.44–0.67. Every measured frame still uploads a stratum: remaining idle dirt includes `TabardModel`, a cast-bar texture, an NPE texture, and `QueueStatusButtonIcon` `Show()`.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
