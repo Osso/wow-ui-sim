@@ -156,11 +156,12 @@ pub(super) fn recipe_schematic_table(
     state: &mut LuaState,
     recipe: Option<&profession_data::RecipeEntry>,
 ) -> Val {
+    let Some(recipe) = recipe else {
+        return Val::Nil;
+    };
+
     let table = create_table_with_capacity(state, RECIPE_SCHEMATIC_HASH_FIELDS);
-    match recipe {
-        Some(recipe) => populate_recipe_schematic_table(state, table, recipe),
-        None => set_number_field(state, table, "recipeID", 0.0),
-    }
+    populate_recipe_schematic_table(state, table, recipe);
     table
 }
 

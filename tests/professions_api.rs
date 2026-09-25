@@ -502,14 +502,35 @@ fn test_recipe_info_unknown() {
 #[test]
 fn test_recipe_schematic_has_reagents() {
     let env = env();
-    let (id, count): (i32, i32) = env
+    let (id, name, output, min, max, count, slot_index, item, quantity): (
+        i32,
+        String,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+    ) = env
         .eval(
-            "local s = C_TradeSkillUI.GetRecipeSchematic(100001); \
-             return s.recipeID, #s.reagentSlotSchematics",
+            r#"
+            local s = C_TradeSkillUI.GetRecipeSchematic(100001)
+            local slot = s.reagentSlotSchematics[1]
+            return s.recipeID, s.name, s.outputItemID, s.quantityMin, s.quantityMax,
+                #s.reagentSlotSchematics, slot.slotIndex, slot.reagents[1].itemID,
+                slot.quantityRequired
+            "#,
         )
         .unwrap();
     assert_eq!(id, 100001);
-    assert!(count > 0);
+    assert_eq!(name, "Khaz Algar Helm");
+    assert_eq!(output, 211993);
+    assert_eq!((min, max), (1, 1));
+    assert_eq!(count, 2);
+    assert_eq!(slot_index, 1);
+    assert_eq!(item, 210934);
+    assert_eq!(quantity, 12);
 }
 
 #[test]
@@ -537,12 +558,24 @@ fn test_recipe_profession_and_item_links_exist() {
 }
 
 #[test]
-fn test_recipe_schematic_unknown() {
+fn test_recipe_schematic_unknown_short_circuits_before_reagent_construction() {
     let env = env();
-    let id: i32 = env
-        .eval("return C_TradeSkillUI.GetRecipeSchematic(999999).recipeID")
+    let result: String = env
+        .eval(
+            r#"
+            local function restore(recipeID)
+                local schematicInfo = C_TradeSkillUI.GetRecipeSchematic(recipeID, false)
+                if not schematicInfo then
+                    return "skipped"
+                end
+                for _ in pairs(schematicInfo.reagentSlotSchematics) do end
+                return "constructed"
+            end
+            return restore(1228977)
+            "#,
+        )
         .unwrap();
-    assert_eq!(id, 0);
+    assert_eq!(result, "skipped");
 }
 
 #[test]
