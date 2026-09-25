@@ -21,6 +21,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
+- [ ] Engine proxy tables and bound-method adapters do not inherit the caller that creates or reads them. Invocation still preserves the active caller and underlying method's own addon taint.
 - [x] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.
 - [x] Expose XML parentKey children to private frame mixins under forbidden-object-table scope while keeping ordinary public Lua fields isolated.
 
@@ -42,7 +43,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 
 ## Tests asserting this spec
 
-- `tests/userdata_proxy.rs` — native parent acceptance, spoof rejection, real provider acquisition, initializer ownership, and private/public isolation.
+- `tests/userdata_proxy.rs` — native parent acceptance, spoof rejection, real provider acquisition, initializer ownership, private/public isolation, and method-origin preservation across addon-created projections.
 - `tests/click_targeting/forever_regressions.rs` — full startup, target-player aura tick, private Count access, and ordinary public-field isolation.
 - `tests/xml_secure_delegates.rs` — secure entry, addon callback taint, caller restoration after return/error, and receiver-only negative control. At `9476efcf5`, both cases pass.
 - Runtime environment-transfer tests cover arguments, varargs, multiple results, tail returns, native callbacks, reentry and error propagation.

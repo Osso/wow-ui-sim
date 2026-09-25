@@ -9,6 +9,29 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+fn forbidden_projection_preserves_method_origin_across_addon_creation_and_lookup() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame=CreateFrame('Frame')
+        frame.Trusted=function() return issecure() end
+        local function addon()
+            frame.Addon=function() return issecure() end
+            local private=GetForbiddenObjectTable(frame)
+            local captured=private.Trusted
+            assert(not private:Trusted(), 'method invocation erased addon caller')
+            return private,captured
+        end
+        debug.setobjecttaint(addon,'PrivateProjectionAddon')
+        local private,captured=addon()
+        assert(private:Trusted() and captured(private), 'proxy tainted trusted method')
+        assert(not private:Addon(), 'proxy promoted addon method')
+    "#,
+    )
+    .unwrap();
+}
+
 // Explicit simulator projection policy, not native identity or security conformance.
 #[test]
 fn forbidden_partition_interns_isolated_private_views() {

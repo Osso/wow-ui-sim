@@ -131,6 +131,25 @@ local function __wow_public_set(object, key, value)
   object[key] = value
 end
 
+local callPrivateProjectionFactory = securecallfunction
+local function bindPublicObjectMethod(object, method)
+  return function(_, ...)
+    return method(object, ...)
+  end
+end
+
+local function createForbiddenObjectTable(object)
+  return setmetatable({ [0] = rawget(object, 0), __wowPublicObject = object }, {
+    __index = function(_, key)
+      local method = object[key]
+      if type(method) ~= "function" then
+        return nil
+      end
+      return callPrivateProjectionFactory(bindPublicObjectMethod, object, method)
+    end,
+  })
+end
+
 function GetForbiddenObjectTable(object)
   local public = type(object) == "table" and rawget(object, "__wowPublicObject")
   if public and __wow_forbidden_object_tables[public] == object then
@@ -141,17 +160,7 @@ function GetForbiddenObjectTable(object)
   end
   local forbidden = __wow_forbidden_object_tables[object]
   if forbidden == nil then
-    forbidden = setmetatable({ [0] = rawget(object, 0), __wowPublicObject = object }, {
-      __index = function(_, key)
-        local method = object[key]
-        if type(method) ~= "function" then
-          return nil
-        end
-        return function(_, ...)
-          return method(object, ...)
-        end
-      end,
-    })
+    forbidden = callPrivateProjectionFactory(createForbiddenObjectTable, object)
     __wow_forbidden_object_tables[object] = forbidden
   end
   return forbidden
