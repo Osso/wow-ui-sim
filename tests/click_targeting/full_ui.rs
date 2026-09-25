@@ -14,8 +14,13 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 pub(crate) fn env_with_full_ui() -> WowLuaEnv {
+    env_with_full_ui_configured(|_| {})
+}
+
+pub(crate) fn env_with_full_ui_configured(configure: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create env");
     env.set_screen_size(1024.0, 768.0);
+    configure(&env);
 
     let ui = blizzard_ui_dir();
     {

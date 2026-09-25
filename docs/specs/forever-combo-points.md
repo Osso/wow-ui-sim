@@ -10,6 +10,7 @@
 - [x] Resolve owner/target aliases through existing unit snapshots and GUID identity. An absent owner or target has no combo points and returns zero.
 - [x] Preserve read-only queries, clear target assignment on a zero input, and leave a nonzero input made without a target unassigned. A new nonzero input replaces the single assignment.
 - [x] Report unsupported resolved nonplayer ownership explicitly instead of fabricating its count. Exercise unchanged native ComboFrame initialization/update with `comboPointLocation=1`, including nonzero display and zero hiding.
+- [x] With full UI startup, `PLAYER_ENTERING_WORLD` must refresh unchanged PlayerFrame/ComboFrame through the CVar-enabled event route for three and zero player combo points without Lua errors.
 
 ### Evidence and explicit guesses
 
@@ -34,7 +35,7 @@ Cached EllesmereUI 9.2.2's changelog reports `UnitPower=3` while `GetComboPoints
 
 ## Tests asserting this spec
 
-`tests/combo_points.rs` joins the existing grouped integration target. It covers changing/zero inputs, primary-power independence, callback ordering across a target swap before a power update, GUID aliases, no-target input, explicit unsupported ownership, and unchanged native ComboFrame with its CVar enabled.
+`tests/combo_points.rs` joins the existing grouped integration target. It covers changing/zero inputs, primary-power independence, callback ordering across a target swap before a power update, GUID aliases, no-target input, explicit unsupported ownership, and unchanged native ComboFrame with its CVar enabled. `tests/click_targeting/forever_regressions.rs` exercises the full-startup world-entry event route.
 
 Runtime RED exists in `/tmp/forever-addon-audit/batch-combo-error-transition.json` and the parent's no-addons shared-data control. At `c1e830ffa`, the isolated Forever integration build and `combo_points::` filter pass 6/6, including unchanged native ComboFrame updates with its CVar enabled. This proves the bounded simulator model, not native client behavior.
 
