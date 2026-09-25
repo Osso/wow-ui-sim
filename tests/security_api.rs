@@ -699,6 +699,46 @@ fn test_issecurevariable_detects_taint() {
 }
 
 #[test]
+fn addon_tainted_table_slot_does_not_make_table_secret() {
+    let env = env();
+    let (slot_secure, slot_owner, secret, access, all_access, deep_access, stored): (
+        bool,
+        String,
+        bool,
+        bool,
+        bool,
+        bool,
+        String,
+    ) = env
+        .eval(
+            r#"
+            local key = {}
+            local function addonWrite()
+                debug.setstacktaint("TaintProbeAddon")
+                key.field = "public"
+            end
+            addonWrite()
+            local secure, owner = issecurevariable(key, "field")
+            local secret = issecretvalue(key)
+            local access = canaccessvalue(key)
+            local allAccess = canaccessallvalues(key, 1)
+            local deepAccess = canaccesstable(key)
+            local map = SecureTypes.CreateSecureMap()
+            map:SetValue(key, "stored")
+            return secure, owner, secret, access, allAccess, deepAccess, map:GetValue(key)
+            "#,
+        )
+        .unwrap();
+    assert!(!slot_secure);
+    assert_eq!(slot_owner, "TaintProbeAddon");
+    assert!(!secret);
+    assert!(access);
+    assert!(all_access);
+    assert!(deep_access);
+    assert_eq!(stored, "stored");
+}
+
+#[test]
 fn test_secure_map_rejects_secret_keys_and_values() {
     let env = env();
     let (key_error, value_error, stored_value): (String, String, String) = env
@@ -859,6 +899,33 @@ fn test_table_containing_party_identity_is_not_accessible() {
         !accessible,
         "tables containing secret identities should be secret"
     );
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn native_secret_contents_remain_inaccessible_in_public_table() {
+    let env = env();
+    let (shallow_secret, shallow_access, deep_access, wrapper_secret, wrapper_access): (
+        bool,
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            local wrapped = secretwrap("private")
+            local publicTable = { nested = { value = wrapped } }
+            return issecretvalue(publicTable), canaccessvalue(publicTable),
+                canaccesstable(publicTable), issecretvalue(wrapped), canaccessvalue(wrapped)
+            "#,
+        )
+        .unwrap();
+    assert!(!shallow_secret);
+    assert!(shallow_access);
+    assert!(!deep_access);
+    assert!(wrapper_secret);
+    assert!(!wrapper_access);
 }
 
 #[test]

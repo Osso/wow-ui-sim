@@ -7,8 +7,9 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 - [ ] Preserve the exact argument count and position, including nil and zero arguments, while wrapping or unwrapping values. Rewrapping an existing native secret preserves its identity.
 - [ ] Let unchanged `AuraButtonPrivateMixin:UpdateAuraDuration` configure its existing duration object using all three wrapped expiration, duration, and rate arguments, or the wrapped zero-span branch.
 - [ ] Mark native wrappers secret in `issecretvalue` and inaccessible in `canaccessvalue`/`canaccessallvalues`, without replacing existing taint-marker and closure checks.
+- [ ] Treat an ordinary table with addon-tainted slots as a public value and valid SecureMap key while `issecurevariable` still reports those slots insecure; deep `canaccesstable` rejects actual nested secret values, including native wrappers and explicitly marked strings.
 - [ ] Reject tainted wrapping and unwrapping of secrets; secret-duration timing and mutation remain inaccessible to tainted callers.
-- [ ] Preserve Forever's native registration and older profiles' existing fallbacks; do not publish `settablesecurity` on retail.
+- [ ] Preserve Forever's native registration and older profiles' existing fallbacks; do not replace retail's pre-existing `settablesecurity` shim with the native table-security API.
 
 ## How it works
 
@@ -25,6 +26,7 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 ## Tests asserting this spec
 
 - `tests/duration_core.rs`: unchanged cached Blizzard AuraButton duration consumer, wrapper arity/nil, security and duration-state checks (GREEN pending).
+- `tests/security_api.rs`: tainted public table slot/SecureMap key, native nested secret, and explicit string-marker controls (compiled GREEN pending).
 
 ## Known gaps (current cycle)
 
