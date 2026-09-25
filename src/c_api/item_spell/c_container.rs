@@ -86,15 +86,6 @@ fn register_container_query_methods(
     )
 }
 
-pub(crate) fn container_slot_count(bag: i32) -> i32 {
-    match bag {
-        -4 => 7,
-        -1 => 28,
-        0..=4 => 16,
-        _ => 0,
-    }
-}
-
 fn register_container_methods(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
@@ -108,28 +99,26 @@ fn register_container_methods(
 
 pub(crate) fn c_container_get_num_slots(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
-    state.push(Val::Num(container_slot_count(bag) as f64));
+    let num_slots = borrow_state(state)?.bag_num_slots(bag);
+    state.push(Val::Num(num_slots as f64));
     Ok(1)
 }
 
 fn c_container_get_num_free_slots(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
-    let occupied = borrow_state(state)?.bag_occupied_slots(bag) as f64;
-    let free = (container_slot_count(bag) as f64 - occupied).max(0.0);
-    state.push(Val::Num(free));
-    state.push(Val::Num(0.0));
+    let sim = borrow_state(state)?;
+    let free = sim.bag_free_slots(bag);
+    let family = sim.bag_info.get(&bag).map_or(0, |info| info.family);
+    drop(sim);
+    state.push(Val::Num(free as f64));
+    state.push(Val::Num(family as f64));
     Ok(2)
 }
 
 fn c_container_calculate_total_number_of_free_bag_slots(state: &mut LuaState) -> LuaResult<u32> {
     let free_slots = {
         let sim = borrow_state(state)?;
-        (0..=4)
-            .map(|bag| {
-                let occupied = sim.bag_occupied_slots(bag);
-                (container_slot_count(bag) - occupied).max(0)
-            })
-            .sum::<i32>()
+        (0..=5).map(|bag| sim.bag_free_slots(bag)).sum::<i32>()
     };
 
     state.push(Val::Num(free_slots as f64));
@@ -140,7 +129,7 @@ fn c_container_get_free_slots(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
     let free_slots = {
         let sim = borrow_state(state)?;
-        (1..=container_slot_count(bag))
+        (1..=sim.bag_num_slots(bag))
             .filter(|slot| sim.get_bag_item(bag, *slot).is_none())
             .collect::<Vec<_>>()
     };
@@ -220,10 +209,7 @@ fn set_container_item_stack_and_quality(
 }
 
 fn set_container_item_hyperlink(state: &mut LuaState, info: Val, bag_item: &BagItem) {
-    let hyperlink = bag_item
-        .hyperlink
-        .clone()
-        .or_else(|| item_link_for_id(bag_item.item_id));
+    let hyperlink = bag_item_link(bag_item);
 
     match hyperlink {
         Some(link) => {
@@ -232,6 +218,13 @@ fn set_container_item_hyperlink(state: &mut LuaState, info: Val, bag_item: &BagI
         }
         None => table_set_static(state, info, "hyperlink", Val::Nil),
     }
+}
+
+fn bag_item_link(bag_item: &BagItem) -> Option<String> {
+    bag_item
+        .hyperlink
+        .clone()
+        .or_else(|| item_link_for_id(bag_item.item_id))
 }
 
 fn c_container_get_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
@@ -258,9 +251,7 @@ pub(crate) fn c_container_get_item_id(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn c_container_get_item_link(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
     let slot = i32::from_stack(state, 2)?;
-    let link = borrow_state(state)?
-        .get_bag_item(bag, slot)
-        .and_then(|(item_id, _)| item_link_for_id(item_id));
+    let link = container_bag_item(state, bag, slot)?.and_then(|item| bag_item_link(&item));
     match link {
         Some(link) => {
             let link = create_string(state, &link);
@@ -273,17 +264,27 @@ pub(crate) fn c_container_get_item_link(state: &mut LuaState) -> LuaResult<u32> 
 
 fn c_container_id_to_inventory_id(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
-    state.push(Val::Num((20 + bag).max(0) as f64));
+    let inventory_slot = borrow_state(state)?
+        .bag_info
+        .get(&bag)
+        .and_then(|info| info.inventory_slot)
+        .unwrap_or(0);
+    state.push(Val::Num(inventory_slot as f64));
     Ok(1)
 }
 
 fn c_container_get_bag_name(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
-    if bag == 0 {
-        let name = create_string(state, "Backpack");
-        state.push(name);
-    } else {
-        state.push(Val::Nil);
+    let name = borrow_state(state)?
+        .bag_info
+        .get(&bag)
+        .and_then(|info| info.name.clone());
+    match name {
+        Some(name) => {
+            let name = create_string(state, &name);
+            state.push(name);
+        }
+        None => state.push(Val::Nil),
     }
     Ok(1)
 }

@@ -163,6 +163,32 @@ fn craft_recipe_consumes_reagents_and_adds_output() {
 }
 
 #[test]
+fn craft_recipe_respects_modeled_backpack_capacity_without_invalid_overflow_slots() {
+    use wow_ui_sim::c_api::bag_info::BagInfo;
+
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_info.insert(0, BagInfo {
+            num_slots: 0, family: 0, name: Some("Backpack".to_string()),
+            inventory_slot: Some(20), item_id: None, hyperlink: None,
+        });
+    }
+    let result: String = env.eval(
+        r#"
+        A_Admin.ClearBags()
+        A_Admin.AddBagItem(0, 1, 210934, 12)
+        A_Admin.AddBagItem(0, 2, 210937, 2)
+        return tostring(C_TradeSkillUI.CraftRecipe(100001, 1))
+        "#,
+    ).unwrap();
+    assert_eq!(result, "false");
+    let sim = env.state().borrow();
+    assert_eq!(sim.bag_items.get(&(0, 1)).map(|item| item.stack_count), Some(12));
+    assert!(!sim.bag_items.keys().any(|(_, slot)| *slot < 1));
+}
+
+#[test]
 fn craft_recipe_starts_player_cast_with_output_item_name_for_cast_bar() {
     let env = env();
     env.exec(

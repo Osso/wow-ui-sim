@@ -55,9 +55,22 @@ pub(super) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
             return false;
         };
 
+        if !sim
+            .bag_items
+            .values()
+            .any(|slot| slot.item_id == plan.output_item_id)
+            && free_bag0_slot(&sim).is_none()
+        {
+            return false;
+        }
+        let backpack_capacity = sim.bag_num_slots(0);
         consume_reagents(&mut sim.bag_items, &plan.reagent_deltas, &mut affected_bags);
-        let output_bag =
-            add_output_item(&mut sim.bag_items, plan.output_item_id, plan.output_count);
+        let output_bag = add_output_item(
+            &mut sim.bag_items,
+            backpack_capacity,
+            plan.output_item_id,
+            plan.output_count,
+        );
         affected_bags.insert(output_bag);
     }
 
@@ -160,7 +173,12 @@ fn consume_item_stacks(
     }
 }
 
-fn add_output_item(bag_items: &mut HashMap<(i32, i32), BagItem>, item_id: u32, count: i32) -> i32 {
+fn add_output_item(
+    bag_items: &mut HashMap<(i32, i32), BagItem>,
+    backpack_capacity: i32,
+    item_id: u32,
+    count: i32,
+) -> i32 {
     if let Some((key, slot)) = bag_items
         .iter_mut()
         .find(|(_, slot)| slot.item_id == item_id)
@@ -169,7 +187,10 @@ fn add_output_item(bag_items: &mut HashMap<(i32, i32), BagItem>, item_id: u32, c
         return key.0;
     }
 
-    let key = free_bag0_slot(bag_items);
+    let key = (1..=backpack_capacity)
+        .map(|slot| (0, slot))
+        .find(|slot| !bag_items.contains_key(slot))
+        .expect("output slot preflighted before consuming reagents");
     bag_items.insert(
         key,
         BagItem {
@@ -181,21 +202,8 @@ fn add_output_item(bag_items: &mut HashMap<(i32, i32), BagItem>, item_id: u32, c
     key.0
 }
 
-/// Find a free slot in bag 0 (slots 1–16). Falls back to negative slots if
-/// all 16 are occupied (tests rarely exceed that).
-fn free_bag0_slot(bag_items: &HashMap<(i32, i32), BagItem>) -> (i32, i32) {
-    for slot in 1..=16_i32 {
-        let k = (0, slot);
-        if !bag_items.contains_key(&k) {
-            return k;
-        }
-    }
-    // overflow safety: negative slots are never valid WoW slots
-    for slot in (-1000..=-1_i32).rev() {
-        let k = (0, slot);
-        if !bag_items.contains_key(&k) {
-            return k;
-        }
-    }
-    unreachable!("bag 0 exhausted")
+fn free_bag0_slot(sim: &crate::lua_api::state::SimState) -> Option<(i32, i32)> {
+    (1..=sim.bag_num_slots(0))
+        .map(|slot| (0, slot))
+        .find(|slot| !sim.bag_items.contains_key(slot))
 }

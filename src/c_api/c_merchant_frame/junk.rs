@@ -1,8 +1,6 @@
 //! Inferred Forever junk policy: sellable poor-quality stack units in carried slots.
 
-use crate::c_api::item_spell::{
-    BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set, container_slot_count,
-};
+use crate::c_api::item_spell::{BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::methods::borrow_state;
 use rilua::vm::state::LuaState;
@@ -16,12 +14,9 @@ pub fn junk_stack_quantity(
     quantity: i32,
     item: Option<&ItemInfo>,
     excluded: bool,
+    capacity: i32,
 ) -> u64 {
-    if excluded
-        || !(0..=4).contains(&bag)
-        || !(1..=container_slot_count(bag)).contains(&slot)
-        || quantity <= 0
-    {
+    if excluded || !(0..=5).contains(&bag) || !(1..=capacity).contains(&slot) || quantity <= 0 {
         return 0;
     }
     match item {
@@ -31,7 +26,7 @@ pub fn junk_stack_quantity(
 }
 
 pub(super) fn get_num_junk_items(state: &mut LuaState) -> LuaResult<u32> {
-    let excluded: [bool; 5] = std::array::from_fn(|bag| {
+    let excluded: [bool; 6] = std::array::from_fn(|bag| {
         bag_slot_flag_is_set(state, bag as i32, BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL)
     });
     let count = {
@@ -39,12 +34,13 @@ pub(super) fn get_num_junk_items(state: &mut LuaState) -> LuaResult<u32> {
         sim.bag_items
             .iter()
             .map(|(&(bag, slot), stack)| {
-                let bag_excluded = (0..=4).contains(&bag) && excluded[bag as usize];
+                let bag_excluded = (0..=5).contains(&bag) && excluded[bag as usize];
                 junk_stack_quantity(
                     (bag, slot),
                     stack.stack_count,
                     items::get_item(stack.item_id),
                     bag_excluded,
+                    sim.bag_num_slots(bag),
                 )
             })
             .sum::<u64>()

@@ -204,6 +204,7 @@ pub struct SimState {
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    pub bag_info: HashMap<i32, crate::c_api::bag_info::BagInfo>,
     pub tracked_recipes: TrackedRecipes,
     pub crafting: CraftingState,
     pub net_stats: NetStats,

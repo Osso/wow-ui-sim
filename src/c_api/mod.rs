@@ -4,6 +4,7 @@
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
 pub mod action_macros;
+pub mod bag_info;
 pub mod c_account_services;
 pub(crate) mod c_action_bar;
 pub mod c_addon_profiler;

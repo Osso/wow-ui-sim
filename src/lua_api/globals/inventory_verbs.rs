@@ -109,7 +109,7 @@ fn find_first_free_backpack_slot(state: &mut LuaState) -> Option<i32> {
     let Ok(st) = borrow_state(state) else {
         return None;
     };
-    (1..=16).find(|slot| !st.bag_items.contains_key(&(0, *slot)))
+    (1..=st.bag_num_slots(0)).find(|slot| !st.bag_items.contains_key(&(0, *slot)))
 }
 
 fn store_cursor_item_in_backpack(state: &mut LuaState, slot: i32, item_id: u32, stack_count: i32) {

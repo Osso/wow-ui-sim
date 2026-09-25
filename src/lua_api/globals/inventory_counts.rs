@@ -3,8 +3,7 @@
 //! Migrates 4 entries off `GLOBAL_ZERO_STUBS`:
 //!
 //! - `GetContainerNumFreeSlots(bagID)` → `(numFree, bagType)` from
-//!   `SimState.bag_items` (backpack has 16 slots, other bags 0 — matching
-//!   `C_Container.GetContainerNumFreeSlots`).
+//!   `SimState.bag_info` and `SimState.bag_items`, matching C_Container.
 //! - `GetNumLootItems()`            → `SimState.loot_slots.len()`
 //! - `GetMerchantNumItems()`        → `SimState.merchant_items.len()`
 //! - `GetNumAuctionItems(listType)` → `(numItems, totalItems)` from
@@ -17,18 +16,14 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 /// Retail `GetContainerNumFreeSlots(bagID)` returns `(numFreeSlots, bagType)`.
-/// The sim models only the backpack (bag 0) with 16 slots; other bags
-/// report 0 free — matching `C_Container.GetContainerNumFreeSlots`.
 fn get_container_num_free_slots(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
-    let free = if bag == 0 {
-        let occupied = borrow_state(state)?.bag_occupied_slots(bag) as f64;
-        (16.0 - occupied).max(0.0)
-    } else {
-        0.0
-    };
-    state.push(Val::Num(free));
-    state.push(Val::Num(0.0)); // bagType: 0 = normal bag
+    let sim = borrow_state(state)?;
+    let free = sim.bag_free_slots(bag);
+    let family = sim.bag_info.get(&bag).map_or(0, |info| info.family);
+    drop(sim);
+    state.push(Val::Num(free as f64));
+    state.push(Val::Num(family as f64));
     Ok(2)
 }
 

@@ -1,8 +1,17 @@
 #![cfg(feature = "client-wowforever")]
 
-use wow_ui_sim::c_api::c_merchant_frame::junk::junk_stack_quantity;
+use wow_ui_sim::c_api::c_merchant_frame::junk::junk_stack_quantity as modeled_junk_stack_quantity;
 use wow_ui_sim::items::ItemInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn junk_stack_quantity(
+    location: (i32, i32),
+    quantity: i32,
+    item: Option<&ItemInfo>,
+    excluded: bool,
+) -> u64 {
+    modeled_junk_stack_quantity(location, quantity, item, excluded, 16)
+}
 
 const EMPTY_READS: &str = r#"
     assert(C_MerchantFrame.GetNumJunkItems() == 0, "expected numeric zero junk count")
@@ -60,7 +69,6 @@ fn merchant_junk_count_excludes_flagged_bags_banks_and_invalid_slots() {
     for location in [
         (-4, 1),
         (-1, 1),
-        (5, 1),
         (6, 1),
         (0, 0),
         (0, -1),
@@ -73,6 +81,14 @@ fn merchant_junk_count_excludes_flagged_bags_banks_and_invalid_slots() {
             "{location:?}"
         );
     }
+}
+
+#[test]
+fn merchant_junk_count_respects_captured_reagent_capacity_and_absent_bag() {
+    let poor = poor_item();
+    assert_eq!(modeled_junk_stack_quantity((5, 36), 3, Some(&poor), false, 36), 3);
+    assert_eq!(modeled_junk_stack_quantity((5, 37), 3, Some(&poor), false, 36), 0);
+    assert_eq!(modeled_junk_stack_quantity((3, 1), 3, Some(&poor), false, 0), 0);
 }
 
 #[test]

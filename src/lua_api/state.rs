@@ -212,6 +212,7 @@ macro_rules! build_empty_sim_state {
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),
             bag_items: $collections.bag_items,
+            bag_info: crate::c_api::bag_info::BagInfo::default_bags(),
             tracked_recipes: $collections.tracked_recipes,
             crafting: CraftingState::default(),
             net_stats: NetStats::default(),

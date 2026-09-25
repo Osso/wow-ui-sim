@@ -272,7 +272,7 @@ fn heirloom_is_collected(sim: &SimState, item_id: u32) -> bool {
 }
 
 fn first_free_backpack_slot(sim: &SimState) -> Option<(i32, i32)> {
-    (1..=16)
+    (1..=sim.bag_num_slots(0))
         .map(|slot| (0, slot))
         .find(|slot| !sim.bag_items.contains_key(slot))
 }
