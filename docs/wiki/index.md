@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Preserve private projection method-origin RED boundary
+
+[[target-aura-private-count]] records `eafd75a76`: AuraContainer `#61195`/`#76243` show clean generated script and private `OnUpdate`, an addon-tainted private `Update` wrapper at `@shared-bootstrap:150`, and a clean underlying Blizzard method. The pre-fix origin probe reports `trustedread=false`, `capturedread=false`, and `addonread=false`. Proxy-metatable and bound-method adapter creation now use the native secure-call factory only; invocation preserves caller and original method taint. `/tmp/retail-regression/wrapper-after.*` remains the pre-fix 1-unique/22-occurrence baseline. No rebuilt startup, reduction, or GREEN claim.
+
 ## [2026-09-25] audit | Preserve retail template and hook origin RED boundary
 
 [[windows-casc-blizzard-taint]] records `35adfc738` preserving XML template declaration taint, `d63ddd32a` sharing the canonical TOC classification policy, and `fc7570022` separating fixed engine hook factories from addon callbacks. Supplied runtime provenance pairs generated-wrapper `BetterBlizzFrames`/`DandersFrames` taint with `nil` underlying Blizzard-method taint. `HookScript` and `hooksecurefunc` RED artifacts both report `false false`; the secure-hook wrapper is reported secret. The `4/27` baseline predates these commits; current-tree runtime build and replay remain pending. No GREEN or residual reduction credited.
