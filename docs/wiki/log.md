@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Preserve caller state after attribute callback errors
+
+`87f2a48af` replaces raw `state.call_function` in registered and direct `OnAttributeChanged` dispatch, whose error paths called the handler and restored only `top`. RED `/tmp/attribute-handler-error-red.log` has both paths failing with `expected Lua closure in execute`; full startup had 480 records versus 2 with `--no-addons`, and cache-disabled startup still reproduced. `protected_lua_pcall_state` now restores caller state while preserving the secure-delegate taint boundary. GREEN tests and startup replay remain pending. See [[attribute-callback-error-recovery]] and [[lua-call-frame-restoration]].
+
 ## [2026-09-25] investigation | Skip render invalidation for no-op re-anchoring
 
 `MicroMenu` stays layout-dirty in Blizzard code and re-anchors five frames to identical points every frame. `672c32aab` defers anchor-edit render invalidation until the dirty set is read and skips frames whose anchors and resolved rect are unchanged. Draw min p50 fell ~2–3x in a noisy A/B. Pre-existing unrelated failures: three `apply_system_anchors` EditMode lib tests (`InitSystemAnchors` nil), also failing on master. See [[tick-cooldown-scan]].
