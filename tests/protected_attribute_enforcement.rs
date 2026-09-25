@@ -275,6 +275,82 @@ fn unchanged_scalar_attribute_refires_on_attribute_changed() {
     assert!(stored_false);
 }
 
+fn assert_attribute_handler_error_preserves_runtime(install_handler: &str) {
+    let env = env();
+    let source = r#"
+        local frame = CreateFrame("Frame")
+        local other = CreateFrame("Frame")
+        local handled, subsequent = 0, 0
+        local function onAttributeChanged(self, name, value)
+            if value == "boom" then error("nested attribute failure") end
+            handled = handled + 1
+        end
+        INSTALL_HANDLER
+        other:SetScript("OnAttributeChanged", function()
+            subsequent = subsequent + 1
+        end)
+
+        local step = 0
+        local function nextStep()
+            step = step + 1
+            return step
+        end
+        local function caller()
+            local marker = "caller intact"
+            local retained = { label = "upvalue intact", nextStep = nextStep }
+            frame:SetAttribute("first", "boom")
+            local firstStep = retained.nextStep()
+            local match = string.match("ok:37", "ok:(%d+)")
+            local allocated = { marker, match, retained.nextStep() }
+            frame:SetAttribute("second", "ok")
+            other:SetAttribute("later", true)
+            return allocated[1], retained.label, firstStep, allocated[2], allocated[3]
+        end
+        local marker, label, firstStep, match, secondStep = caller()
+        return marker, label, firstStep, match, secondStep, handled, subsequent
+    "#
+    .replace("INSTALL_HANDLER", install_handler);
+    let actual: (String, String, i32, String, i32, i32, i32) = env
+        .eval(&source)
+        .expect("a failed attribute callback must not corrupt the active Lua caller");
+    assert_eq!(
+        actual,
+        (
+            "caller intact".into(),
+            "upvalue intact".into(),
+            1,
+            "37".into(),
+            2,
+            1,
+            1,
+        )
+    );
+    let errors = env.state().borrow().lua_errors.clone();
+    assert_eq!(
+        errors.len(),
+        1,
+        "the failed callback should be recorded once"
+    );
+    assert!(
+        errors[0].contains("nested attribute failure"),
+        "the recorded error should identify the failed callback: {errors:?}"
+    );
+}
+
+#[test]
+fn attribute_handler_error_preserves_caller_and_subsequent_handlers() {
+    assert_attribute_handler_error_preserves_runtime(
+        "frame:SetScript('OnAttributeChanged', onAttributeChanged)",
+    );
+}
+
+#[test]
+fn attribute_handler_error_preserves_caller_and_subsequent_handlers_direct_method() {
+    assert_attribute_handler_error_preserves_runtime(
+        "frame.OnAttributeChanged = onAttributeChanged",
+    );
+}
+
 #[test]
 fn set_attribute_dispatches_direct_on_attribute_changed_method() {
     let env = env();
