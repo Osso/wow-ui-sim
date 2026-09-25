@@ -30,15 +30,24 @@ Built `target/debug/wow-sim` SHA-256 `5cd192b3c6e1d5d4fc624685974a6e8efd00472951
 
 Proof ledger `/tmp/retail-regression/proof-ledger.json` links build, RED/GREEN, startup and GUI logs; retained runtime outputs include `/tmp/retail-regression/gui-ipc.json`, `/tmp/retail-regression/panels-default.stdout`, and `/tmp/retail-shallow-after.stdout`.
 
-### Residual failures — not closed
+### Current retail residual correction set — combined verification pending
 
-| Boundary | Observed residual | Status |
+The following commits address five recorded boundaries without changing vendor Lua: `a0b472971` applies text-locale filtering and annotation stripping before XML Script/Include path resolution; `9884fab8e` records held physical keys for retail `IsKeyDown`; `0e638e3e2` adds retail `GetComboPoints` and `GetUnitSpeed`; `491ad1e6a` returns nil for an unmodeled recipe schematic and `ac35dc0b2` records its modeled regression; and `1f7e08f20` extends the secure delegate boundary from forbidden frames to explicitly protected frames. Their specs and committed focused tests define the intended boundaries, but their earlier per-slice logs are partial evidence. No combined current-tree GREEN, startup replay, or residual-count reduction is claimed here.
+
+The recorded 8 unique-error no-SavedVariables run and 9-error default-settings run are the pre-correction baseline pending replay. They cannot yet show whether this combined set removes any residual, and neither configuration is a clean-startup claim.
+
+The secure-delegate RED log identifies test execution slowdown rather than a 90-second test-body limit: Cargo first waited on the build-directory lock and then spent 8m51s building (`/tmp/retail-regression/secure-delegate-red-tests.log`). The already-built exact `prefork_full_ui` binary, bounded with `timeout 90`, ran its two failing cases in 16.125 seconds (`/tmp/retail-regression/secure-delegate-bounded-red.log`). The execution procedure is one main Cargo owner, a separate `cargo test --no-run` compile, then exact test-binary execution under `timeout 90`. This is not a test-runner architecture or performance change.
+
+### Residual failures — pending replay
+
+| Boundary | Prior observed residual | Current disposition |
 |---|---|---|
-| Secure frame handlers | `Invalid 'self' frame handle`; `Wrap frame cannot be used` (most occurrences, notably Clicked/DandersFrames) | No restriction bypass or shim added; secure-frame compatibility unresolved. |
-| Installed addon files | SimpleItemLevel `locale/deDE.lua [AllowLoadTextLocale deDE]` missing | File/TOC loading boundary unresolved; installed files untouched. |
-| Blizzard PlayerFrame | `ComboFrame_Update` calls absent `GetComboPoints` | Also reproduced without third-party addons before this correction; separate surface gap, not repaired. |
-| Addon APIs/inputs | AllTheThings `GetAchievementCriteriaInfoByID` nil; ExwindCore nil call; BetterBlizzFrames numeric argument nil | Cause not yet isolated beyond recorded call sites; no baseline-clean claim. |
-| Configuration-dependent addon paths | Default settings expose CraftSim `pairs(nil)` and Angleur nil call; no-SavedVariables run instead exposes Baganator welcome `categoryBag` nil | Still failing; neither configuration establishes complete addon compatibility. |
+| Secure frame handlers | `Invalid 'self' frame handle`; `Wrap frame cannot be used` (most occurrences, notably Clicked/DandersFrames) | `1f7e08f20` targets protected delegate dispatch. Replay pending; broader secure-frame compatibility remains unresolved. |
+| Installed addon files | SimpleItemLevel `locale/deDE.lua [AllowLoadTextLocale deDE]` missing | `a0b472971` targets XML Script/Include text-locale selection. Replay pending. |
+| Blizzard PlayerFrame | `ComboFrame_Update` calls absent `GetComboPoints` | `0e638e3e2` targets the retail query. Replay pending. |
+| Addon APIs/inputs | AllTheThings `GetAchievementCriteriaInfoByID` nil; ExwindCore nil call; BetterBlizzFrames numeric argument nil | Retail unit speed and `IsKeyDown` are now modeled by `0e638e3e2` and `9884fab8e`; exact affected calls and remaining errors need replay. |
+| Profession schematic consumer | Unknown recipe produced a truthy incomplete table before reagent iteration | `491ad1e6a` now returns nil for unmodeled recipes. Combined replay pending; native unknown-ID semantics remain unproven. |
+| Configuration-dependent addon paths | Default settings expose CraftSim `pairs(nil)` and Angleur nil call; no-SavedVariables run instead exposes Baganator welcome `categoryBag` nil | Still pending; neither configuration establishes complete addon compatibility. |
 
 The shallow-semantics evidence is [QuestieTDB's direct Classic Era probe](https://github.com/Questie/QuestieTDB/blob/master/docs/table.freeze.md), not retail native proof. See [table freezing](../../specs/table-freeze.md).
 

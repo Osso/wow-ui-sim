@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Record retail residual corrections without combined GREEN
+
+Updated [[patch-12-1-5-api-audit]] and index for `a0b472971`, `9884fab8e`, `0e638e3e2`, `491ad1e6a`/`ac35dc0b2`, and `1f7e08f20`. XML locale selection, held-key state, retail combo/speed queries, nil unknown schematics, and protected attribute delegates are committed corrections; prior per-slice logs are partial and final combined verification remains pending. Preserved 8-error no-SavedVariables and 9-error default runs as replay baselines only. `/tmp/retail-regression/secure-delegate-red-tests.log` separates Cargo file-lock/build 8m51 from the exact already-built binary's 16.125-second `timeout 90` RED run in `secure-delegate-bounded-red.log`; recorded one-Cargo-owner, separate `--no-run` compile, then bounded binary execution as procedure, not runner redesign.
+
 ## [2026-09-25] investigation | Filter XML file references by text locale
 
 Updated [[addon-loading]], [pipeline](../addon-loading-pipeline.md), and [XML locale contract](../specs/xml-file-locale-annotations.md). Temporary-addon regression failed on literal annotated path, then passed 1/1 after XML Script/Include reused TOC filtering and annotation stripping. RED `/tmp/simpleitemlevel-locale-red.log`; GREEN `/tmp/simpleitemlevel-locale-green.log`. No native or broad-suite claim.

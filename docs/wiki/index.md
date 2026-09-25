@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Preserve retail residual-correction verification boundary
+
+Updated [[patch-12-1-5-api-audit]] for the current correction set: XML text-locale annotation handling (`a0b472971`), held-key `IsKeyDown` state (`9884fab8e`), retail combo/speed queries (`0e638e3e2`), nil unmodeled recipe schematics (`491ad1e6a`/`ac35dc0b2`), and protected attribute delegates (`1f7e08f20`). Earlier per-slice records remain partial; combined current-tree tests and startup replays are pending. The prior 8-error no-SavedVariables and 9-error default baselines remain pending replay, not credited reductions. Secure-delegate RED separates Cargo lock/build delay (8m51) from a bounded exact binary run (16.125s); procedure is one Cargo owner, separate `--no-run` compile, then `timeout 90` binary execution. No runner redesign or performance claim.
+
 ## [2026-09-25] investigation | Select XML file locale before resolution
 
 The unchanged SimpleItemLevel XML reference `deDE.lua [AllowLoadTextLocale deDE]` reached filesystem resolution literally. XML Script/Include now reuse TOC's enUS locale gate and trailing-annotation stripping; a temporary addon exercises selected/unselected Lua and nested XML references in order. The focused RED failed on the annotated enUS path and GREEN passed 1/1 (`/tmp/simpleitemlevel-locale-red.log`, `/tmp/simpleitemlevel-locale-green.log`). This is simulator policy, not native locale selection. See [[addon-loading]] and [XML locale spec](../specs/xml-file-locale-annotations.md).
