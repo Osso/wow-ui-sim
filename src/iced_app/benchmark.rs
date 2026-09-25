@@ -60,6 +60,7 @@ struct PhaseOptions {
 struct FrameTelemetry {
     textures_loaded: usize,
     bc_textures_loaded: usize,
+    uploaded_strata: usize,
 }
 
 #[derive(Debug, Default)]
@@ -98,6 +99,80 @@ pub fn benchmark_lfg_panel_open_in_gui(env: WowLuaEnv) -> crate::Result<LfgPanel
         first_close,
         second_open,
     })
+}
+
+/// Per-round tick and draw CPU cost over a fixed number of settled frames.
+#[derive(Debug, Clone)]
+pub struct SteadyStateRound {
+    pub tick: DurationStats,
+    pub draw: DurationStats,
+    /// Frames whose draw handed at least one stratum batch to the GPU.
+    pub strata_upload_frames: usize,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct DurationStats {
+    pub p50: Duration,
+    pub p90: Duration,
+    pub mean: Duration,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct SteadyStateOptions {
+    pub warmup_frames: usize,
+    pub measured_frames: usize,
+    pub rounds: usize,
+}
+
+/// Measure settled-UI frames through the real GUI tick and draw path.
+///
+/// Every frame forces a full OnUpdate interval, so the workload per frame is
+/// independent of window pacing and host load. Draw covers the CPU side of the
+/// shader program (quad rebuild and texture loading), not GPU submission.
+pub fn benchmark_steady_state_in_gui(
+    env: WowLuaEnv,
+    options: SteadyStateOptions,
+) -> crate::Result<Vec<SteadyStateRound>> {
+    let mut app = boot_benchmark_app(env);
+    benchmark_phase(&mut app, spellbook_phase("startup_idle", None, false))?;
+    for _ in 0..options.warmup_frames {
+        run_benchmark_frame(&mut app);
+    }
+    let rounds = (0..options.rounds)
+        .map(|_| measure_steady_state_round(&mut app, options.measured_frames))
+        .collect();
+    Ok(rounds)
+}
+
+fn measure_steady_state_round(app: &mut App, frames: usize) -> SteadyStateRound {
+    let mut ticks = Vec::with_capacity(frames);
+    let mut draws = Vec::with_capacity(frames);
+    let mut strata_upload_frames = 0;
+    for _ in 0..frames {
+        let (tick, draw, telemetry) = run_benchmark_frame(app);
+        strata_upload_frames += usize::from(telemetry.uploaded_strata != 0);
+        ticks.push(tick);
+        draws.push(draw);
+    }
+    SteadyStateRound {
+        tick: summarize_durations(ticks),
+        draw: summarize_durations(draws),
+        strata_upload_frames,
+    }
+}
+
+fn summarize_durations(mut samples: Vec<Duration>) -> DurationStats {
+    samples.sort_unstable();
+    let percentile = |fraction: f64| {
+        let index = ((samples.len() as f64 * fraction) as usize).min(samples.len() - 1);
+        samples[index]
+    };
+    let total: Duration = samples.iter().sum();
+    DurationStats {
+        p50: percentile(0.5),
+        p90: percentile(0.9),
+        mean: total / samples.len() as u32,
+    }
 }
 
 fn spellbook_phase(
@@ -142,6 +217,22 @@ fn panel_phase(
         visible_name,
         is_visible,
     }
+}
+
+/// Load every discovered Blizzard UI addon into a fresh 1024x768 environment.
+pub fn load_benchmark_ui_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("failed to create Lua environment");
+    env.set_screen_size(BENCHMARK_SIZE.width, BENCHMARK_SIZE.height);
+    let ui =
+        crate::paths::default_blizzard_ui_addons_path().expect("missing Blizzard UI addon tree");
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    for (name, toc_path) in &crate::loader::discover_blizzard_addons(&ui) {
+        if let Err(error) = crate::loader::load_addon(&env.loader_env(), toc_path) {
+            eprintln!("[load {name}] FAILED: {error}");
+        }
+    }
+    env.apply_post_load_workarounds();
+    env
 }
 
 fn boot_benchmark_app(env: WowLuaEnv) -> App {
@@ -260,6 +351,7 @@ fn run_benchmark_frame(app: &mut App) -> (Duration, Duration, FrameTelemetry) {
         FrameTelemetry {
             textures_loaded: primitive.textures.len(),
             bc_textures_loaded: primitive.bc_textures.len(),
+            uploaded_strata: primitive.strata_batches.iter().flatten().count(),
         },
     )
 }
@@ -325,6 +417,17 @@ mod tests {
         assert_eq!(phase.keypress, Some("S"));
         assert!(phase.expect_visible);
         assert_eq!(phase.visible_name, "spellbook_shown");
+    }
+
+    #[test]
+    fn summarize_durations_reports_percentiles_and_mean() {
+        let samples = (1..=10).rev().map(Duration::from_millis).collect();
+
+        let stats = summarize_durations(samples);
+
+        assert_eq!(stats.p50, Duration::from_millis(6));
+        assert_eq!(stats.p90, Duration::from_millis(10));
+        assert_eq!(stats.mean, Duration::from_micros(5500));
     }
 
     #[test]

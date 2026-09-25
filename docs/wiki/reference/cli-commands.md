@@ -94,6 +94,23 @@ Extract Blizzard UI source files from the local WoW CASC install into `~/.cache/
 wow-cli casc sync-blizzard-ui
 ```
 
+## Benchmark Binaries
+
+### `bench_steady_state`
+
+Settled-UI tick and draw CPU cost through the real GUI `update(ProcessTimers)` and shader `draw()` path, headless. Each frame forces a full OnUpdate interval, so the per-frame workload does not depend on window pacing, stale-tick dropping, or `perf` overhead. Draw covers the CPU side only (quad rebuild, texture loading), not GPU submission.
+
+```bash
+cargo build --release --bin bench_steady_state
+target/release/bench_steady_state [--warmup 300] [--frames 1000] [--rounds 5]
+```
+
+Compare builds by `min p50` across rounds; single rounds vary up to ~2.6x with host load. Two back-to-back runs on 2026-09-25 agreed within 1% (tick) and 6% (draw). Use this, not separate GUI runs, for before/after perf claims.
+
+### `bench_spellbook`
+
+Spellbook open/close settle cost on the same GUI path.
+
 ## Common Flags (wow-sim)
 
 | Flag | Effect |
@@ -107,6 +124,8 @@ wow-cli casc sync-blizzard-ui
 | `--debug-elements` | Both overlays |
 
 ## Sources
+
+- [benchmark.rs](../../../src/iced_app/benchmark.rs) — GUI-path benchmark harness
 
 - [AGENTS.md](../../../AGENTS.md) — full CLI reference, Docker usage, environment variables
 - [[casc-asset-cache]] — CASC-backed texture and Blizzard UI source caches

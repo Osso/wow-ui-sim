@@ -1,3 +1,7 @@
+## [2026-09-25] tooling | Add deterministic steady-state benchmark
+
+Separate GUI runs of one binary varied `on_update` p50 from 0.87ms to 4.11ms with host load and `perf`, and an old/new A/B showed both regimes per binary, so the suspected `on_update` regression was noise. `bench_steady_state` drives the GUI tick/draw path headless with forced OnUpdate intervals; `min p50` across rounds reproduced within 1% (tick) and 6% (draw). Every measured frame uploads at least one stratum. See [[cli-commands]] and [[tick-cooldown-scan]].
+
 ## [2026-09-25] audit | Bound texture-atlas visibility propagation
 
 Audited `83a43ca61`. Generic `Texture:SetAtlas()` had treated every `parentKey` as a button-state slot, defaulting an unknown key to visible and exposing XML-hidden gain-flare/level-up overlays on XP and reputation bars. Propagation now applies only to recognized state slots on `Button`/`CheckButton`; other texture children preserve their own visibility. The cached vendor `GradualAnimatedStatusBar` template begins with both animation textures hidden; its `SetAnimationTextures()` path stays hidden, while ordinary play/tick completion controls temporary show/hide. `/tmp/wow-xml-atlas-green.log` records 6/6 targeted `xml_animation_group_onload` tests passing. GUI XP/reputation startup proof and final checks remain pending. This is simulator and cached-vendor-source evidence, not native-client conformance. Updated [[texture-atlas]], [texture atlas visibility](../specs/texture-atlas-visibility.md), and index.

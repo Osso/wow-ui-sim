@@ -84,6 +84,11 @@ name = "bench_spellbook"
 path = "src/bin/bench_spellbook.rs"
 required-features = ["gui"]
 
+[[bin]]
+name = "bench_steady_state"
+path = "src/bin/bench_steady_state.rs"
+required-features = ["gui"]
+
 [[example]]
 name = "casc_smoke"
 path = "examples/casc_smoke.rs"
