@@ -10,7 +10,9 @@ Runtime `Show`, `Hide`, and `SetShown` transitions in `src/lua_api/frame/methods
 - [x] Report handler errors through the existing error handler and continue remaining bindings and parent delivery.
 - [x] A native Forever AuraContainer configured under a hidden parent must register `UNIT_AURA` when that parent is shown, unregister when hidden, and consume repeated post-construction aura add/remove cycles across repeated parent visibility transitions.
 
-These are engine script/lifecycle requirements, not guessed aura data or a new security policy.
+- [ ] For explicitly protected/forbidden frames, dispatch trusted visibility handlers across the native script boundary without inheriting the setter's taint; restore caller taint afterward. Addon-created handlers retain their own taint, and the existing combat write gate remains before dispatch.
+
+These are engine script/lifecycle requirements, not guessed aura data. The visibility security boundary follows [protected attribute delegation](secure-attribute-delegation.md).
 
 ## How it works
 
@@ -24,6 +26,7 @@ These are engine script/lifecycle requirements, not guessed aura data or a new s
 
 ## Tests asserting this spec
 
+- `tests/blizzard_restricted_addon_environment_loads.rs` — unchanged secure Show/Hide snippets from addon callers, combat denial, and addon-origin callback taint preservation.
 - `tests/frame_creation/visibility_scripts.rs` — real XML intrinsic bindings, children-first ordering, hidden-child exclusion, reentrant hide, error continuation, and existing recursion/depth controls.
 - `tests/forever_forbidden_consumers.rs` — real native container configured while its parent is hidden, followed by two show/add/remove/hide cycles and registration/assignment assertions.
 
@@ -35,4 +38,4 @@ The earlier RED ledger remains root-cause history: it observed a visible but unr
 
 ## Out of scope
 
-Vendor changes, explicit calls to native `UpdateEventRegistrations`, loader/template rewrites, and changes to taint or secret-value policy. `precompiled::fire_onshow` already iterates all installed bindings; its named intrinsic fallback is unchanged because this lifetime failure occurs during recursive runtime visibility transitions.
+Vendor changes, explicit calls to native `UpdateEventRegistrations`, loader/template rewrites, and relaxing addon taint or secret-value restrictions. `precompiled::fire_onshow` already iterates all installed bindings; its named intrinsic fallback is unchanged because this lifetime failure occurs during recursive runtime visibility transitions.

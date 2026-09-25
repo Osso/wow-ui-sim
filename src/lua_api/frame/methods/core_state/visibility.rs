@@ -7,6 +7,7 @@ use crate::lua_api::frame::methods::methods_helpers::{
 use crate::lua_api::frame::methods::secret_origin::{require_shown_readable, unwrap_input};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
 use crate::lua_api::script_helpers::{call_error_handler_state, get_scripts_for_dispatch};
+use crate::lua_api::taint::{clear_active_stack_taint, restore_active_stack_taint};
 use crate::lua_bridge::stack_val;
 use crate::widget::WidgetType;
 use rilua::vm::state::LuaState;
@@ -201,25 +202,35 @@ fn fire_visibility_handler_recursive(
         fire_visibility_handler_recursive(state, child_id, handler_name)?;
     }
 
-    fire_visibility_bindings(state, frame_id, handler_name);
-    Ok(())
+    fire_visibility_bindings(state, frame_id, handler_name)
 }
 
-fn fire_visibility_bindings(state: &mut LuaState, frame_id: u64, handler_name: &str) {
+fn fire_visibility_bindings(
+    state: &mut LuaState,
+    frame_id: u64,
+    handler_name: &str,
+) -> LuaResult<()> {
     let handlers = get_scripts_for_dispatch(state, frame_id, handler_name);
     if handlers.is_empty() {
-        return;
+        return Ok(());
     }
-    let Ok(frame) = frame_ref(state, frame_id) else {
-        return;
-    };
+    let frame = frame_ref(state, frame_id)?;
+    let secure_dispatch = borrow_state(state)?
+        .widgets
+        .get(frame_id)
+        .is_some_and(|frame| frame.is_protected || frame.forbidden);
     for handler in handlers {
-        if let Err(error_msg) =
-            crate::lua_api::script_helpers::protected_lua_pcall_state(state, handler, &[frame])
-        {
+        let saved_taints = secure_dispatch.then(|| clear_active_stack_taint(state));
+        let result =
+            crate::lua_api::script_helpers::protected_lua_pcall_state(state, handler, &[frame]);
+        if let Some(saved_taints) = saved_taints {
+            restore_active_stack_taint(state, saved_taints);
+        }
+        if let Err(error_msg) = result {
             call_error_handler_state(state, &error_msg);
         }
     }
+    Ok(())
 }
 
 pub fn is_visible(state: &mut LuaState) -> LuaResult<u32> {

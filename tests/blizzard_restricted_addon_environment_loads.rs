@@ -597,6 +597,54 @@ fn tainted_replacement_protected_attribute_handler_stays_insecure(env: &WowLuaEn
 }
 
 prefork_full_ui_case! {
+fn protected_visibility_runs_vendor_snippets_without_clearing_addon_caller(env: &WowLuaEnv) {
+    env.exec(r#"
+        local header = CreateFrame('Frame', nil, UIParent, 'SecureHandlerShowHideTemplate')
+        header:Hide()
+        header:SetAttribute('_onshow', [[ self:SetAttribute('show-ran', true) ]])
+        header:SetAttribute('_onhide', [[ self:SetAttribute('hide-ran', true) ]])
+        local function addon()
+            assert(not issecure())
+            header:Show()
+            header:Hide()
+            assert(header:GetAttribute('show-ran') and header:GetAttribute('hide-ran'))
+            assert(not issecure(), 'visibility dispatch lost caller taint')
+            A_Admin.SetInCombat(true)
+            header:Show()
+            assert(not header:IsShown(), 'combat visibility write bypassed protection')
+            A_Admin.SetInCombat(false)
+        end
+        debug.setobjecttaint(addon, 'VisibilityProbeAddon')
+        addon()
+    "#).expect("trusted visibility scripts cross the frame boundary without trusting their caller");
+}
+}
+
+prefork_full_ui_case! {
+fn protected_visibility_preserves_addon_created_handler_taint(env: &WowLuaEnv) {
+    env.exec(r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'SecureFrameTemplate')
+        local target = CreateFrame('Frame', nil, UIParent, 'SecureFrameTemplate')
+        frame:Hide()
+        local ran = false
+        local function addon_factory()
+            return function()
+                ran = true
+                assert(not issecure(), 'addon-origin handler became secure')
+                A_Admin.SetInCombat(true)
+                target:SetAttribute('untrusted-write', true)
+                A_Admin.SetInCombat(false)
+            end
+        end
+        debug.setobjecttaint(addon_factory, 'VisibilityProbeAddon')
+        frame:SetScript('OnShow', addon_factory())
+        frame:Show()
+        assert(ran and target:GetAttribute('untrusted-write') == nil)
+    "#).expect("a secure caller cannot promote an addon-created visibility callback");
+}
+}
+
+prefork_full_ui_case! {
 fn secure_handlers_publish_full_global_surface(env: &WowLuaEnv) {
     for fname in SECURE_HANDLER_GLOBALS {
         let kind: String = env
