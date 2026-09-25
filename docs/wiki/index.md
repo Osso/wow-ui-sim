@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Correct table.freeze recursive GC cascade
+
+`748d4df0c` pins rilua `1788318c20d400a8339f3e7125aa40c9e54ea435` and replaces public recursive GC freezing with shallow `Table::read_only`. Recursive traversal from Syndicator's frozen Search/API/root namespace reached closure environments, `_G`, `callbacksPending`, and later addon state; traversal skipping also damaged references. `/tmp/claude/table-freeze-red-addon.out` remains RED for the addon lifecycle boundary. `87f2a48af` separately restored attribute-error call state (11 verified tests) but did not repair the cascade: 480 records before, 484 after. QuestieTDB's direct Classic Era probe supports shallow semantics, not retail native behavior. Main report GREEN and retail startup replay remain pending. See [[patch-12-1-5-api-audit]] and [table freezing](../specs/table-freeze.md).
+
 ## [2026-09-25] investigation | Finalize bounded unit-frame click and aura evidence
 
 A local Forever release built from `a2fd85382` records PlayerFrame click targeting Uther with a matching player GUID, Combo CVar `1` at `0`, no CharCustomizeFrame, hidden XP/reputation animation textures, panel open/close/reopen state, zero hook/final errors, and Aura ID `1` tooltip `Arcane Intellect`. The accidentally broad 78-test filtered batch is 68 pass / 10 distinct failures, not a suite-green result. This is simulator-local evidence, not native conformance or full GUI acceptance. See [[final-unit-frame-click-aura-proof]].
