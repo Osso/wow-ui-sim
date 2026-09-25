@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Record retail secrecy and closure-taint correction limits
+
+[[patch-12-1-5-api-audit]] now records `b982e9165` separating table slot taint from value secrecy, `924276644` retail native secret wrapping, and `089d016f7` pinning rilua `f1ddc1b` weak closure-key stamps. Upstream logs are 5/5 closure-lifetime and 9/9 taint-stdlib; the no-addons secure-environment diagnostic passes 19 assertions. No simulator GREEN, build, or combined replay ran. Default residual remains four unique errors / 55 occurrences, including ObjectiveTracker `SecureMap` pooled-key rejection and secure-frame failures; no reduction credited.
+
 ## [2026-09-25] audit | Preserve retail residual-correction verification boundary
 
 Updated [[patch-12-1-5-api-audit]] for the current correction set: XML text-locale annotation handling (`a0b472971`), held-key `IsKeyDown` state (`9884fab8e`), retail combo/speed queries (`0e638e3e2`), nil unmodeled recipe schematics (`491ad1e6a`/`ac35dc0b2`), and protected attribute delegates (`1f7e08f20`). Earlier per-slice records remain partial; combined current-tree tests and startup replays are pending. The prior 8-error no-SavedVariables and 9-error default baselines remain pending replay, not credited reductions. Secure-delegate RED separates Cargo lock/build delay (8m51) from a bounded exact binary run (16.125s); procedure is one Cargo owner, separate `--no-run` compile, then `timeout 90` binary execution. No runner redesign or performance claim.

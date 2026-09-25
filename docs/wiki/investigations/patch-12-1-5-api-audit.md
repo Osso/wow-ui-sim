@@ -36,6 +36,14 @@ The following commits address five recorded boundaries without changing vendor L
 
 The recorded 8 unique-error no-SavedVariables run and 9-error default-settings run are the pre-correction baseline pending replay. They cannot yet show whether this combined set removes any residual, and neither configuration is a clean-startup claim.
 
+### Retail secrecy and closure-taint correction set — no combined GREEN
+
+Current `089d016f7` includes three bounded simulator changes. `b982e9165` makes ordinary tables with addon-tainted slots public to shallow secrecy/access checks and valid `SecureMap` keys, while retaining insecure-slot reporting and deep detection of actual nested secrets. `924276644` registers retail-only native `secretwrap`/`secretunwrap` over rilua table-security wrappers after the runtime bootstrap and before temporary bootstrap defaults; it does not replace the existing `settablesecurity` shim. `089d016f7` pins rilua `f1ddc1b185d725f070fccdb4e214f5f838b30976` and routes addon/loadstring stamping and secret-function lookup through rilua's live, weak closure-key API, so a collected closure's stamp cannot transfer to an arena-slot reuse. The standalone `/tmp/rilua-taint-red-runtime.log` is the pre-pin stale-closure reproduction, not current-tree evidence.
+
+Upstream targeted logs record 5 closure-lifetime tests and 9 taint-stdlib tests passing; they cover live host/Lua stamps, collected-stamp removal, stale-handle rejection, secure-call caller clearing, callee stamp preservation, and weak-key storage. They are dependency-level proof only. The no-addons secure-environment diagnostic captured `__secureenv.secretunwrap`, passed 19 assertions, and emitted `[]` in `/tmp/retail-regression/aura-assert-probe2.stdout`; its prior `settablesecurity == nil` assertion was removed by `c583268c2` because that shim pre-existed this bridge. No simulator targeted-test, build, combined startup replay, or current-tree GREEN ran for this correction set.
+
+The supplied default residual artifact still has four unique errors / 55 occurrences: BetterBlizzFrames table-security caller taint (1), ObjectiveTracker pooled-key `SecureMap` rejection (1), restricted closure from insecure code (21), and `Wrap frame cannot be used` (32). The table-key and wrapper work therefore have not been credited as a residual reduction.
+
 The secure-delegate RED log identifies test execution slowdown rather than a 90-second test-body limit: Cargo first waited on the build-directory lock and then spent 8m51s building (`/tmp/retail-regression/secure-delegate-red-tests.log`). The already-built exact `prefork_full_ui` binary, bounded with `timeout 90`, ran its two failing cases in 16.125 seconds (`/tmp/retail-regression/secure-delegate-bounded-red.log`). The execution procedure is one main Cargo owner, a separate `cargo test --no-run` compile, then exact test-binary execution under `timeout 90`. This is not a test-runner architecture or performance change.
 
 ### Residual failures — pending replay
@@ -128,6 +136,10 @@ The shallow-semantics evidence is [QuestieTDB's direct Classic Era probe](https:
 - [PTR remaining structures capture](../../baselines/ptr-12-1-5-remaining-structures.lua) — exact non-secret native observation artifact for build `12.1.5.69594`.
 - [Table-freeze specification](../../specs/table-freeze.md) — corrected simulator contract and pending lifecycle boundary.
 - [QuestieTDB Classic Era table.freeze probe](https://github.com/Questie/QuestieTDB/blob/master/docs/table.freeze.md) — direct Classic Era evidence for shallow semantics; not retail native proof.
+- `/tmp/retail-regression/residual-after.stdout` — current supplied four-error / 55-occurrence default residual artifact.
+- `/tmp/rilua-taint-red-runtime.log` — standalone pre-pin stale-closure reproduction.
+- `/tmp/rilua-taint-green-tests.log`, `/tmp/rilua-taint-lib-tests.log` — upstream targeted closure (5/5) and taint-stdlib (9/9) logs.
+- `/tmp/retail-regression/aura-assert-probe2.stdout` — no-addons secure-environment diagnostic (19 assertions, `[]`).
 
 ## See Also
 
