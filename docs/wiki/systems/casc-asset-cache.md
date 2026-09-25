@@ -77,7 +77,7 @@ The BLP byte cache is roughly **10× faster** than re-extracting steady-state, a
 
 `data/blizzard-ui-files/<profile>.txt` manifests list the Blizzard UI source files for each supported profile. The retail manifest mirrors the complete Gethe `live` AddOns tree, including `Classic/` and `Mainline/` family variants; this preserves source inventory even though retail runtime `[Family]` substitution selects `Mainline`. `wow-cli casc sync-blizzard-ui` resolves each active-profile manifest entry as `Interface/AddOns/<entry>`, extracts it from the active CASC product into `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns`, and preserves Blizzard's original addon/file casing on disk. The bundled limited listfile is generated from the union of those profile manifests plus tracked `data/listfile-overrides.csv` rows for paths missing from the upstream community listfile or requiring canonical display casing.
 
-Retail/Classic sync tries local install archives first through `asset-resolver`. If active root/encoding metadata resolves an FDID but the local streaming install lacks that archive chunk, it downloads the authoritative CASC blob by encoding key through `Osso/casc-extract`.
+Retail/Classic sync tries local install archives first through `asset-resolver`. Local index readers select the highest numeric index generation only; they must not overwrite it with directory enumeration order or merge/rescue from older generations. If active root/encoding metadata resolves an FDID but the local streaming install lacks that archive chunk, sync downloads the authoritative CASC blob by encoding key through `Osso/casc-extract`. See [[casc-local-index-generations]] for the confirmed 69977 failure boundary.
 
 PTR 12.1.5 is intentionally separate: no matching local `wowxptr` install exists. Its committed `data/blizzard-ui-builds/ptr.json` maps the exact `wowxptr` build/config and Gethe `ptr2` revision to CDN archive ranges. Sync validates each range's BLTE encoding key and decoded content key before writing it. This is a build-specific source-acquisition route, not generic TVFS support; it neither labels local `wowt` content as PTR nor falls back to Gethe file bytes.
 
@@ -115,7 +115,7 @@ When removing an unavailable entry, first prove it is not reachable from the ret
 - **Wrong cache override**: an invalid `$ASSET_RESOLVER_CACHE_DIR` can put generated CASC metadata in an unexpected place or one without write permission. Unset it to use `~/.cache/asset-resolver`.
 - **Case-variant duplicates**: `out_path` uses the case returned by the listfile lookup. If a caller passes a non-canonical case to `lookup_path`, the BLP can land under `interface/...` or `INTERFACE/...` instead of `Interface/...`. The cache currently has 4 such stragglers out of 1747 files; harmless but wasteful.
 - **Listfile/CASC drift**: when the live archives have GC'd a file the encoding manifest still references, CASC extract fails with "missing resolution entry" or "missing archive location". The loader writes a `.missing` sentinel and falls back to `<wow>/_retail_/BlizzardInterfaceArt/` for the next request.
-- **Partial Blizzard UI source sync**: the source cache is ignored unless `.wow-ui-sim-blizzard-ui-complete` exists. Re-run `wow-cli casc sync-blizzard-ui` after fixing CASC/listfile issues. Missing Blizzard UI source files are not filled from repo mirrors; if local archives lack chunks that the active product metadata still references, sync may fetch those chunks from Blizzard CDN and cache the archive indexes under `~/.cache/casc-extract/`.
+- **Partial Blizzard UI source sync**: the source cache is ignored unless `.wow-ui-sim-blizzard-ui-complete` exists. Re-run `wow-cli casc sync-blizzard-ui` after fixing CASC/listfile issues. Missing Blizzard UI source files are not filled from repo mirrors; if local archives lack chunks that the active product metadata still references, sync may fetch those chunks from Blizzard CDN and cache the archive indexes under `~/.cache/casc-extract/`. The current Forever cache is incomplete after earlier failures; do not treat the dependency-pin update as a restored cache.
 
 ## Sources
 
@@ -137,4 +137,5 @@ When removing an unavailable entry, first prove it is not reachable from the ret
 
 - [[texture-atlas]] — `TextureManager` structure, BLP/PNG/WebP support, atlas database
 - [[casc-root-v2-parsing-missing-textures]] — root v2 misparse that silently dropped 89% of fdids from the resolution cache; rebuild steps after parser changes
+- [[casc-local-index-generations]] — local index directory generation selection and the separate Forever source-sync boundary
 - [[rendering-pipeline]] — font system and downstream consumers of CASC assets

@@ -14,7 +14,7 @@ Complete active-root parsing verified its header against `56,735,783` bytes, `1,
 
 Commit `34975b1c2` records those four overrides and changes generation so every explicit override FDID is requested even absent from community data, literal scans, atlas entries, and Blizzard UI manifests. Regeneration adds five override-backed rows, including existing `8187495`; the four sidetab mappings appear in the limited listfile. The fresh 146,353-row upstream community CSV still lacks all four names, so it remains insufficient as their source.
 
-Mapping is not content availability. Currency, Honor Alliance, and Reputation now have local index entries. Stats `8197104` has one verified encoding key, `4c7bd5a0d7e07775ff13ac62c07e3e18`, and no local index entry. The original unmapped FDIDs `8175455`, `8245174`, and `8254784` also each have one verified encoding key and no local index entry. Thus the remaining content blockers are Stats plus those original three; no alternate encoding was discarded and no resolver substitution is credited.
+Mapping is not content availability. A confirmed local index-generation reader defect previously made known installed records appear absent; it is separate from this panel's blockers. Stats `8197104` has one verified encoding key, `4c7bd5a0d7e07775ff13ac62c07e3e18`, and remains genuinely unindexed, as do `8175455`, `8245174`, and `8254784`. Thus the remaining content blockers are Stats plus those original three; no alternate encoding was discarded and no resolver substitution is credited. See [[casc-local-index-generations]].
 
 Cached PlayerScriptDocumentation supplies signatures and return counts for six missing Camelot globals: `GetCritChanceFromStat`, `GetSpellCritChanceFromStat`, `GetRangedAttackPowerForStat`, `GetHealthRegenFromSpirit`, `GetManaRegenFromSpirit`, and `GetHealthRegen`. The tooltip multiplies crit fractions by 100 and displays spirit regeneration; the previous `GetManaRegen` intellect baseline does not incorporate spirit. The [bounded model contract](../../specs/forever-character-stat-contributions.md) defines `100` primary-stat points per `1%` crit, class-specific ranged-AP coefficients, `0.2` health and `0.1` mana spirit rates, and default spirit `0` as explicit simulator policies, not native-verified values. Behavioral tests and the unchanged replay still require GREEN verification.
 
@@ -45,7 +45,7 @@ No complete-panel, successful-regression, native, source-provenance, asset-extra
 
 - `/tmp/wow-character-bug/proof-ledger.json` — cached-binary reproduction and prior cache observations.
 - `/tmp/wow-character-bug/root-name-variants.json` and `name-hash-variants.tsv` — complete active-root totals, control FDIDs, and authoritative hash variant.
-- `/tmp/wow-character-bug/stats-encoding-keys.json`, `all-encoding-keys.json`, and `local-index-evidence.json` — verified encoding cardinality and local-index evidence.
+- `/tmp/wow-character-bug/stats-encoding-keys.json`, `all-encoding-keys.json`, and `local-index-evidence.json` — verified encoding cardinality and local-index evidence; superseded for affected known-present records by [[casc-local-index-generations]].
 - `34975b1c2` — explicit overrides and generator request preservation.
 - `5ca35ab62` — Forever character movement-stat regression test.
 - `6a076ed46`, `b871b7083` — bounded Forever stat/regen model and borrow-order correction.
@@ -60,4 +60,5 @@ No complete-panel, successful-regression, native, source-provenance, asset-extra
 
 - [[forever-addon-comparison]] — bounded cached-addon compatibility evidence.
 - [[tick-cooldown-scan]] — separate asset-resolver cache investigation.
+- [[casc-local-index-generations]] — confirmed reader defect versus the four remaining true content blockers.
 - [CASC asset loading](../../specs/casc-loading.md) — GUI resolution-cache-preparation contract.
