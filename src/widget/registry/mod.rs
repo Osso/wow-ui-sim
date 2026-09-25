@@ -1,6 +1,7 @@
 //! Global widget registry for tracking all widgets.
 
 mod anchor;
+mod anchor_edits;
 mod pixel_scale;
 mod storage;
 
@@ -56,6 +57,10 @@ pub struct WidgetRegistry {
     pending_layout_ids: FxHashSet<u64>,
     /// Cooldown widget IDs, so per-tick cooldown checks skip the full registry.
     cooldown_ids: FxHashSet<u64>,
+    /// Pre-edit anchor state for frames anchor-edited since the last dirty read.
+    anchor_edit_baselines: RefCell<FxHashMap<u64, anchor_edits::AnchorEditBaseline>>,
+    /// Layout canvas size, for resolving rects when settling anchor edits.
+    layout_canvas_size: Option<(f32, f32)>,
 }
 
 impl WidgetRegistry {
@@ -97,6 +102,8 @@ impl WidgetRegistry {
             hit_grid_dirty_ids: Self::initial_id_set(),
             pending_layout_ids: Self::initial_id_set(),
             cooldown_ids: FxHashSet::default(),
+            anchor_edit_baselines: RefCell::new(FxHashMap::default()),
+            layout_canvas_size: None,
         }
     }
 
@@ -447,6 +454,7 @@ impl WidgetRegistry {
 
     /// Check whether any frames have been visually dirtied since last drain.
     pub fn has_dirty_frames(&self) -> bool {
+        self.settle_anchor_edits();
         !self.render_dirty_ids.borrow().is_empty()
     }
 
@@ -469,6 +477,7 @@ impl WidgetRegistry {
     }
 
     pub fn take_render_dirty_batch(&self) -> RenderDirtyBatch {
+        self.settle_anchor_edits();
         let mut ids = self.render_dirty_ids.borrow_mut();
         if ids.is_empty() {
             return self.empty_render_dirty_batch();

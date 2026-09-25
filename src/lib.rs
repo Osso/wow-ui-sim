@@ -135,7 +135,7 @@ pub enum BlendMode {
 }
 
 /// Computed layout position for a frame.
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct LayoutRect {
     pub x: f32,
     pub y: f32,

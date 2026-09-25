@@ -218,10 +218,10 @@ pub(super) fn clear_all_points(state: &mut LuaState) -> LuaResult<u32> {
     if !already_empty {
         let mut sim = borrow_state_mut(state)?;
         sim.widgets.remove_all_anchor_dependents_for(id);
-        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
             frame.clear_all_points();
         }
-        sim.widgets.mark_rect_dirty(id);
+        sim.widgets.mark_anchor_rect_dirty(id);
     }
     Ok(0)
 }
@@ -246,13 +246,13 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(target) = target_id {
         sim.widgets.remove_anchor_dependent(target as u64, id);
     }
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         frame.anchors.retain(|a| a.point != point);
         frame
             .secret_anchor_points
             .retain(|existing| *existing != point);
     }
-    sim.widgets.mark_rect_dirty(id);
+    sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
 }
 
@@ -268,13 +268,13 @@ pub(super) fn adjust_points_offset(state: &mut LuaState) -> LuaResult<u32> {
     let x_offset = f64::from_stack(state, 2)? as f32;
     let y_offset = f64::from_stack(state, 3)? as f32;
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         for anchor in &mut frame.anchors {
             anchor.x_offset += x_offset;
             anchor.y_offset += y_offset;
         }
     }
-    sim.widgets.mark_rect_dirty(id);
+    sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
 }
 
@@ -621,7 +621,7 @@ fn apply_set_point(
     if let Some(rel_id) = request.relative_to {
         sim.widgets.add_anchor_dependent(rel_id as u64, id);
     }
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         match request.pending_key {
             Some(pending_key) => frame.set_point_with_name(
                 request.point,
@@ -639,7 +639,7 @@ fn apply_set_point(
             ),
         }
     }
-    sim.widgets.mark_rect_dirty(id);
+    sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
 }
 
@@ -658,10 +658,10 @@ pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(rel_id) = relative_to_id {
         sim.widgets.add_anchor_dependent(rel_id as u64, id);
     }
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         anchor_frame_to_all_corners(frame, relative_to_id);
     }
-    sim.widgets.mark_rect_dirty(id);
+    sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
 }
 

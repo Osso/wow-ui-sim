@@ -14,9 +14,10 @@ impl Default for LayoutPixelScale {
 }
 
 impl WidgetRegistry {
-    pub(crate) fn with_physical_height(height: f32) -> Self {
+    pub(crate) fn with_screen_size(width: f32, height: f32) -> Self {
         let mut registry = Self::default();
         registry.set_layout_physical_height(height);
+        registry.set_layout_canvas_size(width, height);
         registry
     }
 
