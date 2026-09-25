@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Record retail secret-origin geometry RED boundary
+
+[[patch-12-1-5-api-audit]] records `8815f22ce` sharing authenticated secret-input decoding through `forbidden-aspects` for retail 12.1, PTR, and Forever while retaining wrapper authentication and tainted-read guards. The final pre-fix retail trace reaches `ApplyElementLayout` → `SetPoint` with a wrapped point string as userdata; geometry/texture gates now share that capability. `/tmp/retail-regression/onload-after.*` is a pre-fix 1/1 baseline. Rebuilt replay and independent GREEN remain pending.
+
 ## [2026-09-25] audit | Record `OnLoad` creation-origin RED boundary
 
 [[patch-12-1-5-api-audit]] records `63fe3183a`: runtime `OnLoad` clears constructor-stack taint only for protected dispatch, retains declared handler taint, and restores the constructor on success or failure. Two committed deferred-callback tests cover trusted XML under an addon constructor and addon XML under a clean constructor. Latest `/tmp/retail-regression/phase-provenance.stdout` reports clean AuraContainer `#61195`/`#76243` script, proxied/private `Update`, and `OnUpdate`, but six `dirtyPhase` closures remain DandersFrames/BetterBlizzFrames-tainted. Its 22-occurrence `OnUpdate` error is RED provenance only; no build, replay, reduction, or GREEN claim.
