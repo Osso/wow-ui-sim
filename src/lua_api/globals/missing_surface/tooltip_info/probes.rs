@@ -15,7 +15,7 @@ use super::spell::{
     spell_id_for_talent_id, tooltip_for_mount_spell_id, tooltip_for_spell_id,
     tooltip_for_toy_item_id, tooltip_for_unit_aura,
 };
-use super::unit::{tooltip_for_unit, tooltip_for_world_loot};
+use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
 use crate::lua_api::globals::missing_surface::item_spell::{
     current_item_upgrade_location, parse_item_guid, parse_prefixed_id,
@@ -437,8 +437,10 @@ pub(super) fn c_tooltip_get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
         tooltip_for_item_id(state, item_id)
     } else if let Some(spell_id) = parse_prefixed_id(&link, "spell") {
         tooltip_for_spell_id(state, spell_id)
+    } else if let Some(guid) = link.strip_prefix("unit:") {
+        tooltip_for_unit_guid(state, guid).unwrap_or(Val::Nil)
     } else {
-        empty_tooltip(state, TOOLTIP_TYPE_ITEM)
+        Val::Nil
     };
     state.push(tooltip);
     Ok(1)

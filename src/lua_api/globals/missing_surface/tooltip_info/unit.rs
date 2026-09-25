@@ -98,6 +98,7 @@ pub(super) fn unit_tooltip_info(state: &LuaState, unit: &str) -> Option<UnitTool
     let sim = borrow_state(state).ok()?;
     match unit {
         "target" => sim.current_target.as_ref().map(target_tooltip_info),
+        "focus" => sim.current_focus.as_ref().map(target_tooltip_info),
         "player" => Some(player_tooltip_info(&sim.player)),
         other => active_party_member(&sim, other).map(party_tooltip_info),
     }
@@ -115,6 +116,38 @@ fn unit_guid(state: &LuaState, unit: &str) -> Option<String> {
         other => active_party_member_index(&sim, other)
             .map(|idx| format!("Player-0000-000000{:02}", idx + 2)),
     }
+}
+
+pub(super) fn tooltip_for_unit_guid(state: &mut LuaState, guid: &str) -> Option<Val> {
+    let unit = {
+        let sim = borrow_state(state).ok()?;
+        if guid == SEEDED_LOCAL_CHARACTER_GUID {
+            Some("player".to_string())
+        } else if sim
+            .current_target
+            .as_ref()
+            .is_some_and(|target| target.guid == guid)
+        {
+            Some("target".to_string())
+        } else if sim
+            .current_focus
+            .as_ref()
+            .is_some_and(|focus| focus.guid == guid)
+        {
+            Some("focus".to_string())
+        } else if sim.party_group_active {
+            (0..sim.party_members.len())
+                .find(|idx| guid == format!("Player-0000-000000{:02}", idx + 2))
+                .map(|idx| format!("party{}", idx + 1))
+        } else {
+            None
+        }
+    }?;
+    let info = unit_tooltip_info(state, &unit)?;
+    if info.name.is_empty() {
+        return None;
+    }
+    Some(tooltip_for_unit(state, &unit))
 }
 
 fn push_unit_tooltip_lines(state: &mut LuaState, lines: Val, info: &UnitTooltipInfo) {
