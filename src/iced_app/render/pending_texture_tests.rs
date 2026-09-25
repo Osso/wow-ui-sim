@@ -359,3 +359,58 @@ fn settled_idle_warmup_still_loads_textures_from_rebuilt_strata() {
         "a settled warmup must rescan after strata rebuild introduces a new texture"
     );
 }
+
+#[test]
+fn settled_idle_warmup_loads_texture_from_partially_rebuilt_stratum() {
+    let temp_dir = tempdir().unwrap();
+    write_test_png(temp_dir.path(), "scope-medium");
+    write_test_png(temp_dir.path(), "scope-dialog");
+    let app = super::test_support::build_test_app_with_addons(Some(temp_dir.path()));
+    let size = Size::new(800.0, 600.0);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            ScopeMedium = UIParent:CreateTexture(nil, "ARTWORK")
+            ScopeMedium:SetSize(32, 32)
+            ScopeMedium:SetPoint("CENTER")
+            ScopeMedium:SetTexture("Interface/AddOns/scope-medium")
+            ScopeDialog = CreateFrame("Frame", "ScopeDialogFrame", UIParent)
+            ScopeDialog:SetFrameStrata("DIALOG")
+            ScopeDialog:SetSize(32, 32)
+            ScopeDialog:SetPoint("TOPLEFT")
+            ScopeDialogTexture = ScopeDialog:CreateTexture(nil, "ARTWORK")
+            ScopeDialogTexture:SetAllPoints()
+        "#,
+        )
+        .unwrap();
+    app.merge_widget_dirty_into_render_state();
+    app.mark_all_strata_dirty();
+    app.rebuild_draw_quads(size);
+    complete_draw_uploads(&app);
+    run_idle_tick_warmup(&app);
+    complete_draw_uploads(&app);
+    run_idle_tick_warmup(&app);
+
+    app.env
+        .borrow()
+        .exec(r#"ScopeDialogTexture:SetTexture("Interface/AddOns/scope-dialog")"#)
+        .unwrap();
+    app.merge_widget_dirty_into_render_state();
+    let dialog_bit = 1 << crate::widget::FrameStrata::Dialog.as_index();
+    assert_eq!(
+        app.strata_dirty.get(),
+        dialog_bit,
+        "only the DIALOG stratum should be dirty"
+    );
+    app.rebuild_draw_quads(size);
+    complete_draw_uploads(&app);
+    run_idle_tick_warmup(&app);
+
+    assert!(
+        app.texture_manager
+            .borrow()
+            .is_cached("Interface/AddOns/scope-dialog"),
+        "a partial DIALOG rebuild must unsettle that stratum for warmup"
+    );
+}

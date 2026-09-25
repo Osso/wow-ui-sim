@@ -128,12 +128,10 @@ pub struct App {
         RefCell<FxHashMap<String, Vec<crate::render::TextureRequest>>>,
     /// Paths known-ready in GPU atlas from prior successful request handles.
     pub(crate) ready_texture_path_cache: RefCell<FxHashSet<String>>,
-    /// Bumped whenever `cached_strata_quads` is rebuilt or reset.
-    pub(crate) strata_generation: std::cell::Cell<u64>,
-    /// Strata generation at which an idle-tick texture warmup found nothing to
-    /// load. CPU texture caches never evict, so the scan stays redundant until
-    /// the cached requests change.
-    pub(crate) texture_warmup_settled_generation: std::cell::Cell<Option<u64>>,
+    /// Strata rebuilt or reset since an idle-tick texture warmup last found all
+    /// their requests CPU-cached. CPU texture caches never evict, so only these
+    /// strata can hold paths that still need a warmup check.
+    pub(crate) texture_warmup_unsettled_strata: std::cell::Cell<u16>,
     /// Most recent main-thread phase that can block event handling.
     pub(crate) main_thread_phase: RefCell<(&'static str, std::time::Instant)>,
     /// Count of stale timer ticks dropped since the last key log.
@@ -265,8 +263,7 @@ macro_rules! app_from_initial_state {
             })),
             pending_texture_requests_by_path: RefCell::new(FxHashMap::default()),
             ready_texture_path_cache: RefCell::new(FxHashSet::default()),
-            strata_generation: std::cell::Cell::new(0),
-            texture_warmup_settled_generation: std::cell::Cell::new(None),
+            texture_warmup_unsettled_strata: std::cell::Cell::new(ALL_STRATA_MASK),
             main_thread_phase: RefCell::new(("boot", $now)),
             dropped_stale_timer_ticks: std::cell::Cell::new(0),
             last_timer_tick_processed: std::cell::Cell::new($now),
@@ -510,6 +507,8 @@ fn current_env_screen_size(env: &Rc<RefCell<WowLuaEnv>>) -> Size {
     Size::new(state.screen_width, state.screen_height)
 }
 
+pub(crate) const ALL_STRATA_MASK: u16 = (1 << crate::widget::FrameStrata::COUNT) - 1;
+
 impl App {
     /// Mark specific strata as dirty (need quad re-emit + GPU re-upload).
     pub(crate) fn mark_strata_dirty(&self, mask: u16) {
@@ -519,8 +518,7 @@ impl App {
     /// Mark ALL strata as dirty (full rebuild).
     /// Also clears per-frame snapshot caches so the next rebuild is non-incremental.
     pub(crate) fn mark_all_strata_dirty(&self) {
-        self.strata_dirty
-            .set((1u16 << crate::widget::FrameStrata::COUNT) - 1);
+        self.strata_dirty.set(ALL_STRATA_MASK);
         *self.cached_frame_snapshots.borrow_mut() = std::array::from_fn(|_| None);
         *self.pending_dirty_ids.borrow_mut() = None;
     }

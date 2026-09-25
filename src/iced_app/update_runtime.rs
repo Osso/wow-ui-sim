@@ -49,7 +49,7 @@ impl App {
         ));
     }
 
-    fn merge_widget_dirty_into_render_state(&self) {
+    pub(super) fn merge_widget_dirty_into_render_state(&self) {
         let (dirty_mask, dirty_ids) = self.take_render_dirty_with_ids();
         if dirty_mask == 0 {
             return;
@@ -71,11 +71,19 @@ impl App {
     }
 
     pub(super) fn preload_visible_textures(&self) {
-        let _ = self.preload_visible_textures_with_budget(std::time::Duration::from_millis(50));
+        let _ = self.preload_visible_textures_with_budget(
+            std::time::Duration::from_millis(50),
+            super::app::ALL_STRATA_MASK,
+        );
     }
 
-    pub(super) fn preload_visible_textures_with_budget(&self, budget: std::time::Duration) -> bool {
-        let paths = self.warmup_texture_paths();
+    /// Warm CPU texture caches for cached render requests in `strata_mask`.
+    pub(super) fn preload_visible_textures_with_budget(
+        &self,
+        budget: std::time::Duration,
+        strata_mask: u16,
+    ) -> bool {
+        let paths = self.warmup_texture_paths(strata_mask);
         let deadline = std::time::Instant::now() + budget;
         let pending_before = self.textures_pending.get();
         let loaded = self.preload_missing_texture_paths(&paths, deadline);
@@ -119,11 +127,9 @@ impl App {
         loaded: usize,
         pending_before: bool,
     ) -> bool {
-        let cached_request_paths = self.cached_render_request_paths();
         let has_warmup_paths = !paths.is_empty();
         let cpu_decode_pending = self.has_uncached_warmup_paths(paths);
-        let draw_upload_pending =
-            self.cached_render_requests_pending_after_warmup(&cached_request_paths);
+        let draw_upload_pending = self.cached_render_requests_pending_after_warmup();
 
         cpu_decode_pending
             || draw_upload_pending
@@ -131,8 +137,8 @@ impl App {
             || (pending_before && has_warmup_paths)
     }
 
-    fn cached_render_requests_pending_after_warmup(&self, cached_request_paths: &[String]) -> bool {
-        if cached_request_paths.is_empty() {
+    fn cached_render_requests_pending_after_warmup(&self) -> bool {
+        if !self.has_cached_render_requests() {
             return false;
         }
 
@@ -147,9 +153,10 @@ impl App {
             .any(|path| !texture_request_is_cached(&tex_mgr, path))
     }
 
-    fn warmup_texture_paths(&self) -> Vec<String> {
-        let mut cached_paths = self.cached_render_request_paths();
-        if !cached_paths.is_empty() {
+    /// Before any render request exists, fall back to registry-visible paths.
+    fn warmup_texture_paths(&self, strata_mask: u16) -> Vec<String> {
+        if self.has_cached_render_requests() {
+            let mut cached_paths = self.cached_render_request_paths(strata_mask);
             Self::sort_texture_request_paths(&mut cached_paths);
             return cached_paths;
         }
@@ -165,10 +172,25 @@ impl App {
         !env.state().borrow().pending_texture_preloads.is_empty()
     }
 
-    fn cached_render_request_paths(&self) -> Vec<String> {
+    fn has_cached_render_requests(&self) -> bool {
+        self.cached_strata_quads
+            .borrow()
+            .iter()
+            .flatten()
+            .any(|batch| {
+                !batch.texture_requests.is_empty() || !batch.mask_texture_requests.is_empty()
+            })
+    }
+
+    fn cached_render_request_paths(&self, strata_mask: u16) -> Vec<String> {
         let mut paths = FxHashSet::default();
         let strata = self.cached_strata_quads.borrow();
-        for batch in strata.iter().flatten() {
+        let selected = strata
+            .iter()
+            .enumerate()
+            .filter(|(idx, _)| strata_mask & (1 << idx) != 0)
+            .filter_map(|(_, batch)| batch.as_deref());
+        for batch in selected {
             for request in batch
                 .texture_requests
                 .iter()
@@ -334,7 +356,7 @@ impl App {
             }
         }
         if retried {
-            self.texture_warmup_settled_generation.set(None);
+            self.mark_texture_warmup_unsettled(super::app::ALL_STRATA_MASK);
             self.seed_pending_texture_paths_from_cached_strata();
         }
     }
@@ -414,32 +436,29 @@ impl App {
         &self,
         stage_timings: &mut TickStageTimings,
     ) -> bool {
-        let warmup_settled =
-            self.texture_warmup_settled_generation.get() == Some(self.strata_generation.get());
-        if self.textures_pending.get() || self.has_pending_render_work() || warmup_settled {
+        let unsettled_strata = self.texture_warmup_unsettled_strata.get();
+        if self.textures_pending.get() || self.has_pending_render_work() || unsettled_strata == 0 {
             return false;
         }
 
         let started = std::time::Instant::now();
-        let loaded =
-            self.preload_visible_textures_with_budget(std::time::Duration::from_millis(10));
+        let loaded = self.preload_visible_textures_with_budget(
+            std::time::Duration::from_millis(10),
+            unsettled_strata,
+        );
         stage_timings.preload += started.elapsed();
         self.record_texture_warmup_outcome(loaded);
         loaded
     }
 
-    /// Settle only when cached strata supplied the warmup paths: before the
-    /// first rebuild, warmup reads registry-visible paths, which change
-    /// without a strata generation bump.
+    /// Settle only when cached requests supplied the warmup paths: before any
+    /// exist, warmup reads registry-visible paths, which change without a
+    /// strata rebuild.
     fn record_texture_warmup_outcome(&self, loaded: bool) {
-        let has_cached_strata = self
-            .cached_strata_quads
-            .borrow()
-            .iter()
-            .any(Option::is_some);
-        let settled = !loaded && !self.textures_pending.get() && has_cached_strata;
-        self.texture_warmup_settled_generation
-            .set(settled.then(|| self.strata_generation.get()));
+        let settled = !loaded && !self.textures_pending.get() && self.has_cached_render_requests();
+        if settled {
+            self.texture_warmup_unsettled_strata.set(0);
+        }
     }
 
     fn has_pending_render_work(&self) -> bool {
@@ -485,8 +504,7 @@ impl App {
         &self,
         stage_timings: &mut TickStageTimings,
     ) -> bool {
-        let has_cached_render_requests = !self.cached_render_request_paths().is_empty();
-        if self.strata_dirty.get() != 0 || has_cached_render_requests {
+        if self.strata_dirty.get() != 0 || self.has_cached_render_requests() {
             let started = std::time::Instant::now();
             let preloaded = self.preload_render_texture_requests_preserving_dirty(Some(
                 std::time::Duration::from_millis(25),

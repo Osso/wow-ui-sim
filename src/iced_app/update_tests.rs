@@ -450,7 +450,10 @@ fn tick_warmup_prefers_cached_render_crop_requests() {
         .push(TextureRequest::new(&crop_path, 0, 4));
     app.cached_strata_quads.borrow_mut()[0] = Some(std::sync::Arc::new(batch));
 
-    app.preload_visible_textures_with_budget(std::time::Duration::from_millis(50));
+    app.preload_visible_textures_with_budget(
+        std::time::Duration::from_millis(50),
+        crate::iced_app::app::ALL_STRATA_MASK,
+    );
 
     let tex_mgr = app.texture_manager.borrow();
     assert!(
@@ -484,7 +487,10 @@ fn tick_warmup_keeps_staged_but_unprepared_requests_pending() {
         let mut tex_mgr = app.texture_manager.borrow_mut();
         render::preload_texture_request_source(&mut tex_mgr, &request_path);
     }
-    app.preload_visible_textures_with_budget(std::time::Duration::from_millis(50));
+    app.preload_visible_textures_with_budget(
+        std::time::Duration::from_millis(50),
+        crate::iced_app::app::ALL_STRATA_MASK,
+    );
 
     assert!(
         app.textures_pending.get(),

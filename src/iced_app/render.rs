@@ -204,7 +204,7 @@ impl App {
             self.mark_all_strata_dirty();
             // Invalidate per-strata cache — screen size changed.
             *self.cached_strata_quads.borrow_mut() = std::array::from_fn(|_| None);
-            self.bump_strata_generation();
+            self.mark_texture_warmup_unsettled(super::app::ALL_STRATA_MASK);
             // Invalidate hit grid — frame positions change with screen size.
             *self.cached_hittable.borrow_mut() = None;
         }
@@ -493,6 +493,7 @@ impl App {
 
         let mut strata_cache = self.cached_strata_quads.borrow_mut();
         let mut snap_cache = self.cached_frame_snapshots.borrow_mut();
+        self.mark_texture_warmup_unsettled(dirty | uncached_strata_mask(&strata_cache));
         rebuild_dirty_strata_batches_for_registry(
             &mut strata_cache,
             &mut snap_cache,
@@ -511,12 +512,11 @@ impl App {
                 elapsed_secs,
             },
         );
-        self.bump_strata_generation();
     }
 
-    fn bump_strata_generation(&self) {
-        self.strata_generation
-            .set(self.strata_generation.get().wrapping_add(1));
+    pub(crate) fn mark_texture_warmup_unsettled(&self, strata_mask: u16) {
+        self.texture_warmup_unsettled_strata
+            .set(self.texture_warmup_unsettled_strata.get() | strata_mask);
     }
 
     fn update_hit_grid_after_render(
@@ -598,6 +598,16 @@ impl App {
             ga.mark_clean();
         }
     }
+}
+
+/// Strata with no cached batch; `rebuild_strata_batches` rebuilds these
+/// regardless of their dirty bit.
+fn uncached_strata_mask(strata_cache: &rebuild::StrataBatchCache) -> u16 {
+    strata_cache
+        .iter()
+        .enumerate()
+        .filter(|(_, batch)| batch.is_none())
+        .fold(0, |mask, (idx, _)| mask | (1 << idx))
 }
 
 #[cfg(test)]
