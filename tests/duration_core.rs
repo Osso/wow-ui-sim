@@ -1,5 +1,58 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_native_aura_button_preserves_wrapped_duration_arguments() {
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_AuraContainer"],
+        &[],
+    );
+    env.exec(
+        r#"
+        local mixin = __secureenv.AuraButtonPrivateMixin
+        assert(mixin and type(mixin.UpdateAuraDuration) == 'function')
+        local duration = C_DurationUtil.CreateDuration()
+        local button = { auraDuration = duration,
+            auraData = { expirationTime = 50, duration = 30, timeMod = 2 } }
+        mixin.UpdateAuraDuration(button)
+        assert(duration:HasSecretValues())
+        assert(duration:GetEndTime() == 50 and duration:GetTotalDuration() == 15)
+        assert(duration:GetModRate() == 2)
+        local initial = duration
+        button.auraData = { expirationTime = 0, duration = 30 }
+        mixin.UpdateAuraDuration(button)
+        assert(button.auraDuration == initial and duration:HasSecretValues())
+        assert(duration:IsZero())
+        local function values(...) return select('#', ...), ... end
+        local count, first, second, third = values(secretwrap(8, nil, 3))
+        assert(count == 3 and issecretvalue(first) and issecretvalue(second)
+            and issecretvalue(third))
+        assert(secretunwrap(first, second, third) == 8)
+        assert(select('#', secretunwrap(first, second, third)) == 3)
+        assert(select(2, secretunwrap(first, second, third)) == nil)
+        assert(select(3, secretunwrap(first, second, third)) == 3)
+        assert(not canaccessvalue(first) and not canaccessallvalues(1, first))
+        local function tainted()
+            assert(not issecure())
+            assert(issecretvalue(first) and not canaccessvalue(first))
+            assert(not pcall(secretwrap, 1))
+            assert(not pcall(secretunwrap, first))
+            assert(not pcall(duration.GetEndTime, duration))
+            assert(not pcall(duration.SetTimeFromEnd, duration, first, 2, 1))
+        end
+        debug.setobjecttaint(tainted, 'RetailAuraDurationProbe')
+        tainted()
+        assert(duration:IsZero() and duration:HasSecretValues())
+        assert(settablesecurity == nil)
+        "#,
+    )
+    .expect("unchanged Blizzard aura duration consumer preserves wrapped timing and identity");
+}
+
 // Secret lifecycle/access expectations below are explicit simulator guesses, not native proof.
 #[cfg(feature = "client-wowforever")]
 #[test]

@@ -86,57 +86,6 @@ fn retail_combo_points_follow_player_power_across_target_changes() {
 }
 
 #[test]
-fn retail_native_aura_button_preserves_wrapped_duration_arguments() {
-    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
-    crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &["Blizzard_AuraContainer"],
-        &[],
-    );
-    env.exec(
-        r#"
-        assert(type(AuraButtonPrivateMixin.UpdateAuraDuration) == 'function')
-        local duration = C_DurationUtil.CreateDuration()
-        local button = { auraDuration = duration,
-            auraData = { expirationTime = 50, duration = 30, timeMod = 2 } }
-        AuraButtonPrivateMixin.UpdateAuraDuration(button)
-        assert(duration:HasSecretValues())
-        assert(duration:GetEndTime() == 50 and duration:GetTotalDuration() == 15)
-        assert(duration:GetModRate() == 2)
-        local initial = duration
-        button.auraData = { expirationTime = 0, duration = 30 }
-        AuraButtonPrivateMixin.UpdateAuraDuration(button)
-        assert(button.auraDuration == initial and duration:HasSecretValues())
-        assert(duration:IsZero())
-        local function values(...) return select('#', ...), ... end
-        local count, first, second, third = values(secretwrap(8, nil, 3))
-        assert(count == 3 and issecretvalue(first) and issecretvalue(second)
-            and issecretvalue(third))
-        assert(secretunwrap(first, second, third) == 8)
-        assert(select('#', secretunwrap(first, second, third)) == 3)
-        assert(select(2, secretunwrap(first, second, third)) == nil)
-        assert(select(3, secretunwrap(first, second, third)) == 3)
-        assert(not canaccessvalue(first) and not canaccessallvalues(1, first))
-        local function tainted()
-            assert(not issecure())
-            assert(issecretvalue(first) and not canaccessvalue(first))
-            assert(not pcall(secretwrap, 1))
-            assert(not pcall(secretunwrap, first))
-            assert(not pcall(duration.GetEndTime, duration))
-            assert(not pcall(duration.SetTimeFromEnd, duration, first, 2, 1))
-        end
-        debug.setobjecttaint(tainted, 'RetailAuraDurationProbe')
-        tainted()
-        assert(duration:IsZero() and duration:HasSecretValues())
-        assert(settablesecurity == nil)
-        "#,
-    )
-    .expect("unchanged Blizzard aura duration consumer preserves wrapped timing and identity");
-}
-
-#[test]
 fn retail_native_combo_frame_world_entry_updates_nonzero_then_zero() {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
