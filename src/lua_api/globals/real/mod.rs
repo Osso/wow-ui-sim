@@ -8,7 +8,7 @@ pub mod action_bar_state;
 pub mod action_highlights;
 pub mod combat_probes;
 pub mod combat_stats;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod combo_points;
 pub mod container_legacy;
 #[cfg(feature = "retail-12-0-0")]
@@ -60,7 +60,7 @@ pub mod ui_widget_container;
 pub mod unit_interaction;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod unit_speed;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;

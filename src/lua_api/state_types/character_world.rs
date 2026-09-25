@@ -153,7 +153,7 @@ pub struct MovementState {
 }
 
 /// Simulator-assumed speed capabilities, in yards per second.
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Debug, Clone)]
 pub struct MovementSpeeds {
     pub run: f64,
@@ -161,7 +161,7 @@ pub struct MovementSpeeds {
     pub swim: f64,
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 impl Default for MovementSpeeds {
     fn default() -> Self {
         Self {
@@ -207,7 +207,7 @@ pub struct PlayerState {
     pub honor_level: i32,
     pub buffs: Vec<AuraInfo>,
     pub movement: MovementState,
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub movement_speeds: MovementSpeeds,
     /// Explicit player orientation; unknown initially by simulator policy.
     #[cfg(feature = "client-wowforever")]

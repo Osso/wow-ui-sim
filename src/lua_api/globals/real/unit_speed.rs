@@ -1,4 +1,4 @@
-//! Forever's player speed query backed by movement flags and configured capabilities.
+//! Player speed query backed by movement flags and configured capabilities.
 
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::globals::unit_misc::guid_for_unit;

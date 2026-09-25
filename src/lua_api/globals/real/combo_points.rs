@@ -1,4 +1,4 @@
-//! Forever's target-bound player combo points, distinct from the UnitPower snapshot.
+//! Player combo points: retail owns the pool, Forever assigns it to a target.
 
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::globals::unit_misc::guid_for_unit;
@@ -8,10 +8,11 @@ use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
-pub(crate) const COMBO_POINTS_POWER_TYPE: i32 = 4;
+const COMBO_POINTS_POWER_TYPE: i32 = 4;
 
-/// Simulator policy: a power input assigns the existing pool to the selected target.
+/// Forever simulator policy: a power input assigns the existing pool to the selected target.
 /// Selection changes alone leave UnitPower's snapshot and this assignment untouched.
+#[cfg(feature = "client-wowforever")]
 pub(crate) fn bind_player_combo_points(sim: &mut SimState) {
     let has_points = sim
         .player
@@ -27,11 +28,12 @@ pub(crate) fn bind_player_combo_points(sim: &mut SimState) {
     };
 }
 
-fn read_player_combo_points(sim: &SimState, unit: &str, target: &str) -> LuaResult<i32> {
+fn read_player_combo_points(sim: &SimState, unit: &str, _target: &str) -> LuaResult<i32> {
     let Some(owner) = resolve_unit_snapshot(sim, unit) else {
         return Ok(0);
     };
-    let Some(target) = resolve_unit_snapshot(sim, target) else {
+    #[cfg(feature = "client-wowforever")]
+    let Some(target) = resolve_unit_snapshot(sim, _target) else {
         return Ok(0);
     };
     if owner.guid != guid_for_unit(sim, "player") {
@@ -39,6 +41,7 @@ fn read_player_combo_points(sim: &SimState, unit: &str, target: &str) -> LuaResu
             "GetComboPoints currently supports the modeled player owner only",
         ));
     }
+    #[cfg(feature = "client-wowforever")]
     if sim.player.combo_points_target_guid.as_deref() != Some(target.guid.as_str()) {
         return Ok(0);
     }
