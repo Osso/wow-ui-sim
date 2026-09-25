@@ -52,7 +52,8 @@ Focused proof must cover projection identity, field isolation, native parent/met
 - [x] Focused retail proof at `8787273ad`: six `forbidden_partition_` cases cover interned projection/field isolation, native parent identity, spoof rejection, ordinary frame transfer, and real AuraContainer provider/initializer boundaries.
 - [x] Three earlier-12.0.7 controls pass, preserving focused partition behavior outside 12.1.
 - [x] At `9476efcf5`, `secure-chain-tests-ledger.json` records the native AuraContainer initializer/partition group 8/8, `forever_forbidden_consumers` 3/3, and `xml_secure_delegates` 2/2. This closes the scoped transfer/delegate proof, not full GUI aura acceptance.
-- [ ] Full GUI aura acceptance remains outside this bounded proof. The full-startup target-player tick passes private Count after XML child publication but next reports number-vs-userdata at `TargetFrame.lua:569` during layout; investigate secret row-count behavior separately.
+- [x] Bounded integration after the separate secret-number ordering pin: 2/2 original-boundary regressions pass with zero Lua errors — full-startup target-player tick and PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` with CVar setup before `OnLoad` (`/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`). This does not claim exact original screenshot reproduction.
+- [ ] Full GUI aura acceptance and final simulator verification remain outside this bounded proof.
 - Coroutine yield/resume conversion and recursive conversion of table contents are not implemented by this facility.
 - Conditional aura-secrecy access enforcement is separate from partition conversion and remains unmodeled.
 

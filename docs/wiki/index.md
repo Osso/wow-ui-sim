@@ -1,10 +1,10 @@
 ## [2026-09-25] investigation | Document guarded secret-number ordering
 
-Rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2`, published from `osso/host-secret-bool` and pinned by simulator commit `8b8a089e5`, adds guarded ordering for secret-wrapped numbers. Forever target-aura layout stores `secretwrap(lineCount)` then compares it with public zero or two; the prior boundary raised a number/userdata error. Ordering is limited to numeric wrappers and rejects tainted ancestor access; native semantics are inferred, not verified. Dependency verification, simulator integration, clean tick, and GUI proof remain pending. See [[secret-number-ordering]] and [secret-number ordering](../specs/secret-number-ordering.md).
+Rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2`, published from `osso/host-secret-bool` and pinned by `8b8a089e5`, adds guarded ordering for secret-wrapped numbers. Independent rilua verification is 21/21; simulator integration is bounded 2/2 with zero Lua errors: target-player tick and the original PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` CVar pre-`OnLoad` regression. Native semantics are inferred; GUI/final simulator proof and original screenshot-exact reproduction remain pending. See [[secret-number-ordering]] and [secret-number ordering](../specs/secret-number-ordering.md).
 
 ## [2026-09-25] investigation | Publish target aura Count to private XML scope
 
-Full-startup `TargetUnit('player')` → OnUpdate failed at `TargetFrameAuraButton.lua:75`. The logged `__tpl_25839` is the AuraContainer; its actual AuraButton child had a public Count and Rust child key, but no forbidden-table Count. XML parentKey publication now reaches the scoped private view without copying ordinary addon fields. Targeted full-startup tick passes with no Lua errors after the separately pinned secret-number ordering fix. See [[target-aura-private-count]] and [partition spec](../specs/script-object-environments.md).
+Full-startup `TargetUnit('player')` → OnUpdate failed at `TargetFrameAuraButton.lua:75`. The logged `__tpl25839` dispatcher is the AuraContainer; its nested AuraButton had a Rust/public Count but no private Count. `a2fd85382` scopes XML-child publication to the private view without copying ordinary addon fields; `30971450a` covers the original pre-`OnLoad` CVar event order. The integrated 2/2 regression is zero-error; GUI/final proof remains pending. See [[target-aura-private-count]] and [partition spec](../specs/script-object-environments.md).
 
 ## [2026-09-25] investigation | Bound bootstrap-only dependency selection
 
