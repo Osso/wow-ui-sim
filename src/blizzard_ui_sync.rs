@@ -7,7 +7,7 @@ mod profile_cache;
 
 use self::profile_cache::{cache_entry_is_usable, required_profile_cache_entries};
 #[cfg(feature = "casc")]
-use cascette_client_storage::BuildInfoFile;
+use cascette_client_storage::InstalledProduct;
 #[cfg(feature = "casc")]
 use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
@@ -177,13 +177,6 @@ impl CacheProvenance {
     }
 }
 
-#[cfg(feature = "casc")]
-struct BuildIdentity {
-    version: String,
-    build_key: String,
-    install_key: String,
-}
-
 fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         return pinned::provenance();
@@ -215,42 +208,9 @@ fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
 fn read_active_build_identity(
     install_root: &Path,
     active_product: &str,
-) -> crate::Result<BuildIdentity> {
-    let build_info_path = install_root.join(".build.info");
-    let contents = std::fs::read_to_string(&build_info_path).map_err(|error| {
-        crate::Error::Other(format!("read {}: {error}", build_info_path.display()))
-    })?;
-    parse_active_build_identity(&contents, active_product).map_err(crate::Error::Other)
-}
-
-#[cfg(feature = "casc")]
-fn parse_active_build_identity(
-    contents: &str,
-    active_product: &str,
-) -> Result<BuildIdentity, String> {
-    let build_info = BuildInfoFile::parse_str(contents)
-        .map_err(|error| format!("parse .build.info: {error}"))?;
-    let active_entry = build_info
-        .entries()
-        .into_iter()
-        .find(|entry| entry.is_active() && entry.product() == Some(active_product))
-        .ok_or_else(|| {
-            format!(".build.info has no active entry for CASC product {active_product}")
-        })?;
-
-    Ok(BuildIdentity {
-        version: required_build_info_value(active_entry.version(), "Version")?,
-        build_key: required_build_info_value(active_entry.build_key(), "Build Key")?,
-        install_key: active_entry.install_key().unwrap_or_default().to_string(),
-    })
-}
-
-#[cfg(feature = "casc")]
-fn required_build_info_value(value: Option<&str>, column: &str) -> Result<String, String> {
-    value
-        .filter(|value| !value.is_empty())
-        .map(str::to_string)
-        .ok_or_else(|| format!("active .build.info entry is missing {column}"))
+) -> crate::Result<InstalledProduct> {
+    cascette_client_storage::read_installed_product(install_root, active_product)
+        .map_err(|error| crate::Error::Other(error.to_string()))
 }
 
 fn invalidate_cache_if_provenance_mismatched(

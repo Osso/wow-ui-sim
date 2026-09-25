@@ -13,6 +13,14 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] `WOW_INSTALL_PATH` (install root) and `WOW_DATA_PATH` (`Data/` dir) override discovery; both are validated by checking that `<root>/Data/data` exists before they win.
 - [ ] wow-ui-sim creates `asset_resolver::CascListfileResolver` with an explicit cache/shared-data location; runtime loading does not set or require `GAME_ENGINE_SHARED_ROOT`.
 
+### Installed product identity
+
+- [ ] Non-pinned UI-source provenance and runtime CASC resolution read the selected product from the installation's `.product.db` through one shared parser.
+- [ ] Select `activeBuildKey` (field 14), not completed or incomplete build keys; retain `currentVersionStr` and optional `activeInstallKey` for provenance. This is simulator selection policy, not a guarantee of native launcher behavior or complete local content.
+- [ ] An absent `.build.info` product row does not prevent reading the selected product's available CASC content. No installation metadata is rewritten, and no other product is selected as a fallback.
+- [ ] Missing, malformed, duplicate, or invalid selected-product metadata fails explicitly. A missing `.product.db` is not rescued with `.build.info`.
+- [ ] PTR's pinned UI-source provenance remains independent of installed-product metadata.
+
 ### Source sync transport
 
 - [ ] A sync operation reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file, then releases them before GUI startup.
@@ -71,7 +79,9 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ## Tests asserting this spec
 
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled, and error boundaries; not yet verified in this cycle (cold/warm skip without an install)
+- `src/blizzard_ui_sync/tests.rs::build_identity_reads_forever_when_build_info_omits_the_product` — file-backed missing-row regression without metadata writes.
+- `src/blizzard_ui_sync/tests.rs::build_identity_uses_selected_product_not_stale_build_info` — selected-product identity, optional install key, and absent-product failure.
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled, and error boundaries; cold/warm skip without an install
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC

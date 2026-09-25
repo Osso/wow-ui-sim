@@ -217,40 +217,49 @@ fn test_provenance(build_key: &str) -> CacheProvenance {
     )
 }
 
-#[test]
 #[cfg(feature = "casc")]
-fn build_identity_allows_an_active_product_without_install_key() {
-    let build_info = "\
-Branch!STRING:0|Active!DEC:1|Build Key!HEX:16|Install Key!HEX:16|Version!STRING:0|Product!STRING:0
-us|1|0123456789abcdef0123456789abcdef||12.1.0.69497|wow";
-
-    let identity = super::parse_active_build_identity(build_info, "wow")
-        .expect("active build identity without install key");
-
-    assert_eq!(identity.version, "12.1.0.69497");
-    assert_eq!(identity.build_key, "0123456789abcdef0123456789abcdef");
-    assert!(identity.install_key.is_empty());
+fn installed_product_fixture() -> tempfile::TempDir {
+    let root = tempfile::tempdir().unwrap();
+    std::fs::write(
+        root.path().join(".product.db"),
+        include_bytes!("../../tests/fixtures/casc-installed-products.db"),
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join(".build.info"),
+        "Branch!STRING:0|Active!DEC:1|Build Key!HEX:16|Version!STRING:0|Product!STRING:0\nus|1|11111111111111111111111111111111|12.1.0.69933|wow\n",
+    )
+    .unwrap();
+    root
 }
 
 #[test]
 #[cfg(feature = "casc")]
-fn build_identity_selects_the_requested_active_product() {
-    let build_info = "\
-Branch!STRING:0|Active!DEC:1|Build Key!HEX:16|Install Key!HEX:16|Version!STRING:0|Product!STRING:0
-us|1|11111111111111111111111111111111|22222222222222222222222222222222|12.1.0.69497|wow
-us|1|33333333333333333333333333333333|44444444444444444444444444444444|12.1.0.69587|wowt";
+fn build_identity_reads_forever_when_build_info_omits_the_product() {
+    let root = installed_product_fixture();
+    let metadata_before = std::fs::read(root.path().join(".build.info")).unwrap();
+    let identity = super::read_active_build_identity(root.path(), "wow_classic_beta")
+        .expect("installed Forever identity without a build-info row");
 
-    let retail = super::parse_active_build_identity(build_info, "wow")
-        .expect("retail active build identity");
-    let ptr =
-        super::parse_active_build_identity(build_info, "wowt").expect("PTR active build identity");
+    assert_eq!(identity.version, "1.60.1.69977");
+    assert_eq!(identity.build_key, "3bd89ce2721f7c75e7525dc83741076f");
+    assert!(identity.install_key.is_empty());
+    assert_eq!(
+        std::fs::read(root.path().join(".build.info")).unwrap(),
+        metadata_before,
+    );
+}
 
-    assert_eq!(retail.version, "12.1.0.69497");
-    assert_eq!(retail.build_key, "11111111111111111111111111111111");
-    assert_eq!(retail.install_key, "22222222222222222222222222222222");
-    assert_eq!(ptr.version, "12.1.0.69587");
-    assert_eq!(ptr.build_key, "33333333333333333333333333333333");
-    assert_eq!(ptr.install_key, "44444444444444444444444444444444");
+#[test]
+#[cfg(feature = "casc")]
+fn build_identity_uses_selected_product_not_stale_build_info() {
+    let root = installed_product_fixture();
+    let retail = super::read_active_build_identity(root.path(), "wow").unwrap();
+
+    assert_eq!(retail.version, "12.1.0.69933");
+    assert_eq!(retail.build_key, "dcfc90fffd79ba00406ae46f5f657592");
+    assert_eq!(retail.install_key, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    assert!(super::read_active_build_identity(root.path(), "wowt").is_err());
 }
 
 #[test]
