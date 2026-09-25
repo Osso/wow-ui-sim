@@ -15,9 +15,9 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 ### Installed product identity
 
-- [ ] Non-pinned UI-source provenance and runtime CASC resolution read the selected product from the installation's `.product.db` through one shared parser.
-- [ ] Select `activeBuildKey` (field 14), not completed or incomplete build keys; retain `currentVersionStr` and optional `activeInstallKey` for provenance. This is simulator selection policy, not a guarantee of native launcher behavior or complete local content.
-- [ ] An absent `.build.info` product row does not prevent reading the selected product's available CASC content. No installation metadata is rewritten, and no other product is selected as a fallback.
+- [x] Non-pinned UI-source provenance and runtime CASC resolution read the selected product from the installation's `.product.db` through one shared parser.
+- [x] Select `activeBuildKey` (field 14), not completed or incomplete build keys; retain `currentVersionStr` and optional `activeInstallKey` for provenance. This is simulator selection policy, not a guarantee of native launcher behavior or complete local content.
+- [x] An absent `.build.info` product row does not prevent reading the selected product's available CASC content. No installation metadata is rewritten, and no other product is selected as a fallback.
 - [ ] Missing, malformed, duplicate, or invalid selected-product metadata fails explicitly. A missing `.product.db` is not rescued with `.build.info`.
 - [ ] PTR's pinned UI-source provenance remains independent of installed-product metadata.
 
@@ -26,14 +26,14 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] A sync operation reuses one CDN session and archive index set across file downloads instead of re-querying product metadata per file, then releases them before GUI startup.
 - [ ] Initialization checks every archive index in the selected CDN configuration, reusing individual cached index files; an interrupted index download is not accepted as a complete set.
 - [ ] Encoding-key downloads retry typed transport failures at most three times with exponential backoff and jitter. HTTP status and decode failures remain explicit failures.
-- [ ] Linux Zenity startup errors render as plain text, including literal `<profile>` paths.
+- [x] Linux Zenity startup errors render as plain text, including literal `<profile>` paths.
 
 ### GUI resolution-cache preparation
 
 - [ ] Before `run_iced_ui`, an enabled CASC installation prepares the selected product/build resolution cache at `ASSET_RESOLVER_CACHE_DIR` when set, otherwise the resolver default cache root. `WOW_PRODUCT` overrides the client-profile product selection.
-- [ ] A fresh resolution cache is built before GUI rendering; a warm cache is reused without rebuilding. Resolution-cache preparation failure stops GUI startup with an explicit error.
+- [x] A fresh resolution cache is built before GUI rendering; a warm cache is reused without rebuilding. Resolution-cache preparation failure stops GUI startup with an explicit error.
 - [ ] The community lookup catalog initializes before rendering too; catalog-load errors retain the resolver's explicit diagnostic. This moves initialization to startup, not out of total startup time.
-- [ ] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
+- [x] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
 - [ ] Preparation does not initialize the lazy runtime archive reader or extract textures before the first render.
 
 ### Texture resolution
@@ -81,18 +81,20 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 
 - `src/blizzard_ui_sync/tests.rs::build_identity_reads_forever_when_build_info_omits_the_product` — file-backed missing-row regression without metadata writes.
 - `src/blizzard_ui_sync/tests.rs::build_identity_uses_selected_product_not_stale_build_info` — selected-product identity, optional install key, and absent-product failure.
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated-process cold build, warm reuse, disabled, and error boundaries; cold/warm skip without an install
+- Pinned cascette `758d8dbf` `product_db` — 8/8, zero warnings; parser selection/validation proof against the actual install.
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — 1/1 at `4eb32befa`: isolated-process cold build, warm reuse, disabled, and error boundaries; cold/warm skip without an install
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC
 - `src/render/font.rs::tests::unknown_font_falls_back_to_default` — asserts unknown path → FRIZQT family
 - `src/render/font.rs::tests::resolves_case_insensitive` — asserts WoW-path normalisation
+- `/tmp/wow-character-bug/product-db-error-dialog/{result.json,observer.json,stderr,error-dialog.png,metadata-bracket.json}` — actual Linux Zenity missing-`.product.db` dialog; inspected literal `<profile>` rendering, expected timeout cleanup, and metadata unchanged from before the default GUI through the dialog/parser checks
 
 ## Known gaps (current cycle)
 
-- [ ] Run `asset_resolver_config::tests::gui_resolution_cache_preparation`; no GREEN result is recorded yet.
-- [ ] No assertion that the warm-cache path (`out_path.exists()` short-circuit in `try_casc_resolve`) is actually faster than the cold path.
+- [ ] No assertion that the texture `out_path.exists()` short-circuit in `try_casc_resolve` is faster than a cold extract; this is distinct from verified resolution-cache warm reuse.
 - [ ] `asset_resolver::lookup_path` is not backslash-tolerant; the loader normalises but consumers calling the resolver directly hit `None` on `Fonts\\FRIZQT__.TTF`. Consider lifting normalisation into `asset-resolver` upstream.
+- [ ] The inspected error-dialog proof covers Linux Zenity only, not KDE or Windows dialogs.
 
 ## Out of scope
 

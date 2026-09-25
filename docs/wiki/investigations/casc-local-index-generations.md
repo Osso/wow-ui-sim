@@ -33,7 +33,7 @@ The four former character-panel misses are now exact 69977 CASC files in the sta
 
 ## Limits
 
-The desktop `.build.info` still lacks `wow_classic_beta`, but that row is no longer an installed-product discovery requirement. The real `.product.db`, PE metadata, and the 69977 build config agree on the requested Forever product/build; `692e36936`/`4eb32befa` use the product-db record without editing either metadata file. A new release build starts; default real-install GUI proof remains pending. The unrelated minimap mask miss remains open.
+The desktop `.build.info` still lacks `wow_classic_beta`, but that row is no longer an installed-product discovery requirement. The real `.product.db`, PE metadata, and the 69977 build config agree on the requested Forever product/build; `692e36936`/`4eb32befa` use the product-db record without editing either metadata file. The `4eb32befa` release build and actual default-install GUI passed with only isolated XDG config/data; no install, product, or resolver-cache override was set. IPC confirmed 1.60.1.69977 and ready Character/Backpack panels, while before/after hashes and mtimes prove both metadata files were unchanged. The parser's field-14 selection remains simulator policy, not a native-launcher guarantee. The unrelated minimap mask miss remains open.
 
 ## Sources
 
