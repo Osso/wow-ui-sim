@@ -9,6 +9,10 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 - [x] Return exit status 0 and `[]` for clean startup; errors caught and handled with `pcall` must not be reported as uncaught failures.
 - [x] Collect an uncaught `--exec-lua` error through the normal error sink before printing JSON, including when the configured Lua error handler is a no-op.
 
+### Attribute callback recovery
+
+- [ ] Report a failing `OnAttributeChanged` callback without corrupting its active caller, captured locals, or subsequent attribute callbacks, for both registered scripts and direct frame methods. Attribute dispatch retains its existing secure-delegate taint boundary.
+
 ### Addon load summary
 
 - [x] `Failed during loading` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
@@ -34,9 +38,12 @@ The loading summary is explicitly labeled `before startup events`; its counts co
 - `src/lua_errors.rs` — startup execution, post-startup probe error reporting, final stderr summary, JSON generation, and clean/error result.
 - `src/bin/wow_sim/main.rs` — maps the clean/error result to process status.
 - `src/bin/wow_sim/addon_loading.rs` — unique-addon failure accounting and distinct summary labels.
-- `src/lua_api/script_helpers.rs` — canonical error sink and Lua error handler invocation.
+- `src/lua_api/script_helpers.rs` — canonical error sink, protected-call recovery and Lua error handler invocation.
+- `src/lua_api/frame/methods/text_attribute_event/attributes.rs` — protected attribute callback dispatch.
 
 ## Tests asserting this spec
+
+- `tests/protected_attribute_enforcement.rs` — failing registered/direct attribute callbacks preserve caller values and later callbacks while recording the original error.
 
 - `tests/lua_error_cli.rs` — four bounded process invocations using the Cargo-built simulator: combined addon failures, clean addon with handled exceptions, uncaught exec failure, and loading-success followed by event/startup-update/exec-update errors. Final-summary assertions cover clean/error status, counts, explicit owners, and unattributed errors. The deferred fixture installs its own no-op error handler to isolate canonical failures from secondary Blizzard error-UI messages. Temporary first-priority fixtures disable merged external addon names without changing installed addons; existing load markers remain intact.
 

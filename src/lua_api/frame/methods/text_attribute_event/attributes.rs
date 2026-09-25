@@ -181,25 +181,19 @@ pub(super) fn dispatch_attribute_changed(
     ) else {
         return;
     };
-    let call_base = state.top;
-    state.ensure_stack(call_base + 5);
-    state.stack_set(call_base, Val::Function(dispatcher.gc_ref()));
-    state.stack_set(call_base + 1, handler);
-    state.stack_set(call_base + 2, frame);
-    state.stack_set(call_base + 3, name);
-    state.stack_set(call_base + 4, value);
-    state.top = call_base + 5;
-
     let saved_taints = secure_dispatch.then(|| clear_active_stack_taint(state));
-    let call_result = state.call_function(call_base, 0);
+    let call_result = protected_lua_pcall_state(
+        state,
+        Val::Function(dispatcher.gc_ref()),
+        &[handler, frame, name, value],
+    );
     if let Some(saved_taints) = saved_taints {
         restore_active_stack_taint(state, saved_taints);
     }
 
     if let Err(error) = call_result {
-        call_error_handler_state(state, &error.to_string());
+        call_error_handler_state(state, &error);
     }
-    state.top = call_base;
 }
 
 fn dispatch_direct_attribute_changed(state: &mut LuaState, frame: Val, name: Val, value: Val) {
@@ -222,17 +216,13 @@ fn dispatch_direct_attribute_changed(state: &mut LuaState, frame: Val, name: Val
     ) else {
         return;
     };
-    let call_base = state.top;
-    state.ensure_stack(call_base + 4);
-    state.stack_set(call_base, Val::Function(dispatcher.gc_ref()));
-    state.stack_set(call_base + 1, frame);
-    state.stack_set(call_base + 2, name);
-    state.stack_set(call_base + 3, value);
-    state.top = call_base + 4;
-    if let Err(error) = state.call_function(call_base, 0) {
-        call_error_handler_state(state, &error.to_string());
+    if let Err(error) = protected_lua_pcall_state(
+        state,
+        Val::Function(dispatcher.gc_ref()),
+        &[frame, name, value],
+    ) {
+        call_error_handler_state(state, &error);
     }
-    state.top = call_base;
 }
 
 pub(super) fn set_attribute_no_handler(state: &mut LuaState) -> LuaResult<u32> {
