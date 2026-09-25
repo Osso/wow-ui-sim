@@ -506,6 +506,97 @@ fn secure_handler_execute_persists_restricted_tables_for_show_handlers(env: &Wow
 }
 
 prefork_full_ui_case! {
+fn tainted_addon_secure_handler_execute_runs_restricted_snippet_without_clearing_caller(env: &WowLuaEnv) {
+    let (protected, caller_insecure_before, snippet_ran, caller_insecure_after): (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local header = CreateFrame("Frame", nil, UIParent, "SecureHandlerBaseTemplate")
+            local function addon()
+                local before = not issecure()
+                SecureHandlerExecute(header, [[ self:SetAttribute("addon-executed", true) ]])
+                return before, header:GetAttribute("addon-executed") == true, not issecure()
+            end
+            debug.setobjecttaint(addon, "RestrictedAddonProbe")
+            local before, ran, after = addon()
+            return header:IsProtected(), before, ran, after
+            "#,
+        )
+        .expect("tainted addon SecureHandlerExecute probe should evaluate");
+
+    assert!(protected, "vendor SecureHandlerBaseTemplate must protect the header");
+    assert!(caller_insecure_before, "addon caller must enter tainted");
+    assert!(snippet_ran, "vendor restricted snippet must set the header attribute");
+    assert!(caller_insecure_after, "secure dispatch must not clear addon caller taint");
+}
+}
+
+prefork_full_ui_case! {
+fn tainted_addon_secure_handler_wrap_script_runs_restricted_prebody(env: &WowLuaEnv) {
+    let (caller_insecure_before, wrapped, prebody_ran, caller_insecure_after): (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local header = CreateFrame("Frame", nil, UIParent, "SecureHandlerBaseTemplate")
+            local button = CreateFrame("Button", nil, UIParent)
+            button:SetScript("OnClick", function() end)
+            local original = button:GetScript("OnClick")
+            local function addon()
+                local before = not issecure()
+                SecureHandlerWrapScript(button, "OnClick", header,
+                    [[ self:SetAttribute("addon-wrapped", true) ]])
+                local wrapped = button:GetScript("OnClick") ~= original
+                button:GetScript("OnClick")(button, "LeftButton", false)
+                return before, wrapped, header:GetAttribute("addon-wrapped") == true, not issecure()
+            end
+            debug.setobjecttaint(addon, "RestrictedAddonProbe")
+            return addon()
+            "#,
+        )
+        .expect("tainted addon SecureHandlerWrapScript probe should evaluate");
+
+    assert!(caller_insecure_before, "addon caller must enter tainted");
+    assert!(wrapped, "vendor must install the secure OnClick wrapper");
+    assert!(prebody_ran, "wrapped click must execute its restricted prebody");
+    assert!(caller_insecure_after, "wrapper dispatch must not clear addon caller taint");
+}
+}
+
+prefork_full_ui_case! {
+fn tainted_replacement_attribute_handler_stays_insecure_in_combat(env: &WowLuaEnv) {
+    let (handler_ran, handler_insecure, protected_write_blocked, caller_insecure): (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local delegate = CreateFrame("Frame")
+            delegate:SetForbidden()
+            local target = CreateFrame("Frame", nil, UIParent, "SecureFrameTemplate")
+            local ran, insecure = false, false
+            local function replacement()
+                ran, insecure = true, not issecure()
+                target:SetAttribute("addon-combat-write", true)
+            end
+            debug.setobjecttaint(replacement, "RestrictedAddonProbe")
+            delegate:SetScript("OnAttributeChanged", replacement)
+            local function addon()
+                A_Admin.SetInCombat(true)
+                delegate:SetAttribute("addon-trigger", true)
+                local still_insecure = not issecure()
+                A_Admin.SetInCombat(false)
+                return still_insecure
+            end
+            debug.setobjecttaint(addon, "RestrictedAddonProbe")
+            local still_insecure = addon()
+            return ran, insecure, target:GetAttribute("addon-combat-write") == nil, still_insecure
+            "#,
+        )
+        .expect("tainted replacement handler combat probe should evaluate");
+
+    assert!(handler_ran, "replacement must run on forbidden delegate dispatch");
+    assert!(handler_insecure, "addon-tainted replacement must not be promoted to secure");
+    assert!(protected_write_blocked, "tainted handler must not write protected attributes in combat");
+    assert!(caller_insecure, "delegate dispatch must preserve addon caller taint");
+}
+}
+
+prefork_full_ui_case! {
 fn secure_handlers_publish_full_global_surface(env: &WowLuaEnv) {
     for fname in SECURE_HANDLER_GLOBALS {
         let kind: String = env
