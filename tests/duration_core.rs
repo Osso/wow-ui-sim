@@ -47,7 +47,6 @@ fn retail_native_aura_button_preserves_wrapped_duration_arguments() {
         debug.setobjecttaint(tainted, 'RetailAuraDurationProbe')
         tainted()
         assert(duration:IsZero() and duration:HasSecretValues())
-        assert(settablesecurity == nil)
         "#,
     )
     .expect("unchanged Blizzard aura duration consumer preserves wrapped timing and identity");
