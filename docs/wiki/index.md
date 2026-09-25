@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Record `OnLoad` creation-origin RED boundary
+
+[[patch-12-1-5-api-audit]] records `63fe3183a`: runtime `OnLoad` clears constructor-stack taint only for protected dispatch, retains declared handler taint, and restores the constructor on success or failure. Two committed deferred-callback tests cover trusted XML under an addon constructor and addon XML under a clean constructor. Latest `/tmp/retail-regression/phase-provenance.stdout` reports clean AuraContainer `#61195`/`#76243` script, proxied/private `Update`, and `OnUpdate`, but six `dirtyPhase` closures remain DandersFrames/BetterBlizzFrames-tainted. Its 22-occurrence `OnUpdate` error is RED provenance only; no build, replay, reduction, or GREEN claim.
+
 ## [2026-09-25] audit | Preserve private projection method-origin RED boundary
 
 [[target-aura-private-count]] records `eafd75a76`: AuraContainer `#61195`/`#76243` show clean generated script and private `OnUpdate`, an addon-tainted private `Update` wrapper at `@shared-bootstrap:150`, and a clean underlying Blizzard method. The pre-fix origin probe reports `trustedread=false`, `capturedread=false`, and `addonread=false`. Proxy-metatable and bound-method adapter creation now use the native secure-call factory only; invocation preserves caller and original method taint. `/tmp/retail-regression/wrapper-after.*` remains the pre-fix 1-unique/22-occurrence baseline. No rebuilt startup, reduction, or GREEN claim.
