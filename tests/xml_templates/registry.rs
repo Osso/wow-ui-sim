@@ -405,6 +405,52 @@ fn trusted_template_scripts_keep_their_origin_when_addon_constructs_frame() {
 }
 
 #[test]
+fn trusted_onload_creates_clean_callbacks_from_an_addon_constructor() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    register_first_template(
+        r#"<Ui><Frame name="TrustedOnLoadOrigin" virtual="true">
+            <Scripts><OnLoad>self.readTrust = function() return issecure() end</OnLoad></Scripts>
+        </Frame></Ui>"#,
+        "TrustedOnLoadOrigin",
+        "Frame",
+    );
+    env.exec(
+        r#"
+        local function addon()
+            local frame = CreateFrame('Frame', nil, UIParent, 'TrustedOnLoadOrigin')
+            assert(not issecure(), 'OnLoad changed constructor taint')
+            return frame.readTrust
+        end
+        debug.setobjecttaint(addon, 'OnLoadConstructorAddon')
+        local readTrust = addon()
+        assert(securecallfunction(readTrust), 'trusted OnLoad tainted its deferred callback')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn addon_onload_retains_its_origin_for_deferred_callbacks() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let dir = create_test_addon(
+        r#"<Ui><Frame name="AddonOnLoadOrigin" virtual="true">
+            <Scripts><OnLoad>self.readTrust = function() return issecure() end</OnLoad></Scripts>
+        </Frame></Ui>"#,
+        "OnLoadOriginAddon",
+    );
+    load_addon(&env.loader_env(), &dir.path().join("OnLoadOriginAddon.toc")).unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'AddonOnLoadOrigin')
+        assert(not securecallfunction(frame.readTrust), 'addon OnLoad callback became trusted')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn blizzard_template_without_allowload_uses_the_loader_trust_policy() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
