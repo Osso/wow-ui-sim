@@ -109,18 +109,7 @@ fn load_atlas_data(
 // Atlas canvas 1 can hold member canvas 2 artwork; only unpaired 2x members
 // need logical alias dimensions when their override dimensions are absent.
 fn add_element_names(data: &mut AtlasData) {
-    let default_1x_elements: std::collections::HashSet<_> = data
-        .members
-        .iter()
-        .filter(|member| {
-            member.canvas_id != 2
-                && data
-                    .atlases
-                    .get(&member.atlas_id)
-                    .is_some_and(|atlas| atlas.set_id == 1 && atlas.canvas_id == 1)
-        })
-        .map(|member| member.element_id)
-        .collect();
+    let default_1x_elements = collect_default_1x_elements(data);
     let aliases: Vec<_> = data
         .members
         .iter()
@@ -149,6 +138,20 @@ fn add_element_names(data: &mut AtlasData) {
         })
         .collect();
     data.members.extend(aliases);
+}
+
+fn collect_default_1x_elements(data: &AtlasData) -> std::collections::HashSet<u32> {
+    data.members
+        .iter()
+        .filter(|member| {
+            member.canvas_id != 2
+                && data
+                    .atlases
+                    .get(&member.atlas_id)
+                    .is_some_and(|atlas| atlas.set_id == 1 && atlas.canvas_id == 1)
+        })
+        .map(|member| member.element_id)
+        .collect()
 }
 
 fn slice_data_path(wow_data: &Path) -> std::path::PathBuf {
