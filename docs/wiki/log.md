@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Bound ATT unit hyperlink tooltip payload
+
+[[att-unit-hyperlink-tooltip]] records the `GetHyperlink` empty-Item fallback behind ATT `NPC.lua:58`. Pre-fix existing-binary diagnostic returned Item type `0` with zero lines for an unknown creature GUID. `dc6672dc2` resolves known modeled unit GUIDs to Unit lines and returns nil for missing/unsupported links; grouped behavior cases are committed but cannot be run while another owner holds Cargo. No rebuilt binary, GREEN or GUI-hover claim.
+
 ## [2026-09-25] audit | Record retail secret-origin geometry RED boundary
 
 Updated [[patch-12-1-5-api-audit]], index, and this log for `8815f22ce`; no source, spec, build, or test ran in this audit. Existing authenticated secret-input decoding now uses shared `forbidden-aspects` for retail 12.1, PTR, and Forever; wrapper authentication and tainted-read guards remain unchanged. `/tmp/retail-regression/last-aura-trace.stdout` is final pre-fix RED: `Blizzard_CustomAuraContainer.lua:676` `ApplyElementLayout` reaches `SetPoint` with wrapped argument 2 as userdata. Geometry/texture test gates share the capability. `/tmp/retail-regression/onload-after.*` predates the gate fix at 1 unique/1 occurrence. Rebuilt retail replay and independent GREEN remain pending; no reduction claimed.
