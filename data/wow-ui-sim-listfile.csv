@@ -30658,6 +30658,7 @@
 3281887;interface/common/commonsearch.blp
 7523984;interface/common/commonsearchbar.blp
 7524021;interface/common/commonsearchbar2x.blp
+8254784;Interface/common/commonsidetabmaskc60.blp
 5882640;interface/common/currencywindow.blp
 651725;interface/common/dark-goldframe-button-pressed.blp
 651726;interface/common/dark-goldframe-button.blp
@@ -30741,6 +30742,7 @@
 969828;interface/containerframe/bags.blp
 4731887;interface/containerframe/bagsitembankslot2x.blp
 4701874;interface/containerframe/bagsitemslot2x.blp
+8187737;Interface/containerframe/bagsitemslot2xc60.blp
 4691252;interface/containerframe/bagslots.blp
 4691255;interface/containerframe/bagslots2x.blp
 4700787;interface/containerframe/bagspennybag2x.blp
@@ -33389,6 +33391,7 @@
 2406981;interface/framegeneral/uiframemertal2xvertical.blp
 2325363;interface/framegeneral/uiframemetal.blp
 2406979;interface/framegeneral/uiframemetal2x.blp
+8069116;Interface/framegeneral/uiframemetal2xc60.blp
 2406976;interface/framegeneral/uiframemetalhorizontal.blp
 2406987;interface/framegeneral/uiframemetalhorizontal2x.blp
 2325366;interface/framegeneral/uiframemetalvertical.blp

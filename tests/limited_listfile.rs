@@ -33,6 +33,37 @@ fn bundled_limited_listfile_resolves_forever_character_tab_icons() {
 }
 
 #[test]
+fn bundled_limited_listfile_resolves_forever_panel_textures_to_canonical_paths() {
+    for (requested_path, fdid, canonical_path) in [
+        (
+            "Interface/common/commonsidetabmaskc60",
+            8254784,
+            "Interface/common/commonsidetabmaskc60.blp",
+        ),
+        (
+            "Interface/containerframe/bagsitemslot2xc60",
+            8187737,
+            "Interface/containerframe/bagsitemslot2xc60.blp",
+        ),
+        (
+            "Interface/framegeneral/uiframemetal2xc60",
+            8069116,
+            "Interface/framegeneral/uiframemetal2xc60.blp",
+        ),
+    ] {
+        assert_eq!(
+            wow_ui_sim::limited_listfile::lookup_texture_path(requested_path),
+            Some(fdid),
+            "{requested_path}"
+        );
+        let entry = wow_ui_sim::limited_listfile::lookup_entry(canonical_path)
+            .unwrap_or_else(|| panic!("missing {canonical_path}"));
+        assert_eq!(entry.fdid, fdid);
+        assert_eq!(entry.path, canonical_path);
+    }
+}
+
+#[test]
 fn bundled_limited_listfile_preserves_canonical_override_path_casing() {
     let expected_entries = [
         ("fonts/frizqt__.ttf", 615960, "Fonts/FRIZQT__.TTF"),
