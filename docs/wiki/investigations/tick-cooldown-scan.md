@@ -41,6 +41,15 @@ Tests (`src/iced_app/app_tests.rs`): active/slow/fast mod-rate tick intervals, h
 
 Fixed in asset-resolver `3088dee` (pinned by `c3e373f9c`): the cache file is `community-listfile-<fnv1a(canonical source path)>.sqlite`, and sources are canonicalized so symlinks share their target's cache. Verified: first headless run built the new cache (30.6s), second reused it (11.9s, file untouched). The legacy `community-listfile.sqlite` stays in use by game-engine builds that predate the fix.
 
+### Idle texture warmup rescans (follow-up)
+
+After the cooldown fix, ~8% of settled main-thread self time was `preload_visible_textures_for_tick`: every idle tick cloned every cached texture-request path into a `HashSet<String>`, sorted them, and probed each against the texture cache, even when all were loaded. Two emptiness checks (`remaining_texture_work_after_warmup`, `preload_pending_render_requests_for_tick`) cloned the same full path set just to test `is_empty()`.
+
+- `7535af12e`: skip the warmup until cached strata change. Strata rebuild on ~87–97% of settled ticks (no-addons dirty set: `TabardModel`, `QueueStatusFrame`, `QueueStatusButton`, `MicroMenu`, `FramerateFrame`, a few anonymous textures), so this cut preload p50 but not the tail.
+- `946d8255b`: `texture_warmup_unsettled_strata` bitmask — warmup collects paths only from strata rebuilt/reset since the last settle; emptiness checks use `has_cached_render_requests()`. CPU texture caches never evict, so skipped strata stay verified. Retries and resizes unsettle all strata.
+
+Result: `HashSet<String>::insert` 4.3% → 0.13% self time; preload p90 1.51ms → 0.62ms. Tests in `src/iced_app/render/pending_texture_tests.rs` (full and partial-stratum rebuild) fail under mutation of either invalidation site. `on_update` rose between measurements across 29 unrelated commits; unattributed.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
