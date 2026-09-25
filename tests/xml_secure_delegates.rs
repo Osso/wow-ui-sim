@@ -17,8 +17,8 @@ fn secure_xml_delegate_preserves_callback_and_caller_taint() {
             assert(issecure(), 'native delegate must enter without caller taint')
             assert(self == private and argument == privateChild)
             assert(trailing == nil)
-            local map = {}
-            settablesecurity(map, Enum.TableSecurityOption.DisallowSecretKeys)
+            local wrapped = secretwrap(17)
+            assert(issecretvalue(wrapped), 'native delegate must retain secret wrapping authority')
             securecallfunction(callback)
             assert(issecure(), 'callback taint must not leak into native delegate')
             return 'native-result', nil, 17
@@ -38,8 +38,8 @@ fn secure_xml_delegate_preserves_callback_and_caller_taint() {
             assert(observedCallback)
             assert(not issecure() and debug.getstacktaint() == 'DelegateProbe',
                 'native delegate must restore caller taint')
-            local allowed = pcall(settablesecurity, {}, Enum.TableSecurityOption.DisallowSecretKeys)
-            assert(not allowed, 'direct tainted table security must still reject')
+            local allowed = pcall(secretwrap, 17)
+            assert(not allowed, 'direct tainted secret wrapping must still reject')
             local ordinary = pcall(frame.Ordinary, frame, child, callback, nil)
             assert(not ordinary, 'receiver-only delegate must not gain a secure boundary')
         end

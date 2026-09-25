@@ -431,7 +431,10 @@ fn test_frame_identity_slots_dispatch_surrogate_methods() {
         )
         .unwrap();
 
-    assert!(has_identity, "frame[0] should expose a dispatch identity token");
+    assert!(
+        has_identity,
+        "frame[0] should expose a dispatch identity token"
+    );
     assert_eq!(zero_name, "IdentitySlotFrame");
     assert!(zero_protected);
     assert!(!legacy_success, "[1]-only surrogates should not dispatch");
@@ -458,7 +461,10 @@ fn test_frame_identity_slot_can_redirect_method_receiver() {
 
     assert!(!a_before);
     assert!(b_protected);
-    assert!(redirected, "methods should dispatch through the frame[0] token");
+    assert!(
+        redirected,
+        "methods should dispatch through the frame[0] token"
+    );
 }
 
 #[test]
@@ -646,11 +652,12 @@ fn test_securecall_clears_taint_for_nested_closures() {
             r#"
             local secureInside
             local nestedSecret
-            debug.setstacktaint("TestAddon")
-            securecall(function()
+            local function trustedTarget()
                 secureInside = issecure()
                 nestedSecret = issecretvalue(function() end)
-            end)
+            end
+            debug.setstacktaint("TestAddon")
+            securecall(trustedTarget)
             debug.setstacktaint(nil)
             return secureInside, nestedSecret
             "#,
