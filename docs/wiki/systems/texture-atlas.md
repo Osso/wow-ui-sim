@@ -67,9 +67,11 @@ result_left = atlas_left + user_left * (atlas_right - atlas_left)
 
 `SetAtlas("")` is a clear operation. This matters because ElvUI's `StripTextures()` calls `SetTexture(E.ClearTexture)` followed by `SetAtlas("")`; the generated atlas database contains an accidental empty-name entry pointing at a casting-bar flipbook, but the Lua API must treat the empty atlas name as clearing texture/atlas state rather than resolving that entry.
 
-**Button texture propagation**: child textures with standard parentKeys (NormalTexture, PushedTexture, etc.) sync atlas info to the parent button's state fields. Custom parentKeys render independently.
+**Button texture propagation and visibility**: only children of `Button` or `CheckButton` with recognized state-slot keys (`NormalTexture`, `PushedTexture`, `HighlightTexture`, `DisabledTexture`, `CheckedTexture`, `DisabledCheckedTexture`) synchronize atlas and visibility with the parent button state. Custom keys and children of other widget types retain their own visibility and render independently. This prevents atlas assignment from exposing explicitly XML-hidden animation textures.
 
-When a standard button texture child is cleared with `SetAtlas("")`, the corresponding parent button slot is cleared too. Without that propagation, stripped Normal/Pushed/Highlight children can leave stale parent button texture fields behind for the render path.
+When a recognized button texture child is cleared with `SetAtlas("")`, the corresponding parent button slot is cleared too. Without that propagation, stripped Normal/Pushed/Highlight children can leave stale parent button texture fields behind for the render path.
+
+The cached vendor `GradualAnimatedStatusBar` template provides the bounded regression case: its gain-flare and level-up textures begin XML-hidden, `SetAnimationTextures()` assigns their atlases without showing them, and the animation lifecycle owns their temporary visibility. Targeted simulator tests pass; GUI XP/reputation startup proof and final checks remain pending. This is not native-client conformance evidence.
 
 ## Deferred Texture Loading
 
@@ -80,9 +82,11 @@ The live renderer keeps its GPU atlas in the pipeline across frames. For related
 ## Sources
 
 - [texture-atlas-system.md](../../texture-atlas-system.md) — TextureManager, AtlasInfo, nine-slice kits, tex coord remapping, StatusBar fill
-- [atlas.rs](../../../src/lua_api/frame/methods/widgets/texture/atlas.rs) — `SetAtlas("")` clear semantics and button slot propagation
+- [atlas.rs](../../../src/lua_api/frame/methods/widgets/texture/atlas.rs) — `SetAtlas("")` clear semantics and recognized Button/CheckButton slot propagation
+- [texture atlas visibility](../../specs/texture-atlas-visibility.md) — behavior contract and targeted proof
 
 ## See Also
 
 - [[rendering-pipeline]] — GPU atlas tiers, QuadBatch, nine-slice and tiling rendering
 - [[widget-system]] — Frame fields: texture, atlas, tex_coords, nine_slice_atlas
+- [Texture atlas visibility](../../specs/texture-atlas-visibility.md) — XML-hidden animation-texture regression

@@ -16,17 +16,22 @@ Changing a texture's atlas must preserve its XML visibility except for standard 
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/widgets/texture/atlas.rs`: applies atlas and updates recognized button slots.
+- `src/lua_api/frame/methods/widgets/texture/atlas.rs`: only `Button`/`CheckButton` children with recognized state-slot keys (`NormalTexture`, `PushedTexture`, `HighlightTexture`, `DisabledTexture`, `CheckedTexture`, `DisabledCheckedTexture`) synchronize atlas and visibility with their parent. Other children retain their own visibility.
 
 ## Tests asserting this spec
 
-- `tests/xml_animation_group_onload.rs`: actual Forever template, animation lifecycle, and custom button key.
+- `tests/xml_animation_group_onload.rs`: copied vendor `GradualAnimatedStatusBar` template starts with its XML-hidden gain-flare and level-up textures hidden; `SetAnimationTextures()` keeps them hidden; play/tick completion shows then hides each target. It also covers an XML-hidden custom Button child.
 - `tests/frame_creation_checkbutton.rs`: standard CheckButton NormalTexture atlas propagation.
+
+## Evidence
+
+`/tmp/wow-xml-atlas-green.log` records all six targeted `xml_animation_group_onload` tests passing for `83a43ca61`, including the actual-template lifecycle and custom-key regression. This is simulator and cached-vendor-source evidence; it does not establish native client behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] Confirm the full XP/reputation bar startup visuals after this fix.
+- [ ] Confirm full XP/reputation bar startup visuals in the GUI.
+- [ ] Run final checks after the GUI result.
 
 ## Out of scope
 
-Animation timing changes, Blizzard Lua changes, and pixel-level rendering.
+Animation timing changes, Blizzard Lua changes, pixel-level rendering, and native-client conformance.
