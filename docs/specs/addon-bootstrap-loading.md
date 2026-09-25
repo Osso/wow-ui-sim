@@ -4,7 +4,7 @@ Retail 12.1 and cumulative PTR startup execute annotated files from eligible Loa
 
 ## What it must do
 
-- [ ] Visit eligible retail 12.1 and PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility; the retail gate extension awaits GREEN verification.
+- [ ] Visit eligible retail 12.1, PTR, and Forever bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility; the retail gate extension awaits GREEN verification. A bootstrap-only owner's hard dependencies remain LoD unless an eager full root independently requires them; explicit full loading of the owner loads its dependencies before remaining owner files. This is the simulator bootstrap-only contract, not native-verified dependency behavior.
 - [x] Keep eager addon files in literal TOC order, including normal files before and after `[Bootstrap]` entries.
 - [ ] Strip every trailing inline annotation from file paths across spaces, tabs, and mixed whitespace, regardless of annotation order. Preserve `[Game]`/`[Family]` path substitutions, game-type inclusion/exclusion, and per-file environment flags. Before `ac9ce1897`, the Forever native `TargetFrameAuraContainer.lua\t\t[AllowLoadGameType mainline] [LoadIntoEnvironment secure]` line retained its first tab-separated annotation in the path and failed as `ENOENT`; parser/loader GREEN remains pending.
 - [x] Execute only annotated files during a LoD bootstrap operation. Expose `IsAddOnLoaded` as `true,false` during execution and `false,false` afterward.
@@ -27,7 +27,7 @@ Retail 12.1 and cumulative PTR startup execute annotated files from eligible Loa
 - `src/toc/tests.rs` — native TargetFrame multiannotation lines, reordered annotation combinations, unchanged file order/environment flags, and game-type exclusions.
 - `tests/secureenv_isolation.rs::toc_multiannotations_load_files_in_order_with_secure_environment` — actual annotated file loading, ordered execution, and secure/public environment isolation.
 
-- `tests/load_order.rs` — bootstrap lifecycle through runtime `C_AddOns.LoadAddOn`, eager TOC ordering, and exact per-profile discovery snapshots. Retail's 219-addon order excludes the Classic-only `Blizzard_FrameXML` dependencies on UnitPopup and MirrorTimer; their transitive prerequisites consequently move later. PTR's 211-addon fixture is pinned separately.
+- `tests/load_order.rs` — bootstrap lifecycle through runtime `C_AddOns.LoadAddOn`, eager TOC ordering, concrete bootstrap-owner LoD dependency deferral and eager-root hard dependency control, and exact per-profile discovery snapshots. Retail's 219-addon order excludes the Classic-only `Blizzard_FrameXML` dependencies on UnitPopup and MirrorTimer; their transitive prerequisites consequently move later. PTR's 211-addon fixture is pinned separately.
 - Startup loader binary tests — actual scan/load boundary, ordering, and disabled-addon filtering under retail 12.1 and PTR.
 - `tests/micro_menu.rs::micro_menu_ej_button_loads_and_opens_panel` — process-level startup and actual Encounter Journal OnClick twice, with no injected bootstrap helper, completed LoD state, open/close assertions, and empty Lua-error JSON.
 

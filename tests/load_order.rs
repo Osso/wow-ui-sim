@@ -466,6 +466,92 @@ fn test_paperdoll_onload_exists_for_bag_buttons() {
     }
 }
 
+/// Bootstrap-only discovery must not fully load a dependency until its owner is explicitly loaded.
+#[test]
+fn bootstrap_owner_dependency_waits_for_full_load() {
+    use wow_ui_sim::loader::{
+        StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    };
+    use wow_ui_sim::screen::ScreenKind;
+
+    let root = tempfile::tempdir().unwrap();
+    let write_addon = |name: &str, metadata: &str, files: &[(&str, &str)]| {
+        let dir = root.path().join(name);
+        std::fs::create_dir(&dir).unwrap();
+        let mut toc = format!("## Title: {name}\n{metadata}");
+        for (file, contents) in files {
+            toc.push_str(file);
+            toc.push('\n');
+            std::fs::write(dir.join(file.split(' ').next().unwrap()), contents).unwrap();
+        }
+        std::fs::write(dir.join(format!("{name}.toc")), toc).unwrap();
+    };
+    write_addon(
+        "Blizzard_A_Eager",
+        "## Dependencies: Blizzard_Z_EagerDep\n",
+        &[("Eager.lua", "table.insert(startupEvents, 'eager')")],
+    );
+    write_addon(
+        "Blizzard_Z_EagerDep",
+        "## LoadOnDemand: 1\n",
+        &[("Dep.lua", "table.insert(startupEvents, 'eager-dep')")],
+    );
+    write_addon(
+        "Blizzard_B_BootstrapOwner",
+        "## LoadOnDemand: 1\n## Dependencies: Blizzard_C_VisualDep\n",
+        &[
+            (
+                "Bootstrap.lua [Bootstrap]",
+                "bootstrapCount = bootstrapCount + 1; function BootstrapExport() return 42 end",
+            ),
+            ("Owner.lua", "table.insert(startupEvents, 'owner')"),
+        ],
+    );
+    write_addon(
+        "Blizzard_C_VisualDep",
+        "## LoadOnDemand: 1\n",
+        &[(
+            "Visual.lua",
+            "CharCustomizeFrame = CreateFrame('Frame', 'CharCustomizeFrame', UIParent); table.insert(startupEvents, 'visual-dep')",
+        )],
+    );
+
+    let env = WowLuaEnv::new().expect("create fixture environment");
+    env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+    env.exec("startupEvents = {}; bootstrapCount = 0").unwrap();
+    for addon in discover_blizzard_startup_addons_for_screen(root.path(), ScreenKind::Game) {
+        let result = load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .expect("load discovered startup addon");
+        assert!(
+            result.warnings.is_empty(),
+            "{}: {:?}",
+            addon.name,
+            result.warnings
+        );
+        if addon.name == "Blizzard_B_BootstrapOwner" {
+            assert_eq!(addon.kind, StartupAddonLoadKind::BootstrapOnly);
+        }
+    }
+    env.exec(
+        r#"
+        assert(BootstrapExport() == 42 and bootstrapCount == 1)
+        assert(CharCustomizeFrame == nil, 'bootstrap dependency created a visible frame at startup')
+        assert(table.concat(startupEvents, ',') == 'eager-dep,eager')
+        "#,
+    )
+    .expect("only eager hard dependencies execute at startup");
+    env.exec("assert(C_AddOns.LoadAddOn('Blizzard_B_BootstrapOwner'))")
+        .expect("full owner load");
+    env.exec(
+        r#"
+        assert(CharCustomizeFrame and CharCustomizeFrame:IsShown())
+        assert(table.concat(startupEvents, ',') == 'eager-dep,eager,visual-dep,owner')
+        assert(bootstrapCount == 1, 'bootstrap must run exactly once')
+        "#,
+    )
+    .expect("dependency loads before owner only on explicit full load");
+}
+
 /// PTR 69594: bootstrap publication is not full addon completion, and later
 /// explicit loading skips the already executed bootstrap file.
 #[test]

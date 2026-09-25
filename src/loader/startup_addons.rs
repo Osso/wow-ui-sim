@@ -33,7 +33,6 @@ pub fn discover_blizzard_startup_addons_for_screen(
     let dependencies = implicit_blizzard_startup_dependencies();
     pull_required_dependency_addons(&mut addons, &mut pool, &dependencies);
     let bootstrap_names = insert_bootstrap_nodes(&mut addons, &mut pool, screen);
-    pull_required_dependency_addons(&mut addons, &mut pool, &dependencies);
     promote_foundational_addons_to_load_first(&mut addons);
     topological_sort_addons_with_extra_dependencies(addons, &dependencies)
         .into_iter()
