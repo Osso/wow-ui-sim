@@ -563,17 +563,25 @@ impl TocFile {
     /// rely on the signed `Blizzard_` folder-name convention that also drives
     /// `C_AddOns.GetAddOnSecurity`.
     pub fn loads_as_blizzard_code(&self) -> bool {
-        self.is_blizzard_addon() || self.is_secure_env() || self.folder_name_starts_with_blizzard()
-    }
-
-    fn folder_name_starts_with_blizzard(&self) -> bool {
-        self.folder_name()
-            .is_some_and(|name| name.starts_with("Blizzard_"))
+        addon_loads_as_blizzard_code(
+            self.folder_name(),
+            self.is_blizzard_addon(),
+            self.is_secure_env(),
+        )
     }
 
     fn folder_name(&self) -> Option<&str> {
         self.addon_dir.file_name().and_then(|name| name.to_str())
     }
+}
+
+/// Shared loader policy for source declarations and compiled addon chunks.
+pub(crate) fn addon_loads_as_blizzard_code(
+    folder_name: Option<&str>,
+    allow_load: bool,
+    use_secure_env: bool,
+) -> bool {
+    allow_load || use_secure_env || folder_name.is_some_and(|name| name.starts_with("Blizzard_"))
 }
 
 #[cfg(test)]

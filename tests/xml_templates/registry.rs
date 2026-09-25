@@ -405,6 +405,40 @@ fn trusted_template_scripts_keep_their_origin_when_addon_constructs_frame() {
 }
 
 #[test]
+fn blizzard_template_without_allowload_uses_the_loader_trust_policy() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let root = tempfile::tempdir().unwrap();
+    let addon = root.path().join("Blizzard_TemplateOriginProbe");
+    std::fs::create_dir(&addon).unwrap();
+    let toc = addon.join("Blizzard_TemplateOriginProbe.toc");
+    std::fs::write(&toc, "## Interface: 120100\nOrigin.xml\n").unwrap();
+    std::fs::write(
+        addon.join("Origin.xml"),
+        r#"<Ui>
+        <Frame name="InternalOriginTemplate" virtual="true" protected="true" hidden="true">
+            <Scripts><OnShow>self.wasSecure = issecure()</OnShow></Scripts>
+        </Frame>
+    </Ui>"#,
+    )
+    .unwrap();
+    load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec(
+        r#"
+        local function addonCaller()
+            local frame = CreateFrame('Frame', nil, UIParent, 'InternalOriginTemplate')
+            frame:Show()
+            assert(frame.wasSecure == true, 'template disagreed with its loader source origin')
+            assert(not issecure(), 'source origin replaced constructor taint')
+        end
+        debug.setobjecttaint(addonCaller, 'ExternalTemplateConsumer')
+        addonCaller()
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn addon_template_scripts_stay_tainted_when_clean_code_constructs_frame() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();

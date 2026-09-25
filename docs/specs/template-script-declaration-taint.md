@@ -8,6 +8,7 @@ Generated XML template scripts retain the declaration's security origin when a d
 - [ ] Addon XML method-only and fallback handlers remain tainted when clean code creates the frame.
 - [ ] A tainted addon method override remains tainted under a trusted XML handler.
 - [ ] Applying XML template scripts restores the constructor's caller taint.
+- [ ] Declaration origin uses the same existing loader classification as compiled addon chunks, including internal Blizzard folder names without AllowLoad metadata.
 
 ## How it works
 
@@ -16,6 +17,7 @@ Generated XML template scripts retain the declaration's security origin when a d
 
 ## Implementation inventory
 
+- `src/toc/mod.rs` — shared existing addon-code classification policy.
 - `src/loader/xml_frame/preparation.rs` — records XML declaration origin when registering a template.
 - `src/xml/template.rs` — stores the origin alongside a registered template.
 - `src/lua_api/globals/create_frame/template_chain.rs` — scopes generated script installation to that origin.
@@ -30,4 +32,4 @@ Generated XML template scripts retain the declaration's security origin when a d
 
 ## Out of scope
 
-HookScript factories, other callback boundaries, vendor Lua, and filename-based source classification.
+HookScript factories, other callback boundaries, vendor Lua, and changes to the loader's existing trust policy.

@@ -112,7 +112,11 @@ fn current_loading_template_taint(env: &LoaderEnv<'_>) -> Option<String> {
     let addon = state
         .loading_addon_index
         .and_then(|index| state.addons.get(index as usize))?;
-    if addon.metadata.contains_key("AllowLoad") || addon.use_secure_env {
+    if crate::toc::addon_loads_as_blizzard_code(
+        Some(&addon.folder_name),
+        addon.metadata.contains_key("AllowLoad"),
+        addon.use_secure_env,
+    ) {
         None
     } else {
         Some(addon.folder_name.clone())
