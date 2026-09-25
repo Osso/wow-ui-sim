@@ -25,13 +25,13 @@
 - Commit `c00f44d0e`: profile queries, replacement, copied results, effective-button mapping, and reset: 2/2; unchanged Blizzard `SecureUnitButton_OnClick` targets `player` and `party1`: 1/1.
 - Commit `dfcacefbe` replaces the handpicked fixture startup list with production Blizzard Game-screen discovery/loading. Independent inspection of `/tmp/wow-unit-frame-bug/click-production-fixture.log` records `blizzard_full_ui_click_chain_targets_and_casts` PASS 1/1: PlayerFrame and PartyFrame target their units, and spell/action paths cast Flash of Light. The PlayerFrame assertion has no direct `TargetUnit` fallback.
 - The owned prior-release probe `/tmp/wow-unit-frame-bug/aura-global/probe.txt` records PlayerFrame `target` and `menu` attributes. Those attributes are supporting configuration evidence, not separate GUI or native proof.
-- Final Rust checks remain pending.
+- Final bounded local Forever GUI evidence is recorded in [[final-unit-frame-click-aura-proof]]: clicking PlayerFrame selected Uther with the matching player GUID and zero hook/final errors. This is simulator-local GUI evidence, not native proof or broad hit-testing coverage.
 
 ## Known gaps (current cycle)
 
 - [ ] Modifier assignments beyond the unmodified default are simulator-defined; native modifier semantics are unverified.
-- [ ] New-release GUI hit-testing proof remains pending.
-- [ ] A separate target-aura `OnUpdate` error is under investigation; it is outside the click-chain result.
+- [ ] Broader GUI hit-testing coverage remains unverified beyond the owned PlayerFrame click.
+- [ ] The target-aura `OnUpdate` root cause is outside the click-chain contract; see [[target-aura-private-count]].
 
 ## Out of scope
 

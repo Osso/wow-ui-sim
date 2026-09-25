@@ -12,7 +12,7 @@ Guarded VM numeric ordering supports secret-wrapped numbers against public or se
 
 ## Evidence and limits
 
-Independent rilua verification records 21/21 checks plus `cargo fmt` and `cargo check` in `/tmp/wow-unit-frame-bug/rilua-verify-ledger-20260925.json`; the inherited `strlen` warning remains outside this slice. Simulator integration is bounded 2/2 with zero Lua errors in `/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`: full startup → `TargetUnit('player')` → tick, and the original PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` CVar pre-`OnLoad` regression. GUI and final simulator verification remain pending; no native-client conformance or original screenshot-exact reproduction is claimed. The target-aura path is the demonstrated consumer; this page does not cover the separate Count root cause.
+Independent rilua verification records 21/21 checks plus `cargo fmt` and `cargo check` in `/tmp/wow-unit-frame-bug/rilua-verify-ledger-20260925.json`; the inherited `strlen` warning remains outside this slice. Simulator integration is bounded 2/2 with zero Lua errors in `/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`: full startup → `TargetUnit('player')` → tick, and the original PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` CVar pre-`OnLoad` regression. Final local GUI evidence observes that CVar reporting `0`, with zero hook/final errors; see [[final-unit-frame-click-aura-proof]]. No native-client conformance or original screenshot-exact reproduction is claimed. The target-aura path is the demonstrated consumer; this page does not cover the separate Count root cause.
 
 ## Sources
 
@@ -24,3 +24,4 @@ Independent rilua verification records 21/21 checks plus `cargo fmt` and `cargo 
 - [[ellesmereui-forever]] — related Forever aura-secret display investigation
 - [[lua51-unknown-escapes]] — another published rilua compatibility boundary
 - [[target-aura-private-count]] — separate private-Count root cause on the integrated path
+- [[final-unit-frame-click-aura-proof]] — final bounded GUI and verifier evidence

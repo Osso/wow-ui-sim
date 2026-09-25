@@ -10,7 +10,7 @@ The first successful Count assignment exposed a separate layout error (`TargetFr
 
 ## Bounded integration result
 
-`a2fd85382` and `30971450a`, with the separately pinned rilua ordering fix, pass 2/2 original-boundary regressions with zero Lua errors in `/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`: full startup → `TargetUnit('player')` → tick, and PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` with the CVar set before `OnLoad`. This is regression evidence only: no exact original screenshot reproduction, GUI, or final simulator check is claimed.
+`a2fd85382` and `30971450a`, with the separately pinned rilua ordering fix, pass 2/2 original-boundary regressions with zero Lua errors in `/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`: full startup → `TargetUnit('player')` → tick, and PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` with the CVar set before `OnLoad`. Final bounded local GUI evidence is in [[final-unit-frame-click-aura-proof]]: zero hook/final errors, Combo CVar `1` reports `0`, and hovering Aura ID `1` displays `Arcane Intellect`. This does not reproduce the original screenshot exactly or establish native-client conformance.
 
 ## Sources
 
@@ -22,3 +22,4 @@ The first successful Count assignment exposed a separate layout error (`TargetFr
 - [[ellesmereui-forever]] — related private AuraContainer boundaries.
 - [[on-update-dirty]] — OnUpdate lifecycle context.
 - [[secret-number-ordering]] — distinct numeric-ordering boundary required by the integrated path.
+- [[final-unit-frame-click-aura-proof]] — final bounded GUI and verifier evidence.

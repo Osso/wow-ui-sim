@@ -1,10 +1,10 @@
-## [2026-09-25] investigation | Document guarded secret-number ordering
+## [2026-09-25] investigation | Finalize bounded unit-frame click and aura evidence
 
-Rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2`, published from `osso/host-secret-bool` and pinned by `8b8a089e5`, adds guarded ordering for secret-wrapped numbers. Independent rilua verification is 21/21; simulator integration is bounded 2/2 with zero Lua errors: target-player tick and the original PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` CVar pre-`OnLoad` regression. Native semantics are inferred; GUI/final simulator proof and original screenshot-exact reproduction remain pending. See [[secret-number-ordering]] and [secret-number ordering](../specs/secret-number-ordering.md).
+A local Forever release built from `a2fd85382` records PlayerFrame click targeting Uther with a matching player GUID, Combo CVar `1` at `0`, no CharCustomizeFrame, hidden XP/reputation animation textures, panel open/close/reopen state, zero hook/final errors, and Aura ID `1` tooltip `Arcane Intellect`. The accidentally broad 78-test filtered batch is 68 pass / 10 distinct failures, not a suite-green result. This is simulator-local evidence, not native conformance or full GUI acceptance. See [[final-unit-frame-click-aura-proof]].
 
 ## [2026-09-25] investigation | Publish target aura Count to private XML scope
 
-Full-startup `TargetUnit('player')` → OnUpdate failed at `TargetFrameAuraButton.lua:75`. The logged `__tpl25839` dispatcher is the AuraContainer; its nested AuraButton had a Rust/public Count but no private Count. `a2fd85382` scopes XML-child publication to the private view without copying ordinary addon fields; `30971450a` covers the original pre-`OnLoad` CVar event order. The integrated 2/2 regression is zero-error; GUI/final proof remains pending. See [[target-aura-private-count]] and [partition spec](../specs/script-object-environments.md).
+Full-startup `TargetUnit('player')` → OnUpdate failed at `TargetFrameAuraButton.lua:75`. The logged `__tpl25839` dispatcher is the AuraContainer; its nested AuraButton had a Rust/public Count but no private Count. `a2fd85382` scopes XML-child publication to the private view without copying ordinary addon fields; `30971450a` covers the original pre-`OnLoad` CVar event order. The integrated 2/2 regression is zero-error; final bounded GUI observations are recorded in [[final-unit-frame-click-aura-proof]], without native or screenshot-exact claims. See [[target-aura-private-count]] and [partition spec](../specs/script-object-environments.md).
 
 ## [2026-09-25] investigation | Bound bootstrap-only dependency selection
 
@@ -1419,6 +1419,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | Page | Summary |
 |------|---------|
 | [[animated-status-bar-atlas-visibility]] | Atlas assignment on a non-button XML-hidden animated status-bar texture incorrectly showed it; recognized Button/CheckButton slots alone update visibility. Actual Forever template RED/GREEN proof; full UI visual pending. |
+| [[final-unit-frame-click-aura-proof]] | Bounded local Forever release evidence: PlayerFrame target click, Aura tooltip hover, Combo reset, no CharCustomizeFrame, hidden status-bar animation textures, panel state transitions, zero errors, and an explicitly non-green accidental broad test batch. |
 | [[template-existence]] | `DoesTemplateExist` queries only the registered XML virtual-template registry; frozen lifecycle 3/3 and unchanged DRaidFrames startup proof pass, while native edge semantics and workflows remain open. |
 | [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |
