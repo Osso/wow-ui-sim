@@ -1,3 +1,7 @@
+## [2026-09-25] investigation | Document guarded secret-number ordering
+
+Rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2`, published from `osso/host-secret-bool` and pinned by simulator commit `8b8a089e5`, adds guarded ordering for secret-wrapped numbers. Forever target-aura layout stores `secretwrap(lineCount)` then compares it with public zero or two; the prior boundary raised a number/userdata error. Ordering is limited to numeric wrappers and rejects tainted ancestor access; native semantics are inferred, not verified. Dependency verification, simulator integration, clean tick, and GUI proof remain pending. See [[secret-number-ordering]] and [secret-number ordering](../specs/secret-number-ordering.md).
+
 ## [2026-09-25] investigation | Bound bootstrap-only dependency selection
 
 `003128db2` removes the second startup dependency closure that promoted `Blizzard_BarbershopUI`’s LoD `RequiredDep: Blizzard_CharacterCustomize` to a full startup load. That customization addon was the actual stray `CharCustomizeFrame` producer. Eager full-root dependencies remain eager; later full owner loads still order dependencies before remaining owner files. The targeted synthetic lifecycle test is RED → GREEN (`/tmp/bootstrap-startup-red-20260925.log`, `/tmp/bootstrap-startup-green-003128db2.log`); GUI and final checks remain pending. This is simulator/source evidence, not native-proven dependency semantics. See [[addon-loading]] and [bootstrap loading](../specs/addon-bootstrap-loading.md).

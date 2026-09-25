@@ -102,4 +102,5 @@ After enumeration and action-cooldown publication, the real GUI reached five pas
 - [[client-profiles]] — Forever/Camelot profile routing
 - [[bytecode-cache-growth]] — persisted-pack identity and storage bounds
 - [[on-update-dirty]] — existing update-dispatch behavior and dirty scheduling
+- [[secret-number-ordering]] — guarded wrapped-number comparison required by target-aura layout
 - [Forbidden-aspect inheritance](../../specs/forbidden-aspect-inheritance.md) — shared propagation and relationship constraints
