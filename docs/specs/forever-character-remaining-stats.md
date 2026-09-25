@@ -29,13 +29,13 @@ Cached `PlayerScriptDocumentation.lua` supplies the two-return shapes and `UnitD
 ## Tests asserting this spec
 
 - `tests/forever_character_remaining_stats.rs` — observable Lua tests for stats, equipment lifecycle, relic class transitions and resolved aliases, and required token/return shape. The three relic cases passed at `72d6d8b45`; other row coverage remains unverified in this cycle.
-- `tests/wowforever_character_panel.rs` — main-owned full-panel open/close/reopen acceptance passed once at `72d6d8b45`; it does not prove all 25 cached vendor handlers.
+- `tests/wowforever_character_panel.rs` — main-owned full-panel open/close/reopen acceptance passed once at `72d6d8b45`; later release-binary GUI evidence exercised the same lifecycle plus Backpack in the isolated 69977 fixture. Neither proof validates all 25 cached vendor handlers.
 
 ## Known gaps (current cycle)
 
 - [ ] Obtain verifier GREEN for the remaining non-relic stat rows.
 - [ ] Run all 25 cached vendor handlers after the remaining-stat proof; the one full-panel lifecycle pass is not that diagnostic.
-- [ ] Obtain final release visual proof from the registered install; the isolated 69977 cache/run does not establish it.
+- [ ] Obtain registered-host startup/visual proof. The release-binary smoke used the isolated 69977 fixture and does not establish default or registered-install startup.
 
 ## Out of scope
 

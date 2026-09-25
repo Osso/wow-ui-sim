@@ -11,9 +11,9 @@ The frozen Forever 1.60.1.69977 source/cache path now supports the bounded Camel
 | Atlas alias geometry | passed | Two focused cases at `72d6d8b45`. |
 | Character/stat API surface | partial | The pre-change cached diagnostic remains 15/25 visible handlers; it does not prove all handlers after the later changes. |
 | Four original panel assets | acquired | Exact 69977 encoding keys were fetched and MD5-verified into the normal CASC byte cache; no runtime fallback or substitute was added. |
-| Visual lifecycle | bounded pass | Character open/close/reopen and Backpack reported ready with no Lua-error lines in the final GUI artifacts. |
+| Release visual lifecycle | bounded pass | Release `wow-sim` opened/closed/reopened Character and opened/closed/reopened Backpack in the isolated 69977 fixture; both panels were ready. |
 
-Final scoped verification at `72d6d8b45efc0c012fc94cdea63a9becac534c02` passed 12/12: CDN retry/status (3), relic slot (3), atlas (2), profile identity (1), full panel (1), plus two incidental relic matches. `cargo fmt --check` and `cargo check` passed. The unchanged baseline has two Python casing failures, five dependency warnings, and eight older lib-test warnings; none is credited as fixed.
+Final scoped verification at `72d6d8b45efc0c012fc94cdea63a9becac534c02` passed 12/12: CDN retry/status (3), relic slot (3), atlas (2), profile identity (1), full panel (1), plus two incidental relic matches. `cargo fmt --check` and `cargo check` passed. The later release build exited `0`; `wow-sim` SHA-256 is `0e6aceb9b05aaf984f1f85bb630b21b04e20c5dc1475a82f081de9714ba2fcc5`. The unchanged baseline has two Python casing failures, five dependency warnings, and eight older lib-test warnings; none is credited as fixed.
 
 ## Source and cache boundary
 
@@ -32,15 +32,18 @@ The old false-absence diagnosis is superseded: for the affected local index buck
 
 Each entry in `/tmp/wow-character-bug/assets-staged/promoted.json` records the exact cached path, byte count, and verified content MD5. No generated source, Gethe file copy, runtime fallback, or texture substitute is credited.
 
-## Visual evidence and limits
+## Release visual evidence and limits
 
-`/tmp/wow-character-bug/final-visual/result.json` reports a ready screenshot run (the outer timeout is expected). Its observer completed in 8.14 seconds and reported `VISUAL_READY=true`; Backpack measured 178×280 with 16 slots, 36px portrait width, 95px top corner/top edge, and 100px bottom corner. Initial GPU stall was about 1.1 seconds elsewhere; initial texture work was about 13ms. This is bounded GUI evidence, not release acceptance.
+`/tmp/wow-character-bug/release-cold-final/result.json` records a bounded release-binary GUI smoke. The release build exited `0`; its `wow-sim` SHA-256 is `0e6aceb9b05aaf984f1f85bb630b21b04e20c5dc1475a82f081de9714ba2fcc5`. The expected outer timeout exited `124` only after the observer reported IPC readiness and `RELEASE_READY=true` for Character, PaperDoll, and Backpack; screenshot capture exited `0`. The script exercised Character twice, then Backpack open, close, and reopen. Backpack measured 178×280 with 16 slots, 36px portrait width, 95px top corner/top edge, and 100px bottom corner. Main inspected the screenshot: Character and Backpack were visible and Backpack was not oversized; that replay does not prove texture completeness.
 
-The current release build is running through the main alias with Forever features. The real installed `.build.info` is still missing `wow_classic_beta`; its desktop Syncthing debug record was modified on September 24, 2026 at 19:39 CDT. The team did not edit that metadata. Registered-install startup remains blocked, so no host-startup or final-release-visual completion claim follows. An unrelated minimap mask miss remains open.
+This used the historical `/tmp/wow-character-bug/frozen-69977-install` fixture. Resolver and application caches were isolated; 1,460 existing extracts and other texture/UI caches were intentionally reused, while `ability_racial_jackofalltrades` (FDID `2447783`) was excluded and extracted from local CASC only after `--exec-lua`. Before GUI startup, CASC built 1,441,761 resolution entries in 7.5 seconds; font initialization began at 12.507 seconds. The only recorded draw-stall line was 828.2ms (13.7ms quads, 10.0ms textures, 804.6ms other), with no later stall lines. However, stderr also reports `Not found` for `commonsidetabmaskc60`, `bagsitemslot2xc60`, `uiframemetal2xc60`, `ui-hud-actionbar-bag`, and `ui-hud-minimap-frame-generic-mask`; path/case/cache cause is under investigation. This is release-binary evidence for the isolated historical fixture, not a texture-completeness, default, or registered-host startup claim.
+
+The real installed `.build.info` is still missing `wow_classic_beta`; its desktop Syncthing debug record was modified on September 24, 2026 at 19:39 CDT. The team did not edit that metadata. Registered-install startup remains blocked. An unrelated minimap mask miss remains open.
 
 ## Sources
 
-- `/tmp/wow-character-bug/final-visual/{result.json,observer.json}` — final GUI lifecycle and Backpack metrics.
+- `/tmp/wow-character-bug/release-build.result` — release build exit status.
+- `/tmp/wow-character-bug/release-cold-final/{setup.json,result.json,observer.json,stderr,stdout,release-character-backpack.png}` — isolated release-binary GUI lifecycle, cache boundary, timing, metrics, and inspected screenshot.
 - `/tmp/wow-character-bug/assets-staged/promoted.json` — four exact 69977 asset MD5/cache records.
 - `/tmp/wow-character-bug/verified-69977/cache-promotion.json` — 4,398-file byte-equal cache promotion scope.
 - `/tmp/wow-character-bug/frozen-69977-install` — isolated historical CASC fixture.

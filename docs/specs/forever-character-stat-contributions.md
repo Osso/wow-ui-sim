@@ -27,7 +27,7 @@ These coefficients and class selection are **simulator guesses**, not native-ver
 ## Tests asserting this spec
 
 - `tests/forever_character_stat_contributions.rs` — grouped behavioral tests for passed-input scaling, class/stat selection, return counts, spirit isolation, and baseline coherence. Execution deferred to main's batched Cargo verification; boxes remain unchecked until GREEN proof.
-- Main-owned `tests/wowforever_character_panel.rs` — one open/close/reopen full-panel acceptance passed at `72d6d8b45`; this does not validate these stat-contribution formulas.
+- Main-owned `tests/wowforever_character_panel.rs` — one open/close/reopen full-panel acceptance passed at `72d6d8b45`; a later release-binary smoke repeated the lifecycle in the isolated 69977 fixture. Neither validates these stat-contribution formulas.
 
 ## Known gaps (current cycle)
 
