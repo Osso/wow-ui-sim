@@ -1,6 +1,6 @@
 # Table freezing
 
-`table.freeze` and `table.isfrozen` expose rilua's frozen-object state through modeled Lua APIs. The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes the argument type from `LuaValueReference` to `table`; PTR additionally returns the frozen table. Both functions already exist in the pinned earlier contract.
+`table.freeze` and `table.isfrozen` expose shallow table immutability through modeled Lua APIs, independently of rilua's recursive GC-freeze optimization. The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes the argument type from `LuaValueReference` to `table`; PTR additionally returns the frozen table. Both functions already exist in the pinned earlier contract.
 
 ## What it must do
 
@@ -9,7 +9,8 @@
 - [x] `isfrozen(t)` returns exactly one boolean reflecting the VM flag, false before freezing and true afterward.
 - [x] Preserve reads, iteration, array length, and object identity.
 - [x] Reject assignment, `rawset`, `table.insert/remove/sort`, global `tinsert/tremove/wipe`, and PTR `table.removeunordered/removevalue` on already-frozen tables without partial mutation. Mutable-table operations retain ordinary behavior.
-- [x] **Simulator traversal choice:** recursively freeze table values, table keys, and private metatables; cycles terminate. Tests use isolated graphs and confirm nested reads survive collection.
+- [ ] Freeze only the supplied table. Referenced tables, keys, metatables, closure environments and captured state remain mutable; freezing an addon namespace must not freeze `_G` or later addon state.
+- [ ] Keep ordinary GC tracing and collection: reachable values survive collection, but freezing does not permanently pin the table or its graph.
 - [x] **Simulator validation choice:** both profiles require real Lua tables and reject missing/nil/non-table arguments. The broader earlier `LuaValueReference` domain is not claimed.
 
 ## How it works
@@ -20,22 +21,24 @@
 
 ## Implementation inventory
 
-- `src/lua_api/globals/real/table_freeze.rs`: registration, profile return arity, VM freeze/query calls, guarded native mutators.
+- `src/lua_api/globals/real/table_freeze.rs`: registration, profile return arity, shallow read-only/query calls, guarded native mutators.
 - `src/lua_api/globals/real/table_extensions.rs`: shared table lookup and guarded PTR mutators.
 - `src/lua_api/globals/utility_system_spell/mod.rs`: guarded global table mutation aliases.
 - `src/lua_api/globals/register.rs`: epoch-scoped API installation.
-- Pinned rilua `b638756`: existing recursive GC freeze traversal and assignment/rawset enforcement; unchanged.
+- Rilua table immutability: root-only read-only state and write guards, separate from recursive GC freezing.
 
 ## Tests asserting this spec
 
-- `src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs`: four grouped library tests per profile for publication/arity, read preservation, mutation rejection, isolated recursive graphs, and argument errors.
+- `src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs`: grouped library tests for publication/arity, read preservation, mutation rejection, shallow graphs, and argument errors.
+- `tests/table_util.rs`: addon callback/later-load boundary and collection regression.
 
 ## Known gaps (current cycle)
 
-- [ ] Native shallow-versus-recursive semantics, earlier non-table `LuaValueReference` inputs, and secret/taint behavior remain unverified.
-- [ ] The reused VM walk also traverses closure environments/upvalues and userdata environments/metatables. An ordinary closure can reach `_G`; freezing such a graph can freeze shared runtime state. No shared tables/metatables or such closures are frozen in these fixtures. This is the VM traversal model, not a claim about native WoW behavior.
+- [ ] Earlier non-table `LuaValueReference` inputs and cross-addon ownership/taint behavior remain unverified.
+- [ ] Shallow semantics are supported by QuestieTDB's direct Classic Era 1.15.9.68808 probe (`docs/table.freeze.md` in `Questie/QuestieTDB`), not a retail native probe. Retail unchanged Syndicator's namespace freeze followed by callback cleanup establishes the simulator regression boundary.
+- [ ] Final dependency pin, focused verification and retail startup replay pending.
 - [ ] The VM can forward missing-key writes through `__newindex`; this does not mutate the frozen table itself. Metatable replacement, reentrant freezing during comparator callbacks, and arbitrary Rust-side mutation paths are not covered by these tests.
 
 ## Out of scope
 
-External rilua changes, unfreezing, broad VM hardening, native security enforcement, audit-manifest credit, and broader profile conformance are excluded from this bounded implementation.
+Unfreezing, redesign of the recursive GC optimization, broad VM hardening, new ownership enforcement, audit-manifest credit, and broader profile conformance are excluded from this correction.

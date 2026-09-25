@@ -1,4 +1,4 @@
-//! Table freezing uses rilua's recursive GC graph and existing frozen flags.
+//! Shallow table immutability, independent of rilua's recursive GC freezing.
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -20,7 +20,12 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 fn freeze(state: &mut LuaState) -> LuaResult<u32> {
     let table = argument_table(state, 1)?;
-    state.gc.freeze_table(table);
+    state
+        .gc
+        .tables
+        .get_mut(table)
+        .ok_or_else(|| runtime_error("table has been collected"))?
+        .make_read_only();
     if cfg!(feature = "retail-12-1-5") {
         state.push(Val::Table(table));
         Ok(1)
@@ -31,12 +36,16 @@ fn freeze(state: &mut LuaState) -> LuaResult<u32> {
 
 fn is_frozen(state: &mut LuaState) -> LuaResult<u32> {
     let table = argument_table(state, 1)?;
-    state.push(Val::Bool(state.gc.tables.is_frozen(table)));
+    state.push(Val::Bool(is_table_frozen(state, table)));
     Ok(1)
 }
 
+fn is_table_frozen(state: &LuaState, table: GcRef<Table>) -> bool {
+    state.gc.tables.is_frozen(table) || state.gc.tables.get(table).is_some_and(Table::is_read_only)
+}
+
 pub(crate) fn ensure_mutable(state: &LuaState, table: GcRef<Table>) -> LuaResult<()> {
-    if state.gc.tables.is_frozen(table) {
+    if is_table_frozen(state, table) {
         return Err(runtime_error("attempt to modify a frozen table"));
     }
     Ok(())
