@@ -9,8 +9,9 @@ Forever Camelot character-panel handlers consume these Forever-only stat globals
 - [ ] **Modifier reads.** `GetRangedHitModifier()`, `GetArmorPenetration()`, `GetSpellPenetration()`, `GetOverrideAPBySpellPower()`, and `GetOverrideSpellPowerByAP()` each return one number from the corresponding player `CharacterStats` field. These fields start at explicit simulator zero. Armor and spell penetration are flat amounts; ranged hit is a percent; override values are direct configured coefficients.
 - [ ] **Ranged haste.** Forever `GetRangedHaste()` returns `(haste_pct(), quiver_haste_pct)` with unseeded quiver haste zero. Other profiles retain their existing one-return shape.
 - [ ] **Defense skill.** `UnitDefenseSkill(unit)` shares `UnitDefense(unit)`'s modeled unit/level resolution and returns `(max(level * 5, 0), 0)`. The second value is explicit zero because defense bonuses have no modeled source. `UnitDefense` retains one return on every profile.
+- [ ] **Relic slot.** Forever `UnitHasRelicSlot(unit)` requires a string token and returns one boolean. Existing unit resolution supports `player`/`self`, `target`, and `focus`; missing or unmodeled units return false. The Classic Vanilla class rule—Paladin (2), Shaman (7), Druid (11) true; other classes false—is an inference, **not native-verified Forever behavior**. Changes in resolved unit class must change the result.
 
-Cached `PlayerScriptDocumentation.lua` supplies the two-return shapes and `UnitDocumentation.lua` the defense tuple. Cached `ARMOR_PENETRATION_TOOLTIP` establishes flat armor-penetration units. These inputs and zero defaults are simulator policy, not native-verified formulas.
+Cached `PlayerScriptDocumentation.lua` supplies the two-return shapes and `UnitDocumentation.lua` the defense tuple and required-token/boolean relic-slot shape. Cached `ARMOR_PENETRATION_TOOLTIP` establishes flat armor-penetration units. These inputs and zero defaults are simulator policy, not native-verified formulas.
 
 ## How it works
 
@@ -21,18 +22,18 @@ Cached `PlayerScriptDocumentation.lua` supplies the two-return shapes and `UnitD
 ## Implementation inventory
 
 - `src/lua_api/env_init/enums.rs` — Forever spirit constant.
-- `src/lua_api/globals/real/combat_stats.rs` — modifier reads, predicates, ranged-haste shape, and state-error propagation.
+- `src/lua_api/globals/real/combat_stats.rs` — modifier reads, predicates, relic-slot query, ranged-haste shape, and state-error propagation.
 - `src/lua_api/globals/unit_stats.rs` — spirit and defense-skill reads.
 - `src/lua_api/state_types/character_world.rs` — modeled modifier and quiver-haste fields.
 
 ## Tests asserting this spec
 
-- `tests/forever_character_remaining_stats.rs` — four observable Lua tests: global/arity, modifier isolation, defense tuple, and equipped-item lifecycle. Pending verifier GREEN.
+- `tests/forever_character_remaining_stats.rs` — observable Lua tests for stats, equipment lifecycle, relic class transitions and resolved aliases, and required token/return shape. New relic tests pending GREEN.
 - `tests/wowforever_character_panel.rs` — main-owned full-panel acceptance and 25 cached vendor handlers. Not yet passing.
 
 ## Known gaps (current cycle)
 
-- [ ] Obtain verifier GREEN for the four remaining-stat tests.
+- [ ] Obtain verifier GREEN for remaining-stat and relic-slot tests.
 - [ ] Re-run the unchanged full panel and all 25 cached vendor handlers after the remaining-stat proof.
 - [ ] Resolve four asset-content blockers: Stats `8197104`, `8175455`, `8245174`, and `8254784`.
 

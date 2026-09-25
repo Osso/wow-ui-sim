@@ -119,6 +119,87 @@ mod forever {
     }
 
     #[test]
+    fn relic_slot_follows_player_class_transitions_and_aliases() {
+        let env = env();
+        for (class, expected) in [
+            (2, true),
+            (7, true),
+            (11, true),
+            (1, false),
+            (6, false),
+            (0, false),
+        ] {
+            env.state().borrow_mut().player.class_index = class;
+            let (player, alias): (bool, bool) = env
+                .eval("return UnitHasRelicSlot('player'), UnitHasRelicSlot('self')")
+                .unwrap();
+            assert_eq!((player, alias), (expected, expected), "class {class}");
+        }
+    }
+
+    #[test]
+    fn relic_slot_resolves_target_focus_and_unknown_unit() {
+        let env = env();
+        {
+            let state = env.state();
+            let mut sim = state.borrow_mut();
+            sim.player.class_index = 2;
+            sim.current_target = Some(TargetInfo {
+                unit_id: "target".into(),
+                name: "Shaman".into(),
+                class_index: 7,
+                level: 20,
+                health: 100,
+                health_max: 100,
+                power: 100,
+                power_max: 100,
+                power_type: 0,
+                power_type_name: "MANA".into(),
+                is_player: true,
+                is_enemy: false,
+                guid: "Player-0-1".into(),
+                classification: "normal".into(),
+                creature_type: "Humanoid".into(),
+                reaction: 5,
+                interaction: Default::default(),
+            });
+            let mut focus = sim.current_target.as_ref().unwrap().clone();
+            focus.unit_id = "focus".into();
+            focus.name = "Warrior".into();
+            focus.guid = "Player-0-2".into();
+            focus.class_index = 1;
+            sim.current_focus = Some(focus);
+        }
+        let (player, target, focus, unknown, pet): (bool, bool, bool, bool, bool) = env
+            .eval("return UnitHasRelicSlot('player'), UnitHasRelicSlot('target'), UnitHasRelicSlot('focus'), UnitHasRelicSlot('absent'), UnitHasRelicSlot('pet')")
+            .unwrap();
+        assert_eq!(
+            (player, target, focus, unknown, pet),
+            (true, true, false, false, false)
+        );
+        {
+            let state = env.state();
+            let mut sim = state.borrow_mut();
+            sim.current_target.as_mut().unwrap().class_index = 1;
+            sim.current_focus.as_mut().unwrap().class_index = 11;
+        }
+        let (target, focus): (bool, bool) = env
+            .eval("return UnitHasRelicSlot('target'), UnitHasRelicSlot('focus')")
+            .unwrap();
+        assert_eq!((target, focus), (false, true));
+    }
+
+    #[test]
+    fn relic_slot_requires_unit_string_and_returns_one_boolean() {
+        let env = env();
+        let (arity, result_type, missing_ok, nil_ok, number_ok): (i32, String, bool, bool, bool) = env
+            .eval("local function count(...) return select('#', ...) end; local a = pcall(UnitHasRelicSlot); local b = pcall(UnitHasRelicSlot, nil); local c = pcall(UnitHasRelicSlot, 12); return count(UnitHasRelicSlot('player')), type(UnitHasRelicSlot('player')), a, b, c")
+            .unwrap();
+        assert_eq!((arity, result_type.as_str()), (1, "boolean"));
+        assert_eq!((missing_ok, nil_ok, number_ok), (false, false, false));
+    }
+
+    #[test]
     fn weapon_predicates_follow_equipment_metadata_and_removal() {
         let env = env();
         let (dual, ranged): (bool, bool) = env

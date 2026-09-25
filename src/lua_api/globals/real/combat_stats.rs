@@ -1,5 +1,7 @@
 //! State-backed character combat-rating globals backed by `PlayerState.stats`.
 
+#[cfg(feature = "client-wowforever")]
+use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::FromStack;
 use rilua::vm::closure::RustFn;
@@ -218,6 +220,18 @@ fn is_ranged_weapon(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-wowforever")]
+fn unit_has_relic_slot(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let sim = borrow_state(state)?;
+    // Classic Vanilla class capability inference; not native-verified on Forever.
+    let has_relic_slot = resolve_unit_snapshot(&sim, &unit)
+        .is_some_and(|unit| matches!(unit.class_index, 2 | 7 | 11));
+    drop(sim);
+    state.push(Val::Bool(has_relic_slot));
+    Ok(1)
+}
+
 fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(0.0));
     Ok(1)
@@ -340,6 +354,8 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("IsDualWielding", is_dual_wielding),
     #[cfg(feature = "client-wowforever")]
     ("IsRangedWeapon", is_ranged_weapon),
+    #[cfg(feature = "client-wowforever")]
+    ("UnitHasRelicSlot", unit_has_relic_slot),
     ("GetHitModifier", get_hit_modifier),
     ("GetSpellHitModifier", get_spell_hit_modifier),
     ("GetExpertise", get_expertise),
