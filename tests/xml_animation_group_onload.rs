@@ -176,6 +176,96 @@ fn forever_dock_overflow_highlight_keeps_its_flash_animation() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_gradual_status_bar_starts_with_hidden_animation_textures() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source = cache.join("Blizzard_FrameXMLBase");
+    let addon = tempfile::tempdir().unwrap();
+    std::fs::write(
+        addon.path().join("ActualGradualStatusBar.toc"),
+        "GradualAnimatedStatusBar.lua\nGradualAnimatedStatusBar.xml\n",
+    )
+    .unwrap();
+    for file in [
+        "GradualAnimatedStatusBar.lua",
+        "GradualAnimatedStatusBar.xml",
+    ] {
+        std::fs::copy(source.join(file), addon.path().join(file)).unwrap();
+    }
+    load_addon(
+        &env.loader_env(),
+        &addon.path().join("ActualGradualStatusBar.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local bar = CreateFrame("StatusBar", "ActualGradualStatusBar", UIParent, "GradualAnimatedStatusBarTemplate")
+        assert(bar.GainFlareAnimationTexture, "missing gain flare texture")
+        assert(bar.LevelUpTexture, "missing level-up texture")
+        assert(not bar.GainFlareAnimation:IsPlaying(), "gain flare unexpectedly playing")
+        assert(not bar.LevelUpRolloverAnimation:IsPlaying(), "rollover unexpectedly playing")
+        assert(not bar.LevelUpMaxAnimation:IsPlaying(), "max animation unexpectedly playing")
+        assert(not bar.LevelUpMaxAlphaAnimation:IsPlaying(), "max alpha animation unexpectedly playing")
+        assert(not bar.GainFlareAnimationTexture:IsShown(), "gain flare texture initially shown")
+        assert(not bar.LevelUpTexture:IsShown(), "level-up texture initially shown")
+        bar:SetAnimationTextures("UI-HUD-ExperienceBar-Flare-Rested-2x-Flipbook", "UI-HUD-ExperienceBar-Fill-Rested-2x-Flipbook")
+        assert(not bar.GainFlareAnimationTexture:IsShown(), "gain flare shown by atlas change")
+        assert(not bar.LevelUpTexture:IsShown(), "level-up shown by atlas change")
+        bar.GainFlareAnimation:Play()
+        assert(bar.GainFlareAnimationTexture:IsShown(), "gain flare not shown during animation")
+    "#,
+    )
+    .unwrap();
+    env.fire_on_update(1.0).unwrap();
+    env.exec(
+        r#"
+        assert(not ActualGradualStatusBar.GainFlareAnimation:IsPlaying())
+        assert(not ActualGradualStatusBar.GainFlareAnimationTexture:IsShown(), "gain flare left shown after completion")
+        ActualGradualStatusBar.LevelUpRolloverAnimation:Play()
+        assert(ActualGradualStatusBar.LevelUpTexture:IsShown(), "level-up not shown during animation")
+    "#,
+    )
+    .unwrap();
+    env.fire_on_update(2.0).unwrap();
+    env.exec(
+        r#"
+        assert(not ActualGradualStatusBar.LevelUpRolloverAnimation:IsPlaying())
+        assert(not ActualGradualStatusBar.LevelUpTexture:IsShown(), "level-up left shown after completion")
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn custom_button_texture_key_keeps_hidden_state_when_atlas_changes() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let addon = create_test_addon(
+        r#"<Ui><Button name="CustomTextureButton" parent="UIParent">
+            <Layers><Layer level="ARTWORK">
+                <Texture parentKey="CustomArt" hidden="true"/>
+            </Layer></Layers>
+        </Button></Ui>"#,
+        "CustomTextureVisibility",
+    );
+    load_addon(
+        &env.loader_env(),
+        &addon.path().join("CustomTextureVisibility.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        assert(not CustomTextureButton.CustomArt:IsShown())
+        CustomTextureButton.CustomArt:SetAtlas("checkbox-minimal")
+        assert(not CustomTextureButton.CustomArt:IsShown(), "custom button child shown by SetAtlas")
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn xml_animation_group_onload_hides_target_textures() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();

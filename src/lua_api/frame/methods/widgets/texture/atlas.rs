@@ -103,14 +103,28 @@ fn atlas_slot_tex_coords(info: &crate::atlas::AtlasInfo) -> (f32, f32, f32, f32)
     )
 }
 
-/// Parent id + parentKey when both are set. Captured before the child borrow
-/// so the propagation step can run after the child mutation without
-/// re-borrowing state.
+/// A standard texture slot on a Button or CheckButton. Custom parentKeys
+/// and non-button parents keep their own visibility when an atlas changes.
 fn collect_parent_slot(widgets: &crate::widget::WidgetRegistry, id: u64) -> Option<(u64, String)> {
     let frame = widgets.get(id)?;
     let parent_id = frame.parent_id?;
-    let parent_key = frame.parent_key.clone()?;
-    Some((parent_id, parent_key))
+    let parent_key = frame.parent_key.as_deref()?;
+    let parent = widgets.get(parent_id)?;
+    if !matches!(
+        parent.widget_type,
+        crate::widget::WidgetType::Button | crate::widget::WidgetType::CheckButton
+    ) || !matches!(
+        parent_key,
+        "NormalTexture"
+            | "PushedTexture"
+            | "HighlightTexture"
+            | "DisabledTexture"
+            | "CheckedTexture"
+            | "DisabledCheckedTexture"
+    ) {
+        return None;
+    }
+    Some((parent_id, parent_key.to_string()))
 }
 
 /// Write atlas name, source texture, and atlas UVs into the child frame.
