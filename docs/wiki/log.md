@@ -1,6 +1,6 @@
-## [2026-09-25] investigation | Scope generated template scripts to XML origin
+## [2026-09-25] audit | Preserve retail template and hook origin RED boundary
 
-Updated [[windows-casc-blizzard-taint]], the index, and [template origin contract](../specs/template-script-declaration-taint.md). Supplied `/tmp/retail-regression/taint-provenance.stdout` records generated Blizzard method handlers tainted by BetterBlizzFrames/DandersFrames constructors; registry declaration origin now scopes fast/fallback script generation while restoring constructor taint. Grouped behavior tests cover trusted/addon XML and addon method overrides; Cargo GREEN and startup replay remain with the sole build owner.
+Updated [[windows-casc-blizzard-taint]] and index only; the hook and template specs were read, not changed. `35adfc738` separates XML declaration origin from frame-constructor taint; `d63ddd32a` makes declaration classification use the canonical TOC policy, including internal `Blizzard_` folders without `AllowLoad`; `fc7570022` separates fixed engine hook factories from addon callbacks. `/tmp/retail-regression/taint-provenance.stdout` explicitly pairs generated-wrapper `BetterBlizzFrames`/`DandersFrames` taint with underlying Blizzard-method `nil` taint. `/tmp/retail-regression/hookscript-origin-red.*` and `/tmp/retail-regression/securehook-origin-red.*` each report `false false`; the latter reports a secret wrapper. The current `4/27` baseline predates all three commits. Latest runtime build, current-tree replay, and GREEN remain pending; no residual reduction credited.
 
 ## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
 

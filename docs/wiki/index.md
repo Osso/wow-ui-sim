@@ -1,3 +1,7 @@
+## [2026-09-25] audit | Preserve retail template and hook origin RED boundary
+
+[[windows-casc-blizzard-taint]] records `35adfc738` preserving XML template declaration taint, `d63ddd32a` sharing the canonical TOC classification policy, and `fc7570022` separating fixed engine hook factories from addon callbacks. Supplied runtime provenance pairs generated-wrapper `BetterBlizzFrames`/`DandersFrames` taint with `nil` underlying Blizzard-method taint. `HookScript` and `hooksecurefunc` RED artifacts both report `false false`; the secure-hook wrapper is reported secret. The `4/27` baseline predates these commits; current-tree runtime build and replay remain pending. No GREEN or residual reduction credited.
+
 ## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
 
 [[patch-12-1-5-api-audit]] records `ec661653b` clearing caller taint only during protected/forbidden visibility-handler dispatch, and `d9e524204` pinning rilua `77e0f76` for wrapped-table/nil guards, deepest-active closure taint, and weak GC-safe stamps. Actual vendor protected-visibility and custom-asset artifacts remain RED. `/tmp/retail-regression/taint-after.*` predates the latest pin and records two unique errors / four occurrences; no zero-error, reduction, GREEN, or build-latency claim. Rebuilt replay and independent proof remain pending.
