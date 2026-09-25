@@ -73,7 +73,7 @@ fn transfer_script_objects(
     Ok(())
 }
 
-fn project_forbidden(state: &mut LuaState, value: Val) -> LuaResult<Val> {
+pub(crate) fn project_forbidden(state: &mut LuaState, value: Val) -> LuaResult<Val> {
     if native_frame_id_from_val(state, value).is_none()
         || raw_field(state, value, b"__wowUseForbiddenObjectTable") != Val::Bool(true)
     {

@@ -8,6 +8,8 @@
 
 #[path = "click_targeting/full_ui.rs"]
 mod click_targeting_full_ui;
+#[path = "click_targeting/forever_regressions.rs"]
+mod click_targeting_forever_regressions;
 use crate::common;
 
 use click_targeting_full_ui::{drain_test_errors, env_with_full_ui, install_test_error_handler};

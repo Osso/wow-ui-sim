@@ -2916,6 +2916,10 @@ Classified exactly 115 added `C_TransmogOutfitInfo` API, structure, and structur
 
 # Wiki Log
 
+## 2026-09-25 — Target aura private Count diagnosis
+
+Added [[target-aura-private-count]], indexed it, and updated the script-object partition contract. Full-startup target-player tick RED isolated the AuraButton's missing private Count child despite its public/Rust presence; XML parentKey publication fixes that boundary. GREEN after the independent rilua secret-number ordering pin is error-free; original `__tpl_25839` error label named the container.
+
 ## 2026-09-07
 
 - Added the PTR ordered LoD bootstrap startup model to [systems/addon-loading](systems/addon-loading.md): eligible LoadOnDemand addons run only annotated bootstrap files in the ordinary startup dependency order, while full loading remains separate.

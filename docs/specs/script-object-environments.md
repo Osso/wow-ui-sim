@@ -22,6 +22,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
 - [x] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.
+- [x] Expose XML parentKey children to private frame mixins under forbidden-object-table scope while keeping ordinary public Lua fields isolated.
 
 ## How it works
 
@@ -33,6 +34,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 ## Implementation inventory
 
 - `src/lua_api/script_object_transfer.rs` — direct frame-reference conversion.
+- `src/lua_api/methods.rs` — parentKey publication to public and scoped forbidden frame views.
 - `src/lua_api/env_init/mod.rs`, `src/lua_api/mod.rs` — installation under the shared `forbidden-aspects` capability.
 - `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` — parent return projection under the same capability.
 - `src/lua_api/env_init/shared_bootstrap.lua` — partition identity and projection.
@@ -41,6 +43,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 ## Tests asserting this spec
 
 - `tests/userdata_proxy.rs` — native parent acceptance, spoof rejection, real provider acquisition, initializer ownership, and private/public isolation.
+- `tests/click_targeting/forever_regressions.rs` — full startup, target-player aura tick, private Count access, and ordinary public-field isolation.
 - `tests/xml_secure_delegates.rs` — secure entry, addon callback taint, caller restoration after return/error, and receiver-only negative control. At `9476efcf5`, both cases pass.
 - Runtime environment-transfer tests cover arguments, varargs, multiple results, tail returns, native callbacks, reentry and error propagation.
 
@@ -49,7 +52,7 @@ Focused proof must cover projection identity, field isolation, native parent/met
 - [x] Focused retail proof at `8787273ad`: six `forbidden_partition_` cases cover interned projection/field isolation, native parent identity, spoof rejection, ordinary frame transfer, and real AuraContainer provider/initializer boundaries.
 - [x] Three earlier-12.0.7 controls pass, preserving focused partition behavior outside 12.1.
 - [x] At `9476efcf5`, `secure-chain-tests-ledger.json` records the native AuraContainer initializer/partition group 8/8, `forever_forbidden_consumers` 3/3, and `xml_secure_delegates` 2/2. This closes the scoped transfer/delegate proof, not full GUI aura acceptance.
-- [ ] Full GUI aura acceptance remains blocked outside this boundary: runtime tracing subsequently shows both public and secure `C_UnitAuras` enumeration functions returning nil before native `ParseAllAuras` can assign a button. That is a registration-gate defect, not argument projection, private identity, or candidate filtering.
+- [ ] Full GUI aura acceptance remains outside this bounded proof. The full-startup target-player tick passes private Count after XML child publication but next reports number-vs-userdata at `TargetFrame.lua:569` during layout; investigate secret row-count behavior separately.
 - Coroutine yield/resume conversion and recursive conversion of table contents are not implemented by this facility.
 - Conditional aura-secrecy access enforcement is separate from partition conversion and remains unmodeled.
 

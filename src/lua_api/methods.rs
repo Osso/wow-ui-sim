@@ -180,6 +180,18 @@ pub fn sync_child_to_rilua(
     let Val::Table(parent_ref) = parent_val else {
         return Ok(());
     };
+    #[cfg(feature = "forbidden-aspects")]
+    {
+        let private_parent =
+            crate::lua_api::script_object_transfer::project_forbidden(state, parent_val)?;
+        if private_parent != parent_val {
+            let private_child =
+                crate::lua_api::script_object_transfer::project_forbidden(state, child_val)?;
+            if table_get(state, private_parent, key) != private_child {
+                table_set(state, private_parent, key, private_child);
+            }
+        }
+    }
     let key_ref = intern_string_maybe_static(state, key);
     // Short-circuit if parent[key] already points at this exact child.
     // Startup loops (e.g. PartyFrame:InitializePartyMemberFrames) call
