@@ -1,8 +1,8 @@
 ## Interface: 120007
 ## Title: Server Snapshot
-## Notes: Saves character UI state such as action bars, addons, and keybindings into SavedVariables.
+## Notes: Saves character UI state including action bars, carried bags, addons, and keybindings into SavedVariables.
 ## Author: Alessio
-## Version: 0.2.0
+## Version: 0.3.0
 ## SavedVariables: ServerSnapshotDB
 
 ServerSnapshot.lua

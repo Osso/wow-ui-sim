@@ -276,6 +276,64 @@ local function snapshotSpellBook()
     }
 end
 
+local function snapshotBags()
+    local container = C_Container
+    local maxBagID = NUM_TOTAL_EQUIPPED_BAG_SLOTS
+    if type(container) ~= "table" or BACKPACK_CONTAINER ~= 0
+        or type(maxBagID) ~= "number"
+        or type(container.GetContainerNumSlots) ~= "function"
+        or type(container.GetContainerNumFreeSlots) ~= "function"
+        or type(container.GetContainerItemInfo) ~= "function"
+        or type(container.ContainerIDToInventoryID) ~= "function" then
+        return nil
+    end
+
+    local bags = { maxBagID = maxBagID, containers = {} }
+    for bagID = BACKPACK_CONTAINER, maxBagID do
+        local okSlots, numSlots = call(container.GetContainerNumSlots, bagID)
+        local okFamily, _, family = call(container.GetContainerNumFreeSlots, bagID)
+        if not okSlots or type(numSlots) ~= "number" or not okFamily or type(family) ~= "number"
+            or (bagID == 0 and numSlots == 0) then
+            return nil
+        end
+
+        local bag = {
+            numSlots = numSlots,
+            family = family,
+            name = first(GetBagName, bagID),
+            items = {},
+        }
+        if bagID > 0 then
+            bag.inventorySlot = first(container.ContainerIDToInventoryID, bagID)
+            if type(bag.inventorySlot) ~= "number" then
+                return nil
+            end
+            bag.itemID = first(GetInventoryItemID, "player", bag.inventorySlot)
+            bag.hyperlink = first(GetInventoryItemLink, "player", bag.inventorySlot)
+        end
+
+        for slot = 1, numSlots do
+            local okItem, info = call(container.GetContainerItemInfo, bagID, slot)
+            if not okItem then
+                return nil
+            end
+            if info then
+                if type(info) ~= "table" or type(info.itemID) ~= "number"
+                    or type(info.stackCount) ~= "number" then
+                    return nil
+                end
+                bag.items[slot] = {
+                    itemID = info.itemID,
+                    stackCount = info.stackCount,
+                    hyperlink = info.hyperlink,
+                }
+            end
+        end
+        bags.containers[bagID] = bag
+    end
+    return bags
+end
+
 local function snapshotMacros()
     local ok, globalCount, characterCount = call(GetNumMacros)
     if not ok then
@@ -587,6 +645,7 @@ function addon:Snapshot(reason)
         class = getClassInfo(),
         specialization = getSpecInfo(),
         actionBars = snapshotActionBars(),
+        bags = snapshotBags(),
         spellBook = snapshotSpellBook(),
         macros = snapshotMacros(),
         addons = snapshotAddons(),
@@ -623,6 +682,9 @@ end
 
 local events = {
     PLAYER_LOGIN = true,
+    PLAYER_ENTERING_WORLD = true,
+    BAG_UPDATE_DELAYED = true,
+    BAG_CONTAINER_UPDATE = true,
     PLAYER_LOGOUT = true,
     ACTIONBAR_SLOT_CHANGED = true,
     ACTIONBAR_PAGE_CHANGED = true,
