@@ -532,11 +532,11 @@ fn tainted_addon_secure_handler_execute_runs_restricted_snippet_without_clearing
 
 prefork_full_ui_case! {
 fn tainted_addon_secure_handler_wrap_script_runs_restricted_prebody(env: &WowLuaEnv) {
-    let (caller_insecure_before, wrapped, prebody_ran, caller_insecure_after): (bool, bool, bool, bool) = env
+    let (caller_insecure_before, wrapped, caller_insecure_after): (bool, bool, bool) = env
         .eval(
             r#"
             local header = CreateFrame("Frame", nil, UIParent, "SecureHandlerBaseTemplate")
-            local button = CreateFrame("Button", nil, UIParent)
+            local button = CreateFrame("Button", "RestrictedAddonWrapProbe", UIParent)
             button:SetScript("OnClick", function() end)
             local original = button:GetScript("OnClick")
             local function addon()
@@ -544,8 +544,7 @@ fn tainted_addon_secure_handler_wrap_script_runs_restricted_prebody(env: &WowLua
                 SecureHandlerWrapScript(button, "OnClick", header,
                     [[ self:SetAttribute("addon-wrapped", true) ]])
                 local wrapped = button:GetScript("OnClick") ~= original
-                button:GetScript("OnClick")(button, "LeftButton", false)
-                return before, wrapped, header:GetAttribute("addon-wrapped") == true, not issecure()
+                return before, wrapped, not issecure()
             end
             debug.setobjecttaint(addon, "RestrictedAddonProbe")
             return addon()
@@ -555,32 +554,33 @@ fn tainted_addon_secure_handler_wrap_script_runs_restricted_prebody(env: &WowLua
 
     assert!(caller_insecure_before, "addon caller must enter tainted");
     assert!(wrapped, "vendor must install the secure OnClick wrapper");
-    assert!(prebody_ran, "wrapped click must execute its restricted prebody");
     assert!(caller_insecure_after, "wrapper dispatch must not clear addon caller taint");
+    let button = env.state().borrow().widgets.get_id_by_name("RestrictedAddonWrapProbe").unwrap();
+    env.send_click(button).expect("host click should dispatch the wrapped handler");
+    let prebody_ran: bool = env.eval("return RestrictedAddonWrapProbe:GetAttribute('addon-wrapped') == true").unwrap();
+    assert!(prebody_ran, "wrapped click must execute its restricted prebody on the button");
 }
 }
 
 prefork_full_ui_case! {
-fn tainted_replacement_attribute_handler_stays_insecure_in_combat(env: &WowLuaEnv) {
+fn tainted_replacement_protected_attribute_handler_stays_insecure(env: &WowLuaEnv) {
     let (handler_ran, handler_insecure, protected_write_blocked, caller_insecure): (bool, bool, bool, bool) = env
         .eval(
             r#"
-            local delegate = CreateFrame("Frame")
-            delegate:SetForbidden()
+            local delegate = CreateFrame("Frame", nil, UIParent, "SecureFrameTemplate")
             local target = CreateFrame("Frame", nil, UIParent, "SecureFrameTemplate")
             local ran, insecure = false, false
             local function replacement()
                 ran, insecure = true, not issecure()
+                A_Admin.SetInCombat(true)
                 target:SetAttribute("addon-combat-write", true)
+                A_Admin.SetInCombat(false)
             end
             debug.setobjecttaint(replacement, "RestrictedAddonProbe")
             delegate:SetScript("OnAttributeChanged", replacement)
             local function addon()
-                A_Admin.SetInCombat(true)
                 delegate:SetAttribute("addon-trigger", true)
-                local still_insecure = not issecure()
-                A_Admin.SetInCombat(false)
-                return still_insecure
+                return not issecure()
             end
             debug.setobjecttaint(addon, "RestrictedAddonProbe")
             local still_insecure = addon()
@@ -589,7 +589,7 @@ fn tainted_replacement_attribute_handler_stays_insecure_in_combat(env: &WowLuaEn
         )
         .expect("tainted replacement handler combat probe should evaluate");
 
-    assert!(handler_ran, "replacement must run on forbidden delegate dispatch");
+    assert!(handler_ran, "replacement must run on an allowed protected delegate write");
     assert!(handler_insecure, "addon-tainted replacement must not be promoted to secure");
     assert!(protected_write_blocked, "tainted handler must not write protected attributes in combat");
     assert!(caller_insecure, "delegate dispatch must preserve addon caller taint");

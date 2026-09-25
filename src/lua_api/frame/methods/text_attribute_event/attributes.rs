@@ -74,7 +74,9 @@ pub(super) fn set_attribute(state: &mut LuaState) -> LuaResult<u32> {
     let name_arg = create_string(state, &name);
     let secure_delegate_dispatch = {
         let sim = borrow_state(state)?;
-        sim.widgets.get(id).is_some_and(|frame| frame.forbidden)
+        sim.widgets
+            .get(id)
+            .is_some_and(|frame| frame.forbidden || frame.is_protected)
     };
     let dispatch = |state: &mut LuaState| -> LuaResult<()> {
         let frame = frame_ref(state, id)?;
