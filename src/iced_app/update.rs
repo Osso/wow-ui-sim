@@ -44,6 +44,10 @@ impl App {
             Message::KeyPress(key, text, captured_at) => {
                 self.handle_key_press_message(&key, text.as_deref(), captured_at)
             }
+            Message::KeyRelease(key) => {
+                self.env.borrow().send_key_up(&key);
+                Task::none()
+            }
             message => {
                 self.dispatch_non_key_message(message);
                 Task::none()
@@ -81,7 +85,10 @@ impl App {
             Message::MovementToggled(field, val) => self.handle_movement_toggled(field, val),
             Message::ModifiersChanged(modifiers) => self.handle_modifiers_changed(modifiers),
             // Handled before dispatch_non_key_message() or directly in update():
-            Message::KeyPress(_, _, _) | Message::CanvasEvent(_) | Message::ProcessTimers(_) => {
+            Message::KeyPress(_, _, _)
+            | Message::KeyRelease(_)
+            | Message::CanvasEvent(_)
+            | Message::ProcessTimers(_) => {
                 unreachable!()
             }
         }
@@ -216,7 +223,7 @@ impl App {
     ) -> Task<Message> {
         let dispatch_started = Instant::now();
         let env = self.env.borrow();
-        if let Err(e) = env.send_key_press(key, text) {
+        if let Err(e) = env.send_key_down(key, text) {
             self.log_messages
                 .push(format!("KeyPress({}) error: {}", key, e));
         }

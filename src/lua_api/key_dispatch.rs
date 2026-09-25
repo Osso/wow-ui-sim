@@ -68,11 +68,23 @@ fn printable_text_for_editbox_key<'a>(key: &'a str, text: Option<&'a str>) -> Op
     None
 }
 
-fn normalized_key_name(key: &str) -> String {
+pub(crate) fn normalized_key_name(key: &str) -> String {
     if let Some(control_key) = crate::key_names::ascii_control_key_to_letter(key) {
         return format!("CTRL-{control_key}");
     }
-    key.to_string()
+    key.to_ascii_uppercase()
+}
+
+fn unmodified_key_name(key: &str) -> &str {
+    let mut key = key;
+    while let Some(rest) = key
+        .strip_prefix("CTRL-")
+        .or_else(|| key.strip_prefix("ALT-"))
+        .or_else(|| key.strip_prefix("SHIFT-"))
+    {
+        key = rest;
+    }
+    key
 }
 
 // ── WowLuaEnv impl ───────────────────────────────────────────────────────────
@@ -83,13 +95,33 @@ impl WowLuaEnv {
     /// `text` is the raw Unicode character(s) for typing into a focused
     /// EditBox. Pass `None` for non-printable keys.
     pub fn send_key_press(&self, key: &str, text: Option<&str>) -> Result<()> {
+        let result = self.send_key_down(key, text);
+        self.send_key_up(key);
+        result
+    }
+
+    /// Dispatch a physical key-down while retaining its held state until key-up.
+    pub fn send_key_down(&self, key: &str, text: Option<&str>) -> Result<()> {
         let normalized = normalized_key_name(key);
         let key = normalized.as_str();
+        self.state
+            .borrow_mut()
+            .pressed_keys
+            .insert(unmodified_key_name(key).to_string());
         if key == "ESCAPE" {
             self.dispatch_escape()
         } else {
             self.dispatch_key(key, text)
         }
+    }
+
+    /// Release a physical key without dispatching another key-down event.
+    pub fn send_key_up(&self, key: &str) {
+        let normalized = normalized_key_name(key);
+        self.state
+            .borrow_mut()
+            .pressed_keys
+            .remove(unmodified_key_name(&normalized));
     }
 
     // ── Escape ────────────────────────────────────────────────────────────────

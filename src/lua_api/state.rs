@@ -219,6 +219,7 @@ macro_rules! build_empty_sim_state {
             timerunning_season_id: None,
             timerunning_season_seconds_remaining: 0,
             modifier_keys: ModifierKeys::default(),
+            pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
             discord: DiscordState::default(),
             player_choice: PlayerChoiceState::default(),

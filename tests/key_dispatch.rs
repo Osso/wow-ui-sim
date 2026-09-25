@@ -9,6 +9,39 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
 }
 
+#[test]
+fn key_down_state_tracks_real_dispatch_and_release() {
+    let env = env();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame", "KeyDownStateFrame", UIParent)
+        frame:EnableKeyboard(true)
+        frame:SetScript("OnKeyDown", function(_, key)
+            _G.key_down_seen = { key, IsKeyDown(key), IsKeyDown("F2") }
+        end)
+        "#,
+    )
+    .unwrap();
+    let id = env.state().borrow().widgets.get_id_by_name("KeyDownStateFrame").unwrap();
+    env.state().borrow_mut().focused_frame_id = Some(id);
+
+    assert!(!env.eval::<bool>("return IsKeyDown('Q')").unwrap());
+    env.send_key_down("Q", None).unwrap();
+    let seen: (String, bool, bool) = env.eval("return unpack(_G.key_down_seen)").unwrap();
+    assert_eq!(seen, ("Q".into(), true, false));
+    assert!(env.eval::<bool>("return IsKeyDown('Q')").unwrap());
+    env.send_key_up("Q");
+    assert!(!env.eval::<bool>("return IsKeyDown('Q')").unwrap());
+}
+
+#[test]
+fn synthetic_key_press_releases_and_headless_keys_start_up() {
+    let env = env();
+    assert!(!env.eval::<bool>("return IsKeyDown('F2')").unwrap());
+    env.send_key_press("F2", None).unwrap();
+    assert!(!env.eval::<bool>("return IsKeyDown('F2')").unwrap());
+}
+
 // ── ESC dispatch ──────────────────────────────────────────────────────────────
 
 #[test]

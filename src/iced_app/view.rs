@@ -54,6 +54,15 @@ fn message_from_keyboard_event(
     if let keyboard::Event::ModifiersChanged(modifiers) = keyboard_event {
         return Some(Message::ModifiersChanged(*modifiers));
     }
+    if let keyboard::Event::KeyReleased {
+        key, physical_key, ..
+    } = keyboard_event
+    {
+        let modifiers = keyboard::Modifiers::empty();
+        let key = super::keybinds::iced_key_to_wow(key, modifiers)
+            .or_else(|| super::keybinds::iced_physical_key_to_wow(physical_key, modifiers))?;
+        return Some(Message::KeyRelease(key));
+    }
     let keyboard::Event::KeyPressed {
         key,
         modifiers,

@@ -211,6 +211,7 @@ pub struct SimState {
     pub timerunning_season_id: Option<u32>,
     pub timerunning_season_seconds_remaining: u64,
     pub modifier_keys: ModifierKeys,
+    pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
     pub game_rules: GameRulesState,
     pub discord: DiscordState,

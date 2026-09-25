@@ -168,6 +168,8 @@ pub enum Message {
     /// plus optional raw text for character input into focused EditBox and
     /// the event capture timestamp.
     KeyPress(String, Option<String>, Instant),
+    /// Physical key released (unmodified WoW key name).
+    KeyRelease(String),
     /// Keyboard modifier state changed.
     ModifiersChanged(iced::keyboard::Modifiers),
     /// Player class changed via dropdown.

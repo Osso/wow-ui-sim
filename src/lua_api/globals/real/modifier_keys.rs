@@ -12,9 +12,33 @@
 //! modifier-aware UI paths (e.g. `IsModifiedClick("CHATLINK")`).
 
 use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+pub fn is_key_down(state: &mut LuaState) -> LuaResult<u32> {
+    let key = String::from_stack(state, 1)?;
+    let key = crate::lua_api::key_dispatch::normalized_key_name(&key);
+    let down = {
+        let sim = borrow_state(state)?;
+        match key.as_str() {
+            "SHIFT" | "LSHIFT" | "RSHIFT" => sim.modifier_keys.shift,
+            "CTRL" | "CONTROL" | "LCTRL" | "RCTRL" => sim.modifier_keys.control,
+            "ALT" | "LALT" | "RALT" => sim.modifier_keys.alt,
+            "META" | "LMETA" | "RMETA" => sim.modifier_keys.meta,
+            "LEFTBUTTON" | "RIGHTBUTTON" | "MIDDLEBUTTON" | "BUTTON4" | "BUTTON5" => {
+                sim.mouse_buttons.is_down(Some(&key))
+            }
+            _ => sim.pressed_keys.contains(&key),
+        }
+    };
+    state.push(if key.is_empty() {
+        Val::Nil
+    } else {
+        Val::Bool(down)
+    });
+    Ok(1)
+}
 
 pub fn is_shift_key_down(state: &mut LuaState) -> LuaResult<u32> {
     let down = borrow_state(state)?.modifier_keys.shift;
@@ -93,6 +117,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     use rilua::LuaApiMut;
     let state = lua.state_mut();
     let g = state.global;
+    table_set_rust_fn_static(state, g, "IsKeyDown", is_key_down)?;
     table_set_rust_fn_static(state, g, "IsShiftKeyDown", is_shift_key_down)?;
     table_set_rust_fn_static(state, g, "IsControlKeyDown", is_control_key_down)?;
     table_set_rust_fn_static(state, g, "IsAltKeyDown", is_alt_key_down)?;
