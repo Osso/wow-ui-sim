@@ -34,6 +34,7 @@ Retail 12.1 and cumulative PTR startup execute annotated files from eligible Loa
 ## Known gaps (current cycle)
 
 - [ ] Private-table identity and SavedVariables visibility during bootstrap have not been live-probed; no parity claim is made for those boundaries.
+- [ ] Bootstrap-owner dependency behavior is not native-proven. The simulator regression behind `003128db2` identifies `Blizzard_BarbershopUI` as the actual stray `CharCustomizeFrame` producer: its bootstrap-only startup owner had `RequiredDep: Blizzard_CharacterCustomize`; the former second startup dependency closure promoted that LoD customization addon to `Full`. Removing that second closure keeps dependencies of eager full roots eager, while an explicit later full owner load still orders its dependencies before its remaining files. This is bounded source/simulator evidence only; GUI and final checks remain pending.
 
 ## Out of scope
 
