@@ -108,7 +108,7 @@ fn aura_secret_duration_widget_handoffs_keep_readout_restricted() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn aura_secret_geometry_decodes_native_arguments_and_keeps_mixed_origins() {
     let env = WowLuaEnv::new().unwrap();
@@ -162,7 +162,7 @@ fn aura_secret_geometry_decodes_native_arguments_and_keeps_mixed_origins() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(feature = "forbidden-aspects")]
 #[test]
 fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
     let env = WowLuaEnv::new().unwrap();

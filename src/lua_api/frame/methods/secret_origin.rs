@@ -15,7 +15,7 @@ pub(crate) fn require_readable(state: &LuaState, secret: bool) -> LuaResult<()> 
 
 /// Only VM-authenticated wrappers are decoded; plain coercion stays with each API.
 pub(crate) fn unwrap_input(state: &LuaState, value: Val) -> LuaResult<(Val, bool)> {
-    if !cfg!(feature = "client-wowforever") {
+    if !cfg!(feature = "forbidden-aspects") {
         return Ok((value, false));
     }
     let secret = rilua::table_security::is_secret_value(state, value);
