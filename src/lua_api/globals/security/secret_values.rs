@@ -164,26 +164,8 @@ fn function_is_secret(
     state: &mut LuaState,
     func_ref: rilua::vm::gc::arena::GcRef<rilua::vm::closure::Closure>,
 ) -> bool {
-    let Val::Table(taint_table_ref) = registry_get(state, "__closure_taint") else {
-        return false;
-    };
-    let Some(table) = state.gc.tables.get(taint_table_ref) else {
-        return false;
-    };
-    let taint = table.get(Val::Num(func_ref.index() as f64), &state.gc.string_arena);
-    matches!(taint, Val::Str(taint_ref) if string_matches(state, taint_ref, LOADSTRING_SECRET_TAINT_MARKER))
-}
-
-fn string_matches(
-    state: &LuaState,
-    string_ref: rilua::vm::gc::arena::GcRef<rilua::vm::string::LuaString>,
-    expected: &str,
-) -> bool {
-    state
-        .gc
-        .string_arena
-        .get(string_ref)
-        .is_some_and(|value| value.data() == expected.as_bytes())
+    rilua::stdlib::taint::get_closure_taint(state, func_ref).as_deref()
+        == Some(LOADSTRING_SECRET_TAINT_MARKER)
 }
 
 pub(super) fn table_is_secret(

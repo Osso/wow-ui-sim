@@ -181,7 +181,7 @@ fn tainting_loadstring(state: &mut LuaState) -> LuaResult<u32> {
         .map_err(|error| runtime_error(format!("loadstring wrapper failed: {error}")))?;
     if should_taint && let Some(Val::Function(func_ref)) = results.first().copied() {
         let func = rilua::Function::from_gc_ref(func_ref);
-        stamp_addon_taint_state(state, &func, LOADSTRING_TAINT_MARKER);
+        stamp_addon_taint_state(state, &func, LOADSTRING_TAINT_MARKER)?;
     }
     let count = results.len() as u32;
     for value in results {

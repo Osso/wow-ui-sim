@@ -192,10 +192,10 @@ fn execute_compiled_lua_file(
     ctx: &AddonContext,
     chunk_name: &str,
 ) -> Result<rilua::Val, LoadError> {
-    // Stamp addon taint on the compiled function's GC header. When the VM executes
-    // it, fixedtaint blocks read-propagation and inner closures inherit writetaint.
+    // The VM tracks this exact closure allocation and applies its addon taint on entry.
     if ctx.taint {
-        set_object_taint(state, &func, ctx.name);
+        stamp_addon_taint_state(state, &func, ctx.name)
+            .map_err(|e| report_lua_load_error(state, e))?;
     }
     if ctx.use_secure_env {
         mark_secure_state(state, &func).map_err(|e| report_lua_load_error(state, e))?;
@@ -297,11 +297,6 @@ fn load_cached_or_compile(
         }
     }
     Ok(func)
-}
-
-/// Set taint on a Lua function's GC object header via `debug.setobjecttaint`.
-fn set_object_taint(state: &mut LuaState, func: &rilua::Function, taint: &str) {
-    stamp_addon_taint_state(state, func, taint);
 }
 
 fn report_lua_load_error(state: &mut LuaState, err: impl ToString) -> LoadError {
