@@ -1,4 +1,5 @@
-use crate::lua_api::script_helpers::ScriptBinding;
+use crate::lua_api::script_helpers::{ScriptBinding, protected_lua_pcall_state};
+use crate::lua_api::taint::{clear_active_stack_taint, restore_active_stack_taint};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
@@ -42,16 +43,14 @@ pub(super) fn build_hooked_script(state: &mut LuaState, old: Val, hook: Val) -> 
         end
     "#,
     )?;
-    let call_base = state.top;
-    state.ensure_stack(call_base + 4);
-    state.stack_set(call_base, Val::Function(func.gc_ref()));
-    state.stack_set(call_base + 1, old);
-    state.stack_set(call_base + 2, hook);
-    state.top = call_base + 3;
-    state.call_function(call_base, 1)?;
-    let result = state.stack_get(call_base);
-    state.top = call_base;
-    Ok(result)
+    let saved_taints = clear_active_stack_taint(state);
+    let result = protected_lua_pcall_state(state, Val::Function(func.gc_ref()), &[old, hook]);
+    restore_active_stack_taint(state, saved_taints);
+    result
+        .map_err(runtime_error)?
+        .into_iter()
+        .next()
+        .ok_or_else(|| runtime_error("HookScript factory returned no handler"))
 }
 
 pub(super) fn reject_unsupported_hook_binding(

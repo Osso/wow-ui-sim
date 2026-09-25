@@ -3,6 +3,60 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn hook_script_preserves_original_and_addon_hook_taint() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame('Frame')
+        frame:Hide()
+        local originalSecure, hookSecure
+        frame:SetScript('OnShow', function() originalSecure = issecure() end)
+        local function addon()
+            frame:HookScript('OnShow', function() hookSecure = issecure() end)
+            assert(not issecure(), 'hook construction cleared addon caller')
+        end
+        debug.setobjecttaint(addon, 'HookOriginAddon')
+        addon()
+        frame:Show()
+        assert(originalSecure == true, 'hook wrapper tainted the trusted original')
+        assert(hookSecure == false, 'addon hook became secure')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn secure_function_hook_preserves_original_origin_and_results() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local originalSecure, hookSecure
+        HookOriginFunction = function(value)
+            originalSecure = issecure()
+            return value, nil, 3
+        end
+        local function addon()
+            hooksecurefunc('HookOriginFunction', function() hookSecure = issecure() end)
+            assert(not issecure(), 'hook construction cleared addon caller')
+        end
+        debug.setobjecttaint(addon, 'HookOriginAddon')
+        addon()
+        local first, gap, third = HookOriginFunction(7)
+        assert(first == 7 and gap == nil and third == 3)
+        assert(originalSecure == true and hookSecure == false)
+        assert(not issecretvalue(HookOriginFunction))
+        assert(issecurevariable('HookOriginFunction'))
+        local function call_from_addon() HookOriginFunction(8) end
+        debug.setobjecttaint(call_from_addon, 'HookCallerAddon')
+        call_from_addon()
+        assert(originalSecure == false and hookSecure == false,
+            'calling a hooked function must not clear its caller taint')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn test_hook_script_returns_true() {
     let env = WowLuaEnv::new().unwrap();
     let result: bool = env

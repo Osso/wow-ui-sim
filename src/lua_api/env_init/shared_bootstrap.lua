@@ -797,6 +797,33 @@ tWipe = tWipe or table.wipe
 __wow_hooksecurefunc_registry = __wow_hooksecurefunc_registry or {}
 __wow_hooksecurefunc_wrapper_ids = __wow_hooksecurefunc_wrapper_ids or {}
 
+local callSecureHookFactory = securecallfunction
+local function installSecureHookWrapper(object, key, hookId)
+  local function wrapper(...)
+    local entry = __wow_hooksecurefunc_registry[hookId]
+    local function packResults(...)
+      return { n = select("#", ...), ... }
+    end
+    local function unpackResults(list, first, last)
+      first = first or 1
+      last = last or list.n or #list
+      if first > last then
+        return
+      end
+      return list[first], unpackResults(list, first + 1, last)
+    end
+    local results = packResults(entry.original(...))
+    for _, registeredCallback in ipairs(entry.callbacks) do
+      if type(registeredCallback) == "function" then
+        pcall(registeredCallback, ...)
+      end
+    end
+    return unpackResults(results, 1, results.n)
+  end
+  __wow_hooksecurefunc_wrapper_ids[wrapper] = hookId
+  object[key] = wrapper
+end
+
 function hooksecurefunc(target, methodName, hook)
   local object = target
   local key = methodName
@@ -833,33 +860,7 @@ function hooksecurefunc(target, methodName, hook)
     callbacks = { callback },
   }
 
-  local wrapperSource = string.format([[
-    return function(...)
-      local entry = _G.__wow_hooksecurefunc_registry[%d]
-      local function packResults(...)
-        return { n = select("#", ...), ... }
-      end
-      local function unpackResults(list, first, last)
-        first = first or 1
-        last = last or list.n or #list
-        if first > last then
-          return
-        end
-        return list[first], unpackResults(list, first + 1, last)
-      end
-      local results = packResults(entry.original(...))
-      for _, registeredCallback in ipairs(entry.callbacks) do
-        if type(registeredCallback) == "function" then
-          pcall(registeredCallback, ...)
-        end
-      end
-      return unpackResults(results, 1, results.n)
-    end
-  ]], hookId)
-  local wrapper = assert(loadstring(wrapperSource))()
-
-  __wow_hooksecurefunc_wrapper_ids[wrapper] = hookId
-  object[key] = wrapper
+  callSecureHookFactory(installSecureHookWrapper, object, key, hookId)
 end
 
 if getn == nil then
