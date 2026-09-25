@@ -52,6 +52,46 @@ fn retail_native_aura_button_preserves_wrapped_duration_arguments() {
     .expect("unchanged Blizzard aura duration consumer preserves wrapped timing and identity");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_native_custom_aura_reads_wrapped_asset_fields() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_AuraContainer"],
+        &[],
+        |env, _| {
+            env.exec(r#"
+                local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
+                local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
+                    GetForbiddenObjectTable(container), {batchSize=1,
+                    templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
+                        CustomAssetTexture = button:CreateTexture(nil, 'OVERLAY')
+                        button:AddDispelTypeTexture(CustomAssetTexture, {
+                            style=Enum.CustomAuraButtonDispelTypeTextureStyle.CustomAsset,
+                            showWhenHelpful=true, showWithoutDispelType=true,
+                            customDispelAssetMap={None={asset=134400,
+                                texCoords={left=0.1, right=0.9, top=0.2, bottom=0.8}}},
+                        })
+                    end})
+                local button = provider:AcquireFrame()
+                local private = GetForbiddenObjectTable(button)
+                local aura = {auraInstanceID=9982, spellId=19750, name='Custom asset',
+                    duration=8, expirationTime=8, timeMod=1, applications=1,
+                    isHelpful=true, sourceUnit='player'}
+                private:SetAuraInstance('player', aura)
+                private:UpdateAuraDisplay()
+                assert(CustomAssetTexture:GetTexture() == 134400, 'wrapped asset was not applied')
+                local left, top, _, bottom, right = CustomAssetTexture:GetTexCoord()
+                assert(math.abs(left-0.1)<0.001 and math.abs(right-0.9)<0.001)
+                assert(math.abs(top-0.2)<0.001 and math.abs(bottom-0.8)<0.001)
+                aura.dispelName = 'Curse'
+                private:UpdateAuraInstance('player', aura)
+                private:UpdateAuraDisplay()
+                assert(CustomAssetTexture:GetTexture() == nil, 'wrapped missing asset did not clear texture')
+            "#).expect("unchanged aura rendering reads the asset and clears its missing-key branch");
+        },
+    );
+}
+
 // Secret lifecycle/access expectations below are explicit simulator guesses, not native proof.
 #[cfg(feature = "client-wowforever")]
 #[test]

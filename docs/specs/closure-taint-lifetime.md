@@ -5,6 +5,7 @@ Addon and loadstring taint belongs to one closure allocation, not a reusable are
 ## What it must do
 
 - [ ] Preserve a reachable function's explicit taint across collection and secure calls.
+- [ ] New Lua closures inherit the deepest active caller taint, including through a clean factory; a factory invoked across `securecallfunction` creates clean closures only when no active taint remains.
 - [ ] Permit an unreachable stamped function to be collected; never transfer its stamp to a new function reusing that arena slot.
 - [ ] Use the same identity for addon-load stamping, loadstring stamping, VM call entry and secret-function classification.
 - [ ] Report attempts to stamp a collected closure rather than silently ignoring them.
