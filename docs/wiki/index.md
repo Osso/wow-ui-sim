@@ -1,3 +1,7 @@
+## [2026-09-25] maintenance | Document installed-product discovery
+
+`692e36936`/`4eb32befa` replace non-pinned `.build.info` identity selection with the exact requested `.product.db` record via cascette's shared parser: version field 7, active build key field 14, optional install key field 16. The real Forever product DB, PE metadata, and 69977 build config agree; no metadata repair, Battle.net action, `.build.info` fallback, or other-product fallback is required. This is simulator policy, not native-launcher behavior or a full-content guarantee. The new release build starts; default real-install GUI proof remains pending. See [[casc-asset-cache]] and [[forever-character-panel]].
+
 ## [2026-09-25] investigation | Correct isolated Forever cold-fixture mapping diagnosis
 
 The isolated fixture omitted the community listfile CSV; GUI startup changes cwd to its binary directory, so its resolver had no source catalog. Cached blobs cannot resolve a texture path without path-to-FDID mapping. `d0f525630` bundles deterministic CommonMask, BagSlot, and FrameMetal mappings; the focused limited-listfile regression is 4/4. The completed cold fixture restores the real community CSV symlink while starting with no resolver SQLite or resolution cache. It resolves the mapped assets; only the unrelated generic minimap mask remains missing. See [[forever-character-panel]] and [[backpack-background-texture]].
@@ -1386,7 +1390,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[texture-atlas]] | TextureManager (BLP/PNG/WebP), ~50K-entry compiled atlas database, five RGBA GPU tiers plus optional BC1/BC3 atlases, persistent live/shared-headless atlas contexts, nine-slice kit detection, UV remapping |
 | [[frame-data-flow]] | Parallel Lua/Rust systems, same-object engine-root XML configuration, addon-load ownership/cleanup, global tables (__frame_fields/__scripts), method lookup order, Mixin() application with early EditMode base aliases, event dispatch flow |
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
-| [[casc-asset-cache]] | CASC cache layers (FDID resolution sqlite, BLP byte cache, Blizzard UI source cache, in-memory texture cache), measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
+| [[casc-asset-cache]] | CASC cache layers, `.product.db` selected-product identity, measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs modeled from ChrSpecialization.db2 (`SpecInfo.mastery_spell_ids`); backs `C_SpecializationInfo.GetSpecializationMasterySpells` and the Character sheet Mastery tooltip |
 | [[duration-core]] | Lua table-proxy duration timing state, including narrow Retail 12.1+/Forever player cast/channel queries, manual clocks, Copy/Assign policy, curve-evaluation reuse, explicit simulator formulas, and native/consumer boundaries |
 

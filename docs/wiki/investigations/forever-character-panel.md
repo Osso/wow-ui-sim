@@ -46,7 +46,7 @@ The earlier isolated cold fixture omitted the community listfile CSV. GUI startu
 
 The historical `/tmp/wow-character-bug/frozen-69977-install` fixture used isolated application/resolver caches, a real community CSV symlink at `resolver/data/community-listfile.csv`, and initially absent resolver SQLite and resolution caches. CASC built 1,441,761 resolution entries in 13.6 seconds before GUI font initialization at 30.409 seconds. First draw stalled 1.2 seconds (18.6ms quads, 12.1ms textures, 1.2s other), with no later draw stall. The deliberately absent `ability_racial_jackofalltrades` (FDID `2447783`) extracted from local CASC after `--exec-lua`. stderr has no Lua errors; the only `Not found` line is the unrelated `ui-hud-minimap-frame-generic-mask`. This proves the corrected mappings and bounded visual behavior in the isolated historical fixture, not texture completeness, default startup, or registered-host startup.
 
-The real installed `.build.info` is still missing `wow_classic_beta`; registered-install startup remains blocked. The generic minimap-mask miss remains open.
+The real installed `.product.db` contains the exact `wow_classic_beta` 69977 active-build record, so the missing `.build.info` row no longer blocks registered-install startup. `692e36936`/`4eb32befa` select the requested product's `activeBuildKey` through cascette's shared parser, without metadata writes or another-product fallback. The generic minimap-mask miss remains open. A new release build starts; default real-install GUI proof is pending.
 
 ## Sources
 

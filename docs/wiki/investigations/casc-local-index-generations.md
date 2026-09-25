@@ -33,7 +33,7 @@ The four former character-panel misses are now exact 69977 CASC files in the sta
 
 ## Limits
 
-The desktop `.build.info` still lacks `wow_classic_beta`; the observed Syncthing debug copy was modified on September 24, 2026 at 19:39 CDT, and this work did not edit real installation metadata. Thus the actual registered install cannot currently supply host-startup proof. The release alias runs with Forever features, but final release visual acceptance remains pending. The unrelated minimap mask miss remains open.
+The desktop `.build.info` still lacks `wow_classic_beta`, but that row is no longer an installed-product discovery requirement. The real `.product.db`, PE metadata, and the 69977 build config agree on the requested Forever product/build; `692e36936`/`4eb32befa` use the product-db record without editing either metadata file. A new release build starts; default real-install GUI proof remains pending. The unrelated minimap mask miss remains open.
 
 ## Sources
 

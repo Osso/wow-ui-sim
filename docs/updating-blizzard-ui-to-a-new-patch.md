@@ -73,8 +73,7 @@ python3 tools/gen_blizzard_ui_manifest.py                 # all profiles
 python3 tools/gen_blizzard_ui_manifest.py retail --no-refresh   # reuse existing cache
 ```
 
-For retail/Classic, sanity-check the reported version against the installed client build
-(`.build.info` → active product `Version`). PTR 12.1.5 is different: its committed
+For non-pinned retail/Classic products, sanity-check the reported version and active build key against the requested `.product.db` record. The resolver selects the exact product code through cascette's shared parser (`currentVersionStr` field 7, `activeBuildKey` field 14, optional `activeInstallKey` field 16); it does not use `.build.info` as authority or fallback. This is simulator policy, not a native-launcher or complete-content guarantee. PTR 12.1.5 is different: its committed
 `data/blizzard-ui-builds/ptr.json` pins the official `wowxptr` build/config identity
 and Gethe revision because this machine has no matching local PTR install.
 
@@ -107,14 +106,16 @@ On September 20, 2026, refreshing the community listfile and regenerating this
 file added 592 `wowforever` path-to-FDID rows. Every one of the 4,398 paths in
 `data/blizzard-ui-files/wowforever.txt` then mapped, and the rebuilt
 `client-wowforever` sync extracted all 4,398 files from local `wow_classic_beta`
-CASC. This establishes source acquisition only; it does not establish startup or
-Blizzard UI compatibility.
+CASC. On September 25, `692e36936`/`4eb32befa` made the same selected product's
+`.product.db` record authoritative for installed identity, so its absent `.build.info`
+row no longer requires repair or Battle.net. This establishes source acquisition and
+identity selection only; it does not establish startup, full content, or Blizzard UI
+compatibility.
 
 ### 4. Rebuild and validate the sync
 
 The manifests and limited listfile are `include_str!`'d at compile time, so
-rebuild before syncing. Retail/Classic sync compares its active profile, CASC product,
-active `.build.info` identity, and compiled manifest hash with cache provenance. PTR
+rebuild before syncing. Non-pinned sync compares its active profile, requested CASC product, `.product.db` version/active-build identity, and compiled manifest hash with cache provenance. PTR
 12.1.5 instead compares its pinned `wowxptr` build/config, Gethe revision, manifest,
 and content-index hashes; it downloads exact CDN archive ranges and verifies both BLTE
 and decoded-content keys. A mismatch automatically removes only that profile's
