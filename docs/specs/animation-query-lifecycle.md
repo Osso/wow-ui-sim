@@ -5,7 +5,7 @@ Ordinary simulator query behavior for `SimpleAnim` and `SimpleAnimGroup`, exerci
 ## What it must do
 
 - [x] Animation `IsPlaying`, `IsPaused`, and `IsDone` follow their owning group through playback, pause/resume, restart, stop, and completion; an independent idle group stays unchanged.
-- [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. An explicit Stop of a playing group dispatches its `OnStop` scripts after state and visuals settle; callback cleanup and reentrant Play remain effective. Stop does not dispatch `OnFinished`. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
+- [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. Explicit Stop of a playing group dispatches its `OnStop` scripts after modeled state, flipbook, and action-bar state settle; callback cleanup and reentrant Play remain effective. Stop does not dispatch `OnFinished`. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
 - [x] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
 - [x] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Bounce callbacks observe direction changes.
 - [x] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
@@ -37,7 +37,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 | `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; exact start-delay boundary and completion across start/end delays |
 | `delaying_uses_order_start_and_longest_parallel_duration` | Earlier-order wait, parallel maximum including end delay, exact delay boundaries, own end delay, and reverse traversal |
 
-Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit Stop callback state, visible cleanup, reentrant Play, and no OnFinished), and `tests/animation_anim.rs`. No new Cargo target or API-publication absence assertions are needed.
+Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, and no OnFinished), and `tests/animation_anim.rs`. The exact Stop RED/GREEN case is recorded in `/tmp/cross-version-animation-stop-proof.md`: Wrath RED 0/1 at `b8596d6dc`, then GREEN 1/1 at `af1b54f2b`. No new Cargo target or API-publication absence assertions are needed.
 
 At test commit `9bc06cfe2`, all five new tests and 59 existing tests passed under each of `client-ptr` and `client-retail`:
 
@@ -53,7 +53,8 @@ Correction `23bdf9fe6` first reproduced two failures: the exact active-start bou
 
 - [x] Correct the reproduced double subtraction of start delay: group time `0.75` with start delay `0.5` now yields local elapsed/progress `0.25` and `IsDelaying() == false`. The getter derives time within the animation's order rather than reinterpreting clamped active elapsed.
 - [x] The model root now commits playback/cache state, releases the simulation-state borrow, then dispatches existing resolved-group `OnPlay` handlers. This supports the unmodified Blizzard EncounterWarnings consumer; it does not change credit for these sixteen query rows or establish native callback/security semantics.
-- [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage. The explicit Stop callback is supported by unchanged Blizzard UI consumers, not a native execution probe; paused/inactive Stop semantics remain unverified.
+- [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage. Unchanged Blizzard UI consumers source the explicit playing-group Stop callback, but no native execution probe establishes it; paused/inactive Stop, hidden-subtree Stop, child-animation `OnStop`, natural finish, Pause, and other callbacks remain unverified.
+- [ ] The later Stop callback-error-path test is uncompiled; its direct-dispatch error behavior has no GREEN proof. Final combined verification remains pending.
 
 ## Out of scope
 

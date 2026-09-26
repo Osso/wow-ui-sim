@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record AnimationGroup Stop source callback boundary
+
+Created [[animation-group-stop-callback]] and updated [animation query lifecycle](../specs/animation-query-lifecycle.md) from `af1b54f2b`, actual source/consumer inspection, and `/tmp/cross-version-animation-stop-proof.md`. Targeted `gui,client-wrath` proof is RED 0/1 at `b8596d6dc` for missing `OnStop`, then GREEN 1/1 at `af1b54f2b`: explicit Stop while playing commits reset state before the group callback; cleanup/reentrant Play survive and `OnFinished` remains absent. Existing retail consumers and the live registration probe are source/support evidence only, not native callback timing. Paused/inactive Stop, hidden-subtree/child callbacks, natural finish, Pause, other callbacks, and the later uncompiled callback-error-path test remain open. Final combined verification is pending. No tests or builds ran for this documentation audit.
+
 ## [2026-09-26] investigation | Measured FPS overlay metrics
 
 `bbd568584` replaces the overlay's derived `other` number, which included idle wait time, with measured per-second numbers: tick/draw/prepare ms, ticks/s, main-thread CPU busy %, and unmeasured busy ms. Tests: `sample_display_metrics_*`, `main_thread_cpu_time_advances_with_busy_work` (26 passed). See [[tick-cooldown-scan]].

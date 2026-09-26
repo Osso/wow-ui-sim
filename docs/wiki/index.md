@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record AnimationGroup Stop source callback boundary
+
+[[animation-group-stop-callback]] records `af1b54f2b`: explicit Stop of a playing group resets modeled state before group `OnStop`; the focused Wrath case is RED 0/1 at `b8596d6dc`, then GREEN 1/1 for callback-visible reset state, visibility cleanup, reentrant Play, and no `OnFinished`. Retail Blizzard source consumers and live registration support inform the contract, not native callback timing. Paused/inactive, hidden-subtree, child-animation, natural-finish/Pause/other-callback, and callback-error-path behavior remain unverified; final combined verification is pending.
+
 ## [2026-09-26] audit | Record EditBox Lua focus callback boundary
 
 `df9ddbf09` fixes a simulator omission: Lua `EditBox:SetFocus`/`ClearFocus` now use the normal ordered handler path for gained/lost callbacks, including hooks. Source/runtime proof is GREEN for four new focus cases plus two unchanged existing cases: committed-state transfer, no-ops, loss reentry suppressing a stale gain, intrinsic binding order, and error continuation. The actual logs are `/tmp/cross-version-editbox-focus-green.log`; no native-WoW semantics claim. After the vitals integration corrections, independent combined verification at `19757e081` passes Wrath 74/74 and retail 87/87, plus format/check; exact scope is `/tmp/cross-version-batch-proof.md`. Existing mouse focus dispatch is unchanged. See [[event-system]] and [[widget-system]].
