@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record UnitGUID modeled-identity boundary
+
+`2938de6e1` routes public `UnitGUID` through the shared existing-identity resolver: missing target/focus, unknown tokens, and removed party slots return nil instead of fabricated internal GUIDs; modeled player, assigned target/focus, and active party identities remain strings. Tests-only `147a6a776` is RED 4 failures / 2 controls; independent GREEN remains pending in `/tmp/cross-version-unit-guid-proof.md`. Wowless supports the bounded model, while cached retail/Mists Arena UI uses GUID truthiness but explicitly distinguishes remote updates from `UnitExists`; no native or universal equivalence claim. See [[lua-api]] and [Unit GUID presence](../specs/unit-guid-presence.md).
+
 ## [2026-09-26] audit | Record explicit macro action texture resolution
 
 `041c8235a` routes formerly spell-only `GetActionTexture` and `C_ActionBar.GetActionTexture` through shared `c_action_bar::action_texture_path`: assigned macros return nonempty stored `MacroInfo.icon`, while spell resolution remains intact. `2ead3b96c` / `2032f8aed` add edit, move, clear, deletion, empty-icon, and spell controls. Independent verification passes four macro-query/profile cases, 25 inventory controls, format/check and readability; `/tmp/cross-version-macro-texture-verification-ledger.md`. See [macro action textures](../specs/macro-action-textures.md) and [[lua-api]].

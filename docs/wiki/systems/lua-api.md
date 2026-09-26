@@ -73,6 +73,8 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 **Core overrides** — `print` appends to `SimState.console_output`; `ipairs` iterates frame children; `getmetatable` returns a fake metatable exposing all frame methods; `string.format` maps `%F` → `%f` for LuaJIT compatibility.
 
+**Unit GUID presence** — Since `2938de6e1`, public `UnitGUID(unit)` uses the shared existing-identity resolver. It returns one Lua `nil` when the token has no modeled unit presence or resolves only to the internal unknown/empty identity; modeled player, assigned target/focus, and active party identities remain strings. The initial six-case group was RED at tests-only `147a6a776` (four missing-identity failures; two present-identity controls); independent GREEN remains pending in `/tmp/cross-version-unit-guid-proof.md`. Wowless's `UnitGUID.lua` supports the bounded modeled rule (`unit and unit.guid or nil`). Cached retail and Mists `Deprecated_ArenaUI.lua` consume GUID truthiness, but its remote-update comment explicitly distinguishes this from `UnitExists`; no native-client behavior or UnitExists equivalence is claimed. See [Unit GUID presence](../../specs/unit-guid-presence.md).
+
 **Build options** — retail 12.1 `GetBuildOption("RestrictedAuraAPI")` returns `true`, selecting current forbidden aura templates; unknown options return `nil`.
 
 **Aura instance enumeration** — `C_UnitAuras.GetUnitAuraInstanceIDs` returns filtered, optionally sorted/limited IDs from existing public aura state; `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs` returns copied IDs from the private list. The matched-filter boolean belongs to Blizzard's source wrapper (public true, private false), not either native return tuple. `UnitAuraSoundTrigger` and metadata are initialized before secure-environment copying. See [contract and native sources](../../specs/unit-aura-instance-enumeration.md); five focused behavioral tests pass, without claiming new aura acquisition or secret-access policy.
@@ -142,6 +144,10 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 ## Sources
 
 - [lua-api.md](../../lua-api.md) — WowLuaEnv, FrameHandle, method categories, globals, C_* namespaces, timers
+- [unit_misc.rs](../../../src/lua_api/globals/unit_misc.rs) — public UnitGUID registration and existing-identity resolver
+- [Unit GUID presence](../../specs/unit-guid-presence.md) — bounded contract, initial RED evidence, and exclusions
+- `/home/osso/Repos/wowless/data/impl/UnitGUID.lua` — modeled nil-on-missing-identity reference
+- `Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua` in cached retail and Mists UI — GUID-truthiness consumer and remote-update boundary
 - [spell_base.rs](../../../src/c_api/spell_base.rs) — explicit specialization relationship model and public/secret boundary
 - [Public base-spell lookup](../../specs/spell-base.md) — documented identity contract and unverified native gaps
 - `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua` in the pinned Forever cache — `GetBaseSpell` signature and no-override identity
