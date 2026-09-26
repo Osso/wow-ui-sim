@@ -169,7 +169,7 @@ pub fn build_quad_batch_for_registry(registry, screen_size, ...) -> QuadBatch {
 | Frame/StatusBar | `build_frame_quads()` | Backdrop, nine-slice |
 | Button | `build_button_quads()` | State-driven textures + center text |
 | Texture | `build_texture_quads()` | Image, atlas, tiling, nine-slice |
-| FontString | `emit_widget_text_quads()` | Text with justify/wrap/max_lines |
+| FontString | `emit_widget_text_quads()` | Text with justify/wrap/max_lines/line spacing |
 | CheckButton | `build_button_quads()` | + left-aligned text offset 20px |
 | EditBox | `build_editbox_quads()` | + padded text |
 
@@ -243,6 +243,12 @@ pub struct WowFontSystem {
 ```
 
 Supported fonts include FRIZQT__.TTF (default), ARIALN.TTF, FRIZQT___CYR.TTF, and the Mists-era specialty fonts used by Blizzard XML. They load from CASC by default. If path/FDID resolution misses a known core font, the loader retries by the known CASC encoding key; it does not ship embedded font bytes. Uppercase path normalization is used for HashMap lookup, with unknown font paths falling back to the default family.
+
+### FontString line spacing
+
+At `d6d7a9078`, `FontString:SetSpacing` state enters regular emission as `text_line_spacing * effective_scale`. That spacing is part of the glyph shape-cache key, shifts each later cached layout line, and contributes to cached total height and vertical justification. Segmented colored FontString emission applies the same scaled increment when it starts a layout line. Font-system measurement also adds spacing only between layout lines; `GetNumLines` remains a line count.
+
+This is bounded to the FontString paths above. `MessageFrame` explicitly supplies `0.0` to its separate measurement/emission path, and this change does not define `FontObject`, EditBox, tooltip, or native-client spacing behavior. Targeted default-feature source proof is 2/2 library and 4/4 integration tests; independent final verification remains pending. See [FontString spacing](specs/fontstring-spacing.md).
 
 ---
 

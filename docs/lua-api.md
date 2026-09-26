@@ -129,7 +129,9 @@ pub struct FrameHandle {
 
 ### Text/FontString Methods (`methods_text/mod.rs`)
 
-`SetText()`, `GetText()`, `GetTextHeight()`, `GetStringWidth()`, `SetFont()`, `GetFont()`, `SetTextColor()`, `SetShadowColor()`, `SetShadowOffset()`, `SetJustifyH()`, `SetJustifyV()`, `SetFormattedText()`, `SetWordWrap()`
+`SetText()`, `GetText()`, `GetTextHeight()`, `GetStringWidth()`, `SetFont()`, `GetFont()`, `SetTextColor()`, `SetShadowColor()`, `SetShadowOffset()`, `SetJustifyH()`, `SetJustifyV()`, `SetFormattedText()`, `SetWordWrap()`, `SetSpacing()`, `GetSpacing()`, `GetStringHeight()`, `GetNumLines()`.
+
+At `d6d7a9078`, `SetSpacing` writes per-frame `text_line_spacing`; `GetSpacing` reads it. FontString measurement and glyph emission consume it between shaped lines, with effective scale applied at rendering. The documented proof is only the FontString path: it does not establish `FontObject` propagation, MessageFrame spacing, EditBox rendering, or native WoW behavior. See [FontString spacing](specs/fontstring-spacing.md).
 
 ### Button Methods (`methods_button.rs`)
 

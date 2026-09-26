@@ -1,6 +1,6 @@
 # FontString line spacing
 
-`FontString:SetSpacing` adds vertical separation between shaped text lines; `GetSpacing` returns the stored value. This is a simulator contract inferred from the API name and local consumers, not native-verified behavior.
+`FontString:SetSpacing` stores per-`FontString` line spacing; `GetSpacing` returns that stored value. At `d6d7a9078`, the default-feature simulator path applies it between shaped lines in regular and segmented rendering and in `GetStringHeight`/auto-height measurement. This is source-backed simulator behavior, not native-verified behavior.
 
 ## What it must do
 
@@ -9,6 +9,7 @@
 - [x] Explicit newlines and wrapped lines use the same spacing policy; text scale scales measured separation.
 - [x] `GetNumLines` counts layout lines rather than treating spacing as extra lines, including without an attached font system.
 - [x] Segmented, colored FontString text applies spacing when wrapping to another line.
+- [x] The regular glyph-layout cache keys spacing, stores spaced line coordinates and total height, and receives spacing scaled by the FontString effective scale.
 
 ## How it works
 
@@ -21,17 +22,20 @@ See [rendering pipeline](../rendering-pipeline.md) and [Lua API](../lua-api.md).
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — FontString height and line-count queries.
 - `src/render/font.rs` — shaped height and line-count metrics.
 - `src/render/glyph.rs`, `src/render/glyph/text_emit.rs` — cached glyph layout, line coordinates and rendered height.
-- `src/iced_app/quad_builders.rs` — regular and colored text emission.
+- `src/iced_app/quad_builders.rs` — regular text passes `text_line_spacing * effective_scale` to glyph emission; segmented colored placement adds that same scaled spacing on a new layout line.
+- `src/iced_app/message_frame_render.rs` — deliberately passes `0.0` for message measurement and emission; this FontString change does not establish MessageFrame spacing.
+
+## Source-lane proof
+
+At `d6d7a9078`, default-feature targeted source tests were RED 0/2 for renderer glyph placement and RED 0/3 for integration height/auto-height behavior. Final targeted GREEN is **2/2 library tests** and **4/4 integration tests**; the fourth integration case covers line count without an attached font system. Logs: `/tmp/font-spacing-{lib,integration}-{red,green-current}.log`; full ledger: `/tmp/cross-version-font-spacing-proof.md`.
+
+This is source/default-feature coverage only. Independent final verification remains pending; no native-client, full-profile, broad-suite, or GUI-parity claim follows from these counts.
 
 ## Tests asserting this spec
 
-- `src/iced_app/quad_builders_tests.rs` — nonempty glyph quads and colored wrap.
-- `tests/spacing_roundtrip.rs` — Lua height, auto-height, wrapping, scaling, count and getter.
+- `src/iced_app/quad_builders_tests.rs` — regular nonempty glyph placement and segmented colored wrap.
+- `tests/spacing_roundtrip.rs` — Lua height, auto-height, wrapping, text scale, count, and getter.
 
-## Known gaps (current cycle)
+## Untested / out of scope
 
-- [x] Record targeted RED/GREEN and commit with passing tests.
-
-## Out of scope
-
-Exact native spacing units, negative-spacing clamping, EditBox and SimpleHTML rendering, tooltip/message-frame spacing semantics, font-object inheritance, and full GUI visual parity are not established by cached API declarations or these tests.
+Exact native spacing units, negative-spacing clamping, EditBox and SimpleHTML rendering, tooltip/message-frame spacing semantics, `FontObject` inheritance or mutation propagation, and full GUI visual parity are not established. `SetSpacing` is shared in the method registration path, but the documented/rendered proof here is bounded to `FontString`; it does not assign this behavior to `FontObject` or `MessageFrame`.

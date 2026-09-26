@@ -1,6 +1,8 @@
-## [2026-09-26] audit | Record AnimationGroup Stop source callback boundary
+## [2026-09-26] audit | Record bounded FontString spacing and AnimationGroup Stop behavior
 
-[[animation-group-stop-callback]] records `af1b54f2b`: explicit Stop of a playing group resets modeled state before group `OnStop`; the focused Wrath case is RED 0/1 at `b8596d6dc`, then GREEN 1/1 for callback-visible reset state, visibility cleanup, reentrant Play, and no `OnFinished`. Retail Blizzard source consumers and live registration support inform the contract, not native callback timing. Paused/inactive, hidden-subtree, child-animation, natural-finish/Pause/other-callback, and callback-error-path behavior remain unverified; final combined verification is pending.
+[FontString spacing](../specs/fontstring-spacing.md) records `d6d7a9078`: default-feature source proof is RED 0/2 library and 0/3 integration, then GREEN 2/2 library and 4/4 integration for FontString glyph placement, height, auto-height, wrapping, scale, and no-font line count. It does not establish FontObject, MessageFrame, EditBox, native-client, full-profile, or final independent behavior.
+
+[[animation-group-stop-callback]] records `af1b54f2b` and `43025255d`: explicit Stop of a playing group resets modeled state before ordered group `OnStop`; erroring handlers are source-routed through the error handler. The focused Wrath callback case is RED 0/1 then GREEN 1/1; the error-path case has valid pre-correction RED 0/1 only. Post-correction error GREEN and the final independent gate remain pending. These bounded audits do not make FontString or animation exclusive priorities within the broader cross-version useful-behavior goal.
 
 ## [2026-09-26] audit | Record EditBox Lua focus callback boundary
 
