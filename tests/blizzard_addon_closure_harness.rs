@@ -129,6 +129,36 @@ Core.lua
 }
 
 #[test]
+fn panel_addons_load_narration_before_shared_xml_consumes_its_slider_mixin() {
+    let ui = common::panel_fixtures::blizzard_ui_dir();
+    let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    common::panel_fixtures::load_panel_addons(&env);
+
+    let errors = common::panel_fixtures::recorded_lua_errors(&env);
+    for error in &errors {
+        eprintln!("panel addon Lua error: {error}");
+    }
+
+    let (narration_loaded, formatter_published): (bool, bool) = env
+        .eval(
+            r#"return C_AddOns.IsAddOnLoaded("Blizzard_Narration"),
+                type(NarrationSliderMixin) == "table"
+                and type(NarrationSliderMixin.SetNarrationValueFormatter) == "function""#,
+        )
+        .expect("narration dependency probe should return");
+    assert!(
+        narration_loaded && formatter_published,
+        "SharedXML requires the loaded Narration slider formatter publisher; baseline Lua errors: {errors:#?}",
+    );
+    assert!(
+        !errors
+            .iter()
+            .any(|error| error.contains("SetNarrationValueFormatter")),
+        "SharedXML must not initialize a slider before its Narration formatter is available; baseline Lua errors: {errors:#?}",
+    );
+}
+
+#[test]
 fn runtime_load_addon_matches_lod_closure_for_direct_dependencies() {
     let ui = TempBlizzardUiDir::new("runtime-lod-closure-direct");
     ui.add_addon(
