@@ -17,12 +17,12 @@ Dependencies were left intact. A subsequent `cargo build --bin wow-sim -v --timi
 
 ## Boundaries
 
-This does not establish disk corruption, concurrent modification, a rustc bug, or a mold bug. Earlier `CARGO_INCREMENTAL=0` evidence did not test the default workflow. The incident did not change `incremental = true`, mold, or source behavior. The passing build is compile evidence only; runtime green verification remains pending an independent verifier agent.
+This does not establish disk corruption, concurrent modification, a rustc bug, or a mold bug. Earlier `CARGO_INCREMENTAL=0` evidence did not test the default workflow. The incident did not change `incremental = true`, mold, or source behavior. Independent verification inspected the build logs and ran `timeout 90 target/debug/wow-sim lua-errors` with normal addons and SavedVariables: exit `0`, no addon load failures, and zero Lua errors. This verifies the recovered default build and startup, not prevention of another cache mismatch.
 
 ## Sources
 
-- [Cargo manifest](../../Cargo.toml) — dev profile retains `incremental = true`.
-- [Cargo configuration](../../.cargo/config.toml) — Linux linker remains clang with mold arguments.
+- [Cargo manifest](../../../Cargo.toml) — dev profile retains `incremental = true`.
+- [Cargo configuration](../../../.cargo/config.toml) — Linux linker remains clang with mold arguments.
 - `/tmp/retail-linker/proof.json` — commands, exits, and durations.
 - `/tmp/retail-linker/default-build.stderr` — default linker failure and unresolved symbols.
 - `/tmp/retail-linker/archive-nm.log` — unresolved and defined anonymous-symbol suffixes in the archived library.
