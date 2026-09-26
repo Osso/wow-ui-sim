@@ -694,6 +694,7 @@ mod global_frame_access;
 mod inline_script;
 mod layout_alpha;
 mod layout_anchoring;
+mod layout_multi_root;
 mod layout_positioning;
 mod layout_scale;
 mod layout_size;

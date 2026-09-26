@@ -30,6 +30,8 @@ pub struct CachedFrameLayout {
 pub struct LayoutCache {
     resolved: FxHashMap<u64, CachedFrameLayout>,
     visiting: FxHashSet<u64>,
+    /// Frames whose stored rect was already rewritten during this pass.
+    recomputed: FxHashSet<u64>,
 }
 
 impl LayoutCache {
@@ -44,6 +46,13 @@ impl LayoutCache {
     pub fn remove(&mut self, id: &u64) {
         self.resolved.remove(id);
         self.visiting.remove(id);
+    }
+
+    /// Claim `id` for a stored-rect rewrite in this pass. Rects depend only on
+    /// registry state, never on stored `layout_rect`s, so a second rewrite in
+    /// the same pass would produce the same result.
+    pub(crate) fn claim_recompute(&mut self, id: u64) -> bool {
+        self.recomputed.insert(id)
     }
 
     fn begin_resolve(&mut self, id: u64) -> bool {

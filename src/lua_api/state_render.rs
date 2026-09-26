@@ -326,6 +326,9 @@ impl SimState {
         screen_height: f32,
         cache: &mut crate::layout::LayoutCache,
     ) {
+        if !cache.claim_recompute(id) {
+            return;
+        }
         // Remove stale entry so compute_frame_rect_cached recomputes.
         cache.remove(&id);
         let rect = crate::layout::compute_frame_rect_cached(
