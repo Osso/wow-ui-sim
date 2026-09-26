@@ -56,6 +56,25 @@ fn test_c_item_get_item_info_returns_multi_value() {
 }
 
 #[test]
+fn test_get_item_info_accepts_bare_item_strings() {
+    let env = WowLuaEnv::new().unwrap();
+    // AllTheThings queries items by bare item strings, not full links.
+    let results: String = env
+        .eval(
+            r#"
+            local out = {}
+            for _, query in ipairs({ "item:6948", "item:6948:::::::::::1:1:3524:" }) do
+                local name, link, quality = GetItemInfo(query)
+                out[#out + 1] = tostring(name) .. "|" .. tostring(quality) .. "|" .. tostring(link == select(2, GetItemInfo(6948)))
+            end
+            return table.concat(out, ",")
+            "#,
+        )
+        .unwrap();
+    assert_eq!(results, "Hearthstone|1|true,Hearthstone|1|true");
+}
+
+#[test]
 #[cfg(feature = "client-mists")]
 fn test_c_item_get_classic_tradegoods_subclass_info() {
     let env = WowLuaEnv::new().unwrap();

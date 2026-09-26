@@ -15,10 +15,16 @@ use std::collections::HashSet;
 
 type CItemMethod = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
 
+/// Parse the id from a hyperlink (`|Hitem:123:...|h`) or a bare link string
+/// (`item:123:...`); WoW APIs accept both forms.
 pub(crate) fn parse_prefixed_id(value: &str, prefix: &str) -> Option<u32> {
-    let needle = format!("|H{prefix}:");
-    let start = value.find(&needle)? + needle.len();
-    let digits: String = value[start..]
+    let bare = format!("{prefix}:");
+    let hyperlink = format!("|H{bare}");
+    let fields = match value.find(&hyperlink) {
+        Some(start) => &value[start + hyperlink.len()..],
+        None => value.strip_prefix(&bare)?,
+    };
+    let digits: String = fields
         .chars()
         .take_while(|ch| ch.is_ascii_digit())
         .collect();
