@@ -245,6 +245,7 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     #[cfg(feature = "on-update-modes")]
     crate::c_api::on_update_modes::register(lua.state_mut());
+    #[cfg(feature = "aura-instance-enumeration")]
     {
         let state = lua.state_mut();
         let enum_table = ensure_global_table(state, "Enum");
