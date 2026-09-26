@@ -6,6 +6,72 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[test]
+fn unit_vitals_resolve_present_target_focus_and_absent_tokens() {
+    env()
+        .eval::<()>(
+            r#"
+            A_Admin.SetPlayerHealth(710, 1000)
+            A_Admin.SetPlayerPower(31, 100, 0)
+            A_Admin.SetTarget("Target", 60, 1, true)
+            A_Admin.SetTargetHealth(220, 400)
+            A_Admin.SetTargetPower(17, 50, 1)
+            A_Admin.SetFocus("Focus", 60, 1, true)
+            A_Admin.SetFocusHealth(330, 600)
+            A_Admin.SetFocusPower(28, 80, 2)
+            local function vitals(unit, health, maximum, power, powerMax)
+                assert(UnitHealth(unit) == health, unit .. " health")
+                assert(UnitHealthMax(unit) == maximum, unit .. " health max")
+                assert(UnitPower(unit) == power, unit .. " power")
+                assert(UnitPowerMax(unit) == powerMax, unit .. " power max")
+            end
+            vitals("player", 710, 1000, 31, 100)
+            vitals("target", 220, 400, 17, 50)
+            vitals("focus", 330, 600, 28, 80)
+            assert(math.abs(UnitHealthPercent("focus") - 55) < 0.000001, "focus health percent")
+            assert(math.abs(UnitPowerPercent("focus") - 35) < 0.000001, "focus power percent")
+            A_Admin.ClearTarget()
+            for _, unit in ipairs({"target", "unknown-unit"}) do
+                assert(not UnitExists(unit))
+                vitals(unit, 0, 0, 0, 0)
+                assert(UnitHealthPercent(unit) == 0, unit .. " health percent")
+                assert(UnitPowerPercent(unit) == 0, unit .. " power percent")
+                assert(UnitPower(unit, 9) == 0, unit .. " explicit power")
+                assert(UnitPowerMax(unit, 9) == 0, unit .. " explicit power max")
+            end
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn unit_vitals_only_use_active_party_members() {
+    env()
+        .eval::<()>(
+            r#"
+            A_Admin.SetPlayerHealth(710, 1000)
+            A_Admin.SetPartySize(1)
+            A_Admin.SetPartyMember(1, "Member", 1, 60)
+            A_Admin.SetPartyMemberHealth(1, 123, 456)
+            assert(UnitExists("party1"), "party exists")
+            assert(UnitHealth("party1") == 123, "party health")
+            assert(UnitHealthMax("party1") == 456, "party health max")
+            assert(UnitPower("party1") == 80000, "party power")
+            assert(UnitPowerMax("party1") == 80000, "party power max")
+            assert(UnitExists("raid1"), "raid exists")
+            assert(UnitHealth("raid1") == 123, "raid health")
+            assert(UnitPowerMax("raid1") == 80000, "raid power max")
+            A_Admin.SetPartySize(0)
+            assert(not UnitExists("party1"), "party absent")
+            assert(not UnitExists("raid1"), "raid absent")
+            assert(UnitHealth("party1") == 0, "party absent health")
+            assert(UnitHealth("raid1") == 0, "raid absent health")
+            assert(UnitPowerMax("party1") == 0, "party absent power max")
+            "#,
+        )
+        .unwrap();
+}
+
 // ============================================================================
 // SetPlayerHealth
 // ============================================================================

@@ -21,41 +21,73 @@ pub(super) struct UnitVitals {
     pub(super) power_max: i32,
     pub(super) power_type: i32,
     pub(super) power_type_name: String,
+    present: bool,
 }
 
 pub(super) fn lookup_unit_vitals(state: &LuaState, unit: &str) -> UnitVitals {
     let sim = borrow_state(state).expect("sim state should exist");
-    if unit == "target"
-        && let Some(target) = &sim.current_target
-    {
+    if matches!(unit, "player" | "self" | "pet" | "vehicle") {
         return UnitVitals {
-            health: target.health,
-            health_max: target.health_max,
-            power: target.power,
-            power_max: target.power_max,
-            power_type: target.power_type,
-            power_type_name: target.power_type_name.clone(),
+            health: sim.player.health,
+            health_max: sim.player.health_max,
+            power: sim.player.power,
+            power_max: sim.player.power_max,
+            power_type: sim.player.power_type,
+            power_type_name: power_type_name(sim.player.power_type).to_string(),
+            present: true,
         };
     }
-    if let Some(index) = parse_party_index(unit)
-        && let Some(member) = sim.party_members.get(index)
-    {
+    let raid_index = unit
+        .strip_prefix("raid")
+        .and_then(|slot| slot.parse::<usize>().ok())
+        .and_then(|slot| slot.checked_sub(1));
+    let snapshot = if let Some(index) = raid_index {
+        sim.party_group_active
+            .then(|| sim.party_members.get(index))
+            .flatten()
+            .map(|member| {
+                (
+                    member.health,
+                    member.health_max,
+                    member.power,
+                    member.power_max,
+                    member.power_type,
+                    member.power_type_name.clone(),
+                )
+            })
+    } else if parse_party_index(unit).is_some() && !sim.party_group_active {
+        None
+    } else {
+        crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot(&sim, unit).map(|unit| {
+            (
+                unit.health,
+                unit.health_max,
+                unit.power,
+                unit.power_max,
+                unit.power_type,
+                unit.power_type_name,
+            )
+        })
+    };
+    let Some((health, health_max, power, power_max, power_type, power_type_name)) = snapshot else {
         return UnitVitals {
-            health: member.health,
-            health_max: member.health_max,
-            power: member.power,
-            power_max: member.power_max,
-            power_type: member.power_type,
-            power_type_name: member.power_type_name.clone(),
+            health: 0,
+            health_max: 0,
+            power: 0,
+            power_max: 0,
+            power_type: 0,
+            power_type_name: power_type_name(0).to_string(),
+            present: false,
         };
-    }
+    };
     UnitVitals {
-        health: sim.player.health,
-        health_max: sim.player.health_max,
-        power: sim.player.power,
-        power_max: sim.player.power_max,
-        power_type: sim.player.power_type,
-        power_type_name: power_type_name(sim.player.power_type).to_string(),
+        health,
+        health_max,
+        power,
+        power_max,
+        power_type,
+        power_type_name,
+        present: true,
     }
 }
 
@@ -201,6 +233,9 @@ fn requested_power_values(
     unit: &str,
     vitals: &UnitVitals,
 ) -> SecondaryPowerState {
+    if !vitals.present {
+        return SecondaryPowerState { current: 0, max: 0 };
+    }
     let Some(requested) = requested_power_type(state) else {
         return SecondaryPowerState {
             current: vitals.power,
