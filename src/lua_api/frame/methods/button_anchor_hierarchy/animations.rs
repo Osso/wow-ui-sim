@@ -1,6 +1,7 @@
 //! Animation group and animation creation/control methods.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, frame_ref};
+use crate::lua_api::script_helpers::{call_void_function_state, get_scripts_for_dispatch};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -188,9 +189,13 @@ pub(super) fn animation_group_pause(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn animation_group_stop(state: &mut LuaState) -> LuaResult<u32> {
     let group_frame_id = frame_id_from_stack(state, 1)?;
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(group_id) = resolve_animation_group_id(&sim, group_frame_id) {
-        if let Some(group) = sim.animation_groups.get_mut(&group_id) {
+    let notification = {
+        let mut sim = borrow_state_mut(state)?;
+        let Some(group_id) = resolve_animation_group_id(&sim, group_frame_id) else {
+            return Ok(0);
+        };
+        let notification = if let Some(group) = sim.animation_groups.get_mut(&group_id) {
+            let notification = group.playing.then_some(group.frame_id).flatten();
             group.playing = false;
             group.paused = false;
             group.done = true;
@@ -199,10 +204,20 @@ pub(super) fn animation_group_stop(state: &mut LuaState) -> LuaResult<u32> {
             for animation in &mut group.animations {
                 animation.elapsed = 0.0;
             }
-        }
+            notification
+        } else {
+            None
+        };
         refresh_active_animation_group(&mut sim, group_id);
         apply_group_flipbook_state(&mut sim, group_id);
         sync_action_bar_busy_for_group(&mut sim, group_id);
+        notification
+    };
+    if let Some(frame_id) = notification {
+        let frame = frame_ref(state, frame_id)?;
+        for handler in get_scripts_for_dispatch(state, frame_id, "OnStop") {
+            call_void_function_state(state, handler, &[frame]).map_err(rilua::runtime_error)?;
+        }
     }
     Ok(0)
 }

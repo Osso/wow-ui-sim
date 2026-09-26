@@ -86,6 +86,37 @@ fn stop_sets_done() {
 }
 
 #[test]
+fn stop_dispatches_on_stop_after_settling_state_and_allows_reentrant_play() {
+    let env = setup();
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", nil, UIParent)
+        local glow = CreateFrame("Frame", nil, owner)
+        local group = owner:CreateAnimationGroup()
+        local animation = group:CreateAnimation("Alpha")
+        animation:SetDuration(2)
+        local stops, finished = 0, 0
+        group:SetScript("OnFinished", function() finished = finished + 1 end)
+        group:SetScript("OnStop", function(self)
+            stops = stops + 1
+            assert(not self:IsPlaying() and not self:IsPaused() and self:IsDone())
+            assert(self:GetElapsed() == 0)
+            glow:Hide()
+            self:Play()
+        end)
+        group:Play()
+        assert(glow:IsShown())
+        group:Stop()
+        assert(stops == 1, "Stop should dispatch OnStop once")
+        assert(not glow:IsShown(), "OnStop should hide the glow")
+        assert(group:IsPlaying(), "reentrant Play in OnStop should survive Stop")
+        assert(finished == 0, "Stop must not dispatch OnFinished")
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn pause_and_resume() {
     let env = setup();
     env.exec(
