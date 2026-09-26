@@ -109,7 +109,14 @@ Compare builds by `min p50` across rounds; single rounds vary up to ~2.6x with h
 
 ### `bench_spellbook`
 
-Spellbook open/close settle cost on the same GUI path.
+Spellbook open/close settle cost on the same GUI path. `--cycles N` repeats close/open N times after the first open (which also loads the spellbook addon) and reports p50/p90/mean of keypress+settle and draw for the repeated phases; two 20-cycle runs agreed within 2.4%. Use it for panel-interaction before/after claims.
+
+```bash
+cargo build --release --bin bench_spellbook
+target/release/bench_spellbook --cycles 20
+```
+
+Host noise: this machine mixes Zen 5 (CPUs 0-3, 12-15, 5.16 GHz) and Zen 5c (3.29 GHz) cores, and runs are bimodal depending on which cores the scheduler picks. Interleave A/B runs, run several pairs, and discard pairs where both land in the slow regime; `taskset -c 1-3` helps only when other builds are not saturating those cores.
 
 ## Common Flags (wow-sim)
 
