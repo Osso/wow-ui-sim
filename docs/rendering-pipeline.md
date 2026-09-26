@@ -248,7 +248,7 @@ Supported fonts include FRIZQT__.TTF (default), ARIALN.TTF, FRIZQT___CYR.TTF, an
 
 At `d6d7a9078`, `FontString:SetSpacing` state enters regular emission as `text_line_spacing * effective_scale`. That spacing is part of the glyph shape-cache key, shifts each later cached layout line, and contributes to cached total height and vertical justification. Segmented colored FontString emission applies the same scaled increment when it starts a layout line. Font-system measurement also adds spacing only between layout lines; `GetNumLines` remains a line count.
 
-This is bounded to the FontString paths above. `MessageFrame` explicitly supplies `0.0` to its separate measurement/emission path, and this change does not define `FontObject`, EditBox, tooltip, or native-client spacing behavior. Targeted default-feature source proof is 2/2 library and 4/4 integration tests; independent final verification remains pending. See [FontString spacing](specs/fontstring-spacing.md).
+This is bounded to FontString rendering and measurement. At `4ccf92ee0` and `2c0dcb53f`, FontString construction and explicit `SetFontObject` assignment snapshot an explicitly defined FontObject spacing value before this rendering path; assignment also refreshes auto text height. The resulting grouped default-feature `spacing_roundtrip` batch is GREEN 12/12, while independent final verification remains pending. `MessageFrame` explicitly supplies `0.0` to its separate measurement/emission path; EditBox, tooltip, later live FontObject mutation, FontObject graph propagation, precedence, and native-client behavior remain unverified. See [FontString spacing](specs/fontstring-spacing.md).
 
 ---
 

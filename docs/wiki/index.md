@@ -4,7 +4,7 @@
 
 ## [2026-09-26] audit | Record bounded FontString spacing and AnimationGroup Stop behavior
 
-[FontString spacing](../specs/fontstring-spacing.md) records `d6d7a9078`: default-feature source proof is RED 0/2 library and 0/3 integration, then GREEN 2/2 library and 4/4 integration for FontString glyph placement, height, auto-height, wrapping, scale, and no-font line count. Independent spacing and measurement controls, format, and default-feature check pass; FontObject, MessageFrame, EditBox, native-client and full-profile behavior remain outside this proof.
+[FontString spacing](../specs/fontstring-spacing.md) records `d6d7a9078`, `4ccf92ee0`, and `2c0dcb53f`: initial construction and explicit `SetFontObject` assignment snapshot explicitly defined FontObject spacing into a FontString, with assignment refreshing auto text height. The grouped default-feature `spacing_roundtrip` batch is GREEN 12/12; later local FontString setters remain independent. Independent final verification is pending; live FontObject mutation, graph propagation, override precedence, MessageFrame, EditBox, native-client, and full-profile behavior remain outside this proof.
 
 [[animation-group-stop-callback]] records `af1b54f2b` and `43025255d`: explicit Stop of a playing group resets modeled state before ordered group `OnStop`; erroring handlers are source-routed through the error handler. The focused Wrath callback case is RED 0/1 then GREEN 1/1; the error-path case has RED→GREEN proof. Independent verification passes 49 animation cases, six spacing cases and four measurement/glyph controls; ledger `/tmp/cross-version-text-animation-proof.md`. These bounded audits do not make FontString or animation exclusive priorities within the broader cross-version useful-behavior goal.
 

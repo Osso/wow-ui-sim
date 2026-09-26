@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record bounded FontObject spacing snapshot
+
+Updated [FontString spacing](../specs/fontstring-spacing.md), [rendering pipeline](../rendering-pipeline.md), [Lua API inventory](../lua-api.md), index, and log from `4ccf92ee0`, `2c0dcb53f`, `/tmp/cross-version-font-object-spacing-proof.md`, and actual final GREEN logs. Initial FontString construction and explicit `SetFontObject` assignment now snapshot an explicitly defined FontObject spacing value; assignment refreshes auto text height. The grouped default-feature `spacing_roundtrip` batch is GREEN 12/12, and later local FontString `SetSpacing` remains independent. Final independent verification is pending. Later live FontObject mutation, graph propagation, and override precedence remain unverified; no all-FontObject behavior claim. No tests or builds ran for this documentation audit.
+
 ## [2026-09-26] investigation | Bare item strings and idle retry timers
 
 `d533fc182`: `GetItemInfo("item:ID")` returned nil, so AllTheThings kept ~10k 3s retry timers pending, and every idle tick scanned them. After the fix: 0 AllTheThings timers, idle tick ~4.5 to ~3.1ms. The two looping animations (DandersFrames, BoostTutorial glow) still keep the 16ms tick. See [[tick-cooldown-scan]].

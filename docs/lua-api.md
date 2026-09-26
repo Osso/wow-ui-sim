@@ -131,7 +131,7 @@ pub struct FrameHandle {
 
 `SetText()`, `GetText()`, `GetTextHeight()`, `GetStringWidth()`, `SetFont()`, `GetFont()`, `SetTextColor()`, `SetShadowColor()`, `SetShadowOffset()`, `SetJustifyH()`, `SetJustifyV()`, `SetFormattedText()`, `SetWordWrap()`, `SetSpacing()`, `GetSpacing()`, `GetStringHeight()`, `GetNumLines()`.
 
-At `d6d7a9078`, `SetSpacing` writes per-frame `text_line_spacing`; `GetSpacing` reads it. FontString measurement and glyph emission consume it between shaped lines, with effective scale applied at rendering. The documented proof is only the FontString path: it does not establish `FontObject` propagation, MessageFrame spacing, EditBox rendering, or native WoW behavior. See [FontString spacing](specs/fontstring-spacing.md).
+At `d6d7a9078`, `SetSpacing` writes per-frame `text_line_spacing`; `GetSpacing` reads it. FontString measurement and glyph emission consume it between shaped lines, with effective scale applied at rendering. At `4ccf92ee0` and `2c0dcb53f`, construction and explicit `SetFontObject` assignment snapshot explicitly defined FontObject spacing into that per-frame value; assignment refreshes auto text height. The grouped default-feature `spacing_roundtrip` batch is GREEN 12/12. Later local FontString `SetSpacing` remains independent. This does not establish live FontObject mutation, graph propagation, override precedence, MessageFrame spacing, EditBox rendering, or native WoW behavior. See [FontString spacing](specs/fontstring-spacing.md).
 
 ### Button Methods (`methods_button.rs`)
 
@@ -254,9 +254,9 @@ Lines 14-48: Main function. Lines 52-93: Argument parsing with `$parent`/`$Paren
 
 **Standard Fonts** (lines 335-414): GameFontNormal, GameFontHighlight, GameFontDisable, NumberFontNormal, SystemFont_Small/Med1-3/Large, ChatFontNormal, GameTooltipText, SubZoneTextFont, etc.
 
-Font table structure: `__fontPath`, `__fontHeight`, `__fontFlags`, `__textColorR/G/B/A`, `__shadowColorR/G/B/A`, `__shadowOffsetX/Y`, `__justifyH/V`.
+Font table structure: `__fontPath`, `__fontHeight`, `__fontFlags`, `__textColorR/G/B/A`, `__shadowColorR/G/B/A`, `__shadowOffsetX/Y`, `__justifyH/V`, optional `__spacing`.
 
-Methods: `SetFont()`, `GetFont()`, `SetTextColor()`, `SetShadowColor()`, `SetShadowOffset()`, `SetJustifyH/V()`, `CopyFontObject()`.
+Methods: `SetFont()`, `GetFont()`, `SetTextColor()`, `SetShadowColor()`, `SetShadowOffset()`, `SetJustifyH/V()`, `SetSpacing()`, `GetSpacing()`, `CopyFontObject()`. An explicitly defined `__spacing` is copied only into the documented FontString construction/explicit-assignment snapshot path; live object mutation, graph propagation, and precedence behavior are unverified.
 
 ### Object Pools
 **File:** `src/lua_api/globals/pool_api.rs`
