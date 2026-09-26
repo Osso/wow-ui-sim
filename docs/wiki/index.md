@@ -1,6 +1,6 @@
 ## [2026-09-26] audit | Record Wrath StatusBar XML rotation boundary
 
-[[wrath-statusbar-value-callback]] records `9198d4a0` XML `rotatesTexture` coverage. Normal `gui,client-wrath` direct tests changed from RED 0/2 static plus 0/1 runtime to GREEN 2/2 plus 1/1: direct `true`, inherited template `true`, and explicit `false` override all apply before `OnLoad`; runtime `CreateFrame` template application is covered. Callback 10/10 and five non-XML rotation cases remain diagnostic `gui,client-wrath,aura-instance-enumeration` evidence. Fresh normal `fmt`/`check` postdate the XML change and remain pending; no full profile-acceptance or native claim. Vertical rendering direction remains open.
+[[wrath-statusbar-value-callback]] records `9198d4a0` XML `rotatesTexture` coverage. Normal `gui,client-wrath` direct tests changed from RED 0/2 static plus 0/1 runtime to GREEN 2/2 plus 1/1: direct `true`, inherited template `true`, and explicit `false` override all apply before `OnLoad`; runtime `CreateFrame` template application is covered. Independent normal-profile verification now covers 16 unique integration cases: XML3, callback/Slider10, rotation-state/adoption3. Fresh `fmt`/`check` pass without warnings; two renderer unit cases retain diagnostic-feature proof only. No full profile-acceptance or native claim. Vertical rendering direction remains open.
 
 ## [2026-09-26] investigation | Record default build linker-cache boundary
 
