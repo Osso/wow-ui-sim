@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record ServerSnapshot carried-bag replication boundary
+
+Updated [[server-snapshot-action-bars]] and index from producer `43c179b04`, bag model `da3c1ae89`, importer/deployment `5e0e9150d`, the [bag contract](../specs/server-snapshot-bags.md), and ServerSnapshot README. User-approved Python deployment installed source-matching 0.3.0 Lua/TOC at `/syncthing/World of Warcraft/_retail_/Interface/AddOns/ServerSnapshot`; supplied SHA-256 values are recorded on the system page. No fresh native capture exists: user must `/ssnap`, then `/reload` or log out. Existing `/tmp/retail-regression/bag-red.*` is RED against old SavedVariables (backpack 16, reagent 0), not an importer result for the expected captured reagent capacity 36. Producer-to-SavedVariables-to-query importer coverage exists; Rust GREEN remains pending. No external game-server transport or bank/account-bank capture is in scope. No source/spec edits, build, test, deploy, push, or delegation occurred.
+
 ## [2026-09-25] investigation | Bound ATT unit hyperlink tooltip payload
 
 [[att-unit-hyperlink-tooltip]] records the `GetHyperlink` empty-Item fallback behind ATT `NPC.lua:58`. Pre-fix existing-binary diagnostic returned Item type `0` with zero lines for an unknown creature GUID. `dc6672dc2` resolves known modeled unit GUIDs to Unit lines and returns nil for missing/unsupported links; grouped behavior cases are committed but cannot be run while another owner holds Cargo. No rebuilt binary, GREEN or GUI-hover claim.
