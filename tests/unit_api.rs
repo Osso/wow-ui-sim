@@ -285,10 +285,67 @@ fn test_unit_guid_player() {
 }
 
 #[test]
-fn test_unit_guid_other() {
+fn test_unit_guid_missing_target_and_focus_by_default() {
     let env = env();
-    let guid: String = env.eval("return UnitGUID('target')").unwrap();
-    assert_eq!(guid, "Creature-0000-00000000");
+    let (target, focus): (Option<String>, Option<String>) = env
+        .eval("return UnitGUID('target'), UnitGUID('focus')")
+        .unwrap();
+    assert_eq!(target, None);
+    assert_eq!(focus, None);
+}
+
+#[test]
+fn test_unit_guid_target_and_focus_clear_after_valid_assignment() {
+    let env = env();
+    env.eval::<()>(
+        "A_Admin.SetTarget('Hogger', 11, 1, true); A_Admin.SetFocus('Thrall', 70, 7, false)",
+    )
+    .unwrap();
+    let (target, focus): (Option<String>, Option<String>) = env
+        .eval("return UnitGUID('target'), UnitGUID('focus')")
+        .unwrap();
+    assert!(
+        target
+            .as_deref()
+            .is_some_and(|guid| guid.starts_with("Creature-"))
+    );
+    assert!(
+        focus
+            .as_deref()
+            .is_some_and(|guid| guid.starts_with("Player-"))
+    );
+    env.eval::<()>("A_Admin.ClearTarget(); A_Admin.ClearFocus()")
+        .unwrap();
+    let (target, focus): (Option<String>, Option<String>) = env
+        .eval("return UnitGUID('target'), UnitGUID('focus')")
+        .unwrap();
+    assert_eq!(target, None);
+    assert_eq!(focus, None);
+}
+
+#[test]
+fn test_unit_guid_unknown_tokens_do_not_show_frame() {
+    let env = env();
+    let (arena_guid, invalid_guid, arena_shown, invalid_shown, player_shown): (
+        Option<String>, Option<String>, bool, bool, bool,
+    ) = env
+        .eval(
+            r#"
+            local frame = CreateFrame('Frame')
+            frame:SetShown(UnitGUID('arena1'))
+            local arenaShown = frame:IsShown()
+            frame:SetShown(UnitGUID('not-a-unit'))
+            local invalidShown = frame:IsShown()
+            frame:SetShown(UnitGUID('player'))
+            return UnitGUID('arena1'), UnitGUID('not-a-unit'), arenaShown, invalidShown, frame:IsShown()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(arena_guid, None);
+    assert_eq!(invalid_guid, None);
+    assert!(!arena_shown);
+    assert!(!invalid_shown);
+    assert!(player_shown);
 }
 
 #[test]
@@ -303,6 +360,23 @@ fn test_unit_guid_party_member() {
         )
         .unwrap();
     assert_eq!(guid, "Player-0000-00000002");
+}
+
+#[test]
+fn test_unit_guid_party_member_disappears_after_roster_shrink() {
+    let env = env();
+    env.eval::<()>("A_Admin.SetPartySize(2)").unwrap();
+    let (party1, party2): (Option<String>, Option<String>) = env
+        .eval("return UnitGUID('party1'), UnitGUID('party2')")
+        .unwrap();
+    assert_eq!(party1.as_deref(), Some("Player-0000-00000002"));
+    assert_eq!(party2.as_deref(), Some("Player-0000-00000003"));
+    env.eval::<()>("A_Admin.SetPartySize(1)").unwrap();
+    let (party1_after, party2_after): (Option<String>, Option<String>) = env
+        .eval("return UnitGUID('party1'), UnitGUID('party2')")
+        .unwrap();
+    assert_eq!(party1_after, party1);
+    assert_eq!(party2_after, None);
 }
 
 #[test]
