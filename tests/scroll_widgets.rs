@@ -73,6 +73,94 @@ fn test_scrollframe_update_scroll_child_rect_uses_resolved_subtree_bounds() {
 }
 
 #[test]
+fn test_scrollframe_offsets_round_trip_outside_explicit_ranges_and_notify_after_commit() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local sf = CreateFrame("ScrollFrame", "TestScrollFrameOutOfRangeOffsets", UIParent)
+        sf:SetSize(100, 100)
+        sf:SetPoint("CENTER")
+        local child = CreateFrame("Frame", nil, sf)
+        child:SetSize(200, 300)
+        child:SetPoint("TOPLEFT", sf, "TOPLEFT", 0, 0)
+        sf:SetScrollChild(child)
+        sf:UpdateScrollChildRect()
+
+        ScrollOffsetEvents = {}
+        sf:SetScript("OnHorizontalScroll", function(self, offset)
+            table.insert(ScrollOffsetEvents, {"h", offset, self:GetHorizontalScroll(), self:GetVerticalScroll()})
+        end)
+        sf:SetScript("OnVerticalScroll", function(self, offset)
+            table.insert(ScrollOffsetEvents, {"v", offset, self:GetHorizontalScroll(), self:GetVerticalScroll()})
+        end)
+    "#,
+    )
+    .unwrap();
+
+    let ranges: (f64, f64) = env
+        .eval(
+            "return TestScrollFrameOutOfRangeOffsets:GetHorizontalScrollRange(), \
+             TestScrollFrameOutOfRangeOffsets:GetVerticalScrollRange()",
+        )
+        .unwrap();
+    assert_eq!(ranges, (100.0, 200.0));
+
+    env.exec(
+        r#"
+        local sf = TestScrollFrameOutOfRangeOffsets
+        sf:SetVerticalScroll(-50)
+        sf:SetVerticalScroll(-50)
+        sf:SetHorizontalScroll(999)
+        sf:SetHorizontalScroll(999)
+        sf:SetVerticalScroll(999)
+        sf:SetVerticalScroll(999)
+        sf:SetHorizontalScroll(-50)
+        sf:SetHorizontalScroll(-50)
+    "#,
+    )
+    .unwrap();
+
+    let (horizontal, vertical, notifications): (f64, f64, String) = env
+        .eval(
+            r#"
+            local events = {}
+            for _, event in ipairs(ScrollOffsetEvents) do
+                table.insert(events, table.concat(event, ":"))
+            end
+            local sf = TestScrollFrameOutOfRangeOffsets
+            return sf:GetHorizontalScroll(), sf:GetVerticalScroll(), table.concat(events, "|")
+        "#,
+        )
+        .unwrap();
+    assert_eq!((horizontal, vertical), (-50.0, 999.0));
+    assert_eq!(
+        notifications,
+        "v:-50:0:-50|h:999:999:-50|v:999:999:999|h:-50:-50:999"
+    );
+}
+
+#[test]
+fn test_scrollframe_offsets_round_trip_with_zero_cached_ranges() {
+    let env = WowLuaEnv::new().unwrap();
+
+    let (horizontal_range, vertical_range, horizontal, vertical): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local sf = CreateFrame("ScrollFrame", "TestScrollFrameZeroRangeOffsets", UIParent)
+            sf:SetSize(100, 100)
+            sf:SetHorizontalScroll(999)
+            sf:SetVerticalScroll(-50)
+            return sf:GetHorizontalScrollRange(), sf:GetVerticalScrollRange(),
+                sf:GetHorizontalScroll(), sf:GetVerticalScroll()
+        "#,
+        )
+        .unwrap();
+    assert_eq!((horizontal_range, vertical_range), (0.0, 0.0));
+    assert_eq!((horizontal, vertical), (999.0, -50.0));
+}
+
+#[test]
 fn test_scrollframe_same_offsets_do_not_dirty_render_state() {
     let env = WowLuaEnv::new().unwrap();
 
