@@ -1,5 +1,96 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+fn editbox_set_text_clamps_internal_positions_before_callbacks_and_keyboard_edits() {
+    let env = env();
+    env.exec(r#"
+        local eb = CreateFrame("EditBox", "SetTextBoundsEB", UIParent)
+        eb:SetText("aé猫z")
+        eb:SetCursorPosition(7)
+        eb:HighlightText(3, 7)
+        local observations = {}
+        eb:SetScript("OnTextSet", function(self)
+            observations[#observations + 1] = {"set", self:GetText(), self:GetCursorPosition(), self:GetUTF8CursorPosition()}
+        end)
+        eb:SetScript("OnTextChanged", function(self, userInput)
+            observations[#observations + 1] = {"changed", self:GetText(), self:GetCursorPosition(), self:GetUTF8CursorPosition(), userInput}
+        end)
+        eb:SetText("éX")
+        assert(#observations == 2)
+        assert(observations[1][1] == "set" and observations[1][2] == "éX" and observations[1][3] == 3 and observations[1][4] == 2)
+        assert(observations[2][1] == "changed" and observations[2][2] == "éX" and observations[2][3] == 3 and observations[2][4] == 2 and observations[2][5] == false)
+        eb:Insert("Y")
+        assert(eb:GetText() == "éXY", "shortened selection must not delete new text")
+        eb:SetFocus()
+    "#).unwrap();
+    env.send_key_press("LEFT", None).unwrap();
+    env.send_key_press("BACKSPACE", None).unwrap();
+    let result: String = env.eval(r#"return SetTextBoundsEB:GetText() .. ":" .. SetTextBoundsEB:GetCursorPosition()"#).unwrap();
+    assert_eq!(result, "éY:2");
+}
+
+#[test]
+fn editbox_set_text_preserves_in_bounds_caret_and_clips_selection() {
+    let env = env();
+    env.exec(r#"
+        local eb = CreateFrame("EditBox", "SetTextClippedEB", UIParent)
+        eb:SetText("é猫abc")
+        eb:SetCursorPosition(2)
+        eb:HighlightText(2, 8)
+        eb:SetText("éZ")
+        assert(eb:GetCursorPosition() == 2 and eb:GetUTF8CursorPosition() == 1)
+    "#).unwrap();
+    let state = env.state();
+    let state = state.borrow();
+    let id = state.widgets.get_id_by_name("SetTextClippedEB").unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    assert_eq!(frame.editbox_cursor_pos, 1);
+    assert_eq!(frame.editbox_highlight_range, Some((1, 2)));
+}
+
+#[test]
+fn editbox_set_formatted_text_dispatches_hooks_and_routes_errors_without_reentry_loop() {
+    env().exec(r#"
+        local eb = CreateFrame("EditBox", nil, UIParent)
+        local events, errors = {}, {}
+        seterrorhandler(function(message) errors[#errors + 1] = tostring(message) end)
+        eb:SetScript("OnChar", function() error("unexpected char") end)
+        eb:SetScript("OnTextSet", function(self)
+            events[#events + 1] = "set:" .. self:GetText()
+            self:SetText(self:GetText())
+        end)
+        eb:HookScript("OnTextSet", function(self) events[#events + 1] = "set hook:" .. self:GetText() end)
+        eb:SetScript("OnTextChanged", function(self, userInput)
+            events[#events + 1] = "changed:" .. self:GetText() .. ":" .. tostring(userInput)
+        end)
+        eb:HookScript("OnTextChanged", function() events[#events + 1] = "changed hook" end)
+        eb:SetFormattedText("%s%d", "é", 2)
+        assert(eb:GetText() == "é2")
+        assert(table.concat(events, ",") == "set:é2,set hook:é2,changed:é2:false,changed hook", table.concat(events, ","))
+        eb:SetScript("OnTextSet", function() error("text set failure") end)
+        eb:SetText("next")
+        assert(eb:GetText() == "next")
+        assert(events[#events - 1] == "changed:next:false" and events[#events] == "changed hook")
+        assert(#errors == 1 and string.find(errors[1], "text set failure", 1, true))
+    "#).unwrap();
+}
+
+#[test]
+fn non_editbox_set_text_does_not_dispatch_editbox_callbacks() {
+    env().exec(r#"
+        local widgets = {
+            CreateFrame("Button", nil, UIParent),
+            CreateFrame("GameTooltip", nil, UIParent),
+            UIParent:CreateFontString(nil, "ARTWORK"),
+        }
+        for _, widget in ipairs(widgets) do
+            widget:SetText("old")
+            widget:SetText("new")
+            assert(widget:GetText() == "new")
+        end
+    "#).unwrap();
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }

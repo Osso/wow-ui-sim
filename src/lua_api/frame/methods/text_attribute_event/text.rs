@@ -25,8 +25,11 @@ pub(super) use style::{
 
 use super::helpers::val_to_f32;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, frame_id_from_stack,
+    borrow_state, borrow_state_mut, create_string, create_table, frame_id_from_stack, frame_ref,
     get_or_create_frame_fields, table_set,
+};
+use crate::lua_api::script_helpers::{
+    call_error_handler_state, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::stack_val;
@@ -73,7 +76,7 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
     let text = read_text_arg(state, value);
     let tooltip = read_tooltip_line_values(state);
     let stripped_text = stripped_text_for_frame(state, id, text.clone())?;
-    let (is_tooltip, should_update_button_child) =
+    let (is_tooltip, should_update_button_child, editbox_text_changed) =
         update_text_frame(state, id, &text, &stripped_text)?;
     sync_button_text_child(state, id, &text, &stripped_text, should_update_button_child)?;
     set_text_secret_origin(state, id, secret)?;
@@ -81,7 +84,33 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
     if is_tooltip {
         sync_tooltip_text(state, id, text, tooltip)?;
     }
+    if editbox_text_changed {
+        fire_editbox_text_script(state, id, "OnTextSet", &[])?;
+        fire_editbox_text_script(state, id, "OnTextChanged", &[Val::Bool(false)])?;
+    }
     Ok(0)
+}
+
+fn fire_editbox_text_script(
+    state: &mut LuaState,
+    id: u64,
+    handler_name: &str,
+    args: &[Val],
+) -> LuaResult<()> {
+    let handlers = get_scripts_for_dispatch(state, id, handler_name);
+    if handlers.is_empty() {
+        return Ok(());
+    }
+    let frame = frame_ref(state, id)?;
+    for handler in handlers {
+        let mut call_args = Vec::with_capacity(args.len() + 1);
+        call_args.push(frame);
+        call_args.extend_from_slice(args);
+        if let Err(error) = protected_lua_pcall_state(state, handler, &call_args) {
+            call_error_handler_state(state, &error);
+        }
+    }
+    Ok(())
 }
 
 fn read_tooltip_line_values(state: &LuaState) -> TooltipLineValues {
@@ -164,7 +193,7 @@ fn update_text_frame(
     id: u64,
     text: &Option<String>,
     stripped_text: &Option<String>,
-) -> LuaResult<(bool, bool)> {
+) -> LuaResult<(bool, bool, bool)> {
     let mut sim = borrow_state_mut(state)?;
     let frame = sim.widgets.get(id);
     let current_text = frame.and_then(|frame| frame_text_value(&sim, frame, false));
@@ -172,6 +201,8 @@ fn update_text_frame(
     let is_tooltip = frame
         .map(|frame| frame.widget_type == WidgetType::GameTooltip)
         .unwrap_or(false);
+    let editbox_text_changed = frame
+        .is_some_and(|frame| frame.widget_type == WidgetType::EditBox && current_text != *text);
     let is_button = matches!(
         frame.map(|frame| frame.widget_type),
         Some(WidgetType::Button | WidgetType::CheckButton)
@@ -183,13 +214,21 @@ fn update_text_frame(
         frame.text = text.clone();
         frame.text_stripped = stripped_text.clone();
         frame.text_segments.clear();
+        if editbox_text_changed {
+            let len = text.as_deref().unwrap_or("").chars().count() as i32;
+            frame.editbox_cursor_pos = frame.editbox_cursor_pos.clamp(0, len);
+            if let Some((start, end)) = &mut frame.editbox_highlight_range {
+                *start = (*start).clamp(0, len);
+                *end = (*end).clamp(0, len);
+            }
+        }
         if let Some(color) = inline_color {
             frame.text_color = color;
         }
     }
     let should_update_button_child =
         is_button && (changed || (!has_button_text_child && text.is_some()));
-    Ok((is_tooltip, should_update_button_child))
+    Ok((is_tooltip, should_update_button_child, editbox_text_changed))
 }
 
 fn sync_button_text_child(
