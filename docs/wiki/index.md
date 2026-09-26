@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Record default build linker-cache boundary
+
+[[default-build-linker-cache]] records the 1.345s default incremental build link failure in cached `libwow_ui_sim-f3ad90e455e35ad1.rlib`: anonymous LLVM references ended in `18005206435280134742`, while matching-prefix definitions ended in `820421656293145055`. Only that archive and its matching incremental directory were quarantined; dependencies were untouched. The same default incremental build then completed in 178.164s with no environment or source change. Cause and runtime verification remain pending; `incremental = true` and mold remain unchanged.
+
 ## [2026-09-26] audit | Correct wrapped-click fixture and application-input boundary
 
 [[prefork-test-harness]] records fixture-only verification for `904b068fe` and `d7cec2b25`: the 286.7s non-incremental target build, `server_snapshot_capture_bags` 5/5, `tainted_addon_secure_handler` 2/2, format, and check pass. The prior 373 production assertions remain retained, not aggregated with fixture cases. Application debug-key/internal hit-tested mouse remains non-physical-input evidence. `mainhand-close-popup.json` identifies CraftSim `PATCH_NOTES` as the intercepting popup; hit-tested close then MainHand hover shows a nonempty tooltip and `OnLeave` hides it, without Lua error lines. Physical native input and fresh real-WoW bag capture remain unchecked; retail goal remains open.
@@ -1579,6 +1583,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[dropdown-intrinsic-script-chain]] | Reputation dropdowns did not open because style-template scripts replaced intrinsic `DropdownButton` scripts; simulator now chains intrinsic handlers, stores `RegisterForMouse`, and propagates child mouse clicks to parents |
 | [[menu-pool-set-to-defaults]] | Guild roster Mythic+ Rating dropdown rendered as a screen-spanning stripe because pooled menu element frames retained stale sizes; `SetToDefaults` now resets size to 0,0 and clears anchors |
 | [[windows-port-build]] | Windows default builds failed at `iced_dynamic.dll` with MSVC `LNK1189`; `fast-build` is opt-in so default GUI builds avoid the forced DLL link, while headless CI gates GUI-only tests |
+| [[default-build-linker-cache]] | Default Linux incremental build linked a cached `wow_ui_sim` archive with internally mismatched anonymous LLVM symbol suffixes; quarantining only the archive and matching incremental directory permitted a fresh default build, with cause and runtime verification pending |
 | [[three-slice-button-tiling]] | Escape menu button stripes came from inactive `HighlightTexture` children rendering every frame; standard button highlight children now render only on hover or locked highlight |
 | [[dialog-background-dxt3-stripes]] | Escape-menu dialog background stripes came from treating DXT3 BLPs as BC3 on the raw compressed upload path; DXT3 now falls back to RGBA until BC2 atlas support exists |
 | [[addon-startup-settings-and-item-load]] | Addon startup failures can share roots in Settings canvas visibility, secure attribute delegate taint boundaries, and synthetic C_Item item-load behavior |
