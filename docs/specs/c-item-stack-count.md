@@ -28,7 +28,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Final check/readability/broad-suite gate remains pending.
+- [x] Independent verification passes the 40-case C_Item batch, format/check, and changed-code readability. No broad-suite or full-client claim is made.
 - [ ] Native-client behavior remains unverified; no native error wording is claimed.
 
 ## Out of scope
