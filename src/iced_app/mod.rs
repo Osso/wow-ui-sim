@@ -99,9 +99,10 @@ use crate::saved_variables::SavedVariablesManager;
 pub use app::App;
 #[cfg(feature = "gui")]
 pub use benchmark::{
-    BenchmarkPhase, DurationStats, LfgPanelBenchmarkReport, SpellbookBenchmarkReport,
-    SteadyStateOptions, SteadyStateRound, benchmark_lfg_panel_open_in_gui,
-    benchmark_spellbook_open_in_gui, benchmark_steady_state_in_gui, load_benchmark_ui_env,
+    BenchmarkPhase, DurationStats, LfgPanelBenchmarkReport, PhaseStats, SpellbookBenchmarkReport,
+    SpellbookCycleReport, SteadyStateOptions, SteadyStateRound, benchmark_lfg_panel_open_in_gui,
+    benchmark_spellbook_cycles_in_gui, benchmark_spellbook_open_in_gui,
+    benchmark_steady_state_in_gui, load_benchmark_ui_env,
 };
 #[cfg(feature = "gui")]
 pub use click_probe::{NamedClick, run_headless_named_click_probe};

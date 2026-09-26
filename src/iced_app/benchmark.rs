@@ -87,6 +87,62 @@ pub fn benchmark_spellbook_open_in_gui(env: WowLuaEnv) -> crate::Result<Spellboo
     })
 }
 
+/// Spellbook open/close repeated after the first open, so steady-state panel
+/// costs can be compared with more than one sample per build.
+#[derive(Debug, Clone)]
+pub struct SpellbookCycleReport {
+    pub first_open: BenchmarkPhase,
+    pub repeat_open: PhaseStats,
+    pub close: PhaseStats,
+    pub cycles: usize,
+}
+
+/// `total` is keypress dispatch plus settle: the user-visible latency.
+#[derive(Debug, Clone, Copy)]
+pub struct PhaseStats {
+    pub total: DurationStats,
+    pub draw: DurationStats,
+}
+
+pub fn benchmark_spellbook_cycles_in_gui(
+    env: WowLuaEnv,
+    cycles: usize,
+) -> crate::Result<SpellbookCycleReport> {
+    let mut app = boot_benchmark_app(env);
+    benchmark_phase(&mut app, spellbook_phase("startup_idle", None, false))?;
+    let first_open = benchmark_phase(&mut app, spellbook_phase("first_open", Some("S"), true))?;
+    let mut closes = Vec::with_capacity(cycles);
+    let mut opens = Vec::with_capacity(cycles);
+    for _ in 0..cycles {
+        closes.push(benchmark_phase(
+            &mut app,
+            spellbook_phase("repeat_close", Some("S"), false),
+        )?);
+        opens.push(benchmark_phase(
+            &mut app,
+            spellbook_phase("repeat_open", Some("S"), true),
+        )?);
+    }
+    Ok(SpellbookCycleReport {
+        first_open,
+        repeat_open: summarize_phases(&opens),
+        close: summarize_phases(&closes),
+        cycles,
+    })
+}
+
+fn summarize_phases(phases: &[BenchmarkPhase]) -> PhaseStats {
+    let totals = phases
+        .iter()
+        .map(|phase| phase.keypress_elapsed + phase.settle_elapsed)
+        .collect();
+    let draws = phases.iter().map(|phase| phase.draw_elapsed).collect();
+    PhaseStats {
+        total: summarize_durations(totals),
+        draw: summarize_durations(draws),
+    }
+}
+
 pub fn benchmark_lfg_panel_open_in_gui(env: WowLuaEnv) -> crate::Result<LfgPanelBenchmarkReport> {
     let mut app = boot_benchmark_app(env);
     let startup_idle = benchmark_phase(&mut app, lfg_panel_phase("startup_idle", None, false))?;
