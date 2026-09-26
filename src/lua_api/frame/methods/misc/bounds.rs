@@ -1,5 +1,8 @@
 //! Frame bounds, resize, and position offset methods.
 
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, IntoStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -82,6 +85,10 @@ pub fn set_points_offset(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let x = f64::from_stack(state, 2)?;
     let y = f64::from_stack(state, 3)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetPointsOffset");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         for anchor in &mut frame.anchors {

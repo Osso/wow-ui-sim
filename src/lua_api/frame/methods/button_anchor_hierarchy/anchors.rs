@@ -267,6 +267,10 @@ pub(super) fn adjust_points_offset(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let x_offset = f64::from_stack(state, 2)? as f32;
     let y_offset = f64::from_stack(state, 3)? as f32;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "AdjustPointsOffset");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         for anchor in &mut frame.anchors {

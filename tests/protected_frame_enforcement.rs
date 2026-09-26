@@ -325,6 +325,81 @@ fn test_insecure_combat_blocks_protected_anchor_mutations() {
 }
 
 #[test]
+fn test_insecure_combat_blocks_protected_anchor_offset_mutations() {
+    let env = env();
+    let (offsets, blocked): (String, String) = env
+        .eval(
+            r#"
+            local blocked = {}
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("ADDON_ACTION_BLOCKED")
+            listener:SetScript("OnEvent", function(_, _, _, func)
+                blocked[#blocked + 1] = func
+            end)
+
+            local protected = CreateFrame("Frame", "ProtectedOffsetFrame", UIParent)
+            protected:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+            protected:SetPoint("CENTER", UIParent, "CENTER", 20, 5)
+            local anchored = CreateFrame("Frame", "AnchoredOffsetFrame", UIParent)
+            anchored:SetPoint("CENTER", protected, "CENTER", 3, 4)
+            local plain = CreateFrame("Frame", "PlainOffsetFrame", UIParent)
+            plain:SetPoint("CENTER", UIParent, "CENTER", 7, 8)
+
+            A_Admin.SetFrameProtected("ProtectedOffsetFrame", true)
+            A_Admin.SetInCombat(true)
+            forceinsecure()
+            protected:AdjustPointsOffset(2, 3)
+            protected:SetPointsOffset(30, 40)
+            anchored:AdjustPointsOffset(2, 3)
+            anchored:SetPointsOffset(30, 40)
+            plain:AdjustPointsOffset(2, 3)
+            plain:SetPointsOffset(30, 40)
+
+            local function offset(frame, point)
+                local _, _, _, x, y = frame:GetPointByName(point)
+                return x .. "," .. y
+            end
+            return table.concat({offset(protected, "TOPLEFT"), offset(protected, "CENTER"),
+                offset(anchored, "CENTER"), offset(plain, "CENTER")}, "|"),
+                table.concat(blocked, "|")
+            "#,
+        )
+        .unwrap();
+    assert_eq!(offsets, "10,-10|20,5|3,4|30,40");
+    assert_eq!(blocked, "ProtectedOffsetFrame:AdjustPointsOffset()|ProtectedOffsetFrame:SetPointsOffset()|AnchoredOffsetFrame:AdjustPointsOffset()|AnchoredOffsetFrame:SetPointsOffset()");
+}
+
+#[test]
+fn test_allowed_protected_anchor_offset_mutations() {
+    let env = env();
+    let (offsets, blocked): (String, i32) = env
+        .eval(
+            r#"
+            local blocked = 0
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("ADDON_ACTION_BLOCKED")
+            listener:SetScript("OnEvent", function() blocked = blocked + 1 end)
+            local frame = CreateFrame("Frame", "AllowedOffsetFrame", UIParent)
+            frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+            frame:SetPoint("CENTER", UIParent, "CENTER", 20, 5)
+            A_Admin.SetFrameProtected("AllowedOffsetFrame", true)
+            A_Admin.SetInCombat(true)
+            frame:AdjustPointsOffset(2, 3)
+            frame:SetPointsOffset(30, 40)
+            A_Admin.SetInCombat(false)
+            forceinsecure()
+            frame:AdjustPointsOffset(2, -3)
+            local _, _, _, x1, y1 = frame:GetPointByName("TOPLEFT")
+            local _, _, _, x2, y2 = frame:GetPointByName("CENTER")
+            return x1 .. "," .. y1 .. "|" .. x2 .. "," .. y2, blocked
+            "#,
+        )
+        .unwrap();
+    assert_eq!(offsets, "32,37|32,37");
+    assert_eq!(blocked, 0);
+}
+
+#[test]
 fn test_insecure_combat_blocks_protected_visibility_and_scale_mutations() {
     let env = env();
     let (scale, shown, visible, show_frame_shown, blocked): (f32, bool, bool, bool, String) = env
