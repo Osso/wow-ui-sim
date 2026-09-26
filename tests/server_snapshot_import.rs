@@ -189,6 +189,37 @@ fn server_snapshot_rejects_invalid_bags_before_mutating_inventory_or_actions() {
 }
 
 #[test]
+fn server_snapshot_rejects_bag_mapping_to_profession_equipment() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().player.equipped_items.insert(
+        26,
+        wow_ui_sim::lua_api::state::EquippedItem {
+            item_id: 6256,
+            enchant_id: 0,
+            gem_ids: [0; 3],
+        },
+    );
+    env.exec(
+        r#"
+        ServerSnapshotDB = {lastCharacterKey='Bad', characters={Bad={bags={
+            maxBagID=1, containers={
+                [0]={numSlots=2,family=0,items={}},
+                [1]={numSlots=4,family=0,inventorySlot=26,itemID=6948,items={}},
+            },
+        }}}}
+    "#,
+    )
+    .unwrap();
+    let error = wow_ui_sim::server_snapshot_import::apply_loaded_snapshot(&env).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("bags.containers[1].inventorySlot")
+    );
+    env.exec("assert(GetInventoryItemID('player',26)==6256); assert(C_Container.GetContainerNumSlots(0)==16)").unwrap();
+}
+
+#[test]
 fn server_snapshot_action_bars_seed_get_action_info() {
     let env = WowLuaEnv::new().expect("Lua env");
 

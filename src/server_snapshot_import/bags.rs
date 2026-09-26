@@ -12,6 +12,7 @@ use std::collections::{BTreeSet, HashMap};
 
 const LAST_CARRIED_BAG: i32 = 5;
 const FIRST_BAG_INVENTORY_SLOT: i64 = 20;
+const LAST_BAG_INVENTORY_SLOT: i64 = 25;
 
 pub(super) struct BagSnapshot {
     metadata: HashMap<i32, BagInfo>,
@@ -105,7 +106,7 @@ fn optional_inventory_slot(
     integer(
         value,
         FIRST_BAG_INVENTORY_SLOT,
-        i32::MAX as i64,
+        LAST_BAG_INVENTORY_SLOT,
         &format!("{path}.inventorySlot"),
     )
     .map(|value| Some(value as i32))
