@@ -96,7 +96,21 @@ fn resolve_line_quad_inputs(
     };
     let sp = resolve_line_endpoint(start_anchor, registry)?;
     let ep = resolve_line_endpoint(end_anchor, registry)?;
-    let thickness = f.line_thickness * crate::render::texture::UI_SCALE;
+    // Endpoints anchor to logical geometry, but the line moves with its own subtree.
+    let offset = crate::layout::apply_scroll_offsets(
+        registry,
+        f.id,
+        crate::LayoutRect {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 0.0,
+        },
+    );
+    let scale = crate::render::texture::UI_SCALE;
+    let sp = (sp.0 + offset.x * scale, sp.1 + offset.y * scale);
+    let ep = (ep.0 + offset.x * scale, ep.1 + offset.y * scale);
+    let thickness = f.line_thickness * scale;
     let (sp, ep) = adjust_talent_arrow_line_caps(f, sp, ep, thickness);
     let positions = line_quad_positions(sp, ep, thickness)?;
     Some((positions, line_uvs(f), line_tint(f, alpha)))

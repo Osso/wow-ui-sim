@@ -183,14 +183,17 @@ fn render_rect_for_frame(
     id: u64,
     screen_size: (f32, f32),
 ) -> crate::LayoutRect {
-    if matches!(frame.widget_type, WidgetType::Line)
-        && let Some(rect) = line_endpoint_bounds(frame, registry)
-    {
-        return rect;
+    let rect = if matches!(frame.widget_type, WidgetType::Line) {
+        line_endpoint_bounds(frame, registry)
+    } else {
+        None
     }
-    frame.layout_rect.unwrap_or_else(|| {
-        crate::layout::compute_frame_rect(registry, id, screen_size.0, screen_size.1)
-    })
+    .unwrap_or_else(|| {
+        frame.layout_rect.unwrap_or_else(|| {
+            crate::layout::compute_frame_rect(registry, id, screen_size.0, screen_size.1)
+        })
+    });
+    crate::layout::apply_scroll_offsets(registry, id, rect)
 }
 
 fn line_endpoint_bounds(
@@ -337,8 +340,16 @@ fn resolve_clip_rect(
         if (parent.clips_children || clips_scroll_child)
             && let Some(parent_rect) = parent.layout_rect
         {
+            let parent_rect = crate::layout::apply_scroll_offsets(registry, parent_id, parent_rect);
             clip_rect = Some(match clip_rect {
-                Some(existing) => intersect_rects(existing, parent_rect)?,
+                Some(existing) => {
+                    intersect_rects(existing, parent_rect).unwrap_or(crate::LayoutRect {
+                        x: 0.0,
+                        y: 0.0,
+                        width: 0.0,
+                        height: 0.0,
+                    })
+                }
                 None => parent_rect,
             });
         }
@@ -473,6 +484,7 @@ pub fn build_hittable_rects(
         .hittable
         .iter()
         .map(|&(id, key, r)| {
+            let r = crate::layout::apply_scroll_offsets(registry, id, r);
             let (il, ir, it, ib) = registry
                 .get(id)
                 .map(super::frame_collect::scaled_hit_rect_insets)
@@ -602,10 +614,14 @@ fn append_hover_highlight_from_frame(
     registry: &WidgetRegistry,
     frame: &crate::widget::Frame,
 ) {
-    if let Some(bounds) = frame.layout_rect.map(layout_rect_to_screen_rect)
-        && !frame.children_keys.contains_key("HighlightTexture")
-    {
-        emit_button_highlight(batch, bounds, frame, frame.alpha);
+    if !frame.children_keys.contains_key("HighlightTexture") {
+        if let Some(rect) = frame.layout_rect {
+            let rect = crate::layout::apply_scroll_offsets(registry, frame.id, rect);
+            let before = batch.vertices.len();
+            emit_button_highlight(batch, layout_rect_to_screen_rect(rect), frame, frame.alpha);
+            clip_hover_highlight(batch, before, frame.id, registry);
+        }
+        return;
     }
 
     let Some(&highlight_id) = frame.children_keys.get("HighlightTexture") else {
@@ -614,8 +630,23 @@ fn append_hover_highlight_from_frame(
     let Some(highlight) = registry.get(highlight_id) else {
         return;
     };
-    if let Some(bounds) = highlight.layout_rect.map(layout_rect_to_screen_rect) {
-        build_texture_quads(batch, bounds, highlight, None, highlight.alpha);
+    if let Some(rect) = highlight.layout_rect {
+        let rect = crate::layout::apply_scroll_offsets(registry, highlight_id, rect);
+        let before = batch.vertices.len();
+        build_texture_quads(
+            batch,
+            layout_rect_to_screen_rect(rect),
+            highlight,
+            None,
+            highlight.alpha,
+        );
+        clip_hover_highlight(batch, before, highlight_id, registry);
+    }
+}
+
+fn clip_hover_highlight(batch: &mut QuadBatch, before: usize, id: u64, registry: &WidgetRegistry) {
+    if let Some(clip) = resolve_clip_rect(id, registry) {
+        super::masking::clip_axis_aligned_quads(batch, before, layout_rect_to_screen_rect(clip));
     }
 }
 

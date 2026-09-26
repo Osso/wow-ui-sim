@@ -78,7 +78,9 @@ fn resolve_mask_info(
 ) -> Option<MaskInfo> {
     let mask_frame = registry.get(mask_textures[0])?;
     let path = mask_frame.texture.clone()?;
-    let mask_screen = mask_to_screen_rect(mask_frame.layout_rect?);
+    let mask_rect =
+        crate::layout::apply_scroll_offsets(registry, mask_frame.id, mask_frame.layout_rect?);
+    let mask_screen = mask_to_screen_rect(mask_rect);
     if !rects_overlap(icon_bounds, mask_screen) {
         truncate_masked_vertices(batch, vert_before);
         return None;
@@ -162,6 +164,18 @@ fn rect_intersection(a: Rectangle, b: Rectangle) -> Option<Rectangle> {
             iced::Size::new(right - left, bottom - top),
         )
     })
+}
+
+/// Clip separately emitted hover quads to the same ancestor viewport as frame quads.
+pub(super) fn clip_axis_aligned_quads(batch: &mut QuadBatch, before: usize, clip: Rectangle) {
+    for vertices in batch.vertices[before..].chunks_exact_mut(4) {
+        let original = quad_rect(vertices);
+        if let Some(intersection) = rect_intersection(original, clip) {
+            clip_quad_to_rect(vertices, original, intersection);
+        } else {
+            hide_quad(vertices);
+        }
+    }
 }
 
 fn quad_rect(vertices: &[crate::render::shader::QuadVertex]) -> Rectangle {
