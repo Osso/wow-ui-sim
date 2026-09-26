@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record ScrollFrame requested-offset boundary
+
+Updated [ScrollFrame offsets](../specs/scrollframe-offsets.md), [[widget-system]], and index from `ee25b7d62`, `e9b72b107`, `docs/wow-client-diff/README.md:107-108`, and `/tmp/cross-version-scroll-offset-proof.md`. Both setters now preserve the supplied offset instead of clamping it, retaining callback delivery after committed state and same-offset suppression. Cached observations record vertical `-50` and horizontal `999`; no fresh probe ran. The focused evidence is initial RED 0/2, and `/tmp/cross-version-scroll-offset-verification-ledger.md` is absent, so no GREEN or independent-verification claim is made. Renderer movement and implicit range-refresh timing are excluded. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
 ## [2026-09-26] investigation | Timer-only animations wake at loop boundaries
 
 `0d43b3dd9`: animation groups made only of plain `Animation` steps, with no OnUpdate handler, no longer force 16ms ticks. The idle tick rate is still ~63/s, driven by strata dirt and addon C_Timers. See [[tick-cooldown-scan]].

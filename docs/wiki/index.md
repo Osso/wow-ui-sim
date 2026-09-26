@@ -2,6 +2,10 @@
 
 [[wrath-statusbar-value-callback]] records the `SetMinMaxValues` panic repair and [range contract](../specs/widget-range-validation.md). Independent proof: 15 widget cases + one interpolation control, format/check and changed-function readability pass after `90c4f189b`; `/tmp/cross-version-range-validation-verification-ledger.md`. Native behavior and reversed-range interpolation assertions remain unverified.
 
+## [2026-09-26] audit | Record ScrollFrame requested-offset boundary
+
+[ScrollFrame offsets](../specs/scrollframe-offsets.md) and [[widget-system]] record `ee25b7d62` and `e9b72b107`: both public setters preserve requested offsets rather than clamp them, while retaining committed-state callback delivery and same-offset suppression. Cached observations cover vertical `-50` and horizontal `999`; no fresh probe ran. The initial focused proof is RED 0/2 and the verifier ledger is pending, so no GREEN claim is made. Renderer movement and implicit range-refresh timing remain excluded.
+
 ## [2026-09-26] audit | Record public SetParent effective-visibility callbacks
 
 [Visibility script dispatch](../specs/visibility-script-dispatch.md), [[widget-system]], and [[lua-api]] record `676cda72e`: after its existing protection, forbidden-aspect, and cycle guards, public Lua `SetParent` compares effective visibility around hierarchy mutation and dispatches child-first `OnHide`/`OnShow` only on a transition. The six-case GREEN log covers no local shown-state mutation, hidden-descendant exclusion, reentry without stale callbacks, and handler-error continuation, plus the retained self/descendant cycle and valid-reparent controls. Wowless `api.lua:106-126` and `visibility.lua` corroborate the modeled public transition/traversal only; no native claim or every-parent-writer coverage. Independent verification after `1fcdb52b2` passes 19 scoped cases plus format/check/readability. `/tmp/cross-version-reparent-visibility-proof.md` and `/tmp/cross-version-reparent-final-targeted.log` are the evidence.
@@ -1507,7 +1511,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 |------|---------|
 | [[layout-system]] | AnchorPoint enum (9 positions), single vs multi-anchor resolution, coordinate system (top-left screen / bottom-left Lua), SetPoint API, cycle detection |
 | [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution, stable-atlas headless batch comparisons, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing |
-| [[widget-system]] | Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry storage accounting, lazy boxed model-family state, default children, button text rendering, three-slice pattern, and 3D no-op boundary |
+| [[widget-system]] | Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry storage accounting, lazy boxed model-family state, requested ScrollFrame offsets, default children, button text rendering, three-slice pattern, and 3D no-op boundary |
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing (30+ element types), template registry, inheritance chain resolution, XML-to-widget Lua code generation, same-object engine-root reuse, inline scripts/events |

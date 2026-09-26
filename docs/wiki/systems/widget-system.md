@@ -18,6 +18,10 @@ Key field groups:
 
 **Widget-specific** — Slider, StatusBar, EditBox, ScrollFrame, Cooldown each have dedicated field groups. Model-family state is grouped in one lazy `Option<Box<ModelWidgetState>>`; absent payloads preserve getter defaults, while mutating methods allocate only when needed and remain globally callable.
 
+### ScrollFrame requested-offset boundary
+
+`SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. The initial focused proof is RED 0/2, and the independent verification ledger is not yet present, so this records neither GREEN verification nor renderer movement or implicit range-refresh timing. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
+
 ## WidgetType Enum (18 types, `src/widget/mod.rs`)
 
 Frame, Button, FontString, Texture, EditBox, ScrollFrame, Slider, CheckButton, StatusBar, Cooldown, Model (stub), ModelScene (stub), PlayerModel, ColorSelect, MessageFrame, SimpleHTML (stub), GameTooltip, Minimap.
@@ -88,10 +92,12 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
 - [SetParent parent cycles](../../specs/set-parent-cycles.md) — public cycle-rejection contract and limits
 - [Visibility script dispatch](../../specs/visibility-script-dispatch.md) — public reparent visibility callbacks and proof limits
+- [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — requested-offset, callback, and range boundary
 
 ## See Also
 
 - [[layout-system]] — uses Frame.anchors to compute screen positions
 - [[rendering-pipeline]] — dispatches quad emission per WidgetType
 - [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch
+- [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — public offset setter contract and proof status
 - [[lua-api]] — public `SetParent` dispatch boundary
