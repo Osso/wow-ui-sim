@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_script, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
-use crate::lua_bridge::{stack_val, table_set_rust_fn, table_set_rust_fn_static, IntoStack};
+use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn, table_set_rust_fn_static};
 use crate::widget::WidgetType;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
