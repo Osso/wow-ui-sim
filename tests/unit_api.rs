@@ -604,6 +604,118 @@ fn test_unit_is_unit_different() {
 }
 
 #[test]
+fn test_unit_is_unit_target_and_focus_alias_player_symmetrically() {
+    let env = env();
+    env.eval::<()>("TargetUnit('player'); FocusUnit('target')")
+        .unwrap();
+    let (player_guid, target_guid, focus_guid): (String, String, String) = env
+        .eval("return UnitGUID('player'), UnitGUID('target'), UnitGUID('focus')")
+        .unwrap();
+    assert_eq!(target_guid, player_guid);
+    assert_eq!(focus_guid, player_guid);
+    for (lhs, rhs) in [
+        ("player", "target"),
+        ("target", "player"),
+        ("player", "focus"),
+        ("focus", "player"),
+        ("target", "focus"),
+        ("focus", "target"),
+    ] {
+        let same: bool = env
+            .eval(&format!("return UnitIsUnit('{lhs}', '{rhs}')"))
+            .unwrap();
+        assert!(same, "{lhs} and {rhs} share modeled identity");
+    }
+}
+
+#[test]
+fn test_unit_is_unit_retarget_and_clear_change_alias_identity() {
+    let env = env();
+    env.eval::<()>("TargetUnit('player'); FocusUnit('target')")
+        .unwrap();
+    env.eval::<()>("A_Admin.SetTarget('Hogger', 11, 1, true)")
+        .unwrap();
+    let (target_guid, focus_guid, same, target_is_player, focus_is_player): (
+        String,
+        String,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval("return UnitGUID('target'), UnitGUID('focus'), UnitIsUnit('target', 'focus'), UnitIsUnit('target', 'player'), UnitIsUnit('focus', 'player')")
+        .unwrap();
+    assert_ne!(target_guid, focus_guid);
+    assert!(!same);
+    assert!(!target_is_player);
+    assert!(focus_is_player);
+
+    env.eval::<()>("A_Admin.ClearTarget(); A_Admin.ClearFocus()")
+        .unwrap();
+    let (target_guid, focus_guid, target_same, focus_same): (
+        Option<String>,
+        Option<String>,
+        bool,
+        bool,
+    ) = env
+        .eval("return UnitGUID('target'), UnitGUID('focus'), UnitIsUnit('target', 'player'), UnitIsUnit('focus', 'player')")
+        .unwrap();
+    assert_eq!(target_guid, None);
+    assert_eq!(focus_guid, None);
+    assert!(!target_same);
+    assert!(!focus_same);
+}
+
+#[test]
+fn test_unit_is_unit_party_alias_disappears_after_roster_shrink() {
+    let env = env();
+    env.eval::<()>("A_Admin.SetPartySize(2); TargetUnit('party2'); FocusUnit('target')")
+        .unwrap();
+    let (party_guid, target_guid, focus_guid): (String, String, String) = env
+        .eval("return UnitGUID('party2'), UnitGUID('target'), UnitGUID('focus')")
+        .unwrap();
+    assert_eq!(party_guid, target_guid);
+    assert_eq!(party_guid, focus_guid);
+    let (target_same, focus_same): (bool, bool) = env
+        .eval("return UnitIsUnit('party2', 'target'), UnitIsUnit('focus', 'party2')")
+        .unwrap();
+    assert!(target_same);
+    assert!(focus_same);
+
+    env.eval::<()>("A_Admin.SetPartySize(1)").unwrap();
+    let (party_guid, target_guid, focus_guid, target_same, focus_same): (
+        Option<String>,
+        String,
+        String,
+        bool,
+        bool,
+    ) = env
+        .eval("return UnitGUID('party2'), UnitGUID('target'), UnitGUID('focus'), UnitIsUnit('party2', 'target'), UnitIsUnit('focus', 'party2')")
+        .unwrap();
+    assert_eq!(party_guid, None);
+    assert_eq!(target_guid, focus_guid);
+    assert!(!target_same);
+    assert!(!focus_same);
+}
+
+#[test]
+fn test_unit_is_unit_absent_tokens_never_compare_equal() {
+    let env = env();
+    for expression in [
+        "UnitIsUnit('target', 'target')",
+        "UnitIsUnit('focus', 'focus')",
+        "UnitIsUnit('target', 'focus')",
+        "UnitIsUnit('party1', 'party1')",
+        "UnitIsUnit('unknown', 'unknown')",
+        "UnitIsUnit(nil, nil)",
+        "UnitIsUnit(nil, 'player')",
+        "UnitIsUnit('player', nil)",
+    ] {
+        let same: bool = env.eval(&format!("return {expression}")).unwrap();
+        assert!(!same, "{expression} has no pair of existing identities");
+    }
+}
+
+#[test]
 fn test_unit_is_visible() {
     let env = env();
     let val: bool = env.eval("return UnitIsVisible('player')").unwrap();
