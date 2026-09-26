@@ -1,4 +1,4 @@
-//! State-backed action cooldown queries; other action-bar APIs retain their existing owners.
+//! State-backed action cooldown and texture queries.
 
 use crate::lua_api::globals::action_bar_api::spell_cooldown_times;
 use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
@@ -14,6 +14,21 @@ const HAS_ACTIVE_FIELD: bool = cfg!(any(
     feature = "client-wowforever"
 ));
 const ACTION_COOLDOWN_HASH_FIELDS: usize = 4 + HAS_ACTIVE_FIELD as usize;
+
+pub(crate) fn action_texture_path(sim: &crate::lua_api::SimState, slot: u32) -> Option<String> {
+    if let Some(macro_id) = sim.action_macros.get(&slot) {
+        let index = macro_id.checked_sub(1)? as usize;
+        return sim
+            .macros
+            .get(index)
+            .map(|entry| &entry.icon)
+            .filter(|icon| !icon.is_empty())
+            .cloned();
+    }
+    let spell_id = sim.action_bars.get(&slot)?;
+    let spell = crate::spells::get_spell(*spell_id)?;
+    crate::manifest_interface_data::get_texture_path(spell.icon_file_data_id).map(str::to_string)
+}
 
 pub(crate) fn get_action_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let (start, duration) = read_action_cooldown(state)?;

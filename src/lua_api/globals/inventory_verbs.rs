@@ -174,16 +174,14 @@ fn has_action(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_action_texture(state: &mut LuaState) -> LuaResult<u32> {
-    let texture = stack_u32(state, 1)
-        .and_then(|slot| action_spell_id(state, slot))
-        .and_then(|spell_id| {
-            crate::spells::get_spell(spell_id).and_then(|spell| {
-                crate::manifest_interface_data::get_texture_path(spell.icon_file_data_id)
-            })
-        });
+    let slot = stack_u32(state, 1);
+    let texture = {
+        let sim = borrow_state(state)?;
+        slot.and_then(|slot| crate::c_api::c_action_bar::action_texture_path(&sim, slot))
+    };
     match texture {
         Some(path) => {
-            let path_val = create_string(state, path);
+            let path_val = create_string(state, &path);
             state.push(path_val);
         }
         None => state.push(Val::Nil),

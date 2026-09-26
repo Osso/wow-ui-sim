@@ -4,7 +4,9 @@ mod registration;
 pub use registration::register_all;
 
 use crate::Result;
-use crate::c_api::c_action_bar::{get_action_cooldown, get_action_cooldown_duration};
+use crate::c_api::c_action_bar::{
+    action_texture_path, get_action_cooldown, get_action_cooldown_duration,
+};
 use crate::lua_api::SimState;
 use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
 use crate::lua_api::methods::{
@@ -33,12 +35,6 @@ fn stack_slot_at(state: &LuaState, index: i32) -> Option<u32> {
         Val::Num(n) if n >= 0.0 => Some(n as u32),
         _ => None,
     }
-}
-
-fn action_texture_path(state: &SimState, slot: u32) -> Option<String> {
-    let spell_id = state.action_bars.get(&slot)?;
-    let spell = crate::spells::get_spell(*spell_id)?;
-    crate::manifest_interface_data::get_texture_path(spell.icon_file_data_id).map(str::to_string)
 }
 
 fn current_bonus_bar_index(state: &mut LuaState) -> i32 {
