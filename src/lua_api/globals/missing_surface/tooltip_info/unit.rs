@@ -145,7 +145,10 @@ fn find_unit_for_guid(sim: &SimState, guid: &str) -> Option<String> {
 }
 
 pub(super) fn tooltip_for_unit_guid(state: &mut LuaState, guid: &str) -> Option<Val> {
-    let unit = find_unit_for_guid(&borrow_state(state).ok()?, guid)?;
+    let unit = {
+        let sim = borrow_state(state).ok()?;
+        find_unit_for_guid(&sim, guid)?
+    };
     let info = unit_tooltip_info(state, &unit)?;
     if info.name.is_empty() {
         return None;
