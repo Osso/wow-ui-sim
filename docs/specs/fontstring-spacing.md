@@ -10,6 +10,7 @@
 - [x] `GetNumLines` counts layout lines rather than treating spacing as extra lines, including without an attached font system.
 - [x] Segmented, colored FontString text applies spacing when wrapping to another line.
 - [x] The regular glyph-layout cache keys spacing, stores spaced line coordinates and total height, and receives spacing scaled by the FontString effective scale.
+- [x] Explicit `FontObject:SetSpacing` is copied with the other FontObject fields when constructing a FontString with that font or assigning it via `SetFontObject`. The FontString's later local `SetSpacing` does not mutate the font object.
 
 ## How it works
 
@@ -18,6 +19,7 @@ See [rendering pipeline](../rendering-pipeline.md) and [Lua API](../lua-api.md).
 ## Implementation inventory
 
 - `src/widget/frame.rs` — per-frame spacing state.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/font_strings.rs` — reads explicit FontObject spacing into the construction/assignment snapshot and detects changes.
 - `src/lua_api/frame/methods/widgets/editbox.rs` — setter, getter, auto-height refresh.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — FontString height and line-count queries.
 - `src/render/font.rs` — shaped height and line-count metrics.
@@ -34,8 +36,8 @@ Independent verification reused the six exact-source spacing tests and passed fo
 ## Tests asserting this spec
 
 - `src/iced_app/quad_builders_tests.rs` — regular nonempty glyph placement and segmented colored wrap.
-- `tests/spacing_roundtrip.rs` — Lua height, auto-height, wrapping, text scale, count, and getter.
+- `tests/spacing_roundtrip.rs` — Lua height, auto-height, wrapping, text scale, count, getter, and explicit FontObject spacing snapshot.
 
 ## Untested / out of scope
 
-Exact native spacing units, negative-spacing clamping, EditBox and SimpleHTML rendering, tooltip/message-frame spacing semantics, `FontObject` inheritance or mutation propagation, and full GUI visual parity are not established. `SetSpacing` is shared in the method registration path, but the documented/rendered proof here is bounded to `FontString`; it does not assign this behavior to `FontObject` or `MessageFrame`.
+Exact native spacing units, negative-spacing clamping, EditBox and SimpleHTML rendering, tooltip/message-frame spacing semantics, live `FontObject` mutation propagation, precedence of local spacing set before a later `SetFontObject`, and full GUI visual parity are not established. `SetSpacing` is shared in the method registration path, but the documented/rendered proof here is bounded to `FontString`; it does not assign this behavior to `MessageFrame`.

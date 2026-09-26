@@ -398,6 +398,7 @@ pub(crate) fn apply_font_object_fields(
 pub(crate) struct FontObjectFields {
     pub(crate) font: Option<String>,
     pub(crate) font_size: Option<f32>,
+    pub(crate) spacing: Option<f32>,
     pub(crate) font_outline: Option<crate::widget::TextOutline>,
     pub(crate) justify_h: Option<crate::widget::TextJustify>,
     pub(crate) justify_v: Option<crate::widget::TextJustify>,
@@ -411,6 +412,8 @@ pub(crate) fn read_font_object_fields(state: &mut LuaState, font_object: Val) ->
         font: font_field_string(state, font_object.clone(), "__fontPath", "__font"),
         font_size: font_field_number(state, font_object.clone(), "__fontHeight", "__height")
             .map(|height| height as f32),
+        spacing: font_field_number(state, font_object.clone(), "__spacing", "__spacing")
+            .map(|spacing| spacing as f32),
         font_outline: font_field_string(state, font_object.clone(), "__fontFlags", "__outline")
             .map(|outline| crate::widget::TextOutline::from_wow_str(&outline)),
         justify_h: font_field_string(state, font_object.clone(), "__justifyH", "__justifyH")
@@ -447,6 +450,9 @@ pub(crate) fn apply_font_object_snapshot(
     if let Some(height) = fields.font_size {
         fontstring.font_size = height;
     }
+    if let Some(spacing) = fields.spacing {
+        fontstring.text_line_spacing = spacing;
+    }
     if let Some(outline) = fields.font_outline {
         fontstring.font_outline = outline;
     }
@@ -478,6 +484,9 @@ pub(crate) fn font_object_snapshot_changes_frame(
         || fields
             .font_size
             .is_some_and(|font_size| (frame.font_size - font_size).abs() > f32::EPSILON)
+        || fields
+            .spacing
+            .is_some_and(|spacing| frame.text_line_spacing != spacing)
         || fields
             .font_outline
             .is_some_and(|outline| frame.font_outline != outline)

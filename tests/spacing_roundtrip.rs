@@ -95,6 +95,65 @@ fn font_string_and_font_object_are_independent() {
 }
 
 #[test]
+fn font_string_creation_snapshots_explicit_font_object_spacing() {
+    let env = env();
+    env.set_font_system(Rc::new(RefCell::new(WowFontSystem::new_without_casc())));
+    let (baseline, spaced, auto_height, spacing): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local plain = CreateFont("PlainSpacingSnapshotFont")
+            plain:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            local font = CreateFont("SpacedSnapshotFont")
+            font:CopyFontObject(plain)
+            font:SetSpacing(6)
+            local parent = CreateFrame("Frame", nil, UIParent)
+            local control = parent:CreateFontString(nil, "ARTWORK", "PlainSpacingSnapshotFont")
+            local fs = parent:CreateFontString(nil, "ARTWORK", "SpacedSnapshotFont")
+            control:SetText("H\nH")
+            fs:SetText("H\nH")
+            return control:GetStringHeight(), fs:GetStringHeight(), fs:GetHeight(), fs:GetSpacing()
+            "#,
+        )
+        .unwrap();
+    assert!(baseline > 0.0, "must shape real text");
+    assert!((spaced - baseline - 6.0).abs() < 0.01, "{baseline} -> {spaced}");
+    assert!((auto_height - spaced).abs() < 0.01);
+    assert_eq!(spacing, 6.0);
+}
+
+#[test]
+fn set_font_object_snapshots_spacing_then_local_spacing_is_independent() {
+    let env = env();
+    env.set_font_system(Rc::new(RefCell::new(WowFontSystem::new_without_casc())));
+    let (before, after, auto_height, inherited, local, font_spacing):
+        (f64, f64, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local font = CreateFont("ExplicitSpacingSnapshotFont")
+            font:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            font:SetSpacing(5)
+            local fs = CreateFrame("Frame", nil, UIParent):CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            fs:SetText("H\nH")
+            local before = fs:GetStringHeight()
+            fs:SetFontObject(font)
+            local after = fs:GetStringHeight()
+            local auto_height = fs:GetHeight()
+            local inherited = fs:GetSpacing()
+            fs:SetSpacing(2)
+            return before, after, auto_height, inherited, fs:GetSpacing(), font:GetSpacing()
+            "#,
+        )
+        .unwrap();
+    assert!(before > 0.0, "must shape real text");
+    assert!((after - before - 5.0).abs() < 0.01, "{before} -> {after}");
+    assert!((auto_height - after).abs() < 0.01);
+    assert_eq!(inherited, 5.0);
+    assert_eq!(local, 2.0);
+    assert_eq!(font_spacing, 5.0);
+}
+
+#[test]
 fn fontstring_spacing_changes_multiline_height_but_not_single_line() {
     let env = env();
     env.set_font_system(Rc::new(RefCell::new(WowFontSystem::new_without_casc())));
