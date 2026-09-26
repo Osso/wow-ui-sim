@@ -229,16 +229,6 @@ pub(super) fn is_owned(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn fade_out(state: &mut LuaState) -> LuaResult<u32> {
-    let tooltip_id = frame_id_from_stack(state, 1)?;
-    {
-        let mut sim = borrow_state_mut(state)?;
-        if let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) {
-            tooltip.tooltip_owner_id = None;
-        }
-        if let Some(td) = sim.tooltips.get_mut(&tooltip_id) {
-            td.owner_id = None;
-        }
-    }
     crate::lua_api::frame::methods::core_state::hide(state)
 }
 

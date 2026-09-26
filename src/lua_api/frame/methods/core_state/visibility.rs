@@ -77,6 +77,19 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     {
         let mut sim = borrow_state_mut(state)?;
         sim.set_frame_visible(id, shown);
+        if !shown
+            && sim
+                .widgets
+                .get(id)
+                .is_some_and(|frame| frame.widget_type == WidgetType::GameTooltip)
+        {
+            if let Some(frame) = sim.widgets.get_mut(id) {
+                frame.tooltip_owner_id = None;
+            }
+            if let Some(tooltip) = sim.tooltips.get_mut(&id) {
+                tooltip.owner_id = None;
+            }
+        }
     }
 
     if in_handler || !parent_visible {

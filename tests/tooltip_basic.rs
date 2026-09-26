@@ -137,6 +137,92 @@ fn test_setowner_and_isowned_and_getowner() {
 }
 
 #[test]
+fn tooltip_owner_hide_releases_owner_without_clearing_lines() {
+    let env = WowLuaEnv::new().unwrap();
+    let (shown, owner, owned, lines): (bool, bool, bool, i32) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Content")
+            GameTooltip:Show()
+            GameTooltip:Hide()
+            return GameTooltip:IsShown(), GameTooltip:GetOwner() == nil,
+                GameTooltip:IsOwned(owner), GameTooltip:NumLines()
+            "#,
+        )
+        .unwrap();
+    assert!(!shown);
+    assert!(owner, "Hide must release tooltip ownership");
+    assert!(!owned);
+    assert_eq!(lines, 1, "Hide must not clear tooltip lines");
+    let sim = env.state().borrow();
+    let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
+    assert_eq!(sim.widgets.get(id).unwrap().tooltip_owner_id, None);
+    assert_eq!(sim.tooltips.get(&id).unwrap().owner_id, None);
+}
+
+#[test]
+fn tooltip_owner_set_shown_false_releases_owner() {
+    let env = WowLuaEnv::new().unwrap();
+    let (shown, owner, owned): (bool, bool, bool) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Content")
+            GameTooltip:Show()
+            GameTooltip:SetShown(false)
+            return GameTooltip:IsShown(), GameTooltip:GetOwner() == nil, GameTooltip:IsOwned(owner)
+            "#,
+        )
+        .unwrap();
+    assert!(!shown);
+    assert!(owner);
+    assert!(!owned);
+    let sim = env.state().borrow();
+    let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
+    assert_eq!(sim.tooltips.get(&id).unwrap().owner_id, None);
+}
+
+#[test]
+fn tooltip_owner_clear_lines_retains_owner() {
+    let env = WowLuaEnv::new().unwrap();
+    let (lines, owned, owner): (i32, bool, bool) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Content")
+            GameTooltip:ClearLines()
+            return GameTooltip:NumLines(), GameTooltip:IsOwned(owner), GameTooltip:GetOwner() == owner
+            "#,
+        )
+        .unwrap();
+    assert_eq!(lines, 0);
+    assert!(owned && owner);
+}
+
+#[test]
+fn tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner() {
+    let env = WowLuaEnv::new().unwrap();
+    let (shown, owned): (bool, bool) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Content")
+            owner:Show()
+            owner:Hide()
+            return owner:IsShown(), GameTooltip:IsOwned(owner)
+            "#,
+        )
+        .unwrap();
+    assert!(!shown);
+    assert!(owned);
+}
+
+#[test]
 fn test_getanchortype_after_setowner() {
     let env = WowLuaEnv::new().unwrap();
 
