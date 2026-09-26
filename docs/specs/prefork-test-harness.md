@@ -127,7 +127,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Add the two behavioral-messaging cases and one nested registry/preloaded-startup fixture.
 - [x] Benchmark the parent-bypass prefork execution against the retained current in-target baseline.
 - [x] Migrate every eligible normal-retail full-environment test and complete the final 304-test ordinary startup-like eligibility audit.
-- [ ] Commit `d7cec2b25` corrects the failing wrapped-click fixture: the positive button now uses `SecureHandlerBaseTemplate`, because vendor `GetFrameHandle(self, true)` requires explicit protection. It retains a plain-button negative assertion: original click runs, restricted prebody does not; caller taint and header identity stay asserted. Runtime probe is green; final Rust verifier agent94 remains underway.
+- [x] Fixture-only verification for `d7cec2b25`: the positive wrapped-click fixture uses `SecureHandlerBaseTemplate`, because vendor `GetFrameHandle(self, true)` requires explicit protection. The retained plain-button negative preserves original click behavior while restricted prebody does not run; caller taint and header identity remain asserted. A 286.7s non-incremental target build and `tainted_addon_secure_handler` 2/2 pass, with format/check. This does not establish broader retail completion.
 
 ## Out of scope
 
