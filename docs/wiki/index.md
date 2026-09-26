@@ -1,6 +1,6 @@
-## [2026-09-26] audit | Record tooltip owner lifecycle source boundary
+## [2026-09-26] audit | Record Wrath tooltip content lifecycle source boundary
 
-[[tooltip-owner-lifecycle]] records `6da58da9f`: a shown `GameTooltip` releases ownership through `Hide()` and `SetShown(false)` without clearing lines; `ClearLines()` retains ownership; hiding an ordinary `Frame` leaves tooltip ownership unchanged. The normal `gui,client-wrath` grouped target records source GREEN (four unique owner cases, duplicated to 8 matches; existing `FadeOut` case duplicated to 2). Current GameTooltip documentation corroborates the contract, but native Wrath execution, callback order, inherited/effective visibility, and final independent verification remain pending.
+[[tooltip-owner-lifecycle]] records `1e9674bcd` under normal `gui,client-wrath`: `SetOwner` internally hides and clears while retaining its new owner; owned populated `SetText` shows; appends remain hidden; direct `Hide`, `SetShown(false)`, and `FadeOut` release ownership even already hidden. The grouped `tooltip_basic::` source batch is GREEN 62/62. Current GameTooltip documentation is independent API documentation, not native execution; native behavior, callback order, ancestor-driven effective visibility, and final independent verification remain pending.
 
 ## [2026-09-26] audit | Record runtime StatusBar template orientation source boundary
 
