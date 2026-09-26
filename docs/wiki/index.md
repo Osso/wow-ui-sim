@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record explicit macro action texture resolution
+
+`041c8235a` routes formerly spell-only `GetActionTexture` and `C_ActionBar.GetActionTexture` through shared `c_action_bar::action_texture_path`: assigned macros return nonempty stored `MacroInfo.icon`, while spell resolution remains intact. `2ead3b96c` / `2032f8aed` add edit, move, clear, deletion, empty-icon, and spell controls. RED evidence is retained; post-fix verification is pending in `/tmp/cross-version-macro-texture-verification-ledger.md`. See [macro action textures](../specs/macro-action-textures.md) and [[lua-api]].
+
 ## [2026-09-26] audit | Verify Slider/StatusBar range validation
 
 [[wrath-statusbar-value-callback]] records the `SetMinMaxValues` panic repair and [range contract](../specs/widget-range-validation.md). Independent proof: 15 widget cases + one interpolation control, format/check and changed-function readability pass after `90c4f189b`; `/tmp/cross-version-range-validation-verification-ledger.md`. Native behavior and reversed-range interpolation assertions remain unverified.

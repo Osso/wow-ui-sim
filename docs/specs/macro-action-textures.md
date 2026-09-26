@@ -1,6 +1,6 @@
 # Macro action textures
 
-`GetActionTexture` and `C_ActionBar.GetActionTexture` read the explicit icon stored for an assigned macro. Shared resolution lives in `src/c_api/c_action_bar.rs`; see [Lua API](../lua-api.md).
+`041c8235a` routes both formerly spell-only queries through `src/c_api/c_action_bar.rs`, which reads the explicit icon stored for an assigned macro; see [Lua API](../lua-api.md).
 
 ## What it must do
 
@@ -27,7 +27,7 @@ Three unguarded cases in `tests/action_macro_tooltip.rs`, grouped `integration` 
 
 ## Known gaps (current cycle)
 
-- [ ] Post-fix verification pending; two macro cases fail at missing texture queries and the spell control passes before the fix. `/tmp/cross-version-macro-texture-proof.md` records revisions and commands.
+- [ ] Post-fix verification pending. The pre-fix macro cases are RED while the spell control passes; `/tmp/cross-version-macro-texture-proof.md` records revisions and commands, and `/tmp/cross-version-macro-texture-verification-ledger.md` starts pending.
 
 ## Out of scope
 
