@@ -25,7 +25,7 @@ Default behavior for missing methods (returning nil/false/0) is provided directl
 | Namespace | Notes |
 |-----------|-------|
 | C_Timer | After, NewTicker, NewTimer — fully functional |
-| C_Item | GetItemInfo, GetItemInfoInstant, item class/subclass lookups, modeled aggregate `GetItemCount`, and ItemLocation `GetStackCount` |
+| C_Item | GetItemInfo, GetItemInfoInstant, item class/subclass lookups, modeled aggregate `GetItemCount`, ItemLocation presence/ID/link queries, and `GetStackCount` |
 | C_Container | GetContainerItemID/Link/Info, HasContainerItem, bag-slot flags and backpack flag queries |
 | C_Map | GetAreaInfo, GetMapInfo, GetWorldPosFromMapPos |
 | C_QuestLog | GetNumQuestLogEntries, GetInfo, quest ID lookups |
@@ -67,7 +67,8 @@ The signature audit in `docs/c-api-signature-audit.md` documents the exact param
 ## Sources
 
 - [docs/c-api-signature-audit.md](../../c-api-signature-audit.md) — official API signatures (Patch 12.0.1)
-- [C_Item.GetStackCount location counts](../../specs/c-item-stack-count.md) — bounded ItemLocation contract and focused proof
+- [Shared C_Item location queries and links](../../specs/c-item-location-links.md) — bounded presence, ID, and captured-link contract
+- [C_Item.GetStackCount location counts](../../specs/c-item-stack-count.md) — bounded ItemLocation count contract and focused proof
 - [docs/c-api-stub-audit.md](../../c-api-stub-audit.md) — current implementation status per namespace
 
 ## See Also

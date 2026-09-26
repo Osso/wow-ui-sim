@@ -61,6 +61,10 @@ glue-screen (login/character creation) or legacy/removed APIs.
 | GetItemNameByID | Implemented |
 | GetItemIconByID | Stubbed |
 | GetItemCount | Implemented (modeled aggregate count) |
+| DoesItemExist | Implemented (modeled ItemLocation presence) |
+| GetItemID | Implemented (modeled ItemLocation ID) |
+| GetItemLink | Implemented (captured or catalog ItemLocation link) |
+| IsItemDataCached | Implemented (modeled policy; native cache lifecycle unverified) |
 | GetStackCount | Implemented (ItemLocation bag/equipment count) |
 | GetItemSpecInfo | Stubbed |
 | GetItemQualityColor | Stubbed |

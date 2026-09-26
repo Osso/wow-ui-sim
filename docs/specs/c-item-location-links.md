@@ -26,13 +26,17 @@
 
 - `tests/c_item_api/c_item.rs` — grouped pure-model equipment, bag, and empty location cases; existing item-info cases.
 
+## Evidence and verification
+
+- Cached retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua` declares `DoesItemExist(EmptiableItemLocation)`, `GetItemID(ItemLocation)`, `GetItemLink(ItemLocation)`, and `IsItemDataCached(ItemLocation)`.
+- Commit `3f44fa891` is RED→GREEN for four pure-model location cases and GREEN 44/44 `c_item_api::c_item::` controls; `/tmp/cross-version-item-location-proof.md` retains commands and actual logs.
+
 ## Known gaps (current cycle)
 
-- [x] Focused RED→GREEN: four location/link cases and 44 C_Item cases pass under the default grouped integration target; logs `/tmp/cross-version-item-location-proof.md`.
 - [ ] Native client verification remains unavailable for this slice.
+- [ ] `IsItemDataCached` remains a modeled policy, not a fully native-verified item-cache lifecycle.
 
 ## Out of scope
 
-- GUID synthesis: bag and equipped items have no stable item GUID field; `GetItemGUID` remains separate.
-- Metadata-cache redesign: `IsItemDataCached` currently treats modeled location presence as cached data and positive item IDs as synthetically cached, not as a real item-cache lifecycle.
+- GUID synthesis: bag and equipped items have no modeled stable item GUID, so this change neither models nor fabricates `GetItemGUID` results.
 - Numeric aggregate item counts and native-client semantics.

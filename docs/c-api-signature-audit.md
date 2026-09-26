@@ -3,6 +3,16 @@
 Function signatures from `Blizzard_APIDocumentationGenerated/*.lua` (Patch 12.0.1).
 Used to verify stub implementations match the official WoW API.
 
+## C_Item
+
+| Function | Parameters | Returns |
+|----------|------------|---------|
+| DoesItemExist | emptiableItemLocation: EmptiableItemLocation | itemExists: bool |
+| GetItemGUID | itemLocation: ItemLocation | itemGUID: WOWGUID |
+| GetItemID | itemLocation: ItemLocation | itemID: number |
+| GetItemLink | itemLocation: ItemLocation | itemLink: string? |
+| IsItemDataCached | itemLocation: ItemLocation | isCached: bool |
+
 ## C_Spell
 
 | Function | Parameters | Returns |
