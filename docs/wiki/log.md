@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Silent animated alpha writes
+
+`81484068d`: animated alpha writes no longer dirty frames whose effective alpha doesn't change. Hidden pulses (BoostTutorial glow, a casting-bar texture, LFG GroupFinder textures) stopped forcing redraws. Idle draw went from about 0.6 to 0.1ms. Timer-driven dirt on three UIParent children remains. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] audit | Record Region:IsMouseOver presentation-query boundary
 
 Updated [[layout-system]], [[widget-system]], [[lua-api]], [[rendering-pipeline]], and index from `b6bb2f710`, `1529f22c0`, and [ScrollFrame presentation offsets](../specs/scrollframe-presentation.md). `Region:IsMouseOver` applies the shared translation after its logical-rect, visibility, and mouse-enabled guards, before bounds/margin comparison; `GetRect` remains logical and optional margins remain preserved. Independent verification passes the bounded query scope; the spec links the 35-case, format/check, and source-inspection evidence. The query does not gain viewport clipping or intersection semantics; no native claim is made. This proof remains separate from the prior 52-case render/hit presentation proof. Cached MapCanvas queries its viewport rather than a scrolled child and is not evidence of this mismatch. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.

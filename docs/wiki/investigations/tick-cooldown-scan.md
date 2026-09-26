@@ -85,6 +85,8 @@ At idle the GUI ran ~63 ticks/s at ~4.5ms each (28% of the main thread). A tempo
 
 `0d43b3dd9`: timer-only groups (only plain `Animation` steps, which draw nothing) with no OnUpdate handler also wake at their loop/finish boundary. DandersFrames polls range every 0.5s this way. After this change no playing animation requested the 16ms tick in a live idle sample (wakes of 69-375ms). Idle still ran ~63 ticks/s. The remaining sources were `strata_dirty` (nonzero in 10 of 30 samples) and addon C_Timers (ClickableRaidBuffs, ~30/s), which push the next wake under 50ms, and that rounds down to the 16ms bucket.
 
+A per-stage dirt probe in `collect_tick_dirty` showed the loop feeds itself. After an update, any dirty stratum requests another 16ms tick in `compute_tick_interval`, even though iced already redraws after every update (`iced_winit` requests a redraw per message batch). Animated alpha writes went through `get_mut_visual`, which records dirt before the value comparison, so hidden pulses dirtied their textures on about half the ticks. That covered the BoostTutorial glow, an `OverlayPlayerCastingBarFrame` texture and LFG GroupFinder textures. `81484068d` makes those writes silent. `propagate_effective_alpha` already dirties exactly the frames whose effective alpha changes. Test `src/loader/tests/animation_render_dirty.rs`. Live idle draw went from about 0.6ms to 0.1ms per frame. Nine regions on three unnamed UIParent children, dirtied by C_Timer callbacks on 16 of 63 ticks, remain. The `strata_dirty` fast-tick condition is left in place for now. Removing it would slow addon OnUpdate-only motion to whatever rate other sources wake the tick.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
