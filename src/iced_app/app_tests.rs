@@ -351,6 +351,11 @@ fn parse_fast_tick_ms_rejects_zero_and_invalid_values() {
 
 /// Plays a looping 0.75s alpha pulse on a texture under a parent with the given alpha.
 fn play_pulse_under_parent_alpha(app: &App, parent_alpha: f32) {
+    play_pulse_with_setup(app, parent_alpha, "");
+}
+
+/// Same pulse, running `setup` (with `group` and `fade` in scope) before Play.
+fn play_pulse_with_setup(app: &App, parent_alpha: f32, setup: &str) {
     app.env
         .borrow()
         .exec(&format!(
@@ -367,6 +372,7 @@ fn play_pulse_under_parent_alpha(app: &App, parent_alpha: f32) {
             fade:SetFromAlpha(0.25)
             fade:SetToAlpha(0.5)
             fade:SetDuration(0.75)
+            {setup}
             group:Play()
         "#
         ))
@@ -398,4 +404,24 @@ fn animation_under_transparent_parent_wakes_at_loop_boundary() {
         app.compute_tick_interval(),
         Some(std::time::Duration::from_millis(250)),
     );
+}
+
+#[test]
+fn unseen_animation_with_on_update_handler_keeps_fast_tick() {
+    for setup in [
+        r#"fade:SetScript("OnUpdate", function() end)"#,
+        r#"group:SetScript("OnUpdate", function() end)"#,
+    ] {
+        let app = build_test_app(ScreenKind::Game);
+        play_pulse_with_setup(&app, 0.0, setup);
+        app.strata_dirty.set(0);
+        app.textures_pending.set(false);
+
+        // OnUpdate runs every tick, so its handler needs the frame rate.
+        assert_eq!(
+            app.compute_tick_interval(),
+            Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+            "{setup}",
+        );
+    }
 }

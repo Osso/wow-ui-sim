@@ -629,25 +629,41 @@ fn parse_fast_tick_ms(value: &str) -> Option<u64> {
 }
 
 /// Delay until a playing animation next needs a tick: zero when one is
-/// visible, otherwise the nearest loop/finish boundary of unseen ones.
+/// visible or has an OnUpdate handler, otherwise the nearest loop/finish
+/// boundary of unseen ones.
 fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Duration> {
     state
         .animation_groups
-        .values()
-        .filter(|g| {
+        .iter()
+        .filter(|(_, g)| {
             g.playing
                 && !g.paused
                 && g.has_visual_effects()
                 && state.widgets.is_ancestor_visible(g.owner_frame_id)
         })
-        .filter_map(|g| {
-            if is_hidden_by_parent_alpha(&state.widgets, g) {
+        .filter_map(|(&group_id, g)| {
+            let is_unseen = is_hidden_by_parent_alpha(&state.widgets, g)
+                && !group_has_on_update_handler(state, group_id);
+            if is_unseen {
                 g.time_to_next_boundary()
             } else {
                 Some(std::time::Duration::ZERO)
             }
         })
         .min()
+}
+
+/// OnUpdate on the group or one of its animations runs every tick, so the
+/// group needs frame-rate ticks even when nothing it animates can show.
+fn group_has_on_update_handler(state: &crate::lua_api::SimState, group_id: u64) -> bool {
+    state.on_update_frames.iter().any(|frame_id| {
+        let owning_group = state
+            .anim_frame_to_group
+            .get(frame_id)
+            .copied()
+            .or_else(|| state.anim_frame_to_anim.get(frame_id).map(|&(id, _)| id));
+        owning_group == Some(group_id)
+    })
 }
 
 /// True when nothing the group animates can show: the owner's parent has
