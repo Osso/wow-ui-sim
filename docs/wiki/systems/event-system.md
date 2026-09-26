@@ -23,7 +23,7 @@ Per-frame, per-type (at most one active handler): OnEvent, OnUpdate, OnPostUpdat
 
 Handlers stored in the `__scripts` global table keyed as `"{widget_id}_{handler_name}"` (e.g., `"42_OnClick"`). Frame userdata references stored as `__frame_{id}` globals for dispatch. A parallel Rust `ScriptRegistry` (`HashMap<u64, HashMap<ScriptHandler, i32>>`) lets Rust check handler existence without touching Lua.
 
-`SetScript("OnUpdate", fn)` also inserts frame ID into `SimState.on_update_frames: HashSet<u64>`. `HookScript` appends to `__script_hooks` (stored but not auto-invoked during dispatch yet).
+`SetScript("OnUpdate", fn)` also inserts frame ID into `SimState.on_update_frames: HashSet<u64>`. `HookScript` appends to `__script_hooks`. `EditBox:SetFocus` and `ClearFocus` dispatch normal script bindings and hooks through the ordered normal-handler path; other trigger paths retain their own dispatch coverage.
 
 ## Event Dispatch (`src/lua_api/env.rs`)
 
@@ -32,7 +32,7 @@ Handlers stored in the `__scripts` global table keyed as `"{widget_id}_{handler_
 2. For each listener: look up `__scripts["{id}_OnEvent"]` and `__frame_{id}`, call `handler(frame, event_name, ...args)`
 3. Errors logged per-frame; dispatch continues to remaining frames
 
-`fire_script_handler(id, handler_type, args)` fires any non-OnEvent handler on a specific frame.
+`fire_script_handler(id, handler_type, args)` fires any non-OnEvent handler on a specific frame. `EditBox:SetFocus` and `ClearFocus` use the normal ordered binding dispatcher directly: after committing focus state, a transfer calls former owner `OnEditFocusLost`, then current requested owner `OnEditFocusGained`; clearing calls loss only. Repeated focus/clear and clearing a non-owner are no-ops. Loss-handler reentry can replace the requested owner, suppressing its stale gained callback; handler errors are reported and later focus callbacks continue. This closes a simulator omission, not a native-WoW skip. Mouse input focus behavior is unchanged.
 
 `FireEvent(event, ...)` — Lua-callable global that performs the same dispatch, useful for tests.
 
@@ -63,6 +63,7 @@ Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self
 ## Sources
 
 - [event-system.md](../../event-system.md) — EventQueue, ScriptHandler types, dispatch, OnUpdate, input flow, startup sequence
+- [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
 - [Forever finite constants](../../specs/forever-finite-constants.md) — source-backed finite event additions and limits
 - `Blizzard_APIDocumentationGenerated/{ChatInfoDocumentation,UnitAuraDocumentation}.lua` in the pinned Forever cache — event literals
 
@@ -70,5 +71,5 @@ Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self
 
 - [[lua-api]] — SetScript, RegisterEvent, timer system
 - [[client-profiles]] — Forever-specific finite registration boundary
-- [[widget-system]] — Frame.registered_events, on_update_frames set
+- [[widget-system]] — Frame input/focus state, registered_events, and on_update_frames
 - [[frame-data-flow]] — __scripts table layout, method lookup chain

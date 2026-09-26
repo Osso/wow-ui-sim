@@ -10,7 +10,7 @@ Key field groups:
 
 **Rendering order** — `frame_strata`, `frame_level: i32`, `alpha: f32`, `scale: f32`, `draw_layer`, `draw_sub_layer`. The `BLIZZARD` input token is ignored rather than modeled as a drawable strata tier. Retail probe snapshots record effective XML strata and `HasFixedFrameStrata()` before and after selected operations; they do not expose the original XML token or internal resolution mechanism.
 
-**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`.
+**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`. `SimState.focused_frame_id` tracks the focused EditBox; Lua `SetFocus`/`ClearFocus` commit that state before their gained/lost callbacks. Repeated/non-owner calls are no-ops, and loss-handler reentry may replace a requested new owner. This dispatch is a simulator fix; existing mouse focus behavior is unchanged.
 
 **FontString fields** — `text`, `font`, `font_size` (default 14.0), `font_outline` (None/Outline/ThickOutline), `text_color` (default gold), `justify_h/v`, `word_wrap`, `max_lines`.
 
@@ -77,9 +77,10 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [frame.rs](../../../src/widget/frame.rs) — Frame storage and model-state accessors
 - [frame_size.rs](../../../src/widget/frame_size.rs) — registry storage estimate and boxed payload accounting
 - [button-text-rendering.md](../../button-text-rendering.md) — three-slice rendering order problem and fix
+- [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
 
 ## See Also
 
 - [[layout-system]] — uses Frame.anchors to compute screen positions
 - [[rendering-pipeline]] — dispatches quad emission per WidgetType
-- [[event-system]] — Frame.registered_events and script handler storage
+- [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch

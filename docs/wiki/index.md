@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record EditBox Lua focus callback boundary
+
+`df9ddbf09` fixes a simulator omission: Lua `EditBox:SetFocus`/`ClearFocus` now use the normal ordered handler path for gained/lost callbacks, including hooks. Source/runtime proof is GREEN for four new focus cases plus two unchanged existing cases: committed-state transfer, no-ops, loss reentry suppressing a stale gain, intrinsic binding order, and error continuation. The actual logs are `/tmp/cross-version-editbox-focus-green.log`; no native-WoW semantics claim. The concurrent vitals batch is separate and failing 2/3, while the independent final gate for focus remains pending. Existing mouse focus dispatch is unchanged. See [[event-system]] and [[widget-system]].
+
 ## [2026-09-26] audit | Record shared unit-vitals lookup boundary
 
 [[shared-unit-vitals-lookup]] records `bd6f091ac` source-derived cross-version behavior: cleared/unknown units now return zero health/max, power/max, percentage, and explicit-secondary values rather than player values; seeded focus and active party/raid aliases read their modeled snapshots. `UnitPowerType` retains its separate absent fallback `0, MANA`. The corrected `gui,client-wrath` integration binary is pending, so this is not a GREEN claim. The shared lookup has no target-version or Blizzard UI/cache prerequisite; broader completed resource fixes and the audit portfolio remain unchanged.
