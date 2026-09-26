@@ -55,6 +55,10 @@ Links Lua userdata to the Rust `Frame` via `id`. `__newindex` syncs `parent.Chil
 
 Widget-specific: EditBox (SetMultiLine, SetAutoFocus), Slider (SetMinMaxValues, SetValue, SetOrientation), StatusBar (SetStatusBarColor), Cooldown (SetCooldown), Tooltip (SetOwner, AddLine, AddDoubleLine), MessageFrame (AddMessage), Browser (`NavigateTo`, `NavigateHome`). Browser navigation methods are callable no-result compatibility methods; the simulator does not open external content.
 
+### SetParent cycle rejection
+
+Public Lua `SetParent` runs its existing protected-state and forbidden-aspect guards before the shared hierarchy helper walks the proposed parent's `parent_id` ancestry. It rejects a self or descendant parent before animation reparenting or hierarchy mutation. Commit `818fe8d59` proves self and descendant rejection before mutation, plus four grouped controls: valid reparenting, nil parent, same-parent child-count preservation, and region enumeration. This is not a guarantee for other parent writers or every preexisting malformed hierarchy graph; native error wording is unverified, and the tests require only that the simulator error contains `cycle`. See [SetParent parent cycles](../../specs/set-parent-cycles.md).
+
 Model-family widgets (`Model`, `ModelScene`, `PlayerModel`, and related model frames) expose the Lua surface needed by Blizzard code, but 3D rendering is intentionally out of scope. Visual-only calls such as `ClearFog` are callable no-ops; modeled object state and actor methods remain separately documented where supported.
 
 ### Texture identity
@@ -172,6 +176,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [bank_storage_verbs.rs](../../../src/lua_api/globals/bank_storage_verbs.rs) — retail guild-tabard lookup registration
 - [c_string_util_decimal.rs](../../../src/c_api/c_string_util_decimal.rs) — decimal escaping for control and invalid UTF-8 bytes
 - [font_strings.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/font_strings.rs) — canonical Font object field precedence and FontString snapshots
+- [set-parent-cycles.md](../../specs/set-parent-cycles.md) — public hierarchy cycle-rejection contract and limits
 - [chat_window_defaults.rs](../../../src/lua_api/workarounds/temporary/chat_window_defaults.rs) — temporary chat-window name/docking state and public round-trip defaults
 - [compat_overrides.rs](../../../src/lua_api/globals/compat_overrides.rs) — table-form `string.split` compatibility
 - [formatting_utility_defaults.rs](../../../src/lua_api/workarounds/temporary/formatting_utility_defaults.rs) — string-metatable `:split` compatibility
@@ -203,6 +208,6 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [[taint-system]] — secure/public environments and secure-button publication boundaries
 - [[post-load-workaround-audit]] — explicit post-cleanup restoration hooks
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
-- [[widget-system]] — Frame struct backing each FrameHandle
+- [[widget-system]] — `WidgetRegistry` hierarchy storage and public `SetParent` cycle boundary
 - [[texture-atlas]] — texture path resolution, atlas identity, and rendering consumers
 - [[client-profiles]] — cumulative `retail-12-1-5` feature selection for PTR

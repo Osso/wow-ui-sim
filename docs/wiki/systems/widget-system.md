@@ -36,6 +36,10 @@ pub struct WidgetRegistry {
 
 `get_mut()` sets `render_dirty`. `take_render_dirty()` atomically checks and clears. `would_create_anchor_cycle()` is a BFS reachability check used by `SetPoint`.
 
+### Public parent-cycle boundary
+
+Lua `SetParent` keeps its protected-state and forbidden-aspect guards before it calls the shared `methods_hierarchy::would_create_parent_cycle` helper. That helper walks the proposed parent's `parent_id` ancestry and rejects a self or descendant edge before animation reparenting or `reparent_widget` mutates the registry. Commit `818fe8d59` has RED evidence for both invalid graphs and GREEN evidence for those two rejections plus ordinary reparent, nil-parent, same-parent, and region-enumeration controls (4/4). The helper assumes an acyclic existing parent chain; it neither validates every malformed model graph nor covers other parent writers. The simulator error is tested only as containing `cycle`, not as native WoW wording.
+
 ### Storage accounting
 
 `Frame::storage_estimate_bytes()` accounts for inline state, registry/index capacities, and owned collection data. The lazy model payload contributes its boxed allocation and owned capacities only when present. The settled full-game fixture has 45,002 frames and estimates **213,058,036 bytes**, below the unchanged **230,000,000-byte** budget; the prior inline model state estimated **239,185,088 bytes**.
@@ -78,9 +82,11 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [frame_size.rs](../../../src/widget/frame_size.rs) — registry storage estimate and boxed payload accounting
 - [button-text-rendering.md](../../button-text-rendering.md) — three-slice rendering order problem and fix
 - [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
+- [SetParent parent cycles](../../specs/set-parent-cycles.md) — public cycle-rejection contract and limits
 
 ## See Also
 
 - [[layout-system]] — uses Frame.anchors to compute screen positions
 - [[rendering-pipeline]] — dispatches quad emission per WidgetType
 - [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch
+- [[lua-api]] — public `SetParent` dispatch boundary

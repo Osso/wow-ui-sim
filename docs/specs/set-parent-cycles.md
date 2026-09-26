@@ -1,10 +1,10 @@
 # SetParent parent cycles
 
-Public `SetParent` rejects a proposed self or descendant parent before changing frame hierarchy. The source is `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs`.
+Public Lua `SetParent` rejects a proposed self or descendant parent before changing frame hierarchy. `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` invokes the shared `methods_hierarchy::would_create_parent_cycle` helper before animation reparenting or `apply_parent_change`.
 
 ## What it must do
 
-- [x] Reject self-parenting and parenting to any descendant with a meaningful Lua error before mutation.
+- [x] Reject self-parenting and parenting to a descendant before mutation; the tested simulator error contains `cycle`.
 - [x] Preserve existing parent links, child enumeration, and visibility after rejection.
 - [x] Allow ordinary reparenting, nil parent, and same-parent calls without duplicating child links.
 - [x] Preserve existing protection and forbidden-aspect validation before cycle validation.
@@ -16,8 +16,8 @@ Public `SetParent` rejects a proposed self or descendant parent before changing 
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/methods_hierarchy.rs` — checks the proposed parent's ancestry.
-- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` — rejects invalid public `SetParent` calls before mutation.
+- `src/lua_api/frame/methods/methods_hierarchy.rs` — shared `would_create_parent_cycle` walks the proposed parent's `parent_id` ancestry; `reparent_widget` remains the mutation helper.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` — public Lua `SetParent` retains its protected-state and forbidden-aspect guards, then calls the shared validator before animation reparenting and hierarchy mutation.
 
 ## Tests asserting this spec
 
@@ -25,8 +25,10 @@ Public `SetParent` rejects a proposed self or descendant parent before changing 
 
 ## Known gaps (current cycle)
 
-- [ ] Native WoW error wording remains unverified; the error text is simulator-defined.
+- [ ] Native WoW error wording remains unverified; only a simulator error containing `cycle` is tested.
+- [ ] The helper assumes the existing `parent_id` chain is acyclic. It does not validate or repair every malformed model graph.
+- [ ] Other parent writers are not covered by this public Lua `SetParent` boundary.
 
 ## Out of scope
 
-Anchor-cycle policy, internal trusted reparenting call sites, and repairs of preexisting malformed hierarchy graphs.
+Anchor-cycle policy, other parent writers, internal trusted reparenting call sites, and repairs of preexisting malformed hierarchy graphs.
