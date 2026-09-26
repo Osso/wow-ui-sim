@@ -253,10 +253,7 @@ fn fire_parent_visibility_recursive(
         let Some(frame) = sim.widgets.get(id) else {
             return Ok(());
         };
-        if frame.parent_id != expected_parent
-            || !frame.visible
-            || sim.widgets.is_ancestor_visible(id) != visible
-        {
+        if !matches_parent_visibility(frame, &sim.widgets, expected_parent, visible) {
             return Ok(());
         }
         frame.children.clone()
@@ -267,15 +264,24 @@ fn fire_parent_visibility_recursive(
     let still_transitioned = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).is_some_and(|frame| {
-            frame.parent_id == expected_parent
-                && frame.visible
-                && sim.widgets.is_ancestor_visible(id) == visible
+            matches_parent_visibility(frame, &sim.widgets, expected_parent, visible)
         })
     };
     if still_transitioned {
         fire_visibility_bindings(state, id, if visible { "OnShow" } else { "OnHide" })?;
     }
     Ok(())
+}
+
+fn matches_parent_visibility(
+    frame: &crate::widget::Frame,
+    widgets: &crate::widget::WidgetRegistry,
+    expected_parent: Option<u64>,
+    visible: bool,
+) -> bool {
+    let parent_matches = frame.parent_id == expected_parent;
+    let visibility_matches = widgets.is_ancestor_visible(frame.id) == visible;
+    parent_matches && frame.visible && visibility_matches
 }
 
 fn fire_visibility_bindings(

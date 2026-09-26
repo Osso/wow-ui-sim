@@ -72,20 +72,20 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
     if super::animations::reparent_animation(state, id)? {
         return Ok(0);
     }
-    let was_visible = {
-        let sim = borrow_state(state)?;
-        sim.widgets.get(id).is_some_and(|frame| frame.visible)
-            && sim.widgets.is_ancestor_visible(id)
-    };
+    reparent_frame_and_notify(state, id, new_parent_id)
+}
+
+fn reparent_frame_and_notify(
+    state: &mut LuaState,
+    id: u64,
+    new_parent_id: Option<u64>,
+) -> LuaResult<u32> {
+    let was_visible = borrow_state(state)?.widgets.is_ancestor_visible(id);
     {
         let mut sim = borrow_state_mut(state)?;
         apply_parent_change(&mut sim, id, new_parent_id);
     }
-    let is_visible = {
-        let sim = borrow_state(state)?;
-        sim.widgets.get(id).is_some_and(|frame| frame.visible)
-            && sim.widgets.is_ancestor_visible(id)
-    };
+    let is_visible = borrow_state(state)?.widgets.is_ancestor_visible(id);
     if was_visible != is_visible {
         super::super::core_state::visibility::dispatch_parent_visibility_change(
             state,
