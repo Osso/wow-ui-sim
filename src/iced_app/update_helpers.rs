@@ -95,7 +95,7 @@ fn hittable_rect(
     {
         return None;
     }
-    let rect = f.layout_rect?;
+    let rect = crate::layout::apply_scroll_offsets(registry, id, f.layout_rect?);
     let (il, ir, it, ib) = super::frame_collect::scaled_hit_rect_insets(f);
     Some(iced::Rectangle::new(
         iced::Point::new(

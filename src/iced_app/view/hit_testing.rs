@@ -151,8 +151,8 @@ fn visible_descendants_at_point_by_z_order(
         .filter(|&child_id| {
             widgets
                 .get(child_id)
-                .is_some_and(|child| child_visually_contains(child, pos))
-                && direct_parent_clip_contains(frame, child_id, pos)
+                .is_some_and(|child| child_visually_contains(widgets, child, pos))
+                && direct_parent_clip_contains(widgets, frame, child_id, pos)
         })
         .collect();
     child_ids.sort_by_key(|&child_id| {
@@ -168,11 +168,18 @@ fn visible_descendants_at_point_by_z_order(
 /// Whether the child's visual bounds (visible+layout_rect, scaled by UI_SCALE)
 /// contain the screen-space point. Used for hit-test descent through any
 /// visible frame, regardless of mouse-enabled status.
-fn child_visually_contains(child: &crate::widget::Frame, pos: iced::Point) -> bool {
+fn child_visually_contains(
+    widgets: &crate::widget::WidgetRegistry,
+    child: &crate::widget::Frame,
+    pos: iced::Point,
+) -> bool {
     if !child.visible {
         return false;
     }
-    rect_contains_screen_point(child.layout_rect, pos)
+    let rect = child
+        .layout_rect
+        .map(|rect| crate::layout::apply_scroll_offsets(widgets, child.id, rect));
+    rect_contains_screen_point(rect, pos)
 }
 
 fn frame_visually_contains(
@@ -181,15 +188,19 @@ fn frame_visually_contains(
     frame: &crate::widget::Frame,
     pos: iced::Point,
 ) -> bool {
-    child_visually_contains(frame, pos) && ancestor_clips_contain(widgets, frame_id, pos)
+    child_visually_contains(widgets, frame, pos) && ancestor_clips_contain(widgets, frame_id, pos)
 }
 
 fn direct_parent_clip_contains(
+    widgets: &crate::widget::WidgetRegistry,
     parent: &crate::widget::Frame,
     child_id: u64,
     pos: iced::Point,
 ) -> bool {
-    !parent_clips_child(parent, child_id) || rect_contains_screen_point(parent.layout_rect, pos)
+    let rect = parent
+        .layout_rect
+        .map(|rect| crate::layout::apply_scroll_offsets(widgets, parent.id, rect));
+    !parent_clips_child(parent, child_id) || rect_contains_screen_point(rect, pos)
 }
 
 fn ancestor_clips_contain(
@@ -206,9 +217,7 @@ fn ancestor_clips_contain(
         let Some(parent) = widgets.get(parent_id) else {
             break;
         };
-        if parent_clips_child(parent, current_id)
-            && !rect_contains_screen_point(parent.layout_rect, pos)
-        {
+        if !direct_parent_clip_contains(widgets, parent, current_id, pos) {
             return false;
         }
         current_id = parent_id;

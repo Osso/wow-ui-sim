@@ -12,6 +12,29 @@ use crate::widget::{AnchorPoint, WidgetRegistry, WidgetType};
 use layout_line::resolve_line_frame_rect;
 pub use layout_render_eligibility::{frame_has_layout_anchor, frame_has_render_layout};
 
+/// Translate presentation geometry without changing logical anchors or layout.
+/// Each designated scroll-child edge contributes once, including nested views.
+pub fn apply_scroll_offsets(
+    registry: &WidgetRegistry,
+    id: u64,
+    mut rect: LayoutRect,
+) -> LayoutRect {
+    let mut current_id = id;
+    while let Some(child) = registry.get(current_id) {
+        let Some(parent) = child.parent_id.and_then(|id| registry.get(id)) else {
+            break;
+        };
+        if parent.widget_type == WidgetType::ScrollFrame
+            && parent.scroll_child_id == Some(current_id)
+        {
+            rect.x -= parent.scroll_horizontal as f32 * child.effective_scale;
+            rect.y -= parent.scroll_vertical as f32 * child.effective_scale;
+        }
+        current_id = parent.id;
+    }
+    rect
+}
+
 /// Cached layout result: computed rect + effective scale.
 #[derive(Clone, Copy)]
 pub struct CachedFrameLayout {

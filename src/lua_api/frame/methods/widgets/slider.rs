@@ -516,6 +516,7 @@ pub(super) fn set_horizontal_scroll(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.scroll_horizontal = offset;
     }
+    crate::lua_api::frame::methods::widget_scroll::invalidate_scroll_presentation(&mut sim, id);
     drop(sim);
     fire_scroll_frame_event(state, id, "OnHorizontalScroll", &[Val::Num(offset)])?;
     Ok(0)
@@ -557,6 +558,7 @@ pub(super) fn set_vertical_scroll(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.scroll_vertical = offset;
     }
+    crate::lua_api::frame::methods::widget_scroll::invalidate_scroll_presentation(&mut sim, id);
     drop(sim);
     fire_scroll_frame_event(state, id, "OnVerticalScroll", &[Val::Num(offset)])?;
     Ok(0)
@@ -594,6 +596,7 @@ pub(super) fn set_scroll_child(state: &mut LuaState) -> LuaResult<u32> {
     let child = stack_val(state, 2);
     let Some(child_id) = extract_frame_id(state, child) else {
         let mut sim = borrow_state_mut(state)?;
+        crate::lua_api::frame::methods::widget_scroll::invalidate_scroll_presentation(&mut sim, id);
         if let Some(frame) = sim.widgets.get_mut_visual(id) {
             frame.scroll_child_id = None;
             frame.scroll_child_rect_size = None;
