@@ -10,7 +10,7 @@ Key field groups:
 
 **Rendering order** — `frame_strata`, `frame_level: i32`, `alpha: f32`, `scale: f32`, `draw_layer`, `draw_sub_layer`. The `BLIZZARD` input token is ignored rather than modeled as a drawable strata tier. Retail probe snapshots record effective XML strata and `HasFixedFrameStrata()` before and after selected operations; they do not expose the original XML token or internal resolution mechanism.
 
-**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`. `SimState.focused_frame_id` tracks the focused EditBox; Lua `SetFocus`/`ClearFocus` commit that state before their gained/lost callbacks. Repeated/non-owner calls are no-ops, and loss-handler reentry may replace a requested new owner. This dispatch is a simulator fix; existing mouse focus behavior is unchanged.
+**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`. `SimState.focused_frame_id` tracks the focused EditBox; Lua `SetFocus`/`ClearFocus` commit that state before their gained/lost callbacks. Repeated/non-owner calls are no-ops, and loss-handler reentry may replace a requested new owner. For changed EditBox `SetText`/`SetFormattedText`, text commits and scalar caret/selection endpoints clamp before `OnTextSet` then `OnTextChanged(false)`; same-value assignment is a simulator no-op. This dispatch is simulator behavior; existing mouse focus behavior is unchanged.
 
 **FontString fields** — `text`, `font`, `font_size` (default 14.0), `font_outline` (None/Outline/ThickOutline), `text_color` (default gold), `justify_h/v`, `word_wrap`, `max_lines`.
 
