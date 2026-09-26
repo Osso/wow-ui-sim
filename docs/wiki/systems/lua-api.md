@@ -65,6 +65,10 @@ After those existing guards and the hierarchy mutation, public `SetParent` compa
 
 Model-family widgets (`Model`, `ModelScene`, `PlayerModel`, and related model frames) expose the Lua surface needed by Blizzard code, but 3D rendering is intentionally out of scope. Visual-only calls such as `ClearFog` are callable no-ops; modeled object state and actor methods remain separately documented where supported.
 
+### Region mouse-over presentation boundary
+
+`b6bb2f710` applies the shared ScrollFrame presentation translation to `Region:IsMouseOver` after its existing layout, visibility, mouse-enabled, and optional-margin guards. It changes the bounds checked by that public query for a designated scroll-child subtree; `GetRect` remains a logical-layout query. This does not add viewport clipping or intersection behavior, and native query semantics remain unverified. `1529f22c0` records two RED shifted/scale cases in `/tmp/cross-version-scroll-query-proof.md`; independent verification is pending and separate from the 52-case render/hit presentation ledger. Cached MapCanvas calls query its viewport, not a scrolled child, so they do not demonstrate this mismatch. See [[widget-system]] and [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md).
+
 ### Texture identity
 
 For known WoW texture paths resolved by the bundled texture manifest, `Texture:GetTexture()` and `Texture:GetTextureFileID()` return the numeric fileDataID, while `Texture:GetTextureFilePath()` preserves the source path. Use `GetTextureFilePath()` when an assertion needs the authored path rather than the numeric texture identity. Current proofs include `Interface\\TargetingFrame\\UI-Classes-Circles` → `237669` and `Interface\\ICONS\\INV_Misc_QuestionMark` → `134400`.

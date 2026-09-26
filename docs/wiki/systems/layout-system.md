@@ -58,6 +58,8 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 Conversion at `methods_core.rs:144`: `bottom = screen_height - rect.y - rect.height`. Y-offset sign convention: positive Y in `SetPoint` moves frame UP, which means `target_y = anchor_y - y_offset` in layout computation.
 
+ScrollFrame presentation translation does not mutate `LayoutRect`, so `GetRect` remains logical. `Region:IsMouseOver` separately derives presented bounds for its existing guarded bounds check; this does not establish a general geometry-query or viewport-clipping rule.
+
 Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 
 ## Sources
@@ -70,6 +72,6 @@ Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 
 - [[widget-system]] — Frame struct that stores anchors and sizes
 - [[lua-api]] — SetPoint, ClearAllPoints, GetRect method implementations
-- [[rendering-pipeline]] — consumes LayoutRect to emit quads
+- [[rendering-pipeline]] — consumes LayoutRect and applies presentation transforms for render/input geometry
 - [[frame-position-baseline-drift]] — causal replay needs both display metrics and EditMode inputs
 - [[ptr-pixel-rounding-probe]] — PTR native pixel-rounding semantics await live evidence
