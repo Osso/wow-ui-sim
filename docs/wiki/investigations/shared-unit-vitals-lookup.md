@@ -1,10 +1,10 @@
 # Shared unit-vitals lookup
 
-Commit `bd6f091ac` centralizes health/max and power/max lookup for the shared numeric unit-vitals surface. Follow-up `19757e081` removes late duplicate `UnitHealthMax` and `UnitPowerMax` registrations from `unit_stats.rs`: registration order had overwritten the shared handlers with player/stat shortcuts. The evidence is source-derived; GREEN remains pending an independent `gui,client-wrath` integration verifier.
+Commit `bd6f091ac` centralizes health/max and power/max lookup for the shared numeric unit-vitals surface. Follow-up `19757e081` removes late duplicate `UnitHealthMax` and `UnitPowerMax` registrations from `unit_stats.rs`: registration order had overwritten the shared handlers with player/stat shortcuts. Independent grouped verification passes at `19757e081`: Wrath 74/74 and retail 87/87, including EditBox and stat controls; format/check pass. This is simulator evidence, not native-client proof.
 
 ## Actual model
 
-`lookup_unit_vitals()` in `spell_api.rs` reads player state for `player`, `self`, `pet`, and `vehicle`. It reads current target/focus snapshots through `resolve_unit_snapshot`; active `partyN` resolves through that same snapshot resolver, while active `raidN` directly indexes the corresponding modeled party member. Inactive party/raid aliases, cleared target/focus, and unknown tokens produce a zero-valued `UnitVitals` with `present = false` rather than falling through to player state.
+`lookup_unit_vitals()` in `spell_api.rs` reads player state for `player`, `self`, `pet`, and `vehicle`. It checks unit existence before reading current target/focus snapshots through `resolve_unit_snapshot`; active `partyN` and `raidN` index the corresponding modeled party member directly. Inactive party/raid aliases, cleared target/focus, and unknown tokens produce a zero-valued `UnitVitals` with `present = false` rather than falling through to player state.
 
 The `present` flag makes explicit secondary-power `UnitPower` and `UnitPowerMax` return zero too, preventing the prior secondary-player-resource path from leaking a nonzero maximum for an absent unit. `UnitPowerType` retains the existing absent fallback `0, "MANA"`; that metadata behavior is outside the numeric-vitals conclusion.
 
@@ -12,17 +12,17 @@ The targeting-only seed regression and the `UnitPowerMax` single-result regressi
 
 Cached current `Blizzard_APIDocumentationGenerated/UnitDocumentation.lua` and read-only Wrath Classic 3.4.3 `UnitDocumentation.lua` independently declare one `maxPower` return. This establishes the modeled return count only; it does not establish absent-unit values, coercion, `unmodified` behavior, or secret/restriction metadata semantics.
 
-No target-version selection, Blizzard UI cache, or CASC asset is consulted by the lookup. The current documentation file is return-shape evidence, not a runtime prerequisite. The proof ledger's planned `gui,client-wrath` build is verification scope, not a runtime prerequisite for the implementation.
+No target-version selection, Blizzard UI cache, or CASC asset is consulted by the lookup. The current documentation file is return-shape evidence, not a runtime prerequisite. The two compiled profiles are verification lanes, not feature restrictions or runtime prerequisites.
 
 ## Covered source assertions
 
-`admin_health_power_api.rs` adds two grouped assertions:
+`admin_health_power_api.rs` adds grouped regressions:
 
 - Player, target, and focus use distinct seeded health/power values; focus percentage queries read focus values.
 - A cleared target and `unknown-unit` are non-existent and return zero for health/max, power/max, both percentage queries, and explicit power type 9.
 - An active `party1` and `raid1` read the seeded member; after the group is inactive, those aliases are absent and return zero.
 
-These assertions establish intended simulator behavior only. `19757e081` adds the targeting-only seed and one-return maximum regressions after their RED boundary was reproduced; the focus-state refactor `8c5e7afcf` is adjacent revision context and does not alter vitals registration. The final `bd6f091ac` plus `19757e081` scope remains **GREEN pending** an independently built integration binary. This page does not claim a passing test run.
+These assertions establish intended simulator behavior only. `19757e081` adds the targeting-only seed and one-return maximum regressions after their RED boundary was reproduced; the focus-state refactor `8c5e7afcf` is adjacent revision context and does not alter vitals registration. The final code scope passes independently in both selected profiles. `/tmp/cross-version-batch-proof.md` records exact build commands, counts, logs and preserved limitations.
 
 ## Limits
 
@@ -36,7 +36,8 @@ No native client evidence establishes absent-unit numeric or power-type semantic
 - [target snapshot resolver](../../../src/lua_api/globals/targeting_verbs.rs) — target, focus, party, and resolver token mapping.
 - [group unit existence](../../../src/lua_api/globals/group_queries.rs) — active party/raid existence policy.
 - [grouped vitals assertions](../../../tests/admin_health_power_api.rs) — seeded focus, absent-unit, party, and raid cases.
-- `/tmp/cross-version-vitals-proof.md` — supplied proof ledger and pending-GREEN boundary.
+- `/tmp/cross-version-vitals-proof.md` — development RED boundaries.
+- `/tmp/cross-version-batch-proof.md` — final independent two-profile GREEN and source/readability audit.
 - cached current and read-only Wrath 3.4.3 `UnitDocumentation.lua` — independent one-`maxPower` return declarations; no broader semantic credit.
 
 ## See Also

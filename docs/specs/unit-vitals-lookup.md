@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Preserve player health, power, and supported player secondary resources.
-- [ ] Read distinct modeled target, focus, party, and raid-alias values rather than player values.
-- [ ] Return numeric zero for absent target, inactive party/raid, and unknown tokens in health/max, power/max, percentage, and explicit secondary-power queries. This absent-unit zero is simulator policy inferred from the numeric API declarations and `UnitExists` state, not native-verified behavior.
+- [x] Preserve player health, power, and supported player secondary resources.
+- [x] Read distinct modeled target, focus, party, and raid-alias values rather than player values.
+- [x] Return numeric zero for absent target, inactive party/raid, and unknown tokens in health/max, power/max, percentage, and explicit secondary-power queries. This absent-unit zero is simulator policy inferred from the numeric API declarations and `UnitExists` state, not native-verified behavior.
 - [ ] Preserve existing power-type metadata defaults for absent units (`0`, `MANA`); do not infer native metadata semantics from the numeric vitals contract.
-- [ ] Exclude targeting-only synthetic units such as `enemy1` from numeric queries when the unit-existence model says they do not exist.
-- [ ] Return exactly one value from `UnitPowerMax`: the maximum resource amount. Both cached current `UnitDocumentation.lua` and Wrath Classic 3.4.3 source documentation declare only `maxPower`.
+- [x] Exclude targeting-only synthetic units such as `enemy1` from numeric queries when the unit-existence model says they do not exist.
+- [x] Return exactly one value from `UnitPowerMax`: the maximum resource amount. Both cached current `UnitDocumentation.lua` and Wrath Classic 3.4.3 source documentation declare only `maxPower`.
 
 ## How it works
 
@@ -29,7 +29,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Confirm grouped integration GREEN on `gui,client-wrath` after the duplicate-registration fix. RED reproduction is source evidence, not GREEN proof.
+Independent grouped integration passes on `gui,client-wrath` (74 cases) and `gui,client-retail` (87 cases), including focus and stat controls. Exact commands and source scope: `/tmp/cross-version-batch-proof.md`. Native behavior and untested profiles remain outside this proof.
 - [ ] Preserve the return-metadata boundary: local current and read-only Wrath 3.4.3 `UnitDocumentation.lua` declarations establish one `maxPower` result, but do not establish absent-unit values, coercion, `unmodified` behavior, or secret/restriction semantics.
 
 ## Out of scope

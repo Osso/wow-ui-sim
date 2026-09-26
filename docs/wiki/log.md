@@ -2,6 +2,10 @@
 
 `bbd568584` replaces the overlay's derived `other` number, which included idle wait time, with measured per-second numbers: tick/draw/prepare ms, ticks/s, main-thread CPU busy %, and unmeasured busy ms. Tests: `sample_display_metrics_*`, `main_thread_cpu_time_advances_with_busy_work` (26 passed). See [[tick-cooldown-scan]].
 
+## [2026-09-26] audit | Verify shared focus and vitals batch
+
+At `19757e081`, independent grouped tests pass Wrath 74/74 and retail 87/87; format/check pass. [[shared-unit-vitals-lookup]] and [[event-system]] retain exact behavior boundaries. `/tmp/cross-version-batch-proof.md` records commands, source scope and logs; existing file-size findings remain, with no native-client or full-suite claim. Historical intermediate vitals failures below are superseded by this scoped GREEN.
+
 ## [2026-09-26] audit | Record EditBox Lua focus callback boundary
 
 Updated [[event-system]], [[widget-system]], and index from `df9ddbf09`, [the EditBox focus callback contract](../specs/editbox-focus-callbacks.md), `/tmp/cross-version-editbox-focus-proof.md`, and its actual GREEN log. This is a simulator omission, not evidence that native WoW skips callbacks: Lua `SetFocus`/`ClearFocus` now dispatch normal ordered handlers and `HookScript` callbacks after committing focus state. The source/runtime batch is GREEN 4 new + 2 unchanged existing cases: transfer with callback-visible state, repeated/non-owner no-ops, loss reentry suppressing stale gain, intrinsic ordering, and error reporting while later gain continues. `/tmp/cross-version-vitals-green.log` is a separate concurrent batch, failing 2/3; it is not focus proof and vitals work remains pending. Existing mouse focus dispatch is unchanged. Independent final focus verification remains pending. No tests or builds ran for this documentation audit.
