@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | De-duplicate hit-grid batch updates
+
+`45808d6ab` visits each frame once per hit-grid batch; spellbook repeat-open draw p50 fell ~33% and close draw ~49% (fast-core `bench_spellbook --cycles 20` pairs). Full lib suite 1911/1915; failures are the four known pre-existing ones. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] investigation | De-duplicate per-pass layout recompute
 
 A spellbook open's single layout pass recomputed 100k frame subtrees from 64 dirty roots. `4e64f9e20` rewrites each stored rect at most once per pass; repeat-open total p50 fell ~18% and close ~15% (fast-core `bench_spellbook --cycles 20` pairs). Full lib suite: 1909/1914, remaining failures pre-existing (3 EditMode, `installs_debug_environment_defaults`) plus a wall-clock flake in `unit_cast_duration_clears_before_completion_callbacks` that passes alone. See [[tick-cooldown-scan]].

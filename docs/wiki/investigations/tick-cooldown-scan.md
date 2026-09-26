@@ -64,6 +64,10 @@ Dirty-frame probing showed the same frames dirty on idle ticks: `MicroMenu`, `Qu
 
 `4e64f9e20`: `LayoutCache::claim_recompute` makes each frame's stored rect rewrite at most once per pass (rects derive from registry state only, never stored `layout_rect`). Test `src/loader/tests/layout_multi_root.rs`. Fast-core interleaved pairs: repeat-open total p50 ~41 → ~34ms, close ~25 → ~21ms.
 
+### Hit-grid batch de-duplication (follow-up)
+
+`apply_hit_grid_batch` walked the full subtree of every layout root and every visibility notification, re-evaluating and reinserting the same frames (5.4% self time over open/close cycles). `45808d6ab` collects the union of touched subtrees once, sets each frame from current registry visibility (order-independent for coalesced Show/Hide), skips unchanged reinserts, and checks `mouse_enabled` before ancestor walks. Test: `overlapping_roots_and_visibility_changes_match_rebuilt_grid`. Fast-core pairs: repeat-open total p50 27.0 → 22.1ms (draw 14.1 → 9.4ms), close 16.4 → 14.3ms (draw 4.7 → 2.4ms).
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
