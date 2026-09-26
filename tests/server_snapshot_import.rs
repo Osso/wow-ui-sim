@@ -1,4 +1,3 @@
-use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 
@@ -30,20 +29,19 @@ const CAPTURE_BAG_APIS: &str = r#"
 fn write_producer_bag_snapshot(root: &std::path::Path) {
     let directory = root.join("Account/CapturedAccount/SavedVariables");
     let source = WowLuaEnv::new().unwrap();
-    let mut writer = SavedVariablesManager::with_storage_dir(&directory);
-    writer
-        .init_for_addon(
-            source.rilua_mut().state_mut(),
-            "ServerSnapshot",
-            &["ServerSnapshotDB".into()],
-            &[],
-        )
+    let mut writer = SavedVariablesManager::with_storage_dir(directory);
+    source
+        .loader_env()
+        .with_state(|state| {
+            writer.init_for_addon(state, "ServerSnapshot", &["ServerSnapshotDB".into()], &[])
+        })
         .unwrap();
     source.exec(CAPTURE_BAG_APIS).unwrap();
     source.exec(SERVER_SNAPSHOT_ADDON_LUA).unwrap();
     source.fire_event("BAG_UPDATE_DELAYED").unwrap();
-    writer
-        .save_addon(source.rilua_mut().state_mut(), "ServerSnapshot")
+    source
+        .loader_env()
+        .with_state(|state| writer.save_addon(state, "ServerSnapshot"))
         .unwrap();
 }
 
