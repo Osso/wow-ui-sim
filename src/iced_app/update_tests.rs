@@ -775,14 +775,10 @@ fn sample_display_metrics_splits_main_thread_cpu_into_measured_and_unmeasured() 
 fn stable_timer_interval_uses_fixed_buckets() {
     use crate::iced_app::app::stable_timer_interval;
     use std::time::Duration;
-    assert_eq!(
-        stable_timer_interval(Duration::from_millis(0)),
-        Duration::from_millis(16)
-    );
-    assert_eq!(
-        stable_timer_interval(Duration::from_millis(40)),
-        Duration::from_millis(16)
-    );
+    // Anything due within the next bucket runs on the next 60 Hz frame.
+    let frame = Duration::from_micros(16_667);
+    assert_eq!(stable_timer_interval(Duration::from_millis(0)), frame);
+    assert_eq!(stable_timer_interval(Duration::from_millis(40)), frame);
     assert_eq!(
         stable_timer_interval(Duration::from_millis(120)),
         Duration::from_millis(50)

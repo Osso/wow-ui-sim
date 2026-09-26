@@ -77,7 +77,7 @@ fn active_cooldown_widget_uses_fast_tick_interval() {
 
     assert_eq!(
         app.compute_tick_interval(),
-        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+        Some(std::time::Duration::from_micros(16_667)),
     );
 }
 
@@ -99,7 +99,7 @@ fn slow_mod_rate_cooldown_keeps_fast_tick_after_real_duration() {
 
     assert_eq!(
         app.compute_tick_interval(),
-        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+        Some(std::time::Duration::from_micros(16_667)),
     );
 }
 
@@ -388,7 +388,7 @@ fn visible_animation_uses_fast_tick_interval() {
 
     assert_eq!(
         app.compute_tick_interval(),
-        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+        Some(std::time::Duration::from_micros(16_667)),
     );
 }
 
@@ -420,7 +420,7 @@ fn unseen_animation_with_on_update_handler_keeps_fast_tick() {
         // OnUpdate runs every tick, so its handler needs the frame rate.
         assert_eq!(
             app.compute_tick_interval(),
-            Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+            Some(std::time::Duration::from_micros(16_667)),
             "{setup}",
         );
     }
@@ -469,6 +469,6 @@ fn plain_animation_timer_with_on_update_keeps_fast_tick() {
 
     assert_eq!(
         app.compute_tick_interval(),
-        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+        Some(std::time::Duration::from_micros(16_667)),
     );
 }

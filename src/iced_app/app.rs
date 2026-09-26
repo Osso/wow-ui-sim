@@ -39,7 +39,8 @@ struct AppInitialSelections {
     movement: crate::config::MovementConfig,
 }
 
-const DEFAULT_FAST_TICK_MS: u64 = 16;
+/// One frame at 60 Hz: the fastest tick rate, matching a 60 FPS client frame.
+const FRAME_INTERVAL: std::time::Duration = std::time::Duration::from_micros(16_667);
 const GUI_STARTUP_ON_UPDATE_TICKS: usize = 16;
 
 /// Debug visualization options.
@@ -561,7 +562,7 @@ impl App {
         drop(state);
 
         // Timer tick: wake up when next C_Timer fires or an unseen animation
-        // reaches a loop/finish boundary (min 16ms)
+        // reaches a loop/finish boundary (at most one tick per 60 Hz frame)
         let wake_delay = [env.next_timer_delay(), animation_wake]
             .into_iter()
             .flatten()
@@ -604,23 +605,21 @@ impl App {
 /// boundary, and each bucket interval is at most the remaining time, so
 /// timers still fire within one tick of their deadline.
 pub(crate) fn stable_timer_interval(delay: std::time::Duration) -> std::time::Duration {
-    const BUCKETS_MS: &[u64] = &[1000, 250, 50, 16];
+    const BUCKETS_MS: &[u64] = &[1000, 250, 50];
     let delay_ms = delay.as_millis().min(u128::from(u64::MAX)) as u64;
-    let bucket = BUCKETS_MS
+    BUCKETS_MS
         .iter()
         .copied()
         .find(|&bucket| delay_ms >= bucket)
-        .unwrap_or(16);
-    std::time::Duration::from_millis(bucket)
+        .map_or(FRAME_INTERVAL, std::time::Duration::from_millis)
 }
 
 fn fast_tick_interval() -> std::time::Duration {
-    let fast_tick_ms = std::env::var("WOW_SIM_TICK_MS")
+    std::env::var("WOW_SIM_TICK_MS")
         .ok()
         .as_deref()
         .and_then(parse_fast_tick_ms)
-        .unwrap_or(DEFAULT_FAST_TICK_MS);
-    std::time::Duration::from_millis(fast_tick_ms)
+        .map_or(FRAME_INTERVAL, std::time::Duration::from_millis)
 }
 
 fn parse_fast_tick_ms(value: &str) -> Option<u64> {
