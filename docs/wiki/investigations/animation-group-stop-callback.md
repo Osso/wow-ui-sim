@@ -14,20 +14,21 @@ The exact committed RED/GREEN case has these phases:
 
 At parent `b8596d6dc`, targeted `gui,client-wrath` integration was RED 0/1 with `Stop should dispatch OnStop once`. At `af1b54f2b`, the same exact invocation was GREEN 1/1. The proof covers only explicit Stop while playing.
 
-The later error-path case was valid RED 0/1 before `43025255d` with `OnStop errors must not abort the Stop caller`. Its post-correction GREEN has not run. The source implementation is documented above; final independent verification remains pending.
+The later error-path case was valid RED 0/1 before `43025255d` with `OnStop errors must not abort the Stop caller`. Independent verification at `d6d7a9078` passes its post-correction case within 30 group tests, plus 13 state and six lifecycle controls. Format/default-feature check pass without warnings. Full commands and results are in `/tmp/cross-version-text-animation-proof.md`.
 
 Unmodified retail Blizzard sources use group `OnStop` for minimap glow hiding and Objective Tracker active-animation cleanup. The committed model supports those consumers, but neither source inspection nor the targeted simulator test establishes real-client callback timing.
 
 ## Limits
 
 - Paused or inactive `Stop()`, hidden-subtree stops, child-animation `OnStop`, natural finish, `Pause`, and other callbacks are outside this proof.
-- The `43025255d` callback-error implementation has valid pre-correction RED only; post-correction GREEN and final independent verification remain pending.
-- No full suite, full-profile, combined verification, native-client probe, vendor change, or new Cargo target is claimed.
+- The combined default-feature gate covers the selected animation and FontString cases, not a full suite/profile or native-client probe. Existing readability findings remain recorded in the proof ledger.
+- No vendor change or new Cargo target was made.
 
 ## Sources
 
 - [animation control](../../../src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs) — modeled explicit Stop transition and dispatch
-- [animation group tests](../../../tests/animation_group.rs) — exact lifecycle case and pending error-path case
+- [animation group tests](../../../tests/animation_group.rs) — passing lifecycle and error-path cases
+- `/tmp/cross-version-text-animation-proof.md` — independent combined verification
 - [animation query lifecycle](../../specs/animation-query-lifecycle.md) — bounded API inventory
 - `/tmp/cross-version-animation-stop-proof.md` — source boundary and RED/GREEN ledger
 - `/tmp/cross-version-animation-stop-{red,green}.log` — actual targeted test outputs

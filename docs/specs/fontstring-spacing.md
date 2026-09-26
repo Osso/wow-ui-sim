@@ -29,7 +29,7 @@ See [rendering pipeline](../rendering-pipeline.md) and [Lua API](../lua-api.md).
 
 At `d6d7a9078`, default-feature targeted source tests were RED 0/2 for renderer glyph placement and RED 0/3 for integration height/auto-height behavior. Final targeted GREEN is **2/2 library tests** and **4/4 integration tests**; the fourth integration case covers line count without an attached font system. Logs: `/tmp/font-spacing-{lib,integration}-{red,green-current}.log`; full ledger: `/tmp/cross-version-font-spacing-proof.md`.
 
-This is source/default-feature coverage only. Independent final verification remains pending; no native-client, full-profile, broad-suite, or GUI-parity claim follows from these counts.
+Independent verification reused the six exact-source spacing tests and passed four additional measurement/glyph controls, format, and default-feature check without warnings. See `/tmp/cross-version-text-animation-proof.md`. No native-client, full-profile, broad-suite, or GUI-parity claim follows from these counts.
 
 ## Tests asserting this spec
 

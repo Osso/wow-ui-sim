@@ -39,7 +39,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 
 Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, error routing, and no OnFinished), and `tests/animation_anim.rs`.
 
-The exact playing-Stop case is recorded in `/tmp/cross-version-animation-stop-proof.md`: targeted `gui,client-wrath` was RED 0/1 at `b8596d6dc`, then GREEN 1/1 at `af1b54f2b`. At `43025255d`, `animation_group_stop` obtains ordered group `OnStop` handlers, invokes each through `protected_lua_pcall_state`, and sends errors to `call_error_handler_state` after all modeled Stop state has settled. The error-path regression is valid RED 0/1 before that correction; it has no post-`43025255d` GREEN run. No new Cargo target or API-publication absence assertions are needed.
+The exact playing-Stop case is recorded in `/tmp/cross-version-animation-stop-proof.md`: targeted `gui,client-wrath` was RED 0/1 at `b8596d6dc`, then GREEN 1/1 at `af1b54f2b`. At `43025255d`, `animation_group_stop` obtains ordered group `OnStop` handlers, invokes each through `protected_lua_pcall_state`, and sends errors to `call_error_handler_state` after all modeled Stop state has settled. The error-path regression was RED 0/1 before correction; independent verification at `d6d7a9078` passes all 30 group, 13 group-state, and six lifecycle cases, including error routing and reentrant Play. Format/default-feature check pass; exact proof is `/tmp/cross-version-text-animation-proof.md`. No new Cargo target or API-publication absence assertions are needed.
 
 At test commit `9bc06cfe2`, all five new tests and 59 existing tests passed under each of `client-ptr` and `client-retail`:
 
@@ -56,7 +56,7 @@ Correction `23bdf9fe6` first reproduced two failures: the exact active-start bou
 - [x] Correct the reproduced double subtraction of start delay: group time `0.75` with start delay `0.5` now yields local elapsed/progress `0.25` and `IsDelaying() == false`. The getter derives time within the animation's order rather than reinterpreting clamped active elapsed.
 - [x] The model root now commits playback/cache state, releases the simulation-state borrow, then dispatches existing resolved-group `OnPlay` handlers. This supports the unmodified Blizzard EncounterWarnings consumer; it does not change credit for these sixteen query rows or establish native callback/security semantics.
 - [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage. Unchanged Blizzard UI consumers source the explicit playing-group Stop callback, but no native execution probe establishes it; paused/inactive Stop, hidden-subtree Stop, child-animation `OnStop`, natural finish, Pause, and other callbacks remain unverified.
-- [ ] The `43025255d` source routes group `OnStop` handler errors through the normal error handler rather than propagating them from `Stop()`, but its error-path case has only valid RED 0/1 evidence before the correction. Post-correction GREEN and final independent verification remain pending.
+- [x] Explicit playing-group Stop reports handler errors without aborting its caller; the post-correction regression passes in the independent 49-case animation batch.
 
 ## Out of scope
 
