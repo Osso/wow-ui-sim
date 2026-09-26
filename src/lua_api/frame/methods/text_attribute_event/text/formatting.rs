@@ -1,6 +1,7 @@
 use super::simple_html::{get_simple_html_font, is_simple_html_frame, set_simple_html_font};
 use super::{
-    frame_text_value, get_string_width, measure_text_height, measure_text_width, set_text,
+    frame_text_value, get_string_width, measure_text_height, measure_text_width,
+    refresh_auto_text_height_after_width_change, set_text,
 };
 use crate::lua_api::frame::methods::button_anchor_hierarchy::{
     apply_font_object_snapshot, font_object_snapshot_changes_frame, read_font_object_fields,
@@ -471,6 +472,8 @@ pub(crate) fn set_font_object(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         apply_font_object_snapshot(frame, &fields);
     }
+    drop(sim);
+    refresh_auto_text_height_after_width_change(state, id);
     Ok(0)
 }
 
