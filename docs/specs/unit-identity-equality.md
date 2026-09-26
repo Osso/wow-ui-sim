@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Compare player, target and focus aliases symmetrically after public targeting assigns the same identity.
-- [ ] Distinguish different modeled identities after retargeting while preserving an unchanged focus identity.
-- [ ] Compare active party aliases with target/focus snapshots; stop resolving a removed party slot without erasing retained target/focus snapshots.
-- [ ] Return false when either token lacks a modeled identity, including two identical absent tokens or two nil arguments. Preserve existing argument conversion and boolean return shape.
+- [x] Compare player, target and focus aliases symmetrically after public targeting assigns the same identity.
+- [x] Distinguish different modeled identities after retargeting while preserving an unchanged focus identity.
+- [x] Compare active party aliases with target/focus snapshots; stop resolving a removed party slot without erasing retained target/focus snapshots.
+- [x] Return false when either token lacks a modeled identity, including two identical absent tokens or two nil arguments. Preserve existing argument conversion and boolean return shape.
 
 These are simulator model-consistency requirements, not native-client proof. Cached retail `Blizzard_UnitFrame/Mainline/TargetFrame.lua`, `TargetFrame_OpenMenu`, uses `UnitIsUnit("target", "player")` to select the SELF menu. That is evidence of a consumer needing aliases, not a full menu integration test.
 
@@ -27,9 +27,9 @@ These are simulator model-consistency requirements, not native-client proof. Cac
 
 ## Known gaps (current cycle)
 
-`1787bd5f7` reproduces four failures with two retained controls passing. `/tmp/cross-version-unit-identity-proof.md` records exact commands and logs.
+`1787bd5f76007c12132fa7c4f65f5fa9fabc6f7e` reproduces four failures with two retained controls passing. Production `bfa742675ec489e1bfb3f2a42e0c4d3d4369d555` is independently GREEN: 83 `unit_api::` cases, 24 `targeting_verbs::` cases plus one nested consumer, format, check, and readability. `/tmp/cross-version-unit-identity-verification-ledger.md` records exact commands, revisions, and logs; authorized source remains unchanged through docs-only `33155da3e`.
 
-- [ ] Independent GREEN verification and Rust checks pending.
+- [x] Independent bounded GREEN verification and Rust checks complete.
 - [ ] Native-client behavior, same-name distinct-identity fixtures and a live SELF-menu interaction remain unproven.
 
 ## Out of scope
