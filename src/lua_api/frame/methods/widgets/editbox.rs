@@ -119,8 +119,8 @@ pub(super) fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let pos = val_to_f64(stack_val(state, 2)) as i32;
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
-        let len = f.text.as_deref().unwrap_or("").chars().count() as i32;
-        f.editbox_cursor_pos = pos.clamp(0, len);
+        let text = f.text.as_deref().unwrap_or("");
+        f.editbox_cursor_pos = char_offset(text, pos) as i32;
     }
     Ok(0)
 }
@@ -131,10 +131,32 @@ pub(super) fn get_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let v = sim
         .widgets
         .get(id)
-        .map(|f| f.editbox_cursor_pos)
+        .map(|f| {
+            byte_offset(
+                f.text.as_deref().unwrap_or(""),
+                f.editbox_cursor_pos.max(0) as usize,
+            )
+        })
         .unwrap_or(0);
     drop(sim);
     (v as f64).into_stack(state)
+}
+
+// Public offsets are bytes; internal cursor and selection positions are characters.
+// A non-boundary byte offset maps to the preceding scalar boundary (not a native claim).
+fn char_offset(text: &str, byte_pos: i32) -> usize {
+    let mut boundary = (byte_pos.max(0) as usize).min(text.len());
+    while !text.is_char_boundary(boundary) {
+        boundary -= 1;
+    }
+    text[..boundary].chars().count()
+}
+
+fn byte_offset(text: &str, char_pos: usize) -> usize {
+    text.char_indices()
+        .nth(char_pos)
+        .map(|(index, _)| index)
+        .unwrap_or(text.len())
 }
 
 pub(super) fn get_num_letters(state: &mut LuaState) -> LuaResult<u32> {
@@ -461,21 +483,10 @@ pub(super) fn get_utf8_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let cursor = sim
         .widgets
         .get(id)
-        .map(|f| f.editbox_cursor_pos.max(0) as usize)
-        .unwrap_or(0);
-    let byte_pos = sim
-        .widgets
-        .get(id)
-        .and_then(|f| f.text.as_ref())
-        .map(|text| {
-            text.chars()
-                .take(cursor)
-                .map(|ch| ch.len_utf8())
-                .sum::<usize>()
-        })
+        .map(|f| f.editbox_cursor_pos)
         .unwrap_or(0);
     drop(sim);
-    (byte_pos as f64).into_stack(state)
+    (cursor as f64).into_stack(state)
 }
 
 fn desired_width_field(state: &mut LuaState, id: u64) -> Option<f32> {
@@ -733,13 +744,17 @@ pub(super) fn insert(state: &mut LuaState) -> LuaResult<u32> {
     let text = opt_string(state, 2).unwrap_or_default();
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
-        let pos = f.editbox_cursor_pos.max(0) as usize;
+        let range = selection::take_selected_range(f).unwrap_or_else(|| {
+            let pos = f.editbox_cursor_pos.max(0) as usize;
+            pos..pos
+        });
         let current = f.text.get_or_insert_with(String::new);
-        let insert_at = pos.min(current.len());
-        current.insert_str(insert_at, &text);
+        let start = byte_offset(current, range.start);
+        let end = byte_offset(current, range.end);
+        current.replace_range(start..end, &text);
         f.text_stripped = Some(crate::render::strip_wow_markup(current));
         f.text_segments.clear();
-        f.editbox_cursor_pos = (insert_at + text.len()) as i32;
+        f.editbox_cursor_pos = (range.start + text.chars().count()) as i32;
     }
     Ok(0)
 }

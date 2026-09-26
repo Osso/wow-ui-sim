@@ -102,12 +102,12 @@ fn editbox_stub_family_methods_persist_runtime_state() {
             end
             eb:SetText("aé🙂b")
             eb:SetCursorPosition(2)
-            if eb:GetUTF8CursorPosition() ~= 3 then
-                return "utf8_cursor_position_should_track_byte_offset_after_accent"
+            if eb:GetUTF8CursorPosition() ~= 1 then
+                return "utf8_cursor_position_should_track_character_offset_after_accent"
             end
-            eb:SetCursorPosition(3)
-            if eb:GetUTF8CursorPosition() ~= 7 then
-                return "utf8_cursor_position_should_track_byte_offset_after_emoji"
+            eb:SetCursorPosition(7)
+            if eb:GetUTF8CursorPosition() ~= 3 then
+                return "utf8_cursor_position_should_track_character_offset_after_emoji"
             end
             eb:SetText("Visible text")
             if eb:GetDisplayText() ~= "Visible text" then
@@ -163,6 +163,63 @@ fn editbox_stub_family_methods_persist_runtime_state() {
         Some((0, "Visible text".chars().count() as i32)),
         "HighlightText() without args should select the full current text"
     );
+}
+
+#[test]
+fn editbox_public_cursor_offsets_bridge_utf8_boundaries() {
+    let env = env();
+    let result: String = env.eval(r#"
+        local eb = CreateFrame("EditBox", nil, UIParent)
+        eb:SetText("é猫A")
+        eb:SetCursorPosition(2)
+        if eb:GetCursorPosition() ~= 2 or eb:GetUTF8CursorPosition() ~= 1 then return "after accent" end
+        eb:Insert("X")
+        if eb:GetText() ~= "éX猫A" then return "insert placement" end
+        if eb:GetCursorPosition() ~= 3 or eb:GetUTF8CursorPosition() ~= 2 then return "after insert" end
+        eb:SetCursorPosition(6)
+        if eb:GetCursorPosition() ~= 6 or eb:GetUTF8CursorPosition() ~= 3 then return "after ideograph" end
+        eb:SetCursorPosition(100)
+        if eb:GetCursorPosition() ~= 7 or eb:GetUTF8CursorPosition() ~= 4 then return "end clamp" end
+        return "ok"
+    "#).unwrap();
+    assert_eq!(result, "ok");
+}
+
+#[test]
+fn editbox_insert_replaces_or_deletes_ascii_selection() {
+    let env = env();
+    let result: String = env.eval(r#"
+        local eb = CreateFrame("EditBox", nil, UIParent)
+        eb:SetText("abcdef")
+        eb:HighlightText(1, 4)
+        eb:Insert("X")
+        if eb:GetText() ~= "aXef" or eb:GetCursorPosition() ~= 2 then return "replace" end
+        eb:HighlightText(1, 2)
+        eb:Insert("")
+        if eb:GetText() ~= "aef" or eb:GetCursorPosition() ~= 1 then return "delete" end
+        eb:Insert("Z")
+        if eb:GetText() ~= "aZef" then return "selection not cleared" end
+        return "ok"
+    "#).unwrap();
+    assert_eq!(result, "ok");
+}
+
+#[test]
+fn editbox_insert_replaces_valid_utf8_byte_selection() {
+    let env = env();
+    let result: String = env.eval(r#"
+        local eb = CreateFrame("EditBox", nil, UIParent)
+        eb:SetText("é猫A")
+        eb:HighlightText(2, 5)
+        eb:Insert("界")
+        if eb:GetText() ~= "é界A" then return "replacement" end
+        if eb:GetCursorPosition() ~= 5 or eb:GetUTF8CursorPosition() ~= 2 then return "cursor" end
+        eb:HighlightText(0, 2)
+        eb:Insert("")
+        if eb:GetText() ~= "界A" or eb:GetCursorPosition() ~= 0 then return "deletion" end
+        return "ok"
+    "#).unwrap();
+    assert_eq!(result, "ok");
 }
 
 #[test]
