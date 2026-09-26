@@ -166,18 +166,6 @@ fn rect_intersection(a: Rectangle, b: Rectangle) -> Option<Rectangle> {
     })
 }
 
-/// Clip separately emitted hover quads to the same ancestor viewport as frame quads.
-pub(super) fn clip_axis_aligned_quads(batch: &mut QuadBatch, before: usize, clip: Rectangle) {
-    for vertices in batch.vertices[before..].chunks_exact_mut(4) {
-        let original = quad_rect(vertices);
-        if let Some(intersection) = rect_intersection(original, clip) {
-            clip_quad_to_rect(vertices, original, intersection);
-        } else {
-            hide_quad(vertices);
-        }
-    }
-}
-
 fn quad_rect(vertices: &[crate::render::shader::QuadVertex]) -> Rectangle {
     debug_assert!(vertices.len() >= 4);
     let left = vertices[0].position[0];

@@ -2,7 +2,11 @@ use iced::Rectangle;
 
 use crate::render::{QuadBatch, QuadVertex};
 
-pub(super) fn clip_recent_quads(batch: &mut QuadBatch, vert_before: usize, clip: Rectangle) {
+pub(in crate::iced_app) fn clip_recent_quads(
+    batch: &mut QuadBatch,
+    vert_before: usize,
+    clip: Rectangle,
+) {
     for chunk in batch.vertices[vert_before..].chunks_exact_mut(4) {
         let original = [chunk[0], chunk[1], chunk[2], chunk[3]];
         let left = chunk[0].position[0].min(chunk[3].position[0]);

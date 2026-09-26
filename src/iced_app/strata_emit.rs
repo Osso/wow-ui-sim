@@ -342,14 +342,8 @@ fn resolve_clip_rect(
         {
             let parent_rect = crate::layout::apply_scroll_offsets(registry, parent_id, parent_rect);
             clip_rect = Some(match clip_rect {
-                Some(existing) => {
-                    intersect_rects(existing, parent_rect).unwrap_or(crate::LayoutRect {
-                        x: 0.0,
-                        y: 0.0,
-                        width: 0.0,
-                        height: 0.0,
-                    })
-                }
+                // An empty intersection is an empty clip, not absence of clipping.
+                Some(existing) => intersect_rects(existing, parent_rect).unwrap_or_default(),
                 None => parent_rect,
             });
         }
@@ -646,7 +640,7 @@ fn append_hover_highlight_from_frame(
 
 fn clip_hover_highlight(batch: &mut QuadBatch, before: usize, id: u64, registry: &WidgetRegistry) {
     if let Some(clip) = resolve_clip_rect(id, registry) {
-        super::masking::clip_axis_aligned_quads(batch, before, layout_rect_to_screen_rect(clip));
+        super::quad_builders::clip_recent_quads(batch, before, layout_rect_to_screen_rect(clip));
     }
 }
 

@@ -25,7 +25,7 @@ mod cooldown;
 mod button;
 
 pub(super) use button::emit_button_highlight;
-use clipping::clip_recent_quads;
+pub(super) use clipping::clip_recent_quads;
 pub(super) use textures::{build_minimap_quads, build_texture_quads};
 
 /// Build quads for a Frame widget (backdrop).
