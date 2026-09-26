@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record shared unit-vitals lookup boundary
+
+[[shared-unit-vitals-lookup]] records `bd6f091ac` source-derived cross-version behavior: cleared/unknown units now return zero health/max, power/max, percentage, and explicit-secondary values rather than player values; seeded focus and active party/raid aliases read their modeled snapshots. `UnitPowerType` retains its separate absent fallback `0, MANA`. The corrected `gui,client-wrath` integration binary is pending, so this is not a GREEN claim. The shared lookup has no target-version or Blizzard UI/cache prerequisite; broader completed resource fixes and the audit portfolio remain unchanged.
+
 ## [2026-09-26] audit | Record Wrath tooltip content lifecycle source boundary
 
 [[tooltip-owner-lifecycle]] records `1e9674bcd` under normal `gui,client-wrath`: `SetOwner` internally hides and clears while retaining its new owner; owned populated `SetText` shows; appends remain hidden; direct `Hide`, `SetShown(false)`, and `FadeOut` release ownership even already hidden. The grouped `tooltip_basic::` source batch is GREEN 62/62. Independent format/check pass; five sizing/cursor fixture failures were corrected in `12734d0ae` and pass focused reruns. One duplicated full-UI case still fails on absent `BuffFrame.UpdateAuras`; no full-green claim. Current API documentation is not native execution; callback/effective-visibility edges remain open.
@@ -1481,6 +1485,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[att-unit-hyperlink-tooltip]] | ATT NPC first-line failure came from an empty Item tooltip for unit links; modeled GUIDs now return Unit lines and unknown links nil. Grouped regression committed; build and GUI replay pending. |
 | [[animated-status-bar-atlas-visibility]] | Atlas assignment on a non-button XML-hidden animated status-bar texture incorrectly showed it; recognized Button/CheckButton slots alone update visibility. Actual Forever template RED/GREEN proof; full UI visual pending. |
 | [[final-unit-frame-click-aura-proof]] | Bounded local Forever release evidence: PlayerFrame target click, Aura tooltip hover, Combo reset, no CharCustomizeFrame, hidden status-bar animation textures, panel state transitions, zero errors, and an explicitly non-green accidental broad test batch. |
+| [[shared-unit-vitals-lookup]] | `bd6f091ac` shared numeric-vitals lookup: modeled focus and active group snapshots, zero absent/unknown values without player fallback, and explicitly pending integration GREEN. |
 | [[template-existence]] | `DoesTemplateExist` queries only the registered XML virtual-template registry; frozen lifecycle 3/3 and unchanged DRaidFrames startup proof pass, while native edge semantics and workflows remain open. |
 | [[mainline-spellbook-lifecycle]] | Retail, PTR, and Forever share a production-shaped SpellBook keybinding regression; Mists/Cata and legacy profiles remain explicit separate contracts. |
 | [[forever-clean-startup]] | `ed4c97a8a` fixes the sustained WorldMap lifecycle root by publishing the source-documented quest limit; actual Show plus 60 ticks and a 20-second GUI run are clean. |

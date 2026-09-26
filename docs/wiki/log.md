@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record shared unit-vitals lookup boundary
+
+Created [[shared-unit-vitals-lookup]] and updated index from `bd6f091ac`, [the unit-vitals contract](../specs/unit-vitals-lookup.md), actual lookup/resolver/group code, grouped assertions, and `/tmp/cross-version-vitals-proof.md`. The source model reads seeded focus and active party/raid snapshots and returns zero numeric vitals—including explicit secondary power—for cleared/unknown/inactive aliases instead of player values. `UnitPowerType` keeps its independent `0, MANA` fallback. The committed-scope `gui,client-wrath` integration binary remains GREEN pending; no test passed in this documentation audit. No target-version, Blizzard UI cache, or CASC prerequisite applies. Completed resource fixes and the broad audit portfolio remain retained.
+
 ## [2026-09-26] investigation | De-duplicate hit-grid batch updates
 
 `45808d6ab` visits each frame once per hit-grid batch; spellbook repeat-open draw p50 fell ~33% and close draw ~49% (fast-core `bench_spellbook --cycles 20` pairs). Full lib suite 1911/1915; failures are the four known pre-existing ones. See [[tick-cooldown-scan]].
