@@ -31,6 +31,117 @@ fn statusbar_value_change_updates_text_synchronously() {
         .unwrap();
 }
 
+#[test]
+fn slider_reversed_range_errors_without_changing_range_or_value() {
+    env()
+        .exec(
+            r#"
+        local slider = CreateFrame('Slider')
+        slider:SetMinMaxValues(0, 10)
+        slider:SetValue(7)
+        local ok, err = pcall(slider.SetMinMaxValues, slider, 8, 2)
+        assert(not ok and type(err) == 'string', 'reversed Slider range must raise a Lua error')
+        local min, max = slider:GetMinMaxValues()
+        assert(min == 0 and max == 10 and slider:GetValue() == 7,
+            'failed range update must preserve range and value')
+    "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn statusbar_reversed_range_collapses_to_max_and_clamps_value() {
+    env()
+        .exec(
+            r#"
+        local bar = CreateFrame('StatusBar')
+        bar:SetMinMaxValues(0, 10)
+        bar:SetValue(7)
+        local ok, err = pcall(bar.SetMinMaxValues, bar, 8, 2)
+        assert(ok, 'reversed StatusBar range must succeed: ' .. tostring(err))
+        local min, max = bar:GetMinMaxValues()
+        assert(min == 2 and max == 2 and bar:GetValue() == 2,
+            'reversed StatusBar range must collapse to the maximum bound')
+    "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn slider_nan_bounds_error_atomically_and_allow_later_valid_updates() {
+    env()
+        .exec(
+            r#"
+        local slider = CreateFrame('Slider')
+        slider:SetMinMaxValues(0, 10)
+        slider:SetValue(7)
+        local nan = 0 / 0
+        for _, bounds in ipairs({{nan, 8}, {2, nan}}) do
+            local ok, err = pcall(slider.SetMinMaxValues, slider, bounds[1], bounds[2])
+            assert(not ok and type(err) == 'string', 'NaN Slider bound must raise a Lua error')
+            local min, max = slider:GetMinMaxValues()
+            assert(min == 0 and max == 10 and slider:GetValue() == 7,
+                'failed NaN Slider update must preserve range and value')
+            slider:SetMinMaxValues(2, 8)
+            local validMin, validMax = slider:GetMinMaxValues()
+            assert(validMin == 2 and validMax == 8 and slider:GetValue() == 7,
+                'valid Slider range must work after rejected NaN')
+            slider:SetMinMaxValues(0, 10)
+        end
+    "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn statusbar_nan_bounds_error_atomically_and_allow_later_valid_updates() {
+    env()
+        .exec(
+            r#"
+        local bar = CreateFrame('StatusBar')
+        bar:SetMinMaxValues(0, 10)
+        bar:SetValue(7)
+        local nan = 0 / 0
+        for _, bounds in ipairs({{nan, 8}, {2, nan}}) do
+            local ok, err = pcall(bar.SetMinMaxValues, bar, bounds[1], bounds[2])
+            assert(not ok and type(err) == 'string', 'NaN StatusBar bound must raise a Lua error')
+            local min, max = bar:GetMinMaxValues()
+            assert(min == 0 and max == 10 and bar:GetValue() == 7,
+                'failed NaN StatusBar update must preserve range and value')
+            bar:SetMinMaxValues(2, 8)
+            local validMin, validMax = bar:GetMinMaxValues()
+            assert(validMin == 2 and validMax == 8 and bar:GetValue() == 7,
+                'valid StatusBar range must work after rejected NaN')
+            bar:SetMinMaxValues(0, 10)
+        end
+    "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn equal_ranges_and_ordinary_range_clamps_work_for_slider_and_statusbar() {
+    env()
+        .exec(
+            r#"
+        for _, kind in ipairs({'Slider', 'StatusBar'}) do
+            local widget = CreateFrame(kind)
+            widget:SetMinMaxValues(0, 10)
+            widget:SetValue(7)
+            widget:SetMinMaxValues(2, 5)
+            local min, max = widget:GetMinMaxValues()
+            assert(min == 2 and max == 5 and widget:GetValue() == 5,
+                kind .. ' must clamp an existing value to an ordinary range')
+            widget:SetMinMaxValues(3, 3)
+            min, max = widget:GetMinMaxValues()
+            assert(min == 3 and max == 3 and widget:GetValue() == 3,
+                kind .. ' must accept an equal-bound range and clamp its value')
+        end
+    "#,
+        )
+        .unwrap();
+}
+
 const VALUE_BINDINGS_XML: &str = r#"
 <Ui>
     <Slider name="SliderValuePrecall" intrinsic="true">
