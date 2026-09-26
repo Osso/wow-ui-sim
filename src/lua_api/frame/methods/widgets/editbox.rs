@@ -751,10 +751,11 @@ pub(super) fn insert(state: &mut LuaState) -> LuaResult<u32> {
         let current = f.text.get_or_insert_with(String::new);
         let start = byte_offset(current, range.start);
         let end = byte_offset(current, range.end);
+        let cursor = current[..start].chars().count() + text.chars().count();
         current.replace_range(start..end, &text);
         f.text_stripped = Some(crate::render::strip_wow_markup(current));
         f.text_segments.clear();
-        f.editbox_cursor_pos = (range.start + text.chars().count()) as i32;
+        f.editbox_cursor_pos = cursor as i32;
     }
     Ok(0)
 }

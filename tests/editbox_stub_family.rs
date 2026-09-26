@@ -5,6 +5,35 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
+fn editbox_insert_clamps_cursor_after_text_shortens() {
+    env()
+        .exec(
+            r#"
+            local eb = CreateFrame("EditBox", nil, UIParent)
+            eb:SetText("abcd")
+            eb:SetCursorPosition(4)
+            eb:SetText("A")
+            eb:Insert("X")
+            assert(eb:GetText() == "AX")
+            assert(eb:GetCursorPosition() == 2)
+            assert(eb:GetUTF8CursorPosition() == 2, "cursor must follow the actual clamped insertion")
+
+            eb:SetText("é猫A")
+            eb:HighlightText(5, 6)
+            eb:SetText("é")
+            eb:Insert("X")
+            assert(eb:GetText() == "éX")
+            assert(eb:GetCursorPosition() == 3)
+            assert(eb:GetUTF8CursorPosition() == 2, "stale selection must not leave the cursor past the text")
+            eb:Insert("Y")
+            assert(eb:GetText() == "éXY")
+            assert(eb:GetUTF8CursorPosition() == 3)
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn editbox_stub_family_methods_persist_runtime_state() {
     let env = env();
     let result: String = env
@@ -188,7 +217,9 @@ fn editbox_public_cursor_offsets_bridge_utf8_boundaries() {
 #[test]
 fn editbox_insert_replaces_or_deletes_ascii_selection() {
     let env = env();
-    let result: String = env.eval(r#"
+    let result: String = env
+        .eval(
+            r#"
         local eb = CreateFrame("EditBox", nil, UIParent)
         eb:SetText("abcdef")
         eb:HighlightText(1, 4)
@@ -200,14 +231,18 @@ fn editbox_insert_replaces_or_deletes_ascii_selection() {
         eb:Insert("Z")
         if eb:GetText() ~= "aZef" then return "selection not cleared" end
         return "ok"
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
     assert_eq!(result, "ok");
 }
 
 #[test]
 fn editbox_insert_replaces_valid_utf8_byte_selection() {
     let env = env();
-    let result: String = env.eval(r#"
+    let result: String = env
+        .eval(
+            r#"
         local eb = CreateFrame("EditBox", nil, UIParent)
         eb:SetText("é猫A")
         eb:HighlightText(2, 5)
@@ -218,7 +253,9 @@ fn editbox_insert_replaces_valid_utf8_byte_selection() {
         eb:Insert("")
         if eb:GetText() ~= "界A" or eb:GetCursorPosition() ~= 0 then return "deletion" end
         return "ok"
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
     assert_eq!(result, "ok");
 }
 

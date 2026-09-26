@@ -8,6 +8,7 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] Cursor positions past the end clamp to the end; `Insert` at the cursor preserves UTF-8 and advances both public getters consistently.
 - [x] `HighlightText` with valid byte endpoints selects a range; `Insert` replaces that range (including empty-string deletion), collapses the cursor after inserted text, and clears selection for the next insertion.
 - [x] ASCII cursor and selected-range editing retain their original units; renderer-facing stripped text remains synchronized with inserted text.
+- [ ] `Insert` derives its resulting cursor from the actual clamped edit range, including when earlier text replacement left cursor or selection indices beyond the new text.
 - [x] Existing keyboard typing and forbidden scripted-input cursor guard remain intact.
 
 ## How it works
