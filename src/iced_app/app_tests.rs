@@ -348,3 +348,54 @@ fn parse_fast_tick_ms_rejects_zero_and_invalid_values() {
     assert_eq!(parse_fast_tick_ms("abc"), None);
     assert_eq!(parse_fast_tick_ms(""), None);
 }
+
+/// Plays a looping 0.75s alpha pulse on a texture under a parent with the given alpha.
+fn play_pulse_under_parent_alpha(app: &App, parent_alpha: f32) {
+    app.env
+        .borrow()
+        .exec(&format!(
+            r#"
+            local parent = CreateFrame("Frame", nil, UIParent)
+            parent:SetSize(100, 100)
+            parent:SetPoint("CENTER")
+            parent:SetAlpha({parent_alpha})
+            local glow = parent:CreateTexture(nil, "ARTWORK")
+            glow:SetAllPoints()
+            local group = glow:CreateAnimationGroup()
+            group:SetLooping("BOUNCE")
+            local fade = group:CreateAnimation("Alpha")
+            fade:SetFromAlpha(0.25)
+            fade:SetToAlpha(0.5)
+            fade:SetDuration(0.75)
+            group:Play()
+        "#
+        ))
+        .expect("pulse animation should play");
+}
+
+#[test]
+fn visible_animation_uses_fast_tick_interval() {
+    let app = build_test_app(ScreenKind::Game);
+    play_pulse_under_parent_alpha(&app, 1.0);
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+    );
+}
+
+#[test]
+fn animation_under_transparent_parent_wakes_at_loop_boundary() {
+    let app = build_test_app(ScreenKind::Game);
+    play_pulse_under_parent_alpha(&app, 0.0);
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    // 0.75s to the next bounce: the widest timer bucket not past the boundary.
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_millis(250)),
+    );
+}

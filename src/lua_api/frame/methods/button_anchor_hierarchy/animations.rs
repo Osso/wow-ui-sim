@@ -665,15 +665,7 @@ fn animation_is_in_start_delay(
 pub(super) fn animation_group_total_duration(
     group: &crate::lua_api::animation::AnimGroupState,
 ) -> f64 {
-    let mut duration_by_order = std::collections::BTreeMap::<u32, f64>::new();
-    for animation in &group.animations {
-        let total_time = animation.total_time();
-        duration_by_order
-            .entry(animation.order)
-            .and_modify(|current| *current = current.max(total_time))
-            .or_insert(total_time);
-    }
-    duration_by_order.into_values().sum()
+    group.total_duration()
 }
 
 pub(super) fn animation_group_frame_id(group: &crate::lua_api::animation::AnimGroupState) -> u64 {

@@ -159,4 +159,36 @@ impl AnimGroupState {
     pub fn has_visual_effects(&self) -> bool {
         !self.animations.is_empty()
     }
+
+    /// Length of one pass: animations sharing an order run in parallel,
+    /// orders run in sequence.
+    pub fn total_duration(&self) -> f64 {
+        let mut duration_by_order = std::collections::BTreeMap::<u32, f64>::new();
+        for animation in &self.animations {
+            let total_time = animation.total_time();
+            duration_by_order
+                .entry(animation.order)
+                .and_modify(|current| *current = current.max(total_time))
+                .or_insert(total_time);
+        }
+        duration_by_order.into_values().sum()
+    }
+
+    /// Real time until playback reaches the next loop or finish boundary,
+    /// where OnLoop/OnFinished fire. `None` when playback is frozen.
+    pub fn time_to_next_boundary(&self) -> Option<std::time::Duration> {
+        if self.pending_finish {
+            return Some(std::time::Duration::ZERO);
+        }
+        if self.speed_multiplier <= 0.0 {
+            return None;
+        }
+        let remaining = if self.reverse {
+            self.elapsed
+        } else {
+            self.total_duration() - self.elapsed
+        };
+        let real_seconds = remaining.max(0.0) / self.speed_multiplier;
+        Some(std::time::Duration::from_secs_f64(real_seconds))
+    }
 }

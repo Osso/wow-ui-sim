@@ -545,12 +545,8 @@ impl App {
         let state = env.state().borrow();
 
         // Fast tick: playing visual animations, active cast, or dirty quads.
-        let has_animations = state.animation_groups.values().any(|g| {
-            g.playing
-                && !g.paused
-                && g.has_visual_effects()
-                && state.widgets.is_ancestor_visible(g.owner_frame_id)
-        });
+        let animation_wake = next_animation_wake(&state);
+        let has_animations = animation_wake == Some(std::time::Duration::ZERO);
         let has_casting = state.casting.is_some();
         let has_cooldowns = has_active_cooldowns(&state);
         let is_glue_screen = state.screen_kind.is_glue();
@@ -564,8 +560,13 @@ impl App {
         }
         drop(state);
 
-        // Timer tick: wake up when next C_Timer fires (min 16ms)
-        if let Some(delay) = env.next_timer_delay() {
+        // Timer tick: wake up when next C_Timer fires or an unseen animation
+        // reaches a loop/finish boundary (min 16ms)
+        let wake_delay = [env.next_timer_delay(), animation_wake]
+            .into_iter()
+            .flatten()
+            .min();
+        if let Some(delay) = wake_delay {
             return Some(stable_timer_interval(delay));
         }
         drop(env);
@@ -625,6 +626,58 @@ fn fast_tick_interval() -> std::time::Duration {
 fn parse_fast_tick_ms(value: &str) -> Option<u64> {
     let tick_ms = value.trim().parse::<u64>().ok()?;
     (tick_ms > 0).then_some(tick_ms)
+}
+
+/// Delay until a playing animation next needs a tick: zero when one is
+/// visible, otherwise the nearest loop/finish boundary of unseen ones.
+fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Duration> {
+    state
+        .animation_groups
+        .values()
+        .filter(|g| {
+            g.playing
+                && !g.paused
+                && g.has_visual_effects()
+                && state.widgets.is_ancestor_visible(g.owner_frame_id)
+        })
+        .filter_map(|g| {
+            if is_hidden_by_parent_alpha(&state.widgets, g) {
+                g.time_to_next_boundary()
+            } else {
+                Some(std::time::Duration::ZERO)
+            }
+        })
+        .min()
+}
+
+/// True when nothing the group animates can show: the owner's parent has
+/// effective alpha 0 and no animated frame escapes it via ignoreParentAlpha.
+fn is_hidden_by_parent_alpha(
+    widgets: &crate::widget::WidgetRegistry,
+    group: &crate::lua_api::animation::AnimGroupState,
+) -> bool {
+    let targets_owner_only = group.animations.iter().all(|a| a.child_key.is_none());
+    let Some(owner) = widgets.get(group.owner_frame_id) else {
+        return false;
+    };
+    let parent_alpha = owner
+        .parent_id
+        .and_then(|parent_id| widgets.get(parent_id))
+        .map(|parent| parent.effective_alpha);
+    let parent_is_transparent = parent_alpha.is_some_and(|alpha| alpha <= 0.0);
+    targets_owner_only && parent_is_transparent && !subtree_ignores_parent_alpha(widgets, owner)
+}
+
+fn subtree_ignores_parent_alpha(
+    widgets: &crate::widget::WidgetRegistry,
+    frame: &crate::widget::Frame,
+) -> bool {
+    frame.ignore_parent_alpha
+        || frame
+            .children
+            .iter()
+            .filter_map(|&child_id| widgets.get(child_id))
+            .any(|child| subtree_ignores_parent_alpha(widgets, child))
 }
 
 /// Check if any GCD, spell, or visible Cooldown widgets are still active.
