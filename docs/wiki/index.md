@@ -1,6 +1,6 @@
-## [2026-09-26] audit | Record Wrath StatusBar callback and rotation diagnostic GREEN
+## [2026-09-26] audit | Record Wrath StatusBar XML rotation boundary
 
-[[wrath-statusbar-value-callback]] records `9ea6555f8` ordinary callbacks, `98101cda3` texture rotation, and `91cb5c735` aligning the `c_unit_auras` enum-registration cfg with `aura-instance-enumeration`. Final source evidence remains diagnostic `gui,client-wrath,aura-instance-enumeration`: callback-containing `widget_slider::` 10/10 plus rotation 5/5 (two renderer UV, two replacement/atlas-coordinate, one custom-coordinate adoption). The normal-Wrath blocker fix is committed, but no post-fix `gui,client-wrath` verifier ran; no profile acceptance or native claim. Stage 1 remains incomplete: range/init, callback order, geometry, and XML are unproven. Later stages retain normal-lane verification, source-supported expansion, and profile/native validation.
+[[wrath-statusbar-value-callback]] records `9198d4a0` XML `rotatesTexture` coverage. Normal `gui,client-wrath` direct tests changed from RED 0/2 static plus 0/1 runtime to GREEN 2/2 plus 1/1: direct `true`, inherited template `true`, and explicit `false` override all apply before `OnLoad`; runtime `CreateFrame` template application is covered. Callback 10/10 and five non-XML rotation cases remain diagnostic `gui,client-wrath,aura-instance-enumeration` evidence. Fresh normal `fmt`/`check` postdate the XML change and remain pending; no full profile-acceptance or native claim. Vertical rendering direction remains open.
 
 ## [2026-09-26] investigation | Record default build linker-cache boundary
 

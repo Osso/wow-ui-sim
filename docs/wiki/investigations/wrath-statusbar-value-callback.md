@@ -1,6 +1,6 @@
 # Wrath StatusBar value callback boundary
 
-Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation. `91cb5c735` fixes the independent normal-Wrath `c_unit_auras` enum-registration gate by matching it to the `aura-instance-enumeration` module feature. Source GREEN remains only under the augmented diagnostic `gui,client-wrath,aura-instance-enumeration` feature set: no normal `gui,client-wrath` verifier has run, so there is no normal-profile GREEN claim. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
+Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation; `9198d4a0` adds XML `rotatesTexture` application. `91cb5c735` fixes the independent normal-Wrath `c_unit_auras` enum-registration gate by matching it to the `aura-instance-enumeration` module feature. Diagnostic `gui,client-wrath,aura-instance-enumeration` source GREEN covers callbacks and five non-XML rotation cases; `9198d4a0` has separate targeted normal `gui,client-wrath` XML GREEN 3/3. Neither establishes full normal-profile acceptance: existing normal `fmt`/`check` predate the XML code and tests; fresh verification is pending. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
 
 ## Evidence
 
@@ -12,7 +12,7 @@ The cached Classic `Blizzard_TextStatusBar/Classic/TextStatusBar.xml` binds `OnV
 
 Rotation source GREEN is five focused cases: two rendered partial-fill UV cases in `/tmp/wrath-statusbar-postfix-rotated_statusbar_.log`, two source-replacement/atlas-coordinate cases in `/tmp/wrath-statusbar-postfix-statusbar_rotat.log`, and one custom-coordinate adoption case in `/tmp/wrath-statusbar-postfix-statusbar_adopts_existing_custom_texcoords_without_rotation.log`.
 
-`91cb5c735` adds the matching `aura-instance-enumeration` cfg to `c_unit_auras::register_sound_trigger_enum` in `enums.rs`, committing the normal-Wrath compile-blocker fix. No normal `gui,client-wrath` compile or regression verifier was run after that change. The `gui,client-wrath,aura-instance-enumeration` 15-case diagnostic proof (callback-containing `widget_slider::` 10/10 plus rotation 5/5) remains diagnostic only; it does not validate the normal Wrath configuration.
+`91cb5c735` adds the matching `aura-instance-enumeration` cfg to `c_unit_auras::register_sound_trigger_enum` in `enums.rs`, committing the normal-Wrath compile-blocker fix. At `9198d4a0`, a normal `gui,client-wrath` integration build passed, then two static XML tests and one runtime-template test changed from RED 0/2 + 0/1 to GREEN 2/2 + 1/1. The static tests prove direct `true` before `OnLoad`, template `true` inheritance before `OnLoad`, and explicit `false` override; the runtime test proves `CreateFrame` template application before `OnLoad`. The `gui,client-wrath,aura-instance-enumeration` 15-case diagnostic proof (callback-containing `widget_slider::` 10/10 plus rotation 5/5) remains diagnostic only; it does not validate callbacks or the five non-XML rotation cases in normal Wrath.
 
 ## Stage 1: Solarity comparison
 
@@ -26,16 +26,17 @@ wow-ui-sim's `client-wrath` reports interface 38001, while Solarity targets buil
 | --- | --- | --- |
 | Ordinary callback | Pre-fix 0/1 RED; post-fix `widget_slider::` 10/10 includes synchronous label update | Source GREEN under diagnostic features only |
 | Texture rotation | Two renderer UV, two replacement/atlas-coordinate, and one custom-coordinate adoption case | Source GREEN 5/5 under diagnostic features only |
-| Normal Wrath lane | `91cb5c735` aligns `c_unit_auras` enum registration with `aura-instance-enumeration`; no post-fix normal compile or regression run | Blocker fix committed; verifier pending |
-| Stage-1 contracts | Range/first-value initialization, callback order, geometry, and XML parsing | Unproven; not imported from Solarity |
+| XML rotation | Normal `gui,client-wrath` build; RED 0/2 static + 0/1 runtime, then GREEN 2/2 + 1/1 | Direct `true`, inherited `true`, and explicit `false` override apply before `OnLoad`; runtime template covered |
+| Normal Wrath lane | `91cb5c735` aligns `c_unit_auras` enum registration; XML targeted build/tests pass | Callback and five non-XML rotation regressions, plus fresh normal `fmt`/`check`, pending |
+| Stage-1 contracts | Range/first-value initialization, callback order, and vertical rendering direction | Unproven; not imported from Solarity |
 
 Stage 1 is a bounded comparison plus diagnostic source proof, not complete profile or native validation.
 
 ## Later four stages
 
-2. **Verify normal profile compilation.** `91cb5c735` commits the independent `c_unit_auras` gate fix; run the normal lane without using the augmented diagnostic feature set as acceptance.
-3. **Repeat ordinary and rotation regressions in normal Wrath.** Retain RED artifacts and record normal-lane GREEN only when callback delivery and all five rotation cases pass.
-4. **Expand only source-supported contracts.** Separately establish same-value suppression, first/range initialization, min/max reclamping, callback order/reentry, interpolation, geometry, and XML parsing. Do not import Solarity behavior without matching Wrath evidence.
+2. **Verify the remaining normal profile.** The normal XML build and 3/3 targeted tests pass; run fresh normal `fmt`/`check` after `9198d4a0`.
+3. **Repeat ordinary and non-XML rotation regressions in normal Wrath.** Retain RED artifacts and record normal-lane GREEN only when callback delivery and all five non-XML rotation cases pass.
+4. **Expand only source-supported contracts.** Separately establish same-value suppression, first/range initialization, min/max reclamping, callback order/reentry, interpolation, geometry, and vertical rendering direction. Do not import Solarity behavior without matching Wrath evidence.
 5. **Validate profile fidelity.** Exercise unchanged Classic TextStatusBar consumers and, if available, native 3.3.5 evidence; keep missing native execution explicit.
 
 ## Sources
@@ -52,6 +53,7 @@ Stage 1 is a bounded comparison plus diagnostic source proof, not complete profi
 - `/tmp/wrath-statusbar-postfix-rotated_statusbar_.log` — diagnostic rendered rotation GREEN (2/2).
 - `/tmp/wrath-statusbar-postfix-statusbar_rotat.log` — diagnostic source-replacement rotation GREEN (2/2).
 - `/tmp/wrath-statusbar-postfix-statusbar_adopts_existing_custom_texcoords_without_rotation.log` — diagnostic adoption GREEN (1/1).
+- `/tmp/wrath-statusbar-xml-proof.md` — normal `gui,client-wrath` XML RED/ GREEN ledger: 0/2 + 0/1 before `9198d4a0`, then 2/2 + 1/1.
 
 ## See Also
 
