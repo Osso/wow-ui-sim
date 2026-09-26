@@ -22,6 +22,10 @@ Key field groups:
 
 `SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN six ScrollFrame cases and 15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. Renderer movement and implicit range-refresh timing remain unverified. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
 
+### ScrollFrame presentation boundary
+
+Commits `08c43a536` and `4c39f4a5a` leave stored anchors and logical layout immutable, then apply a shared presentation translation at each ScrollFrame edge whose `scroll_child_id` names the current descendant. The designated subtree moves once per crossed viewport, including externally anchored descendants; nested viewports inherit outer translation but apply their own offset only below their own scroll child. The transform uses the crossed scroll child's effective scale. [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) is the bounded render/input contract. `ed69bd136` records three RED cases; independent GREEN remains pending. This does not claim all UI paths or scale behavior are tested.
+
 ## WidgetType Enum (18 types, `src/widget/mod.rs`)
 
 Frame, Button, FontString, Texture, EditBox, ScrollFrame, Slider, CheckButton, StatusBar, Cooldown, Model (stub), ModelScene (stub), PlayerModel, ColorSelect, MessageFrame, SimpleHTML (stub), GameTooltip, Minimap.
@@ -93,6 +97,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [SetParent parent cycles](../../specs/set-parent-cycles.md) — public cycle-rejection contract and limits
 - [Visibility script dispatch](../../specs/visibility-script-dispatch.md) — public reparent visibility callbacks and proof limits
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — requested-offset, callback, and range boundary
+- [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only descendant translation and pending proof
 
 ## See Also
 
@@ -100,4 +105,5 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [[rendering-pipeline]] — dispatches quad emission per WidgetType
 - [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — public offset setter contract and proof status
+- [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only scroll-child subtree contract
 - [[lua-api]] — public `SetParent` dispatch boundary

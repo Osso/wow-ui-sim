@@ -62,9 +62,15 @@ Strata order: `WORLD < BACKGROUND < LOW < MEDIUM < HIGH < DIALOG < FULLSCREEN < 
 
 `collect_ancestor_visible_ids()` BFS from roots: `eff_alpha = parent_alpha * frame.alpha`. Frames with `eff_alpha <= 0` are skipped entirely.
 
+## ScrollFrame presentation geometry
+
+`08c43a536` and `4c39f4a5a` apply the shared layout presentation transform before quad emission and hit geometry, without changing stored layout rectangles, anchors, or logical geometry queries. Follow-up `ec6b39047` reuses existing quad clipping for hover geometry rather than keeping a duplicate clip helper. Each crossed ScrollFrame contributes its requested offset only when the ancestor's designated `scroll_child_id` is the current edge; this covers nested viewports and descendants whose anchors point outside the subtree. Render clips intersect presented ancestor viewport rectangles. A disjoint nested intersection becomes an explicit empty clip, so it suppresses content instead of removing the clip constraint. Lines, masks, and hover quads use the same presentation/clip path.
+
+`ed69bd136` supplies RED coverage for quad movement, hit movement, and disjoint nested clipping. GREEN and independent verification remain pending; scale fixtures, all UI paths, live GPU pixels, and native-client behavior are not claimed. [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) defines the bounded contract. Solarity corroborates separation of logical geometry from presentation transforms only; no Solarity code was copied and it is not native proof.
+
 ## Hit Testing (`src/iced_app/frame_collect.rs`, `src/iced_app/hit_grid.rs`, `src/iced_app/view.rs`)
 
-`frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. That input wiring remains pending integration. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
+`frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. ScrollFrame presentation transforms and ancestor clips are shared with rendering, so cache-backed hit targets move and clip with presented content. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
 
 ## Performance
 
@@ -86,11 +92,13 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 - [state_render_tests.rs](../../../src/lua_api/state_render_tests.rs) — cross-strata top-level grouping, repeated show ordering, and same-level Raise/Lower boundaries
 - [world_map_voice_button_order.rs](../../../tests/world_map_voice_button_order.rs) — live-like top-level overlap regression
 - [top-level render groups](../../specs/toplevel-render-groups.md) — native controlled matrix and pending integration status
+- [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — bounded presentation transform, clipping, and proof status
 - [[betterblizzframes-no-portrait-overlay]] — root cause and private native evidence
 
 ## See Also
 
 - [[layout-system]] — produces LayoutRect consumed by quad building
-- [[widget-system]] — WidgetType dispatch per frame type
+- [[widget-system]] — WidgetType dispatch per frame type and ScrollFrame state
+- [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — immutable logical geometry with shared render/hit presentation transforms
 - [[texture-atlas]] — TextureManager and atlas resolution feeding the GPU atlas
 - [[addon-compatibility]] — Docker headless release build contract
