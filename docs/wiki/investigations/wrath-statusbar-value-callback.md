@@ -1,6 +1,6 @@
 # Wrath StatusBar value callback boundary
 
-Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation. Source GREEN exists only under the augmented diagnostic `gui,client-wrath,aura-instance-enumeration` feature set; normal `gui,client-wrath` remains independently blocked. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
+Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation. `91cb5c735` fixes the independent normal-Wrath `c_unit_auras` enum-registration gate by matching it to the `aura-instance-enumeration` module feature. Source GREEN remains only under the augmented diagnostic `gui,client-wrath,aura-instance-enumeration` feature set: no normal `gui,client-wrath` verifier has run, so there is no normal-profile GREEN claim. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
 
 ## Evidence
 
@@ -12,7 +12,7 @@ The cached Classic `Blizzard_TextStatusBar/Classic/TextStatusBar.xml` binds `OnV
 
 Rotation source GREEN is five focused cases: two rendered partial-fill UV cases in `/tmp/wrath-statusbar-postfix-rotated_statusbar_.log`, two source-replacement/atlas-coordinate cases in `/tmp/wrath-statusbar-postfix-statusbar_rotat.log`, and one custom-coordinate adoption case in `/tmp/wrath-statusbar-postfix-statusbar_adopts_existing_custom_texcoords_without_rotation.log`.
 
-The normal `gui,client-wrath` compilation cannot currently run that lane because `enums.rs` references `c_unit_auras` behind an incompatible feature gate. The `gui,client-wrath,aura-instance-enumeration` build was diagnostic only; it does not validate the normal Wrath configuration.
+`91cb5c735` adds the matching `aura-instance-enumeration` cfg to `c_unit_auras::register_sound_trigger_enum` in `enums.rs`, committing the normal-Wrath compile-blocker fix. No normal `gui,client-wrath` compile or regression verifier was run after that change. The `gui,client-wrath,aura-instance-enumeration` 15-case diagnostic proof (callback-containing `widget_slider::` 10/10 plus rotation 5/5) remains diagnostic only; it does not validate the normal Wrath configuration.
 
 ## Stage 1: Solarity comparison
 
@@ -26,14 +26,14 @@ wow-ui-sim's `client-wrath` reports interface 38001, while Solarity targets buil
 | --- | --- | --- |
 | Ordinary callback | Pre-fix 0/1 RED; post-fix `widget_slider::` 10/10 includes synchronous label update | Source GREEN under diagnostic features only |
 | Texture rotation | Two renderer UV, two replacement/atlas-coordinate, and one custom-coordinate adoption case | Source GREEN 5/5 under diagnostic features only |
-| Normal Wrath lane | `gui,client-wrath` compile reaches incompatible `c_unit_auras` gate | Blocked |
+| Normal Wrath lane | `91cb5c735` aligns `c_unit_auras` enum registration with `aura-instance-enumeration`; no post-fix normal compile or regression run | Blocker fix committed; verifier pending |
 | Stage-1 contracts | Range/first-value initialization, callback order, geometry, and XML parsing | Unproven; not imported from Solarity |
 
 Stage 1 is a bounded comparison plus diagnostic source proof, not complete profile or native validation.
 
 ## Later four stages
 
-2. **Unblock normal profile compilation.** Resolve the independent `c_unit_auras` feature-gate failure without using the augmented diagnostic feature set as acceptance.
+2. **Verify normal profile compilation.** `91cb5c735` commits the independent `c_unit_auras` gate fix; run the normal lane without using the augmented diagnostic feature set as acceptance.
 3. **Repeat ordinary and rotation regressions in normal Wrath.** Retain RED artifacts and record normal-lane GREEN only when callback delivery and all five rotation cases pass.
 4. **Expand only source-supported contracts.** Separately establish same-value suppression, first/range initialization, min/max reclamping, callback order/reentry, interpolation, geometry, and XML parsing. Do not import Solarity behavior without matching Wrath evidence.
 5. **Validate profile fidelity.** Exercise unchanged Classic TextStatusBar consumers and, if available, native 3.3.5 evidence; keep missing native execution explicit.
@@ -43,6 +43,7 @@ Stage 1 is a bounded comparison plus diagnostic source proof, not complete profi
 - [StatusBar callback spec](../../specs/statusbar-value-callback.md) — scoped contract and current exclusions.
 - [Slider/StatusBar setter](../../../src/lua_api/frame/methods/widgets/slider.rs) — commit implementation.
 - [script-handler admission](../../../src/lua_api/frame/methods/text_attribute_event/events.rs) — widget eligibility.
+- [enum initialization](../../../src/lua_api/env_init/enums.rs) — `91cb5c735` feature-gate correction.
 - `/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_TextStatusBar/Classic/TextStatusBar.xml` — Classic binding.
 - `/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_TextStatusBar/Classic/TextStatusBar.lua` — Classic text-update consumer.
 - `/home/osso/Repos/solarityclient/docs/architecture/ui-content-loading.md` — build-12340 comparison.
