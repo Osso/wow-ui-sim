@@ -160,6 +160,14 @@ impl AnimGroupState {
         !self.animations.is_empty()
     }
 
+    /// True when every animation is a plain `Animation`, which changes
+    /// nothing on screen; addons use such groups as OnLoop/OnFinished timers.
+    pub fn is_timer_only(&self) -> bool {
+        self.animations
+            .iter()
+            .all(|animation| animation.anim_type == AnimationType::Animation)
+    }
+
     /// Length of one pass: animations sharing an order run in parallel,
     /// orders run in sequence.
     pub fn total_duration(&self) -> f64 {

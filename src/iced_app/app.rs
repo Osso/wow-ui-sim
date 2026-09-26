@@ -630,7 +630,8 @@ fn parse_fast_tick_ms(value: &str) -> Option<u64> {
 
 /// Delay until a playing animation next needs a tick: zero when one is
 /// visible or has an OnUpdate handler, otherwise the nearest loop/finish
-/// boundary of unseen ones.
+/// boundary of unseen ones (timer-only groups or ones under a transparent
+/// parent).
 fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Duration> {
     state
         .animation_groups
@@ -642,8 +643,8 @@ fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Du
                 && state.widgets.is_ancestor_visible(g.owner_frame_id)
         })
         .filter_map(|(&group_id, g)| {
-            let is_unseen = is_hidden_by_parent_alpha(&state.widgets, g)
-                && !group_has_on_update_handler(state, group_id);
+            let draws_nothing = g.is_timer_only() || is_hidden_by_parent_alpha(&state.widgets, g);
+            let is_unseen = draws_nothing && !group_has_on_update_handler(state, group_id);
             if is_unseen {
                 g.time_to_next_boundary()
             } else {

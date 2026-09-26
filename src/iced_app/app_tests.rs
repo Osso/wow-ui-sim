@@ -425,3 +425,50 @@ fn unseen_animation_with_on_update_handler_keeps_fast_tick() {
         );
     }
 }
+
+/// Plays a parentless 0.5s REPEAT timer made of a plain Animation (the
+/// DandersFrames range-poll pattern), running `setup` before Play.
+fn play_plain_timer_animation(app: &App, setup: &str) {
+    app.env
+        .borrow()
+        .exec(&format!(
+            r#"
+            local timerFrame = CreateFrame("Frame")
+            local group = timerFrame:CreateAnimationGroup()
+            local step = group:CreateAnimation()
+            step:SetDuration(0.5)
+            group:SetLooping("REPEAT")
+            group:SetScript("OnLoop", function() end)
+            {setup}
+            group:Play()
+        "#
+        ))
+        .expect("plain timer animation should play");
+}
+
+#[test]
+fn plain_animation_timer_wakes_at_loop_boundary() {
+    let app = build_test_app(ScreenKind::Game);
+    play_plain_timer_animation(&app, "");
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    // 0.5s to the next loop: the widest timer bucket not past the boundary.
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_millis(250)),
+    );
+}
+
+#[test]
+fn plain_animation_timer_with_on_update_keeps_fast_tick() {
+    let app = build_test_app(ScreenKind::Game);
+    play_plain_timer_animation(&app, r#"step:SetScript("OnUpdate", function() end)"#);
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_millis(DEFAULT_FAST_TICK_MS)),
+    );
+}
