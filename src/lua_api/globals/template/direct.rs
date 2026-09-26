@@ -712,6 +712,33 @@ pub fn apply_xml_letters(
     }
 }
 
+/// Resolve and apply StatusBar texture rotation from template chain + instance XML.
+pub fn apply_xml_statusbar_rotation(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let rotates = frame.rotates_texture.or_else(|| {
+        crate::xml::get_template_chain(inherits)
+            .iter()
+            .rev()
+            .find_map(|entry| entry.frame.rotates_texture)
+    });
+    if let Some(rotates) = rotates {
+        let mut sim = state.borrow_mut();
+        if sim
+            .widgets
+            .get(frame_id)
+            .is_some_and(|frame| frame.widget_type == crate::widget::WidgetType::StatusBar)
+        {
+            crate::lua_api::frame::methods::widgets::set_statusbar_rotation(
+                &mut sim, frame_id, rotates,
+            );
+        }
+    }
+}
+
 /// Resolve and apply Slider `orientation` from template chain + instance XML.
 pub fn apply_xml_slider_orientation(
     state: &Rc<RefCell<SimState>>,

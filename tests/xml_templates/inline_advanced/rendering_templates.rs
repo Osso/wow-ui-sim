@@ -152,6 +152,93 @@ fn inherited_statusbar_bar_texture_creates_live_bar_child() {
 }
 
 #[test]
+fn xml_statusbar_rotates_texture_before_onload() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let dir = create_test_addon(
+        r#"<Ui>
+    <StatusBar name="XmlRotatedStatusBar" parent="UIParent" rotatesTexture="true">
+        <BarTexture file="Interface\Buttons\WHITE8X8"/>
+        <Scripts><OnLoad>self.rotationAtLoad = self:GetRotatesTexture(); self.coordsAtLoad = table.concat({self:GetStatusBarTexture():GetTexCoord()}, ",")</OnLoad></Scripts>
+    </StatusBar>
+</Ui>"#,
+        "TestXmlStatusBarRotation",
+    );
+    load_addon(&env.loader_env(), &dir.path().join("TestXmlStatusBarRotation.toc"))
+        .expect("addon load should succeed");
+
+    let (rotates, at_load, coords): (bool, bool, String) = env
+        .eval(
+            "return XmlRotatedStatusBar:GetRotatesTexture(), XmlRotatedStatusBar.rotationAtLoad, XmlRotatedStatusBar.coordsAtLoad",
+        )
+        .unwrap();
+    assert!(rotates && at_load);
+    assert_eq!(coords, "0,1,1,1,0,0,1,0");
+}
+
+#[test]
+fn xml_statusbar_inherits_rotation_with_explicit_false_override() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let dir = create_test_addon(
+        r#"<Ui>
+    <StatusBar name="XmlRotatedTemplate" virtual="true" rotatesTexture="true">
+        <BarTexture file="Interface\Buttons\WHITE8X8"/>
+        <Scripts><OnLoad>self.rotationAtLoad = self:GetRotatesTexture()</OnLoad></Scripts>
+    </StatusBar>
+    <StatusBar name="XmlInheritedRotation" parent="UIParent" inherits="XmlRotatedTemplate"/>
+    <StatusBar name="XmlDisabledRotation" parent="UIParent" inherits="XmlRotatedTemplate" rotatesTexture="false"/>
+</Ui>"#,
+        "TestXmlInheritedStatusBarRotation",
+    );
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TestXmlInheritedStatusBarRotation.toc"),
+    )
+    .expect("addon load should succeed");
+
+    let (inherited, inherited_at_load, inherited_coords, overridden, overridden_at_load, override_coords):
+        (bool, bool, String, bool, bool, String) = env
+        .eval(
+            r#"return XmlInheritedRotation:GetRotatesTexture(), XmlInheritedRotation.rotationAtLoad,
+                      table.concat({XmlInheritedRotation:GetStatusBarTexture():GetTexCoord()}, ","),
+                      XmlDisabledRotation:GetRotatesTexture(), XmlDisabledRotation.rotationAtLoad,
+                      table.concat({XmlDisabledRotation:GetStatusBarTexture():GetTexCoord()}, ",")"#,
+        )
+        .unwrap();
+    assert!(inherited && inherited_at_load);
+    assert_eq!(inherited_coords, "0,1,1,1,0,0,1,0");
+    assert!(!overridden && !overridden_at_load);
+    assert_ne!(override_coords, inherited_coords);
+}
+
+#[test]
+fn create_frame_statusbar_template_applies_rotation_before_onload() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let dir = create_test_addon(
+        r#"<Ui>
+    <StatusBar name="RuntimeRotatedStatusBarTemplate" virtual="true" rotatesTexture="true">
+        <BarTexture file="Interface\Buttons\WHITE8X8"/>
+        <Scripts><OnLoad>self.rotationAtLoad = self:GetRotatesTexture(); self.coordsAtLoad = table.concat({self:GetStatusBarTexture():GetTexCoord()}, ",")</OnLoad></Scripts>
+    </StatusBar>
+</Ui>"#,
+        "TestRuntimeStatusBarRotation",
+    );
+    load_addon(&env.loader_env(), &dir.path().join("TestRuntimeStatusBarRotation.toc"))
+        .expect("addon load should succeed");
+
+    let (rotates, at_load, coords): (bool, bool, String) = env
+        .eval(
+            r#"local bar = CreateFrame("StatusBar", nil, UIParent, "RuntimeRotatedStatusBarTemplate")
+               return bar:GetRotatesTexture(), bar.rotationAtLoad, bar.coordsAtLoad"#,
+        )
+        .unwrap();
+    assert!(rotates && at_load);
+    assert_eq!(coords, "0,1,1,1,0,0,1,0");
+}
+
+#[test]
 fn test_create_frame_from_xml_hidden_starts_hidden() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();

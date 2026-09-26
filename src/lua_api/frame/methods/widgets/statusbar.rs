@@ -439,7 +439,12 @@ pub(super) fn set_rotates_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let rotates = val_to_bool(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
-    let bar_id = statusbar_child_id(&sim, id);
+    set_statusbar_rotation(&mut sim, id, rotates);
+    Ok(0)
+}
+
+pub(super) fn set_statusbar_rotation(sim: &mut crate::lua_api::SimState, id: u64, rotates: bool) {
+    let bar_id = statusbar_child_id(sim, id);
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.statusbar_rotates_texture = rotates;
     }
@@ -448,7 +453,6 @@ pub(super) fn set_rotates_texture(state: &mut LuaState) -> LuaResult<u32> {
     {
         apply_bar_texture_rotation(bar, rotates);
     }
-    Ok(0)
 }
 
 // Aliases

@@ -189,6 +189,8 @@ pub struct FrameXml {
     pub frame_level: Option<i32>,
     #[serde(rename = "@orientation")]
     pub orientation: Option<String>,
+    #[serde(rename = "@rotatesTexture")]
+    pub rotates_texture: Option<bool>,
     #[serde(rename = "@fixedFrameLevel")]
     pub fixed_frame_level: Option<bool>,
     #[serde(rename = "@useParentLevel")]

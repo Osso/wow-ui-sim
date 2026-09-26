@@ -40,6 +40,10 @@ pub(crate) fn toggle_checkbutton_for_click(state: &mut LuaState, id: u64) -> Lua
     slider::toggle_checkbutton_for_click(state, id)
 }
 
+pub(crate) fn set_statusbar_rotation(sim: &mut crate::lua_api::SimState, id: u64, rotates: bool) {
+    statusbar::set_statusbar_rotation(sim, id, rotates);
+}
+
 /// Dispatch the shared Clear name without overwriting either widget's handler.
 fn clear(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
