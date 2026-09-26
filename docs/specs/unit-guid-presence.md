@@ -33,4 +33,4 @@ Independent verification of `2938de6e1` passes 79 unit API cases (six GUID cases
 
 ## Out of scope
 
-New remote/arena/pet/vehicle/raid identity models, GUID-based UnitIsUnit redesign, other unit queries, coercion/error contracts, secret-value policy changes, and native or all-profile compatibility claims. Existing internal GUID construction and the separately gated aura-caster query retain their current behavior.
+New remote/arena/pet/vehicle/raid identity models, the separate [UnitIsUnit identity contract](unit-identity-equality.md), other unit queries, coercion/error contracts, secret-value policy changes, and native or all-profile compatibility claims. Existing internal GUID construction and the separately gated aura-caster query retain their current behavior.

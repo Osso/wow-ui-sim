@@ -274,7 +274,17 @@ fn unit_is_dnd(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_is_unit(state: &mut LuaState) -> LuaResult<u32> {
     let lhs = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let rhs = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
-    state.push(Val::Bool(lhs == rhs));
+    let same_unit = {
+        let sim = borrow_state(state)?;
+        match (
+            existing_guid_for_unit(&sim, &lhs),
+            existing_guid_for_unit(&sim, &rhs),
+        ) {
+            (Some(lhs), Some(rhs)) => lhs == rhs,
+            _ => false,
+        }
+    };
+    state.push(Val::Bool(same_unit));
     Ok(1)
 }
 
