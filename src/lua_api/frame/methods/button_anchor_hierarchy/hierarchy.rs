@@ -12,7 +12,7 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::{FromStack, IntoStack, stack_val};
 use crate::widget::{AnchorPoint, Frame, WidgetRegistry};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 use super::font_strings::resolve_child_name;
 use super::shared::{bind_named_child_global, opt_string};
@@ -58,6 +58,16 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
             forbidden_aspects::INHERITANCE_PARENT,
             "SetParent",
         )?;
+    }
+    {
+        let sim = borrow_state(state)?;
+        if super::super::methods_hierarchy::would_create_parent_cycle(
+            &sim.widgets,
+            id,
+            new_parent_id,
+        ) {
+            return Err(runtime_error("SetParent would create a parent cycle"));
+        }
     }
     if super::animations::reparent_animation(state, id)? {
         return Ok(0);

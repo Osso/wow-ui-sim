@@ -2,6 +2,23 @@
 
 use crate::widget::{FrameStrata, WidgetRegistry};
 
+/// A proposed parent creates a cycle when its ancestry already contains the child.
+/// The existing hierarchy is assumed acyclic; this checks the new edge before mutation.
+pub fn would_create_parent_cycle(
+    widgets: &WidgetRegistry,
+    child_id: u64,
+    new_parent_id: Option<u64>,
+) -> bool {
+    let mut ancestor_id = new_parent_id;
+    while let Some(id) = ancestor_id {
+        if id == child_id {
+            return true;
+        }
+        ancestor_id = widgets.get(id).and_then(|frame| frame.parent_id);
+    }
+    false
+}
+
 pub fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: Option<u64>) {
     let old_parent_id = widgets.get(child_id).and_then(|frame| frame.parent_id);
     let same_parent = old_parent_id.is_some() && old_parent_id == new_parent_id;
