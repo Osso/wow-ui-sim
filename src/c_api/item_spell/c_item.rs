@@ -10,7 +10,7 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val};
+use rilua::{LuaError, LuaResult, RuntimeError, Val};
 use std::collections::HashSet;
 
 type CItemMethod = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
@@ -603,11 +603,22 @@ fn c_item_get_item_count(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_item_get_stack_count(state: &mut LuaState) -> LuaResult<u32> {
     let value = stack_val(state, 1);
-    let count = match value {
-        Val::Table(_) => bag_stack_count(state, value),
-        _ => item_id_from_location_or_item_info(state, value)
-            .and_then(|item_id| items::get_item(item_id).map(|_| 1))
-            .unwrap_or(0),
+    if !matches!(value, Val::Table(_)) {
+        return Err(LuaError::Runtime(RuntimeError {
+            message: format!(
+                "C_Item.GetStackCount: expected ItemLocation table at argument 1, got {}",
+                value.type_name()
+            ),
+            level: 1,
+            traceback: vec![],
+        }));
+    }
+    let count = match table_get(state, value, "equipmentSlotIndex") {
+        Val::Num(slot) => borrow_state(state)?
+            .player
+            .equipped_items
+            .contains_key(&(slot as i32)) as i32,
+        _ => bag_stack_count(state, value),
     };
     state.push(Val::Num(count as f64));
     Ok(1)

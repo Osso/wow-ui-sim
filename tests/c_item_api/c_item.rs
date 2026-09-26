@@ -466,6 +466,37 @@ fn test_c_item_get_quality_and_stack_count_from_item_location() {
 }
 
 #[test]
+fn test_c_item_get_stack_count_reads_modeled_locations_without_item_metadata() {
+    let env = env();
+    env.exec("A_Admin.AddBagItem(0, 5, 987654, 7); A_Admin.EquipItem(18, 987654)")
+        .unwrap();
+    let (equipped, bag, empty_equipment, empty_bag): (i32, i32, i32, i32) = env
+        .eval(
+            "return C_Item.GetStackCount({ equipmentSlotIndex = 18 }), \
+             C_Item.GetStackCount({ bagID = 0, slotIndex = 5 }), \
+             C_Item.GetStackCount({ equipmentSlotIndex = 17 }), \
+             C_Item.GetStackCount({ bagID = 0, slotIndex = 6 })",
+        )
+        .unwrap();
+    assert_eq!((equipped, bag, empty_equipment, empty_bag), (1, 7, 0, 0));
+}
+
+#[test]
+fn test_c_item_get_stack_count_rejects_non_locations() {
+    let env = env();
+    for argument in ["987654", "'item:987654'", "nil"] {
+        let (ok, error): (bool, String) = env
+            .eval(&format!(
+                "local ok, result = pcall(C_Item.GetStackCount, {argument}); return ok, tostring(result)"
+            ))
+            .unwrap();
+        assert!(!ok, "accepted non-location {argument}");
+        assert!(error.contains("GetStackCount"), "{argument}: {error}");
+        assert!(error.contains("table"), "{argument}: {error}");
+    }
+}
+
+#[test]
 fn test_c_item_binding_probes_return_booleans_for_item_location() {
     let env = env();
     let (is_bound, is_bound_until_equip): (bool, bool) = env
