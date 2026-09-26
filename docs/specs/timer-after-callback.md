@@ -7,8 +7,8 @@
 - [x] Accept the existing ordinary function and callback-container forms and return no values.
 - [x] Defer zero-delay callbacks until normal timer processing, invoke them once with zero arguments, and not repeat on a later processing pass.
 - [x] Preserve NewTimer/NewTicker callbacks' one container-proxy argument, handle equality, shared fields, and finite ticker iteration behavior.
-- [ ] Retain After/NewTimer/NewTicker timers registered inside a callback for subsequent processing passes, without firing them in the registering pass.
-- [ ] Preserve already-pending timers, finite ticker repeats, and cancellation of both callback-created timers and timers already taken for processing.
+- [x] Retain After/NewTimer/NewTicker timers registered inside a callback for subsequent processing passes, without firing them in the registering pass.
+- [x] Preserve already-pending timers, finite ticker repeats, and cancellation of both callback-created timers and timers already taken for processing.
 
 The cached retail `UITimerDocumentation.lua` declares `After` with a `TimerCallback` (no callback arguments), while `NewTimer`/`NewTicker` use `TickerCallback` (one callback argument). The checked-in 12.0.0 occurrence records the callback-type change to `LuaFunctionContainer`, seconds input, and no return values; it does not independently establish callback arguments. Historical simulator-profile tests are not native historical-client evidence.
 
@@ -29,7 +29,7 @@ The cached retail `UITimerDocumentation.lua` declares `After` with a `TimerCallb
 
 ## Known gaps (current cycle)
 
-- [ ] Nested-timer compiled GREEN remains pending. Before the production change, the existing simulator binary ran the shared fixture through normal headless update/timer passes and reported `nested timer pass 2 after: expected 1, got 0`. Evidence: `/tmp/ellesmere-forever/nested-timers-ledger.json`.
+The two existing `timer_nested_callbacks_` cases pass independently on the default grouped integration executable at `6977172b8`; `/tmp/cross-version-unit-guid-verification-ledger.md` records exact compilation and commands. Before the queue-preservation change, the existing simulator binary ran the shared fixture through normal headless update/timer passes and reported `nested timer pass 2 after: expected 1, got 0`; `/tmp/ellesmere-forever/nested-timers-ledger.json`. This closes default compiled proof, not native or all-profile queue semantics.
 
 - [ ] Native After container identity, historical callback arguments, exact delay boundaries, coercion/errors, cancellation edge cases and GC/lifecycle behavior are not established by this slice.
 - [ ] The real-client NewTimer/NewTicker capture does not prove After behavior.
