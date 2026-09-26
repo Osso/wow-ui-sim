@@ -86,6 +86,7 @@ fn is_mouse_over_bounds(
     let Some(rect) = frame.layout_rect else {
         return false;
     };
+    let rect = crate::layout::apply_scroll_offsets(&state.widgets, id, rect);
     mouse_x >= rect.x - left
         && mouse_x <= rect.x + rect.width + right
         && mouse_y >= rect.y - top
