@@ -239,6 +239,42 @@ fn create_frame_statusbar_template_applies_rotation_before_onload() {
 }
 
 #[test]
+fn create_frame_statusbar_template_applies_orientation_before_onload() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let dir = create_test_addon(
+        r#"<Ui>
+    <StatusBar name="RuntimeVerticalBarTemplate" virtual="true" orientation="VERTICAL">
+        <Scripts><OnLoad>self.orientationAtLoad = self:GetOrientation()</OnLoad></Scripts>
+    </StatusBar>
+    <StatusBar name="RuntimeInheritedVerticalBarTemplate" virtual="true" inherits="RuntimeVerticalBarTemplate"/>
+    <StatusBar name="RuntimeHorizontalBarTemplate" virtual="true" inherits="RuntimeVerticalBarTemplate" orientation="HORIZONTAL"/>
+</Ui>"#,
+        "TestRuntimeStatusBarOrientation",
+    );
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TestRuntimeStatusBarOrientation.toc"),
+    )
+    .expect("addon load should succeed");
+
+    let (direct, direct_at_load, inherited, inherited_at_load, overridden, overridden_at_load):
+        (String, String, String, String, String, String) = env
+        .eval(
+            r#"local direct = CreateFrame("StatusBar", nil, UIParent, "RuntimeVerticalBarTemplate")
+               local inherited = CreateFrame("StatusBar", nil, UIParent, "RuntimeInheritedVerticalBarTemplate")
+               local overridden = CreateFrame("StatusBar", nil, UIParent, "RuntimeHorizontalBarTemplate")
+               return direct:GetOrientation(), direct.orientationAtLoad,
+                      inherited:GetOrientation(), inherited.orientationAtLoad,
+                      overridden:GetOrientation(), overridden.orientationAtLoad"#,
+        )
+        .unwrap();
+    assert_eq!((direct.as_str(), direct_at_load.as_str()), ("VERTICAL", "VERTICAL"));
+    assert_eq!((inherited.as_str(), inherited_at_load.as_str()), ("VERTICAL", "VERTICAL"));
+    assert_eq!((overridden.as_str(), overridden_at_load.as_str()), ("HORIZONTAL", "HORIZONTAL"));
+}
+
+#[test]
 fn test_create_frame_from_xml_hidden_starts_hidden() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
