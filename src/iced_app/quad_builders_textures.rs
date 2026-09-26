@@ -227,12 +227,26 @@ fn clip_bar_quad_uvs(uv4: [[f32; 2]; 4], fill: &StatusBarFill) -> [[f32; 2]; 4] 
             a[1] + (b[1] - a[1]) * fraction,
         ]
     };
-    [
-        interpolate(uv4[0], uv4[1], start),
-        interpolate(uv4[0], uv4[1], end),
-        interpolate(uv4[3], uv4[2], end),
-        interpolate(uv4[3], uv4[2], start),
-    ]
+    if fill.vertical {
+        let (top, bottom) = if fill.reverse {
+            (0.0, fill.fraction)
+        } else {
+            (1.0 - fill.fraction, 1.0)
+        };
+        [
+            interpolate(uv4[0], uv4[3], top),
+            interpolate(uv4[1], uv4[2], top),
+            interpolate(uv4[1], uv4[2], bottom),
+            interpolate(uv4[0], uv4[3], bottom),
+        ]
+    } else {
+        [
+            interpolate(uv4[0], uv4[1], start),
+            interpolate(uv4[0], uv4[1], end),
+            interpolate(uv4[3], uv4[2], end),
+            interpolate(uv4[3], uv4[2], start),
+        ]
+    }
 }
 
 fn map_quad_into_atlas(uv4: [[f32; 2]; 4], atlas: Option<(f32, f32, f32, f32)>) -> [[f32; 2]; 4] {
@@ -433,6 +447,18 @@ fn finalize_textured_quad(batch: &mut QuadBatch, vert_before: usize, f: &crate::
 /// Apply StatusBar fill clipping to bounds.
 fn apply_bar_fill(bounds: Rectangle, bar_fill: Option<&StatusBarFill>) -> Rectangle {
     let Some(fill) = bar_fill else { return bounds };
+    if fill.vertical {
+        let fill_height = bounds.height * fill.fraction;
+        let top = if fill.reverse {
+            bounds.y
+        } else {
+            bounds.y + bounds.height - fill_height
+        };
+        return Rectangle::new(
+            Point::new(bounds.x, top),
+            Size::new(bounds.width, fill_height),
+        );
+    }
     let fill_width = bounds.width * fill.fraction;
     if fill.reverse {
         Rectangle::new(
@@ -491,6 +517,15 @@ fn apply_bar_fill_with_uvs(
     let fill_bounds = apply_bar_fill(bounds, bar_fill);
     let (uv_left, uv_right, uv_top, uv_bottom) = tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
     let uv_range = uv_right - uv_left;
+    if fill.vertical {
+        let height = uv_bottom - uv_top;
+        let (top, bottom) = if fill.reverse {
+            (uv_top, uv_top + height * fill.fraction)
+        } else {
+            (uv_bottom - height * fill.fraction, uv_bottom)
+        };
+        return (fill_bounds, Some((uv_left, uv_right, top, bottom)));
+    }
     let fill_uvs = if fill.reverse {
         (
             uv_left + uv_range * (1.0 - fill.fraction),
@@ -612,6 +647,7 @@ mod tests {
         let fill = crate::iced_app::statusbar::StatusBarFill {
             fraction: 0.5,
             reverse: false,
+            vertical: false,
             color: None,
         };
 
@@ -636,6 +672,7 @@ mod tests {
         let fill = crate::iced_app::statusbar::StatusBarFill {
             fraction: 0.5,
             reverse: false,
+            vertical: false,
             color: None,
         };
 
@@ -646,6 +683,105 @@ mod tests {
                 .vertices
                 .iter()
                 .zip([[0.0, 1.0], [0.0, 0.5], [1.0, 0.5], [1.0, 1.0]])
+        {
+            assert!((vertex.tex_coords[0] - expected[0]).abs() < 0.0001);
+            assert!((vertex.tex_coords[1] - expected[1]).abs() < 0.0001);
+        }
+        assert!(batch.texture_requests[0].path.contains("@crop:"));
+    }
+
+    #[test]
+    fn vertical_statusbar_fill_clips_bottom_up_with_custom_uvs() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.tex_coords = Some((0.2, 0.8, 0.1, 0.9));
+        let fill = crate::iced_app::statusbar::StatusBarFill {
+            fraction: 0.25,
+            reverse: false,
+            vertical: true,
+            color: None,
+        };
+        build_texture_quads(
+            &mut batch,
+            Rectangle::new(Point::new(10.0, 20.0), Size::new(30.0, 80.0)),
+            &frame,
+            Some(&fill),
+            1.0,
+        );
+        assert_eq!(
+            batch
+                .vertices
+                .iter()
+                .map(|v| v.position)
+                .collect::<Vec<_>>(),
+            [[10.0, 80.0], [40.0, 80.0], [40.0, 100.0], [10.0, 100.0]]
+        );
+        assert_eq!(batch.vertices[0].tex_coords, [0.2, 0.7]);
+        assert_eq!(batch.vertices[2].tex_coords, [0.8, 0.9]);
+    }
+
+    #[test]
+    fn vertical_statusbar_reverse_clips_top_down() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.color_texture = Some(Color::new(1.0, 1.0, 1.0, 1.0));
+        let fill = crate::iced_app::statusbar::StatusBarFill {
+            fraction: 0.25,
+            reverse: true,
+            vertical: true,
+            color: None,
+        };
+        build_texture_quads(
+            &mut batch,
+            Rectangle::new(Point::new(10.0, 20.0), Size::new(30.0, 80.0)),
+            &frame,
+            Some(&fill),
+            1.0,
+        );
+        assert_eq!(
+            batch
+                .vertices
+                .iter()
+                .map(|v| v.position)
+                .collect::<Vec<_>>(),
+            [[10.0, 20.0], [40.0, 20.0], [40.0, 40.0], [10.0, 40.0]]
+        );
+    }
+
+    #[test]
+    fn vertical_rotated_statusbar_clips_along_vertical_quad_axis() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.atlas_tex_coords = Some((0.2, 0.6, 0.3, 0.7));
+        frame.tex_coords_quad = Some([0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]);
+        let fill = crate::iced_app::statusbar::StatusBarFill {
+            fraction: 0.25,
+            reverse: false,
+            vertical: true,
+            color: None,
+        };
+        build_texture_quads(
+            &mut batch,
+            Rectangle::new(Point::new(10.0, 20.0), Size::new(30.0, 80.0)),
+            &frame,
+            Some(&fill),
+            1.0,
+        );
+        assert_eq!(
+            batch
+                .vertices
+                .iter()
+                .map(|v| v.position)
+                .collect::<Vec<_>>(),
+            [[10.0, 80.0], [40.0, 80.0], [40.0, 100.0], [10.0, 100.0]]
+        );
+        for (vertex, expected) in
+            batch
+                .vertices
+                .iter()
+                .zip([[0.75, 1.0], [0.75, 0.0], [1.0, 0.0], [1.0, 1.0]])
         {
             assert!((vertex.tex_coords[0] - expected[0]).abs() < 0.0001);
             assert!((vertex.tex_coords[1] - expected[1]).abs() < 0.0001);
