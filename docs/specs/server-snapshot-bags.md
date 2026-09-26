@@ -37,7 +37,8 @@ Each ID from zero through `maxBagID` is present. Rows contain `numSlots`, `famil
 
 ## Known gaps (current cycle)
 
-- [ ] Current grouped verification and fresh native-client capture pending. Existing installed 0.2.0 snapshots contain no inventory; updating code cannot reconstruct that missing data.
+- [ ] Final proof at `29d2ee30e` has 373 bounded integration passes but one capture-fixture failure: delayed bag events call a nil `callback`. Commit `904b068fe` corrects the fixture after that proof; Rust GREEN remains pending.
+- [ ] Fresh native-client capture pending. Installed 0.3.0 source hashes match, but current SavedVariables is the July 5 snapshot without `bags`; updating code cannot reconstruct missing inventory.
 - Item display metadata continues to use the simulator's existing item catalog; this capture adds inventory identity/count/link state, not a new item database.
 
 ## Out of scope
