@@ -116,10 +116,12 @@ fn unit_guid(state: &mut LuaState) -> LuaResult<u32> {
         let Ok(sim) = borrow_state(state) else {
             return Ok(0);
         };
-        guid_for_unit(&sim, &unit)
+        existing_guid_for_unit(&sim, &unit)
     };
-    let guid = create_string(state, &guid);
-    state.push(guid);
+    let result = guid
+        .map(|guid| create_string(state, &guid))
+        .unwrap_or(Val::Nil);
+    state.push(result);
     Ok(1)
 }
 
@@ -138,7 +140,6 @@ fn unit_creature_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
 pub(crate) fn existing_guid_for_unit(
     sim: &crate::lua_api::state::SimState,
     unit: &str,
