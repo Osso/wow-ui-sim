@@ -84,7 +84,7 @@ The `Frame` struct is the fundamental data structure representing any widget in 
 
 **StatusBar:** `statusbar_value`, `statusbar_min/max`, `statusbar_color`, `statusbar_texture_path`, `statusbar_bar_id`, `statusbar_fill_style`, `statusbar_reverse_fill`, `statusbar_orientation`
 
-**EditBox:** `editbox_cursor_pos`, `editbox_max_letters/bytes`, `editbox_multi_line`, `editbox_auto_focus`, `editbox_numeric`, `editbox_password`, `editbox_blink_speed`, `editbox_history`, `editbox_text_insets`
+**EditBox:** `editbox_cursor_pos` stores the internal Unicode-scalar index. Public cursor and selection methods translate valid UTF-8 byte offsets at the Lua boundary; `editbox_highlight_range` stores the normalized scalar range. `Insert` consumes a nonempty highlighted range before insertion, so an empty insert deletes it. Other fields: `editbox_max_letters/bytes`, `editbox_multi_line`, `editbox_auto_focus`, `editbox_numeric`, `editbox_password`, `editbox_blink_speed`, `editbox_history`, `editbox_text_insets`
 
 **ScrollFrame:** `scroll_child_id`, `scroll_child_rect_size`, `scroll_horizontal`, `scroll_vertical`
 `UpdateScrollChildRect()` resolves the scroll child subtree layout and caches its unioned bounds in `scroll_child_rect_size`, which `GetHorizontalScrollRange()` and `GetVerticalScrollRange()` then use for real scroll extents.

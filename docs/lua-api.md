@@ -149,7 +149,7 @@ At `d6d7a9078`, `SetSpacing` writes per-frame `text_line_spacing`; `GetSpacing` 
 
 ### Widget-Type-Specific Methods
 
-**EditBox:** `SetText()`, `GetText()`, `SetMaxLetters()`, `SetMultiLine()`, `SetAutoFocus()`, `SetFocus()`, `ClearFocus()`
+**EditBox:** `SetText()`, `GetText()`, `SetMaxLetters()`, `SetMultiLine()`, `SetAutoFocus()`, `SetFocus()`, `ClearFocus()`, `SetCursorPosition()`, `GetCursorPosition()`, `GetUTF8CursorPosition()`, `HighlightText()`, `ClearHighlightText()`, `Insert()`. Cursor and highlight endpoints exposed to Lua are valid UTF-8 byte offsets; `GetUTF8CursorPosition()` reports the scalar count before the cursor. The widget retains scalar cursor/selection indices internally. `Insert` replaces a nonempty highlighted range, including deletion when passed an empty string, then clears that selection.
 
 **Slider:** `GetMinMaxValues()`, `SetMinMaxValues()`, `GetValue()`, `SetValue()`, `GetValueStep()`, `SetValueStep()`, `GetOrientation()`, `SetOrientation()`
 
@@ -414,7 +414,7 @@ Applied after addon loading via `env.apply_post_load_workarounds()`:
 | Animations | Partial | AnimationGroup creation; ticking implemented |
 | Buttons | Complete | State-dependent texture switching |
 | Sliders | Complete | Min/max, value, step |
-| EditBox | Partial | SetText, GetText; no actual text input |
+| EditBox | Partial | Text state, focus, byte-facing cursor/selection APIs, and bounded `Insert` replacement/deletion; broader input behavior remains outside this inventory |
 | Tooltips | Complete | SetOwner, AddLine, display |
 | Cooldowns | Stub | SetCooldown stores duration; no swirl animation |
 | Pools | Complete | CreateFramePool, CreateFrameFactory, Acquire/Release |

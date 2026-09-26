@@ -27,12 +27,11 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - `tests/key_dispatch.rs` — keyboard editing controls.
 - `tests/forbidden_aspect_creation.rs` — scripted-input cursor restrictions.
 
-## Known gaps (current cycle)
+## Evidence boundary
 
-- [ ] Native behavior for byte offsets inside a UTF-8 scalar and grapheme-cluster boundaries is unverified; simulator maps non-boundary offsets to the preceding scalar boundary.
-- [ ] Native `Insert` callback timing and `OnTextChanged` userInput flag are unverified; this slice does not change callback dispatch.
+- The supported public boundary is valid UTF-8 byte offsets. The simulator retains character indices internally for editing and selected ranges.
+- Cached Blizzard consumers corroborate byte-facing use: `Blizzard_AutoComplete/AutoComplete.lua:405` and `Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:510` pass Lua `strlen` results to `HighlightText`; Classic `ChatFrameUtilOverrides` passes `GetCursorPosition()` to byte-indexed Lua `string.sub`. This is source-consumer corroboration, not a native probe.
 
 ## Out of scope
 
-- Full `Insert` faithfulness, limits, IME, clipboard, keyboard selection mutation, and rendering selection highlight: no complete native contract or test in this slice.
-- Native verification of UTF-8 selection endpoint units: cached Blizzard `Blizzard_AutoComplete/AutoComplete.lua:405` and `Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:510` pass `strlen` byte offsets to `HighlightText`, corroborating byte-facing endpoints without a native UTF-8 selection probe.
+- Full input-system behavior, limits, IME, clipboard, keyboard selection mutation, and rendering selection highlight.

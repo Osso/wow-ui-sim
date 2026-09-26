@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record bounded EditBox byte-offset selection boundary
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), index, and log from `419b9cfc9` and `/tmp/cross-version-editbox-text-position-proof.md`. Lua cursor and highlight endpoints use valid UTF-8 byte offsets; widget state retains character cursor and selection indices. `Insert` replaces a nonempty selection, accepts empty insertion as deletion, and clears the consumed selection. Actual committed targeted commands are GREEN 34/34 `editbox_`, 19/19 `key_dispatch::`, and 4/4 `forbidden_aspect_creation::scripted_focus_aspect_`. Cached Blizzard `strlen`/Lua `string.sub` byte-offset consumers corroborate this public API boundary only; they are not a native probe. Final check, readability, broad suite, delegation, push, and deployment remain pending. The broader simulator goal remains broad. No tests or builds ran for this documentation audit.
+
 ## [2026-09-26] audit | Verify anchor protection and FontObject spacing
 
 Independent verification retains 93/93 unchanged anchor/security cases and passes 16/16 focused font cases after `00c4edb01`, plus format/check and a zero-issue changed-code readability audit. [[protected-frames]] and [FontString spacing](../specs/fontstring-spacing.md) retain their explicit behavioral limits. `/tmp/cross-version-anchor-font-proof.md` records commands, revisions and logs; earlier pending notes below are superseded for this bounded batch.
