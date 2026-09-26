@@ -225,6 +225,59 @@ fn fire_visibility_handler_recursive(
     fire_visibility_bindings(state, frame_id, handler_name)
 }
 
+/// Deliver an effective-visibility transition caused by SetParent without changing shown state.
+pub(crate) fn dispatch_parent_visibility_change(
+    state: &mut LuaState,
+    id: u64,
+    parent_id: Option<u64>,
+    visible: bool,
+) -> LuaResult<()> {
+    let depth = borrow_state(state)?.global_show_hide_depth;
+    if depth >= GLOBAL_SHOW_HIDE_DEPTH_LIMIT {
+        return Ok(());
+    }
+    borrow_state_mut(state)?.global_show_hide_depth = depth + 1;
+    let result = fire_parent_visibility_recursive(state, id, parent_id, visible);
+    borrow_state_mut(state)?.global_show_hide_depth = depth;
+    result
+}
+
+fn fire_parent_visibility_recursive(
+    state: &mut LuaState,
+    id: u64,
+    expected_parent: Option<u64>,
+    visible: bool,
+) -> LuaResult<()> {
+    let children = {
+        let sim = borrow_state(state)?;
+        let Some(frame) = sim.widgets.get(id) else {
+            return Ok(());
+        };
+        if frame.parent_id != expected_parent
+            || !frame.visible
+            || sim.widgets.is_ancestor_visible(id) != visible
+        {
+            return Ok(());
+        }
+        frame.children.clone()
+    };
+    for child_id in children {
+        fire_parent_visibility_recursive(state, child_id, Some(id), visible)?;
+    }
+    let still_transitioned = {
+        let sim = borrow_state(state)?;
+        sim.widgets.get(id).is_some_and(|frame| {
+            frame.parent_id == expected_parent
+                && frame.visible
+                && sim.widgets.is_ancestor_visible(id) == visible
+        })
+    };
+    if still_transitioned {
+        fire_visibility_bindings(state, id, if visible { "OnShow" } else { "OnHide" })?;
+    }
+    Ok(())
+}
+
 fn fire_visibility_bindings(
     state: &mut LuaState,
     frame_id: u64,
