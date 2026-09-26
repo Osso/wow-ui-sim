@@ -429,6 +429,8 @@ fn test_tooltip_anchor_cursor_tracks_mouse_movement() {
         r#"
         local owner = CreateFrame("Frame", "AnchorCursorFollowOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_CURSOR", 10, 30)
+        GameTooltip:SetText("Cursor-follow tooltip")
+        assert(GameTooltip:IsShown())
     "#,
     )
     .unwrap();

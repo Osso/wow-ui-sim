@@ -383,6 +383,8 @@ fn test_wrapped_line_does_not_expand_width() {
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("Short")
         GameTooltip:AddLine("This is a very very very very very very very very very long line that should word-wrap within the tooltip width rather than expanding it to be extremely wide", 1, 1, 1, true)
+        GameTooltip:Show()
+        assert(GameTooltip:IsShown())
     "#,
     )
     .unwrap();
@@ -528,6 +530,8 @@ fn test_tooltip_sizing_includes_padding() {
         local owner = CreateFrame("Frame", "PadTestOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("X")
+        GameTooltip:Show()
+        assert(GameTooltip:IsShown())
     "#,
     )
     .unwrap();
@@ -708,7 +712,10 @@ fn test_tooltip_sizing_skipped_when_hidden() {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
         let frame = state.widgets.get(gt_id).unwrap();
-        assert!(!frame.visible, "tooltip must be hidden before render sizing");
+        assert!(
+            !frame.visible,
+            "tooltip must be hidden before render sizing"
+        );
         frame.width
     };
 
