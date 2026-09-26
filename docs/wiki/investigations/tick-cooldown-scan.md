@@ -68,6 +68,10 @@ Dirty-frame probing showed the same frames dirty on idle ticks: `MicroMenu`, `Qu
 
 `apply_hit_grid_batch` walked the full subtree of every layout root and every visibility notification, re-evaluating and reinserting the same frames (5.4% self time over open/close cycles). `45808d6ab` collects the union of touched subtrees once, sets each frame from current registry visibility (order-independent for coalesced Show/Hide), skips unchanged reinserts, and checks `mouse_enabled` before ancestor walks. Test: `overlapping_roots_and_visibility_changes_match_rebuilt_grid`. Fast-core pairs: repeat-open total p50 27.0 → 22.1ms (draw 14.1 → 9.4ms), close 16.4 → 14.3ms (draw 4.7 → 2.4ms).
 
+### FPS overlay metrics (follow-up)
+
+The old title bar showed `other` as wall time minus tick and draw, which counted idle time spent waiting for the next frame. That made an idle app look busy (e.g. `other:222ms`). `bbd568584` replaces it with measured numbers averaged over one second: FPS, tick ms and ticks/s, draw ms, `prepare` ms (the `WowUiPrimitive::prepare` time, collected through `take_prepare_time`), and main-thread busy % from `CLOCK_THREAD_CPUTIME_ID` (unix only). It also reports unmeasured busy ms per second: main-thread CPU time not covered by tick, draw or prepare. `WOW_SIM_VERBOSE` prints the same numbers as an `[fps]` line. A live idle run showed 60 FPS, tick ~1.1ms ×63/s, draw 0.19ms, main thread 14% busy, 58ms/s unmeasured. The idle tick rate (~63/s rather than the 1s heartbeat) has not been investigated yet.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
