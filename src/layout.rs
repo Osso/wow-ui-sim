@@ -12,6 +12,18 @@ use crate::widget::{AnchorPoint, WidgetRegistry, WidgetType};
 use layout_line::resolve_line_frame_rect;
 pub use layout_render_eligibility::{frame_has_layout_anchor, frame_has_render_layout};
 
+/// Offset contributed by the designated scroll-child edge, in screen pixels.
+fn scroll_edge_offset(child: &crate::widget::Frame, parent: &crate::widget::Frame) -> (f32, f32) {
+    if parent.widget_type == WidgetType::ScrollFrame && parent.scroll_child_id == Some(child.id) {
+        (
+            parent.scroll_horizontal as f32 * child.effective_scale,
+            parent.scroll_vertical as f32 * child.effective_scale,
+        )
+    } else {
+        (0.0, 0.0)
+    }
+}
+
 /// Translate presentation geometry without changing logical anchors or layout.
 /// Each designated scroll-child edge contributes once, including nested views.
 pub fn apply_scroll_offsets(
@@ -24,15 +36,57 @@ pub fn apply_scroll_offsets(
         let Some(parent) = child.parent_id.and_then(|id| registry.get(id)) else {
             break;
         };
-        if parent.widget_type == WidgetType::ScrollFrame
-            && parent.scroll_child_id == Some(current_id)
-        {
-            rect.x -= parent.scroll_horizontal as f32 * child.effective_scale;
-            rect.y -= parent.scroll_vertical as f32 * child.effective_scale;
-        }
+        let (x, y) = scroll_edge_offset(child, parent);
+        rect.x -= x;
+        rect.y -= y;
         current_id = parent.id;
     }
     rect
+}
+
+/// Cumulative presentation offsets for one traversal of an unchanged registry.
+/// Descendants reuse their ancestors' offsets rather than walking to the root.
+#[derive(Default)]
+pub struct ScrollOffsetCache {
+    offsets: FxHashMap<u64, (f32, f32)>,
+}
+
+impl ScrollOffsetCache {
+    pub fn apply(
+        &mut self,
+        registry: &WidgetRegistry,
+        id: u64,
+        mut rect: LayoutRect,
+    ) -> LayoutRect {
+        let mut missing = Vec::new();
+        let mut current_id = id;
+        while !self.offsets.contains_key(&current_id) {
+            let Some(frame) = registry.get(current_id) else {
+                break;
+            };
+            missing.push(current_id);
+            let Some(parent_id) = frame.parent_id else {
+                break;
+            };
+            current_id = parent_id;
+        }
+
+        let mut total = self.offsets.get(&current_id).copied().unwrap_or_default();
+        for frame_id in missing.into_iter().rev() {
+            let frame = registry
+                .get(frame_id)
+                .expect("frame collected from registry");
+            if let Some(parent) = frame.parent_id.and_then(|id| registry.get(id)) {
+                let (x, y) = scroll_edge_offset(frame, parent);
+                total.0 += x;
+                total.1 += y;
+            }
+            self.offsets.insert(frame_id, total);
+        }
+        rect.x -= total.0;
+        rect.y -= total.1;
+        rect
+    }
 }
 
 /// Cached layout result: computed rect + effective scale.
