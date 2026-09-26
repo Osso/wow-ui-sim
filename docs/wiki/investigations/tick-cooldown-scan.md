@@ -58,6 +58,12 @@ Dirty-frame probing showed the same frames dirty on idle ticks: `MicroMenu`, `Qu
 
 `bench_steady_state` A/B (host load 18–20, noisy): draw min p50 2.60/1.24ms → 0.41/0.46ms; draw/tick ratio per round 1.08–1.14 → 0.44–0.67. Every measured frame still uploads a stratum: remaining idle dirt includes `TabardModel`, a cast-bar texture, an NPE texture, and `QueueStatusButtonIcon` `Show()`.
 
+### Panel-open layout recompute (follow-up)
+
+`bench_spellbook --cycles 50` self time: layout ~15%, hit grid 5.4%, Lua ~10%, buckets 2.7%; PNG decode only 0.3% (first-use decode was one-time, not a re-decode bug). Counters showed one `ensure_layout_rects` pass during the open keypress with 64 dirty roots making 100,230 `recompute_layout_subtree` calls (~305k rect resolutions); close made 51,835. Nested roots and anchor dependents re-walked subtrees already rewritten in the same pass. The anchor-edit settle check added only ~0.16% of rect resolutions.
+
+`4e64f9e20`: `LayoutCache::claim_recompute` makes each frame's stored rect rewrite at most once per pass (rects derive from registry state only, never stored `layout_rect`). Test `src/loader/tests/layout_multi_root.rs`. Fast-core interleaved pairs: repeat-open total p50 ~41 → ~34ms, close ~25 → ~21ms.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
