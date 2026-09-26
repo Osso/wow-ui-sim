@@ -462,6 +462,13 @@ pub(crate) fn apply_font_object_snapshot(
     if let Some(justify_v) = fields.justify_v {
         fontstring.justify_v = justify_v;
     }
+    apply_font_object_colors_and_shadow(fontstring, fields);
+}
+
+fn apply_font_object_colors_and_shadow(
+    fontstring: &mut crate::widget::Frame,
+    fields: &FontObjectFields,
+) {
     if let Some(text_color) = fields.text_color {
         fontstring.text_color = text_color;
     }
@@ -496,9 +503,16 @@ pub(crate) fn font_object_snapshot_changes_frame(
         || fields
             .justify_v
             .is_some_and(|justify_v| frame.justify_v != justify_v)
-        || fields
-            .text_color
-            .is_some_and(|color| frame.text_color != color)
+        || font_object_colors_or_shadow_change(frame, fields)
+}
+
+fn font_object_colors_or_shadow_change(
+    frame: &crate::widget::Frame,
+    fields: &FontObjectFields,
+) -> bool {
+    fields
+        .text_color
+        .is_some_and(|color| frame.text_color != color)
         || fields
             .shadow_color
             .is_some_and(|color| frame.shadow_color != color)
