@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Both queries return the assigned macro's nonempty stored icon string; subsequent `EditMacro` icon changes are visible without reassignment.
-- [ ] Moving a macro action moves its query result; clearing/deleting the assignment returns nil. An empty stored icon returns nil without a fabricated replacement.
-- [ ] Preserve spell action icon resolution and agreement between both queries.
+- [x] Both queries return the assigned macro's nonempty stored icon string; subsequent `EditMacro` icon changes are visible without reassignment.
+- [x] Moving a macro action moves its query result; clearing/deleting the assignment returns nil. An empty stored icon returns nil without a fabricated replacement.
+- [x] Preserve spell action icon resolution and agreement between both queries.
 
 Cached retail `Blizzard_ActionBar/Shared/ActionButton.lua` queries `C_ActionBar.GetActionTexture(action)` and hides the button icon on nil. This contract connects existing explicit macro state to that consumer; it does not claim full native macro-icon evaluation.
 
@@ -27,7 +27,7 @@ Three unguarded cases in `tests/action_macro_tooltip.rs`, grouped `integration` 
 
 ## Known gaps (current cycle)
 
-- [ ] Post-fix verification pending. The pre-fix macro cases are RED while the spell control passes; `/tmp/cross-version-macro-texture-proof.md` records revisions and commands, and `/tmp/cross-version-macro-texture-verification-ledger.md` starts pending.
+None for this bounded correction. Independent verification passes four macro-query/profile cases, 25 inventory controls, format/check and changed-code readability. `/tmp/cross-version-macro-texture-verification-ledger.md` records exact revisions; the separate proof ledger retains RED evidence.
 
 ## Out of scope
 
