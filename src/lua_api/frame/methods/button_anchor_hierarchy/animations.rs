@@ -1,7 +1,9 @@
 //! Animation group and animation creation/control methods.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, frame_ref};
-use crate::lua_api::script_helpers::{call_void_function_state, get_scripts_for_dispatch};
+use crate::lua_api::script_helpers::{
+    call_error_handler_state, get_scripts_for_dispatch, protected_lua_pcall_state,
+};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -216,7 +218,9 @@ pub(super) fn animation_group_stop(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(frame_id) = notification {
         let frame = frame_ref(state, frame_id)?;
         for handler in get_scripts_for_dispatch(state, frame_id, "OnStop") {
-            call_void_function_state(state, handler, &[frame]).map_err(rilua::runtime_error)?;
+            if let Err(error) = protected_lua_pcall_state(state, handler, &[frame]) {
+                call_error_handler_state(state, &error);
+            }
         }
     }
     Ok(0)

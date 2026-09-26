@@ -5,7 +5,7 @@ Ordinary simulator query behavior for `SimpleAnim` and `SimpleAnimGroup`, exerci
 ## What it must do
 
 - [x] Animation `IsPlaying`, `IsPaused`, and `IsDone` follow their owning group through playback, pause/resume, restart, stop, and completion; an independent idle group stays unchanged.
-- [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. Explicit Stop of a playing group dispatches its `OnStop` scripts after modeled state, flipbook, and action-bar state settle; callback cleanup and reentrant Play remain effective. Stop does not dispatch `OnFinished`. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
+- [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. Explicit Stop of a playing group dispatches its `OnStop` scripts after modeled state, flipbook, and action-bar state settle; callback cleanup and reentrant Play remain effective. Callback errors reach the script error handler without aborting Stop. Stop does not dispatch `OnFinished`. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
 - [x] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
 - [x] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Bounce callbacks observe direction changes.
 - [x] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
@@ -37,7 +37,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 | `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; exact start-delay boundary and completion across start/end delays |
 | `delaying_uses_order_start_and_longest_parallel_duration` | Earlier-order wait, parallel maximum including end delay, exact delay boundaries, own end delay, and reverse traversal |
 
-Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, and no OnFinished), and `tests/animation_anim.rs`. The exact Stop RED/GREEN case is recorded in `/tmp/cross-version-animation-stop-proof.md`: Wrath RED 0/1 at `b8596d6dc`, then GREEN 1/1 at `af1b54f2b`. No new Cargo target or API-publication absence assertions are needed.
+Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, error routing, and no OnFinished), and `tests/animation_anim.rs`. The exact Stop RED/GREEN case is recorded in `/tmp/cross-version-animation-stop-proof.md`: Wrath RED 0/1 at `b8596d6dc`, then GREEN 1/1 at `af1b54f2b`. No new Cargo target or API-publication absence assertions are needed.
 
 At test commit `9bc06cfe2`, all five new tests and 59 existing tests passed under each of `client-ptr` and `client-retail`:
 

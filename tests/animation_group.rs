@@ -117,6 +117,28 @@ fn stop_dispatches_on_stop_after_settling_state_and_allows_reentrant_play() {
 }
 
 #[test]
+fn stop_routes_handler_errors_without_aborting_caller() {
+    let env = setup();
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", nil, UIParent)
+        local group = owner:CreateAnimationGroup()
+        local animation = group:CreateAnimation("Alpha")
+        animation:SetDuration(2)
+        local errors = {}
+        seterrorhandler(function(message) errors[#errors + 1] = tostring(message) end)
+        group:SetScript("OnStop", function() error("stop callback failure") end)
+        group:Play()
+        local ok = pcall(function() group:Stop() end)
+        assert(ok, "OnStop errors must not abort the Stop caller")
+        assert(#errors == 1 and errors[1]:find("stop callback failure", 1, true))
+        assert(group:IsDone() and not group:IsPlaying())
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn pause_and_resume() {
     let env = setup();
     env.exec(
