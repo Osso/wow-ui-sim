@@ -5,6 +5,37 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn panel_addons_load_narration_before_shared_xml_consumes_its_slider_mixin() {
+    let ui = crate::common::panel_fixtures::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    crate::common::panel_fixtures::load_panel_addons(&env);
+
+    let errors = crate::common::panel_fixtures::recorded_lua_errors(&env);
+    for error in &errors {
+        eprintln!("panel addon Lua error: {error}");
+    }
+
+    let (narration_loaded, formatter_published): (bool, bool) = env
+        .eval(
+            r#"return C_AddOns.IsAddOnLoaded("Blizzard_Narration"),
+                type(NarrationSliderMixin) == "table"
+                and type(NarrationSliderMixin.SetNarrationValueFormatter) == "function""#,
+        )
+        .expect("narration dependency probe should return");
+    assert!(
+        narration_loaded && formatter_published,
+        "SharedXML requires the loaded Narration slider formatter publisher; baseline Lua errors: {errors:#?}",
+    );
+    assert!(
+        !errors
+            .iter()
+            .any(|error| error.contains("SetNarrationValueFormatter")),
+        "SharedXML must not initialize a slider before its Narration formatter is available; baseline Lua errors: {errors:#?}",
+    );
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
