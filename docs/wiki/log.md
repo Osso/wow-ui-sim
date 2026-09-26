@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Unseen animations wake at loop boundaries
+
+`a1dbdb697`: animation groups under an effective-alpha-0 parent now schedule the tick at their next loop/finish boundary instead of forcing 16ms ticks. This removes the BoostTutorial glow as an idle fast-tick source. The DandersFrames base-`Animation` loop still forces the fast tick. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] audit | Verify EditBox text-position correction
 
 At `3b5ee8d55`, independent verification passes seven EditBox family cases and four focus controls, with 19 unchanged key-dispatch cases retained, plus format/check. The previously failing shortened-text regression now covers stale cursor and UTF-8 selection endpoints followed by another insert. [The spec](../specs/editbox-text-position-selection.md) and `/tmp/cross-version-editbox-text-position-proof.md` retain exact limits and logs; `SetText`'s own lifecycle and native callback semantics remain unclaimed.
