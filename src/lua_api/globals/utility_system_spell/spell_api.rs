@@ -27,67 +27,77 @@ pub(super) struct UnitVitals {
 pub(super) fn lookup_unit_vitals(state: &LuaState, unit: &str) -> UnitVitals {
     let sim = borrow_state(state).expect("sim state should exist");
     if matches!(unit, "player" | "self" | "pet" | "vehicle") {
-        return UnitVitals {
-            health: sim.player.health,
-            health_max: sim.player.health_max,
-            power: sim.player.power,
-            power_max: sim.player.power_max,
-            power_type: sim.player.power_type,
-            power_type_name: power_type_name(sim.player.power_type).to_string(),
-            present: true,
-        };
+        return player_vitals(&sim.player);
     }
-    let raid_index = unit
-        .strip_prefix("raid")
-        .and_then(|slot| slot.parse::<usize>().ok())
-        .and_then(|slot| slot.checked_sub(1));
-    let snapshot = if let Some(index) = raid_index {
-        sim.party_group_active
-            .then(|| sim.party_members.get(index))
-            .flatten()
-            .map(|member| {
-                (
-                    member.health,
-                    member.health_max,
-                    member.power,
-                    member.power_max,
-                    member.power_type,
-                    member.power_type_name.clone(),
-                )
-            })
-    } else if parse_party_index(unit).is_some() && !sim.party_group_active {
-        None
-    } else {
-        crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot(&sim, unit).map(|unit| {
-            (
-                unit.health,
-                unit.health_max,
-                unit.power,
-                unit.power_max,
-                unit.power_type,
-                unit.power_type_name,
-            )
-        })
-    };
-    let Some((health, health_max, power, power_max, power_type, power_type_name)) = snapshot else {
-        return UnitVitals {
-            health: 0,
-            health_max: 0,
-            power: 0,
-            power_max: 0,
-            power_type: 0,
-            power_type_name: power_type_name(0).to_string(),
-            present: false,
-        };
-    };
+    if !crate::lua_api::globals::group_queries::unit_exists_in_state(&sim, unit) {
+        return absent_vitals();
+    }
+    if let Some(index) = vitals_group_index(unit) {
+        return sim
+            .party_members
+            .get(index)
+            .map(member_vitals)
+            .unwrap_or_else(absent_vitals);
+    }
+    crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot(&sim, unit)
+        .as_ref()
+        .map(target_vitals)
+        .unwrap_or_else(absent_vitals)
+}
+
+fn vitals_group_index(unit: &str) -> Option<usize> {
+    parse_party_index(unit).or_else(|| {
+        unit.strip_prefix("raid")
+            .and_then(|slot| slot.parse::<usize>().ok())
+            .and_then(|slot| slot.checked_sub(1))
+    })
+}
+
+fn player_vitals(player: &crate::lua_api::state::PlayerState) -> UnitVitals {
     UnitVitals {
-        health,
-        health_max,
-        power,
-        power_max,
-        power_type,
-        power_type_name,
+        health: player.health,
+        health_max: player.health_max,
+        power: player.power,
+        power_max: player.power_max,
+        power_type: player.power_type,
+        power_type_name: power_type_name(player.power_type).to_string(),
         present: true,
+    }
+}
+
+fn member_vitals(member: &crate::lua_api::game_data::PartyMember) -> UnitVitals {
+    UnitVitals {
+        health: member.health,
+        health_max: member.health_max,
+        power: member.power,
+        power_max: member.power_max,
+        power_type: member.power_type,
+        power_type_name: member.power_type_name.clone(),
+        present: true,
+    }
+}
+
+fn target_vitals(target: &crate::lua_api::game_data::TargetInfo) -> UnitVitals {
+    UnitVitals {
+        health: target.health,
+        health_max: target.health_max,
+        power: target.power,
+        power_max: target.power_max,
+        power_type: target.power_type,
+        power_type_name: target.power_type_name.clone(),
+        present: true,
+    }
+}
+
+fn absent_vitals() -> UnitVitals {
+    UnitVitals {
+        health: 0,
+        health_max: 0,
+        power: 0,
+        power_max: 0,
+        power_type: 0,
+        power_type_name: power_type_name(0).to_string(),
+        present: false,
     }
 }
 

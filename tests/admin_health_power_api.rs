@@ -45,6 +45,21 @@ fn unit_vitals_resolve_present_target_focus_and_absent_tokens() {
 }
 
 #[test]
+fn unit_vitals_do_not_expose_targeting_only_seed() {
+    env()
+        .eval::<()>(
+            r#"
+            assert(not UnitExists("enemy1"))
+            assert(UnitHealth("enemy1") == 0, "absent unit must not expose a targeting seed")
+            assert(UnitHealthMax("enemy1") == 0)
+            assert(UnitPower("enemy1") == 0)
+            assert(UnitPowerMax("enemy1", 9) == 0)
+            "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn unit_vitals_only_use_active_party_members() {
     env()
         .eval::<()>(

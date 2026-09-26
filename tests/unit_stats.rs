@@ -176,16 +176,18 @@ fn unit_health_max_reads_player_health_max() {
 }
 
 #[test]
-fn unit_power_max_returns_value_and_type() {
+fn unit_power_max_returns_only_maximum() {
     let env = env();
     {
         let mut st = env.state().borrow_mut();
         st.player.power_max = 1000;
         st.player.power_type = 3; // ENERGY
     }
-    let (max, power_type): (i32, i32) = env.eval(r#"return UnitPowerMax("player")"#).unwrap();
+    let (count, max): (i32, i32) = env
+        .eval(r#"return select('#', UnitPowerMax("player")), UnitPowerMax("player")"#)
+        .unwrap();
+    assert_eq!(count, 1, "UnitPowerMax returns a maximum, not a power type");
     assert_eq!(max, 1000);
-    assert_eq!(power_type, 3);
 }
 
 #[test]

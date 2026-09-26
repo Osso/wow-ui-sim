@@ -1,12 +1,12 @@
 //! Unit-stat probe globals.
 //!
-//! Migrates 18 entries off `GLOBAL_ZERO_STUBS`:
+//! Implements modeled combat-stat probes:
 //!
 //! - `UnitArmor`, `UnitAttackPower`, `UnitCriticalStrike`, `UnitDamage`,
 //!   `UnitDefense`, `UnitDodge`, `UnitParry`, `UnitSpellHaste`, `UnitStat`,
 //!   `UnitResistance`, `UnitRangedAttackPower`, `UnitRangedCriticalStrike`,
-//!   `UnitRangedDamage`, `UnitReaction`, `UnitHealthMax`, `UnitPowerMax`,
-//!   `UnitXP`, `UnitXPMax`.
+//!   `UnitRangedDamage`, `UnitReaction`, `UnitXP`, `UnitXPMax`.
+//! Health/power maxima are registered with the shared unit-vitals queries.
 //!
 //! Stats come from one of three sources depending on the unit token:
 //!
@@ -38,8 +38,6 @@ use rilua::{LuaApiMut, LuaResult, Val};
 struct UnitStats {
     level: i32,
     health_max: i32,
-    power_max: i32,
-    power_type: i32,
     armor: i32,
     attack_power: i32,
     crit_rating: i32,
@@ -63,8 +61,6 @@ impl Default for UnitStats {
         Self {
             level: 0,
             health_max: 0,
-            power_max: 0,
-            power_type: 0,
             armor: 0,
             attack_power: 0,
             crit_rating: 0,
@@ -90,8 +86,6 @@ fn player_stats(player: &PlayerState) -> UnitStats {
     UnitStats {
         level: player.level,
         health_max: player.health_max,
-        power_max: player.power_max,
-        power_type: player.power_type,
         armor: player.stats.armor,
         attack_power: ap as i32,
         crit_rating: player.stats.crit_rating,
@@ -114,8 +108,6 @@ fn target_stats(target: &TargetInfo) -> UnitStats {
     UnitStats {
         level: target.level,
         health_max: target.health_max,
-        power_max: target.power_max,
-        power_type: target.power_type,
         armor: (level_f * 150.0) as i32,
         attack_power: ap as i32,
         crit_rating: (level_f * 4.0) as i32,
@@ -138,8 +130,6 @@ fn party_stats(member: &PartyMember) -> UnitStats {
     UnitStats {
         level: member.level,
         health_max: member.health_max,
-        power_max: member.power_max,
-        power_type: member.power_type,
         armor: (level_f * 180.0) as i32,
         attack_power: ap as i32,
         crit_rating: (level_f * 5.0) as i32,
@@ -195,13 +185,6 @@ fn stats_for_unit(state: &LuaState, unit: &str) -> UnitStats {
 fn stats_for(state: &LuaState) -> UnitStats {
     let unit = unit_token(state);
     stats_for_unit(state, &unit)
-}
-
-fn requested_power_type(state: &LuaState) -> Option<i32> {
-    match stack_val(state, 2) {
-        Val::Num(n) => Some(n as i32),
-        _ => None,
-    }
 }
 
 fn stack_i32(state: &LuaState, index: i32) -> i32 {
@@ -283,23 +266,6 @@ pub(crate) fn secondary_power_max(power_type: i32) -> i32 {
         16 => 4,
         _ => 5,
     }
-}
-
-fn is_secondary_power_type(power_type: i32) -> bool {
-    matches!(
-        power_type,
-        4 | 5 | 6 | 7 | 8 | 9 | 11 | 12 | 13 | 16 | 17 | 18
-    )
-}
-
-fn player_secondary_power_max(state: &LuaState, power_type: i32) -> i32 {
-    borrow_state(state)
-        .expect("sim state should exist")
-        .player
-        .secondary_powers
-        .get(&power_type)
-        .map(|power| power.max)
-        .unwrap_or_else(|| secondary_power_max(power_type))
 }
 
 // ── Stat probes ──────────────────────────────────────────────────────────────
@@ -433,35 +399,6 @@ fn unit_parry(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_reaction(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
     state.push(Val::Num(stats.reaction as f64));
-    Ok(1)
-}
-
-/// `UnitHealthMax(unit)` — single-value shortcut.
-fn unit_health_max(state: &mut LuaState) -> LuaResult<u32> {
-    let stats = stats_for(state);
-    state.push(Val::Num(stats.health_max as f64));
-    Ok(1)
-}
-
-/// `UnitPowerMax(unit)` — retail: `(maxPower, powerType)`.
-fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
-    let unit = unit_token(state);
-    let stats = stats_for(state);
-    let Some(requested) = requested_power_type(state) else {
-        state.push(Val::Num(stats.power_max as f64));
-        state.push(Val::Num(stats.power_type as f64));
-        return Ok(2);
-    };
-    if requested == stats.power_type {
-        state.push(Val::Num(stats.power_max as f64));
-        return Ok(1);
-    }
-    if unit == "player" && is_secondary_power_type(requested) {
-        let power_max = player_secondary_power_max(state, requested);
-        state.push(Val::Num(power_max as f64));
-        return Ok(1);
-    }
-    state.push(Val::Num(stats.power_max as f64));
     Ok(1)
 }
 
@@ -664,8 +601,6 @@ const UNIT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("UnitDodge", unit_dodge),
     ("UnitParry", unit_parry),
     ("UnitReaction", unit_reaction),
-    ("UnitHealthMax", unit_health_max),
-    ("UnitPowerMax", unit_power_max),
     ("UnitXP", unit_xp),
     ("UnitXPMax", unit_xp_max),
     ("UnitStat", unit_stat),
