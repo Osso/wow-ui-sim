@@ -4,19 +4,13 @@ ServerSnapshot is a small World of Warcraft addon that records character UI stat
 
 ## Install
 
-Copy this folder to the matching WoW client AddOns directory:
+From the repository root, install into an existing client AddOns directory:
 
 ```text
-World of Warcraft/_retail_/Interface/AddOns/ServerSnapshot/
+./docs/addons/ServerSnapshot/deploy.sh "/syncthing/World of Warcraft/_retail_/Interface/AddOns"
 ```
 
-The folder should contain:
-
-```text
-ServerSnapshot/ServerSnapshot.toc
-ServerSnapshot/ServerSnapshot.lua
-ServerSnapshot/README.md
-```
+The Python 3 deployment entry point updates only `ServerSnapshot.lua` and `ServerSnapshot.toc` inside `ServerSnapshot/`; it does not modify SavedVariables or other addons.
 
 ## Use
 
@@ -63,7 +57,10 @@ bags = {
     containers = {
         [0] = { numSlots = 16, family = 0, items = { [1] = { itemID = 100, stackCount = 4, hyperlink = "item:100" } } },
         [1] = { numSlots = 2, family = 8, name = "Herb Bag", inventorySlot = 20, itemID = 500, hyperlink = "item:500", items = {} },
-        -- Every carried container has a row, including empty/unequipped bags.
+        [2] = { numSlots = 0, family = 0, inventorySlot = 21, items = {} },
+        [3] = { numSlots = 0, family = 0, inventorySlot = 22, items = {} },
+        [4] = { numSlots = 0, family = 0, inventorySlot = 23, items = {} },
+        [5] = { numSlots = 36, family = 1024, inventorySlot = 24, items = {} },
     },
 }
 ```
@@ -98,6 +95,10 @@ If present, the simulator loads `ServerSnapshotDB`, picks `lastCharacterKey` whe
 Before third-party addon loading, wow-ui-sim uses the captured `addons.entries[*].enabled` values as an enable-state overlay. This is more reliable than trying to infer the AddOn List UI state from `AddOns.txt` alone.
 
 Before Blizzard addons load, wow-ui-sim applies captured keybindings and clears/seeds spell action slots from the captured action bar data. Empty action slots and non-spell action entries such as macros are ignored today.
+
+A present `bags` domain replaces carried capacities and contents, including empty slots and unequipped bags, without replacing non-carried storage or ordinary equipment. Bag import works without action-bar data. Invalid bag payloads report their field and leave inventory unchanged. Container queries expose captured capacities, counts and available links; the importer emits bag notifications after installing the full state. See the [bag contract](../../specs/server-snapshot-bags.md).
+
+Snapshots made before addon 0.3.0 have no bag data. Install the update, log into the source character, run `/ssnap`, then `/reload` or log out. Restart the simulator with SavedVariables enabled to import that fresh capture.
 
 The simulator also reads `snapshot.editMode.activeLayoutName` and uses it as the
 preferred EditMode layout when loading the WTF EditMode cache. This means the

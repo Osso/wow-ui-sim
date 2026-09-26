@@ -1,8 +1,10 @@
-//! Import action bar state captured by the ServerSnapshot addon.
+//! Import action bar and carried-bag state captured by the ServerSnapshot addon.
 //!
 //! The addon writes account SavedVariables from a real client. During simulator
 //! startup we load that file, pick the requested/latest character snapshot, and
-//! seed the simulator action bar model before Blizzard action buttons initialize.
+//! seed action bars and carried inventory before Blizzard consumers initialize.
+
+mod bags;
 
 use crate::lua_api::WowLuaEnv;
 use crate::saved_variables::SavedVariablesManager;
@@ -115,9 +117,16 @@ fn snapshot_chunk(body: &str) -> String {
     format!("{CHOOSE_SNAPSHOT_PRELUDE}{body}")
 }
 
-/// Apply an already-loaded `ServerSnapshotDB` global to the simulator action bar model.
+/// Apply the selected `ServerSnapshotDB` character to action bars and carried bags.
+/// Returns the spell-slot count for existing callers; bag import is independent.
 pub fn apply_loaded_snapshot(env: &WowLuaEnv) -> crate::Result<i64> {
-    env.eval(&snapshot_chunk(APPLY_SNAPSHOT_BODY))
+    let bags = bags::read(env)?;
+    let imported = env.eval(&snapshot_chunk(APPLY_SNAPSHOT_BODY))?;
+    if let Some(bags) = bags {
+        let changed = bags::apply(env, bags);
+        bags::notify(env, &changed)?;
+    }
+    Ok(imported)
 }
 
 pub fn load_addon_enable_overrides(

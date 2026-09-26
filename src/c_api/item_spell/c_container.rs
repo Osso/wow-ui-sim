@@ -267,9 +267,8 @@ fn c_container_id_to_inventory_id(state: &mut LuaState) -> LuaResult<u32> {
     let inventory_slot = borrow_state(state)?
         .bag_info
         .get(&bag)
-        .and_then(|info| info.inventory_slot)
-        .unwrap_or(0);
-    state.push(Val::Num(inventory_slot as f64));
+        .and_then(|info| info.inventory_slot);
+    state.push(inventory_slot.map_or(Val::Nil, |slot| Val::Num(slot as f64)));
     Ok(1)
 }
 

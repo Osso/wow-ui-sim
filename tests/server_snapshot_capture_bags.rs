@@ -13,10 +13,10 @@ C_Container = {
         if bag == 5 and slot == 1 then return {itemID=200, stackCount=1} end
     end,
     ContainerIDToInventoryID = function(bag) return 19 + bag end,
+    GetBagName = function(bag) if bag == 1 then return "Herb Bag" end end,
 }
 GetInventoryItemID = function(unit, slot) if slot == 20 then return 500 end end
 GetInventoryItemLink = function(unit, slot) if slot == 20 then return "item:500" end end
-GetBagName = function(bag) if bag == 1 then return "Herb Bag" end end
 snapshotFrame = nil
 CreateFrame = function()
     local f = {registered = {}}
@@ -85,7 +85,7 @@ fn optional_bag_metadata_can_be_missing_without_losing_contents() {
     let valid: bool = env
         .eval(
             r#"
-        GetBagName = nil
+        C_Container.GetBagName = nil
         GetInventoryItemID = nil
         GetInventoryItemLink = nil
         local bags = ServerSnapshot:Snapshot("optional metadata").bags

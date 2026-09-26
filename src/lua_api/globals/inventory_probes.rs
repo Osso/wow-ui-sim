@@ -232,7 +232,12 @@ fn get_inventory_item_link(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    match item_link_for_id(item_id) {
+    let captured = borrow_state(state)?
+        .bag_info
+        .values()
+        .find(|bag| bag.inventory_slot == Some(slot) && bag.item_id == Some(item_id))
+        .and_then(|bag| bag.hyperlink.clone());
+    match captured.or_else(|| item_link_for_id(item_id)) {
         Some(link) => {
             let link = crate::lua_api::methods::create_string(state, &link);
             state.push(link);

@@ -145,7 +145,7 @@ fn load_startup_addons(
             snapshot_edit_mode_layout,
         )
     });
-    load_server_snapshot_action_bars(env, saved_vars);
+    load_server_snapshot_state(env, saved_vars);
     startup_trace::time_load_step("load Blizzard addons", || {
         addon_loading::load_blizzard_addons(env, saved_vars, screen)
     });
@@ -169,11 +169,8 @@ fn load_startup_addons(
     apply_post_load_workarounds(env);
 }
 
-fn load_server_snapshot_action_bars(
-    env: &WowLuaEnv,
-    saved_vars: &mut Option<SavedVariablesManager>,
-) {
-    startup_trace::time_load_step("load ServerSnapshot action bars", || {
+fn load_server_snapshot_state(env: &WowLuaEnv, saved_vars: &mut Option<SavedVariablesManager>) {
+    startup_trace::time_load_step("load ServerSnapshot character state", || {
         let Some(saved_vars) = saved_vars.as_mut() else {
             return;
         };
@@ -182,9 +179,9 @@ fn load_server_snapshot_action_bars(
                 "ServerSnapshot imported {imported} action bar spell slot(s)"
             )),
             Ok(_) => {}
-            Err(error) => logging::println_elapsed(&format!(
-                "ServerSnapshot action bar import failed: {error}"
-            )),
+            Err(error) => {
+                logging::println_elapsed(&format!("ServerSnapshot import failed: {error}"))
+            }
         }
     });
 }

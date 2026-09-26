@@ -300,7 +300,7 @@ local function snapshotBags()
         local bag = {
             numSlots = numSlots,
             family = family,
-            name = first(GetBagName, bagID),
+            name = first(container.GetBagName, bagID),
             items = {},
         }
         if bagID > 0 then

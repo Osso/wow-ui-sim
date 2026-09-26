@@ -25,6 +25,7 @@ impl BagInfo {
             (2, 16),
             (3, 16),
             (4, 16),
+            (5, 0),
         ] {
             bags.insert(
                 bag,

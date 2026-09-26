@@ -1,7 +1,192 @@
+use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 
-const SERVER_SNAPSHOT_ADDON_LUA: &str = include_str!("../docs/addons/ServerSnapshot/ServerSnapshot.lua");
+const SERVER_SNAPSHOT_ADDON_LUA: &str =
+    include_str!("../docs/addons/ServerSnapshot/ServerSnapshot.lua");
+
+const CAPTURE_BAG_APIS: &str = r#"
+    NUM_TOTAL_EQUIPPED_BAG_SLOTS = 5
+    BACKPACK_CONTAINER = 0
+    C_Container = {
+        GetContainerNumSlots = function(bag)
+            return ({[0]=20, [1]=2, [2]=0, [3]=0, [4]=0, [5]=36})[bag]
+        end,
+        GetContainerNumFreeSlots = function(bag) return 0, bag == 5 and 1024 or 0 end,
+        GetContainerItemInfo = function(bag, slot)
+            if bag == 0 and slot == 1 then return {itemID=6948, stackCount=1, hyperlink='item:6948'} end
+            if bag == 5 and slot == 30 then
+                return {itemID=190315, stackCount=17,
+                    hyperlink='|Hitem:190315:::::::::::::1:9999|h[Captured ore]|h'}
+            end
+        end,
+        ContainerIDToInventoryID = function(bag) return 19+bag end,
+        GetBagName = function(bag) return bag == 0 and 'Captured Backpack' or 'Captured Bag '..bag end,
+    }
+    GetInventoryItemID = function(_, slot) if slot == 20 then return 200000 end end
+    GetInventoryItemLink = function(_, slot) if slot == 20 then return 'item:200000' end end
+"#;
+
+fn write_producer_bag_snapshot(root: &std::path::Path) {
+    let directory = root.join("Account/CapturedAccount/SavedVariables");
+    let source = WowLuaEnv::new().unwrap();
+    let mut writer = SavedVariablesManager::with_storage_dir(&directory);
+    writer
+        .init_for_addon(
+            source.rilua_mut().state_mut(),
+            "ServerSnapshot",
+            &["ServerSnapshotDB".into()],
+            &[],
+        )
+        .unwrap();
+    source.exec(CAPTURE_BAG_APIS).unwrap();
+    source.exec(SERVER_SNAPSHOT_ADDON_LUA).unwrap();
+    source.fire_event("BAG_UPDATE_DELAYED").unwrap();
+    writer
+        .save_addon(source.rilua_mut().state_mut(), "ServerSnapshot")
+        .unwrap();
+}
+
+fn import_producer_bag_snapshot(root: &std::path::Path, env: &WowLuaEnv) {
+    let mut reader = SavedVariablesManager::with_storage_dir(root.join("sim-local"));
+    reader.set_wtf_config(WtfConfig::new(
+        root,
+        "CapturedAccount",
+        "Realm",
+        "Character",
+    ));
+    wow_ui_sim::server_snapshot_import::load_from_saved_variables(env, &mut reader).unwrap();
+}
+
+#[test]
+fn server_snapshot_bags_roundtrip_actual_producer_saved_variables_and_queries() {
+    let root = tempfile::tempdir().unwrap();
+    write_producer_bag_snapshot(root.path());
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        A_Admin.AddBagItem(1, 1, 6948, 9)
+        A_Admin.AddBagItem(-1, 1, 6948, 2)
+        HeaderItemBeforeBagImport = GetInventoryItemID('player', 1)
+        BagImportEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('BAG_UPDATE')
+        listener:RegisterEvent('BAG_UPDATE_DELAYED')
+        listener:SetScript('OnEvent', function(_, event, bag)
+            assert(C_Container.GetContainerNumSlots(0) == 20)
+            assert(C_Container.GetContainerNumSlots(5) == 36)
+            assert(C_Container.GetContainerItemInfo(5, 30).stackCount == 17)
+            table.insert(BagImportEvents, {event, bag})
+        end)
+    "#,
+    )
+    .unwrap();
+    import_producer_bag_snapshot(root.path(), &env);
+    env.exec(r#"
+        assert(C_Container.GetContainerNumSlots(0) == 20)
+        assert(C_Container.GetContainerNumSlots(1) == 2)
+        assert(C_Container.GetContainerNumSlots(2) == 0)
+        assert(C_Container.GetContainerNumSlots(5) == 36)
+        assert(C_Container.GetBagName(0) == 'Captured Backpack')
+        assert(C_Container.GetBagName(5) == 'Captured Bag 5')
+        assert(C_Container.ContainerIDToInventoryID(1) == 20)
+        assert(GetInventoryItemID('player', 20) == 200000)
+        assert(GetInventoryItemLink('player', 20) == 'item:200000')
+        assert(GetInventoryItemID('player', 1) == HeaderItemBeforeBagImport)
+        assert(C_Container.GetContainerItemInfo(1, 1) == nil)
+        assert(C_Container.GetContainerItemInfo(0, 1).itemID == 6948)
+        assert(C_Container.GetContainerItemInfo(5, 30).itemID == 190315)
+        assert(C_Container.GetContainerItemInfo(5, 30).stackCount == 17)
+        local expectedLink = '|Hitem:190315:::::::::::::1:9999|h[Captured ore]|h'
+        assert(C_Container.GetContainerItemLink(5, 30) == expectedLink)
+        assert(C_Container.GetContainerItemInfo(5, 30).hyperlink == expectedLink)
+        assert(C_Container.GetContainerItemInfo(5, 31) == nil)
+        local free, family = C_Container.GetContainerNumFreeSlots(5)
+        assert(free == 35 and family == 1024)
+        assert(#C_Container.GetContainerFreeSlots(5) == 35)
+        assert(C_Container.GetContainerItemInfo(-1, 1).stackCount == 2)
+        assert(#BagImportEvents == 7)
+        for index=1,6 do assert(BagImportEvents[index][1]=='BAG_UPDATE' and BagImportEvents[index][2]==index-1) end
+        assert(BagImportEvents[7][1]=='BAG_UPDATE_DELAYED')
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn server_snapshot_empty_bags_clear_stale_items_but_missing_domain_preserves_state() {
+    let root = tempfile::tempdir().unwrap();
+    write_producer_bag_snapshot(root.path());
+    let env = WowLuaEnv::new().unwrap();
+    import_producer_bag_snapshot(root.path(), &env);
+    env.exec(
+        r#"
+        SelectedBagSnapshot = ServerSnapshotDB.characters[ServerSnapshotDB.lastCharacterKey]
+        CapturedBagDomain = SelectedBagSnapshot.bags
+        SelectedBagSnapshot.bags = nil
+    "#,
+    )
+    .unwrap();
+    wow_ui_sim::server_snapshot_import::apply_loaded_snapshot(&env).unwrap();
+    env.exec(
+        r#"
+        assert(C_Container.GetContainerItemInfo(5, 30).stackCount == 17)
+        SelectedBagSnapshot.bags = CapturedBagDomain
+        CapturedBagDomain.containers[0].items = {}
+        CapturedBagDomain.containers[5].items = {}
+        CapturedBagDomain.containers[1].numSlots = 0
+        CapturedBagDomain.containers[1].itemID = nil
+        CapturedBagDomain.containers[1].hyperlink = nil
+    "#,
+    )
+    .unwrap();
+    wow_ui_sim::server_snapshot_import::apply_loaded_snapshot(&env).unwrap();
+    env.exec(
+        r#"
+        assert(C_Container.GetContainerNumSlots(0) == 20)
+        assert(C_Container.GetContainerItemInfo(0, 1) == nil)
+        assert(C_Container.GetContainerItemInfo(5, 30) == nil)
+        assert(C_Container.GetContainerNumFreeSlots(5) == 36)
+        assert(C_Container.GetContainerNumSlots(1) == 0)
+        assert(GetInventoryItemID('player', 20) == nil)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn server_snapshot_rejects_invalid_bags_before_mutating_inventory_or_actions() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        A_Admin.AddBagItem(0, 1, 6948, 3)
+        A_Admin.SetActionSlot(1, 19750)
+        ServerSnapshotDB = {lastCharacterKey='Bad', characters={Bad={
+            actionBars={slots={[1]={type='spell',id=4987}}},
+            bags={maxBagID=0,containers={[0]={numSlots=2,family=0,
+                items={[3]={itemID=190315,stackCount=1}}}}},
+        }}}
+    "#,
+    )
+    .unwrap();
+    let error = wow_ui_sim::server_snapshot_import::apply_loaded_snapshot(&env).unwrap_err();
+    assert!(error.to_string().contains("bags.containers[0].items key"));
+    env.exec(
+        r#"
+        assert(C_Container.GetContainerNumSlots(0) == 16)
+        assert(C_Container.GetContainerItemInfo(0, 1).stackCount == 3)
+        local kind, id = GetActionInfo(1)
+        assert(kind == 'spell' and id == 19750)
+        ServerSnapshotDB.characters.Bad.actionBars = nil
+        ServerSnapshotDB.characters.Bad.bags.containers[0].items = {}
+    "#,
+    )
+    .unwrap();
+    assert_eq!(
+        wow_ui_sim::server_snapshot_import::apply_loaded_snapshot(&env).unwrap(),
+        0
+    );
+    env.exec("assert(C_Container.GetContainerNumSlots(0) == 2); assert(C_Container.GetContainerNumSlots(1) == 0)").unwrap();
+}
 
 #[test]
 fn server_snapshot_action_bars_seed_get_action_info() {
@@ -136,11 +321,9 @@ fn server_snapshot_loads_from_wtf_saved_variables_file() {
         "CharacterName",
     ));
 
-    let imported = wow_ui_sim::server_snapshot_import::load_from_saved_variables(
-        &env,
-        &mut saved_vars,
-    )
-    .expect("load ServerSnapshot from WTF");
+    let imported =
+        wow_ui_sim::server_snapshot_import::load_from_saved_variables(&env, &mut saved_vars)
+            .expect("load ServerSnapshot from WTF");
     assert_eq!(imported, 1);
 
     let (action_type, spell_id): (String, i64) = env
