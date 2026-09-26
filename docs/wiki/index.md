@@ -4,7 +4,7 @@
 
 ## [2026-09-26] audit | Record ScrollFrame requested-offset boundary
 
-[ScrollFrame offsets](../specs/scrollframe-offsets.md) and [[widget-system]] record `ee25b7d62` and `e9b72b107`: both public setters preserve requested offsets rather than clamp them, while retaining committed-state callback delivery and same-offset suppression. Cached observations cover vertical `-50` and horizontal `999`; no fresh probe ran. The initial focused proof is RED 0/2 and the verifier ledger is pending, so no GREEN claim is made. Renderer movement and implicit range-refresh timing remain excluded.
+[ScrollFrame offsets](../specs/scrollframe-offsets.md) and [[widget-system]] record `ee25b7d62` and `e9b72b107`: both public setters preserve requested offsets rather than clamp them, while retaining committed-state callback delivery and same-offset suppression. Cached observations cover vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN 6 ScrollFrame +15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. Renderer movement and implicit range-refresh timing remain excluded.
 
 ## [2026-09-26] audit | Record public SetParent effective-visibility callbacks
 

@@ -20,7 +20,7 @@ Key field groups:
 
 ### ScrollFrame requested-offset boundary
 
-`SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. The initial focused proof is RED 0/2, and the independent verification ledger is not yet present, so this records neither GREEN verification nor renderer movement or implicit range-refresh timing. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
+`SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN six ScrollFrame cases and 15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. Renderer movement and implicit range-refresh timing remain unverified. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
 
 ## WidgetType Enum (18 types, `src/widget/mod.rs`)
 
