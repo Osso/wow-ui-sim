@@ -532,33 +532,61 @@ fn tainted_addon_secure_handler_execute_runs_restricted_snippet_without_clearing
 
 prefork_full_ui_case! {
 fn tainted_addon_secure_handler_wrap_script_runs_restricted_prebody(env: &WowLuaEnv) {
-    let (caller_insecure_before, wrapped, caller_insecure_after): (bool, bool, bool) = env
+    let (protected, plain_unprotected, caller_insecure_before, wrapped, caller_insecure_after):
+        (bool, bool, bool, bool, bool) = env
         .eval(
             r#"
-            local header = CreateFrame("Frame", nil, UIParent, "SecureHandlerBaseTemplate")
-            local button = CreateFrame("Button", "RestrictedAddonWrapProbe", UIParent)
-            button:SetScript("OnClick", function() end)
-            local original = button:GetScript("OnClick")
+            local header = CreateFrame("Frame", "RestrictedAddonWrapHeader", UIParent, "SecureHandlerBaseTemplate")
+            local button = CreateFrame("Button", "RestrictedAddonWrapProbe", UIParent, "SecureHandlerBaseTemplate")
+            local plain = CreateFrame("Button", "RestrictedAddonPlainWrapProbe", UIParent)
+            local function original(self) self:SetAttribute("original-clicked", true) end
+            button:SetScript("OnClick", original)
+            plain:SetScript("OnClick", original)
             local function addon()
                 local before = not issecure()
                 SecureHandlerWrapScript(button, "OnClick", header,
                     [[ self:SetAttribute("addon-wrapped", true) ]])
+                SecureHandlerWrapScript(plain, "OnClick", header,
+                    [[ self:SetAttribute("addon-wrapped", true) ]])
                 local wrapped = button:GetScript("OnClick") ~= original
+                    and plain:GetScript("OnClick") ~= original
                 return before, wrapped, not issecure()
             end
             debug.setobjecttaint(addon, "RestrictedAddonProbe")
-            return addon()
+            local before, wrapped, after = addon()
+            return button:IsProtected(), not plain:IsProtected(), before, wrapped, after
             "#,
         )
         .expect("tainted addon SecureHandlerWrapScript probe should evaluate");
 
+    assert!(protected, "vendor SecureHandlerBaseTemplate must protect the wrapped button");
+    assert!(plain_unprotected, "plain button must remain unprotected");
     assert!(caller_insecure_before, "addon caller must enter tainted");
-    assert!(wrapped, "vendor must install the secure OnClick wrapper");
-    assert!(caller_insecure_after, "wrapper dispatch must not clear addon caller taint");
-    let button = env.state().borrow().widgets.get_id_by_name("RestrictedAddonWrapProbe").unwrap();
-    env.send_click(button).expect("host click should dispatch the wrapped handler");
-    let prebody_ran: bool = env.eval("return RestrictedAddonWrapProbe:GetAttribute('addon-wrapped') == true").unwrap();
-    assert!(prebody_ran, "wrapped click must execute its restricted prebody on the button");
+    assert!(wrapped, "vendor must install both OnClick wrappers");
+    assert!(caller_insecure_after, "wrapper installation must not clear addon caller taint");
+    let (button, plain) = {
+        let state = env.state();
+        let state = state.borrow();
+        (
+            state.widgets.get_id_by_name("RestrictedAddonWrapProbe").unwrap(),
+            state.widgets.get_id_by_name("RestrictedAddonPlainWrapProbe").unwrap(),
+        )
+    };
+    env.send_click(button).expect("host click should dispatch the protected wrapper");
+    env.send_click(plain).expect("host click should dispatch the plain wrapper");
+    let (protected_original, protected_prebody, plain_original, plain_prebody, header_prebody):
+        (bool, bool, bool, bool, bool) = env.eval(
+            "return RestrictedAddonWrapProbe:GetAttribute('original-clicked') == true, \
+             RestrictedAddonWrapProbe:GetAttribute('addon-wrapped') == true, \
+             RestrictedAddonPlainWrapProbe:GetAttribute('original-clicked') == true, \
+             RestrictedAddonPlainWrapProbe:GetAttribute('addon-wrapped') == true, \
+             RestrictedAddonWrapHeader:GetAttribute('addon-wrapped') == true"
+        ).unwrap();
+    assert!(protected_original, "protected wrapped click must run its original handler");
+    assert!(protected_prebody, "restricted prebody must write to the protected button");
+    assert!(plain_original, "plain wrapped click must run its original handler");
+    assert!(!plain_prebody, "plain button has no protected handle for the restricted prebody");
+    assert!(!header_prebody, "restricted self must be the button, not the header");
 }
 }
 
