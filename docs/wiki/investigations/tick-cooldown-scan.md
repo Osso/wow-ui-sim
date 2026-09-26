@@ -83,6 +83,8 @@ At idle the GUI ran ~63 ticks/s at ~4.5ms each (28% of the main thread). A tempo
 
 `a1dbdb697`: a playing group counts as unseen when its owner's parent has effective alpha 0, it has no child-key targets, and no frame in the owner's subtree ignores parent alpha. An unseen group no longer forces the 16ms tick. Instead the tick wakes at its next loop/finish boundary (`AnimGroupState::time_to_next_boundary`), merged with the next C_Timer delay and bucketed by `stable_timer_interval`. OnLoop/OnFinished timing is kept. The simulator does dispatch OnUpdate on groups and animations (their frames are in `on_update_frames`). A group with such a handler keeps the fast tick, fixed in the follow-up commit (test `unseen_animation_with_on_update_handler_keeps_fast_tick`). Tests: `animation_under_transparent_parent_wakes_at_loop_boundary`, `visible_animation_uses_fast_tick_interval`. The BoostTutorial glow now wakes about every 7-671ms instead of every frame. DandersFrames' parentless `Repeat` group holds only a base `Animation` at alpha 1, so it still forces the fast tick.
 
+`0d43b3dd9`: timer-only groups (only plain `Animation` steps, which draw nothing) with no OnUpdate handler also wake at their loop/finish boundary. DandersFrames polls range every 0.5s this way. After this change no playing animation requested the 16ms tick in a live idle sample (wakes of 69-375ms). Idle still ran ~63 ticks/s. The remaining sources were `strata_dirty` (nonzero in 10 of 30 samples) and addon C_Timers (ClickableRaidBuffs, ~30/s), which push the next wake under 50ms, and that rounds down to the 16ms bucket.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks

@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Timer-only animations wake at loop boundaries
+
+`0d43b3dd9`: animation groups made only of plain `Animation` steps, with no OnUpdate handler, no longer force 16ms ticks. The idle tick rate is still ~63/s, driven by strata dirt and addon C_Timers. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] audit | Verify Slider/StatusBar range validation
 
 [[wrath-statusbar-value-callback]] links the [range contract](../specs/widget-range-validation.md). Tests `0e3c8157c`, implementation `c72db371d`, and format-only `90c4f189b` have independent 15+1 behavioral passes, format/check and changed-function readability proof. `/tmp/cross-version-range-validation-verification-ledger.md` preserves exact scope and native/interpolation limitations.
