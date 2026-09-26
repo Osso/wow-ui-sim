@@ -27,36 +27,51 @@ pub(super) fn apply_hit_grid_batch(
     visibility_changes: &[(u64, bool)],
 ) {
     grid.update_render_order(strata_buckets);
-    for root in geometry_roots {
-        apply_subtree_hit_grid_change(grid, registry, root, true);
-    }
-    for &(root, visible) in visibility_changes {
-        apply_subtree_hit_grid_change(grid, registry, root, visible);
+    let visibility_roots = visibility_changes.iter().map(|&(root, _)| root);
+    for id in collect_touched_subtrees(registry, geometry_roots.into_iter().chain(visibility_roots))
+    {
+        sync_hit_grid_frame(grid, registry, id);
     }
 }
 
-/// Walk a subtree using ranks refreshed by the batch owner.
-fn apply_subtree_hit_grid_change(
+/// Union of the subtrees under `roots`, each frame once. Overlapping roots
+/// (nested layout roots, repeated visibility notifications) would otherwise
+/// re-walk the same frames.
+fn collect_touched_subtrees(
+    registry: &crate::widget::WidgetRegistry,
+    roots: impl IntoIterator<Item = u64>,
+) -> Vec<u64> {
+    let mut visited = FxHashSet::default();
+    let mut touched = Vec::new();
+    let mut stack: Vec<u64> = roots.into_iter().collect();
+    while let Some(id) = stack.pop() {
+        if !visited.insert(id) {
+            continue;
+        }
+        let Some(frame) = registry.get(id) else {
+            continue;
+        };
+        touched.push(id);
+        stack.extend_from_slice(&frame.children);
+    }
+    touched
+}
+
+/// Set a frame's hit-grid entry from current registry state. Visibility is
+/// read from the registry, so the result does not depend on the order of
+/// coalesced Show/Hide notifications in the batch.
+fn sync_hit_grid_frame(
     grid: &mut super::hit_grid::HitGrid,
     registry: &crate::widget::WidgetRegistry,
-    root_id: u64,
-    became_visible: bool,
+    id: u64,
 ) {
-    let mut stack = vec![root_id];
-    while let Some(id) = stack.pop() {
-        let Some(f) = registry.get(id) else { continue };
-        let hit = became_visible
-            .then(|| {
-                grid.render_order_key(id)
-                    .zip(hittable_rect(registry, id, f))
-            })
-            .flatten();
-        if let Some((key, rect)) = hit {
-            grid.insert(id, rect, key);
-        } else {
-            grid.remove(id);
-        }
-        stack.extend_from_slice(&f.children);
+    let hit = registry.get(id).and_then(|frame| {
+        grid.render_order_key(id)
+            .zip(hittable_rect(registry, id, frame))
+    });
+    match hit {
+        Some((key, rect)) => grid.insert(id, rect, key),
+        None => grid.remove(id),
     }
 }
 
@@ -66,12 +81,12 @@ fn hittable_rect(
     id: u64,
     f: &crate::widget::Frame,
 ) -> Option<iced::Rectangle> {
-    if !crate::layout::frame_has_render_layout(registry, id) {
-        return None;
-    }
     let mouse_enabled =
         f.mouse_enabled || matches!(f.widget_type, crate::widget::WidgetType::EditBox);
-    if !registry.is_ancestor_visible(id) || !mouse_enabled {
+    if !mouse_enabled || !registry.is_ancestor_visible(id) {
+        return None;
+    }
+    if !crate::layout::frame_has_render_layout(registry, id) {
         return None;
     }
     if f.name
@@ -102,6 +117,102 @@ mod tests {
     use crate::iced_app::strata_emit::build_hittable_rects;
     use crate::lua_api::WowLuaEnv;
     use iced::Point;
+
+    fn rebuilt_grid(state: &crate::lua_api::SimState, buckets: &[Vec<u64>]) -> HitGrid {
+        let collected = collect_hittable_frames(&state.widgets, buckets);
+        HitGrid::new(
+            build_hittable_rects(&collected, &state.widgets),
+            800.0,
+            600.0,
+        )
+    }
+
+    #[test]
+    fn overlapping_roots_and_visibility_changes_match_rebuilt_grid() {
+        let env = WowLuaEnv::new().unwrap();
+        env.set_screen_size(800.0, 600.0);
+        env.exec(
+            r#"
+            OverlapParent = CreateFrame("Button", "OverlapParent", UIParent)
+            OverlapParent:SetSize(200, 200)
+            OverlapParent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+            OverlapParent:EnableMouse(true)
+            OverlapChild = CreateFrame("Button", "OverlapChild", OverlapParent)
+            OverlapChild:SetSize(50, 50)
+            OverlapChild:SetPoint("TOPLEFT", OverlapParent, "TOPLEFT", 10, -10)
+            OverlapChild:EnableMouse(true)
+            "#,
+        )
+        .unwrap();
+        let ids = |state: &crate::lua_api::SimState| {
+            (
+                state.widgets.get_id_by_name("OverlapParent").unwrap(),
+                state.widgets.get_id_by_name("OverlapChild").unwrap(),
+            )
+        };
+        let (parent, child) = {
+            let mut state = env.state().borrow_mut();
+            state.ensure_layout_rects();
+            ids(&state)
+        };
+        let buckets = vec![vec![parent, child]];
+        let mut grid = rebuilt_grid(&env.state().borrow(), &buckets);
+        let points = [
+            Point::new(120.0, 120.0),
+            Point::new(250.0, 250.0),
+            Point::new(170.0, 170.0),
+            Point::new(20.0, 20.0),
+        ];
+        let assert_matches_rebuilt = |grid: &HitGrid, label: &str| {
+            let state = env.state().borrow();
+            let rebuilt = rebuilt_grid(&state, &buckets);
+            for point in points {
+                assert_eq!(
+                    grid.topmost_matching_at(point, |_| true),
+                    rebuilt.topmost_matching_at(point, |_| true),
+                    "{label}: hit at {point:?} differs from rebuilt grid",
+                );
+            }
+        };
+
+        env.exec("OverlapChild:SetPoint('TOPLEFT', OverlapParent, 'TOPLEFT', 60, -60)")
+            .unwrap();
+        env.exec("OverlapParent:Hide()").unwrap();
+        env.state().borrow_mut().ensure_layout_rects();
+        {
+            let state = env.state().borrow();
+            apply_hit_grid_batch(
+                &mut grid,
+                &state.widgets,
+                &buckets,
+                [parent, child],
+                &[(parent, false)],
+            );
+        }
+        assert_matches_rebuilt(&grid, "after hide + move");
+        assert_eq!(
+            grid.topmost_matching_at(Point::new(120.0, 120.0), |_| true),
+            None
+        );
+
+        env.exec("OverlapParent:Show()").unwrap();
+        env.state().borrow_mut().ensure_layout_rects();
+        {
+            let state = env.state().borrow();
+            apply_hit_grid_batch(
+                &mut grid,
+                &state.widgets,
+                &buckets,
+                [child, parent],
+                &[(child, false), (parent, true)],
+            );
+        }
+        assert_matches_rebuilt(&grid, "after show");
+        assert_eq!(
+            grid.topmost_matching_at(Point::new(170.0, 170.0), |_| true),
+            Some(child)
+        );
+    }
 
     #[test]
     fn coalesced_hide_show_preserves_final_hit_order_without_rebuilding_grid() {

@@ -146,6 +146,10 @@ impl HitGrid {
     /// full rebuilds). Reinserting the same frame ID replaces the old cells so
     /// callers do not need to coordinate a separate remove/insert sequence.
     pub fn insert(&mut self, id: u64, rect: Rectangle, key: HitOrderKey) {
+        let unchanged = self.rects.get(&id) == Some(&rect) && self.keys.get(&id) == Some(&key);
+        if unchanged {
+            return;
+        }
         if let Some(old_rect) = self.rects.get(&id).copied() {
             self.remove_from_cells(id, old_rect);
         }
