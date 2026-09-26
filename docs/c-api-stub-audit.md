@@ -60,7 +60,8 @@ glue-screen (login/character creation) or legacy/removed APIs.
 | GetItemClassInfo | Implemented |
 | GetItemNameByID | Implemented |
 | GetItemIconByID | Stubbed |
-| GetItemCount | Stubbed |
+| GetItemCount | Implemented (modeled aggregate count) |
+| GetStackCount | Implemented (ItemLocation bag/equipment count) |
 | GetItemSpecInfo | Stubbed |
 | GetItemQualityColor | Stubbed |
 | GetItemExpac | Stubbed |

@@ -20,9 +20,16 @@
 
 - `tests/c_item_api/c_item.rs` — modeled bag/equipment, empty locations, and non-location rejection in the grouped `integration` target.
 
+## Evidence and verification
+
+- Cached retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua` declares `GetStackCount(itemLocation: ItemLocation) -> stackCount`; it does not declare item-ID or item-link input.
+- The same documentation declares `GetItemCount(itemInfo, ...) -> count` separately. The simulator's modeled aggregate query remains that API, not a `GetStackCount` fallback.
+- Commit `c80aaefba` is GREEN 40/40 focused `c_item_api::c_item::` cases; `/tmp/cross-version-item-stack-count-proof.md` and its linked logs retain the command, revision, and result.
+
 ## Known gaps (current cycle)
 
-- [ ] Native-client semantics and broader profile acceptance remain unverified.
+- [ ] Final check/readability/broad-suite gate remains pending.
+- [ ] Native-client behavior remains unverified; no native error wording is claimed.
 
 ## Out of scope
 
