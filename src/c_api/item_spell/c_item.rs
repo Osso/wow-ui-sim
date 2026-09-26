@@ -231,22 +231,43 @@ fn c_item_does_item_exist_by_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn location_item(state: &mut LuaState, location: Val) -> Option<(u32, Option<String>)> {
+    if let Val::Num(slot) = table_get(state, location, "equipmentSlotIndex") {
+        let sim = borrow_state(state).ok()?;
+        let bag = sim
+            .bag_info
+            .values()
+            .find(|bag| bag.inventory_slot == Some(slot as i32) && bag.item_id.is_some());
+        return sim
+            .player
+            .equipped_items
+            .get(&(slot as i32))
+            .map(|item| {
+                let link = bag
+                    .filter(|bag| bag.item_id == Some(item.item_id))
+                    .and_then(|bag| bag.hyperlink.clone());
+                (item.item_id, link)
+            })
+            .or_else(|| bag.and_then(|bag| bag.item_id.map(|id| (id, bag.hyperlink.clone()))));
+    }
+    let bag = match table_get(state, location, "bagID") {
+        Val::Num(number) => number as i32,
+        _ => 0,
+    };
+    let slot = match table_get(state, location, "slotIndex") {
+        Val::Num(number) => number as i32,
+        _ => 0,
+    };
+    borrow_state(state)
+        .ok()?
+        .bag_items
+        .get(&(bag, slot))
+        .map(|item| (item.item_id, item.hyperlink.clone()))
+}
+
 fn item_id_from_location_or_item_info(state: &mut LuaState, value: Val) -> Option<u32> {
     match value {
-        Val::Table(_) => {
-            let bag = match table_get(state, value, "bagID") {
-                Val::Num(number) => number as i32,
-                _ => 0,
-            };
-            let slot = match table_get(state, value, "slotIndex") {
-                Val::Num(number) => number as i32,
-                _ => 0,
-            };
-            borrow_state(state)
-                .ok()?
-                .get_bag_item(bag, slot)
-                .map(|(item_id, _)| item_id)
-        }
+        Val::Table(_) => location_item(state, value).map(|(item_id, _)| item_id),
         _ => parse_item_id_from_val(state, value),
     }
 }
@@ -303,17 +324,7 @@ fn c_item_is_item_data_cached(state: &mut LuaState) -> LuaResult<u32> {
 
 fn item_may_exist(state: &mut LuaState, value: Val) -> LuaResult<bool> {
     Ok(match value {
-        Val::Table(_) => {
-            let bag = match table_get(state, value, "bagID") {
-                Val::Num(number) => number as i32,
-                _ => 0,
-            };
-            let slot = match table_get(state, value, "slotIndex") {
-                Val::Num(number) => number as i32,
-                _ => 0,
-            };
-            borrow_state(state)?.get_bag_item(bag, slot).is_some()
-        }
+        Val::Table(_) => location_item(state, value).is_some(),
         _ => parse_item_id_from_val(state, value)
             .map(item_id_may_exist)
             .unwrap_or(false),
@@ -646,11 +657,13 @@ fn c_item_is_bound(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_item_get_item_link(state: &mut LuaState) -> LuaResult<u32> {
     let value = stack_val(state, 1);
-    match item_id_from_location_or_item_info(state, value) {
-        Some(item_id) => {
-            let link = item_link_for_id(item_id).unwrap_or_else(|| {
-                format!("|cnIQ1:|Hitem:{item_id}::::::::80:70:::::::::|h[Unknown]|h|r")
-            });
+    let item = match value {
+        Val::Table(_) => location_item(state, value),
+        _ => parse_item_id_from_val(state, value).map(|item_id| (item_id, None)),
+    };
+    let link = item.and_then(|(item_id, captured)| captured.or_else(|| item_link_for_id(item_id)));
+    match link {
+        Some(link) => {
             let link = create_string(state, &link);
             state.push(link);
         }

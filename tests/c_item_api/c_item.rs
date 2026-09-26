@@ -1,4 +1,6 @@
 use crate::support::env;
+use wow_ui_sim::c_api::bag_info::BagInfo;
+use wow_ui_sim::lua_api::state::BagItem;
 
 #[test]
 fn test_c_item_surface_registers_expected_methods() {
@@ -259,6 +261,114 @@ fn test_c_item_item_location_queries_return_seeded_backpack_metadata() {
         link_or_err.contains("Hitem:6948") && link_or_err.contains("[Hearthstone]"),
         "C_Item.GetItemLink(ItemLocation) should return the seeded backpack hearthstone link: {link_or_err}"
     );
+}
+
+#[test]
+fn item_location_equipment_queries_read_modeled_occupancy() {
+    let env = env();
+    env.exec("A_Admin.EquipItem(18, 6948)").unwrap();
+    let (id, exists, link, empty_id, empty_exists, empty_link): (
+        Option<i64>,
+        bool,
+        Option<String>,
+        Option<i64>,
+        bool,
+        Option<String>,
+    ) = env
+        .eval(
+            "return C_Item.GetItemID({ equipmentSlotIndex = 18 }), \
+         C_Item.DoesItemExist({ equipmentSlotIndex = 18 }), \
+         C_Item.GetItemLink({ equipmentSlotIndex = 18 }), \
+         C_Item.GetItemID({ equipmentSlotIndex = 17 }), \
+         C_Item.DoesItemExist({ equipmentSlotIndex = 17 }), \
+         C_Item.GetItemLink({ equipmentSlotIndex = 17 })",
+        )
+        .unwrap();
+    assert_eq!(id, Some(6948));
+    assert!(exists);
+    assert_eq!(
+        link,
+        env.eval::<Option<String>>("return C_Item.GetItemLink(6948)")
+            .unwrap()
+    );
+    assert_eq!(empty_id, None);
+    assert!(!empty_exists);
+    assert_eq!(empty_link, None);
+}
+
+#[test]
+fn item_location_bag_link_preserves_captured_hyperlink() {
+    let env = env();
+    let captured = "|Hitem:6948::::::::70:::::1:12345|h[Captured Hearthstone]|h";
+    env.state().borrow_mut().bag_items.insert(
+        (5, 8),
+        BagItem {
+            item_id: 6948,
+            stack_count: 1,
+            hyperlink: Some(captured.to_string()),
+        },
+    );
+    let (item_link, container_link): (String, String) = env.eval(
+        "return C_Item.GetItemLink({ bagID = 5, slotIndex = 8 }), C_Container.GetContainerItemLink(5, 8)"
+    ).unwrap();
+    assert_eq!(item_link, captured);
+    assert_eq!(item_link, container_link);
+}
+
+#[test]
+fn item_location_equipped_bag_uses_modeled_inventory_slot_and_captured_link() {
+    let env = env();
+    let captured = "|Hitem:194019|h[Captured reagent bag]|h";
+    env.state().borrow_mut().bag_info.insert(
+        5,
+        BagInfo {
+            num_slots: 36,
+            family: 4,
+            name: Some("Captured reagent bag".to_string()),
+            inventory_slot: Some(25),
+            item_id: Some(194019),
+            hyperlink: Some(captured.to_string()),
+        },
+    );
+    let (id, exists, link): (Option<i64>, bool, Option<String>) = env
+        .eval(
+            "return C_Item.GetItemID({ equipmentSlotIndex = 25 }), \
+         C_Item.DoesItemExist({ equipmentSlotIndex = 25 }), \
+         C_Item.GetItemLink({ equipmentSlotIndex = 25 })",
+        )
+        .unwrap();
+    assert_eq!(id, Some(194019));
+    assert!(exists);
+    assert_eq!(link.as_deref(), Some(captured));
+}
+
+#[test]
+fn item_location_empty_and_uncataloged_links_are_nil() {
+    let env = env();
+    env.exec("A_Admin.AddBagItem(0, 5, 987654, 1)").unwrap();
+    let (id, exists, link, empty_id, empty_exists, empty_link): (
+        Option<i64>,
+        bool,
+        Option<String>,
+        Option<i64>,
+        bool,
+        Option<String>,
+    ) = env
+        .eval(
+            "return C_Item.GetItemID({ bagID = 0, slotIndex = 5 }), \
+         C_Item.DoesItemExist({ bagID = 0, slotIndex = 5 }), \
+         C_Item.GetItemLink({ bagID = 0, slotIndex = 5 }), \
+         C_Item.GetItemID({ bagID = 0, slotIndex = 6 }), \
+         C_Item.DoesItemExist({ bagID = 0, slotIndex = 6 }), \
+         C_Item.GetItemLink({ bagID = 0, slotIndex = 6 })",
+        )
+        .unwrap();
+    assert_eq!(id, Some(987654));
+    assert!(exists);
+    assert_eq!(link, None);
+    assert_eq!(empty_id, None);
+    assert!(!empty_exists);
+    assert_eq!(empty_link, None);
 }
 
 #[test]
