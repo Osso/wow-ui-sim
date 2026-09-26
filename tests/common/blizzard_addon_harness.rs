@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use wow_ui_sim::loader::{
     BlizzardAddonOverride, discover_blizzard_addon_closure_for_screen_with_overrides, load_addon,
@@ -25,10 +25,17 @@ pub fn load_blizzard_addon_closure_for_screen_into_env(
     roots: &[&str],
     overrides: &[BlizzardAddonOverride<'_>],
 ) -> Vec<String> {
+    let addons =
+        discover_blizzard_addon_closure_for_screen_with_overrides(ui_dir, screen, roots, overrides);
+    load_discovered_blizzard_addons_into_env(env, addons)
+}
+
+pub(super) fn load_discovered_blizzard_addons_into_env(
+    env: &WowLuaEnv,
+    addons: Vec<(String, PathBuf)>,
+) -> Vec<String> {
     let mut loaded = Vec::new();
-    for (name, toc_path) in
-        discover_blizzard_addon_closure_for_screen_with_overrides(ui_dir, screen, roots, overrides)
-    {
+    for (name, toc_path) in addons {
         if !is_addon_loaded(env, &name) {
             if let Err(error) = load_addon(&env.loader_env(), &toc_path) {
                 panic!("{name} should load in the Blizzard addon closure harness: {error}");

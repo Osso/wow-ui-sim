@@ -15,7 +15,7 @@ pub fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
-/// Blizzard addons needed for the panel system (dependency order).
+/// Required panel roots; discovery orders these and their dependencies.
 pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
@@ -101,9 +101,20 @@ pub fn seed_addon_search_paths(env: &WowLuaEnv) {
 
 pub fn load_panel_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
-    for addon_name in PANEL_ADDONS {
-        crate::common::load_required_blizzard_addon(env, &ui, addon_name);
+    let addons = wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen_with_overrides(
+        &ui,
+        wow_ui_sim::screen::ScreenKind::Game,
+        PANEL_ADDONS,
+        &[],
+    );
+    for root in PANEL_ADDONS {
+        assert!(
+            addons.iter().any(|(name, _)| name == root),
+            "required panel addon `{root}` has no eligible Game TOC under {}",
+            ui.display(),
+        );
     }
+    super::blizzard_addon_harness::load_discovered_blizzard_addons_into_env(env, addons);
 }
 
 pub fn install_lua_harness_stubs(env: &WowLuaEnv) {
