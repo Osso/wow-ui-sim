@@ -155,12 +155,10 @@ pub struct App {
     pub(crate) fps_last_time: std::time::Instant,
     /// Current FPS value.
     pub(crate) fps: f32,
-    /// Timer tick time for display, amortized per draw over the sample window.
-    pub(crate) tick_time_display: f32,
-    /// Draw time for display, averaged per draw over the sample window.
-    pub(crate) draw_time_display: f32,
-    /// Remaining wall time for display after subtracting tick + draw.
-    pub(crate) other_time_display: f32,
+    /// Main-thread CPU time at `fps_last_time`, when the platform reports it.
+    pub(crate) fps_last_main_thread_cpu: Option<std::time::Duration>,
+    /// Title-bar frame metrics from the last one-second sample window.
+    pub(crate) display_metrics: super::update::DisplayMetrics,
     /// Current mouse position in canvas coordinates.
     pub(crate) mouse_position: Option<Point>,
     /// Currently inspected frame ID.
@@ -274,9 +272,8 @@ macro_rules! app_from_initial_state {
             tick_count: std::cell::Cell::new(0),
             fps_last_time: $now,
             fps: 0.0,
-            tick_time_display: 0.0,
-            draw_time_display: 0.0,
-            other_time_display: 0.0,
+            fps_last_main_thread_cpu: super::update::main_thread_cpu_time(),
+            display_metrics: super::update::DisplayMetrics::default(),
             mouse_position: None,
             inspected_frame: None,
             inspector_visible: false,

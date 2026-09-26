@@ -474,18 +474,25 @@ impl App {
         let now = std::time::Instant::now();
         let elapsed = now.duration_since(self.fps_last_time);
         if elapsed >= std::time::Duration::from_secs(1) {
-            let frames = self.frame_count.get();
-            let metrics = sample_display_metrics(
+            let main_thread_cpu = main_thread_cpu_time();
+            let metrics = sample_display_metrics(MetricsWindow {
                 elapsed,
-                frames,
-                self.tick_count.get(),
-                self.draw_time_accum_ms.get(),
-                self.tick_time_accum_ms.get(),
-            );
+                frames: self.frame_count.get(),
+                ticks: self.tick_count.get(),
+                tick_total_ms: self.tick_time_accum_ms.get(),
+                draw_total_ms: self.draw_time_accum_ms.get(),
+                prepare_total_ms: duration_ms(crate::render::shader::primitive::take_prepare_time())
+                    as f32,
+                main_thread_cpu: main_thread_cpu
+                    .zip(self.fps_last_main_thread_cpu)
+                    .map(|(now, before)| now.saturating_sub(before)),
+            });
             self.fps = metrics.fps;
-            self.tick_time_display = metrics.tick_ms;
-            self.draw_time_display = metrics.draw_ms;
-            self.other_time_display = metrics.other_ms;
+            if super::perf_logging_enabled() {
+                crate::logging::eprintln_elapsed(&format!("[fps] {}", metrics.summary()));
+            }
+            self.display_metrics = metrics;
+            self.fps_last_main_thread_cpu = main_thread_cpu;
             self.frame_count.set(0);
             self.draw_time_accum_ms.set(0.0);
             self.tick_time_accum_ms.set(0.0);
@@ -693,43 +700,94 @@ pub(super) fn should_drop_stale_timer_tick(
     age > stale_threshold
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
-struct DisplayMetrics {
-    fps: f32,
-    tick_ms: f32,
-    draw_ms: f32,
-    other_ms: f32,
+/// Title-bar metrics for one sample window.
+///
+/// Costs are averaged per event (per tick, per drawn frame), not spread over
+/// frames, so they stay meaningful when the app redraws only on change.
+/// `unmeasured_ms_per_sec` is main-thread CPU time not spent in tick, draw or
+/// GPU prepare (iced view/layout/present, input); wall time outside the busy
+/// share is the thread waiting for events.
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
+pub(crate) struct DisplayMetrics {
+    pub(crate) fps: f32,
+    pub(crate) tick_ms: f32,
+    pub(crate) ticks_per_sec: f32,
+    pub(crate) draw_ms: f32,
+    pub(crate) prepare_ms: f32,
+    pub(crate) main_thread_busy_pct: Option<f32>,
+    pub(crate) unmeasured_ms_per_sec: Option<f32>,
 }
 
-fn sample_display_metrics(
-    elapsed: std::time::Duration,
-    frames: u32,
-    ticks: u32,
-    draw_total_ms: f32,
-    tick_total_ms: f32,
-) -> DisplayMetrics {
-    let elapsed_secs = elapsed.as_secs_f32();
-    let fps = if elapsed_secs > 0.0 {
-        frames as f32 / elapsed_secs
-    } else {
-        0.0
-    };
-    let draw_denominator = frames.max(1) as f32;
-    let tick_denominator = if frames > 0 {
-        draw_denominator
-    } else {
-        ticks.max(1) as f32
-    };
-    let frame_budget_ms = elapsed.as_secs_f32() * 1000.0 / draw_denominator;
-    let draw_ms = draw_total_ms / draw_denominator;
-    let tick_ms = tick_total_ms / tick_denominator;
-    let other_ms = (frame_budget_ms - draw_ms - tick_ms).max(0.0);
-    DisplayMetrics {
-        fps,
-        tick_ms,
-        draw_ms,
-        other_ms,
+impl DisplayMetrics {
+    /// e.g. `4.0 FPS | tick:1.20ms x62/s | draw:2.08ms | prep:0.50ms | main:32% busy, 180ms/s unmeasured`
+    pub(crate) fn summary(&self) -> String {
+        let main_thread = match (self.main_thread_busy_pct, self.unmeasured_ms_per_sec) {
+            (Some(busy), Some(unmeasured)) => {
+                format!("main:{busy:.0}% busy, {unmeasured:.0}ms/s unmeasured")
+            }
+            _ => "main:n/a".to_string(),
+        };
+        format!(
+            "{:.1} FPS | tick:{:.2}ms x{:.0}/s | draw:{:.2}ms | prep:{:.2}ms | {main_thread}",
+            self.fps, self.tick_ms, self.ticks_per_sec, self.draw_ms, self.prepare_ms
+        )
     }
+}
+
+pub(super) struct MetricsWindow {
+    pub(super) elapsed: std::time::Duration,
+    pub(super) frames: u32,
+    pub(super) ticks: u32,
+    pub(super) tick_total_ms: f32,
+    pub(super) draw_total_ms: f32,
+    pub(super) prepare_total_ms: f32,
+    pub(super) main_thread_cpu: Option<std::time::Duration>,
+}
+
+fn sample_display_metrics(window: MetricsWindow) -> DisplayMetrics {
+    let elapsed_secs = window.elapsed.as_secs_f32();
+    let per_sec = |value: f32| {
+        if elapsed_secs > 0.0 {
+            value / elapsed_secs
+        } else {
+            0.0
+        }
+    };
+    let frames = window.frames.max(1) as f32;
+    let measured_ms = window.tick_total_ms + window.draw_total_ms + window.prepare_total_ms;
+    let cpu_ms = window.main_thread_cpu.map(|cpu| duration_ms(cpu) as f32);
+    DisplayMetrics {
+        fps: per_sec(window.frames as f32),
+        tick_ms: window.tick_total_ms / window.ticks.max(1) as f32,
+        ticks_per_sec: per_sec(window.ticks as f32),
+        draw_ms: window.draw_total_ms / frames,
+        prepare_ms: window.prepare_total_ms / frames,
+        main_thread_busy_pct: cpu_ms.map(|cpu| per_sec(cpu) / 10.0),
+        unmeasured_ms_per_sec: cpu_ms.map(|cpu| per_sec((cpu - measured_ms).max(0.0))),
+    }
+}
+
+/// CPU time consumed by the calling thread (the GUI main thread when called
+/// from `update`), or `None` where the platform does not report it.
+#[cfg(unix)]
+pub(super) fn main_thread_cpu_time() -> Option<std::time::Duration> {
+    let mut spec = libc::timespec {
+        tv_sec: 0,
+        tv_nsec: 0,
+    };
+    // SAFETY: `spec` is a valid, writable timespec for the duration of the call.
+    let status = unsafe { libc::clock_gettime(libc::CLOCK_THREAD_CPUTIME_ID, &mut spec) };
+    if status != 0 {
+        return None;
+    }
+    let secs = u64::try_from(spec.tv_sec).ok()?;
+    let nanos = u32::try_from(spec.tv_nsec).ok()?;
+    Some(std::time::Duration::new(secs, nanos))
+}
+
+#[cfg(not(unix))]
+pub(super) fn main_thread_cpu_time() -> Option<std::time::Duration> {
+    None
 }
 
 #[cfg(test)]

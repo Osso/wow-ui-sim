@@ -725,15 +725,48 @@ fn collect_tick_dirty_preserves_full_rebuild_sentinel() {
     );
 }
 
-#[test]
-fn sample_display_metrics_split_frame_budget() {
-    let metrics =
-        sample_display_metrics(std::time::Duration::from_secs_f32(1.0), 10, 10, 25.0, 15.0);
+fn metrics_window(main_thread_cpu: Option<std::time::Duration>) -> MetricsWindow {
+    // 2s window: 8 draws, 120 ticks, 30ms ticking, 16ms drawing, 4ms prepare.
+    MetricsWindow {
+        elapsed: std::time::Duration::from_secs(2),
+        frames: 8,
+        ticks: 120,
+        tick_total_ms: 30.0,
+        draw_total_ms: 16.0,
+        prepare_total_ms: 4.0,
+        main_thread_cpu,
+    }
+}
 
-    assert!((metrics.fps - 10.0).abs() < 0.001);
-    assert!((metrics.draw_ms - 2.5).abs() < 0.001);
-    assert!((metrics.tick_ms - 1.5).abs() < 0.001);
-    assert!((metrics.other_ms - 96.0).abs() < 0.001);
+#[test]
+fn sample_display_metrics_averages_costs_per_event() {
+    let metrics = sample_display_metrics(metrics_window(None));
+
+    assert!((metrics.fps - 4.0).abs() < 0.001);
+    assert!(
+        (metrics.tick_ms - 0.25).abs() < 0.001,
+        "per tick, not per draw"
+    );
+    assert!((metrics.ticks_per_sec - 60.0).abs() < 0.001);
+    assert!((metrics.draw_ms - 2.0).abs() < 0.001);
+    assert!((metrics.prepare_ms - 0.5).abs() < 0.001);
+    assert_eq!(metrics.main_thread_busy_pct, None);
+    assert_eq!(metrics.unmeasured_ms_per_sec, None);
+}
+
+#[test]
+fn sample_display_metrics_splits_main_thread_cpu_into_measured_and_unmeasured() {
+    // 450ms CPU over 2s: 22.5% busy; 450 - (30 + 16 + 4) = 400ms unmeasured -> 200ms/s.
+    let metrics =
+        sample_display_metrics(metrics_window(Some(std::time::Duration::from_millis(450))));
+
+    let busy = metrics.main_thread_busy_pct.unwrap();
+    let unmeasured = metrics.unmeasured_ms_per_sec.unwrap();
+    assert!((busy - 22.5).abs() < 0.001, "busy {busy}");
+    assert!(
+        (unmeasured - 200.0).abs() < 0.001,
+        "unmeasured {unmeasured}"
+    );
 }
 
 // ── Tick interval stability ──────────────────────────────────────────────────
@@ -827,4 +860,21 @@ fn stale_timer_ticks_cannot_starve_processing_indefinitely() {
         "stale tick within the budget must still be dropped"
     );
     assert_eq!(app.dropped_stale_timer_ticks.get(), 1);
+}
+
+#[cfg(unix)]
+#[test]
+fn main_thread_cpu_time_advances_with_busy_work() {
+    let before = main_thread_cpu_time().expect("unix reports thread CPU time");
+    let started = std::time::Instant::now();
+    let mut acc = 0u64;
+    while started.elapsed() < std::time::Duration::from_millis(30) {
+        acc = acc.wrapping_mul(6364136223846793005).wrapping_add(1);
+    }
+    std::hint::black_box(acc);
+    let after = main_thread_cpu_time().unwrap();
+    assert!(
+        after.saturating_sub(before) >= std::time::Duration::from_millis(10),
+        "30ms of spinning should add CPU time: {before:?} -> {after:?}"
+    );
 }

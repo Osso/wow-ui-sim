@@ -8,6 +8,21 @@ use std::collections::{HashMap, HashSet};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
+/// GPU prepare time since the last `take_prepare_time`, in nanoseconds.
+/// `prepare` runs inside iced's renderer without access to the app, so the
+/// FPS sampler drains this counter instead.
+static PREPARE_NANOS: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
+fn record_prepare_time(elapsed: Duration) {
+    let nanos = u64::try_from(elapsed.as_nanos()).unwrap_or(u64::MAX);
+    PREPARE_NANOS.fetch_add(nanos, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Drain the GPU prepare time accumulated since the previous call.
+pub(crate) fn take_prepare_time() -> Duration {
+    Duration::from_nanos(PREPARE_NANOS.swap(0, std::sync::atomic::Ordering::Relaxed))
+}
+
 pub use super::primitive_textures::{
     GpuBcTextureData, GpuTextureData, LoadedTexture, TextureLoadTelemetry, load_texture_or_crop,
     load_texture_prefer_bc, load_texture_prefer_bc_with_telemetry,
@@ -758,6 +773,7 @@ impl shader::Primitive for WowUiPrimitive {
             upload_dirty_strata_batches(pipeline, device, queue, scale, &self.strata_batches);
         let overlay_elapsed = upload_overlay_batch(pipeline, device, queue, scale, &self.overlay);
         let prepare_elapsed = prepare_started.elapsed();
+        record_prepare_time(prepare_elapsed);
         self.log_slow_prepare(
             prepare_elapsed,
             texture_stats,

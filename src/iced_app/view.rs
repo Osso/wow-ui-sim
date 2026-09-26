@@ -109,11 +109,8 @@ impl App {
         let screen = self.screen_size.get();
         let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
         let title_text = format!(
-            "WoW UI Simulator  [{:.1} FPS | tick:{:.2}ms | draw:{:.2}ms | other:{:.2}ms{}]",
-            self.fps,
-            self.tick_time_display,
-            self.draw_time_display,
-            self.other_time_display,
+            "WoW UI Simulator  [{}{}]",
+            self.display_metrics.summary(),
             screen_str
         );
         text(title_text).size(20).color(palette::GOLD).into()
