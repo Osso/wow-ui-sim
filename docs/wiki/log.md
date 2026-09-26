@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Bare item strings and idle retry timers
+
+`d533fc182`: `GetItemInfo("item:ID")` returned nil, so AllTheThings kept ~10k 3s retry timers pending, and every idle tick scanned them. After the fix: 0 AllTheThings timers, idle tick ~4.5 to ~3.1ms. The two looping animations (DandersFrames, BoostTutorial glow) still keep the 16ms tick. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] audit | Record protected anchor-offset mutation boundary
 
 Updated [[protected-frames]] and index from `ad01e3d8e`, [the protected offset contract](../specs/protected-anchor-offsets.md), `/tmp/cross-version-anchor-protection-proof.md`, and its actual logs. `AdjustPointsOffset` and `SetPointsOffset` now use the existing protected-frame policy: insecure combat calls on protected or protected-anchor-related frames preserve offsets and emit method-named `ADDON_ACTION_BLOCKED`; plain-frame, secure-combat, and insecure-out-of-combat controls remain allowed. RED runtime was 0/1; post-edit GREEN was 3/3 plus two existing 1/1 controls. The post-edit compile had unrelated unstaged `tests/spacing_roundtrip.rs`, not included in `ad01e3d8e`. No post-commit check, readability review, broad suite, deploy, or independent final gate ran. No native-client or `ClearPointsOffset` semantics claim. No tests or builds ran for this documentation audit.

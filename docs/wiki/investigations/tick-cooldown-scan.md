@@ -72,6 +72,15 @@ Dirty-frame probing showed the same frames dirty on idle ticks: `MicroMenu`, `Qu
 
 The old title bar showed `other` as wall time minus tick and draw, which counted idle time spent waiting for the next frame. That made an idle app look busy (e.g. `other:222ms`). `bbd568584` replaces it with measured numbers averaged over one second: FPS, tick ms and ticks/s, draw ms, `prepare` ms (the `WowUiPrimitive::prepare` time, collected through `take_prepare_time`), and main-thread busy % from `CLOCK_THREAD_CPUTIME_ID` (unix only). It also reports unmeasured busy ms per second: main-thread CPU time not covered by tick, draw or prepare. `WOW_SIM_VERBOSE` prints the same numbers as an `[fps]` line. A live idle run showed 60 FPS, tick ~1.1ms ×63/s, draw 0.19ms, main thread 14% busy, 58ms/s unmeasured. The idle tick rate (~63/s rather than the 1s heartbeat) has not been investigated yet.
 
+### Idle fast tick and AllTheThings retry timers (follow-up)
+
+At idle the GUI ran ~63 ticks/s at ~4.5ms each (28% of the main thread). A temporary probe in `compute_tick_interval` found two causes.
+
+- **Timers:** AllTheThings kept ~10,000 one-shot timers pending. Each tick scans the pending timers. The cause was `GetItemInfo("item:ID:...")`, which returned nil because `parse_prefixed_id` only parsed `|Hitem:` hyperlinks. For every item, AllTheThings' `CanRetry` then started a 3s `DelayedCallback`. The next read of the item cleared the flag and started it again.
+- **Animations:** looping animations force the 16ms tick. One is DandersFrames' parentless frame with a `Repeat` loop. The other is the `BOUNCE` glow texture on `NPE_TutorialMainFrame_Frame` (Blizzard_BoostTutorial), a frame that has no parent and alpha 0.
+
+`d533fc182` also accepts the bare `item:`/`spell:` form. Test: `test_get_item_info_accepts_bare_item_strings`. In a live idle run AllTheThings' pending timers went from ~10k to 0 and the idle tick from ~4.5 to ~3.1ms (main thread 28% to 21%; single runs). The animations still keep the fast tick.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
