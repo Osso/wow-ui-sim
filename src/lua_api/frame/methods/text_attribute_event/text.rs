@@ -188,6 +188,10 @@ fn stripped_text_for_frame(
     Ok(prepare_stripped_text(widget_type, text))
 }
 
+fn drawn_text(text: &Option<String>) -> &str {
+    text.as_deref().unwrap_or_default()
+}
+
 fn update_text_frame(
     state: &mut LuaState,
     id: u64,
@@ -210,7 +214,15 @@ fn update_text_frame(
     let inline_color = leading_wow_text_color(text);
     let has_button_text_child = frame.and_then(button_text_child_id).is_some();
     let changed = is_tooltip || current_text != *text || current_stripped_text != *stripped_text;
-    if changed && let Some(frame) = sim.widgets.get_mut_visual(id) {
+    // nil and "" draw nothing alike; only a change to what is drawn needs a redraw.
+    let drawn_changed = is_tooltip
+        || drawn_text(&current_text) != drawn_text(text)
+        || drawn_text(&current_stripped_text) != drawn_text(stripped_text)
+        || inline_color.is_some_and(|color| frame.is_some_and(|f| f.text_color != color));
+    if drawn_changed {
+        sim.widgets.mark_visual_dirty(id);
+    }
+    if changed && let Some(frame) = sim.widgets.get_mut(id) {
         frame.text = text.clone();
         frame.text_stripped = stripped_text.clone();
         frame.text_segments.clear();

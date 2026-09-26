@@ -351,29 +351,42 @@ pub(crate) fn set_font(state: &mut LuaState) -> LuaResult<u32> {
     };
     let flags = val_to_string(state, stack_val(state, 4));
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        apply_font_args(frame, font, size, flags);
+    let changed = sim
+        .widgets
+        .get_mut(id)
+        .is_some_and(|frame| apply_font_args(frame, font, size, flags));
+    // Re-applying the current font leaves the text as drawn.
+    if changed {
+        sim.widgets.mark_visual_dirty(id);
     }
     drop(sim);
     state.push(Val::Bool(true));
     Ok(1)
 }
 
+/// Apply the given font fields; returns whether any of them changed.
 fn apply_font_args(
     frame: &mut crate::widget::Frame,
     font: Option<String>,
     size: Option<f32>,
     flags: Option<String>,
-) {
+) -> bool {
+    let font = font.filter(|f| frame.font.as_deref() != Some(f.as_str()));
+    let size = size.filter(|&s| frame.font_size != s);
+    let outline = flags
+        .map(|f| crate::widget::TextOutline::from_wow_str(&f))
+        .filter(|&o| frame.font_outline != o);
+    let changed = font.is_some() || size.is_some() || outline.is_some();
     if let Some(f) = font {
         frame.font = Some(f);
     }
     if let Some(s) = size {
         frame.font_size = s;
     }
-    if let Some(ref f) = flags {
-        frame.font_outline = crate::widget::TextOutline::from_wow_str(f);
+    if let Some(o) = outline {
+        frame.font_outline = o;
     }
+    changed
 }
 
 pub(crate) fn get_font(state: &mut LuaState) -> LuaResult<u32> {

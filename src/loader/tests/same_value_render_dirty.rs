@@ -18,6 +18,10 @@ const SETUP: &str = r#"
     SameLabel:SetPoint("CENTER")
     SameLabel:SetText("")
     SameLabel:SetTextColor(1, 1, 1, 1)
+    SameLabel:SetFont("Fonts/FRIZQT__.TTF", 13, "OUTLINE")
+    SameCleared = SameParent:CreateFontString("SameCleared", "OVERLAY", "GameFontNormal")
+    SameCleared:SetPoint("BOTTOM")
+    SameCleared:SetText()
     SameHidden = SameParent:CreateTexture("SameHidden", "ARTWORK")
     SameHidden:Hide()
 "#;
@@ -34,6 +38,9 @@ const SAME_VALUE_CALLS: &[&str] = &[
     "SameParent:SetHeight(40)",
     "SameLabel:SetText(\"\")",
     "SameLabel:SetTextColor(1, 1, 1, 1)",
+    "SameLabel:SetFont(\"Fonts/FRIZQT__.TTF\", 13, \"OUTLINE\")",
+    "SameCleared:SetText()",
+    "SameLabel:SetText()",
 ];
 
 fn dirty_names_after(t: &TestCtx, lua: &str) -> Vec<String> {
