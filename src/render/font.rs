@@ -23,6 +23,10 @@ pub(crate) fn line_height_for_font_size(font_size: f32) -> Option<f32> {
     Some((font_size * LINE_HEIGHT_MULTIPLIER).ceil().max(1.0))
 }
 
+pub(crate) fn spaced_text_height(base_height: f32, line_count: usize, spacing: f32) -> f32 {
+    base_height + line_count.saturating_sub(1) as f32 * spacing
+}
+
 /// Font entry mapping a WoW path to a fontdb family name.
 #[derive(Debug, Clone)]
 struct FontEntry {
@@ -507,12 +511,25 @@ impl WowFontSystem {
         font_path: Option<&str>,
         font_size: f32,
         wrap_width: Option<f32>,
+        spacing: f32,
     ) -> f32 {
+        self.measure_text_layout(text, font_path, font_size, wrap_width, spacing)
+            .0
+    }
+
+    pub(crate) fn measure_text_layout(
+        &mut self,
+        text: &str,
+        font_path: Option<&str>,
+        font_size: f32,
+        wrap_width: Option<f32>,
+        spacing: f32,
+    ) -> (f32, usize) {
         let Some(line_height) = line_height_for_font_size(font_size) else {
-            return 0.0;
+            return (0.0, 0);
         };
         if text.is_empty() {
-            return 0.0;
+            return (0.0, 0);
         }
         let metrics = cosmic_text::Metrics::new(font_size, line_height);
         let attrs = self.attrs_owned(font_path);
@@ -533,13 +550,17 @@ impl WowFontSystem {
 
         let runs: Vec<_> = buffer.layout_runs().collect();
         let num_lines = runs.len();
-        if num_lines <= 1 {
+        let base_height = if num_lines <= 1 {
             line_height
         } else {
             runs.last()
                 .map(|run| run.line_y + line_height)
                 .unwrap_or(line_height)
-        }
+        };
+        (
+            spaced_text_height(base_height, num_lines, spacing),
+            num_lines,
+        )
     }
 }
 
@@ -853,7 +874,7 @@ mod tests {
 
         assert_eq!(fs.measure_text_width("Collections", None, 0.0), 0.0);
         assert_eq!(
-            fs.measure_text_height("Collections", None, 0.0, Some(100.0)),
+            fs.measure_text_height("Collections", None, 0.0, Some(100.0), 0.0),
             0.0
         );
     }
@@ -872,7 +893,7 @@ mod tests {
     #[test]
     fn measure_text_height_single_line() {
         let mut fs = WowFontSystem::new();
-        let h = fs.measure_text_height("Hello", Some(WOW_FONT_FRIZ), 14.0, None);
+        let h = fs.measure_text_height("Hello", Some(WOW_FONT_FRIZ), 14.0, None, 0.0);
         let line_height = (14.0_f32 * 1.2).ceil();
         assert_eq!(h, line_height, "Single line should equal line_height");
     }
@@ -882,8 +903,9 @@ mod tests {
         let mut fs = WowFontSystem::new();
         let long_text =
             "This is a fairly long sentence that should wrap when given a narrow width constraint";
-        let single = fs.measure_text_height(long_text, Some(WOW_FONT_FRIZ), 14.0, None);
-        let wrapped = fs.measure_text_height(long_text, Some(WOW_FONT_FRIZ), 14.0, Some(100.0));
+        let single = fs.measure_text_height(long_text, Some(WOW_FONT_FRIZ), 14.0, None, 0.0);
+        let wrapped =
+            fs.measure_text_height(long_text, Some(WOW_FONT_FRIZ), 14.0, Some(100.0), 0.0);
         assert!(
             wrapped > single,
             "Wrapped text should be taller: {wrapped} > {single}"
@@ -893,7 +915,7 @@ mod tests {
     #[test]
     fn measure_text_height_empty_is_zero() {
         let mut fs = WowFontSystem::new();
-        let h = fs.measure_text_height("", Some(WOW_FONT_FRIZ), 14.0, Some(200.0));
+        let h = fs.measure_text_height("", Some(WOW_FONT_FRIZ), 14.0, Some(200.0), 0.0);
         assert_eq!(h, 0.0);
     }
 }

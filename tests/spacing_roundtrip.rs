@@ -2,11 +2,13 @@
 //!
 //! The value is stored on `Frame.text_line_spacing` (for FontString /
 //! EditBox widgets) or the font-object `__spacing` slot (for
-//! GameFontNormal-style Font tables). Rendering ignores it for now —
-//! see `src/widget/frame.rs` `text_line_spacing` comment — so these
-//! tests only pin the getter/setter contract.
+//! GameFontNormal-style Font tables). These tests cover API round trips
+//! and rendered text measurement without loading Blizzard UI.
 
+use std::cell::RefCell;
+use std::rc::Rc;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::render::font::WowFontSystem;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
@@ -90,6 +92,102 @@ fn font_string_and_font_object_are_independent() {
         .unwrap();
     assert_eq!(fs_val, 2.0, "FontString value");
     assert_eq!(font_val, 11.0, "Font object value");
+}
+
+#[test]
+fn fontstring_spacing_changes_multiline_height_but_not_single_line() {
+    let env = env();
+    env.set_font_system(Rc::new(RefCell::new(WowFontSystem::new_without_casc())));
+    let (before, after, single_before, single_after, lines): (f64, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local fs = CreateFrame("Frame", nil, UIParent):CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            fs:SetText("H\nH")
+            local before = fs:GetStringHeight()
+            fs:SetSpacing(6)
+            local after = fs:GetStringHeight()
+            local lines = fs:GetNumLines()
+            fs:SetText("H")
+            local single_after = fs:GetStringHeight()
+            fs:SetSpacing(0)
+            return before, after, fs:GetStringHeight(), single_after, lines
+            "#,
+        )
+        .unwrap();
+    assert!(before > 0.0, "must shape real text");
+    assert!((after - before - 6.0).abs() < 0.01, "{before} -> {after}");
+    assert_eq!(single_before, single_after);
+    assert_eq!(lines, 2.0);
+}
+
+#[test]
+fn fontstring_spacing_keeps_line_count_without_font_system() {
+    let env = env();
+    let (before, after): (f64, f64) = env
+        .eval(
+            r#"
+            local fs = CreateFrame("Frame", nil, UIParent):CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            fs:SetText("H\nH")
+            local before = fs:GetNumLines()
+            fs:SetSpacing(6)
+            return before, fs:GetNumLines()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(before, 2.0);
+    assert_eq!(after, 2.0);
+}
+
+#[test]
+fn fontstring_spacing_updates_auto_text_height() {
+    let env = env();
+    env.set_font_system(Rc::new(RefCell::new(WowFontSystem::new_without_casc())));
+    let (before, after, measured): (f64, f64, f64) = env
+        .eval(
+            r#"
+            local fs = CreateFrame("Frame", nil, UIParent):CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            fs:SetText("H\nH")
+            local before = fs:GetHeight()
+            fs:SetSpacing(6)
+            return before, fs:GetHeight(), fs:GetStringHeight()
+            "#,
+        )
+        .unwrap();
+    assert!(before > 0.0);
+    assert!((after - before - 6.0).abs() < 0.01, "{before} -> {after}");
+    assert!((after - measured).abs() < 0.01);
+}
+
+#[test]
+fn fontstring_spacing_changes_wrapped_height_with_text_scale() {
+    let env = env();
+    let fonts = Rc::new(RefCell::new(WowFontSystem::new_without_casc()));
+    let width = fonts.borrow_mut().measure_text_width("H ", None, 16.0) + 1.0;
+    env.set_font_system(fonts);
+    let (before, after, unwrapped, after_unwrapped): (f64, f64, f64, f64) = env
+        .eval(&format!(
+            r#"
+            local fs = CreateFrame("Frame", nil, UIParent):CreateFontString(nil, "ARTWORK")
+            fs:SetFont("Fonts\\FRIZQT__.TTF", 16)
+            fs:SetText("H H")
+            fs:SetWidth({width})
+            fs:SetTextScale(1.5)
+            local before = fs:GetStringHeight()
+            fs:SetSpacing(6)
+            local after = fs:GetStringHeight()
+            fs:SetWidth(400)
+            local after_unwrapped = fs:GetStringHeight()
+            fs:SetSpacing(0)
+            return before, after, fs:GetStringHeight(), after_unwrapped
+            "#,
+        ))
+        .unwrap();
+    assert!(before > 0.0);
+    assert!((after - before - 9.0).abs() < 0.01, "{before} -> {after}");
+    assert_eq!(unwrapped, after_unwrapped);
 }
 
 #[test]

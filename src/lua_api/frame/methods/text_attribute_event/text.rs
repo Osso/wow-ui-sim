@@ -13,7 +13,7 @@ pub(super) use formatting::{
     set_font_objects_to_try, set_formatted_text, set_text_height, set_text_to_fit,
     try_apply_default_text,
 };
-use metrics::{approximate_text_height, approximate_text_width};
+use metrics::{approximate_text_height, approximate_text_layout, approximate_text_width};
 pub(super) use style::{
     can_non_space_wrap, can_word_wrap, get_hyperlink_format, get_hyperlinks_enabled,
     get_indented_word_wrap, get_justify_h, get_justify_v, get_max_lines, get_shadow_color,
@@ -60,7 +60,6 @@ struct AutoTextHeightState {
 
 struct LineCountProps {
     has_text: bool,
-    line_height: f32,
     wrap_width: Option<f32>,
 }
 
@@ -392,7 +391,7 @@ fn anchor_pinned_horizontal_width(state: &LuaState, id: u64) -> Option<f32> {
     (width > 0.0).then_some(width)
 }
 
-fn refresh_text_measurements(state: &mut LuaState, id: u64) {
+pub(crate) fn refresh_text_measurements(state: &mut LuaState, id: u64) {
     update_auto_text_width(state, id);
     update_auto_text_height(state, id);
 }
@@ -641,6 +640,12 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
         return 0.0;
     }
     let text_scale = frame_text_scale_value(state, id);
+    let spacing = borrow_state(state)
+        .expect("sim state should exist")
+        .widgets
+        .get(id)
+        .map(|frame| frame.text_line_spacing)
+        .unwrap_or(0.0);
     if let Some(app) = state.app_data::<crate::lua_api::env::WowLuaAppData>()
         && let Some(font_system) = app.font_system.as_ref()
     {
@@ -649,10 +654,11 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
             font.as_deref(),
             font_size,
             wrap_width,
+            spacing,
         ) as f64
             * text_scale;
     }
-    approximate_text_height(&text, font_size, wrap_width) as f64 * text_scale
+    approximate_text_height(&text, font_size, wrap_width, spacing) as f64 * text_scale
 }
 
 pub(super) fn get_string_width(state: &mut LuaState) -> LuaResult<u32> {
@@ -738,13 +744,23 @@ pub(super) fn get_num_lines(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
-    let line_count = if props.has_text && props.line_height > 0.0 {
-        let text_height = measure_text_height(state, id, props.wrap_width);
-        (text_height / f64::from(props.line_height)).ceil().max(1.0)
+    let line_count = if !props.has_text {
+        0
     } else {
-        0.0
+        let (text, font, font_size) = frame_text_measurement(state, id);
+        if let Some(font_system) = state
+            .app_data::<crate::lua_api::env::WowLuaAppData>()
+            .and_then(|app| app.font_system.as_ref())
+        {
+            font_system
+                .borrow_mut()
+                .measure_text_layout(&text, font.as_deref(), font_size, props.wrap_width, 0.0)
+                .1
+        } else {
+            approximate_text_layout(&text, font_size, props.wrap_width, 0.0).1
+        }
     };
-    state.push(Val::Num(line_count));
+    state.push(Val::Num(line_count as f64));
     Ok(1)
 }
 
@@ -755,13 +771,8 @@ fn read_line_count_props(state: &LuaState, id: u64) -> LuaResult<Option<LineCoun
     };
     Ok(Some(LineCountProps {
         has_text: frame_text_value(&sim, frame, true).is_some_and(|text| !text.is_empty()),
-        line_height: measured_line_height(frame),
         wrap_width: (frame.word_wrap && frame.width > 0.0).then_some(frame.width),
     }))
-}
-
-fn measured_line_height(frame: &crate::widget::Frame) -> f32 {
-    (frame.font_size * 1.2).ceil() * frame.text_scale.max(0.0) as f32
 }
 
 #[cfg(test)]

@@ -418,8 +418,7 @@ pub struct Frame {
     pub editbox_history_max: i32,
     /// Text insets (left, right, top, bottom).
     pub editbox_text_insets: (f32, f32, f32, f32),
-    /// Line spacing applied by `FontString:SetSpacing` / `EditBox:SetSpacing`.
-    /// Purely stored for round-tripping via GetSpacing; not yet rendered.
+    /// Additional distance between rendered text lines, set by `SetSpacing`.
     pub text_line_spacing: f32,
     /// Whether to count invisible letters.
     pub editbox_count_invisible_letters: bool,

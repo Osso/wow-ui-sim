@@ -88,6 +88,7 @@ fn zero_font_size_emits_no_text_quads() {
         TextOutline::None,
         false,
         0,
+        0.0,
         None,
     );
 

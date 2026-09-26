@@ -33,6 +33,7 @@ pub fn emit_text_quads(
     outline: crate::widget::TextOutline,
     word_wrap: bool,
     max_lines: u32,
+    spacing: f32,
     pre_stripped: Option<&str>,
 ) {
     if !can_emit_text(text, bounds, font_size) {
@@ -54,6 +55,7 @@ pub fn emit_text_quads(
             bounds,
             word_wrap,
             max_lines,
+            spacing,
         },
     );
     let pass = TextPassContext {
@@ -99,6 +101,7 @@ struct TextLayoutCacheRequest<'a> {
     bounds: Rectangle,
     word_wrap: bool,
     max_lines: u32,
+    spacing: f32,
 }
 
 fn cached_text_layout(
@@ -113,6 +116,7 @@ fn cached_text_layout(
         shape_width_for_bounds(request.word_wrap, request.bounds.width),
         request.bounds.height,
         request.max_lines,
+        request.spacing,
     );
     populate_text_layout_cache(glyph_atlas, font_system, key, request);
     let entry = glyph_atlas
@@ -145,10 +149,11 @@ fn populate_text_layout_cache(
             bounds_height: request.bounds.height,
             word_wrap: request.word_wrap,
             max_lines: request.max_lines,
+            spacing: request.spacing,
         },
     );
     entry.insert(ShapeCacheEntry {
-        runs: extract_layout_runs(&buffer, request.max_lines),
+        runs: extract_layout_runs(&buffer, request.max_lines, request.spacing),
         total_height,
         last_used: glyph_atlas.shape_cache_generation,
     });

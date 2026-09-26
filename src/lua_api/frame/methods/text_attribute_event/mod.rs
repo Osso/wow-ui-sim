@@ -11,6 +11,7 @@ mod events;
 mod helpers;
 mod rolesets;
 mod text;
+pub(super) use text::refresh_text_measurements;
 mod unit_event;
 
 #[cfg(feature = "on-update-modes")]

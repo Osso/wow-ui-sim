@@ -226,6 +226,111 @@ fn emit_widget_text_quads_uses_text_segment_colors() {
     assert!(has_glyph_color(&batch, [0.0, 1.0, 0.0, 1.0]));
 }
 
+fn render_fontstring_spacing(frame: &Frame, text: &str, width: f32) -> QuadBatch {
+    let mut font_sys = WowFontSystem::new_without_casc();
+    let mut glyph_atlas = GlyphAtlas::new();
+    render_fontstring_spacing_with(frame, text, width, &mut font_sys, &mut glyph_atlas)
+}
+
+fn render_fontstring_spacing_with(
+    frame: &Frame,
+    text: &str,
+    width: f32,
+    font_sys: &mut WowFontSystem,
+    glyph_atlas: &mut GlyphAtlas,
+) -> QuadBatch {
+    let mut batch = QuadBatch::new();
+    let mut renderer = WidgetTextRenderer {
+        batch: &mut batch,
+        font_sys,
+        glyph_atlas,
+    };
+    emit_widget_text_quads(
+        &mut renderer,
+        frame,
+        WidgetTextLayout {
+            text,
+            bounds: Rectangle::new(iced::Point::ORIGIN, iced::Size::new(width, 160.0)),
+            justify_h: TextJustify::Left,
+            justify_v: TextJustify::Left,
+            word_wrap: frame.word_wrap,
+            max_lines: 0,
+            alpha: 1.0,
+        },
+    );
+    batch
+}
+
+fn glyph_quad_tops(batch: &QuadBatch) -> Vec<f32> {
+    batch
+        .vertices
+        .chunks_exact(4)
+        .filter(|quad| quad[0].tex_index == GLYPH_ATLAS_TEX_INDEX)
+        .map(|quad| quad[0].position[1])
+        .collect()
+}
+
+#[test]
+fn fontstring_spacing_moves_second_rendered_line_without_moving_first() {
+    let mut frame = Frame::new(WidgetType::FontString, None, None);
+    frame.font_size = 16.0;
+    let mut font_sys = WowFontSystem::new_without_casc();
+    let mut glyph_atlas = GlyphAtlas::new();
+    let zero =
+        render_fontstring_spacing_with(&frame, "H\nH", 200.0, &mut font_sys, &mut glyph_atlas);
+    frame.text_line_spacing = 6.0;
+    let spaced =
+        render_fontstring_spacing_with(&frame, "H\nH", 200.0, &mut font_sys, &mut glyph_atlas);
+    let zero_tops = glyph_quad_tops(&zero);
+    let spaced_tops = glyph_quad_tops(&spaced);
+    assert_eq!(zero_tops.len(), 2, "both lines must rasterize glyph quads");
+    assert_eq!(
+        spaced_tops.len(),
+        2,
+        "both spaced lines must rasterize glyph quads"
+    );
+    assert_eq!(spaced_tops[0], zero_tops[0]);
+    assert!((spaced_tops[1] - zero_tops[1] - 6.0).abs() < 0.01);
+}
+
+#[test]
+fn segmented_fontstring_spacing_moves_colored_second_line() {
+    let mut frame = Frame::new(WidgetType::FontString, None, None);
+    frame.font_size = 16.0;
+    frame.text_segments = vec![
+        TextSegment {
+            text: "H ".to_string(),
+            color: crate::widget::Color::new(1.0, 0.0, 0.0, 1.0),
+        },
+        TextSegment {
+            text: "H".to_string(),
+            color: crate::widget::Color::new(0.0, 1.0, 0.0, 1.0),
+        },
+    ];
+    let width = WowFontSystem::new_without_casc().measure_text_width("H ", None, 16.0) + 1.0;
+    let zero = render_fontstring_spacing(&frame, "H H", width);
+    frame.text_line_spacing = 6.0;
+    let spaced = render_fontstring_spacing(&frame, "H H", width);
+    let red_top = |batch: &QuadBatch| {
+        batch
+            .vertices
+            .iter()
+            .find(|v| v.color == [1.0, 0.0, 0.0, 1.0])
+            .expect("red glyph")
+            .position[1]
+    };
+    let green_top = |batch: &QuadBatch| {
+        batch
+            .vertices
+            .iter()
+            .find(|v| v.color == [0.0, 1.0, 0.0, 1.0])
+            .expect("green glyph")
+            .position[1]
+    };
+    assert_eq!(red_top(&zero), red_top(&spaced));
+    assert!((green_top(&spaced) - green_top(&zero) - 6.0).abs() < 0.01);
+}
+
 #[test]
 fn tooltip_line_fontstrings_do_not_render_as_generic_fontstrings() {
     let mut registry = WidgetRegistry::new();

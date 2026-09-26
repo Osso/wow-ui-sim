@@ -204,6 +204,7 @@ pub(super) fn emit_widget_text_quads(
         f.font_outline,
         layout.word_wrap,
         layout.max_lines,
+        f.text_line_spacing * f.effective_scale,
         f.text_stripped.as_deref(),
     );
     clip_recent_quads(text_renderer.batch, vert_before, clip_bounds);
@@ -230,7 +231,7 @@ fn emit_widget_text_segment_quads(
                     .measure_text_width(chunk, f.font.as_deref(), font_size);
             if starts_new_segment_line(&layout, chunk, x, width, right) {
                 x = layout.bounds.x;
-                y += line_height;
+                y += line_height + f.text_line_spacing * f.effective_scale;
             }
             let bounds = Rectangle::new(Point::new(x, y), Size::new(width.max(1.0), line_height));
             emit_text_segment_chunk(text_renderer, f, chunk, bounds, font_size, color, shadow);
@@ -275,6 +276,7 @@ fn emit_text_segment_chunk(
         f.font_outline,
         false,
         0,
+        0.0,
         None,
     );
 }

@@ -205,7 +205,13 @@ fn measure_tooltip_text_height(
     font_size: f32,
     wrap_width: Option<f32>,
 ) -> f32 {
-    font_system.measure_text_height(&tooltip_visible_text(text), None, font_size, wrap_width)
+    font_system.measure_text_height(
+        &tooltip_visible_text(text),
+        None,
+        font_size,
+        wrap_width,
+        0.0,
+    )
 }
 
 fn tooltip_visible_text(text: &str) -> String {
@@ -390,6 +396,7 @@ fn emit_tooltip_lines(
                 None,
                 font_size,
                 Some(content_width),
+                0.0,
             )
         } else {
             line.measured_height * eff_scale
@@ -757,6 +764,7 @@ fn emit_tooltip_text_run(
         TextOutline::None,
         run.wrap,
         0,
+        0.0,
         None,
     );
 }

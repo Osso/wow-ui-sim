@@ -11,7 +11,7 @@ use std::collections::HashMap;
 use cosmic_text::{Buffer, CacheKey, Metrics, Shaping, SwashContent};
 use iced::Rectangle;
 
-use super::font::{WowFontSystem, line_height_for_font_size};
+use super::font::{WowFontSystem, line_height_for_font_size, spaced_text_height};
 use super::shader::{BlendMode, QuadBatch};
 use crate::widget::TextJustify;
 
@@ -46,6 +46,7 @@ fn shape_cache_hash(
     shape_width: f32,
     bounds_height: f32,
     max_lines: u32,
+    spacing: f32,
 ) -> u64 {
     use std::hash::{Hash, Hasher};
     let mut h = std::hash::DefaultHasher::new();
@@ -55,6 +56,7 @@ fn shape_cache_hash(
     shape_width.to_bits().hash(&mut h);
     bounds_height.to_bits().hash(&mut h);
     max_lines.hash(&mut h);
+    spacing.to_bits().hash(&mut h);
     h.finish()
 }
 
@@ -407,7 +409,8 @@ fn shape_text_to_runs(
     let mut buffer = build_text_shape_buffer(font_system, &shape, line_height, shape_width);
     buffer.shape_until_scroll(&mut font_system.font_system, true);
 
-    let total_height = shaped_text_total_height(&buffer, shape.max_lines, line_height);
+    let total_height =
+        shaped_text_total_height(&buffer, shape.max_lines, line_height, shape.spacing);
     (buffer, total_height)
 }
 
@@ -443,12 +446,17 @@ fn build_text_shape_buffer(
     buffer
 }
 
-fn shaped_text_total_height(buffer: &Buffer, max_lines: u32, line_height: f32) -> f32 {
+fn shaped_text_total_height(
+    buffer: &Buffer,
+    max_lines: u32,
+    line_height: f32,
+    spacing: f32,
+) -> f32 {
     let mut runs: Vec<_> = buffer.layout_runs().collect();
     if max_lines > 0 {
         runs.truncate(max_lines as usize);
     }
-    text_total_height(&runs, line_height)
+    spaced_text_height(text_total_height(&runs, line_height), runs.len(), spacing)
 }
 
 fn text_total_height(runs: &[cosmic_text::LayoutRun<'_>], line_height: f32) -> f32 {
@@ -470,10 +478,11 @@ struct TextShapeRequest<'a> {
     bounds_height: f32,
     word_wrap: bool,
     max_lines: u32,
+    spacing: f32,
 }
 
 /// Extract glyph positions from layout runs into cacheable data.
-fn extract_layout_runs(buffer: &Buffer, max_lines: u32) -> Vec<CachedLayoutRun> {
+fn extract_layout_runs(buffer: &Buffer, max_lines: u32, spacing: f32) -> Vec<CachedLayoutRun> {
     let runs: Vec<_> = buffer.layout_runs().collect();
     let runs_slice = if max_lines > 0 {
         &runs[..runs.len().min(max_lines as usize)]
@@ -482,7 +491,8 @@ fn extract_layout_runs(buffer: &Buffer, max_lines: u32) -> Vec<CachedLayoutRun> 
     };
     runs_slice
         .iter()
-        .map(|run| {
+        .enumerate()
+        .map(|(line_index, run)| {
             let glyphs = run
                 .glyphs
                 .iter()
@@ -496,7 +506,7 @@ fn extract_layout_runs(buffer: &Buffer, max_lines: u32) -> Vec<CachedLayoutRun> 
                 })
                 .collect();
             CachedLayoutRun {
-                line_y: run.line_y,
+                line_y: run.line_y + line_index as f32 * spacing,
                 line_w: run.line_w,
                 glyphs,
             }
@@ -610,6 +620,7 @@ pub fn measure_text_height(
     font_size: f32,
     bounds_width: f32,
     word_wrap: bool,
+    spacing: f32,
 ) -> f32 {
     let stripped = crate::render::strip_wow_markup(text);
     if stripped.is_empty() {
@@ -623,6 +634,7 @@ pub fn measure_text_height(
         bounds_height: 10000.0,
         word_wrap,
         max_lines: 0,
+        spacing,
     };
     let key = text_measure_cache_key(&shape);
     if let Some(entry) = glyph_atlas.shape_cache.get_mut(&key) {
@@ -630,7 +642,7 @@ pub fn measure_text_height(
         return entry.total_height;
     }
     let (buffer, total_height) = shape_text_to_runs(font_system, shape);
-    let runs = extract_layout_runs(&buffer, 0);
+    let runs = extract_layout_runs(&buffer, 0, spacing);
     glyph_atlas.insert_shape_cache_entry(key, runs, total_height);
     total_height
 }
@@ -644,6 +656,7 @@ fn text_measure_cache_key(shape: &TextShapeRequest<'_>) -> u64 {
         shape_width,
         shape.bounds_height,
         shape.max_lines,
+        shape.spacing,
     )
 }
 
