@@ -115,6 +115,103 @@ mod hit_grid_tests {
     }
 
     #[test]
+    fn nested_scroll_offsets_accumulate_in_cached_hits_and_clip_outside_outer_viewport() {
+        let app = build_test_app();
+        app.env
+            .borrow()
+            .exec(
+                r#"
+                NestedHitOuter = CreateFrame("ScrollFrame", "NestedHitOuter", UIParent)
+                NestedHitOuter:SetSize(100, 100)
+                NestedHitOuter:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+                local outerChild = CreateFrame("Frame", nil, NestedHitOuter)
+                outerChild:SetSize(250, 250)
+                outerChild:SetPoint("TOPLEFT", NestedHitOuter, "TOPLEFT")
+                NestedHitOuter:SetScrollChild(outerChild)
+                NestedHitInner = CreateFrame("ScrollFrame", "NestedHitInner", outerChild)
+                NestedHitInner:SetSize(50, 50)
+                NestedHitInner:SetPoint("TOPLEFT", outerChild, "TOPLEFT", 40, -40)
+                local innerChild = CreateFrame("Frame", nil, NestedHitInner)
+                innerChild:SetSize(120, 120)
+                innerChild:SetPoint("TOPLEFT", NestedHitInner, "TOPLEFT")
+                NestedHitInner:SetScrollChild(innerChild)
+                NestedHitContent = CreateFrame("Button", "NestedHitContent", innerChild)
+                NestedHitContent:SetSize(20, 20)
+                NestedHitContent:SetPoint("TOPLEFT", innerChild, "TOPLEFT", 30, -30)
+                NestedHitContent:EnableMouse(true)
+                NestedHitContent:RegisterForClicks("LeftButtonUp")
+                NestedHitChrome = CreateFrame("Button", "NestedHitChrome", NestedHitOuter)
+                NestedHitChrome:SetSize(20, 20)
+                NestedHitChrome:SetPoint("TOPLEFT", NestedHitOuter, "TOPLEFT", 80, 0)
+                NestedHitChrome:EnableMouse(true)
+                NestedHitChrome:RegisterForClicks("LeftButtonUp")
+            "#,
+            )
+            .unwrap();
+        let size = Size::new(800.0, 600.0);
+        app.mark_all_strata_dirty();
+        app.rebuild_dirty_strata(size, app.strata_dirty.get());
+        let original = Point::new(95.0, 95.0);
+        let outer_only = Point::new(75.0, 75.0);
+        let combined = Point::new(55.0, 55.0);
+        let chrome = Point::new(105.0, 25.0);
+        let target = app.hit_test_mouse_button(original, "LeftButton", false);
+        let chrome_target = app.hit_test_mouse_button(chrome, "LeftButton", false);
+        assert!(target.is_some());
+        assert!(chrome_target.is_some());
+        assert_ne!(target, chrome_target);
+
+        app.env
+            .borrow()
+            .exec("NestedHitOuter:SetHorizontalScroll(20); NestedHitOuter:SetVerticalScroll(20)")
+            .unwrap();
+        rebuild_after_widget_dirty(&app, size);
+        assert_eq!(
+            app.hit_test_mouse_button(outer_only, "LeftButton", false),
+            target
+        );
+        assert_eq!(
+            app.hit_test_mouse_button(chrome, "LeftButton", false),
+            chrome_target
+        );
+
+        app.env
+            .borrow()
+            .exec("NestedHitInner:SetHorizontalScroll(20); NestedHitInner:SetVerticalScroll(20)")
+            .unwrap();
+        rebuild_after_widget_dirty(&app, size);
+        assert_eq!(
+            app.hit_test_mouse_button(combined, "LeftButton", false),
+            target
+        );
+        assert_ne!(
+            app.hit_test_mouse_button(outer_only, "LeftButton", false),
+            target
+        );
+        assert_eq!(
+            app.hit_test_mouse_button(chrome, "LeftButton", false),
+            chrome_target
+        );
+
+        app.env
+            .borrow()
+            .exec(
+                "NestedHitOuter:SetHorizontalScroll(-200); NestedHitOuter:SetVerticalScroll(-200)",
+            )
+            .unwrap();
+        rebuild_after_widget_dirty(&app, size);
+        assert_ne!(
+            app.hit_test_mouse_button(Point::new(275.0, 275.0), "LeftButton", false),
+            target,
+            "content outside the outer viewport must not receive hits",
+        );
+        assert_eq!(
+            app.hit_test_mouse_button(chrome, "LeftButton", false),
+            chrome_target
+        );
+    }
+
+    #[test]
     fn layout_move_updates_cached_hit_grid_rects() {
         let app = build_test_app();
         app.env

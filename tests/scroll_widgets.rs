@@ -25,7 +25,12 @@ fn scroll_content_quad_bounds(env: &WowLuaEnv) -> (f32, f32, f32, f32) {
     let solid: Vec<_> = batch
         .vertices
         .iter()
-        .filter(|vertex| vertex.tex_index == -1 && vertex.color[0] > 0.9 && vertex.color[1] < 0.1)
+        .filter(|vertex| {
+            vertex.tex_index == -1
+                && vertex.color[0] > 0.9
+                && vertex.color[1] < 0.1
+                && vertex.color[3] > 0.0
+        })
         .collect();
     assert!(
         !solid.is_empty(),
@@ -93,7 +98,10 @@ fn nested_scroll_viewport_outside_parent_emits_no_visible_content() {
             .vertices
             .iter()
             .filter(|vertex| {
-                vertex.tex_index == -1 && vertex.color[2] > 0.9 && vertex.color[0] < 0.1
+                vertex.tex_index == -1
+                    && vertex.color[2] > 0.9
+                    && vertex.color[0] < 0.1
+                    && vertex.color[3] > 0.0
             })
             .count()
     };
@@ -143,6 +151,36 @@ fn scroll_offsets_translate_emitted_content_quads_on_both_axes_without_drift() {
     env.exec("ScrollQuadViewport:SetHorizontalScroll(0); ScrollQuadViewport:SetVerticalScroll(0)")
         .unwrap();
     assert_eq!(scroll_content_quad_bounds(&env), (70.0, 70.0, 90.0, 90.0));
+}
+
+#[cfg(feature = "gui")]
+#[test]
+fn scaled_scroll_child_offsets_move_visible_quads_in_screen_pixels() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        ScrollQuadViewport = CreateFrame("ScrollFrame", "ScrollQuadViewport", UIParent)
+        ScrollQuadViewport:SetSize(100, 100)
+        ScrollQuadViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+        local child = CreateFrame("Frame", nil, ScrollQuadViewport)
+        child:SetSize(100, 100)
+        child:SetScale(2)
+        child:SetPoint("TOPLEFT", ScrollQuadViewport, "TOPLEFT")
+        ScrollQuadViewport:SetScrollChild(child)
+        local texture = child:CreateTexture(nil, "ARTWORK")
+        texture:SetSize(10, 10)
+        texture:SetPoint("TOPLEFT", child, "TOPLEFT", 30, -30)
+        texture:SetColorTexture(1, 0, 0, 1)
+    "#,
+    )
+    .unwrap();
+
+    assert_eq!(scroll_content_quad_bounds(&env), (80.0, 80.0, 100.0, 100.0));
+    env.exec(
+        "ScrollQuadViewport:SetHorizontalScroll(10); ScrollQuadViewport:SetVerticalScroll(10)",
+    )
+    .unwrap();
+    assert_eq!(scroll_content_quad_bounds(&env), (60.0, 60.0, 80.0, 80.0));
 }
 
 // ============================================================================
