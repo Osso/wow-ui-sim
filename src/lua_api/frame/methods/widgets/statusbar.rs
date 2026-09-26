@@ -81,12 +81,19 @@ fn apply_bar_texture(
             .children_keys
             .insert("BarTexture".to_string(), bar_id);
     }
+    let rotates = sim
+        .widgets
+        .get(id)
+        .is_some_and(|f| f.statusbar_rotates_texture);
     if let Some(bar) = sim.widgets.get_mut_visual(bar_id) {
         bar.parent_id = Some(id);
         bar.parent_key = Some("BarTexture".to_string());
         bar.texture_file_data_id = file_id;
         bar.color_texture = None;
         apply_statusbar_texture_source(bar, path);
+        if rotates {
+            apply_bar_texture_rotation(bar, true);
+        }
     }
 }
 
@@ -104,10 +111,21 @@ fn adopt_bar_texture(sim: &mut crate::lua_api::SimState, id: u64, bar_id: u64) {
             .insert("BarTexture".to_string(), bar_id);
     }
 
+    let rotates = sim
+        .widgets
+        .get(id)
+        .is_some_and(|f| f.statusbar_rotates_texture);
     if let Some(bar) = sim.widgets.get_mut_visual(bar_id) {
         bar.parent_id = Some(id);
         bar.parent_key = Some("BarTexture".to_string());
+        if rotates {
+            apply_bar_texture_rotation(bar, true);
+        }
     }
+}
+
+fn apply_bar_texture_rotation(bar: &mut crate::widget::Frame, rotates: bool) {
+    bar.tex_coords_quad = rotates.then_some([0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]);
 }
 
 fn apply_statusbar_texture_source(frame: &mut crate::widget::Frame, path: Option<String>) {
@@ -407,10 +425,29 @@ fn apply_desaturation(state: &mut LuaState, id: u64, desaturation: f64) {
 }
 
 pub(super) fn get_rotates_texture(state: &mut LuaState) -> LuaResult<u32> {
-    false.into_stack(state)
+    let id = frame_id_from_stack(state, 1)?;
+    let sim = borrow_state(state)?;
+    let rotates = sim
+        .widgets
+        .get(id)
+        .is_some_and(|f| f.statusbar_rotates_texture);
+    drop(sim);
+    rotates.into_stack(state)
 }
 
-pub(super) fn set_rotates_texture(_state: &mut LuaState) -> LuaResult<u32> {
+pub(super) fn set_rotates_texture(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let rotates = val_to_bool(stack_val(state, 2));
+    let mut sim = borrow_state_mut(state)?;
+    let bar_id = statusbar_child_id(&sim, id);
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.statusbar_rotates_texture = rotates;
+    }
+    if let Some(bar_id) = bar_id
+        && let Some(bar) = sim.widgets.get_mut_visual(bar_id)
+    {
+        apply_bar_texture_rotation(bar, rotates);
+    }
     Ok(0)
 }
 

@@ -384,6 +384,8 @@ pub struct Frame {
     pub statusbar_texture_path: Option<String>,
     /// StatusBar bar texture child ID (set by SetStatusBarTexture).
     pub statusbar_bar_id: Option<u64>,
+    /// Whether the bar texture is rotated by a quarter turn.
+    pub statusbar_rotates_texture: bool,
     /// StatusBar desaturation amount in the normalized 0..1 range.
     pub statusbar_desaturation: f64,
     /// Numeric Enum.StatusBarFillStyle value (0..3).

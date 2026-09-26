@@ -198,6 +198,7 @@ macro_rules! frame_defaults {
             statusbar_color: None,
             statusbar_texture_path: None,
             statusbar_bar_id: None,
+            statusbar_rotates_texture: false,
             statusbar_desaturation: 0.0,
             statusbar_fill_style: 0,
             statusbar_reverse_fill: false,

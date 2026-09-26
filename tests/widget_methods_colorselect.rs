@@ -631,6 +631,71 @@ fn test_statusbar_texture_userdata_preserves_existing_atlas_source() {
 }
 
 #[test]
+fn statusbar_adopts_existing_custom_texcoords_without_rotation() {
+    let env = WowLuaEnv::new().unwrap();
+    let coords: (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            local texture = bar:CreateTexture()
+            texture:SetAtlas("UI-HUD-UnitFrame-Party-PortraitOn-Bar-Mana")
+            texture:SetTexCoord(0.2, 0.8, 0.3, 0.7)
+            local a, b, c, d = texture:GetTexCoord()
+            bar:SetStatusBarTexture(texture)
+            local e, f, g, h = texture:GetTexCoord()
+            return e-a, f-b, g-c, h-d
+            "#,
+        )
+        .unwrap();
+    assert!(coords.0.abs() < 0.0001 && coords.1.abs() < 0.0001);
+    assert!(coords.2.abs() < 0.0001 && coords.3.abs() < 0.0001);
+}
+
+#[test]
+fn statusbar_rotates_texture_persists_across_source_changes() {
+    let env = WowLuaEnv::new().unwrap();
+    let (initial, enabled, replaced, disabled): (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            local initial = bar:GetRotatesTexture()
+            bar:SetRotatesTexture(true)
+            local enabled = bar:GetRotatesTexture()
+            bar:SetStatusBarTexture("Interface\\Buttons\\WHITE8X8")
+            bar:SetStatusBarTexture("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana")
+            local replaced = bar:GetRotatesTexture()
+            bar:SetRotatesTexture(false)
+            return initial, enabled, replaced, bar:GetRotatesTexture()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        (initial, enabled, replaced, disabled),
+        (false, true, true, false)
+    );
+}
+
+#[test]
+fn statusbar_rotation_updates_child_texcoords_after_atlas_replacement() {
+    let env = WowLuaEnv::new().unwrap();
+    let (first, second): (String, String) = env
+        .eval(
+            r#"
+            local bar = CreateFrame("StatusBar")
+            bar:SetStatusBarTexture("Interface\\Buttons\\WHITE8X8")
+            bar:SetRotatesTexture(true)
+            local first = table.concat({bar:GetStatusBarTexture():GetTexCoord()}, ",")
+            bar:SetStatusBarTexture("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana")
+            local second = table.concat({bar:GetStatusBarTexture():GetTexCoord()}, ",")
+            return first, second
+            "#,
+        )
+        .unwrap();
+    assert_eq!(first, "0,1,1,1,0,0,1,0");
+    assert_eq!(second, first);
+}
+
+#[test]
 fn test_statusbar_interpolation_methods_track_target_and_displayed_value() {
     let env = WowLuaEnv::new().unwrap();
 

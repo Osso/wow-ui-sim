@@ -147,6 +147,26 @@ fn emit_textured_quad(
     tint: [f32; 4],
     alpha: f32,
 ) {
+    if let Some(fill) = bar_fill
+        && let Some(uv4) = rotated_quad_uvs(f)
+    {
+        let fill_bounds = apply_bar_fill(bounds, bar_fill);
+        let cropped_uv4 = clip_bar_quad_uvs(uv4, fill);
+        let atlas_uv4 = map_quad_into_atlas(cropped_uv4, f.atlas_tex_coords);
+        let (effective_path, effective_uv4) =
+            remap_atlas_crop_uv4(tex_path, atlas_uv4, f.atlas_tex_coords);
+        let vert_before = batch.vertices.len();
+        batch.push_textured_path_uv4(
+            fill_bounds,
+            effective_uv4,
+            &effective_path,
+            tint,
+            f.blend_mode,
+        );
+        finalize_textured_quad(batch, vert_before, f);
+        return;
+    }
+
     if bar_fill.is_none()
         && let Some(uv4) = rotated_quad_uvs(f)
     {
@@ -193,6 +213,33 @@ fn rotated_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
         return None;
     }
     Some([tl, tr, br, bl])
+}
+
+fn clip_bar_quad_uvs(uv4: [[f32; 2]; 4], fill: &StatusBarFill) -> [[f32; 2]; 4] {
+    let (start, end) = if fill.reverse {
+        (1.0 - fill.fraction, 1.0)
+    } else {
+        (0.0, fill.fraction)
+    };
+    let interpolate = |a: [f32; 2], b: [f32; 2], fraction: f32| {
+        [
+            a[0] + (b[0] - a[0]) * fraction,
+            a[1] + (b[1] - a[1]) * fraction,
+        ]
+    };
+    [
+        interpolate(uv4[0], uv4[1], start),
+        interpolate(uv4[0], uv4[1], end),
+        interpolate(uv4[3], uv4[2], end),
+        interpolate(uv4[3], uv4[2], start),
+    ]
+}
+
+fn map_quad_into_atlas(uv4: [[f32; 2]; 4], atlas: Option<(f32, f32, f32, f32)>) -> [[f32; 2]; 4] {
+    let Some((left, right, top, bottom)) = atlas else {
+        return uv4;
+    };
+    uv4.map(|[u, v]| [left + u * (right - left), top + v * (bottom - top)])
 }
 
 /// Apply atlas-slot cropping to 4-corner UVs. Returns the rewritten path
@@ -553,6 +600,57 @@ mod tests {
             tint: [1.0, 1.0, 1.0, 1.0],
             blend: BlendMode::Alpha,
         }
+    }
+
+    #[test]
+    fn rotated_statusbar_fill_maps_visible_half_to_vertical_texture_region() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.tex_coords_quad = Some([0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]);
+        let bounds = Rectangle::new(Point::new(10.0, 20.0), Size::new(100.0, 20.0));
+        let fill = crate::iced_app::statusbar::StatusBarFill {
+            fraction: 0.5,
+            reverse: false,
+            color: None,
+        };
+
+        build_texture_quads(&mut batch, bounds, &frame, Some(&fill), 1.0);
+
+        assert_eq!(batch.vertices.len(), 4);
+        assert_eq!(batch.vertices[0].tex_coords, [0.0, 1.0]);
+        assert_eq!(batch.vertices[1].tex_coords, [0.0, 0.5]);
+        assert_eq!(batch.vertices[2].tex_coords, [1.0, 0.5]);
+        assert_eq!(batch.vertices[3].tex_coords, [1.0, 1.0]);
+        assert_eq!(batch.vertices[2].position[0], 60.0);
+    }
+
+    #[test]
+    fn rotated_statusbar_atlas_uses_cropped_texture_space() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.atlas_tex_coords = Some((0.2, 0.6, 0.3, 0.7));
+        frame.tex_coords_quad = Some([0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]);
+        let bounds = Rectangle::new(Point::new(10.0, 20.0), Size::new(100.0, 20.0));
+        let fill = crate::iced_app::statusbar::StatusBarFill {
+            fraction: 0.5,
+            reverse: false,
+            color: None,
+        };
+
+        build_texture_quads(&mut batch, bounds, &frame, Some(&fill), 1.0);
+
+        for (vertex, expected) in
+            batch
+                .vertices
+                .iter()
+                .zip([[0.0, 1.0], [0.0, 0.5], [1.0, 0.5], [1.0, 1.0]])
+        {
+            assert!((vertex.tex_coords[0] - expected[0]).abs() < 0.0001);
+            assert!((vertex.tex_coords[1] - expected[1]).abs() < 0.0001);
+        }
+        assert!(batch.texture_requests[0].path.contains("@crop:"));
     }
 
     #[test]
