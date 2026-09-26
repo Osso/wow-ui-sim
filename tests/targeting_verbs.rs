@@ -36,6 +36,59 @@ fn panel_addons_load_narration_before_shared_xml_consumes_its_slider_mixin() {
     );
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn panel_addons_initialize_target_frame_private_aura_groups() {
+    let ui = crate::common::panel_fixtures::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    crate::common::panel_fixtures::load_panel_addons(&env);
+
+    let errors = crate::common::panel_fixtures::recorded_lua_errors(&env);
+    for error in &errors {
+        eprintln!("panel addon Lua error: {error}");
+    }
+
+    let (loaded, public_util, secure_util, private_onload_secure, aura_exists, buffs, debuffs): (
+        bool,
+        String,
+        String,
+        bool,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            local secure = __secureenv
+            local mixin = secure and secure.TargetFrameAuraContainerPrivateMixin
+            local onload = mixin and mixin.OnLoad
+            local aura = TargetFrame and TargetFrame.TargetFrameContent
+                and TargetFrame.TargetFrameContent.TargetFrameContentContextual
+                and TargetFrame.TargetFrameContent.TargetFrameContentContextual.Auras
+            local private = aura and GetForbiddenObjectTable(aura)
+            return C_AddOns.IsAddOnLoaded("Blizzard_AuraContainer"),
+                type(AuraContainerUtil),
+                type(secure and secure.AuraContainerUtil),
+                type(onload) == "function" and getfenv(onload) == secure,
+                aura ~= nil,
+                private ~= nil and private.buffAuraGroup ~= nil,
+                private ~= nil and private.debuffAuraGroup ~= nil
+            "#,
+        )
+        .expect("target aura state should be introspectable after panel loading");
+    eprintln!(
+        "target aura diagnostics: Blizzard_AuraContainer loaded={loaded}, public AuraContainerUtil={public_util}, secure AuraContainerUtil={secure_util}, private OnLoad secure env={private_onload_secure}, aura exists={aura_exists}, buff group={buffs}, debuff group={debuffs}"
+    );
+    assert!(
+        aura_exists,
+        "TargetFrame contextual Auras missing; Lua errors: {errors:#?}"
+    );
+    assert!(
+        buffs && debuffs,
+        "TargetFrame aura OnLoad must initialize both private groups; Lua errors: {errors:#?}",
+    );
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
