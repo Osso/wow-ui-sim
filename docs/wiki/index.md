@@ -1,6 +1,6 @@
 ## [2026-09-26] audit | Record Wrath tooltip content lifecycle source boundary
 
-[[tooltip-owner-lifecycle]] records `1e9674bcd` under normal `gui,client-wrath`: `SetOwner` internally hides and clears while retaining its new owner; owned populated `SetText` shows; appends remain hidden; direct `Hide`, `SetShown(false)`, and `FadeOut` release ownership even already hidden. The grouped `tooltip_basic::` source batch is GREEN 62/62. Current GameTooltip documentation is independent API documentation, not native execution; native behavior, callback order, ancestor-driven effective visibility, and final independent verification remain pending.
+[[tooltip-owner-lifecycle]] records `1e9674bcd` under normal `gui,client-wrath`: `SetOwner` internally hides and clears while retaining its new owner; owned populated `SetText` shows; appends remain hidden; direct `Hide`, `SetShown(false)`, and `FadeOut` release ownership even already hidden. The grouped `tooltip_basic::` source batch is GREEN 62/62. Independent format/check pass; five sizing/cursor fixture failures were corrected in `12734d0ae` and pass focused reruns. One duplicated full-UI case still fails on absent `BuffFrame.UpdateAuras`; no full-green claim. Current API documentation is not native execution; callback/effective-visibility edges remain open.
 
 ## [2026-09-26] audit | Record runtime StatusBar template orientation source boundary
 
