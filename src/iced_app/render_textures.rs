@@ -362,6 +362,9 @@ impl App {
         let Some(f) = registry.get(hovered_id) else {
             return;
         };
+        if !super::super::button_vis::should_append_hover_highlight(registry, f) {
+            return;
+        }
 
         let Some(bounds) = hovered_button_bounds(f) else {
             return;

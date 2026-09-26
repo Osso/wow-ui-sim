@@ -32,11 +32,13 @@ pub fn should_skip_frame(
     if parent_draw_layer_is_disabled(f, registry) {
         return true;
     }
-    // WoW HIGHLIGHT draw layer: regions only visible when parent is hovered.
-    // This is separate from the HighlightTexture button child (handled below).
+    // Generic HIGHLIGHT regions require hover; a locked Button slot child
+    // instead renders in the regular draw pass.
     if f.draw_layer == DrawLayer::Highlight {
         let parent_hovered = f.parent_id.is_some() && hovered_frame == f.parent_id;
-        if !parent_hovered || !parent_allows_hover_highlight(f, registry) {
+        if !locked_button_highlight_child(f, registry)
+            && (!parent_hovered || !parent_allows_hover_highlight(f, registry))
+        {
             return true;
         }
     }
@@ -80,6 +82,25 @@ fn parent_draw_layer_is_disabled(f: &crate::widget::Frame, registry: &WidgetRegi
         return false;
     };
     !parent.is_draw_layer_enabled(f.draw_layer)
+}
+
+pub(super) fn should_append_hover_highlight(
+    registry: &WidgetRegistry,
+    button: &crate::widget::Frame,
+) -> bool {
+    !button.highlight_locked && registry.is_ancestor_visible(button.id)
+}
+
+fn locked_button_highlight_child(f: &crate::widget::Frame, registry: &WidgetRegistry) -> bool {
+    f.parent_id
+        .and_then(|id| registry.get(id))
+        .is_some_and(|parent| {
+            matches!(
+                parent.widget_type,
+                WidgetType::Button | WidgetType::CheckButton
+            ) && parent.highlight_locked
+                && parent.children_keys.get("HighlightTexture") == Some(&f.id)
+        })
 }
 
 fn parent_allows_hover_highlight(f: &crate::widget::Frame, registry: &WidgetRegistry) -> bool {
@@ -154,9 +175,9 @@ fn texture_visibility(
         return Some(is_pressed);
     }
     if parent.children_keys.get("HighlightTexture") == Some(&texture_id) {
-        // Hover highlight is rendered exclusively by append_hover_highlight.
-        // Keep it out of the generic draw loop so additive blending is applied once.
-        return Some(false);
+        // Locked highlight renders in the regular pass; unlocked highlight
+        // renders in the hover pass. Never emit the same child in both.
+        return Some(parent.highlight_locked);
     }
     None
 }

@@ -242,6 +242,60 @@ fn highlight_texture_child_stays_hidden_until_hover_render_path() {
     );
 }
 
+fn red_highlight_quads(batch: &wow_ui_sim::render::QuadBatch) -> usize {
+    batch
+        .vertices
+        .chunks_exact(4)
+        .filter(|quad| {
+            let color = quad[0].color;
+            color[0] > 0.9 && color[1] < 0.1 && color[2] < 0.1
+        })
+        .count()
+}
+
+#[test]
+fn locked_button_highlight_renders_once_without_hover_and_unlock_restores_hover() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame", "TestLockParent", UIParent)
+        parent:SetPoint("CENTER")
+        parent:SetSize(120, 40)
+        local btn = CreateFrame("Button", "TestLockButton", parent)
+        btn:SetAllPoints(parent)
+        local highlight = btn:CreateTexture(nil, "HIGHLIGHT")
+        highlight:SetAllPoints(btn)
+        highlight:SetColorTexture(1, 0, 0, 1)
+        btn:SetHighlightTexture(highlight)
+        "#,
+    )
+    .unwrap();
+    let button_id = env.state().borrow().widgets.get_id_by_name("TestLockButton").unwrap();
+    let count = |hovered| red_highlight_quads(&build_batch_for_button(&env, "TestLockParent", None, hovered));
+
+    assert_eq!(count(None), 0, "unlocked nonhover must not emit highlight");
+    assert_eq!(count(Some(button_id)), 1, "ordinary hover emits once");
+
+    env.exec("TestLockButton:LockHighlight()").unwrap();
+    assert_eq!(count(None), 1, "locked nonhover must emit highlight");
+    assert_eq!(count(Some(button_id)), 1, "locked hover must not double-emit");
+
+    env.exec("TestLockButton:UnlockHighlight()").unwrap();
+    assert_eq!(count(None), 0, "unlock restores nonhover suppression");
+    assert_eq!(count(Some(button_id)), 1, "unlock restores hover emission");
+
+    env.exec("TestLockButton:SetHighlightLocked(true)").unwrap();
+    assert_eq!(count(None), 1, "SetHighlightLocked also renders when not hovered");
+    assert_eq!(count(Some(button_id)), 1, "SetHighlightLocked hover emits once");
+    env.exec("TestLockParent:Hide()").unwrap();
+    assert_eq!(count(None), 0, "hidden ancestor suppresses locked highlight");
+    assert_eq!(count(Some(button_id)), 0, "hidden ancestor suppresses hover overlay");
+    env.exec("TestLockParent:Show(); TestLockButton:SetHighlightLocked(false)")
+        .unwrap();
+    assert_eq!(count(None), 0, "cleared lock restores nonhover suppression");
+    assert_eq!(count(Some(button_id)), 1, "cleared lock restores hover");
+}
+
 /// Disabled button shows DisabledTexture instead of NormalTexture.
 /// Pressed/hovered state has no effect while disabled.
 #[test]

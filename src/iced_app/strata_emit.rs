@@ -587,7 +587,10 @@ fn append_hover_highlight(
     ) {
         return;
     }
-    if params.pressed_frame == Some(hovered_id) || frame.button_state == 1 {
+    if params.pressed_frame == Some(hovered_id)
+        || frame.button_state == 1
+        || !super::button_vis::should_append_hover_highlight(params.registry, frame)
+    {
         return;
     }
 
