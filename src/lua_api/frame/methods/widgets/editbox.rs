@@ -7,8 +7,11 @@ use super::shared::{opt_string, val_to_bool, val_to_f64};
 use crate::lua_api::frame::methods::forbidden_aspects::ensure_forbidden_aspect_absent;
 use crate::lua_api::frame::methods::text_attribute_event::refresh_auto_text_height_after_width_change;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, frame_id_from_stack, get_or_create_frame_fields,
-    table_get, table_set,
+    borrow_state, borrow_state_mut, create_string, frame_id_from_stack, frame_ref,
+    get_or_create_frame_fields, table_get, table_set,
+};
+use crate::lua_api::script_helpers::{
+    call_error_handler_state, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
 use crate::lua_bridge::{IntoStack, stack_val};
 use rilua::vm::gc::arena::GcRef;
@@ -38,9 +41,28 @@ pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
         old
     };
     if old_focus != Some(id) {
-        // TODO: fire OnEditFocusLost on old_focus, OnEditFocusGained on id
+        if let Some(old_id) = old_focus {
+            fire_focus_script(state, old_id, "OnEditFocusLost")?;
+        }
+        if borrow_state(state)?.focused_frame_id == Some(id) {
+            fire_focus_script(state, id, "OnEditFocusGained")?;
+        }
     }
     Ok(0)
+}
+
+fn fire_focus_script(state: &mut LuaState, id: u64, handler_name: &str) -> LuaResult<()> {
+    let handlers = get_scripts_for_dispatch(state, id, handler_name);
+    if handlers.is_empty() {
+        return Ok(());
+    }
+    let frame = frame_ref(state, id)?;
+    for handler in handlers {
+        if let Err(error) = protected_lua_pcall_state(state, handler, &[frame]) {
+            call_error_handler_state(state, &error);
+        }
+    }
+    Ok(())
 }
 
 pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
@@ -60,7 +82,7 @@ pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
         }
     };
     if cleared {
-        // TODO: fire OnEditFocusLost
+        fire_focus_script(state, id, "OnEditFocusLost")?;
     }
     Ok(0)
 }

@@ -49,6 +49,110 @@ fn test_editbox_focus_switches_between_frames() {
 }
 
 #[test]
+fn editbox_lua_focus_transitions_dispatch_once_with_current_state() {
+    let env = WowLuaEnv::new().unwrap();
+    let calls: String = env.eval(r#"
+        local first = CreateFrame('EditBox')
+        local second = CreateFrame('EditBox')
+        local calls = {}
+        local function record(label, frame, event)
+            table.insert(calls, label .. ':' .. event .. ':' .. tostring(frame:HasFocus()))
+        end
+        first:SetScript('OnEditFocusGained', function(self) record('first', self, 'gained') end)
+        first:HookScript('OnEditFocusLost', function(self) record('first', self, 'lost') end)
+        second:SetScript('OnEditFocusGained', function(self) record('second', self, 'gained') end)
+        second:SetScript('OnEditFocusLost', function(self) record('second', self, 'lost') end)
+        first:SetFocus()
+        first:SetFocus()
+        second:SetFocus()
+        first:ClearFocus()
+        second:SetFocus()
+        second:ClearFocus()
+        second:ClearFocus()
+        return table.concat(calls, ',')
+    "#).unwrap();
+    assert_eq!(calls, "first:gained:true,first:lost:false,second:gained:true,second:lost:false");
+}
+
+#[test]
+fn editbox_focus_lost_redirect_does_not_gain_stale_target() {
+    let env = WowLuaEnv::new().unwrap();
+    let calls: String = env.eval(r#"
+        local first = CreateFrame('EditBox')
+        local requested = CreateFrame('EditBox')
+        local redirected = CreateFrame('EditBox')
+        local calls = {}
+        first:SetFocus()
+        first:SetScript('OnEditFocusLost', function(self)
+            table.insert(calls, 'lost:' .. tostring(self:HasFocus()))
+            redirected:SetFocus()
+        end)
+        requested:SetScript('OnEditFocusGained', function() table.insert(calls, 'stale') end)
+        redirected:SetScript('OnEditFocusGained', function(self)
+            table.insert(calls, 'redirected:' .. tostring(self:HasFocus()))
+        end)
+        requested:SetFocus()
+        assert(redirected:HasFocus() and not requested:HasFocus())
+        return table.concat(calls, ',')
+    "#).unwrap();
+    assert_eq!(calls, "lost:false,redirected:true");
+}
+
+#[test]
+fn editbox_focus_dispatches_intrinsic_bindings_in_order() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("FocusBindingProbe = function() end").unwrap();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("FocusBindings.toc");
+    std::fs::write(&toc, "## Title: Focus bindings\nBindings.xml\n").unwrap();
+    std::fs::write(root.path().join("Bindings.xml"), r#"
+        <Ui>
+            <Frame name="FocusPrecall" intrinsic="true"><Scripts>
+                <OnEditFocusLost intrinsicOrder="precall">FocusBindingProbe('pre', self)</OnEditFocusLost>
+            </Scripts></Frame>
+            <Frame name="FocusPostcall" virtual="true"><Scripts>
+                <OnEditFocusLost intrinsicOrder="postcall">FocusBindingProbe('post', self)</OnEditFocusLost>
+            </Scripts></Frame>
+        </Ui>
+    "#).unwrap();
+    let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    let bindings: String = env.eval(r#"
+        local calls = {}
+        FocusBindingProbe = function(binding, self)
+            table.insert(calls, binding .. ':' .. tostring(self:HasFocus()))
+        end
+        local edit = CreateFrame('EditBox', nil, UIParent, 'FocusPrecall,FocusPostcall')
+        assert(type(edit:GetScript('OnEditFocusLost', 0)) == 'function')
+        assert(type(edit:GetScript('OnEditFocusLost', 2)) == 'function')
+        edit:SetScript('OnEditFocusLost', function(self)
+            table.insert(calls, 'normal:' .. tostring(self:HasFocus()))
+        end)
+        edit:SetFocus()
+        edit:ClearFocus()
+        return table.concat(calls, ',')
+    "#).unwrap();
+    assert_eq!(bindings, "pre:false,normal:false,post:false");
+}
+
+#[test]
+fn editbox_focus_error_reports_and_other_focus_callbacks_continue() {
+    let env = WowLuaEnv::new().unwrap();
+    let hidden: bool = env.eval(r#"
+        local popup = CreateFrame('Frame')
+        local first = CreateFrame('EditBox')
+        local second = CreateFrame('EditBox')
+        first:SetScript('OnEditFocusLost', function() error('focus cleanup failure') end)
+        second:SetScript('OnEditFocusGained', function() popup:Hide() end)
+        first:SetFocus()
+        second:SetFocus()
+        return not popup:IsShown() and second:HasFocus()
+    "#).unwrap();
+    assert!(hidden, "gained callback must run despite former owner's failing lost callback");
+    assert!(env.state().borrow().lua_errors.iter().any(|error| error.contains("focus cleanup failure")));
+}
+
+#[test]
 fn test_button_get_text_height_measures_button_text() {
     let env = WowLuaEnv::new().unwrap();
 
