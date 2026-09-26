@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record tooltip owner lifecycle source boundary
+
+Created [[tooltip-owner-lifecycle]] and updated index from `6da58da9f`, `docs/specs/tooltip-owner-lifecycle.md`, and `/tmp/wrath-tooltip-owner-proof.md`. The shared explicit hide transition clears both tooltip owner fields for a shown `GameTooltip`; `Hide()` and `SetShown(false)` preserve lines while releasing ownership. `ClearLines()` retains ownership, and ordinary `Frame:Hide()` does not affect tooltip ownership. Normal `gui,client-wrath` focused source results are 8/8 grouped matches for four unique owner cases and 2/2 for existing `FadeOut`. Current GameTooltip documentation corroborates `Hide` clearing and `ClearLines` retention, but this is not native execution. Callback order, ancestor-driven effective visibility, and final independent verification remain pending. No tests ran for this documentation audit.
+
 ## [2026-09-26] tooling | Repeatable panel benchmark and Fx hit-grid hashing
 
 `02cc4185d` adds `bench_spellbook --cycles N`. Spellbook-open profiling (flat self time, ~384ms main-thread CPU across open/close) split: Lua 21%, hashing/allocation 16%, layout 12%, main-thread PNG decode 10%, hit grid 4.7%, strata buckets 3.1%, quad emission 2%. `c007a2f6b` swaps std SipHash maps in the hit grid and strata-bucket code for Fx maps; fast-core interleaved pairs show ~5-8% lower repeat-open/close draw p50. Runs are bimodal on this host's Zen 5/Zen 5c mix; see [[cli-commands]].
