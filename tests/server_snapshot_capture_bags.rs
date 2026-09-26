@@ -22,7 +22,7 @@ CreateFrame = function()
     local f = {registered = {}}
     function f:RegisterEvent(event) self.registered[event] = true end
     function f:SetScript(_, callback) self.callback = callback end
-    snapshotFrame = f
+    if not snapshotFrame then snapshotFrame = f end
     return f
 end
 "#;
@@ -132,10 +132,12 @@ fn delayed_bag_events_refresh_snapshot_without_per_item_updates() {
     let valid: bool = env
         .eval(
             r#"
-        local events = snapshotFrame.registered
-        snapshotFrame.callback(snapshotFrame, "BAG_UPDATE_DELAYED")
+        local eventFrame = snapshotFrame
+        ServerSnapshot:Snapshot("intermediate")
+        local events = eventFrame.registered
+        eventFrame.callback(eventFrame, "BAG_UPDATE_DELAYED")
         local delayed = ServerSnapshotDB.characters[ServerSnapshotDB.lastCharacterKey]
-        snapshotFrame.callback(snapshotFrame, "BAG_CONTAINER_UPDATE")
+        eventFrame.callback(eventFrame, "BAG_CONTAINER_UPDATE")
         local changed = ServerSnapshotDB.characters[ServerSnapshotDB.lastCharacterKey]
         return events.BAG_UPDATE_DELAYED and events.BAG_CONTAINER_UPDATE
             and events.PLAYER_ENTERING_WORLD and not events.BAG_UPDATE
