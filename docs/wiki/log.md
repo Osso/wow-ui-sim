@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Verify EditBox text-position correction
+
+At `3b5ee8d55`, independent verification passes seven EditBox family cases and four focus controls, with 19 unchanged key-dispatch cases retained, plus format/check. The previously failing shortened-text regression now covers stale cursor and UTF-8 selection endpoints followed by another insert. [The spec](../specs/editbox-text-position-selection.md) and `/tmp/cross-version-editbox-text-position-proof.md` retain exact limits and logs; `SetText`'s own lifecycle and native callback semantics remain unclaimed.
+
 ## [2026-09-26] audit | Record pending shortened-text EditBox cursor follow-up
 
 Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), index, and `/tmp/cross-version-editbox-text-position-proof.md` from `3b5ee8d55` and `/tmp/editbox-shortening-red.log`. The new shortened-text test was initially RED 0/1: `SetText` left old logical cursor/selection state, `Insert` clamped byte editing to the shorter text, then derived its cursor from that old index. The follow-up derives the cursor from the actual clamped prefix plus inserted scalar count. GREEN and final gates remain pending; the spec item remains unchecked. No full `SetText` cursor-lifecycle or native-callback claim. Broader goal unchanged. No tests, builds, delegation, push, or deployment ran for this documentation audit.
