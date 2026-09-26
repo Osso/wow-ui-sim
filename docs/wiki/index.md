@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record runtime StatusBar template orientation source boundary
+
+[[wrath-statusbar-value-callback]] records `4ad244e56` runtime `CreateFrame` template orientation source GREEN under normal `gui,client-wrath`: a RED 0/1 became GREEN 1/1 for direct/inherited `VERTICAL` plus explicit `HORIZONTAL` override before `OnLoad`. Six retained renderer/collector controls remain source proof only; no native fill-direction claim. Fresh final normal `fmt`/`check` remain pending verifier-main reconciliation. Stage 1 range, initialization, `OnMinMaxChanged`, and callback-order gaps remain; stages 2–5 remain tooltip lifecycle, scrolling/text, broader API audit, and integrated Wrath validation.
+
 ## [2026-09-26] audit | Record Wrath StatusBar vertical source boundary
 
 [[wrath-statusbar-value-callback]] records `e0720b992` targeted normal `gui,client-wrath` source GREEN: vertical normal/reverse 2/2, vertical rotated atlas 1/1, and Lua orientation collection 1/1. Horizontal rotation controls remain GREEN 2/2 within overlapping `rotated_statusbar_` 3/3. Bottom-up normal/top-down reverse are inferred, not native-verified. Range validity, first-zero dispatch, `OnMinMaxChanged`, and callback order remain uncorroborated for the interface-38001 target. Independent final normal `fmt`/`check` remains pending; stages 2–5 remain tooltip lifecycle, scrolling/text, broader API audit, and integrated Wrath validation.

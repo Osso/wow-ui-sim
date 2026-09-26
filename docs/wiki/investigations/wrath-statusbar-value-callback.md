@@ -1,6 +1,6 @@
 # Wrath StatusBar value callback boundary
 
-Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation; `9198d4a0` adds XML `rotatesTexture` application; `e0720b992` clips vertical fills along the bar axis. `91cb5c735` fixes the independent normal-Wrath `c_unit_auras` enum-registration gate by matching it to the `aura-instance-enumeration` module feature. At `e0720b992`, targeted normal `gui,client-wrath` source GREEN covers vertical normal/reverse 2/2, vertical rotated atlas 1/1, and Lua orientation collection 1/1; horizontal rotation controls remain GREEN 2/2 within the overlapping `rotated_statusbar_` 3/3 filter. This is source evidence only: bottom-up normal and top-down reverse are inferred, not native-verified. Independent final normal `fmt`/`check` remains pending. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
+Commits `9ea6555f8` and `98101cda3` cover ordinary StatusBar callbacks and texture rotation; `9198d4a0` adds XML `rotatesTexture` application; `e0720b992` adds vertical-fill source coverage; `4ad244e56` applies runtime `CreateFrame` StatusBar template orientation before `OnLoad`. `91cb5c735` fixes the independent normal-Wrath `c_unit_auras` enum-registration gate by matching it to the `aura-instance-enumeration` module feature. At `4ad244e56`, normal `gui,client-wrath` source GREEN changes the runtime orientation regression from RED 0/1 to GREEN 1/1: direct/inherited `VERTICAL` and explicit `HORIZONTAL` override are visible before `OnLoad`. Six retained normal-lane renderer/collector controls cover vertical normal/reverse 2/2, rotated atlas 1/1, Lua orientation collection 1/1, and horizontal rotation controls 2/2. All are source proof only; no native fill-direction claim is made. Fresh final normal `fmt`/`check` remain pending verifier-main reconciliation. The stock Classic consumer establishes the callback path; Solarity build 12340 is comparison, not authority for wow-ui-sim's interface-38001 profile. Native execution was not performed.
 
 ## Evidence
 
@@ -12,7 +12,7 @@ The cached Classic `Blizzard_TextStatusBar/Classic/TextStatusBar.xml` binds `OnV
 
 Rotation source GREEN is five focused cases: two rendered partial-fill UV cases in `/tmp/wrath-statusbar-postfix-rotated_statusbar_.log`, two source-replacement/atlas-coordinate cases in `/tmp/wrath-statusbar-postfix-statusbar_rotat.log`, and one custom-coordinate adoption case in `/tmp/wrath-statusbar-postfix-statusbar_adopts_existing_custom_texcoords_without_rotation.log`.
 
-`91cb5c735` adds the matching `aura-instance-enumeration` cfg to `c_unit_auras::register_sound_trigger_enum` in `enums.rs`, committing the normal-Wrath compile-blocker fix. At `9198d4a0`, a normal `gui,client-wrath` integration build passed, then two static XML tests and one runtime-template test changed from RED 0/2 + 0/1 to GREEN 2/2 + 1/1. The static tests prove direct `true` before `OnLoad`, template `true` inheritance before `OnLoad`, and explicit `false` override; the runtime test proves `CreateFrame` template application before `OnLoad`. Subsequent normal-profile verification passes the ten callback/Slider cases and three non-XML rotation-state/adoption cases. The two renderer unit cases retain diagnostic-feature proof only. The `statusbar_rotat` filter also selects one XML case; count that overlap once.
+`91cb5c735` adds the matching `aura-instance-enumeration` cfg to `c_unit_auras::register_sound_trigger_enum` in `enums.rs`, committing the normal-Wrath compile-blocker fix. At `9198d4a0`, a normal `gui,client-wrath` integration build passed, then two static XML tests and one runtime-template test changed from RED 0/2 + 0/1 to GREEN 2/2 + 1/1. The static tests prove direct `true` before `OnLoad`, template `true` inheritance before `OnLoad`, and explicit `false` override; the runtime test proves `CreateFrame` template rotation before `OnLoad`. At `4ad244e56`, `apply_runtime_child_direct_properties_with_inherits` calls the shared orientation resolver before rotation and lifecycle scripts; the new runtime orientation case changed from RED 0/1 to GREEN 1/1 for direct/inherited vertical and explicit horizontal override before `OnLoad`. The two renderer unit cases retain diagnostic-feature proof only. The `statusbar_rotat` filter also selects one XML case; count that overlap once.
 
 ## Stage 1: Solarity comparison
 
@@ -26,12 +26,13 @@ wow-ui-sim's `client-wrath` reports interface 38001, while Solarity targets buil
 | --- | --- | --- |
 | Ordinary callback | Pre-fix 0/1 RED; normal-profile `widget_slider::` 10/10 includes synchronous label update | Normal Wrath source GREEN |
 | Texture rotation | Two replacement/atlas-coordinate and one custom-coordinate adoption case pass normal Wrath; two rendered UV cases pass diagnostic features | API state/adoption normal GREEN; renderer proof remains diagnostic |
-| XML rotation | Normal `gui,client-wrath` build; RED 0/2 static + 0/1 runtime, then GREEN 2/2 + 1/1 | Direct `true`, inherited `true`, and explicit `false` override apply before `OnLoad`; runtime template covered |
-| Vertical fill | At `e0720b992`, normal `gui,client-wrath`: normal/reverse 2/2, rotated atlas 1/1, collector 1/1; horizontal controls remain GREEN 2/2 in overlapping `rotated_statusbar_` 3/3 | Targeted source GREEN. Bottom-up normal/top-down reverse are inferred, not native-verified; independent final `fmt`/`check` pending |
-| Normal Wrath lane | `91cb5c735` aligns `c_unit_auras` enum registration; `9198d4a0` independently passed 16 unique integration cases and fresh `fmt`/`check` | Vertical source proof is later and targeted; no full UI validation |
-| Stage-1 contracts | Range validity, first-zero dispatch, `OnMinMaxChanged`, callback order, and exact native vertical direction | Uncorroborated for this target; not imported from Solarity |
+| XML rotation | Normal `gui,client-wrath` build; RED 0/2 static + 0/1 runtime, then GREEN 2/2 + 1/1 | Direct `true`, inherited `true`, and explicit `false` override apply before `OnLoad`; runtime template rotation covered |
+| Runtime template orientation | At `4ad244e56`, normal `gui,client-wrath` RED 0/1, then GREEN 1/1 | Direct/inherited `VERTICAL` and explicit `HORIZONTAL` override apply before `OnLoad` |
+| Renderer/collector controls | Retained normal `gui,client-wrath` source proof: vertical normal/reverse 2/2, rotated atlas 1/1, collector 1/1, horizontal controls 2/2 | Six source controls retained; no native fill-direction claim |
+| Final normal checks | `4ad244e56` ledger has focused compile and four filtered GREEN cases only | Fresh final `fmt`/`check` pending verifier-main reconciliation; no full UI validation |
+| Stage-1 contracts | Range, initialization, `OnMinMaxChanged`, callback order, and native vertical direction | Uncorroborated for this target; not imported from Solarity |
 
-Stage 1 remains open: the vertical implementation has targeted normal-Wrath source GREEN, but exact native direction plus range/initialization/order contracts need separate evidence and regressions. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
+Stage 1 remains open: runtime template orientation now has targeted normal-Wrath source GREEN, while range, initialization, `OnMinMaxChanged`, callback order, and native vertical direction need separate evidence and regressions. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
 
 ## Later four stages
 
@@ -55,7 +56,10 @@ Stage 1 remains open: the vertical implementation has targeted normal-Wrath sour
 - `/tmp/wrath-statusbar-postfix-statusbar_rotat.log` — diagnostic source-replacement rotation GREEN (2/2).
 - `/tmp/wrath-statusbar-postfix-statusbar_adopts_existing_custom_texcoords_without_rotation.log` — diagnostic adoption GREEN (1/1).
 - `/tmp/wrath-statusbar-xml-proof.md` — normal `gui,client-wrath` XML RED/ GREEN ledger: 0/2 + 0/1 before `9198d4a0`, then 2/2 + 1/1.
-- `/tmp/wrath-statusbar-vertical-proof.md` — `e0720b992` normal-Wrath vertical RED/GREEN ledger and horizontal control results.
+- `/tmp/wrath-statusbar-vertical-proof.md` — `e0720b992` normal-Wrath vertical source ledger and horizontal control results.
+- `/tmp/wrath-statusbar-orientation-template-proof.md` — `4ad244e56` runtime orientation RED/GREEN ledger.
+- `/tmp/wrath-statusbar-orientation-template-red.log` — pre-fix runtime orientation RED (0/1).
+- `/tmp/wrath-statusbar-orientation-template-create_frame_statusbar_template_applies_orientation_before_onload.log` — post-fix runtime orientation GREEN (1/1).
 
 ## See Also
 

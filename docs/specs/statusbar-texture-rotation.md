@@ -7,7 +7,7 @@
 - [x] New bars report `false`; `SetRotatesTexture(true/false)` round-trips, including when set before or across bar texture replacement.
 - [x] The owned texture exposes the rotated eight-coordinate tuple `(0,1,1,1,0,0,1,0)`; replacing a raw source with an atlas retains rotation. Adopting an unrotated texture retains its existing custom texture coordinates.
 - [x] Rendered fill quads rotate texture samples and clip partial fills without changing horizontal fill geometry.
-- [x] Vertical StatusBars clip normal fills bottom-up and reverse fills top-down, including rotated textures and atlas-backed UVs. This direction is inferred from local Solarity source and conventional UI, **not native-verified**.
+- [x] Simulator vertical-fill fixtures cover normal/reverse state plus rotated atlas-backed UVs. This is source proof only; it makes no native fill-direction claim.
 - [x] XML StatusBars and runtime `CreateFrame` templates apply `rotatesTexture` before `OnLoad`; unset attributes inherit the template value while explicit `false` overrides inherited `true`.
 - [x] Runtime `CreateFrame` StatusBar templates apply `orientation` before `OnLoad`; inherited `VERTICAL` persists and explicit `HORIZONTAL` overrides it.
 
@@ -30,17 +30,17 @@
 - `tests/widget_methods_colorselect.rs` — source GREEN: two rotation/replacement cases plus one adopted-custom-coordinate case (3/3 total) under the diagnostic feature set.
 - `src/iced_app/quad_builders_textures.rs` — normal `gui,client-wrath` source GREEN at `e0720b992`: vertical normal/reverse 2/2 and rotated atlas 1/1. Horizontal rotation controls remain GREEN 2/2 within the overlapping `rotated_statusbar_` 3/3 filter.
 - `src/iced_app/statusbar.rs` — normal `gui,client-wrath` source GREEN: Lua-created vertical bar orientation and value reach collected fill (1/1).
-- `tests/xml_templates/inline_advanced/rendering_templates.rs` — normal `gui,client-wrath` RED 2 static + 1 runtime, then GREEN 3/3: direct XML `true` is visible in `OnLoad`; an inherited `true` remains visible in `OnLoad`; explicit XML `false` overrides it; runtime `CreateFrame` template rotation is visible in `OnLoad`. A separate runtime orientation case was RED 0/1 and GREEN 1/1 under `gui,client-wrath`, asserting direct/inherited vertical orientation and explicit horizontal override before `OnLoad`.
+- `tests/xml_templates/inline_advanced/rendering_templates.rs` — normal `gui,client-wrath` rotation RED 2 static + 1 runtime, then GREEN 3/3: direct XML `true`, inherited `true`, and explicit `false` override apply before `OnLoad`. At `4ad244e56`, the runtime orientation case changed from RED 0/1 to source GREEN 1/1: direct and inherited `VERTICAL`, plus explicit `HORIZONTAL` override, are each observable before `OnLoad`.
 
-The five earlier non-XML rotation cases passed only with `gui,client-wrath,aura-instance-enumeration`; they do not accept that diagnostic lane as normal-profile acceptance. Vertical source GREEN at `e0720b992` is separately targeted under normal `gui,client-wrath`: normal/reverse 2/2, rotated atlas 1/1, collector 1/1, with horizontal controls preserved 2/2. Bottom-up normal and top-down reverse remain inferred rather than native-verified. The XML 3/3 and vertical results are not replacements for independent final normal `fmt`/`check`.
+The five earlier non-XML rotation cases passed only with `gui,client-wrath,aura-instance-enumeration`; they do not accept that diagnostic lane as normal-profile acceptance. Six retained normal-lane source controls cover vertical normal/reverse 2/2, rotated atlas 1/1, Lua orientation collection 1/1, and horizontal rotation controls 2/2. They are simulator source proof only and make no native fill-direction claim. The XML results and retained six controls are not replacements for fresh final normal `fmt`/`check`, pending verifier-main reconciliation.
 
 ## Known gaps (current cycle)
 
-- [ ] Repeat the five earlier non-XML rotation cases under normal `gui,client-wrath`; `aura-instance-enumeration` was diagnostic only. Run independent final normal `fmt`/`check` after `e0720b992`.
+- [ ] Repeat the five earlier non-XML rotation cases under normal `gui,client-wrath`; `aura-instance-enumeration` was diagnostic only. Fresh final normal `fmt`/`check` remain pending verifier-main reconciliation after `4ad244e56`.
 - [ ] Confirm exact default and rotation semantics on an actual Classic Wrath client; Solarity assertions concern original build 12340, not this target.
-- [ ] Verify vertical fill direction and rotation against a native Classic Wrath client; bottom-up normal/top-down reverse is an explicit inference, and Lua/renderer fixtures do not prove native conformance.
+- [ ] Verify vertical fill direction and rotation against a native Classic Wrath client; current Lua/renderer fixtures are source proof, not native conformance.
 
 ## Out of scope
 
-- Range and callback behavior belongs to the separate value-callback slice.
+- Range, initialization, `OnMinMaxChanged`, and callback order belong to the separate value-callback slice.
 - Other XML orientation and geometry behavior remains separate; cached Blizzard usage corroborates the XML attribute but does not prove native rotation coordinates.
