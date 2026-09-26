@@ -8,7 +8,7 @@ An enabled, unpressed Button or CheckButton with a standard HighlightTexture slo
 - [x] Locked hover emits only one highlight quad; `UnlockHighlight()` or `SetHighlightLocked(false)` restores nonhover suppression and single hover emission.
 - [x] A hidden ancestor suppresses both locked and hovered highlight emission.
 - [x] Unlocked standard HighlightTexture renders on hover, not without hover.
-- [ ] Locking preserves existing pressed/disabled suppression; the highlight resumes once the button is enabled and unpressed.
+- [x] Locking preserves existing pressed/disabled suppression; the highlight resumes once the button is enabled and unpressed.
 
 ## How it works
 
@@ -30,7 +30,7 @@ The early texture-visibility decision had unconditionally culled `HighlightTextu
 
 ## Known gaps (current cycle)
 
-- [ ] Main-owned final gate remains pending.
+Independent verification at `e545bdcda` passes all nine button-state cases, reuses three unchanged highlight controls, and passes format/check/readability. The expanded full-path test verifies pressed/disabled suppression and re-enabled resumption after the initial regression. Exact logs: `/tmp/cross-version-locked-highlight-proof.md`.
 - [ ] Native-client behavior remains unverified.
 
 ## Out of scope

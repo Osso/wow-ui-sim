@@ -29,7 +29,7 @@ runtime dumps showed each button's `.HighlightTexture` child visible at alpha
 
 The original fix established the intended child policy, but `204f52235` found a later contradiction: `button_vis.rs` returned false for `HighlightTexture` and generic HIGHLIGHT children before the later quad-builder locked-child allowance could execute. The repair permits only a locked standard `HighlightTexture` slot through the early cull. The registry generic emitter and live hover overlay now share the same unlocked-and-visible predicate, so unlocked hover emits one quad, not two. A hidden ancestor suppresses both locked regular emission and live hover emission. The full `button_state_textures::` group is GREEN 9/9; the preceding locked nonhover case was RED 0/1 (zero rather than one quad). Additive overlays still bypass the shader brightness boost.
 
-This does not redefine pressed or disabled selection, or generic HIGHLIGHT-layer policy. The evidence is simulator-only; native-client behavior and the main-owned final gate remain unverified.
+Follow-up `e545bdcda` corrects the initial locked-path regression for pressed/disabled buttons: the standard slot now requires locked, enabled and unpressed state. The expanded Lua-to-quad regression passes `(0,0,0,0,1)` for input-pressed, manually pushed, disabled, disabled-hovered and re-enabled cases. Independent nine-case button verification, format/check and readability pass; three unchanged generic highlight controls retain their proof. Generic HIGHLIGHT-layer policy is unchanged. Native behavior and field-only/no-child highlights remain unclaimed.
 
 ## Sources
 
