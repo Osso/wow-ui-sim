@@ -40,6 +40,10 @@ pub struct WidgetRegistry {
 
 Lua `SetParent` keeps its protected-state and forbidden-aspect guards before it calls the shared `methods_hierarchy::would_create_parent_cycle` helper. That helper walks the proposed parent's `parent_id` ancestry and rejects a self or descendant edge before animation reparenting or `reparent_widget` mutates the registry. Commit `818fe8d59` has RED evidence for both invalid graphs and GREEN evidence for those two rejections plus ordinary reparent, nil-parent, same-parent, and region-enumeration controls (4/4). The helper assumes an acyclic existing parent chain; it neither validates every malformed model graph nor covers other parent writers. The simulator error is tested only as containing `cycle`, not as native WoW wording.
 
+### Public SetParent visibility boundary
+
+After the existing protected-state, forbidden-aspect, and cycle guards, public Lua `SetParent` compares the moved frame's effective visibility before and after hierarchy mutation. When it changed, `676cda72e` recursively dispatches `OnShow` or `OnHide` children first without mutating any frame's local `visible` flag. Locally hidden descendants receive no callback. Reentry validates the expected parent and effective visibility before each callback, so a redirected reparent suppresses stale delivery; an erroring child binding still allows the parent binding to run. `/tmp/cross-version-reparent-final-targeted.log` is GREEN 6/6, including those cases and existing self/descendant cycle controls. The final independent gate remains pending. Wowless is source corroboration, not a native probe; other parent writers remain outside this public method boundary.
+
 ### Storage accounting
 
 `Frame::storage_estimate_bytes()` accounts for inline state, registry/index capacities, and owned collection data. The lazy model payload contributes its boxed allocation and owned capacities only when present. The settled full-game fixture has 45,002 frames and estimates **213,058,036 bytes**, below the unchanged **230,000,000-byte** budget; the prior inline model state estimated **239,185,088 bytes**.
@@ -83,6 +87,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [button-text-rendering.md](../../button-text-rendering.md) — three-slice rendering order problem and fix
 - [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
 - [SetParent parent cycles](../../specs/set-parent-cycles.md) — public cycle-rejection contract and limits
+- [Visibility script dispatch](../../specs/visibility-script-dispatch.md) — public reparent visibility callbacks and proof limits
 
 ## See Also
 

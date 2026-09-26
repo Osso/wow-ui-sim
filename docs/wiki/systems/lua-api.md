@@ -59,6 +59,10 @@ Widget-specific: EditBox (SetMultiLine, SetAutoFocus), Slider (SetMinMaxValues, 
 
 Public Lua `SetParent` runs its existing protected-state and forbidden-aspect guards before the shared hierarchy helper walks the proposed parent's `parent_id` ancestry. It rejects a self or descendant parent before animation reparenting or hierarchy mutation. Commit `818fe8d59` proves self and descendant rejection before mutation, plus four grouped controls: valid reparenting, nil parent, same-parent child-count preservation, and region enumeration. This is not a guarantee for other parent writers or every preexisting malformed hierarchy graph; native error wording is unverified, and the tests require only that the simulator error contains `cycle`. See [SetParent parent cycles](../../specs/set-parent-cycles.md).
 
+### SetParent effective-visibility callbacks
+
+After those existing guards and the hierarchy mutation, public `SetParent` compares effective visibility. Commit `676cda72e` delivers child-first `OnShow`/`OnHide` only on a change, without changing local shown flags; locally hidden descendants remain silent. It suppresses stale callbacks after handler-driven reparenting and continues to the parent binding after a handler error. The targeted public-method batch is GREEN 6/6 in `/tmp/cross-version-reparent-final-targeted.log`; final independent verification remains pending. Wowless `api.lua:106-126` plus `visibility.lua` corroborates the modeled public transition and child-first traversal only, not native-client behavior. Other parent writers are excluded. See [visibility script dispatch](../../specs/visibility-script-dispatch.md).
+
 Model-family widgets (`Model`, `ModelScene`, `PlayerModel`, and related model frames) expose the Lua surface needed by Blizzard code, but 3D rendering is intentionally out of scope. Visual-only calls such as `ClearFog` are callable no-ops; modeled object state and actor methods remain separately documented where supported.
 
 ### Texture identity
