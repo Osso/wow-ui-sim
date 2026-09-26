@@ -58,7 +58,7 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 Conversion at `methods_core.rs:144`: `bottom = screen_height - rect.y - rect.height`. Y-offset sign convention: positive Y in `SetPoint` moves frame UP, which means `target_y = anchor_y - y_offset` in layout computation.
 
-ScrollFrame presentation translation does not mutate `LayoutRect`, so `GetRect` remains logical. `Region:IsMouseOver` separately derives presented bounds for its existing guarded bounds check; this does not establish a general geometry-query or viewport-clipping rule.
+ScrollFrame presentation translation does not mutate `LayoutRect`, so `GetRect` remains logical. `Region:IsMouseOver` separately derives presented bounds after its logical-rect, visibility, and mouse-enabled guards and before bounds/margin comparison; this does not establish a general geometry-query or viewport-clipping rule. [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) records the bounded verification.
 
 Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 
