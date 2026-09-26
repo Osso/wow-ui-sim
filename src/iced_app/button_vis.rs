@@ -177,7 +177,7 @@ fn texture_visibility(
     if parent.children_keys.get("HighlightTexture") == Some(&texture_id) {
         // Locked highlight renders in the regular pass; unlocked highlight
         // renders in the hover pass. Never emit the same child in both.
-        return Some(parent.highlight_locked);
+        return Some(parent.highlight_locked && !is_disabled && !is_pressed);
     }
     None
 }

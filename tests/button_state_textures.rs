@@ -270,26 +270,84 @@ fn locked_button_highlight_renders_once_without_hover_and_unlock_restores_hover(
         "#,
     )
     .unwrap();
-    let button_id = env.state().borrow().widgets.get_id_by_name("TestLockButton").unwrap();
-    let count = |hovered| red_highlight_quads(&build_batch_for_button(&env, "TestLockParent", None, hovered));
+    let button_id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("TestLockButton")
+        .unwrap();
+    let count = |hovered| {
+        red_highlight_quads(&build_batch_for_button(
+            &env,
+            "TestLockParent",
+            None,
+            hovered,
+        ))
+    };
 
     assert_eq!(count(None), 0, "unlocked nonhover must not emit highlight");
     assert_eq!(count(Some(button_id)), 1, "ordinary hover emits once");
 
     env.exec("TestLockButton:LockHighlight()").unwrap();
     assert_eq!(count(None), 1, "locked nonhover must emit highlight");
-    assert_eq!(count(Some(button_id)), 1, "locked hover must not double-emit");
+    assert_eq!(
+        count(Some(button_id)),
+        1,
+        "locked hover must not double-emit"
+    );
+
+    let mouse_pressed = red_highlight_quads(&build_batch_for_button(
+        &env,
+        "TestLockParent",
+        Some(button_id),
+        Some(button_id),
+    ));
+    env.exec("TestLockButton:SetButtonState('PUSHED')").unwrap();
+    let pushed = count(None);
+    env.exec("TestLockButton:SetButtonState('NORMAL'); TestLockButton:Disable()")
+        .unwrap();
+    let disabled = count(None);
+    let disabled_hovered = count(Some(button_id));
+    env.exec("TestLockButton:Enable()").unwrap();
+    let enabled_again = count(None);
+    assert_eq!(
+        (
+            mouse_pressed,
+            pushed,
+            disabled,
+            disabled_hovered,
+            enabled_again
+        ),
+        (0, 0, 0, 0, 1),
+        "locking must preserve pressed/disabled suppression and resume after enabling"
+    );
 
     env.exec("TestLockButton:UnlockHighlight()").unwrap();
     assert_eq!(count(None), 0, "unlock restores nonhover suppression");
     assert_eq!(count(Some(button_id)), 1, "unlock restores hover emission");
 
     env.exec("TestLockButton:SetHighlightLocked(true)").unwrap();
-    assert_eq!(count(None), 1, "SetHighlightLocked also renders when not hovered");
-    assert_eq!(count(Some(button_id)), 1, "SetHighlightLocked hover emits once");
+    assert_eq!(
+        count(None),
+        1,
+        "SetHighlightLocked also renders when not hovered"
+    );
+    assert_eq!(
+        count(Some(button_id)),
+        1,
+        "SetHighlightLocked hover emits once"
+    );
     env.exec("TestLockParent:Hide()").unwrap();
-    assert_eq!(count(None), 0, "hidden ancestor suppresses locked highlight");
-    assert_eq!(count(Some(button_id)), 0, "hidden ancestor suppresses hover overlay");
+    assert_eq!(
+        count(None),
+        0,
+        "hidden ancestor suppresses locked highlight"
+    );
+    assert_eq!(
+        count(Some(button_id)),
+        0,
+        "hidden ancestor suppresses hover overlay"
+    );
     env.exec("TestLockParent:Show(); TestLockButton:SetHighlightLocked(false)")
         .unwrap();
     assert_eq!(count(None), 0, "cleared lock restores nonhover suppression");

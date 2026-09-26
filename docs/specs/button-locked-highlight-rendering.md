@@ -1,6 +1,6 @@
 # Button locked-highlight rendering
 
-A Button or CheckButton with a standard HighlightTexture slot renders its highlight while locked without requiring hover. This specifies the simulator's shared rendering contract, not native-client behavior.
+An enabled, unpressed Button or CheckButton with a standard HighlightTexture slot renders its highlight while locked without requiring hover. This specifies the simulator's shared rendering contract, not native-client behavior.
 
 ## What it must do
 
@@ -8,6 +8,7 @@ A Button or CheckButton with a standard HighlightTexture slot renders its highli
 - [x] Locked hover emits only one highlight quad; `UnlockHighlight()` or `SetHighlightLocked(false)` restores nonhover suppression and single hover emission.
 - [x] A hidden ancestor suppresses both locked and hovered highlight emission.
 - [x] Unlocked standard HighlightTexture renders on hover, not without hover.
+- [ ] Locking preserves existing pressed/disabled suppression; the highlight resumes once the button is enabled and unpressed.
 
 ## How it works
 
@@ -34,4 +35,4 @@ The early texture-visibility decision had unconditionally culled `HighlightTextu
 
 ## Out of scope
 
-Pressed and disabled state policy, generic HIGHLIGHT-layer behavior, and native lock/disabled interaction.
+Changes to existing pressed/disabled policy, generic HIGHLIGHT-layer behavior, and native lock/disabled interaction. Field-only highlights without a standard child and late texture assignment are not covered by this slice.
