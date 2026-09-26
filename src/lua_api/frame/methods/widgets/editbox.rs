@@ -22,24 +22,7 @@ use rilua::{LuaResult, Val};
 pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetFocus")?;
-    let old_focus = {
-        let mut sim = borrow_state_mut(state)?;
-        let old = sim.focused_frame_id;
-        sim.focused_frame_id = Some(id);
-        if let Some(old_id) = old
-            && old_id != id
-        {
-            if let Some(f) = sim.widgets.get_mut_visual(old_id) {
-                f.editbox_focused = false;
-            }
-            sim.widgets.mark_visual_dirty(old_id);
-        }
-        if let Some(f) = sim.widgets.get_mut_visual(id) {
-            f.editbox_focused = true;
-        }
-        sim.widgets.mark_visual_dirty(id);
-        old
-    };
+    let old_focus = replace_editbox_focus(state, id)?;
     if old_focus != Some(id) {
         if let Some(old_id) = old_focus {
             fire_focus_script(state, old_id, "OnEditFocusLost")?;
@@ -49,6 +32,25 @@ pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
         }
     }
     Ok(0)
+}
+
+fn replace_editbox_focus(state: &mut LuaState, id: u64) -> LuaResult<Option<u64>> {
+    let mut sim = borrow_state_mut(state)?;
+    let old = sim.focused_frame_id;
+    sim.focused_frame_id = Some(id);
+    if let Some(old_id) = old
+        && old_id != id
+    {
+        if let Some(frame) = sim.widgets.get_mut_visual(old_id) {
+            frame.editbox_focused = false;
+        }
+        sim.widgets.mark_visual_dirty(old_id);
+    }
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.editbox_focused = true;
+    }
+    sim.widgets.mark_visual_dirty(id);
+    Ok(old)
 }
 
 fn fire_focus_script(state: &mut LuaState, id: u64, handler_name: &str) -> LuaResult<()> {
