@@ -175,6 +175,8 @@ pub fn build_quad_batch_for_registry(registry, screen_size, ...) -> QuadBatch {
 
 **Button texture fallback** (lines 169-188): If tex_coords specified, use custom UVs. Otherwise 3-slice default (4px caps).
 
+**Locked standard highlights:** a standard `HighlightTexture` child normally reaches the live hover overlay only when its Button is unlocked and effectively visible. `LockHighlight()` permits that slot through the regular registry emission path without hover; the early visibility gate must make this decision before quad building. The registry and live hover paths share the unlocked-and-visible predicate, preventing duplicate quads on unlocked hover. Hidden ancestors suppress both paths. This is limited to the standard slot: pressed, disabled, and generic HIGHLIGHT-layer policy is unchanged. See [Button locked-highlight rendering](specs/button-locked-highlight-rendering.md).
+
 ---
 
 ## Headless GPU Rendering (Screenshots)

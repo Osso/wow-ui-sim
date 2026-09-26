@@ -27,11 +27,9 @@ authored atlas size. The dense stripe report was not from that Center texture:
 runtime dumps showed each button's `.HighlightTexture` child visible at alpha
 1.0 even with no hovered frame.
 
-Fix: standard button highlight texture children are skipped during the normal
-texture pass unless the parent button is hovered or `LockHighlight()` /
-`SetHighlightLocked(true)` is active. Hover rendering still draws the child
-highlight through the overlay pass. Additive overlays also bypass the shader
-brightness boost.
+The original fix established the intended child policy, but `204f52235` found a later contradiction: `button_vis.rs` returned false for `HighlightTexture` and generic HIGHLIGHT children before the later quad-builder locked-child allowance could execute. The repair permits only a locked standard `HighlightTexture` slot through the early cull. The registry generic emitter and live hover overlay now share the same unlocked-and-visible predicate, so unlocked hover emits one quad, not two. A hidden ancestor suppresses both locked regular emission and live hover emission. The full `button_state_textures::` group is GREEN 9/9; the preceding locked nonhover case was RED 0/1 (zero rather than one quad). Additive overlays still bypass the shader brightness boost.
+
+This does not redefine pressed or disabled selection, or generic HIGHLIGHT-layer policy. The evidence is simulator-only; native-client behavior and the main-owned final gate remain unverified.
 
 ## Sources
 
@@ -41,8 +39,11 @@ brightness boost.
 - [quad_builders.rs](../../src/iced_app/quad_builders.rs) — button highlight child gating
 - [quad.wgsl](../../src/render/shader/quad.wgsl) — additive overlays bypass brightness boost
 - [tiling.rs](../../src/iced_app/tiling.rs) — simulator tile-size computation and regression test
+- [Button locked-highlight rendering](../../specs/button-locked-highlight-rendering.md) — verified shared emission boundary and limits
+- `/tmp/cross-version-locked-highlight-proof.md` — actual RED/GREEN commands and logs for `204f52235`
 
 ## See Also
 
 - [[texture-atlas]] — atlas metadata and UV remapping
 - [[rendering-pipeline]] — quad emission and texture request flow
+- [[animated-status-bar-atlas-visibility]] — recognized Button slot visibility boundary
