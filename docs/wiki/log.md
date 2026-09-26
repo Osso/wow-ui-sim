@@ -1,3 +1,7 @@
+## [2026-09-26] investigation | Same-value setters stop dirtying regions
+
+`9805bc079`, `bef30706e`: SetTexture, SetDesaturated/SetDesaturation, SetTextColor, SetFont and SetText no longer mark regions dirty when the drawn result is unchanged. This removes ClickableRaidBuffs' timer-driven idle dirt. See [[tick-cooldown-scan]].
+
 ## [2026-09-26] investigation | Silent animated alpha writes
 
 `81484068d`: animated alpha writes no longer dirty frames whose effective alpha doesn't change. Hidden pulses (BoostTutorial glow, a casting-bar texture, LFG GroupFinder textures) stopped forcing redraws. Idle draw went from about 0.6 to 0.1ms. Timer-driven dirt on three UIParent children remains. See [[tick-cooldown-scan]].
