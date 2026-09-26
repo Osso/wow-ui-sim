@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_script, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
-use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn, table_set_rust_fn_static, IntoStack};
 use crate::widget::WidgetType;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -260,27 +260,52 @@ pub(super) fn shared_set_min_max_values(state: &mut LuaState) -> LuaResult<u32> 
     let min = val_to_f64(stack_val(state, 2));
     let max = val_to_f64(stack_val(state, 3));
     let mut sim = borrow_state_mut(state)?;
-    if let Some(f) = sim.widgets.get_mut_visual(id) {
-        match f.widget_type {
-            WidgetType::Slider => {
-                f.slider_min = min;
-                f.slider_max = max;
-                f.slider_value = f.slider_value.clamp(min, max);
-            }
-            WidgetType::StatusBar => {
-                f.statusbar_min = min;
-                f.statusbar_max = max;
-                f.statusbar_value = f.statusbar_value.clamp(min, max);
-                f.statusbar_interpolated_value = f.statusbar_interpolated_value.clamp(min, max);
-                f.statusbar_interpolation_target = f
-                    .statusbar_interpolation_target
-                    .map(|t| t.clamp(min, max))
-                    .filter(|&t| t != f.statusbar_interpolated_value);
-            }
-            _ => {}
-        }
+    let Some(widget_type) = sim.widgets.get(id).map(|f| f.widget_type) else {
+        return Ok(0);
+    };
+    let min = checked_range_minimum(widget_type, min, max)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        apply_widget_range(frame, min, max);
     }
     Ok(0)
+}
+
+fn checked_range_minimum(widget_type: WidgetType, min: f64, max: f64) -> LuaResult<f64> {
+    if !matches!(widget_type, WidgetType::Slider | WidgetType::StatusBar) {
+        return Ok(min);
+    }
+    if min.is_nan() || max.is_nan() {
+        return Err(rilua::runtime_error(
+            "SetMinMaxValues bounds must not be NaN",
+        ));
+    }
+    if widget_type == WidgetType::Slider && min > max {
+        return Err(rilua::runtime_error(
+            "SetMinMaxValues minimum exceeds maximum",
+        ));
+    }
+    Ok(min.min(max))
+}
+
+fn apply_widget_range(frame: &mut crate::widget::Frame, min: f64, max: f64) {
+    match frame.widget_type {
+        WidgetType::Slider => {
+            frame.slider_min = min;
+            frame.slider_max = max;
+            frame.slider_value = frame.slider_value.clamp(min, max);
+        }
+        WidgetType::StatusBar => {
+            frame.statusbar_min = min;
+            frame.statusbar_max = max;
+            frame.statusbar_value = frame.statusbar_value.clamp(min, max);
+            frame.statusbar_interpolated_value = frame.statusbar_interpolated_value.clamp(min, max);
+            frame.statusbar_interpolation_target = frame
+                .statusbar_interpolation_target
+                .map(|target| target.clamp(min, max))
+                .filter(|&target| target != frame.statusbar_interpolated_value);
+        }
+        _ => {}
+    }
 }
 
 pub(super) fn shared_get_min_max_values(state: &mut LuaState) -> LuaResult<u32> {
