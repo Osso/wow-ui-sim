@@ -21,12 +21,16 @@
 
 ## Tests asserting this spec
 
-- `tests/widget_methods_colorselect.rs` — getter, setter, replacement and child texture coordinates.
-- `src/iced_app/quad_builders_textures.rs` — rendered partial-fill vertices.
+- `tests/widget_methods_colorselect.rs` — source GREEN: two rotation/replacement cases plus one adopted-custom-coordinate case (3/3 total) under the diagnostic feature set.
+- `src/iced_app/quad_builders_textures.rs` — source GREEN: two rendered partial-fill UV cases (2/2) under the diagnostic feature set.
+
+The five rotation cases passed only with `gui,client-wrath,aura-instance-enumeration`; they do not accept the blocked normal `gui,client-wrath` lane.
 
 ## Known gaps (current cycle)
 
+- [ ] Unblock and repeat under normal `gui,client-wrath`; `aura-instance-enumeration` was diagnostic only.
 - [ ] Confirm exact default and rotation semantics on an actual Classic Wrath client; Solarity assertions concern original build 12340, not this target.
+- [ ] Establish XML `rotatesTexture` parsing and interaction with geometry separately; schema declaration alone is insufficient.
 
 ## Out of scope
 

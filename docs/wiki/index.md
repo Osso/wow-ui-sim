@@ -1,6 +1,6 @@
-## [2026-09-26] audit | Preserve Wrath StatusBar callback RED boundary
+## [2026-09-26] audit | Record Wrath StatusBar callback and rotation diagnostic GREEN
 
-[[wrath-statusbar-value-callback]] records `9ea6555f8`: ordinary changed StatusBar values now commit before protected `OnValueChanged(self, value)` dispatch, with no Slider mouse flag. Cached Classic `TextStatusBar` rereads committed state in its callback. The direct Wrath test remains RED at `/tmp/wrath-statusbar-red-statusbar_value_change_updates_text_synchronously.log`; no GREEN, native execution, or profile acceptance is claimed. `client-wrath` is interface 38001; Solarity build 12340 is comparison only. Normal `gui,client-wrath` compilation remains independently blocked by `c_unit_auras` feature gating; augmented `aura-instance-enumeration` was diagnostic only. The five-stage roadmap preserves normal-lane compilation, ordinary GREEN, source-limited contract expansion, and native validation as separate work.
+[[wrath-statusbar-value-callback]] records `9ea6555f8` ordinary callbacks and `98101cda3` texture rotation. Final source evidence under diagnostic `gui,client-wrath,aura-instance-enumeration` is callback-containing `widget_slider::` 10/10 plus rotation 5/5 (two renderer UV, two replacement/atlas-coordinate, one custom-coordinate adoption). Normal `gui,client-wrath` remains independently blocked by `c_unit_auras`; no profile acceptance or native claim. Stage 1 remains incomplete: range/init, callback order, geometry, and XML are unproven. Four later stages retain normal-lane unblock, normal-lane regression, source-supported expansion, and profile/native validation.
 
 ## [2026-09-26] investigation | Record default build linker-cache boundary
 
