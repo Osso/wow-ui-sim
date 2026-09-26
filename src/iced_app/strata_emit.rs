@@ -158,13 +158,14 @@ pub(super) fn build_render_list(
     screen_size: (f32, f32),
 ) -> Vec<(u64, crate::LayoutRect, Option<crate::LayoutRect>, f32)> {
     let mut list = Vec::new();
+    let mut offsets = crate::layout::ScrollOffsetCache::default();
     for &id in bucket {
         let Some(f) = registry.get(id) else { continue };
         if !has_renderable_rect(registry, f, id) {
             continue;
         }
-        let rect = render_rect_for_frame(f, registry, id, screen_size);
-        let clip_rect = resolve_clip_rect(id, registry);
+        let rect = render_rect_for_frame(f, registry, id, screen_size, &mut offsets);
+        let clip_rect = resolve_clip_rect(id, registry, &mut offsets);
         let eff_alpha = resolve_eff_alpha(f, registry);
         if eff_alpha <= 0.0 {
             continue;
@@ -182,6 +183,7 @@ fn render_rect_for_frame(
     registry: &crate::widget::WidgetRegistry,
     id: u64,
     screen_size: (f32, f32),
+    offsets: &mut crate::layout::ScrollOffsetCache,
 ) -> crate::LayoutRect {
     let rect = if matches!(frame.widget_type, WidgetType::Line) {
         line_endpoint_bounds(frame, registry)
@@ -193,7 +195,7 @@ fn render_rect_for_frame(
             crate::layout::compute_frame_rect(registry, id, screen_size.0, screen_size.1)
         })
     });
-    crate::layout::apply_scroll_offsets(registry, id, rect)
+    offsets.apply(registry, id, rect)
 }
 
 fn line_endpoint_bounds(
@@ -327,6 +329,7 @@ fn resolve_eff_alpha(f: &crate::widget::Frame, registry: &crate::widget::WidgetR
 fn resolve_clip_rect(
     id: u64,
     registry: &crate::widget::WidgetRegistry,
+    offsets: &mut crate::layout::ScrollOffsetCache,
 ) -> Option<crate::LayoutRect> {
     let mut current_id = id;
     let mut clip_rect: Option<crate::LayoutRect> = None;
@@ -340,7 +343,7 @@ fn resolve_clip_rect(
         if (parent.clips_children || clips_scroll_child)
             && let Some(parent_rect) = parent.layout_rect
         {
-            let parent_rect = crate::layout::apply_scroll_offsets(registry, parent_id, parent_rect);
+            let parent_rect = offsets.apply(registry, parent_id, parent_rect);
             clip_rect = Some(match clip_rect {
                 // An empty intersection is an empty clip, not absence of clipping.
                 Some(existing) => intersect_rects(existing, parent_rect).unwrap_or_default(),
@@ -474,11 +477,12 @@ pub fn build_hittable_rects(
     collected: &CollectedFrames,
     registry: &crate::widget::WidgetRegistry,
 ) -> Vec<(u64, Rectangle, super::frame_collect::HitOrderKey)> {
+    let mut offsets = crate::layout::ScrollOffsetCache::default();
     collected
         .hittable
         .iter()
         .map(|&(id, key, r)| {
-            let r = crate::layout::apply_scroll_offsets(registry, id, r);
+            let r = offsets.apply(registry, id, r);
             let (il, ir, it, ib) = registry
                 .get(id)
                 .map(super::frame_collect::scaled_hit_rect_insets)
@@ -639,7 +643,7 @@ fn append_hover_highlight_from_frame(
 }
 
 fn clip_hover_highlight(batch: &mut QuadBatch, before: usize, id: u64, registry: &WidgetRegistry) {
-    if let Some(clip) = resolve_clip_rect(id, registry) {
+    if let Some(clip) = resolve_clip_rect(id, registry, &mut Default::default()) {
         super::quad_builders::clip_recent_quads(batch, before, layout_rect_to_screen_rect(clip));
     }
 }

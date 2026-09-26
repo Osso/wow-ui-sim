@@ -27,10 +27,11 @@ pub(super) fn apply_hit_grid_batch(
     visibility_changes: &[(u64, bool)],
 ) {
     grid.update_render_order(strata_buckets);
+    let mut offsets = crate::layout::ScrollOffsetCache::default();
     let visibility_roots = visibility_changes.iter().map(|&(root, _)| root);
     for id in collect_touched_subtrees(registry, geometry_roots.into_iter().chain(visibility_roots))
     {
-        sync_hit_grid_frame(grid, registry, id);
+        sync_hit_grid_frame(grid, registry, id, &mut offsets);
     }
 }
 
@@ -64,10 +65,11 @@ fn sync_hit_grid_frame(
     grid: &mut super::hit_grid::HitGrid,
     registry: &crate::widget::WidgetRegistry,
     id: u64,
+    offsets: &mut crate::layout::ScrollOffsetCache,
 ) {
     let hit = registry.get(id).and_then(|frame| {
         grid.render_order_key(id)
-            .zip(hittable_rect(registry, id, frame))
+            .zip(hittable_rect(registry, id, frame, offsets))
     });
     match hit {
         Some((key, rect)) => grid.insert(id, rect, key),
@@ -80,6 +82,7 @@ fn hittable_rect(
     registry: &crate::widget::WidgetRegistry,
     id: u64,
     f: &crate::widget::Frame,
+    offsets: &mut crate::layout::ScrollOffsetCache,
 ) -> Option<iced::Rectangle> {
     let mouse_enabled =
         f.mouse_enabled || matches!(f.widget_type, crate::widget::WidgetType::EditBox);
@@ -95,7 +98,7 @@ fn hittable_rect(
     {
         return None;
     }
-    let rect = crate::layout::apply_scroll_offsets(registry, id, f.layout_rect?);
+    let rect = offsets.apply(registry, id, f.layout_rect?);
     let (il, ir, it, ib) = super::frame_collect::scaled_hit_rect_insets(f);
     Some(iced::Rectangle::new(
         iced::Point::new(

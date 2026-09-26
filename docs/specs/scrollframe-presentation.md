@@ -31,7 +31,9 @@ Solarity's `crates/ui/src/render/c_simple_render.rs` separates immutable geometr
 
 ## Known gaps (current cycle)
 
-- [ ] GREEN and independent verification pending. `ed69bd136` reproduces three failures: stationary hit target, stationary quads, and unclipped disjoint nested content. `/tmp/cross-version-scroll-presentation-proof.md`.
+- [ ] Final verification pending after repairing repeated ancestry traversal. Initial independent verification passed 27 scroll-widget cases, eight cache-backed hit cases, six strata, three mask, three line, and one hover control, but two existing 20,000-frame hit-test chains timed out. Traversal-local offset memoization and clipping short-circuiting address that regression; the deep-chain module must pass before completion. `/tmp/cross-version-scroll-presentation-verification-ledger.md`.
+
+`ed69bd136` reproduces the original three failures: stationary hit target, stationary quads, and unclipped disjoint nested content. `/tmp/cross-version-scroll-presentation-proof.md`.
 - [ ] Scaled/nested hit-test fixtures, line/mask/highlight-specific scrolling, live GPU pixels and native-client semantics are not proven by the initial three cases.
 
 ## Out of scope

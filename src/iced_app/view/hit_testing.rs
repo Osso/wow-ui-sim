@@ -1,4 +1,5 @@
 use crate::iced_app::app::App;
+use crate::layout::ScrollOffsetCache;
 use rustc_hash::FxHashSet;
 
 impl App {
@@ -91,6 +92,7 @@ fn deepest_target_through_visible_children(
 ) -> Option<u64> {
     let mut stack = vec![HitVisit::Enter(frame_id)];
     let mut seen = FxHashSet::default();
+    let mut offsets = ScrollOffsetCache::default();
 
     while let Some(visit) = stack.pop() {
         match visit {
@@ -102,7 +104,8 @@ fn deepest_target_through_visible_children(
                     continue;
                 };
                 stack.push(HitVisit::Check(current_id));
-                let mut child_ids = visible_descendants_at_point_by_z_order(widgets, frame, pos);
+                let mut child_ids =
+                    visible_descendants_at_point_by_z_order(widgets, frame, pos, &mut offsets);
                 while let Some(child_id) = child_ids.pop() {
                     stack.push(HitVisit::Enter(child_id));
                 }
@@ -111,7 +114,7 @@ fn deepest_target_through_visible_children(
                 let Some(frame) = widgets.get(current_id) else {
                     continue;
                 };
-                if target_contains_point(widgets, current_id, pos)
+                if target_contains_point(widgets, current_id, pos, &mut offsets)
                     && accepts_frame(frame, current_id)
                 {
                     return Some(current_id);
@@ -132,17 +135,18 @@ fn target_contains_point(
     widgets: &crate::widget::WidgetRegistry,
     frame_id: u64,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> bool {
     widgets
         .get(frame_id)
-        .is_some_and(|frame| frame_visually_contains(widgets, frame_id, frame, pos))
-        && ancestor_clips_contain(widgets, frame_id, pos)
+        .is_some_and(|frame| frame_visually_contains(widgets, frame_id, frame, pos, offsets))
 }
 
 fn visible_descendants_at_point_by_z_order(
     widgets: &crate::widget::WidgetRegistry,
     frame: &crate::widget::Frame,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> Vec<u64> {
     let mut child_ids: Vec<_> = frame
         .children
@@ -151,8 +155,8 @@ fn visible_descendants_at_point_by_z_order(
         .filter(|&child_id| {
             widgets
                 .get(child_id)
-                .is_some_and(|child| child_visually_contains(widgets, child, pos))
-                && direct_parent_clip_contains(widgets, frame, child_id, pos)
+                .is_some_and(|child| child_visually_contains(widgets, child, pos, offsets))
+                && direct_parent_clip_contains(widgets, frame, child_id, pos, offsets)
         })
         .collect();
     child_ids.sort_by_key(|&child_id| {
@@ -172,13 +176,14 @@ fn child_visually_contains(
     widgets: &crate::widget::WidgetRegistry,
     child: &crate::widget::Frame,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> bool {
     if !child.visible {
         return false;
     }
     let rect = child
         .layout_rect
-        .map(|rect| crate::layout::apply_scroll_offsets(widgets, child.id, rect));
+        .map(|rect| offsets.apply(widgets, child.id, rect));
     rect_contains_screen_point(rect, pos)
 }
 
@@ -187,8 +192,10 @@ fn frame_visually_contains(
     frame_id: u64,
     frame: &crate::widget::Frame,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> bool {
-    child_visually_contains(widgets, frame, pos) && ancestor_clips_contain(widgets, frame_id, pos)
+    child_visually_contains(widgets, frame, pos, offsets)
+        && ancestor_clips_contain(widgets, frame_id, pos, offsets)
 }
 
 fn direct_parent_clip_contains(
@@ -196,17 +203,22 @@ fn direct_parent_clip_contains(
     parent: &crate::widget::Frame,
     child_id: u64,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> bool {
+    if !parent_clips_child(parent, child_id) {
+        return true;
+    }
     let rect = parent
         .layout_rect
-        .map(|rect| crate::layout::apply_scroll_offsets(widgets, parent.id, rect));
-    !parent_clips_child(parent, child_id) || rect_contains_screen_point(rect, pos)
+        .map(|rect| offsets.apply(widgets, parent.id, rect));
+    rect_contains_screen_point(rect, pos)
 }
 
 fn ancestor_clips_contain(
     widgets: &crate::widget::WidgetRegistry,
     frame_id: u64,
     pos: iced::Point,
+    offsets: &mut ScrollOffsetCache,
 ) -> bool {
     let mut current_id = frame_id;
     let mut seen = FxHashSet::default();
@@ -217,7 +229,7 @@ fn ancestor_clips_contain(
         let Some(parent) = widgets.get(parent_id) else {
             break;
         };
-        if !direct_parent_clip_contains(widgets, parent, current_id, pos) {
+        if !direct_parent_clip_contains(widgets, parent, current_id, pos, offsets) {
             return false;
         }
         current_id = parent_id;
@@ -375,7 +387,8 @@ mod tests {
                 &registry,
                 button,
                 button_frame,
-                iced::Point::new(20.0, 160.0)
+                iced::Point::new(20.0, 160.0),
+                &mut Default::default(),
             ),
             "scroll-frame clipped descendants below the viewport should not be hit-test candidates"
         );
@@ -413,7 +426,8 @@ mod tests {
                 &registry,
                 button,
                 button_frame,
-                iced::Point::new(20.0, 60.0)
+                iced::Point::new(20.0, 60.0),
+                &mut Default::default(),
             ),
             "scroll-frame clipped descendants inside the viewport should remain hittable"
         );
