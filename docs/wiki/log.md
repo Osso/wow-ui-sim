@@ -1,6 +1,6 @@
-## [2026-09-26] audit | Record pending Slider/StatusBar range validation
+## [2026-09-26] audit | Verify Slider/StatusBar range validation
 
-Updated [[wrath-statusbar-value-callback]], index, and log from `0e3c8157c`, `c72db371d`, [Widget range validation](../specs/widget-range-validation.md), and `/tmp/cross-version-range-validation-proof.md`. The root failure was mutating bounds before calling `f64::clamp`, which panicked for reversed or NaN inputs. The documented simulator policy rejects reversed Slider and both-widget NaN inputs before mutation; reversed StatusBar bounds collapse to the supplied maximum and clamp current/interpolated values. Solarity is reference-only; native behavior and error text remain unverified. Ledger contains only `0e3c8157c` pre-fix RED: four panic cases and one passing ordinary/equal-range control. GREEN and independent verification remain pending. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+[[wrath-statusbar-value-callback]] links the [range contract](../specs/widget-range-validation.md). Tests `0e3c8157c`, implementation `c72db371d`, and format-only `90c4f189b` have independent 15+1 behavioral passes, format/check and changed-function readability proof. `/tmp/cross-version-range-validation-verification-ledger.md` preserves exact scope and native/interpolation limitations.
 
 ## [2026-09-26] audit | Verify reparent visibility transitions
 

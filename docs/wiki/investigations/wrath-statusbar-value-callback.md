@@ -30,16 +30,16 @@ wow-ui-sim's `client-wrath` reports interface 38001, while Solarity targets buil
 | Runtime template orientation | At `4ad244e56`, normal `gui,client-wrath` RED 0/1, then GREEN 1/1 | Direct/inherited `VERTICAL` and explicit `HORIZONTAL` override apply before `OnLoad` |
 | Renderer/collector controls | Retained normal `gui,client-wrath` source proof: vertical normal/reverse 2/2, rotated atlas 1/1, collector 1/1, horizontal controls 2/2 | Six source controls retained; no native fill-direction claim |
 | Final normal checks | `4ad244e56` focused compile/four GREEN cases, reused six rendering/collector controls, fresh format/check and readability audit | PASS; zero check warnings; no full UI validation |
-| Range validation | `0e3c8157c` test coverage; `c72db371d` simulator policy; pre-fix RED ledger | Reversed/NaN panic boundary fixed in source; GREEN and independent verification pending; no native claim |
+| Range validation | `0e3c8157c` RED → `c72db371d` GREEN; formatting follow-up `90c4f189b` | Independent 15 widget cases + one interpolation control, format/check pass; no native claim |
 | Stage-1 contracts | Initialization, `OnMinMaxChanged`, callback order, and native vertical direction | Uncorroborated for this target; not imported from Solarity |
 
-User chose to defer uncorroborated first-zero and callback-order semantics and start Stage 2. Inverted-range handling now has a simulator policy, but native compatibility remains unresolved and independent GREEN evidence is pending. Runtime template orientation and vertical rendering have bounded source proof, not native verification. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
+User chose to defer uncorroborated first-zero and callback-order semantics and start Stage 2. Inverted-range handling now has verified simulator behavior, but native compatibility remains unresolved. Runtime template orientation and vertical rendering have bounded source proof, not native verification. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
 
-## Range validation (pending independent verification)
+## Range validation
 
-`0e3c8157c` adds behavioral coverage and `c72db371d` validates `SetMinMaxValues` before mutating widget state, preventing Rust `f64::clamp` panics for reversed or NaN bounds. A reversed Slider raises a catchable Lua error and retains its previous range and value. A reversed StatusBar collapses to the supplied maximum (`min = max`) and clamps stored, interpolated, and target values; either NaN bound rejects before mutation for both widgets. Equal and ordinary ranges remain in scope.
+[Widget range validation](../../specs/widget-range-validation.md) defines the bounded policy. Root cause: bounds changed before `f64::clamp` validated them. `c72db371d` validates before mutation; Solarity corroborates the reversed-bound distinction, not native fidelity.
 
-This is a simulator policy: Solarity is comparison-only evidence, and native handling/error text remain unverified. The available ledger is pre-fix RED evidence at `0e3c8157c`: four panic cases and one passing ordinary/equal-range control. GREEN and independent verification remain pending until `/tmp/cross-version-range-validation-proof.md` contains post-fix evidence.
+Independent verification passes 15 widget cases, one interpolation control, format/check and changed-function readability after formatting-only `90c4f189b`. `/tmp/cross-version-range-validation-verification-ledger.md` records exact revisions. Reversed-range interpolation clamping has code-inspection evidence only; native handling/error text remain unverified.
 
 ## Later four stages
 

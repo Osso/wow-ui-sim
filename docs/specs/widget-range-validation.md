@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Reject a reversed Slider range with a catchable Lua error, preserving the previous range and value.
-- [ ] Collapse a reversed StatusBar range to its supplied maximum and clamp stored/interpolated values to that range.
-- [ ] Reject NaN in either bound for both widget types with a catchable Lua error before mutation; subsequent valid setters still work.
-- [ ] Preserve ordinary clamping and equal-bound ranges.
+- [x] Reject a reversed Slider range with a catchable Lua error, preserving the previous range and value.
+- [x] Collapse a reversed StatusBar range to its supplied maximum and clamp the stored value to that range.
+- [x] Reject NaN in either bound for both widget types with a catchable Lua error before mutation; subsequent valid setters still work.
+- [x] Preserve ordinary clamping and equal-bound ranges.
 
 These are simulator policies corroborated in part by Solarity source, not native-client verification. Solarity `crates/ui/src/script/simple_script.rs` rejects reversed Slider bounds; `crates/ui/src/script/simple_script/status_bars.rs::set_range` reduces the minimum to `minimum.min(maximum)`. NaN rejection prevents the observed Rust `f64::clamp` panic; exact native handling and error text remain unverified.
 
@@ -26,7 +26,9 @@ These are simulator policies corroborated in part by Solarity source, not native
 
 ## Known gaps (current cycle)
 
-- [ ] GREEN and independent verification pending. RED at `0e3c8157c`: four Rust panic failures, one valid-range control passes; `/tmp/cross-version-range-validation-proof.md`.
+- [ ] Reversed-range interpolation clamping is retained in code but lacks a direct behavioral assertion. The existing interpolation lifecycle control passes.
+
+RED at `0e3c8157c`: four Rust panic failures and one passing control. Independent GREEN after `c72db371d`: 15 widget tests and one interpolation control, plus `cargo check`; `/tmp/cross-version-range-validation-verification-ledger.md` records exact scope and the formatting-only follow-up.
 
 ## Out of scope
 

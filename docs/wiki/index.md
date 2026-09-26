@@ -1,6 +1,6 @@
-## [2026-09-26] audit | Record pending Slider/StatusBar range validation
+## [2026-09-26] audit | Verify Slider/StatusBar range validation
 
-[[wrath-statusbar-value-callback]] records `0e3c8157c` and `c72db371d`: `SetMinMaxValues` now validates before mutation, avoiding `f64::clamp` panics. Reversed Sliders error without mutation; reversed StatusBars collapse to their supplied maximum; NaN rejects for both. Solarity is comparison-only and native behavior is unverified. The only ledger evidence is pre-fix RED (four panics, one ordinary/equal control); post-fix GREEN and independent verification remain pending in `/tmp/cross-version-range-validation-proof.md`.
+[[wrath-statusbar-value-callback]] records the `SetMinMaxValues` panic repair and [range contract](../specs/widget-range-validation.md). Independent proof: 15 widget cases + one interpolation control, format/check and changed-function readability pass after `90c4f189b`; `/tmp/cross-version-range-validation-verification-ledger.md`. Native behavior and reversed-range interpolation assertions remain unverified.
 
 ## [2026-09-26] audit | Record public SetParent effective-visibility callbacks
 
