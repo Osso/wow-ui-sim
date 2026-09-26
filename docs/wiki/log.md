@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record UnitIsUnit modeled-identity boundary
+
+Updated [[lua-api]] and index from `bfa742675`, `1787bd5f7`, and [modeled unit identity equality](../specs/unit-identity-equality.md). `UnitIsUnit` now compares resolved existing modeled GUIDs: player, assigned target/focus, and active party aliases can match; missing identities never match, including two absent tokens. Pet/vehicle identities remain unmodeled. Tests-only evidence is RED 4 failures / 2 controls; independent verification is pending. Cached retail `Blizzard_UnitFrame/Mainline/TargetFrame.lua` calls `UnitIsUnit("target", "player")` for SELF-menu selection, consumer evidence only. Native behavior is unverified. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
 ## [2026-09-26] investigation | Same-value setters stop dirtying regions
 
 `9805bc079`, `bef30706e`: SetTexture, SetDesaturated/SetDesaturation, SetTextColor, SetFont and SetText no longer mark regions dirty when the drawn result is unchanged. This removes ClickableRaidBuffs' timer-driven idle dirt. See [[tick-cooldown-scan]].

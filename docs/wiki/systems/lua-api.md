@@ -79,6 +79,8 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 **Unit GUID presence** — Since `2938de6e1`, public `UnitGUID(unit)` uses the shared existing-identity resolver. It returns one Lua `nil` when the token has no modeled unit presence or resolves only to the internal unknown/empty identity; modeled player, assigned target/focus, and active party identities remain strings. The initial six-case group was RED at tests-only `147a6a776` (four missing-identity failures; two present-identity controls). Independent verification passes all six within 79 unit API cases, 24 targeting controls plus a nested consumer, format/check and readability; `/tmp/cross-version-unit-guid-verification-ledger.md`. The targeting fixture logs 12 missing-dependency Lua errors despite passing assertions; no clean full-UI claim. Wowless's `UnitGUID.lua` supports the bounded modeled rule (`unit and unit.guid or nil`). Cached retail and Mists `Deprecated_ArenaUI.lua` consume GUID truthiness, but its remote-update comment explicitly distinguishes this from `UnitExists`; no native-client behavior or UnitExists equivalence is claimed. See [Unit GUID presence](../../specs/unit-guid-presence.md).
 
+**Unit identity equality** — Since `bfa742675`, `UnitIsUnit` compares resolved existing modeled GUIDs, rather than token text. Player, assigned target/focus, and active party aliases may therefore compare equal; a missing identity never compares equal, including two absent tokens. Pet and vehicle tokens receive no fabricated identities. Tests-only `1787bd5f7` is RED 4 failures / 2 controls; independent verification is pending. Cached retail `Blizzard_UnitFrame/Mainline/TargetFrame.lua` calls `UnitIsUnit("target", "player")` for SELF-menu selection, which is consumer evidence only. Native behavior is unverified. See [modeled unit identity equality](../../specs/unit-identity-equality.md).
+
 **Build options** — retail 12.1 `GetBuildOption("RestrictedAuraAPI")` returns `true`, selecting current forbidden aura templates; unknown options return `nil`.
 
 **Aura instance enumeration** — `C_UnitAuras.GetUnitAuraInstanceIDs` returns filtered, optionally sorted/limited IDs from existing public aura state; `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs` returns copied IDs from the private list. The matched-filter boolean belongs to Blizzard's source wrapper (public true, private false), not either native return tuple. `UnitAuraSoundTrigger` and metadata are initialized before secure-environment copying. See [contract and native sources](../../specs/unit-aura-instance-enumeration.md); five focused behavioral tests pass, without claiming new aura acquisition or secret-access policy.
@@ -148,8 +150,9 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 ## Sources
 
 - [lua-api.md](../../lua-api.md) — WowLuaEnv, FrameHandle, method categories, globals, C_* namespaces, timers
-- [unit_misc.rs](../../../src/lua_api/globals/unit_misc.rs) — public UnitGUID registration and existing-identity resolver
-- [Unit GUID presence](../../specs/unit-guid-presence.md) — bounded contract, initial RED evidence, and exclusions
+- [unit_misc.rs](../../../src/lua_api/globals/unit_misc.rs) — UnitGUID and UnitIsUnit registration through the existing-identity resolver
+- [Unit GUID presence](../../specs/unit-guid-presence.md) — bounded GUID-presence contract and exclusions
+- [Modeled unit identity equality](../../specs/unit-identity-equality.md) — equality contract, RED evidence, and exclusions
 - `/home/osso/Repos/wowless/data/impl/UnitGUID.lua` — modeled nil-on-missing-identity reference
 - `Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua` in cached retail and Mists UI — GUID-truthiness consumer and remote-update boundary
 - [spell_base.rs](../../../src/c_api/spell_base.rs) — explicit specialization relationship model and public/secret boundary
