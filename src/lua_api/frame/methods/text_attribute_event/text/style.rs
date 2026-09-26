@@ -131,9 +131,11 @@ pub(crate) fn set_text_color(state: &mut LuaState) -> LuaResult<u32> {
     let a = val_to_f32(stack_val(state, 5), 1.0);
     let new_color = crate::widget::Color::new(r, g, b, a);
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id)
-        && frame.text_color != new_color
-    {
+    let changed = sim
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.text_color != new_color);
+    if changed && let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.text_color = new_color;
     }
     Ok(0)

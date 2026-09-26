@@ -289,13 +289,15 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
     let vert_tile = opt_bool(state, 4);
     let mut sim = borrow_state_mut(state)?;
     let mut order_changed = false;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    let mut changed = false;
+    if let Some(frame) = sim.widgets.get_mut(id) {
         let Some((path, file_data_id)) = resolved else {
             return Ok(0);
         };
         let had_render_source = texture_has_render_source(frame);
         let has_render_source = path.is_some() || file_data_id.is_some();
-        let changed = texture_assignment_changed(frame, &path, file_data_id, horiz_tile, vert_tile);
+        changed = texture_assignment_changed(frame, &path, file_data_id, horiz_tile, vert_tile)
+            || frame.secret_texture != secret;
         frame.texture = path;
         frame.texture_file_data_id = file_data_id;
         frame.secret_texture = secret;
@@ -308,6 +310,10 @@ pub(super) fn set_texture(state: &mut LuaState) -> LuaResult<u32> {
         if order_changed {
             frame.region_order = crate::widget::next_region_order();
         }
+    }
+    // Re-applying the current texture leaves the region as drawn.
+    if changed {
+        sim.widgets.mark_visual_dirty(id);
     }
     if order_changed {
         sim.invalidate_strata_buckets();

@@ -99,10 +99,18 @@ pub(super) fn set_desaturated(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let desaturated = val_to_bool(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+    write_desaturated(&mut sim.widgets, id, desaturated);
+    Ok(0)
+}
+
+/// Store the desaturation flag, marking the region dirty only on change.
+fn write_desaturated(widgets: &mut crate::widget::WidgetRegistry, id: u64, desaturated: bool) {
+    let changed = widgets
+        .get(id)
+        .is_some_and(|frame| frame.desaturated != desaturated);
+    if changed && let Some(frame) = widgets.get_mut_visual(id) {
         frame.desaturated = desaturated;
     }
-    Ok(0)
 }
 
 pub(super) fn is_desaturated(state: &mut LuaState) -> LuaResult<u32> {
@@ -120,9 +128,7 @@ pub(super) fn set_desaturation(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let desaturated = val_to_f64(stack_val(state, 2)) > 0.0;
     let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.desaturated = desaturated;
-    }
+    write_desaturated(&mut sim.widgets, id, desaturated);
     Ok(0)
 }
 
