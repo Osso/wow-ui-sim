@@ -183,6 +183,117 @@ fn scaled_scroll_child_offsets_move_visible_quads_in_screen_pixels() {
     assert_eq!(scroll_content_quad_bounds(&env), (60.0, 60.0, 80.0, 80.0));
 }
 
+#[test]
+fn region_is_mouse_over_tracks_scrolled_descendants_not_viewport_chrome() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_size(800.0, 600.0);
+    env.exec(
+        r#"
+        MouseQueryViewport = CreateFrame("ScrollFrame", nil, UIParent)
+        MouseQueryViewport:SetSize(100, 100)
+        MouseQueryViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+        MouseQueryViewport:EnableMouse(true)
+        local canvas = CreateFrame("Frame", nil, MouseQueryViewport)
+        canvas:SetSize(200, 200)
+        canvas:SetPoint("TOPLEFT", MouseQueryViewport, "TOPLEFT")
+        MouseQueryViewport:SetScrollChild(canvas)
+        MouseQueryContent = CreateFrame("Frame", nil, canvas)
+        MouseQueryContent:SetSize(20, 20)
+        MouseQueryContent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 70, -70)
+        MouseQueryContent:EnableMouse(true)
+        MouseQueryDescendant = CreateFrame("Frame", nil, MouseQueryContent)
+        MouseQueryDescendant:SetSize(10, 10)
+        MouseQueryDescendant:SetPoint("TOPLEFT", MouseQueryContent, "TOPLEFT")
+        MouseQueryDescendant:EnableMouse(true)
+        MouseQueryChrome = CreateFrame("Frame", nil, MouseQueryViewport)
+        MouseQueryChrome:SetSize(20, 20)
+        MouseQueryChrome:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 70, -70)
+        MouseQueryChrome:EnableMouse(true)
+    "#,
+    )
+    .unwrap();
+
+    let rect: (f64, f64, f64, f64) = env.eval("return MouseQueryContent:GetRect()").unwrap();
+    let over = |x, y| {
+        env.state().borrow_mut().set_mouse_position(Some((x, y)));
+        env.eval::<(bool, bool, bool, bool)>(
+            "return MouseQueryContent:IsMouseOver(), MouseQueryDescendant:IsMouseOver(), \
+             MouseQueryChrome:IsMouseOver(), MouseQueryViewport:IsMouseOver()",
+        )
+        .unwrap()
+    };
+
+    assert_eq!(over(75.0, 75.0), (true, true, true, true));
+    env.exec(
+        "MouseQueryViewport:SetHorizontalScroll(40); MouseQueryViewport:SetVerticalScroll(40)",
+    )
+    .unwrap();
+    assert_eq!(over(35.0, 35.0), (true, true, false, true));
+    assert_eq!(over(75.0, 75.0), (false, false, true, true));
+    env.state()
+        .borrow_mut()
+        .set_mouse_position(Some((52.0, 40.0)));
+    let (outside, inside_margin): (bool, bool) = env
+        .eval("return MouseQueryContent:IsMouseOver(), MouseQueryContent:IsMouseOver(0, 3, 0, 0)")
+        .unwrap();
+    assert_eq!((outside, inside_margin), (false, true));
+    assert_eq!(
+        env.eval::<(f64, f64, f64, f64)>("return MouseQueryContent:GetRect()")
+            .unwrap(),
+        rect
+    );
+
+    env.exec(
+        "MouseQueryViewport:SetHorizontalScroll(40); MouseQueryViewport:SetVerticalScroll(40)",
+    )
+    .unwrap();
+    assert_eq!(over(35.0, 35.0), (true, true, false, true));
+    env.exec("MouseQueryViewport:SetHorizontalScroll(0); MouseQueryViewport:SetVerticalScroll(0)")
+        .unwrap();
+    assert_eq!(over(75.0, 75.0), (true, true, true, true));
+    assert_eq!(over(35.0, 35.0), (false, false, false, true));
+    assert_eq!(
+        env.eval::<(f64, f64, f64, f64)>("return MouseQueryContent:GetRect()")
+            .unwrap(),
+        rect
+    );
+}
+
+#[test]
+fn region_is_mouse_over_scales_scroll_offset_with_canvas() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_size(800.0, 600.0);
+    env.exec(
+        r#"
+        ScaledMouseViewport = CreateFrame("ScrollFrame", nil, UIParent)
+        ScaledMouseViewport:SetSize(100, 100)
+        ScaledMouseViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+        local canvas = CreateFrame("Frame", nil, ScaledMouseViewport)
+        canvas:SetSize(100, 100)
+        canvas:SetScale(2)
+        canvas:SetPoint("TOPLEFT", ScaledMouseViewport, "TOPLEFT")
+        ScaledMouseViewport:SetScrollChild(canvas)
+        ScaledMouseContent = CreateFrame("Frame", nil, canvas)
+        ScaledMouseContent:SetSize(10, 10)
+        ScaledMouseContent:SetPoint("TOPLEFT", canvas, "TOPLEFT", 30, -30)
+        ScaledMouseContent:EnableMouse(true)
+    "#,
+    )
+    .unwrap();
+    let over = |x, y| {
+        env.state().borrow_mut().set_mouse_position(Some((x, y)));
+        env.eval::<bool>("return ScaledMouseContent:IsMouseOver()")
+            .unwrap()
+    };
+    assert!(over(90.0, 90.0));
+    env.exec(
+        "ScaledMouseViewport:SetHorizontalScroll(10); ScaledMouseViewport:SetVerticalScroll(10)",
+    )
+    .unwrap();
+    assert!(over(70.0, 70.0));
+    assert!(!over(90.0, 90.0));
+}
+
 // ============================================================================
 // Basic ScrollFrame Tests
 // ============================================================================
