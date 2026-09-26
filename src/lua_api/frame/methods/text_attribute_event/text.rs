@@ -436,7 +436,9 @@ fn replace_tooltip_lines(
     let mut sim = borrow_state_mut(state)?;
     let td = sim.tooltips.entry(id).or_default();
     td.lines.clear();
+    td.spell_id = None;
     if let Some(text) = text {
+        let show = !text.is_empty() && td.owner_id.is_some();
         td.lines.push(crate::lua_api::tooltip::TooltipLine {
             left_text: text,
             left_color: (
@@ -451,8 +453,10 @@ fn replace_tooltip_lines(
             wrap: matches!(tooltip.wrap, Val::Bool(true)),
             texture: None,
         });
+        if show {
+            sim.set_frame_visible(id, true);
+        }
     }
-    td.spell_id = None;
     Ok(())
 }
 

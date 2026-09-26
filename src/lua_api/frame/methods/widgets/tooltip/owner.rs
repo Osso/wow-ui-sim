@@ -96,9 +96,7 @@ fn record_tooltip_owner(
     td.lines.clear();
     td.spell_id = None;
     sim.widgets.mark_rect_dirty(tooltip_id);
-    // Tooltip owners commonly reapply SetOwner during periodic refreshes.
-    // Keep the tooltip shown so identical refreshes don't churn show/hide state.
-    sim.set_frame_visible(tooltip_id, true);
+    sim.set_frame_visible(tooltip_id, false);
 }
 
 pub(super) fn set_object_tooltip_position(state: &mut LuaState) -> LuaResult<u32> {

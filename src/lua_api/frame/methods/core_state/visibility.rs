@@ -62,6 +62,9 @@ pub fn set_shown(state: &mut LuaState) -> LuaResult<u32> {
 
 fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     let (needs_change, in_handler, parent_id) = read_show_hide_state(state, id, shown)?;
+    if !shown {
+        release_tooltip_owner(state, id)?;
+    }
     if !needs_change {
         return Ok(());
     }
@@ -77,19 +80,6 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     {
         let mut sim = borrow_state_mut(state)?;
         sim.set_frame_visible(id, shown);
-        if !shown
-            && sim
-                .widgets
-                .get(id)
-                .is_some_and(|frame| frame.widget_type == WidgetType::GameTooltip)
-        {
-            if let Some(frame) = sim.widgets.get_mut(id) {
-                frame.tooltip_owner_id = None;
-            }
-            if let Some(tooltip) = sim.tooltips.get_mut(&id) {
-                tooltip.owner_id = None;
-            }
-        }
     }
 
     if in_handler || !parent_visible {
@@ -112,6 +102,23 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
 
     result?;
     super::size::mark_nearest_layout_parent_dirty(state, id);
+    Ok(())
+}
+
+fn release_tooltip_owner(state: &mut LuaState, id: u64) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    if sim
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.widget_type == WidgetType::GameTooltip)
+    {
+        if let Some(frame) = sim.widgets.get_mut(id) {
+            frame.tooltip_owner_id = None;
+        }
+        if let Some(tooltip) = sim.tooltips.get_mut(&id) {
+            tooltip.owner_id = None;
+        }
+    }
     Ok(())
 }
 

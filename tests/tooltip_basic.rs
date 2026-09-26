@@ -460,23 +460,111 @@ fn test_appendtext() {
 }
 
 #[test]
-fn test_setowner_makes_tooltip_visible() {
+fn tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner() {
     let env = WowLuaEnv::new().unwrap();
+    let (shown, lines, owned): (bool, i32, bool) = env
+        .eval(
+            r#"
+            local first = CreateFrame("Frame", nil, UIParent)
+            local second = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(first, "ANCHOR_RIGHT")
+            GameTooltip:SetSpellByID(19750)
+            assert(GameTooltip:IsShown())
+            GameTooltip:SetOwner(second, "ANCHOR_LEFT")
+            return GameTooltip:IsShown(), GameTooltip:NumLines(),
+                GameTooltip:GetOwner() == second and GameTooltip:IsOwned(second)
+            "#,
+        )
+        .unwrap();
+    assert!(!shown);
+    assert_eq!(lines, 0);
+    assert!(owned);
+    let sim = env.state().borrow();
+    let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
+    assert_eq!(sim.widgets.get(id).unwrap().tooltip_owner_id, sim.tooltips.get(&id).unwrap().owner_id);
+    assert!(sim.tooltips.get(&id).unwrap().owner_id.is_some());
+}
 
-    // GameTooltip starts hidden
-    let initially_visible: bool = env.eval("return GameTooltip:IsVisible()").unwrap();
-    assert!(!initially_visible, "GameTooltip should start hidden");
+#[test]
+fn tooltip_content_lifecycle_appends_remain_hidden_until_show() {
+    let env = WowLuaEnv::new().unwrap();
+    let (hidden, count, shown): (bool, i32, bool) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("First")
+            GameTooltip:AddDoubleLine("Second", "Right")
+            local hidden, count = not GameTooltip:IsShown(), GameTooltip:NumLines()
+            GameTooltip:Show()
+            return hidden, count, GameTooltip:IsShown()
+            "#,
+        )
+        .unwrap();
+    assert!(hidden);
+    assert_eq!(count, 2);
+    assert!(shown);
+}
 
-    env.exec(
-        r#"
-        local owner = CreateFrame("Frame", "VisOwner", UIParent)
-        GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-    "#,
-    )
-    .unwrap();
+#[test]
+fn tooltip_content_lifecycle_settext_shows_owned_populated_tooltip() {
+    let env = WowLuaEnv::new().unwrap();
+    let (shown, owned, count): (bool, bool, i32) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:SetText("New content")
+            return GameTooltip:IsShown(), GameTooltip:IsOwned(owner), GameTooltip:NumLines()
+            "#,
+        )
+        .unwrap();
+    assert!(shown);
+    assert!(owned);
+    assert_eq!(count, 1);
+}
 
-    let now_visible: bool = env.eval("return GameTooltip:IsVisible()").unwrap();
-    assert!(now_visible, "SetOwner should make tooltip visible");
+#[test]
+fn tooltip_content_lifecycle_spell_payload_still_shows_after_setowner() {
+    let env = WowLuaEnv::new().unwrap();
+    let (shown, owned, count): (bool, bool, i32) = env
+        .eval(
+            r#"
+            local owner = CreateFrame("Frame", nil, UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            GameTooltip:SetSpellByID(19750)
+            return GameTooltip:IsShown(), GameTooltip:IsOwned(owner), GameTooltip:NumLines()
+            "#,
+        )
+        .unwrap();
+    assert!(shown);
+    assert!(owned);
+    assert!(count > 0);
+}
+
+#[test]
+fn tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden() {
+    for method in ["Hide()", "SetShown(false)", "FadeOut()"] {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"
+            local owner = CreateFrame("Frame", "HiddenTooltipOwner", UIParent)
+            GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+            "#,
+        )
+        .unwrap();
+        assert!(!env.eval::<bool>("return GameTooltip:IsShown()").unwrap());
+        env.exec(&format!("GameTooltip:{method}")).unwrap();
+        let (shown, owned, owner_nil): (bool, bool, bool) = env
+            .eval("return GameTooltip:IsShown(), GameTooltip:IsOwned(HiddenTooltipOwner), GameTooltip:GetOwner() == nil")
+            .unwrap();
+        assert!(!shown, "{method}");
+        assert!(!owned, "{method}");
+        assert!(owner_nil, "{method}");
+        let sim = env.state().borrow();
+        let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
+        assert_eq!(sim.tooltips.get(&id).unwrap().owner_id, None, "{method}");
+    }
 }
 
 #[test]
