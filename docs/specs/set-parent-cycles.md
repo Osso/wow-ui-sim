@@ -22,6 +22,7 @@ Public Lua `SetParent` rejects a proposed self or descendant parent before chang
 ## Tests asserting this spec
 
 - `tests/methods_hierarchy.rs` — public self/descendant rejection, preserved hierarchy and visibility, and valid controls.
+- Independent verification passes these four cases and two existing creation/visibility controls. Format/check pass; `/tmp/cross-version-parent-item-location-proof.md` records the source and commands.
 
 ## Known gaps (current cycle)
 

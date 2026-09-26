@@ -29,7 +29,7 @@
 ## Evidence and verification
 
 - Cached retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua` declares `DoesItemExist(EmptiableItemLocation)`, `GetItemID(ItemLocation)`, `GetItemLink(ItemLocation)`, and `IsItemDataCached(ItemLocation)`.
-- Commit `3f44fa891` is RED→GREEN for four pure-model location cases and GREEN 44/44 `c_item_api::c_item::` controls; `/tmp/cross-version-item-location-proof.md` retains commands and actual logs.
+- Commit `3f44fa891` is RED→GREEN for four pure-model location cases and GREEN 44/44 `c_item_api::c_item::` controls; `/tmp/cross-version-item-location-proof.md` retains development logs. Independent verification after readability refactor `aa5f686f8` passes all 44 C_Item cases, format/check and changed-function readability; `/tmp/cross-version-parent-item-location-proof.md` records exact scope.
 
 ## Known gaps (current cycle)
 
@@ -38,5 +38,5 @@
 
 ## Out of scope
 
-- GUID synthesis: bag and equipped items have no modeled stable item GUID, so this change neither models nor fabricates `GetItemGUID` results.
+- `GetItemGUID` is unchanged. Stable item-instance identity remains unmodeled; the pre-existing bag getter still synthesizes a location-derived string. This change adds no GUID behavior.
 - Numeric aggregate item counts and native-client semantics.
