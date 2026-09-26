@@ -5,7 +5,145 @@
 use crate::common;
 
 use common::env_with_shared_xml;
+#[cfg(feature = "gui")]
+use wow_ui_sim::iced_app::{RegistryQuadBatchParams, build_quad_batch_for_registry};
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[cfg(feature = "gui")]
+fn scroll_content_quad_bounds(env: &WowLuaEnv) -> (f32, f32, f32, f32) {
+    env.set_screen_size(800.0, 600.0);
+    let buckets = {
+        let mut state = env.state().borrow_mut();
+        state.ensure_layout_rects();
+        state.get_strata_buckets().unwrap().clone()
+    };
+    let state = env.state().borrow();
+    let batch = build_quad_batch_for_registry(
+        RegistryQuadBatchParams::new(&state.widgets, (800.0, 600.0), &buckets)
+            .root_name(Some("ScrollQuadViewport")),
+    );
+    let solid: Vec<_> = batch
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == -1 && vertex.color[0] > 0.9 && vertex.color[1] < 0.1)
+        .collect();
+    assert!(
+        !solid.is_empty(),
+        "content color texture should emit visible vertices"
+    );
+    (
+        solid
+            .iter()
+            .map(|vertex| vertex.position[0])
+            .fold(f32::INFINITY, f32::min),
+        solid
+            .iter()
+            .map(|vertex| vertex.position[1])
+            .fold(f32::INFINITY, f32::min),
+        solid
+            .iter()
+            .map(|vertex| vertex.position[0])
+            .fold(f32::NEG_INFINITY, f32::max),
+        solid
+            .iter()
+            .map(|vertex| vertex.position[1])
+            .fold(f32::NEG_INFINITY, f32::max),
+    )
+}
+
+#[cfg(feature = "gui")]
+#[test]
+fn nested_scroll_viewport_outside_parent_emits_no_visible_content() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        OuterScrollViewport = CreateFrame("ScrollFrame", "OuterScrollViewport", UIParent)
+        OuterScrollViewport:SetSize(100, 100)
+        OuterScrollViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+        local outerChild = CreateFrame("Frame", nil, OuterScrollViewport)
+        outerChild:SetSize(250, 250)
+        outerChild:SetPoint("TOPLEFT", OuterScrollViewport, "TOPLEFT")
+        OuterScrollViewport:SetScrollChild(outerChild)
+        local inner = CreateFrame("ScrollFrame", nil, outerChild)
+        inner:SetSize(30, 30)
+        inner:SetPoint("TOPLEFT", outerChild, "TOPLEFT", 70, -70)
+        local innerChild = CreateFrame("Frame", nil, inner)
+        innerChild:SetSize(30, 30)
+        innerChild:SetPoint("TOPLEFT", inner, "TOPLEFT")
+        inner:SetScrollChild(innerChild)
+        local texture = innerChild:CreateTexture(nil, "ARTWORK")
+        texture:SetAllPoints()
+        texture:SetColorTexture(0, 0, 1, 1)
+    "#,
+    )
+    .unwrap();
+    let blue_vertex_count = || {
+        env.set_screen_size(800.0, 600.0);
+        let buckets = {
+            let mut state = env.state().borrow_mut();
+            state.ensure_layout_rects();
+            state.get_strata_buckets().unwrap().clone()
+        };
+        let state = env.state().borrow();
+        let batch = build_quad_batch_for_registry(
+            RegistryQuadBatchParams::new(&state.widgets, (800.0, 600.0), &buckets)
+                .root_name(Some("OuterScrollViewport")),
+        );
+        batch
+            .vertices
+            .iter()
+            .filter(|vertex| {
+                vertex.tex_index == -1 && vertex.color[2] > 0.9 && vertex.color[0] < 0.1
+            })
+            .count()
+    };
+    assert!(blue_vertex_count() > 0, "nested content starts visible");
+    env.exec("OuterScrollViewport:SetHorizontalScroll(-100); OuterScrollViewport:SetVerticalScroll(-100)").unwrap();
+    assert_eq!(
+        blue_vertex_count(),
+        0,
+        "disjoint nested viewport must clip all content"
+    );
+}
+
+#[cfg(feature = "gui")]
+#[test]
+fn scroll_offsets_translate_emitted_content_quads_on_both_axes_without_drift() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        ScrollQuadViewport = CreateFrame("ScrollFrame", "ScrollQuadViewport", UIParent)
+        ScrollQuadViewport:SetSize(100, 100)
+        ScrollQuadViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+        local child = CreateFrame("Frame", nil, ScrollQuadViewport)
+        child:SetSize(200, 200)
+        child:SetPoint("TOPLEFT", ScrollQuadViewport, "TOPLEFT")
+        ScrollQuadViewport:SetScrollChild(child)
+        local external = CreateFrame("Frame", nil, child)
+        external:SetSize(20, 20)
+        external:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 70, -70)
+        local texture = external:CreateTexture(nil, "ARTWORK")
+        texture:SetAllPoints()
+        texture:SetColorTexture(1, 0, 0, 1)
+    "#,
+    )
+    .unwrap();
+
+    assert_eq!(scroll_content_quad_bounds(&env), (70.0, 70.0, 90.0, 90.0));
+    env.exec(
+        "ScrollQuadViewport:SetHorizontalScroll(40); ScrollQuadViewport:SetVerticalScroll(40)",
+    )
+    .unwrap();
+    assert_eq!(scroll_content_quad_bounds(&env), (30.0, 30.0, 50.0, 50.0));
+    env.exec(
+        "ScrollQuadViewport:SetHorizontalScroll(40); ScrollQuadViewport:SetVerticalScroll(40)",
+    )
+    .unwrap();
+    assert_eq!(scroll_content_quad_bounds(&env), (30.0, 30.0, 50.0, 50.0));
+    env.exec("ScrollQuadViewport:SetHorizontalScroll(0); ScrollQuadViewport:SetVerticalScroll(0)")
+        .unwrap();
+    assert_eq!(scroll_content_quad_bounds(&env), (70.0, 70.0, 90.0, 90.0));
+}
 
 // ============================================================================
 // Basic ScrollFrame Tests

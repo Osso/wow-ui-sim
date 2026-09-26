@@ -13,6 +13,108 @@ mod hit_grid_tests {
     }
 
     #[test]
+    fn scroll_offsets_move_cached_hit_target_without_moving_chrome_or_logical_rect() {
+        let app = build_test_app();
+        app.env
+            .borrow()
+            .exec(
+                r#"
+                ScrollHitViewport = CreateFrame("ScrollFrame", "ScrollHitViewport", UIParent)
+                ScrollHitViewport:SetSize(100, 100)
+                ScrollHitViewport:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 20, -20)
+                local child = CreateFrame("Frame", nil, ScrollHitViewport)
+                child:SetSize(200, 200)
+                child:SetPoint("TOPLEFT", ScrollHitViewport, "TOPLEFT")
+                ScrollHitViewport:SetScrollChild(child)
+                ScrollHitContent = CreateFrame("Button", "ScrollHitContent", child)
+                ScrollHitContent:SetSize(20, 20)
+                ScrollHitContent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 70, -70)
+                ScrollHitContent:EnableMouse(true)
+                ScrollHitContent:RegisterForClicks("LeftButtonUp")
+                ScrollHitChrome = CreateFrame("Button", "ScrollHitChrome", ScrollHitViewport)
+                ScrollHitChrome:SetSize(20, 20)
+                ScrollHitChrome:SetPoint("TOPLEFT", ScrollHitViewport, "TOPLEFT", 80, 0)
+                ScrollHitChrome:EnableMouse(true)
+                ScrollHitChrome:RegisterForClicks("LeftButtonUp")
+            "#,
+            )
+            .expect("scroll hit fixture should load");
+        let size = Size::new(800.0, 600.0);
+        app.mark_all_strata_dirty();
+        app.rebuild_dirty_strata(size, app.strata_dirty.get());
+        let original = Point::new(75.0, 75.0);
+        let shifted = Point::new(35.0, 35.0);
+        let chrome = Point::new(105.0, 25.0);
+        let target = app.hit_test_mouse_button(original, "LeftButton", false);
+        let chrome_target = app.hit_test_mouse_button(chrome, "LeftButton", false);
+        assert!(target.is_some(), "content starts in viewport");
+        assert!(chrome_target.is_some(), "chrome starts in viewport");
+        assert_ne!(target, chrome_target);
+        assert_ne!(
+            app.hit_test_mouse_button(shifted, "LeftButton", false),
+            target
+        );
+        let logical_rect: (f64, f64, f64, f64) = app
+            .env
+            .borrow()
+            .eval("return ScrollHitContent:GetRect()")
+            .expect("content logical rectangle should be readable");
+
+        app.env
+            .borrow()
+            .exec("ScrollHitViewport:SetHorizontalScroll(40); ScrollHitViewport:SetVerticalScroll(40)")
+            .expect("scroll setters should succeed");
+        rebuild_after_widget_dirty(&app, size);
+        assert_eq!(
+            app.hit_test_mouse_button(shifted, "LeftButton", false),
+            target
+        );
+        assert_ne!(
+            app.hit_test_mouse_button(original, "LeftButton", false),
+            target
+        );
+        assert_eq!(
+            app.hit_test_mouse_button(chrome, "LeftButton", false),
+            chrome_target
+        );
+        assert_eq!(
+            app.env
+                .borrow()
+                .eval::<(f64, f64, f64, f64)>("return ScrollHitContent:GetRect()")
+                .unwrap(),
+            logical_rect,
+            "scroll presentation must not mutate logical layout",
+        );
+
+        app.env
+            .borrow()
+            .exec("ScrollHitViewport:SetHorizontalScroll(40); ScrollHitViewport:SetVerticalScroll(40)")
+            .unwrap();
+        rebuild_after_widget_dirty(&app, size);
+        assert_eq!(
+            app.hit_test_mouse_button(shifted, "LeftButton", false),
+            target,
+            "same offset must not accumulate"
+        );
+
+        app.env
+            .borrow()
+            .exec(
+                "ScrollHitViewport:SetHorizontalScroll(0); ScrollHitViewport:SetVerticalScroll(0)",
+            )
+            .unwrap();
+        rebuild_after_widget_dirty(&app, size);
+        assert_eq!(
+            app.hit_test_mouse_button(original, "LeftButton", false),
+            target
+        );
+        assert_ne!(
+            app.hit_test_mouse_button(shifted, "LeftButton", false),
+            target
+        );
+    }
+
+    #[test]
     fn layout_move_updates_cached_hit_grid_rects() {
         let app = build_test_app();
         app.env
