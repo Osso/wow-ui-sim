@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Verify anchor protection and FontObject spacing
+
+Independent verification retains 93/93 unchanged anchor/security cases and passes 16/16 focused font cases after `00c4edb01`, plus format/check and a zero-issue changed-code readability audit. [[protected-frames]] and [FontString spacing](../specs/fontstring-spacing.md) retain their explicit behavioral limits. `/tmp/cross-version-anchor-font-proof.md` records commands, revisions and logs; earlier pending notes below are superseded for this bounded batch.
+
 ## [2026-09-26] audit | Record bounded FontObject spacing snapshot
 
 Updated [FontString spacing](../specs/fontstring-spacing.md), [rendering pipeline](../rendering-pipeline.md), [Lua API inventory](../lua-api.md), index, and log from `4ccf92ee0`, `2c0dcb53f`, `/tmp/cross-version-font-object-spacing-proof.md`, and actual final GREEN logs. Initial FontString construction and explicit `SetFontObject` assignment now snapshot an explicitly defined FontObject spacing value; assignment refreshes auto text height. The grouped default-feature `spacing_roundtrip` batch is GREEN 12/12, and later local FontString `SetSpacing` remains independent. Final independent verification is pending. Later live FontObject mutation, graph propagation, and override precedence remain unverified; no all-FontObject behavior claim. No tests or builds ran for this documentation audit.
