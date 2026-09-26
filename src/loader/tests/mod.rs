@@ -688,6 +688,7 @@ fn test_intersects_returns_false_for_disjoint_frames() {
 }
 
 mod anchor_render_dirty;
+mod animation_render_dirty;
 mod frame_interaction;
 mod frame_state;
 mod global_frame_access;

@@ -419,11 +419,14 @@ fn apply_animation_group_outcome(
     sim: &mut crate::lua_api::state::SimState,
     result: &AnimationGroupAdvance,
 ) {
+    // Alpha writes stay silent: propagate_effective_alpha below marks a frame
+    // dirty only when its effective alpha changes, so a pulse under a
+    // transparent parent does not force a redraw every tick.
     let mut changed_alpha_targets = Vec::new();
     for alpha_update in &result.alpha_updates {
         let mut changed = false;
         if let Some(alpha) = alpha_update.pending_alpha
-            && let Some(frame) = sim.widgets.get_mut_visual(alpha_update.target_id)
+            && let Some(frame) = sim.widgets.get_mut(alpha_update.target_id)
             && (frame.alpha as f64 - alpha).abs() > f32::EPSILON as f64
         {
             frame.alpha = alpha as f32;
@@ -431,7 +434,7 @@ fn apply_animation_group_outcome(
         }
 
         if let Some(saved_alpha) = alpha_update.restore_saved_alpha
-            && let Some(frame) = sim.widgets.get_mut_visual(alpha_update.target_id)
+            && let Some(frame) = sim.widgets.get_mut(alpha_update.target_id)
             && (frame.alpha - saved_alpha).abs() > f32::EPSILON
         {
             frame.alpha = saved_alpha;
