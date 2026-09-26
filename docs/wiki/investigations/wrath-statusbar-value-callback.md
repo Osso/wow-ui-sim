@@ -30,9 +30,16 @@ wow-ui-sim's `client-wrath` reports interface 38001, while Solarity targets buil
 | Runtime template orientation | At `4ad244e56`, normal `gui,client-wrath` RED 0/1, then GREEN 1/1 | Direct/inherited `VERTICAL` and explicit `HORIZONTAL` override apply before `OnLoad` |
 | Renderer/collector controls | Retained normal `gui,client-wrath` source proof: vertical normal/reverse 2/2, rotated atlas 1/1, collector 1/1, horizontal controls 2/2 | Six source controls retained; no native fill-direction claim |
 | Final normal checks | `4ad244e56` focused compile/four GREEN cases, reused six rendering/collector controls, fresh format/check and readability audit | PASS; zero check warnings; no full UI validation |
-| Stage-1 contracts | Range, initialization, `OnMinMaxChanged`, callback order, and native vertical direction | Uncorroborated for this target; not imported from Solarity |
+| Range validation | `0e3c8157c` test coverage; `c72db371d` simulator policy; pre-fix RED ledger | Reversed/NaN panic boundary fixed in source; GREEN and independent verification pending; no native claim |
+| Stage-1 contracts | Initialization, `OnMinMaxChanged`, callback order, and native vertical direction | Uncorroborated for this target; not imported from Solarity |
 
-User chose to defer uncorroborated first-zero, inverted-range and callback-order semantics and start Stage 2. These remain unresolved compatibility gaps, not implemented or disproven behavior. Runtime template orientation and vertical rendering have bounded source proof, not native verification. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
+User chose to defer uncorroborated first-zero and callback-order semantics and start Stage 2. Inverted-range handling now has a simulator policy, but native compatibility remains unresolved and independent GREEN evidence is pending. Runtime template orientation and vertical rendering have bounded source proof, not native verification. Cached Classic `Blizzard_ActionBar/Classic/OverrideActionBar.xml` health and power bars combine `orientation="VERTICAL"` with `rotatesTexture="true"`, corroborating a concrete consumer path.
+
+## Range validation (pending independent verification)
+
+`0e3c8157c` adds behavioral coverage and `c72db371d` validates `SetMinMaxValues` before mutating widget state, preventing Rust `f64::clamp` panics for reversed or NaN bounds. A reversed Slider raises a catchable Lua error and retains its previous range and value. A reversed StatusBar collapses to the supplied maximum (`min = max`) and clamps stored, interpolated, and target values; either NaN bound rejects before mutation for both widgets. Equal and ordinary ranges remain in scope.
+
+This is a simulator policy: Solarity is comparison-only evidence, and native handling/error text remain unverified. The available ledger is pre-fix RED evidence at `0e3c8157c`: four panic cases and one passing ordinary/equal-range control. GREEN and independent verification remain pending until `/tmp/cross-version-range-validation-proof.md` contains post-fix evidence.
 
 ## Later four stages
 
@@ -44,6 +51,7 @@ User chose to defer uncorroborated first-zero, inverted-range and callback-order
 ## Sources
 
 - [StatusBar callback spec](../../specs/statusbar-value-callback.md) — scoped contract and current exclusions.
+- [Widget range validation](../../specs/widget-range-validation.md) — simulator policy and pending verification boundary.
 - [Slider/StatusBar setter](../../../src/lua_api/frame/methods/widgets/slider.rs) — commit implementation.
 - [script-handler admission](../../../src/lua_api/frame/methods/text_attribute_event/events.rs) — widget eligibility.
 - [enum initialization](../../../src/lua_api/env_init/enums.rs) — `91cb5c735` feature-gate correction.
@@ -60,6 +68,7 @@ User chose to defer uncorroborated first-zero, inverted-range and callback-order
 - `/tmp/wrath-statusbar-orientation-template-proof.md` — `4ad244e56` runtime orientation RED/GREEN ledger.
 - `/tmp/wrath-statusbar-orientation-template-red.log` — pre-fix runtime orientation RED (0/1).
 - `/tmp/wrath-statusbar-orientation-template-create_frame_statusbar_template_applies_orientation_before_onload.log` — post-fix runtime orientation GREEN (1/1).
+- `/tmp/cross-version-range-validation-proof.md` — pre-fix range-validation RED ledger; no post-fix GREEN evidence yet.
 
 ## See Also
 

@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record pending Slider/StatusBar range validation
+
+Updated [[wrath-statusbar-value-callback]], index, and log from `0e3c8157c`, `c72db371d`, [Widget range validation](../specs/widget-range-validation.md), and `/tmp/cross-version-range-validation-proof.md`. The root failure was mutating bounds before calling `f64::clamp`, which panicked for reversed or NaN inputs. The documented simulator policy rejects reversed Slider and both-widget NaN inputs before mutation; reversed StatusBar bounds collapse to the supplied maximum and clamp current/interpolated values. Solarity is reference-only; native behavior and error text remain unverified. Ledger contains only `0e3c8157c` pre-fix RED: four panic cases and one passing ordinary/equal-range control. GREEN and independent verification remain pending. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
 ## [2026-09-26] audit | Verify reparent visibility transitions
 
 Independent verification after `1fcdb52b2` passes six reparent cases, nine existing Show/Hide cases and four parent/alpha controls, plus format/check and changed-function readability. [Visibility dispatch](../specs/visibility-script-dispatch.md) and `/tmp/cross-version-reparent-visibility-proof.md` retain source-only and public-method boundaries; this supersedes the pending gate below without claiming native timing or all parent writers.
