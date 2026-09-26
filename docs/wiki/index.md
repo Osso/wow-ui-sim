@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Preserve Wrath StatusBar callback RED boundary
+
+[[wrath-statusbar-value-callback]] records `9ea6555f8`: ordinary changed StatusBar values now commit before protected `OnValueChanged(self, value)` dispatch, with no Slider mouse flag. Cached Classic `TextStatusBar` rereads committed state in its callback. The direct Wrath test remains RED at `/tmp/wrath-statusbar-red-statusbar_value_change_updates_text_synchronously.log`; no GREEN, native execution, or profile acceptance is claimed. `client-wrath` is interface 38001; Solarity build 12340 is comparison only. Normal `gui,client-wrath` compilation remains independently blocked by `c_unit_auras` feature gating; augmented `aura-instance-enumeration` was diagnostic only. The five-stage roadmap preserves normal-lane compilation, ordinary GREEN, source-limited contract expansion, and native validation as separate work.
+
 ## [2026-09-26] investigation | Record default build linker-cache boundary
 
 [[default-build-linker-cache]] records the 1.345s default incremental build link failure in cached `libwow_ui_sim-f3ad90e455e35ad1.rlib`: anonymous LLVM references ended in `18005206435280134742`, while matching-prefix definitions ended in `820421656293145055`. Only that archive and its matching incremental directory were quarantined; dependencies were untouched. The same default incremental build then completed in 178.164s with no environment or source change. Cause and runtime verification remain pending; `incremental = true` and mold remain unchanged.
