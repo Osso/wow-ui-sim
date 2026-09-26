@@ -149,7 +149,7 @@ At `d6d7a9078`, `SetSpacing` writes per-frame `text_line_spacing`; `GetSpacing` 
 
 ### Widget-Type-Specific Methods
 
-**EditBox:** `SetText()`, `GetText()`, `SetMaxLetters()`, `SetMultiLine()`, `SetAutoFocus()`, `SetFocus()`, `ClearFocus()`, `SetCursorPosition()`, `GetCursorPosition()`, `GetUTF8CursorPosition()`, `HighlightText()`, `ClearHighlightText()`, `Insert()`. Cursor and highlight endpoints exposed to Lua are valid UTF-8 byte offsets; `GetUTF8CursorPosition()` reports the scalar count before the cursor. The widget retains scalar cursor/selection indices internally. `Insert` replaces a nonempty highlighted range, including deletion when passed an empty string, then clears that selection.
+**EditBox:** `SetText()`, `GetText()`, `SetMaxLetters()`, `SetMultiLine()`, `SetAutoFocus()`, `SetFocus()`, `ClearFocus()`, `SetCursorPosition()`, `GetCursorPosition()`, `GetUTF8CursorPosition()`, `HighlightText()`, `ClearHighlightText()`, `Insert()`. Cursor and highlight endpoints exposed to Lua are valid UTF-8 byte offsets; `GetUTF8CursorPosition()` reports the scalar count before the cursor. The widget retains scalar cursor/selection indices internally. `Insert` replaces a nonempty highlighted range, including deletion when passed an empty string, then clears that selection. When stored cursor/selection state remains beyond shortened text, `3b5ee8d55` derives the post-insert cursor from the clamped prefix rather than the old index; its new test was initially RED, with GREEN and final gates pending.
 
 **Slider:** `GetMinMaxValues()`, `SetMinMaxValues()`, `GetValue()`, `SetValue()`, `GetValueStep()`, `SetValueStep()`, `GetOrientation()`, `SetOrientation()`
 

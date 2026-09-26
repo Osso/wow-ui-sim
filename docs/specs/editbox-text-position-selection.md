@@ -31,6 +31,7 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 ## Evidence boundary
 
 - The supported public boundary is valid UTF-8 byte offsets. The simulator retains character indices internally for editing and selected ranges.
+- Initial verification added `editbox_insert_clamps_cursor_after_text_shortens`, which was RED 0/1 in `/tmp/editbox-shortening-red.log`: after `SetText` shortened text without resetting stored cursor or selection indices, `Insert` clamped its byte edit range but derived the resulting scalar cursor from the stale logical index. `3b5ee8d55` instead derives that cursor from the actual clamped text prefix plus inserted scalar count. GREEN and final gates remain pending, so this requirement remains unchecked.
 - Cached Blizzard consumers corroborate byte-facing use: `Blizzard_AutoComplete/AutoComplete.lua:405` and `Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:510` pass Lua `strlen` results to `HighlightText`; Classic `ChatFrameUtilOverrides` passes `GetCursorPosition()` to byte-indexed Lua `string.sub`. This is source-consumer corroboration, not a native probe.
 
 ## Out of scope
