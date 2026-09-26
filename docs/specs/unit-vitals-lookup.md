@@ -20,16 +20,17 @@
 - `src/lua_api/globals/utility_system_spell/spell_api.rs`: shared lookup and power queries.
 - `src/lua_api/globals/targeting_verbs.rs`: modeled snapshot resolver.
 - `src/lua_api/globals/group_queries.rs`: existing party/raid active-unit policy.
-- `src/lua_api/globals/unit_stats.rs`: unrelated combat-stat queries; no duplicate maximum-health/power registration.
+- `src/lua_api/globals/unit_stats.rs`: unrelated combat-stat queries. Before `19757e081`, its late registration of duplicate `UnitHealthMax` and `UnitPowerMax` handlers overwrote the shared handlers; those duplicate handlers are deleted.
 
 ## Tests asserting this spec
 
-- `tests/admin_health_power_api.rs`: modeled target/focus, active-group, absent-token and targeting-only seed regressions; existing player/target primary and player secondary tests.
-- `tests/unit_stats.rs`: maximum-health behavior and the documented single-value power maximum, including an explicitly selected secondary pool.
+- `tests/admin_health_power_api.rs`: modeled target/focus, active-group, absent-token, and targeting-only seed regressions; the new seed case was RED before the registration fix.
+- `tests/unit_stats.rs`: maximum-health behavior, explicitly selected secondary pool, and a `select('#', UnitPowerMax("player")) == 1` regression; the single-result case was RED before the registration fix.
 
 ## Known gaps (current cycle)
 
-- [ ] Confirm grouped integration GREEN on `gui,client-wrath` after fixture correction.
+- [ ] Confirm grouped integration GREEN on `gui,client-wrath` after the duplicate-registration fix. RED reproduction is source evidence, not GREEN proof.
+- [ ] Preserve the return-metadata boundary: local current and read-only Wrath 3.4.3 `UnitDocumentation.lua` declarations establish one `maxPower` result, but do not establish absent-unit values, coercion, `unmodified` behavior, or secret/restriction semantics.
 
 ## Out of scope
 

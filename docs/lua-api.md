@@ -226,6 +226,11 @@ Retail 12.1 `GetBuildOption("RestrictedAuraAPI")` returns `true`, selecting curr
 
 `ClearTarget()` clears the current target and returns `true` iff a target existed; it returns `false` when no target was set and preserves the `PLAYER_TARGET_CHANGED` event.
 
+### Shared unit vitals
+**File:** `src/lua_api/globals/utility_system_spell/spell_api.rs`
+
+`UnitHealth`, `UnitHealthMax`, `UnitPower`, and `UnitPowerMax` register once with the shared vitals provider. Commit `19757e081` removed duplicate late maxima registrations from `unit_stats.rs`, because registration order had overridden the shared lookup with player/stat shortcuts. The provider reads modeled target/focus/group snapshots and returns zero numeric vitals for absent units; `UnitPowerMax` emits one maximum result. Local current and read-only Wrath 3.4.3 API documentation corroborate that one-result shape only; absent-unit, coercion, scaling, and secret/restriction semantics remain unverified.
+
 ### Profile-scoped guild panel toggle
 **File:** `src/lua_api/globals/panel_toggle_verbs.rs`
 
