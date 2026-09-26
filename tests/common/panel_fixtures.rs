@@ -62,6 +62,9 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_PingUI",
     "Blizzard_ActionBar",
     "Blizzard_ColorPickerFrame",
+    // Retail UnitFrame's secure aura consumer relies on this implicit startup root.
+    #[cfg(feature = "client-retail")]
+    "Blizzard_AuraContainer",
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
     "Blizzard_Minimap",

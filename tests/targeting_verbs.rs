@@ -87,6 +87,14 @@ fn panel_addons_initialize_target_frame_private_aura_groups() {
         buffs && debuffs,
         "TargetFrame aura OnLoad must initialize both private groups; Lua errors: {errors:#?}",
     );
+    assert_eq!(
+        public_util, "nil",
+        "private aura utilities must not leak into _G"
+    );
+    assert_eq!(
+        secure_util, "table",
+        "private aura utilities must remain secure"
+    );
 }
 
 fn env() -> WowLuaEnv {
