@@ -5,7 +5,7 @@
 //! of the full list.
 
 use iced::{Point, Rectangle};
-use std::collections::HashMap;
+use rustc_hash::FxHashMap;
 
 use super::frame_collect::HitOrderKey;
 
@@ -19,9 +19,9 @@ pub struct HitGrid {
     /// Each cell holds frame IDs that overlap it, in render-order (low→high).
     cells: Vec<Vec<u64>>,
     /// Rectangle for each hittable frame, keyed by frame ID.
-    rects: HashMap<u64, Rectangle>,
+    rects: FxHashMap<u64, Rectangle>,
     /// Current render-bucket ranks, including frames not currently hittable.
-    keys: HashMap<u64, HitOrderKey>,
+    keys: FxHashMap<u64, HitOrderKey>,
     cols: usize,
     rows: usize,
 }
@@ -37,8 +37,8 @@ impl HitGrid {
         let rows = (screen_h / CELL_SIZE).ceil() as usize;
         let cell_count = cols * rows;
         let mut cells: Vec<Vec<u64>> = vec![Vec::new(); cell_count];
-        let mut rects = HashMap::with_capacity(hittable.len());
-        let mut keys = HashMap::with_capacity(hittable.len());
+        let mut rects = FxHashMap::with_capacity_and_hasher(hittable.len(), Default::default());
+        let mut keys = FxHashMap::with_capacity_and_hasher(hittable.len(), Default::default());
 
         for &(id, rect, key) in &hittable {
             rects.insert(id, rect);
@@ -72,7 +72,7 @@ impl HitGrid {
     /// Refresh ranks once per update batch without rebuilding spatial cells.
     /// Frames no longer present in the render order are removed from hit testing.
     pub fn update_render_order(&mut self, strata_buckets: &[Vec<u64>]) {
-        let next_keys: HashMap<_, _> = strata_buckets
+        let next_keys: FxHashMap<_, _> = strata_buckets
             .iter()
             .flatten()
             .enumerate()

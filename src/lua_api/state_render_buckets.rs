@@ -1,5 +1,5 @@
 use crate::widget::WidgetRegistry;
-use std::collections::HashSet;
+use rustc_hash::FxHashSet;
 
 #[path = "state_render_buckets/trace.rs"]
 mod trace;
@@ -45,7 +45,7 @@ pub(super) fn dfs_emit(
     id: u64,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
 ) {
     dfs_emit_with_region_mode(id, strata_idx, widgets, visible, out, false);
@@ -55,7 +55,7 @@ fn dfs_emit_with_region_mode(
     id: u64,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
     suppress_regions: bool,
 ) {
@@ -98,7 +98,7 @@ fn emit_tooltip_nineslice(
     tooltip_nineslice_id: Option<u64>,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
     suppress_regions: bool,
 ) {
@@ -137,7 +137,7 @@ enum RegionPlacement {
 struct RegionEmitContext<'a> {
     strata_idx: usize,
     widgets: &'a WidgetRegistry,
-    visible: &'a HashSet<u64>,
+    visible: &'a FxHashSet<u64>,
     out: &'a mut Vec<u64>,
     suppress_regions: bool,
 }
@@ -205,7 +205,7 @@ fn tooltip_nineslice_child(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
 ) -> Option<u64> {
     if frame.widget_type != crate::widget::WidgetType::GameTooltip {
         return None;
@@ -222,7 +222,7 @@ fn collect_regions_and_children(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     suppress_regions: bool,
 ) -> (Vec<RegionEntry>, Vec<u64>) {
     let mut regions = Vec::new();
@@ -263,7 +263,7 @@ fn emit_child_frames_and_hoisted(
     child_frames: &mut [u64],
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
     suppress_regions: bool,
     deferred_regions: &mut Vec<RegionEntry>,
@@ -295,7 +295,7 @@ fn collect_frame_regions(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     depth: u32,
     regions: &mut Vec<RegionEntry>,
     child_frames: &mut Vec<u64>,
@@ -315,7 +315,7 @@ fn collect_frame_regions_inner(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     depth: u32,
     regions: &mut Vec<RegionEntry>,
     child_frames: &mut Vec<u64>,
@@ -337,7 +337,7 @@ fn collect_child_for_emit(
     child_id: u64,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     depth: u32,
     regions: &mut Vec<RegionEntry>,
     child_frames: &mut Vec<u64>,
@@ -364,7 +364,7 @@ fn collect_transparent_wrapper_regions(
     id: u64,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     depth: u32,
     regions: &mut Vec<RegionEntry>,
 ) {
@@ -402,7 +402,7 @@ fn collect_frame_children_only(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
     child_frames: &mut Vec<u64>,
 ) {
     for &child_id in &frame.children {
@@ -432,7 +432,7 @@ fn is_regionless_transparent_wrapper(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
 ) -> bool {
     is_transparent_wrapper(frame)
         && !has_visible_same_strata_region_child(frame, strata_idx, widgets, visible)
@@ -442,7 +442,7 @@ fn has_visible_same_strata_region_child(
     frame: &crate::widget::Frame,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    visible: &HashSet<u64>,
+    visible: &FxHashSet<u64>,
 ) -> bool {
     frame.children.iter().copied().any(|child_id| {
         visible.contains(&child_id)
@@ -456,7 +456,7 @@ pub(super) fn collect_same_strata_subtree_ids(
     id: u64,
     strata_idx: usize,
     widgets: &WidgetRegistry,
-    out: &mut HashSet<u64>,
+    out: &mut FxHashSet<u64>,
 ) {
     if !out.insert(id) {
         return;
@@ -481,7 +481,7 @@ pub(super) fn collect_same_strata_subtree_ids(
 pub(super) fn same_strata_subtree_segment_end(
     bucket: &[u64],
     start: usize,
-    subtree_ids: &HashSet<u64>,
+    subtree_ids: &FxHashSet<u64>,
 ) -> usize {
     let mut end = start + 1;
     while end < bucket.len() && subtree_ids.contains(&bucket[end]) {

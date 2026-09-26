@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use rustc_hash::FxHashSet;
 
 use super::super::state::SimState;
 use super::state_render_buckets::{
@@ -8,7 +8,7 @@ use super::state_render_buckets::{
 pub(super) struct StrataBucketRepairPlan {
     pub(super) strata_idx: usize,
     pub(super) repair_root: u64,
-    pub(super) subtree_ids: HashSet<u64>,
+    pub(super) subtree_ids: FxHashSet<u64>,
     pub(super) replacement_segment: Vec<u64>,
 }
 
@@ -53,13 +53,16 @@ fn same_strata_subtree_ids(
     repair_root: u64,
     strata_idx: usize,
     widgets: &crate::widget::WidgetRegistry,
-) -> HashSet<u64> {
-    let mut subtree_ids = HashSet::new();
+) -> FxHashSet<u64> {
+    let mut subtree_ids = FxHashSet::default();
     collect_same_strata_subtree_ids(repair_root, strata_idx, widgets, &mut subtree_ids);
     subtree_ids
 }
 
-fn visible_same_strata_subtree_ids(state: &SimState, subtree_ids: &HashSet<u64>) -> HashSet<u64> {
+fn visible_same_strata_subtree_ids(
+    state: &SimState,
+    subtree_ids: &FxHashSet<u64>,
+) -> FxHashSet<u64> {
     subtree_ids
         .iter()
         .copied()
@@ -76,7 +79,7 @@ fn emit_visible_same_strata_segment(
     repair_root: u64,
     strata_idx: usize,
     widgets: &crate::widget::WidgetRegistry,
-    visible_ids: &HashSet<u64>,
+    visible_ids: &FxHashSet<u64>,
 ) -> Vec<u64> {
     let mut replacement_segment = Vec::new();
     dfs_emit(
@@ -152,7 +155,7 @@ mod tests {
         assert_eq!(repair_plan.repair_root, 30);
         assert_eq!(
             repair_plan.subtree_ids,
-            std::collections::HashSet::from([30, 31, 32, 33, 34, 35])
+            rustc_hash::FxHashSet::from_iter([30, 31, 32, 33, 34, 35])
         );
         assert_eq!(repair_plan.replacement_segment, vec![30, 31, 33, 34, 35]);
     }

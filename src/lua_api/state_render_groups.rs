@@ -1,9 +1,9 @@
 //! Keep top-level-owned render segments together across their local strata.
 
 use super::super::state::SimState;
-use std::collections::HashMap;
+use rustc_hash::FxHashMap;
 
-type Owners = HashMap<u64, u64>;
+type Owners = FxHashMap<u64, u64>;
 
 struct ToplevelGroup {
     strata: usize,
@@ -39,11 +39,11 @@ impl SimState {
     fn collect_toplevel_groups(
         &self,
         buckets: &[Vec<u64>],
-    ) -> (Owners, HashMap<u64, ToplevelGroup>) {
-        let mut owners = HashMap::new();
-        let mut groups = HashMap::<u64, ToplevelGroup>::new();
-        let mut raised_cache = HashMap::new();
-        let mut unraised_cache = HashMap::new();
+    ) -> (Owners, FxHashMap<u64, ToplevelGroup>) {
+        let mut owners = FxHashMap::default();
+        let mut groups = FxHashMap::<u64, ToplevelGroup>::default();
+        let mut raised_cache = FxHashMap::default();
+        let mut unraised_cache = FxHashMap::default();
         // Existing raw buckets preserve local strata, level and region ordering.
         for &id in buckets.iter().flatten() {
             // Retain existing nested active-owner selection; unraised roots

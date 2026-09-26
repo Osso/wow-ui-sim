@@ -1,6 +1,6 @@
 use super::{collect_child_for_emit, dfs_emit, same_strata_subtree_segment_end};
 use crate::widget::{DrawLayer, Frame, FrameStrata, WidgetRegistry, WidgetType};
-use std::collections::HashSet;
+use rustc_hash::FxHashSet;
 
 fn test_frame(id: u64, widget_type: WidgetType, parent_id: Option<u64>) -> Frame {
     Frame {
@@ -23,7 +23,7 @@ fn editbox_regions_render_before_internal_text_emitter() {
     });
     widgets.add_child(1, 2);
 
-    let visible = HashSet::from([1, 2]);
+    let visible = FxHashSet::from_iter([1, 2]);
     let mut emitted = Vec::new();
     dfs_emit(
         1,
@@ -55,7 +55,7 @@ fn tooltip_texture_regions_render_before_internal_text_emitter() {
     widgets.add_child(1, 2);
     widgets.add_child(1, 3);
 
-    let visible = HashSet::from([1, 2, 3]);
+    let visible = FxHashSet::from_iter([1, 2, 3]);
     let mut emitted = Vec::new();
     dfs_emit(
         1,
@@ -98,7 +98,7 @@ fn collect_child_for_emit_routes_regions_and_same_strata_frames() {
         ..Default::default()
     });
 
-    let visible = HashSet::from([2, 3, 4]);
+    let visible = FxHashSet::from_iter([2, 3, 4]);
     let mut regions = Vec::new();
     let mut child_frames = Vec::new();
 
@@ -143,7 +143,7 @@ fn dfs_emit_renders_tooltip_nineslice_before_tooltip_frame() {
     let border = test_frame(border_tex_id, WidgetType::Texture, Some(nineslice_id));
     widgets.register(border);
 
-    let visible = HashSet::from([tooltip_id, nineslice_id, border_tex_id]);
+    let visible = FxHashSet::from_iter([tooltip_id, nineslice_id, border_tex_id]);
     let mut out = Vec::new();
     dfs_emit(
         tooltip_id,
@@ -170,7 +170,7 @@ fn dfs_emit_renders_tooltip_nineslice_before_tooltip_frame() {
 #[test]
 fn same_strata_subtree_segment_end_stops_at_first_non_subtree_id() {
     let bucket = vec![10, 11, 12, 99, 13];
-    let subtree_ids = HashSet::from([10, 11, 12, 13]);
+    let subtree_ids = FxHashSet::from_iter([10, 11, 12, 13]);
 
     assert_eq!(same_strata_subtree_segment_end(&bucket, 0, &subtree_ids), 3);
 }
@@ -188,7 +188,7 @@ fn dfs_emit_keeps_transparent_wrapper_regions_after_wrapper_frame_and_parent_tex
     widgets.add_child(1, 5);
     widgets.add_child(3, 4);
 
-    let visible = HashSet::from([1, 2, 3, 4, 5]);
+    let visible = FxHashSet::from_iter([1, 2, 3, 4, 5]);
     let mut bucket = Vec::new();
 
     dfs_emit(
@@ -215,7 +215,7 @@ fn dfs_emit_keeps_wrapper_owned_regions_before_child_frames() {
     widgets.add_child(2, 4);
     widgets.add_child(4, 5);
 
-    let visible = HashSet::from([1, 2, 3, 4, 5]);
+    let visible = FxHashSet::from_iter([1, 2, 3, 4, 5]);
     let mut bucket = Vec::new();
 
     dfs_emit(

@@ -1,6 +1,6 @@
 //! Strata rendering, layout, and visibility methods for SimState.
 
-use std::collections::{HashMap, HashSet};
+use rustc_hash::{FxHashMap, FxHashSet};
 
 use super::state::SimState;
 #[path = "state_render_buckets.rs"]
@@ -43,7 +43,7 @@ impl SimState {
     /// when fade animations cross alpha zero.
     fn build_strata_buckets(&mut self) -> Vec<Vec<u64>> {
         // Step 1: Collect frame IDs per strata (unordered).
-        let mut visible: HashSet<u64> = HashSet::new();
+        let mut visible: FxHashSet<u64> = FxHashSet::default();
         let mut strata_map: Vec<Vec<u64>> = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
         for id in self.widgets.iter_ids() {
             let Some(f) = self.widgets.get(id) else {
@@ -91,8 +91,8 @@ impl SimState {
     ) -> (Vec<u64>, Vec<RaisedToplevelSegment>) {
         let mut regular_ids = Vec::with_capacity(bucket.len());
         let mut segments = Vec::<RaisedToplevelSegment>::new();
-        let mut segment_indices = HashMap::<u64, usize>::new();
-        let mut owner_cache = HashMap::<u64, Option<(u64, u64)>>::new();
+        let mut segment_indices = FxHashMap::<u64, usize>::default();
+        let mut owner_cache = FxHashMap::<u64, Option<(u64, u64)>>::default();
 
         for id in bucket.drain(..) {
             match self.nearest_toplevel_owner(id, &mut owner_cache, true) {
@@ -112,7 +112,7 @@ impl SimState {
     fn nearest_toplevel_owner(
         &self,
         id: u64,
-        cache: &mut HashMap<u64, Option<(u64, u64)>>,
+        cache: &mut FxHashMap<u64, Option<(u64, u64)>>,
         raised_only: bool,
     ) -> Option<(u64, u64)> {
         if let Some(owner) = cache.get(&id) {
@@ -128,7 +128,7 @@ impl SimState {
     fn walk_toplevel_owner(
         &self,
         id: u64,
-        cache: &HashMap<u64, Option<(u64, u64)>>,
+        cache: &FxHashMap<u64, Option<(u64, u64)>>,
         raised_only: bool,
         path: &mut Vec<u64>,
     ) -> Option<(u64, u64)> {
@@ -170,7 +170,7 @@ impl SimState {
     }
 
     fn cache_toplevel_path(
-        cache: &mut HashMap<u64, Option<(u64, u64)>>,
+        cache: &mut FxHashMap<u64, Option<(u64, u64)>>,
         path: Vec<u64>,
         owner: Option<(u64, u64)>,
     ) {
@@ -196,7 +196,7 @@ impl SimState {
         &self,
         ids: &[u64],
         strata_idx: usize,
-        visible: &HashSet<u64>,
+        visible: &FxHashSet<u64>,
     ) -> Vec<u64> {
         ids.iter()
             .copied()
@@ -225,7 +225,7 @@ impl SimState {
         &self,
         ids: &[u64],
         strata_idx: usize,
-        visible: &HashSet<u64>,
+        visible: &FxHashSet<u64>,
     ) -> Vec<u64> {
         ids.iter()
             .copied()
@@ -617,7 +617,7 @@ impl SimState {
             return;
         };
         // Collect all IDs in the subtree.
-        let mut subtree = HashSet::new();
+        let mut subtree = FxHashSet::default();
         let mut queue = vec![root_id];
         while let Some(fid) = queue.pop() {
             subtree.insert(fid);
@@ -832,7 +832,7 @@ impl SimState {
 
 fn append_raised_toplevel_id(
     segments: &mut Vec<RaisedToplevelSegment>,
-    segment_indices: &mut HashMap<u64, usize>,
+    segment_indices: &mut FxHashMap<u64, usize>,
     owner_id: u64,
     show_order: u64,
     id: u64,
