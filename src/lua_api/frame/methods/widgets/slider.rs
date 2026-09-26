@@ -139,19 +139,18 @@ fn apply_slider_value(sim: &mut crate::lua_api::SimState, id: u64, value: f64) -
 }
 
 /// Apply `value` to a StatusBar, clamping and updating interpolation state.
-fn apply_statusbar_value(sim: &mut crate::lua_api::SimState, id: u64, value: f64) {
-    let Some(f) = sim.widgets.get(id) else {
-        return;
-    };
+fn apply_statusbar_value(sim: &mut crate::lua_api::SimState, id: u64, value: f64) -> Option<f64> {
+    let f = sim.widgets.get(id)?;
     let clamped = value.clamp(f.statusbar_min, f.statusbar_max);
     if clamped == f.statusbar_value {
-        return;
+        return None;
     }
     if let Some(f) = sim.widgets.get_mut_visual(id) {
         f.statusbar_value = clamped;
         f.statusbar_interpolated_value = clamped;
         f.statusbar_interpolation_target = None;
     }
+    Some(clamped)
 }
 
 fn apply_statusbar_interpolated_value(sim: &mut crate::lua_api::SimState, id: u64, value: f64) {
@@ -178,36 +177,61 @@ pub(super) fn shared_set_value(state: &mut LuaState) -> LuaResult<u32> {
             };
             if let Some(value) = clamped {
                 let treat_as_mouse_event = val_to_bool(stack_val(state, 3));
-                fire_slider_value_changed(state, id, value, treat_as_mouse_event)?;
+                fire_value_changed(state, id, value, Some(treat_as_mouse_event))?;
             }
         }
         Some(WidgetType::StatusBar) => {
-            let mut sim = borrow_state_mut(state)?;
-            if interpolation_mode.is_some() {
-                apply_statusbar_interpolated_value(&mut sim, id, value);
-            } else {
-                apply_statusbar_value(&mut sim, id, value);
-            }
+            set_statusbar_value(state, id, value, interpolation_mode.is_some())?;
         }
         _ => {}
     }
     Ok(0)
 }
 
-fn fire_slider_value_changed(
+fn set_statusbar_value(
     state: &mut LuaState,
     id: u64,
     value: f64,
-    treat_as_mouse_event: bool,
+    interpolate: bool,
+) -> LuaResult<()> {
+    let changed = {
+        let mut sim = borrow_state_mut(state)?;
+        if interpolate {
+            apply_statusbar_interpolated_value(&mut sim, id, value);
+            None
+        } else {
+            apply_statusbar_value(&mut sim, id, value)
+        }
+    };
+    if let Some(value) = changed {
+        fire_value_changed(state, id, value, None)?;
+    }
+    Ok(())
+}
+
+fn fire_value_changed(
+    state: &mut LuaState,
+    id: u64,
+    value: f64,
+    treat_as_mouse_event: Option<bool>,
 ) -> LuaResult<()> {
     let handlers = get_scripts_for_dispatch(state, id, "OnValueChanged");
     if handlers.is_empty() {
         return Ok(());
     }
     let frame = frame_ref(state, id)?;
-    let args = [frame, Val::Num(value), Val::Bool(treat_as_mouse_event)];
+    let args = [
+        frame,
+        Val::Num(value),
+        Val::Bool(treat_as_mouse_event.unwrap_or(false)),
+    ];
+    let args = if treat_as_mouse_event.is_some() {
+        &args[..]
+    } else {
+        &args[..2]
+    };
     for handler in handlers {
-        if let Err(error_msg) = protected_lua_pcall_state(state, handler, &args) {
+        if let Err(error_msg) = protected_lua_pcall_state(state, handler, args) {
             call_error_handler_state(state, &error_msg);
         }
     }

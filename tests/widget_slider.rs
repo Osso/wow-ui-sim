@@ -6,6 +6,31 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().unwrap()
 }
 
+#[test]
+fn statusbar_value_change_updates_text_synchronously() {
+    env()
+        .exec(
+            r#"
+        local bar = CreateFrame('StatusBar')
+        bar:SetMinMaxValues(0, 100)
+        local text = bar:CreateFontString()
+        local calls = 0
+        bar:SetScript('OnValueChanged', function(...)
+            local self, value = ...
+            assert(select('#', ...) == 2, 'StatusBar callbacks have no Slider mouse flag')
+            assert(self == bar and self:GetValue() == value)
+            calls = calls + 1
+            text:SetText(tostring(value))
+        end)
+        bar:SetValue(35)
+        assert(text:GetText() == '35', 'status bar callback must update its label before SetValue returns')
+        bar:SetValue(75)
+        assert(text:GetText() == '75' and calls == 2)
+    "#,
+        )
+        .unwrap();
+}
+
 const VALUE_BINDINGS_XML: &str = r#"
 <Ui>
     <Slider name="SliderValuePrecall" intrinsic="true">
