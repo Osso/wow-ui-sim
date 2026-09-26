@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record protected anchor-offset mutation boundary
+
+[[protected-frames]] records `ad01e3d8e`: `AdjustPointsOffset` and `SetPointsOffset` now use the existing protected-frame write policy. Insecure combat calls on protected or protected-anchor-related frames preserve offsets and emit method-named `ADDON_ACTION_BLOCKED`; plain-frame calls, secure combat, and insecure out-of-combat controls remain allowed. `/tmp/cross-version-anchor-protection-proof.md` records RED 0/1 then GREEN 3/3 plus two 1/1 controls. The GREEN compile had unrelated unstaged `tests/spacing_roundtrip.rs`; it was not committed. No post-commit check, readability review, broad suite, deploy, or independent final gate has run. No native-client or `ClearPointsOffset` semantics claim.
+
 ## [2026-09-26] audit | Record bounded FontString spacing and AnimationGroup Stop behavior
 
 [FontString spacing](../specs/fontstring-spacing.md) records `d6d7a9078`: default-feature source proof is RED 0/2 library and 0/3 integration, then GREEN 2/2 library and 4/4 integration for FontString glyph placement, height, auto-height, wrapping, scale, and no-font line count. Independent spacing and measurement controls, format, and default-feature check pass; FontObject, MessageFrame, EditBox, native-client and full-profile behavior remain outside this proof.

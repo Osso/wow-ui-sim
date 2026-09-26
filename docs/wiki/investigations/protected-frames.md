@@ -13,11 +13,19 @@ Blocked calls: silently no-op and fire `ADDON_ACTION_BLOCKED`. Blizzard secure c
 
 ## Covered Methods
 
-- Anchor/movement: `SetPoint`, `ClearAllPoints`, `AdjustPointsOffset`, `StartMoving`, `StopMovingOrSizing`
+- Anchor/movement: `SetPoint`, `ClearAllPoints`, `AdjustPointsOffset`, `SetPointsOffset`, `StartMoving`, `StopMovingOrSizing`
 - Visibility: `Show`, `Hide`, `SetShown`
 - Hierarchy/size: `SetParent`, `SetSize`, `SetWidth`, `SetHeight`
 - Strata/level: `SetFrameLevel`, `SetFrameStrata`, `SetFixedFrameLevel`, `SetFixedFrameStrata`, `SetToplevel`
 - Other: `SetClampedToScreen`, `SetHitRectInsets`, `SetScrollChild`, `SetHyperlinksEnabled`, `SetPropagateKeyboardInput`, `SetForbidden`
+
+## Offset mutation audit — `ad01e3d8e`
+
+`AdjustPointsOffset` and `SetPointsOffset` now use the existing protected-frame write policy. For insecure combat calls on protected or protected-anchor-related frames, each leaves offsets unchanged and emits `ADDON_ACTION_BLOCKED` naming the attempted method. The same calls remain allowed for a secure caller in combat and an insecure caller out of combat; ordinary plain-frame calls remain allowed.
+
+`/tmp/cross-version-anchor-protection-proof.md` records a RED 0/1 runtime reproduction before the production edit, then GREEN 3/3 for the `protected_anchor` selection plus two 1/1 existing secure/out-of-combat controls. The paired compile logs pass before RED and after GREEN. The ledger explicitly limits this to the scoped source before commit `ad01e3d8e`; unrelated `tests/spacing_roundtrip.rs` changes were present only during GREEN compilation. No post-commit check, readability review, broad suite, deploy, or independent final gate has run.
+
+This records simulator policy and source/runtime coverage only. It makes no native-client claim and does not state `ClearPointsOffset` reset semantics.
 
 ## Remaining Gaps
 
@@ -41,3 +49,5 @@ Wowless does not enforce protected frames — only this simulator and live WoW e
 ## Sources
 
 - [protected-frame-enforcement.md](../../protected-frame-enforcement.md) — full method list and open questions
+- [protected-anchor-offsets.md](../../specs/protected-anchor-offsets.md) — bounded offset-mutation contract
+- `/tmp/cross-version-anchor-protection-proof.md` — RED/GREEN command ledger and actual logs
