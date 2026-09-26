@@ -506,24 +506,18 @@ pub(super) fn set_horizontal_scroll(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
-    let range = sim
-        .widgets
-        .get(id)
-        .map(|frame| scroll_range(frame, 'h'))
-        .unwrap_or(0.0);
-    let new_offset = offset.clamp(0.0, range);
     if sim
         .widgets
         .get(id)
-        .is_some_and(|frame| frame.scroll_horizontal == new_offset)
+        .is_some_and(|frame| frame.scroll_horizontal == offset)
     {
         return Ok(0);
     }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.scroll_horizontal = new_offset;
+        frame.scroll_horizontal = offset;
     }
     drop(sim);
-    fire_scroll_frame_event(state, id, "OnHorizontalScroll", &[Val::Num(new_offset)])?;
+    fire_scroll_frame_event(state, id, "OnHorizontalScroll", &[Val::Num(offset)])?;
     Ok(0)
 }
 
@@ -553,24 +547,18 @@ pub(super) fn set_vertical_scroll(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
-    let range = sim
-        .widgets
-        .get(id)
-        .map(|frame| scroll_range(frame, 'v'))
-        .unwrap_or(0.0);
-    let new_offset = offset.clamp(0.0, range);
     if sim
         .widgets
         .get(id)
-        .is_some_and(|frame| frame.scroll_vertical == new_offset)
+        .is_some_and(|frame| frame.scroll_vertical == offset)
     {
         return Ok(0);
     }
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.scroll_vertical = new_offset;
+        frame.scroll_vertical = offset;
     }
     drop(sim);
-    fire_scroll_frame_event(state, id, "OnVerticalScroll", &[Val::Num(new_offset)])?;
+    fire_scroll_frame_event(state, id, "OnVerticalScroll", &[Val::Num(offset)])?;
     Ok(0)
 }
 
