@@ -1,5 +1,35 @@
 use super::env;
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn editbox_set_text_max_letters_secret_clipping_preserves_access_controls() {
+    env()
+        .exec(
+            r#"
+        local eb = CreateFrame('EditBox')
+        eb:SetMaxLetters(3)
+        local wrapped = secretwrap('hidden payload')
+        eb:SetText(wrapped)
+        assert(eb:GetText() == 'hid')
+        local function addon()
+            assert(not pcall(eb.GetText, eb), 'tainted caller must not read secret-origin text')
+            assert(not pcall(eb.SetText, eb, wrapped), 'tainted secret write must fail')
+        end
+        debug.setobjecttaint(addon, 'SecretEditBoxProbe')
+        addon()
+        assert(eb:GetText() == 'hid', 'rejected secret write must preserve clipped text')
+        assert(not pcall(eb.SetText, eb, newproxy()), 'ordinary userdata must be rejected')
+        assert(eb:GetText() == 'hid', 'rejected userdata must not mutate text')
+        eb:SetText('plain')
+        assert(eb:GetText() == 'pla')
+        local function read_plain() assert(eb:GetText() == 'pla') end
+        debug.setobjecttaint(read_plain, 'SecretEditBoxProbe')
+        read_plain()
+    "#,
+        )
+        .unwrap();
+}
+
 #[test]
 fn editbox_set_text_max_letters_matches_recorded_ascii_fixture() {
     env()
