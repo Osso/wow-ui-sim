@@ -523,6 +523,142 @@ fn rejected_numeric_key_preserves_selection_for_next_valid_key() {
 }
 
 #[test]
+fn editbox_limit_rejects_overflow_at_end_and_middle_without_moving_caret() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "LimitedPositionEB", UIParent)
+        eb:SetText("abc")
+        eb:SetMaxLetters(4)
+        eb:SetCursorPosition(3)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("D", Some("de")).unwrap();
+    let after_append: (String, i64, i64) = env
+        .eval("return LimitedPositionEB:GetText(), LimitedPositionEB:GetCursorPosition(), LimitedPositionEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(after_append, ("abc".into(), 3, 3));
+
+    env.exec("LimitedPositionEB:SetCursorPosition(1)").unwrap();
+    env.send_key_press("X", Some("XY")).unwrap();
+    let after_middle: (String, i64, i64) = env
+        .eval("return LimitedPositionEB:GetText(), LimitedPositionEB:GetCursorPosition(), LimitedPositionEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(after_middle, ("abc".into(), 1, 1));
+}
+
+#[test]
+fn editbox_limit_rejection_preserves_selection_and_emits_no_edit_callbacks() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "LimitedSelectionEB", UIParent)
+        eb:SetText("abcde")
+        eb:SetMaxLetters(4)
+        eb:HighlightText(1, 4)
+        eb:SetCursorPosition(4)
+        _G.limit_events = {}
+        eb:SetScript("OnChar", function(self, char)
+            table.insert(_G.limit_events, "char:" .. char .. ":" .. self:GetText())
+        end)
+        eb:SetScript("OnTextChanged", function(self, userInput)
+            table.insert(_G.limit_events, "changed:" .. tostring(userInput) .. ":" .. self:GetText())
+        end)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X", Some("XYZ")).unwrap();
+    let rejected: (String, i64, String) = env
+        .eval("return LimitedSelectionEB:GetText(), LimitedSelectionEB:GetCursorPosition(), table.concat(_G.limit_events, ';')")
+        .unwrap();
+    assert_eq!(rejected, ("abcde".into(), 4, "".into()));
+
+    env.send_key_press("B", Some("BC")).unwrap();
+    let accepted: (String, i64, i64, String) = env
+        .eval("return LimitedSelectionEB:GetText(), LimitedSelectionEB:GetCursorPosition(), LimitedSelectionEB:GetUTF8CursorPosition(), table.concat(_G.limit_events, ';')")
+        .unwrap();
+    assert_eq!(
+        accepted,
+        (
+            "aBCe".into(),
+            3,
+            3,
+            "char:B:aBCe;char:C:aBCe;changed:true:aBCe".into()
+        )
+    );
+}
+
+#[test]
+fn editbox_limit_counts_unicode_scalars_and_utf8_bytes_independently() {
+    let env = env();
+    env.exec(
+        r#"
+        local letters = CreateFrame("EditBox", "LimitedScalarsEB", UIParent)
+        letters:SetText("é")
+        letters:SetMaxLetters(2)
+        letters:SetMaxBytes(6)
+        letters:SetCursorPosition(2)
+        letters:SetFocus()
+        "#,
+    )
+    .unwrap();
+    env.send_key_press("M", Some("猫")).unwrap();
+    env.send_key_press("X", Some("x")).unwrap(); // 6 bytes fits, 3 scalars do not.
+    let letters: (String, i64, i64) = env
+        .eval("return LimitedScalarsEB:GetText(), LimitedScalarsEB:GetCursorPosition(), LimitedScalarsEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(letters, ("é猫".into(), 5, 2));
+
+    env.exec(
+        r#"
+        local bytes = CreateFrame("EditBox", "LimitedBytesEB", UIParent)
+        bytes:SetText("é")
+        bytes:SetMaxLetters(3)
+        bytes:SetMaxBytes(4)
+        bytes:SetCursorPosition(2)
+        bytes:SetFocus()
+        "#,
+    )
+    .unwrap();
+    env.send_key_press("M", Some("猫")).unwrap(); // 2 scalars fit, 5 bytes do not.
+    let rejected: (String, i64, i64) = env
+        .eval("return LimitedBytesEB:GetText(), LimitedBytesEB:GetCursorPosition(), LimitedBytesEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(rejected, ("é".into(), 2, 1));
+    env.send_key_press("A", Some("a")).unwrap();
+    assert_eq!(
+        env.eval::<String>("return LimitedBytesEB:GetText()")
+            .unwrap(),
+        "éa"
+    );
+}
+
+#[test]
+fn editbox_limit_zero_defaults_allow_multichar_unicode_input() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "UnlimitedInputEB", UIParent)
+        eb:SetText("a")
+        eb:SetCursorPosition(1)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("M", Some("猫é")).unwrap();
+    let result: (String, i64, i64, i64, i64) = env
+        .eval("return UnlimitedInputEB:GetText(), UnlimitedInputEB:GetCursorPosition(), UnlimitedInputEB:GetUTF8CursorPosition(), UnlimitedInputEB:GetMaxLetters(), UnlimitedInputEB:GetMaxBytes()")
+        .unwrap();
+    assert_eq!(result, ("a猫é".into(), 6, 3, 0, 0));
+}
+
+#[test]
 fn editbox_cursor_keys_move_within_text_bounds() {
     let env = env();
     env.exec(
