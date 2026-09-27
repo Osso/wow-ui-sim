@@ -1,5 +1,7 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+mod max_letters;
+
 #[test]
 fn editbox_set_text_clamps_internal_positions_before_callbacks_and_keyboard_edits() {
     let env = env();
@@ -25,21 +27,26 @@ fn editbox_set_text_clamps_internal_positions_before_callbacks_and_keyboard_edit
     "#).unwrap();
     env.send_key_press("LEFT", None).unwrap();
     env.send_key_press("BACKSPACE", None).unwrap();
-    let result: String = env.eval(r#"return SetTextBoundsEB:GetText() .. ":" .. SetTextBoundsEB:GetCursorPosition()"#).unwrap();
+    let result: String = env
+        .eval(r#"return SetTextBoundsEB:GetText() .. ":" .. SetTextBoundsEB:GetCursorPosition()"#)
+        .unwrap();
     assert_eq!(result, "éY:2");
 }
 
 #[test]
 fn editbox_set_text_preserves_in_bounds_caret_and_clips_selection() {
     let env = env();
-    env.exec(r#"
+    env.exec(
+        r#"
         local eb = CreateFrame("EditBox", "SetTextClippedEB", UIParent)
         eb:SetText("é猫abc")
         eb:SetCursorPosition(2)
         eb:HighlightText(2, 8)
         eb:SetText("éZ")
         assert(eb:GetCursorPosition() == 2 and eb:GetUTF8CursorPosition() == 1)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     let state = env.state();
     let state = state.borrow();
     let id = state.widgets.get_id_by_name("SetTextClippedEB").unwrap();
@@ -77,7 +84,9 @@ fn editbox_set_formatted_text_dispatches_hooks_and_routes_errors_without_reentry
 
 #[test]
 fn non_editbox_set_text_does_not_dispatch_editbox_callbacks() {
-    env().exec(r#"
+    env()
+        .exec(
+            r#"
         local widgets = {
             CreateFrame("Button", nil, UIParent),
             CreateFrame("GameTooltip", nil, UIParent),
@@ -88,7 +97,9 @@ fn non_editbox_set_text_does_not_dispatch_editbox_callbacks() {
             widget:SetText("new")
             assert(widget:GetText() == "new")
         end
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 fn env() -> WowLuaEnv {
