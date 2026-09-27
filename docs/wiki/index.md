@@ -1,3 +1,7 @@
+## [2026-09-27] audit | Record pending programmatic EditBox MaxLetters proof
+
+`390e560f5` applies positive `MaxLetters` before programmatic EditBox `SetText`/shared `SetFormattedText` cache, cursor/selection, and callback work. Same final text remains a no-op; non-EditBoxes and unlimited limits are unchanged. Keyboard overflow still rejects under its separate user-selected policy. Tests-only `7542b1a56` is RED in three cases with one control passing; main final proof remains pending. The 2026-02-23 ASCII `hello`/five-letter record and installed MaxLetters-five fixture lack exact build/hash provenance. Scalar truncation follows the simulator model; native markup/grapheme behavior and `SetText` MaxBytes remain unresolved. See [[widget-system]], [[lua-api]], and [EditBox text position and selection](../specs/editbox-text-position-selection.md).
+
 ## [2026-09-26] audit | Record pending EditBox XML-limit proof
 
 `547907429` parses XML `bytes` and resolves `bytes`/`letters` independently: explicit instance values, including zero, override the most-derived template value literally. Ordinary XML and runtime-template construction, including nested template EditBoxes, apply both limits before `OnLoad`. Tests-only `5f94dd219` is pre-change RED: four failures; one ordinary-`letters` control passes. Independent post-change verification is pending; native byte/terminator accounting remains unverified. See [[widget-system]], [[xml-template-system]], and [EditBox text position and selection](../specs/editbox-text-position-selection.md).
