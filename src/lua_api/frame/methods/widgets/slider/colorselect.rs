@@ -5,6 +5,9 @@ use crate::lua_api::methods::{
     borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref, get_or_create_frame_fields,
     table_get_static, table_set_static,
 };
+use crate::lua_api::script_helpers::{
+    call_error_handler_state, get_scripts_for_dispatch, protected_lua_pcall_state,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::closure::RustFn;
 use rilua::vm::gc::arena::GcRef;
@@ -95,18 +98,37 @@ fn set_colorselect_texture(state: &mut LuaState, id: u64, key: &str, value: Val)
 
 fn colorselect_set_color_rgb(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let alpha = read_color_component(state, id, "__color_a", 1.0);
-    write_color_components(
-        state,
-        id,
-        (
-            val_to_f64(stack_val(state, 2)),
-            val_to_f64(stack_val(state, 3)),
-            val_to_f64(stack_val(state, 4)),
-            alpha,
-        ),
+    let old_rgb = (
+        read_color_component(state, id, "__color_r", 1.0),
+        read_color_component(state, id, "__color_g", 1.0),
+        read_color_component(state, id, "__color_b", 1.0),
     );
+    let rgb = (
+        val_to_f64(stack_val(state, 2)),
+        val_to_f64(stack_val(state, 3)),
+        val_to_f64(stack_val(state, 4)),
+    );
+    let alpha = read_color_component(state, id, "__color_a", 1.0);
+    write_color_components(state, id, (rgb.0, rgb.1, rgb.2, alpha));
+    if rgb != old_rgb {
+        fire_color_select(state, id, rgb)?;
+    }
     Ok(0)
+}
+
+fn fire_color_select(state: &mut LuaState, id: u64, rgb: (f64, f64, f64)) -> LuaResult<()> {
+    let handlers = get_scripts_for_dispatch(state, id, "OnColorSelect");
+    if handlers.is_empty() {
+        return Ok(());
+    }
+    let frame = frame_ref(state, id)?;
+    let args = [frame, Val::Num(rgb.0), Val::Num(rgb.1), Val::Num(rgb.2)];
+    for handler in handlers {
+        if let Err(error) = protected_lua_pcall_state(state, handler, &args) {
+            call_error_handler_state(state, &error);
+        }
+    }
+    Ok(())
 }
 
 fn colorselect_get_color_rgb(state: &mut LuaState) -> LuaResult<u32> {
