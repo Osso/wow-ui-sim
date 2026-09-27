@@ -543,6 +543,16 @@ impl App {
     /// registered (e.g., buff duration countdown text).
     pub(crate) fn compute_tick_interval(&self) -> Option<std::time::Duration> {
         let env = self.env.borrow();
+        // A timer due within the smallest bucket already asks for the
+        // fastest tick, and no fast-tick condition can ask for more; skip
+        // the animation and cooldown scans. Blizzard's SmoothStatusBar keeps
+        // a 0-interval ticker pending for the whole session.
+        let timer_delay = env.next_timer_delay();
+        let timer_wants_frame_rate =
+            timer_delay.is_some_and(|delay| stable_timer_interval(delay) == FRAME_INTERVAL);
+        if timer_wants_frame_rate && fast_tick_interval() == FRAME_INTERVAL {
+            return Some(FRAME_INTERVAL);
+        }
         let state = env.state().borrow();
 
         // Fast tick: playing visual animations, active cast, or dirty quads.
@@ -563,10 +573,7 @@ impl App {
 
         // Timer tick: wake up when next C_Timer fires or an unseen animation
         // reaches a loop/finish boundary (at most one tick per 60 Hz frame)
-        let wake_delay = [env.next_timer_delay(), animation_wake]
-            .into_iter()
-            .flatten()
-            .min();
+        let wake_delay = [timer_delay, animation_wake].into_iter().flatten().min();
         if let Some(delay) = wake_delay {
             return Some(stable_timer_interval(delay));
         }
@@ -615,11 +622,14 @@ pub(crate) fn stable_timer_interval(delay: std::time::Duration) -> std::time::Du
 }
 
 fn fast_tick_interval() -> std::time::Duration {
-    std::env::var("WOW_SIM_TICK_MS")
-        .ok()
-        .as_deref()
-        .and_then(parse_fast_tick_ms)
-        .map_or(FRAME_INTERVAL, std::time::Duration::from_millis)
+    static FAST_TICK: std::sync::OnceLock<std::time::Duration> = std::sync::OnceLock::new();
+    *FAST_TICK.get_or_init(|| {
+        std::env::var("WOW_SIM_TICK_MS")
+            .ok()
+            .as_deref()
+            .and_then(parse_fast_tick_ms)
+            .map_or(FRAME_INTERVAL, std::time::Duration::from_millis)
+    })
 }
 
 fn parse_fast_tick_ms(value: &str) -> Option<u64> {

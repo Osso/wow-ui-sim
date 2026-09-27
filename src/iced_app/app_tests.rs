@@ -472,3 +472,21 @@ fn plain_animation_timer_with_on_update_keeps_fast_tick() {
         Some(std::time::Duration::from_micros(16_667)),
     );
 }
+
+#[test]
+fn per_frame_ticker_keeps_sixty_hertz_tick() {
+    let app = build_test_app(ScreenKind::Game);
+    app.strata_dirty.set(0);
+    app.textures_pending.set(false);
+
+    // Blizzard's SmoothStatusBar pattern: a 0-interval ticker for the session.
+    app.env
+        .borrow()
+        .exec("C_Timer.NewTicker(0, function() end)")
+        .expect("ticker should be created");
+
+    assert_eq!(
+        app.compute_tick_interval(),
+        Some(std::time::Duration::from_micros(16_667)),
+    );
+}
