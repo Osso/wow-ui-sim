@@ -11,3 +11,6 @@ mod rendering_templates;
 
 #[path = "inline_advanced/colorselect_textures.rs"]
 mod colorselect_textures;
+
+#[path = "inline_advanced/editbox_limits.rs"]
+mod editbox_limits;
