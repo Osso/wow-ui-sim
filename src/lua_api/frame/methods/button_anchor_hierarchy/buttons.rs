@@ -6,7 +6,9 @@ use crate::lua_api::methods::{
     frame_id_from_stack, frame_ref, get_or_create_frame_fields, table_get, table_set,
     val_to_string,
 };
-use crate::lua_api::script_helpers::{call_error_handler_state, get_script as get_rilua_script};
+use crate::lua_api::script_helpers::{
+    call_error_handler_state, get_script as get_rilua_script, get_scripts_for_dispatch,
+};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -240,26 +242,31 @@ pub(super) fn is_down_over(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn click(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "Click")?;
+    crate::lua_api::frame::methods::widgets::toggle_checkbutton_for_click(state, id)?;
     if !begin_click(state, id)? {
         return Ok(0);
     }
-    crate::lua_api::frame::methods::widgets::toggle_checkbutton_for_click(state, id)?;
-    let Some(handler) = get_rilua_script(state, id, "OnClick") else {
-        end_click(state, id);
-        return Ok(0);
-    };
-    if matches!(handler, Val::Nil) {
-        end_click(state, id);
-        return Ok(0);
-    }
-    let self_ref = frame_ref(state, id)?;
-    let button = create_string(state, "LeftButton");
-    let args = [self_ref, button, Val::Bool(false)];
-    if let Err(error) = call_function_state(state, handler, &args) {
-        call_error_handler_state(state, &error.to_string());
-    }
+    let result = dispatch_click_scripts(state, id);
     end_click(state, id);
+    result?;
     Ok(0)
+}
+
+fn dispatch_click_scripts(state: &mut LuaState, id: u64) -> LuaResult<()> {
+    let self_ref = frame_ref(state, id)?;
+    let button_name =
+        val_to_string(state, stack_val(state, 2)).unwrap_or_else(|| "LeftButton".to_string());
+    let button = create_string(state, &button_name);
+    let down = bool::from_stack(state, 3).unwrap_or(false);
+    let args = [self_ref, button, Val::Bool(down)];
+    for script in ["PreClick", "OnClick", "PostClick"] {
+        for handler in get_scripts_for_dispatch(state, id, script) {
+            if let Err(error) = call_function_state(state, handler, &args) {
+                call_error_handler_state(state, &error.to_string());
+            }
+        }
+    }
+    Ok(())
 }
 
 fn begin_click(state: &mut LuaState, id: u64) -> LuaResult<bool> {
@@ -267,7 +274,7 @@ fn begin_click(state: &mut LuaState, id: u64) -> LuaResult<bool> {
     let Some(frame) = sim.widgets.get_mut(id) else {
         return Ok(false);
     };
-    if frame.click_depth > 0 {
+    if frame.click_depth > 0 || !button_enabled(frame) {
         return Ok(false);
     }
     frame.click_depth = 1;
