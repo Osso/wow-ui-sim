@@ -74,6 +74,7 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error("expected text, not userdata"));
     }
     let text = read_text_arg(state, value);
+    let text = truncate_editbox_text(state, id, text)?;
     let tooltip = read_tooltip_line_values(state);
     let stripped_text = stripped_text_for_frame(state, id, text.clone())?;
     let (is_tooltip, should_update_button_child, editbox_text_changed) =
@@ -89,6 +90,27 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         fire_editbox_text_script(state, id, "OnTextChanged", &[Val::Bool(false)])?;
     }
     Ok(0)
+}
+
+fn truncate_editbox_text(
+    state: &LuaState,
+    id: u64,
+    text: Option<String>,
+) -> LuaResult<Option<String>> {
+    let Some(mut text) = text else {
+        return Ok(None);
+    };
+    let limit = borrow_state(state)?
+        .widgets
+        .get(id)
+        .filter(|frame| frame.widget_type == WidgetType::EditBox && frame.editbox_max_letters > 0)
+        .map(|frame| frame.editbox_max_letters as usize);
+    if let Some(limit) = limit
+        && let Some((boundary, _)) = text.char_indices().nth(limit)
+    {
+        text.truncate(boundary);
+    }
+    Ok(Some(text))
 }
 
 fn fire_editbox_text_script(

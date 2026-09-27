@@ -16,6 +16,8 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] Keyboard input respects positive `MaxLetters` (Unicode scalars) and `MaxBytes` (UTF-8 bytes) against the proposed selected-range replacement. Zero defaults are unlimited.
 - [x] An overflowing input fragment is rejected entirely, preserving existing text, caret, selection and render caches. It emits no `OnChar` or `OnTextChanged`; accepted input retains the existing callback sequence.
 
+- [ ] Positive `MaxLetters` truncates programmatic EditBox `SetText` (including the shared `SetFormattedText` path) to the configured Unicode-scalar prefix without splitting UTF-8. Non-EditBox text and unlimited values retain their existing behavior.
+- [ ] Derive render text, clamp cursor/selection, and decide text callbacks from the final limited value. Different inputs that normalize to the same stored text retain the existing no-op lifecycle.
 - [x] A changed EditBox `SetText` (including `SetFormattedText`) commits text, then clamps stored scalar cursor and selection endpoints to its length before callbacks; an already in-bounds cursor stays in place. Clipping is a simulator model invariant, not a native precedence claim.
 - [x] Changed programmatic text dispatches `OnTextSet(self)` before `OnTextChanged(self, false)` through normal scripts and hooks. Callbacks see committed text and coherent byte/scalar cursor getters; handler errors reach the error handler and do not prevent later handlers or `OnTextChanged`.
 - [x] Same-value EditBox text assignment is a simulator no-op: it does not dispatch this lifecycle, so a callback assigning its current text cannot recurse. It emits no `OnChar`.
@@ -41,11 +43,14 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 ## Tests asserting this spec
 
 - `tests/editbox_stub_family.rs` — cursor units, selected replacement/deletion, render text, programmatic mutation and callbacks.
+- `tests/editbox_stub_family/max_letters.rs` — recorded ASCII limit case, scalar/UTF-8 model consistency, clipped callback/cache observations and final-value no-op controls.
 - `tests/key_dispatch.rs` — ASCII/Unicode selected typing, selection deletion, subsequent public Insert, callback observations, numeric rejection, and unselected controls.
 - `tests/forbidden_aspect_creation.rs` — scripted-input cursor restrictions.
 - `tests/xml_templates/inline_advanced/editbox_limits.rs` — XML/runtime-template propagation, independent overrides, OnLoad observations, and configured-limit keyboard rejection.
 
 ## Evidence boundary
+
+- Programmatic MaxLetters tests `7542b1a56` are RED in three cases; unlimited/non-EditBox controls pass. `/tmp/cross-version-editbox-settext-limit-proof.md` records commands and revisions. `docs/wow-client-diff/WowBehaviorTest.lua` records `hello` and five letters on 2026-02-23; the matching installed fixture at `/syncthing/World of Warcraft/_retail_/Interface/Disabled Addons/WowBehaviorTest/tests_editbox.lua` sets MaxLetters to five before assigning `hello world`. No specific client-build or historical fixture-hash provenance was recovered. Unicode-scalar truncation extends the existing simulator `GetNumLetters` model beyond that ASCII observation; native markup/grapheme accounting remains unverified. Post-change verification is pending. Keyboard overflow still rejects rather than truncates, per the separate user-selected policy.
 
 - XML-limit tests-only `5f94dd219` is RED in four cases; the ordinary `letters` control passes. Its pre-change evidence found unparsed `bytes` and missing runtime-template application for both limits. `547907429` now parses `bytes` and applies each explicit or inherited value independently in ordinary XML and runtime-template construction, including nested template children, before `OnLoad`. `/tmp/cross-version-editbox-xml-limits-proof.md` records the exact RED boundary. Independent verification passes 48 scoped cases: five XML-limit, 28 keyboard, 11 EditBox-family, one unchanged retail ColorPicker consumer, and three ColorSelect XML controls. Format/check and grouped integration compilation pass without warnings; changed-function readability has no introduced findings. `/tmp/cross-version-editbox-xml-limits-verification-ledger.md` records exact proof, the retained bare-environment ESCAPE nil-call diagnostic, and the deliberate text-set error control. Literal declared-value propagation is simulator behavior; native byte/terminator accounting remains unverified, with no adjustment inferred from the unchanged retail ColorPicker HexBox `bytes="7"` declaration.
 
@@ -60,5 +65,5 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 
 ## Out of scope
 
-- Full input-system behavior, public `Insert`/`SetText` limit enforcement, IME, clipboard, keyboard selection creation/navigation, and rendering selection highlight.
+- Full input-system behavior, public `Insert` limit enforcement, `SetText` MaxBytes enforcement, native markup/grapheme counting, IME, clipboard, keyboard selection creation/navigation, and rendering selection highlight.
 - Native same-value callback policy, caret placement/reset (including any always-end behavior), `OnCursorChanged`, IME lifecycle, and full native EditBox lifecycle remain unverified. The changed-value callbacks, no-op policy, and clipping above are bounded simulator behavior, not a native-client execution claim.
