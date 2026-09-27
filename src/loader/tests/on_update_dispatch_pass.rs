@@ -52,3 +52,53 @@ fn on_update_error_names_frame_and_handler_source() {
         .unwrap_or_else(|| panic!("no pass boom error in {errors:?}"));
     assert!(message.contains("[OnUpdate] frame=PassBroken"), "{message}");
 }
+
+/// OnPostUpdate is not settable from Lua on common widgets, so install it
+/// through the same registry binding path that SetScript uses.
+fn install_on_post_update(t: &TestCtx, frame_name: &str, handler_global: &str) {
+    let frame_id = t
+        .env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name(frame_name)
+        .unwrap();
+    let mut lua = t.env.rilua_mut();
+    let state = lua.state_mut();
+    let chunk = state.load(&format!("return {handler_global}")).unwrap();
+    let results = crate::lua_api::script_helpers::protected_call_state(
+        state,
+        rilua::Val::Function(chunk.gc_ref()),
+        &[],
+    )
+    .unwrap();
+    let handler = results[0];
+    crate::lua_api::script_helpers::set_script(state, frame_id, "OnPostUpdate", handler);
+}
+
+#[test]
+fn on_post_update_runs_after_on_update_for_frames_that_have_it() {
+    let (t, _) = load_test_lua(
+        "on-post-update",
+        r#"
+        PostLog = {}
+        PostBoth = CreateFrame("Frame", "PostBoth", UIParent)
+        PostBoth:SetScript("OnUpdate", function() table.insert(PostLog, "both:update") end)
+        PostBothPost = function(self, elapsed)
+            table.insert(PostLog, "both:post:" .. string.format("%.2f", elapsed))
+        end
+        PostOnly = CreateFrame("Frame", "PostOnly", UIParent)
+        PostOnlyPost = function() table.insert(PostLog, "only:post") end
+        PostNone = CreateFrame("Frame", "PostNone", UIParent)
+        PostNone:SetScript("OnUpdate", function() table.insert(PostLog, "none:update") end)
+    "#,
+    );
+    install_on_post_update(&t, "PostBoth", "PostBothPost");
+    install_on_post_update(&t, "PostOnly", "PostOnlyPost");
+    t.env.exec("PostLog = {}").unwrap();
+
+    t.env.fire_on_update(0.5).unwrap();
+
+    let log: String = t.env.eval("return table.concat(PostLog, ',')").unwrap();
+    assert_eq!(log, "both:update,none:update,both:post:0.50,only:post");
+}

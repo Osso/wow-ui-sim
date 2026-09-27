@@ -106,6 +106,21 @@ fn numeric_key_to_widget_id(key: Val) -> Option<u64> {
     ((widget_id as f64 - raw_id).abs() <= f64::EPSILON).then_some(widget_id)
 }
 
+/// The subset of `frame_ids` that have an OnPostUpdate handler, in order.
+pub fn frames_with_on_post_update(state: &mut LuaState, frame_ids: &[u64]) -> Vec<u64> {
+    let Some(table_ref) = registry_table(state, ON_POST_UPDATE_SCRIPTS_KEY) else {
+        return Vec::new();
+    };
+    let Some(table) = state.gc.tables.get(table_ref) else {
+        return Vec::new();
+    };
+    frame_ids
+        .iter()
+        .copied()
+        .filter(|&id| !matches!(table.get_int(id as i64), Val::Nil))
+        .collect()
+}
+
 fn cached_handler_present(state: &mut LuaState, cache_key: &'static str, widget_id: u64) -> bool {
     let Some(table_ref) = registry_table(state, cache_key) else {
         return false;

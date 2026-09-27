@@ -114,8 +114,14 @@ fn fire_on_post_update_handlers(
     frame_ids: &[u64],
     elapsed: f64,
 ) -> crate::Result<()> {
-    for frame_id in frame_ids {
-        env.fire_script_handler(*frame_id, "OnPostUpdate", vec![rilua::Val::Num(elapsed)])?;
+    // Resolved after the OnUpdate pass so a handler installed during it
+    // still runs this tick; most tracked frames have no OnPostUpdate.
+    let post_update_ids = {
+        let mut lua = env.rilua_mut();
+        super::script_helpers::frames_with_on_post_update(lua.state_mut(), frame_ids)
+    };
+    for frame_id in post_update_ids {
+        env.fire_script_handler(frame_id, "OnPostUpdate", vec![rilua::Val::Num(elapsed)])?;
     }
     Ok(())
 }

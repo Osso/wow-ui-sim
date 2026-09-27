@@ -20,7 +20,7 @@ mod tests;
 
 pub(crate) use event_dispatch::{dispatch_named_event_handlers, event_matches_unit_filter};
 pub use event_dispatch::{dispatch_on_update, fire_named_event_state, get_event_listeners};
-pub use on_update_cache::reconcile_on_update_runtime_cache_if_dirty;
+pub use on_update_cache::{frames_with_on_post_update, reconcile_on_update_runtime_cache_if_dirty};
 pub use source_metadata::get_script_source_binding;
 use source_metadata::{remove_script_source_binding, set_script_source_binding};
 
