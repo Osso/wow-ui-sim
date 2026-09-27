@@ -24,7 +24,7 @@ Inline scroll-related XML handlers receive named argument locals without losing 
 
 ## Known gaps (current cycle)
 
-Tests-only `6b63be464` is RED in three cases: ordinary/runtime handlers read sentinel globals instead of their arguments, and the real FauxScrollFrame scrollbar does not synchronize to offset 37. All three have empty recorded Lua-error lists, so this is a silent wrong-value failure. Five binding controls pass. `/tmp/cross-version-scroll-xml-args-proof.md` records exact revisions and logs. Post-change verification is pending.
+Tests-only `6b63be464` is RED in three cases: ordinary/runtime handlers read sentinel globals instead of their arguments, and the real FauxScrollFrame scrollbar does not synchronize to offset 37. The three new alias cases are error-clean, but the prior 46 alias cases passed behaviorally with five FauxScrollFrame diagnostics; they are not an all-errors-clean result. `/tmp/scroll-error-isolated-attribution.md` attributes those diagnostics to `function=""` resolving `_G` to a table, not shared environment or ScrollBox state. The next empty-function-clearing slice repairs that cause; independent verification remains pending.
 
 Cached Blizzard `SecureScrollTemplates.xml` directly uses `offset` and `delta`; the Mists `CharacterCreate.xml` range handler uses `yrange`. Vendor files remain unchanged. This is source/consumer corroboration, not a fresh native-client probe.
 
