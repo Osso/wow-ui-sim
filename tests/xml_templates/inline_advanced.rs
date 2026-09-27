@@ -17,3 +17,6 @@ mod editbox_limits;
 
 #[path = "inline_advanced/double_click_scripts.rs"]
 mod double_click_scripts;
+
+#[path = "inline_advanced/empty_script_overrides.rs"]
+mod empty_script_overrides;
