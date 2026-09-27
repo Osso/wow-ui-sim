@@ -8,3 +8,6 @@ mod advanced_bindings;
 
 #[path = "inline_advanced/rendering_templates.rs"]
 mod rendering_templates;
+
+#[path = "inline_advanced/colorselect_textures.rs"]
+mod colorselect_textures;
