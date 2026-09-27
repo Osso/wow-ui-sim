@@ -19,7 +19,8 @@ Same-value RGB calls retain their previous no-notification behavior. Handler fai
 ## Implementation inventory
 
 - `src/lua_api/frame/methods/widgets/slider/colorselect.rs`: RGB state commitment and callback delivery.
-- `src/loader/xml_frame_extras.rs`: existing special-texture property machinery; ColorSelect integration pending.
+- `src/loader/xml_frame_extras.rs`: ColorSelect slot declaration resolution and shared texture property application.
+- `src/loader/xml_frame/finalize.rs` and `src/lua_api/globals/create_frame/template_chain/runtime_loader_effects.rs`: ordinary and runtime-template integration.
 
 ## Tests asserting this spec
 
