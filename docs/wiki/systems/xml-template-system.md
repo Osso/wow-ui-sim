@@ -72,7 +72,7 @@ Three `ScriptBodyXml` forms:
 
 For `method="X"`, live PTR 12.1 probing showed two separate stores: the object field (`frame.X`) and the script handler returned by `GetScript`. XML method binding installs the currently composed method function as the script handler. Later `frame.X = otherFunction` changes direct `frame:X()` calls but does not change `GetScript`; later `SetScript` changes `GetScript` but does not change `frame.X`. `__wow_bind_xml_method` resolves the public frame first, then the forbidden object table when `useForbiddenObjectTable="true"`; private handlers receive the forbidden self, whose missing frame methods forward to the public `FrameHandle`. This covers precompiled intrinsic `OnLoad` as well as ordinary XML handlers, matching `Blizzard_AuraContainer.xml`'s private `OnLoad_Intrinsic`/`OnEvent_Intrinsic` pattern.
 
-Intrinsic default scripts use the precall binding; ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument returns only the normal handler. `1c66baffc` parses and registers `OnHorizontalScroll`, `OnVerticalScroll`, and `OnScrollRangeChanged` in ordinary and runtime-template construction; `c82ed91af` proves both paths at runtime. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) is the SSOT; implicit XML named-parameter mapping remains unverified.
+Intrinsic default scripts use the precall binding; ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument returns only the normal handler. `1c66baffc` parses and registers `OnHorizontalScroll`, `OnVerticalScroll`, and `OnScrollRangeChanged` in ordinary and runtime-template construction; `c82ed91af` proves both paths at runtime. `4d42cb803` adds `OnDoubleClick` to the optimized collector, preventing an empty successful collection from bypassing general XML compilation. Tests-only `0d052b4b2` is RED in three ordinary/runtime method-and-inline cases; its `OnEnter` control passes. `GetScript` plus manual Lua invocation proves registration and declared side effects only; post-change verification, physical input dispatch, and native arguments remain unverified. [XML double-click script registration](../../specs/xml-double-click-scripts.md) and [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) are the bounded contracts; implicit XML named-parameter mapping remains unverified.
 
 `inherit="prepend"` or `"append"` chains new/existing handlers, both wrapped in `pcall`. Without `inherit`, new handler replaces old.
 
@@ -91,6 +91,7 @@ Intrinsic default scripts use the precall binding; ordinary XML scripts use the 
 - `src/xml/parse.rs` — parser handling that preserves sibling elements after inline `<Scripts>...</Scripts>` blocks
 - `src/loader/addon.rs` — shared addon loading transaction used while XML files execute
 - `src/loader/tests/runtime_template_misc.rs` — regression coverage for forbidden object tables, secure delegates, and XML `method=` binding timing
+- [XML double-click script registration](../../specs/xml-double-click-scripts.md) — optimized `OnDoubleClick` collection boundary and pending proof
 
 ## See Also
 

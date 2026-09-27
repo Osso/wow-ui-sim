@@ -67,6 +67,10 @@ At `7b5f40bf3`, public Lua `Button:Click()` rejects `ScriptedInput` before Check
 
 At `1d989b0a3`, public `Enable`, `Disable`, and `SetEnabled` keep committed state visible to callbacks and only dispatch on a state transition. `OnEnable`/`OnDisable` now use `get_scripts_for_dispatch`, which returns registered XML intrinsic precall, normal script/hooks, and intrinsic postcall bindings in that order; errors reach the existing error handler while later bindings continue. Tests-only `960c20b32` is RED in two intrinsic cases; XML `GetScript` queries prove those precall/postcall bindings were registered, while the normal hook-only control passes. Intrinsic `HookScript` restrictions remain unchanged. Independent post-change verification is pending; no native all-profile or vendor/UI behavior is claimed. See [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md).
 
+### XML `OnDoubleClick` script registration
+
+`4d42cb803` includes `OnDoubleClick` in optimized XML method-script collection, so a declaration no longer silently succeeds with no collected handler and bypasses general compilation. Tests-only `0d052b4b2` is RED in three ordinary/runtime method-and-inline cases; its `OnEnter` mixin control passes. `GetScript` and manual handler invocation establish registration and declared side effects, not physical double-click input or native argument conventions. Independent post-change verification remains pending. See [XML double-click script registration](../../specs/xml-double-click-scripts.md).
+
 ### ScrollFrame script bindings
 
 `2cc079507` routes changed horizontal scroll, vertical scroll, and range events through registered precall, normal/hooks, then postcall bindings. It removes the normal-only lookup and automatic `*_Intrinsic` property invocation, so unregistered properties do not run. `1c66baffc` registers the three declarations in ordinary and runtime-template creation. Original RED `1e4706e2a` / `c46c6f76d` showed three registration failures and one bogus-property invocation; normal hooks were already covered. Final `c82ed91af` proof validates 60 unique relevant cases, including ordinary XML and cached EventScrollFrame callbacks with zero recorded Lua errors. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) is the SSOT; mouse-wheel, size, lifecycle, native/GPU, other-profile, and inline named-parameter behavior remain unverified or unchanged.
@@ -247,6 +251,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [[taint-system]] — secure/public environments and secure-button publication boundaries
 - [[post-load-workaround-audit]] — explicit post-cleanup restoration hooks
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
+- [[xml-template-system]] — XML script declaration and optimized installation paths
 - [[widget-system]] — `WidgetRegistry` hierarchy storage and public Button/SetParent boundaries
 - [[texture-atlas]] — texture path resolution, atlas identity, and rendering consumers
 - [[client-profiles]] — cumulative `retail-12-1-5` feature selection for PTR
