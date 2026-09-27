@@ -49,11 +49,15 @@ Links Lua userdata to the Rust `Frame` via `id`. `__newindex` syncs `parent.Chil
 | `methods_create` | CreateTexture, CreateFontString, CreateFrame, CreateAnimationGroup |
 | `methods_texture` | SetTexture, SetAtlas, SetTexCoord, SetVertexColor, SetBlendMode, SetDrawLayer |
 | `methods_text` | SetText, GetText, SetFont, SetTextColor, SetJustifyH/V, SetWordWrap |
-| `methods_button` | SetNormalTexture, SetPushedTexture, GetFontString, SetButtonState, IsPressed |
+| `methods_button` | Click, SetNormalTexture, SetPushedTexture, GetFontString, SetButtonState, IsPressed |
 | `methods_hierarchy` | GetParent, SetParent, GetChildren, GetNumChildren, GetRegions |
 | `methods_meta` | `__index`, `__newindex`, `__len`, `__eq` |
 
 Widget-specific: EditBox (SetMultiLine, SetAutoFocus), Slider (SetMinMaxValues, SetValue, SetOrientation), StatusBar (SetStatusBarColor), Cooldown (SetCooldown), Tooltip (SetOwner, AddLine, AddDoubleLine), MessageFrame (AddMessage), Browser (`NavigateTo`, `NavigateHome`). Browser navigation methods are callable no-result compatibility methods; the simulator does not open external content.
+
+### Scripted Button click lifecycle
+
+At `7b5f40bf3`, public Lua `Button:Click()` rejects `ScriptedInput` before CheckButton mutation or callbacks, then toggles a CheckButton before its enabled/same-button recursion guard. A permitted call dispatches `PreClick`, `OnClick`, then `PostClick` through `get_scripts_for_dispatch`, passing `(self, mouseButton, down)` and defaulting omitted arguments to `LeftButton`, `false`. Handler errors are reported and dispatch continues; the guard is released afterward. Tests-only `8ff05b19a` is RED for six failures, with two new and two existing controls passing; its fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` is the bounded evidence, and independent verification is pending. Wowless corroborates Button ordering, arguments, and error continuation only; it has no CheckButton click override. Solarity corroborates toggle-before-guard but differs by propagating handler errors. No native or physical-click parity is claimed. See [Scripted Button clicks](../../specs/button-script-click.md).
 
 ### SetParent cycle rejection
 
@@ -195,6 +199,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [bank_storage_verbs.rs](../../../src/lua_api/globals/bank_storage_verbs.rs) — retail guild-tabard lookup registration
 - [c_string_util_decimal.rs](../../../src/c_api/c_string_util_decimal.rs) — decimal escaping for control and invalid UTF-8 bytes
 - [font_strings.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/font_strings.rs) — canonical Font object field precedence and FontString snapshots
+- [buttons.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs) — public scripted Button click lifecycle
+- [Scripted Button clicks](../../specs/button-script-click.md) — public click contract and pending verification
 - [set-parent-cycles.md](../../specs/set-parent-cycles.md) — public hierarchy cycle-rejection contract and limits
 - [chat_window_defaults.rs](../../../src/lua_api/workarounds/temporary/chat_window_defaults.rs) — temporary chat-window name/docking state and public round-trip defaults
 - [compat_overrides.rs](../../../src/lua_api/globals/compat_overrides.rs) — table-form `string.split` compatibility
@@ -227,6 +233,6 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [[taint-system]] — secure/public environments and secure-button publication boundaries
 - [[post-load-workaround-audit]] — explicit post-cleanup restoration hooks
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
-- [[widget-system]] — `WidgetRegistry` hierarchy storage and public `SetParent` cycle boundary
+- [[widget-system]] — `WidgetRegistry` hierarchy storage and public Button/SetParent boundaries
 - [[texture-atlas]] — texture path resolution, atlas identity, and rendering consumers
 - [[client-profiles]] — cumulative `retail-12-1-5` feature selection for PTR

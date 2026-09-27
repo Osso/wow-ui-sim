@@ -18,6 +18,10 @@ Key field groups:
 
 **Widget-specific** — Slider, StatusBar, EditBox, ScrollFrame, Cooldown each have dedicated field groups. Model-family state is grouped in one lazy `Option<Box<ModelWidgetState>>`; absent payloads preserve getter defaults, while mutating methods allocate only when needed and remain globally callable.
 
+### Scripted Button click boundary
+
+Public Lua `Button:Click()` first rejects a `ScriptedInput` forbidden aspect. It then toggles a CheckButton before the enabled/same-button recursion guard. A permitted click dispatches every registered `PreClick`, `OnClick`, and `PostClick` binding in order with `(self, mouseButton, down)`; omitted arguments become `LeftButton` and `false`. Handler errors reach the error handler without stopping later bindings or phases, and cleanup releases the recursion guard. Tests-only `8ff05b19a` is RED: six failures; two new and two existing controls pass. Its fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` records the bounded evidence; independent post-change verification is pending. Wowless corroborates Button phase order, arguments, and error continuation but has no CheckButton override. Solarity corroborates toggle-before-guard but propagates handler errors. This does not claim native or physical-mouse-click parity. [Scripted Button clicks](../../specs/button-script-click.md) defines the contract.
+
 ### ScrollFrame requested-offset boundary
 
 `SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN six ScrollFrame cases and 15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. That proof excludes renderer movement, covered separately below; implicit range-refresh timing remains unverified. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
@@ -108,6 +112,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — requested-offset, callback, and range boundary
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only descendant translation and bounded proof
 - [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — designated-child replacement and clearing boundary
+- [Scripted Button clicks](../../specs/button-script-click.md) — public click lifecycle and bounded evidence
 
 ## See Also
 
@@ -119,3 +124,4 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — pending designated-child ownership contract
 - [[lua-api]] — Lua method surface
 - [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — selected keyboard-edit boundary
+- [Scripted Button clicks](../../specs/button-script-click.md) — public Button/CheckButton click lifecycle
