@@ -24,7 +24,8 @@ Public Lua `Button:Click` dispatches the scripted click lifecycle. The implement
 
 ## Tests asserting this spec
 
-- `tests/methods_button.rs`: scripted phases, arguments/hooks, disabled state, CheckButton recursion, independent-button recursion and handler-error recovery.
+- `tests/methods_button.rs`: original default-click/no-handler controls.
+- `tests/methods_button/click_callbacks.rs`: scripted phases, arguments/hooks, disabled state, CheckButton recursion, independent-button recursion and handler-error recovery; moved without behavior changes into the same grouped integration target.
 - `tests/forbidden_aspect_creation.rs`: scripted-input guards.
 
 ## Known gaps (current cycle)

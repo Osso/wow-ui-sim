@@ -6,9 +6,7 @@ use crate::lua_api::methods::{
     frame_id_from_stack, frame_ref, get_or_create_frame_fields, table_get, table_set,
     val_to_string,
 };
-use crate::lua_api::script_helpers::{
-    call_error_handler_state, get_script as get_rilua_script, get_scripts_for_dispatch,
-};
+use crate::lua_api::script_helpers::{call_error_handler_state, get_scripts_for_dispatch};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -81,18 +79,20 @@ pub(super) fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Fire the `OnEnable` or `OnDisable` Lua script for a button, if registered.
-fn fire_enable_disable_script(state: &mut LuaState, id: u64, enabled: bool) {
+/// Fire all registered `OnEnable` or `OnDisable` bindings in order.
+fn fire_enable_disable_script(state: &mut LuaState, id: u64, enabled: bool) -> LuaResult<()> {
     let handler_name = if enabled { "OnEnable" } else { "OnDisable" };
-    let Some(handler) = get_rilua_script(state, id, handler_name) else {
-        return;
-    };
-    let Ok(frame) = frame_ref(state, id) else {
-        return;
-    };
-    if let Err(error) = call_function_state(state, handler, &[frame]) {
-        call_error_handler_state(state, &error.to_string());
+    let handlers = get_scripts_for_dispatch(state, id, handler_name);
+    if handlers.is_empty() {
+        return Ok(());
     }
+    let frame = frame_ref(state, id)?;
+    for handler in handlers {
+        if let Err(error) = call_function_state(state, handler, &[frame]) {
+            call_error_handler_state(state, &error.to_string());
+        }
+    }
+    Ok(())
 }
 
 pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -107,7 +107,7 @@ pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
     };
     set_button_enabled_value(state, id, enabled)?;
     if changed {
-        fire_enable_disable_script(state, id, enabled);
+        fire_enable_disable_script(state, id, enabled)?;
     }
     Ok(0)
 }
@@ -123,7 +123,7 @@ pub(super) fn enable(state: &mut LuaState) -> LuaResult<u32> {
     };
     set_button_enabled_value(state, id, true)?;
     if was_disabled {
-        fire_enable_disable_script(state, id, true);
+        fire_enable_disable_script(state, id, true)?;
     }
     Ok(0)
 }
@@ -136,7 +136,7 @@ pub(super) fn disable(state: &mut LuaState) -> LuaResult<u32> {
     };
     set_button_enabled_value(state, id, false)?;
     if was_enabled {
-        fire_enable_disable_script(state, id, false);
+        fire_enable_disable_script(state, id, false)?;
     }
     Ok(0)
 }
