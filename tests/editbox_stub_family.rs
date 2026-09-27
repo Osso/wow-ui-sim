@@ -1,5 +1,6 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "editbox_stub_family/max_letters.rs"]
 mod max_letters;
 
 #[test]
