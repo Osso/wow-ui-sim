@@ -42,4 +42,4 @@ Independent final verification of `1ecc0c98c` passes 52 scoped cases: 27 scroll-
 
 ## Out of scope
 
-Scroll-child ownership/replacement semantics, logical geometry query redesign, new mouse-over clipping/intersection semantics, automatic range refresh, new ScrollBox behavior, vendor changes, unrelated clipping/drag redesign and performance claims. This is a bounded render/input correction, not universal ScrollFrame compatibility.
+Scroll-child ownership/replacement semantics are covered separately by [child ownership](scrollframe-child-ownership.md). This presentation contract excludes logical geometry query redesign, new mouse-over clipping/intersection semantics, automatic range refresh, new ScrollBox behavior, vendor changes, unrelated clipping/drag redesign and performance claims. This is a bounded render/input correction, not universal ScrollFrame compatibility.
