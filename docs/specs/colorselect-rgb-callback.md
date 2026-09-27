@@ -4,9 +4,9 @@ The simulator's existing `ColorSelect:SetColorRGB` publishes changed color state
 
 ## What it must do
 
-- [ ] Commit RGB components while preserving alpha before dispatching `OnColorSelect(self, r, g, b)` through registered scripts and hooks.
-- [ ] Update the unchanged retail ColorPickerFrame's current swatch and caller callback during setup and hex-entry interaction.
-- [ ] Construct the ColorSelect texture children already declared in Blizzard XML, preserving their parent keys, slot getter identity and declared properties in ordinary and template-based creation.
+- [x] Commit RGB components while preserving alpha before dispatching `OnColorSelect(self, r, g, b)` through registered scripts and hooks.
+- [x] Update the unchanged retail ColorPickerFrame's current swatch and caller callback during setup and hex-entry interaction.
+- [x] Construct the six ColorSelect texture children declared in XML, preserving parent keys, slot getter identity, and declared properties through ordinary, inherited-template, and runtime-template creation.
 
 Same-value RGB calls retain their previous no-notification behavior. Handler failures use the established script error handler; native same-value and reentrant policies are not established by this work.
 
@@ -24,14 +24,20 @@ Same-value RGB calls retain their previous no-notification behavior. Handler fai
 
 ## Tests asserting this spec
 
-- `tests/widget_methods_colorselect.rs`: committed RGB/alpha callback payloads and unchanged retail ColorPicker setup/hex-entry consumer.
-- `tests/xml_templates/inline_advanced/rendering_templates.rs`: six parsed ColorSelect texture roles through inline XML, inherited XML, and runtime template creation.
+- `tests/widget_methods_colorselect.rs`: 12 RGB/HSV/alpha state and getter controls, plus exact committed-RGB script/hook callback and unchanged Retail ColorPicker setup/hex-entry consumer cases.
+- `tests/xml_templates/inline_advanced/colorselect_textures.rs`: three XML construction paths. Each asserts `GetNumRegions() == 6`; all six role getters bind the matching `parentKey` texture with the correct parent/object type; declared dimensions, all eight thumb texture-coordinate values, and the Wheel's renderer-facing `color_texture` are retained.
 
-## Known gaps (current cycle)
+## Evidence
 
-Tests-only `a5c96d373` proves missing RGB callback delivery. Its real retail consumer test exposes an independent missing `Alpha` child, not a clean callback-only RED. Tests-only `67d596b0b` reproduces dropped special-texture declarations in three construction paths; each currently stops at the first Wheel binding. Ledgers: `/tmp/cross-version-colorselect-callback-proof.md` and `/tmp/cross-version-colorselect-xml-proof.md`. Integrated verification is pending.
+`/tmp/cross-version-colorselect-verification-ledger.md` is the detailed proof record. At `e586e6d30`, 35 unique behavioral cases are valid: 18 retained XML controls, three moved XML cases, 12 ColorSelect state controls, and two exact callback/Retail-consumer cases. Fresh `cargo fmt --check` and `cargo test --test integration --no-run` passed without compiler warnings; the exact Retail consumer case asserts zero recorded Lua errors.
 
-Retail `Blizzard_ColorPickerFrame/Mainline/ColorPickerFrame.lua` installs the callback in `OnLoad`; setup and hex entry invoke the native setter rather than manually updating the current swatch. This grounds the consumer repair without modifying that Lua or creating substitute UI. It is not a fresh native-client probe.
+Evidence phases: `a5c96d373` supplied the RGB callback RED; `67d596b0b` supplied the XML-slot RED; `3397eeec9`, `69e4bd61d`, and `579770559` implemented the runtime slice; `b27e0bf75` documented the first integrated attempt, whose XML assertion was falsified because it expected vertex tint rather than `color_texture`; `fab59666e` corrected that fixture; and `e586e6d30` moved the three XML cases into the bounded sibling module. No Blizzard/vendor UI files changed.
+
+## Known gaps
+
+Native HSV-only and alpha-only callback semantics, native reentry/coercion behavior, physical picker dragging, GPU parity, and non-Retail profiles remain unverified. Cached Retail `Blizzard_ColorPickerFrame/Mainline/ColorPickerFrame.lua` is the consumer source; its setup and hex-entry path passes, but this is not a fresh native-client probe.
+
+Readability: `tests/widget_methods_colorselect.rs` was already over the 750-line cap before the initial test commit (`a5c96d373^`: 897 lines); it is now 1,015 lines, a net +118 across the full slice. This is a preexisting finding, not authorization for extra cleanup. The new sibling module avoided extending `rendering_templates.rs`, which is now 669 lines.
 
 ## Out of scope
 

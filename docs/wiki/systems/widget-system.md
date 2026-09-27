@@ -20,7 +20,7 @@ Key field groups:
 
 ### ColorSelect RGB callback boundary
 
-`3397eeec9` makes changed `SetColorRGB` commit RGB state while retaining alpha, then dispatch `OnColorSelect(self, r, g, b)` through normal registered script and hook bindings. Same RGB retains the prior no-event behavior. No native reentry claim is made; HSV and alpha-only setter callback behavior is unchanged. Tests-only `a5c96d373` is RED. The unchanged retail ColorPickerFrame consumer remains blocked by a nil `Alpha` child because parsed XML special-texture declarations are dropped; loader RED `67d596b0b` is separate and integration proof remains pending. [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) defines the intended boundary.
+`3397eeec9` makes changed `SetColorRGB` commit RGB while retaining alpha, then dispatch `OnColorSelect(self, r, g, b)` through registered scripts and hooks; same RGB remains a no-event call. `69e4bd61d`/`579770559` load the six XML texture slots across ordinary, inherited-template, and runtime-template paths. Final bounded proof at `e586e6d30` covers 35 behavioral cases, including the unchanged Retail ColorPicker setup/hex-entry consumer with zero recorded Lua errors. Native HSV-only/alpha-only callbacks, reentry, GPU parity, and non-Retail profiles remain unverified. [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) is the SSOT.
 
 ### Scripted Button click boundary
 
