@@ -9,6 +9,9 @@ use common::env_with_shared_xml;
 use wow_ui_sim::iced_app::{RegistryQuadBatchParams, build_quad_batch_for_registry};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "scroll_widgets/script_bindings.rs"]
+mod script_bindings;
+
 #[cfg(feature = "gui")]
 fn scroll_content_quad_bounds(env: &WowLuaEnv) -> (f32, f32, f32, f32) {
     env.set_screen_size(800.0, 600.0);
