@@ -318,6 +318,84 @@ fn test_create_scrollframe_basic() {
 }
 
 #[test]
+fn scroll_child_replacement_detaches_old_child_without_disturbing_siblings() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local sf = CreateFrame("ScrollFrame", nil, UIParent)
+        local sibling = CreateFrame("Frame", nil, sf)
+        local old = CreateFrame("Frame", nil, sf)
+        local descendant = CreateFrame("Frame", nil, old)
+        local new = CreateFrame("Frame", nil, UIParent)
+        sf:SetScrollChild(old)
+        assert(sf:GetScrollChild() == old and old:GetParent() == sf)
+
+        sf:SetScrollChild(new)
+        assert(sf:GetScrollChild() == new, "replacement must be designated")
+        assert(old:GetParent() == nil, "replaced child must be detached")
+        assert(new:GetParent() == sf, "replacement must be parented to scroll frame")
+        assert(descendant:GetParent() == old, "old subtree must remain intact")
+        assert(sibling:GetParent() == sf, "unrelated sibling must retain its parent")
+        local children = {sf:GetChildren()}
+        assert(#children == 2, "scroll frame must contain sibling and replacement only")
+        assert((children[1] == sibling and children[2] == new)
+            or (children[1] == new and children[2] == sibling))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn scroll_child_nil_clears_designation_and_detaches_old_subtree() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local sf = CreateFrame("ScrollFrame", nil, UIParent)
+        sf:SetScale(2)
+        sf:SetAlpha(0.5)
+        local sibling = CreateFrame("Frame", nil, sf)
+        local old = CreateFrame("Frame", nil, sf)
+        old:SetScale(0.5)
+        old:SetAlpha(0.8)
+        local descendant = CreateFrame("Frame", nil, old)
+        sf:SetScrollChild(old)
+        assert(old:GetEffectiveScale() == sf:GetEffectiveScale() * old:GetScale())
+        assert(math.abs(old:GetEffectiveAlpha() - 0.4) < 0.0001)
+
+        sf:SetScrollChild(nil)
+        assert(sf:GetScrollChild() == nil, "nil must clear the designation")
+        assert(old:GetParent() == nil, "cleared child must be detached")
+        assert(descendant:GetParent() == old, "old subtree must remain intact")
+        assert(sibling:GetParent() == sf and sf:GetNumChildren() == 1)
+        assert(sf:GetChildren() == sibling, "cleared child must leave child enumeration")
+        assert(old:GetEffectiveScale() == old:GetScale())
+        assert(math.abs(old:GetEffectiveAlpha() - 0.8) < 0.0001)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn scroll_child_same_child_reassignment_keeps_single_parent_link() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local sf = CreateFrame("ScrollFrame", nil, UIParent)
+        local sibling = CreateFrame("Frame", nil, sf)
+        local child = CreateFrame("Frame", nil, sf)
+        sf:SetScrollChild(child)
+        sf:SetScrollChild(child)
+        assert(sf:GetScrollChild() == child and child:GetParent() == sf)
+        assert(sibling:GetParent() == sf and sf:GetNumChildren() == 2)
+        local children = {sf:GetChildren()}
+        assert((children[1] == sibling and children[2] == child)
+            or (children[1] == child and children[2] == sibling))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn test_scrollframe_update_scroll_child_rect_uses_resolved_subtree_bounds() {
     let env = WowLuaEnv::new().unwrap();
 
