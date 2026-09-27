@@ -632,18 +632,23 @@ fn parse_fast_tick_ms(value: &str) -> Option<u64> {
 /// boundary of unseen ones (timer-only groups or ones under a transparent
 /// parent).
 fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Duration> {
+    let mut groups_with_on_update: Option<rustc_hash::FxHashSet<u64>> = None;
     state
-        .animation_groups
+        .active_animation_groups
         .iter()
+        .filter_map(|&group_id| Some((group_id, state.animation_groups.get(&group_id)?)))
         .filter(|(_, g)| {
             g.playing
                 && !g.paused
                 && g.has_visual_effects()
                 && state.widgets.is_ancestor_visible(g.owner_frame_id)
         })
-        .filter_map(|(&group_id, g)| {
+        .filter_map(|(group_id, g)| {
             let draws_nothing = g.is_timer_only() || is_hidden_by_parent_alpha(&state.widgets, g);
-            let is_unseen = draws_nothing && !group_has_on_update_handler(state, group_id);
+            let is_unseen = draws_nothing
+                && !groups_with_on_update
+                    .get_or_insert_with(|| animation_groups_with_on_update(state))
+                    .contains(&group_id);
             if is_unseen {
                 g.time_to_next_boundary()
             } else {
@@ -653,17 +658,21 @@ fn next_animation_wake(state: &crate::lua_api::SimState) -> Option<std::time::Du
         .min()
 }
 
-/// OnUpdate on the group or one of its animations runs every tick, so the
-/// group needs frame-rate ticks even when nothing it animates can show.
-fn group_has_on_update_handler(state: &crate::lua_api::SimState, group_id: u64) -> bool {
-    state.on_update_frames.iter().any(|frame_id| {
-        let owning_group = state
-            .anim_frame_to_group
-            .get(frame_id)
-            .copied()
-            .or_else(|| state.anim_frame_to_anim.get(frame_id).map(|&(id, _)| id));
-        owning_group == Some(group_id)
-    })
+/// Groups whose own frame or one of whose animations has an OnUpdate
+/// handler: those run every tick, so the group needs frame-rate ticks even
+/// when nothing it animates can show.
+fn animation_groups_with_on_update(state: &crate::lua_api::SimState) -> rustc_hash::FxHashSet<u64> {
+    state
+        .on_update_frames
+        .iter()
+        .filter_map(|frame_id| {
+            state
+                .anim_frame_to_group
+                .get(frame_id)
+                .copied()
+                .or_else(|| state.anim_frame_to_anim.get(frame_id).map(|&(id, _)| id))
+        })
+        .collect()
 }
 
 /// True when nothing the group animates can show: the owner's parent has
