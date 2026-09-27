@@ -658,21 +658,29 @@ fn assert_colorselect_xml_textures(env: &WowLuaEnv, frame: &str) {
         );
     }
 
-    let (alpha_width, thumb_width, wheel_red, wheel_green, wheel_blue, wheel_alpha, thumb_left, thumb_right, thumb_top, thumb_bottom):
+    assert_colorselect_xml_properties(env, frame);
+}
+
+fn assert_colorselect_xml_properties(env: &WowLuaEnv, frame: &str) {
+    let (alpha_width, thumb_width, tlx, tly, blx, bly, trx, try_, brx, bry):
         (f32, f32, f32, f32, f32, f32, f32, f32, f32, f32) = env
         .eval(&format!(
-            "local f = {frame}; local r,g,b,a = f.Wheel:GetVertexColor(); local l,rr,t,bb = f.AlphaThumb:GetTexCoord(); return f.Alpha:GetWidth(), f.AlphaThumb:GetWidth(), r,g,b,a,l,rr,t,bb"
+            "local f = {frame}; return f.Alpha:GetWidth(), f.AlphaThumb:GetWidth(), f.AlphaThumb:GetTexCoord()"
         ))
         .unwrap();
     assert_eq!((alpha_width, thumb_width), (32.0, 48.0), "{frame}");
     assert_eq!(
-        (wheel_red, wheel_green, wheel_blue, wheel_alpha),
-        (0.2, 0.4, 0.6, 0.8),
+        (tlx, tly, blx, bly, trx, try_, brx, bry),
+        (0.25, 0.0, 0.25, 0.875, 1.0, 0.0, 1.0, 0.875),
         "{frame}"
     );
+    let state = env.state().borrow();
+    let parent_id = state.widgets.get_id_by_name(frame).unwrap();
+    let wheel_id = state.widgets.get(parent_id).unwrap().children_keys["Wheel"];
+    let fill = state.widgets.get(wheel_id).unwrap().color_texture.unwrap();
     assert_eq!(
-        (thumb_left, thumb_right, thumb_top, thumb_bottom),
-        (0.25, 1.0, 0.0, 0.875),
+        (fill.r, fill.g, fill.b, fill.a),
+        (0.2, 0.4, 0.6, 0.8),
         "{frame}"
     );
 }
