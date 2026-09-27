@@ -1,13 +1,14 @@
 use super::{
-    call_error_handler, call_error_handler_state, get_script_handlers_for_dispatch,
+    ScriptBinding, ScriptHandlerLookup, call_error_handler, call_error_handler_state,
     get_scripts_for_dispatch, protected_lua_pcall_state, registry_table, table_get_str,
 };
 use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::handler_timing;
-use crate::lua_api::methods::{borrow_state, create_string, frame_ref, table_get, val_to_string};
+use crate::lua_api::methods::{borrow_state, create_string, frame_ref, val_to_string};
 use rilua::vm::closure::Closure;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::string::LuaString;
 use rilua::vm::table::Table;
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::borrow::Cow;
@@ -15,6 +16,7 @@ use std::collections::HashSet;
 use std::time::Instant;
 
 const BUILTIN_ADDON_NAME: &str = "__BuiltIn";
+const ON_UPDATE_MODE_KEY: &str = "__onUpdateMode";
 
 /// Get event listeners in registration order from rilua's registry.
 pub fn get_event_listeners(state: &mut LuaState, event: &str) -> Vec<u64> {
@@ -194,7 +196,7 @@ pub fn dispatch_script(
         let Val::Function(func_ref) = handler_val else {
             continue;
         };
-        let (owner_addon, _, _) = handler_log_metadata(lua.state(), widget_id);
+        let owner_addon = handler_owner_addon(lua.state(), widget_id);
         let func = rilua::Function::from_gc_ref(func_ref);
         let previous_addon = replace_executing_addon(lua.state(), owner_addon);
         if let Err(e) = lua.call_function(&func, &args) {
@@ -218,28 +220,21 @@ pub fn dispatch_on_update(
     elapsed: f64,
 ) -> rilua::LuaResult<()> {
     let elapsed_val = Val::Num(elapsed);
+    let (mut lookup, mode_key) = {
+        let state = lua.state_mut();
+        let mode_key = state.gc.intern_string_static(ON_UPDATE_MODE_KEY.as_bytes());
+        (ScriptHandlerLookup::new(state, "OnUpdate"), mode_key)
+    };
     for &frame_id in frame_ids {
-        let mode = {
-            let state = lua.state_mut();
-            on_update_mode_for_frame(state, frame_id)?
-        };
-        let dispatch = {
-            let state = lua.state_mut();
-            should_dispatch_on_update(state, frame_id, mode)
-        };
-        if !dispatch {
+        let state = lua.state_mut();
+        let frame_val = frame_ref(state, frame_id)?;
+        let mode = on_update_mode_of(state, frame_val, mode_key)?;
+        if !should_dispatch_on_update(state, frame_id, mode) {
             continue;
         }
-        let handlers = {
-            let state = lua.state_mut();
-            get_script_handlers_for_dispatch(state, frame_id, "OnUpdate")
-        };
+        let handlers = lookup.handlers(state, frame_id);
         if handlers.is_empty() {
             continue;
-        };
-        let frame_val = {
-            let state = lua.state_mut();
-            frame_ref(state, frame_id)?
         };
         if mode.is_one_shot() {
             disable_on_update_mode(lua.state_mut(), frame_id)?;
@@ -248,17 +243,13 @@ pub fn dispatch_on_update(
             let Val::Function(func_ref) = handler.handler else {
                 continue;
             };
-            let registered_source = {
-                let state = lua.state_mut();
-                super::get_script_source_binding(state, frame_id, "OnUpdate", handler.binding)
-            };
             dispatch_on_update_handler(
                 lua,
                 frame_id,
                 frame_val,
                 elapsed_val,
                 func_ref,
-                registered_source,
+                handler.binding,
             );
         }
     }
@@ -277,17 +268,28 @@ fn should_dispatch_on_update(state: &mut LuaState, frame_id: u64, mode: OnUpdate
         .unwrap_or(false)
 }
 
-fn on_update_mode_for_frame(state: &mut LuaState, frame_id: u64) -> rilua::LuaResult<OnUpdateMode> {
-    let frame = frame_ref(state, frame_id)?;
-    OnUpdateMode::from_stored_value(table_get(state, frame, "__onUpdateMode"))
+fn on_update_mode_of(
+    state: &LuaState,
+    frame: Val,
+    mode_key: GcRef<LuaString>,
+) -> rilua::LuaResult<OnUpdateMode> {
+    let stored = match frame {
+        Val::Table(table) => state
+            .gc
+            .tables
+            .get(table)
+            .map_or(Val::Nil, |t| t.get_str(mode_key, &state.gc.string_arena)),
+        _ => Val::Nil,
+    };
+    OnUpdateMode::from_stored_value(stored)
 }
 
 fn disable_on_update_mode(state: &mut LuaState, frame_id: u64) -> rilua::LuaResult<()> {
     let frame = frame_ref(state, frame_id)?;
-    crate::lua_api::methods::table_set(
+    crate::lua_api::methods::table_set_static(
         state,
         frame,
-        "__onUpdateMode",
+        ON_UPDATE_MODE_KEY,
         OnUpdateMode::Disabled.value(),
     );
     Ok(())
@@ -299,15 +301,20 @@ fn dispatch_on_update_handler(
     frame_val: Val,
     elapsed_val: Val,
     func_ref: GcRef<Closure>,
-    registered_source: Option<String>,
+    binding: ScriptBinding,
 ) {
-    let (owner_addon, addon_name, frame_name) = handler_log_metadata(lua.state(), frame_id);
+    let owner_addon = handler_owner_addon(lua.state(), frame_id);
     let func = rilua::Function::from_gc_ref(func_ref);
     let start = Instant::now();
     let previous_addon = replace_executing_addon(lua.state(), owner_addon);
     if let Err(e) = lua.call_function(&func, &[frame_val, elapsed_val]) {
+        // Names and sources are only needed for the report, so they are
+        // resolved here instead of for every handler call.
+        let registered_source =
+            super::get_script_source_binding(lua.state_mut(), frame_id, "OnUpdate", binding);
         let source =
             registered_source.or_else(|| handler_error_source_label(lua.state(), func_ref));
+        let (addon_name, frame_name) = handler_names(lua.state(), frame_id, owner_addon);
         let error = handler_error_message(
             "OnUpdate",
             frame_id,
@@ -321,15 +328,18 @@ fn dispatch_on_update_handler(
     replace_executing_addon(lua.state(), previous_addon);
     let elapsed = start.elapsed();
     record_frame_timing(lua.state(), owner_addon, &start);
-    log_dispatched_handler(
-        lua.state(),
-        func_ref,
-        addon_name.as_deref(),
-        "OnUpdate",
-        frame_name.as_deref(),
-        frame_id,
-        elapsed,
-    );
+    if handler_timing::should_log(elapsed) {
+        let (addon_name, frame_name) = handler_names(lua.state(), frame_id, owner_addon);
+        log_dispatched_handler(
+            lua.state(),
+            func_ref,
+            addon_name.as_deref(),
+            "OnUpdate",
+            frame_name.as_deref(),
+            frame_id,
+            elapsed,
+        );
+    }
 }
 
 fn handler_error_message(
@@ -359,22 +369,33 @@ fn handler_frame_label(frame_name: Option<&str>, frame_id: u64) -> Cow<'_, str> 
     }
 }
 
-fn handler_log_metadata(
+fn handler_owner_addon(state: &LuaState, frame_id: u64) -> Option<u16> {
+    use crate::lua_api::env::WowLuaAppData;
+
+    let sim = state
+        .app_data::<WowLuaAppData>()?
+        .sim_state
+        .try_borrow()
+        .ok()?;
+    sim.widgets
+        .get(frame_id)
+        .and_then(|frame| frame.owner_addon)
+}
+
+/// Owner addon folder name and frame name, for error and timing reports.
+fn handler_names(
     state: &LuaState,
     frame_id: u64,
-) -> (Option<u16>, Option<String>, Option<String>) {
+    owner_addon: Option<u16>,
+) -> (Option<String>, Option<String>) {
     use crate::lua_api::env::WowLuaAppData;
 
     let Some(app) = state.app_data::<WowLuaAppData>() else {
-        return (None, None, None);
+        return (None, None);
     };
     let Ok(sim) = app.sim_state.try_borrow() else {
-        return (None, None, None);
+        return (None, None);
     };
-    let owner_addon = sim
-        .widgets
-        .get(frame_id)
-        .and_then(|frame| frame.owner_addon);
     let addon_name = owner_addon
         .and_then(|idx| sim.addons.get(idx as usize))
         .map(|addon| addon.folder_name.clone());
@@ -382,7 +403,7 @@ fn handler_log_metadata(
         .widgets
         .get(frame_id)
         .and_then(|frame| frame.name.clone());
-    (owner_addon, addon_name, frame_name)
+    (addon_name, frame_name)
 }
 
 fn replace_executing_addon(state: &LuaState, owner_addon: Option<u16>) -> Option<u16> {

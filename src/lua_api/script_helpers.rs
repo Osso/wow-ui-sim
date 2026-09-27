@@ -267,6 +267,64 @@ fn script_frame_table(
     Some(handlers)
 }
 
+const DISPATCH_BINDINGS: [ScriptBinding; 3] = [
+    ScriptBinding::Precall,
+    ScriptBinding::Normal,
+    ScriptBinding::Postcall,
+];
+
+/// Looks up one handler name for many frames in a dispatch pass, reusing the
+/// interned handler key and the per-binding registry tables. A binding table
+/// that does not exist yet is looked up again on the next call, so a hook
+/// installed mid-pass still applies to later frames.
+pub(super) struct ScriptHandlerLookup {
+    handler_key: GcRef<LuaString>,
+    binding_tables: [Option<GcRef<Table>>; 3],
+}
+
+impl ScriptHandlerLookup {
+    pub(super) fn new(state: &mut LuaState, handler_name: &str) -> Self {
+        Self {
+            handler_key: script_handler_key_ref(state, handler_name),
+            binding_tables: [None; 3],
+        }
+    }
+
+    /// Handlers bound for `widget_id`, in precall, normal, postcall order.
+    pub(super) fn handlers(
+        &mut self,
+        state: &mut LuaState,
+        widget_id: u64,
+    ) -> Vec<ScriptDispatchHandler> {
+        let mut found = Vec::new();
+        for (slot, binding) in DISPATCH_BINDINGS.into_iter().enumerate() {
+            let Some(scripts) = self.binding_table(state, slot, binding) else {
+                continue;
+            };
+            let Some(handlers) = script_frame_table(state, scripts, widget_id, false) else {
+                continue;
+            };
+            match table_get_str_ref(state, handlers, self.handler_key) {
+                Val::Nil => {}
+                handler => found.push(ScriptDispatchHandler { binding, handler }),
+            }
+        }
+        found
+    }
+
+    fn binding_table(
+        &mut self,
+        state: &mut LuaState,
+        slot: usize,
+        binding: ScriptBinding,
+    ) -> Option<GcRef<Table>> {
+        if self.binding_tables[slot].is_none() {
+            self.binding_tables[slot] = registry_table(state, binding.registry_key());
+        }
+        self.binding_tables[slot]
+    }
+}
+
 pub fn get_scripts_for_dispatch(
     state: &mut LuaState,
     widget_id: u64,

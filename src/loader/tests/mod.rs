@@ -700,6 +700,7 @@ mod layout_positioning;
 mod layout_scale;
 mod layout_size;
 mod minimap_specialized;
+mod on_update_dispatch_pass;
 mod same_value_render_dirty;
 mod wow_api;
 mod wow_api_globals;
