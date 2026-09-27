@@ -535,6 +535,16 @@ fn handler_params(handler_name: &str) -> &'static str {
     }
 }
 
+/// Bind scroll argument names without consuming the existing vararg payload.
+fn inline_scroll_argument_locals(handler_name: &str) -> &'static str {
+    match handler_name {
+        "OnHorizontalScroll" | "OnVerticalScroll" => "local offset = ...;",
+        "OnScrollRangeChanged" => "local xrange, yrange = ...;",
+        "OnMouseWheel" => "local delta = ...;",
+        _ => "",
+    }
+}
+
 /// Build the Lua expression for a script handler (without setting it).
 fn build_handler_expr(
     target: &str,
@@ -557,8 +567,9 @@ fn build_handler_expr(
             return None;
         }
         let params = handler_params(handler_name);
+        let locals = inline_scroll_argument_locals(handler_name);
         Some(format!(
-            "function({params})\n            {body}\n        end"
+            "function({params})\n            {locals}\n            {body}\n        end"
         ))
     }
 }
