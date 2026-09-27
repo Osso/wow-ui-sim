@@ -243,6 +243,12 @@ pub struct ScriptsXml {
     pub on_game_pad_stick: Vec<ScriptBodyXml>,
     #[serde(rename = "OnValueChanged", default)]
     pub on_value_changed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnHorizontalScroll", default)]
+    pub on_horizontal_scroll: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnVerticalScroll", default)]
+    pub on_vertical_scroll: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnScrollRangeChanged", default)]
+    pub on_scroll_range_changed: Vec<ScriptBodyXml>,
     #[serde(rename = "OnEnable", default)]
     pub on_enable: Vec<ScriptBodyXml>,
     #[serde(rename = "OnDisable", default)]

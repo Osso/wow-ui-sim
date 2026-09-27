@@ -690,12 +690,18 @@ fn text_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScr
     ]
 }
 
-fn state_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 11] {
+fn state_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 14] {
     [
         ("OnKeyDown", scripts.on_key_down.last()),
         ("OnGamePadStick", scripts.on_game_pad_stick.last()),
         ("OnKeyUp", scripts.on_key_up.last()),
         ("OnValueChanged", scripts.on_value_changed.last()),
+        ("OnHorizontalScroll", scripts.on_horizontal_scroll.last()),
+        ("OnVerticalScroll", scripts.on_vertical_scroll.last()),
+        (
+            "OnScrollRangeChanged",
+            scripts.on_scroll_range_changed.last(),
+        ),
         ("OnEnable", scripts.on_enable.last()),
         ("OnDisable", scripts.on_disable.last()),
         ("OnSizeChanged", scripts.on_size_changed.last()),
