@@ -26,6 +26,10 @@ Key field groups:
 
 Public Lua `Button:Click()` first rejects a `ScriptedInput` forbidden aspect. It then toggles a CheckButton before the enabled/same-button recursion guard. A permitted click dispatches every registered `PreClick`, `OnClick`, and `PostClick` binding in order with `(self, mouseButton, down)`; omitted arguments become `LeftButton` and `false`. Handler errors reach the error handler without stopping later bindings or phases, and cleanup releases the recursion guard. Tests-only `8ff05b19a` is RED: six failures; two new and two existing controls pass. Its fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` records the bounded evidence; independent post-change verification is pending. Wowless corroborates Button phase order, arguments, and error continuation but has no CheckButton override. Solarity corroborates toggle-before-guard but propagates handler errors. This does not claim native or physical-mouse-click parity. [Scripted Button clicks](../../specs/button-script-click.md) defines the contract.
 
+### Button enabled-state callback boundary
+
+At `1d989b0a3`, `Enable`, `Disable`, and `SetEnabled` retain their committed-state-before-callback, changed-state-only dispatch, and same-value no-op behavior, but route `OnEnable`/`OnDisable` through the existing ordered binding lookup: XML intrinsic precall, normal script plus hooks, then intrinsic postcall. Handler errors still report and later bindings continue. Tests-only `960c20b32` is RED: two intrinsic-binding dispatch cases fail; the normal hook-only control passes, so normal hooks were never omitted. XML `GetScript` binding queries establish that the tested precall/postcall bindings are registered. Intrinsic `HookScript` restrictions are unchanged. No native all-profile or vendor/UI claim. [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) is the bounded contract; independent post-change verification is pending.
+
 ### ScrollFrame requested-offset boundary
 
 `SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN six ScrollFrame cases and 15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. That proof excludes renderer movement, covered separately below; implicit range-refresh timing remains unverified. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
@@ -117,6 +121,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only descendant translation and bounded proof
 - [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — designated-child replacement and clearing boundary
 - [Scripted Button clicks](../../specs/button-script-click.md) — public click lifecycle and bounded evidence
+- [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) — transition callback binding order and pending verification
 - [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) — RGB callback boundary and pending consumer/loader proof
 
 ## See Also
@@ -130,4 +135,5 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [[lua-api]] — Lua method surface
 - [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — selected keyboard-edit boundary
 - [Scripted Button clicks](../../specs/button-script-click.md) — public Button/CheckButton click lifecycle
+- [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) — public enabled-state transition callbacks
 - [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) — changed-RGB callback and pending loader evidence

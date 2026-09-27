@@ -63,6 +63,10 @@ At `390e560f5`, positive `MaxLetters` truncates programmatic EditBox `SetText` a
 
 At `7b5f40bf3`, public Lua `Button:Click()` rejects `ScriptedInput` before CheckButton mutation or callbacks, then toggles a CheckButton before its enabled/same-button recursion guard. A permitted call dispatches `PreClick`, `OnClick`, then `PostClick` through `get_scripts_for_dispatch`, passing `(self, mouseButton, down)` and defaulting omitted arguments to `LeftButton`, `false`. Handler errors are reported and dispatch continues; the guard is released afterward. Tests-only `8ff05b19a` is RED for six failures, with two new and two existing controls passing; its fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` is the bounded evidence, and independent verification is pending. Wowless corroborates Button ordering, arguments, and error continuation only; it has no CheckButton click override. Solarity corroborates toggle-before-guard but differs by propagating handler errors. No native or physical-click parity is claimed. See [Scripted Button clicks](../../specs/button-script-click.md).
 
+### Button enabled-state callbacks
+
+At `1d989b0a3`, public `Enable`, `Disable`, and `SetEnabled` keep committed state visible to callbacks and only dispatch on a state transition. `OnEnable`/`OnDisable` now use `get_scripts_for_dispatch`, which returns registered XML intrinsic precall, normal script/hooks, and intrinsic postcall bindings in that order; errors reach the existing error handler while later bindings continue. Tests-only `960c20b32` is RED in two intrinsic cases; XML `GetScript` queries prove those precall/postcall bindings were registered, while the normal hook-only control passes. Intrinsic `HookScript` restrictions remain unchanged. Independent post-change verification is pending; no native all-profile or vendor/UI behavior is claimed. See [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md).
+
 ### SetParent cycle rejection
 
 Public Lua `SetParent` runs its existing protected-state and forbidden-aspect guards before the shared hierarchy helper walks the proposed parent's `parent_id` ancestry. It rejects a self or descendant parent before animation reparenting or hierarchy mutation. Commit `818fe8d59` proves self and descendant rejection before mutation, plus four grouped controls: valid reparenting, nil parent, same-parent child-count preservation, and region enumeration. This is not a guarantee for other parent writers or every preexisting malformed hierarchy graph; native error wording is unverified, and the tests require only that the simulator error contains `cycle`. See [SetParent parent cycles](../../specs/set-parent-cycles.md).
@@ -203,8 +207,9 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [bank_storage_verbs.rs](../../../src/lua_api/globals/bank_storage_verbs.rs) — retail guild-tabard lookup registration
 - [c_string_util_decimal.rs](../../../src/c_api/c_string_util_decimal.rs) — decimal escaping for control and invalid UTF-8 bytes
 - [font_strings.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/font_strings.rs) — canonical Font object field precedence and FontString snapshots
-- [buttons.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs) — public scripted Button click lifecycle
+- [buttons.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs) — public Button click and enabled-state callback dispatch
 - [Scripted Button clicks](../../specs/button-script-click.md) — public click contract and pending verification
+- [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) — transition binding order and pending verification
 - [set-parent-cycles.md](../../specs/set-parent-cycles.md) — public hierarchy cycle-rejection contract and limits
 - [chat_window_defaults.rs](../../../src/lua_api/workarounds/temporary/chat_window_defaults.rs) — temporary chat-window name/docking state and public round-trip defaults
 - [compat_overrides.rs](../../../src/lua_api/globals/compat_overrides.rs) — table-form `string.split` compatibility
