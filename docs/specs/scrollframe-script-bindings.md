@@ -4,10 +4,10 @@ Scroll offset and range changes dispatch declared scripts through the existing b
 
 ## What it must do
 
-- [ ] Parse and register XML `OnHorizontalScroll`, `OnVerticalScroll`, and `OnScrollRangeChanged` in ordinary and runtime-template construction.
-- [ ] Run registered precall, normal/hooks, and postcall handlers in order, with committed scroll values and existing payloads. Preserve unchanged-offset/range no-ops.
-- [ ] Report handler errors and continue later bindings.
-- [ ] Deliver unchanged EventScrollFrame callback-registry events once, before normal scripts as its XML declares; do not automatically invoke unregistered `*_Intrinsic` properties.
+- [x] Parse and register XML `OnHorizontalScroll`, `OnVerticalScroll`, and `OnScrollRangeChanged` in ordinary and runtime-template construction.
+- [x] Run registered precall, normal/hooks, and postcall handlers in order, with committed scroll values and existing payloads. Preserve unchanged-offset/range no-ops.
+- [x] Report handler errors and continue later bindings.
+- [x] Deliver unchanged EventScrollFrame callback-registry events once, before normal scripts as its XML declares; do not automatically invoke unregistered `*_Intrinsic` properties.
 
 ## How it works
 
@@ -23,11 +23,11 @@ Scroll offset and range changes dispatch declared scripts through the existing b
 
 ## Tests asserting this spec
 
-`tests/scroll_widgets/script_bindings.rs`, inside the existing grouped integration target, verifies public `GetScript` bindings before invocation and loads the real cached EventScrollFrame XML/Lua through the shared XML fixture. Existing `tests/scroll_widgets.rs` retains offset/range/presentation controls.
+`tests/scroll_widgets/script_bindings.rs`, inside the existing grouped integration target, proves registration and dispatch through an ordinary XML `<ScrollFrame>` and through cached EventScrollFrame XML/Lua. Both paths verify public `GetScript` bindings, committed payloads, callback order, and zero recorded Lua errors. Existing `tests/scroll_widgets.rs` retains offset/range/presentation controls.
 
 ## Known gaps (current cycle)
 
-Tests-only `1e4706e2a` reproduces four failures. Three stop at missing XML registrations because `ScriptsXml` drops the declarations; the fourth shows automatic invocation of unregistered properties. These are not dispatch-only RED failures. `/tmp/cross-version-scroll-script-bindings-proof.md` records commands and diagnostic follow-up `c46c6f76d`. Integrated verification is pending.
+Tests-only `1e4706e2a` originally reproduced four failures: three missing XML registrations because `ScriptsXml` dropped the declarations, plus automatic invocation of an unregistered property. These were not dispatch-only RED failures. `c82ed91af` closes that boundary with 60 unique relevant passing cases, including ordinary XML and strengthened cached EventScrollFrame coverage; `/tmp/cross-version-scroll-script-bindings-verification-ledger.md` records full registration and runtime proof. Pre-existing readability caps remain reported there: `input_handlers_with_options` length and `template_chain.rs` file size.
 
 Blizzard's cached `Blizzard_SharedXML/Shared/Frame/EventScrollFrame.xml` explicitly binds the three `*_Intrinsic` methods as precalls. The corresponding Lua methods emit callback-registry events. Both files remain unchanged; this is consumer/source corroboration, not a fresh native-client probe.
 

@@ -69,7 +69,7 @@ At `1d989b0a3`, public `Enable`, `Disable`, and `SetEnabled` keep committed stat
 
 ### ScrollFrame script bindings
 
-`2cc079507` routes changed horizontal scroll, vertical scroll, and range events through registered script bindings in precall, normal/hooks, then postcall order. It removes the old normal-only handler lookup and automatic `*_Intrinsic` property invocation, so unregistered object properties do not run. `1c66baffc` supplies XML registration for the three declarations in ordinary and runtime-template creation. Tests-only `1e4706e2a` / `c46c6f76d` remain RED: three registration failures and one unregistered-property negative; normal hooks were already covered. Independent post-change verification is pending. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) is the bounded contract; mouse-wheel, size, and lifecycle dispatch are unchanged.
+`2cc079507` routes changed horizontal scroll, vertical scroll, and range events through registered precall, normal/hooks, then postcall bindings. It removes the normal-only lookup and automatic `*_Intrinsic` property invocation, so unregistered properties do not run. `1c66baffc` registers the three declarations in ordinary and runtime-template creation. Original RED `1e4706e2a` / `c46c6f76d` showed three registration failures and one bogus-property invocation; normal hooks were already covered. Final `c82ed91af` proof validates 60 unique relevant cases, including ordinary XML and cached EventScrollFrame callbacks with zero recorded Lua errors. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) is the SSOT; mouse-wheel, size, lifecycle, native/GPU, other-profile, and inline named-parameter behavior remain unverified or unchanged.
 
 ### SetParent cycle rejection
 
@@ -214,7 +214,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [buttons.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs) — public Button click and enabled-state callback dispatch
 - [Scripted Button clicks](../../specs/button-script-click.md) — public click contract and pending verification
 - [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) — transition binding order and pending verification
-- [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) — XML registration, binding order, and pending verification
+- [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) — XML registration, binding order, and bounded runtime proof
 - [set-parent-cycles.md](../../specs/set-parent-cycles.md) — public hierarchy cycle-rejection contract and limits
 - [chat_window_defaults.rs](../../../src/lua_api/workarounds/temporary/chat_window_defaults.rs) — temporary chat-window name/docking state and public round-trip defaults
 - [compat_overrides.rs](../../../src/lua_api/globals/compat_overrides.rs) — table-form `string.split` compatibility
