@@ -1493,6 +1493,10 @@ The six retail 12.0.0 `Enum.EncounterTimelineEventSource.*` and `Enum.EncounterT
 
 # Wiki Index
 
+## [2026-09-27] audit | Record pending inline XML ScrollFrame arguments
+
+`0c913d2ed` binds inline-body locals before the body: `offset` for horizontal/vertical scroll, `xrange`/`yrange` for range changes, and `delta` for wheel callbacks. Varargs and same-named globals remain intact; `method=`/`function=` bindings are unchanged. Tests-only `6b63be464` is RED in three silent wrong-value cases: handlers read globals `901`–`904` and FauxScrollFrame is wrong at offset `37`; recorded Lua errors are empty and five prior binding controls pass. Cached FauxScrollFrame uses `offset`/`delta`; Mists CharacterCreate uses `yrange`. Independent verification is pending; no physical-input, native, or vendor/UI claim. See [[xml-template-system]], [[widget-system]], [[lua-api]], and [Inline XML scroll arguments](../specs/xml-scroll-arguments.md).
+
 ## [2026-09-05] API | PTR 12.1.5 Lua math extensions
 
 [[lua-api]] records the `retail-12-1-5`-gated native `math` functions required by PTR `MathUtil.lua`, their grouped behavioral coverage, and the unproven invalid-range/secret-value limits. See [Lua math extensions](../specs/lua-math-extensions.md).

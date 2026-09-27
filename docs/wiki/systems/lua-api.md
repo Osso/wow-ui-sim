@@ -73,7 +73,7 @@ At `1d989b0a3`, public `Enable`, `Disable`, and `SetEnabled` keep committed stat
 
 ### ScrollFrame script bindings
 
-`2cc079507` routes changed horizontal scroll, vertical scroll, and range events through registered precall, normal/hooks, then postcall bindings. It removes the normal-only lookup and automatic `*_Intrinsic` property invocation, so unregistered properties do not run. `1c66baffc` registers the three declarations in ordinary and runtime-template creation. Original RED `1e4706e2a` / `c46c6f76d` showed three registration failures and one bogus-property invocation; normal hooks were already covered. Final `c82ed91af` proof validates 60 unique relevant cases, including ordinary XML and cached EventScrollFrame callbacks with zero recorded Lua errors. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) is the SSOT; mouse-wheel, size, lifecycle, native/GPU, other-profile, and inline named-parameter behavior remain unverified or unchanged.
+`2cc079507` routes changed horizontal scroll, vertical scroll, and range events through registered precall, normal/hooks, then postcall bindings. It removes the normal-only lookup and automatic `*_Intrinsic` property invocation, so unregistered properties do not run. `1c66baffc` registers the three declarations in ordinary and runtime-template creation. Original RED `1e4706e2a` / `c46c6f76d` showed three registration failures and one bogus-property invocation; normal hooks were already covered. Final `c82ed91af` proof validates 60 unique relevant cases, including ordinary XML and cached EventScrollFrame callbacks with zero recorded Lua errors. `0c913d2ed` gives inline XML bodies local `offset`, `xrange`/`yrange`, or `delta` before the body while retaining `...`; it does not change method/function bindings. Tests-only `6b63be464` is RED: three wrong-value cases read globals `901`–`904` or leave the FauxScrollFrame bar wrong at offset `37`, with no recorded Lua errors; five binding controls pass. Independent verification is pending; physical input and native semantics remain unverified. [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) and [Inline XML scroll arguments](../../specs/xml-scroll-arguments.md) are the bounded contracts.
 
 ### SetParent cycle rejection
 
@@ -219,6 +219,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [Scripted Button clicks](../../specs/button-script-click.md) — public click contract and pending verification
 - [Button enabled-state callbacks](../../specs/button-enabled-callbacks.md) — transition binding order and pending verification
 - [ScrollFrame script bindings](../../specs/scrollframe-script-bindings.md) — XML registration, binding order, and bounded runtime proof
+- [Inline XML scroll arguments](../../specs/xml-scroll-arguments.md) — inline callback locals, preserved varargs, and pending proof
 - [set-parent-cycles.md](../../specs/set-parent-cycles.md) — public hierarchy cycle-rejection contract and limits
 - [chat_window_defaults.rs](../../../src/lua_api/workarounds/temporary/chat_window_defaults.rs) — temporary chat-window name/docking state and public round-trip defaults
 - [compat_overrides.rs](../../../src/lua_api/globals/compat_overrides.rs) — table-form `string.split` compatibility

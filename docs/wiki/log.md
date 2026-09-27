@@ -3220,6 +3220,10 @@ Classified exactly 115 added `C_TransmogOutfitInfo` API, structure, and structur
 
 # Wiki Log
 
+## [2026-09-27] audit | Record pending inline XML ScrollFrame arguments
+
+Updated [[xml-template-system]], [[widget-system]], [[lua-api]], index, and [Inline XML scroll arguments](../specs/xml-scroll-arguments.md) from `0c913d2ed` and tests-only `6b63be464`. Inline XML scroll bodies bind `offset` (horizontal/vertical), `xrange`/`yrange` (range), or `delta` (wheel) before their bodies, preserving varargs and globals; method/function bindings remain unchanged. RED is three silent wrong-value cases: global sentinels `901`–`904` leak into ordinary/runtime handlers and FauxScrollFrame is wrong at offset `37`; no Lua errors are recorded, while five prior binding controls pass. Cached FauxScrollFrame uses `offset`/`delta`; Mists CharacterCreate uses `yrange`. Independent verification remains pending. No physical-input, native, vendor/UI, code, test, Cargo, delegation, Bash, push, or deployment claim.
+
 ## 2026-09-25 — Target aura private Count diagnosis
 
 Added [[target-aura-private-count]], indexed it, and updated the script-object partition contract. Full-startup target-player tick RED isolated the AuraButton's missing private Count child despite its public/Rust presence; XML parentKey publication fixes that boundary. GREEN after the independent rilua secret-number ordering pin is error-free; original `__tpl_25839` error label named the container.
