@@ -582,7 +582,16 @@ fn fast_script_install<'a>(
 ) -> Option<FastScriptInstall<'a>> {
     let handler = fast_handler_ref(handler_name, script)?;
     if matches!(handler, FastHandlerRef::NoOp) {
-        return Some(FastScriptInstall::Set(handler));
+        let binding =
+            crate::loader::helpers::intrinsic_binding_index(script.intrinsic_order.as_deref())
+                .or(intrinsic_default_scripts.then_some(0));
+        return Some(match binding {
+            Some(binding) => FastScriptInstall::Intrinsic {
+                handler,
+                new_first: binding == 0,
+            },
+            None => FastScriptInstall::Set(handler),
+        });
     }
     match script.intrinsic_order.as_deref() {
         Some("precall") => Some(FastScriptInstall::Intrinsic {
@@ -617,6 +626,9 @@ fn fast_handler_ref<'a>(
     handler_name: &'static str,
     script: &'a crate::xml::ScriptBodyXml,
 ) -> Option<FastHandlerRef<'a>> {
+    if crate::loader::helpers::script_clears_handler(script) {
+        return Some(FastHandlerRef::NoOp);
+    }
     if let Some(method_name) = script.method.as_deref() {
         return Some(FastHandlerRef::Method(method_name));
     }

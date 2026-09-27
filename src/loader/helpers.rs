@@ -419,7 +419,7 @@ fn append_script_handler_with_options(
     }
 }
 
-fn intrinsic_binding_index(order: Option<&str>) -> Option<u8> {
+pub(crate) fn intrinsic_binding_index(order: Option<&str>) -> Option<u8> {
     match order {
         Some("precall") => Some(0),
         Some("postcall") => Some(2),
@@ -506,7 +506,7 @@ fn chained_handler_lua(
     )
 }
 
-fn script_clears_handler(script: &crate::xml::ScriptBodyXml) -> bool {
+pub(crate) fn script_clears_handler(script: &crate::xml::ScriptBodyXml) -> bool {
     if script.method.is_some() {
         return false;
     }
