@@ -22,11 +22,17 @@ Key field groups:
 
 `SetHorizontalScroll` and `SetVerticalScroll` store the requested offset without range clamping. Commit `e9b72b107` preserves existing changed-state callback delivery after storage and same-offset suppression; `ee25b7d62` supplies the regression cases. Cached client observations record round-trips for vertical `-50` and horizontal `999`; no fresh probe ran. RED 0/2 becomes independent GREEN six ScrollFrame cases and 15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md`. That proof excludes renderer movement, covered separately below; implicit range-refresh timing remains unverified. [ScrollFrame offsets](../../specs/scrollframe-offsets.md) is the contract and scope.
 
+### ScrollFrame child-ownership boundary
+
+`07afe68ae` clears the current designation and detaches its old child with shared `reparent_widget` before assigning a different child; nil takes the same clear path. The helper invalidates old-child layout and presentation before replacement assignment, while reassigning the same child avoids detachment. Tests-only `3eea04853` is RED for two ownership failures with one same-child control passing; independent post-change proof is pending. Local Wowless `data/uiobjects/ScrollFrame/SetScrollChild.lua` corroborates only the unparent-before-replace model, not native callbacks or anchor-reset behavior. Unrelated custom Lua `ScrollChild` properties remain unchanged. [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) is the bounded contract.
+
 ### ScrollFrame presentation boundary
 
 Commits `08c43a536` and `4c39f4a5a` leave stored anchors and logical layout immutable, then apply a shared presentation translation at each ScrollFrame edge whose `scroll_child_id` names the current descendant. The designated subtree moves once per crossed viewport, including externally anchored descendants; nested viewports inherit outer translation but apply their own offset only below their own scroll child. The transform uses the crossed scroll child's effective scale. [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) is the bounded render/input contract. `ed69bd136` records three RED cases. Final independent verification passes 52 scoped cases, including scaled-child quads, nested cached hits and both 20,000-frame depth controls; format/check pass. See `/tmp/cross-version-scroll-presentation-final-verification-ledger.md`. Live GPU pixels and all UI/native behavior remain unclaimed.
 
 `b6bb2f710` applies that same translation to public `Region:IsMouseOver` bounds after its logical-rect, visibility, and mouse-enabled guards and before bounds/margin comparison. `GetRect` stays logical and optional margins remain preserved. This adds neither viewport clipping nor intersection semantics to the query; native behavior remains unverified. Independent verification passes the bounded query scope; [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) records its 35-case and format/check evidence separately from the 52-case presentation proof. Cached MapCanvas queries its viewport rather than a scrolled child, so it is not evidence of this mismatch.
+
+Ownership when `SetScrollChild` replaces or clears its designation is outside this presentation-only boundary: [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) covers the pending detach contract. It makes no native callback or anchor-reset claim.
 
 ## WidgetType Enum (18 types, `src/widget/mod.rs`)
 
@@ -101,6 +107,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [Visibility script dispatch](../../specs/visibility-script-dispatch.md) — public reparent visibility callbacks and proof limits
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — requested-offset, callback, and range boundary
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only descendant translation and bounded proof
+- [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — designated-child replacement and clearing boundary
 
 ## See Also
 
@@ -109,5 +116,6 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — public offset setter contract and proof status
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only scroll-child subtree contract
+- [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — pending designated-child ownership contract
 - [[lua-api]] — Lua method surface
 - [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — selected keyboard-edit boundary
