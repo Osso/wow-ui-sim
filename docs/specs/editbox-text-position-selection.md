@@ -11,6 +11,8 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] `Insert` derives its resulting cursor from the actual clamped edit range, including when earlier text replacement left cursor or selection indices beyond the new text.
 - [x] Keyboard printable input replaces a highlighted range; Backspace and Delete remove it. Each consumes selection and commits text/caret/render caches before existing callbacks. Rejected numeric input preserves the pending selection.
 - [x] Keyboard character callbacks precede `OnTextChanged(self, true)`; deletion emits only the changed callback. Unselected editing and forbidden scripted-input cursor guards remain intact.
+- [ ] XML `letters` and `bytes` populate the existing `MaxLetters` and `MaxBytes` fields before `OnLoad` in ordinary, inherited, and runtime-template construction, including nested runtime-template EditBoxes.
+- [ ] Each explicit XML value, including zero, overrides the most-derived inherited value independently. Preserve the declared integer verbatim; do not add terminator arithmetic.
 - [x] Keyboard input respects positive `MaxLetters` (Unicode scalars) and `MaxBytes` (UTF-8 bytes) against the proposed selected-range replacement. Zero defaults are unlimited.
 - [x] An overflowing input fragment is rejected entirely, preserving existing text, caret, selection and render caches. It emits no `OnChar` or `OnTextChanged`; accepted input retains the existing callback sequence.
 
@@ -33,14 +35,19 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 - `src/lua_api/frame/methods/widgets/editbox/selection.rs` — highlighted byte endpoints and character-range storage.
 - `src/lua_api/key_dispatch.rs` — selected-range keyboard replacement/deletion, pre-mutation length validation, and input callbacks.
 - `src/widget/frame.rs` — selection consumption shared by public `Insert` and keyboard edits.
+- `src/xml/types.rs` — optional EditBox `letters` and `bytes` declarations.
+- `src/lua_api/globals/template/direct.rs` — shared declared-limit resolution, invoked from ordinary XML setup and runtime-template property application.
 
 ## Tests asserting this spec
 
 - `tests/editbox_stub_family.rs` — cursor units, selected replacement/deletion, render text, programmatic mutation and callbacks.
 - `tests/key_dispatch.rs` — ASCII/Unicode selected typing, selection deletion, subsequent public Insert, callback observations, numeric rejection, and unselected controls.
 - `tests/forbidden_aspect_creation.rs` — scripted-input cursor restrictions.
+- `tests/xml_templates/inline_advanced/editbox_limits.rs` — XML/runtime-template propagation, independent overrides, OnLoad observations, and configured-limit keyboard rejection.
 
 ## Evidence boundary
+
+- XML-limit tests-only `5f94dd219` is RED in four cases; the ordinary `letters` control passes. `bytes` was not parsed, and runtime-template property application omitted both limits. `/tmp/cross-version-editbox-xml-limits-proof.md` records exact boundaries. Post-change verification is pending. Literal declared-value propagation follows the existing `letters` model; native terminator accounting remains unverified. The unchanged retail ColorPicker HexBox declares `bytes="7"`, but this work does not infer any extra terminator adjustment from that value.
 
 - Keyboard-limit tests at `e114cafe0` are RED in three cases: append overflow, selected oversized replacement with no callbacks, and combined scalar limit. One zero-default control passes. `/tmp/cross-version-editbox-limits-proof.md` records commands and revision. Independent verification of `1933cb68c` passes 43 scoped tests (28 keyboard, 11 EditBox family, four scripted-focus guards), format/check and grouped integration compilation without compiler warnings; readability has no findings. `/tmp/cross-version-editbox-limits-verification-ledger.md` records exact proof. Render-cache preservation and negative-limit handling are source-inspected, not directly asserted by the new tests. Scoped logs retain the separate bare-environment ESCAPE nil-call diagnostic and deliberate text-set error control; no zero-Lua-error claim. This change is entirely simulator-side Rust; Blizzard Lua/XML and existing UI definitions are untouched.
 

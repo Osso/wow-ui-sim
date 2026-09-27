@@ -201,10 +201,12 @@ pub struct FrameXml {
     pub protected: Option<bool>,
     #[serde(rename = "@onUpdateMode")]
     pub on_update_mode: Option<String>,
-    /// EditBox `letters` attribute — caps `SetMaxLetters`. Ignored on
-    /// non-EditBox widgets.
+    /// Initial EditBox MaxLetters value from XML.
     #[serde(rename = "@letters")]
     pub letters: Option<i32>,
+    /// Initial EditBox MaxBytes value from XML.
+    #[serde(rename = "@bytes")]
+    pub bytes: Option<i32>,
 
     #[serde(skip)]
     pub use_forbidden_object_table: bool,

@@ -685,30 +685,33 @@ pub fn apply_xml_id(state: &Rc<RefCell<SimState>>, frame_id: u64, frame: &FrameX
     }
 }
 
-/// Apply EditBox `letters` attribute (caps `SetMaxLetters`).
-///
-/// Walks the inherits chain after the explicit attribute so a template
-/// default propagates only when the instance leaves the attribute unset.
-/// No-ops on widgets where the field is meaningless — `editbox_max_letters`
-/// is set on every Frame but only consulted by EditBox runtime methods.
-pub fn apply_xml_letters(
+/// Apply declared EditBox limits, resolving each field independently.
+/// Explicit values (including zero) override the most-derived template value.
+pub fn apply_xml_editbox_limits(
     state: &Rc<RefCell<SimState>>,
     frame_id: u64,
     frame: &FrameXml,
     inherits: &str,
 ) {
-    let mut letters = frame.letters;
-    if letters.is_none() && !inherits.is_empty() {
-        for entry in &*crate::xml::get_template_chain(inherits) {
-            if let Some(value) = entry.frame.letters {
-                letters = Some(value);
-            }
-        }
+    let chain = crate::xml::get_template_chain(inherits);
+    let letters = frame
+        .letters
+        .or_else(|| chain.iter().rev().find_map(|entry| entry.frame.letters));
+    let bytes = frame
+        .bytes
+        .or_else(|| chain.iter().rev().find_map(|entry| entry.frame.bytes));
+    if letters.is_none() && bytes.is_none() {
+        return;
     }
-    if let Some(value) = letters
-        && let Some(f) = state.borrow_mut().widgets.get_mut_visual(frame_id)
-    {
-        f.editbox_max_letters = value;
+    let mut sim = state.borrow_mut();
+    let Some(widget) = sim.widgets.get_mut_visual(frame_id) else {
+        return;
+    };
+    if let Some(value) = letters {
+        widget.editbox_max_letters = value;
+    }
+    if let Some(value) = bytes {
+        widget.editbox_max_bytes = value;
     }
 }
 

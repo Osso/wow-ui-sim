@@ -366,7 +366,7 @@ fn apply_xml_properties_direct(
     direct::apply_xml_clamped_to_screen(state, frame_id, frame, inherits);
     direct::apply_xml_protected(state, frame_id, frame, inherits);
     direct::apply_xml_id(state, frame_id, frame);
-    direct::apply_xml_letters(state, frame_id, frame, inherits);
+    direct::apply_xml_editbox_limits(state, frame_id, frame, inherits);
     direct::apply_xml_slider_orientation(state, frame_id, frame, inherits);
     direct::apply_xml_statusbar_rotation(state, frame_id, frame, inherits);
     apply_xml_on_update_mode(env, frame_id, frame)?;
