@@ -89,6 +89,17 @@ A per-stage dirt probe in `collect_tick_dirty` showed the loop feeds itself. Aft
 
 Those timer-driven regions belong to ClickableRaidBuffs, whose UpdateBus re-applies identical icon state about 15 times a second. Five setters dirtied on unchanged values. `SetTexture` ignored its own change flag. `SetDesaturated`/`SetDesaturation` never compared. `SetTextColor` recorded dirt before comparing. `SetFont` never compared. `SetText` treated nil and "" as different. `9805bc079` and `bef30706e` mark dirt only on a drawn change; stored values stay exact. Test `src/loader/tests/same_value_render_dirty.rs` replays the addon's calls. The live idle dirt probe then showed only one-off OnUpdate writes. Idle was still ~63 ticks/s at ~3ms each, driven by timer and animation wake buckets rather than dirt. The `integration` failures `test_tooltip_layout_is_clamped_to_viewport_edges` and `search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length` also fail before these commits.
 
+### 60 Hz tick and per-tick cost (follow-up)
+
+A per-branch probe of `compute_tick_interval` found the remaining idle rate came from a timer. Blizzard's `SmoothStatusBar.lua` runs `C_Timer.NewTicker(0, ProcessSmoothStatusBars)` for the whole session, so the 16ms bucket was always selected. That is intended per-frame behavior and Blizzard Lua is not patched.
+
+- **`8c59186f1`:** the tick is capped at one 60 Hz frame (16.667ms) instead of 16ms.
+- **`fe40e0e82`:** OnUpdate dispatch resolves the handler key, the `__onUpdateMode` key and the binding tables once per pass (`ScriptHandlerLookup`; missing tables are retried so hooks added mid-pass apply). Frame/addon names and source labels are built only for error and slow-handler reports.
+- **`21a6c8e79`:** OnPostUpdate fires only for frames in `__on_post_update_scripts`. The pass previously looked up bindings on every OnUpdate frame; OnPostUpdate is not settable from Lua on common widgets.
+- **`b9de308f0`, `b59d80c8b`:** the tick interval scans only active animation groups, and returns early when a pending timer already selects the frame interval.
+
+`bench_steady_state` (Blizzard UI, 4 interleaved pairs, fast cores) tick p50 went from 0.53-0.62ms to 0.34-0.39ms; draw was unchanged. Test file `src/loader/tests/on_update_dispatch_pass.rs`. `on_update_modes_process_actual_managed_aura_dirty_phases` also fails before these commits. The remaining idle cost is mostly Lua execution of OnUpdate handlers. Smaller simulator-side costs: std SipHash maps (`on_update_frames`, `animation_groups`), the per-tick cooldown dirty scan and winit window-id hashing.
+
 ## Sources
 
 - [app.rs](../../../src/iced_app/app.rs) — tick interval and cooldown checks
