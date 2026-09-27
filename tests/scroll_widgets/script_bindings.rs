@@ -138,6 +138,14 @@ fn bare_scrollframe_property_named_intrinsic_is_not_a_registered_binding() {
         sf.OnHorizontalScroll_Intrinsic = function() calls[#calls + 1] = 'h' end
         sf.OnVerticalScroll_Intrinsic = function() calls[#calls + 1] = 'v' end
         sf.OnScrollRangeChanged_Intrinsic = function() calls[#calls + 1] = 'range' end
+        sf:SetScript('OnHorizontalScroll', function(self, offset)
+            assert(self == sf and offset == self:GetHorizontalScroll())
+            calls[#calls + 1] = 'normal'
+        end)
+        sf:HookScript('OnHorizontalScroll', function(self, offset)
+            assert(self == sf and offset == self:GetHorizontalScroll())
+            calls[#calls + 1] = 'hook'
+        end)
         assert(sf:GetScript('OnHorizontalScroll', 0) == nil)
         assert(sf:GetScript('OnVerticalScroll', 0) == nil)
         assert(sf:GetScript('OnScrollRangeChanged', 0) == nil)
@@ -149,7 +157,8 @@ fn bare_scrollframe_property_named_intrinsic_is_not_a_registered_binding() {
         sf:UpdateScrollChildRect()
         sf:SetHorizontalScroll(8)
         sf:SetVerticalScroll(9)
-        assert(#calls == 0, 'unregistered intrinsic property must not dispatch: ' .. table.concat(calls, ','))
+        assert(table.concat(calls, ',') == 'normal,hook',
+            'normal script and hook run, but unregistered intrinsic property does not: ' .. table.concat(calls, ','))
     "#,
         )
         .unwrap();
