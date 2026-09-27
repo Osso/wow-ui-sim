@@ -22,7 +22,12 @@ fn key_down_state_tracks_real_dispatch_and_release() {
         "#,
     )
     .unwrap();
-    let id = env.state().borrow().widgets.get_id_by_name("KeyDownStateFrame").unwrap();
+    let id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("KeyDownStateFrame")
+        .unwrap();
     env.state().borrow_mut().focused_frame_id = Some(id);
 
     assert!(!env.eval::<bool>("return IsKeyDown('Q')").unwrap());
@@ -119,8 +124,14 @@ fn spell_stop_casting_clears_active_cast() {
         )
         .unwrap();
 
-    assert!(first_stop, "SpellStopCasting should report an interrupted cast");
-    assert!(!casting_after_first, "SpellStopCasting should clear casting state");
+    assert!(
+        first_stop,
+        "SpellStopCasting should report an interrupted cast"
+    );
+    assert!(
+        !casting_after_first,
+        "SpellStopCasting should clear casting state"
+    );
     assert!(
         !second_stop,
         "SpellStopCasting should return false when nothing is casting"
@@ -182,7 +193,9 @@ fn default_ctrl_q_binding_requests_simulator_exit() {
 
     env.send_key_press("CTRL-Q", None).unwrap();
 
-    let requested: bool = env.eval("return A_Admin.IsSimulatorExitRequested()").unwrap();
+    let requested: bool = env
+        .eval("return A_Admin.IsSimulatorExitRequested()")
+        .unwrap();
     assert!(requested, "CTRL-Q should dispatch the default Quit binding");
 }
 
@@ -192,7 +205,9 @@ fn ctrl_q_control_character_without_modifier_requests_simulator_exit() {
 
     env.send_key_press("\u{11}", None).unwrap();
 
-    let requested: bool = env.eval("return A_Admin.IsSimulatorExitRequested()").unwrap();
+    let requested: bool = env
+        .eval("return A_Admin.IsSimulatorExitRequested()")
+        .unwrap();
     assert!(
         requested,
         "Ctrl+Q may arrive from iced as ASCII DC1 without a modifier flag"
@@ -205,7 +220,9 @@ fn quit_game_global_requests_simulator_exit() {
 
     env.exec("QuitGame()").unwrap();
 
-    let requested: bool = env.eval("return A_Admin.IsSimulatorExitRequested()").unwrap();
+    let requested: bool = env
+        .eval("return A_Admin.IsSimulatorExitRequested()")
+        .unwrap();
     assert!(requested, "QuitGame should use the simulator exit path");
 }
 
@@ -352,6 +369,157 @@ fn editbox_backspace_removes_last_character() {
         .eval(r#"return TestBkspEB:GetText()"#)
         .unwrap_or_default();
     assert_eq!(text, "hell", "Backspace should remove the last character");
+}
+
+#[test]
+fn focused_editbox_typing_replaces_selection_and_consumes_it_before_public_insert() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "SelectedTypeEB", UIParent)
+        eb:SetText("AB")
+        eb:HighlightText(0, 1)
+        eb:SetCursorPosition(1)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X", Some("X")).unwrap();
+    let after_key: (String, i64, i64) = env
+        .eval("return SelectedTypeEB:GetText(), SelectedTypeEB:GetCursorPosition(), SelectedTypeEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(after_key, ("XB".into(), 1, 1));
+
+    env.exec("SelectedTypeEB:Insert('Y')").unwrap();
+    let after_insert: (String, i64, i64) = env
+        .eval("return SelectedTypeEB:GetText(), SelectedTypeEB:GetCursorPosition(), SelectedTypeEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(after_insert, ("XYB".into(), 2, 2));
+}
+
+#[test]
+fn focused_editbox_typing_replaces_utf8_byte_selection() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "SelectedUnicodeEB", UIParent)
+        eb:SetText("aé猫z")
+        eb:HighlightText(1, 6)
+        eb:SetCursorPosition(6)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X", Some("界")).unwrap();
+    let result: (String, i64, i64) = env
+        .eval("return SelectedUnicodeEB:GetText(), SelectedUnicodeEB:GetCursorPosition(), SelectedUnicodeEB:GetUTF8CursorPosition()")
+        .unwrap();
+    assert_eq!(result, ("a界z".into(), 4, 2));
+}
+
+#[test]
+fn focused_editbox_deletion_keys_remove_selected_range_and_consume_selection() {
+    let mut results = Vec::new();
+    for key in ["BACKSPACE", "DELETE"] {
+        let env = env();
+        env.exec(
+            r#"
+            local eb = CreateFrame("EditBox", "SelectedDeletionEB", UIParent)
+            eb:SetText("aé猫z")
+            eb:HighlightText(1, 6)
+            eb:SetCursorPosition(6)
+            eb:SetFocus()
+            "#,
+        )
+        .unwrap();
+
+        env.send_key_press(key, None).unwrap();
+        let after_key: (String, i64, i64) = env
+            .eval("return SelectedDeletionEB:GetText(), SelectedDeletionEB:GetCursorPosition(), SelectedDeletionEB:GetUTF8CursorPosition()")
+            .unwrap();
+        env.exec("SelectedDeletionEB:Insert('Q')").unwrap();
+        let after_insert: (String, i64) = env
+            .eval("return SelectedDeletionEB:GetText(), SelectedDeletionEB:GetCursorPosition()")
+            .unwrap();
+        results.push((key, after_key, after_insert));
+    }
+    assert_eq!(
+        results,
+        vec![
+            ("BACKSPACE", ("az".into(), 1, 1), ("aQz".into(), 2)),
+            ("DELETE", ("az".into(), 1, 1), ("aQz".into(), 2)),
+        ]
+    );
+}
+
+#[test]
+fn selected_keyboard_edits_dispatch_callbacks_after_committing_text_and_caret() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "SelectedCallbackEB", UIParent)
+        eb:SetText("AB")
+        eb:HighlightText(0, 1)
+        eb:SetCursorPosition(1)
+        _G.selected_edit_events = {}
+        eb:SetScript("OnChar", function(self, char)
+            table.insert(_G.selected_edit_events, table.concat({"char", char, self:GetText(), self:GetCursorPosition(), self:GetUTF8CursorPosition()}, ":"))
+        end)
+        eb:SetScript("OnTextChanged", function(self, userInput)
+            table.insert(_G.selected_edit_events, table.concat({"changed", tostring(userInput), self:GetText(), self:GetCursorPosition(), self:GetUTF8CursorPosition()}, ":"))
+        end)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X", Some("X")).unwrap();
+    env.exec("SelectedCallbackEB:HighlightText(0, 1); SelectedCallbackEB:SetCursorPosition(1)")
+        .unwrap();
+    env.send_key_press("BACKSPACE", None).unwrap();
+    let events: String = env
+        .eval("return table.concat(_G.selected_edit_events, ';')")
+        .unwrap();
+    assert_eq!(
+        events,
+        "char:X:XB:1:1;changed:true:XB:1:1;changed:true:B:0:0"
+    );
+}
+
+#[test]
+fn rejected_numeric_key_preserves_selection_for_next_valid_key() {
+    let env = env();
+    env.exec(
+        r#"
+        local eb = CreateFrame("EditBox", "SelectedNumericEB", UIParent)
+        eb:SetText("12")
+        eb:HighlightText(0, 1)
+        eb:SetCursorPosition(1)
+        eb:SetNumeric(true)
+        eb:SetFocus()
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X", Some("X")).unwrap();
+    let rejected: (String, i64) = env
+        .eval("return SelectedNumericEB:GetText(), SelectedNumericEB:GetCursorPosition()")
+        .unwrap();
+    assert_eq!(rejected, ("12".into(), 1));
+
+    env.send_key_press("9", Some("9")).unwrap();
+    let accepted: (String, i64) = env
+        .eval("return SelectedNumericEB:GetText(), SelectedNumericEB:GetCursorPosition()")
+        .unwrap();
+    assert_eq!(accepted, ("92".into(), 1));
+    env.exec("SelectedNumericEB:Insert('8')").unwrap();
+    assert_eq!(
+        env.eval::<String>("return SelectedNumericEB:GetText()")
+            .unwrap(),
+        "982"
+    );
 }
 
 #[test]
