@@ -24,7 +24,7 @@ Inline scroll-related XML handlers receive named argument locals without losing 
 
 ## Known gaps (current cycle)
 
-Tests-only `6b63be464` is RED in three cases: ordinary/runtime handlers read sentinel globals instead of their arguments, and the real FauxScrollFrame scrollbar does not synchronize to offset 37. The three new alias cases are error-clean, but the prior 46 alias cases passed behaviorally with five FauxScrollFrame diagnostics; they are not an all-errors-clean result. `/tmp/scroll-error-isolated-attribution.md` attributes those diagnostics to `function=""` resolving `_G` to a table, not shared environment or ScrollBox state. The next empty-function-clearing slice repairs that cause; independent verification remains pending.
+Tests-only `6b63be464` remains RED in three cases: ordinary/runtime handlers read sentinel globals instead of their arguments, and the real FauxScrollFrame scrollbar does not synchronize to offset 37. The empty-function slice is independently GREEN: fresh `scroll_widgets::` output has zero prior FauxScrollFrame table-call diagnostics and one intentional sentinel diagnostic from tested error continuation. The table calls came from literal `FastHandlerRef::Function("")` resolving an empty global path to `_G` and invoking it, not shared environment or ScrollBox state. This does not make the inline-alias slice error-clean or verified.
 
 Cached Blizzard `SecureScrollTemplates.xml` directly uses `offset` and `delta`; the Mists `CharacterCreate.xml` range handler uses `yrange`. Vendor files remain unchanged. This is source/consumer corroboration, not a fresh native-client probe.
 

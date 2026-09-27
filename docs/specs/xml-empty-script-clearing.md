@@ -4,9 +4,11 @@ An XML script declaration with `function=""` clears its inherited selected handl
 
 ## What it must do
 
-- [ ] Treat `function=""` as a clear for the inherited selected normal, precall, postcall, or intrinsic-default binding.
-- [ ] Preserve unselected bindings, `method=`, nonempty `function=`, and other binding behavior.
-- [ ] Apply the clear in ordinary XML and runtime template construction.
+- [x] Clear an inherited normal binding for ordinary XML `function=""`.
+- [x] Clear only an explicitly selected intrinsic `precall` or `postcall` binding for runtime templates; preserve normal and opposite intrinsic bindings.
+- [x] Preserve nonempty `function=` behavior and cached FauxScrollFrame range behavior without table-call diagnostics.
+- [ ] Clear the intrinsic-default binding. Source-inspected only: no runtime test distinguishes that default slot.
+- [ ] Treat whitespace-only `function=` as empty and preserve `method=` precedence. Source-inspected only; no runtime assertion covers either distinction.
 
 ## How it works
 
@@ -16,17 +18,21 @@ An XML script declaration with `function=""` clears its inherited selected handl
 
 ## Implementation inventory
 
-- `src/loader/helpers.rs`: shared empty-function classification and intrinsic binding selection.
+- `src/loader/helpers.rs`: shared empty-function classification and selected-binding resolution.
 - `src/lua_api/globals/create_frame/template_chain.rs`: optimized template installer applies the clear to its selected binding.
+- `src/lua_api/globals/create_frame/template_chain/builders.rs`: `NoOp` intrinsic installation removes the selected intrinsic slot rather than the normal slot.
 
 ## Tests asserting this spec
 
-`tests/xml_templates/inline_advanced/empty_script_overrides.rs` covers ordinary normal clearing, runtime precall/postcall selection with retained other bindings, nonempty control, and cached FauxScrollFrame inheritance.
+`tests/xml_templates/inline_advanced/empty_script_overrides.rs` proves ordinary normal clearing, explicit runtime precall/postcall selection with retained other bindings, nonempty control, and cached FauxScrollFrame inheritance. Bounded default-profile verification ran 47 test instances, `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` clean; `/tmp/cross-version-empty-script-verification-ledger.md` records commands and logs.
 
 ## Known gaps (current cycle)
 
-Tests-only `6325ae0d4` is RED: three expected failures with one nonempty-function control passing. The corrected ordinary fixture, runtime precall, and cached FauxScrollFrame cases establish the pre-fix boundary; postcall and retained-binding assertions occur after the first runtime failure and are not independently RED. `/tmp/cross-version-empty-script-proof.md` records this evidence. Independent GREEN verification of `3e67e7b6e` is pending.
+- [ ] Add a runtime assertion that distinguishes intrinsic-default clearing from explicit precall.
+- [ ] Add runtime assertions for whitespace-only `function=` and `method=` precedence.
+
+`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame cases; its postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED. The later bounded GREEN proof establishes explicit precall/postcall behavior but does not change that RED-first limitation.
 
 ## Out of scope
 
-Native-client parity, vendor/UI changes, physical input, parser changes, and any behavior beyond empty `function=` clearing.
+Native-client parity, full-profile coverage, vendor/UI changes, physical input, parser changes, and behavior beyond empty `function=` clearing.

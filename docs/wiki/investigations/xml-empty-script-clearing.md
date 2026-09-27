@@ -1,31 +1,36 @@
 # XML Empty Script-Function Clearing
 
-`function=""` was recognized by general XML script generation as a clear, but the optimized runtime-template installer treated it as an ordinary no-op handler and retained inherited scripts. Commit `3e67e7b6e` aligns that path with the existing general generator; tests-only `6325ae0d4` records the corrected pre-fix boundary. Independent GREEN verification remains pending.
+`function=""` must clear its selected inherited script binding. Bounded default-profile verification passes 47 test instances plus format/check/integration compilation; it does not claim native-client or full-profile parity.
 
 ## Content
 
 ### Root cause
 
-The fast installer returned a no-op for an empty function before classifying its binding. It therefore installed the no-op through the normal path instead of clearing the inherited normal, precall, postcall, or intrinsic-default selected binding.
+The optimized path did **not** classify `function=""` as `FastHandlerRef::NoOp`. It represented it literally as `FastHandlerRef::Function("")`; `resolve_global_path("")` returns the globals table (`_G`), not `_G[""]`, and the installer then attempted to invoke that table.
+
+A separate existing `NoOp` installation bug ignored an intrinsic slot and always cleared the normal binding. It is distinct from the empty-function table invocation: intrinsic `NoOp` installation must remove the selected precall or postcall slot, while normal `NoOp` installation removes the normal script.
 
 ### Scoped contract
 
-An empty `function=` clears only the selected inherited binding. It preserves other bindings, `method=`, nonempty `function=`, and existing script behavior. Ordinary XML and runtime templates use the same clearing classification. No vendor files changed.
+Ordinary XML `function=""` clears an inherited normal binding. Runtime templates clear only an explicitly selected intrinsic precall or postcall binding and preserve normal and opposite intrinsic bindings. Nonempty `function=`, `method=`, and other bindings remain unchanged. Intrinsic-default selection, whitespace-only classification, and method precedence are source-inspected only.
 
 ### Evidence status
 
-`6325ae0d4` is RED: ordinary normal, runtime precall, and cached FauxScrollFrame inherited-range cases fail; the nonempty-function control passes. The postcall and retained-binding assertions are after the first runtime failure, so they are covered by the test body but not independently established RED. `/tmp/cross-version-empty-script-proof.md` is the proof ledger; verifier GREEN is pending.
+`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame inherited-range cases; its nonempty-function control passed. Postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED.
 
-### Scroll argument diagnostic correction
+Independent bounded GREEN verification at `3e67e7b6e` passes 47 test instances: ordinary clearing, explicit precall/postcall selection and preservation, nonempty control, cached FauxScrollFrame behavior, 40 `scroll_widgets::` cases, and three existing controls. `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` exit clean. `/tmp/cross-version-empty-script-verification-ledger.md` records exact commands and logs. No native-client, full-profile, vendor/UI, or clean-all-diagnostics claim is made.
 
-The prior 46 alias cases passed behaviorally but were not error-clean: five FauxScrollFrame cases emitted diagnostics because `function=""` resolved `_G[""]` to a table. The three new alias tests are error-clean. Those diagnostics are repaired by this next slice; independent verification is pending. This attribution is scoped to `/tmp/scroll-error-isolated-attribution.md`, which identifies the five isolated FauxScrollFrame cases rather than a shared environment or ScrollBox cause.
+### Scroll diagnostic correction
+
+The prior five FauxScrollFrame `attempt to call upvalue 'func' (a table value)` diagnostics came from the literal empty `FastHandlerRef::Function("")` path resolving to `_G` and invoking it. Fresh `scroll_widgets::` output has zero occurrences of that table-call error. It retains exactly one intentional `scroll precall sentinel` diagnostic from the tested error-continuation path; that test passes and asserts the report while later bindings continue.
 
 ## Sources
 
-- [XML empty script-function clearing](../../specs/xml-empty-script-clearing.md) — contract and test boundary
-- [helpers.rs](../../../src/loader/helpers.rs) — existing general XML clear classification
-- [template_chain.rs](../../../src/lua_api/globals/create_frame/template_chain.rs) — optimized runtime-template installation
-- [empty_script_overrides.rs](../../../tests/xml_templates/inline_advanced/empty_script_overrides.rs) — RED coverage
+- [XML empty script-function clearing](../../specs/xml-empty-script-clearing.md) — contract and proof boundary
+- [helpers.rs](../../../src/loader/helpers.rs) — shared classification and binding selection
+- [template_chain.rs](../../../src/lua_api/globals/create_frame/template_chain.rs) — optimized handler construction and installation
+- [builders.rs](../../../src/lua_api/globals/create_frame/template_chain/builders.rs) — selected-slot `NoOp` removal
+- [empty_script_overrides.rs](../../../tests/xml_templates/inline_advanced/empty_script_overrides.rs) — RED and bounded GREEN coverage
 
 ## See Also
 
