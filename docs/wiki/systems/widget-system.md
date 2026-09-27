@@ -18,6 +18,10 @@ Key field groups:
 
 **Widget-specific** — Slider, StatusBar, EditBox, ScrollFrame, Cooldown each have dedicated field groups. Model-family state is grouped in one lazy `Option<Box<ModelWidgetState>>`; absent payloads preserve getter defaults, while mutating methods allocate only when needed and remain globally callable.
 
+### ColorSelect RGB callback boundary
+
+`3397eeec9` makes changed `SetColorRGB` commit RGB state while retaining alpha, then dispatch `OnColorSelect(self, r, g, b)` through normal registered script and hook bindings. Same RGB retains the prior no-event behavior. No native reentry claim is made; HSV and alpha-only setter callback behavior is unchanged. Tests-only `a5c96d373` is RED. The unchanged retail ColorPickerFrame consumer remains blocked by a nil `Alpha` child because parsed XML special-texture declarations are dropped; loader RED `67d596b0b` is separate and integration proof remains pending. [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) defines the intended boundary.
+
 ### Scripted Button click boundary
 
 Public Lua `Button:Click()` first rejects a `ScriptedInput` forbidden aspect. It then toggles a CheckButton before the enabled/same-button recursion guard. A permitted click dispatches every registered `PreClick`, `OnClick`, and `PostClick` binding in order with `(self, mouseButton, down)`; omitted arguments become `LeftButton` and `false`. Handler errors reach the error handler without stopping later bindings or phases, and cleanup releases the recursion guard. Tests-only `8ff05b19a` is RED: six failures; two new and two existing controls pass. Its fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` records the bounded evidence; independent post-change verification is pending. Wowless corroborates Button phase order, arguments, and error continuation but has no CheckButton override. Solarity corroborates toggle-before-guard but propagates handler errors. This does not claim native or physical-mouse-click parity. [Scripted Button clicks](../../specs/button-script-click.md) defines the contract.
@@ -113,6 +117,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only descendant translation and bounded proof
 - [ScrollFrame child ownership](../../specs/scrollframe-child-ownership.md) — designated-child replacement and clearing boundary
 - [Scripted Button clicks](../../specs/button-script-click.md) — public click lifecycle and bounded evidence
+- [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) — RGB callback boundary and pending consumer/loader proof
 
 ## See Also
 
@@ -125,3 +130,4 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [[lua-api]] — Lua method surface
 - [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — selected keyboard-edit boundary
 - [Scripted Button clicks](../../specs/button-script-click.md) — public Button/CheckButton click lifecycle
+- [ColorSelect RGB callback](../../specs/colorselect-rgb-callback.md) — changed-RGB callback and pending loader evidence
