@@ -241,6 +241,91 @@ fn test_colorselect_rgb_defaults() {
     assert_eq!(b, 1.0);
 }
 
+#[test]
+fn test_colorselect_rgb_notifies_script_and_hook_with_committed_color() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local picker = CreateFrame("ColorSelect", nil, UIParent)
+        picker:SetColorAlpha(0.35)
+        local scriptCalls, hookCalls = 0, 0
+        picker:SetScript("OnColorSelect", function(self, r, g, b)
+            scriptCalls = scriptCalls + 1
+            local currentR, currentG, currentB = self:GetColorRGB()
+            assert(self == picker and r == 0.2 and g == 0.4 and b == 0.6,
+                "script received wrong color or self")
+            assert(currentR == r and currentG == g and currentB == b,
+                "script ran before color was committed")
+            assert(self:GetColorAlpha() == 0.35, "RGB update changed alpha")
+        end)
+        picker:HookScript("OnColorSelect", function(self, r, g, b)
+            hookCalls = hookCalls + 1
+            assert(self == picker and r == 0.2 and g == 0.4 and b == 0.6,
+                "hook received wrong color or self")
+        end)
+        picker:SetColorRGB(0.2, 0.4, 0.6)
+        local r, g, b = picker:GetColorRGB()
+        assert(r == 0.2 and g == 0.4 and b == 0.6, "RGB setter did not store color")
+        assert(picker:GetColorAlpha() == 0.35, "RGB setter did not preserve alpha")
+        assert(scriptCalls == 1 and hookCalls == 1,
+            "RGB change must notify script and hook once")
+        "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty(), "{:?}", env.state().borrow().lua_errors);
+}
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn test_retail_color_picker_setup_and_hex_entry_update_real_consumer() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_ColorPickerFrame"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|addon| addon == "Blizzard_ColorPickerFrame"));
+            assert!(
+                env.state().borrow().lua_errors.is_empty(),
+                "ColorPickerFrame closure load errors: {:?}",
+                env.state().borrow().lua_errors
+            );
+            let (setup_color, original, current, hex, setup_calls):
+                (bool, bool, bool, String, i64) = env.eval(r#"
+                local frame = ColorPickerFrame
+                assert(frame and frame.Content and frame.Content.ColorPicker and frame.Content.HexBox)
+                ColorPickerConsumerCalls = 0
+                frame:SetupColorPickerAndShow({r=0.2, g=0.4, b=0.6,
+                    swatchFunc=function() ColorPickerConsumerCalls = ColorPickerConsumerCalls + 1 end})
+                local r, g, b = frame:GetColorRGB()
+                local or_, og, ob = frame.Content.ColorSwatchOriginal:GetVertexColor()
+                local cr, cg, cb = frame.Content.ColorSwatchCurrent:GetVertexColor()
+                return r == 0.2 and g == 0.4 and b == 0.6,
+                    or_ == 0.2 and og == 0.4 and ob == 0.6,
+                    cr == 0.2 and cg == 0.4 and cb == 0.6,
+                    frame.Content.HexBox:GetText(), ColorPickerConsumerCalls
+                "#).expect("unchanged Retail SetupColorPickerAndShow should execute");
+            let (hex_color, updated_swatch, hex_calls): (bool, bool, i64) = env.eval(r#"
+                local box = ColorPickerFrame.Content.HexBox
+                box:SetText("804020")
+                box:OnEnterPressed()
+                local r, g, b = ColorPickerFrame:GetColorRGB()
+                local cr, cg, cb = ColorPickerFrame.Content.ColorSwatchCurrent:GetVertexColor()
+                return math.abs(r - 128/255) < 0.001 and math.abs(g - 64/255) < 0.001
+                    and math.abs(b - 32/255) < 0.001,
+                    math.abs(cr - 128/255) < 0.001 and math.abs(cg - 64/255) < 0.001
+                    and math.abs(cb - 32/255) < 0.001,
+                    ColorPickerConsumerCalls
+                "#).expect("unchanged Retail HexBox:OnEnterPressed should execute");
+            assert!(env.state().borrow().lua_errors.is_empty(), "ColorPickerFrame interaction errors: {:?}", env.state().borrow().lua_errors);
+            assert!(setup_color && original && hex_color, "setter and original swatch control failed: setup={setup_color}, original={original}, hex={hex_color}");
+            assert_eq!(hex, "336699", "real setup must populate hex box");
+            assert!(current, "real setup must update current swatch through OnColorSelect");
+            assert_eq!(setup_calls, 1, "real setup must call caller swatchFunc");
+            assert!(updated_swatch, "real hex entry must update current swatch through OnColorSelect");
+            assert_eq!(hex_calls, 2, "real hex entry must call caller swatchFunc");
+        },
+    );
+}
+
 // ============================================================================
 // ColorSelect: SetColorHSV / GetColorHSV
 // ============================================================================
