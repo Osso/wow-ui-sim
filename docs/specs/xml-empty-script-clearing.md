@@ -25,11 +25,11 @@ An XML script declaration with `function=""` clears its inherited selected handl
 
 ## Tests asserting this spec
 
-`tests/xml_templates/inline_advanced/empty_script_overrides.rs` now has nine passing default-profile module cases: four existing cases cover ordinary normal clearing, explicit runtime precall/postcall selection and retention, nonempty control, and cached FauxScrollFrame inheritance; five added cases cover runtime intrinsic-default selection, ordinary and runtime whitespace/empty-body clearing, and ordinary and runtime `method=` with empty `function=`. The five additions are development-test passes at `267f1fea4`; independent verification remains pending. `/tmp/cross-version-empty-script-edge-proof.md` records their bounded scope.
+`tests/xml_templates/inline_advanced/empty_script_overrides.rs` has nine independently inspected passing default-profile module cases: four existing cases cover ordinary normal clearing, explicit runtime precall/postcall selection and retention, nonempty control, and cached FauxScrollFrame inheritance; five added cases cover runtime intrinsic-default selection, ordinary and runtime whitespace/empty-body clearing, and ordinary and runtime `method=` with empty `function=`. The five additions are from test commit `267f1fea4`; independent verification at descendant docs revision `5d2dfb990` records 9/9 module passes, `cargo fmt --check` passing, and reused unchanged-runtime `cargo check` proof. `/tmp/cross-version-empty-script-edge-verification-ledger.md` records the bounded scope; it does not claim native-client parity.
 
 ## Proof status
 
-`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame cases; its postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED. The later source fix did not itself prove the remaining branches. `267f1fea4` closes those source-only branches with behavior tests, but does not establish native-client parity.
+`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame cases; its postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED. The later source fix did not itself prove the remaining branches. `267f1fea4` closes those source-only branches with behavior tests. Independent inspection at `5d2dfb990` confirms all nine bounded module cases pass; it does not establish native-client parity.
 
 ## Out of scope
 

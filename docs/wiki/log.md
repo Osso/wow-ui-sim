@@ -1,6 +1,6 @@
 ## [2026-09-27] investigation | Extend XML empty-function clearing coverage
 
-Updated [[xml-empty-script-clearing]] and [XML empty script-function clearing](../specs/xml-empty-script-clearing.md) from tests-only `267f1fea4` and `/tmp/cross-version-empty-script-edge-proof.md`. Five added behavior tests close the prior source-only branches: intrinsic-default precall clearing, ordinary/runtime whitespace and empty-body clearing, and ordinary/runtime `method=` plus empty `function=`. The default-profile module has 9/9 development-test passes. Independent verification remains pending; native-client parity is unclaimed.
+Updated [[xml-empty-script-clearing]] and [XML empty script-function clearing](../specs/xml-empty-script-clearing.md) from test commit `267f1fea4` and `/tmp/cross-version-empty-script-edge-verification-ledger.md`. Five added behavior tests close the prior source-only branches: intrinsic-default precall clearing, ordinary/runtime whitespace and empty-body clearing, and ordinary/runtime `method=` plus empty `function=`. Independent inspection at descendant docs revision `5d2dfb990` confirms the default-profile module passes 9/9 and `cargo fmt --check` passes; unchanged-runtime `cargo check` proof is reused without rerun. Native-client parity is unclaimed.
 
 ## [2026-09-27] audit | Record pending XML `OnDoubleClick` registration proof
 

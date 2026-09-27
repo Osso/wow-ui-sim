@@ -1,6 +1,6 @@
 # XML Empty Script-Function Clearing
 
-`function=""` clears its selected inherited script binding. The default-profile module has nine development-test passes; independent verification is pending. It does not claim native-client or full-profile parity.
+`function=""` clears its selected inherited script binding. Independent inspection at `5d2dfb990` confirms the default-profile module passes 9/9, format passes, and the unchanged runtime check is reused; it does not claim native-client or full-profile parity.
 
 ## Content
 
@@ -18,7 +18,7 @@ Ordinary XML `function=""` clears an inherited normal binding. Runtime templates
 
 `6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame inherited-range cases; its nonempty-function control passed. Postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED.
 
-Tests-only `267f1fea4` adds five behavior cases to the existing module: intrinsic-default precall clearing; ordinary and runtime whitespace/empty-body clearing; and ordinary and runtime `method=` plus empty `function=`. Together with four existing cases, the bounded default-profile module passes 9/9. This closes the prior source-only branches, but independent verification remains pending. `/tmp/cross-version-empty-script-edge-proof.md` records the scoped test run. No native-client, full-profile, vendor/UI, or clean-all-diagnostics claim is made.
+Tests-only `267f1fea4` adds five behavior cases to the existing module: intrinsic-default precall clearing; ordinary and runtime whitespace/empty-body clearing; and ordinary and runtime `method=` plus empty `function=`. Together with four existing cases, independent inspection at descendant docs revision `5d2dfb990` confirms the bounded default-profile module passes 9/9; `cargo fmt --check` passes, and unchanged-runtime `cargo check` proof is reused without rerun. This closes the prior source-only branches. `/tmp/cross-version-empty-script-edge-verification-ledger.md` records the scoped proof. No native-client, full-profile, vendor/UI, or clean-all-diagnostics claim is made.
 
 ### Scroll diagnostic correction
 
