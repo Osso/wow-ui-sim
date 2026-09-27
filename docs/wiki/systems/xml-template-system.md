@@ -30,6 +30,7 @@ Property resolution per template walk:
 - **Mixins**: accumulated base-to-derived, then frame's own (duplicates skipped)
 - **KeyValues**: later values overwrite; frame's own applied last
 - **Hidden**: first template with a value wins (break on hit)
+- **EditBox `letters` / `bytes`**: resolve independently; an explicit instance value, including zero, wins, otherwise the most-derived template declaration applies literally.
 
 ## XML-to-Widget Conversion (`src/loader/xml_frame.rs`)
 
@@ -48,7 +49,7 @@ Top-level XML frames with `toplevel="true"` retain the implicit UIParent used du
 
 ## Lua-Side Template Application (`src/lua_api/globals/template/mod.rs`)
 
-Called from `CreateFrame()` at runtime (no `LoaderEnv` access). `apply_single_template()` order: Mixin → Size → Anchors → SetAllPoints → KeyValues → Layers → button textures → child frames → Scripts. OnLoad for ALL template-created children is deferred until after the entire chain is applied. XML frame KeyValues are passed through the CreateFrame template initializer when present, so template child OnLoad handlers see those values before they fire.
+Called from `CreateFrame()` at runtime (no `LoaderEnv` access). `apply_single_template()` order: Mixin → Size → Anchors → SetAllPoints → KeyValues → Layers → button textures → child frames → Scripts. Direct XML properties, including independently resolved EditBox `letters` / `bytes`, apply before lifecycle scripts; this also covers nested template children. OnLoad for ALL template-created children is deferred until after the entire chain is applied. XML frame KeyValues are passed through the CreateFrame template initializer when present, so template child OnLoad handlers see those values before they fire. [EditBox text position and selection](../../specs/editbox-text-position-selection.md) defines the bounded contract; post-change independent verification of `547907429` remains pending.
 
 ## Partitioned 12.1 Mixins
 

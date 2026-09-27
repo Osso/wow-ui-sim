@@ -1,3 +1,7 @@
+## [2026-09-26] audit | Record pending EditBox XML-limit proof
+
+`547907429` parses XML `bytes` and resolves `bytes`/`letters` independently: explicit instance values, including zero, override the most-derived template value literally. Ordinary XML and runtime-template construction, including nested template EditBoxes, apply both limits before `OnLoad`. Tests-only `5f94dd219` is pre-change RED: four failures; one ordinary-`letters` control passes. Independent post-change verification is pending; native byte/terminator accounting remains unverified. See [[widget-system]], [[xml-template-system]], and [EditBox text position and selection](../specs/editbox-text-position-selection.md).
+
 ## [2026-09-27] audit | Record pending EditBox keyboard-limit proof
 
 `1933cb68c` validates focused keyboard input's proposed selected-range replacement against positive scalar (`MaxLetters`) and UTF-8 byte (`MaxBytes`) limits before mutation. Overflow is a user-selected simulator no-edit/no-callback policy: text, caret, selection, and render caches remain intact; accepted callbacks remain unchanged. Public `Insert`/`SetText` limits, Blizzard UI/XML, and native-client semantics remain out of scope. Tests-only `e114cafe0` is RED in three cases with one zero-default control passing; independent post-change verification is pending. See [[widget-system]], [[lua-api]], and [EditBox text position and selection](../specs/editbox-text-position-selection.md).

@@ -36,7 +36,7 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 - `src/lua_api/key_dispatch.rs` — selected-range keyboard replacement/deletion, pre-mutation length validation, and input callbacks.
 - `src/widget/frame.rs` — selection consumption shared by public `Insert` and keyboard edits.
 - `src/xml/types.rs` — optional EditBox `letters` and `bytes` declarations.
-- `src/lua_api/globals/template/direct.rs` — shared declared-limit resolution, invoked from ordinary XML setup and runtime-template property application.
+- `src/lua_api/globals/template/direct.rs` — shared independent `bytes`/`letters` resolution, invoked from ordinary XML setup and runtime-template property application before `OnLoad`.
 
 ## Tests asserting this spec
 
@@ -47,7 +47,7 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 
 ## Evidence boundary
 
-- XML-limit tests-only `5f94dd219` is RED in four cases; the ordinary `letters` control passes. `bytes` was not parsed, and runtime-template property application omitted both limits. `/tmp/cross-version-editbox-xml-limits-proof.md` records exact boundaries. Post-change verification is pending. Literal declared-value propagation follows the existing `letters` model; native terminator accounting remains unverified. The unchanged retail ColorPicker HexBox declares `bytes="7"`, but this work does not infer any extra terminator adjustment from that value.
+- XML-limit tests-only `5f94dd219` is RED in four cases; the ordinary `letters` control passes. Its pre-change evidence found unparsed `bytes` and missing runtime-template application for both limits. `547907429` now parses `bytes` and applies each explicit or inherited value independently in ordinary XML and runtime-template construction, including nested template children, before `OnLoad`. `/tmp/cross-version-editbox-xml-limits-proof.md` records the exact RED boundary. Independent post-change verification is pending, so the XML bullets remain unchecked. Literal declared-value propagation is simulator behavior; native byte/terminator accounting remains unverified, with no adjustment inferred from the unchanged retail ColorPicker HexBox `bytes="7"` declaration.
 
 - Keyboard-limit tests at `e114cafe0` are RED in three cases: append overflow, selected oversized replacement with no callbacks, and combined scalar limit. One zero-default control passes. `/tmp/cross-version-editbox-limits-proof.md` records commands and revision. Independent verification of `1933cb68c` passes 43 scoped tests (28 keyboard, 11 EditBox family, four scripted-focus guards), format/check and grouped integration compilation without compiler warnings; readability has no findings. `/tmp/cross-version-editbox-limits-verification-ledger.md` records exact proof. Render-cache preservation and negative-limit handling are source-inspected, not directly asserted by the new tests. Scoped logs retain the separate bare-environment ESCAPE nil-call diagnostic and deliberate text-set error control; no zero-Lua-error claim. This change is entirely simulator-side Rust; Blizzard Lua/XML and existing UI definitions are untouched.
 
