@@ -34,11 +34,36 @@ fn is_truthy(val: Val) -> bool {
     !matches!(val, Val::Nil | Val::Bool(false))
 }
 
-/// Byte range for the character at `char_index` in `s`.
-fn char_byte_range(s: &str, char_index: usize) -> Range<usize> {
-    let mut chars = s.char_indices();
-    let (start, ch) = chars.nth(char_index).unwrap();
-    start..start + ch.len_utf8()
+fn replace_editbox_range(frame: &mut crate::widget::Frame, range: Range<usize>, text: &str) {
+    let current = frame.text.get_or_insert_with(String::new);
+    let start = current
+        .char_indices()
+        .nth(range.start)
+        .map_or(current.len(), |(i, _)| i);
+    let end = current
+        .char_indices()
+        .nth(range.end)
+        .map_or(current.len(), |(i, _)| i);
+    let cursor = current[..start].chars().count() + text.chars().count();
+    current.replace_range(start..end, text);
+    frame.editbox_cursor_pos = cursor as i32;
+    refresh_editbox_render_text(frame);
+}
+
+fn editbox_deletion_range(
+    frame: &mut crate::widget::Frame,
+    before_cursor: bool,
+) -> Option<Range<usize>> {
+    if let Some(range) = frame.take_editbox_selection() {
+        return Some(range);
+    }
+    let cursor = frame.editbox_cursor_pos.max(0) as usize;
+    if before_cursor {
+        cursor.checked_sub(1).map(|start| start..cursor)
+    } else {
+        let length = editbox_text_char_count(frame) as usize;
+        (cursor < length).then_some(cursor..cursor + 1)
+    }
 }
 
 fn refresh_editbox_render_text(frame: &mut crate::widget::Frame) {
@@ -197,8 +222,8 @@ impl WowLuaEnv {
     /// Dispatch a key event to a focused EditBox.
     fn dispatch_editbox_key(&self, fid: u64, key: &str, text: Option<&str>) -> Result<()> {
         match key {
-            "BACKSPACE" => self.editbox_backspace(fid)?,
-            "DELETE" => self.editbox_delete(fid)?,
+            "BACKSPACE" => self.editbox_delete_text(fid, true)?,
+            "DELETE" => self.editbox_delete_text(fid, false)?,
             "LEFT" => self.editbox_move_cursor(fid, -1)?,
             "RIGHT" => self.editbox_move_cursor(fid, 1)?,
             "HOME" => self.editbox_cursor_home(fid)?,
@@ -311,16 +336,11 @@ impl WowLuaEnv {
     fn splice_text_at_cursor(&self, fid: u64, text: &str) {
         let mut state = self.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut_visual(fid) {
-            let current = frame.text.get_or_insert_with(String::new);
-            let char_pos = frame.editbox_cursor_pos as usize;
-            let byte_pos = current
-                .char_indices()
-                .nth(char_pos)
-                .map(|(i, _)| i)
-                .unwrap_or(current.len());
-            current.insert_str(byte_pos, text);
-            frame.editbox_cursor_pos += text.chars().count() as i32;
-            refresh_editbox_render_text(frame);
+            let range = frame.take_editbox_selection().unwrap_or_else(|| {
+                let cursor = frame.editbox_cursor_pos.max(0) as usize;
+                cursor..cursor
+            });
+            replace_editbox_range(frame, range, text);
         }
     }
 
@@ -337,55 +357,19 @@ impl WowLuaEnv {
         Ok(())
     }
 
-    /// Delete the character before the cursor (Backspace).
-    fn editbox_backspace(&self, fid: u64) -> Result<()> {
-        let changed = {
+    /// Delete the selection, or one character on the requested side of the cursor.
+    fn editbox_delete_text(&self, fid: u64, before_cursor: bool) -> Result<()> {
+        {
             let mut state = self.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut_visual(fid) {
-                let current = frame.text.get_or_insert_with(String::new);
-                let char_pos = frame.editbox_cursor_pos as usize;
-                if char_pos > 0 {
-                    let byte_range = char_byte_range(current, char_pos - 1);
-                    current.drain(byte_range);
-                    frame.editbox_cursor_pos -= 1;
-                    refresh_editbox_render_text(frame);
-                    true
-                } else {
-                    false
-                }
-            } else {
-                false
-            }
-        };
-        if changed {
-            self.fire_script_handler(fid, "OnTextChanged", vec![Val::Bool(true)])?;
+            let Some(frame) = state.widgets.get_mut_visual(fid) else {
+                return Ok(());
+            };
+            let Some(range) = editbox_deletion_range(frame, before_cursor) else {
+                return Ok(());
+            };
+            replace_editbox_range(frame, range, "");
         }
-        Ok(())
-    }
-
-    /// Delete the character after the cursor (Delete key).
-    fn editbox_delete(&self, fid: u64) -> Result<()> {
-        let changed = {
-            let mut state = self.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut_visual(fid) {
-                let current = frame.text.get_or_insert_with(String::new);
-                let char_pos = frame.editbox_cursor_pos as usize;
-                let char_count = current.chars().count();
-                if char_pos < char_count {
-                    let byte_range = char_byte_range(current, char_pos);
-                    current.drain(byte_range);
-                    refresh_editbox_render_text(frame);
-                    true
-                } else {
-                    false
-                }
-            } else {
-                false
-            }
-        };
-        if changed {
-            self.fire_script_handler(fid, "OnTextChanged", vec![Val::Bool(true)])?;
-        }
+        self.fire_script_handler(fid, "OnTextChanged", vec![Val::Bool(true)])?;
         Ok(())
     }
 

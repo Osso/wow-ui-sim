@@ -9,7 +9,8 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] `HighlightText` with valid byte endpoints selects a range; `Insert` replaces that range (including empty-string deletion), collapses the cursor after inserted text, and clears selection for the next insertion.
 - [x] ASCII cursor and selected-range editing retain their original units; renderer-facing stripped text remains synchronized with inserted text.
 - [x] `Insert` derives its resulting cursor from the actual clamped edit range, including when earlier text replacement left cursor or selection indices beyond the new text.
-- [x] Existing keyboard typing and forbidden scripted-input cursor guard remain intact.
+- [x] Keyboard printable input replaces a highlighted range; Backspace and Delete remove it. Each consumes selection and commits text/caret/render caches before existing callbacks. Rejected numeric input preserves the pending selection.
+- [x] Keyboard character callbacks precede `OnTextChanged(self, true)`; deletion emits only the changed callback. Unselected editing and forbidden scripted-input cursor guards remain intact.
 - [x] A changed EditBox `SetText` (including `SetFormattedText`) commits text, then clamps stored scalar cursor and selection endpoints to its length before callbacks; an already in-bounds cursor stays in place. Clipping is a simulator model invariant, not a native precedence claim.
 - [x] Changed programmatic text dispatches `OnTextSet(self)` before `OnTextChanged(self, false)` through normal scripts and hooks. Callbacks see committed text and coherent byte/scalar cursor getters; handler errors reach the error handler and do not prevent later handlers or `OnTextChanged`.
 - [x] Same-value EditBox text assignment is a simulator no-op: it does not dispatch this lifecycle, so a callback assigning its current text cannot recurse. It emits no `OnChar`.
@@ -25,15 +26,18 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - `src/lua_api/frame/methods/widgets/editbox.rs` — public cursor conversions and `Insert`.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — shared text mutation and changed EditBox callback lifecycle.
 - `src/lua_api/frame/methods/widgets/editbox/selection.rs` — highlighted byte endpoints and character-range storage.
-- `src/lua_api/key_dispatch.rs` — existing character-based keyboard editing (unchanged).
+- `src/lua_api/key_dispatch.rs` — selected-range keyboard replacement/deletion and existing input callbacks.
+- `src/widget/frame.rs` — selection consumption shared by public `Insert` and keyboard edits.
 
 ## Tests asserting this spec
 
 - `tests/editbox_stub_family.rs` — cursor units, selected replacement/deletion, render text, programmatic mutation and callbacks.
-- `tests/key_dispatch.rs` — keyboard editing controls.
+- `tests/key_dispatch.rs` — ASCII/Unicode selected typing, selection deletion, subsequent public Insert, callback observations, numeric rejection, and unselected controls.
 - `tests/forbidden_aspect_creation.rs` — scripted-input cursor restrictions.
 
 ## Evidence boundary
+
+- Selected keyboard editing was RED in five behavioral cases at `67beac8c0`; four existing unselected controls passed. `/tmp/cross-version-editbox-key-selection-proof.md` records exact failures. Solarity's `edit_box_replacement_range` corroborates the replacement model, not native-client behavior. Post-fix verification is tracked separately.
 
 - The supported public boundary is valid UTF-8 byte offsets. The simulator retains character indices internally for editing and selected ranges.
 - Initial verification added `editbox_insert_clamps_cursor_after_text_shortens`, which was RED 0/1 in `/tmp/editbox-shortening-red.log`: after `SetText` shortened text without resetting stored cursor or selection indices, `Insert` clamped its byte edit range but derived the resulting scalar cursor from the stale logical index. `3b5ee8d55` instead derives that cursor from the actual clamped text prefix plus inserted scalar count. Independent verification at `3b5ee8d55` passes seven EditBox family cases plus four focus controls; 19 unchanged key-dispatch cases retain their prior proof. Format/check pass. Exact logs and source boundaries are in `/tmp/cross-version-editbox-text-position-proof.md`.
@@ -42,5 +46,5 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 
 ## Out of scope
 
-- Full input-system behavior, limits, IME, clipboard, keyboard selection mutation, and rendering selection highlight.
+- Full input-system behavior, limits, IME, clipboard, keyboard selection creation/navigation, and rendering selection highlight.
 - Native same-value callback policy, caret placement/reset (including any always-end behavior), `OnCursorChanged`, IME lifecycle, and full native EditBox lifecycle remain unverified. The changed-value callbacks, no-op policy, and clipping above are bounded simulator behavior, not a native-client execution claim.

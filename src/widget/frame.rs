@@ -577,6 +577,12 @@ impl Default for Frame {
 }
 
 impl Frame {
+    pub(crate) fn take_editbox_selection(&mut self) -> Option<std::ops::Range<usize>> {
+        self.editbox_highlight_range
+            .take()
+            .and_then(|(start, end)| (start != end).then(|| start as usize..end as usize))
+    }
+
     pub fn model_state(&self) -> &ModelWidgetState {
         static DEFAULT: OnceLock<ModelWidgetState> = OnceLock::new();
         self.model_state

@@ -744,7 +744,7 @@ pub(super) fn insert(state: &mut LuaState) -> LuaResult<u32> {
     let text = opt_string(state, 2).unwrap_or_default();
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
-        let range = selection::take_selected_range(f).unwrap_or_else(|| {
+        let range = f.take_editbox_selection().unwrap_or_else(|| {
             let pos = f.editbox_cursor_pos.max(0) as usize;
             pos..pos
         });
