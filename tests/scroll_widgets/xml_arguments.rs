@@ -39,7 +39,7 @@ fn assert_no_lua_errors(env: &WowLuaEnv) {
 }
 
 fn assert_inline_arguments(env: &WowLuaEnv, frame: &str) {
-    env.exec(&format!(
+    let result = env.exec(&format!(
         r#"
         ArgCalls = {{}}
         offset, xrange, yrange, delta = 901, 902, 903, 904
@@ -61,9 +61,9 @@ fn assert_inline_arguments(env: &WowLuaEnv, frame: &str) {
             'range:80:120:2,h:35:1,v:37:1,wheel:-1:1', table.concat(ArgCalls, ','))
         assert(offset == 901 and xrange == 902 and yrange == 903 and delta == 904)
     "#
-    ))
-    .unwrap();
+    ));
     assert_no_lua_errors(env);
+    result.unwrap();
 }
 
 #[test]
@@ -84,7 +84,7 @@ fn runtime_template_inline_scroll_arguments_shadow_globals_and_preserve_varargs(
 #[test]
 fn cached_faux_scrollframe_inline_offset_and_wheel_delta_sync_scrollbar() {
     let env = super::env_with_shared_xml();
-    env.exec(
+    let result = env.exec(
         r#"
         offset, delta = 901, 904
         local sf = CreateFrame('ScrollFrame', 'XmlFauxScrollArgs', UIParent,
@@ -106,7 +106,7 @@ fn cached_faux_scrollframe_inline_offset_and_wheel_delta_sync_scrollbar() {
             'inline delta must advance frame and bar by scrollStep')
         assert(offset == 901 and delta == 904)
     "#,
-    )
-    .unwrap();
+    );
     assert_no_lua_errors(&env);
+    result.unwrap();
 }
