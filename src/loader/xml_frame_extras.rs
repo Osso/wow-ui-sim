@@ -104,6 +104,36 @@ pub(crate) fn apply_thumb_texture(
     Ok(())
 }
 
+type ColorSelectSelector = fn(&crate::xml::FrameChildElement) -> Option<&crate::xml::TextureXml>;
+
+// Wheel, Value, Alpha: later relativeKey anchors can reference earlier textures.
+const COLORSELECT_ROLES: [(&str, ColorSelectSelector); 6] = [
+    ("ColorWheelTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorWheelTexture(t) => Some(t),
+        _ => None,
+    }),
+    ("ColorWheelThumbTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorWheelThumbTexture(t) => Some(t),
+        _ => None,
+    }),
+    ("ColorValueTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorValueTexture(t) => Some(t),
+        _ => None,
+    }),
+    ("ColorValueThumbTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorValueThumbTexture(t) => Some(t),
+        _ => None,
+    }),
+    ("ColorAlphaTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorAlphaTexture(t) => Some(t),
+        _ => None,
+    }),
+    ("ColorAlphaThumbTexture", |child| match child {
+        crate::xml::FrameChildElement::ColorAlphaThumbTexture(t) => Some(t),
+        _ => None,
+    }),
+];
+
 /// Bind the six ColorSelect texture declarations, including inherited slots.
 /// Reuse getter-owned textures when template loading already created them.
 pub(crate) fn apply_colorselect_textures(
@@ -112,72 +142,68 @@ pub(crate) fn apply_colorselect_textures(
     name: &str,
     inherits: &str,
 ) -> Result<(), LoadError> {
-    use crate::xml::FrameChildElement;
-
-    let roles: [(
-        &str,
-        fn(&FrameChildElement) -> Option<&crate::xml::TextureXml>,
-    ); 6] = [
-        ("ColorWheelTexture", |child| match child {
-            FrameChildElement::ColorWheelTexture(t) => Some(t),
-            _ => None,
-        }),
-        ("ColorWheelThumbTexture", |child| match child {
-            FrameChildElement::ColorWheelThumbTexture(t) => Some(t),
-            _ => None,
-        }),
-        ("ColorValueTexture", |child| match child {
-            FrameChildElement::ColorValueTexture(t) => Some(t),
-            _ => None,
-        }),
-        ("ColorValueThumbTexture", |child| match child {
-            FrameChildElement::ColorValueThumbTexture(t) => Some(t),
-            _ => None,
-        }),
-        ("ColorAlphaTexture", |child| match child {
-            FrameChildElement::ColorAlphaTexture(t) => Some(t),
-            _ => None,
-        }),
-        ("ColorAlphaThumbTexture", |child| match child {
-            FrameChildElement::ColorAlphaThumbTexture(t) => Some(t),
-            _ => None,
-        }),
-    ];
-    for (role, select) in roles {
-        let texture = frame.children.iter().find_map(select).cloned().or_else(|| {
-            crate::xml::get_template_chain(inherits)
-                .iter()
-                .rev()
-                .find_map(|entry| entry.frame.children.iter().find_map(select).cloned())
-        });
-        let Some(texture) = texture else { continue };
-        let texture = crate::xml::resolve_texture_inheritance(&texture);
-        let texture_name = resolved_texture_name(&texture, name, "__colorselect_");
-        let parent_ref = lua_global_ref(name);
-        let mut code = format!(
-            "local parent = {parent_ref}\nif parent then\n    local thumb = parent:Get{role}()\n    if not thumb then\n        thumb = parent:CreateTexture(\"{}\", \"ARTWORK\")\n    end\n",
-            escape_lua_string(&texture_name)
-        );
-        append_texture_common_properties(&mut code, &texture, name);
-        code.push_str(&format!("    parent:Set{role}(thumb)\n"));
-        if texture.name.is_some() {
-            code.push_str(&format!(
-                "    _G[\"{}\"] = thumb\n",
-                escape_lua_string(&texture_name)
-            ));
-        }
-        if let Some(parent_key) = texture.parent_key.as_deref() {
-            code.push_str(&format!(
-                "    {} = thumb\n",
-                lua_table_field_ref("parent", parent_key)
-            ));
-        }
-        code.push_str("end\n");
-        env.exec(&code).map_err(|error| {
-            LoadError::Lua(format!("Failed to create {role} on {name}: {error}"))
-        })?;
+    for (role, select) in COLORSELECT_ROLES {
+        let Some(texture) = resolve_colorselect_texture(frame, inherits, select) else {
+            continue;
+        };
+        apply_colorselect_texture(env, role, &texture, name)?;
     }
     Ok(())
+}
+
+fn resolve_colorselect_texture(
+    frame: &crate::xml::FrameXml,
+    inherits: &str,
+    select: ColorSelectSelector,
+) -> Option<crate::xml::TextureXml> {
+    frame.children.iter().find_map(select).cloned().or_else(|| {
+        crate::xml::get_template_chain(inherits)
+            .iter()
+            .rev()
+            .find_map(|entry| entry.frame.children.iter().find_map(select).cloned())
+    })
+}
+
+fn apply_colorselect_texture(
+    env: &LoaderEnv<'_>,
+    role: &str,
+    texture: &crate::xml::TextureXml,
+    name: &str,
+) -> Result<(), LoadError> {
+    let texture = crate::xml::resolve_texture_inheritance(texture);
+    let texture_name = resolved_texture_name(&texture, name, "__colorselect_");
+    let code = build_colorselect_texture_code(role, &texture, &texture_name, name);
+    env.exec(&code)
+        .map_err(|error| LoadError::Lua(format!("Failed to create {role} on {name}: {error}")))
+}
+
+fn build_colorselect_texture_code(
+    role: &str,
+    texture: &crate::xml::TextureXml,
+    texture_name: &str,
+    name: &str,
+) -> String {
+    let parent_ref = lua_global_ref(name);
+    let mut code = format!(
+        "local parent = {parent_ref}\nif parent then\n    local thumb = parent:Get{role}()\n    if not thumb then\n        thumb = parent:CreateTexture(\"{}\", \"ARTWORK\")\n    end\n",
+        escape_lua_string(texture_name)
+    );
+    append_texture_common_properties(&mut code, texture, name);
+    code.push_str(&format!("    parent:Set{role}(thumb)\n"));
+    if texture.name.is_some() {
+        code.push_str(&format!(
+            "    _G[\"{}\"] = thumb\n",
+            escape_lua_string(texture_name)
+        ));
+    }
+    if let Some(parent_key) = texture.parent_key.as_deref() {
+        code.push_str(&format!(
+            "    {} = thumb\n",
+            lua_table_field_ref("parent", parent_key)
+        ));
+    }
+    code.push_str("end\n");
+    code
 }
 
 fn resolve_bar_texture(
