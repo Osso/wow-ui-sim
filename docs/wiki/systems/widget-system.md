@@ -10,7 +10,7 @@ Key field groups:
 
 **Rendering order** — `frame_strata`, `frame_level: i32`, `alpha: f32`, `scale: f32`, `draw_layer`, `draw_sub_layer`. The `BLIZZARD` input token is ignored rather than modeled as a drawable strata tier. Retail probe snapshots record effective XML strata and `HasFixedFrameStrata()` before and after selected operations; they do not expose the original XML token or internal resolution mechanism.
 
-**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`. `SimState.focused_frame_id` tracks the focused EditBox; Lua `SetFocus`/`ClearFocus` commit that state before their gained/lost callbacks. Repeated/non-owner calls are no-ops, and loss-handler reentry may replace a requested new owner. For changed EditBox `SetText`/`SetFormattedText`, text commits and scalar caret/selection endpoints clamp before `OnTextSet` then `OnTextChanged(false)`; same-value assignment is a simulator no-op. This dispatch is simulator behavior; existing mouse focus behavior is unchanged.
+**Input** — `mouse_enabled`, `mouse_motion_enabled`, `keyboard_enabled`, `propagate_keyboard_input`, `movable`, `resizable`. `SimState.focused_frame_id` tracks the focused EditBox; Lua `SetFocus`/`ClearFocus` commit that state before their gained/lost callbacks. Repeated/non-owner calls are no-ops, and loss-handler reentry may replace a requested new owner. Changed EditBox `SetText`/`SetFormattedText` commits text and clamps scalar caret/selection endpoints before `OnTextSet` then `OnTextChanged(false)`; same-value assignment is a simulator no-op. At `0c5d5f047`, focused printable, Backspace, and Delete consume a nonempty selection through the same Frame helper as public `Insert`, committing text/caret/render caches before existing callbacks; rejected numeric input preserves selection. Public `Insert` callback behavior and keyboard selection creation/navigation remain unmodeled. This dispatch is simulator behavior; existing mouse focus behavior is unchanged.
 
 **FontString fields** — `text`, `font`, `font_size` (default 14.0), `font_outline` (None/Outline/ThickOutline), `text_color` (default gold), `justify_h/v`, `word_wrap`, `max_lines`.
 
@@ -96,6 +96,7 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [frame_size.rs](../../../src/widget/frame_size.rs) — registry storage estimate and boxed payload accounting
 - [button-text-rendering.md](../../button-text-rendering.md) — three-slice rendering order problem and fix
 - [EditBox focus callbacks](../../specs/editbox-focus-callbacks.md) — Lua focus-transition contract and limits
+- [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — byte offsets, selected edits, and proof limits
 - [SetParent parent cycles](../../specs/set-parent-cycles.md) — public cycle-rejection contract and limits
 - [Visibility script dispatch](../../specs/visibility-script-dispatch.md) — public reparent visibility callbacks and proof limits
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — requested-offset, callback, and range boundary
@@ -108,4 +109,5 @@ Three-slice buttons (ThreeSliceButtonTemplate) define their background as child 
 - [[event-system]] — Frame.registered_events, script handler storage, and focus callback dispatch
 - [ScrollFrame offsets](../../specs/scrollframe-offsets.md) — public offset setter contract and proof status
 - [ScrollFrame presentation offsets](../../specs/scrollframe-presentation.md) — presentation-only scroll-child subtree contract
-- [[lua-api]] — public `SetParent` dispatch boundary
+- [[lua-api]] — Lua method surface
+- [EditBox text position and selection](../../specs/editbox-text-position-selection.md) — selected keyboard-edit boundary
