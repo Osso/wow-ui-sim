@@ -11,8 +11,8 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] `Insert` derives its resulting cursor from the actual clamped edit range, including when earlier text replacement left cursor or selection indices beyond the new text.
 - [x] Keyboard printable input replaces a highlighted range; Backspace and Delete remove it. Each consumes selection and commits text/caret/render caches before existing callbacks. Rejected numeric input preserves the pending selection.
 - [x] Keyboard character callbacks precede `OnTextChanged(self, true)`; deletion emits only the changed callback. Unselected editing and forbidden scripted-input cursor guards remain intact.
-- [ ] Keyboard input must respect positive `MaxLetters` (Unicode scalars) and `MaxBytes` (UTF-8 bytes) against the proposed selected-range replacement. Nonpositive limits are unlimited.
-- [ ] Reject an overflowing input fragment entirely, preserving existing text, caret, selection and render caches. Do not emit `OnChar` or `OnTextChanged` for rejected input; accepted input retains the existing callback sequence.
+- [x] Keyboard input respects positive `MaxLetters` (Unicode scalars) and `MaxBytes` (UTF-8 bytes) against the proposed selected-range replacement. Nonpositive limits are unlimited.
+- [x] An overflowing input fragment is rejected entirely, preserving existing text, caret, selection and render caches. It emits no `OnChar` or `OnTextChanged`; accepted input retains the existing callback sequence.
 
 Length overflow rejection is the user-selected simulator policy, not a native-client claim. No-edit callback suppression follows the existing numeric-input rejection policy; tests establish simulator consistency, not native callback equivalence.
 - [x] A changed EditBox `SetText` (including `SetFormattedText`) commits text, then clamps stored scalar cursor and selection endpoints to its length before callbacks; an already in-bounds cursor stays in place. Clipping is a simulator model invariant, not a native precedence claim.
@@ -41,7 +41,7 @@ Length overflow rejection is the user-selected simulator policy, not a native-cl
 
 ## Evidence boundary
 
-- Keyboard-limit tests at `e114cafe0` are RED in three cases; a zero-default control passes. `/tmp/cross-version-editbox-limits-proof.md` records commands and revision. Post-change verification is pending. This change is entirely simulator-side Rust; Blizzard Lua/XML and existing UI definitions are untouched.
+- Keyboard-limit tests at `e114cafe0` are RED in three cases: append overflow, selected oversized replacement with no callbacks, and combined scalar limit. One zero-default control passes. `/tmp/cross-version-editbox-limits-proof.md` records commands and revision. Independent post-change verification is pending. This change is entirely simulator-side Rust; Blizzard Lua/XML and existing UI definitions are untouched.
 
 - Selected keyboard editing was RED in five behavioral cases at `67beac8c0`; four existing unselected controls passed. Independent bounded verification of code `0c5d5f047` then passed 45 scoped invocations: 24 `key_dispatch::`, 11 EditBox-family, six focus, and four scripted-focus guards. `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` passed with zero compiler warnings. `/tmp/cross-version-editbox-key-selection-verification-ledger.md` records exact commands, source scope, and logs. The scoped test logs contain three expected existing Lua diagnostics: a bare-environment ESCAPE-to-`ToggleGameMenu` nil call, plus explicit text-set and focus callback-error controls; this is not a zero-Lua-error claim. Solarity's `edit_box_replacement_range` corroborates the replacement model, not native-client behavior.
 

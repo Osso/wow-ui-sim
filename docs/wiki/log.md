@@ -1,3 +1,7 @@
+## [2026-09-27] audit | Record pending EditBox keyboard-limit proof
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), [[widget-system]], and index from `1933cb68c`, tests-only `e114cafe0`, and `/tmp/cross-version-editbox-limits-proof.md`. Focused keyboard input validates its proposed selected-range replacement against positive scalar (`MaxLetters`) and UTF-8 byte (`MaxBytes`) limits before mutation. Overflow is a user-selected simulator no-edit/no-callback policy, preserving text, caret, selection, and render caches; accepted callbacks remain unchanged. RED is three failures with one zero-default control passing; independent post-change verification is pending. Public `Insert`/`SetText` limits, Blizzard UI/XML, replacement EditBoxes, and native-client semantics remain out of scope. No tests, Cargo, delegation, Bash, push, or deployment ran for this documentation audit.
+
 ## [2026-09-26] investigation | 60 Hz tick cap and cheaper OnUpdate dispatch
 
 `8c59186f1`..`b59d80c8b`: the idle rate came from Blizzard SmoothStatusBar's session-long 0-interval ticker. The tick is now capped at 60 Hz. OnUpdate dispatch resolves keys once per pass and builds report metadata lazily, OnPostUpdate is filtered to frames that have it, and the tick-interval scans short-circuit. Steady-state tick p50 went from ~0.55 to ~0.36ms. See [[tick-cooldown-scan]].
