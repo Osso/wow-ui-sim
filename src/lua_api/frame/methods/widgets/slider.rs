@@ -3,10 +3,10 @@
 use super::shared::{opt_string, val_to_bool, val_to_f64};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref,
-    sync_child_to_rilua, table_get,
+    sync_child_to_rilua,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler_state, get_script, get_scripts_for_dispatch, protected_lua_pcall_state,
+    call_error_handler_state, get_scripts_for_dispatch, protected_lua_pcall_state,
 };
 use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn, table_set_rust_fn_static};
 use crate::widget::WidgetType;
@@ -398,33 +398,8 @@ fn fire_scroll_frame_event(
     handler_name: &str,
     args: &[Val],
 ) -> LuaResult<()> {
-    call_scroll_frame_handler(state, frame_id, handler_name, args)?;
-    let intrinsic_name = format!("{handler_name}_Intrinsic");
-    call_scroll_frame_intrinsic(state, frame_id, &intrinsic_name, args)
-}
-
-fn call_scroll_frame_handler(
-    state: &mut LuaState,
-    frame_id: u64,
-    handler_name: &str,
-    args: &[Val],
-) -> LuaResult<()> {
-    let Some(handler) = get_script(state, frame_id, handler_name) else {
-        return Ok(());
-    };
-    call_scroll_frame_function(state, frame_id, handler, args)
-}
-
-fn call_scroll_frame_intrinsic(
-    state: &mut LuaState,
-    frame_id: u64,
-    intrinsic_name: &str,
-    args: &[Val],
-) -> LuaResult<()> {
-    let frame = frame_ref(state, frame_id)?;
-    let intrinsic = table_get(state, frame, intrinsic_name);
-    if matches!(intrinsic, Val::Function(_)) {
-        call_scroll_frame_function(state, frame_id, intrinsic, args)?;
+    for handler in get_scripts_for_dispatch(state, frame_id, handler_name) {
+        call_scroll_frame_function(state, frame_id, handler, args)?;
     }
     Ok(())
 }
