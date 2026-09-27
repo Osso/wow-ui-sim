@@ -11,6 +11,10 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - [x] `Insert` derives its resulting cursor from the actual clamped edit range, including when earlier text replacement left cursor or selection indices beyond the new text.
 - [x] Keyboard printable input replaces a highlighted range; Backspace and Delete remove it. Each consumes selection and commits text/caret/render caches before existing callbacks. Rejected numeric input preserves the pending selection.
 - [x] Keyboard character callbacks precede `OnTextChanged(self, true)`; deletion emits only the changed callback. Unselected editing and forbidden scripted-input cursor guards remain intact.
+- [ ] Keyboard input must respect positive `MaxLetters` (Unicode scalars) and `MaxBytes` (UTF-8 bytes) against the proposed selected-range replacement. Nonpositive limits are unlimited.
+- [ ] Reject an overflowing input fragment entirely, preserving existing text, caret, selection and render caches. Do not emit `OnChar` or `OnTextChanged` for rejected input; accepted input retains the existing callback sequence.
+
+Length overflow rejection is the user-selected simulator policy, not a native-client claim. No-edit callback suppression follows the existing numeric-input rejection policy; tests establish simulator consistency, not native callback equivalence.
 - [x] A changed EditBox `SetText` (including `SetFormattedText`) commits text, then clamps stored scalar cursor and selection endpoints to its length before callbacks; an already in-bounds cursor stays in place. Clipping is a simulator model invariant, not a native precedence claim.
 - [x] Changed programmatic text dispatches `OnTextSet(self)` before `OnTextChanged(self, false)` through normal scripts and hooks. Callbacks see committed text and coherent byte/scalar cursor getters; handler errors reach the error handler and do not prevent later handlers or `OnTextChanged`.
 - [x] Same-value EditBox text assignment is a simulator no-op: it does not dispatch this lifecycle, so a callback assigning its current text cannot recurse. It emits no `OnChar`.
@@ -26,7 +30,7 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 - `src/lua_api/frame/methods/widgets/editbox.rs` — public cursor conversions and `Insert`.
 - `src/lua_api/frame/methods/text_attribute_event/text.rs` — shared text mutation and changed EditBox callback lifecycle.
 - `src/lua_api/frame/methods/widgets/editbox/selection.rs` — highlighted byte endpoints and character-range storage.
-- `src/lua_api/key_dispatch.rs` — selected-range keyboard replacement/deletion and existing input callbacks.
+- `src/lua_api/key_dispatch.rs` — selected-range keyboard replacement/deletion, pre-mutation length validation, and input callbacks.
 - `src/widget/frame.rs` — selection consumption shared by public `Insert` and keyboard edits.
 
 ## Tests asserting this spec
@@ -37,6 +41,8 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 
 ## Evidence boundary
 
+- Keyboard-limit tests at `e114cafe0` are RED in three cases; a zero-default control passes. `/tmp/cross-version-editbox-limits-proof.md` records commands and revision. Post-change verification is pending. This change is entirely simulator-side Rust; Blizzard Lua/XML and existing UI definitions are untouched.
+
 - Selected keyboard editing was RED in five behavioral cases at `67beac8c0`; four existing unselected controls passed. Independent bounded verification of code `0c5d5f047` then passed 45 scoped invocations: 24 `key_dispatch::`, 11 EditBox-family, six focus, and four scripted-focus guards. `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` passed with zero compiler warnings. `/tmp/cross-version-editbox-key-selection-verification-ledger.md` records exact commands, source scope, and logs. The scoped test logs contain three expected existing Lua diagnostics: a bare-environment ESCAPE-to-`ToggleGameMenu` nil call, plus explicit text-set and focus callback-error controls; this is not a zero-Lua-error claim. Solarity's `edit_box_replacement_range` corroborates the replacement model, not native-client behavior.
 
 - The supported public boundary is valid UTF-8 byte offsets. The simulator retains character indices internally for editing and selected ranges.
@@ -46,5 +52,5 @@ Shared EditBox cursor and highlighted-range methods expose bounded text-position
 
 ## Out of scope
 
-- Full input-system behavior, limits, IME, clipboard, keyboard selection creation/navigation, and rendering selection highlight.
+- Full input-system behavior, public `Insert`/`SetText` limit enforcement, IME, clipboard, keyboard selection creation/navigation, and rendering selection highlight.
 - Native same-value callback policy, caret placement/reset (including any always-end behavior), `OnCursorChanged`, IME lifecycle, and full native EditBox lifecycle remain unverified. The changed-value callbacks, no-op policy, and clipping above are bounded simulator behavior, not a native-client execution claim.

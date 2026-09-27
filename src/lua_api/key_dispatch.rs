@@ -34,18 +34,42 @@ fn is_truthy(val: Val) -> bool {
     !matches!(val, Val::Nil | Val::Bool(false))
 }
 
-fn replace_editbox_range(frame: &mut crate::widget::Frame, range: Range<usize>, text: &str) {
-    let current = frame.text.get_or_insert_with(String::new);
-    let start = current
+fn editbox_byte_range(text: &str, range: Range<usize>) -> Range<usize> {
+    let start = text
         .char_indices()
         .nth(range.start)
-        .map_or(current.len(), |(i, _)| i);
-    let end = current
+        .map_or(text.len(), |(i, _)| i);
+    let end = text
         .char_indices()
         .nth(range.end)
-        .map_or(current.len(), |(i, _)| i);
-    let cursor = current[..start].chars().count() + text.chars().count();
-    current.replace_range(start..end, text);
+        .map_or(text.len(), |(i, _)| i);
+    start..end
+}
+
+fn accepted_editbox_insertion_range(
+    frame: &crate::widget::Frame,
+    text: &str,
+) -> Option<Range<usize>> {
+    let selection = frame.editbox_selection().unwrap_or_else(|| {
+        let cursor = frame.editbox_cursor_pos.max(0) as usize;
+        cursor..cursor
+    });
+    let current = frame.text.as_deref().unwrap_or("");
+    let range = editbox_byte_range(current, selection);
+    let letters = current[..range.start].chars().count()
+        + text.chars().count()
+        + current[range.end..].chars().count();
+    let bytes = current.len() - range.len() + text.len();
+    let within_letters =
+        frame.editbox_max_letters <= 0 || letters <= frame.editbox_max_letters as usize;
+    let within_bytes = frame.editbox_max_bytes <= 0 || bytes <= frame.editbox_max_bytes as usize;
+    (within_letters && within_bytes).then_some(range)
+}
+
+fn replace_editbox_byte_range(frame: &mut crate::widget::Frame, range: Range<usize>, text: &str) {
+    let current = frame.text.get_or_insert_with(String::new);
+    let cursor = current[..range.start].chars().count() + text.chars().count();
+    current.replace_range(range, text);
     frame.editbox_cursor_pos = cursor as i32;
     refresh_editbox_render_text(frame);
 }
@@ -325,7 +349,9 @@ impl WowLuaEnv {
         if numeric && !is_valid_numeric {
             return Ok(());
         }
-        self.splice_text_at_cursor(fid, text);
+        if !self.splice_text_at_cursor(fid, text) {
+            return Ok(());
+        }
         self.fire_char_events(fid, text)?;
         self.fire_script_handler(fid, "OnTextChanged", vec![Val::Bool(true)])?;
         Ok(())
@@ -333,15 +359,21 @@ impl WowLuaEnv {
 
     /// Write `text` into the frame's text buffer at the cursor position and
     /// advance the cursor by the number of characters inserted.
-    fn splice_text_at_cursor(&self, fid: u64, text: &str) {
+    fn splice_text_at_cursor(&self, fid: u64, text: &str) -> bool {
         let mut state = self.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(fid) {
-            let range = frame.take_editbox_selection().unwrap_or_else(|| {
-                let cursor = frame.editbox_cursor_pos.max(0) as usize;
-                cursor..cursor
-            });
-            replace_editbox_range(frame, range, text);
-        }
+        let range = state
+            .widgets
+            .get(fid)
+            .and_then(|frame| accepted_editbox_insertion_range(frame, text));
+        let Some(range) = range else {
+            return false;
+        };
+        let Some(frame) = state.widgets.get_mut_visual(fid) else {
+            return false;
+        };
+        let _ = frame.take_editbox_selection();
+        replace_editbox_byte_range(frame, range, text);
+        true
     }
 
     /// Fire `OnChar` for each character in `text`.
@@ -367,7 +399,8 @@ impl WowLuaEnv {
             let Some(range) = editbox_deletion_range(frame, before_cursor) else {
                 return Ok(());
             };
-            replace_editbox_range(frame, range, "");
+            let range = editbox_byte_range(frame.text.as_deref().unwrap_or(""), range);
+            replace_editbox_byte_range(frame, range, "");
         }
         self.fire_script_handler(fid, "OnTextChanged", vec![Val::Bool(true)])?;
         Ok(())
