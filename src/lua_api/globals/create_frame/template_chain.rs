@@ -645,12 +645,13 @@ fn describe_fast_script_miss(handler_name: &str, script: &crate::xml::ScriptBody
     }
 }
 
-fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 8] {
+fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 9] {
     [
         ("OnLoad", scripts.on_load.last()),
         ("OnEvent", scripts.on_event.last()),
         ("OnUpdate", scripts.on_update.last()),
         ("OnClick", scripts.on_click.last()),
+        ("OnDoubleClick", scripts.on_double_click.last()),
         ("PreClick", scripts.pre_click.last()),
         ("PostClick", scripts.post_click.last()),
         ("OnShow", scripts.on_show.last()),
