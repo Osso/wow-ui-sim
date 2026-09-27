@@ -9,7 +9,8 @@ use crate::loader::button::{
 };
 use crate::loader::error::LoadError;
 use crate::loader::xml_frame_extras::{
-    apply_animation_groups, apply_bar_texture, apply_thumb_texture, init_action_bar_tables,
+    apply_animation_groups, apply_bar_texture, apply_colorselect_textures, apply_thumb_texture,
+    init_action_bar_tables,
 };
 use crate::loader::xml_lifecycle::{LifecycleScripts, fire_lifecycle_scripts};
 use crate::lua_api::LoaderEnv;
@@ -90,6 +91,7 @@ fn apply_frame_button_extras(
     apply_button_fonts_with_ref(env, frame, name, &frame_ref_name, "")?;
     apply_bar_texture(env, frame, name, inherits)?;
     apply_thumb_texture(env, frame, name, inherits)?;
+    apply_colorselect_textures(env, frame, name, inherits)?;
     init_action_bar_tables(env, frame, name);
     Ok(button_start.elapsed())
 }

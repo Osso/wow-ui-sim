@@ -112,6 +112,10 @@ fn apply_loader_frame_xml_extras(
         .map_err(|error| rilua::runtime_error(error.to_string()))?;
     crate::loader::xml_frame_extras::apply_thumb_texture(loader_env, frame, frame_name, inherits)
         .map_err(|error| rilua::runtime_error(error.to_string()))?;
+    crate::loader::xml_frame_extras::apply_colorselect_textures(
+        loader_env, frame, frame_name, inherits,
+    )
+    .map_err(|error| rilua::runtime_error(error.to_string()))?;
     crate::loader::xml_frame_extras::init_action_bar_tables(loader_env, frame, frame_name);
     Ok(())
 }
