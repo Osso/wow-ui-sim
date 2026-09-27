@@ -12,23 +12,21 @@ fn ordinary_xml_empty_function_clears_inherited_normal_script() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("XmlEmptyFunctionCalls = 0; function XmlInheritedRange() XmlEmptyFunctionCalls = XmlEmptyFunctionCalls + 1 end")
         .unwrap();
-    register_first_template(
-        r#"<Ui><ScrollFrame name="XmlRangeParent" virtual="true">
-            <Scripts><OnScrollRangeChanged function="XmlInheritedRange"/></Scripts>
-        </ScrollFrame></Ui>"#,
-        "XmlRangeParent",
-        "ScrollFrame",
+    let dir = create_test_addon(
+        r#"<Ui>
+            <ScrollFrame name="XmlRangeParent" virtual="true">
+                <Scripts><OnScrollRangeChanged function="XmlInheritedRange"/></Scripts>
+            </ScrollFrame>
+            <ScrollFrame name="XmlRangeCleared" parent="UIParent" inherits="XmlRangeParent">
+                <Scripts><OnScrollRangeChanged function=""/></Scripts>
+            </ScrollFrame>
+        </Ui>"#,
+        "XmlEmptyOrdinaryRange",
     );
-    create_first_frame(
-        &env,
-        r#"<Ui><ScrollFrame name="XmlRangeCleared" parent="UIParent" inherits="XmlRangeParent">
-            <Scripts><OnScrollRangeChanged function=""/></Scripts>
-        </ScrollFrame></Ui>"#,
-        "ScrollFrame",
-    );
+    load_addon(&env.loader_env(), &dir.path().join("XmlEmptyOrdinaryRange.toc")).unwrap();
     env.exec(
         r#"local frame = XmlRangeCleared
-           assert(frame:GetScript('OnScrollRangeChanged') == nil)
+           assert(frame:GetScript('OnScrollRangeChanged') == nil, 'ordinary empty function did not clear inherited handler')
            frame:SetSize(100, 100)
            local child = CreateFrame('Frame', nil, frame)
            child:SetSize(200, 200)
@@ -69,12 +67,12 @@ fn runtime_xml_empty_function_clears_only_requested_intrinsic_slots() {
            for _, frame in ipairs({pre, post}) do
                frame:SetScript('OnHorizontalScroll', function() XmlSlotCalls[#XmlSlotCalls + 1] = 'normal' end)
            end
-           assert(pre:GetScript('OnHorizontalScroll', 0) == nil)
-           assert(type(pre:GetScript('OnHorizontalScroll')) == 'function')
-           assert(type(pre:GetScript('OnHorizontalScroll', 2)) == 'function')
-           assert(type(post:GetScript('OnHorizontalScroll', 0)) == 'function')
-           assert(type(post:GetScript('OnHorizontalScroll')) == 'function')
-           assert(post:GetScript('OnHorizontalScroll', 2) == nil)
+           assert(pre:GetScript('OnHorizontalScroll', 0) == nil, 'precall not cleared')
+           assert(type(pre:GetScript('OnHorizontalScroll')) == 'function', 'normal dropped with precall')
+           assert(type(pre:GetScript('OnHorizontalScroll', 2)) == 'function', 'postcall dropped with precall')
+           assert(type(post:GetScript('OnHorizontalScroll', 0)) == 'function', 'precall dropped with postcall')
+           assert(type(post:GetScript('OnHorizontalScroll')) == 'function', 'normal dropped with postcall')
+           assert(post:GetScript('OnHorizontalScroll', 2) == nil, 'postcall not cleared')
            pre:SetHorizontalScroll(10)
            post:SetHorizontalScroll(20)
            assert(table.concat(XmlSlotCalls, ',') == 'normal,post,pre,normal', table.concat(XmlSlotCalls, ','))"#,
@@ -112,7 +110,7 @@ fn cached_faux_scrollframe_empty_function_disables_inherited_auto_range() {
     let env = crate::common::env_with_shared_xml();
     env.exec(
         r#"local frame = CreateFrame('ScrollFrame', 'XmlEmptyFauxRange', UIParent, 'FauxScrollFrameTemplate')
-           assert(frame:GetScript('OnScrollRangeChanged') == nil)
+           assert(frame:GetScript('OnScrollRangeChanged') == nil, 'cached Faux inherited range handler retained')
            frame:SetSize(100, 100)
            local bar = _G[frame:GetName() .. 'ScrollBar']
            assert(bar)
