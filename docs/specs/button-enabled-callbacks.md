@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] On an enabled-state change, run intrinsic precall, normal script/hooks, and intrinsic postcall for `OnEnable` or `OnDisable`, with the button as the sole argument and committed state visible to handlers.
-- [ ] Retain unchanged-state no-ops and normal hook-only behavior.
-- [ ] Report handler errors and continue later bindings without undoing the state change.
+- [x] On an enabled-state change, run intrinsic precall, normal script/hooks, and intrinsic postcall for `OnEnable` or `OnDisable`, with the button as the sole argument and committed state visible to handlers.
+- [x] Retain unchanged-state no-ops and normal hook-only behavior.
+- [x] Report handler errors and continue later bindings without undoing the state change.
 
 ## How it works
 
@@ -24,7 +24,7 @@
 
 ## Known gaps (current cycle)
 
-Tests-only `960c20b32` is RED in two dispatch cases: registered intrinsic bindings are skipped, leaving only normal/hook calls. The normal hook-only control passes; there is no normal-hook omission bug. `/tmp/cross-version-button-enabled-bindings-proof.md` records exact revisions and outputs. Post-change verification is pending.
+Tests-only `960c20b32` is RED in two dispatch cases: registered intrinsic bindings are skipped, leaving only normal/hook calls. The normal hook-only control passes; there is no normal-hook omission bug. `/tmp/cross-version-button-enabled-bindings-proof.md` records exact revisions and outputs. Independent verification of `1d989b0a3` passes 62 scoped cases: 34 Button methods, 19 texture controls, seven CheckButton controls, and two HookScript taint/restriction controls. Format/check and grouped integration compilation pass without warnings; changed-file readability reports zero issues. Three deliberate error-control diagnostics remain in the Button test log. `/tmp/cross-version-button-enabled-bindings-verification-ledger.md` records exact commands, revisions and logs.
 
 This corrects a demonstrated mismatch between registration and dispatch in the simulator's established XML binding model; it is not a fresh native-client probe. Intrinsic `HookScript` restrictions remain unchanged.
 
