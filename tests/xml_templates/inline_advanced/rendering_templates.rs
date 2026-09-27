@@ -164,8 +164,11 @@ fn xml_statusbar_rotates_texture_before_onload() {
 </Ui>"#,
         "TestXmlStatusBarRotation",
     );
-    load_addon(&env.loader_env(), &dir.path().join("TestXmlStatusBarRotation.toc"))
-        .expect("addon load should succeed");
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TestXmlStatusBarRotation.toc"),
+    )
+    .expect("addon load should succeed");
 
     let (rotates, at_load, coords): (bool, bool, String) = env
         .eval(
@@ -225,8 +228,11 @@ fn create_frame_statusbar_template_applies_rotation_before_onload() {
 </Ui>"#,
         "TestRuntimeStatusBarRotation",
     );
-    load_addon(&env.loader_env(), &dir.path().join("TestRuntimeStatusBarRotation.toc"))
-        .expect("addon load should succeed");
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TestRuntimeStatusBarRotation.toc"),
+    )
+    .expect("addon load should succeed");
 
     let (rotates, at_load, coords): (bool, bool, String) = env
         .eval(
@@ -269,9 +275,18 @@ fn create_frame_statusbar_template_applies_orientation_before_onload() {
                       overridden:GetOrientation(), overridden.orientationAtLoad"#,
         )
         .unwrap();
-    assert_eq!((direct.as_str(), direct_at_load.as_str()), ("VERTICAL", "VERTICAL"));
-    assert_eq!((inherited.as_str(), inherited_at_load.as_str()), ("VERTICAL", "VERTICAL"));
-    assert_eq!((overridden.as_str(), overridden_at_load.as_str()), ("HORIZONTAL", "HORIZONTAL"));
+    assert_eq!(
+        (direct.as_str(), direct_at_load.as_str()),
+        ("VERTICAL", "VERTICAL")
+    );
+    assert_eq!(
+        (inherited.as_str(), inherited_at_load.as_str()),
+        ("VERTICAL", "VERTICAL")
+    );
+    assert_eq!(
+        (overridden.as_str(), overridden_at_load.as_str()),
+        ("HORIZONTAL", "HORIZONTAL")
+    );
 }
 
 #[test]
@@ -590,6 +605,104 @@ fn count_typed_children(env: &WowLuaEnv, name: &str, wt: wow_ui_sim::widget::Wid
         .iter()
         .filter(|&&cid| state.widgets.get(cid).is_some_and(|c| c.widget_type == wt))
         .count()
+}
+
+const COLORSELECT_XML_TEXTURES: &str = r#"
+    <ColorWheelTexture parentKey="Wheel"><Size x="128" y="128"/>
+        <Color r="0.2" g="0.4" b="0.6" a="0.8"/></ColorWheelTexture>
+    <ColorWheelThumbTexture parentKey="WheelThumb" file="Interface\Buttons\UI-ColorPicker-Buttons">
+        <Size x="10" y="10"/><TexCoords left="0" right="0.15625" top="0" bottom="0.625"/>
+    </ColorWheelThumbTexture>
+    <ColorValueTexture parentKey="Value"><Size x="32" y="128"/></ColorValueTexture>
+    <ColorValueThumbTexture parentKey="ValueThumb"><Size x="48" y="14"/></ColorValueThumbTexture>
+    <ColorAlphaTexture parentKey="Alpha"><Size x="32" y="128"/></ColorAlphaTexture>
+    <ColorAlphaThumbTexture parentKey="AlphaThumb" file="Interface\Buttons\UI-ColorPicker-Buttons">
+        <Size x="48" y="14"/><TexCoords left="0.25" right="1" top="0" bottom="0.875"/>
+    </ColorAlphaThumbTexture>
+"#;
+
+fn load_colorselect_xml_fixture(env: &WowLuaEnv) -> tempfile::TempDir {
+    let xml = format!(
+        r#"<Ui>
+    <ColorSelect name="XmlInlineColorSelect" parent="UIParent">{COLORSELECT_XML_TEXTURES}</ColorSelect>
+    <ColorSelect name="XmlColorSelectTextureTemplate" virtual="true">{COLORSELECT_XML_TEXTURES}</ColorSelect>
+    <ColorSelect name="XmlInheritedColorSelect" parent="UIParent" inherits="XmlColorSelectTextureTemplate"/>
+</Ui>"#
+    );
+    let dir = create_test_addon(&xml, "TestColorSelectXmlTextures");
+    load_addon(
+        &env.loader_env(),
+        &dir.path().join("TestColorSelectXmlTextures.toc"),
+    )
+    .expect("ColorSelect XML fixture should load");
+    dir
+}
+
+fn assert_colorselect_xml_textures(env: &WowLuaEnv, frame: &str) {
+    for (role, key) in [
+        ("ColorWheelTexture", "Wheel"),
+        ("ColorWheelThumbTexture", "WheelThumb"),
+        ("ColorValueTexture", "Value"),
+        ("ColorValueThumbTexture", "ValueThumb"),
+        ("ColorAlphaTexture", "Alpha"),
+        ("ColorAlphaThumbTexture", "AlphaThumb"),
+    ] {
+        let bound: bool = env
+            .eval(&format!(
+                "local f = {frame}; local t = f:Get{role}(); return t ~= nil and t == f.{key} and t:GetObjectType() == 'Texture' and t:GetParent() == f"
+            ))
+            .unwrap();
+        assert!(
+            bound,
+            "{frame}: {role} should bind the declared .{key} texture"
+        );
+    }
+
+    let (alpha_width, thumb_width, wheel_red, wheel_green, wheel_blue, wheel_alpha, thumb_left, thumb_right, thumb_top, thumb_bottom):
+        (f32, f32, f32, f32, f32, f32, f32, f32, f32, f32) = env
+        .eval(&format!(
+            "local f = {frame}; local r,g,b,a = f.Wheel:GetVertexColor(); local l,rr,t,bb = f.AlphaThumb:GetTexCoord(); return f.Alpha:GetWidth(), f.AlphaThumb:GetWidth(), r,g,b,a,l,rr,t,bb"
+        ))
+        .unwrap();
+    assert_eq!((alpha_width, thumb_width), (32.0, 48.0), "{frame}");
+    assert_eq!(
+        (wheel_red, wheel_green, wheel_blue, wheel_alpha),
+        (0.2, 0.4, 0.6, 0.8),
+        "{frame}"
+    );
+    assert_eq!(
+        (thumb_left, thumb_right, thumb_top, thumb_bottom),
+        (0.25, 1.0, 0.0, 0.875),
+        "{frame}"
+    );
+}
+
+#[test]
+fn xml_colorselect_declared_textures_bind_to_getters() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let _dir = load_colorselect_xml_fixture(&env);
+    assert_colorselect_xml_textures(&env, "XmlInlineColorSelect");
+}
+
+#[test]
+fn xml_colorselect_inherited_textures_bind_to_getters() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let _dir = load_colorselect_xml_fixture(&env);
+    assert_colorselect_xml_textures(&env, "XmlInheritedColorSelect");
+}
+
+#[test]
+fn runtime_colorselect_xml_template_textures_bind_to_getters() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    let _dir = load_colorselect_xml_fixture(&env);
+    env.exec(
+        r#"XmlRuntimeColorSelect = CreateFrame("ColorSelect", "XmlRuntimeColorSelect", UIParent, "XmlColorSelectTextureTemplate")"#,
+    )
+    .unwrap();
+    assert_colorselect_xml_textures(&env, "XmlRuntimeColorSelect");
 }
 
 #[test]
