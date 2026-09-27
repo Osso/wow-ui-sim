@@ -65,7 +65,7 @@ fn enabled_transitions_dispatch_intrinsic_normal_hook_and_post_with_committed_st
             'pre:true', 'normal:true', 'hook:true', 'post:true',
             'pre:false', 'normal:false', 'hook:false', 'post:false',
             'pre:true', 'normal:true', 'hook:true', 'post:true',
-        }, ','), 'only transitions must dispatch all bindings in order')
+        }, ','), 'only transitions must dispatch all bindings in order: ' .. table.concat(calls, ','))
     "#,
         )
         .unwrap();
@@ -89,7 +89,8 @@ fn precall_error_reports_and_continues_normal_hook_and_post() {
         button:SetScript('OnDisable', function(self, ...) ButtonEnableProbe(self, 'normal', false, ...) end)
         button:HookScript('OnDisable', function(self, ...) ButtonEnableProbe(self, 'hook', false, ...) end)
         button:Disable()
-        assert(table.concat(calls, ',') == 'pre,normal,hook,post', 'error must not stop later bindings')
+        assert(table.concat(calls, ',') == 'pre,normal,hook,post',
+            'error must not stop later bindings: ' .. table.concat(calls, ','))
         assert(#errors == 1 and string.find(errors[1], 'enabled precall sentinel', 1, true),
             'precall error must be reported once')
     "#).unwrap();
