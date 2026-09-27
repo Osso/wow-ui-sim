@@ -11,6 +11,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "scroll_widgets/script_bindings.rs"]
 mod script_bindings;
+#[path = "scroll_widgets/xml_arguments.rs"]
+mod xml_arguments;
 
 #[cfg(feature = "gui")]
 fn scroll_content_quad_bounds(env: &WowLuaEnv) -> (f32, f32, f32, f32) {
