@@ -8,7 +8,7 @@ use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
-const COMBO_POINTS_POWER_TYPE: i32 = 4;
+pub(crate) const COMBO_POINTS_POWER_TYPE: i32 = 4;
 
 /// Forever simulator policy: a power input assigns the existing pool to the selected target.
 /// Selection changes alone leave UnitPower's snapshot and this assignment untouched.
