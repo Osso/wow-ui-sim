@@ -1,6 +1,6 @@
 # XML Empty Script-Function Clearing
 
-`function=""` must clear its selected inherited script binding. Bounded default-profile verification passes 47 test instances plus format/check/integration compilation; it does not claim native-client or full-profile parity.
+`function=""` clears its selected inherited script binding. The default-profile module has nine development-test passes; independent verification is pending. It does not claim native-client or full-profile parity.
 
 ## Content
 
@@ -12,13 +12,13 @@ A separate existing `NoOp` installation bug ignored an intrinsic slot and always
 
 ### Scoped contract
 
-Ordinary XML `function=""` clears an inherited normal binding. Runtime templates clear only an explicitly selected intrinsic precall or postcall binding and preserve normal and opposite intrinsic bindings. Nonempty `function=`, `method=`, and other bindings remain unchanged. Intrinsic-default selection, whitespace-only classification, and method precedence are source-inspected only.
+Ordinary XML `function=""` clears an inherited normal binding. Runtime templates clear explicitly selected intrinsic precall/postcall bindings and preserve normal and opposite intrinsic bindings; absent `intrinsicOrder` selects precall. Ordinary XML and runtime templates treat whitespace-only `function=` plus empty or whitespace-only bodies as clears. In both construction paths, `method=` with empty `function=` remains callable. Nonempty `function=` and other bindings remain unchanged.
 
 ### Evidence status
 
 `6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame inherited-range cases; its nonempty-function control passed. Postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED.
 
-Independent bounded GREEN verification at `3e67e7b6e` passes 47 test instances: ordinary clearing, explicit precall/postcall selection and preservation, nonempty control, cached FauxScrollFrame behavior, 40 `scroll_widgets::` cases, and three existing controls. `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` exit clean. `/tmp/cross-version-empty-script-verification-ledger.md` records exact commands and logs. No native-client, full-profile, vendor/UI, or clean-all-diagnostics claim is made.
+Tests-only `267f1fea4` adds five behavior cases to the existing module: intrinsic-default precall clearing; ordinary and runtime whitespace/empty-body clearing; and ordinary and runtime `method=` plus empty `function=`. Together with four existing cases, the bounded default-profile module passes 9/9. This closes the prior source-only branches, but independent verification remains pending. `/tmp/cross-version-empty-script-edge-proof.md` records the scoped test run. No native-client, full-profile, vendor/UI, or clean-all-diagnostics claim is made.
 
 ### Scroll diagnostic correction
 

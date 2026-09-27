@@ -7,8 +7,9 @@ An XML script declaration with `function=""` clears its inherited selected handl
 - [x] Clear an inherited normal binding for ordinary XML `function=""`.
 - [x] Clear only an explicitly selected intrinsic `precall` or `postcall` binding for runtime templates; preserve normal and opposite intrinsic bindings.
 - [x] Preserve nonempty `function=` behavior and cached FauxScrollFrame range behavior without table-call diagnostics.
-- [ ] Clear the intrinsic-default binding. Source-inspected only: no runtime test distinguishes that default slot.
-- [ ] Treat whitespace-only `function=` as empty and preserve `method=` precedence. Source-inspected only; no runtime assertion covers either distinction.
+- [x] Clear the runtime intrinsic-default binding: absent `intrinsicOrder` selects precall while retaining normal and postcall bindings.
+- [x] Treat whitespace-only `function=` and empty/whitespace-only bodies as empty in ordinary XML and runtime templates.
+- [x] Preserve a callable `method=` binding when paired with empty `function=` in ordinary XML and runtime templates.
 
 ## How it works
 
@@ -24,14 +25,11 @@ An XML script declaration with `function=""` clears its inherited selected handl
 
 ## Tests asserting this spec
 
-`tests/xml_templates/inline_advanced/empty_script_overrides.rs` proves ordinary normal clearing, explicit runtime precall/postcall selection with retained other bindings, nonempty control, and cached FauxScrollFrame inheritance. Bounded default-profile verification ran 47 test instances, `cargo fmt --check`, `cargo check`, and `cargo test --test integration --no-run` clean; `/tmp/cross-version-empty-script-verification-ledger.md` records commands and logs.
+`tests/xml_templates/inline_advanced/empty_script_overrides.rs` now has nine passing default-profile module cases: four existing cases cover ordinary normal clearing, explicit runtime precall/postcall selection and retention, nonempty control, and cached FauxScrollFrame inheritance; five added cases cover runtime intrinsic-default selection, ordinary and runtime whitespace/empty-body clearing, and ordinary and runtime `method=` with empty `function=`. The five additions are development-test passes at `267f1fea4`; independent verification remains pending. `/tmp/cross-version-empty-script-edge-proof.md` records their bounded scope.
 
-## Known gaps (current cycle)
+## Proof status
 
-- [ ] Add a runtime assertion that distinguishes intrinsic-default clearing from explicit precall.
-- [ ] Add runtime assertions for whitespace-only `function=` and `method=` precedence.
-
-`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame cases; its postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED. The later bounded GREEN proof establishes explicit precall/postcall behavior but does not change that RED-first limitation.
+`6325ae0d4` established RED for ordinary normal, runtime precall, and cached FauxScrollFrame cases; its postcall and retained-binding assertions followed the first runtime failure, so they were not independently RED. The later source fix did not itself prove the remaining branches. `267f1fea4` closes those source-only branches with behavior tests, but does not establish native-client parity.
 
 ## Out of scope
 
