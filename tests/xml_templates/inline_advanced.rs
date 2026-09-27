@@ -14,3 +14,6 @@ mod colorselect_textures;
 
 #[path = "inline_advanced/editbox_limits.rs"]
 mod editbox_limits;
+
+#[path = "inline_advanced/double_click_scripts.rs"]
+mod double_click_scripts;
