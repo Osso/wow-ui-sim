@@ -19,12 +19,12 @@ const SCROLL_BINDINGS_XML: &str = r#"
 </Ui>
 "#;
 
-fn synthetic_bindings_env() -> WowLuaEnv {
+fn synthetic_bindings_env(xml: &str) -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     let root = tempfile::tempdir().unwrap();
     let toc = root.path().join("ScrollBindings.toc");
     std::fs::write(&toc, "## Title: Scroll bindings probe\nBindings.xml\n").unwrap();
-    std::fs::write(root.path().join("Bindings.xml"), SCROLL_BINDINGS_XML).unwrap();
+    std::fs::write(root.path().join("Bindings.xml"), xml).unwrap();
     let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env
@@ -45,7 +45,7 @@ const SCROLL_SETUP: &str = r#"
 
 #[test]
 fn xml_scroll_bindings_order_payload_commit_and_unchanged_suppression() {
-    let env = synthetic_bindings_env();
+    let env = synthetic_bindings_env(SCROLL_BINDINGS_XML);
     env.exec(&format!(
         r#"
         ScrollBindingCalls = {{}}
@@ -101,7 +101,7 @@ fn xml_scroll_bindings_order_payload_commit_and_unchanged_suppression() {
 
 #[test]
 fn xml_scroll_precall_error_reports_and_continues_other_bindings() {
-    let env = synthetic_bindings_env();
+    let env = synthetic_bindings_env(SCROLL_BINDINGS_XML);
     env.exec(&format!(
         r#"
         local calls, errors = {{}}, {{}}
@@ -125,6 +125,68 @@ fn xml_scroll_precall_error_reports_and_continues_other_bindings() {
     "#
     ))
     .unwrap();
+}
+
+#[test]
+fn ordinary_xml_scrollframe_registers_and_dispatches_all_scroll_scripts() {
+    let env = synthetic_bindings_env(
+        r#"
+<Ui>
+    <ScrollFrame name="OrdinaryXmlScrollBindingTarget" parent="UIParent">
+        <Scripts>
+            <OnHorizontalScroll>OrdinaryScrollProbe(self, 'h', ...)</OnHorizontalScroll>
+            <OnVerticalScroll>OrdinaryScrollProbe(self, 'v', ...)</OnVerticalScroll>
+            <OnScrollRangeChanged>OrdinaryScrollProbe(self, 'range', ...)</OnScrollRangeChanged>
+        </Scripts>
+    </ScrollFrame>
+</Ui>
+"#,
+    );
+    env.exec(
+        r#"
+        local sf = OrdinaryXmlScrollBindingTarget
+        local calls = {}
+        function OrdinaryScrollProbe(self, event, ...)
+            assert(self == sf)
+            local x, y = self:GetHorizontalScrollRange(), self:GetVerticalScrollRange()
+            if event == 'range' then
+                assert(select('#', ...) == 2)
+                local new_x, new_y = ...
+                assert(new_x == 80 and new_y == 120 and x == new_x and y == new_y)
+                calls[#calls + 1] = 'range:' .. new_x .. ':' .. new_y
+            elseif event == 'h' then
+                assert(select('#', ...) == 1 and (...) == 35 and self:GetHorizontalScroll() == 35)
+                assert(x == 80 and y == 120)
+                calls[#calls + 1] = 'h:35'
+            else
+                assert(event == 'v' and select('#', ...) == 1)
+                assert((...) == -7 and self:GetVerticalScroll() == -7)
+                assert(x == 80 and y == 120)
+                calls[#calls + 1] = 'v:-7'
+            end
+        end
+        for _, event in ipairs({'OnHorizontalScroll', 'OnVerticalScroll', 'OnScrollRangeChanged'}) do
+            assert(type(sf:GetScript(event)) == 'function', event .. ' XML handler missing')
+        end
+        sf:SetSize(100, 100)
+        local child = CreateFrame('Frame', nil, sf)
+        child:SetSize(100, 100)
+        child:SetPoint('TOPLEFT', sf, 'TOPLEFT')
+        sf:SetScrollChild(child)
+        local content = CreateFrame('Frame', nil, child)
+        content:SetSize(180, 220)
+        content:SetPoint('TOPLEFT', child, 'TOPLEFT')
+        sf:UpdateScrollChildRect()
+        assert(sf:GetHorizontalScrollRange() == 80 and sf:GetVerticalScrollRange() == 120)
+        sf:SetHorizontalScroll(35)
+        sf:SetVerticalScroll(-7)
+        assert(table.concat(calls, ',') == 'range:80:120,h:35,v:-7', table.concat(calls, ','))
+    "#,
+    )
+    .unwrap();
+    let state = env.state();
+    let state = state.borrow();
+    assert!(state.lua_errors.is_empty(), "{:?}", state.lua_errors);
 }
 
 #[test]
@@ -215,4 +277,7 @@ fn cached_event_scrollframe_callbacks_precede_normal_scripts_once() {
     "#,
     )
     .unwrap();
+    let state = env.state();
+    let state = state.borrow();
+    assert!(state.lua_errors.is_empty(), "{:?}", state.lua_errors);
 }
