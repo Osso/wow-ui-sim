@@ -4,13 +4,13 @@
 
 ## What it must do
 
-- [ ] `GetOutfitInfo(outfitID)`, `GetOutfitInfoByName(name)`, `GetOutfitInfoByPlayerFacingIndex(playerFacingOutfitIndex)` and `GetOutfitsInfo()` query the same catalog under cumulative `retail-12-0-5`.
-- [ ] Start empty, without fabricated records. Singular misses return zero values; enumeration returns an empty table (inferred empty-list policy).
-- [ ] Return `outfitID`, `name`, `situationCategories`, `icon`, `isEventOutfit`, `isDisabled`, and `playerFacingOutfitIndex` with documented types. Each call owns fresh tables, including nested categories.
-- [ ] Resolve mixed-case names and explicit player-facing indices independently of outfit IDs and list offsets.
-- [ ] Singular lookups use the existing VM secret-argument helper: untainted callers can resolve secret arguments; tainted callers cannot. Ordinary arguments remain allowed for tainted callers.
+- [x] `GetOutfitInfo(outfitID)`, `GetOutfitInfoByName(name)`, `GetOutfitInfoByPlayerFacingIndex(playerFacingOutfitIndex)` and `GetOutfitsInfo()` query the same catalog under cumulative `retail-12-0-5`.
+- [x] Start empty, without fabricated records. Singular misses return zero values; enumeration returns an empty table (inferred empty-list policy).
+- [x] Return `outfitID`, `name`, `situationCategories`, `icon`, `isEventOutfit`, `isDisabled`, and `playerFacingOutfitIndex` with documented types. Each call owns fresh tables, including nested categories.
+- [x] Resolve mixed-case names and explicit player-facing indices independently of outfit IDs and list offsets.
+- [x] Singular lookups use the existing VM secret-argument helper: untainted callers can resolve secret arguments; tainted callers cannot. Ordinary arguments remain allowed for tainted callers.
 
-Checkboxes await focused GREEN proof; these are not native-verified claims.
+Focused default-retail GREEN: 5/5 tests, exit 0, on shared build revision `72220958b` containing implementation `9d89c7021`; `/tmp/patch-12.0.5-outfit-green-test.log` and `/tmp/patch-12.0.5-outfit-ledger.md` retain proof. These are simulator behavioral claims, not native-verified semantics.
 
 ## How it works
 
@@ -30,7 +30,7 @@ Checkboxes await focused GREEN proof; these are not native-verified claims.
 
 ## Known gaps (current cycle)
 
-- [ ] Focused default-retail GREEN and independent final verification; no separate profile build requested.
+- [ ] Independent final verification; focused default-retail GREEN is complete. No separate profile build requested.
 - [ ] Native Unicode matching: create names `Été`, `Straße`, `İ`, and decomposed `e\u0301`; query upper/lowercase and normalized equivalents, recording exact matches and locale.
 - [ ] Native sparse/index semantics: create three outfits, delete the middle, reorder if supported, inspect all published indices, and compare lookup by those indices versus positions and IDs.
 - [ ] Native invalid inputs: call each lookup with missing/nil, booleans, tables, numeric strings, fractions, zero, negative numbers, NaN and infinity; record errors and exact return counts.
