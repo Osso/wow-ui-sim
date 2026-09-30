@@ -4,15 +4,15 @@
 
 ## What it must do
 
-- [ ] Register under the cumulative `retail-12-0-5` gate without replacing other scenario methods.
-- [ ] Return exactly three supplied values: integer credit as a Lua number, percentage as a Lua number, and the unchanged display string; do not derive a denominator or round/localize text.
-- [ ] Read independent unit-token rows, including explicit zero progress and subsequent row updates.
-- [ ] Inferred: absent scenario, absent unit row, and empty-default input return zero results, not nil or fabricated zeros.
-- [ ] Reject missing/nil/non-string unit arguments, including non-string secret payloads. Native exact diagnostics and extra-argument policy are unprobed.
-- [ ] Unwrap secret token input only through rilua's untainted-caller guard; tainted secret input must fail without disclosure.
-- [ ] Inferred input-boundary policy: each row explicitly classifies identity restriction; restricted rows wrap all three values with native rilua secrets. No party/raid-token heuristic or global string marking.
-- [ ] Identical public values remain public after restricted output; explicit classification updates affect subsequent reads.
-- [ ] Current VM limitation: tainted callers querying restricted rows fail at guarded `wrap_secret`; no caller declassification bypass. Plain public rows remain callable while tainted.
+- [x] Publish the query in the default cumulative retail environment without replacing existing scenario methods. Registration uses `retail-12-0-5`; disabled-epoch exclusion is not exercised by this proof.
+- [x] Return exactly three supplied values: integer credit as a Lua number, percentage as a Lua number, and the unchanged display string; do not derive a denominator or round/localize text.
+- [x] Read independent unit-token rows, including explicit zero progress and subsequent row updates.
+- [x] Inferred: absent scenario, absent unit row, and empty-default input return zero results, not nil or fabricated zeros.
+- [x] Reject missing/nil/non-string unit arguments, including non-string secret payloads. Native exact diagnostics and extra-argument policy are unprobed.
+- [x] Unwrap secret token input only through rilua's untainted-caller guard; tainted secret input must fail without disclosure.
+- [x] Inferred input-boundary policy: each row explicitly classifies identity restriction; restricted rows wrap all three values with native rilua secrets. No party/raid-token heuristic or global string marking.
+- [x] Identical public values remain public after restricted output; explicit classification updates affect subsequent reads.
+- [x] Current VM limitation: tainted callers querying restricted rows fail at guarded `wrap_secret`; no caller declassification bypass. Plain public rows remain callable while tainted.
 
 ## How it works
 
@@ -29,6 +29,9 @@
 ## Tests asserting this spec
 
 - `tests/scenario_unit_criteria.rs` in the existing grouped `integration` target, default cumulative retail.
+- `tests/c_scenario_info_probes.rs`: existing scenario namespace controls with empty unit-credit fixtures.
+
+Bounded development proof: implementation `f372687b6` plus fixture followup `72220958b`; unchanged Rust at docs descendant `e3537af64`. Initial absent-API RED ran two cases; the two later fixture cases did not independently execute RED. GREEN passed all four new cases and 11 existing controls. Ledger: `/tmp/patch-12.0.5-scenario-ledger.md`. This is simulator proof, not native parity or a broad acceptance gate.
 
 ## Known gaps (current cycle)
 
