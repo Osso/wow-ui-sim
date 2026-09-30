@@ -126,6 +126,8 @@ macro_rules! build_empty_sim_state {
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
             transmog_outfit_locks: HashSet::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
             // Simulator initial policy; native default is unverified.
             outfit_situations_enabled: false,
             transmog_set_filters: HashMap::new(),

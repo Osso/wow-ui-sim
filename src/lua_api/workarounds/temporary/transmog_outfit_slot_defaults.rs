@@ -121,12 +121,6 @@ if rawget(C_TransmogOutfitInfo, "GetCurrentlyViewedOutfitID") == nil then
     end
 end
 
-if rawget(C_TransmogOutfitInfo, "GetOutfitInfo") == nil then
-    function C_TransmogOutfitInfo.GetOutfitInfo()
-        return nil
-    end
-end
-
 if rawget(C_TransmogOutfitInfo, "GetAllTransmogOutfitOptionSheatheCategoryInfo") == nil then
     function C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo(slotTransmogID)
         if numberOrNumericString(slotTransmogID) ~= VALID_SHEATHE_SLOT_TRANSMOG_ID then

@@ -1,4 +1,9 @@
-//! Global outfit-situations setting; outfit behavior remains unmodeled.
+//! Global outfit-situations setting and read-only outfit catalog.
+
+#[cfg(feature = "retail-12-0-5")]
+mod catalog;
+#[cfg(feature = "retail-12-0-5")]
+pub use catalog::{OutfitCatalog, OutfitEntry};
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
@@ -8,6 +13,8 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
+    #[cfg(feature = "retail-12-0-5")]
+    catalog::register(state, namespace)?;
     table_set_rust_fn_static(
         state,
         namespace,
