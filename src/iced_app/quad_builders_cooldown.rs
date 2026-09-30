@@ -191,10 +191,11 @@ pub(super) fn cooldown_countdown_text(f: &crate::widget::Frame, remaining: f64) 
     if threshold > 0.0 && remaining >= threshold {
         return Some(format!("{}s", remaining.ceil() as i64));
     }
-    if remaining >= 10.0 {
-        Some(format!("{}", remaining.ceil() as i64))
-    } else {
+    let decimal_threshold = f.cooldown_countdown_milliseconds_threshold_seconds;
+    if remaining < decimal_threshold {
         Some(format!("{remaining:.1}"))
+    } else {
+        Some(format!("{}", remaining.ceil() as i64))
     }
 }
 
