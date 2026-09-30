@@ -115,12 +115,15 @@ fn read_array(
 
 pub(super) fn write_rows(state: &mut LuaState, rows: &[Breakpoint]) -> LuaResult<Val> {
     let result = create_table(state);
+    let Val::Table(result_ref) = result else {
+        unreachable!("create_table returns a Lua table");
+    };
     state.push(result);
     for (index, row) in rows.iter().enumerate() {
         let output = create_table(state);
         state.push(output);
         write_row(state, output, row)?;
-        table_set_num(state, result, (index + 1) as i64, output);
+        table_set_num(state, result_ref, (index + 1) as f64, output);
         state.pop();
     }
     state.pop();
