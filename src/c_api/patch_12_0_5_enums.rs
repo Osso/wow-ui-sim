@@ -13,6 +13,13 @@ pub(crate) fn register(state: &mut LuaState) {
     }
 }
 
+pub(crate) fn refresh_house_finder_metadata(state: &mut LuaState) {
+    let enums = super::ensure_global_table(state, "Enum");
+    let name = "HouseFinderSuggestionReason";
+    let values = table_get(state, enums, name);
+    publish_metadata(state, enums, name, values);
+}
+
 fn publish_metadata(state: &mut LuaState, enums: Val, name: &str, values: Val) {
     let Val::Table(values_ref) = values else {
         panic!("Enum.{name} must be initialized before 12.0.5 additions");
