@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame name="SmoothScalingProbeXML" parent="UIParent" hidden="true">
+    <Layers><Layer level="ARTWORK">
+      <FontString parentKey="Default" inherits="GameFontNormal"/>
+      <FontString parentKey="Smooth" inherits="GameFontNormal" smoothScaling="true"/>
+      <FontString parentKey="Snapped" inherits="GameFontNormal" smoothScaling="false"/>
+    </Layer></Layers>
+  </Frame>
+</Ui>

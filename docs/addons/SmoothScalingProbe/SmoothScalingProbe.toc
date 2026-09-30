@@ -1,0 +1,6 @@
+## Interface: 120005
+## Title: SmoothScalingProbe
+## Notes: Manual FontString smooth scaling defaults, heights, wrapping, XML, and visual comparisons
+## SavedVariables: SmoothScalingProbeDB
+SmoothScalingProbe.xml
+SmoothScalingProbe.lua
