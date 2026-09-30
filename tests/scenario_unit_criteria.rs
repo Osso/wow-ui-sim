@@ -84,8 +84,14 @@ fn scenario_unit_criteria_secret_outputs_do_not_contaminate_public_values() {
         assert(issecretvalue(a) and issecretvalue(b) and issecretvalue(c))
         local function tainted()
             assert(not issecure())
-            local ok, err = pcall(query, 'target')
-            assert(not ok and type(err) == 'string')
+            a, b, c = query('target')
+            assert(select('#', query('target')) == 3)
+            assert(not issecure())
+            assert(debug.getstacktaint() == 'ScenarioCriteriaProbe')
+            for _, value in ipairs({a, b, c}) do
+                assert(issecretvalue(value) and not canaccessvalue(value))
+                assert(not pcall(secretunwrap, value))
+            end
             assert(not pcall(query, token))
             x, y, z = query('party1')
             assert(x == 3 and y == 1.5 and z == '1.5%')
