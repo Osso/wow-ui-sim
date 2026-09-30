@@ -372,9 +372,59 @@ mod tests {
     }
 
     #[test]
+    fn cooldown_decimal_threshold_changes_rendered_text_at_exact_boundary() {
+        let env = crate::lua_api::WowLuaEnv::new().expect("Lua environment");
+        env.exec(
+            r#"
+                local cooldown = CreateFrame("Cooldown", "DecimalThresholdCooldown")
+                cooldown:SetCountdownMillisecondsThreshold(20)
+            "#,
+        )
+        .expect("configure threshold through Lua API");
+        let sim = env.state().borrow();
+        let id = sim
+            .widgets
+            .get_id_by_name("DecimalThresholdCooldown")
+            .unwrap();
+        let cooldown = sim.widgets.get(id).unwrap();
+        for (remaining, expected) in [(19.9, "19.9"), (20.0, "20"), (20.1, "21")] {
+            assert_eq!(
+                cooldown_countdown_text(cooldown, remaining).as_deref(),
+                Some(expected),
+                "remaining={remaining}"
+            );
+        }
+    }
+
+    #[test]
+    fn cooldown_decimal_threshold_zero_and_updates_control_fractional_text() {
+        let env = crate::lua_api::WowLuaEnv::new().expect("Lua environment");
+        env.exec("decimalCooldown = CreateFrame('Cooldown', 'UpdatedDecimalCooldown')")
+            .expect("create cooldown");
+        for (threshold, expected) in [(0.0, "3"), (5.0, "2.4"), (2.0, "3"), (0.0, "3")] {
+            env.exec(&format!(
+                "decimalCooldown:SetCountdownMillisecondsThreshold({threshold})"
+            ))
+            .expect("update threshold through Lua API");
+            let sim = env.state().borrow();
+            let id = sim
+                .widgets
+                .get_id_by_name("UpdatedDecimalCooldown")
+                .unwrap();
+            let cooldown = sim.widgets.get(id).unwrap();
+            assert_eq!(
+                cooldown_countdown_text(cooldown, 2.4).as_deref(),
+                Some(expected),
+                "threshold={threshold}"
+            );
+        }
+    }
+
+    #[test]
     fn cooldown_countdown_text_uses_aura_and_abbrev_modes() {
         let mut cooldown = Frame::new(WidgetType::Cooldown, None, None);
         cooldown.cooldown_countdown_abbrev_threshold_seconds = 5.0;
+        cooldown.cooldown_countdown_milliseconds_threshold_seconds = 10.0;
 
         assert_eq!(
             cooldown_countdown_text(&cooldown, 8.2).as_deref(),
