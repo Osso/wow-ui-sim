@@ -3,6 +3,8 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod abbreviated_number_formatter;
 pub mod action_macros;
 pub mod bag_info;
 pub mod c_account_services;

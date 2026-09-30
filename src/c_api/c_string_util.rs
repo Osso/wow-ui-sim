@@ -65,6 +65,8 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
     )?;
     #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    super::abbreviated_number_formatter::register(state, c_string_util_ref)?;
     Ok(())
 }
 

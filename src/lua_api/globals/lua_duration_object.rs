@@ -16,6 +16,8 @@
 //! Blizzard/addon Lua can request duration objects.
 
 mod core;
+#[cfg(feature = "retail-12-0-5")]
+mod formatting;
 
 use crate::lua_api::methods::{
     call_function_state, create_table, registry_get, registry_set, table_get, table_set,
@@ -416,6 +418,10 @@ fn m_has_secret_values(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Returns true if `key` is a method or metamethod name (write-protected).
 fn is_readonly_key(key: &str) -> bool {
+    #[cfg(feature = "retail-12-0-5")]
+    if formatting::METHOD_NAMES.contains(&key) {
+        return true;
+    }
     METHOD_NAMES.contains(&key) || META_NAMES.contains(&key)
 }
 
@@ -485,6 +491,8 @@ fn build_methods_table(state: &mut LuaState) -> Val {
     install_lifecycle_methods(state, methods);
     install_query_methods(state, methods);
     core::register(state, methods);
+    #[cfg(feature = "retail-12-0-5")]
+    formatting::register(state, methods);
     methods
 }
 
