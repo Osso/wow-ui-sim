@@ -133,6 +133,8 @@ fn smooth_scaling_xml_ordinary_and_runtime_template() {
         directory.path().join("fixture.xml"),
         r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
+          <FontString name="SmoothRegionTemplate" virtual="true" smoothScaling="true"/>
+          <FontString name="SnappedRegionTemplate" virtual="true" inherits="SmoothRegionTemplate" smoothScaling="false"/>
           <Frame name="SmoothTemplate" virtual="true"><Layers><Layer>
             <FontString parentKey="Smooth" smoothScaling="true"/>
             <FontString parentKey="Plain" smoothScaling="false"/>
@@ -150,6 +152,10 @@ fn smooth_scaling_xml_ordinary_and_runtime_template() {
         local runtime = CreateFrame('Frame', nil, UIParent, 'SmoothTemplate')
         assert(runtime.Smooth:GetSmoothScaling() == true)
         assert(runtime.Plain:GetSmoothScaling() == false)
+        local inherited = runtime:CreateFontString(nil, 'ARTWORK', 'SmoothRegionTemplate')
+        local overridden = runtime:CreateFontString(nil, 'ARTWORK', 'SnappedRegionTemplate')
+        assert(inherited:GetSmoothScaling() == true)
+        assert(overridden:GetSmoothScaling() == false)
     "#,
     )
     .unwrap();
