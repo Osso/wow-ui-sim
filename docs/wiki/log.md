@@ -1,3 +1,7 @@
+## [2026-09-30] audit | Link bounded 12.0.5 capability and future-probe inventory
+
+Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index from the six linked specs and commits `326e571b8`, `5bfca2e16`, `f372687b6`, `857146cda`, `9d89c7021`, `50feedbfe`. Compact coverage distinguishes documented contracts, inferred policies, spec-reported proof state and future probes; this ingest is docs/source inference, not code or native proof. Full audit remains **IN PROGRESS**, final gate pending, and 38-row register status unchanged. `patch-page-index.json` discovers 138 API pages / 98 retail-history candidate titles by title classification only.
+
 ## [2026-09-27] investigation | Extend XML empty-function clearing coverage
 
 Updated [[xml-empty-script-clearing]] and [XML empty script-function clearing](../specs/xml-empty-script-clearing.md) from test commit `267f1fea4` and `/tmp/cross-version-empty-script-edge-verification-ledger.md`. Five added behavior tests close the prior source-only branches: intrinsic-default precall clearing, ordinary/runtime whitespace and empty-body clearing, and ordinary/runtime `method=` plus empty `function=`. Independent inspection at descendant docs revision `5d2dfb990` confirms the default-profile module passes 9/9 and `cargo fmt --check` passes; unchanged-runtime `cargo check` proof is reused without rerun. Native-client parity is unclaimed.
