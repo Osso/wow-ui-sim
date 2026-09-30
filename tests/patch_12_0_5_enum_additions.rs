@@ -19,7 +19,9 @@ fn assert_publication(enum_name: &str, expected: &str, count: usize, min: i32, m
             max = math.max(max, value)
         end
         local meta = Enum.{enum_name}Meta
-        assert(meta.NumValues == count, "incoherent count")
+        assert(meta.NumValues == count,
+            "incoherent count: metadata=" .. tostring(meta.NumValues) ..
+            " published=" .. tostring(count))
         assert(meta.MinValue == min, "incoherent minimum")
         assert(meta.MaxValue == max, "incoherent maximum")
         assert(count == {count}, "unexpected member count")
