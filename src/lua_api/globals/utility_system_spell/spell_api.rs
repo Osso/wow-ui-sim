@@ -182,6 +182,42 @@ fn unit_power(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
+fn unit_has_power_type(state: &mut LuaState) -> LuaResult<u32> {
+    if !matches!(stack_val(state, 1), Val::Str(_)) {
+        return Err(rilua::runtime_error(
+            "UnitHasPowerType: unitToken must be a string",
+        ));
+    }
+    let unit = val_to_string(state, stack_val(state, 1))
+        .ok_or_else(|| rilua::runtime_error("UnitHasPowerType: unitToken must be a string"))?;
+    let power_type = read_power_capability_type(state)?;
+    let vitals = lookup_unit_vitals(state, &unit);
+    // Capability is inferred from modeled presence, not resource quantities.
+    // Pet/vehicle primary vitals alias player, but secondary capabilities do not.
+    let has_secondary = matches!(unit.as_str(), "player" | "self")
+        && lookup_secondary_player_power(state, power_type).is_some();
+    let has_power = vitals.present && (vitals.power_type == power_type || has_secondary);
+    state.push(Val::Bool(has_power));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn read_power_capability_type(state: &LuaState) -> LuaResult<i32> {
+    match stack_val(state, 2) {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && (i32::MIN as f64..=i32::MAX as f64).contains(&number) =>
+        {
+            Ok(number as i32)
+        }
+        _ => Err(rilua::runtime_error(
+            "UnitHasPowerType: powerType must be a numeric integer in the i32 range",
+        )),
+    }
+}
+
 fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -489,6 +525,8 @@ pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;
     LuaApiMut::register_function(lua, "UnitPower", unit_power)?;
     LuaApiMut::register_function(lua, "UnitPowerMax", unit_power_max)?;
+    #[cfg(feature = "retail-12-0-5")]
+    LuaApiMut::register_function(lua, "UnitHasPowerType", unit_has_power_type)?;
     #[cfg(feature = "retail-12-0-0")]
     LuaApiMut::register_function(lua, "UnitPowerMissing", unit_power_missing)?;
     LuaApiMut::register_function(lua, "UnitPowerPercent", unit_power_percent)?;
