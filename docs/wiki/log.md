@@ -1,3 +1,7 @@
+## [2026-09-30] audit | Record bounded abbreviated formatter implementation
+
+Updated [[duration-core]] and index from `786e731a1`, `663de5528`, and [abbreviated formatter spec](../specs/abbreviated-number-formatter.md). Public FormatNumber is grounded in the common NumericFormatter documentation; suffix lookup is grounded in localization declarations and existing global strings. Four grouped RED cases fail on missing surface; GREEN is pending shared compilation. Native policies and existing multi-formatter duration dispatch remain explicitly unclaimed.
+
 ## [2026-09-30] audit | Link bounded 12.0.5 capability and future-probe inventory
 
 Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index from the six linked specs and commits `326e571b8`, `5bfca2e16`, `f372687b6`, `857146cda`, `9d89c7021`, `50feedbfe`. Compact coverage distinguishes documented contracts, inferred policies, spec-reported proof state and future probes; this ingest is docs/source inference, not code or native proof. Full audit remains **IN PROGRESS**, final gate pending, and 38-row register status unchanged. `patch-page-index.json` discovers 138 API pages / 98 retail-history candidate titles by title classification only.

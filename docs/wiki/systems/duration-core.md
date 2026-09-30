@@ -18,6 +18,12 @@ The core stores `start`, base duration, and rate. Its rate/modifier formulas, ze
 
 `FrameAPICooldown.SetCooldownFromDurationObject` resolves proxy methods through Lua indexing. A zero duration preserves existing cooldown timing when `clearIfZero = false`; omitted/true clears it. This is tested simulator behavior, not native confirmation. Protected, secret, and forbidden semantics remain unresolved.
 
+## Abbreviated numeric formatting
+
+`786e731a1` and `663de5528` add Retail 12.0.5 duration `FormatElapsedDuration`, `FormatRemainingDuration`, and `FormatTotalDuration` with typed abbreviated-formatter dispatch. `AbbreviatedNumberFormatter` owns Rust breakpoint rows; its public `FormatNumber` comes from the cached common `NumericFormatterAPIDocumentation.lua`, not an inferred proxy convention. Existing NumericRuleFormatter/SecondsFormatter duration dispatch remains unsupported in this slice.
+
+The [abbreviated formatter spec](../../specs/abbreviated-number-formatter.md) owns validation, locale and secrecy guesses plus concrete future probes. RED is four missing-surface failures; post-change compilation/runtime proof is pending. No vendor behavior, existing CreateAbbreviateConfig, public Lua secretwrap guard, or caller taint was changed.
+
 ## Player cast duration queries
 
 `180d08b69` reuses the core factory for `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` under the narrow `player-cast-durations` capability shared by Retail 12.1+ and Forever. The queries snapshot simulator-owned player cast/channel timestamps; idle and unmodeled units return no result. Empower defaults to hold-at-max inclusion, while explicit `false` uses the base empowered end. The latter boundary is an inference from the pinned Forever CastingBar consumer, which separately adds hold to `UnitChannelInfo` endpoints.
@@ -33,6 +39,8 @@ A real ActionBarAuras replay on September 22, 2026 reached an assigned, shown Cu
 This is bounded simulator evidence only. Final scheduler proof at `71d73ed81` reuses the exact `a61c6080d` source build and records binding-copy 11/11, native formatter 7/7, numeric formatter 8/8, visibility and event error continuation 1/1 each, format/default checks, PTR integration compilation, PTR binding-copy 7/7, and PTR native formatter 3/3: `/tmp/forever-addon-audit/verify-binding-tick-final-ledger.json`. PTR automatic scheduler runtime remains unproven because the scheduler test is Forever-gated. Target-debuff and rendering paths, native timing parity, first-update/expiry behavior, and native output equivalence remain open. The active implementation contract and tests belong in [duration text binding](../../specs/duration-text-binding.md).
 
 ## Sources
+
+- [Abbreviated number formatter](../../specs/abbreviated-number-formatter.md) — scoped producer/consumer contract and unresolved native policies.
 
 - [Unit cast duration queries](../../specs/unit-cast-durations.md) — modeled query contract and explicit inference boundary.
 - [Duration core spec](../../specs/duration-core.md) — modeled contract and explicit assumptions.
