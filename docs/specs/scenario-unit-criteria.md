@@ -12,7 +12,7 @@
 - [x] Unwrap secret token input only through rilua's untainted-caller guard; tainted secret input must fail without disclosure.
 - [x] Inferred input-boundary policy: each row explicitly classifies identity restriction; restricted rows wrap all three values with native rilua secrets. No party/raid-token heuristic or global string marking.
 - [x] Identical public values remain public after restricted output; explicit classification updates affect subsequent reads.
-- [x] Current VM limitation: tainted callers querying restricted rows fail at guarded `wrap_secret`; no caller declassification bypass. Plain public rows remain callable while tainted.
+- [ ] Plain-token queries from tainted addon callers return three opaque secret values for restricted rows, preserving caller taint and the secret-input/unwrap guards. Trusted typed Rust producers wrap modeled output only; they do not declassify Lua inputs.
 
 ## How it works
 
@@ -21,7 +21,8 @@
 
 ## Implementation inventory
 
-- `src/c_api/c_scenario_info.rs`: per-unit input type and guarded three-result query.
+- `src/c_api/c_scenario_info.rs`: per-unit input type, guarded token reads, and typed host-produced secret results.
+- Pinned rilua typed host number/string producers: output minting preserves caller taint; Lua-value wrapping and unwrapping remain guarded.
 - `src/c_api/mod.rs`: public model module.
 - `src/c_api/registration.rs`: patch-gated namespace registration.
 - `src/lua_api/state_types/mythic_plus_scenario.rs`: empty-default unit-token map in ScenarioState.
@@ -31,7 +32,7 @@
 - `tests/scenario_unit_criteria.rs` in the existing grouped `integration` target, default cumulative retail.
 - `tests/c_scenario_info_probes.rs`: existing scenario namespace controls with empty unit-credit fixtures.
 
-Bounded development proof: implementation `f372687b6` plus fixture followup `72220958b`; unchanged Rust at docs descendant `e3537af64`. Initial absent-API RED ran two cases; the two later fixture cases did not independently execute RED. GREEN passed all four new cases and 11 existing controls. Ledger: `/tmp/patch-12.0.5-scenario-ledger.md`. This is simulator proof, not native parity or a broad acceptance gate.
+Bounded development proof: implementation `f372687b6` plus fixture followup `72220958b`; unchanged Rust at docs descendant `e3537af64`. Initial absent-API RED ran two cases; the two later fixture cases did not independently execute RED. GREEN passed all four new cases and 11 existing controls. Ledger: `/tmp/patch-12.0.5-scenario-ledger.md`. This is simulator proof, not native parity or a broad acceptance gate. It predates the host-result correction: the updated tainted plain-token regression is RED against the old guarded output path (`/tmp/patch-12.0.5-scenario-host-secret-red.log`). Current host-result GREEN is pending.
 
 ## Known gaps (current cycle)
 

@@ -5,7 +5,7 @@ use {
     super::ensure_namespace,
     crate::lua_api::methods::{borrow_state, create_string},
     crate::lua_bridge::{stack_val, table_set_rust_fn_static},
-    rilua::table_security::{unwrap_secret, wrap_secret},
+    rilua::table_security::{unwrap_secret, wrap_host_secret_number, wrap_host_secret_string},
     rilua::vm::state::LuaState,
     rilua::{LuaResult, Val},
 };
@@ -34,21 +34,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 #[cfg(feature = "retail-12-0-5")]
 fn get_unit_criteria_progress_values(state: &mut LuaState) -> LuaResult<u32> {
-    // The VM enforces AllowedWhenUntainted; do not declassify secret input.
-    let unit = unwrap_secret(state, stack_val(state, 1))?;
-    let Val::Str(unit) = unit else {
-        return Err(rilua::runtime_error(
-            "GetUnitCriteriaProgressValues requires a UnitToken string at argument 1",
-        ));
-    };
-    let unit = state
-        .gc
-        .string_arena
-        .get(unit)
-        .ok_or_else(|| rilua::runtime_error("UnitToken string has been collected"))?;
-    let unit = std::str::from_utf8(unit.data())
-        .map_err(|_| rilua::runtime_error("UnitToken must be a UTF-8 string"))?
-        .to_owned();
+    let unit = read_unit_token(state)?;
     let progress = {
         let sim = borrow_state(state)?;
         if !sim.scenario.in_scenario {
@@ -60,26 +46,43 @@ fn get_unit_criteria_progress_values(state: &mut LuaState) -> LuaResult<u32> {
     let Some(progress) = progress else {
         return Ok(0);
     };
-    for value in [
-        Val::Num(progress.actual_value as f64),
-        Val::Num(progress.percent_value),
-    ] {
-        push_progress_value(state, value, progress.identity_restricted)?;
-    }
-    let display = create_string(state, &progress.percent_value_string);
-    push_progress_value(state, display, progress.identity_restricted)?;
+    push_progress_results(state, &progress);
     Ok(3)
 }
 
 #[cfg(feature = "retail-12-0-5")]
-fn push_progress_value(state: &mut LuaState, value: Val, restricted: bool) -> LuaResult<()> {
-    // Current VM limitation: restricted output rejects tainted callers at this
-    // guard. No bypass; this is not native-verified caller behavior.
-    let value = if restricted {
-        wrap_secret(state, value)?
-    } else {
-        value
+fn read_unit_token(state: &LuaState) -> LuaResult<String> {
+    // Secret Lua input retains the VM's untainted-caller guard.
+    let unit = unwrap_secret(state, stack_val(state, 1))?;
+    let Val::Str(unit) = unit else {
+        return Err(rilua::runtime_error(
+            "GetUnitCriteriaProgressValues requires a UnitToken string at argument 1",
+        ));
     };
-    state.push(value);
-    Ok(())
+    let string = state
+        .gc
+        .string_arena
+        .get(unit)
+        .ok_or_else(|| rilua::runtime_error("UnitToken string has been collected"))?;
+    std::str::from_utf8(string.data())
+        .map(str::to_owned)
+        .map_err(|_| rilua::runtime_error("UnitToken must be a UTF-8 string"))
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn push_progress_results(state: &mut LuaState, progress: &UnitCriteriaProgress) {
+    for number in [progress.actual_value as f64, progress.percent_value] {
+        let value = if progress.identity_restricted {
+            wrap_host_secret_number(state, number)
+        } else {
+            Val::Num(number)
+        };
+        state.push(value);
+    }
+    let display = if progress.identity_restricted {
+        wrap_host_secret_string(state, &progress.percent_value_string)
+    } else {
+        create_string(state, &progress.percent_value_string)
+    };
+    state.push(display);
 }
