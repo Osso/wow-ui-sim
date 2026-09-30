@@ -60,6 +60,8 @@ pub mod c_major_factions;
 pub mod c_map;
 pub mod c_map_exploration_info;
 pub mod c_merchant_frame;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_nameplate_manager;
 mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;

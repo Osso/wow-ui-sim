@@ -20,6 +20,9 @@ macro_rules! build_empty_sim_state {
                 $runtime.screen_height,
             ),
             events: EventQueue::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            nameplate_hit_test_insets:
+                crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             #[cfg(feature = "client-wowforever")]
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),

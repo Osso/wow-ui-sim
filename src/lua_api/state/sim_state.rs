@@ -1,6 +1,8 @@
 use super::*;
 
 pub struct SimState {
+    #[cfg(feature = "retail-12-0-5")]
+    pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     #[cfg(feature = "client-wowforever")]
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
     pub widgets: WidgetRegistry,
