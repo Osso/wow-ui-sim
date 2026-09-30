@@ -6,10 +6,10 @@
 
 All following label rules are **best-supported simulator inferences, not native-verified semantics**.
 
-- [ ] An action associated with an existing macro with a nonempty name returns one plain, non-secret boolean `true` and one text result equal to the exact stored name, preserving whitespace. Macro body and `#showtooltip` do not select label usage.
-- [ ] Rename/body edits are visible without reassignment. An empty name marks an unused macro entry: `false` and nil; restoring a name restores the associated label.
-- [ ] Cursor pickup/place and `C_ActionBar.PutActionInSlot` follow current slot assignments. Moving, clearing, deleting or replacing with a spell clears obsolete labels; reuse of a deleted macro ID does not restore old assignments.
-- [ ] Empty and ordinary spell slots return `false` and nil. An item cursor rejected by the existing placement model leaves an empty destination returning `false` and nil; this is not native item-action-slot coverage.
+- [x] An action associated with an existing macro with a nonempty name returns one plain, non-secret boolean `true` and one text result equal to the exact stored name, preserving whitespace. Macro body and `#showtooltip` do not select label usage.
+- [x] Rename/body edits are visible without reassignment. An empty name marks an unused macro entry: `false` and nil; restoring a name restores the associated label.
+- [x] Cursor pickup/place and `C_ActionBar.PutActionInSlot` follow current slot assignments. Moving, clearing, deleting or replacing with a spell clears obsolete labels; reuse of a deleted macro ID does not restore old assignments.
+- [x] Empty and ordinary spell slots return `false` and nil. An item cursor rejected by the existing placement model leaves an empty destination returning `false` and nil; this is not native item-action-slot coverage.
 - [ ] Queries retain existing cross-profile registration, without a new retail patch gate.
 
 ## How it works
@@ -25,7 +25,7 @@ All following label rules are **best-supported simulator inferences, not native-
 
 ## Tests asserting this spec
 
-`tests/action_text.rs`, automatically grouped in the existing `integration` target: public create/pickup/place, rename/body edits, empty name, move/transfer, spell replacement, deletion/reuse, clear, scalar result count/type/secrecy and empty/spell/unplaceable-item controls. Tests are unguarded; only current default retail compilation is exercised in this bounded implementation.
+`tests/action_text.rs`, automatically grouped in the existing `integration` target: public create/pickup/place, rename/body edits, empty name, move/transfer, spell replacement, deletion/reuse, clear, scalar result count/type/secrecy and empty/spell/unplaceable-item controls. Tests are unguarded; only current default retail compilation is exercised in this bounded implementation. Targeted RED records four missing-behavior failures and one passing control; GREEN passes all five tests using the corrected shared integration build. `/tmp/patch-12.0.5-action-text-ledger.md` retains commands, source identities and logs; broad final gates are not part of this implementation proof.
 
 ## Known gaps (current cycle)
 
