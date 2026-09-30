@@ -332,6 +332,54 @@ fn segmented_fontstring_spacing_moves_colored_second_line() {
 }
 
 #[test]
+#[cfg(feature = "retail-12-0-5")]
+fn smooth_scaling_render_measure_and_cache_flips() {
+    let env = crate::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        fs = CreateFrame('Frame'):CreateFontString('SmoothRender')
+        fs:SetFont('Fonts\\FRIZQT__.TTF', 12)
+        fs:SetScale(1.1)
+        fs:SetText('H\nH')
+        fs:SetSmoothScaling(false)
+    "#,
+    )
+    .unwrap();
+    let mut font_sys = WowFontSystem::new_without_casc();
+    env.set_font_system(std::rc::Rc::new(std::cell::RefCell::new(
+        WowFontSystem::new_without_casc(),
+    )));
+    let mut atlas = GlyphAtlas::new();
+    let mut tops = Vec::new();
+    for smooth in [false, true, false, true] {
+        env.exec(&format!("fs:SetSmoothScaling({smooth})")).unwrap();
+        let frame = {
+            let state = env.state().borrow();
+            let id = state.widgets.get_id_by_name("SmoothRender").unwrap();
+            let mut frame = state.widgets.get(id).unwrap().clone();
+            frame.effective_scale = 1.1;
+            frame
+        };
+        let batch =
+            render_fontstring_spacing_with(&frame, "H\nH", 200.0, &mut font_sys, &mut atlas);
+        let positions = glyph_quad_tops(&batch);
+        assert_eq!(positions.len(), 2);
+        let separation = positions[1] - positions[0];
+        assert!((separation - if smooth { 15.84 } else { 16.0 }).abs() < .01);
+        if smooth {
+            let height: f64 = env
+                .eval("fs:SetText('H'); return fs:GetStringHeight()")
+                .unwrap();
+            assert!((height as f32 * 1.1 - separation).abs() < .01);
+            env.exec("fs:SetText('H\\nH')").unwrap();
+        }
+        tops.push(positions);
+    }
+    assert_eq!(tops[0], tops[2]);
+    assert_eq!(tops[1], tops[3]);
+}
+
+#[test]
 fn tooltip_line_fontstrings_do_not_render_as_generic_fontstrings() {
     let mut registry = WidgetRegistry::new();
     let mut tooltip = Frame::new(
