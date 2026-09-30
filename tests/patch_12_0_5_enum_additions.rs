@@ -4,6 +4,17 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn assert_publication(enum_name: &str, expected: &str, count: usize, min: i32, max: i32) {
     let env = WowLuaEnv::new().unwrap();
+    assert_publication_in_env(&env, enum_name, expected, count, min, max);
+}
+
+fn assert_publication_in_env(
+    env: &WowLuaEnv,
+    enum_name: &str,
+    expected: &str,
+    count: usize,
+    min: i32,
+    max: i32,
+) {
     env.exec(&format!(
         r#"
         local values = Enum.{enum_name}
@@ -69,12 +80,22 @@ fn illusion_flags_publish_ranged_permission_and_retain_old_members() {
 #[test]
 #[cfg(feature = "profile-retail")]
 fn house_finder_publishes_home_owner_without_adding_later_reasons() {
-    assert_publication(
-        "HouseFinderSuggestionReason",
-        "{ None=0, Owner=1, CharterInvite=2, Guild=4, BNetFriends=8,
-        PartySync=16, Random=32, HomeOwner=64 }",
-        8,
-        0,
-        64,
-    );
+    let env = WowLuaEnv::new().unwrap();
+    let expected = "{ None=0, Owner=1, CharterInvite=2, Guild=4, BNetFriends=8,
+        PartySync=16, Random=32, HomeOwner=64 }";
+    // Shared 12.1 compatibility already publishes Relinquished=65.
+    // Preserve it; correcting that later member is outside this patch.
+    let later_epoch = cfg!(feature = "retail-12-1-0");
+    let count = if later_epoch { 9 } else { 8 };
+    let max = if later_epoch { 65 } else { 64 };
+    assert_publication_in_env(&env, "HouseFinderSuggestionReason", expected, count, 0, max);
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 65)")
+            .unwrap();
+        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        assert_publication_in_env(&env, "HouseFinderSuggestionReason", expected, count, 0, max);
+        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 65)")
+            .unwrap();
+    }
 }
