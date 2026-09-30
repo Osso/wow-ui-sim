@@ -1,0 +1,12 @@
+{
+  "patch": "12.0.5",
+  "title": "Patch 12.0.5/API changes",
+  "page_id": 670710,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_12.0.5/API_changes",
+  "retrieved": "2026-09-30",
+  "method": "MediaWiki query prop=extracts explaintext=1; full plaintext page extract",
+  "sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+  "scope": "Entire plaintext page, including historical blue-post revisions and consolidated changes; not raw wikitext/link graph",
+  "audit_status": "in-progress",
+  "prior_probe_register": "12.0.5-probes.json"
+}
