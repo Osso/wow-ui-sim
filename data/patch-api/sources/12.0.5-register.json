@@ -1,0 +1,4442 @@
+{
+  "source": "data/patch-api/sources/12.0.5-api-changes.txt",
+  "source_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+  "source_line_count": 678,
+  "inventory_version": 1,
+  "notes": [
+    "Consolidated entries are represented as one row per atomic annotation line, retaining exact source line references.",
+    "Blue-post prose is preserved separately, not merged into the consolidated API delta rows.",
+    "Dated PTR proposals/observations are chronological evidence, not silently treated as final; consolidated block is the final 12.0.1→12.0.5 snapshot.",
+    "The source has an empty CVars section.",
+    "No unsupported inference was used to expand prose into signatures.",
+    "Blue-post section labels and narrative framing are preserved as rows where content-bearing; API-change prose is kept verbatim with one-based source line references. PTR wording can differ from later posts and consolidated entries; statuses mark chronology rather than asserting every proposal shipped.",
+    "2026-04-17 announcement remains labeled pre-release plan; source provides no later confirmation or consolidated signature for it.",
+    "Source inventory only: narrative rows and historical proposals are not an API count or runtime support proof. Per-occurrence behavioral audit remains in progress."
+  ],
+  "counts": {
+    "total_rows": 362,
+    "consolidated_delta_rows": 244,
+    "prose_rows": 118,
+    "unresolved_rows": 0,
+    "by_consolidated_section": {
+      "Global API": 155,
+      "ScriptObjects": 5,
+      "Widgets": 10,
+      "Events": 6,
+      "Enums": 33,
+      "Structures": 35
+    },
+    "by_delta_operator": {
+      "#": 69,
+      "S": 5,
+      "+": 139,
+      "-": 31
+    },
+    "distinct_consolidated_subjects": 186,
+    "source_cvar_entries": 0,
+    "blue_post_prose_rows": 118,
+    "prose_change_rows": 118,
+    "by_blue_post_status": {
+      "ptr1-or-future-proposal": 16,
+      "planned-in-upcoming-ptrs": 3,
+      "future-plan-not-12.0.5": 9,
+      "historical-or-proposed": 9,
+      "superseded-or-pre-release-proposal": 45,
+      "live-hotfix": 1,
+      "ptr4-finalized": 21,
+      "bugfix-finalized": 6,
+      "classic-scope-clarification": 8
+    }
+  },
+  "rows": [
+    {
+      "id": "prose-2026-03-12-010",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "=== 2026-03-12 ===",
+      "source_lines": [
+        10
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-011",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "source_lines": [
+        11
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-013",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Hello again from Blizzard! With 12.0.5 PTR slated to start today, here is the list of addon API changes you can expect to see in next couple builds, followed by a discussion about some longer-term changes we are considering for the aura system.",
+      "source_lines": [
+        13
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-014",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "source_lines": [
+        14
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-019",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "We have added three new Lua object types for numeric formatting: AbbreviatedNumberFormatter, NumericRuleFormatter, and SecondsFormatter. These types can be supplied with secret numbers through the Format functions on duration objects.",
+      "source_lines": [
+        19
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-020",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "We're considering adjusting the various \"display count\" APIs (eg. GetSpellDisplayCount) to accept formatter objects, but this would be a breaking change (let us know your thoughts).",
+      "source_lines": [
+        20
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-023",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The following APIs will now return a zero-span duration object when the queried spell is at maximum charges: GetSpellBookItemChargeDuration, GetSpellChargeDuration, GetActionChargeDuration.",
+      "source_lines": [
+        23
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-026",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Duration objects that measure a zero-span are now considered fully elapsed.",
+      "source_lines": [
+        26
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-029",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The isHelpful, isHarmful, isRaid, isNameplateOnly, and isFromPlayerOrPlayerPet booleans on aura data tables are no longer secret.",
+      "source_lines": [
+        29
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-032",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Added GetTransmogOutfitIndex to the restricted environment. Values returned from this can be used with the new /outfit slash command.",
+      "source_lines": [
+        32
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-035",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Added a new Predicates table to out Lua API documentation, which will provide a description of the restrictions on each API.",
+      "source_lines": [
+        35
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-038",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The Ambiguate function now accepts secrets from addons.",
+      "source_lines": [
+        38
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-039",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Added a Cooldown:SetCountdownMillisecondsThreshold(seconds) API. When a cooldown frame is rendering a time below this number of seconds, it will be displayed as a decimal value with one decimal place (e.g. \"8.7\").",
+      "source_lines": [
+        39
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-040",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "String formatting APIs no longer honor field width modifiers for secret string values (e.g. the \"%.5s\" format will no longer truncate a secret string).",
+      "source_lines": [
+        40
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-041",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The UnitSpellTargetName API now only returns names for player units.",
+      "source_lines": [
+        41
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-043",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The C_EncounterEvents.GetEventSound API no longer errors when called.",
+      "source_lines": [
+        43
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr1-or-future-proposal"
+    },
+    {
+      "id": "prose-2026-03-12-048",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "The UnitTokenFromGUID API (and various others) will no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.",
+      "source_lines": [
+        48
+      ],
+      "chronology": "dated-blue-post",
+      "status": "planned-in-upcoming-ptrs"
+    },
+    {
+      "id": "prose-2026-03-12-049",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "UnitTokenNamePlate APIs will no longer accept party, raid, or target-of-target unit tokens.",
+      "source_lines": [
+        49
+      ],
+      "chronology": "dated-blue-post",
+      "status": "planned-in-upcoming-ptrs"
+    },
+    {
+      "id": "prose-2026-03-12-050",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Addon execution throttles will no longer apply while the PLAYER_LOGOUT and ADDONS_UNLOADING events are being processed.",
+      "source_lines": [
+        50
+      ],
+      "chronology": "dated-blue-post",
+      "status": "planned-in-upcoming-ptrs"
+    },
+    {
+      "id": "prose-2026-03-12-054",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "While we have a variety of plans for future patches (12.0.7 and beyond), including many more quality-of-life fixes for addon developers, we wanted to take a moment to talk about one area in particular that we are putting a lot of thought into: Auras (particularly of the Private variety).",
+      "source_lines": [
+        54
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-055",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "We created the Private Aura system back in 10.1 as a means to prevent addons from automating certain very specific fight mechanics. In some ways Private Auras can be viewed as the beginning of our experimentation with adjusting addon capabilities, and while they certainly had their issues, for the most part they served their purpose (albeit in a rather heavy-handed way). When we started developing the Secret Value system, we had hoped (planned even) to be able to essentially retire the Private Aura system and replace it with just secrets.",
+      "source_lines": [
+        55
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-056",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Unfortunately, as Midnight Alpha & Beta progressed it became clear that relying on Secret Values alone was not going to be enough to prevent addon automation involving auras. And so, we ended up having to go in almost the exact opposite direction: we made MOST encounter debuffs private auras rather than just a select few. While this approach gave us the security we needed for Midnight Season 1, it also came with some significant downsides. Our own private aura displays don't currently have full parity with normal auras, and they aren’t supported in nameplates. On top of that they also require our encounter designers to be very diligent about flagging almost every encounter debuff as private, which is cumbersome and very easy to get wrong.",
+      "source_lines": [
+        56
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-057",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "All this is to say that we are not happy with the current state of auras as they pertain to addons, and we are planning to make some large changes to them. We don't have a hard target yet for when this rework will happen, but just to ease your minds a little it definitely will NOT be in 12.0.5 or 12.0.7. What shape this new aura system will take is also nowhere near decided yet so we won't have any specifics for a while yet, but the overarching goals can be summed up as:",
+      "source_lines": [
+        57
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-059",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Auras need to be more secure than they currently are (with less upkeep for designers).",
+      "source_lines": [
+        59
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-060",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Auras still need to be customizable and displayable by addons.",
+      "source_lines": [
+        60
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-061",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "And then as a bonus goal we would like auras to be more performant for addons.",
+      "source_lines": [
+        61
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-062",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "We will be consulting with addon developers as we start to plan out work on this new system, so don't worry about this being dropped on you out of the blue. We just wanted to give you an idea of where our heads are at, so it doesn't come as a surprise later.",
+      "source_lines": [
+        62
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-12-063",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace",
+      "change": "Oh and just to make Meo happy, Jar Jar would like to say: Wesa will have mooie tings to share berry soon!",
+      "source_lines": [
+        63
+      ],
+      "chronology": "dated-blue-post",
+      "status": "future-plan-not-12.0.5"
+    },
+    {
+      "id": "prose-2026-03-25-066",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "=== 2026-03-25 ===",
+      "source_lines": [
+        66
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-25-067",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "source_lines": [
+        67
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-25-069",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the last two 12.0.5 PTR builds, followed by the changes we plan to make in next week's PTR build. We begin with a few changes we will be hotfixing to live.",
+      "source_lines": [
+        69
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-25-070",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "source_lines": [
+        70
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-25-074",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "The following APIs will no longer be able to be called by addons during combat: PromoteToLeader, PromoteToAssistant, DemoteAssistant, SetEveryoneIsAssistant, DoReadyCheck, ConfirmReadyCheck, ConvertToParty, ConvertToRaid, ConfirmConvertToRaid, C_PartyInfo.DoCountdown, C_PartyInfo.SetRestrictPings, C_PartyInfo.SetLootMethod.",
+      "source_lines": [
+        74
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-075",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Text lines in tooltips that contain secret text will no longer remain secret permanently.",
+      "source_lines": [
+        75
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-076",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Fixing a bug where some players randomly become unable to set raid markers until they restart their client.",
+      "source_lines": [
+        76
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-081",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Added an API to allow addons to override the offsets of nameplate hit-rects.",
+      "source_lines": [
+        81
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-084",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "The UnitTokenFromGUID API (and various others) no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.",
+      "source_lines": [
+        84
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-085",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "UnitTokenNamePlate APIs no longer accept party, raid, or target-of-target unit tokens.",
+      "source_lines": [
+        85
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-088",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "UnitIsUnit now returns secrets if either unit in the comparison is \"targettarget\" or \"focustarget\".",
+      "source_lines": [
+        88
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-091",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Added new Get/SetSmoothScaling APIs to font string objects (XML attributes were added for this back in 12.0.0).",
+      "source_lines": [
+        91
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-092",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "C_Navigation.GetNearestPartyMemberToken can no longer be called by addons.",
+      "source_lines": [
+        92
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-093",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Added improved error messaging for various security-related errors involving tables.",
+      "source_lines": [
+        93
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-094",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Addons can now use the table.freeze/table.isfrozen APIs to make their own tables read-only.",
+      "source_lines": [
+        94
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-095",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Addon execution throttles will no longer be applied while processing PLAYER_LOGOUT and ADDONS_UNLOADING events.",
+      "source_lines": [
+        95
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-098",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Using macro conditions with /tm commands (e.g. /tm [condition] 1) will no longer cause Lua errors.",
+      "source_lines": [
+        98
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-099",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Fixed an issue with the IsUnderMouse] API where it would incorrectly return false for parent frames that were actually under the mouse.",
+      "source_lines": [
+        99
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-104",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "The UnitIsUnit API is being adjusted to apply the following rules:",
+      "source_lines": [
+        104
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-105",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "If either unit is one of the following, the comparison is permitted: \"player\", \"pet\", \"vehicle\", \"mouseover\", \"target\", \"softenemy\", \"softfriend\", \"softinteract\", \"focus\", \"none\", \"npc\", \"questnpc\"",
+      "source_lines": [
+        105
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-106",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token (\"boss1target\"), nameplate token, or \"targettarget\"/\"focustarget\", the comparison is permitted.",
+      "source_lines": [
+        106
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-107",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "All other comparisons are disallowed and return nil.",
+      "source_lines": [
+        107
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-110",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are adding 2 new APIs to C_TransmogOutfitInfo: GetOutfitInfoByName and GetOutfitInfoByPlayerFacingIndex.",
+      "source_lines": [
+        110
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-111",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are adding a new secure action (\"outfit\") for changing/clearing transmog outfits.",
+      "source_lines": [
+        111
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-112",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Permanent auras will be sorted after long duration auras in SecureAuraHeaderTemplate (short < long < permanent).",
+      "source_lines": [
+        112
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-113",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are adding a new UnitHasPowerType API that returns a non-secret bool indicating if the unit uses a power type.",
+      "source_lines": [
+        113
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-114",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are adding a new ignoreGCD parameter to APIs that construct and return duration objects for cooldowns.",
+      "source_lines": [
+        114
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-115",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are adding numeric formatter support for Cooldown frame fontstrings.",
+      "source_lines": [
+        115
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-116",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "We are removing the restrictions that we recently placed on the AddPrivateAuraAnchor, RemovePrivateAuraAnchor and SetPrivateWarningTextAnchor APIs.",
+      "source_lines": [
+        116
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-117",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Existing restrictions will remain on the AddPrivateAuraAppliedSound and RemovePrivateAuraAppliedSound APIs.",
+      "source_lines": [
+        117
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-120",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "ClassTalentHelper functions for changing specializations and loadouts will no longer taint the talent frame or player castbar.",
+      "source_lines": [
+        120
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-121",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Using the /equipset command with an unknown or invalid set name will no longer cause Lua errors.",
+      "source_lines": [
+        121
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-122",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Using macro conditions with /outfit command (e.g. /outfit [@player,noexists] 1) will no longer cause Lua errors.",
+      "source_lines": [
+        122
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-123",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "The GetRaidRosterInfo API will no longer return nil for name if the name is not in the name cache yet. Instead, it will return \"Unknown\" during that period.",
+      "source_lines": [
+        123
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "later dated Blue post or final consolidated snapshot; compare exact subject/change"
+    },
+    {
+      "id": "prose-2026-03-25-125",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets",
+      "change": "Jar Jar says: Meesa wishin' Meo a mooey mooey Happy Birthday!!",
+      "source_lines": [
+        125
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-31-128",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "=== 2026-03-31 ===",
+      "source_lines": [
+        128
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-31-129",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "source_lines": [
+        129
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-31-131",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the new 12.0.5 PTR build. We begin with a small change we will be hotfixing to live.",
+      "source_lines": [
+        131
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-31-132",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "source_lines": [
+        132
+      ],
+      "chronology": "dated-blue-post",
+      "status": "historical-or-proposed"
+    },
+    {
+      "id": "prose-2026-03-31-136",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Fixing a bug that would cause tooltips to get marked secret incorrectly when textures were added to them.",
+      "source_lines": [
+        136
+      ],
+      "chronology": "dated-blue-post",
+      "status": "live-hotfix"
+    },
+    {
+      "id": "prose-2026-03-31-138",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Changes in 12.0.5 PTR 4",
+      "source_lines": [
+        138
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-141",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "The UnitIsUnit API has been adjusted to apply the following rules:",
+      "source_lines": [
+        141
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-142",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "If either unit is one of the following, the comparison is permitted: \"player\", \"pet\", \"vehicle\", \"mouseover\", \"target\", \"softenemy\", \"softfriend\", \"softinteract\", \"focus\", \"none\", \"npc\", \"questnpc\"",
+      "source_lines": [
+        142
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-143",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token (\"boss1target\"), nameplate token, or \"targettarget\"/\"focustarget\", the comparison is permitted.",
+      "source_lines": [
+        143
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-144",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "All other comparisons are disallowed and return nil.",
+      "source_lines": [
+        144
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-147",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Most APIs that return player stats now return secrets if auras are secret. See the Lua documentation files for the full list of APIs affected.",
+      "source_lines": [
+        147
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-150",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Aura instance ID values now re-randomize when the player enters an encounter/M+/PvP match.",
+      "source_lines": [
+        150
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-151",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Permanent auras are now sorted after long duration auras in SecureAuraHeaderTemplate (short < long < permanent).",
+      "source_lines": [
+        151
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-154",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "The UnitName API no longer accepts secret unit tokens.",
+      "source_lines": [
+        154
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-157",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added a new UnitHasPowerType API that returns a non-secret bool indicating if the unit uses a power type.",
+      "source_lines": [
+        157
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-160",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added a new ignoreGCD parameter to APIs that construct and return duration objects for cooldowns.",
+      "source_lines": [
+        160
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-161",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added numeric formatter support for Cooldown frame fontstrings.",
+      "source_lines": [
+        161
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-164",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added 2 new APIs to C_TransmogOutfitInfo: GetOutfitInfoByName and GetOutfitInfoByPlayerFacingIndex.",
+      "source_lines": [
+        164
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-165",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added a new secure action \"outfit\" for changing/clearing transmog outfits.",
+      "source_lines": [
+        165
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-168",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Removed the restrictions that we recently placed on the AddPrivateAuraAnchor, RemovePrivateAuraAnchor, SetPrivateWarningTextAnchor and RemovePrivateAuraAppliedSound APIs. The AddPrivateAuraAppliedSound API is still restricted, but this restriction is now only in place during encounters and during M+/PvP matches.",
+      "source_lines": [
+        168
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-169",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.",
+      "source_lines": [
+        169
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-170",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added a new C_ActionBar.UsesActionText API and switched to using it inside ActionBarActionButtonMixin:Update. This should fix some Lua errors that were getting thrown for addons in that code due to secrets.",
+      "source_lines": [
+        170
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-171",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added questID to the QuestAcceptConfirm event.",
+      "source_lines": [
+        171
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-172",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Added a secure delegate for ClearSelectedSystem in EditMode, so addons can call it without taint concerns while not in combat.",
+      "source_lines": [
+        172
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-173",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Add the following insecure templates for addon usage: InsecureMouseMotionPropagatorTemplate, InsecureMouseClicksPropagatorTemplate, InsecureKeyboardInputPropagatorTemplate and InsecureHyperlinkPropagatorTemplate.",
+      "source_lines": [
+        173
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-174",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "NPC followers are now treated as player units by nameplates, allowing the nameplateUseClassColorForFriendlyPlayerUnitNames and nameplateShowOnlyNameForFriendlyPlayerUnits cvars to work for them.",
+      "source_lines": [
+        174
+      ],
+      "chronology": "dated-blue-post",
+      "status": "ptr4-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-177",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "ClassTalentHelper functions for changing specializations and loadouts no longer taint the talent frame or player castbar.",
+      "source_lines": [
+        177
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-178",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Using the /equipset command with an unknown or invalid set name no longer causes Lua errors.",
+      "source_lines": [
+        178
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-179",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Using macro conditions with /outfit commands (e.g. /outfit [@player,noexists] 1) no longer causes Lua errors.",
+      "source_lines": [
+        179
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-180",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "The GetRaidRosterInfo API no longer returns nil for name if the name is not in the name cache yet. Instead, it will return \"Unknown\" during that period.",
+      "source_lines": [
+        180
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-181",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Fixed an issue where the IsInInstance API would not always return true when the player was in certain instances (mostly delves).",
+      "source_lines": [
+        181
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-03-31-182",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets",
+      "change": "Fixed an issue where the UNIT_CONNECTION event was not getting sent correctly when a party member disconnected or connected.",
+      "source_lines": [
+        182
+      ],
+      "chronology": "dated-blue-post",
+      "status": "bugfix-finalized"
+    },
+    {
+      "id": "prose-2026-04-10-185",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "=== 2026-04-10 ===",
+      "source_lines": [
+        185
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-186",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "source_lines": [
+        186
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-188",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Hello again from Blizzard! Below you will find a small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live. These changes will likely be in an upcoming 12.0.5 PTR build before they go live (this is not guaranteed though depending on build timing).",
+      "source_lines": [
+        188
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-189",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "source_lines": [
+        189
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-193",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Instant-cast spells that are secret will no longer cause the UNIT_SPELLCAST_SUCCEEDED event to get sent for any units other than the player.",
+      "source_lines": [
+        193
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-194",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "The ModelSceneActor:SetModelByUnit and Model:SetUnit APIs will no longer accept unit tokens for units which have secret identity.",
+      "source_lines": [
+        194
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-195",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "These will not error - instead, they'll return a nil value in-place of the existing success return.",
+      "source_lines": [
+        195
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-196",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Various chat channel APIs are no longer usable while chat lockdown is in effect, or from within macros.",
+      "source_lines": [
+        196
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-197",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Unit identity restrictions have been adjusted; identities are secret while on instanced maps for any unit that isn't the player, their pet/vehicle, or a raid/party member.",
+      "source_lines": [
+        197
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-198",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Previously, identity was restricted on instanced maps for attackable units.",
+      "source_lines": [
+        198
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-199",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Mind control effects on allies no longer impact identity secrecy.",
+      "source_lines": [
+        199
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-200",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Fixed a bug that caused taint logging to stop working after a reload UI.",
+      "source_lines": [
+        200
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-201",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Fixed a bug that caused taint logging to not correctly write messages for tainted reads from tables.",
+      "source_lines": [
+        201
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-10-202",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 Upcoming Restriction Changes",
+      "change": "Fixed a bug that could cause some auras showing in the cooldown manager to have incorrect tooltips if they were active when an encounter begins.",
+      "source_lines": [
+        202
+      ],
+      "chronology": "dated-blue-post",
+      "status": "superseded-or-pre-release-proposal",
+      "superseded_by": "final consolidated snapshot where represented; post-patch notes remain prose-only otherwise"
+    },
+    {
+      "id": "prose-2026-04-17-205",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "=== 2026-04-17 ===",
+      "source_lines": [
+        205
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-206",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "Midnight 12.0.5 and Classic PTR Update",
+      "source_lines": [
+        206
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-208",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "Hello again from Blizzard! Below you will find a (very) small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live.",
+      "source_lines": [
+        208
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-209",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "But first, a quick update about what to expect in regard to addon security in the upcoming Classic 5.5.4 PTR (and all future Classic releases).",
+      "source_lines": [
+        209
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-210",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "source_lines": [
+        210
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-213",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "By and large, the addon security systems we put in place for Midnight will not be active in Classic. The secret value system is entirely disabled on Classic builds, and any API that returns secrets on Mainline will return non-secrets in Classic.",
+      "source_lines": [
+        213
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-214",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "The new chat restrictions will also be inactive in Classic, and combat log events will work just like they do currently in Classic. Additional restrictions to various APIs added in Midnight (guild APIs, etc.) will also not be active in Classic. The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course. Brand new functionality and objects that were added in Midnight (duration objects, curves, etc. and their associated APIs) will be available in Classic.",
+      "source_lines": [
+        214
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-215",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "One thing to note here is that Lua API documentation files do currently still reference secret values despite them not actually applying in Classic. We are working on fixing that, as well as doing an overall pass to make sure everything is working as expected in Classic. If you notice specific APIs that appear to not be working as expected please pass those along to us in the feedback channel.",
+      "source_lines": [
+        215
+      ],
+      "chronology": "dated-blue-post",
+      "status": "classic-scope-clarification"
+    },
+    {
+      "id": "prose-2026-04-17-219",
+      "section": "Blue posts",
+      "kind": "prose",
+      "subject": "Midnight 12.0.5 and Classic PTR Update",
+      "change": "Added a new API C_ScenarioInfo.GetUnitCriteriaProgressValues(unitToken) API which returns the M+ Enemy Forces value of the unit as an int (plain value), float (percent) and string (percent). Returns are secret when unit identity is secret.",
+      "source_lines": [
+        219
+      ],
+      "chronology": "dated-blue-post",
+      "status": "pre-release-hotfix-plan",
+      "superseded_by": "no consolidated counterpart shown; retained as dated prose-only API addition"
+    },
+    {
+      "id": "global api-C_ActionBar-FindSpellActionButtons-229",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.FindSpellActionButtons",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        229
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionCharges-231",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionCharges",
+      "change": "SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        231
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionCooldown-233",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionCooldown",
+      "change": "SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        233
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionCooldownDuration-235",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionCooldownDuration",
+      "change": "+ arg2 = ignoreGCD",
+      "source_lines": [
+        235
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionDisplayCount-237",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionDisplayCount",
+      "change": "SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        237
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionLossOfControlCooldownInfo-239",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionLossOfControlCooldownInfo",
+      "change": "SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        239
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-GetActionUseCount-241",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.GetActionUseCount",
+      "change": "SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        241
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-HasSpellActionButtons-243",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.HasSpellActionButtons",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        243
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ActionBar-IsOnBarOrSpecialBar-245",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ActionBar.IsOnBarOrSpecialBar",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        245
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_CatalogShop-GetProductInfo-247",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_CatalogShop.GetProductInfo",
+      "change": "+ HasRestrictions",
+      "source_lines": [
+        247
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_CatalogShop-PurchaseProduct-249",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_CatalogShop.PurchaseProduct",
+      "change": "+ HasRestrictions",
+      "source_lines": [
+        249
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ChatInfo-InChatMessagingLockdown-251",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ChatInfo.InChatMessagingLockdown",
+      "change": "- ret2 = lockdownReason",
+      "source_lines": [
+        251
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ChatInfo-ReplaceIconAndGroupExpressions-253",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ChatInfo.ReplaceIconAndGroupExpressions",
+      "change": "+ arg2,3 NeverSecret",
+      "source_lines": [
+        253
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_ClickBindings-CanSpellBeClickBound-255",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_ClickBindings.CanSpellBeClickBound",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        255
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-GetCurioLink-257",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.GetCurioLink",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        257
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-GetCurioLink-258",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.GetCurioLink",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        258
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-GetTieredEntrancePDEID-260",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.GetTieredEntrancePDEID",
+      "change": "- MayReturnNothing",
+      "source_lines": [
+        260
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-HasActiveDelve-262",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.HasActiveDelve",
+      "change": "- arg1 = mapID",
+      "source_lines": [
+        262
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-HasActiveDelve-263",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.HasActiveDelve",
+      "change": "- SecretArguments = AllowedWhenUntainted",
+      "source_lines": [
+        263
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_DelvesUI-RequestPartyEligibilityForDelveTiers-265",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_DelvesUI.RequestPartyEligibilityForDelveTiers",
+      "change": "# arg1.Name gossipOption -> mapID",
+      "source_lines": [
+        265
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-267",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.RemoveFixtureFromSelectedPoint",
+      "change": "+ arg1 = attachedDecorAction",
+      "source_lines": [
+        267
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-268",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.RemoveFixtureFromSelectedPoint",
+      "change": "+ SecretArguments = AllowedWhenUntainted",
+      "source_lines": [
+        268
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-SelectCoreFixtureOption-270",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.SelectCoreFixtureOption",
+      "change": "+ arg2 = attachedDecorAction",
+      "source_lines": [
+        270
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-SelectFixtureOption-272",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.SelectFixtureOption",
+      "change": "+ arg2 = attachedDecorAction",
+      "source_lines": [
+        272
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-SetHouseExteriorSize-274",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.SetHouseExteriorSize",
+      "change": "+ arg2 = attachedDecorAction",
+      "source_lines": [
+        274
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HouseExterior-SetHouseExteriorType-276",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HouseExterior.SetHouseExteriorType",
+      "change": "+ arg2 = attachedDecorAction",
+      "source_lines": [
+        276
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingBasicMode-StartPlacingNewDecor-278",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingBasicMode.StartPlacingNewDecor",
+      "change": "# arg1.Name catalogEntryID -> catalogEntryVariantID",
+      "source_lines": [
+        278
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingBasicMode-StartPlacingNewDecor-279",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingBasicMode.StartPlacingNewDecor",
+      "change": "# arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        279
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-DestroyEntry-281",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.DestroyEntry",
+      "change": "# arg1.Name entryID -> entryVariantID",
+      "source_lines": [
+        281
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-DestroyEntry-282",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.DestroyEntry",
+      "change": "# arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        282
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.GetCatalogEntryInfoByItem",
+      "change": "- arg2 = tryGetOwnedInfo",
+      "source_lines": [
+        284
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.GetCatalogEntryInfoByRecordID",
+      "change": "- arg3 = tryGetOwnedInfo",
+      "source_lines": [
+        286
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-GetDestroyableInstanceCount-288",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.GetDestroyableInstanceCount",
+      "change": "# arg1.Name entryID -> entryVariantID",
+      "source_lines": [
+        288
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_HousingCatalog-GetDestroyableInstanceCount-289",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_HousingCatalog.GetDestroyableInstanceCount",
+      "change": "# arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        289
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_MountJournal-GetMountFromSpell-291",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_MountJournal.GetMountFromSpell",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        291
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_QuestInfoSystem-GetQuestLogRewardFavor-293",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_QuestInfoSystem.GetQuestLogRewardFavor",
+      "change": "# arg1.Nilable false -> true",
+      "source_lines": [
+        293
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetBaseSpell-295",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetBaseSpell",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        295
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-297",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetMawPowerBorderAtlasBySpellID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        297
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetMawPowerLinkBySpellID-299",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetMawPowerLinkBySpellID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        299
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellCastCount-301",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellCastCount",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        301
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellCharges-303",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellCharges",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        303
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellCooldown-305",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellCooldown",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        305
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellCooldownDuration-307",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellCooldownDuration",
+      "change": "+ arg2 = ignoreGCD",
+      "source_lines": [
+        307
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellDisplayCount-309",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellDisplayCount",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        309
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellLink-311",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellLink",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        311
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellLossOfControlCooldownInfo-313",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellLossOfControlCooldownInfo",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        313
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellMaxCumulativeAuraApplications-315",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellMaxCumulativeAuraApplications",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        315
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_Spell-GetSpellMaxCumulativeAuraApplications-316",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_Spell.GetSpellMaxCumulativeAuraApplications",
+      "change": "# SecretWhenSpellAuraRestricted -> SecretWhenUnitAuraRestricted",
+      "source_lines": [
+        316
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_SpellBook-GetSpellBookItemCastCount-318",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_SpellBook.GetSpellBookItemCastCount",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        318
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_SpellBook-GetSpellBookItemCharges-320",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_SpellBook.GetSpellBookItemCharges",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        320
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_SpellBook-GetSpellBookItemCooldown-322",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_SpellBook.GetSpellBookItemCooldown",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        322
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_SpellBook-GetSpellBookItemCooldownDuration-324",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_SpellBook.GetSpellBookItemCooldownDuration",
+      "change": "+ arg3 = ignoreGCD",
+      "source_lines": [
+        324
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_SpellBook-GetSpellBookItemLossOfControlCooldownInfo-326",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo",
+      "change": "# SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted",
+      "source_lines": [
+        326
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_StringUtil-RemoveContiguousSpaces-328",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_StringUtil.RemoveContiguousSpaces",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        328
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetItemByID-330",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetItemByID",
+      "change": "+ arg3 = itemContext",
+      "source_lines": [
+        330
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetItemByID-331",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetItemByID",
+      "change": "+ arg4 = treasureContextLevel",
+      "source_lines": [
+        331
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetMountBySpellID-333",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetMountBySpellID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        333
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetMountBySpellID-334",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetMountBySpellID",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        334
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetSpellByID-336",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetSpellByID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        336
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetSpellByID-337",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetSpellByID",
+      "change": "+ arg2-6 NeverSecret",
+      "source_lines": [
+        337
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitAuraByAuraInstanceID-339",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitAuraByAuraInstanceID",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        339
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitAuraByAuraInstanceID-340",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitAuraByAuraInstanceID",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        340
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitBuff-342",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitBuff",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        342
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-344",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitBuffByAuraInstanceID",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        344
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-345",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitBuffByAuraInstanceID",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        345
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitDebuff-347",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitDebuff",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        347
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-349",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitDebuffByAuraInstanceID",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        349
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-350",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TooltipInfo.GetUnitDebuffByAuraInstanceID",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        350
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TransmogCollection-GetIllusions-352",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TransmogCollection.GetIllusions",
+      "change": "+ arg1 = category",
+      "source_lines": [
+        352
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TransmogCollection-GetIllusions-353",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TransmogCollection.GetIllusions",
+      "change": "+ SecretArguments = AllowedWhenUntainted",
+      "source_lines": [
+        353
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TransmogOutfitInfo-GetOutfitInfo-355",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TransmogOutfitInfo.GetOutfitInfo",
+      "change": "# ret1.Name outfitsInfo -> outfitInfo",
+      "source_lines": [
+        355
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_TransmogOutfitInfo-GetPendingTransmogCost-357",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_TransmogOutfitInfo.GetPendingTransmogCost",
+      "change": "+ ret2 = modifierFlags",
+      "source_lines": [
+        357
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-AddPrivateAuraAnchor-359",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.AddPrivateAuraAnchor",
+      "change": "- HasRestrictions",
+      "source_lines": [
+        359
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-AuraIsBigDefensive-361",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.AuraIsBigDefensive",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        361
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-AuraIsPrivate-363",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.AuraIsPrivate",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        363
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-DoesAuraHaveExpirationTime-365",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.DoesAuraHaveExpirationTime",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        365
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraApplicationDisplayCount-367",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraApplicationDisplayCount",
+      "change": "+ arg3 NeverSecret",
+      "source_lines": [
+        367
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraApplicationDisplayCount-368",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraApplicationDisplayCount",
+      "change": "+ arg4 NeverSecret",
+      "source_lines": [
+        368
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraApplicationDisplayCount-369",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraApplicationDisplayCount",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        369
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraBaseDuration-371",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraBaseDuration",
+      "change": "# arg3.Type number -> SpellIdentifier",
+      "source_lines": [
+        371
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraDataByIndex-373",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraDataByIndex",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        373
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraDataByIndex-374",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraDataByIndex",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        374
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraDataBySlot-376",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraDataBySlot",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        376
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraDispelTypeColor-378",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraDispelTypeColor",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        378
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraDuration-380",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraDuration",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        380
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetAuraSlots-382",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetAuraSlots",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        382
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetBuffDataByIndex-384",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetBuffDataByIndex",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        384
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetBuffDataByIndex-385",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetBuffDataByIndex",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        385
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetCooldownAuraBySpellID-387",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetCooldownAuraBySpellID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        387
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetDebuffDataByIndex-389",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetDebuffDataByIndex",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        389
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetDebuffDataByIndex-390",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetDebuffDataByIndex",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        390
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetPlayerAuraBySpellID-392",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetPlayerAuraBySpellID",
+      "change": "# arg1.Type number -> SpellIdentifier",
+      "source_lines": [
+        392
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetRefreshExtendedDuration-394",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetRefreshExtendedDuration",
+      "change": "# arg3.Type number -> SpellIdentifier",
+      "source_lines": [
+        394
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-GetUnitAuraBySpellID-396",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.GetUnitAuraBySpellID",
+      "change": "# arg2.Type number -> SpellIdentifier",
+      "source_lines": [
+        396
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-398",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.IsAuraFilteredOutByInstanceID",
+      "change": "- arg1 NeverSecret",
+      "source_lines": [
+        398
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-399",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.IsAuraFilteredOutByInstanceID",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        399
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-RemovePrivateAuraAnchor-401",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.RemovePrivateAuraAnchor",
+      "change": "- HasRestrictions",
+      "source_lines": [
+        401
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-RemovePrivateAuraAppliedSound-403",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.RemovePrivateAuraAppliedSound",
+      "change": "- HasRestrictions",
+      "source_lines": [
+        403
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-SetPrivateWarningTextAnchor-405",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.SetPrivateWarningTextAnchor",
+      "change": "- HasRestrictions",
+      "source_lines": [
+        405
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_UnitAuras-WantsAlteredForm-407",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_UnitAuras.WantsAlteredForm",
+      "change": "# SecretArguments AllowedWhenTainted -> AllowedWhenUntainted",
+      "source_lines": [
+        407
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-C_VoiceChat-SpeakText-409",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "C_VoiceChat.SpeakText",
+      "change": "+ arg1,3-5 NeverSecret",
+      "source_lines": [
+        409
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Localization BreakUpLargeNumbers-411",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Localization BreakUpLargeNumbers",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        411
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Localization CreateAbbreviateConfig-413",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Localization CreateAbbreviateConfig",
+      "change": "+ RequiresRestrictedAbbreviationBreakpoints",
+      "source_lines": [
+        413
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript Ambiguate-415",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript Ambiguate",
+      "change": "+ arg2 NeverSecret",
+      "source_lines": [
+        415
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript Ambiguate-416",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript Ambiguate",
+      "change": "# SecretArguments AllowedWhenUntainted -> AllowedWhenTainted",
+      "source_lines": [
+        416
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetAttackPowerForStat-418",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetAttackPowerForStat",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        418
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetAvoidance-420",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetAvoidance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        420
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetBlockChance-422",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetBlockChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        422
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetCombatRating-424",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetCombatRating",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        424
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetCombatRatingBonus-426",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetCombatRatingBonus",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        426
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetCritChance-428",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetCritChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        428
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetDodgeChance-430",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetDodgeChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        430
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetDodgeChanceFromAttribute-432",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetDodgeChanceFromAttribute",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        432
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetExpertise-434",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetExpertise",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        434
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetExpertisePercent-436",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetExpertisePercent",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        436
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetHaste-438",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetHaste",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        438
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetHitModifier-440",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetHitModifier",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        440
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetLifesteal-442",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetLifesteal",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        442
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetManaRegen-444",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetManaRegen",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        444
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetMastery-446",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetMastery",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        446
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetMasteryEffect-448",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetMasteryEffect",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        448
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetMeleeHaste-450",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetMeleeHaste",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        450
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetModResilienceDamageReduction-452",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetModResilienceDamageReduction",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        452
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetOverrideAPBySpellPower-454",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetOverrideAPBySpellPower",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        454
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetOverrideSpellPowerByAP-456",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetOverrideSpellPowerByAP",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        456
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetParryChance-458",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetParryChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        458
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetParryChanceFromAttribute-460",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetParryChanceFromAttribute",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        460
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPetMeleeHaste-462",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPetMeleeHaste",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        462
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPetSpellBonusDamage-464",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPetSpellBonusDamage",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        464
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPowerRegen-466",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPowerRegen",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        466
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPowerRegenForPowerType-468",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPowerRegenForPowerType",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        468
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPvpPowerDamage-470",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPvpPowerDamage",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        470
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetPvpPowerHealing-472",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetPvpPowerHealing",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        472
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetRangedCritChance-474",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetRangedCritChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        474
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetRangedHaste-476",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetRangedHaste",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        476
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetShieldBlock-478",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetShieldBlock",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        478
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpeed-480",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpeed",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        480
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpellBonusDamage-482",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpellBonusDamage",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        482
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpellBonusHealing-484",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpellBonusHealing",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        484
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpellCritChance-486",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpellCritChance",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        486
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpellHitModifier-488",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpellHitModifier",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        488
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSpellPenetration-490",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSpellPenetration",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        490
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetSturdiness-492",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetSturdiness",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        492
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript GetVersatilityBonus-494",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript GetVersatilityBonus",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        494
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-PlayerScript PlayerEffectiveAttackPower-496",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "PlayerScript PlayerEffectiveAttackPower",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        496
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit GetUnitSpeed-498",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit GetUnitSpeed",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        498
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitArmor-500",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitArmor",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        500
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitAttackPower-502",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitAttackPower",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        502
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitAttackSpeed-504",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitAttackSpeed",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        504
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitDamage-506",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitDamage",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        506
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitRangedAttackPower-508",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitRangedAttackPower",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        508
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitRangedDamage-510",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitRangedDamage",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        510
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitSpellHaste-512",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitSpellHaste",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        512
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitStat-514",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitStat",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        514
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "global api-Unit UnitWeaponAttackPower-516",
+      "section": "Global API",
+      "kind": "delta",
+      "subject": "Unit UnitWeaponAttackPower",
+      "change": "+ SecretWhenUnitStatsRestricted",
+      "source_lines": [
+        516
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "scriptobjects-AbbreviateConfig-SetAbbreviateNumberData-522",
+      "section": "ScriptObjects",
+      "kind": "delta",
+      "subject": "AbbreviateConfig:SetAbbreviateNumberData",
+      "change": "+ RequiresRestrictedAbbreviationBreakpoints",
+      "source_lines": [
+        522
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524",
+      "section": "ScriptObjects",
+      "kind": "delta",
+      "subject": "HousingCatalogSearcher:GetAllSearchItems",
+      "change": "# ret1.Name matchingEntryIDs -> matchingEntryVariantIDs",
+      "source_lines": [
+        524
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525",
+      "section": "ScriptObjects",
+      "kind": "delta",
+      "subject": "HousingCatalogSearcher:GetAllSearchItems",
+      "change": "# ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        525
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527",
+      "section": "ScriptObjects",
+      "kind": "delta",
+      "subject": "HousingCatalogSearcher:GetCatalogSearchResults",
+      "change": "# ret1.Name matchingEntryIDs -> matchingEntryVariantIDs",
+      "source_lines": [
+        527
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528",
+      "section": "ScriptObjects",
+      "kind": "delta",
+      "subject": "HousingCatalogSearcher:GetCatalogSearchResults",
+      "change": "# ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        528
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-PlayerModel-SetUnit-534",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "PlayerModel:SetUnit",
+      "change": "+ RequiresDeclassifiedUnitIdentity",
+      "source_lines": [
+        534
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-Cooldown-GetMinimumCountdownDuration-536",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "Cooldown:GetMinimumCountdownDuration",
+      "change": "# ret1.Type number -> DurationMillisecondsPrimitive",
+      "source_lines": [
+        536
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-Cooldown-SetCountdownAbbrevThreshold-538",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "Cooldown:SetCountdownAbbrevThreshold",
+      "change": "# arg1.Type number -> DurationSecondsPrimitive",
+      "source_lines": [
+        538
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-Cooldown-SetMinimumCountdownDuration-540",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "Cooldown:SetMinimumCountdownDuration",
+      "change": "# arg1.Type number -> DurationMillisecondsPrimitive",
+      "source_lines": [
+        540
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-ModelSceneActorBase-SetModelByUnit-542",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "ModelSceneActorBase:SetModelByUnit",
+      "change": "+ RequiresDeclassifiedUnitIdentity",
+      "source_lines": [
+        542
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-FontString-GetFont-544",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "FontString:GetFont",
+      "change": "# ret1.Type cstring -> FontAsset",
+      "source_lines": [
+        544
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-FontString-SetFont-546",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "FontString:SetFont",
+      "change": "# arg1.Type cstring -> FontAsset",
+      "source_lines": [
+        546
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-FontString-SetFont-547",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "FontString:SetFont",
+      "change": "# arg2.Type uiUnit -> number",
+      "source_lines": [
+        547
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-FontString-SetFont-548",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "FontString:SetFont",
+      "change": "# arg3.Nilable false -> true",
+      "source_lines": [
+        548
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "widgets-FontString-SetFont-549",
+      "section": "Widgets",
+      "kind": "delta",
+      "subject": "FontString:SetFont",
+      "change": "+ ret1 = success",
+      "source_lines": [
+        549
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-HOUSING_STORAGE_ENTRY_UPDATED-555",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "HOUSING_STORAGE_ENTRY_UPDATED",
+      "change": "# [1].Name entryID -> entryVariantID",
+      "source_lines": [
+        555
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-HOUSING_STORAGE_ENTRY_UPDATED-556",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "HOUSING_STORAGE_ENTRY_UPDATED",
+      "change": "# [1].Type HousingCatalogEntryID -> HousingCatalogEntryVariantID",
+      "source_lines": [
+        556
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-QUEST_ACCEPT_CONFIRM-558",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "QUEST_ACCEPT_CONFIRM",
+      "change": "+ [3] = questID",
+      "source_lines": [
+        558
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-SPELL_CONFIRMATION_PROMPT-560",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "SPELL_CONFIRMATION_PROMPT",
+      "change": "+ [8] = displayItemID",
+      "source_lines": [
+        560
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-SPELL_CONFIRMATION_PROMPT-561",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "SPELL_CONFIRMATION_PROMPT",
+      "change": "+ [9] = itemContext",
+      "source_lines": [
+        561
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "events-SPELL_CONFIRMATION_PROMPT-562",
+      "section": "Events",
+      "kind": "delta",
+      "subject": "SPELL_CONFIRMATION_PROMPT",
+      "change": "+ [10] = treasureContextLevel",
+      "source_lines": [
+        562
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-AbbreviationDataError-570",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.AbbreviationDataError",
+      "change": "- InvalidAbbreviation",
+      "source_lines": [
+        570
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-AddOnRestrictionType-572",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.AddOnRestrictionType",
+      "change": "+ Chat",
+      "source_lines": [
+        572
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-CurrencyFlagsB-574",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.CurrencyFlagsB",
+      "change": "+ CurrencyBNoBonusXP",
+      "source_lines": [
+        574
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-EditModeAccountSetting-576",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.EditModeAccountSetting",
+      "change": "+ ShowTotemActionBar",
+      "source_lines": [
+        576
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-EditModeStatusTrackingBarSetting-578",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.EditModeStatusTrackingBarSetting",
+      "change": "+ Size",
+      "source_lines": [
+        578
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-EditModeSystem-580",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.EditModeSystem",
+      "change": "+ TotemActionBar",
+      "source_lines": [
+        580
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-EditModeUnitFrameSetting-582",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.EditModeUnitFrameSetting",
+      "change": "+ BigDefensiveIconSize",
+      "source_lines": [
+        582
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-FragmentID-584",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.FragmentID",
+      "change": "+ FPathingDynamicLinks",
+      "source_lines": [
+        584
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-FragmentID-585",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.FragmentID",
+      "change": "+ TagHousingDecorProxyGameObject",
+      "source_lines": [
+        585
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-FrameTutorialAccount-587",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.FrameTutorialAccount",
+      "change": "+ HousingEndeavorsTabSeen",
+      "source_lines": [
+        587
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HouseExteriorWMODataFlags-589",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HouseExteriorWMODataFlags",
+      "change": "+ HiddenUnlessOwned",
+      "source_lines": [
+        589
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HouseFinderSuggestionReason-591",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HouseFinderSuggestionReason",
+      "change": "+ HomeOwner",
+      "source_lines": [
+        591
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HousingDecorPlacementRestriction-593",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HousingDecorPlacementRestriction",
+      "change": "+ InvalidLightOverlap",
+      "source_lines": [
+        593
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HousingItemToastType-595",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HousingItemToastType",
+      "change": "# House -> HouseType",
+      "source_lines": [
+        595
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HousingResult-597",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HousingResult",
+      "change": "+ BoundToStartingArea",
+      "source_lines": [
+        597
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-HousingResult-598",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.HousingResult",
+      "change": "+ InvalidLightOverlap",
+      "source_lines": [
+        598
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-LootMethodStyles-600",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.LootMethodStyles",
+      "change": "+ Mainline",
+      "source_lines": [
+        600
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-LootMethodStyles-601",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.LootMethodStyles",
+      "change": "- PersonalOnly",
+      "source_lines": [
+        601
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-PhotoSharingUploadStatus-603",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.PhotoSharingUploadStatus",
+      "change": "+ Disabled",
+      "source_lines": [
+        603
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-SurveyDeliveryMoment-605",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.SurveyDeliveryMoment",
+      "change": "+ EncounterEnd",
+      "source_lines": [
+        605
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogIllusionFlags-607",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogIllusionFlags",
+      "change": "+ AllowedRangedShieldsHoldables",
+      "source_lines": [
+        607
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-609",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ AllWeather",
+      "source_lines": [
+        609
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-610",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ WeatherClear",
+      "source_lines": [
+        610
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-611",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ WeatherRain",
+      "source_lines": [
+        611
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-612",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ WeatherSnow",
+      "source_lines": [
+        612
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-613",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ WeatherSand",
+      "source_lines": [
+        613
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-614",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ AllTime",
+      "source_lines": [
+        614
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-615",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ TimeMorning",
+      "source_lines": [
+        615
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-616",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ TimeDay",
+      "source_lines": [
+        616
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-617",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ TimeEvening",
+      "source_lines": [
+        617
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituation-618",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituation",
+      "change": "+ TimeNight",
+      "source_lines": [
+        618
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituationTrigger-620",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituationTrigger",
+      "change": "+ Weather",
+      "source_lines": [
+        620
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "enums-Enum-TransmogSituationTrigger-621",
+      "section": "Enums",
+      "kind": "delta",
+      "subject": "Enum.TransmogSituationTrigger",
+      "change": "+ TimeOfDay",
+      "source_lines": [
+        621
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-AddPrivateAuraAnchorArgs-626",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "AddPrivateAuraAnchorArgs",
+      "change": "+ isContainer",
+      "source_lines": [
+        626
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-AreaPOIInfo-628",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "AreaPOIInfo",
+      "change": "+ isSuppressible",
+      "source_lines": [
+        628
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-AreaPOIInfo-629",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "AreaPOIInfo",
+      "change": "+ isLocked",
+      "source_lines": [
+        629
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductDisplayInfo-631",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductDisplayInfo",
+      "change": "+ additionalProductPMTURLs",
+      "source_lines": [
+        631
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductDisplayInfo-632",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductDisplayInfo",
+      "change": "+ houseTextureAtlas",
+      "source_lines": [
+        632
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductInfo-634",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductInfo",
+      "change": "+ previewBGOverrideProductURL",
+      "source_lines": [
+        634
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductInfo-635",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductInfo",
+      "change": "+ previewSmallBGOverrideProductURL",
+      "source_lines": [
+        635
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductInfo-636",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductInfo",
+      "change": "+ decorQuantity",
+      "source_lines": [
+        636
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-CatalogShopProductInfo-637",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "CatalogShopProductInfo",
+      "change": "- consumableQuantity",
+      "source_lines": [
+        637
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-DamageMeterCombatSource-639",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "DamageMeterCombatSource",
+      "change": "+ sourceDisplayType",
+      "source_lines": [
+        639
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingBundleInfo-641",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingBundleInfo",
+      "change": "+ nonDecorProducts",
+      "source_lines": [
+        641
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogCategoryInfo-643",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogCategoryInfo",
+      "change": "# anyOwnedEntries -> anyStoredEntries",
+      "source_lines": [
+        643
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryID-645",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryID",
+      "change": "- entrySubtype",
+      "source_lines": [
+        645
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryID-646",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryID",
+      "change": "- subtypeIdentifier",
+      "source_lines": [
+        646
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-648",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "+ recordID",
+      "source_lines": [
+        648
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-649",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "+ entryType",
+      "source_lines": [
+        649
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-650",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "+ totalNumStored",
+      "source_lines": [
+        650
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-651",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "+ totalNumPlaced",
+      "source_lines": [
+        651
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-652",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- entryID",
+      "source_lines": [
+        652
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-653",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- showQuantity",
+      "source_lines": [
+        653
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-654",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- quantity",
+      "source_lines": [
+        654
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-655",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- numPlaced",
+      "source_lines": [
+        655
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-656",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- customizations",
+      "source_lines": [
+        656
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogEntryInfo-657",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogEntryInfo",
+      "change": "- dyeIDs",
+      "source_lines": [
+        657
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCatalogSubcategoryInfo-659",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCatalogSubcategoryInfo",
+      "change": "# anyOwnedEntries -> anyStoredEntries",
+      "source_lines": [
+        659
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingCategorySearchInfo-661",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingCategorySearchInfo",
+      "change": "# withOwnedEntriesOnly -> withStoredEntriesOnly",
+      "source_lines": [
+        661
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-HousingDecorDyeSlot-663",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "HousingDecorDyeSlot",
+      "change": "+ dyeColorName",
+      "source_lines": [
+        663
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-MajorFactionRenownRewardInfo-665",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "MajorFactionRenownRewardInfo",
+      "change": "+ isCollected",
+      "source_lines": [
+        665
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-PvpBrawlInfo-667",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "PvpBrawlInfo",
+      "change": "+ shouldHideRewardIcon",
+      "source_lines": [
+        667
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-RecentAllyStateData-669",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "RecentAllyStateData",
+      "change": "# hasFriendRequestPending -> friendRequestSentThisSession",
+      "source_lines": [
+        669
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-TransmogAppearanceSourceInfoData-671",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "TransmogAppearanceSourceInfoData",
+      "change": "+ ignoreModelAttachmentChecksForIllusion",
+      "source_lines": [
+        671
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-TransmogOutfitEntryInfo-673",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "TransmogOutfitEntryInfo",
+      "change": "+ playerFacingOutfitIndex",
+      "source_lines": [
+        673
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-UnitPrivateAuraAnchorInfo-675",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "UnitPrivateAuraAnchorInfo",
+      "change": "+ isContainer",
+      "source_lines": [
+        675
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-UnitPrivateAuraAnchorInfo-676",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "UnitPrivateAuraAnchorInfo",
+      "change": "+ parent",
+      "source_lines": [
+        676
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    },
+    {
+      "id": "structures-ViewedTransmogOutfitSlotInfo-678",
+      "section": "Structures",
+      "kind": "delta",
+      "subject": "ViewedTransmogOutfitSlotInfo",
+      "change": "+ sheatheCategory",
+      "source_lines": [
+        678
+      ],
+      "chronology": "consolidated-final",
+      "status": "consolidated-delta"
+    }
+  ]
+}
