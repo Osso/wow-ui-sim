@@ -1,13 +1,13 @@
-//! Publication only. Retail intentionally retains its two-member simulator drift.
+//! Numeric publication only, including cumulative 12.0.5 retail additions.
 
 use crate::lua_api::WowLuaEnv;
 
 fn assert_publication(env: &WowLuaEnv, ptr: bool) {
     env.exec(&format!(
         r#"
-        local expected = {{ HideUntilCollected = 1, PlayerConditionGrantsOnLogin = 2 }}
+        local expected = {{ HideUntilCollected = 1, PlayerConditionGrantsOnLogin = 2,
+            AllowedRangedShieldsHoldables = 4 }}
         if {ptr} then
-            expected.AllowedRangedShieldsHoldables = 4
             expected.HiddenIllusion = 8
         end
         local count = 0
@@ -23,7 +23,7 @@ fn assert_publication(env: &WowLuaEnv, ptr: bool) {
         assert(actualCount == count)
         local meta = Enum.TransmogIllusionFlagsMeta
         assert(meta.MinValue == 1)
-        assert(meta.MaxValue == ({ptr} and 8 or 2))
+        assert(meta.MaxValue == ({ptr} and 8 or 4))
         assert(meta.NumValues == count)
         "#
     ))
@@ -35,7 +35,7 @@ fn assert_publication(env: &WowLuaEnv, ptr: bool) {
 fn patch_12_1_5_transmog_illusion_flags_publication() {
     let env = WowLuaEnv::new().unwrap();
     let ptr = cfg!(feature = "client-ptr");
-    // Pinned base has value 4 and metadata 1/4/3; preserve actual retail 1/2/2.
+    // Retail publishes 12.0.5 values; PTR retains its additional HiddenIllusion bit.
     assert_publication(&env, ptr);
     crate::ptr::compat_bootstrap::apply_post_load(&env);
     assert_publication(&env, ptr);

@@ -235,6 +235,8 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
     }
     lua.exec(COMPAT_ENUMS_LUA)?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::patch_12_0_5_enums::register(lua.state_mut());
     #[cfg(feature = "client-wowforever")]
     {
         crate::c_api::forever_edit_mode_enums::register(lua.state_mut());
