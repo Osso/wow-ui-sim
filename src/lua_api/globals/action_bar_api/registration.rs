@@ -24,7 +24,6 @@ const GENERAL_METHODS: &[ActionBarMethod] = &[
 ];
 
 const BASIC_SLOT_VALUE_METHODS: &[ActionBarMethod] = &[
-    ("GetActionText", get_action_text),
     ("GetActionCount", get_action_count),
     ("GetActionDisplayCount", get_action_display_count),
     ("GetActionUseCount", get_action_use_count),
@@ -52,7 +51,6 @@ const COOLDOWN_SLOT_METHODS: &[ActionBarMethod] = &[
         "GetActionLossOfControlCooldownInfo",
         get_action_loss_of_control_cooldown_info,
     ),
-    ("UsesActionText", uses_action_text),
     ("GetActionChargeDuration", get_action_charge_duration),
     ("GetActionCooldownDuration", get_action_cooldown_duration),
     (

@@ -1,11 +1,7 @@
 //! Macro action associations; directive recognition is a simulator assumption.
-#[cfg(feature = "retail-12-1-5")]
-use crate::lua_api::methods::borrow_state;
-use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_api::state::SimState;
-use crate::lua_bridge::FromStack;
-#[cfg(feature = "retail-12-1-5")]
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -66,7 +62,42 @@ fn is_macro_action_with_showtooltip(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+// Inferred label rule: only an occupied macro action supplies text, regardless
+// of body/directives. Empty names denote unused macro entries in this model.
+fn read_action_text(state: &LuaState) -> LuaResult<Option<String>> {
+    let slot = match stack_val(state, 1) {
+        Val::Num(number) if number >= 0.0 => number as u32,
+        _ => return Ok(None),
+    };
+    let sim = borrow_state(state)?;
+    let name = sim
+        .action_macros
+        .get(&slot)
+        .and_then(|id| id.checked_sub(1))
+        .and_then(|index| sim.macros.get(index as usize))
+        .map(|entry| &entry.name);
+    Ok(name.filter(|name| !name.is_empty()).cloned())
+}
+
+fn uses_action_text(state: &mut LuaState) -> LuaResult<u32> {
+    let uses_text = read_action_text(state)?.is_some();
+    state.push(Val::Bool(uses_text));
+    Ok(1)
+}
+
+fn get_action_text(state: &mut LuaState) -> LuaResult<u32> {
+    let text = read_action_text(state)?;
+    let value = match text {
+        Some(name) => create_string(state, &name),
+        None => Val::Nil,
+    };
+    state.push(value);
+    Ok(1)
+}
+
 pub fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "UsesActionText", uses_action_text)?;
+    table_set_rust_fn_static(state, namespace, "GetActionText", get_action_text)?;
     #[cfg(feature = "retail-12-1-5")]
     table_set_rust_fn_static(
         state,

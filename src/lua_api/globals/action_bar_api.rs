@@ -205,11 +205,6 @@ fn is_possess_bar_visible(state: &mut LuaState) -> LuaResult<u32> {
     push_bool(state, visible)
 }
 
-fn get_action_text(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = stack_val(state, 1);
-    push_nil(state)
-}
-
 fn get_action_count(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     push_i32(state, 0)
@@ -299,11 +294,6 @@ fn get_action_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u
     table_set(state, info, "shouldReplaceNormalCooldown", Val::Bool(false));
     state.push(info);
     Ok(1)
-}
-
-fn uses_action_text(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = stack_val(state, 1);
-    push_bool(state, false)
 }
 
 fn get_action_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
