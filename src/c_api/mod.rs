@@ -69,6 +69,7 @@ pub mod c_pvp;
 pub mod c_quest_hub;
 pub mod c_report_system;
 pub mod c_reputation;
+pub mod c_scenario_info;
 #[cfg(feature = "aura-containers")]
 pub mod c_secrets;
 pub mod c_settings_util;

@@ -127,6 +127,8 @@ pub struct ScenarioState {
     pub is_tiered_entrance: bool,
     /// Ordered list of steps. Indexed by `step_id - 1`.
     pub steps: Vec<ScenarioStep>,
+    /// Supplied per-token Enemy Forces credit; absent rows have no result.
+    pub unit_criteria: HashMap<String, crate::c_api::c_scenario_info::UnitCriteriaProgress>,
 }
 
 impl Default for ScenarioState {
@@ -141,6 +143,7 @@ impl Default for ScenarioState {
             texture_kit: String::new(),
             is_tiered_entrance: false,
             steps: Vec::new(),
+            unit_criteria: HashMap::new(),
         }
     }
 }
