@@ -1,0 +1,979 @@
+{
+  "source": "MediaWiki allpages prefix=Patch namespace0",
+  "retrieved": "2026-09-30",
+  "pagination_complete": true,
+  "batches": 2,
+  "patch_page_count": 818,
+  "api_change_pages": [
+    {
+      "pageid": 67688,
+      "ns": 0,
+      "title": "Patch 1.0.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 271516,
+      "ns": 0,
+      "title": "Patch 1.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 385987,
+      "ns": 0,
+      "title": "Patch 1.10.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 152527,
+      "ns": 0,
+      "title": "Patch 1.10.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 465540,
+      "ns": 0,
+      "title": "Patch 1.10.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 109825,
+      "ns": 0,
+      "title": "Patch 1.11.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 326189,
+      "ns": 0,
+      "title": "Patch 1.12.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 115161,
+      "ns": 0,
+      "title": "Patch 1.13.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 455918,
+      "ns": 0,
+      "title": "Patch 1.13.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 333398,
+      "ns": 0,
+      "title": "Patch 1.13.4/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 398847,
+      "ns": 0,
+      "title": "Patch 1.13.5/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 461367,
+      "ns": 0,
+      "title": "Patch 1.13.6/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 46829,
+      "ns": 0,
+      "title": "Patch 1.13.7/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 71995,
+      "ns": 0,
+      "title": "Patch 1.14.0/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 102588,
+      "ns": 0,
+      "title": "Patch 1.14.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 236101,
+      "ns": 0,
+      "title": "Patch 1.14.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 480026,
+      "ns": 0,
+      "title": "Patch 1.14.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 267043,
+      "ns": 0,
+      "title": "Patch 1.14.4/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 564510,
+      "ns": 0,
+      "title": "Patch 1.15.0/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 577687,
+      "ns": 0,
+      "title": "Patch 1.15.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 583919,
+      "ns": 0,
+      "title": "Patch 1.15.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 593663,
+      "ns": 0,
+      "title": "Patch 1.15.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 600355,
+      "ns": 0,
+      "title": "Patch 1.15.4/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 610284,
+      "ns": 0,
+      "title": "Patch 1.15.5/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 619994,
+      "ns": 0,
+      "title": "Patch 1.15.6/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 626071,
+      "ns": 0,
+      "title": "Patch 1.15.7/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686952,
+      "ns": 0,
+      "title": "Patch 1.15.8/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 685352,
+      "ns": 0,
+      "title": "Patch 1.15.9/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 350208,
+      "ns": 0,
+      "title": "Patch 1.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 316397,
+      "ns": 0,
+      "title": "Patch 1.4.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 372076,
+      "ns": 0,
+      "title": "Patch 1.5.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 310843,
+      "ns": 0,
+      "title": "Patch 1.6.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 707613,
+      "ns": 0,
+      "title": "Patch 1.60.1/API changes",
+      "scope": "forever",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 456653,
+      "ns": 0,
+      "title": "Patch 1.7.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 360905,
+      "ns": 0,
+      "title": "Patch 1.8.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 278324,
+      "ns": 0,
+      "title": "Patch 1.9.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 530068,
+      "ns": 0,
+      "title": "Patch 10.0.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 303146,
+      "ns": 0,
+      "title": "Patch 10.0.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 75033,
+      "ns": 0,
+      "title": "Patch 10.0.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 108565,
+      "ns": 0,
+      "title": "Patch 10.0.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 230704,
+      "ns": 0,
+      "title": "Patch 10.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 396196,
+      "ns": 0,
+      "title": "Patch 10.1.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 442982,
+      "ns": 0,
+      "title": "Patch 10.1.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 12983,
+      "ns": 0,
+      "title": "Patch 10.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 564286,
+      "ns": 0,
+      "title": "Patch 10.2.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 582132,
+      "ns": 0,
+      "title": "Patch 10.2.6/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 584467,
+      "ns": 0,
+      "title": "Patch 10.2.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 585562,
+      "ns": 0,
+      "title": "Patch 11.0.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 595347,
+      "ns": 0,
+      "title": "Patch 11.0.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 601519,
+      "ns": 0,
+      "title": "Patch 11.0.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 609319,
+      "ns": 0,
+      "title": "Patch 11.0.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 616105,
+      "ns": 0,
+      "title": "Patch 11.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 621744,
+      "ns": 0,
+      "title": "Patch 11.1.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 628473,
+      "ns": 0,
+      "title": "Patch 11.1.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 636685,
+      "ns": 0,
+      "title": "Patch 11.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 641912,
+      "ns": 0,
+      "title": "Patch 11.2.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 649551,
+      "ns": 0,
+      "title": "Patch 11.2.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 649552,
+      "ns": 0,
+      "title": "Patch 12.0.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 659762,
+      "ns": 0,
+      "title": "Patch 12.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 670710,
+      "ns": 0,
+      "title": "Patch 12.0.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "in-progress",
+      "source_snapshot": "sources/12.0.5-api-changes.txt"
+    },
+    {
+      "pageid": 675928,
+      "ns": 0,
+      "title": "Patch 12.0.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 679840,
+      "ns": 0,
+      "title": "Patch 12.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 705933,
+      "ns": 0,
+      "title": "Patch 12.1.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 324401,
+      "ns": 0,
+      "title": "Patch 2.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 279373,
+      "ns": 0,
+      "title": "Patch 2.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 184149,
+      "ns": 0,
+      "title": "Patch 2.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 44655,
+      "ns": 0,
+      "title": "Patch 2.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 73272,
+      "ns": 0,
+      "title": "Patch 2.4.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 81145,
+      "ns": 0,
+      "title": "Patch 2.4.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 71215,
+      "ns": 0,
+      "title": "Patch 2.5.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 69347,
+      "ns": 0,
+      "title": "Patch 2.5.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 53568,
+      "ns": 0,
+      "title": "Patch 2.5.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 515131,
+      "ns": 0,
+      "title": "Patch 2.5.4/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686953,
+      "ns": 0,
+      "title": "Patch 2.5.5/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 685353,
+      "ns": 0,
+      "title": "Patch 2.5.6/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 482353,
+      "ns": 0,
+      "title": "Patch 3.0.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 560990,
+      "ns": 0,
+      "title": "Patch 3.0.3/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 95599,
+      "ns": 0,
+      "title": "Patch 3.0.8/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 233195,
+      "ns": 0,
+      "title": "Patch 3.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 499137,
+      "ns": 0,
+      "title": "Patch 3.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 522376,
+      "ns": 0,
+      "title": "Patch 3.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 261776,
+      "ns": 0,
+      "title": "Patch 3.3.3/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 25049,
+      "ns": 0,
+      "title": "Patch 3.3.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 16896,
+      "ns": 0,
+      "title": "Patch 3.4.0/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 379792,
+      "ns": 0,
+      "title": "Patch 3.4.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 355030,
+      "ns": 0,
+      "title": "Patch 3.4.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 152751,
+      "ns": 0,
+      "title": "Patch 3.4.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 129645,
+      "ns": 0,
+      "title": "Patch 4.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 426651,
+      "ns": 0,
+      "title": "Patch 4.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 315583,
+      "ns": 0,
+      "title": "Patch 4.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 167555,
+      "ns": 0,
+      "title": "Patch 4.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 389302,
+      "ns": 0,
+      "title": "Patch 4.3.4/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 580953,
+      "ns": 0,
+      "title": "Patch 4.4.0/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 608915,
+      "ns": 0,
+      "title": "Patch 4.4.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 619773,
+      "ns": 0,
+      "title": "Patch 4.4.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 554410,
+      "ns": 0,
+      "title": "Patch 5.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 385020,
+      "ns": 0,
+      "title": "Patch 5.0.4/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 282785,
+      "ns": 0,
+      "title": "Patch 5.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 422312,
+      "ns": 0,
+      "title": "Patch 5.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 423274,
+      "ns": 0,
+      "title": "Patch 5.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 414879,
+      "ns": 0,
+      "title": "Patch 5.4.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 221650,
+      "ns": 0,
+      "title": "Patch 5.4.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 262849,
+      "ns": 0,
+      "title": "Patch 5.4.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 549368,
+      "ns": 0,
+      "title": "Patch 5.4.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 177816,
+      "ns": 0,
+      "title": "Patch 5.4.8/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 628475,
+      "ns": 0,
+      "title": "Patch 5.5.0/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686954,
+      "ns": 0,
+      "title": "Patch 5.5.1/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686956,
+      "ns": 0,
+      "title": "Patch 5.5.2/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686957,
+      "ns": 0,
+      "title": "Patch 5.5.3/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 686958,
+      "ns": 0,
+      "title": "Patch 5.5.4/API changes",
+      "scope": "classic",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 3058,
+      "ns": 0,
+      "title": "Patch 6.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 556401,
+      "ns": 0,
+      "title": "Patch 6.0.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 123523,
+      "ns": 0,
+      "title": "Patch 6.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 149103,
+      "ns": 0,
+      "title": "Patch 6.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 122147,
+      "ns": 0,
+      "title": "Patch 6.2.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 212964,
+      "ns": 0,
+      "title": "Patch 6.2.4/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 336026,
+      "ns": 0,
+      "title": "Patch 7.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 549091,
+      "ns": 0,
+      "title": "Patch 7.0.3/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 389232,
+      "ns": 0,
+      "title": "Patch 7.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 412195,
+      "ns": 0,
+      "title": "Patch 7.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 448509,
+      "ns": 0,
+      "title": "Patch 7.2.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 553643,
+      "ns": 0,
+      "title": "Patch 7.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 230850,
+      "ns": 0,
+      "title": "Patch 7.3.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 149302,
+      "ns": 0,
+      "title": "Patch 8.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 464337,
+      "ns": 0,
+      "title": "Patch 8.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 394493,
+      "ns": 0,
+      "title": "Patch 8.1.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 533235,
+      "ns": 0,
+      "title": "Patch 8.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 83383,
+      "ns": 0,
+      "title": "Patch 8.2.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 109654,
+      "ns": 0,
+      "title": "Patch 8.3.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 160588,
+      "ns": 0,
+      "title": "Patch 8.3.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 229972,
+      "ns": 0,
+      "title": "Patch 9.0.1/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 66933,
+      "ns": 0,
+      "title": "Patch 9.0.2/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 447309,
+      "ns": 0,
+      "title": "Patch 9.0.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 17181,
+      "ns": 0,
+      "title": "Patch 9.1.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 219137,
+      "ns": 0,
+      "title": "Patch 9.1.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 496546,
+      "ns": 0,
+      "title": "Patch 9.2.0/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 237255,
+      "ns": 0,
+      "title": "Patch 9.2.5/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    },
+    {
+      "pageid": 542130,
+      "ns": 0,
+      "title": "Patch 9.2.7/API changes",
+      "scope": "retail-history-candidate",
+      "audit_status": "source-discovered"
+    }
+  ],
+  "scope_note": "Complete MediaWiki allpages discovery for existing Patch*/API changes page titles; retail candidates require page-by-page applicability audit. No nonexistent/deleted/moved/title-variant pages are claimed covered. Work proceeds one patch page at a time.",
+  "retail_candidate_count": 98,
+  "classification_basis": "Version families: original1.x through1.12,2.x through2.4,3.x through3.3,4.x through4.3,5.x through5.4,6.x onward classified as retail history candidates; Classic rereleases and Forever separated. Candidate title classification is not page-content/client-API applicability proof."
+}
