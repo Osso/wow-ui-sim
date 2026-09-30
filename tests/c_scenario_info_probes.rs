@@ -55,6 +55,7 @@ fn get_scenario_info_returns_seeded_scenario() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Assault on Violet Hold".into(),
+            unit_criteria: Default::default(),
             scenario_id: 101,
             current_step: 2,
             num_steps: 3,
@@ -86,6 +87,7 @@ fn get_scenario_step_info_returns_current_step() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Test Scenario".into(),
+            unit_criteria: Default::default(),
             scenario_id: 5,
             current_step: 1,
             num_steps: 2,
@@ -123,6 +125,7 @@ fn get_scenario_step_info_by_explicit_step_id() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Multi Step".into(),
+            unit_criteria: Default::default(),
             scenario_id: 7,
             current_step: 1,
             num_steps: 2,
@@ -165,6 +168,7 @@ fn get_scenario_bonus_step_reward_returns_nil_for_non_bonus() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Bonus Test".into(),
+            unit_criteria: Default::default(),
             scenario_id: 10,
             current_step: 1,
             num_steps: 2,
@@ -196,6 +200,7 @@ fn get_scenario_bonus_step_reward_returns_quest_id_for_bonus() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Bonus Quest Scenario".into(),
+            unit_criteria: Default::default(),
             scenario_id: 20,
             current_step: 2,
             num_steps: 2,
@@ -254,6 +259,7 @@ fn is_bonus_step_field_populated_in_step_info() {
         state.scenario = ScenarioState {
             in_scenario: true,
             name: "Bonus Marker".into(),
+            unit_criteria: Default::default(),
             scenario_id: 30,
             current_step: 1,
             num_steps: 1,
