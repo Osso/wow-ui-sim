@@ -132,6 +132,10 @@ The exact current replay remains **failed**. It reports trailing `[]` but one XM
 
 The warning-only observation is superseded by clean `f095f24c6` build `/tmp/forever-addon-audit/xml-collector-clean-build-2e1thpb8/ledger.json` and exact replay `/tmp/forever-addon-runtime/datamine-collected-error-mzafz9ai/ledger.json`: canonical `lua-errors` exits `1` with the nested XML `CreateFrame` error from `MovieFrame.lua:270` calling missing `EnableSubtitles`, plus its Blizzard ScriptErrors mirror. The archive has 863 byte-identical members and unchanged host CVars. This corrects diagnostics only; it does not implement MovieFrame subtitles or establish startup/UI acceptance.
 
+### Current replay blocker (2026-09-30)
+
+The MovieFrame preference setter is committed through `4fde11dec` and remains in current `master`; the missing-method replay above predates it. Datamine acceptance is still unverified after that change. Historical `/tmp/forever-addon-archives`, `/tmp/forever-addon-runtime`, and `/tmp/forever-addon-audit` artifacts are no longer available. Referenced results are historical records, not currently inspectable proof. Bounded searches of Downloads, the simulator cache, and project data found no surviving exact Datamine archive. Restore `Datamine-v2.5.4a.zip` (file ID `8936714`, 1,478,999 bytes, SHA-256 `68ff4c852ea469af089ae9098eef47242e296a5eb52513af8ffccbbbfe14b15f`) before unchanged-addon replay. No replacement download or new startup/workflow credit is authorized by this blocker.
+
 ## Acceptance discipline
 
 - Verify that intended addon roots actually load; empty error JSON with nothing loaded is not a pass.

@@ -25,7 +25,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Replay unchanged Datamine archive to determine whether MovieFrame initialization proceeds and whether new errors surface.
+- [ ] Replay unchanged Datamine archive to determine whether MovieFrame initialization proceeds and whether new errors surface. Exact archive and historical runtime artifacts are unavailable as of 2026-09-30; see [replay blocker](../forever-addon-runtime-coverage.md#current-replay-blocker-2026-09-30).
 
 ## Out of scope
 
