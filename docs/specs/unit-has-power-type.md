@@ -5,10 +5,10 @@
 ## What it must do
 
 - [ ] Publish only with cumulative `retail-12-0-5`; older epochs/profiles without that feature retain no global. Older-profile execution remains unverified in this slice.
-- [ ] Return one ordinary, non-secret boolean for matching and nonmatching capabilities.
-- [ ] Inferred simulator capability: a present unit's primary type matches even with zero current and maximum resources. Player/self also match any explicitly modeled secondary-map entry, even with zero current or maximum; removal removes capability.
-- [ ] Inferred simulator absence: absent target/focus, inactive group tokens, unknown tokens and empty strings return false, never player capability. Present target/group units expose only their primary type. Pet/vehicle retain existing player-primary vitals aliasing but do not inherit player secondary entries.
-- [ ] Inferred argument policy: require string unitToken and a finite numeric integral powerType representable as i32; missing/nil, wrong types, numeric strings, fractions, nonfinite numbers and overflow error, including for absent units. Valid unmodeled integers return false. No generic secondary maximum invents capability.
+- [x] Return one ordinary, non-secret boolean for matching and nonmatching capabilities.
+- [x] Inferred simulator capability: a present unit's primary type matches even with zero current and maximum resources. Player/self also match any explicitly modeled secondary-map entry, even with zero current or maximum; removal removes capability.
+- [x] Inferred simulator absence: absent target/focus, inactive group tokens, unknown tokens and empty strings return false, never player capability. Present target/group units expose only their primary type. Pet/vehicle retain existing player-primary vitals aliasing but do not inherit player secondary entries.
+- [x] Inferred argument policy: require string unitToken and a finite numeric integral powerType representable as i32; missing/nil, wrong types, numeric strings, fractions, nonfinite numbers and overflow error, including for absent units. Valid unmodeled integers return false. No generic secondary maximum invents capability.
 
 ## How it works
 
@@ -22,7 +22,7 @@
 ## Tests asserting this spec
 
 - `tests/unit_has_power_type.rs`: five focused current-retail tests with concrete primary/secondary, target and group state; real Lua capability, arity, secrecy and error queries. Generated grouping in existing `integration` target adds no Cargo target. A feature-off publication test is available but not run in this slice.
-- Corrected RED: five API-missing failures before production changes. Targeted GREEN pending shared compilation. Commands, source hashes, results and logs: `/tmp/patch-12.0.5-unit-power-ledger.md`. Final readability/check verifier belongs to main.
+- Corrected RED: five API-missing failures before production changes. Implementation `5bfca2e16` passes targeted GREEN 5/5 with the shared default-retail integration binary compiled at `72220958b`; `timeout 90` direct filtered execution exits 0 in 0.23 seconds. Checked requirements describe tested simulator behavior, not native verification. Commands, source hashes, results and logs: `/tmp/patch-12.0.5-unit-power-ledger.md` and `/tmp/patch-12.0.5-unit-power-green.log`. Final readability/check verifier belongs to main.
 
 ## Known gaps (current cycle)
 
