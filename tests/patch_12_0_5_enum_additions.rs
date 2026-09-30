@@ -60,8 +60,8 @@ fn currency_flags_publish_no_bonus_xp_and_retain_old_members() {
 
 #[test]
 fn illusion_flags_publish_ranged_permission_and_retain_old_members() {
-    let later_epoch = cfg!(feature = "retail-12-1-5");
-    let expected = if later_epoch {
+    let ptr = cfg!(feature = "client-ptr");
+    let expected = if ptr {
         "{ HideUntilCollected=1, PlayerConditionGrantsOnLogin=2,
         AllowedRangedShieldsHoldables=4, HiddenIllusion=8 }"
     } else {
@@ -71,9 +71,9 @@ fn illusion_flags_publish_ranged_permission_and_retain_old_members() {
     assert_publication(
         "TransmogIllusionFlags",
         expected,
-        if later_epoch { 4 } else { 3 },
+        if ptr { 4 } else { 3 },
         1,
-        if later_epoch { 8 } else { 4 },
+        if ptr { 8 } else { 4 },
     );
 }
 
