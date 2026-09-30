@@ -5229,3 +5229,7 @@ Audited `70e681266` against the pinned 12.1.5 event/query register and current s
 ## [2026-09-11] audit | Credit PTR spellcast self-cancel interruption
 
 `c89d475e1` and proof record `6278d87a9` credit only `UNIT_SPELLCAST_INTERRUPTED` for modeled `SpellStopCasting()` self-cancel. Focused real producer tests cover captured state clear, five fields including resolved player GUID, paired STOP, repeat false/no notifications, no later completion/effect, and interruption/STOP callback replacement casts. `INTERRUPTED`→`STOP` ordering and self attribution remain simulator policy; enemy/native/security semantics and every other unimplemented spellcast event remain unresolved. Totals: 424 best-effort, 25 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-30] ingest | Expand 12.0.5 source-audit boundary
+
+Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], and index links after source-retention commit `7ff275fd3`. Expanded audit is IN PROGRESS: retained plaintext page/provenance and working inventory distinguish 244 consolidated delta rows / 186 subjects from 118 chronological prose rows (including narrative), with 0 CVar entries. The historical 38 native-probe subfindings do not establish full-page coverage. User-requested best-supported guesses remain explicitly guessed and track concrete future probes; no completed behavior or native-verification claim.

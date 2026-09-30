@@ -2,6 +2,8 @@
 Probe-subfinding register for the retained 12.0.5 live-client audit. Machine status advances only with row-specific behavioral evidence or item-specific evidence for an explicit exception path; prior documented states remain visible separately.
 
 ## Content
+
+**Coverage boundary:** these 38 native-probe subfindings are not full patch-page coverage. The retained page and expanded source audit (**IN PROGRESS**, no completed behavior claim) are documented in [[patch-12-0-5-api-audit]]; its inventory counts 244 consolidated delta rows / 186 subjects plus 118 chronological prose rows, including narrative, and 0 CVar entries. Best-supported implementation guesses must remain labeled and paired with concrete future probes, not native-verification claims.
 - **Source:** `data/patch-api/sources/12.0.5-probes.json`
 - **Source SHA-256:** `2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca`
 - **Target:** retail build `12.0.5`

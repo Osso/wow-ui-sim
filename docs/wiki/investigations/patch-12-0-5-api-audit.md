@@ -1,12 +1,16 @@
 # Patch 12.0.5 API Audit
 
-Patch 12.0.5 work in wow-ui-sim is probe-driven rather than a single additive API-diff bridge pass. Retail `12.0.5.67823` live probes pinned core frame, event, attribute, identity, scale-event, and XML frame-level behavior; the simulator already models the safe findings with regression coverage. No dedicated `patch_12_0_5_inert_defaults` module exists.
+The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention commit `7ff275fd3`; full-page behavior coverage is not established. Earlier work was probe-driven rather than a full API-change-page audit. Retail `12.0.5.67823` live probes pinned core frame, event, attribute, identity, scale-event, and XML frame-level behavior; the simulator already models the safe findings with regression coverage. No dedicated `patch_12_0_5_inert_defaults` module exists.
 
 ## Content
 
 ### Source scope
 
-The 12.0.5 audit sources are live-client probe addons under `docs/addons/` and the corresponding wiki investigation pages. Unlike the later 12.0.7 and 12.1 passes, this audit did not start from a patch-specific API-change page with a large additive namespace list.
+The original audit used live-client probe addons under `docs/addons/` and corresponding wiki investigations, not the full patch page. Commit `7ff275fd3` retains the entire plaintext **Patch 12.0.5/API changes** extract in [12.0.5-api-changes.txt](../../../data/patch-api/sources/12.0.5-api-changes.txt), with [retrieval provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json): retrieved 2026-09-30, SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`. This is plaintext, not raw wikitext or its link graph.
+
+The source inventory `/tmp/patch-12.0.5-inventory.json` counts **244 consolidated delta rows / 186 distinct subjects**, plus **118 chronological prose rows**; some prose is narrative rather than an API. Consolidated sections cover Global API, ScriptObjects, Widgets, Events, Enums, and Structures. The source has **0 CVar entries**. These are source-coverage counts, not implemented API counts or behavioral proof. Chronological PTR proposals and future plans must remain distinct from the consolidated snapshot; 362 inventory rows do not imply 362 shipped APIs.
+
+**Guessed implementation policy:** the user explicitly requests best-supported guesses for missing APIs rather than stalling for native evidence. Label each guessed contract as a guess, record its supporting evidence, and track a concrete future probe identifying the call/input scenario and observable results needed to resolve uncertainty. Guesses and simulator tests do not establish native semantics. Existing probe-register classifications below are preserved, not silently reclassified by this expanded policy.
 
 Primary retained 12.0.5 probe sources (13 SavedVariables captures): `AnimScriptProbe`, `AttributeDispatchProbe`, `CoreBehaviorProbe`, `DevToolsDumpProbe`, `FrameIdentityProbe`, `HookScriptBindingProbe`, `IsProtectedProbe`, `JustifyProbe`, `ProtectedRetailProbe`, `ScaleEventProbe`, `SetAtlasProbe`, `StoreForbiddenProbe`, and `TextureSetTextureProbe`. `XmlFrameLevelProbe` findings are documented, but its raw capture was not retained.
 
@@ -76,9 +80,12 @@ The remaining generic defaults are intentionally outside this 12.0.5 audit unles
 
 ### Audit state
 
-This audit remains open with 4 evidence-required rows and 1 approved provenance-only exception-requested row. The four behavior gaps are one impossible same-size input-boundary gap and three unsafe Store/security gaps; they are not exception or approval candidates. Authoritative/live evidence or correct behavior is still required before this audit can close. No 12.0.5-specific inert-default module remains, but absence of a patch shim is not proof that every retained probe result has exact regression coverage.
+The expanded source audit remains **IN PROGRESS**, with no completed full-page behavior claim. Separately, the historical 38-subfinding probe register remains open with 4 evidence-required rows and 1 approved provenance-only exception-requested row. The four behavior gaps are one impossible same-size input-boundary gap and three unsafe Store/security gaps; they are not exception or approval candidates. Authoritative/live evidence or correct behavior is still required before this audit can close. No 12.0.5-specific inert-default module remains, but absence of a patch shim is not proof that every retained probe result has exact regression coverage.
 
 ## Sources
+
+- [Retained full plaintext patch page](../../../data/patch-api/sources/12.0.5-api-changes.txt) and [provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json) — expanded source audit, not behavior proof.
+- `/tmp/patch-12.0.5-inventory.json` — working source inventory; temporary artifact, not a committed manifest.
 
 - [[retail-core-behavior-probes]] — core 12.0.5 live-client behavior findings.
 - [[frame-surrogate-identity-slot]] — frame `[0]` identity-token behavior.
@@ -92,6 +99,8 @@ This audit remains open with 4 evidence-required rows and 1 approved provenance-
 - [Cargo lockfile](../../../Cargo.lock) — pinned iced 0.14.0 and winit 0.30.12.
 
 ## See Also
+
+- [[patch-12-0-5-probe-inventory]] — only 38 native-probe subfindings, not full patch-page coverage.
 
 - [[patch-12-0-7-api-audit]] — later additive API bridge audit pattern.
 - [[patch-12-1-api-audit]] — PTR API bridge audit pattern.
