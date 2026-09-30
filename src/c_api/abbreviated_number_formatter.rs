@@ -182,7 +182,7 @@ pub(crate) fn format_value(
             row.abbreviation
         )));
     };
-    let template = val_to_string(state, abbreviation)
+    let suffix = val_to_string(state, abbreviation)
         .ok_or_else(|| runtime_error("abbreviation global must be UTF-8"))?;
-    Ok((model::render_global_abbreviation(&template, &text)?, secret))
+    Ok((format!("{text}{suffix}"), secret))
 }

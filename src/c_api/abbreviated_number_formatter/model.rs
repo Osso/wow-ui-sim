@@ -69,33 +69,3 @@ pub(super) fn render_number(number: f64, row: Option<&Breakpoint>) -> LuaResult<
     let signed = if number < 0.0 { -rounded } else { rounded };
     Ok(signed.to_string())
 }
-
-pub(super) fn render_global_abbreviation(template: &str, number: &str) -> LuaResult<String> {
-    let mut result = String::new();
-    let mut chars = template.chars();
-    let mut conversions = 0;
-    while let Some(character) = chars.next() {
-        if character != '%' {
-            result.push(character);
-            continue;
-        }
-        match chars.next() {
-            Some('%') => result.push('%'),
-            Some('s' | 'd') => {
-                result.push_str(number);
-                conversions += 1;
-            }
-            _ => {
-                return Err(runtime_error(
-                    "unsupported abbreviation global format; expected %s or %d",
-                ));
-            }
-        }
-    }
-    if conversions != 1 {
-        return Err(runtime_error(
-            "abbreviation global must contain one numeric conversion",
-        ));
-    }
-    Ok(result)
-}

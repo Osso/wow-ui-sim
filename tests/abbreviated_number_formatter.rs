@@ -55,7 +55,7 @@ fn documented_default_and_duration_format_methods() {
 fn custom_breakpoints_global_lookup_and_private_copies() {
     execute(
         r#"
-        CUSTOM_ABBREVIATION = '%s chips'
+        CUSTOM_ABBREVIATION = ' chips'
         local config = {row(10000, 'K', 1000, 1), row(1000, 'K', 100, 10)}
         formatter:SetBreakpoints(config)
         config[2].abbreviation = 'changed'
@@ -71,6 +71,9 @@ fn custom_breakpoints_global_lookup_and_private_copies() {
             significandDivisor=100000, fractionDivisor=10})
         assert(duration(1234567):FormatTotalDuration(formatter) == '1.2 chips')
         assert(duration(1234567):FormatTotalDuration(copied) == '1234K')
+        formatter:SetBreakpoints({{breakpoint=1000, abbreviation='FIRST_NUMBER_CAP_NO_SPACE',
+            significandDivisor=100, fractionDivisor=10}})
+        assert(duration(1234):FormatTotalDuration(formatter) == '1.2K')
         formatter:ClearBreakpoints()
         assert(#formatter:GetBreakpoints() == 0)
         assert(duration(123456):FormatTotalDuration(formatter) == '123456')
