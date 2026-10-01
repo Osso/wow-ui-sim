@@ -1166,7 +1166,7 @@
       "source_id": "prose-2026-03-31-169",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Final March 31 contract retained; bounded ready-check subset parent GREEN only: docs/specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01. Independent acceptance pending; countdown, ping and loot restrictions undone. No native restriction parity or whole-row credit."
+      "note": "Final March 31 contract retained; bounded independently accepted ready-check subset only: docs/specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01. Countdown, ping and loot restrictions undone. No native restriction parity or whole-row credit."
     },
     {
       "source_id": "prose-2026-03-31-170",

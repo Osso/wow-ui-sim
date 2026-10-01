@@ -1,8 +1,8 @@
 # Patch 12.0.5 API Audit
 
-### Chat lockdown ready checks — parent GREEN, independent pending
+### Chat lockdown ready checks — bounded independent PASS
 
-[Ready-check proof](../../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01) owns actual compiled RED `8649fe072` (**1 PASS / 5 FAIL**, compile 0/162.49s) and producer GREEN `f62420536` (**6 ready + 5 predicate + 11 group = 22 PASS**, compile 0/296.24s), plus saved startup exit0 `[]`. Intervening docs `6f264ce3e` is not compilation provenance. Verifier266 report absent during reconciliation: **independent bounded acceptance PENDING**. Error reporting, legacy alias and explicit-input policy are simulator inferences, not native restriction parity.
+[Ready-check proof](../../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01) owns actual compiled RED `8649fe072` (**1 PASS / 5 FAIL**, compile 0/162.49s) and producer GREEN `f62420536` (**6 ready + 5 predicate + 11 group = 22 PASS**, compile 0/296.24s), plus saved startup exit0 `[]`. Intervening docs `6f264ce3e` is not compilation provenance. Full verifier266 report now accepts bounded saved behavior and wiring/readability; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later concurrent ping inputs excluded; linked spec owns exact gate artifacts. Error reporting, legacy alias and explicit-input policy are simulator inferences, not native restriction parity.
 
 Exact final **`prose-2026-03-31-169` remains audit-pending** with bounded ready-check subset link only; countdown/ping/loot undone. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
 

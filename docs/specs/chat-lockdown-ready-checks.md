@@ -6,11 +6,11 @@ Retained source [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-reg
 
 ## What it must do
 
-- [ ] With explicit `chat_messaging_lockdown = true`, reject `C_PartyInfo.DoReadyCheck()` and `C_PartyInfo.ConfirmReadyCheck(bool)` before changing either `ready_check.active` or `ready_check.response`, or dispatching any `READY_CHECK`, `READY_CHECK_CONFIRM`, or `READY_CHECK_FINISHED` event. Cover combat false and true, fresh/inactive state, and preexisting active/response state.
-- [ ] With explicit lockdown false, preserve existing ready-check behavior independently of combat: start sets active true and clears response; confirmation sets active false and stores either true or false. Clearing lockdown after rejection permits subsequent operations in the same environment without changing combat.
-- [ ] Preserve existing synchronous observable events: start emits one `READY_CHECK` with zero arguments; confirmation emits `READY_CHECK_CONFIRM("player", response)` then `READY_CHECK_FINISHED()` exactly once each. Real frame handlers observe the updated queried status and active time-left state. These payload/timing expectations characterize existing simulator behavior, not native parity.
-- [ ] Apply the same restriction and unlock recovery to existing legacy `ReadyCheck()`, including fresh and preexisting active/response fixtures; no alias bypass.
-- [ ] **SIMULATOR INFERENCE:** report a blocked call as an explicit runtime error detectable by `pcall`. Native blocked-error convention is **UNKNOWN**; no native name/message parity is asserted. Tests require failure and an error value, not a hardcoded full error string.
+- [x] With explicit `chat_messaging_lockdown = true`, reject `C_PartyInfo.DoReadyCheck()` and `C_PartyInfo.ConfirmReadyCheck(bool)` before changing either `ready_check.active` or `ready_check.response`, or dispatching any `READY_CHECK`, `READY_CHECK_CONFIRM`, or `READY_CHECK_FINISHED` event. Cover combat false and true, fresh/inactive state, and preexisting active/response state.
+- [x] With explicit lockdown false, preserve existing ready-check behavior independently of combat: start sets active true and clears response; confirmation sets active false and stores either true or false. Clearing lockdown after rejection permits subsequent operations in the same environment without changing combat.
+- [x] Preserve existing synchronous observable events: start emits one `READY_CHECK` with zero arguments; confirmation emits `READY_CHECK_CONFIRM("player", response)` then `READY_CHECK_FINISHED()` exactly once each. Real frame handlers observe the updated queried status and active time-left state. These payload/timing expectations characterize existing simulator behavior, not native parity.
+- [x] Apply the same restriction and unlock recovery to existing legacy `ReadyCheck()`, including fresh and preexisting active/response fixtures; no alias bypass.
+- [x] **SIMULATOR INFERENCE:** report a blocked call as an explicit runtime error detectable by `pcall`. Native blocked-error convention is **UNKNOWN**; no native name/message parity is asserted. Tests require failure and an error value, not a hardcoded full error string.
 
 The test module is gated by both `profile-retail` and `retail-12-0-5` (12.0.5+ epoch), matching the explicit input. No combat-derived restriction, new input, Lua setter, security change, or profile expansion is authorized.
 
@@ -58,14 +58,14 @@ Saved metadata, not intervening docs HEAD, binds RED to `8649fe0729940ab46607508
 | `-green-run-1.log`, `-green-run-2.log` | Same integration executable SHA256 `1fc5661696075543d29b332f0059efcb7c844b09e003c4af14bf658b64ba87de`; **5 predicate + 11 group controls PASS**, each exit 0; **22 total PASS** across three filters, not one combined run. |
 | `-green-startup-run.json`, `-green-startup.json`, `-green-startup.log` | Producer-bound normal binary; exit 0, saved `[]`, CLEAN with zero unique/occurrence Lua errors. Ancillary parent startup, not independent acceptance. |
 
-**Independent acceptance PENDING:** verifier266 report `/tmp/patch-12.0.5-ready-check-lockdown-independent-proof.md` was absent during reconciliation. Parent GREEN supports bounded development evidence only; requirements remain unchecked until independent audit. No builds/tests/checks were rerun by this docs reconciliation.
+**Independent bounded acceptance PASS:** full verifier266 report `/tmp/patch-12.0.5-ready-check-lockdown-independent-proof.md` arrived after the parent-proof checkpoint. It accepts saved 22 PASS, state-preserving rejection/event silence, existing alias, unlock recovery, both combat axes and exact existing simulator event observations. Fresh default fmt/check exit 0 at clean `6f264ce3e` (22.02s/43.68s), zero reported warnings/errors; `/tmp/patch-12.0.5-ready-check-default-gates.json` and `-gate-scope.json` bind scope/hashes. Relevant producer/tests unchanged from `f62420536`; later concurrent ping inputs excluded. Source/wiring/readability audit PASS; other-profile preservation source-only. No builds/tests/checks rerun by this docs reconciliation.
 
 Exact final `prose-2026-03-31-169` remains **audit-pending** with only a bounded ready-check subset link. Countdown, ping and loot restrictions remain undone; superseded March 25 prose is not the final contract. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/text SHA256 and unrelated classifications. Explicit-input policy, blocked-call error reporting and existing legacy-alias handling are inferred simulator behavior, not native restriction parity.
 
 ## Known gaps (current cycle)
 
 - [x] Saved parent development GREEN: six ready-check fixtures, five predicate and eleven existing group controls after the guarded producer change; not independent acceptance.
-- [ ] Independent acceptance of state preservation, real event silence/payloads, unlock recovery and both combat axes.
+- [x] Independent bounded acceptance of state preservation, real event silence/payloads, unlock recovery and both combat axes; native parity remains open.
 
 ## Out of scope
 

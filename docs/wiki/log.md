@@ -1,6 +1,6 @@
-## [2026-10-01] evidence | Record bounded ready-check parent proof
+## [2026-10-01] evidence | Accept bounded ready-check proof
 
-[[patch-12-0-5-api-audit#Chat lockdown ready checks — parent GREEN, independent pending]] links [ready-check proof](../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01): compiled RED `8649fe072` 1 PASS/5 FAIL; producer `f62420536` saved 6 ready + 5 predicate + 11 group = 22 PASS, startup exit0 `[]`. Docs `6f264ce3e` is not compiled provenance. Verifier266 report absent; independent acceptance pending. Final `prose-2026-03-31-169` stays pending: ready-check subset only, countdown/ping/loot undone; no superseded March25 contract. 264 pending/84 bounded/14 partial = 362 and IDs/text SHA retained. Inferred explicit input/error/alias policy, not native parity; no builds/tests/checks/delegation/push.
+[[patch-12-0-5-api-audit#Chat lockdown ready checks — bounded independent PASS]] links [ready-check proof](../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01): full verifier266 report accepts saved 22 PASS and bounded state/event/alias/recovery behavior; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later ping inputs excluded. Final `prose-2026-03-31-169` remains pending; countdown/ping/loot undone, no native parity. 264 pending/84 bounded/14 partial = 362; IDs/text SHA retained. No reruns/delegation/push.
 
 ## [2026-10-01] evidence | Accept bounded chat predicate proof
 
