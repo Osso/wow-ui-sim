@@ -194,7 +194,7 @@ Persistent `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-0
 | Prior messaging/module/restricted/BugCapture | 36/36 pass on current pin | Bounded local workflows, not archive identity |
 | Loot/instance producer controls | 24/24 pass | Producer controls do not prove AutoRoll consumption |
 
-Default fmt/check passed with unchanged recorded source/config inputs in `/tmp/patch-12.0.5-batch11-rust-gates.json`; independent audit agent `20366` remains pending. New hover-policy tests have implementation pending; no outcome is inferred. Native hover/controller and Reveal remain unmodeled. Overall compatibility stays open; no archive or matrix counters change. See [[gamepad-mapped-state]].
+Independent historical audit `20366` is complete (`independent-report.md` in the proof directory): 63/70 and recorded cache/CVar/vendor/binary attribution confirmed. Default fmt/check in `/tmp/patch-12.0.5-batch11-rust-gates.json` remain historical, not blanket current-source acceptance after changed inputs. `f442b0913` implements the separate documented hover getter/setter and synchronous bool event; default false/change-only/state-before-callback are guesses, and physical cursor filtering is absent. Five `0ff9d1c5a` hover RED cases all stop at unknown-event registration, before behavior assertions. Collect-all diagnostics `ee3e27172` show only the setter unexpected within seven failed GamepadSharedUtility TOCs; later closure remains unknown and the exact Reveal exception is retained. No hover GREEN exists; final verifier compiling 75 cases has no result yet. Native hover/controller and Reveal remain unmodeled. Overall compatibility stays open; no archive or matrix counters change. See [[gamepad-mapped-state]].
 
 ## Sources
 

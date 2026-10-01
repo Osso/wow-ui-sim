@@ -27,7 +27,7 @@ Cached Forever `GamePadDocumentation.lua:135-141,231-238,305-314` declares a non
 - [ ] **Inferred simulator guesses:** initialize each environment false, ignore repeated values, and write changed state before dispatching synchronous callbacks and returning. Emit exactly one ordinary bool payload per transition.
 - [ ] Keep policy independent of mapped sticks, logical UI input style, and frame mouse/gamepad flags. Add only the exact documented event to Forever's finite registerable-event extension; do not widen validation in other profiles.
 
-All hover bullets remain unverified. Existing tests commit `0ff9d1c5a` has executed RED: `hover-red-ledger.json`, `hover-red.stdout`, and `hover-red.stderr` under `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/` record 3 pass / 12 fail. Five hover cases fail at event registration; seven cached cases stop at the setter dependency, retaining only the exact known Reveal setup diagnostic. Implementation does not itself establish GREEN, native semantics, cached initialization success, or AutoRoll behavior. Parent owns builds/runtime integration and verifier gates.
+All hover bullets remain unverified. Existing tests commit `0ff9d1c5a` has executed RED: `hover-red-ledger.json`, `hover-red.stdout`, and `hover-red.stderr` under `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/` record 3 pass / 12 fail. All five hover cases stop registering the unknown event, before getter/transition/security assertions. Collect-all diagnostics at `ee3e27172` find only the setter unexpected within the failed GamepadSharedUtility TOC in seven cached cases; later dependency closure remains unknown. Only the exact known Reveal setup diagnostic is retained. Implementation does not itself establish GREEN, native semantics, cached initialization success, or AutoRoll behavior. Parent owns builds/runtime integration and verifier gates.
 
 ## How it works
 
@@ -52,9 +52,9 @@ Five `hover_*` cases in `tests/gamepad_mapped_state.rs` assert synchronous state
 - [ ] Hover-policy compilation, five-case GREEN, and independent verification remain pending.
 
 - [ ] Cached initializer GREEN and AutoRoll workflow proof remain blocked at the hover-policy dependency.
-- [ ] Independent audit agent `20366` remains pending; overall acceptance is open.
+Independent historical audit `20366` is complete (`independent-report.md` in the proof directory), confirming 63/70 and recorded cache/CVar/vendor/binary attribution. Overall current-source acceptance remains open.
 
-Default fmt/check passed in `/tmp/patch-12.0.5-batch11-rust-gates.json` with unchanged recorded source/config inputs; no rerun by this documentation audit. Hover policy is implemented with recorded pre-implementation RED; no post-implementation outcome is inferred. Native hover/controller and Reveal behavior remain unmodeled.
+Default fmt/check passed historically in `/tmp/patch-12.0.5-batch11-rust-gates.json`; changed inputs prevent blanket current-source reuse. No rerun by this documentation audit. Final verifier is compiling 75 cases; no outcome is available. Hover policy is implemented with recorded pre-implementation RED; no post-implementation outcome is inferred. Native hover/controller and Reveal behavior remain unmodeled.
 
 ## Out of scope
 

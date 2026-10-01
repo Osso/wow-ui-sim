@@ -1,3 +1,7 @@
+## [2026-10-01] audit | Record bounded hover policy without GREEN
+
+Audited `f442b0913`; updated [[gamepad-mapped-state]], [contract](../specs/gamepad-mapped-state.md), [[forever-addon-comparison]] and index. Documented bool getter/setter, AllowedWhenUntainted and synchronous bool changed event are separate from optional mapped state. Initial false/change-only/state-before-callback remain guesses; physical cursor filtering is absent. Five `0ff9d1c5a` actual RED cases stop at unknown-event registration, not getter assertions. `ee3e27172` finds only setter unexpected within seven failed GamepadSharedUtility TOCs; later closure unknown, exact Reveal exception retained. Historical audit `20366` complete; prior gates do not establish current-source acceptance. No GREEN; final verifier compiling 75 cases has no result. Docs-only audit; no tests/checks/builds/delegation/operations run.
+
 ## [2026-10-01] implementation | Record bounded Recent Allies producer
 
 Updated [[patch-12-0-5-api-audit]] and index, linking the [contract](../specs/recent-allies-state-data.md). Query implemented after actual 0/4 RED; generic lazy nil provider traced, no targeted obsolete provider found. Nested stack-rooting and independent explicit-input snapshots documented. Compilation, GREEN and final gates remain parent-owned; no completed-row/native credit.
