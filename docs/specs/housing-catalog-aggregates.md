@@ -23,8 +23,9 @@ Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:85-87` aliases `quant
 
 ## Implementation inventory
 
-- `src/c_api/c_housing/catalog.rs`: two optional explicit aggregate inputs; no producer change.
-- `src/c_api/c_housing/catalog/queries.rs` and `catalog/snapshot.rs`: existing lookup/publication paths; untouched, aggregate publication still pending actual RED.
+- `src/c_api/c_housing/catalog.rs`: two optional explicit aggregate inputs.
+- `src/c_api/c_housing/catalog/queries.rs`: unchanged shared lookup path for all three getters.
+- `src/c_api/c_housing/catalog/snapshot.rs`: shared `push_entry` publishes each supplied unsigned count directly as a Lua number; absent inputs remain absent. No variant or unrelated-state reads.
 - `tests/housing_catalog_aggregates.rs`: twelve grouped behavioral fixtures, gated by `retail-12-0-5`.
 - Existing construction sites in `tests/housing_catalog_base_lookups.rs` (two literals), `tests/housing_catalog_variants.rs`, `tests/housing_storage_entry_updated.rs`, and `tests/housing_destroy_entry.rs` (one literal each): both new inputs are `None`; all prior concrete fixture data preserved.
 - Existing `build.rs` discovery includes top-level Rust test modules in `tests/integration.rs`; `autotests = false` remains unchanged. No new Cargo target or harness edit.
@@ -41,16 +42,15 @@ Exact filter: `housing_catalog_aggregates::`; target: `integration`.
 | `snapshots_are_independent_across_lua_and_input_mutation` | All three selectors produce independent snapshots across Lua changes, input changes and GC | Written; uncompiled/unrun |
 | `missing_base_record_is_nil_even_with_surviving_variants`, `aggregates_are_environment_local` | Missing-record nil and isolated explicit input | Written; uncompiled/unrun |
 
-### Input checkpoint / proof ledger — 2026-10-01
+### Producer checkpoint / proof ledger — 2026-10-01
 
-Parent owns compilation and actual RED, then a fresh producer implementation. No build, check, test execution, delegation, push or deployment in this slice. Output producer remains unchanged; predicted missing-field failures are **not observed RED**. Existing nil/missing-record controls may already pass; that does not prove explicit aggregate publication.
+Parent reports compiled RED at `fe874979b`: build exit 0; twelve tests, two PASS and ten FAIL for missing aggregates. Artifacts: `/tmp/patch-12.0.5-batch24-red-*`. This producer slice does not independently rerun or inspect that behavioral proof; table entries above describe the original input checkpoint, not fresh producer results.
 
-Formatting command: `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog.rs tests/housing_catalog_base_lookups.rs tests/housing_catalog_variants.rs tests/housing_storage_entry_updated.rs tests/housing_destroy_entry.rs tests/housing_catalog_aggregates.rs`. Exit 0; formatting only; later edits invalidate its scope. No compile/behavior/acceptance evidence. All requirements remain unchecked.
+Producer now publishes both optional counts through shared `push_entry`, using direct `u32` to `f64` conversion without signed narrowing. `None` does not write a field; `Some(0)` writes numeric zero. Queries, variants, seed data and wrappers remain unchanged. No build, check, tests, readability, coverage, startup, delegation, push or deployment in this slice. GREEN and acceptance remain parent-owned; requirements remain unchecked pending that proof.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compile and actual RED on `integration` with filter `housing_catalog_aggregates::` before changing serializer/output producer.
-- [ ] Fresh producer publication after actual RED; subsequent behavioral proof remains parent-owned.
+- [ ] Parent GREEN and verifier on the committed producer revision; no fresh compile or behavioral result claimed here.
 
 ## Out of scope
 

@@ -54,6 +54,14 @@ pub(super) fn push_entry(
     if let Some(item_id) = record.item_id {
         set_number(state, row, "itemID", item_id);
     }
+    for (field, count) in [
+        ("totalNumStored", record.total_num_stored),
+        ("totalNumPlaced", record.total_num_placed),
+    ] {
+        if let Some(count) = count {
+            table_set_static(state, row, field, Val::Num(f64::from(count)));
+        }
+    }
     set_text(state, row, "name", &record.name);
     table_set_static(
         state,
