@@ -1,6 +1,7 @@
 //! Source-observed Forever subset; no hardware or native DTO parity claim.
 #![cfg(feature = "client-wowforever")]
 
+use rilua::LuaApiMut;
 use wow_ui_sim::c_api::c_game_pad::{MappedStick, MappedStickSnapshot};
 use wow_ui_sim::loader::{
     MissingRequirement, MissingRequirementKind,
