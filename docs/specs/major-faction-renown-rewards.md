@@ -38,7 +38,7 @@ Rust inputs represent IDs/fileID as `i64`, order/reward type as `i32`, strings a
 
 ## Tests asserting this spec
 
-`tests/major_faction_renown_rewards.rs`: five grouped tests gated by `client-retail` and `retail-12-0-5`, querying the actual registered namespace function. No Cargo manifest or existing test registry edits.
+`tests/major_faction_renown_rewards.rs`: five grouped tests gated by `retail-12-0-5` and mainline `profile-retail`/`client-ptr`, including standalone historical retail epochs, querying the actual registered namespace function. No Cargo manifest or existing test registry edits.
 
 Actual compilation and behavioral RED are **pending**; no tests/checks run in this slice. Intended first RED: `expected three modeled renown rewards` because the retained fallback returns `{}` instead of three explicit fixture rows. Empty/default controls may already pass; they do not establish publication.
 

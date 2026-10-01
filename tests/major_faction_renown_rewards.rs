@@ -1,5 +1,8 @@
 //! Input fixtures for the pending state-backed renown reward producer.
-#![cfg(all(feature = "client-retail", feature = "retail-12-0-5"))]
+#![cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
 
 use wow_ui_sim::c_api::c_major_factions::RenownRewardInfo;
 use wow_ui_sim::lua_api::{MajorFactionData, RenownLevelInfo, WowLuaEnv};
