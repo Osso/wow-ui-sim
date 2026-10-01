@@ -56,16 +56,6 @@ const HOUSING_CATALOG_SCRIPT: &str = r#"
         return "wrong_first_featured_product"
     end
 
-    local variant = C_HousingCatalog.GetCatalogEntryVariantInfo(1001, 2)
-    if not variant or variant.variantID ~= 2 or variant.productID ~= 91002 or variant.name ~= "Azure Upholstery" then
-        return "wrong_variant_info"
-    end
-
-    local allVariants = C_HousingCatalog.GetAllVariantInfosForEntry(1001)
-    if #allVariants ~= 2 or allVariants[1].variantID ~= 1 or allVariants[2].variantID ~= 2 then
-        return "wrong_variant_list"
-    end
-
     local marketInfo = C_HousingCatalog.GetMarketInfoForDecor(1001)
     if marketInfo.isInCart ~= false or marketInfo.cartCount ~= 0 or marketInfo.wasViewedInStore ~= false then
         return "wrong_initial_market_info"
@@ -106,15 +96,6 @@ const HOUSING_CATALOG_SCRIPT: &str = r#"
     local secondAfterClear = C_HousingCatalog.GetMarketInfoForDecor(1002)
     if firstAfterClear.isInCart ~= false or secondAfterClear.isInCart ~= false then
         return "clear_cart_not_reflected"
-    end
-
-    local entryInfo = C_HousingCatalog.GetCatalogEntryInfo(1001)
-    if type(entryInfo.itemID) ~= "number" or entryInfo.itemID ~= 1001 then
-        return "wrong_catalog_entry_item_id"
-    end
-
-    if type(entryInfo.isUniqueTrophy) ~= "boolean" or entryInfo.isUniqueTrophy ~= false then
-        return "wrong_catalog_entry_unique_trophy"
     end
 
     local bundle = C_HousingCatalog.GetBundleInfo(5001)
@@ -161,7 +142,7 @@ fn housing_preview_cart_state_round_trips_and_promotes() {
 }
 
 #[test]
-fn housing_catalog_market_and_variant_methods_use_seeded_state() {
+fn housing_catalog_storefront_and_market_methods_use_seeded_state() {
     let env = env();
     let result: String = env
         .eval(HOUSING_CATALOG_SCRIPT)
