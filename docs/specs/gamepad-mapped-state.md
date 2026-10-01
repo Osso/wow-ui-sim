@@ -7,27 +7,28 @@ Forever exposes the two `C_GamePad` queries consumed by cached `Blizzard_Gamepad
 - [x] Forever direct calls to `GetDeviceMappedState()` and `StickIndexToConfigName(index)` expose the modeled queries.
 - [ ] Publication is Forever-only (source-gated; no executed other-profile absence proof). The actual cached initializer calls the getter eagerly twice, without arguments, and passes ordinary zero-based numbers to the selector.
 - [x] No configured snapshot returns nil. Defaulting to no configured snapshot is simulator policy, not observed hardware detection.
-- [ ] Actual cached initialization marks both listener sides centered.
+- [x] Actual cached initialization marks both listener sides centered.
 - [x] A configured ordered stick list publishes coherent `stickCount`, one-based `sticks`, and per-stick `len`. Selector index zero names the first configured stick. The actual cached initializer compares names with `Movement`/`Camera` and checks `len == 0`.
-- [ ] Concrete nonzero Movement/zero Camera initializes left uncentered/right centered. Reordered Camera/Movement inputs initialize the opposite sides from names rather than fixed positions.
+- [x] Concrete nonzero Movement/zero Camera initializes left uncentered/right centered. Reordered Camera/Movement inputs initialize the opposite sides from names rather than fixed positions.
 - [x] **Inferred simulator policy:** finite coordinate fixtures produce Euclidean length; Rust x/y are input fields, not claims about native Lua fields. Each getter returns independent tables; replacement, empty snapshots and clearing are visible on subsequent queries.
 - [x] Each environment owns its optional snapshot independently of logical UI input style and frame gamepad flags.
 - [x] **Inferred simulator policy:** absent/out-of-range/negative/fractional numeric selectors return nil; string and opaque secret selectors error, with opaque input remaining secret.
 - [ ] Other nonnumeric selectors and payload-free error reporting lack observable assertions. No native coercion or secret contract is claimed.
 - [x] Ordinary addon-tainted calls preserve caller taint; opaque selector input remains secret after rejection.
 
-Checked bullets denote bounded observable direct-model proof only, not overall acceptance or native parity. Current evidence is `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/model-v2-ledger.json` with `model-v2.stdout` / `model-v2.stderr`: build `5e15752` reconciled to run `74e6c8845`, rilua `6044544b`, 70 cases / 63 pass / 7 fail (exit 101). Three direct mapped-model cases pass; three cached initializer and four AutoRoll cases fail before local addon/decision assertions on `C_GamePad.SetAllowHoverEventsWithFreeLook`, `FrameControlsManager.lua:830`. This supersedes the earlier namespace-gap boundary at `1fbea8e70`; neither failure establishes AutoRoll decision behavior.
+Checked bullets denote bounded observable model/initializer proof, not overall acceptance or native parity. Current evidence under `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/` is `hover-green-ledger.json`, `hover-green.stdout` and `hover-green.stderr`: source-scoped `a956dfdd3`, rilua `6044544b`, 75 cases / 71 pass / 4 fail (exit 101). All eleven mapped/hover cases pass: three direct-model, three actual cached initializer and five hover cases. Prior messaging/module/restricted/BugCapture cases pass 36/36; loot/instance controls pass 24/24. Four AutoRoll cases stop before local lifecycle decisions at `Blizzard_StaticPopup_Game` requirements for `C_Club.GetInvitationCandidates` and `C_GameRules.IsHardcoreActive`. Eager-call versus lookup classification remains pending; no native, masking or exemption conclusion follows. Historical `model-v2` 63/70 proof remains retained, superseded only for these current boundaries.
 
 ## Free-look-hover policy
 
 Cached Forever `GamePadDocumentation.lua:135-141,231-238,305-314` declares a non-nil bool getter, a bool setter with `SecretArguments = "AllowedWhenUntainted"`, and `GAME_PAD_ALLOW_HOVER_EVENTS_WITH_FREE_LOOK_CHANGED` with `SynchronousEvent = true` and one bool payload. Cached `FrameControlsManager.lua:830` consumes the setter. These declarations establish surface/security/event shape, not native initial value or change detection.
 
-- [ ] Publish only Forever `GetAllowHoverEventsWithFreeLook()` and `SetAllowHoverEventsWithFreeLook(enable)`; return an ordinary boolean from the getter.
-- [ ] Require an actual boolean after VM secret access checks, without truthiness/numeric/string coercion. Untainted callers may pass opaque booleans; tainted callers may pass ordinary booleans but must be rejected on opaque arguments. Preserve caller taint and opaque argument secrecy; invalid input must not mutate state or emit events.
-- [ ] **Inferred simulator guesses:** initialize each environment false, ignore repeated values, and write changed state before dispatching synchronous callbacks and returning. Emit exactly one ordinary bool payload per transition.
-- [ ] Keep policy independent of mapped sticks, logical UI input style, and frame mouse/gamepad flags. Add only the exact documented event to Forever's finite registerable-event extension; do not widen validation in other profiles.
+- [x] Forever getter returns an ordinary boolean and setter is callable; Forever-only publication remains source-gated, with no executed other-profile absence proof.
+- [x] Require an actual boolean after VM secret access checks, without truthiness/numeric/string coercion. Untainted callers may pass opaque booleans; tainted callers may pass ordinary booleans but must be rejected on opaque arguments. Preserve caller taint and opaque argument secrecy; invalid input must not mutate state or emit events.
+- [x] **Inferred simulator guesses:** initialize each environment false, ignore repeated values, and write changed state before dispatching synchronous callbacks and returning. Emit exactly one ordinary bool payload per transition.
+- [x] Observed environment-local policy is independent of mapped sticks and logical UI input style.
+- [ ] Frame mouse/gamepad-flag independence and exact Forever-only event publication remain source-only; other-profile absence is not executed.
 
-All hover bullets remain unverified. Existing tests commit `0ff9d1c5a` has executed RED: `hover-red-ledger.json`, `hover-red.stdout`, and `hover-red.stderr` under `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/` record 3 pass / 12 fail. All five hover cases stop registering the unknown event, before getter/transition/security assertions. Collect-all diagnostics at `ee3e27172` find only the setter unexpected within the failed GamepadSharedUtility TOC in seven cached cases; later dependency closure remains unknown. Only the exact known Reveal setup diagnostic is retained. Implementation does not itself establish GREEN, native semantics, cached initialization success, or AutoRoll behavior. Parent owns builds/runtime integration and verifier gates.
+Five hover cases now pass in the current run; checked criteria reflect their bounded assertions. Existing tests commit `0ff9d1c5a` has executed RED: `hover-red-ledger.json`, `hover-red.stdout`, and `hover-red.stderr` under `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/` record 3 pass / 12 fail. All five hover cases stop registering the unknown event, before getter/transition/security assertions. Collect-all diagnostics at `ee3e27172` find only the setter unexpected within the failed GamepadSharedUtility TOC in seven cached cases; later dependency closure remains unknown. Only the exact known Reveal setup diagnostic is retained. The current run establishes bounded hover and cached initializer GREEN, not native semantics or AutoRoll behavior. Parent owns independent verification gates.
 
 ## How it works
 
@@ -45,16 +46,17 @@ All hover bullets remain unverified. Existing tests commit `0ff9d1c5a` has execu
 
 `tests/gamepad_mapped_state.rs` is autodiscovered inside the existing grouped integration target. Three cases load the actual cached GamepadSharedUtility TOC dependency closure without overrides or callback bypasses, with fixture state installed before initialization. Other cases cover replacements/counts/names/table independence, environment isolation and taint/opaque-selector policy. The exact existing SharedXML `C_Reveal` debug-setup diagnostic is retained and reported; its truthy stub changes setup behavior and is not native absence or an innocent probe.
 
-Five `hover_*` cases in `tests/gamepad_mapped_state.rs` assert synchronous state-before-event transitions, isolation from sticks/style, invalid ordinary arguments, untainted opaque acceptance, and tainted opaque rejection. Their recorded RED is not GREEN proof.
+Five `hover_*` cases in `tests/gamepad_mapped_state.rs` assert synchronous state-before-event transitions, isolation from sticks/style, invalid ordinary arguments, untainted opaque acceptance, and tainted opaque rejection. Their recorded RED remains historical; current `hover-green.stdout` records all five passing.
 
 ## Known gaps (current cycle)
 
-- [ ] Hover-policy compilation, five-case GREEN, and independent verification remain pending.
+- [x] Retry compilation exits 0 with unchanged recorded inputs; five hover and three cached initializer cases pass.
+- [ ] Four AutoRoll workflows remain blocked before local lifecycle decisions at the StaticPopup requirements above; eager-call/lookup explorer classification is pending.
+- [ ] Independent verifier `20374` source/readability/default fmt/check gates remain ongoing; no overall acceptance.
 
-- [ ] Cached initializer GREEN and AutoRoll workflow proof remain blocked at the hover-policy dependency.
-Independent historical audit `20366` is complete (`independent-report.md` in the proof directory), confirming 63/70 and recorded cache/CVar/vendor/binary attribution. Overall current-source acceptance remains open.
+Original GREEN build runner was interrupted by Pi restart, proven a terminated zombie with no surviving compiler. Original lost-output proof is retained, not silently replaced by retry success. `hover-green-retry-build-ledger.json` records exit 0 at unchanged `a956dfdd3` inputs; runtime artifact names remain `hover-green-*`, not `hover-green-retry-*`. Runtime ledger records unchanged binary, addon and host CVar hashes. Later commits are not blanket-covered by this source-scoped proof.
 
-Default fmt/check passed historically in `/tmp/patch-12.0.5-batch11-rust-gates.json`; changed inputs prevent blanket current-source reuse. No rerun by this documentation audit. Final verifier is compiling 75 cases; no outcome is available. Hover policy is implemented with recorded pre-implementation RED; no post-implementation outcome is inferred. Native hover/controller and Reveal behavior remain unmodeled.
+Independent historical audit `20366` remains complete for 63/70. Default fmt/check in `/tmp/patch-12.0.5-batch11-rust-gates.json` remain historical. This docs audit runs no tests/builds/checks. Native hover/controller and Reveal behavior remain unmodeled; retained exact Reveal setup diagnostic changes debug setup, not native absence. No AutoRoll or whole-inventory credit.
 
 ## Out of scope
 
