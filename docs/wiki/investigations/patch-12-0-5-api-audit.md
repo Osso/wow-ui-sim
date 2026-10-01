@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Housing base selectors — bounded independent PASS
+
+[Batch23 contract/proof](../../specs/housing-catalog-variants.md#reconciled-batch23-bounded-proof--2026-10-01) owns producer `346c7e1be`, inputs `1e452eac3`, compiled predecessor RED **0/12**, saved **14 base + 24 variants/count + 14 pending + 4 cart = 56 PASS**. Saved parent startup **0 []**, zero errors, is not independent execution. Independent default fmt/check **0** at clean `346c7e1be` excludes later batch24. Root cause: old base selectors read seeded data rather than explicit base records; producer replaces only these publishers/exclusive copier with public item-ID/link and exact record/type lookup, fresh bounded snapshots and no seed/variant fallback.
+
+Only `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284` and `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` receive **bounded-coverage** for removed trailing `tryGetOwnedInfo`, not broad query/full DTO/native row completion. Name support, native AllowedWhenUntainted and nonempty deprecated wrapper remain open; ambiguity error inferred. Two late-added controls have GREEN, no predecessor RED. Current accounting **276 pending / 72 bounded / 14 partial = 362**; IDs/text hash preserved. Aggregate spec remains batch24-owned and excluded. Audit **IN PROGRESS**.
+
 ### Housing pending decor — bounded independent PASS
 
 [Pending request contract](../../specs/housing-pending-decor.md#reconciled-bounded-proof--2026-10-01) owns independent acceptance at `f59c03402`: RED `659f79a3c` **1 PASS / 13 FAIL**, saved GREEN **45/45**, snapshot default fmt/check **0**. Explicit full-variant pending request only; eligibility/cancel/validation are simulator inferences. Parent startup **0 []** is saved, not independent compilation provenance. Exact StartPlacingNewDecor rows 278/279 gain proof links but **remain audit-pending**, like DestroyEntry: inferred partial behavior does not cover the literal delta across real placement. **278 pending / 70 bounded / 14 partial**, all 362 IDs/source hash preserved. No finish/instance/3D/stock mutation/event production/native/all-profile or entire-domain claim. Audit **IN PROGRESS**.

@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept bounded batch23 base selectors
+
+[[patch-12-0-5-api-audit#Housing base selectors — bounded independent PASS]] links [batch23 contract/proof](../specs/housing-catalog-variants.md#reconciled-batch23-bounded-proof--2026-10-01). Only ByItem-284/ByRecordID-286 removed trailing-argument deltas gain bounded coverage; **276 pending / 72 bounded / 14 partial**, 362 IDs/text hash preserved. Native security, item names, full DTO/nonempty wrapper remain open; batch24 excluded, audit **IN PROGRESS**.
+
 ## [2026-10-01] evidence | Reconcile bounded batch22 pending decor
 
 [[patch-12-0-5-api-audit#Housing pending decor — bounded independent PASS]] links the [pending contract](../specs/housing-pending-decor.md#reconciled-bounded-proof--2026-10-01): independent saved **45/45 PASS** at `f59c03402`, RED `659f79a3c` **1 PASS / 13 FAIL**, snapshot default fmt/check **0**. Parent startup **0 []** is saved, not independent compilation provenance. Explicit pending request only; inferred policy does not close real placement delta. Exact rows 278/279 remain **audit-pending** with proof links; **278 pending / 70 bounded / 14 partial**, 362 IDs/source hash retained. Finish/instance/3D/stock mutation/event production/native/all-profile/full-domain acceptance excluded; audit **IN PROGRESS**.
