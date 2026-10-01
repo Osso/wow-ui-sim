@@ -146,7 +146,7 @@ mod cached_consumer_regression {
     #[test]
     fn cached_private_auras_container_callbacks_remove_readd_and_transition_unit() {
         crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
-            &["Blizzard_PrivateAurasUI"],
+            &["Blizzard_BuffFrame", "Blizzard_PrivateAurasUI"],
             &[],
             |env, loaded| {
                 assert!(
