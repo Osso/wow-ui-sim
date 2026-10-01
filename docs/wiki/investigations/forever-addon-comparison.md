@@ -182,6 +182,20 @@ The real local TOCs and embedded libraries initialize through normal ADDON_LOADE
 
 Earlier BugSack `MissingRequirements` reflects nil-symbol-access diagnostics, not `RequiresAPI` TOC metadata. Runtime fallback synthesizes nil-returning callables; RED's thirteen behavior assertions failed after function-type checks passed. See [outbound contract](../../specs/addon-messages.md) for the policy and proof limits. `verify-artifacts.json` is source-audit evidence predating main GREEN. `verify-green.json` independently confirms bounded 36/36 exit 0, one default `cargo fmt --check` and one default `cargo check --offline`, each exit 0 with zero warnings at `255adcbde`. Docs-only `54c6bfaf2` preserves all 3252 recorded build inputs. Current reconciliation rechecks those inputs, all 29 local vendor hashes, host CVar hash and retained artifact hashes without mismatches; Cargo manifest/lock and rilua pin `e47c1fedc59dfa3859bdc522ea454792112d8316` remain unchanged. Relevant cached vendor hashes provide current source attribution only: no whole-cache before/after snapshot exists, so full-cache preservation is not claimed. The source audit's dense numeric predicate and six positional record arguments are two nonblocking readability findings, not correctness blockers. AutoRoll tests require separate proof/goal extension. Binary stringView, logged nil outcomes, native parity, network delivery and rendered pixels remain unsupported or unverified.
 
+## Mapped-stick and AutoRoll — current-pin boundary
+
+Persistent `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/model-v2-ledger.json`, `model-v2.stdout` and `model-v2.stderr` record build `5e15752` → run `74e6c8845` at rilua `6044544b`: **70 cases, 63 pass / 7 fail**, exit 101. This is separate current-pin evidence, not a rewrite of the earlier `255adcbde` proof.
+
+| Boundary | Current observable proof | Limit |
+| --- | --- | --- |
+| Direct mapped-stick model | 3/3 pass: replacement/counts/names/table independence; environment/input-style isolation; taint/opaque selectors | [Granular contract](../../specs/gamepad-mapped-state.md); native DTO/hardware parity unclaimed |
+| Cached initializer | 0/3 pass | Dependency requirement `C_GamePad.SetAllowHoverEventsWithFreeLook`, `FrameControlsManager.lua:830`, before initializer assertions |
+| Current-local AutoRoll | 0/4 pass | Same dependency boundary before local addon/decision assertions; no loot-decision proof |
+| Prior messaging/module/restricted/BugCapture | 36/36 pass on current pin | Bounded local workflows, not archive identity |
+| Loot/instance producer controls | 24/24 pass | Producer controls do not prove AutoRoll consumption |
+
+Default fmt/check passed with unchanged recorded source/config inputs in `/tmp/patch-12.0.5-batch11-rust-gates.json`; independent audit agent `20366` remains pending. New hover-policy tests have implementation pending; no outcome is inferred. Native hover/controller and Reveal remain unmodeled. Overall compatibility stays open; no archive or matrix counters change. See [[gamepad-mapped-state]].
+
 ## Sources
 
 - [Selected-TOC loader](../../../src/loader/addon.rs) — `dd77368b7` removes implicit local overlays, preserves module-root guard

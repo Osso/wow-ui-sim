@@ -4,16 +4,19 @@ Forever exposes the two `C_GamePad` queries consumed by cached `Blizzard_Gamepad
 
 ## What it must do
 
-- [ ] Register `GetDeviceMappedState()` and `StickIndexToConfigName(index)` only for Forever. The actual cached initializer calls the getter eagerly twice, without arguments, and passes ordinary zero-based numbers to the selector.
-- [ ] No configured snapshot returns nil; actual cached initialization consequently marks both listener sides centered. Defaulting to no configured snapshot is simulator policy, not observed hardware detection.
-- [ ] A configured ordered stick list publishes coherent `stickCount`, one-based `sticks`, and per-stick `len`. Selector index zero names the first configured stick. The actual cached initializer compares names with `Movement`/`Camera` and checks `len == 0`.
+- [x] Forever direct calls to `GetDeviceMappedState()` and `StickIndexToConfigName(index)` expose the modeled queries.
+- [ ] Publication is Forever-only (source-gated; no executed other-profile absence proof). The actual cached initializer calls the getter eagerly twice, without arguments, and passes ordinary zero-based numbers to the selector.
+- [x] No configured snapshot returns nil. Defaulting to no configured snapshot is simulator policy, not observed hardware detection.
+- [ ] Actual cached initialization marks both listener sides centered.
+- [x] A configured ordered stick list publishes coherent `stickCount`, one-based `sticks`, and per-stick `len`. Selector index zero names the first configured stick. The actual cached initializer compares names with `Movement`/`Camera` and checks `len == 0`.
 - [ ] Concrete nonzero Movement/zero Camera initializes left uncentered/right centered. Reordered Camera/Movement inputs initialize the opposite sides from names rather than fixed positions.
-- [ ] **Inferred simulator policy:** finite coordinate fixtures produce Euclidean length; Rust x/y are input fields, not claims about native Lua fields. Each getter returns independent tables; replacement, empty snapshots and clearing are visible on subsequent queries.
-- [ ] Each environment owns its optional snapshot independently of logical UI input style and frame gamepad flags.
-- [ ] **Inferred simulator policy:** absent/out-of-range/negative/fractional numeric selectors return nil; nonnumeric and opaque secret selectors error without decoding or reporting their payload. No native coercion or secret contract is claimed.
-- [ ] Ordinary addon-tainted calls preserve caller taint. Neither query implicitly declassifies values.
+- [x] **Inferred simulator policy:** finite coordinate fixtures produce Euclidean length; Rust x/y are input fields, not claims about native Lua fields. Each getter returns independent tables; replacement, empty snapshots and clearing are visible on subsequent queries.
+- [x] Each environment owns its optional snapshot independently of logical UI input style and frame gamepad flags.
+- [x] **Inferred simulator policy:** absent/out-of-range/negative/fractional numeric selectors return nil; string and opaque secret selectors error, with opaque input remaining secret.
+- [ ] Other nonnumeric selectors and payload-free error reporting lack observable assertions. No native coercion or secret contract is claimed.
+- [x] Ordinary addon-tainted calls preserve caller taint; opaque selector input remains secret after rejection.
 
-All bullets remain unchecked until parent-owned focused GREEN and independent verification. Existing RED is the pre-addon namespace failure at `1fbea8e70`, not an AutoRoll decision failure; the retained proof is `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/corrected-ledger.json` with sibling stdout/stderr.
+Checked bullets denote bounded observable direct-model proof only, not overall acceptance or native parity. Current evidence is `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/model-v2-ledger.json` with `model-v2.stdout` / `model-v2.stderr`: build `5e15752` reconciled to run `74e6c8845`, rilua `6044544b`, 70 cases / 63 pass / 7 fail (exit 101). Three direct mapped-model cases pass; three cached initializer and four AutoRoll cases fail before local addon/decision assertions on `C_GamePad.SetAllowHoverEventsWithFreeLook`, `FrameControlsManager.lua:830`. This supersedes the earlier namespace-gap boundary at `1fbea8e70`; neither failure establishes AutoRoll decision behavior.
 
 ## How it works
 
@@ -32,7 +35,10 @@ All bullets remain unchecked until parent-owned focused GREEN and independent ve
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and run focused tests against the approved rilua pin, then perform independent final verification. No Cargo or verification command was run by this author.
+- [ ] Cached initializer GREEN and AutoRoll workflow proof remain blocked at the hover-policy dependency.
+- [ ] Independent audit agent `20366` remains pending; overall acceptance is open.
+
+Default fmt/check passed in `/tmp/patch-12.0.5-batch11-rust-gates.json` with unchanged recorded source/config inputs; no rerun by this documentation audit. New hover-policy tests have implementation pending and no outcome is inferred. Native hover/controller and Reveal behavior remain unmodeled.
 
 ## Out of scope
 

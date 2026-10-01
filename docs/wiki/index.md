@@ -8,7 +8,7 @@
 
 ## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
 
-[[gamepad-mapped-state]] records `f774ce454`: optional environment input, two C API queries and six grouped tests, including unchanged cached TOC initialization. [Contract](../specs/gamepad-mapped-state.md) distinguishes source-observed calls/fields from inferred policy. Existing RED is the pre-addon namespace gap, not AutoRoll decisions; parent GREEN/final gates remain pending. No hardware, full DTO, Reveal, Retail or addon-integration credit.
+[[gamepad-mapped-state]] records `f774ce454`: optional environment input, two C API queries and six grouped tests, including unchanged cached TOC initialization. [Contract](../specs/gamepad-mapped-state.md) distinguishes source-observed calls/fields from inferred policy. Current rilua `6044544b` proof at build `5e15752` → run `74e6c8845` is 63/70: three direct mapped-model passes; three cached initializer and four AutoRoll failures at hover-policy dependency before local addon/decision assertions. [Current comparison boundary](investigations/forever-addon-comparison.md#mapped-stick-and-autoroll--current-pin-boundary) records passing 36 prior and 24 producer controls; default fmt/check evidence exists, independent audit `20366` remains pending. Cached GREEN/overall acceptance remain open; pending hover tests have no outcome. No hardware, full DTO, Reveal, Retail or addon-integration credit.
 
 ## [2026-10-01] audit | Record pending renown reward input
 
