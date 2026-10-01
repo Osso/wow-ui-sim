@@ -147,15 +147,51 @@
         "DurationObject.FormatRemainingDuration",
         "DurationObject.FormatTotalDuration"
       ],
-      "scope": "Real abbreviated/numeric-rule/Seconds formatter instances, elapsed/remaining/total and RealTime/BaseTime modifiers, invalid-input atomicity, opaque secret provenance and caller guards: four development cases pass. Controls abbreviated 4/4 and numeric-rule 7/7; not API coverage counts. Native localized Seconds duration-unit behavior remains RED; no native/final/all-profile proof.",
+      "scope": "Five common cases PASS including curve/closure taint; Seconds format 7/7 including cached garden consumer, configuration 7/7, native-method controls 3/3. Native-enabled simulator output only, not native-client parity, independent final acceptance or all-profile proof.",
       "spec": "docs/specs/duration-core.md",
       "tests": [
         "tests/duration_numeric_formatters.rs"
       ],
       "implementation": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
       "proof": "partial-development-green",
-      "compiled_revision": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
-      "ledger": "/tmp/patch-12.0.5-proof-ledger.md"
+      "compiled_revision": "e0a46d691",
+      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+    },
+    {
+      "id": "unit-stat-output-secrecy",
+      "symbols": [],
+      "scope": "Four cases PASS covering outputs of 40 supported APIs. Explicit supplied restriction state; ten missing base APIs remain RED 0/10, pending agents 73/74/75. No automatic aura policy/native stat parity.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs"
+      ],
+      "proof": "partial-development-green",
+      "compiled_revision": "e0a46d691",
+      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+    },
+    {
+      "id": "unit-comparison-permissions",
+      "symbols": [],
+      "scope": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity.",
+      "spec": "docs/specs/unit-identity-equality.md",
+      "tests": [
+        "tests/unit_comparison_permissions.rs"
+      ],
+      "proof": "partial-development-green",
+      "compiled_revision": "e0a46d691",
+      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+    },
+    {
+      "id": "cooldown-ignore-gcd",
+      "symbols": [],
+      "scope": "Six cases PASS across action/spell/spellbook supplied cooldown/GCD selection. Simulator selection/input policies; no secrecy/native/consumer parity.",
+      "spec": "docs/specs/spellbook-cooldown-duration.md",
+      "tests": [
+        "tests/cooldown_probes/ignore_gcd.rs"
+      ],
+      "proof": "partial-development-green",
+      "compiled_revision": "e0a46d691",
+      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
     }
   ],
   "source_rows": [
@@ -190,7 +226,7 @@
         "duration-common-formatters"
       ],
       "status": "bounded-coverage",
-      "note": "Bounded formatter and common-duration development coverage only; source statement includes multiple types and secret semantics. Native Seconds duration-unit regression remains RED; not whole-statement/native parity."
+      "note": "Batch5 common 5/5, Seconds format/config/native controls 7/7, 7/7, 3/3 development GREEN; not whole-statement completion or native parity."
     },
     {
       "source_id": "prose-2026-03-12-020",
@@ -202,7 +238,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -588,33 +624,43 @@
     },
     {
       "source_id": "prose-2026-03-31-141",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
     },
     {
       "source_id": "prose-2026-03-31-142",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
     },
     {
       "source_id": "prose-2026-03-31-143",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
     },
     {
       "source_id": "prose-2026-03-31-144",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
     },
     {
       "source_id": "prose-2026-03-31-147",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-output-secrecy"
+      ],
+      "status": "partial-development-green",
+      "note": "Four cases PASS covering outputs of 40 supported APIs. Explicit supplied restriction state; ten missing base APIs remain RED 0/10, pending agents 73/74/75. No automatic aura policy/native stat parity."
     },
     {
       "source_id": "prose-2026-03-31-150",
@@ -644,9 +690,11 @@
     },
     {
       "source_id": "prose-2026-03-31-160",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-ignore-gcd"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS across action/spell/spellbook supplied cooldown/GCD selection. Simulator selection/input policies; no secrecy/native/consumer parity."
     },
     {
       "source_id": "prose-2026-03-31-161",
@@ -908,9 +956,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCooldownDuration-235",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-ignore-gcd"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS across action/spell/spellbook supplied cooldown/GCD selection. Simulator selection/input policies; no secrecy/native/consumer parity."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionDisplayCount-237",
@@ -1142,9 +1192,11 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCooldownDuration-307",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-ignore-gcd"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS across action/spell/spellbook supplied cooldown/GCD selection. Simulator selection/input policies; no secrecy/native/consumer parity."
     },
     {
       "source_id": "global api-C_Spell-GetSpellDisplayCount-309",
@@ -1196,9 +1248,11 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCooldownDuration-324",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-ignore-gcd"
+      ],
+      "status": "partial-development-green",
+      "note": "Six cases PASS across action/spell/spellbook supplied cooldown/GCD selection. Simulator selection/input policies; no secrecy/native/consumer parity."
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemLossOfControlCooldownInfo-326",
