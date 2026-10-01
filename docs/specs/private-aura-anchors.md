@@ -1,6 +1,6 @@
 # Public private-aura anchors
 
-Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Producer code is uncompiled and unrun in this bounded slice; parent owns GREEN and verification. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
+Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Saved parent runs establish bounded lifecycle and cached-consumer GREEN; independent acceptance remains pending. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -74,45 +74,45 @@ Inputs: `39dd9cce6` and import fix `7926dfdfe`. Parent artifacts `/tmp/patch-12.
 
 The lone PASS, `added_callback_can_remove_the_just_published_id`, was vacuous: nil-returning public stubs never delivered callbacks, `removed == id` compared nils and the empty-list check passed. The producer adds numeric ID and exact added/removed delivery counts plus final zero-record count. **No standalone RED exists for these added assertions**, nor for new nested-output exclusion assertions. Prior twelve failures remain historical missing-behavior proof; they do not validate current producer code. All table entries below describe producer proof, not that historical RED.
 
-Parent `run-1.log` separately records seven `aura_table_shape::` controls PASS at the input revision; those are not current anchor GREEN. Producer formatting is recorded in the commit handoff; compilation, GREEN, migrated controls, startup and independent verification remain parent-owned.
+Parent `run-1.log` separately records seven `aura_table_shape::` controls PASS at the input revision; those are not current anchor GREEN. Saved parent GREEN covers thirteen fixtures below and one migrated integration control; independent acceptance and separate embedded-control execution remain unclaimed.
 
 | Fixture | Observable contract | Producer proof |
 | --- | --- | --- |
-| `ids_are_monotonic_and_environment_local` | Independent empty environments starting at 1, increasing IDs, no reuse | Written; unrun |
-| `added_payload_and_listing_preserve_parent_identity_and_default_flags` | One callback argument, committed state, full required metadata/defaults, original frame, no aura content | Written; unrun |
-| `nonempty_optional_bindings_publish_flattened_icon_dimensions` | Valid actual-frame bindings, true flags/container, scalar input isolation, optional border omission | Written; unrun |
-| `listing_filters_units_and_isolates_callback_and_result_mutations` | Ordered all/unit lists, fresh records, callback/list mutation isolation | Written; unrun |
-| `removal_has_no_results_and_reentrant_callbacks_observe_committed_state` | Zero results, exact IDs, missing-ID no-op, remove-before-callback, live-ID reentry | Written; unrun |
-| `added_callback_can_remove_the_just_published_id` | Add-before-callback and meaningful removal reentry | Written; unrun |
-| `callbacks_survive_gc_and_replacement_uses_only_latest_handlers` | Rooted closures after collection, latest added/removed handlers only | Written; unrun |
-| `parent_identity_and_custom_fields_survive_gc_without_input_roots` | Canonical usable frame after collection | Written; unrun |
-| `malformed_inputs_are_atomic_and_do_not_consume_ids` | Required/scalar validation, no callbacks/state/ID consumption | Written; unrun |
-| `optional_icon_and_duration_bindings_validate_every_required_field_atomically` | Required nested fields and binding types, no partial registration | Written; unrun |
-| `secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint` | Conservative secret rejection at each consumed layer, atomicity/taint | Written; unrun |
-| `secured_outer_and_nested_tables_respect_vm_access_guards` | Actual denied reads, nested guarded parse rejection, clean access | Written; unrun |
-| `ordinary_public_add_and_remove_preserve_addon_taint` | No caller-taint laundering on ordinary lifecycle | Written; unrun |
+| `ids_are_monotonic_and_environment_local` | Independent empty environments starting at 1, increasing IDs, no reuse | Saved parent PASS; see reconciled proof |
+| `added_payload_and_listing_preserve_parent_identity_and_default_flags` | One callback argument, committed state, full required metadata/defaults, original frame, no aura content | Saved parent PASS; see reconciled proof |
+| `nonempty_optional_bindings_publish_flattened_icon_dimensions` | Valid actual-frame bindings, true flags/container, scalar input isolation, optional border omission | Saved parent PASS; see reconciled proof |
+| `listing_filters_units_and_isolates_callback_and_result_mutations` | Ordered all/unit lists, fresh records, callback/list mutation isolation | Saved parent PASS; see reconciled proof |
+| `removal_has_no_results_and_reentrant_callbacks_observe_committed_state` | Zero results, exact IDs, missing-ID no-op, remove-before-callback, live-ID reentry | Saved parent PASS; see reconciled proof |
+| `added_callback_can_remove_the_just_published_id` | Add-before-callback and meaningful removal reentry | Saved parent PASS; see reconciled proof |
+| `callbacks_survive_gc_and_replacement_uses_only_latest_handlers` | Rooted closures after collection, latest added/removed handlers only | Saved parent PASS; see reconciled proof |
+| `parent_identity_and_custom_fields_survive_gc_without_input_roots` | Canonical usable frame after collection | Saved parent PASS; see reconciled proof |
+| `malformed_inputs_are_atomic_and_do_not_consume_ids` | Required/scalar validation, no callbacks/state/ID consumption | Saved parent PASS; see reconciled proof |
+| `optional_icon_and_duration_bindings_validate_every_required_field_atomically` | Required nested fields and binding types, no partial registration | Saved parent PASS; see reconciled proof |
+| `secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint` | Conservative secret rejection at each consumed layer, atomicity/taint | Saved parent PASS; see reconciled proof |
+| `secured_outer_and_nested_tables_respect_vm_access_guards` | Actual denied reads, nested guarded parse rejection, clean access | Saved parent PASS; see reconciled proof |
+| `ordinary_public_add_and_remove_preserve_addon_taint` | No caller-taint laundering on ordinary lifecycle | Saved parent PASS; see reconciled proof |
 
-### Cached-consumer regression checkpoint — 2026-10-01
+### Reconciled batch29 bounded proof — 2026-10-01
 
-Input revision: `61cd50cd817f9b9f31333a5011227fd6236e5828`. Parent reports **13 private-anchor + 1 retained + 7 shape PASS**, but startup exits **1** with **21 unique errors** in `/tmp/patch-12.0.5-batch29-green-startup.json`. Existing startup reproduction remains valid; this fixture-only slice does not rerun it. The artifact includes unknown `UNIT_AURA_BLOCK_LIST_CLEARED` registration and `Container frame already has an OnAttributeChanged script`; passing producer fixtures do not close real callback integration.
-
-Cached **12.1.0.69933**, not native 12.0.5, `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:612–619` declares `UNIT_AURA_BLOCK_LIST_CLEARED`, `SynchronousEvent = true`, and one `unitTarget: UnitTokenVariant` payload. `src/event/valid_events.rs::PATCH_12_1_REGISTERABLE_EVENTS` already contains `UNIT_AURA_BLOCKED`; this slice leaves that registry unchanged. No 12.0.5 exception-explorer claim is made.
-
-`tests/private_aura_anchors.rs::cached_consumer_regression` remains in the existing grouped integration target, gated only by `retail-12-1-0`. Exact parent-run filters:
-
-| Filter | Contract | Proof |
+| Revision / saved artifacts | Result | Boundary |
 | --- | --- | --- |
-| `private_aura_anchors::cached_consumer_regression::block_list_cleared_registration_accepts_exact_event_and_rejects_unknown` | Exact event accepted by both registration methods; unknown near-match rejected with contextual name | Written; unrun |
-| `private_aura_anchors::cached_consumer_regression::block_list_cleared_explicit_dispatch_has_one_unit_payload_and_player_filter` | RegisterAllEvents player/target delivery; player filter; exactly one payload; immediate dispatch counts | Written; unrun |
-| `private_aura_anchors::cached_consumer_regression::cached_private_auras_container_callbacks_remove_readd_and_transition_unit` | Actual TOC/callback container lifecycle, public state/parent identity, settings-handler ownership and no new errors per phase | Written; unrun |
+| Producer `61cd50cd8`; `/tmp/patch-12.0.5-batch29-green-*` | Thirteen anchors + one migrated integration PASS; startup 21 unique errors | Producer fixtures alone did not close cached callback integration. |
+| Tests `f589f1107` + `c9e1696d7`; `/tmp/patch-12.0.5-batch29-consumer-red-fixed-run.{json,log}` | Three cached regressions FAIL at unknown exact event and container fixture nil `Symbol` | Actual RED, not three independent root causes. |
+| Exact event correction `2b24386c5`; `/tmp/patch-12.0.5-batch29-consumer-green-runs.json`, `green-run-{0,1}.log` | Fifteen of sixteen anchors PASS; migrated integration PASS; only fixture nil `Symbol` remains | Thirteen producer fixtures and two event fixtures PASS. |
+| Same revision; `/tmp/patch-12.0.5-batch29-consumer-green-startup{.json,-run.json,.log}` | Startup exit 0, `[]`, 5.53s | All prior 21 messages disappear after exact event correction; earlier handler message is not an independently established root cause. |
+| Fixture `053f6c860`; `/tmp/patch-12.0.5-batch29-consumer-fixture-green-run.{json,log}` | Cached container lifecycle one PASS, exit 0, 1.84s | Separate targeted run, not a combined sixteen-test execution or startup rerun. |
 
-Combined filter: `private_aura_anchors::cached_consumer_regression::`. Closure-load errors are retained and printed separately; lifecycle assertions examine only appended errors, without clearing/reclassifying the baseline. Setup supplies a real frame and concrete container attributes read by the cached consumer; no prerequisite globals, callback replacements, vendor overrides, or custom TOC are installed. Actual callback completion is nonvacuously asserted through settings-handler installation, `update-settings`, and teardown before re-add. Named phases distinguish initial Add, Remove, same-parent re-add, unit transition, and final cleanup.
+Cached **12.1.0.69933**, not native 12.0.5, `UnitAuraDocumentation.lua:612–619` declares exact `UNIT_AURA_BLOCK_LIST_CLEARED`, synchronous metadata and one `unitTarget` payload. Correction `2b24386c5` adds the exact event to the retail-12.1 registry. Saved event tests prove both registration methods, unknown near-match rejection, all-event delivery and player filtering with immediate counts and exactly one payload. Explicit `env.fire_event_with_args` dispatch is **not native event production or historical 12.0.5 availability evidence**.
 
-Parent owns compiled RED, then an event-only production change and subsequent proof. Unknown-event and handler failures are distinct: this checkpoint does not claim that an event-only fix resolves both. No build/test/check/delegation/push occurred in this slice; formatting and a fixture/spec commit only. Neither new fixture RED/GREEN nor startup repair is claimed.
+Fixture `053f6c860` loads the actual cached `Blizzard_BuffFrame` root to supply inherited `AuraButtonArtTemplate.Symbol`, without vendor overrides or a synthesized Symbol child. Actual `Blizzard_PrivateAurasUI` dependency closure/root TOC, including final `PrivateAuraInit.lua`, installs the real callbacks. Targeted PASS covers Add/Remove, same-parent player re-add, player→target transition, metadata/original parent identity, settings-handler installation, `update-settings`, teardown and no new phase errors. This repairs a fixture prerequisite, not production anchor behavior.
+
+Metadata binds `2b24386c59e908f154b8b8c64efbc1afd6f5ebe3` integration binary SHA256 `b84c5a3ef8dc2ff839a5b3faffa2c79f0b68d0f50b891a9798ee94450b9f7cf9` and startup binary `eda8a709b6576882d80197597a7344ef6dae623a2dedf21179942695d2a849b7`. Fixture run binds `053f6c860ec553f83b0c959d9adafc881753a87d`, binary `91b46b705ffbe70cc38444a72f83b7120c7b26a344ee4f06f3853dbe789a4f8f`. Saved commands use `timeout 90`, grouped integration filters with `--nocapture --test-threads=1`; startup uses `wow-sim --no-addons --no-saved-vars lua-errors`.
+
+Verifier 251 acceptance remains pending: `/tmp/patch-12.0.5-private-anchor-independent-proof.md` was absent at audit. No fresh builds/tests/checks or delegation in this docs audit. Requirement checkboxes and retained source statuses stay unpromoted. Candidate field deltas 626/675/676 do not gain credit before actual independent acceptance; restriction rows359/401 remain unresolved, not evidence of secret acceptance.
 
 ### Retained assertion migration before helper removal
 
-Both old assertion owners now call public producers with actual frame parents and required aura indices. Notification, ID, filter and snapshot assertions remain; helper boolean success becomes public zero-results plus state/notification proof. Migrated tests are unrun here. Public function absence was an incorrect initial source inference: the lazy namespace publisher exists.
+Both old assertion owners now call public producers with actual frame parents and required aura indices. Notification, ID, filter and snapshot assertions remain; helper boolean success becomes public zero-results plus state/notification proof. Migrated integration has saved PASS; separate embedded execution remains unclaimed. Public function absence was an incorrect initial source inference: the lazy namespace publisher exists.
 
 | Existing assertion owner | Assertions that must survive | Public destination / retained control |
 | --- | --- | --- |
@@ -144,13 +144,13 @@ Local profile cache evidence, **12.1, not native 12.0.5**:
 
 ## Known gaps (current cycle)
 
-- [ ] Parent/verifier compiles and establishes GREEN for the 13 public fixtures plus migrated integration and embedded controls, then checks startup/profile scope under separate authorization. Producer performs formatting only, not build/tests/check/readability/startup.
-- [ ] Strengthened reentry delivery counts and nested-output exclusions have no standalone RED; producer runtime success is not claimed.
+- [ ] Independent acceptance remains pending; saved parent GREEN/startup is not independent acceptance. Embedded controls and all-profile execution remain unestablished.
+- [ ] Strengthened reentry counts and nested-output exclusions have saved GREEN but no standalone RED. Callback-error rollback and frame destruction remain unproven.
 - [ ] Rendering/anchor application remains absent despite retained parsed binding data. Full frame/ScriptRegion and all-profile native parity remain unverified.
 - [ ] Native `AllowedWhenUntainted` secret acceptance, private secure-only behavior and cross-profile parity remain unmodeled/unverified. Conservative rejection and existing private availability must not be reported as native security parity. No combat lockout is introduced: retained source removes restrictions; that is not full native security proof.
 
 ## Out of scope
 
-- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and no new errors; it is unrun. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup acceptance remain excluded.
+- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and saved targeted PASS, not independent acceptance. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup/native acceptance remain excluded; bounded saved startup is recorded above.
 - Aura content, spell data, sounds, warning/update models, container layout/settings, and other aura structure changes: independent owners, not required for public anchor registration.
-- Shared wiki/index/log, coverage registers, PLAN, source/register status edits, builds/checks/tests/readability/startup, push/deploy and delegation: excluded from this producer slice.
+- Coverage-register/source-status promotion, PLAN, code/tests edits, fresh builds/checks/tests/startup, push/deploy and delegation: excluded from this docs audit.

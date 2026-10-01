@@ -1,5 +1,12 @@
 # Patch 12.0.5 API Audit
 
+### Private anchors — parent GREEN, independent pending
+
+[Batch29 bounded proof](../../specs/private-aura-anchors.md#reconciled-batch29-bounded-proof--2026-10-01) owns saved producer, event correction and actual BuffFrame fixture evidence. Startup's 21 earlier messages all disappear after exact retail-12.1 event correction; do not treat distinct messages as independent root causes. Container fixture now passes actual cached Add/Remove/re-add/unit transition after supplying inherited Symbol through the real root. Explicit simulator dispatch is not native event production or historical 12.0.5 availability.
+
+Independent report pending; no acceptance or source-status promotion. Candidate literal field deltas 626/675/676 stay pending; restriction rows359/401 unresolved. Native AllowedWhenUntainted, callback-error rollback, frame destruction and rendering unproven. Preserve **362 IDs/source hash and 268 pending / 80 bounded / 14 partial**; audit **IN PROGRESS**.
+
+
 ### Housing category search and removed raw fields — bounded independent PASS
 
 [Batch26 search contract/proof](../../specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01) owns producer `a608db343`, actual search RED **0/12**, saved **78 PASS/startup 0 []**, fresh independent default fmt/check **0**. Exact row **661** gains bounded new-filter-name/raw old-key exclusion and actual cached consumer bridge coverage. Featured-parent/order/explicit mode policies remain inferred; native AllowedWhenUntainted, full DTO and ordinary-searcher filtering unclaimed.
