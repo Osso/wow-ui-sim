@@ -17,17 +17,16 @@ fn env() -> WowLuaEnv {
 
 #[cfg(not(feature = "retail-12-0-5"))]
 #[test]
-fn charge_duration_earlier_profiles_preserve_existing_results() {
+fn charge_duration_earlier_profiles_preserve_spell_book_publication_boundaries() {
     env()
         .exec(
             r#"
             assert(C_Spell.GetSpellChargeDuration(19750) == nil)
             assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 0) == nil)
-            local action = C_ActionBar.GetActionChargeDuration(99)
-            assert(action ~= nil and action:IsZero())
+            assert(C_ActionBar.GetActionChargeDuration(99) == nil)
             "#,
         )
-        .expect("earlier profiles retain nil spell/book and empty action duration behavior");
+        .expect("earlier spell/book publication and globally modeled action no-data behavior");
 }
 
 fn assert_close(actual: f64, expected: f64) {
