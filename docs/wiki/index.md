@@ -1,10 +1,10 @@
 ## [2026-10-01] evidence | Bounded charge policy and XML acceptance
 
-[[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] links three exact charge-table source IDs and [restriction contract](../specs/cooldown-restriction.md): policy 8 + charge 10 + ignoreGCD 6 PASS at `d8a93bec3`, startup `[]`; verifier 126 current fmt/check/audit pending. [[spell-charge-state]] records producers; secret spell identifiers/native hooks/other cooldown policies remain open. XML verifier 124 confirms five bounded declarative/getter cases; no whole-row/page completion.
+[[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] links three exact charge-table source IDs and [restriction contract](../specs/cooldown-restriction.md): independent policy/charge/ignoreGCD confirmation and recorded default fmt/check PASS; the linked contract owns proof artifacts and revision scope. Startup `[]` is historical, not proof of the current binary. [[spell-charge-state]] records producers; secret spell identifiers/native hooks/other cooldown policies remain open. XML verifier 124 confirms five bounded declarative/getter cases; no whole-row/page completion.
 
 ## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
 
-[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links completed source-scoped batch9 audit and saved startup. [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links propagator SSOT, observed GREEN/pending independent acceptance and charge-policy failures. Current runtime fmt/check remain pending; all 362 source IDs remain, with no whole-page completion.
+[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links completed source-scoped batch9 audit and saved startup. [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links propagator SSOT and completed bounded independent getter/inheritance acceptance; charge-policy failures are historical RED, superseded by the [restriction proof](../specs/cooldown-restriction.md#tests-asserting-this-spec). That proof owns recorded default Rust gates; all 362 source IDs remain, with no whole-page completion.
 
 ## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
 
@@ -24,11 +24,11 @@
 
 ## [2026-10-01] scaffolding | Add explicit cooldown restriction input
 
-[[spell-charge-state#Cooldown restriction input-only boundary]] links the [contract](../specs/cooldown-restriction.md): false-default independent boolean and eight grouped actual-query fixtures only. Predicate registration, restricted fields and absent book-table producer are unchanged; no executed RED/GREEN. Parent owns actual RED before producers. Secret spell identifier policy remains unresolved, not generic-unwrap support.
+[[spell-charge-state#Cooldown restriction bounded producer]] links the [contract](../specs/cooldown-restriction.md): false-default independent boolean and eight grouped actual-query fixtures only. Predicate registration, restricted fields and absent book-table producer are unchanged; no executed RED/GREEN. Historical scaffolding status; [current bounded outcome](../specs/cooldown-restriction.md#tests-asserting-this-spec) supersedes pending RED/producer claims. Secret spell identifier policy remains unresolved, not generic-unwrap support.
 
 ## [2026-10-01] implementation | Add explicit spell charge producers
 
-[[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. The no-data spell-duration control used a lazy namespace nil closure, not a modeled producer. Actual concrete RED at `eac08bda3` is 1/10 pass, including shared zero-span failure; `13af6a6b2` then wires all three duration producers and both table queries, removes exact obsolete providers, and gates fully elapsed zero semantics to 12.0.5+. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; parent GREEN/final gates and native parity remain unclaimed.
+[[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. The no-data spell-duration control used a lazy namespace nil closure, not a modeled producer. Actual concrete RED at `eac08bda3` is 1/10 pass, including shared zero-span failure; `13af6a6b2` then wires all three duration producers and both table queries, removes exact obsolete providers, and gates fully elapsed zero semantics to 12.0.5+. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; historical pending GREEN/gates are superseded within the [bounded restriction proof](../specs/cooldown-restriction.md#tests-asserting-this-spec); native parity remains unclaimed.
 
 ## [2026-09-30] implementation | Add bounded Forever outbound messaging
 
@@ -36,7 +36,7 @@
 
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 
-[[duration-core#Cooldown duration selection]] links the shared duration-only policy and modeled [spellbook producer](../specs/spellbook-cooldown-duration.md). Retained 12.0.5 source names arg2/arg3; individual-only true selection and invalid slot/bank behavior are explicit inferences. Existing default GCD selection, zero-span objects, runtime clock and snapshots remain. Grouped RED at `9a50d8a5c` is 0/6; parent-owned GREEN remains pending. No pet/macro mappings, native/secrecy proof, or vendor edits.
+[[duration-core#Cooldown duration selection]] links the shared duration-only policy and modeled [spellbook producer](../specs/spellbook-cooldown-duration.md). Retained 12.0.5 source names arg2/arg3; individual-only true selection and invalid slot/bank behavior are explicit inferences. Existing default GCD selection, zero-span objects, runtime clock and snapshots remain. Grouped RED at `9a50d8a5c` is 0/6; the [current bounded proof](../specs/cooldown-restriction.md#tests-asserting-this-spec) records superseding ignoreGCD controls. No pet/macro mappings, native/secrecy proof, or vendor edits.
 
 ## [2026-09-30] audit | Extend common duration NumericFormatter consumption
 
