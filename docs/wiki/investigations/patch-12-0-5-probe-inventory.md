@@ -50,6 +50,8 @@ Probe-subfinding register for the retained 12.0.5 live-client audit. Machine sta
 | `StoreForbiddenProbe.DropdownPopulation` | evidence-required | unsafe | Store lifecycle | changed | Retained `StoreDropdown_SetDropdown == nil`; population, reuse, text/check, callback, and protection behavior were never observed. Await authoritative live evidence or a correct modeled implementation. |
 | `StoreForbiddenProbe.ForbiddenDescendants` | evidence-required | unsafe | Store lifecycle | changed | Store descendant forbidden/protected state remains open: the retained file lacks the `/sfp` manual descendant scan, so correct behavior is not modeled. Await authoritative live evidence or a correct modeled implementation. |
 
+Bounded [secret `%s` spec](../../specs/secret-string-formatting.md) and [[patch-12-0-5-api-audit#Secret-string formatting bounded runtime proof]] add independent runtime development proof only; new-pin simulator integration and native probes remain pending. No credit or classification change to these 38 subfindings.
+
 ## Machine state totals
 
 - implemented: 0

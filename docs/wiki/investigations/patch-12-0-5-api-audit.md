@@ -137,6 +137,12 @@ The remaining generic defaults are intentionally outside this 12.0.5 audit unles
 
 The expanded source audit remains **IN PROGRESS**, with no completed full-page behavior claim. Separately, the historical 38-subfinding probe register remains open with 4 evidence-required rows and 1 approved provenance-only exception-requested row. The four behavior gaps are one impossible same-size input-boundary gap and three unsafe Store/security gaps; they are not exception or approval candidates. Authoritative/live evidence or correct behavior is still required before this audit can close. No 12.0.5-specific inert-default module remains, but absence of a patch shim is not proof that every retained probe result has exact regression coverage.
 
+### Secret-string formatting bounded runtime proof
+
+[Secret-string formatting spec](../../specs/secret-string-formatting.md) covers only retained line 40, `prose-2026-03-12-040`: secret `%s` ignores width/precision and preserves full payload; public formatting is unchanged. Allowed tainted opaque formatting is **inferred**, not native-verified permission; input/result unwrap guards and stack taint remain intact, with no arbitrary callback capability. `SetFormattedText`, display provenance and other formatting domains remain unproven.
+
+MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb3373412757c2caee` after explicit user approval and remote verification; simulator pin commit `c5ba89ae3` changes only Cargo/lock pin. Independent runtime report `/tmp/rilua-secret-format-independent-proof.md` records 6 formatter PASS, 2 host-guard PASS, fmt/check PASS with pre-existing `strlen` warning—not warning-free. Actual simulator old-pin RED at `eac08bda3` is 1 public PASS / 5 secret FAIL (`/tmp/patch-12.0.5-batch6-secret-format-red.log`). New-pin batch7 is pending compilation: **no simulator integration GREEN or native proof**. Concrete future probe and remaining guard/display boundaries live in the spec. Full page remains IN PROGRESS; 38-row probe classifications are unchanged.
+
 ## Sources
 
 - [Unit-stat output restriction](../../specs/unit-stat-output-restriction.md) — exact supported/pending matrix, proof and future native probes.

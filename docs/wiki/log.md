@@ -5297,3 +5297,7 @@ Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], and index 
 ## [2026-09-30] implementation | Correct bounded current-retail enum publication
 
 `e8ebb47c1` corrects source-backed current-retail enum additions/removals/rename and related shifted values, with actual-member metadata refreshed after shared compatibility publication. [[patch-12-0-5-api-audit]] links the [enum spec](../specs/patch-12-0-5-enum-additions.md#retained-source--proof-matrix), the sole exact accounting/proof matrix. Parent RED is retained; GREEN/final checks pending. Historical/PTR publications, native/domain semantics and later unrelated members remain outside new claims.
+
+## [2026-10-01] ingest | Bounded secret-string formatting runtime proof
+
+Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage and runtime revision metadata; updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index. Runtime `6044544` independent 6+2 PASS and fmt/check with pre-existing strlen warning; simulator pin `c5ba89ae3`, old-pin RED 1/5, new-pin batch7 compilation pending. Tainted opaque permission inferred; SetFormattedText/other domains and native parity unproven. All source IDs/classifications retained; full page IN PROGRESS and 38-row probe register unchanged.
