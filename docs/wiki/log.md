@@ -1,10 +1,14 @@
+## [2026-10-01] evidence | Reconcile bounded housing parent GREEN
+
+[Variant proof](../specs/housing-catalog-variants.md#proof-ledger-and-producer-gate) records repaired parent `157d15cef` compile and 14 variants PASS, four cart + four free-place + one customize + two decor controls PASS, saved startup exit 0 `[]`, and exact artifact metadata. Initial 13/14 came from retail no-op table security; host test-local VM registration corrected the fixture without production changes. Independent report 178 and accounting acceptance pending. All 362 IDs and unrelated DamageMeter accounting preserved; docs audit ran no builds/tests/delegation/push.
+
 ## [2026-10-01] fix | Install real VM policy in housing guard fixture
 
-[Guard diagnosis](../specs/housing-catalog-variants.md#guarded-selector-fixture-root-cause) records parent compile PASS, variants 13/14 and cart 4 PASS. Retail's no-op `settablesecurity` left the fixture unguarded; test-local pinned VM registration restores its premise without production changes. Named secure/tainted source and query assertions retain rejection/taint requirements. Revised proof remains parent-owned; zero-match filters and native behavior are not evidence. See [[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]].
+[Guard diagnosis](../specs/housing-catalog-variants.md#guarded-selector-fixture-root-cause) records parent compile PASS, variants 13/14 and cart 4 PASS. Retail's no-op `settablesecurity` left the fixture unguarded; test-local pinned VM registration restores its premise without production changes. Named secure/tainted source and query assertions retain rejection/taint requirements. Revised proof remains parent-owned; zero-match filters and native behavior are not evidence. See [[patch-12-0-5-api-audit#Housing catalog variant producer — parent GREEN, independent pending]].
 
 ## [2026-10-01] implementation | Replace overlapping housing catalog seeds
 
-[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [contract](../specs/housing-catalog-variants.md): actual parent RED 0/11 precedes empty-backed base/variant queries and distinct source/results publication. C API owns retained Lua lifecycle; registration remains unconditional, excluded temporary providers untouched. Secret selectors conservatively rejected without unwrapping or taint clearing; guard/snapshot controls unrun. No builds/checks/delegation/push; parent GREEN/startup and acceptance pending, all accounting IDs unchanged.
+[[patch-12-0-5-api-audit#Housing catalog variant producer — parent GREEN, independent pending]] links the [contract](../specs/housing-catalog-variants.md): actual parent RED 0/11 precedes empty-backed base/variant queries and distinct source/results publication. C API owns retained Lua lifecycle; registration remains unconditional, excluded temporary providers untouched. Secret selectors conservatively rejected without unwrapping or taint clearing; guard/snapshot controls unrun. No builds/checks/delegation/push; parent GREEN/startup and acceptance pending, all accounting IDs unchanged.
 
 ## [2026-10-01] evidence | Reconcile bounded DamageMeter acceptance
 
@@ -12,7 +16,7 @@
 
 ## [2026-10-01] input/spec | Prepare housing variant fixtures
 
-[Variant contract](../specs/housing-catalog-variants.md) owns eleven unrun grouped cases, empty C API-owned inputs, exact source/filter IDs and equivalent fixture replacement coverage. [[patch-12-0-5-api-audit#Housing catalog variant inputs — pending RED]] records corrected registration order and retained unrelated providers. No output edits/build/check/delegation or actual RED/row credit.
+[Variant contract](../specs/housing-catalog-variants.md) owns eleven unrun grouped cases, empty C API-owned inputs, exact source/filter IDs and equivalent fixture replacement coverage. [[patch-12-0-5-api-audit#Housing catalog variant inputs — historical pre-RED checkpoint]] records corrected registration order and retained unrelated providers. No output edits/build/check/delegation or actual RED/row credit.
 
 ## [2026-10-01] fix | Preserve DamageMeter registration scope
 

@@ -8,7 +8,7 @@
 
 ## [2026-10-01] implementation | Publish empty-backed housing variants
 
-[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [variant contract](../specs/housing-catalog-variants.md): parent input `05ca7dff0` RED 0/11, exact-key base/variant queries and independent filter-free source/results snapshots. Unconditional registration and existing searcher lifecycle retained; overlapping seeded Lua outputs removed, excluded owners preserved. Parent compile passed; 13/14 variants and four cart controls passed. Linked contract diagnoses the unguarded retail fixture and records host-installed VM guard repair; revised execution remains pending. Parent owns repaired GREEN/startup; no native/filter/count/event/placement or source-row completion claim.
+[[patch-12-0-5-api-audit#Housing catalog variant producer — parent GREEN, independent pending]] links the [variant contract](../specs/housing-catalog-variants.md): parent input `05ca7dff0` RED 0/11, exact-key base/variant queries and independent filter-free source/results snapshots. Unconditional registration and existing searcher lifecycle retained; overlapping seeded Lua outputs removed, excluded owners preserved. Parent repaired compile and 14/14 variants PASS at `157d15cef`; four cart, four free-place, one customize and two decor controls PASS. Saved startup exits 0 `[]`. Linked contract owns metadata and test-local VM guard repair, without production changes; initial 13/14 was a fixture-premise failure. Independent report 178 and accounting acceptance pending; no native/filter/count/event/placement or source-row completion claim.
 
 ## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
 
@@ -16,7 +16,7 @@
 
 ## [2026-10-01] input/spec | Prepare empty housing catalog variants
 
-[Variant contract](../specs/housing-catalog-variants.md) records empty C API-owned inputs, eleven unrun grouped fixtures, exact filter/source accounting and seed-test replacement mapping. [[patch-12-0-5-api-audit#Housing catalog variant inputs — pending RED]] corrects bootstrap order and preserves excluded owners. Outputs unchanged; actual RED/build/security/query acceptance pending, no source-row credit.
+Historical input checkpoint: [Variant contract](../specs/housing-catalog-variants.md) records empty C API-owned inputs, eleven unrun grouped fixtures, exact filter/source accounting and seed-test replacement mapping. [[patch-12-0-5-api-audit#Housing catalog variant inputs — historical pre-RED checkpoint]] corrects bootstrap order and preserves excluded owners. Outputs unchanged; actual RED/build/security/query acceptance pending, no source-row credit. Superseded by parent GREEN above; independent report 178 remains pending.
 
 ## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
 
