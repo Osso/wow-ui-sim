@@ -29,6 +29,15 @@ The new inputs are ordinary public host booleans, not secret-aware values. Exist
 - `src/loader/tests/wow_api_tooltip_helpers.rs`, `tests/c_unit_auras_admin.rs`, `tests/aura_api.rs`, `patch-tests/patch_12_1/aura_container.rs` — existing test constructors retain explicit legacy values.
 - `tests/aura_table_shape.rs` — existing shape assertions retained; new host-populated player/party fixtures exercise independent classifications, public booleans, taint, and snapshots without adding a Cargo target.
 
+Existing complete constructor sites updated (14 total):
+
+- `src/lua_api/game_data.rs`: `apply_player_aura_spell`, `make_party_buff`, `make_party_debuff`, `build_auras_from_indices` (four).
+- `src/lua_api/globals/auras.rs`: `target_fixture_auras` (two), `tests::plain_helpful_aura` (one); `src/lua_api/globals/admin.rs`: `build_admin_aura` (one).
+- `src/loader/tests/wow_api_tooltip_helpers.rs`: `flash_of_light_aura` (one); `tests/c_unit_auras_admin.rs`: `admin_aura` (one). `admin_buff` and the struct-update `dispellable_debuff` inherit the updated constructor values.
+- `tests/aura_api.rs`: `test_c_unit_auras_filters_aura_instances_by_polarity_and_player_source` (two); `patch-tests/patch_12_1/aura_container.rs`: `seed_player_filter_auras` (two).
+
+New complete constructor sites: `tests/aura_table_shape.rs::{helpful_non_raid_fixture,harmful_raid_fixture}`. Party fixtures clone these inputs, then explicitly reverse nameplate-only and from-player values.
+
 ## Tests asserting this spec
 
 Existing five `aura_table_shape` tests retain their expectations. The target debuff assertion now describes its explicit fixture classification rather than asserting a general helpfulness/raid coupling.
@@ -49,7 +58,7 @@ Existing-control filter: `cargo test --test integration aura_table_shape::`. Con
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and observe actual behavioral RED before a fresh producer change. Current writer still derives `isRaid` from helpfulness and publishes constant false `isNameplateOnly`; the first new test is intended to expose this mismatch, not yet proven to fail.
+- [ ] Parent must compile and observe actual behavioral RED before a fresh producer change. Current writer still derives `isRaid` from helpfulness, publishes constant false `isNameplateOnly`, and forces `isFromPlayerOrPlayerPet=true` for player queries; the first new test is intended to expose this mismatch, not yet proven to fail.
 - [ ] After RED, publish the two explicit fields and obtain focused GREEN plus retained controls. No writer/producer changes, test execution, builds, checks, coverage, push, or deployment occur in this slice.
 - [ ] Target queries currently read fixed Rust fixtures, with no host-populated target aura store. Tests preserve that pathway rather than adding or pretending to exercise target inputs.
 
