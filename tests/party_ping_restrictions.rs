@@ -1,6 +1,7 @@
 //! Pending Retail 12.0.5 contract fixtures; strict rejection is simulator policy.
 #![cfg(feature = "retail-12-0-5")]
 
+use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
