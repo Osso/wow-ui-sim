@@ -742,7 +742,7 @@ fn is_truthy(value: Val) -> bool {
 fn build_aura_table(state: &mut LuaState, aura: &AuraInfo, unit: &str) -> Val {
     let t = create_table_with_capacity(state, AURA_DATA_HASH_FIELDS);
     write_aura_identity(state, t, aura, unit);
-    write_aura_flags(state, t, aura, unit);
+    write_aura_flags(state, t, aura);
     t
 }
 
@@ -780,22 +780,27 @@ fn write_aura_identity(state: &mut LuaState, t: Val, aura: &AuraInfo, unit: &str
     );
 }
 
-fn write_aura_flags(state: &mut LuaState, t: Val, aura: &AuraInfo, unit: &str) {
+fn write_aura_flags(state: &mut LuaState, t: Val, aura: &AuraInfo) {
     table_set(state, t, "isStealable", Val::Bool(aura.is_stealable));
     table_set(state, t, "nameplateShowPersonal", Val::Bool(false));
     table_set(state, t, "canApplyAura", Val::Bool(aura.can_apply_aura));
     table_set(state, t, "isBossAura", Val::Bool(false));
-    let from_player = if unit == "player" {
-        true
-    } else {
-        aura.is_from_player_or_player_pet
-    };
-    table_set(state, t, "isFromPlayerOrPlayerPet", Val::Bool(from_player));
+    table_set(
+        state,
+        t,
+        "isFromPlayerOrPlayerPet",
+        Val::Bool(aura.is_from_player_or_player_pet),
+    );
     table_set(state, t, "nameplateShowAll", Val::Bool(false));
     table_set(state, t, "isHelpful", Val::Bool(aura.is_helpful));
     table_set(state, t, "isHarmful", Val::Bool(!aura.is_helpful));
-    table_set(state, t, "isNameplateOnly", Val::Bool(false));
-    table_set(state, t, "isRaid", Val::Bool(aura.is_helpful));
+    table_set(
+        state,
+        t,
+        "isNameplateOnly",
+        Val::Bool(aura.is_nameplate_only),
+    );
+    table_set(state, t, "isRaid", Val::Bool(aura.is_raid));
 }
 
 #[cfg(test)]
