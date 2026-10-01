@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile bounded batch24 aggregates
+
+[[patch-12-0-5-api-audit#Housing explicit aggregates — bounded independent PASS]] links [aggregate proof](../specs/housing-catalog-aggregates.md#reconciled-batch24-bounded-proof--2026-10-01): inputs `fe874979b`, producer `72795fbfa`, RED **2 PASS / 10 FAIL** at stored assertion, saved **76 PASS**, parent startup **0 []**, fresh independent fmt/check **0** at identical relevant code/docs `2973774c5`. Rows 650/651 remain pending with bounded explicit-field links; **276 pending / 72 bounded / 14 partial = 362**, IDs/text hash preserved. None→nil is simulator missing-data gap, not cached required native-number parity. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile closure; **IN PROGRESS**. Docs/accounting validation only; no builds/tests/delegation/push.
+
 ## [2026-10-01] evidence | Accept bounded batch23 base selectors
 
 [[patch-12-0-5-api-audit#Housing base selectors — bounded independent PASS]] links [batch23 contract/proof](../specs/housing-catalog-variants.md#reconciled-batch23-bounded-proof--2026-10-01): producer `346c7e1be`, tests `1e452eac3`, RED **0/12**, saved GREEN **56 PASS**, parent startup **0 []**, independent fmt/check **0** at clean producer. Only two trailing-argument deltas promoted; **276 pending / 72 bounded / 14 partial**, 362 IDs/text hash retained. Ambiguity inferred; two late tests lack predecessor RED. No broad-query/full DTO/native row closure or batch24 acceptance. Docs/accounting validation only; audit **IN PROGRESS**.

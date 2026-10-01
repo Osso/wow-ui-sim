@@ -4,11 +4,11 @@ Bounded 12.0.5 input/test contract for `HousingCatalogEntryInfo.totalNumStored` 
 
 ## What it must do
 
-- [ ] `GetCatalogEntryInfo`, `GetCatalogEntryInfoByItem`, and `GetCatalogEntryInfoByRecordID` publish the selected base record's explicitly supplied `total_num_stored` and `total_num_placed` as Lua numbers named `totalNumStored` and `totalNumPlaced`.
-- [ ] Counts are nonnegative `Option<u32>` inputs; supplied values above the signed 32-bit range remain exact. No native maximum is inferred from this simulator representation.
-- [ ] **Simulator inference:** `Some(0)` publishes numeric zero; each `None` independently leaves its Lua field nil. Missing explicit data is a simulator gap, not native contract parity or a native default.
-- [ ] Never derive totals from an incomplete variant map, pending placement, room membership, spent budgets or other unrelated housing state. Variant changes/removal do not change explicit totals; aggregate changes do not mutate variants or pending state.
-- [ ] Every query returns independent snapshots: Lua mutation cannot change other results or input; later input mutation cannot change earlier results. Missing base records return nil even when variants survive. Environments remain independent.
+- [x] `GetCatalogEntryInfo`, `GetCatalogEntryInfoByItem`, and `GetCatalogEntryInfoByRecordID` publish the selected base record's explicitly supplied `total_num_stored` and `total_num_placed` as Lua numbers named `totalNumStored` and `totalNumPlaced`.
+- [x] Counts are nonnegative `Option<u32>` inputs; supplied values above the signed 32-bit range remain exact. No native maximum is inferred from this simulator representation.
+- [x] **Simulator inference:** `Some(0)` publishes numeric zero; each `None` independently leaves its Lua field nil. Missing explicit data is a simulator gap, not native contract parity or a native default.
+- [x] Never derive totals from an incomplete variant map, pending placement, room membership, spent budgets or other unrelated housing state. Variant changes/removal do not change explicit totals; aggregate changes do not mutate variants or pending state.
+- [x] Every query returns independent snapshots: Lua mutation cannot change other results or input; later input mutation cannot change earlier results. Missing base records return nil even when variants survive. Environments remain independent.
 
 ### Declaration evidence and limits
 
@@ -36,22 +36,26 @@ Exact filter: `housing_catalog_aggregates::`; target: `integration`.
 
 | Fixtures | Required behavior | Proof level |
 | --- | --- | --- |
-| `entry_info_publishes_explicit_aggregates`, `by_item_publishes_explicit_aggregates`, `by_record_id_publishes_explicit_aggregates` | Each selector publishes 37 stored / 11 placed independently of variants containing 3 and 5 stored | Written; uncompiled/unrun |
-| `explicit_zero_is_not_missing_inferred_policy`, `missing_aggregates_are_nil_not_variant_sums_inferred_gap`, `each_aggregate_can_be_missing_independently_inferred_gap`, `nonnegative_counts_preserve_values_above_signed_range` | Zero/nil distinction, no variant-sum default, independent omissions, unsigned count range | Written; uncompiled/unrun |
-| `variant_and_unrelated_housing_mutation_do_not_change_aggregates`, `aggregate_input_mutation_does_not_change_variants_or_pending_state` | No coupling in either direction; variant identities/counts stay distinct | Written; uncompiled/unrun |
-| `snapshots_are_independent_across_lua_and_input_mutation` | All three selectors produce independent snapshots across Lua changes, input changes and GC | Written; uncompiled/unrun |
-| `missing_base_record_is_nil_even_with_surviving_variants`, `aggregates_are_environment_local` | Missing-record nil and isolated explicit input | Written; uncompiled/unrun |
+| `entry_info_publishes_explicit_aggregates`, `by_item_publishes_explicit_aggregates`, `by_record_id_publishes_explicit_aggregates` | Each selector publishes 37 stored / 11 placed independently of variants containing 3 and 5 stored | Saved GREEN; independently inspected, not rerun |
+| `explicit_zero_is_not_missing_inferred_policy`, `missing_aggregates_are_nil_not_variant_sums_inferred_gap`, `each_aggregate_can_be_missing_independently_inferred_gap`, `nonnegative_counts_preserve_values_above_signed_range` | Zero/nil distinction, no variant-sum default, independent omissions, unsigned count range | Saved GREEN; independently inspected, not rerun |
+| `variant_and_unrelated_housing_mutation_do_not_change_aggregates`, `aggregate_input_mutation_does_not_change_variants_or_pending_state` | No coupling in either direction; variant identities/counts stay distinct | Saved GREEN; independently inspected, not rerun |
+| `snapshots_are_independent_across_lua_and_input_mutation` | All three selectors produce independent snapshots across Lua changes, input changes and GC | Saved GREEN; independently inspected, not rerun |
+| `missing_base_record_is_nil_even_with_surviving_variants`, `aggregates_are_environment_local` | Missing-record nil and isolated explicit input | Saved GREEN; independently inspected, not rerun |
 
-### Producer checkpoint / proof ledger — 2026-10-01
+### Reconciled batch24 bounded proof — 2026-10-01
 
-Parent reports compiled RED at `fe874979b`: build exit 0; twelve tests, two PASS and ten FAIL for missing aggregates. Artifacts: `/tmp/patch-12.0.5-batch24-red-*`. This producer slice does not independently rerun or inspect that behavioral proof; table entries above describe the original input checkpoint, not fresh producer results.
+Inputs `fe874979b`; producer `72795fbfa`. [Independent proof](/tmp/patch-12.0.5-housing-aggregates-independent-proof.md) inspected saved compiler/runtime artifacts, not rerun behavior. Compiled RED: build exit 0, **2 PASS / 10 FAIL**. All ten failures stop at `explicit totalNumStored mismatch`; they do not individually isolate placed-field failures. Missing-aggregate and missing-base controls pass.
 
-Producer now publishes both optional counts through shared `push_entry`, using direct `u32` to `f64` conversion without signed narrowing. `None` does not write a field; `Some(0)` writes numeric zero. Queries, variants, seed data and wrappers remain unchanged. No build, check, tests, readability, coverage, startup, delegation, push or deployment in this slice. GREEN and acceptance remain parent-owned; requirements remain unchecked pending that proof.
+Saved GREEN: **12 aggregate + 14 base + 24 variants/count + 11 storage + 15 destruction = 76 PASS** across five nonempty selections. Parent normal startup exits **0**, JSON `[]`, zero unique errors/occurrences; saved evidence, not independent execution or nonempty-wrapper proof. Runtime ledger: `/tmp/patch-12.0.5-batch24-green-runs.json`; startup: `/tmp/patch-12.0.5-batch24-green-startup-run.json`.
+
+Fresh independent `cargo fmt --check` and `cargo check` each exit **0** at docs `2973774c5`, with relevant Rust/config identical to producer; no warnings/errors. Gate ledger: `/tmp/patch-12.0.5-batch24-independent-checks.json`. Source audit covers shared serializer, unchanged selector guards/registration, rooting and preserved constructor data; not native aggregate secrecy or all-profile execution.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent GREEN and verifier on the committed producer revision; no fresh compile or behavioral result claimed here.
+- [ ] Cached required native numbers remain a missing-data simulator gap when input is `None`; nil is not a native default. Native maximum/default/secrecy unverified.
+- [ ] Automatic synchronization, variant derivation, complete DTO and successful nonempty deprecated-wrapper compatibility remain absent/unproven; `remainingRedeemable` is not modeled here.
+- [ ] Exact rows 650/651 retain audit-pending with bounded explicit-field proof links, not whole-row closure. Audit **IN PROGRESS**.
 
 ## Out of scope
 
-Native nil/default/security semantics, complete `HousingCatalogEntryInfo`, redeemable data, deprecated-wrapper parity, storage/placement aggregate recomputation or synchronization, variant schema changes, serializer/output changes before RED, new Cargo targets, all-profile acceptance, shared coverage registers/wiki/PLAN and edits to `housing-catalog-variants.md` are excluded.
+Native nil/default/security semantics, complete `HousingCatalogEntryInfo`, redeemable data, deprecated-wrapper parity, storage/placement aggregate recomputation or synchronization, variant schema changes, new Cargo targets, all-profile acceptance, PLAN and edits to `housing-catalog-variants.md` are excluded.

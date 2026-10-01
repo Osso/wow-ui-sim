@@ -525,6 +525,24 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-pending-decor-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch22-green-startup-run.json",
       "gate_scope": "Saved runtime independently inspected, not rerun; fresh default fmt/check0 at producer snapshot. Parent startup is not independent compilation provenance; nondefault registration source-only."
+    },
+    {
+      "id": "housing-catalog-aggregates",
+      "symbols": [
+        "HousingCatalogEntryInfo.totalNumStored",
+        "HousingCatalogEntryInfo.totalNumPlaced"
+      ],
+      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "spec": "docs/specs/housing-catalog-aggregates.md",
+      "tests": [
+        "tests/housing_catalog_aggregates.rs"
+      ],
+      "implementation": "72795fbfa",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch24-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-aggregates-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch24-green-startup-run.json",
+      "gate_scope": "Saved 76 PASS inspected, not rerun; parent startup 0 [] saved, not independent. Fresh default fmt/check 0 at docs2973774c5 with identical relevant producer code/config. RED2PASS10FAIL all stop at stored assertion, not individually placed failure."
     }
   ],
   "source_rows": [
@@ -2751,15 +2769,19 @@
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-650",
-      "capabilities": [],
+      "capabilities": [
+        "housing-catalog-aggregates"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
-      "capabilities": [],
+      "capabilities": [
+        "housing-catalog-aggregates"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",

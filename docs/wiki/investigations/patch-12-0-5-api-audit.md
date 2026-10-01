@@ -1,10 +1,16 @@
 # Patch 12.0.5 API Audit
 
+### Housing explicit aggregates — bounded independent PASS
+
+[Batch24 contract/proof](../../specs/housing-catalog-aggregates.md#reconciled-batch24-bounded-proof--2026-10-01) owns inputs `fe874979b`, producer `72795fbfa`, compiled RED **2 PASS / 10 FAIL** (all ten stop at stored-field assertion, not isolated placed failures), saved **12 aggregate + 14 base + 24 variants/count + 11 storage + 15 destruction = 76 PASS** and parent startup **0 []**, zero errors, not independent execution. Fresh independent default fmt/check **0** at docs `2973774c5` covers identical relevant code/config. Explicit fields through three selectors, zero/nil distinction, unsigned range, independent snapshots and no mutation coupling are bounded simulator proof. `None`→nil is missing-data gap against cached required native numbers, not native default.
+
+Exact structure rows **650/651 remain audit-pending**, linked only for bounded explicit fields. **276 pending / 72 bounded / 14 partial = 362** and all IDs/text hash retained. No synchronization, variant derivation, full DTO, nonempty wrapper, native or all-profile claim. Category spec remains separately owned; audit **IN PROGRESS**.
+
 ### Housing base selectors — bounded independent PASS
 
 [Batch23 contract/proof](../../specs/housing-catalog-variants.md#reconciled-batch23-bounded-proof--2026-10-01) owns producer `346c7e1be`, inputs `1e452eac3`, compiled predecessor RED **0/12**, saved **14 base + 24 variants/count + 14 pending + 4 cart = 56 PASS**. Saved parent startup **0 []**, zero errors, is not independent execution. Independent default fmt/check **0** at clean `346c7e1be` excludes later batch24. Root cause: old base selectors read seeded data rather than explicit base records; producer replaces only these publishers/exclusive copier with public item-ID/link and exact record/type lookup, fresh bounded snapshots and no seed/variant fallback.
 
-Only `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284` and `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` receive **bounded-coverage** for removed trailing `tryGetOwnedInfo`, not broad query/full DTO/native row completion. Name support, native AllowedWhenUntainted and nonempty deprecated wrapper remain open; ambiguity error inferred. Two late-added controls have GREEN, no predecessor RED. Current accounting **276 pending / 72 bounded / 14 partial = 362**; IDs/text hash preserved. Aggregate spec remains batch24-owned and excluded. Audit **IN PROGRESS**.
+Only `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284` and `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` receive **bounded-coverage** for removed trailing `tryGetOwnedInfo`, not broad query/full DTO/native row completion. Name support, native AllowedWhenUntainted and nonempty deprecated wrapper remain open; ambiguity error inferred. Two late-added controls have GREEN, no predecessor RED. Current accounting **276 pending / 72 bounded / 14 partial = 362**; IDs/text hash preserved. Batch23 proof excludes later batch24; aggregate proof is recorded separately above. Audit **IN PROGRESS**.
 
 ### Housing pending decor — bounded independent PASS
 
