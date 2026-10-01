@@ -8,7 +8,9 @@ Main source `255adcbde` builds unchanged and passes 36/36 bounded cases, includi
 
 ## Inventory — 2026-09-22
 
-All 268 successfully downloaded Forever packages exist and match their indexed sizes and SHA-256 hashes. ConsumableTracker's selected Forever file `8924598` is unavailable; its older comparison archive is not silently substituted. Missing cached dependencies remain separate blockers. No further downloads are authorized by this audit.
+The September 22 inventory recorded all 268 downloaded Forever packages matching indexed sizes and SHA-256 hashes. This is historical presence/hash evidence, not proof those source packages remain available. ConsumableTracker's selected Forever file `8924598` was unavailable; its older comparison archive was not substituted. Missing cached dependencies remain separate blockers. No further downloads are authorized by this audit.
+
+On October 1, bounded local-source inspection established runnable repository sources for AutoRoll, !BugGrabber and BugSack, but no additional complete third-party package for the next workflow. `Interface/AddOns/Syndicator` contains only two CheckItem fragments, no TOC or addon entry point. The Forever Blizzard cache supplies vendor UI, not third-party packages; catalog records and retained proof do not establish current archive presence. No reacquisition or inventory-counter change follows from this availability gap.
 
 The matrix separates current startup and interaction results from `priorEvidence`. A `not-run` current result does not erase earlier scoped proof: it means that proof has not yet been reconciled or rerun for this inventory-wide pass. Current bounded batches include Abattis PugBoard open/close, Abgesattelt named remote-death count updates, one intentional LoadOnDemand-not-requested module, one profile-excluded package, and ActionBarAuras duration create/countdown/removal evidence. Ellesmere's existing six-group proof is retained. EpicDamageMeter also has historical bounded interaction proof; CooldownMaster and DragonGuildMaster have startup-only evidence. Carbonite and Baganator have recorded failures or dependency blockers.
 
