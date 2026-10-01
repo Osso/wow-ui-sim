@@ -1,6 +1,7 @@
 use super::*;
 
 pub struct SimState {
+    pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
     /// Explicit pending records only; empty default and lifecycle are simulator policy.
     #[cfg(all(
         feature = "retail-12-0-5",

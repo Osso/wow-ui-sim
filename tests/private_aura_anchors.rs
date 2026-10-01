@@ -120,6 +120,7 @@ fn nonempty_optional_bindings_publish_flattened_icon_dimensions() {
             assert(info.anchorID == id and info.unitToken == 'target' and info.auraIndex == 2)
             assert(rawequal(info.parent, parent))
             assert(info.iconWidth == 24 and info.iconHeight == 30 and info.borderScale == 1.25)
+            assert(info.iconInfo == nil and info.iconAnchor == nil and info.durationAnchor == nil)
             assert(info.showCooldownFrame and info.showCooldownEdge)
             assert(info.showCountdownNumbers and info.showDispelIcon and info.isContainer)
         end
@@ -207,15 +208,21 @@ fn added_callback_can_remove_the_just_published_id() {
     let env = fixture_env();
     env.exec(
         r#"
-        local removed
-        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id) removed = id end)
+        local removed, addedCount, removedCount = nil, 0, 0
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+            removedCount = removedCount + 1
+            removed = id
+        end)
         C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+            addedCount = addedCount + 1
             assert(FindAnchor(info.anchorID) ~= nil)
             C_UnitAuras.RemovePrivateAuraAnchor(info.anchorID)
             assert(FindAnchor(info.anchorID) == nil)
         end)
         local id = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, CreateFrame('Frame')))
-        assert(removed == id and #C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        assert(type(id) == 'number' and addedCount == 1 and removedCount == 1)
+        assert(removed == id)
+        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
     "#,
     )
     .expect("added dispatch releases model borrow before synchronous removal");

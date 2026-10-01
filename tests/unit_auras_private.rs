@@ -109,23 +109,22 @@ fn private_aura_anchor_callbacks_and_state_are_tracked() {
                 removed[#removed + 1] = anchorID
             end)
 
-            local anchorID1 = C_UnitAurasPrivate._AddPrivateAuraAnchorForTest({
+            local parent = CreateFrame("Frame")
+            local anchorID1 = C_UnitAuras.AddPrivateAuraAnchor({
                 unitToken = "player",
                 auraIndex = 1,
-                isBuff = true,
-                maxAuras = 5,
+                parent = parent,
             })
-            local anchorID2 = C_UnitAurasPrivate._AddPrivateAuraAnchorForTest({
+            local anchorID2 = C_UnitAuras.AddPrivateAuraAnchor({
                 unitToken = "target",
                 auraIndex = 2,
-                isBuff = false,
-                maxAuras = 3,
+                parent = parent,
             })
 
             local allAnchors = C_UnitAurasPrivate.GetPrivateAuraAnchors()
             local playerAnchors = C_UnitAurasPrivate.GetPrivateAuraAnchors("player")
 
-            local removedOk = C_UnitAurasPrivate._RemovePrivateAuraAnchorForTest(anchorID1)
+            local removedOk = select('#', C_UnitAuras.RemovePrivateAuraAnchor(anchorID1)) == 0
             local anchorsAfterRemove = C_UnitAurasPrivate.GetPrivateAuraAnchors()
 
             return anchorID1 > 0 and anchorID2 > anchorID1,

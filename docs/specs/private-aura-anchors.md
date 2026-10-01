@@ -1,6 +1,6 @@
 # Public private-aura anchors
 
-Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Current production owner is [`private_aura_state.rs`](../../src/lua_api/workarounds/temporary/private_aura_state.rs); only its private test helpers currently produce anchors. This checkpoint adds fixtures, not backing code. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
+Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Producer code is uncompiled and unrun in this bounded slice; parent owns GREEN and verification. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -39,29 +39,37 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 ## Implementation inventory
 
-| Path | Role at input checkpoint |
+| Path | Role |
 | --- | --- |
-| `tests/private_aura_anchors.rs` | New public-only behavioral fixtures; actual frame parents, no helper-produced anchors. |
-| `tests/unit_auras_private.rs` | Existing helper and non-anchor controls; unchanged for initial RED. |
-| `src/lua_api/workarounds/temporary/private_aura_state.rs` | Existing unconditional private bootstrap, anchor owners/helpers and mixed embedded test; unchanged. |
+| `src/c_api/private_aura_anchors.rs` | Empty per-environment records, monotonic IDs, callbacks and fresh flattened DTOs. |
+| `src/c_api/private_aura_anchors/input.rs` | Complete secret-aware and VM-guarded public/nested input validation. |
+| `src/c_api/mod.rs`, `src/lua_api/globals/register.rs`, `src/lua_api/state.rs`, `src/lua_api/state/sim_state.rs` | Unconditional module/publication and per-environment model wiring, separate from gated aura enumeration. |
+| `tests/private_aura_anchors.rs` | Public lifecycle fixtures; explicit delivery counts repair vacuous reentry PASS; flattened DTO exclusions. |
+| `tests/unit_auras_private.rs` | Retained anchor assertions migrated to public producers; non-anchor controls unchanged. |
+| `src/lua_api/workarounds/temporary/private_aura_state.rs` | Old anchor state/counters/setters/getter/callback slots/helpers removed; embedded anchor assertions migrated, unrelated controls retained. |
 | `build.rs` / `Cargo.toml` | Existing grouped `integration` discovery with `autotests = false`; unchanged. |
 
-### Later producer constraints (not implemented here)
+### Ownership and publication boundary
 
-User-required design: Rust C API record stores strings/scalars and frame IDs, **not unrooted `rilua::Val`**. `frame_ref` must retrieve the canonical rooted frame. Callback functions must be rooted in the Lua registry or existing namespace, not retained as unrooted values. Validate complete records through secret-aware, access-guarded reads before mutation; release the state borrow before dispatch. This is a producer handoff, not a claim about current architecture.
+Public names already existed through `runtime_surface_bootstrap.lua`'s `__wow_namespace_mt.__index`, which logs missing symbols and caches functions returning nil. Those are not lifecycle implementations. Static namespace stubs and the public aura registrar have no explicit anchor publishers. The old temporary bootstrap independently owned private anchors, counter, callback slots, getter and test-only producers. Concrete C API publication now runs after `auras::register_all` and before runtime namespace metatable installation; existing concrete slots bypass lazy stubs. Both public methods and all three private methods are unconditional; no retail/aura-enumeration cfg is introduced.
 
-Replace exact old anchor ownership, not other aura models:
+Records hold strings/scalars and canonical native frame IDs only. Parent and binding receivers use native backing identity, not overridable dispatch tokens. Existing `frame_ref` caches canonical tables in the rooted registry, pins frame tables without skipping traversal, and shares those tables with per-frame custom fields. No new frame deep copy or Rust-held permanent `Val` root is added. Callback replacement uses named Lua registry roots with GC barriers. Full parsing precedes mutation; model borrows end before synchronous callbacks. Bindings are captured for future `AnchorPrivateAura`, but registration does not apply layout/rendering and DTOs expose no nested input structures.
 
-1. Retire `PrivateAuraState()` initialization/ownership of `state.anchors` and `state.nextAnchorID`.
-2. Replace old `SetPrivateAuraAnchorAddedCallback`, `SetPrivateAuraAnchorRemovedCallback`, and `GetPrivateAuraAnchors` Lua publishers plus `_anchorAddedCallback` / `_anchorRemovedCallback` storage with rooted C API ownership.
-3. Remove `_AddPrivateAuraAnchorForTest` and `_RemovePrivateAuraAnchorForTest` only after retained assertions migrate to public producers and pass. Do not leave parallel helper state or fallback producers.
-4. Keep warning-frame/show-dispel/update callback owners, private aura lists/lookups and their controls. `CopyPrivateAuraValue` / `CopyPrivateAuraList` still serve those non-anchor paths; do not remove them just because anchor copying moves.
+`CopyPrivateAuraValue` / `CopyPrivateAuraList` still serve unrelated private aura paths. There is no parallel anchor helper state or fallback producer.
 
 ## Tests asserting this spec
 
 `tests/private_aura_anchors.rs` is automatically included by `build.rs::discover_top_level_test_modules` / `should_include_in_integration_harness` in the existing `integration` binary. No standalone Cargo target is added.
 
-| Fixture | Observable contract | Proof |
+### Batch29 proof ledger — 2026-10-01
+
+Inputs: `39dd9cce6` and import fix `7926dfdfe`. Parent artifacts `/tmp/patch-12.0.5-batch29-red-fixed-{revision.txt,build-result.json,runs.json,run-0.log}` bind actual compiled RED to `7926dfdfe19b2ee236f14f8084153b604dc1c4d5`. Command: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c private_aura_anchors:: --nocapture --test-threads=1`; binary SHA256 `c96aa74ceffe25c1461c5a97b73a35e322ad8babecc1d2a0175c0e6300b240c8`, exit 101, **1 PASS / 12 FAIL**. Fixture function assertions passed; failures reached behavioral assertions. Initial exit-101 build missing `LuaApiMut` is not behavior proof.
+
+The lone PASS, `added_callback_can_remove_the_just_published_id`, was vacuous: nil-returning public stubs never delivered callbacks, `removed == id` compared nils and the empty-list check passed. The producer adds numeric ID and exact added/removed delivery counts plus final zero-record count. **No standalone RED exists for these added assertions**, nor for new nested-output exclusion assertions. Prior twelve failures remain historical missing-behavior proof; they do not validate current producer code. All table entries below describe producer proof, not that historical RED.
+
+Parent `run-1.log` separately records seven `aura_table_shape::` controls PASS at the input revision; those are not current anchor GREEN. Producer formatting is recorded in the commit handoff; compilation, GREEN, migrated controls, startup and independent verification remain parent-owned.
+
+| Fixture | Observable contract | Producer proof |
 | --- | --- | --- |
 | `ids_are_monotonic_and_environment_local` | Independent empty environments starting at 1, increasing IDs, no reuse | Written; unrun |
 | `added_payload_and_listing_preserve_parent_identity_and_default_flags` | One callback argument, committed state, full required metadata/defaults, original frame, no aura content | Written; unrun |
@@ -79,13 +87,13 @@ Replace exact old anchor ownership, not other aura models:
 
 ### Retained assertion migration before helper removal
 
-Old tests remain **unchanged** at this checkpoint. Parent must obtain actual public-method RED before a fresh producer starts; absence is source-observed, not a test result.
+Both old assertion owners now call public producers with actual frame parents and required aura indices. Notification, ID, filter and snapshot assertions remain; helper boolean success becomes public zero-results plus state/notification proof. Migrated tests are unrun here. Public function absence was an incorrect initial source inference: the lazy namespace publisher exists.
 
 | Existing assertion owner | Assertions that must survive | Public destination / retained control |
 | --- | --- | --- |
 | `tests/unit_auras_private.rs::private_aura_anchor_callbacks_and_state_are_tracked` | Positive increasing IDs; added record ID/unit; all-list count and second ID; player-filter first ID; exact removed ID; one remaining second ID | New ID/payload/list/removal fixtures. Migrate helper calls to valid public args with actual parents; replace helper-boolean assertion with public zero-results assertion, keeping notification and post-removal content checks. |
 | `private_aura_state.rs::tests::installs_private_aura_state_and_callbacks` anchor portion | Initial ID 1 and matching added ID; callback mutation does not alter unit; unit-filtered list; getter mutation isolated; matching removal callback | New public fixtures retain first-ID-1 in each fresh environment, progression/copy isolation/removal. This numbering contract is retained simulator policy, not native start-at-1 evidence. |
-| Same embedded test non-anchor portion | Warning storage; available dispel notification/state; update source/spell and call count; all-private-aura mutation isolation; numeric/string private lookup mutation isolation | Keep as non-anchor embedded control after removing only anchor setup/assertions. Do not delete the mixed test wholesale. |
+| Same embedded test non-anchor portion | Warning storage; available dispel notification/state; update source/spell and call count; all-private-aura mutation isolation; numeric/string private lookup mutation isolation | Preserved unchanged alongside migrated public anchor setup/assertions. |
 | `tests/unit_auras_private.rs` remaining tests | Warning-frame identity, available show-dispel state/callback, update callback/payload, configured aura reads and copy isolation | Leave unchanged; no anchor helper dependency to migrate. |
 
 Old helper input extras `isBuff`, `maxAuras`, and `point` do not have retained value assertions in these tests and are not fabricated into the public args schema. Old helper success boolean is a helper-only contract, not the public remove return shape. Keep its equivalent state/notification proof, not an invented public boolean.
@@ -111,13 +119,13 @@ Local profile cache evidence, **12.1, not native 12.0.5**:
 
 ## Known gaps (current cycle)
 
-- [ ] Parent executes targeted actual RED using existing grouped `integration` target, then assigns fresh producer; this session is forbidden from builds/checks/test runs/delegation.
-- [ ] Producer implements C API lifecycle and migrates exact retained assertions before removing old owners/helpers; no backing code exists in this checkpoint.
-- [ ] Producer/final verifier establishes GREEN, relevant old controls, formatting/compilation and normal startup after API registration changes under separately authorized scope. No runtime result is claimed here.
-- [ ] Native untainted secret acceptance, private secure-only behavior and cross-profile parity remain unmodeled/unverified. Conservative rejection and existing private availability must not be reported as native security parity.
+- [ ] Parent/verifier compiles and establishes GREEN for the 13 public fixtures plus migrated integration and embedded controls, then checks startup/profile scope under separate authorization. Producer performs formatting only, not build/tests/check/readability/startup.
+- [ ] Strengthened reentry delivery counts and nested-output exclusions have no standalone RED; producer runtime success is not claimed.
+- [ ] Rendering/anchor application remains absent despite retained parsed binding data. Full frame/ScriptRegion and all-profile native parity remain unverified.
+- [ ] Native `AllowedWhenUntainted` secret acceptance, private secure-only behavior and cross-profile parity remain unmodeled/unverified. Conservative rejection and existing private availability must not be reported as native security parity. No combat lockout is introduced: retained source removes restrictions; that is not full native security proof.
 
 ## Out of scope
 
 - Full Blizzard widget/secure-environment execution: minimal prerequisites are not established. Fixtures prove dispatch payload/state, not `PrivateAuraUnitWatcher` or complete UI integration.
 - Aura content, spell data, sounds, warning/update models, container layout/settings, and other aura structure changes: independent owners, not required for public anchor registration.
-- Shared wiki/index/log, coverage registers, PLAN, source/register status edits, production code, builds/checks/tests, push/deploy and delegation: excluded from this input checkpoint.
+- Shared wiki/index/log, coverage registers, PLAN, source/register status edits, builds/checks/tests/readability/startup, push/deploy and delegation: excluded from this producer slice.

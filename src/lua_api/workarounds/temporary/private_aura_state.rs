@@ -1,7 +1,7 @@
 //! Temporary private-aura state surface.
 //!
-//! Private aura anchors and update callbacks are not backed by simulator aura
-//! state yet. Keep this explicit as temporary compatibility behavior.
+//! Private aura data and update callbacks remain temporary compatibility behavior.
+//! Anchor registration and callbacks are owned by c_api::private_aura_anchors.
 
 const PRIVATE_AURA_STATE_LUA: &str = r#"
 if type(C_UnitAuras) ~= "table" then
@@ -17,9 +17,6 @@ end
 
 local function PrivateAuraState()
     local state = C_UnitAurasPrivate._state
-    if type(state.anchors) ~= "table" then
-        state.anchors = {}
-    end
     if type(state.privateAurasByUnit) ~= "table" then
         state.privateAurasByUnit = {}
     end
@@ -28,9 +25,6 @@ local function PrivateAuraState()
     end
     if type(state.updateCallbacksByUnit) ~= "table" then
         state.updateCallbacksByUnit = {}
-    end
-    if type(state.nextAnchorID) ~= "number" then
-        state.nextAnchorID = 1
     end
     return state
 end
@@ -63,62 +57,6 @@ local function CopyPrivateAuraList(list)
         copy[index] = CopyPrivateAuraValue(list[index])
     end
     return copy
-end
-
-if rawget(C_UnitAurasPrivate, "SetPrivateAuraAnchorAddedCallback") == nil then
-    function C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(callback)
-        C_UnitAurasPrivate._anchorAddedCallback = callback
-    end
-end
-
-if rawget(C_UnitAurasPrivate, "SetPrivateAuraAnchorRemovedCallback") == nil then
-    function C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(callback)
-        C_UnitAurasPrivate._anchorRemovedCallback = callback
-    end
-end
-
-if rawget(C_UnitAurasPrivate, "GetPrivateAuraAnchors") == nil then
-    function C_UnitAurasPrivate.GetPrivateAuraAnchors(unitToken)
-        local anchors = {}
-        local state = PrivateAuraState()
-        for index = 1, #state.anchors do
-            local anchor = state.anchors[index]
-            if unitToken == nil or anchor.unitToken == unitToken then
-                anchors[#anchors + 1] = CopyPrivateAuraValue(anchor)
-            end
-        end
-        return anchors
-    end
-end
-
-if rawget(C_UnitAurasPrivate, "_AddPrivateAuraAnchorForTest") == nil then
-    function C_UnitAurasPrivate._AddPrivateAuraAnchorForTest(anchorInfo)
-        local state = PrivateAuraState()
-        local anchor = CopyPrivateAuraValue(anchorInfo or {})
-        anchor.anchorID = state.nextAnchorID
-        state.nextAnchorID = state.nextAnchorID + 1
-        state.anchors[#state.anchors + 1] = anchor
-        if type(C_UnitAurasPrivate._anchorAddedCallback) == "function" then
-            C_UnitAurasPrivate._anchorAddedCallback(CopyPrivateAuraValue(anchor))
-        end
-        return anchor.anchorID
-    end
-end
-
-if rawget(C_UnitAurasPrivate, "_RemovePrivateAuraAnchorForTest") == nil then
-    function C_UnitAurasPrivate._RemovePrivateAuraAnchorForTest(anchorID)
-        local state = PrivateAuraState()
-        for index = 1, #state.anchors do
-            if state.anchors[index].anchorID == anchorID then
-                table.remove(state.anchors, index)
-                if type(C_UnitAurasPrivate._anchorRemovedCallback) == "function" then
-                    C_UnitAurasPrivate._anchorRemovedCallback(anchorID)
-                end
-                return true
-            end
-        end
-        return false
-    end
 end
 
 if rawget(C_UnitAurasPrivate, "SetPrivateWarningTextFrame") == nil then
@@ -223,9 +161,10 @@ mod tests {
                 C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(anchorID)
                     removedID = anchorID
                 end)
-                local anchorID = C_UnitAurasPrivate._AddPrivateAuraAnchorForTest({
+                local anchorID = C_UnitAuras.AddPrivateAuraAnchor({
                     unitToken = "player",
-                    point = "CENTER",
+                    auraIndex = 1,
+                    parent = CreateFrame("Frame"),
                 })
                 if anchorID ~= 1 or addedID ~= 1 then
                     return "bad_anchor_add"
@@ -238,7 +177,7 @@ mod tests {
                 if C_UnitAurasPrivate.GetPrivateAuraAnchors("player")[1].unitToken ~= "player" then
                     return "leaked_anchor_copy"
                 end
-                if not C_UnitAurasPrivate._RemovePrivateAuraAnchorForTest(anchorID) or removedID ~= anchorID then
+                if select('#', C_UnitAuras.RemovePrivateAuraAnchor(anchorID)) ~= 0 or removedID ~= anchorID then
                     return "bad_anchor_remove"
                 end
                 C_UnitAurasPrivate.SetPrivateWarningTextFrame("warning")
