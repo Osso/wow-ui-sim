@@ -37,7 +37,7 @@ The passing no-data spell control did not prove a modeled provider: `runtime_sur
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-batched GREEN, earlier-profile controls, format/check/startup and readability proof.
+- [ ] Batch7 GREEN observed; earlier-profile controls and independent format/check/readability/final proof remain pending. Snapshot startup proof is recorded in the patch audit.
 - [ ] Native rate interpretation, return arity, malformed input/error behavior, snapshots and charge transitions remain unprobed. Future native fixture: one configured charged spell at max and during recharge, compare all five table fields plus duration timing/rate before and after one charge use.
 
 ## Out of scope
@@ -49,4 +49,4 @@ The passing no-data spell control did not prove a modeled provider: `runtime_sur
 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
-`cooldown_probes::charge_duration::` PASS 10/10 (`integration-2.log`); `duration_core::` PASS 27/27 (`integration-3.log`). Earlier-profile controls and automatic progression remain unproven.
+`cooldown_probes::charge_duration::` PASS 10/10 (`/tmp/patch-12.0.5-batch7-integration-2.log`); `duration_core::` PASS 27/27 (`/tmp/patch-12.0.5-batch7-integration-3.log`). Earlier-profile controls and automatic progression remain unproven.

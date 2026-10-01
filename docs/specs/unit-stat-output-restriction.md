@@ -41,8 +41,8 @@ All 40 existing APIs below are implemented; batch7 restriction fixtures PASS 4/4
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted post-change GREEN and parent-owned final gate pending. Predicate pre-change RED: `/tmp/patch-12.0.5-stats-predicate-red.log` (1 failed, missing predicate); corrected shared build revision `a3ba2a23a`. Output RED at `9a50d8a5c`: `/tmp/patch-12.0.5-batch4-stats-output-red.log`, predicate passes / three output cases fail, including `GetAttackPowerForStat secrecy 1`. Fresh evidence verified 2026-10-01; earlier retained provenance dates remain unchanged.
-- [ ] Parent-owned GREEN for the ten separately implemented [retail stat input models](retail-missing-stat-inputs.md); concrete input, order, update and security fixtures are RED at `eac08bda3`. No new no-op stubs here.
+- [ ] Batch7 restriction GREEN observed 4/4; parent-owned independent final gate pending. Predicate pre-change RED: `/tmp/patch-12.0.5-stats-predicate-red.log` (1 failed, missing predicate); corrected shared build revision `a3ba2a23a`. Output RED at `9a50d8a5c`: `/tmp/patch-12.0.5-batch4-stats-output-red.log`, predicate passes / three output cases fail, including `GetAttackPowerForStat secrecy 1`. Fresh evidence verified 2026-10-01; earlier retained provenance dates remain unchanged.
+- [ ] Batch7 observed GREEN 13/13 for the ten separately implemented [retail stat input models](retail-missing-stat-inputs.md); concrete input, order, update and security fixtures are RED at `eac08bda3`. No new no-op stubs here.
 - [ ] Future native probes: predicate transition across combat/encounter/aura contexts, absent-unit nil/zero behavior, all result positions and caller taint. Existing stat formulas/placeholders are not claimed native parity.
 
 ## Out of scope
@@ -53,4 +53,4 @@ All 40 existing APIs below are implemented; batch7 restriction fixtures PASS 4/4
 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
-`character_stats::stat_restriction::` PASS 4/4 (`integration-1.log`) retains the 40-API matrix; separate ten-model fixtures PASS 13/13. No native activation/formula claim.
+`character_stats::stat_restriction::` PASS 4/4 (`/tmp/patch-12.0.5-batch7-integration-1.log`) retains the 40-API matrix; separate ten-model fixtures PASS 13/13. No native activation/formula claim.

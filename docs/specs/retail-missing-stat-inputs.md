@@ -41,4 +41,4 @@ Native numeric parity, automatic equipment/spell-derived input producers, automa
 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
-`character_stats::missing_apis::` PASS 13/13 (`integration-0.log`): explicit scalar/pet/regen/AP inputs and bounded selector/secrecy fixtures. No automatic producers or native formulas.
+`character_stats::missing_apis::` PASS 13/13 (`/tmp/patch-12.0.5-batch7-integration-0.log`): explicit scalar/pet/regen/AP inputs and bounded selector/secrecy fixtures. No automatic producers or native formulas.

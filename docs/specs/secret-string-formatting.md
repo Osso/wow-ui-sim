@@ -40,4 +40,4 @@ Observed simulator integration GREEN is bounded; checkboxes do not imply indepen
 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
-`secret_string_formatting::` PASS 6/6 (`integration-7.log`), now simulator integration proof rather than external runtime-only proof. Inferred opaque permission and display limits remain.
+`secret_string_formatting::` PASS 6/6 (`/tmp/patch-12.0.5-batch7-integration-7.log`), now simulator integration proof rather than external runtime-only proof. Inferred opaque permission and display limits remain.
