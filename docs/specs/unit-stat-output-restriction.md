@@ -12,6 +12,7 @@ The 12.0.5 [GlobalAPI source](../../data/patch-api/sources/12.0.5-api-changes.tx
 
 ## How it works
 
+- [Bounded audit and implementation notes](../wiki/investigations/patch-12-0-5-api-audit.md#bounded-unit-stat-output-secrecy-verified-2026-10-01)
 - [Lua API](../lua-api.md)
 
 ## Implementation inventory

@@ -41,6 +41,14 @@ Compiled revision `9a50d8a5cc20d0adf0b7c529d237fc043ef57532`: retained `/tmp/pat
 
 Evidence: `/tmp/patch-12.0.5-batch4-{font-api-green,duration-common-green,abbreviated-control,numeric-rule-control}.log`, `/tmp/patch-12.0.5-scenario-host-secret-green.log`, and current `/tmp/patch-12.0.5-proof-ledger.md`. [Page coverage links](../../../data/patch-api/sources/12.0.5-page-coverage.json) attach only these exact supported source rows; other accounting remains audit-pending. Whole page remains **IN PROGRESS**. No new credit or reclassification enters the 38-subfinding native-probe register.
 
+### Bounded unit-stat output secrecy (verified 2026-10-01)
+
+[Unit-stat restriction spec](../../specs/unit-stat-output-restriction.md) owns the exact 50-row coverage matrix and pending base-model names. `8da12a42c` adds the plain `SimState.unit_stats_restricted` boolean, default false, and matching `C_Secrets.ShouldUnitStatsBeSecret`; `f35d0293f` adds concrete grouped fixtures; `edab2563a` marks all numeric results of the 40 supported default-retail APIs while retaining existing values, arity and order. Ten unsupported base models remain separate pending work; secrecy support does not establish native stat-model parity.
+
+`c_secrets::push_stat_number` accepts only a concrete Rust-computed `f64`, uses rilua's trusted host-number producer, and roots the result immediately without changing caller taint. The module compiles across profiles, but predicate and aura registrations retain their feature gates; profiles without `retail-12-0-5` push plain numbers. The existing zero-return producer was shared by source-covered PvP/resilience APIs and unrelated miss/enemy queries: only the source trio uses the restricted producer now.
+
+Observed predicate RED at `a3ba2a23a` was missing publication. Output RED at `9a50d8a5c` passes the predicate and fails three output tests, including `GetAttackPowerForStat secrecy 1`; log `/tmp/patch-12.0.5-batch4-stats-output-red.log`. Post-change GREEN and parent-owned final gates remain pending. Restriction activation is an explicit approved simulator input, not an aura/combat heuristic or native-verified policy. Future native probes and absent-unit limitations remain in the spec. Full patch audit remains **IN PROGRESS**; no register reclassification.
+
 [Patch-page discovery index](../../../data/patch-api/patch-page-index.json) discovers **138 API pages / 98 retail-history candidate titles**. This is title classification only: neither retained page-content coverage, shipped API classification nor runtime/behavior proof.
 
 ### Itemized probe status
@@ -111,6 +119,7 @@ The expanded source audit remains **IN PROGRESS**, with no completed full-page b
 
 ## Sources
 
+- [Unit-stat output restriction](../../specs/unit-stat-output-restriction.md) — exact supported/pending matrix, proof and future native probes.
 - [Retained full plaintext patch page](../../../data/patch-api/sources/12.0.5-api-changes.txt) and [provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json) — expanded source audit, not behavior proof.
 - `/tmp/patch-12.0.5-inventory.json` — working source inventory; temporary artifact, not a committed manifest.
 - [Patch-page discovery index](../../../data/patch-api/patch-page-index.json) — title-only discovery; capability contracts and commit references are linked in the table above.
