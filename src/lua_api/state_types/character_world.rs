@@ -269,6 +269,9 @@ pub struct PlayerState {
     pub xp: i64,
     /// Experience required to ding the next level. Drives `UnitXPMax("player")`.
     pub xp_max: i64,
+    /// Explicit WantsAlteredForm input; false by inferred simulator default,
+    /// independent of race, stance, barber data and legacy alternate-form flags.
+    pub wants_altered_form: bool,
     /// True when the player is currently in their alternate form (e.g. worgen, druid).
     pub is_alternate_form: bool,
     /// True when the alternate form is the default/native form.
