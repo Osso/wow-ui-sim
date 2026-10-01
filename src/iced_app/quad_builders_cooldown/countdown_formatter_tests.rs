@@ -17,14 +17,59 @@ fn setup(code: &str) -> WowLuaEnv {
 fn tick_at(env: &WowLuaEnv, seconds: f64) -> Option<String> {
     env.state().borrow_mut().start_time = Instant::now() - Duration::from_secs_f64(seconds);
     env.fire_on_update(0.125).expect("real engine tick");
+    rendered_text(env, "FormatterRenderCooldown")
+}
+
+fn rendered_text(env: &WowLuaEnv, name: &str) -> Option<String> {
     let sim = env.state().borrow();
-    let id = sim
-        .widgets
-        .get_id_by_name("FormatterRenderCooldown")
-        .unwrap();
+    let id = sim.widgets.get_id_by_name(name).unwrap();
     let cooldown = sim.widgets.get(id).unwrap();
     let remaining = cooldown_remaining_seconds(cooldown, sim.start_time.elapsed().as_secs_f64())?;
     cooldown_countdown_text(cooldown, remaining)
+}
+
+#[test]
+fn configured_renderer_curve_replaces_another_attachment_during_collection() {
+    let env = setup(
+        r#"
+        other = CreateFrame('Cooldown', 'OtherFormatterRenderCooldown')
+        other:GetCountdownFontString()
+        local mutated = false
+        local function replacement_curve(target)
+            return function()
+                if not mutated then
+                    mutated = true
+                    replacedName = target:GetName()
+                    local replacement = C_StringUtil.CreateSecondsFormatter()
+                    replacement:SetDesiredUnitCount(2)
+                    replacement:SetDefaultAbbreviation(2)
+                    target:SetCountdownFormatter(replacement)
+                    replacement = nil
+                    collectgarbage('collect')
+                end
+                return 3
+            end
+        end
+        for _, pair in ipairs({{cooldown, other}, {other, cooldown}}) do
+            local formatter = C_StringUtil.CreateSecondsFormatter()
+            formatter:SetDesiredUnitCount(1)
+            formatter:SetDefaultAbbreviation(2)
+            formatter:SetMaxIntervalCurve({Evaluate = replacement_curve(pair[2])})
+            pair[1]:SetCountdownFormatter(formatter)
+            pair[1]:SetCooldown(0, 1234.5)
+        end
+        "#,
+    );
+    let _ = tick_at(&env, 0.25);
+    let replaced: String = env
+        .eval("return replacedName")
+        .expect("curve replaced peer attachment");
+    assert_eq!(rendered_text(&env, &replaced).as_deref(), Some("20m 34s"));
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "replaced attachment must not dispatch a stale collected formatter: {:?}",
+        env.state().borrow().lua_errors
+    );
 }
 
 #[cfg(feature = "numeric-rule-formatters")]
