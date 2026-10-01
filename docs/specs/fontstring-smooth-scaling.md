@@ -28,6 +28,7 @@ Retail 12.0.5+ `GetSmoothScaling` / `SetSmoothScaling` configure a per-FontStrin
 
 - `tests/fontstring_smooth_scaling.rs` — public API, errors, secrets, height/auto-height, wrapping, XML ordinary/runtime creation.
 - `src/iced_app/quad_builders_tests.rs::smooth_scaling_render_measure_and_cache_flips` — font size 12, effective scale 1.1, emitted two-line separation, mode flips with shared glyph cache, scaled smooth measurement agreement.
+- `src/iced_app/quad_builders_tests.rs::smooth_scaling_wrapped_render_and_cached_measurement_agree` — supplemental post-implementation assertions for real wrapped glyph output, cache-backed measured height and public smooth height through repeated mode flips; not independently observed pre-change RED.
 
 Valid pre-implementation RED at build revision `a3ba2a23a1567150ca239efcec39fa6f43918257`: six API cases and one renderer case fail on absent methods. The first attempted build failed on renderer fixture mistakes; tests-only `3c4cffda6` corrected borrowed-Frame use and float literal syntax. Logs: `/tmp/patch-12.0.5-font-{api,render}-red.log`; build identity `/tmp/patch-12.0.5-corrected-pin-red-build.json`. Renderer RED reaches the missing setter, not its later fractional/cache assertions. The multiline expected value was subsequently corrected from legacy-baseline height to the chosen smooth baseline-span policy. Targeted GREEN pending parent-owned shared batch; no native proof.
 

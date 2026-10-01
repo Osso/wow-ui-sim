@@ -378,6 +378,68 @@ fn smooth_scaling_render_measure_and_cache_flips() {
 }
 
 #[test]
+#[cfg(feature = "retail-12-0-5")]
+fn smooth_scaling_wrapped_render_and_cached_measurement_agree() {
+    let env = crate::lua_api::WowLuaEnv::new().unwrap();
+    env.set_font_system(std::rc::Rc::new(std::cell::RefCell::new(
+        WowFontSystem::new_without_casc(),
+    )));
+    env.exec(
+        r#"
+        fs = CreateFrame('Frame'):CreateFontString('SmoothWrappedRender')
+        fs:SetFont('Fonts\\FRIZQT__.TTF', 12 * 1.1)
+        fs:SetWidth(24)
+        fs:SetText('H H H H')
+    "#,
+    )
+    .unwrap();
+    let mut fonts = WowFontSystem::new_without_casc();
+    let mut atlas = GlyphAtlas::new();
+    let mut heights = Vec::new();
+    for smooth in [false, true, false, true] {
+        env.exec(&format!("fs:SetSmoothScaling({smooth})")).unwrap();
+        let batch = {
+            let state = env.state().borrow();
+            let id = state.widgets.get_id_by_name("SmoothWrappedRender").unwrap();
+            render_fontstring_spacing_with(
+                state.widgets.get(id).unwrap(),
+                "H H H H",
+                24.0,
+                &mut fonts,
+                &mut atlas,
+            )
+        };
+        let tops = glyph_quad_tops(&batch);
+        assert_eq!(tops.len(), 4, "four real H glyphs");
+        let first = tops.iter().copied().reduce(f32::min).unwrap();
+        let last = tops.iter().copied().reduce(f32::max).unwrap();
+        assert!(last > first, "fixture must actually wrap");
+        let line_height = if smooth { 15.84 } else { 16.0 };
+        let rendered_height = last - first + line_height;
+        let cached_height = crate::render::glyph::measure_text_height(
+            &mut fonts,
+            &mut atlas,
+            "H H H H",
+            Some("Fonts\\FRIZQT__.TTF"),
+            12.0 * 1.1,
+            24.0,
+            true,
+            0.0,
+            smooth,
+        );
+        assert!((cached_height - rendered_height).abs() < 0.01);
+        if smooth {
+            let measured: f64 = env.eval("return fs:GetStringHeight()").unwrap();
+            assert!((measured as f32 - rendered_height).abs() < 0.01);
+        }
+        heights.push(cached_height);
+    }
+    assert!(heights[1] < heights[0]);
+    assert_eq!(heights[0], heights[2]);
+    assert_eq!(heights[1], heights[3]);
+}
+
+#[test]
 fn tooltip_line_fontstrings_do_not_render_as_generic_fontstrings() {
     let mut registry = WidgetRegistry::new();
     let mut tooltip = Frame::new(
