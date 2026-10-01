@@ -50,12 +50,7 @@ fn admin_buff(name: &str, spell_id: i32, aura_instance_id: i32, is_helpful: bool
     admin_aura(name, spell_id, aura_instance_id, is_helpful)
 }
 
-fn dispellable_debuff(
-    name: &str,
-    spell_id: i32,
-    aura_instance_id: i32,
-    dispel_type: &str,
-) -> AuraInfo {
+fn dispellable_debuff(name: &str, spell_id: i32, aura_instance_id: i32, dispel_type: &str) -> AuraInfo {
     AuraInfo {
         dispel_type: Some(dispel_type.to_string()),
         ..admin_aura(name, spell_id, aura_instance_id, false)
@@ -175,10 +170,7 @@ fn get_aura_dispel_type_color_is_transparent_for_non_dispellable_aura() {
 #[test]
 fn dispellable_debuff_surfaces_type_icon_and_color() {
     let env = env();
-    clear_buffs_and_insert(
-        &env,
-        vec![dispellable_debuff("Arcane Shock", 88, 888, "Magic")],
-    );
+    clear_buffs_and_insert(&env, vec![dispellable_debuff("Arcane Shock", 88, 888, "Magic")]);
 
     let (dispel_name, icon, r, g, b, a): (String, i64, f64, f64, f64, f64) = env
         .eval(
@@ -301,10 +293,7 @@ fn admin_add_debuff_without_dispel_type_has_nil_dispel_name() {
             "#,
         )
         .unwrap();
-    assert!(
-        dispel_is_nil,
-        "omitted dispelType must surface as nil dispelName"
-    );
+    assert!(dispel_is_nil, "omitted dispelType must surface as nil dispelName");
 }
 
 #[test]
@@ -323,12 +312,6 @@ fn admin_add_buff_and_debuff_accept_numeric_icon() {
             "#,
         )
         .unwrap();
-    assert_eq!(
-        buff_icon, 135987.0,
-        "documented numeric icon form must work for AddBuff"
-    );
-    assert_eq!(
-        debuff_icon, 136207.0,
-        "documented numeric icon form must work for AddDebuff"
-    );
+    assert_eq!(buff_icon, 135987.0, "documented numeric icon form must work for AddBuff");
+    assert_eq!(debuff_icon, 136207.0, "documented numeric icon form must work for AddDebuff");
 }

@@ -281,10 +281,7 @@ fn test_c_unit_auras_get_unit_auras_returns_iterable_table() {
 
     assert!(result.0, "GetUnitAuras should return a table");
     assert!(result.1, "HELPFUL table should contain aura data");
-    assert!(
-        result.2,
-        "empty filters should return an empty table, not nil"
-    );
+    assert!(result.2, "empty filters should return an empty table, not nil");
 }
 
 #[cfg(feature = "retail-12-1-0")]
