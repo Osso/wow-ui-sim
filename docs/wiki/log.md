@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Private warning placement producer
+
+[Warning contract/ledger](../specs/private-warning-text-anchor.md#batch33-proof-ledger--2026-10-01) records sole C API providers replacing temporary public/private owners, native hierarchy/visibility primitives and strict parser reuse. Saved original compiled RED, parent GREEN pending; new callback/override and secured-table controls uncompiled. Unrelated cached closure errors preserved; no native parity or audit promotion.
+
 ## [2026-10-01] evidence | Accept bounded independent ping proof
 
 [Party ping ledger](../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) reconciles full independent report: saved **29/29 PASS**, startup **0 []**, fresh default fmt/check **0**; relevant hashes unchanged while warning-fixture/docs HEAD advanced through `ee9984ec6`. No immutable whole-tree, warning-runtime, native ping delivery or security-parity credit. March31 row169 stays PENDING (countdown/loot); **264/84/14 = 362**, IDs/source SHA preserved. Docs-only; no runtime reruns or other-owned edits.

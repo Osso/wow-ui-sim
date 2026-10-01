@@ -1,6 +1,6 @@
 # Private warning-text anchor
 
-`C_UnitAuras.SetPrivateWarningTextAnchor(parent, optionalAnchorBinding)` configures the separately registered private warning text frame, not the public parent frame. This bounded Retail 12.0.5 input/test contract replaces the current no-op as a future producer goal. Source: retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt), profile-scoped cached Blizzard API documentation and actual RaidWarning/PrivateAurasUI consumers. [Widget system](../widget-system.md) describes frame parenting and geometry.
+`C_UnitAuras.SetPrivateWarningTextAnchor(parent, optionalAnchorBinding)` configures the separately registered private warning text frame, not the public parent frame. This bounded implementation replaces the public no-op and temporary private registration owner. Parenting, timing, replacement and nil policies remain inferred, not native-verified. Source: retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt), profile-scoped cached Blizzard API documentation and actual RaidWarning/PrivateAurasUI consumers. [Widget system](../widget-system.md) describes frame parenting and geometry.
 
 ## What it must do
 
@@ -38,14 +38,16 @@
 
 | Path | Current role |
 |---|---|
-| `src/lua_api/workarounds/temporary/unit_auras_state.rs` | Current public warning-anchor no-op; unchanged in this slice. |
-| `src/lua_api/workarounds/temporary/private_aura_state.rs` | Private setter retains actual frame in `_state.warningTextFrame`; unchanged. |
+| `src/c_api/private_aura_anchors/warning.rs` | Typed per-environment request/private-frame state and sole providers; preserves `_state.warningTextFrame` identity. |
+| `src/c_api/private_aura_anchors/input.rs` | Shared strict, secret/access-aware binding parser; exposed without duplicating parsing. |
+| `src/lua_api/frame/methods/button_anchor_hierarchy/` | Reused native parent mutation exposed for C API placement; visibility dispatch retained after complete geometry update. |
+| `src/lua_api/workarounds/temporary/{unit_auras_state,private_aura_state}.rs` | Obsolete warning providers removed; existing unit controls use actual frames/correct binding. |
 | `tests/common/blizzard_addon_harness.rs` | Existing real TOC dependency closure loader, reused without changes. |
-| `tests/private_warning_text_anchor.rs` | Ten input-only behavioral fixtures in existing grouped `integration` target. |
+| `tests/private_warning_text_anchor.rs` | Ten original behavioral fixtures plus hierarchy/callback/override and secured-table controls in grouped `integration` target. |
 
 ## Tests asserting this spec
 
-`tests/private_warning_text_anchor.rs` is discovered by the existing generated integration harness; no new Cargo target or Rust model is introduced.
+`tests/private_warning_text_anchor.rs` uses the existing generated integration harness; no new Cargo target. The following table preserves fixture-authoring status; saved compiled RED and current producer proof are recorded below.
 
 | Fixture | Exact coverage | Proof level |
 |---|---|---|
@@ -60,21 +62,32 @@
 | `secret_public_inputs_preserve_binding_and_caller_taint_atomically` | Actual VM secret wrappers, both caller contexts, pending/applied/replacement atomicity | Authored, not compiled/RED |
 | `cached_raid_warning_and_private_auras_lifecycle_places_distinct_private_frame` | Actual cached OnLoads and public utility repositioning; hidden private frame located through existing registration slot | Authored, not compiled/RED; requires `retail-12-1-0` cache capability |
 
-Parent RED filter: `cargo test --test integration private_warning_text_anchor:: -- --nocapture`. Minimal historical 12.0.5 compilation can use `--no-default-features --features profile-retail,retail-12-0-5`; nine direct fixtures remain enabled, cached consumer fixture is deliberately excluded because current cached consumers require 12.1 aura/widget capabilities. No compiled RED or acceptance claim is made here. Existing `tests/unit_auras_private.rs` warning-frame identity control remains untouched.
+Parent filter: `cargo test --test integration private_warning_text_anchor:: -- --nocapture`. Historical 12.0.5 compilation can use `--no-default-features --features profile-retail,retail-12-0-5`; cached lifecycle is excluded without 12.1 aura/widget capability. Existing `tests/unit_auras_private.rs` identity control remains untouched.
+
+### Batch33 proof ledger — 2026-10-01
+
+- Saved parent revision `303de9af7`: `cargo test --test integration --no-run --message-format=json`, exit **0**, 152.67s; artifact SHA-256 `6a9cf4abf3aed2bbfcd7648c822cd082e3095b46575dc33e5a938b8ffa681b33`. Evidence: `/tmp/patch-12.0.5-batch33-red-build-result.json`.
+- Same artifact: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c private_warning_text_anchor:: --nocapture --test-threads=1`, exit **101**, **0 PASS / 10 FAIL**. Nine direct failures establish no-op/validation RED; cached assertion also fails, with separate `PingSystemTutorial` string.find closure errors preserved. Evidence: `/tmp/patch-12.0.5-batch33-red-run.{json,log}`.
+- Producer now authored: native hierarchy primitive preserves alpha/scale/strata, child lists, dirty/hit-grid state; anchor replacement maintains dependency edges. Ordinary parent visibility callbacks run after full placement and retained state commit, without Lua override dispatch. Callback errors do not roll back committed placement, matching native primitive ordering rather than hiding errors.
+- `placement_preserves_native_hierarchy_visibility_and_bypasses_method_overrides` and `tainted_access_to_secured_binding_is_rejected_before_placement_or_retention`: additional authored controls, **not compiled or run**. Cached fixture gains diagnostic assertion messages only; unrelated closure errors remain logged.
+- Parent owns producer compilation/GREEN. No producer build, test, check, readability, broad-suite or startup acceptance performed in this implementation slice; earlier RED does not prove changed producer passes.
+
+### Availability and implementation limits
+
+Both replaced providers were unconditional. Cached Mists and Forever consumers also reference warning placement; preserve that existing availability without a new retail epoch gate. No all-profile behavior proof. Public parents must be SimpleFrames; private registration accepts actual frames and preserves exact Lua identity. Invalid private values are rejected rather than retained as fake layout targets. No chat/combat/untainted-caller guard is introduced. Table-access and forbidden-aspect inheritance checks remain active; secret rejection is conservative, not `AllowedWhenUntainted` parity.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile fixtures and establish assertion-level RED before changing the producer. Builds/checks/test execution forbidden for this slice; formatting only.
-- [ ] Implement public backing state/placement and private-registration connection; current public no-op cannot satisfy placement fixtures.
+- [ ] Parent must compile changed producer and establish GREEN; original compiled RED is saved above. Formatting only in this implementation slice.
 - [ ] Characterize native parenting, precise registration/replacement timing, nil behavior and input-table snapshot policy. These defaults are best-supported inferences, not native observations.
 - [ ] Characterize native `AllowedWhenUntainted` acceptance/security. Conservative rejection is only simulator policy.
-- [ ] Cached dependency fixture has not run: closure/template prerequisites were inspected, not runtime-proven. It reports existing closure-load errors separately and asserts registration/geometry directly; it does not silently skip missing frames. Successful lifecycle assertions would not establish error-free whole-addon loading.
+- [ ] Cached lifecycle GREEN pending. RED logs separate `PingSystemTutorial` closure-load errors; do not mask them or claim error-free whole-addon loading.
 
 ## Out of scope
 
 - Warning message/event production, private raid-boss callback delivery, text rendering and visibility enforcement: producer work not authorized in this slice.
-- Private setter validation changes or removal of `_state.warningTextFrame` identity compatibility: existing contracts retained; this slice exercises valid private frames only.
-- Other private-aura APIs, 12.0.0 gating/parity, all profiles, full startup/suite acceptance, native security parity and audit status promotion: bounded tests/spec only.
+- Native private-setter invalid/nil input semantics and removal of `_state.warningTextFrame` identity compatibility: unsupported; valid frame registration remains the bounded contract.
+- Other private-aura APIs, 12.0.0 gating/parity, all profiles, full startup/suite acceptance, native security parity and audit status promotion: bounded placement only.
 - Vendor changes, callback impersonation, public-parent geometry rewrites and new fallback behavior: prohibited.
 
 ## Evidence and confidence limits

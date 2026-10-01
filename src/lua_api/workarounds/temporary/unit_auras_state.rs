@@ -1,17 +1,12 @@
 //! Temporary `C_UnitAuras` compatibility surface.
 //!
 //! Aura lookup and blocked-aura/provider-switch state are Rust-backed in
-//! `globals::auras`. The private warning text anchor is still a no-op
-//! compatibility surface, so keep it explicit as temporary behavior.
+//! `globals::auras`. Private warning placement is owned by
+//! `c_api::private_aura_anchors`.
 
 const UNIT_AURAS_STATE_LUA: &str = r#"
 if type(C_UnitAuras) ~= "table" then
     C_UnitAuras = {}
-end
-
-if rawget(C_UnitAuras, "SetPrivateWarningTextAnchor") == nil then
-    function C_UnitAuras.SetPrivateWarningTextAnchor()
-    end
 end
 
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
@@ -73,7 +68,11 @@ mod tests {
                 if C_UnitAuras._providerSwitched ~= false then
                     return "bad_provider_state"
                 end
-                C_UnitAuras.SetPrivateWarningTextAnchor("frame", "TOP", 1, 2)
+                local parent = CreateFrame("Frame")
+                C_UnitAuras.SetPrivateWarningTextAnchor(parent, {
+                    point = "TOP", relativeTo = parent, relativePoint = "TOP",
+                    offsetX = 1, offsetY = 2,
+                })
                 return "ok"
                 "#,
             )

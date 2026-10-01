@@ -1,6 +1,7 @@
 //! Public private-aura anchor registration, independent of aura content and rendering.
 
 mod input;
+mod warning;
 
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, frame_ref,
@@ -50,6 +51,7 @@ pub struct AnchorRecord {
 pub(crate) struct PrivateAuraAnchors {
     next_id: u64,
     records: BTreeMap<u64, AnchorRecord>,
+    warning: warning::WarningPlacement,
 }
 
 impl Default for PrivateAuraAnchors {
@@ -57,6 +59,7 @@ impl Default for PrivateAuraAnchors {
         Self {
             next_id: 1,
             records: BTreeMap::new(),
+            warning: warning::WarningPlacement::default(),
         }
     }
 }
@@ -79,7 +82,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "SetPrivateAuraAnchorRemovedCallback",
         set_removed,
     )?;
-    table_set_rust_fn_static(state, private, "GetPrivateAuraAnchors", list)
+    table_set_rust_fn_static(state, private, "GetPrivateAuraAnchors", list)?;
+    warning::register(state, public, private)
 }
 
 fn set_callback(state: &mut LuaState, key: &'static str) -> LuaResult<u32> {

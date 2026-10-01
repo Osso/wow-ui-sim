@@ -97,7 +97,7 @@ fn reparent_frame_and_notify(
     Ok(0)
 }
 
-pub(super) fn apply_parent_change(
+pub(crate) fn apply_parent_change(
     sim: &mut crate::lua_api::SimState,
     id: u64,
     new_parent_id: Option<u64>,

@@ -15,7 +15,7 @@ pub(super) fn reject_secret(state: &LuaState, value: Val, field: &str) -> LuaRes
     Ok(())
 }
 
-fn read_table(state: &LuaState, value: Val, field: &str) -> LuaResult<Val> {
+pub(crate) fn read_table(state: &LuaState, value: Val, field: &str) -> LuaResult<Val> {
     reject_secret(state, value, field)?;
     let Val::Table(reference) = value else {
         return Err(runtime_error(format!(
@@ -81,6 +81,10 @@ fn bool_field(state: &mut LuaState, table: Val, field: &str) -> LuaResult<bool> 
 
 fn frame_field(state: &mut LuaState, table: Val, field: &str) -> LuaResult<u64> {
     let value = read_field(state, table, field)?;
+    read_frame(state, value, field)
+}
+
+pub(crate) fn read_frame(state: &LuaState, value: Val, field: &str) -> LuaResult<u64> {
     read_table(state, value, field)?;
     let id = native_frame_id_from_val(state, value)
         .ok_or_else(|| runtime_error(format!("private aura anchor {field} must be a frame")))?;
@@ -103,7 +107,11 @@ fn point_field(
         .ok_or_else(|| runtime_error(format!("private aura anchor {field} is not a frame point")))
 }
 
-fn read_binding(state: &mut LuaState, value: Val, field: &str) -> LuaResult<AnchorBinding> {
+pub(crate) fn read_binding(
+    state: &mut LuaState,
+    value: Val,
+    field: &str,
+) -> LuaResult<AnchorBinding> {
     let table = read_table(state, value, field)?;
     Ok(AnchorBinding {
         point: point_field(state, table, "point")?,

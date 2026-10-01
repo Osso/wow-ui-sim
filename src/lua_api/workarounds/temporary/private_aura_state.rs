@@ -1,7 +1,8 @@
 //! Temporary private-aura state surface.
 //!
 //! Private aura data and update callbacks remain temporary compatibility behavior.
-//! Anchor registration and callbacks are owned by c_api::private_aura_anchors.
+//! Anchor registration, warning placement and anchor callbacks are owned by
+//! c_api::private_aura_anchors.
 
 const PRIVATE_AURA_STATE_LUA: &str = r#"
 if type(C_UnitAuras) ~= "table" then
@@ -57,12 +58,6 @@ local function CopyPrivateAuraList(list)
         copy[index] = CopyPrivateAuraValue(list[index])
     end
     return copy
-end
-
-if rawget(C_UnitAurasPrivate, "SetPrivateWarningTextFrame") == nil then
-    function C_UnitAurasPrivate.SetPrivateWarningTextFrame(frame)
-        PrivateAuraState().warningTextFrame = frame
-    end
 end
 
 if rawget(C_UnitAurasPrivate, "SetShowDispelTypeCallback") == nil then
@@ -180,8 +175,9 @@ mod tests {
                 if select('#', C_UnitAuras.RemovePrivateAuraAnchor(anchorID)) ~= 0 or removedID ~= anchorID then
                     return "bad_anchor_remove"
                 end
-                C_UnitAurasPrivate.SetPrivateWarningTextFrame("warning")
-                if C_UnitAurasPrivate._state.warningTextFrame ~= "warning" then
+                local warning = CreateFrame("Frame")
+                C_UnitAurasPrivate.SetPrivateWarningTextFrame(warning)
+                if C_UnitAurasPrivate._state.warningTextFrame ~= warning then
                     return "bad_warning_frame"
                 end
                 if rawget(C_UnitAuras, "TriggerPrivateAuraShowDispelType") ~= nil then

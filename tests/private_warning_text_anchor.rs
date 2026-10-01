@@ -208,10 +208,13 @@ fn malformed_public_inputs_preserve_applied_and_pending_binding_atomically() {
         r#"
         C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
         local function rejectMalformed()
-            for _, parent in ipairs({false, 7, 'PublicParent', {}, UIParent:CreateTexture()}) do
+            local group = PublicParent:CreateAnimationGroup()
+            for _, parent in ipairs({false, 7, 'PublicParent', {}, UIParent:CreateTexture(), group}) do
                 AssertRejected(parent, Binding(OtherParent))
             end
             AssertRejected(nil, Binding(OtherParent))
+            local nonregionBinding = Binding(group)
+            AssertRejected(OtherParent, nonregionBinding)
             for _, binding in ipairs({false, 7, 'TOP', {}}) do
                 AssertRejected(OtherParent, binding)
             end
@@ -291,6 +294,83 @@ fn secret_public_inputs_preserve_binding_and_caller_taint_atomically() {
     .expect("conservative secret rejection and atomicity, NOT AllowedWhenUntainted parity");
 }
 
+#[test]
+fn placement_preserves_native_hierarchy_visibility_and_bypasses_method_overrides() {
+    let env = warning_env();
+    env.exec(
+        r#"
+        OtherParent:Hide()
+        local child = CreateFrame('Frame', nil, PrivateText)
+        local hides, shows = 0, 0
+        child:SetScript('OnHide', function() hides = hides + 1 end)
+        child:SetScript('OnShow', function() shows = shows + 1 end)
+        PrivateText:SetScript('OnHide', function(self)
+            hides = hides + 1
+            AssertPlacement(self, OtherParent, OtherParent, 'TOP', 'BOTTOM', 17, -23)
+        end)
+        PrivateText:SetScript('OnShow', function(self)
+            shows = shows + 1
+            AssertBound()
+        end)
+        PrivateText.SetParent = function() error('must not dispatch overridden SetParent') end
+        PrivateText.ClearAllPoints = function() error('must not dispatch overridden ClearAllPoints') end
+        PrivateText.SetPoint = function() error('must not dispatch overridden SetPoint') end
+        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        C_UnitAuras.SetPrivateWarningTextAnchor(OtherParent, Binding(OtherParent))
+        assert(hides == 2 and shows == 0, 'native reparent delivers private and descendant OnHide')
+        assert(not PrivateText:IsVisible() and not child:IsVisible())
+        local function contains(parent, target)
+            for _, frame in ipairs({parent:GetChildren()}) do
+                if frame == target then return true end
+            end
+            return false
+        end
+        assert(contains(OtherParent, PrivateText) and not contains(UIParent, PrivateText),
+            'reparent must synchronize old and new child lists')
+        C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
+        assert(hides == 2 and shows == 2, 'native reparent delivers private and descendant OnShow')
+        assert(PrivateText:IsVisible() and child:IsVisible())
+        assert(contains(PublicParent, PrivateText) and not contains(OtherParent, PrivateText))
+        AssertPublicUnchanged()
+        "#,
+    )
+    .expect("native parenting callbacks observe complete placement without invoking Lua method overrides");
+}
+
+#[test]
+fn tainted_access_to_secured_binding_is_rejected_before_placement_or_retention() {
+    let env = warning_env();
+    {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        rilua::table_security::register_table_security(&mut lua)
+            .expect("install actual VM table access controls");
+    }
+    env.exec(
+        r#"
+        C_UnitAuras.SetPrivateWarningTextAnchor(PublicParent, Binding(PublicParent))
+        local secured = Binding(OtherParent)
+        settablesecurity(secured, 0)
+        local function addon()
+            assert(not issecure())
+            AssertRejected(OtherParent, secured)
+            assert(not issecure(), 'access rejection preserves caller taint')
+        end
+        debug.setobjecttaint(addon, 'WarningAnchorFixture')
+        addon()
+        C_UnitAurasPrivate.SetPrivateWarningTextFrame(PrivateText)
+        AssertBound()
+        addon()
+        AssertBound()
+        local replacement = CreateFrame('Frame', nil, UIParent)
+        C_UnitAurasPrivate.SetPrivateWarningTextFrame(replacement)
+        AssertPlacement(replacement, PublicParent, PublicParent, 'TOP', 'BOTTOM', 17, -23)
+        AssertPublicUnchanged()
+        "#,
+    )
+    .expect("actual secured-table access rejection preserves applied and pending requests");
+}
+
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn cached_raid_warning_and_private_auras_lifecycle_places_distinct_private_frame() {
@@ -330,13 +410,16 @@ fn cached_raid_warning_and_private_auras_lifecycle_places_distinct_private_frame
             -- Existing private registration slot locates the hidden secure-environment XML frame.
             local private = C_UnitAurasPrivate._state.warningTextFrame
             local public = PrivateRaidBossEmoteFrameAnchor
-            assert(private and private:GetName() == 'RaidBossEmoteFramePrivate')
+            assert(private and private:GetName() == 'RaidBossEmoteFramePrivate',
+                'actual private OnLoad must persist RaidBossEmoteFramePrivate identity')
             assert(private ~= public, 'private XML consumer must be distinct from public anchor')
             local function assertPrivateBinding()
-                assert(private:GetParent() == public and private:GetNumPoints() == 1)
+                assert(private:GetParent() == public, 'registered private frame must use public anchor as parent')
+                assert(private:GetNumPoints() == 1, 'registered private frame must have sole binding')
                 local point, relativeTo, relativePoint, x, y = private:GetPoint(1)
-                assert(point == 'TOP' and relativeTo == public and relativePoint == 'TOP')
-                assert(x == 0 and y == 0)
+                assert(point == 'TOP' and relativeTo == public and relativePoint == 'TOP',
+                    'registered private point must target public anchor, not itself')
+                assert(x == 0 and y == 0, 'cached private binding offsets')
             end
             assertPrivateBinding()
             assert(DeadlyDebuffFrame, 'real BuffFrame dependency supplies center-screen consumer')
