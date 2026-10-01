@@ -1,10 +1,10 @@
 # Housing basic-mode pending decor request
 
-Input/tests-only preparation for bounded 12.0.5 `C_HousingBasicMode.StartPlacingNewDecor`. Reuses the [catalog full variant identity](housing-catalog-variants.md), not a decor instance. Retained [change source](../../data/patch-api/sources/12.0.5-api-changes.txt) rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` and `-279` rename argument 1 to `catalogEntryVariantID` and change its type to `HousingCatalogEntryVariantID`. These rows do not establish placement or validation semantics. No audit credit or full-placement claim at this checkpoint.
+Bounded pending-request model for 12.0.5 `C_HousingBasicMode.StartPlacingNewDecor`. Reuses the [catalog full variant identity](housing-catalog-variants.md), not a decor instance. Retained [change source](../../data/patch-api/sources/12.0.5-api-changes.txt) rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` and `-279` rename argument 1 to `catalogEntryVariantID` and change its type to `HousingCatalogEntryVariantID`. These rows do not establish placement or validation semantics. No audit credit or full-placement claim; parent behavioral GREEN remains pending.
 
 ## What it must do
 
-All lifecycle and validation policies below are **bounded simulator inferences**, not native-verified behavior. Checkboxes remain unchecked until compiled behavioral proof against the future producer.
+All lifecycle and validation policies below are **bounded simulator inferences**, not native-verified behavior. Checkboxes remain unchecked until compiled behavioral proof against the implemented producer.
 
 - [ ] A fresh `HousingState` has no pending request. Its `pending_new_decor` is an `Option<HousingCatalogEntryVariantID>` using the existing C API-owned full `(recordID, entryType, variantIdentifier)` type. It carries no GUID, instance, transform, stock reservation or selection data.
 - [ ] `StartPlacingNewDecor(catalogEntryVariantID)` validates the entire public integer selector before mutation. An existing exact variant with positive explicitly supplied `num_stored` sets pending to that full identity. No base entry, seeded catalog or alternate selector lookup is required. Identical valid requests are repeatable; valid replacement requests replace record, type and variant identity. Changing the caller's table afterward does not change pending.
@@ -34,14 +34,15 @@ Cache root: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. This is c
 
 ## Implementation inventory
 
-- `src/lua_api/state/support_types.rs`: empty-default `pending_new_decor` input slot; existing C API-owned variant ID reused. No producer implementation.
+- `src/lua_api/state/support_types.rs`: empty-default `pending_new_decor` slot; existing C API-owned variant ID reused.
 - `tests/housing_pending_decor.rs`: fourteen bounded behavioral expectations discovered into the existing grouped `integration` target. No new Cargo target or global fixture state.
-- `src/lua_api/workarounds/temporary/housing_catalog_state.lua:734–743`: unchanged unconditional providers, including false pending query and no-op start/cancel/finish. Future producer must replace only owned keys; selected/customize/preview owners remain separate.
-- `src/c_api/c_housing/basic_mode.rs`: existing free-place surface unchanged. Future request producer belongs to C API, not Lua glue.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: only BasicMode start/query/cancel publishers removed. Finish remains a documented no-op; selected/customize/preview owners remain separate.
+- `src/c_api/c_housing/basic_mode.rs`: unconditional `register_pending` publishes start/query/cancel; existing free-place registration retains its original feature gate. Start uses the shared catalog parser/VM table-access guard, then stores the exact ID only for an existing variant with positive stock. Query reads presence; cancel clears only pending. No events or other housing mutations.
+- `src/c_api/c_housing/catalog/input.rs`: shared selector and full-variant parsing exposed within the housing module; validation behavior unchanged.
 
 ## Tests asserting this spec
 
-Filter: `housing_pending_decor::` in existing target `integration`. **Not compiled or run at this input checkpoint**; no GREEN claim.
+Filter: `housing_pending_decor::` in existing target `integration`. Parent reports compiled RED at input commit `659f79a3c`: **1 PASS / 13 FAIL**, including empty pending and missing-selector acceptance failures (`batch22-red-build/run*`). This implementation session runs no builds/checks/tests; parent owns GREEN. No GREEN claim.
 
 | Cases | Observable boundary |
 |---|---|
@@ -66,11 +67,11 @@ Actual RED log: `/tmp/housing-pending-source-plain-red.log`. Executable SHA-256 
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and observe grouped fixture RED separately from plain no-input provider RED before implementing output replacement.
-- [ ] Implement bounded C API start/query/cancel against explicit input and observe targeted GREEN. Current pending slot alone does not change public behavior.
+- [x] Parent reports grouped compiled RED at `659f79a3c`: 1 PASS / 13 FAIL; separate from the earlier plain-provider probe.
+- [ ] Parent must observe targeted GREEN for implemented C API start/query/cancel; source inspection and formatting are not behavioral acceptance.
 - [ ] Finish/commit/placement lifecycle unresolved: existing finish no-op must remain visible as a gap.
 - [ ] Native validation/no-op/cancel semantics, secure secret access and all-profile execution unverified.
 
 ## Out of scope
 
-Full placement/3D transforms/collision, GUID or instance allocation, stock reservation/consumption, dye/destruction mutation, preview placement, selected-instance synthesis, UI success/selection publication and full addon UI readiness. No native/full-row/all-profile completion claim. Wiki/audit accounting unchanged at this input/tests/spec checkpoint.
+Full placement/3D transforms/collision, GUID or instance allocation, stock reservation/consumption, dye/destruction mutation, preview placement, selected-instance synthesis, UI success/selection publication and full addon UI readiness. No native/full-row/all-profile completion claim. Wiki/audit accounting unchanged; source implementation is not audit acceptance.

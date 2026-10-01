@@ -732,15 +732,13 @@ C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
 -- resolve to the no-op metamethod.
 C_Housing = __wow_merge_namespace(C_Housing, {})
 C_HousingBasicMode = __wow_merge_namespace(C_HousingBasicMode, {
-  IsPlacingNewDecor = function() return false end,
   IsDecorSelected = function() return C_HousingDecor.IsDecorSelected() end,
   GetSelectedDecorInfo = function() return C_HousingDecor.GetSelectedDecorInfo() end,
   IsHouseExteriorSelected = function() return false end,
   CommitDecorMovement = __wow_noop,
   CommitHouseExteriorPosition = __wow_noop,
-  CancelActiveEditing = __wow_noop,
+  -- Finish remains unmodeled: pending requests do not commit placed instances.
   FinishPlacingNewDecor = __wow_noop,
-  StartPlacingNewDecor = __wow_noop,
   StartPlacingPreviewDecor = __wow_noop,
   IsGridSnapEnabled = function() return false end,
   SetGridSnapEnabled = __wow_noop,

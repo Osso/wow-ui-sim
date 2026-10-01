@@ -7,7 +7,6 @@
 //! housing/favor state, and blueprint import/export calls produce simulator
 //! share codes that can be round-tripped in tests.
 
-#[cfg(feature = "retail-12-0-0")]
 mod basic_mode;
 pub mod catalog;
 
@@ -42,6 +41,7 @@ const BLUEPRINT_TYPE_ROOM: i32 = 2;
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     // Replaces an unconditional temporary surface, including non-retail profiles.
     catalog::register(state)?;
+    basic_mode::register_pending(state)?;
     #[cfg(feature = "retail-12-0-0")]
     basic_mode::register(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;

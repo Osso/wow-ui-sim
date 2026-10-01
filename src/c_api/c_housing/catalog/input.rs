@@ -7,7 +7,7 @@ use rilua::table_security::check_table_access;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-pub(super) fn read_selector(state: &mut LuaState) -> LuaResult<Val> {
+pub(in crate::c_api::c_housing) fn read_selector(state: &mut LuaState) -> LuaResult<Val> {
     let selector = Val::from_stack(state, 1)?;
     let Val::Table(reference) = selector else {
         return Err(rilua::runtime_error(
@@ -48,7 +48,7 @@ pub(super) fn read_entry_id(
     })
 }
 
-pub(super) fn read_variant_id(
+pub(in crate::c_api::c_housing) fn read_variant_id(
     state: &mut LuaState,
     selector: Val,
 ) -> LuaResult<HousingCatalogEntryVariantID> {

@@ -8,6 +8,7 @@ mod queries;
 mod snapshot;
 mod storage;
 
+pub(super) use input::{read_selector, read_variant_id};
 pub(super) use queries::register;
 pub(crate) use storage::set_variant_stored_count;
 
