@@ -404,6 +404,137 @@ fn removal_has_no_results_and_reentrant_callbacks_observe_committed_state() {
     .expect("remove real IDs before callback reentry without duplicate notification");
 }
 
+// Characterize inferred simulator policy, not native callback-error semantics.
+#[test]
+fn added_callback_error_retains_anchor_without_returning_id_and_dispatch_recovers() {
+    let env = fixture_env();
+    env.exec(
+        r#"
+        local parent = CreateFrame('Frame')
+        local baseline = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 1, parent))
+        local reached, failedPayload, visibleDuringCallback = 0, nil, nil
+        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(info)
+            reached = reached + 1
+            failedPayload = info
+            visibleDuringCallback = FindAnchor(info.anchorID)
+            error('private-anchor-added-callback-failure', 0)
+        end)
+        local function pack(...) return {n = select('#', ...), ...} end
+        local result = pack(pcall(C_UnitAuras.AddPrivateAuraAnchor,
+            AnchorArgs('player', 4, parent)))
+        assert(reached == 1, 'ordinary public Add must reach added callback')
+        assert(result.n == 2 and result[1] == false,
+            'failed Add must yield only pcall failure and error, not a fabricated ID')
+        assert(type(result[2]) == 'string' and
+            string.find(result[2], 'private-anchor-added-callback-failure', 1, true),
+            'added callback error must propagate to public caller')
+        local failedID = failedPayload.anchorID
+        assert(failedID == baseline + 1, 'failed Add still consumes its ID')
+        assert(visibleDuringCallback.anchorID == failedID and
+            visibleDuringCallback.unitToken == 'player', 'insert precedes added callback')
+        assert(failedPayload.auraIndex == 4 and rawequal(failedPayload.parent, parent),
+            'callback receives concrete published metadata and actual parent')
+        local all = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+        local players = C_UnitAurasPrivate.GetPrivateAuraAnchors('player')
+        assert(#all == 2 and all[1].anchorID == baseline and all[2].anchorID == failedID,
+            'callback failure must not roll back insertion or disturb existing record')
+        assert(#players == 1 and players[1].anchorID == failedID and
+            players[1].auraIndex == 4 and rawequal(players[1].parent, parent),
+            'failed Add retains original state in filtered listing')
+
+        local added, removed = {}, {}
+        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(...)
+            assert(select('#', ...) == 1, 'recovered added dispatch has one payload')
+            local info = ...
+            assert(rawequal(info.parent, parent) and FindAnchor(info.anchorID) ~= nil)
+            added[#added + 1] = info.anchorID
+        end)
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(...)
+            assert(select('#', ...) == 1, 'recovered removed dispatch has one ID')
+            local id = ...
+            assert(FindAnchor(id) == nil)
+            removed[#removed + 1] = id
+        end)
+        local nextID = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 5, parent))
+        assert(nextID == failedID + 1, 'next successful Add must not reuse failed Add ID')
+        assert(#added == 1 and added[1] == nextID, 'replacement callback remains usable')
+        assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(failedID)) == 0)
+        assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(nextID)) == 0)
+        assert(#removed == 2 and removed[1] == failedID and removed[2] == nextID)
+        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors('player') == 0)
+        assert(FindAnchor(baseline).unitToken == 'target', 'unrelated anchor survives recovery')
+        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(nil)
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(nil)
+        C_UnitAuras.RemovePrivateAuraAnchor(baseline)
+        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        "#,
+    )
+    .expect("inferred added callback error retains insertion and later public dispatch works");
+}
+
+// Characterize inferred simulator policy, not native callback-error semantics.
+#[test]
+fn removed_callback_error_retains_deletion_and_dispatch_recovers() {
+    let env = fixture_env();
+    env.exec(
+        r#"
+        local parent = CreateFrame('Frame')
+        local first = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 1, parent))
+        local survivor = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('target', 2, parent))
+        local reached, notifiedID, absentDuringCallback = 0, nil, false
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(id)
+            reached = reached + 1
+            notifiedID = id
+            absentDuringCallback = FindAnchor(id) == nil
+            error('private-anchor-removed-callback-failure', 0)
+        end)
+        local function pack(...) return {n = select('#', ...), ...} end
+        local result = pack(pcall(C_UnitAuras.RemovePrivateAuraAnchor, first))
+        assert(reached == 1 and notifiedID == first, 'public Remove reaches callback with exact ID')
+        assert(absentDuringCallback, 'deletion precedes removed callback')
+        assert(result.n == 2 and result[1] == false,
+            'failed Remove must yield only pcall failure and error')
+        assert(type(result[2]) == 'string' and
+            string.find(result[2], 'private-anchor-removed-callback-failure', 1, true),
+            'removed callback error must propagate to public caller')
+        local all = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+        assert(#all == 1 and all[1].anchorID == survivor and
+            all[1].unitToken == 'target' and rawequal(all[1].parent, parent),
+            'callback failure retains deletion without disturbing survivor')
+        assert(FindAnchor(first) == nil and
+            #C_UnitAurasPrivate.GetPrivateAuraAnchors('player') == 0,
+            'removed record stays absent after public failure')
+        assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(first)) == 0)
+        assert(reached == 1, 'retry of already deleted ID must not repeat failing callback')
+
+        local added, removed = {}, {}
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(nil)
+        C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(...)
+            assert(select('#', ...) == 1, 'recovered removed dispatch has one ID')
+            local id = ...
+            assert(FindAnchor(id) == nil)
+            removed[#removed + 1] = id
+        end)
+        C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(...)
+            assert(select('#', ...) == 1, 'recovered added dispatch has one payload')
+            local info = ...
+            assert(info.unitToken == 'player' and rawequal(info.parent, parent))
+            assert(FindAnchor(info.anchorID) ~= nil)
+            added[#added + 1] = info.anchorID
+        end)
+        local nextID = C_UnitAuras.AddPrivateAuraAnchor(AnchorArgs('player', 3, parent))
+        assert(nextID == survivor + 1, 'postfailure Add preserves monotonic IDs')
+        assert(#added == 1 and added[1] == nextID, 'added callback usable after Remove error')
+        assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(survivor)) == 0)
+        assert(select('#', C_UnitAuras.RemovePrivateAuraAnchor(nextID)) == 0)
+        assert(#removed == 2 and removed[1] == survivor and removed[2] == nextID,
+            'replacement removed callback usable for later valid operations')
+        assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0)
+        "#,
+    )
+    .expect("inferred removed callback error retains deletion and later public dispatch works");
+}
+
 #[test]
 fn added_callback_can_remove_the_just_published_id() {
     let env = fixture_env();
