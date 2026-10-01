@@ -302,7 +302,10 @@
       "implementation": "d8a93bec3",
       "compiled_revision": "d8a93bec37dc09980e41dd37b63d0dd26be88668",
       "proof": "partial-development-green",
-      "ledger": "/tmp/patch-12.0.5-batch11-runs.json"
+      "ledger": "/tmp/patch-12.0.5-batch11-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-charge-policy-independent-proof.md",
+      "gate_ledger": "/tmp/patch-12.0.5-batch11-rust-gates.json",
+      "gate_scope": "Independent saved 24 PASS confirmed at d8a93bec37dc09980e41dd37b63d0dd26be88668. Default cargo fmt --check and cargo check exit 0 without warnings at 5e15752e2d466b028cb87d8cde27b710546a14bc through docs-only 74e6c8845f446967060f4ff49c1cbef301fafe3a; zero changed Rust/config hashes. Historical startup [] is bound to saved d8 executable hash, not the later overwritten target path. No status reclassification, all-profile/native or whole-page acceptance."
     }
   ],
   "source_rows": [
