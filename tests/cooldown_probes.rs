@@ -4,6 +4,10 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::SpellCooldownState;
 
 #[cfg(feature = "retail-12-0-5")]
+#[path = "cooldown_probes/charge_duration.rs"]
+mod charge_duration;
+
+#[cfg(feature = "retail-12-0-5")]
 #[path = "cooldown_probes/ignore_gcd.rs"]
 mod ignore_gcd;
 
