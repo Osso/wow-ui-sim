@@ -176,6 +176,9 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    /// Explicit recast metadata only; empty means unknown, never current aura duration.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,
     #[cfg(feature = "client-wowforever")]
     pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,
     pub spell_loss_of_control: HashMap<u32, LossOfControlInfo>,

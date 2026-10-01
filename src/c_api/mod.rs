@@ -8,6 +8,8 @@ pub(crate) mod abbreviated_number_formatter;
 pub mod action_macros;
 #[cfg(feature = "client-wowforever")]
 mod addon_messages;
+#[cfg(feature = "retail-12-0-5")]
+pub mod aura_duration;
 pub mod bag_info;
 pub mod c_account_services;
 pub(crate) mod c_action_bar;
