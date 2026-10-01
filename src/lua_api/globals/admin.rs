@@ -85,6 +85,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     let builder = register_player(builder)?;
     let builder = register_combat_casting(builder)?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    let builder = super::real::spell_confirmation_prompts::register_admin(builder)?;
     #[cfg(feature = "player-cast-durations")]
     let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;

@@ -1,6 +1,15 @@
 use super::*;
 
 pub struct SimState {
+    /// Explicit pending records only; empty default and lifecycle are simulator policy.
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    pub(crate) pending_spell_confirmation_prompts: HashMap<
+        u64,
+        crate::lua_api::globals::real::spell_confirmation_prompts::SpellConfirmationPrompt,
+    >,
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     #[cfg(feature = "client-wowforever")]

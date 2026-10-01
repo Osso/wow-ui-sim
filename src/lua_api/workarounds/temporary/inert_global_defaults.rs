@@ -171,12 +171,6 @@ if CanShowSetRoleButton == nil then
     end
 end
 
-if GetSpellConfirmationPromptsInfo == nil then
-    function GetSpellConfirmationPromptsInfo()
-        return {}
-    end
-end
-
 if GetActiveLootRollIDs == nil then
     function GetActiveLootRollIDs()
         return {}
@@ -246,7 +240,25 @@ if GetAvailableBandwidth == nil then
 end
 "#;
 
+// Historical/nonmainline profiles retain only their prior inert query.
+#[cfg(not(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+)))]
+const UNMODELED_SPELL_CONFIRMATION_QUERY_LUA: &str = r#"
+if GetSpellConfirmationPromptsInfo == nil then
+    function GetSpellConfirmationPromptsInfo()
+        return {}
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
     Ok(())
 }

@@ -20,6 +20,11 @@ macro_rules! build_empty_sim_state {
                 $runtime.screen_height,
             ),
             events: EventQueue::default(),
+            #[cfg(all(
+                feature = "retail-12-0-5",
+                any(feature = "profile-retail", feature = "client-ptr")
+            ))]
+            pending_spell_confirmation_prompts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             nameplate_hit_test_insets:
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),

@@ -48,6 +48,11 @@ pub mod recent_allies_location;
 pub mod shapeshift;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub(crate) mod spell_confirmation_prompts;
 pub mod spell_flyout_legacy;
 pub mod spell_tabs;
 #[cfg(feature = "retail-12-1-5")]

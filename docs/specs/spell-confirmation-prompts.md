@@ -1,6 +1,6 @@
 # Spell confirmation prompts
 
-Bounded Mainline retail 12.0.5 pending-prompt input, query and actions. `A_Admin.QueueSpellConfirmationPrompt(record)` is the planned explicit simulator input, not a native WoW API. Fixtures use actual registered APIs, never generic event injection or test-time replacements. [Audit context](../wiki/investigations/patch-12-0-5-api-audit.md).
+Bounded Mainline retail 12.0.5+ pending-prompt input, query and actions (`retail-12-0-5` plus `profile-retail` or `client-ptr`). `A_Admin.QueueSpellConfirmationPrompt(record)` is an explicit simulator input, not a native WoW API. Fixtures use actual registered APIs, never generic event injection or test-time replacements. [Audit context](../wiki/investigations/patch-12-0-5-api-audit.md).
 
 ## What it must do
 
@@ -45,9 +45,13 @@ Cached sources ground event names, positions, nilability, synchronous designatio
 ## Implementation inventory
 
 - `tests/spell_confirmation_prompts.rs`: six pending behavioral fixtures, gated to `profile-retail` + `retail-12-0-5`; discovered by the existing generated integration harness, no new Cargo target.
-- `src/lua_api/workarounds/temporary/inert_global_defaults.rs`: current empty-table query workaround; untouched by this tests/spec slice.
-- `src/event/valid_events_c.rs`: current event-name registration, not a stateful producer; untouched.
-- Planned `A_Admin.QueueSpellConfirmationPrompt`, pending state and matching action producers: not implemented in this slice; no new all-profile behavior required.
+- `src/lua_api/globals/real/spell_confirmation_prompts.rs`: host-owned complete records, admin parsing/publication, snapshot query and matching-ID actions. Numeric `spellID` keys preserve finite values without integer truncation; signed zero shares one identity.
+- `src/lua_api/state/sim_state.rs` and `state.rs`: per-environment pending map, empty by default, under the same Mainline epoch/profile gate.
+- `src/lua_api/globals/{real/mod.rs,register.rs,admin.rs}`: gated public globals and admin input wiring.
+- `src/lua_api/workarounds/temporary/inert_global_defaults.rs`: exact inert query moved to a separately cfg-selected bootstrap for earlier/nonmainline profiles; modeled profiles never execute that fallback. Runtime source search found no pre-existing accept/decline stub registrations to supersede; those profiles retain their prior action surface.
+- `src/event/valid_events_c.rs`: existing event-name registration, unchanged.
+
+Parsing requires every numeric field to be a finite public number and text to be a public UTF-8 string; these are host validation policies, not native rejection claims. Secured input tables obey VM access checks. Opaque secret values are rejected without decoding or disclosure. Parsing and host copying finish before pending state changes. Query tables and event text are stack-rooted across allocations/callbacks; no simulator borrow crosses dispatch.
 
 ## Tests asserting this spec
 
@@ -62,14 +66,14 @@ Cached sources ground event names, positions, nilability, synchronous designatio
 | `repeated_spell_id_replaces_one_record_without_duplicate` | Full replacement with distinct values, unrelated record retained |
 | `input_and_query_mutations_do_not_cross_snapshots_or_environments` | Caller/query mutation isolation, retained snapshots and separate environments |
 
-Proof ledger (2026-10-01): fixtures/spec only. No build, test, check or runtime execution authorized for this slice; no RED/GREEN, compilation or native proof claimed. Formatter execution is not behavioral proof. Parent must execute actual targeted RED in the existing `integration` target before query/state production edits; missing callable action/input failures must be distinguished from reached behavioral assertions. All requirement checkboxes remain unverified.
+Proof ledger (2026-10-01): tests/spec `6f7427fef41267f39abc24a032e56e63bf41ad8f` compiled in the parent's saved 127.27s build (`/tmp/patch-12.0.5-batch15-red-build.json`, `.log`, and result artifact). Actual selected RED: 0/6, exit 101, 1.44s; `/tmp/patch-12.0.5-batch15-red-run.json` and `.log` identify that revision and binary hash. Failures stop at missing modeled surface prerequisites, not six independent reached behavior failures. Production implementation follows that RED; parent owns compilation, targeted GREEN and final gates. No build/test/check execution in the production slice. Formatting is not behavioral proof; requirement checkboxes remain unverified.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent records actual targeted RED and its revision before production implementation.
-- [ ] Implement bounded input/state/query/actions; replace the exact empty-query provider, then obtain actual GREEN and required independent gates.
+- [x] Parent records actual targeted RED and its revision before production implementation.
+- [ ] Obtain actual GREEN and required independent gates for the implemented bounded input/state/query/actions and replaced empty-query provider.
 - [ ] Native semantics remain unknown as listed above; do not upgrade inferred lifecycle choices to native parity.
 
 ## Out of scope
 
-Gameplay rewards, currency deduction, real spell/item triggers, automatic expiration/timing and `SPELL_CONFIRMATION_TIMEOUT`. They require additional gameplay/lifecycle contracts, not invented effects for a pending-record fixture. Missing/invalid-field rejection rules and action return values are unspecified; no rejection fixtures assert invented semantics. No vendor edits, new all-profile behavior, whole-page audit completion or native parity claim.
+Gameplay rewards, currency deduction, real spell/item triggers, automatic expiration/timing and `SPELL_CONFIRMATION_TIMEOUT`. They require additional gameplay/lifecycle contracts, not invented effects for a pending-record fixture. Native missing/invalid-field rejection rules and action return values are unspecified; no rejection fixtures claim native semantics. No vendor edits, new all-profile behavior, whole-page audit completion or native parity claim.
