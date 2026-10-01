@@ -47,11 +47,24 @@ Inspection finds `ReadyCheck()` registered and calling shared `start_ready_check
 
 Parent filter: `cargo test --test integration chat_lockdown_ready_checks::`. Predicate control filter: `cargo test --test integration chat_messaging_lockdown::`. Existing legacy control: `cargo test --test integration group_verbs::ready_check_fires_event`.
 
-**Proof ledger:** parent artifacts `/tmp/patch-12.0.5-batch31-red-build-result.json` and `-red-run.log` bind compiled RED to tests/spec `8649fe072`: compile exit 0 in 162.49s; six selected tests, one unlocked lifecycle PASS and five FAIL at actual locked-state mutations. This producer slice adds guards and formatting only; no builds/checks/tests run here. Bounded GREEN and independent verification remain parent-owned. All requirements remain unchecked pending acceptance; no source-row or whole-audit acceptance credit.
+## Reconciled batch31 parent proof — 2026-10-01
+
+Saved metadata, not intervening docs HEAD, binds RED to `8649fe0729940ab46607508743e31aa0a78c7b62` and GREEN to producer `f62420536798220ae18827643e166339b9f6ea02`. Docs `6f264ce3e` interleaves afterward and is not the compiled revision.
+
+| Saved artifact / scope | Result |
+| --- | --- |
+| `/tmp/patch-12.0.5-batch31-red-build-result.json`, `-red-run.json`, `-red-run.log` | Compile exit 0, 162.49s; runtime exit 101, **1 PASS / 5 FAIL** at locked-state effects. Unlocked lifecycle already passes. |
+| `-green-build-result.json`, `-green-runs.json`, `-green-run-0.log` | Compile exit 0, 296.24s; **6 ready-check PASS**, runtime exit 0. |
+| `-green-run-1.log`, `-green-run-2.log` | Same integration executable SHA256 `1fc5661696075543d29b332f0059efcb7c844b09e003c4af14bf658b64ba87de`; **5 predicate + 11 group controls PASS**, each exit 0; **22 total PASS** across three filters, not one combined run. |
+| `-green-startup-run.json`, `-green-startup.json`, `-green-startup.log` | Producer-bound normal binary; exit 0, saved `[]`, CLEAN with zero unique/occurrence Lua errors. Ancillary parent startup, not independent acceptance. |
+
+**Independent acceptance PENDING:** verifier266 report `/tmp/patch-12.0.5-ready-check-lockdown-independent-proof.md` was absent during reconciliation. Parent GREEN supports bounded development evidence only; requirements remain unchecked until independent audit. No builds/tests/checks were rerun by this docs reconciliation.
+
+Exact final `prose-2026-03-31-169` remains **audit-pending** with only a bounded ready-check subset link. Countdown, ping and loot restrictions remain undone; superseded March 25 prose is not the final contract. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/text SHA256 and unrelated classifications. Explicit-input policy, blocked-call error reporting and existing legacy-alias handling are inferred simulator behavior, not native restriction parity.
 
 ## Known gaps (current cycle)
 
-- [ ] Bounded GREEN for the six ready-check fixtures, predicate and existing group controls after the guarded producer change.
+- [x] Saved parent development GREEN: six ready-check fixtures, five predicate and eleven existing group controls after the guarded producer change; not independent acceptance.
 - [ ] Independent acceptance of state preservation, real event silence/payloads, unlock recovery and both combat axes.
 
 ## Out of scope

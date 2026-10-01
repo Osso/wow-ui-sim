@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Chat lockdown ready checks — parent GREEN, independent pending
+
+[Ready-check proof](../../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01) owns actual compiled RED `8649fe072` (**1 PASS / 5 FAIL**, compile 0/162.49s) and producer GREEN `f62420536` (**6 ready + 5 predicate + 11 group = 22 PASS**, compile 0/296.24s), plus saved startup exit0 `[]`. Intervening docs `6f264ce3e` is not compilation provenance. Verifier266 report absent during reconciliation: **independent bounded acceptance PENDING**. Error reporting, legacy alias and explicit-input policy are simulator inferences, not native restriction parity.
+
+Exact final **`prose-2026-03-31-169` remains audit-pending** with bounded ready-check subset link only; countdown/ping/loot undone. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
+
 ### Chat lockdown predicate — bounded independent PASS
 
 [Predicate proof](../../specs/chat-messaging-lockdown.md#reconciled-batch30-bounded-proof--2026-10-01) owns independent bounded acceptance: saved five predicate + two controls PASS at `18b09cbf9`, ancillary parent startup0 `[]`; fresh fmt/check once exit0 at `0d247625c`, original scope matches producer. Only row251 gains explicit-input one-boolean/no-second-reason coverage: **264 pending / 84 bounded / 14 partial = 362**, IDs/source hash/unrelated rows preserved. RED nonboolean nil, not two returns. Ready-check `8649fe072` and concurrent code excluded; no native producer/security/enforcement/macros/all-profile/full-page claim. **IN PROGRESS**.
