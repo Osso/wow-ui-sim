@@ -611,6 +611,21 @@
       "implementation": "61cd50cd8 + 2b24386c5; fixture 053f6c860; callback tests f69497fc6 compiled 91e845021",
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-private-anchor-independent-proof.md"
+    },
+    {
+      "id": "chat-lockdown-predicate",
+      "symbols": [
+        "C_ChatInfo.InChatMessagingLockdown"
+      ],
+      "scope": "Explicit per-environment bool only: exactly one boolean, no second reason; combat independence, isolation and ordinary caller taint. No native producer/security/enforcement/macros/all-profile/full-page claim; ready-check work excluded.",
+      "spec": "docs/specs/chat-messaging-lockdown.md",
+      "tests": [
+        "tests/chat_messaging_lockdown.rs"
+      ],
+      "implementation": "18b09cbf9",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md",
+      "gate_scope": "Saved five predicate + two controls PASS, ancillary parent startup0[]; fresh fmt/check once exit0 at0d247625c, original scope matches producer. Excludes8649fe072 and concurrent ready-check code; RED nonbool nil, not two returns."
     }
   ],
   "source_rows": [
@@ -1437,9 +1452,11 @@
     },
     {
       "source_id": "global api-C_ChatInfo-InChatMessagingLockdown-251",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "chat-lockdown-predicate"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact removed ret2 lockdownReason only, under explicit simulator input. Linked chat-messaging-lockdown spec owns bounded independent proof and exclusions; RED was nonboolean nil, not demonstrated two-return failure. No native producer/security/enforcement/macros/all-profile/full-page acceptance; ready-check work excluded."
     },
     {
       "source_id": "global api-C_ChatInfo-ReplaceIconAndGroupExpressions-253",

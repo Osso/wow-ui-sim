@@ -4,11 +4,11 @@ Bounded Retail 12.0.5 input and predicate for `C_ChatInfo.InChatMessagingLockdow
 
 ## What it must do
 
-- [ ] Match literal audit row `global api-C_ChatInfo-InChatMessagingLockdown-251`: `- ret2 = lockdownReason` ([retained register](../../data/patch-api/sources/12.0.5-register.json), source line 251).
-- [ ] Return exactly one required boolean, including fresh-state `false` and explicit `true`/`false`/`true` transitions; no second reason, even nil.
-- [ ] Read the per-environment Rust boolean `chat_messaging_lockdown`, independently of `player.in_combat`, across all four combinations.
-- [ ] Isolate input and query results between environments.
-- [ ] Preserve ordinary addon caller stack taint without claiming broader native security parity.
+- [x] Match literal audit row `global api-C_ChatInfo-InChatMessagingLockdown-251`: `- ret2 = lockdownReason` ([retained register](../../data/patch-api/sources/12.0.5-register.json), source line 251).
+- [x] Return exactly one required boolean, including fresh-state `false` and explicit `true`/`false`/`true` transitions; no second reason, even nil.
+- [x] Read the per-environment Rust boolean `chat_messaging_lockdown`, independently of `player.in_combat`, across all four combinations.
+- [x] Isolate input and query results between environments.
+- [x] Preserve ordinary addon caller stack taint without claiming broader native security parity.
 
 Cached contract: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua`, lines 293–300, declares `Name = "InChatMessagingLockdown"` and exactly one return `{ Name = "isRestricted", Type = "bool", Nilable = false }`. Its description is “Returns true if API security restrictions regarding chat messaging are in effect.” This documents the return contract, not the native restriction producer or transition policy.
 
@@ -32,15 +32,17 @@ Cached contract: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocu
 
 Parent filter: `cargo test --test integration chat_messaging_lockdown::` with Retail 12.0.5+ enabled. Saved parent RED at input commit `f777027be4721bb46728a32553cf15a5cf44fbcd`: compilation exit 0 (303.63s), then five failures at non-boolean query results, exit 101. Evidence: `/tmp/patch-12.0.5-batch30-red-build-result.json`, `/tmp/patch-12.0.5-batch30-red-run.log`, `/tmp/patch-12.0.5-batch30-red-run.json`. Saved parent GREEN metadata binds actual compiled/run revision `18b09cbf9787ed781399173be022b0866218384f`, not a later interleaved docs commit: compilation exit 0 (411.42s); five predicate PASS and two separate `c_chat_info_probes::` control PASS, both exit 0. Evidence: `/tmp/patch-12.0.5-batch30-green-build-result.json`, `/tmp/patch-12.0.5-batch30-green-runs.json`, and `green-run-0.log` / `green-run-1.log` under the same prefix. Both runs identify integration binary SHA-256 `455c53f291d206453255bca5bb452ec15d683394977b335808a44f801c842c5f`. Parent startup metadata at that revision records exit 0; saved summary is CLEAN, zero unique/occurrence errors (`/tmp/patch-12.0.5-batch30-green-startup-run.json`, `green-startup.log`). Startup is parent evidence, not independent execution.
 
-## Reconciled batch30 parent proof — 2026-10-01
+## Reconciled batch30 bounded proof — 2026-10-01
 
 Literal row `global api-C_ChatInfo-InChatMessagingLockdown-251` removes only `ret2 = lockdownReason`. Fixtures assert `select('#', C_ChatInfo.InChatMessagingLockdown()) == 1`; `reason == nil` alone would not prove absence of a second nil return. Saved RED reaches non-boolean assertions after compilation; it is not a demonstrated two-return RED. Saved GREEN supports explicit simulator input, exact arity, combat independence, environment isolation and ordinary caller taint only.
 
-Independent report `/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md` was absent when this reconciliation was written. **Independent acceptance pending**; no independent PASS claimed, checklist items remain open and exact row remains audit-pending. Retained 362 source IDs/text hash and **265 pending / 83 bounded / 14 partial** accounting are unchanged. No native producer, enforcement, message/channel, macro, all-profile or whole-audit credit.
+Independent report `/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md`, read fully, accepts only the explicit per-environment input and single-boolean predicate. Saved five predicate and two control PASS at producer `18b09cbf9`; saved parent startup exit 0, JSON `[]`, is ancillary evidence, not independent execution. Fresh fmt/check each ran once and exited 0 at `0d247625c`, with original predicate scope identical to producer. Ready-check inputs `8649fe072` and concurrent ready-check implementation are excluded; this is recorded source-scoped acceptance, not acceptance of current dirty code.
+
+Only exact row251 gains **bounded-coverage**: **264 pending / 84 bounded / 14 partial = 362**. All source IDs, source SHA-256 and unrelated rows remain unchanged. RED observed non-boolean nil, not a two-return failure. No native producer/security, enforcement, message/channel, macro, all-profile, full-page or whole-audit credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent gate for the implemented predicate; saved parent bounded GREEN above is available.
+- [x] Independent bounded gate for the recorded predicate scope; see reconciled proof above.
 - [ ] Native restriction producer, activation/reset/ordering policy, and broader security semantics remain open.
 
 ## Out of scope

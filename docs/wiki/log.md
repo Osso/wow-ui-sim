@@ -1,6 +1,6 @@
-## [2026-10-01] evidence | Record bounded chat predicate parent proof
+## [2026-10-01] evidence | Accept bounded chat predicate proof
 
-[[patch-12-0-5-api-audit#Chat lockdown predicate — parent GREEN, independent pending]] links [predicate proof](../specs/chat-messaging-lockdown.md#reconciled-batch30-parent-proof--2026-10-01): metadata binds RED inputs `f777027be` compile0 303.63s/five non-boolean failures and GREEN producer `18b09cbf9` compile0 411.42s/five predicate plus two separate C_ChatInfo controls PASS. Saved parent startup exit0 CLEAN zero errors is not independent execution. Exact row251 removes second reason; tests assert select arity one. Independent report absent; row remains pending, **265 pending / 83 bounded / 14 partial = 362**, IDs/hash retained. No native producer/enforcement/message/channel/macro/all-profile credit; **IN PROGRESS**. Docs-only, no builds/tests/checks/delegation/push/deploy.
+[[patch-12-0-5-api-audit#Chat lockdown predicate — bounded independent PASS]] links [Predicate proof](../specs/chat-messaging-lockdown.md#reconciled-batch30-bounded-proof--2026-10-01) owns independent bounded acceptance: saved five predicate + two controls PASS at `18b09cbf9`, ancillary parent startup0 `[]`; fresh fmt/check once exit0 at `0d247625c`, original scope matches producer. Only row251 gains explicit-input one-boolean/no-second-reason coverage: **264 pending / 84 bounded / 14 partial = 362**, IDs/source hash/unrelated rows preserved. RED nonboolean nil, not two returns. Ready-check `8649fe072` and concurrent code excluded; no native producer/security/enforcement/macros/all-profile/full-page claim. **IN PROGRESS**.
 
 ## [2026-10-01] evidence | Accept bounded private-anchor field proof
 

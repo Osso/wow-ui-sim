@@ -1,11 +1,8 @@
 # Patch 12.0.5 API Audit
 
-### Chat lockdown predicate — parent GREEN, independent pending
+### Chat lockdown predicate — bounded independent PASS
 
-[Batch30 predicate proof](../../specs/chat-messaging-lockdown.md#reconciled-batch30-parent-proof--2026-10-01) binds saved RED to inputs `f777027be` (compile exit 0, 303.63s; five non-boolean failures) and GREEN to actual metadata revision `18b09cbf9` (compile exit 0, 411.42s; five predicate PASS plus two separately run C_ChatInfo controls). Parent startup exit 0, CLEAN zero errors is saved evidence, not independent execution. Exact `global api-C_ChatInfo-InChatMessagingLockdown-251` removes `ret2 = lockdownReason`; fixtures assert `select` arity one, not merely nil reason. RED does not establish a second-return failure.
-
-Independent report `/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md` was absent at reconciliation. Row remains **audit-pending**, checklist unpromoted; **265 pending / 83 bounded / 14 partial = 362**, source IDs/text SHA256 and unrelated accounting retained. Native producer/security, enforcement, messaging/channel restrictions, macros and all-profile acceptance unclaimed; audit **IN PROGRESS**. No builds/tests/checks/delegation/push/deploy.
-
+[Predicate proof](../../specs/chat-messaging-lockdown.md#reconciled-batch30-bounded-proof--2026-10-01) owns independent bounded acceptance: saved five predicate + two controls PASS at `18b09cbf9`, ancillary parent startup0 `[]`; fresh fmt/check once exit0 at `0d247625c`, original scope matches producer. Only row251 gains explicit-input one-boolean/no-second-reason coverage: **264 pending / 84 bounded / 14 partial = 362**, IDs/source hash/unrelated rows preserved. RED nonboolean nil, not two returns. Ready-check `8649fe072` and concurrent code excluded; no native producer/security/enforcement/macros/all-profile/full-page claim. **IN PROGRESS**.
 
 ### Private anchors — bounded independent PASS
 
