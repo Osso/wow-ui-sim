@@ -4,11 +4,11 @@
 
 ## [2026-09-30] audit | Extend common duration NumericFormatter consumption
 
-[[duration-core]] now links the [three-formatter duration contract](../specs/duration-core.md#common-numeric-formatting): typed abbreviated/numeric-rule dispatch and captured Seconds identity/FormatNumber, with opaque secret handoff and native core getters. Four default RED cases reproduce missing type support and decoded-modifier disclosure; GREEN is pending. Localized Seconds rendering remains capability-scoped; native parity and general debug confidentiality are unclaimed.
+[[duration-core]] now links the [three-formatter duration contract](../specs/duration-core.md#common-numeric-formatting): typed abbreviated/numeric-rule dispatch and captured Seconds identity/FormatNumber, with opaque secret handoff and native core getters. Four default RED cases reproduce missing type support and decoded-modifier disclosure; parent build `9a50d8a5c` passes common 4/4, abbreviated 4/4, and numeric-rule 7/7. This used Seconds primitive text. Native promotion `e0ff01ef1` is committed; localized output and the fifth curve case await native-enabled proof. Native parity and general debug confidentiality are unclaimed.
 
 ## [2026-09-30] audit | Record bounded abbreviated formatter implementation
 
-`786e731a1` and `663de5528` add typed abbreviated-number formatter methods and duration Format* consumers. Common cached NumericFormatter docs ground public FormatNumber; localization docs plus existing FIRST_NUMBER_CAP_NO_SPACE ground literal/global suffixes. Four grouped RED cases fail on missing surface; GREEN remains pending. Locale, validation and secret-propagation guesses and future probes belong to [abbreviated formatter spec](../specs/abbreviated-number-formatter.md); see [[duration-core]]. No native or all-formatter duration compatibility claim.
+`786e731a1` and `663de5528` add typed abbreviated-number formatter methods and duration Format* consumers. Common cached NumericFormatter docs ground public FormatNumber; localization docs plus existing FIRST_NUMBER_CAP_NO_SPACE ground literal/global suffixes. Four grouped cases were RED on missing surface; later default controls pass 4/4 at `9a50d8a5c`. Locale, validation and secret-propagation guesses and future probes belong to [abbreviated formatter spec](../specs/abbreviated-number-formatter.md); see [[duration-core]]. No native or all-formatter duration compatibility claim.
 
 ## [2026-09-27] investigation | Extend XML empty-function clearing coverage
 
