@@ -1,4 +1,4 @@
-//! Inputs/tests only for rows 650/651; parent must observe actual RED before production.
+//! Grouped coverage for explicit aggregates and current raw catalog snapshots.
 #![cfg(feature = "retail-12-0-5")]
 
 use wow_ui_sim::c_api::c_housing::catalog::{
@@ -248,6 +248,51 @@ fn missing_base_record_is_nil_even_with_surviving_variants() {
         assert(C_HousingCatalog.GetCatalogEntryInfoByItem(998877) == nil)
         assert(C_HousingCatalog.GetCatalogEntryInfoByRecordID(
             Enum.HousingCatalogEntryType.Decor, 998877) == nil)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn raw_entry_snapshots_omit_removed_fields_after_legacy_injection() {
+    let env = fixture_env(Some(37), Some(11));
+    env.exec(
+        r#"
+        local removedFields = {
+            'showQuantity', 'quantity', 'numPlaced', 'customizations', 'dyeIDs',
+            'entryID',
+        }
+        local function assertCurrentSnapshot(info)
+            assertAggregates(info, 37, 11)
+            assert(rawget(info, 'recordID') == 82001)
+            assert(rawget(info, 'entryType') == Enum.HousingCatalogEntryType.Decor)
+            assert(rawget(info, 'itemID') == 6948)
+            assert(rawget(info, 'name') == 'Aggregate fixture chair')
+            assert(rawget(info, 'isUniqueTrophy') == false)
+            assert(rawget(info, 'totalNumStored') == 37)
+            assert(rawget(info, 'totalNumPlaced') == 11)
+            for _, field in ipairs(removedFields) do
+                assert(rawget(info, field) == nil, 'raw snapshot retains ' .. field)
+            end
+        end
+        local snapshots = {}
+        for index, query in ipairs(aggregateQueries) do
+            local info = query()
+            assertCurrentSnapshot(info)
+            snapshots[index] = info
+            for _, field in ipairs(removedFields) do
+                rawset(info, field, {snapshot = index, field = field})
+            end
+        end
+        for _, query in ipairs(aggregateQueries) do
+            assertCurrentSnapshot(query())
+        end
+        for index, info in ipairs(snapshots) do
+            for _, field in ipairs(removedFields) do
+                local injected = rawget(info, field)
+                assert(injected.snapshot == index and injected.field == field)
+            end
+        end
     "#,
     )
     .unwrap();

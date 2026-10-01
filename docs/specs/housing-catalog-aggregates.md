@@ -26,7 +26,7 @@ Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:85-87` aliases `quant
 - `src/c_api/c_housing/catalog.rs`: two optional explicit aggregate inputs.
 - `src/c_api/c_housing/catalog/queries.rs`: unchanged shared lookup path for all three getters.
 - `src/c_api/c_housing/catalog/snapshot.rs`: shared `push_entry` publishes each supplied unsigned count directly as a Lua number; absent inputs remain absent. No variant or unrelated-state reads.
-- `tests/housing_catalog_aggregates.rs`: twelve grouped behavioral fixtures, gated by `retail-12-0-5`.
+- `tests/housing_catalog_aggregates.rs`: thirteen grouped behavioral fixtures, gated by `retail-12-0-5`; twelve prior fixtures plus one raw-output coverage extension awaiting parent GREEN.
 - Existing construction sites in `tests/housing_catalog_base_lookups.rs` (two literals), `tests/housing_catalog_variants.rs`, `tests/housing_storage_entry_updated.rs`, and `tests/housing_destroy_entry.rs` (one literal each): both new inputs are `None`; all prior concrete fixture data preserved.
 - Existing `build.rs` discovery includes top-level Rust test modules in `tests/integration.rs`; `autotests = false` remains unchanged. No new Cargo target or harness edit.
 
@@ -49,6 +49,17 @@ Inputs `fe874979b`; producer `72795fbfa`. [Independent proof](/tmp/patch-12.0.5-
 Saved GREEN: **12 aggregate + 14 base + 24 variants/count + 11 storage + 15 destruction = 76 PASS** across five nonempty selections. Parent normal startup exits **0**, JSON `[]`, zero unique errors/occurrences; saved evidence, not independent execution or nonempty-wrapper proof. Runtime ledger: `/tmp/patch-12.0.5-batch24-green-runs.json`; startup: `/tmp/patch-12.0.5-batch24-green-startup-run.json`.
 
 Fresh independent `cargo fmt --check` and `cargo check` each exit **0** at docs `2973774c5`, with relevant Rust/config identical to producer; no warnings/errors. Gate ledger: `/tmp/patch-12.0.5-batch24-independent-checks.json`. Source audit covers shared serializer, unchanged selector guards/registration, rooting and preserved constructor data; not native aggregate secrecy or all-profile execution.
+
+### Raw output coverage extension — awaiting parent GREEN (2026-10-01)
+
+Exact [source register](../../data/patch-api/sources/12.0.5-register.json) rows `structures-HousingCatalogEntryInfo-653` through `-657` remove, respectively, `showQuantity`, `quantity`, `numPlaced`, `customizations`, and `dyeIDs`. Already-bounded row `-652` removes `entryID`, retained here as a control.
+
+- [ ] `raw_entry_snapshots_omit_removed_fields_after_legacy_injection` exercises all three raw getters on the populated base fixture with `Some(37)` stored and `Some(11)` placed. It asserts concrete current identity, item, name, trophy flag and aggregate fields, plus `rawget == nil` for all five removed names and `entryID`; not absence on a missing record.
+- [ ] Injecting legacy fields into each returned Lua snapshot leaves subsequent fresh results from all three getters populated and alias-free, while the injected snapshots retain their local fields.
+
+Coverage extension for existing, unchanged production behavior; no fabricated RED or new producer/input behavior. Exact parent GREEN filter `housing_catalog_aggregates::` selects **12 prior + 1 bounded extension = 13 tests** in target `integration`. No build/check/test execution in this extension; parent compiles GREEN only, verifier tracks production source unchanged. Prior saved proof above does not cover the new test.
+
+Boundary is the raw C API in `WowLuaEnv::new()`, not the cached deprecated wrapper, which deliberately adds backward-compatible aliases and remains untouched. Extra unknown selector fields being ignored is distinct from output-field absence; this test imposes no new selector type-shape requirement. No complete DTO, native or all-profile claim.
 
 ## Known gaps (current cycle)
 
