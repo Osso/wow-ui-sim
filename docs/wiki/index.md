@@ -1,10 +1,10 @@
 ## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
 
-[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent verifier 147 absent/pending, current Rust gates unclaimed. No native/network/all-profile/full-row/full-page acceptance.
+[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent bounded PASS and snapshot-scoped default fmt/check recorded in the linked contract; concurrent unrelated tests/`tests/forever_auto_roll.rs` edits excluded, no current whole-worktree formatting claim. No native/network/all-profile/full-row/full-page acceptance.
 
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
-[[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures now have bounded development GREEN; linked contract owns 55 PASS and saved zero-error startup. Independent acceptance/current Rust gates remain pending; no native, all-profile execution or whole-row completion claim.
+[[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures now have bounded development GREEN; linked contract owns 55 PASS and saved zero-error startup. Independent bounded acceptance and snapshot-scoped default Rust gates recorded; parent startup remains saved, not independently verified; no native, all-profile execution or whole-row completion claim.
 
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 

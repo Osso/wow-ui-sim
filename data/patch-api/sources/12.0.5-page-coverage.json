@@ -354,7 +354,7 @@
         "GroupHasOfflineMember",
         "UNIT_CONNECTION"
       ],
-      "scope": "Shared party connection bool and explicit simulator input; mainline development proof for synchronous disconnect/reconnect exact two-argument callbacks with post-mutation queries, unchanged edges, absent/inactive members, aggregate offline state, roster regrowth, environment isolation and preserved non-party queries. Defaults/edge/lifecycle policies inferred; cached event contract is documented, not native execution. No network, all-profile execution, full-row or whole-page claim.",
+      "scope": "Shared party connection bool and explicit simulator input; bounded independently audited mainline proof for synchronous disconnect/reconnect exact two-argument callbacks with post-mutation queries, unchanged edges, absent/inactive members, aggregate offline state, roster regrowth, environment isolation and preserved non-party queries. Defaults/edge/lifecycle policies inferred; cached event contract is documented, not native execution. No network, all-profile execution, full-row or whole-page claim.",
       "spec": "docs/specs/party-connection.md",
       "tests": [
         "tests/party_connection.rs"
@@ -362,10 +362,11 @@
       "inputs": "03ebe6972",
       "implementation": "527cb2f57",
       "compiled_revision": "527cb2f57e992777ca5b4b75392fa0c9a8758da0",
-      "proof": "development-green",
+      "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-batch14-green-runs.json",
       "startup_ledger": "/tmp/patch-12.0.5-batch14-green-startup-run.json",
-      "gate_scope": "Actual RED 0/6 at missing setter; GREEN 8 party + 28 admin-party + 19 admin-event = 55 PASS; saved startup exit 0, [] zero errors. Independent verifier 147 pending (report absent); no current Rust gate claim. Linked spec owns proof and inference limits."
+      "gate_scope": "Independent bounded behavior/wiring/readability PASS; actual missing-setter RED 0/6, GREEN 8 party + 28 admin-party + 19 admin-event = 55 PASS reused. Default fmt/check exit 0 at captured 527cb2f57 source/config snapshot; concurrent unrelated tests/forever_auto_roll.rs edit and subsequent unrelated tests excluded, no current whole-worktree fmt or all-test compile claim. Separate parent startup exit 0, [] zero errors, 7.85s; not independently verified by report. Linked spec owns artifacts/inference limits; no native/network/all-profile/full-row/whole-page claim.",
+      "independent_ledger": "/tmp/patch-12.0.5-party-connection-independent-proof.md"
     }
   ],
   "source_rows": [
@@ -978,7 +979,7 @@
         "party-connection"
       ],
       "status": "bounded-coverage",
-      "note": "Retained UNIT_CONNECTION party disconnect/connect prose: bounded shared explicit input/state/query/event development proof only. Cached UnitDocumentation.lua:4057-4065 documents synchronous (unitTarget, isConnected); transition policies inferred. Spec owns RED 0/6, GREEN 55 PASS and saved zero-error startup. Independent acceptance/current Rust gates pending; no native/network/all-profile/full-row/whole-page credit."
+      "note": "Retained UNIT_CONNECTION party disconnect/connect prose: bounded shared explicit input/state/query/event independent acceptance only. Cached UnitDocumentation.lua:4057-4065 documents synchronous (unitTarget, isConnected); transition policies inferred. Spec owns RED 0/6, GREEN 55 PASS, independent bounded audit and snapshot-scoped default gates excluding concurrent/subsequent unrelated tests. Parent saved startup exit 0, [] zero errors, 7.85s is not independently verified. No current whole-worktree fmt/native/network/all-profile/full-row/whole-page credit."
     },
     {
       "source_id": "prose-2026-04-10-185",

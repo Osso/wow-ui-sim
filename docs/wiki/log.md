@@ -1,6 +1,6 @@
 ## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
 
-[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent verifier 147 absent/pending, current Rust gates unclaimed. No native/network/all-profile/full-row/full-page acceptance.
+[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent bounded PASS and snapshot-scoped default fmt/check recorded in the linked contract; unrelated tests/`tests/forever_auto_roll.rs` edits excluded, no current whole-worktree formatting claim. No native/network/all-profile/full-row/full-page acceptance.
 
 ## [2026-10-01] contract | Bound AutoRoll fixture to consumed paths
 
@@ -8,7 +8,7 @@
 
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
-[[lua-api#Global Functions]] links the [contract](../specs/party-connection.md), which owns actual RED artifacts and superseding bounded development GREEN. Added shared party bool, active admin edge transition and query consumption; updated all constructors. Two additional controls now pass for inactive retained members and preserved non-party aliases. Linked contract owns 55 PASS and saved startup; independent acceptance/current Rust gates remain pending. Exact source accounting is bounded, not whole-row completion.
+[[lua-api#Global Functions]] links the [contract](../specs/party-connection.md), which owns actual RED artifacts and superseding bounded development GREEN. Added shared party bool, active admin edge transition and query consumption; updated all constructors. Two additional controls now pass for inactive retained members and preserved non-party aliases. Linked contract owns 55 PASS and saved startup; independent bounded acceptance and snapshot-scoped default gates now recorded; startup remains parent-owned saved evidence. Exact source accounting is bounded, not whole-row completion.
 
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 
@@ -5374,3 +5374,7 @@ Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage a
 ## [2026-10-01] reconciliation | Correct stale charge-policy and XML status links
 
 Updated index and [[spell-charge-state]] to link current proof SSOT rather than repeat pending charge/default-gate claims; batch10 links completed bounded XML getter/inheritance acceptance. Historical entries retain their context with superseding outcome links. All 362 classifications unchanged; no native, whole-page or current-binary acceptance added. Docs-only; no code edits or test execution.
+
+## [2026-10-01] evidence | Reconcile independent party acceptance
+
+[Party contract](../specs/party-connection.md#tests-asserting-this-spec) owns independent 55/55 reuse, wiring/readability PASS and snapshot-scoped default fmt/check. Exact `prose-2026-03-31-182`/`party-connection` accounting retains 362 IDs and unrelated statuses. Parent startup exit 0, `[]`, 7.85s remains separately attributed; no current whole-worktree, native/network/profile or whole-page claim.

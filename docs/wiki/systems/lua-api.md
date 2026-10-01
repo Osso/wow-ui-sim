@@ -99,7 +99,7 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 ## Global Functions
 
-**Party connection input** — Active `admin.rs` registration exposes the shared setter; `PartyMember.connected` feeds party-token and aggregate queries. Mutation precedes synchronous edge dispatch with no state borrow held. Non-party token behavior remains unchanged. [Contract](../../specs/party-connection.md) owns cached payload evidence, inferred semantics, actual six-case RED and pending eight-case GREEN/final gates; no native or source-accounting completion credit.
+**Party connection input** — Active `admin.rs` registration exposes the shared setter; `PartyMember.connected` feeds party-token and aggregate queries. Mutation precedes synchronous edge dispatch with no state borrow held. Non-party token behavior remains unchanged. [Contract](../../specs/party-connection.md) owns cached payload evidence, inferred semantics, actual six-case RED, eight-case GREEN plus 47 controls, independent bounded acceptance and snapshot-scoped default Rust gates; parent startup is saved evidence, not independently verified, and concurrent unrelated test edits are excluded; no native or source-accounting completion credit.
 
 **Core overrides** — `print` appends to `SimState.console_output`; `ipairs` iterates frame children; `getmetatable` returns a fake metatable exposing all frame methods; `string.format` maps `%F` → `%f` for LuaJIT compatibility.
 
