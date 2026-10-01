@@ -181,7 +181,10 @@ fn charge_queries_derive_all_five_fields_from_same_explicit_state() {
     seed_charge(&env, 1);
     env.exec(
         r#"
-        for _, info in ipairs({C_Spell.GetSpellCharges('fixture heal'), C_ActionBar.GetActionCharges(17)}) do
+        local spell = C_Spell.GetSpellCharges('fixture heal')
+        local action = C_ActionBar.GetActionCharges(17)
+        assert(spell ~= nil and action ~= nil, 'configured charge tables must exist')
+        for _, info in ipairs({spell, action}) do
             assert(info.currentCharges == 1 and info.maxCharges == 2)
             assert(info.cooldownStartTime == 12 and info.cooldownDuration == 40)
             assert(info.chargeModRate == 2)
@@ -192,7 +195,10 @@ fn charge_queries_derive_all_five_fields_from_same_explicit_state() {
     seed_charge(&env, 2);
     env.exec(
         r#"
-        for _, info in ipairs({C_Spell.GetSpellCharges(19750), C_ActionBar.GetActionCharges(17)}) do
+        local spell = C_Spell.GetSpellCharges(19750)
+        local action = C_ActionBar.GetActionCharges(17)
+        assert(spell ~= nil and action ~= nil, 'maximum charge tables must exist')
+        for _, info in ipairs({spell, action}) do
             assert(info.currentCharges == 2 and info.maxCharges == 2)
             assert(info.cooldownStartTime == 12 and info.cooldownDuration == 40)
             assert(info.chargeModRate == 2)
@@ -242,7 +248,10 @@ fn charge_duration_snapshots_survive_changed_state_alias_mapping_and_clock() {
             assert(old:GetRemainingDuration() == 0)
         end
         assert(oldChargeInfo.currentCharges == 1 and oldChargeInfo.chargeModRate == 2)
-        for _, d in ipairs({C_Spell.GetSpellChargeDuration('FIXTURE HEAL'), C_ActionBar.GetActionChargeDuration(17)}) do
+        local spell = C_Spell.GetSpellChargeDuration('FIXTURE HEAL')
+        local action = C_ActionBar.GetActionChargeDuration(17)
+        assert(spell ~= nil and action ~= nil, 'remapped charge durations must exist')
+        for _, d in ipairs({spell, action}) do
             assert(d:GetStartTime() == 45 and d:GetEndTime() == 55)
             assert(d:GetModRate() == 3 and d:GetTotalDuration() == 10)
             assert(not d:HasExpired())
