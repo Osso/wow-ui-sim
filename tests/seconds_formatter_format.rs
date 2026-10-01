@@ -5,7 +5,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn seconds_formatter_format_selects_units_and_decomposes() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = C_StringUtil.CreateSecondsFormatter()
         local cases = {{59.4, '59 seconds'}, {60, '1 minute'}, {90, '1 minute'},
             {3599, '59 minutes'}, {3600, '1 hour'}, {86400, '1 day'},
@@ -32,14 +33,17 @@ fn seconds_formatter_format_selects_units_and_decomposes() {
         f:SetMaxIntervalCurve({Evaluate = function() error('curve marker') end})
         local ok, err = pcall(f.Format, f, 90)
         assert(not ok and tostring(err):find('curve marker', 1, true))
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
 fn seconds_formatter_format_rounds_final_unit_and_handles_thresholds() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = C_StringUtil.CreateSecondsFormatter()
         f:SetRounding(Enum.SecondsFormatterRounding.RoundUp)
         assert(f:Format(59.4) == '1 minute', f:Format(59.4))
@@ -64,14 +68,17 @@ fn seconds_formatter_format_rounds_final_unit_and_handles_thresholds() {
         assert(f:Format(-0.125) == '-0.125 seconds')
         f:SetRounding(0)
         assert(f:Format(0.9999) == '1 second')
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
 fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = C_StringUtil.CreateSecondsFormatter()
         local other = C_StringUtil.CreateSecondsFormatter()
         f:SetDesiredUnitCount(2)
@@ -94,14 +101,17 @@ fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
         -- No private renderer is published as a helper on public tables.
         assert(rawget(C_StringUtil, 'FormatDurationUnits') == nil)
         assert(rawget(_G, '__wow_render_duration_units') == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
 fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = C_StringUtil.CreateSecondsFormatter()
         for _, value in ipairs({false, '1', {}, math.huge, -math.huge, 0/0}) do
             assert(not pcall(f.Format, f, value))
@@ -125,7 +135,9 @@ fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
         f:SetMaxInterval(3)
         assert(f:Format(1) == '1 second')
         assert(f:GetApproximationSeconds() == 0 and f:GetMillisecondsThreshold() == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "client-ptr")]
@@ -133,7 +145,8 @@ fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
 fn seconds_formatter_format_uses_exact_ptr_abbreviation_enum_after_bootstrap() {
     let env = WowLuaEnv::new().unwrap();
     for _ in 0..2 {
-        env.exec(r#"
+        env.exec(
+            r#"
             local enum = Enum.SecondsFormatterAbbreviation
             local expected = {None = 0, Truncate = 1, OneLetter = 2}
             local count = 0
@@ -158,9 +171,42 @@ fn seconds_formatter_format_uses_exact_ptr_abbreviation_enum_after_bootstrap() {
             assert(not pcall(formatter.Format, formatter, 90))
             assert(not pcall(formatter.Format, formatter, 90, 3))
             assert(formatter:Format(90, 0) == outputs[1])
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-0-5"))]
+#[test]
+fn seconds_formatter_format_retail_epoch_formats_numeric_duration_units() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        GetLocale = function() return 'enUS' end
+        local formatter = C_StringUtil.CreateSecondsFormatter()
+        formatter:SetDesiredUnitCount(2)
+        formatter:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
+        formatter:SetRounding(Enum.SecondsFormatterRounding.Truncate)
+        local text = formatter:FormatNumber(93)
+        assert(text == '1m 33s', 'expected duration units, got ' .. text)
+        local clock = C_DurationUtil.CreateManualClock(33)
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetClock(clock)
+        duration:SetTimeFromStart(0, 93)
+        assert(duration:FormatTotalDuration(formatter) == '1m 33s')
+        assert(duration:FormatElapsedDuration(formatter) == '33s')
+        assert(duration:FormatRemainingDuration(formatter) == '1m')
+        formatter:SetMaxIntervalCurve({Evaluate=function(_, seconds)
+            assert(seconds == 93)
+            return Enum.SecondsFormatterInterval.Seconds
+        end})
+        assert(duration:FormatTotalDuration(formatter) == '93s')
+        assert(C_Intl == nil)
+    "#,
+    )
+    .expect("retail 12.0.5+ uses the existing native duration formatter");
 }
 
 #[cfg(feature = "client-retail")]
@@ -168,7 +214,8 @@ fn seconds_formatter_format_uses_exact_ptr_abbreviation_enum_after_bootstrap() {
 fn seconds_formatter_format_preserves_retail_abbreviation_enum_after_bootstrap() {
     let env = WowLuaEnv::new().unwrap();
     for _ in 0..2 {
-        env.exec(r#"
+        env.exec(
+            r#"
             local enum = Enum.SecondsFormatterAbbreviation
             local expected = {None = 0, OneLetter = 1, TwoLetters = 2, Full = 3}
             local count = 0
@@ -188,7 +235,9 @@ fn seconds_formatter_format_preserves_retail_abbreviation_enum_after_bootstrap()
                 assert(formatter:Format(90, value) == '90')
             end
             assert(C_Intl == nil)
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
 }
@@ -197,7 +246,8 @@ fn seconds_formatter_format_preserves_retail_abbreviation_enum_after_bootstrap()
 #[test]
 fn seconds_formatter_format_preserves_retail_placeholder_without_native_api() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = C_StringUtil.CreateSecondsFormatter()
         for _, seconds in ipairs({59.4,60,90,3599,3600,86400,0,-90}) do
             assert(f:Format(seconds) == tostring(seconds))
@@ -207,5 +257,7 @@ fn seconds_formatter_format_preserves_retail_placeholder_without_native_api() {
         assert(f:Format() == '0')
         assert(C_Intl == nil)
         assert(rawget(C_StringUtil, 'FormatDurationUnits') == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
