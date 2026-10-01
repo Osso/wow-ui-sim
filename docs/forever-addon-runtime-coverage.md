@@ -2,6 +2,10 @@
 
 Overall compatibility remains **unverified**. The [per-project matrix](../data/forever-addon-audit/runtime-coverage.json) covers all 269 projects in the [cached archive inventory](../data/forever-addon-audit/cached-comparisons.json), not just previously selected candidates. The earlier [comparison audit](forever-addon-comparison.md) records static evidence; it is not runtime acceptance.
 
+## Current-local evidence, separate from archive inventory
+
+Main source `255adcbde` builds unchanged and passes 36/36 bounded cases, including real current-local BugGrabber/BugSack normal-dispatch capture twice: one stored error, counter `1 → 2`, broker count `1`, red icon and minimap texture property update. All 29 local file hashes, binary and host CVar hashes remain unchanged. These are available local sources, not the historical BugSack zip; no new archive identity, 269-inventory counter credit or whole-addon acceptance follows. Independent final/default fmt/check remain parent-ledger pending; pixels, native parity and transport are unverified. Exact artifacts and diagnostics: [Forever investigation](wiki/investigations/forever-addon-comparison.md#current-local-messaging-and-error-capture--observed-green).
+
 ## Inventory — 2026-09-22
 
 All 268 successfully downloaded Forever packages exist and match their indexed sizes and SHA-256 hashes. ConsumableTracker's selected Forever file `8924598` is unavailable; its older comparison archive is not silently substituted. Missing cached dependencies remain separate blockers. No further downloads are authorized by this audit.

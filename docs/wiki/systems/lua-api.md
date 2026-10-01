@@ -32,7 +32,7 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 ### Forever outbound addon messages
 
-`client-wowforever` publishes chat senders from `c_api::registration` and the BattleNet sender from its existing namespace registrar. `c_api::addon_messages` checks types/secrets before consulting current group/guild or nested online game-account state, then appends accepted intent to the existing `SimState.message_log`. No inbound event or legacy-global replacement occurs. See [outbound message contract](../../specs/addon-messages.md) for inferred limits/result mappings, binary-string boundary and pending parent GREEN.
+`client-wowforever` publishes chat senders from `c_api::registration` and the BattleNet sender from its existing namespace registrar. `c_api::addon_messages` checks types/secrets before consulting current group/guild or nested online game-account state, then appends accepted intent to the existing `SimState.message_log`. No inbound event or legacy-global replacement occurs. See [outbound message contract](../../specs/addon-messages.md) for inferred limits/result mappings, binary-string boundary, observed main 36/36 GREEN at `255adcbde`, and pending independent parent final checks.
 
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 

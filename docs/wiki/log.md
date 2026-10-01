@@ -1,6 +1,10 @@
+## [2026-09-30] evidence | Reconcile observed messaging GREEN
+
+Updated outbound spec, [[lua-api]], [[forever-addon-comparison]], index and runtime coverage from actual main build/run ledgers and full stdout/stderr: 36/36 at unchanged `255adcbde`. Current-local 29-file capture proof only; no archive credit. Corrected MissingRequirements provenance; independent final/default fmt/check remain pending. PLAN records bounded observation, not goal closure.
+
 ## [2026-09-30] implementation | Record bounded Forever outbound messaging
 
-Updated [[lua-api]], index and [outbound contract](../specs/addon-messages.md) for three Forever-only C_* senders. Actual message-log records replace no legacy behavior; VM-authenticated secret access preserves taint. Valid RED `79bedc49e` is 9/22 pass, thirteen assertion failures of unmodeled behavior after callable namespace sender checks passed; these are not missing-method failures. The separate actual BugSack workflow's literal `MissingRequirements` metadata failure remains valid. No addon-inventory credit follows. No Cargo or GREEN claimed; parent owns integration. Binary stringView limitation and inferred local policies are explicit.
+Updated [[lua-api]], index and [outbound contract](../specs/addon-messages.md) for three Forever-only C_* senders. Actual message-log records replace no legacy behavior; VM-authenticated secret access preserves taint. Valid RED `79bedc49e` is 9/22 pass, thirteen assertion failures of unmodeled behavior after callable namespace sender checks passed; these are not missing-method failures. The separate actual BugSack workflow's `MissingRequirements` nil-symbol-access diagnostic (not `RequiresAPI` TOC metadata) remains valid. No addon-inventory credit follows. Main unchanged-source build/run artifacts now show 36/36 GREEN; independent final/default fmt/check remain parent-owned and pending. Binary stringView limitation and inferred local policies are explicit.
 
 ## [2026-09-30] implementation | Record live Cooldown formatter handoff
 

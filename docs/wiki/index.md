@@ -1,3 +1,7 @@
+## [2026-09-30] evidence | Reconcile main GREEN without inventory credit
+
+[[forever-addon-comparison#Current-local messaging and error capture — observed GREEN]] records 36/36 at unchanged `255adcbde`, including exact 29-local-file BugCapture proof. [Outbound contract](../specs/addon-messages.md) behavior checks reflect observed main GREEN; source-only guards/profile absence remain qualified. Independent final/default fmt/check await parent ledger. No archive identity or inventory-counter changes.
+
 ## [2026-09-30] implementation | Attach and consume typed Cooldown formatters
 
 [[duration-core#Cooldown countdown formatter]] records private typed attachment roots, engine-ticked renderer-only text, and separate API/render evidence. [Contract](../specs/cooldown-countdown-formatter.md) owns inferred behavior and pending gates; API GREEN does not establish render coverage.
@@ -8,7 +12,7 @@
 
 ## [2026-09-30] implementation | Add bounded Forever outbound messaging
 
-[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass): thirteen behavior assertions fail after callable namespace sender checks pass, not missing-method failures. Separate BugSack `MissingRequirements` workflow evidence remains valid; parent GREEN remains pending and no addon-inventory credit follows. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
+[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass): thirteen behavior assertions fail after callable namespace sender checks pass, not missing-method failures. Separate BugSack `MissingRequirements` workflow evidence remains valid; main GREEN is observed at `255adcbde` (36/36); independent final checks remain pending and no addon-inventory credit follows. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
 
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 

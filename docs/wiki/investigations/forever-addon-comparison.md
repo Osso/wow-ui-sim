@@ -162,15 +162,25 @@ Source proof is **1/1 passed**, exit `0`, with unchanged before/after hashes for
 
 The first current-local BugCapture test failed before its workflow: `!BugGrabber did not load any Lua files`. Persistent `trace.stderr` rejects both `BugGrabber.lua` and `locales.lua`: relative `Interface/AddOns/!BugGrabber/...` module paths are outside the absolute selected TOC root. The trace's `loaded !BugGrabber` bookkeeping marker does not prove Lua execution. An earlier explorer assertion that it was already loaded lacked observation and is rejected by these warnings.
 
-Pre-fix `resolve_addon_file_path` chose a repo-relative overlay whenever that file existed, overriding the selected TOC source. `dd77368b7` removes that implicit alternate-source choice and passes `toc.file_paths()` directly to loading; the selected-root module guard remains intact. This honors the user's NoFallbacks constraint without vendor edits. Post-fix GREEN is pending; docs test requirements remain unchecked.
+Pre-fix `resolve_addon_file_path` chose a repo-relative overlay whenever that file existed, overriding the selected TOC source. `dd77368b7` removes that implicit alternate-source choice and passes `toc.file_paths()` directly to loading; the selected-root module guard remains intact. This honors the user's NoFallbacks constraint without vendor edits. Post-fix main GREEN is now observed below; independent final acceptance remains pending.
 
 | Boundary | Observed proof | Remaining limit |
 | --- | --- | --- |
 | Cached RestrictedExecution, updated rilua pin | Build ledger revision `3e40b526b`; combined test ledger: 2 tests, 1 baseline pass / 1 loading failure, exit `101` | Improves bounded producer proof only; independent/full security acceptance unclaimed |
-| Current-local BugGrabber/BugSack | 29-file before/after identity unchanged; first test fails loading, diagnostic trace confirms root mismatch | Not an archive-release identity; no store/counter/display workflow pass |
-| Selected-TOC correction `dd77368b7` | Source diff removes existence-based substitution | Post-fix regression/workflow GREEN pending |
+| Current-local BugGrabber/BugSack | 29-file before/after identity unchanged; first test fails loading, diagnostic trace confirms root mismatch | Not an archive-release identity; subsequent bounded workflow GREEN recorded below |
+| Selected-TOC correction `dd77368b7` | Source diff removes existence-based substitution | Main bounded workflow GREEN below; independent final checks pending |
 
 No archival matrix status changes follow. Historical DisenchantHelper remains unavailable; Datamine's separate blockers remain open. Evidence directory: `/home/osso/.local/state/wow-ui-sim-proof/forever-bug-capture-2026-10-01/` (`build-ledger.json`, `test-ledger.json`, `tests.stdout`, `trace.stderr`, and local addon before/after hashes).
+
+## Current-local messaging and error capture — observed GREEN
+
+Main-owned artifacts in `/home/osso/.local/state/wow-ui-sim-proof/addon-messages-2026-10-01/` record unchanged build source `255adcbde`, build exit 0 and run **36/36 passed**, exit 0: 15 outbound model/security/state cases, seven legacy controls, twelve module cases, one cached RestrictedExecution case and one current-local BugGrabber/BugSack workflow. The selected-TOC correction now has bounded workflow GREEN, superseding the earlier loading failure, not erasing it.
+
+The real local TOCs and embedded libraries initialize through normal ADDON_LOADED/PLAYER_LOGIN dispatch. Two normal OnUpdate error dispatches store one error, increment its counter `1 → 2`, keep broker count `1`, switch broker icon to red, and update the actual minimap texture property. The intentional marker appears twice in stderr (second occurrence suppression reported); the deliberate failed-module control also emits its expected diagnostic. This is not zero-error or rendered-pixel proof.
+
+`green-ledger.json` retains exact before/after hashes for all **29 available local files**, unchanged; binary SHA-256 `6aa6c19ea007c13bad1e02b4425f6169ea3088c06d34791d03c5c4bc62202271` and shared host CVar hash are unchanged. These local sources are **not the historical BugSack zip** and establish no new archive identity or credit against the 269-project inventory. No archive matrix counters change.
+
+Earlier BugSack `MissingRequirements` reflects nil-symbol-access diagnostics, not `RequiresAPI` TOC metadata. Runtime fallback synthesizes nil-returning callables; RED's thirteen behavior assertions failed after function-type checks passed. See [outbound contract](../../specs/addon-messages.md) for the policy and proof limits. `verify-artifacts.json` is source-audit evidence predating main GREEN. Independent final acceptance/default fmt/check await the parent ledger. Binary stringView, logged nil outcomes, native parity, network delivery and rendered pixels remain unsupported or unverified.
 
 ## Sources
 
