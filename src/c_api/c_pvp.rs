@@ -1,3 +1,8 @@
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+mod active_brawl;
 #[cfg(feature = "retail-12-0-5")]
 mod brawl_info;
 #[cfg(feature = "retail-12-0-5")]
@@ -20,6 +25,11 @@ pub enum TrainingGroundKind {
 
 pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PvP")?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;
     register_training_grounds(state, ns)
 }

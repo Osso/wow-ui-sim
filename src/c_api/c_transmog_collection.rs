@@ -2,6 +2,11 @@
 
 #[cfg(feature = "retail-12-0-5")]
 mod appearance_source_info;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+mod appearance_sources;
 #[cfg(feature = "retail-12-0-5")]
 pub use appearance_source_info::AppearanceSourceInfo;
 
@@ -36,6 +41,11 @@ struct ItemTransmogInfo {
 }
 
 pub(crate) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    appearance_sources::register(state, table)?;
     for (name, handler) in [
         (
             "NewCustomSet",

@@ -7,6 +7,11 @@ pub use catalog::{OutfitCatalog, OutfitEntry};
 
 #[cfg(feature = "retail-12-0-5")]
 mod viewed_slot_info;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+mod viewed_slots;
 #[cfg(feature = "retail-12-0-5")]
 pub use viewed_slot_info::ViewedOutfitSlotInfo;
 
@@ -20,6 +25,11 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    viewed_slots::register(state, namespace)?;
     table_set_rust_fn_static(
         state,
         namespace,

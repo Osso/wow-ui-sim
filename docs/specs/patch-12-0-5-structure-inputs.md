@@ -1,6 +1,6 @@
 # Patch 12.0.5 structure inputs
 
-Three empty C API backing inputs support future publication of added structure fields. Source authority is the cached retail `Blizzard_APIDocumentationGenerated` files only: `PvpInfoDocumentation.lua` (109–115, 1676–1695), `TransmogItemsDocumentation.lua` (196–209, 1163–1177), and `TransmogOutfitInfoDocumentation.lua` (521–536, 1003–1019), under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. Fixture IDs are arbitrary test-local inputs, not production data.
+Three empty C API backing inputs publish modeled structure snapshots through bounded mainline 12.0.5+ queries. Source authority is the cached retail `Blizzard_APIDocumentationGenerated` files only: `PvpInfoDocumentation.lua` (109–115, 1676–1695), `TransmogItemsDocumentation.lua` (196–209, 1163–1177), and `TransmogOutfitInfoDocumentation.lua` (521–536, 1003–1019), under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. Fixture IDs are arbitrary test-local inputs, not production data.
 
 ## What it must do
 
@@ -20,7 +20,10 @@ Three empty C API backing inputs support future publication of added structure f
 - `src/c_api/c_pvp/brawl_info.rs`: explicit `PvpBrawlInfo` record.
 - `src/c_api/c_transmog_collection/appearance_source_info.rs`: explicit `AppearanceSourceInfo` record.
 - `src/c_api/c_transmog_outfit_info/viewed_slot_info.rs`: explicit `ViewedOutfitSlotInfo` record.
-- Existing parent modules: type reexports only; no handler or registration changes.
+- `src/c_api/c_pvp/active_brawl.rs`: `GetActiveBrawlInfo` snapshot producer.
+- `src/c_api/c_transmog_collection/appearance_sources.rs`: exact source-ID query.
+- `src/c_api/c_transmog_outfit_info/viewed_slots.rs`: exact `(slot, type, option)` query.
+- Owning parent registrations replace lazy namespace providers for only these three keys under `all(retail-12-0-5, any(profile-retail, client-ptr))`. Unrelated registrations and other-profile defaults remain unchanged.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: public type access, `active_brawl: None`, empty `transmog_appearance_sources` and `viewed_outfit_slots`, gated to `retail-12-0-5`.
 
 ## Tests asserting this spec
@@ -29,10 +32,12 @@ Three empty C API backing inputs support future publication of added structure f
 
 ## Known gaps (current cycle)
 
-- [ ] Query producers unchanged. Lazy namespace nil-returning functions are not evidence of an implemented producer or method absence. Actual behavioral RED and compilation are pending parent batch 8; no tests, builds or checks run in this slice. Intended RED: populated inputs fail table assertions; no-data arity may also fail independently.
-- [ ] Parent must observe actual RED before changing runtime producers. Required-argument validation tests remain deferred: schema establishes requiredness, not exact native error/coercion behavior.
+- [x] Actual parent batch-8 behavioral RED at `693883c77003589b24b9a555141ea51a3e71e1e9`: 0/9 pass, 9/9 fail. `/tmp/patch-12.0.5-batch8-new-model-runs.json` binds the successful-build binary SHA-256 `33fb7f19a888209821fa80417201d1b5bc6a6f2899377813335df62b3e671924`; `/tmp/patch-12.0.5-batch8-new-model-red-2.log` records populated table failures before field assertions, separate transmog zero-return arity failures, and brawl populated/removal boundary failure. Empty brawl one-nil control alone already passed.
+- [x] Implemented three producers after that RED: all declared fields, optional omission, fresh tables/map array, exact integer keys, one brawl nil versus zero transmog results, authenticated secret unwrap per transmog selector before numeric decoding. No inferred records or booleans.
+- [ ] GREEN and gates pending parent execution; no Cargo, tests, checks, readability, or broad gate run in this implementation slice. Implementation is not native parity proof.
+- [ ] Required-argument validation tests remain deferred: schema establishes requiredness, not exact native error/coercion behavior. Current numeric decoding rejects missing/non-number, non-finite, fractional and out-of-storage-range selectors rather than truncating to a different key; native validation/error wording remains an inference. Enum ranges are not validated.
 - [ ] Future native probes: populated/empty return arity, all field values and optional omissions, enum ranges, snapshot mutation and exact secret-caller behavior. Cached shapes do not prove these simulator policies.
 
 ## Out of scope
 
-Producer handlers/registrations, production game data, events or queue policy, outfit selection/editing, argument coercion heuristics, vendor changes, generic security changes, major-faction/GC/DamageMeter/RecentAllies/housing work, build/check/test/push/deploy execution.
+SimState/schema changes, tests weakening, production game data, events or queue policy, outfit selection/editing, argument coercion heuristics, vendor changes, generic security changes, major-faction/GC/DamageMeter/RecentAllies/housing work, Cargo/build/check/test/readability/broad-gate/push/deploy execution.
