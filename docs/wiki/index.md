@@ -6,6 +6,10 @@
 
 [Indexed argument proof](../specs/unit-aura-index-secret-arguments.md#reconciled-batch42-parent-green--2026-10-01) records producer `8e04eaa335b4df36b213c92842ef4242d81d2025`, unchanged fixtures `414f87346`, compile0/238.27s, **12 indexed + 14 filter + 7 shape + 29 aura + 18 corrected admin = 80 unique PASS**, startup0 `[]`, exact artifacts/hashes. Zero-test `admin_buff::` excluded. Independent Rust/security/readability gates and parent acceptance pending; exact373/374/384/385/389/390 uncredited, accounting/PLAN unchanged. Native access/conditional output secrecy excluded; strict representations inferred, selection/DTO/store and earlier profiles retained.
 
+## [2026-10-01] implementation | Add bounded aura application display count producer
+
+[[lua-api#Retail 12.0.5 aura application display count]] links [display-count contract](../specs/aura-application-display-count.md): sole epoch-gated C API producer, authenticated unit/ID and independently NeverSecret thresholds, unchanged blocked-inclusive typed count lookup. Saved parent RED14FAIL/0PASS; producer GREEN/controls/startup/independent acceptance pending. Exact367–369 remain uncredited; native permission/output secrecy and accounting excluded.
+
 ## [2026-10-01] implementation | Add bounded indexed aura argument producers
 
 [[lua-api#Retail 12.0.5 indexed aura arguments]] links [indexed argument contract](../specs/unit-aura-index-secret-arguments.md): three C API-owned 12.0.5 boundaries authenticate documented arguments before unchanged indexed selection/DTO helper; original providers are earlier-epoch-only. Contract records corrected batch42 compiled RED, six controls PASS/six genuine FAIL, inventory and pending parent GREEN/gates. Native access/output policy and six-row accounting remain excluded; tests/store/provider state unchanged.

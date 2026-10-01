@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura application display count producer
+
+Updated [[lua-api#Retail 12.0.5 aura application display count]], index and [contract](../specs/aura-application-display-count.md). Sole `retail-12-0-5` count producer authenticates unit/ID through pinned VM and rejects actual secret thresholds independently of caller security; validates supplied positions before unchanged blocked-inclusive typed lookup. Saved parent RED14FAIL/0PASS; formatting only here, parent GREEN/controls/startup/independent gates pending. Fixtures/model/DTO/provider state and unowned dirty aura_duration.rs preserved. No row/accounting/native credit.
+
 ## [2026-10-01] evidence | Accept exact indexed aura argument rows
 
 [Independent bounded acceptance](../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) records accepted indexed scope and unresolved global formatting failure. Updated exact six source rows only; retained IDs/hashes/prior capabilities/356 unrelated rows. Earlier GREEN-only pending checkpoint superseded, not whole-page/native closure.
