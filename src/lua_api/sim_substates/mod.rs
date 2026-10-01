@@ -257,6 +257,9 @@ impl PetBattlePet {
 /// retail's modern shape unless a test seeds the struct.
 #[derive(Debug, Default, Clone)]
 pub struct PetState {
+    /// Independent summoned-pet melee haste percentage; None means no stat input.
+    #[cfg(feature = "client-retail")]
+    pub melee_haste_pct: Option<f64>,
     /// Current summoned pet portrait texture. Drives `GetPetIcon`; `None`
     /// represents no summoned pet.
     pub icon: Option<String>,

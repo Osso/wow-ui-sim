@@ -25,12 +25,15 @@ pub struct CharacterStats {
     pub ranged_hit_modifier_pct: f64,
     #[cfg(feature = "client-wowforever")]
     pub armor_penetration: f64,
-    #[cfg(feature = "client-wowforever")]
+    /// Explicit penetration amount; unconfigured zero is a simulator guess.
     pub spell_penetration: f64,
-    #[cfg(feature = "client-wowforever")]
+    /// Explicit conversion percentage, not converted attack power.
     pub spell_power_to_attack_power: f64,
-    #[cfg(feature = "client-wowforever")]
+    /// Explicit reverse conversion percentage, not converted spell power.
     pub attack_power_to_spell_power: f64,
+    /// Explicit durability-loss reduction percentage; default zero is a guess.
+    #[cfg(feature = "client-retail")]
+    pub sturdiness_pct: f64,
     #[cfg(feature = "client-wowforever")]
     pub quiver_haste_pct: f64,
     pub armor: i32,
@@ -116,6 +119,34 @@ impl CharacterStats {
     }
 }
 
+/// Explicit per-second regeneration inputs; missing pools use zero by simulator policy.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone, Copy, Default)]
+pub struct PowerRegen {
+    pub base: f64,
+    pub casting: f64,
+}
+
+/// Effective and base AP in the documented PlayerEffectiveAttackPower return order.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone, Copy)]
+pub struct EffectiveAttackPower {
+    pub main_hand: f64,
+    pub off_hand: f64,
+    pub ranged: f64,
+    pub base: f64,
+    pub base_ranged: f64,
+}
+
+/// Independent weapon contributions; these are not total/effective attack power.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone, Copy, Default)]
+pub struct WeaponAttackPower {
+    pub main_hand: f64,
+    pub off_hand: f64,
+    pub ranged: f64,
+}
+
 /// Player character state: identity, combat, power, health, buffs, spec.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct SecondaryPowerState {
@@ -194,6 +225,12 @@ pub struct PlayerState {
     pub power_type: i32,
     /// Secondary power pools keyed by Enum.PowerType value (e.g. Holy Power).
     pub secondary_powers: HashMap<i32, SecondaryPowerState>,
+    /// Explicit regen pairs indexed by power type; no mana/player-stat alias.
+    #[cfg(feature = "client-retail")]
+    pub power_regen: HashMap<i32, PowerRegen>,
+    /// None returns no values, a simulator guess for unavailable effective AP.
+    #[cfg(feature = "client-retail")]
+    pub effective_attack_power: Option<EffectiveAttackPower>,
     /// Forever simulator policy: target owning the last combo-point power input.
     #[cfg(feature = "client-wowforever")]
     pub combo_points_target_guid: Option<String>,
