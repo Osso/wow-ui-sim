@@ -428,6 +428,29 @@
       "ledger": "/tmp/patch-12.0.5-proof-ledger.md",
       "independent_ledger": "/tmp/patch-12.0.5-damage-meter-followup-proof.md",
       "gate_scope": "Default and historical Retail 12.0.0 each 9 PASS; prior 17 controls original narrow proof only. Snapshot default fmt/check 0. Parent startup 0 [] saved, not independent. No combat/native/all-profile/full-addon UI acceptance."
+    },
+    {
+      "id": "housing-catalog-variants",
+      "symbols": [
+        "C_HousingCatalog.GetCatalogEntryInfo",
+        "C_HousingCatalog.GetCatalogEntryVariantInfo",
+        "C_HousingCatalog.GetAllVariantInfosForEntry",
+        "HousingCatalogSearcher.GetAllSearchItems",
+        "HousingCatalogSearcher.GetCatalogSearchResults"
+      ],
+      "scope": "Empty-default explicit compound variant inputs, separate filter-free source/results snapshots, bounded base recordID/entryType and absent entryID, explicit dyeColorName. Partial: filtering, full DTO, native security, count/events/placement and all-profile execution not accepted. Batch19 count changes excluded.",
+      "spec": "docs/specs/housing-catalog-variants.md",
+      "tests": [
+        "tests/housing_catalog_variants.rs",
+        "tests/housing_catalog.rs"
+      ],
+      "implementation": "76f2ac88a + 45f0d8b21",
+      "compiled_revision": "157d15cef796ccd11b3e6c04f80b57d0700728cb",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch18-guard-fixture-run.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-variants-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch18-guard-fixture-startup-run.json",
+      "gate_scope": "Saved 14 variants + 11 controls PASS; independent default fmt/check exit 0 for nine hash-bound files at 157d15cef, not later checkout. Parent startup exit 0 [] in 4.86s, not verifier-run. Host-installed guard test only; no retail security registration/native parity or exhaustive GC proof."
     }
   ],
   "source_rows": [
@@ -2132,27 +2155,35 @@
     },
     {
       "source_id": "scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "widgets-PlayerModel-SetUnit-534",
@@ -2554,15 +2585,19 @@
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-648",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-649",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-650",
@@ -2578,9 +2613,11 @@
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-653",
@@ -2626,9 +2663,11 @@
     },
     {
       "source_id": "structures-HousingDecorDyeSlot-663",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-variants"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch18 bounded independent PASS at 157d15cef: saved 14 variants + 11 controls, default fmt/check 0. Exact output/field slice only; filtering, full DTO and native security remain partial. Parent startup 0 [] is saved evidence, not verifier-run. Later batch19 count changes excluded."
     },
     {
       "source_id": "structures-MajorFactionRenownRewardInfo-665",

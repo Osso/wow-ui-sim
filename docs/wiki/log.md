@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile bounded batch18 variants
+
+[Variant contract](../specs/housing-catalog-variants.md#reconciled-bounded-proof--2026-10-01) owns independent saved 14 variants + 11 controls PASS, default fmt/check 0 at `157d15cef`, and parent startup 0 `[]` (not verifier-run). Eight exact search/base/dye rows gain bounded coverage; 362 IDs/hash bindings retained. Categories: 312 audit-pending + 36 bounded-coverage + 14 partial-development-green = 362. Filtering/full DTO/native security remain partial. Batch19 count proof/docs remain separate and pending; its spec untouched. No production/PLAN/build/delegation/push.
+
 ## [2026-10-01] evidence | Reconcile bounded housing parent GREEN
 
 [Variant proof](../specs/housing-catalog-variants.md#proof-ledger-and-producer-gate) records repaired parent `157d15cef` compile and 14 variants PASS, four cart + four free-place + one customize + two decor controls PASS, saved startup exit 0 `[]`, and exact artifact metadata. Initial 13/14 came from retail no-op table security; host test-local VM registration corrected the fixture without production changes. Independent report 178 and accounting acceptance pending. All 362 IDs and unrelated DamageMeter accounting preserved; docs audit ran no builds/tests/delegation/push.

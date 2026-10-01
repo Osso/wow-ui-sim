@@ -1,6 +1,6 @@
 # Housing catalog variants
 
-Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. Empty-backed producers now replace overlapping temporary catalog/search outputs after actual parent RED 0/11 at input `05ca7dff0`. Producer `76f2ac88a`; follow-up restricts registration visibility to its owning `c_housing` module so the re-export is legal. Parent compilation and repaired bounded GREEN passed at `157d15cef`; saved startup exits 0 with `[]`. Independent report 178 remains pending; accounting acceptance is not awarded. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — parent GREEN, independent pending) record integration boundaries.
+Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. Empty-backed producers now replace overlapping temporary catalog/search outputs after actual parent RED 0/11 at input `05ca7dff0`. Producer `76f2ac88a`; follow-up restricts registration visibility to its owning `c_housing` module so the re-export is legal. Parent compilation and repaired bounded GREEN passed at `157d15cef`; saved startup exits 0 with `[]`. Independent report 178 remains pending; accounting acceptance is not awarded. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variants — bounded independent PASS) record integration boundaries.
 
 ## What it must do
 
@@ -18,13 +18,13 @@ Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patc
 ### Security
 
 - [ ] Ordinary selectors remain callable from tainted addon code without clearing caller taint, consistent with cached `SecretArguments = "AllowedWhenUntainted"` on the three info/list queries.
-- [ ] Nested secret selector fields reject safely in both secure and tainted callers until access is modeled. Do not unwrap secrets, clear taint or bypass secured-table access. Parent host-secret and repaired host-installed guarded-table controls passed; independent report 178 remains pending. This conservative simulator limit is stricter than `AllowedWhenUntainted`, not native security parity. Selectors currently require ordinary tables with raw integer fields; native coercion, metatable lookup and numeric ranges remain unverified.
+- [ ] Nested secret selector fields reject safely in both secure and tainted callers until access is modeled. Do not unwrap secrets, clear taint or bypass secured-table access. Parent host-secret and repaired host-installed guarded-table controls passed; bounded independent report accepts only `157d15cef`. This conservative simulator limit is stricter than `AllowedWhenUntainted`, not native security parity. Selectors currently require ordinary tables with raw integer fields; native coercion, metatable lookup and numeric ranges remain unverified.
 
 The two no-argument search getters have no `SecretArguments` annotation in the inspected cache. This is not proof that returned identities are always public in native WoW.
 
 ## How it works
 
-- [Housing ownership and pending proof](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — parent GREEN, independent pending).
+- [Housing ownership and bounded proof](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variants — bounded independent PASS).
 - [Independent existing free-place contract](housing-free-place-state.md).
 
 ## Implementation inventory
@@ -37,7 +37,7 @@ The two no-argument search getters have no `SecretArguments` annotation in the i
 
 ## Tests asserting this spec
 
-Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Parent compiled producer `76f2ac88a` plus visibility fix `45f0d8b21` successfully, initially observing **13 passed, 1 failed** across fourteen variant fixtures. The failure was the guarded-selector fixture described below, corrected without production changes at `157d15cef`. Parent repaired run passes **14/14 variants**, with **4 cart + 4 free-place + 1 customize + 2 decor controls PASS**; saved startup exits **0**, output **[]**. Earlier zero-match filters provide no evidence; the later actual controls do. Independent report **178 pending**; no accounting acceptance awarded. No build/check/delegation/push authorized in this docs audit. Contract checkboxes remain acceptance-pending, not implementation absence.
+Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Parent compiled producer `76f2ac88a` plus visibility fix `45f0d8b21` successfully, initially observing **13 passed, 1 failed** across fourteen variant fixtures. The failure was the guarded-selector fixture described below, corrected without production changes at `157d15cef`. Parent repaired run passes **14/14 variants**, with **4 cart + 4 free-place + 1 customize + 2 decor controls PASS**; saved startup exits **0**, output **[]**. Earlier zero-match filters provide no evidence; the later actual controls do. Independent bounded acceptance is recorded below. No new build/check/delegation/push in this docs audit. Checkboxes retain unresolved native/full-contract requirements, not implementation absence.
 
 | Contract | Cases |
 |---|---|
@@ -73,11 +73,19 @@ Retail `src/ptr/compat_bootstrap.lua` defines `settablesecurity` as a no-op. `sr
 
 Pinned rilua `6044544b960cd68b4b0c58bb3373412757c2caee` sets option 0's table flag only through real `set_table_security`; `check_table_access` rejects flagged tables whenever any live call frame is tainted, without a table-owner exception. Catalog `read_selector` already invokes that check before its raw integer-field reads. Neither production code nor the guard is changed.
 
-The repaired test explicitly registers pinned VM table security in its own environment. Named assertions require secure source indexing/rawget and all three catalog queries to succeed, tainted source indexing/rawget and each query to reject with the table-access error, caller taint to persist after rejection, and secure access/source data to remain intact after the addon returns. Lua `rawget` itself invokes the VM guard; no bypass reads are added. This proves only host-installed guarded selectors, not retail registration, native policy or Forever parity. Revised fixture compilation/execution passed in the saved parent run at `157d15cef`; independent report 178 remains pending. Repair formatting: `rustfmt --edition 2024 --config skip_children=true tests/housing_catalog_variants.rs` exited 0; only this changed Rust file is covered. No builds, checks or tests ran during the fixture edit itself; later parent build/run evidence is recorded above.
+The repaired test explicitly registers pinned VM table security in its own environment. Named assertions require secure source indexing/rawget and all three catalog queries to succeed, tainted source indexing/rawget and each query to reject with the table-access error, caller taint to persist after rejection, and secure access/source data to remain intact after the addon returns. Lua `rawget` itself invokes the VM guard; no bypass reads are added. This proves only host-installed guarded selectors, not retail registration, native policy or Forever parity. Revised fixture compilation/execution passed in the saved parent run at `157d15cef`; bounded independent report accepts only `157d15cef`. Repair formatting: `rustfmt --edition 2024 --config skip_children=true tests/housing_catalog_variants.rs` exited 0; only this changed Rust file is covered. No builds, checks or tests ran during the fixture edit itself; later parent build/run evidence is recorded above.
+
+### Reconciled bounded proof — 2026-10-01
+
+[Independent report](/tmp/patch-12.0.5-housing-variants-independent-proof.md) accepts saved **14 variants + 11 controls PASS**, with independent default fmt/check **exit 0**, only for nine hash-bound code/test files at `157d15cef796ccd11b3e6c04f80b57d0700728cb`. Fmt 12.72s; check 32.18s, no warning/error output. Later batch19 destroyable-count inputs/fixtures and current whole checkout are excluded. No new test/build/check was run for this reconciliation.
+
+Saved parent startup `/tmp/patch-12.0.5-batch18-guard-fixture-startup-run.json`: exit 0, 4.861724s, output `[]`; binary SHA-256 `7e673f2a0365ed5cc2e3127d26cd38f033844005d61e3cca674c185d79843578`. Not verifier-run. Earlier cart evidence remains valid because its test/producer/temporary-provider diff from `45f0d8b21` to `157d15cef` is empty. Zero-match filters and deprecated-wrapper source inspection are not runtime GREEN.
+
+Host-installed guard success/rejection is bounded simulator proof, not retail security registration or native AllowedWhenUntainted parity. Rooting/profile wiring are source-inspected, not exhaustive GC/all-profile execution. Filtering, full DTO, native security, count/events/placement remain open. Coverage `source_sha256` `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed` binds the retained register; the text hash below remains distinct.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent producer compilation, repaired 14/14 grouped GREEN and saved zero-error startup passed; independent report 178 and accounting acceptance remain pending. Actual prerequisite RED and historical 13/14 fixture failure are retained above.
+- [ ] Parent producer compilation, repaired 14/14 grouped GREEN and saved zero-error startup passed; bounded independent acceptance is recorded below; later batch19 count work awaits separate verifier and docs reconciliation. Actual prerequisite RED and historical 13/14 fixture failure are retained above.
 - [ ] Distinct source/results are implemented; real filtering, sorting, async updates and owned-instance count semantics remain unmodeled. Existing filter method names do not establish matching behavior.
 - [ ] Complete base metadata/aggregates and secure access to secret selectors are missing. Strict public raw integer selectors and conservative secret rejection are simulator limits, not native range/coercion/access claims.
 - [ ] Overlapping variant/base seed assertions were replaced by explicit fixtures at `05ca7dff0`; coverage is retained, not deleted. Historical deprecated tests target the excluded ByRecordID wrapper; current retail cache no longer ships that addon. No other test references the replaced seeded query outputs. Customize selection remains a separate temporary fixture.
@@ -88,17 +96,17 @@ The repaired test explicitly registers pinned VM table security in its own envir
 - Destroy mutation, destroyable counts, aggregate/search count policies, storage events and placement selection: source deltas establish types, not mutation/emission/count/placement policy.
 - All search filters, category/subcategory ownership predicates and sorting: intentionally filter-free fixtures; no invented matching semantics.
 - Storefront/cart/exterior/customize-selection behavior and legacy wrapper migration: unrelated owners retained, not declared authoritative catalog data.
-- Native parity, loaded UI acceptance, broad checks/builds, delegation, push and source-row completion: not authorized or established in this cycle.
+- Native parity, loaded UI acceptance, new broad checks/builds, delegation, push and whole-row completion: not authorized or established in this reconciliation.
 
 ## Source and accounting boundary
 
-Retained source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`; [362-row register](../../data/patch-api/sources/12.0.5-register.json) and [coverage register](../../data/patch-api/sources/12.0.5-page-coverage.json) are unchanged. This slice changes no register statuses/IDs and awards no row credit; concurrent unrelated audit commits are outside its proof scope.
+Retained source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`; [362-row register](../../data/patch-api/sources/12.0.5-register.json) is unchanged; [coverage register](../../data/patch-api/sources/12.0.5-page-coverage.json) links only eight bounded rows below. All 362 IDs and existing hash bindings remain unchanged. Coverage categories: audit-pending 320 → 312, bounded-coverage 28 → 36, partial-development-green 14 → 14; total 362 before/after. Register chronology/classification counts unchanged. No whole-row/catalog closure; batch19 count work remains separate and pending verifier/docs reconciliation.
 
 | Exact accounting IDs | This slice |
 |---|---|
-| `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524`, `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528` | Producer implemented after RED; Parent full-ID GREEN; independent acceptance pending, not filter proof |
-| `structures-HousingCatalogEntryInfo-648`, `structures-HousingCatalogEntryInfo-649`, `structures-HousingCatalogEntryInfo-652` | Bounded producer implemented after RED; Parent GREEN; independent acceptance pending, no full entry-info claim |
-| `structures-HousingDecorDyeSlot-663` | Explicit `dyeColorName` publication parent GREEN; independent acceptance pending |
+| `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524`, `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528` | Bounded independent full-ID output rename/type coverage; distinct filter-free source/results only, not filter proof |
+| `structures-HousingCatalogEntryInfo-648`, `structures-HousingCatalogEntryInfo-649`, `structures-HousingCatalogEntryInfo-652` | Bounded independent recordID/entryType publication and entryID absence; no full entry-info claim |
+| `structures-HousingDecorDyeSlot-663` | Bounded independent explicit `dyeColorName` publication |
 | `structures-HousingCatalogEntryID-645`, `structures-HousingCatalogEntryID-646` | Base input omits legacy subtype fields; no runtime legacy-field absence test/credit |
 | `structures-HousingCatalogCategoryInfo-643`, `structures-HousingCatalogSubcategoryInfo-659`, `structures-HousingCategorySearchInfo-661` | **Exact filter/ownership accounting IDs excluded**; renamed predicates/search input remain unresolved |
 | `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284`, `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` | Removed arguments outside scope |
