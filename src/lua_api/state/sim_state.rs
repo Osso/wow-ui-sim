@@ -114,6 +114,9 @@ pub struct SimState {
     pub barber_shop: BarberShopState,
     pub major_factions: HashMap<i64, MajorFactionData>,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
+    /// Explicit pair-keyed reward inputs only; no fabricated default rows.
+    pub major_faction_renown_rewards:
+        HashMap<(i64, i32), Vec<crate::c_api::c_major_factions::RenownRewardInfo>>,
     pub account_wide_reputation_factions: HashSet<i64>,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
     pub transmog_outfit_locks: HashSet<i64>,

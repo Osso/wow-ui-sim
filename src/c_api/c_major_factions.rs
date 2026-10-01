@@ -13,6 +13,9 @@
 //!   matching vec. The mixin uses the **last** entry's `level` to clamp the
 //!   bar via `:GetMaxLevel()`. An unknown id yields an empty sequence.
 
+mod renown_rewards;
+pub use renown_rewards::RenownRewardInfo;
+
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::methods::{
     borrow_state, call_function_state, create_string, create_table, create_table_with_fields,

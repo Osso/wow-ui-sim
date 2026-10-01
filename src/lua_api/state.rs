@@ -130,6 +130,7 @@ macro_rules! build_empty_sim_state {
             barber_shop: BarberShopState::default(),
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
+            major_faction_renown_rewards: HashMap::new(),
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
             transmog_outfit_locks: HashSet::new(),
