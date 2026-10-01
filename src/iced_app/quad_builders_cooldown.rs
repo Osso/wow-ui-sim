@@ -168,26 +168,17 @@ pub(super) fn emit_cooldown_countdown_text(
 }
 
 fn cooldown_remaining_seconds(f: &crate::widget::Frame, elapsed_secs: f64) -> Option<f64> {
-    if f.cooldown_hide_countdown || f.cooldown_duration <= 0.0 {
-        return None;
-    }
-    let remaining = (f.cooldown_duration - cooldown_elapsed_since_start(f, elapsed_secs)).max(0.0);
-    if remaining <= 0.0 || f.cooldown_display_duration_ms < f.cooldown_min_countdown_duration_ms {
-        return None;
-    }
-    Some(remaining)
+    f.cooldown_remaining_seconds(elapsed_secs)
 }
 
 fn cooldown_elapsed_since_start(f: &crate::widget::Frame, elapsed_secs: f64) -> f64 {
-    let mod_rate = if f.cooldown_mod_rate > 0.0 {
-        f.cooldown_mod_rate
-    } else {
-        1.0
-    };
-    (elapsed_secs - f.cooldown_start) * mod_rate
+    f.cooldown_elapsed_since_start(elapsed_secs)
 }
 
 pub(super) fn cooldown_countdown_text(f: &crate::widget::Frame, remaining: f64) -> Option<String> {
+    if f.cooldown_has_countdown_formatter {
+        return f.cooldown_formatted_countdown_text.clone();
+    }
     let threshold = f.cooldown_countdown_abbrev_threshold_seconds;
     if f.cooldown_use_aura_display_time {
         return Some(format!("{}", remaining.ceil() as i64));

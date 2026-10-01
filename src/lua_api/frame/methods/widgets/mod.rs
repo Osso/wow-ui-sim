@@ -11,6 +11,8 @@
 mod browser;
 mod checkout;
 mod cooldown;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use cooldown::tick_countdown_formatters;
 mod editbox;
 pub mod message_frame;
 mod model;

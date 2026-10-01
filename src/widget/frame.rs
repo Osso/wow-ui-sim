@@ -504,6 +504,8 @@ pub struct Frame {
     pub cooldown_countdown_font_string_id: Option<u64>,
     /// Whether private Lua registry storage holds a live countdown formatter.
     pub cooldown_has_countdown_formatter: bool,
+    /// Trusted renderer-only text; never assigned to Lua-readable child text.
+    pub cooldown_formatted_countdown_text: Option<String>,
     /// Whether cooldown is paused.
     pub cooldown_paused: bool,
 
@@ -581,6 +583,29 @@ impl Default for Frame {
 }
 
 impl Frame {
+    pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {
+        let mod_rate = if self.cooldown_mod_rate > 0.0 {
+            self.cooldown_mod_rate
+        } else {
+            1.0
+        };
+        (elapsed_secs - self.cooldown_start) * mod_rate
+    }
+
+    pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {
+        if self.cooldown_hide_countdown || self.cooldown_duration <= 0.0 {
+            return None;
+        }
+        let remaining =
+            (self.cooldown_duration - self.cooldown_elapsed_since_start(elapsed_secs)).max(0.0);
+        if remaining <= 0.0
+            || self.cooldown_display_duration_ms < self.cooldown_min_countdown_duration_ms
+        {
+            return None;
+        }
+        Some(remaining)
+    }
+
     pub(crate) fn editbox_selection(&self) -> Option<std::ops::Range<usize>> {
         self.editbox_highlight_range
             .and_then(|(start, end)| (start != end).then(|| start as usize..end as usize))

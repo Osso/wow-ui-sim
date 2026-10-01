@@ -261,6 +261,7 @@ macro_rules! frame_defaults {
             cooldown_tex_coord_range: None,
             cooldown_countdown_font_string_id: None,
             cooldown_has_countdown_formatter: false,
+            cooldown_formatted_countdown_text: None,
             cooldown_paused: false,
 
             // Line

@@ -1,7 +1,7 @@
 //! rilua-backed OnUpdate bridge.
 
 use super::state::SimState;
-#[cfg(feature = "player-cast-durations")]
+#[cfg(any(feature = "player-cast-durations", feature = "retail-12-0-5"))]
 use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -64,6 +64,9 @@ pub(crate) fn fire(
     let started = Instant::now();
     fire_on_post_update_handlers(env, &frame_ids, elapsed)?;
     timings.on_post_update = started.elapsed();
+
+    #[cfg(feature = "retail-12-0-5")]
+    super::frame::methods::widgets::tick_countdown_formatters(env.rilua_mut().state_mut())?;
 
     #[cfg(feature = "retail-12-1-5")]
     crate::c_api::c_encounter_timeline::end_tick(env.rilua_mut().state_mut())?;

@@ -129,8 +129,10 @@ fn configured_renderer_preserves_hide_minimum_and_expiry_gates() {
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
     env.exec("cooldown:SetHideCountdownNumbers(true)").unwrap();
     assert_eq!(tick_at(&env, 1.25), None);
-    env.exec("cooldown:SetHideCountdownNumbers(false); cooldown:SetMinimumCountdownDuration(11000)")
-        .unwrap();
+    env.exec(
+        "cooldown:SetHideCountdownNumbers(false); cooldown:SetMinimumCountdownDuration(11000)",
+    )
+    .unwrap();
     assert_eq!(tick_at(&env, 1.25), None);
     env.exec("cooldown:SetMinimumCountdownDuration(0)").unwrap();
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
@@ -166,6 +168,16 @@ fn configured_renderer_ignores_public_frame_formatter_callbacks_for_secret_timin
         formatter = C_StringUtil.CreateSecondsFormatter()
         formatter:SetDefaultAbbreviation(2)
         cooldown:SetCountdownFormatter(formatter)
+        observed = nil
+        local function curve(_, seconds)
+            observed = seconds
+            assert(issecretvalue(seconds), 'configured curve received decoded cooldown timing')
+            assert(not issecure(), 'engine must not clear configured curve taint')
+            assert(not pcall(secretunwrap, seconds), 'tainted curve must not decode timing')
+            return 0
+        end
+        debug.setobjecttaint(curve, 'CooldownCurveProbe')
+        formatter:SetMaxIntervalCurve({Evaluate = curve})
         local duration = C_DurationUtil.CreateDuration()
         duration:SetTimeFromStart(secretwrap(0), secretwrap(10))
         cooldown:SetCooldownFromDurationObject(duration)
@@ -181,5 +193,6 @@ fn configured_renderer_ignores_public_frame_formatter_callbacks_for_secret_timin
     "#,
     );
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
-    env.exec("assert(calls == 0 and issecure())").unwrap();
+    env.exec("assert(calls == 0 and issecretvalue(observed) and issecure()); assert(cooldown:GetCountdownFontString():GetText() == nil)")
+        .unwrap();
 }

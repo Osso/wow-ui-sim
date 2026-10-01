@@ -27,18 +27,22 @@
 ## Implementation inventory
 
 - `src/lua_api/frame/methods/widgets/cooldown.rs` — setter/getter, validation, private per-frame GC roots.
+- `src/lua_api/frame/methods/widgets/cooldown/countdown_formatter.rs` — typed tick dispatch into renderer-only strings; failed formatting reports an error and suppresses configured output, never substitutes default/stale text.
+- `src/lua_api/on_update.rs` — configured-only dispatch after frame update handlers.
+- `src/iced_app/quad_builders_cooldown.rs` — consumes configured text cache through the existing countdown gates, retaining default policy only when no formatter is attached.
 - `src/widget/frame.rs`, `src/widget/frame_defaults.rs` — live attachment and default state.
 - `src/lua_api/globals/lua_duration_object/formatting.rs` — shared authenticated formatter identification and typed dispatch.
 
 ## Tests asserting this spec
 
 - `tests/cooldown_countdown_formatter.rs` — eight public configuration cases, RED at `e0a46d691` in `/tmp/patch-12.0.5-batch5-cooldown-formatter-red.log`.
-- `src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs` — seven real engine tick → library countdown text cases; renderer RED execution pending. These assert text selection, not GPU glyph rasterization.
+- `src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs` — seven real engine tick → library countdown text cases. Actual RED at `5cfb08c4e`: `/tmp/patch-12.0.5-batch6-cooldown-render-red.log`; each fails on hardcoded default text instead of configured strings. Later secret-curve assertions strengthen the existing case without changing formatter implementation. These assert text selection, not GPU glyph rasterization.
 
 ## Known gaps (current cycle)
 
-- [ ] Configuration GREEN awaits parent's batched Cargo run.
-- [ ] Dynamic library rendering tests must run RED before implementing the consumer.
+- [ ] Parent's current-revision GREEN and final integration gates remain pending. Public configuration development GREEN is 8/8 at `eac08bda3`: `/tmp/patch-12.0.5-batch6-cooldown-api-green.log`.
+- [ ] Library renderer GREEN remains pending after the actual seven-case RED. The secret-curve strengthening has no separate pre-consumer RED execution.
+- [ ] Child FontString `GetText` consistency is not modeled: configured secret-derived strings remain trusted Rust renderer data, not plaintext Lua-readable child text.
 
 ## Out of scope
 

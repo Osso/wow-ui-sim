@@ -1,5 +1,10 @@
 //! Cooldown widget methods.
 
+#[cfg(feature = "retail-12-0-5")]
+mod countdown_formatter;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use countdown_formatter::tick_countdown_formatters;
+
 use super::shared::{animation_group_id_for_frame, opt_string, val_to_bool, val_to_f64};
 use crate::lua_api::frame::methods::secret_origin::{require_readable, require_timing_readable};
 use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
@@ -37,6 +42,7 @@ fn set_countdown_formatter(state: &mut LuaState) -> LuaResult<u32> {
     table_set(state, roots, &id.to_string(), formatter);
     if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut_visual(id) {
         frame.cooldown_has_countdown_formatter = formatter != Val::Nil;
+        frame.cooldown_formatted_countdown_text = None;
     }
     Ok(0)
 }
