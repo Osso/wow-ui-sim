@@ -1,3 +1,7 @@
+## [2026-09-30] implementation | Stage explicit charge model and zero-span fixtures
+
+Added [[spell-charge-state]] and [charge contract](../specs/spell-charge-state.md), recording public map/clock/mapping paths and the lazy nil spell-duration provider. `75434f23d` stages concrete active/max and shared zero-span tests; existing duration-core expectations are epoch-aware. Initial `e0a46d691` RED is 1/4 pass. Parent owns concrete RED/GREEN; producers are not yet changed. No Cargo or native semantics claim.
+
 ## [2026-09-30] implementation | Record bounded cooldown ignoreGCD selection
 
 Updated [[duration-core]] and index with duration-only shared selection and the retail-gated [spellbook duration contract](../specs/spellbook-cooldown-duration.md). Existing player bank 0 resolves real slots; unsupported banks/slots return nil. True individual-only and omitted/false later-end selection are simulator inferences from the source-named argument, not native evidence. Actual grouped RED at `9a50d8a5c` is 0/6 in `/tmp/patch-12.0.5-batch4-ignore-gcd-red.log`; parent owns GREEN and older-profile checks. No Cargo, delegation, vendor changes, secrecy bypass, fabricated pet/macro mappings, push or deploy.
