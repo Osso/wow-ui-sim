@@ -238,6 +238,13 @@ fn configured_renderer_ignores_public_frame_formatter_callbacks_for_secret_timin
     "#,
     );
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
-    env.exec("assert(calls == 0 and issecretvalue(observed) and issecure()); assert(cooldown:GetCountdownFontString():GetText() == nil)")
-        .unwrap();
+    env.exec(
+        r#"
+        assert(issecure(), 'fresh host entry must be secure before reading callback observations')
+        assert(calls == 0 and issecretvalue(observed))
+        assert(not issecure(), 'reading callback-written observation must retain addon taint')
+        assert(cooldown:GetCountdownFontString():GetText() == nil)
+        "#,
+    )
+    .unwrap();
 }
