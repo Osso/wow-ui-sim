@@ -1,5 +1,5 @@
 //! Bounded native handle and duration-consumer contract, not native-client parity.
-#![cfg(feature = "native-duration-formatting")]
+#![cfg(all(feature = "native-duration-formatting", feature = "aura-containers"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

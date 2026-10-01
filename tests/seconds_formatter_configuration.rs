@@ -37,12 +37,20 @@ fn seconds_formatter_whitespace_modes_preserve_numeric_configuration() {
 fn seconds_formatter_older_profiles_keep_whitespace_publication_unchanged() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
-        r#"
+        &r#"
         assert(Enum.SecondsFormatterIntervalWhitespace == nil)
         local formatter = C_StringUtil.CreateSecondsFormatter()
         assert(formatter.SetStripIntervalWhitespace == nil)
-        assert(formatter:Format(90) == '90')
-        "#,
+        assert(formatter:Format(90) == EXPECTED_FORMAT)
+        "#
+        .replace(
+            "EXPECTED_FORMAT",
+            if cfg!(feature = "native-duration-formatting") {
+                "'1 minute'"
+            } else {
+                "'90'"
+            },
+        ),
     )
     .unwrap();
 }

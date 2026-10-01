@@ -9,7 +9,7 @@
 - [x] Each getter returns exactly one number; each setter returns no values.
 - [x] Missing, nil, nonnumeric, NaN, and infinite setter arguments raise an error without changing either stored value. This validation policy is a simulator choice; numeric strings are not coerced.
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
-- [x] Formatter identity and stored setter values remain intact; maximum-mode switching is specified below. PTR and Forever formatting use the shared native-duration backend; profiles without that feature retain their existing placeholder behavior. Formatting policy is specified separately in [duration formatting](seconds-formatter-format.md).
+- [x] Formatter identity and stored setter values remain intact; maximum-mode switching is specified below. Retail 12.0.5+, PTR, and Forever formatting use the shared native-duration backend; profiles without that feature retain their existing placeholder behavior. Formatting policy is specified separately in [duration formatting](seconds-formatter-format.md).
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
 - [x] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
 
@@ -68,7 +68,7 @@ After the import-only `0e23609d6`, the isolated library restoration test passed 
 - [x] Compile the PTR integration target and run focused PTR native formatter/configuration checks; default `cargo check` also passes. These are profile-preservation checks, not complete PTR/default behavioral coverage.
 - [x] Diagnose ActionBarAuras's post-formatter `C_Spell.GetBaseSpell` nil spell-ID failure. Its `b8f0982be` startup replay is clean, but a real aura-duration workflow remains unproven.
 - [ ] Native defaults, validation/coercion, exact locale/unit formatting, `Seconds` representation, opaque-handle identity, and secret/taint enforcement remain unverified despite bounded simulator tests. In particular, the modeled `FormatNumber` secret-input route rejects tainted callers; this is an explicit simulator limitation, not a claim to match the API's allowed-tainted native contract.
-- [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.
+- [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); only profiles outside the native-duration capability retain placeholder output; the default retail profile now inherits the 12.0.5 promotion, pending parent GREEN.
 - [ ] Existing numeric curves currently interpolate linearly even when configured as Step. These evaluators call that existing engine unchanged and explicitly reject a fractional interval result. Vendor AuraContainer's Step curve therefore still requires a separate curve-engine correction; no broader redesign was attempted.
 
 ## Out of scope

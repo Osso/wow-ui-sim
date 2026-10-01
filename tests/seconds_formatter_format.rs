@@ -1,7 +1,7 @@
-//! Modeled PTR duration formatting; ICU data and policy are not native WoW proof.
+//! Modeled shared duration formatting; ICU data and policy are not native WoW proof.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_formatter_format_selects_units_and_decomposes() {
     let env = WowLuaEnv::new().unwrap();
@@ -38,7 +38,7 @@ fn seconds_formatter_format_selects_units_and_decomposes() {
     .unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_formatter_format_rounds_final_unit_and_handles_thresholds() {
     let env = WowLuaEnv::new().unwrap();
@@ -73,7 +73,7 @@ fn seconds_formatter_format_rounds_final_unit_and_handles_thresholds() {
     .unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
     let env = WowLuaEnv::new().unwrap();
@@ -106,7 +106,7 @@ fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
     .unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
     let env = WowLuaEnv::new().unwrap();
@@ -140,9 +140,9 @@ fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
     .unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "native-duration-formatting")]
 #[test]
-fn seconds_formatter_format_uses_exact_ptr_abbreviation_enum_after_bootstrap() {
+fn seconds_formatter_format_uses_documented_abbreviation_enum_after_bootstrap() {
     let env = WowLuaEnv::new().unwrap();
     for _ in 0..2 {
         env.exec(
@@ -209,42 +209,12 @@ fn seconds_formatter_format_retail_epoch_formats_numeric_duration_units() {
     .expect("retail 12.0.5+ uses the existing native duration formatter");
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(all(
+    feature = "profile-retail",
+    not(feature = "native-duration-formatting")
+))]
 #[test]
-fn seconds_formatter_format_preserves_retail_abbreviation_enum_after_bootstrap() {
-    let env = WowLuaEnv::new().unwrap();
-    for _ in 0..2 {
-        env.exec(
-            r#"
-            local enum = Enum.SecondsFormatterAbbreviation
-            local expected = {None = 0, OneLetter = 1, TwoLetters = 2, Full = 3}
-            local count = 0
-            for name, value in pairs(enum) do
-                assert(expected[name] == value, 'unexpected retail abbreviation: ' .. name)
-                count = count + 1
-            end
-            assert(count == 4)
-            for name, value in pairs(expected) do assert(enum[name] == value) end
-            assert(enum.Truncate == nil)
-            local meta = Enum.SecondsFormatterAbbreviationMeta
-            assert(meta.MinValue == 0 and meta.MaxValue == 3 and meta.NumValues == 4)
-            local formatter = C_StringUtil.CreateSecondsFormatter()
-            for value = 0, 3 do
-                formatter:SetDefaultAbbreviation(value)
-                assert(formatter:Format(90) == '90')
-                assert(formatter:Format(90, value) == '90')
-            end
-            assert(C_Intl == nil)
-        "#,
-        )
-        .unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
-    }
-}
-
-#[cfg(feature = "client-retail")]
-#[test]
-fn seconds_formatter_format_preserves_retail_placeholder_without_native_api() {
+fn seconds_formatter_format_preserves_historical_placeholder_without_native_api() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"

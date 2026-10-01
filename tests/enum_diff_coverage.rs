@@ -122,6 +122,27 @@ fn sparse_large_max_value_meta_enums_are_available_with_expected_values() {
 #[test]
 fn seconds_formatter_enums_are_available_with_expected_values() {
     let env = WowLuaEnv::new().unwrap();
+    #[cfg(feature = "native-duration-formatting")]
+    env.exec(
+        r#"
+        local abbreviation = Enum.SecondsFormatterAbbreviation
+        assert(abbreviation.None == 0 and abbreviation.Truncate == 1)
+        assert(abbreviation.OneLetter == 2)
+        assert(abbreviation.TwoLetters == nil and abbreviation.Full == nil)
+        local metadata = Enum.SecondsFormatterAbbreviationMeta
+        assert(metadata.MinValue == 0 and metadata.MaxValue == 2 and metadata.NumValues == 3)
+        "#,
+    )
+    .unwrap();
+    #[cfg(not(feature = "native-duration-formatting"))]
+    env.exec(
+        r#"
+        local abbreviation = Enum.SecondsFormatterAbbreviation
+        assert(abbreviation.None == 0 and abbreviation.OneLetter == 1)
+        assert(abbreviation.TwoLetters == 2 and abbreviation.Full == 3)
+        "#,
+    )
+    .unwrap();
     let result: String = env
         .eval(
             r#"
@@ -137,10 +158,6 @@ fn seconds_formatter_enums_are_available_with_expected_values() {
             if type(abbreviation) ~= "table" then
                 return "missing_abbreviation"
             end
-            if abbreviation.None ~= 0 or abbreviation.OneLetter ~= 1 or abbreviation.TwoLetters ~= 2 or abbreviation.Full ~= 3 then
-                return "wrong_abbreviation"
-            end
-
             local rounding = Enum.SecondsFormatterRounding
             if type(rounding) ~= "table" then
                 return "missing_rounding"
