@@ -6,6 +6,10 @@
 
 [[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. The no-data spell-duration control used a lazy namespace nil closure, not a modeled producer. Actual concrete RED at `eac08bda3` is 1/10 pass, including shared zero-span failure; `13af6a6b2` then wires all three duration producers and both table queries, removes exact obsolete providers, and gates fully elapsed zero semantics to 12.0.5+. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; parent GREEN/final gates and native parity remain unclaimed.
 
+## [2026-09-30] implementation | Add bounded Forever outbound messaging
+
+[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass); parent GREEN remains pending. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
+
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 
 [[duration-core#Cooldown duration selection]] links the shared duration-only policy and modeled [spellbook producer](../specs/spellbook-cooldown-duration.md). Retained 12.0.5 source names arg2/arg3; individual-only true selection and invalid slot/bank behavior are explicit inferences. Existing default GCD selection, zero-span objects, runtime clock and snapshots remain. Grouped RED at `9a50d8a5c` is 0/6; parent-owned GREEN remains pending. No pet/macro mappings, native/secrecy proof, or vendor edits.

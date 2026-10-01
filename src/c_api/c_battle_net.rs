@@ -39,6 +39,13 @@ type BattleNetTable = GcRef<Table>;
 pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_BattleNet")?;
     register_texture_methods(state, table_ref)?;
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "SendGameData",
+        super::addon_messages::send_game_data,
+    )?;
     register_friend_query_methods(state, table_ref)
 }
 

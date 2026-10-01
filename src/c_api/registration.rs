@@ -44,6 +44,8 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "client-wowforever")]
+    super::addon_messages::register_chat(state)?;
+    #[cfg(feature = "client-wowforever")]
     super::c_combat_log::register_publication(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
