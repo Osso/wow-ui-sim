@@ -3,20 +3,22 @@
 use super::FORMATTER_ROOTS;
 use crate::lua_api::frame::methods::secret_origin::require_readable;
 use crate::lua_api::globals::lua_duration_object::formatting::{format_number, identify_formatter};
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, registry_get, val_to_string};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, registry_get, table_get, val_to_string,
+};
 use rilua::table_security::{unwrap_secret, wrap_host_secret_number};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn tick_countdown_formatters(state: &mut LuaState) -> LuaResult<()> {
-    let attachments = read_attached_formatters(state)?;
+    let attachments = read_attached_frame_ids(state)?;
     if attachments.is_empty() {
         return Ok(());
     }
     // Same monotonic origin as GetTime and quad emission, not tick-delta accumulation.
     let now = borrow_state(state)?.start_time.elapsed().as_secs_f64();
-    for (id, formatter) in attachments {
-        let text = match format_active_countdown(state, id, formatter, now) {
+    for id in attachments {
+        let text = match format_active_countdown(state, id, now) {
             Ok(text) => text,
             Err(error) => {
                 let message = format!("Cooldown {id} countdown formatter: {error}");
@@ -29,7 +31,7 @@ pub(crate) fn tick_countdown_formatters(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-fn read_attached_formatters(state: &mut LuaState) -> LuaResult<Vec<(u64, Val)>> {
+fn read_attached_frame_ids(state: &mut LuaState) -> LuaResult<Vec<u64>> {
     let roots = registry_get(state, FORMATTER_ROOTS);
     let Val::Table(reference) = roots else {
         return if roots == Val::Nil {
@@ -46,21 +48,32 @@ fn read_attached_formatters(state: &mut LuaState) -> LuaResult<Vec<(u64, Val)>> 
         .hash_entries();
     entries
         .into_iter()
-        .map(|(key, formatter)| {
+        .map(|(key, _)| {
             let id = val_to_string(state, key)
                 .and_then(|key| key.parse::<u64>().ok())
                 .ok_or_else(|| runtime_error("Cooldown formatter root requires a frame ID"))?;
-            Ok((id, formatter))
+            Ok(id)
         })
         .collect()
 }
 
-fn format_active_countdown(
-    state: &mut LuaState,
-    id: u64,
-    formatter: Val,
-    now: f64,
-) -> LuaResult<Option<String>> {
+fn read_attached_formatter(state: &mut LuaState, id: u64) -> LuaResult<Val> {
+    let roots = registry_get(state, FORMATTER_ROOTS);
+    let Val::Table(reference) = roots else {
+        return Err(runtime_error("Cooldown formatter roots must be a table"));
+    };
+    if state.gc.tables.get(reference).is_none() {
+        return Err(runtime_error("Cooldown formatter roots are unavailable"));
+    }
+    Ok(table_get(state, roots, &id.to_string()))
+}
+
+fn format_active_countdown(state: &mut LuaState, id: u64, now: f64) -> LuaResult<Option<String>> {
+    // Earlier callbacks may replace or clear this attachment and collect its old handle.
+    let formatter = read_attached_formatter(state, id)?;
+    if formatter == Val::Nil {
+        return Ok(None);
+    }
     let (remaining, secret) = {
         let sim = borrow_state(state)?;
         let frame = sim
@@ -82,15 +95,17 @@ fn format_countdown_text(
     secret: bool,
 ) -> LuaResult<String> {
     require_readable(state, secret)?;
-    let kind = identify_formatter(state, formatter)?;
-    let input = if secret {
-        wrap_host_secret_number(state, remaining)
-    } else {
-        Val::Num(remaining)
-    };
     let previous_top = state.top;
-    state.push(input);
+    // A callback may detach even this active formatter before collecting garbage.
+    state.push(formatter);
     let text = (|| {
+        let kind = identify_formatter(state, formatter)?;
+        let input = if secret {
+            wrap_host_secret_number(state, remaining)
+        } else {
+            Val::Num(remaining)
+        };
+        state.push(input);
         let output = format_number(state, kind, formatter, input)?;
         state.push(output);
         // Authenticate secret output and inspect only an actual string. Never

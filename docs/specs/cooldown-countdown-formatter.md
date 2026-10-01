@@ -17,7 +17,7 @@
 - [ ] Consume live configured formatter output in the real library countdown text path, including numeric-rule strings, abbreviation strings, and native Seconds strings.
 - [ ] Use the renderer's monotonic simulator clock and existing modRate calculation; ticks and formatter configuration changes update displayed text.
 - [ ] Clearing selects the existing default countdown policy. Hide, minimum-duration, and expiry gates still suppress countdown output.
-- [ ] Keep formatter handles rooted across collection. Invoke only shared trusted typed dispatch, never addon overrides with decoded secret timing; retain secret authorization and caller taint.
+- [ ] Snapshot only attached frame IDs; reread each formatter from private `FORMATTER_ROOTS` immediately before consumption. Root the active formatter on the VM stack through identification, dispatch, and collecting callbacks; restore stack height on success or error. A cleared attachment is skipped; invalid/unavailable roots and invalid formatter handles report meaningful errors. Invoke only shared trusted typed dispatch, never addon overrides with decoded secret timing; retain secret authorization and caller taint.
 - [ ] When a configured curve replaces a peer Cooldown's attachment and explicitly collects garbage, the peer consumes the replacement on that tick without stale-handle errors. This reentrant live-state policy is a simulator inference.
 
 ## How it works
@@ -42,8 +42,8 @@
 ## Known gaps (current cycle)
 
 - [ ] Parent's current-revision GREEN and final integration gates remain pending. Public configuration development GREEN is 8/8 at `eac08bda3`: `/tmp/patch-12.0.5-batch6-cooldown-api-green.log`.
-- [ ] Library renderer GREEN remains pending after the actual seven-case RED. The secret-curve strengthening has no separate pre-consumer RED execution.
-- [ ] The eighth library regression, `configured_renderer_curve_replaces_another_attachment_during_collection`, is staged at `be4da7354`. Parent must run it before any reentrant-consumer correction; no failure or fix is yet claimed.
+- [ ] Actual eight-case library execution at `c5ba89ae3` is 6 PASS / 2 FAIL: `/tmp/patch-12.0.5-batch7-lib-0.log`. The GC replacement regression expects `Some("20m 34s")`, receives `None`, and records `expected a known NumericFormatter object`: an earlier curve replaces a later attachment and collects the unrooted handle captured by the value snapshot. The frame-ID/live-root and active-stack-root correction awaits parent-owned GREEN.
+- [ ] The separate secret-callback security fixture fails during setup in that execution; parent owns it. No security-fixture fix or GREEN is claimed here. The earlier seven-case consumer RED was hardcoded default text, not this GC lifetime failure.
 - [ ] Child FontString `GetText` consistency is not modeled: configured secret-derived strings remain trusted Rust renderer data, not plaintext Lua-readable child text.
 
 ## Out of scope
