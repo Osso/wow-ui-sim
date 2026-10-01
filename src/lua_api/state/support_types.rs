@@ -260,6 +260,8 @@ fn one_based_index(index: i32) -> Option<usize> {
 #[derive(Clone, Debug, Default)]
 pub struct HousingState {
     pub catalog: crate::c_api::c_housing::catalog::HousingCatalogState,
+    /// Inferred pending request only; never a selected or placed decor instance.
+    pub pending_new_decor: Option<crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID>,
     // Preserve the simulator's enabled initial policy without claiming a native default.
     pub free_place_disabled: bool,
     pub tracked_house_guid: Option<String>,
