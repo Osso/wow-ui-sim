@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded altered-form query producer
+
+Updated [[lua-api#Retail 12.0.5 altered-form query]], index and [contract](../specs/unit-aura-altered-form.md). C API producer authenticates only the unit argument, resolves player GUID identity and reads the independent bool without mutation; epoch-gated registration supersedes generic missing-method synthesis, with no explicit same-function default to remove. Saved parent RED at `732d1c5e6`: **1 PASS / 9 FAIL**, Cargo build-finished success true (wrapper exit unretained). Tests unchanged; formatting only, parent GREEN/acceptance pending. Defaults/misses/errors inferred; no native, source-accounting or 3D credit.
+
 ## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
 
 [Independent bounded acceptance](../specs/aura-refresh-duration.md#independent-bounded-acceptance--2026-10-01): row394 only, **18 duration + 73 controls = 91 PASS**, startup0 `[]`, fresh fmt/check0; **257/91/14 → 256/92/14 = 362**. Consumer base prerequisite and unknown metadata included; two nonblocking LENGTH/COMPLEX_COND suggestions deferred, not zero issues. Informed policies remain nonnative; production empty returns nil until metadata. IDs/register/source SHA/unrelated rows preserved; no Blizzard visual/native/all-profile claim.

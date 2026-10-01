@@ -107,6 +107,8 @@ pub mod c_transmog_outfit_info;
 mod c_transmog_sets;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_unit_aura_altered_form;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;

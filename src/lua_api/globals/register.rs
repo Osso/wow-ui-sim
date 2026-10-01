@@ -72,6 +72,8 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::aura_duration::register(lua.state_mut())?;
     crate::c_api::private_aura_anchors::register(lua.state_mut())?;
     #[cfg(feature = "aura-instance-enumeration")]

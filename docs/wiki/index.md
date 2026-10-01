@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded altered-form query producer
+
+[[lua-api#Retail 12.0.5 altered-form query]] links [altered-form contract](../specs/unit-aura-altered-form.md): epoch-gated shared namespace, explicit player bool, existing GUID identity and VM-authenticated unit-string access; immutable query returns one public boolean. Saved parent RED **1 PASS / 9 FAIL**; producer formatted only, parent GREEN/acceptance pending. Defaults/misses/errors inferred; native/security parity unknown. Tests, vendor, source accounting and PLAN unchanged.
+
 ## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
 
 [Independent bounded acceptance](../specs/aura-refresh-duration.md#independent-bounded-acceptance--2026-10-01): row394 only, **18 duration + 73 controls = 91 PASS**, startup0 `[]`, fresh fmt/check0; **257/91/14 → 256/92/14 = 362**. Consumer base prerequisite and unknown metadata included; two nonblocking LENGTH/COMPLEX_COND suggestions deferred, not zero issues. Informed policies remain nonnative; production empty returns nil until metadata. IDs/register/source SHA/unrelated rows preserved; no Blizzard visual/native/all-profile claim.
