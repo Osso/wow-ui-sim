@@ -1,8 +1,8 @@
 //! Temporary `C_MajorFactions` display-policy defaults.
 //!
-//! Renown faction data, IDs, and renown levels remain state-backed in Rust.
+//! Renown faction data, IDs, levels, and reward rows remain state-backed in Rust.
 //! Expansion-page visibility, journey/reward-track policy, current renown level,
-//! NPC faction mapping, and renown reward display are not modeled yet.
+//! and NPC faction mapping are not modeled yet.
 
 const MAJOR_FACTION_DISPLAY_DEFAULTS_LUA: &str = r#"
 C_MajorFactions = C_MajorFactions or __wow_namespace()
@@ -28,12 +28,6 @@ end
 if rawget(C_MajorFactions, "GetCurrentRenownLevel") == nil then
     function C_MajorFactions.GetCurrentRenownLevel(_factionID)
         return 1
-    end
-end
-
-if rawget(C_MajorFactions, "GetRenownRewardsForLevel") == nil then
-    function C_MajorFactions.GetRenownRewardsForLevel(_factionID, _level)
-        return {}
     end
 end
 

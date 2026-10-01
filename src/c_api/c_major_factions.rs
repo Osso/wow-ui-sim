@@ -30,6 +30,12 @@ pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResu
     let ns = ensure_namespace(state, "C_MajorFactions")?;
     table_set_rust_fn_static(state, ns, "GetMajorFactionData", get_major_faction_data)?;
     table_set_rust_fn_static(state, ns, "GetRenownLevels", get_renown_levels)?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "GetRenownRewardsForLevel",
+        renown_rewards::get_renown_rewards_for_level,
+    )?;
     table_set_rust_fn_static(state, ns, "GetMajorFactionIDs", get_major_faction_ids)?;
     Ok(())
 }

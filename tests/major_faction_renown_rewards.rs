@@ -1,4 +1,4 @@
-//! Input fixtures for the pending state-backed renown reward producer.
+//! Behavioral fixtures for the state-backed renown reward producer.
 #![cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -102,6 +102,88 @@ fn reward_fixture() -> WowLuaEnv {
         .major_faction_renown_rewards
         .insert((2507, 7), fixture_rewards());
     env
+}
+
+#[test]
+fn major_faction_renown_rewards_public_selectors_allow_tainted_callers() {
+    let env = reward_fixture();
+    env.exec(
+        r#"
+        local function addon()
+            local rewards = C_MajorFactions.GetRenownRewardsForLevel(2507, 7)
+            assert(#rewards == 3 and rewards[1].renownRewardID == 7101)
+            assert(not issecure(), "query must not clear caller taint")
+        end
+        debug.setobjecttaint(addon, "RenownRewardsProbe")
+        local ok, err = pcall(addon)
+        assert(ok, err)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn major_faction_renown_rewards_secret_selectors_require_secure_callers() {
+    let env = reward_fixture();
+    env.exec(
+        r#"
+        local secretFaction, secretLevel = secretwrap(2507), secretwrap(7)
+        for _, args in ipairs({{secretFaction, 7}, {2507, secretLevel},
+            {secretFaction, secretLevel}}) do
+            local ok, rewards = pcall(C_MajorFactions.GetRenownRewardsForLevel,
+                args[1], args[2])
+            assert(ok and #rewards == 3 and rewards[1].renownRewardID == 7101,
+                "secure caller must resolve each secret selector")
+            local function addon()
+                return C_MajorFactions.GetRenownRewardsForLevel(args[1], args[2])
+            end
+            debug.setobjecttaint(addon, "RenownRewardsProbe")
+            assert(not pcall(addon), "tainted caller must reject each secret selector")
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn major_faction_renown_rewards_require_numeric_selectors() {
+    let env = reward_fixture();
+    env.exec(
+        r#"
+        local query = C_MajorFactions.GetRenownRewardsForLevel
+        assert(not pcall(query))
+        assert(not pcall(query, 2507))
+        assert(not pcall(query, nil, 7))
+        assert(not pcall(query, "2507", 7))
+        assert(not pcall(query, 2507, "7"))
+        assert(not pcall(query, false, 7))
+        assert(not pcall(query, 2507, {}))
+        assert(next(query(2507.5, 7)) == nil, "do not truncate faction selector")
+        assert(next(query(2507, 7.5)) == nil, "do not truncate level selector")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn major_faction_renown_rewards_return_independent_snapshots() {
+    let env = reward_fixture();
+    env.exec(
+        r#"
+        local a = C_MajorFactions.GetRenownRewardsForLevel(2507, 7)
+        local b = C_MajorFactions.GetRenownRewardsForLevel(2507, 7)
+        assert(#a == 3 and #b == 3)
+        assert(a ~= b and a[1] ~= b[1])
+        a[1].name, a[1].isCollected, a[1].itemID = "Lua mutation", false, nil
+        a[2] = nil
+        assert(b[1].name == "Wardens reward" and b[1].isCollected == true)
+        assert(b[1].itemID == 210001 and b[2].renownRewardID == 7102)
+        local c = C_MajorFactions.GetRenownRewardsForLevel(2507, 7)
+        assert(#c == 3 and c[1].name == "Wardens reward")
+        assert(c[1].isCollected == true and c[1].itemID == 210001)
+        "#,
+    )
+    .unwrap();
 }
 
 #[test]
