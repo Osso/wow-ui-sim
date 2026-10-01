@@ -148,7 +148,7 @@ fn getter_exposes_only_positive_existing_master_indices_without_changing_legacy(
             state.loot_method.party_master_index = party;
             state.loot_method.raid_master_index = raid;
         }
-        let (method, party_result, raid_result): (u8, Option<i32>, Option<i32>) =
+        let (method, party_result, raid_result): (i32, Option<i32>, Option<i32>) =
             env.eval("return C_PartyInfo.GetLootMethod()").unwrap();
         assert_eq!(method, 2);
         assert_eq!(party_result, (party > 0).then_some(party));
@@ -298,7 +298,7 @@ fn public_setter_mutations_are_isolated_between_environments() {
     second.exec("assert(C_PartyInfo.SetLootMethod(4))").unwrap();
     assert_eq!(
         first
-            .eval::<u8>("return C_PartyInfo.GetLootMethod()")
+            .eval::<i32>("return C_PartyInfo.GetLootMethod()")
             .unwrap(),
         1
     );
@@ -311,7 +311,7 @@ fn public_setter_mutations_are_isolated_between_environments() {
     first.exec("assert(C_PartyInfo.SetLootMethod(5))").unwrap();
     assert_eq!(
         second
-            .eval::<u8>("return C_PartyInfo.GetLootMethod()")
+            .eval::<i32>("return C_PartyInfo.GetLootMethod()")
             .unwrap(),
         4
     );
