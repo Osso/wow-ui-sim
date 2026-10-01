@@ -34,6 +34,10 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 `client-wowforever` publishes chat senders from `c_api::registration` and the BattleNet sender from its existing namespace registrar. `c_api::addon_messages` checks types/secrets before consulting current group/guild or nested online game-account state, then appends accepted intent to the existing `SimState.message_log`. No inbound event or legacy-global replacement occurs. See [outbound message contract](../../specs/addon-messages.md) for inferred limits/result mappings, binary-string boundary, independently confirmed bounded 36/36 GREEN and single default fmt/check-offline passes at `255adcbde` (`verify-green.json`). No broader profile or inventory acceptance follows.
 
+### Retail 12.0.5 party ping restrictions
+
+`c_api::c_party_info` wires an epoch-gated helper over explicit per-environment `party_ping_restriction: u8`. See [party ping contract](../../specs/party-ping-restrictions.md) for signatures, inferred strict/security policies, saved seven-fixture RED and pending parent GREEN. No ping delivery, permission or native secret acceptance model is added.
+
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 
 ```rust

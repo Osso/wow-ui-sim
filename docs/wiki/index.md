@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded party ping producer
+
+[[lua-api#Retail 12.0.5 party ping restrictions]] links [party ping contract](../specs/party-ping-restrictions.md): epoch-gated numeric getter/public enum setter reuses chat lockdown guard, rejects malformed/secrets atomically under inferred policies. Saved parent compiled RED at `12e4a1a28`: seven FAIL. Parent compilation/GREEN pending; no audit promotion, native parity, ping delivery or permissions claim.
+
 ## [2026-10-01] evidence | Accept bounded ready-check proof
 
 [[patch-12-0-5-api-audit#Chat lockdown ready checks — bounded independent PASS]] links [ready-check proof](../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01): full verifier266 report accepts saved 22 PASS and bounded state/event/alias/recovery behavior; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later ping inputs excluded. Final `prose-2026-03-31-169` remains pending; countdown/ping/loot undone, no native parity. 264 pending/84 bounded/14 partial = 362; IDs/text SHA retained. No reruns/delegation/push.

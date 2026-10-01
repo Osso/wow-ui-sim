@@ -18,12 +18,17 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "retail-12-0-5")]
+mod ping_restrictions;
+
 const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
 
 pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
     register_group_membership_probes(state, table_ref)?;
     register_loot_method_probes(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    ping_restrictions::register(state, table_ref)?;
     Ok(())
 }
 
