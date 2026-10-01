@@ -89,6 +89,7 @@ fn zero_font_size_emits_no_text_quads() {
         false,
         0,
         0.0,
+        false,
         None,
     );
 

@@ -6,6 +6,8 @@ mod simple_html;
 mod style;
 #[cfg(feature = "retail-12-0-0")]
 pub(super) use style::{get_scale_animation_mode, set_scale_animation_mode};
+#[cfg(feature = "retail-12-0-5")]
+pub(super) use style::{get_smooth_scaling, set_smooth_scaling};
 
 pub(super) use formatting::{
     apply_default_text, get_font, get_font_height, get_font_object, get_unbounded_string_width,
@@ -64,6 +66,7 @@ struct AutoTextHeightState {
 struct LineCountProps {
     has_text: bool,
     wrap_width: Option<f32>,
+    smooth_scaling: bool,
 }
 
 pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
@@ -309,7 +312,7 @@ fn update_auto_text_height(state: &mut LuaState, id: u64) {
     let Some(frame) = sim.widgets.get(id) else {
         return;
     };
-    if (frame.height - height).abs() <= 0.5 && frame.height_is_text_auto {
+    if (frame.height - height).abs() <= f32::EPSILON && frame.height_is_text_auto {
         return;
     }
     let Some(frame) = sim.widgets.get_mut_visual(id) else {
@@ -713,12 +716,12 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
         return 0.0;
     }
     let text_scale = frame_text_scale_value(state, id);
-    let spacing = borrow_state(state)
+    let (spacing, smooth_scaling) = borrow_state(state)
         .expect("sim state should exist")
         .widgets
         .get(id)
-        .map(|frame| frame.text_line_spacing)
-        .unwrap_or(0.0);
+        .map(|frame| (frame.text_line_spacing, frame.font_string_smooth_scaling))
+        .unwrap_or((0.0, false));
     if let Some(app) = state.app_data::<crate::lua_api::env::WowLuaAppData>()
         && let Some(font_system) = app.font_system.as_ref()
     {
@@ -728,10 +731,12 @@ fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f6
             font_size,
             wrap_width,
             spacing,
+            smooth_scaling,
         ) as f64
             * text_scale;
     }
-    approximate_text_height(&text, font_size, wrap_width, spacing) as f64 * text_scale
+    approximate_text_height(&text, font_size, wrap_width, spacing, smooth_scaling) as f64
+        * text_scale
 }
 
 pub(super) fn get_string_width(state: &mut LuaState) -> LuaResult<u32> {
@@ -827,10 +832,24 @@ pub(super) fn get_num_lines(state: &mut LuaState) -> LuaResult<u32> {
         {
             font_system
                 .borrow_mut()
-                .measure_text_layout(&text, font.as_deref(), font_size, props.wrap_width, 0.0)
+                .measure_text_layout(
+                    &text,
+                    font.as_deref(),
+                    font_size,
+                    props.wrap_width,
+                    0.0,
+                    props.smooth_scaling,
+                )
                 .1
         } else {
-            approximate_text_layout(&text, font_size, props.wrap_width, 0.0).1
+            approximate_text_layout(
+                &text,
+                font_size,
+                props.wrap_width,
+                0.0,
+                props.smooth_scaling,
+            )
+            .1
         }
     };
     state.push(Val::Num(line_count as f64));
@@ -845,6 +864,7 @@ fn read_line_count_props(state: &LuaState, id: u64) -> LuaResult<Option<LineCoun
     Ok(Some(LineCountProps {
         has_text: frame_text_value(&sim, frame, true).is_some_and(|text| !text.is_empty()),
         wrap_width: (frame.word_wrap && frame.width > 0.0).then_some(frame.width),
+        smooth_scaling: frame.font_string_smooth_scaling,
     }))
 }
 

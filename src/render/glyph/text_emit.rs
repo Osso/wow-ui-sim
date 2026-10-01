@@ -34,6 +34,7 @@ pub fn emit_text_quads(
     word_wrap: bool,
     max_lines: u32,
     spacing: f32,
+    smooth_scaling: bool,
     pre_stripped: Option<&str>,
 ) {
     if !can_emit_text(text, bounds, font_size) {
@@ -56,6 +57,7 @@ pub fn emit_text_quads(
             word_wrap,
             max_lines,
             spacing,
+            smooth_scaling,
         },
     );
     let pass = TextPassContext {
@@ -79,7 +81,7 @@ pub fn emit_text_quads(
 }
 
 fn can_emit_text(text: &str, bounds: Rectangle, font_size: f32) -> bool {
-    !text.is_empty() && bounds.height > 0.0 && line_height_for_font_size(font_size).is_some()
+    !text.is_empty() && bounds.height > 0.0 && line_height_for_font_size(font_size, false).is_some()
 }
 
 fn stripped_text<'a>(text: &'a str, pre_stripped: Option<&'a str>) -> Cow<'a, str> {
@@ -102,6 +104,7 @@ struct TextLayoutCacheRequest<'a> {
     word_wrap: bool,
     max_lines: u32,
     spacing: f32,
+    smooth_scaling: bool,
 }
 
 fn cached_text_layout(
@@ -117,6 +120,7 @@ fn cached_text_layout(
         request.bounds.height,
         request.max_lines,
         request.spacing,
+        request.smooth_scaling,
     );
     populate_text_layout_cache(glyph_atlas, font_system, key, request);
     let entry = glyph_atlas
@@ -150,6 +154,7 @@ fn populate_text_layout_cache(
             word_wrap: request.word_wrap,
             max_lines: request.max_lines,
             spacing: request.spacing,
+            smooth_scaling: request.smooth_scaling,
         },
     );
     entry.insert(ShapeCacheEntry {

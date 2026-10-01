@@ -202,6 +202,8 @@ pub struct Frame {
     /// Text scale factor (for FontString widgets).
     pub text_scale: f64,
     pub font_string_scale_animation_mode: u8,
+    /// Preserve fractional text line height instead of the legacy whole-pixel ceiling.
+    pub font_string_smooth_scaling: bool,
     /// Normal texture path (for Button widgets).
     pub normal_texture: Option<String>,
     /// Normal texture UV coords (left, right, top, bottom) for atlas-based buttons.

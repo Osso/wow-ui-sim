@@ -65,6 +65,12 @@ fn generate_fontstring_size_and_flags(code: &mut String, fs: &crate::xml::FontSt
             "\n        do local f,_,fl = fs:GetFont(); if f then fs:SetFont(f, {h}, fl) end end\n        "
         ));
     }
+    #[cfg(feature = "retail-12-0-5")]
+    if let Some(enabled) = fs.smooth_scaling {
+        code.push_str(&format!(
+            "\n        fs:SetSmoothScaling({enabled})\n        "
+        ));
+    }
     if fs.word_wrap == Some(false) {
         code.push_str("\n        fs:SetWordWrap(false)\n        ");
     }

@@ -123,6 +123,7 @@ fn measure_visible_messages(
             width,
             true,
             0.0,
+            false,
         );
         if h <= 0.0 {
             continue;
@@ -169,6 +170,7 @@ fn render_message(
         true,
         0, // word_wrap=true, no line limit
         0.0,
+        false,
         None, // message frames don't pre-strip
     );
 }

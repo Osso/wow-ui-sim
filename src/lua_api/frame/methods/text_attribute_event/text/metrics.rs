@@ -13,8 +13,9 @@ pub(super) fn approximate_text_height(
     font_size: f32,
     wrap_width: Option<f32>,
     spacing: f32,
+    smooth_scaling: bool,
 ) -> f32 {
-    approximate_text_layout(text, font_size, wrap_width, spacing).0
+    approximate_text_layout(text, font_size, wrap_width, spacing, smooth_scaling).0
 }
 
 pub(super) fn approximate_text_layout(
@@ -22,8 +23,11 @@ pub(super) fn approximate_text_layout(
     font_size: f32,
     wrap_width: Option<f32>,
     spacing: f32,
+    smooth_scaling: bool,
 ) -> (f32, usize) {
-    let Some(line_height) = approximate_line_height(font_size) else {
+    let Some(line_height) =
+        crate::render::font::line_height_for_font_size(font_size, smooth_scaling)
+    else {
         return (0.0, 0);
     };
     let Some(avg_char_width) = approximate_average_char_width(font_size) else {

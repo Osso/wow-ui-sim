@@ -322,6 +322,10 @@ fn apply_font_string_template_fields(
     fontstring: &mut crate::widget::Frame,
     template: &crate::xml::FontStringXml,
 ) {
+    #[cfg(feature = "retail-12-0-5")]
+    if let Some(enabled) = template.smooth_scaling {
+        fontstring.font_string_smooth_scaling = enabled;
+    }
     if let Some(justify_h) = template.justify_h.as_deref() {
         fontstring.justify_h = crate::widget::TextJustify::from_wow_str(justify_h);
     }

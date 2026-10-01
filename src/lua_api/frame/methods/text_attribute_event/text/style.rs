@@ -412,6 +412,37 @@ pub(crate) fn get_scale_animation_mode(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn set_smooth_scaling(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
+    let Val::Bool(enabled) = value else {
+        return Err(rilua::runtime_error("SetSmoothScaling requires a boolean"));
+    };
+    {
+        let mut sim = borrow_state_mut(state)?;
+        let frame = sim
+            .widgets
+            .get_mut_visual(id)
+            .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?;
+        frame.font_string_smooth_scaling = enabled;
+    }
+    super::refresh_text_measurements(state, id);
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn get_smooth_scaling(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let enabled = borrow_state(state)?
+        .widgets
+        .get(id)
+        .ok_or_else(|| rilua::runtime_error("FontString frame no longer exists"))?
+        .font_string_smooth_scaling;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
 pub(crate) fn get_text_scale(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     state.push(Val::Num(frame_text_scale_value(state, id)));

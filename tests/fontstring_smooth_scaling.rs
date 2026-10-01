@@ -94,7 +94,7 @@ fn smooth_scaling_fractional_height_and_auto_height_follow_mode_flips() {
         fs:SetSmoothScaling(true)
         fs:SetText('H\nH')
         local height = fs:GetStringHeight()
-        assert(height > 2 * 15.84)
+        near(height, 2 * 15.84)
         near(fs:GetHeight(), height)
         fs:SetTextScale(1.1)
         near(fs:GetStringHeight(), height * 1.1)

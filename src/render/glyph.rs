@@ -47,6 +47,7 @@ fn shape_cache_hash(
     bounds_height: f32,
     max_lines: u32,
     spacing: f32,
+    smooth_scaling: bool,
 ) -> u64 {
     use std::hash::{Hash, Hasher};
     let mut h = std::hash::DefaultHasher::new();
@@ -57,6 +58,7 @@ fn shape_cache_hash(
     bounds_height.to_bits().hash(&mut h);
     max_lines.hash(&mut h);
     spacing.to_bits().hash(&mut h);
+    smooth_scaling.hash(&mut h);
     h.finish()
 }
 
@@ -403,7 +405,7 @@ fn shape_text_to_runs(
     font_system: &mut WowFontSystem,
     shape: TextShapeRequest<'_>,
 ) -> (Buffer, f32) {
-    let line_height = line_height_for_font_size(shape.font_size)
+    let line_height = line_height_for_font_size(shape.font_size, shape.smooth_scaling)
         .expect("shape_text_to_runs requires a positive font size");
     let shape_width = text_shape_width(&shape);
     let mut buffer = build_text_shape_buffer(font_system, &shape, line_height, shape_width);
@@ -479,6 +481,7 @@ struct TextShapeRequest<'a> {
     word_wrap: bool,
     max_lines: u32,
     spacing: f32,
+    smooth_scaling: bool,
 }
 
 /// Extract glyph positions from layout runs into cacheable data.
@@ -621,6 +624,7 @@ pub fn measure_text_height(
     bounds_width: f32,
     word_wrap: bool,
     spacing: f32,
+    smooth_scaling: bool,
 ) -> f32 {
     let stripped = crate::render::strip_wow_markup(text);
     if stripped.is_empty() {
@@ -635,6 +639,7 @@ pub fn measure_text_height(
         word_wrap,
         max_lines: 0,
         spacing,
+        smooth_scaling,
     };
     let key = text_measure_cache_key(&shape);
     if let Some(entry) = glyph_atlas.shape_cache.get_mut(&key) {
@@ -657,6 +662,7 @@ fn text_measure_cache_key(shape: &TextShapeRequest<'_>) -> u64 {
         shape.bounds_height,
         shape.max_lines,
         shape.spacing,
+        shape.smooth_scaling,
     )
 }
 

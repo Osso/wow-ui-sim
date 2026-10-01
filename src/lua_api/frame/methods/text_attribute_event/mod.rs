@@ -291,6 +291,11 @@ fn register_text_scaling(state: &mut LuaState, table: GcRef<Table>) -> LuaResult
             text::set_scale_animation_mode,
         )?;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        table_set_rust_fn_static(state, table, "GetSmoothScaling", text::get_smooth_scaling)?;
+        table_set_rust_fn_static(state, table, "SetSmoothScaling", text::set_smooth_scaling)?;
+    }
     table_set_rust_fn_static(state, table, "GetTextScale", text::get_text_scale)?;
     table_set_rust_fn_static(state, table, "SetTextScale", text::set_text_scale)?;
     table_set_rust_fn_static(state, table, "SetTextToFit", text::set_text_to_fit)?;

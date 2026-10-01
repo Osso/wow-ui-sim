@@ -211,6 +211,7 @@ fn measure_tooltip_text_height(
         font_size,
         wrap_width,
         0.0,
+        false,
     )
 }
 
@@ -397,6 +398,7 @@ fn emit_tooltip_lines(
                 font_size,
                 Some(content_width),
                 0.0,
+                false,
             )
         } else {
             line.measured_height * eff_scale
@@ -765,6 +767,7 @@ fn emit_tooltip_text_run(
         run.wrap,
         0,
         0.0,
+        false,
         None,
     );
 }

@@ -274,6 +274,8 @@ pub struct FontStringXml {
     pub word_wrap: Option<bool>,
     #[serde(rename = "@maxLines")]
     pub max_lines: Option<u32>,
+    #[serde(rename = "@smoothScaling")]
+    pub smooth_scaling: Option<bool>,
     #[serde(rename = "FontHeight")]
     pub font_height: Option<FontHeightXml>,
 }

@@ -107,6 +107,7 @@ macro_rules! frame_defaults {
             max_lines: 0,
             text_scale: 1.0,
             font_string_scale_animation_mode: 0,
+            font_string_smooth_scaling: false,
             normal_texture: None,
             normal_tex_coords: None,
             pushed_texture: None,

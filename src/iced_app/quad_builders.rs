@@ -205,6 +205,7 @@ pub(super) fn emit_widget_text_quads(
         layout.word_wrap,
         layout.max_lines,
         f.text_line_spacing * f.effective_scale,
+        f.font_string_smooth_scaling,
         f.text_stripped.as_deref(),
     );
     clip_recent_quads(text_renderer.batch, vert_before, clip_bounds);
@@ -217,7 +218,11 @@ fn emit_widget_text_segment_quads(
     shadow: Option<[f32; 4]>,
 ) {
     let font_size = f.font_size * f.effective_scale;
-    let line_height = (font_size * 1.2).ceil();
+    let Some(line_height) =
+        crate::render::font::line_height_for_font_size(font_size, f.font_string_smooth_scaling)
+    else {
+        return;
+    };
     let mut x = layout.bounds.x;
     let mut y = layout.bounds.y;
     let right = layout.bounds.x + layout.bounds.width;
@@ -277,6 +282,7 @@ fn emit_text_segment_chunk(
         false,
         0,
         0.0,
+        f.font_string_smooth_scaling,
         None,
     );
 }
