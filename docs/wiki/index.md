@@ -6,6 +6,10 @@
 
 [[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links completed source-scoped batch9 audit and saved startup. [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links propagator SSOT and completed bounded independent getter/inheritance acceptance; charge-policy failures are historical RED, superseded by the [restriction proof](../specs/cooldown-restriction.md#tests-asserting-this-spec). That proof owns recorded default Rust gates; all 362 source IDs remain, with no whole-page completion.
 
+## [2026-10-01] implementation | Add bounded Recent Allies snapshots
+
+[[patch-12-0-5-api-audit#Recent Allies snapshot producer — GREEN pending]] links the [contract](../specs/recent-allies-state-data.md): mainline 12.0.5-only query, explicit complete inputs, renamed boolean, nil optionals and rooted independent snapshots. Actual pre-producer RED is 0/4; compilation, GREEN and final gates remain pending. No native or audit-completion credit.
+
 ## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
 
 [[gamepad-mapped-state]] records `f774ce454`: optional environment input, two C API queries and six grouped tests, including unchanged cached TOC initialization. [Contract](../specs/gamepad-mapped-state.md) distinguishes source-observed calls/fields from inferred policy. Current rilua `6044544b` proof at build `5e15752` → run `74e6c8845` is 63/70: three direct mapped-model passes; three cached initializer and four AutoRoll failures at hover-policy dependency before local addon/decision assertions. [Current comparison boundary](investigations/forever-addon-comparison.md#mapped-stick-and-autoroll--current-pin-boundary) records passing 36 prior and 24 producer controls; default fmt/check evidence exists, independent audit `20366` remains pending. Cached GREEN/overall acceptance remain open; pending hover tests have no outcome. No hardware, full DTO, Reveal, Retail or addon-integration credit.

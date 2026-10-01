@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Record bounded Recent Allies producer
+
+Updated [[patch-12-0-5-api-audit]] and index, linking the [contract](../specs/recent-allies-state-data.md). Query implemented after actual 0/4 RED; generic lazy nil provider traced, no targeted obsolete provider found. Nested stack-rooting and independent explicit-input snapshots documented. Compilation, GREEN and final gates remain parent-owned; no completed-row/native credit.
+
 ## [2026-10-01] evidence | Reconcile mapped-stick current-pin boundary
 
 Updated [mapped-stick contract](../specs/gamepad-mapped-state.md), [[gamepad-mapped-state]], [[forever-addon-comparison]], runtime coverage and index from persistent `model-v2-ledger.json` / stdout / stderr: rilua `6044544b`, build `5e15752` → run `74e6c8845`, 63/70 pass. Three direct-model cases pass; three cached initializer and four AutoRoll cases fail at `SetAllowHoverEventsWithFreeLook`, `FrameControlsManager.lua:830`, before local addon/decision assertions. Prior 36 workflows and 24 producer controls pass. Granular checked criteria reflect only observable assertions; cached GREEN and overall acceptance stay open. Existing default fmt/check ledger records unchanged source/config; audit `20366` pending. Native hover/controller/Reveal unmodeled; pending hover tests have no inferred outcome. No archive/matrix counters changed; no tests/builds/checks/delegation run.

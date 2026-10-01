@@ -32,8 +32,9 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 
 ## Implementation inventory
 
-- `src/c_api/c_recent_allies.rs`: explicit input and all nested rows; no registration or serializer.
+- `src/c_api/c_recent_allies.rs`: explicit input, all nested rows, and bounded `GetRecentAllies` snapshot producer; implemented, GREEN pending.
 - `src/c_api/mod.rs`: gated public input module.
+- `src/c_api/registration.rs`: query registration under `retail-12-0-5` and mainline retail/PTR gates; other profiles unchanged.
 - `src/lua_api/state/sim_state.rs`: per-environment input storage.
 - `src/lua_api/state.rs`: disabled, empty input initialization.
 - `tests/recent_allies_state_data.rs`: four actual-query cases in the existing generated integration harness; no new Cargo target.
@@ -42,11 +43,17 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 
 `tests/recent_allies_state_data.rs` covers disabled populated input, enabled empty input, two populated rows with opposite renamed flags and concrete nested/optional data, and deep result mutation versus input and later snapshots.
 
-Proof ledger: no compilation, RED, GREEN, check, or runtime execution in this slice. Fixtures call the actual registered query without test-time replacement. Query producer remains unchanged intentionally; parent owns build and actual RED before implementing publication. All checkboxes remain unverified. Formatting is not behavioral proof.
+Proof ledger: input/fixtures committed in `d0495e796`; parent build at `ee3e2717213972f9c99d3ee26c3220ac57cfa983` succeeded (`/tmp/patch-12.0.5-batch12-red-build.json` and `.log`). Actual RED (`/tmp/patch-12.0.5-batch12-red-run.log` and `.json`) is 0/4: callable query returned one nil, failing disabled return count, enabled empty-table type, populated length, and independent snapshot identity. Fixtures call the actual registered query without test-time replacement.
+
+Producer implemented after this RED; compilation, GREEN and final checks remain parent-owned and pending. All behavioral checkboxes remain unverified; formatting is not behavioral proof.
+
+Old-provider trace: no explicit `C_RecentAllies`/`GetRecentAllies` registration existed in `src`. `init_lua_state` runs Rust globals registration before `init_runtime_surface_bootstrap`; that bootstrap's `_G.__index` creates missing `C_*` namespaces, then `__wow_namespace_mt.__index` installs `function() return nil end` for missing methods. New registration supplies the concrete method before bootstrap. No targeted obsolete provider exists to remove; generic other-namespace fallback remains untouched.
+
+Rooting: each newly allocated output/nested table is pushed immediately, stays rooted while fields and descendants allocate, and loses its temporary stack root only after attachment to a rooted parent with the table write barrier. `table_set_static` temporarily roots string values while field names intern. Enabled queries leave only the output sequence as the result; disabled queries allocate no snapshots. Each query copies explicit Rust rows and builds fresh nested tables; absent optional fields stay nil. No secret decoding, taint clearing or synthetic records are introduced.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent: build grouped fixtures and capture actual RED; implement only this query's registration/serializer after RED, then establish GREEN and final gates.
+- [ ] Parent: compile the implemented producer, establish GREEN for all four grouped fixtures, and run final gates; successful pre-producer build and actual RED are recorded above.
 - [ ] Future native probe: query disabled/enabled empty/populated states; record return counts, nested nils, renamed true/false flags, ordering and mutations across repeated queries. Native eligibility and default state remain unknown.
 
 ## Out of scope

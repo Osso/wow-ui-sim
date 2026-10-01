@@ -54,6 +54,11 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_text::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    super::c_recent_allies::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     super::c_scenario_info::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

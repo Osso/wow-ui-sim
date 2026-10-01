@@ -4,6 +4,10 @@ The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention
 
 ## Content
 
+### Recent Allies snapshot producer — GREEN pending
+
+[Recent Allies contract](../../specs/recent-allies-state-data.md) owns the bounded `structures-RecentAllyStateData-669` implementation and proof: four actual-query fixtures were RED at `ee3e27172`; the gated producer now publishes only explicitly supplied records. All nested tables stay stack-rooted until parent attachment. Previous query was a generic lazy namespace nil closure, not an explicit targeted provider. Compilation, GREEN and final gates remain parent-owned; no completed-row or native-parity credit.
+
 ### Source scope
 
 The original audit used live-client probe addons under `docs/addons/` and corresponding wiki investigations, not the full patch page. Commit `7ff275fd3` retains the entire plaintext **Patch 12.0.5/API changes** extract in [12.0.5-api-changes.txt](../../../data/patch-api/sources/12.0.5-api-changes.txt), with [retrieval provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json): retrieved 2026-09-30, SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`. This is plaintext, not raw wikitext or its link graph.
