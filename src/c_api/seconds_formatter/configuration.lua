@@ -1,4 +1,4 @@
-local new_configuration, write_configuration, read_number, wrap_value, render_duration_units = ...
+local new_configuration, write_configuration, read_number, wrap_value, render_duration_units, render_numeric_text = ...
 local type, error, setmetatable, getmetatable, newproxy = type, error, setmetatable, getmetatable, newproxy
 local floor, huge, tostring = math.floor, math.huge, tostring
 local configurations = setmetatable({}, { __mode = "k" })
@@ -108,6 +108,12 @@ else
     configuration(self)
     return tostring(seconds or 0)
   end
+  -- Common numeric contract retains this profile's existing primitive-number
+  -- output without decoding secret time for an arbitrary tostring metamethod.
+  function methods:FormatNumber(input)
+    configuration(self)
+    return render_numeric_text(input)
+  end
 end
 
 local prototype = newproxy(true)
@@ -126,3 +132,7 @@ function C_StringUtil.CreateSecondsFormatter()
   configurations[object] = new_configuration()
   return object
 end
+
+-- Host consumers retain these closures, not the configuration store or public
+-- property lookup. Identity validation receives only a receiver, never timing.
+return function(object) return configurations[object] ~= nil end, methods.FormatNumber

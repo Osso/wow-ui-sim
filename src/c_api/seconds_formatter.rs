@@ -4,11 +4,18 @@ mod render;
 #[cfg(feature = "native-duration-formatting")]
 mod units;
 
-use crate::lua_api::methods::{create_table, table_set, table_set_static};
+#[cfg(feature = "retail-12-0-5")]
+use crate::lua_api::methods::{call_function_state, registry_get};
+use crate::lua_api::methods::{
+    create_string, create_table, registry_set, table_set, table_set_static,
+};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
+
+const IDENTITY: &str = "__wow_seconds_formatter_identity";
+const FORMAT_NUMBER: &str = "__wow_seconds_formatter_format_number";
 
 fn publish_values(
     state: &mut LuaState,
@@ -131,8 +138,7 @@ fn write_configuration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn read_number(state: &mut LuaState) -> LuaResult<u32> {
-    let input = stack_val(state, 1);
+fn read_format_input(state: &LuaState, input: Val) -> LuaResult<(f64, bool)> {
     let secret = rilua::table_security::is_secret_value(state, input);
     let value = rilua::table_security::unwrap_secret(state, input)?;
     let Val::Num(number) = value else {
@@ -141,9 +147,27 @@ fn read_number(state: &mut LuaState) -> LuaResult<u32> {
     if !number.is_finite() {
         return Err(runtime_error("SecondsFormatter requires a finite number"));
     }
+    Ok((number, secret))
+}
+
+fn read_number(state: &mut LuaState) -> LuaResult<u32> {
+    let (number, secret) = read_format_input(state, stack_val(state, 1))?;
     state.push(Val::Num(number));
     state.push(Val::Bool(secret));
     Ok(2)
+}
+
+fn render_numeric_text(state: &mut LuaState) -> LuaResult<u32> {
+    let (number, secret) = read_format_input(state, stack_val(state, 1))?;
+    // Match primitive Lua number text without invoking a number __tostring callback.
+    let text = format!("{}", Val::Num(number));
+    let result = if secret {
+        rilua::table_security::wrap_host_secret_string(state, &text)
+    } else {
+        create_string(state, &text)
+    };
+    state.push(result);
+    Ok(1)
 }
 
 fn wrap_value(state: &mut LuaState) -> LuaResult<u32> {
@@ -162,7 +186,15 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     let state = lua.state_mut();
     let saved_top = state.top;
     state.push(Val::Function(function.gc_ref()));
-    let arguments = [
+    let arguments = bootstrap_callbacks(state);
+    let result = lua.call_function(&function, &arguments);
+    lua.state_mut().top = saved_top;
+    retain_host_dispatch(lua.state_mut(), &result?)?;
+    Ok(())
+}
+
+fn bootstrap_callbacks(state: &mut LuaState) -> [Val; 6] {
+    [
         private_callback(
             state,
             "SecondsFormatter.NewConfiguration",
@@ -176,11 +208,53 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
         private_callback(state, "SecondsFormatter.ReadNumber", read_number),
         private_callback(state, "SecondsFormatter.WrapValue", wrap_value),
         renderer(state),
-    ];
-    let result = lua.call_function(&function, &arguments);
-    lua.state_mut().top = saved_top;
-    result?;
+        private_callback(state, "SecondsFormatter.NumericText", render_numeric_text),
+    ]
+}
+
+fn retain_host_dispatch(state: &mut LuaState, results: &[Val]) -> LuaResult<()> {
+    let [identity @ Val::Function(_), format @ Val::Function(_)] = results else {
+        return Err(runtime_error(
+            "SecondsFormatter bootstrap requires identity and FormatNumber functions",
+        ));
+    };
+    // Store only captured functions, never a Lua-visible configuration table.
+    registry_set(state, IDENTITY, *identity);
+    registry_set(state, FORMAT_NUMBER, *format);
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn is_formatter(state: &mut LuaState, object: Val) -> LuaResult<bool> {
+    let validator = registry_get(state, IDENTITY);
+    if validator == Val::Nil {
+        return Ok(false);
+    }
+    match call_function_state(state, validator, &[object])? {
+        Val::Bool(valid) => Ok(valid),
+        _ => Err(runtime_error(
+            "SecondsFormatter identity validator must return a boolean",
+        )),
+    }
+}
+
+/// Invoke the captured common contract with opaque input, never a public Lua override.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn call_format_number(state: &mut LuaState, object: Val, input: Val) -> LuaResult<Val> {
+    if !is_formatter(state, object)? {
+        return Err(runtime_error("expected SecondsFormatter"));
+    }
+    let method = registry_get(state, FORMAT_NUMBER);
+    let result = call_function_state(state, method, &[object, input])?;
+    state.push(result);
+    let value = rilua::table_security::unwrap_secret(state, result)?;
+    state.pop();
+    if !matches!(value, Val::Str(_)) {
+        return Err(runtime_error(
+            "SecondsFormatter FormatNumber must return a string",
+        ));
+    }
+    Ok(result)
 }
 
 fn renderer(state: &mut LuaState) -> Val {

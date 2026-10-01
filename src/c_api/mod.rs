@@ -112,7 +112,7 @@ mod mists_talents;
 #[cfg(feature = "native-duration-formatting")]
 pub(crate) mod native_icu;
 #[cfg(feature = "numeric-rule-formatters")]
-mod numeric_rule_formatter;
+pub(crate) mod numeric_rule_formatter;
 pub(crate) mod on_update_modes;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod patch_12_0_5_enums;

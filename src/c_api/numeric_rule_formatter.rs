@@ -96,8 +96,8 @@ fn create(state: &mut LuaState) -> LuaResult<u32> {
     push_formatter(state, NumericRuleFormatter::default())
 }
 
-fn formatter(state: &LuaState) -> LuaResult<&NumericRuleFormatter> {
-    let Val::Userdata(reference) = stack_val(state, 1) else {
+fn formatter(state: &LuaState, object: Val) -> LuaResult<&NumericRuleFormatter> {
+    let Val::Userdata(reference) = object else {
         return Err(runtime_error(
             "NumericRuleFormatter method requires formatter self",
         ));
@@ -108,6 +108,12 @@ fn formatter(state: &LuaState) -> LuaResult<&NumericRuleFormatter> {
         .get(reference)
         .and_then(|value| value.downcast_ref())
         .ok_or_else(|| runtime_error("incompatible NumericRuleFormatter receiver"))
+}
+
+/// Test actual host-owned identity, not the public FormatNumber property.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn is_formatter(state: &LuaState, object: Val) -> bool {
+    formatter(state, object).is_ok()
 }
 
 fn formatter_mut(state: &mut LuaState) -> LuaResult<&mut NumericRuleFormatter> {
@@ -126,7 +132,15 @@ fn formatter_mut(state: &mut LuaState) -> LuaResult<&mut NumericRuleFormatter> {
 
 fn format_number(state: &mut LuaState) -> LuaResult<u32> {
     let input = model::finite(read_format_input(state)?)?;
-    let rules = &formatter(state)?.rules;
+    let result = format_value(state, stack_val(state, 1), input)?;
+    state.push(result);
+    Ok(1)
+}
+
+/// Native dispatch only: decoded numbers cannot reach a replaced Lua FormatNumber.
+pub(crate) fn format_value(state: &mut LuaState, object: Val, input: f64) -> LuaResult<Val> {
+    let input = model::finite(input)?;
+    let rules = &formatter(state, object)?.rules;
     let end = rules.partition_point(|rule| rule.threshold <= input);
     let rule = end
         .checked_sub(1)
@@ -134,9 +148,7 @@ fn format_number(state: &mut LuaState) -> LuaResult<u32> {
         .cloned()
         .ok_or_else(|| runtime_error("NumericRuleFormatter has no matching breakpoint"))?;
     let numbers = rule.arguments(input)?;
-    let result = apply_format(state, &rule.format, &numbers)?;
-    state.push(result);
-    Ok(1)
+    apply_format(state, &rule.format, &numbers)
 }
 
 fn read_format_input(state: &LuaState) -> LuaResult<f64> {
@@ -157,6 +169,20 @@ fn apply_format(state: &mut LuaState, format: &str, numbers: &[f64]) -> LuaResul
     args.push(create_string(state, format));
     args.extend(numbers.iter().copied().map(Val::Num));
     let printf = registry_get(state, PRINTF);
+    let Val::Function(reference) = printf else {
+        return Err(runtime_error(
+            "numeric rule formatter requires native string.format",
+        ));
+    };
+    let native = matches!(
+        state.gc.closures.get(reference),
+        Some(rilua::vm::closure::Closure::Rust(_))
+    );
+    if !native {
+        return Err(runtime_error(
+            "numeric rule formatter requires native string.format",
+        ));
+    }
     call_function_state(state, printf, &args)
 }
 
@@ -167,7 +193,7 @@ fn validate_printf(state: &mut LuaState, rule: &Breakpoint) -> LuaResult<()> {
 }
 
 fn set_breakpoints(state: &mut LuaState) -> LuaResult<u32> {
-    formatter(state)?;
+    formatter(state, stack_val(state, 1))?;
     let rules = config::read_breakpoints(state, stack_val(state, 2))?;
     for rule in &rules {
         validate_printf(state, rule)?;
@@ -177,7 +203,7 @@ fn set_breakpoints(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn add_breakpoint(state: &mut LuaState) -> LuaResult<u32> {
-    formatter(state)?;
+    formatter(state, stack_val(state, 1))?;
     let rule = config::read_breakpoint(state, stack_val(state, 2))?;
     validate_printf(state, &rule)?;
     let rules = &mut formatter_mut(state)?.rules;
@@ -199,13 +225,13 @@ fn clear_breakpoints(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_breakpoints(state: &mut LuaState) -> LuaResult<u32> {
-    let rules = formatter(state)?.rules.clone();
+    let rules = formatter(state, stack_val(state, 1))?.rules.clone();
     let result = config::write_breakpoints(state, &rules);
     state.push(result);
     Ok(1)
 }
 
 fn copy(state: &mut LuaState) -> LuaResult<u32> {
-    let copied = formatter(state)?.clone();
+    let copied = formatter(state, stack_val(state, 1))?.clone();
     push_formatter(state, copied)
 }

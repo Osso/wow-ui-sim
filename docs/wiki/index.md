@@ -1,3 +1,7 @@
+## [2026-09-30] audit | Extend common duration NumericFormatter consumption
+
+[[duration-core]] now links the [three-formatter duration contract](../specs/duration-core.md#common-numeric-formatting): typed abbreviated/numeric-rule dispatch and captured Seconds identity/FormatNumber, with opaque secret handoff and native core getters. Four default RED cases reproduce missing type support and decoded-modifier disclosure; GREEN is pending. Localized Seconds rendering remains capability-scoped; native parity and general debug confidentiality are unclaimed.
+
 ## [2026-09-30] audit | Record bounded abbreviated formatter implementation
 
 `786e731a1` and `663de5528` add typed abbreviated-number formatter methods and duration Format* consumers. Common cached NumericFormatter docs ground public FormatNumber; localization docs plus existing FIRST_NUMBER_CAP_NO_SPACE ground literal/global suffixes. Four grouped RED cases fail on missing surface; GREEN remains pending. Locale, validation and secret-propagation guesses and future probes belong to [abbreviated formatter spec](../specs/abbreviated-number-formatter.md); see [[duration-core]]. No native or all-formatter duration compatibility claim.
@@ -1594,7 +1598,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, bounded per-environment click-binding interaction profile, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
 | [[casc-asset-cache]] | CASC cache layers, `.product.db` selected-product identity, measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs modeled from ChrSpecialization.db2 (`SpecInfo.mastery_spell_ids`); backs `C_SpecializationInfo.GetSpecializationMasterySpells` and the Character sheet Mastery tooltip |
-| [[duration-core]] | Lua table-proxy duration timing state, including narrow Retail 12.1+/Forever player cast/channel queries, manual clocks, Copy/Assign policy, curve-evaluation reuse, explicit simulator formulas, and native/consumer boundaries |
+| [[duration-core]] | Lua table-proxy timing, three-formatter duration consumption, player cast/channel queries, manual clocks, Copy/Assign, curve evaluation, simulator policies and native/consumer bounds |
 
 ## investigations/
 

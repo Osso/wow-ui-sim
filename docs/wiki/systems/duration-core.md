@@ -18,11 +18,13 @@ The core stores `start`, base duration, and rate. Its rate/modifier formulas, ze
 
 `FrameAPICooldown.SetCooldownFromDurationObject` resolves proxy methods through Lua indexing. A zero duration preserves existing cooldown timing when `clearIfZero = false`; omitted/true clears it. This is tested simulator behavior, not native confirmation. Protected, secret, and forbidden semantics remain unresolved.
 
-## Abbreviated numeric formatting
+## Common numeric formatting
 
-`786e731a1` and `663de5528` add Retail 12.0.5 duration `FormatElapsedDuration`, `FormatRemainingDuration`, and `FormatTotalDuration` with typed abbreviated-formatter dispatch. `AbbreviatedNumberFormatter` owns Rust breakpoint rows; its public `FormatNumber` comes from the cached common `NumericFormatterAPIDocumentation.lua`, not an inferred proxy convention. Existing NumericRuleFormatter/SecondsFormatter duration dispatch remains unsupported in this slice.
+Retail 12.0.5 duration `FormatElapsedDuration`, `FormatRemainingDuration`, and `FormatTotalDuration` dispatch the three source-named NumericFormatter objects. Abbreviated and numeric-rule formatters use typed host-owned rows; numeric-rule printf must remain native. SecondsFormatter uses captured private identity/FormatNumber closures rather than public property lookup. Its configuration store is not exported by the handoff, and secret-derived duration input remains wrapped at the Lua/curve boundary.
 
-The [abbreviated formatter spec](../../specs/abbreviated-number-formatter.md) owns validation, locale and secrecy guesses plus concrete future probes. RED is four missing-surface failures; post-change compilation/runtime proof is pending. No vendor behavior, existing CreateAbbreviateConfig, public Lua secretwrap guard, or caller taint was changed.
+Core getters come from the native methods registry, not replaceable fields on the duration table. Focused default RED at parent build `a3ba2a23a` records three wrong-abbreviated-receiver failures plus a decoded secret-modifier disclosure to a replaced Lua getter in `/tmp/patch-12.0.5-duration-common-red.log`. Post-change focused GREEN is pending. Typed host number/string producers mint derived opaque values without clearing taint; existing secret reads retain their caller guards. The newly appended number-`__tostring` regression was not included in that RED build.
+
+The [duration contract](../../specs/duration-core.md#common-numeric-formatting) owns modifier/secrecy guesses and profile bounds. Native Seconds rendering remains capability-scoped; other profiles retain checked primitive numeric text, not localized units. Existing Seconds Format and duration-text-binding behavior are unchanged. The [abbreviated formatter spec](../../specs/abbreviated-number-formatter.md) owns locale/breakpoint guesses. No native parity, general debug/upvalue confidentiality, vendor change, or caller-taint bypass is claimed.
 
 ## Player cast duration queries
 

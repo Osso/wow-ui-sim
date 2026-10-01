@@ -78,6 +78,11 @@ fn formatter(state: &LuaState, value: Val) -> LuaResult<&AbbreviatedNumberFormat
         .ok_or_else(|| runtime_error("incompatible AbbreviatedNumberFormatter receiver"))
 }
 
+/// Test actual host-owned identity without consulting Lua methods or metatables.
+pub(crate) fn is_formatter(state: &LuaState, object: Val) -> bool {
+    formatter(state, object).is_ok()
+}
+
 fn formatter_mut(state: &mut LuaState) -> LuaResult<&mut AbbreviatedNumberFormatter> {
     let Val::Userdata(reference) = stack_val(state, 1) else {
         return Err(runtime_error("expected AbbreviatedNumberFormatter"));

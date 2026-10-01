@@ -51,6 +51,19 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 
 `Reset` produces `s=0,D=0,r=1` and retains the clock. `SetToDefaults` additionally selects the default simulator clock. Existing manual clocks use their mutable `time` field; invalid/nonfinite bound clock time errors on clock-dependent queries. Clock setter validation remains unchanged.
 
+## Common numeric formatting
+
+Retail 12.0.5 source `data/patch-api/sources/12.0.5-api-changes.txt:19` names AbbreviatedNumberFormatter, NumericRuleFormatter, and SecondsFormatter as duration Format consumers. Cached `NumericFormatterAPIDocumentation.lua` defines `FormatNumber(number) -> string` with `SecretArguments = "AllowedWhenUntainted"`; duration documentation declares all three Format methods with NumericFormatter arguments, RealTime default modifiers, and `SecretWhenNumericFormatterSecret`.
+
+- [ ] Accept real instances of all three formatter types in `FormatElapsedDuration`, `FormatRemainingDuration`, and `FormatTotalDuration`. Reuse each existing formatter's numeric contract, not an arbitrary Lua callback or a duck-typed table.
+- [ ] Apply the existing duration getter's omitted/nil, RealTime, or BaseTime modifier exactly once, returning one string. Reject unknown formatters and invalid modifiers without changing duration timing or formatter configuration.
+- [ ] Preserve secret duration, modifier, wrapped formatter, and formatter-derived output provenance. Retain existing untainted-caller requirements for decoded secret timing and arguments; do not clear caller or callback closure taint.
+- [ ] Keep derived secret time opaque at the SecondsFormatter Lua/curve boundary. Native abbreviated/numeric-rule dispatch and core duration queries must not deliver decoded time, modifiers, or formatter configuration to arbitrary Lua callbacks, including replaced getters, public FormatNumber methods, or string.format.
+
+Conservative output propagation from secret duration/modifier/wrapped receiver is a **simulator guess**, not native-verified parity. Existing rendering bounds remain: abbreviated formatting models enUS/enGB; numeric rules retain their finite numeric printf policies; native SecondsFormatter uses the existing private localized backend, while profiles without that capability retain numeric-text output through a checked common FormatNumber entry. Adding duration consumption does not establish localized SecondsFormatter rendering on those profiles.
+
+Future native probes: use all three real factories with a manual duration of base 2468/rate 2 at elapsed real time 300; compare total/elapsed/remaining outputs for omitted/nil, RealTime, and BaseTime. Repeat with secret timing, modifier, formatter references, and formatter-derived secrets in secure and tainted closures; record result secrecy, exact strings, callback input secrecy/closure taint, errors, and unchanged duration/configuration after rejection. Exact native coercions, error strings, secret-configuration policies, and callback evaluation ordering remain unverified.
+
 ## How it works
 
 - [Lua API architecture](../lua-api.md)
@@ -65,6 +78,7 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 ## Tests asserting this spec
 
 - `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances; percentage boundary/rewind, zero-span, invalid modifier, invalid clock, and seven Copy/Assign simulator-policy cases.
+- `tests/duration_numeric_formatters.rs`: four default-profile cases cover all three actual formatter objects, concrete total/elapsed/remaining values, modifiers, secret provenance/caller guards, receiver/contract validation, captured numeric printf, trusted core getter dispatch despite Lua overrides, and unchanged state after errors. A fifth native-backend case covers opaque curve input and retained callback taint. Focused RED/GREEN execution is pending; test presence is not proof.
 - Existing `tests/cooldown_widget.rs` and duration-text-binding tests: bounded consumer regression checks; these do not establish native core formulas.
 
 `/tmp/verify-duration-percent-ledger.json` records the earlier seven-case percentage proof. The first Copy/Assign GREEN attempt at `19416ff84` did not compile: `/tmp/duration-copy-green-ledger.json` records E0308 before tests ran. `acb86ceda` corrects that mutability mismatch; `/tmp/duration-copy-green-retry-ledger.json` retains durable 7/7 output but lost its numeric exit code in a post-execution wrapper error. Final independent proof is `/tmp/verify-duration-copy-ledger.json`: all 15 `duration_core::` tests pass with exit 0 on 12.0.0, 12.0.5, 12.0.7, and Mists; format, default check, both default binaries, no-addons/no-saved-vars startup (`[]`), both affected validators, and all-manifest hash scanning pass. Historical warnings remain 6/6/1/6; default verification has none. This proves ordinary simulator policies only. Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
