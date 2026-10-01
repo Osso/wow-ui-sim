@@ -48,11 +48,21 @@ Five hover cases now pass in the current run; checked criteria reflect their bou
 
 Five `hover_*` cases in `tests/gamepad_mapped_state.rs` assert synchronous state-before-event transitions, isolation from sticks/style, invalid ordinary arguments, untainted opaque acceptance, and tainted opaque rejection. Their recorded RED remains historical; current `hover-green.stdout` records all five passing.
 
+## Final independent proof and limits
+
+SSOT: `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/independent-hover-report.md` (read fully) and `independent-hover-command-ledger.json`, with referenced invocation/ledger files. Independent source, wiring, security and readability audits completed; readability advisories remain, not edit authorization. Runtime at `a956dfdd3`: **overall FAIL**, 71/75 pass (11/11 mapped/hover, 60/60 prior controls, 0/4 AutoRoll blocked before local loading/decisions). All 4393 cached sources, 205 addon files, host CVars and executable remain unchanged; no hash drift or stale-cache claim.
+
+Default `cargo check --offline` exits 0 with zero warnings. First `cargo fmt --check` fails on concurrent `CastTargetSnapshot` re-export wrapping; original failed-fmt and restart/lost-output proof remain preserved. Corrected fmt passes at `8d2c7ccff42f4dd4293e42f1c5fdc5ea2ecbd50c` with unchanged source/config input scope. `independent-hover-check-input-reconciliation.json` classifies during-check input drift as whitespace-only plus uncompiled `tests/unit_spell_target_name.rs`; `independent-hover-concurrency-classification.json` retains full diffs. No check/runtime rerun. Casting representation changes preceding default gates occurred after the runtime: current root casting representation is not blanket-covered by the 75-case run.
+
+Forever `[Family]` resolves Mainline. Loaded `Mainline/GameDialogDefs.lua:1387` eagerly captures `C_Club.GetInvitationCandidates` as `autoCompleteSource`; invocation at :1357 is only inside the `InviteToClub` callback. Base `GameDialogDefs.lua:3412` eagerly calls `C_GameRules.IsHardcoreActive` to gate popup definitions. Basename/:1371 diagnostic attribution is not the physical Mainline-family line. Neither local AutoRoll source invokes these queries. No code exemption, masking or vendor modification follows.
+
+Production edits stopped after three dependency iterations. User-owned decision remains whether the fixture requires whole-dependency cleanliness or only the consumed path. No AutoRoll decision, native parity, inventory credit or overall completion follows; existing native/hardware/Reveal/profile limits remain.
+
 ## Known gaps (current cycle)
 
 - [x] Retry compilation exits 0 with unchanged recorded inputs; five hover and three cached initializer cases pass.
-- [ ] Four AutoRoll workflows remain blocked before local lifecycle decisions at the StaticPopup requirements above; eager-call/lookup explorer classification is pending.
-- [ ] Independent verifier `20374` source/readability/default fmt/check gates remain ongoing; no overall acceptance.
+- [ ] Four AutoRoll workflows remain blocked before local lifecycle decisions at the StaticPopup requirements above; classification complete; fixture cleanliness scope remains user-owned.
+- [x] Independent audits and scoped default gates completed as recorded above; overall acceptance remains FAIL.
 
 Original GREEN build runner was interrupted by Pi restart, proven a terminated zombie with no surviving compiler. Original lost-output proof is retained, not silently replaced by retry success. `hover-green-retry-build-ledger.json` records exit 0 at unchanged `a956dfdd3` inputs; runtime artifact names remain `hover-green-*`, not `hover-green-retry-*`. Runtime ledger records unchanged binary, addon and host CVar hashes. Later commits are not blanket-covered by this source-scoped proof.
 
