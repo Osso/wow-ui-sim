@@ -23,7 +23,7 @@ Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract ove
 - [ ] Reuse shared [chat messaging lockdown guard](chat-messaging-lockdown.md) before effects. Explicit lockdown true rejects setter with a nonempty runtime error; false allows ordinary requests regardless of combat. Both getters remain readable in all four combat/lockdown combinations. Do not change either restriction input.
 - [ ] **Conservative inferred security policy:** reject actual VM secret enum or secret master string before effects in both untainted and tainted callers, including secret optional string on a non-master request. Preserve secret values, shared state, event queue and caller taint. Do not unwrap or declassify. This is stricter than cached `AllowedWhenUntainted`; no annotation parity claim.
 
-Boxes describe the contract, not native acceptance. Saved bounded compiled proof is recorded below; independent verifier288 remains pending.
+Boxes describe the contract, not native acceptance. Saved bounded compiled proof is recorded below; independent bounded acceptance is recorded below.
 
 ## How it works
 
@@ -59,7 +59,17 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 - Same binary run3 (`party_countdown::`) exits101, **0 PASS / 10 FAIL**: behavioral RED for the next slice, not loot acceptance or a compilation failure. Countdown remains open; its spec/wiki ownership is excluded here.
 - Saved startup at `676e4c25a` exits0 with `[]` and CLEAN0 unique/occurrences; `/tmp/patch-12.0.5-batch34-green-fixed-startup-run.json` binds wow-sim SHA256 `770a9a5522645f8cba951e30070406dbb8c14c1888ee9bff7284dd2527e42ba7`. This is parent snapshot proof, not a fresh rerun or broader compatibility gate.
 
-**Verifier288 pending.** No fresh fmt/check/readability, native security/permissions, all-profile or full-row acceptance inferred. Final `prose-2026-03-31-169` remains pending for broader limits/countdown; **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash and unrelated statuses unchanged. Docs/accounting inspection only; no code/tests/builds/delegation.
+**Verifier288 bounded PASS**, detailed below. Native security/permissions, all-profile and full-row acceptance remain unproved. Final `prose-2026-03-31-169` remains pending for broader limits/countdown; **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash and unrelated statuses unchanged. Docs/accounting inspection only; no code/tests/builds/delegation.
+
+## Independent bounded acceptance — 2026-10-01
+
+`/tmp/patch-12.0.5-loot-method-independent-proof.md` accepts saved **19 unique PASS / 31 executions**, startup exit0 `[]`, and fresh default fmt/check exit0 (12.75s/15.07s), each run once. Check before/after revision `676e4c25a` and 13 stable source hashes match saved GREEN; relevant loot source/tests match producer `f2e85fcb6`. Later countdown producer `27a840b34` registration/state edits are not covered by that earlier check; no whole-tree gate claimed.
+
+**Fmt artifact collision:** initial `Path.with_suffix` on the dotted basename caused check to overwrite fmt streams and snapshots. Direct tool output preserves fmt exit0/time/zero stream lengths; reconstructed empty streams/JSON are labeled. Exact fmt before/after revision metadata is unavailable, not fabricated or rerun. Original check snapshots remain valid.
+
+Two nonblocking readability findings deferred: `apply_selection` hides queued event publication in its name; `resolve_indices` uses bare master-enum `2` and modeled raid-cutoff `6`. No observed bounded correctness defect; no code changes authorized here. Native `AllowedWhenUntainted`, permissions, general raid/party-player resolution and event policy remain unproved.
+
+Countdown now has [separate parent GREEN](party-countdown.md#reconciled-batch35-parent-proof--2026-10-01), independent292 pending. Row169 remains pending; accounting **264/84/14 = 362**, retained IDs/source hash unchanged. Any future row decision must name the exact bounded predicate: explicit chat-lockdown input blocks the four named setters/actions, while combat alone does not. It cannot imply native lockdown production, network delivery or permission enforcement.
 
 ## Exact evidence and inference boundary
 
@@ -73,7 +83,8 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 ## Known gaps (current cycle)
 
 - [x] Parent saved bounded GREEN and legacy/availability controls: 19 unique PASS, provenance and duplicate accounting above.
-- [ ] Independent verifier288 acceptance and broader gates remain pending.
+- [x] Independent verifier288 bounded acceptance: saved 19 unique PASS / 31 executions; fresh fmt/check exit0 with fmt artifact limitation below.
+- [ ] Broader/native gates remain open; countdown independent292 pending.
 - [ ] Cached `AllowedWhenUntainted` acceptance is not implemented by conservative rejection; native taint/security parity remains unknown.
 - [ ] General raid member resolution is unclaimed: existing raid `UnitName`/existence indexing differs from `GetRaidRosterInfo`'s player-first roster. Only explicit player roster index 1 is selected here; do not fabricate a general mapping.
 - [ ] Solo/party-player master encoding, native missing/ambiguous/realm-name policies, native permissions and native event repetition/timing remain unknown. Existing zero-index state cannot distinguish an assigned party player from no assignment without a separate contract.
@@ -82,4 +93,4 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 - Availability redesign, eligibility/leadership/native permissions, loot distribution and threshold mutation; existing availability set is deliberately unchanged.
 - Native lockdown activation/reset, countdown/other named party actions, all-profile/native parity and closure of final prose row169.
-- Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns runtime proof; independent acceptance remains pending.
+- Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns runtime proof; independent acceptance is bounded as recorded above.

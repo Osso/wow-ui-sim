@@ -1,6 +1,6 @@
 # Party countdown
 
-Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. The provider is registered by `src/c_api/c_party_info.rs` and implemented in its C API-owned `countdown` module. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Parent reports compiled RED at `676e4c25a` (ten FAIL); producer GREEN and independent acceptance remain pending.
+Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. The provider is registered by `src/c_api/c_party_info.rs` and implemented in its C API-owned `countdown` module. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Parent reports compiled RED at `676e4c25a` (ten FAIL); parent GREEN is recorded below; independent292 acceptance remains pending.
 
 Cached generated `Blizzard_APIDocumentationGenerated/PartyInfoDocumentation.lua:156–170` declares required numeric `seconds`, one required `success:boolean`, `HasRestrictions=true`, and `SecretArguments="AllowedWhenUntainted"`. Cached `WorldStateInfoDocumentation.lua:10–39` declares synchronous events:
 
@@ -52,12 +52,21 @@ Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-regi
 
 Parent filter: `cargo test --test integration party_countdown::`.
 
-**Proof ledger, 2026-10-01:** parent-established compiled RED at `676e4c25a`, same successful build recorded by `/tmp/patch-12.0.5-batch34-green-fixed-build-result.json`; parent reports run3 logs/manifests show ten FAIL because no producer existed. Producer slice runs formatting only, no builds/tests/checks/readability gate or native probes. Parent owns GREEN compilation/run and independent acceptance. Existing grouped harness discovery requires no other test/Cargo edits. Requirement checkboxes stay open pending behavioral proof.
+**Proof ledger, 2026-10-01:** parent-established compiled RED at `676e4c25a`, same successful build recorded by `/tmp/patch-12.0.5-batch34-green-fixed-build-result.json`; parent reports run3 logs/manifests show ten FAIL because no producer existed. Producer slice runs formatting only, no builds/tests/checks/readability gate or native probes. Parent owns GREEN compilation/run and independent acceptance. Existing grouped harness discovery requires no other test/Cargo edits. Requirement checkboxes stay open pending independent acceptance; parent behavioral GREEN is recorded below.
+
+## Reconciled batch35 parent proof — 2026-10-01
+
+Saved `/tmp/patch-12.0.5-batch35-green-{build-result,runs,startup-run}.json` and build/run-{0,1,2,3}/startup logs establish producer `27a840b348f8391e2fd7794d2b4f96c4aec19460`: integration no-run build exit0 in **251.83s**; **10 countdown + 12 loot + 6 ready-check + 7 ping = 35 PASS**, four exit0 selected runs. Integration SHA256 `5e22d2e2f5f6d9531e5ea3651f0dac3aeb6ff1d26a9c574031526e9cc80371d0`. Countdown proof covers the ten fixtures above; controls are selected, not a broad suite.
+
+Saved normal startup exits0 in10.03s, stdout `[]`, CLEAN0 unique/occurrences; wow-sim SHA256 `721c2b00b2220ff21362e0ea11af372cb437c84be91b84f722860988dda4e00e`. Saved artifacts inspected only, not rerun. **Independent292 pending**; earlier [loot fmt/check](party-loot-method.md#independent-bounded-acceptance--2026-10-01) predates countdown producer and is not a countdown gate.
+
+Row `prose-2026-03-31-169` remains pending before countdown independent acceptance. Preserve **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash. Future row decisions must specify the exact bounded explicit-input predicate across countdown, ready check, ping and loot: lockdown blocks requests; combat alone does not. No native lockdown activation/secrecy, network or permission-enforcement credit. Lifecycle/security/error policies above remain inferred.
 
 ## Known gaps (current cycle)
 
 - [x] Parent established compiled behavioral RED before producer work: ten FAIL at `676e4c25a`, not compile errors.
-- [ ] Parent proves the implemented bounded producer GREEN, then obtains independent acceptance.
+- [x] Parent saved bounded producer GREEN: countdown10 and selected controls25 PASS, startup0 `[]`.
+- [ ] Independent292 acceptance remains pending; no countdown fresh fmt/check claimed.
 - [ ] Native zero-as-cancel/replacement, duration validation, blocked failure convention, initiator/chat policy and `AllowedWhenUntainted` behavior remain unverified. These are explicitly inferred simulator policies.
 
 ## Out of scope

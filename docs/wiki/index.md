@@ -1,5 +1,9 @@
 ## [2026-10-01] implementation | Add bounded party countdown producer
 
+## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN
+
+[Independent loot acceptance](../specs/party-loot-method.md#independent-bounded-acceptance--2026-10-01): **19 unique PASS / 31 executions**, saved startup0 `[]`, fresh fmt/check0. Fmt revision artifact collision explicitly limits provenance; original check snapshots at `676e4c25a` valid, later countdown edits excluded. Two nonblocking readability findings deferred. [Countdown parent proof](../specs/party-countdown.md#reconciled-batch35-parent-proof--2026-10-01): `27a840b34`, build0/251.83s, countdown10+loot12+ready6+ping7=**35 PASS**, startup0 `[]`; **independent292 pending**. Row169 stays pending; **264/84/14 = 362**, IDs/source hash retained. Future decision limited to explicit chat-lockdown-vs-combat predicate, not native/network/permission enforcement.
+
 [[lua-api#Retail 12.0.5 party countdown]] links [countdown contract](../specs/party-countdown.md): C API-owned per-environment request snapshots, lockdown-first public finite-duration validation and synchronous exact START/CANCEL payloads commit before callbacks. Parent reports ten compiled RED failures at `676e4c25a`; producer formatting only, GREEN/acceptance pending. Cancellation/replacement/security/no-chat policies inferred; no scheduler, native permissions/network parity or audit promotion. Loot code/tests untouched.
 
 ## [2026-10-01] implementation | Add bounded party loot producer
