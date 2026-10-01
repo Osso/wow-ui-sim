@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile batch42 indexed aura parent GREEN
+
+[Indexed argument proof](../specs/unit-aura-index-secret-arguments.md#reconciled-batch42-parent-green--2026-10-01) records producer `8e04eaa335b4df36b213c92842ef4242d81d2025`, unchanged fixtures `414f87346`, compile0/238.27s, **12 indexed + 14 filter + 7 shape + 29 aura + 18 corrected admin = 80 unique PASS**, startup0 `[]`, exact artifacts/hashes. Zero-test `admin_buff::` excluded. Independent Rust/security/readability gates and parent acceptance pending; exact373/374/384/385/389/390 uncredited, accounting/PLAN unchanged. Native access/conditional output secrecy excluded; strict representations inferred, selection/DTO/store and earlier profiles retained.
+
 ## [2026-10-01] implementation | Add bounded indexed aura argument producers
 
 Updated [[lua-api#Retail 12.0.5 indexed aura arguments]], index and [contract](../specs/unit-aura-index-secret-arguments.md). Added epoch-gated C API providers; original indexed providers remain only before 12.0.5. Existing helper/polarity/DTO/store behavior retained; all documented positions VM-authenticated and strictly validated before lookup. Saved parent batch42 RED provenance corrected in contract. Formatting only in producer slice; parent GREEN/regression/startup/independent gates and exact six-row accounting pending. No native permission/restricted-output or source-row completion claim.

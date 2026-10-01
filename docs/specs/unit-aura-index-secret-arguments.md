@@ -1,6 +1,6 @@
 # Unit aura indexed getter secret arguments
 
-Bounded Retail 12.0.5 fixture contract for `C_UnitAuras.GetAuraDataByIndex`, `GetBuffDataByIndex` and `GetDebuffDataByIndex`. Only six argument-delta rows are selected. Source facts come from [the committed delta ledger](../../data/patch-api/sources/12.0.5-api-changes.txt) and the complete retail cache declaration at `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua`. Existing model context: [Lua API system](../wiki/systems/lua-api.md). Bounded argument-boundary producer implemented after genuine parent RED; parent owns GREEN, regression, startup, independent acceptance and six-row accounting. No post-producer execution proof claimed.
+Bounded Retail 12.0.5 fixture contract for `C_UnitAuras.GetAuraDataByIndex`, `GetBuffDataByIndex` and `GetDebuffDataByIndex`. Only six argument-delta rows are selected. Source facts come from [the committed delta ledger](../../data/patch-api/sources/12.0.5-api-changes.txt) and the complete retail cache declaration at `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua`. Existing model context: [Lua API system](../wiki/systems/lua-api.md). Bounded argument-boundary producer implemented after genuine parent RED; parent owns GREEN, regression, startup, independent acceptance and six-row accounting. Saved parent GREEN recorded below; independent gates and parent acceptance remain pending.
 
 ## What it must do
 
@@ -50,15 +50,15 @@ Source IDs are `global api-C_UnitAuras-GetAuraDataByIndex-373` / `-374`, `global
 
 ## Tests asserting this spec
 
-`tests/next125aura.rs`: **12 fixtures, unchanged by producer**. Grouped integration filter: `next125aura::`; requires `retail-12-0-5` enabled. Saved parent RED compiled and ran before producer; this slice runs formatting only. Parent GREEN/gates pending; formatting is not compiled proof.
+`tests/next125aura.rs`: **12 fixtures, unchanged by producer**. Grouped integration filter: `next125aura::`; requires `retail-12-0-5` enabled. Saved parent RED compiled and ran before producer. Saved parent GREEN covers unchanged fixtures and controls; independent gates and parent acceptance remain pending.
 
 | Coverage | Fixture count | Saved parent RED / post-producer proof |
 | --- | ---: | --- |
-| Player/party full DTO, polarity and source flags; optional filter defaults; retained filter selection | 4 | 4 PASS retained controls / GREEN pending |
-| Blocked compaction; valid index/unknown misses and exact nullable arity | 2 | 2 PASS retained controls / GREEN pending |
-| Strict unit/filter/index representations before unknown lookup | 2 | 2 FAIL genuine boundary failures / GREEN pending; policy inferred |
-| Each/combined authentic secrets, tainted denial/recovery, GC-rooted roundtrip | 3 | 3 FAIL genuine secret failures / GREEN pending |
-| Store/block/provider immutability and independent DTO mutation | 1 | 1 FAIL at authentic secret input / GREEN pending |
+| Player/party full DTO, polarity and source flags; optional filter defaults; retained filter selection | 4 | 4 PASS retained controls / GREEN 4 PASS |
+| Blocked compaction; valid index/unknown misses and exact nullable arity | 2 | 2 PASS retained controls / GREEN 2 PASS |
+| Strict unit/filter/index representations before unknown lookup | 2 | 2 FAIL genuine boundary failures / GREEN 2 PASS; policy inferred |
+| Each/combined authentic secrets, tainted denial/recovery, GC-rooted roundtrip | 3 | 3 FAIL genuine secret failures / GREEN 3 PASS |
+| Store/block/provider immutability and independent DTO mutation | 1 | 1 FAIL at authentic secret input / GREEN 1 PASS |
 
 The secure/tainted matrices cover all three getters; general getter covers both polarity filters. VM secrets are host-created, rooted before global insertion and observed using real security helpers. No simulated secret marker or overridden query/vendor implementation.
 
@@ -68,9 +68,19 @@ Saved at `414f87346c2c836a849dee2eaaff9ff0bdb62ad2`: `cargo test --test integrat
 
 Strict unit/filter/index fixtures fail on existing coercion/defaults. Secure, GC and immutability fixtures fail with `expected string, got userdata at argument 1` on authentic host-secret STRING. Tainted fixture fails at `GetBuffDataByIndex` because the old wrapper ignores supplied secret filter. These are callable-provider behavior failures, not missing registration or compile failures. Six passing fixtures establish retained modeled behavior only; they do not prove secret authentication. This supersedes the earlier written-only status.
 
+### Reconciled batch42 parent GREEN — 2026-10-01
+
+Producer `8e04eaa335b4df36b213c92842ef4242d81d2025`, unchanged fixtures `414f87346c2c836a849dee2eaaff9ff0bdb62ad2`: saved `cargo test --test integration --no-run --message-format=json` exit **0**, **238.27s**. `/tmp/patch-12.0.5-batch42-green-build-result.json` binds `target/debug/deps/integration-a11e89d240f9bd0c` to SHA256 `362a5bab54821d4499128f955517b66d1411bc45b60f237700ab39235b81022a`. Build transcripts: `/tmp/patch-12.0.5-batch42-green-build.jsonl` and `/tmp/patch-12.0.5-batch42-green-build.log`.
+
+`/tmp/patch-12.0.5-batch42-green-runs.json` records the same revision/binary hash for **80 unique PASS**: `next125aura::` **12**, `unit_aura_filter_query::` **14**, `aura_table_shape::` **7**, `aura_api::` **29**, corrected `admin_buff_api::` **18**, each exit **0**. Raw artifacts: `/tmp/patch-12.0.5-batch42-green-run-{0,1,2,3,5}.{stdout,stderr}` respectively. Original `admin_buff::` (run4) selected **zero tests** and supplies no control proof; its exit0 is excluded.
+
+`/tmp/patch-12.0.5-batch42-green-startup-run.json` records startup exit **0**, **5.638s**, stdout `[]`, at producer revision; wow-sim SHA256 `5c13e22ae410eb80bce3c75d229a42c9a93bb0cab792f43216662334c55d0554`. Raw artifacts: `/tmp/patch-12.0.5-batch42-green-startup.stdout` and `.stderr`. Startup is bounded error-scan evidence, not native access/output secrecy or consumer closure proof.
+
+Saved parent runs only; no new executions by this docs audit. Independent Rust/security/readability gates and parent acceptance remain pending. Strict representations inferred; selection/DTO/store and earlier-profile providers retained. Exact373/374/384/385/389/390 remain uncredited; no accounting/PLAN change follows from GREEN alone.
+
 ## Known gaps (current cycle)
 
-- [ ] Producer implemented; parent-owned GREEN/controls, startup, independent acceptance and final Rust/security/readability gates pending. Prior RED is invalid as post-producer proof. Six source rows373/374/384/385/389/390 remain uncredited here; accounting/PLAN unchanged.
+- [ ] Saved parent GREEN/controls and startup recorded above; independent acceptance and final Rust/security/readability gates pending. Prior RED is invalid as post-producer proof. Six source rows373/374/384/385/389/390 remain uncredited here; accounting/PLAN unchanged.
 - [ ] `RequiresUnitAuraAccess` and `SecretWhenUnitAuraRestricted` lack grounded aura permission/restriction state in this scope. No fixture proves native authorization, conditional secret outputs, restricted DTO fields or arbitrary declassification.
 - [ ] Strict signed-i32 index policy and invalid-input/missing-result/error behavior are inferred simulator contracts, not native-client-verified semantics.
 - [ ] Native filter semantics and cached consumer closure remain unproved. Tests deliberately retain current indexed selection instead of promoting the instance-query PLAYER predicate into it.
