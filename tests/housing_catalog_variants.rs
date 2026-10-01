@@ -62,7 +62,11 @@ fn inject_catalog(env: &WowLuaEnv) {
         },
     )
     .collect();
-    env.state().borrow_mut().housing.catalog = HousingCatalogState { entries, variants };
+    env.state().borrow_mut().housing.catalog = HousingCatalogState {
+        entries,
+        variants,
+        ..HousingCatalogState::default()
+    };
 }
 
 fn fixture_env() -> WowLuaEnv {

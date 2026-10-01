@@ -61,9 +61,31 @@ pub struct HousingDecorDyeSlot {
     pub dye_color_name: Option<String>,
 }
 
+/// Category identity is the map key; ownership is an explicit input, not a variant sum.
+#[derive(Clone, Debug)]
+pub struct HousingCatalogCategoryRecord {
+    pub order_index: i32,
+    pub name: Option<String>,
+    pub icon: Option<String>,
+    pub subcategory_ids: Vec<i32>,
+    pub any_stored_entries: bool,
+}
+
+/// Subcategory identity is the map key; parent identity does not alias a category record.
+#[derive(Clone, Debug)]
+pub struct HousingCatalogSubcategoryRecord {
+    pub order_index: i32,
+    pub parent_category_id: i32,
+    pub name: Option<String>,
+    pub icon: Option<String>,
+    pub any_stored_entries: bool,
+}
+
 /// Per-environment input; Default supplies no records or fallback data.
 #[derive(Clone, Debug, Default)]
 pub struct HousingCatalogState {
+    pub categories: HashMap<i32, HousingCatalogCategoryRecord>,
+    pub subcategories: HashMap<i32, HousingCatalogSubcategoryRecord>,
     pub entries: HashMap<HousingCatalogEntryID, HousingCatalogEntryRecord>,
     pub variants: HashMap<HousingCatalogEntryVariantID, HousingCatalogVariantRecord>,
 }
