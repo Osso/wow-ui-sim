@@ -159,6 +159,15 @@ fn duration_getter_overrides_cannot_receive_decoded_secret_modifiers() {
         assert(calls == 0, 'duration Format must use trusted core queries')
         rawset(d, 'GetTotalDuration', nil)
         assert(d:GetTotalDuration() == 1234)
+        local previous = debug.getmetatable(0)
+        debug.setmetatable(0, {__tostring=function()
+            error('decoded number disclosed to conversion callback')
+        end})
+        for index, formatter in ipairs(formatters) do
+            local result = d:FormatTotalDuration(formatter, modifier)
+            assert(issecretvalue(result) and secretunwrap(result) == expected[index])
+        end
+        debug.setmetatable(0, previous)
     "#,
     );
 }
