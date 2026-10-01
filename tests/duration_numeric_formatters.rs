@@ -54,6 +54,10 @@ fn all_three_formatters_render_real_elapsed_remaining_and_base_modifiers() {
         clock:SetTime(1500)
         assert(d:FormatRemainingDuration(seconds) == (nativeSeconds and '0s' or '0'))
         assert(d:FormatElapsedDuration(numeric) == '1234 ticks')
+        local original = string.format
+        string.format = function() error('arbitrary replacement printf') end
+        assert(d:FormatTotalDuration(numeric) == '1234 ticks')
+        string.format = original
     "#,
     );
 }
@@ -160,10 +164,6 @@ fn seconds_curve_receives_opaque_time_and_retains_closure_taint() {
         assert(secretDuration:HasSecretValues())
         seconds:SetMaxInterval(3)
         assert(d:FormatTotalDuration(seconds) == '20m 34s')
-        local original = string.format
-        string.format = function() error('arbitrary replacement printf') end
-        assert(d:FormatTotalDuration(numeric) == '1234 ticks')
-        string.format = original
     "#,
     );
 }
