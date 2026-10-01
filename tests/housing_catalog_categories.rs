@@ -22,6 +22,7 @@ fn inject_categories(env: &WowLuaEnv) {
                 icon: Some("fixture-category-atlas".into()),
                 subcategory_ids: vec![1002, 1001],
                 any_stored_entries: true,
+                editor_mode_contexts: vec![],
             },
         ),
         (
@@ -32,6 +33,7 @@ fn inject_categories(env: &WowLuaEnv) {
                 icon: Some("fixture-category-atlas".into()),
                 subcategory_ids: vec![1002, 1001],
                 any_stored_entries: false,
+                editor_mode_contexts: vec![],
             },
         ),
     ]
@@ -45,6 +47,7 @@ fn inject_categories(env: &WowLuaEnv) {
                 name: Some("Fixture subcategory".into()),
                 icon: Some("fixture-subcategory-atlas".into()),
                 any_stored_entries: true,
+                editor_mode_contexts: vec![],
             },
         ),
         (
@@ -55,6 +58,7 @@ fn inject_categories(env: &WowLuaEnv) {
                 name: Some("Fixture subcategory".into()),
                 icon: Some("fixture-subcategory-atlas".into()),
                 any_stored_entries: false,
+                editor_mode_contexts: vec![],
             },
         ),
     ]

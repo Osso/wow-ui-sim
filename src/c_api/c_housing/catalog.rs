@@ -70,6 +70,8 @@ pub struct HousingCatalogCategoryRecord {
     pub icon: Option<String>,
     pub subcategory_ids: Vec<i32>,
     pub any_stored_entries: bool,
+    /// Explicit host associations; empty means no known editor-mode association.
+    pub editor_mode_contexts: Vec<i32>,
 }
 
 /// Subcategory identity is the map key; parent identity does not alias a category record.
@@ -80,6 +82,8 @@ pub struct HousingCatalogSubcategoryRecord {
     pub name: Option<String>,
     pub icon: Option<String>,
     pub any_stored_entries: bool,
+    /// Explicit host associations; empty means no known editor-mode association.
+    pub editor_mode_contexts: Vec<i32>,
 }
 
 /// Per-environment input; Default supplies no records or fallback data.

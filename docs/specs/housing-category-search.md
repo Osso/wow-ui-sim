@@ -1,0 +1,81 @@
+# Housing category search
+
+`C_HousingCatalog.SearchCatalogCategories` and `SearchCatalogSubcategories` must query explicit category/subcategory inputs in `src/c_api/c_housing/catalog.rs`. This batch26 tests+inputs contract targets exact 12.0.5 audit row `structures-HousingCategorySearchInfo-661`: `withOwnedEntriesOnly` → `withStoredEntriesOnly`. Category snapshot getters from producer `bbbacf8f0` are unchanged. See [API architecture](../wiki/systems/lua-api.md) for subsystem context.
+
+## What it must do
+
+### Cached declaration contract
+
+- [ ] Require a non-nil `HousingCategorySearchInfo` table; return a table of numeric category/subcategory IDs. Cached `HousingCatalogUIDocumentation.lua:385–412` declares both functions and `SecretArguments = "AllowedWhenUntainted"`.
+- [ ] Default missing/nil `withStoredEntriesOnly` and `includeFeaturedCategory` to false. `HousingCatalogUIDocumentation.lua:594–601` declares `Default = false` for both booleans and optional `editorModeContext`.
+- [ ] With `withStoredEntriesOnly = true`, restrict results to records with stored entries; an editor mode restricts results to associated records. Cached text describes stored entries as "the player has something stored under" and mode filtering as "categories associated with/used by this Editor Mode". Native associations are not supplied by this declaration.
+
+### Explicit simulator policies, not native guarantees
+
+- [ ] Query only the appropriate explicit map. Empty maps return fresh empty arrays, never former seed IDs or synthesized featured records.
+- [ ] Use each record's explicit `any_stored_entries` boolean; never derive it from partial variants, names, subcategory lists, or parent records. False/default includes both stored and unstored records.
+- [ ] Both category and subcategory records accept host-owned `editor_mode_contexts: Vec<i32>`. Existing literals receive empty vectors without changing other data. Empty means no known association, not association with every mode. No context (`None`/nil) applies no mode filter; a specified public integer matches exact vector membership. Explicit numbers are host inputs, not fabricated native enum associations.
+- [ ] Exclude the existing featured category by default/false, include it when requested and all other filters match. Read the current runtime `Constants.HousingCatalogConsts.HOUSING_CATALOG_FEATURED_CATEGORY_ID`; do not hardcode its value. The requested `HousingConsts` namespace is not the observed namespace: cached `HousingCatalogConstantsDocumentation.lua:67–73` declares `HousingCatalogConsts`, matching runtime `src/lua_api/globals/enum_data/constants_values.lua`.
+- [ ] **Inferred featured-subcategory policy:** treat a subcategory as featured solely when its explicit `parent_category_id` equals that constant. Do not require the parent category record to exist. General subcategory queries also impose no inferred graph/list-membership constraint.
+- [ ] Sort results by `order_index`, then numeric map ID, independent of insertion order. This deterministic simulator policy is not a native ordering guarantee.
+- [ ] Return fresh snapshots; caller result mutations do not affect inputs or future queries. Subsequent host input insertion, removal, predicate, association, or order changes affect new results, not previous arrays. Searches do not mutate catalog records, entries, or variants.
+
+### Bounded parser/security and deprecated consumer
+
+- [ ] Require a public table and preserve the VM table-access guard before reading fields. Supplied booleans must be public booleans; optional mode must be a public integral `i32`, not a coerced string, fractional number, boolean, secret, or out-of-range number. This strict simulator boundary is not complete native validation evidence.
+- [ ] Allow ordinary public addon calls without clearing caller taint. Reject secret tables and each secret field in secure and tainted callers without unwrapping values or changing caller taint. Preserve host-installed VM secured-table rejection; the fixture installs real rilua policy because retail `settablesecurity` is a compatibility no-op.
+- [ ] Raw new APIs ignore removed `withOwnedEntriesOnly`. The actual cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:113–121,196–208` wrapper maps the old field only when new is missing: explicit new false wins over old true. Consumer table mutation by that wrapper is intentional and distinct from raw query/input mutation.
+
+## How it works
+
+- [API architecture](../wiki/systems/lua-api.md)
+- [Category DTO contract](housing-catalog-categories.md) — unchanged getter scope.
+- [Catalog variant contract](housing-catalog-variants.md) — separate filter-free ordinary searcher scope.
+
+## Implementation inventory
+
+- `src/c_api/c_housing/catalog.rs` — explicit category/subcategory maps and new editor-mode association vectors only.
+- `tests/housing_catalog_categories.rs` — existing four literals gain empty association vectors; getter assertions remain unchanged.
+- `tests/housing_category_search.rs` — grouped integration expectations for future replacement of the seeded category search methods.
+- `build.rs` / `tests/integration.rs` — existing discovery includes the new file in the single integration target; no new Cargo target.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua` — current seeded search producer, untouched in batch26.
+- Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua` — actual deprecated wrapper loaded in one fixture; not copied, rewritten, or monkey-patched.
+
+## Tests asserting this spec
+
+All twelve fixtures are **unrun** at this input checkpoint. No RED/GREEN, build, check, native, or acceptance claim.
+
+| Fixture in `tests/housing_category_search.rs` | Contract |
+|---|---|
+| `empty_maps_return_fresh_empty_arrays_without_seed_ids` | Empty/fresh/no synthesis |
+| `stored_filter_uses_explicit_boolean_and_raw_api_ignores_removed_key` | Defaults, stored restriction, raw rename |
+| `featured_filter_only_selects_existing_records_and_explicit_parent_ids` | Runtime constant, existing records, inferred featured-parent policy, combined filters |
+| `context_filter_matches_exact_host_membership_without_parent_or_label_inference` | Exact/multiple associations, absent association excluded, unknown mode empty, None unfiltered |
+| `ordering_is_order_index_then_numeric_id_after_state_changes` | Order index plus genuinely numeric tie-break |
+| `fresh_snapshots_follow_current_inputs_without_aliasing_prior_results` | Freshness, host changes, prior arrays unchanged |
+| `queries_do_not_mutate_records_or_derive_stored_predicates_from_variants` | Whole catalog state unchanged, independent explicit predicates |
+| `required_public_table_and_strict_supplied_field_types_reject_invalid_inputs` | Required table and strict types/range |
+| `public_addon_queries_preserve_caller_taint` | Public addon allowed |
+| `secret_table_and_fields_reject_without_unwrapping_or_clearing_taint` | Real VM secrets, GC rooting, secure/addon rejection |
+| `guarded_search_table_preserves_real_vm_access_policy` | Real host-installed secured-table guard |
+| `cached_deprecated_wrapper_maps_old_only_when_new_field_is_missing` | Actual cached bridge, new false wins |
+
+Parent's exact RED filter before fresh producer work:
+
+```text
+cargo test --test integration housing_category_search:: -- --nocapture
+```
+
+Default features include `retail-12-0-5`; the file uses that feature gate. This command is recorded, not executed by batch26. Proof ledger: inputs/tests/spec only; formatter execution does not prove compilation or runtime behavior. No exact-row coverage promotion.
+
+## Known gaps (current cycle)
+
+- [ ] Parent must observe actual behavioral RED on these inputs before replacing seeded `SearchCatalogCategories`/`SearchCatalogSubcategories`, then establish targeted GREEN.
+- [ ] Native ordering, featured-subcategory behavior, mode associations, and exact parser behavior remain unknown; policies above are explicit simulator inferences.
+- [ ] Native `AllowedWhenUntainted` secret acceptance remains incomplete. Secure secret rejection here intentionally does not claim parity with that declaration.
+
+## Out of scope
+
+- Query/parser implementation, serializers, registration, seed changes, or getter changes: separate producer work after actual RED.
+- Ordinary `HousingCatalogSearcher` filtering: these two category queries establish no ordinary-searcher filtering claim.
+- Shared wiki, coverage manifests, PLAN, existing category spec, native probes, builds/checks/tests, delegation, push, deployment: excluded by batch26 authorization.
