@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept bounded independent ping proof
+
+[Party ping ledger](../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) reconciles full independent report: saved **29/29 PASS**, startup **0 []**, fresh default fmt/check **0**; relevant hashes unchanged while warning-fixture/docs HEAD advanced through `ee9984ec6`. No immutable whole-tree, warning-runtime, native ping delivery or security-parity credit. March31 row169 stays PENDING (countdown/loot); **264/84/14 = 362**, IDs/source SHA preserved. Docs-only; no runtime reruns or other-owned edits.
+
 ## [2026-10-01] evidence | Reconcile bounded ping parent proof
 
 [[patch-12-0-5-api-audit#Party ping restrictions — bounded parent PASS, independent pending]] links [batch32 ledger](../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01): corrected compiled RED `12e4a1a28` 0/7, initial missing-trait compile failure excluded; producer `77ab2785f` saved 7 ping + 22 controls = **29 selected PASS**, parent startup exit0 `[]`. Independent verifier273 report pending, no independent credit. Strict enum/secret/error/default policies inferred; no native AllowedWhenUntainted, ping delivery/roles/events. March31 row169 remains PENDING, countdown/loot open; historical superseded March25 preserved. **264 pending / 84 bounded / 14 partial = 362**, IDs/source SHA retained; no whole-source credit. Docs-only, no delegation/build/check/push/deploy; other-owned private-warning work excluded.

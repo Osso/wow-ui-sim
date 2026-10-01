@@ -36,7 +36,7 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 ### Retail 12.0.5 party ping restrictions
 
-`c_api::c_party_info` wires an epoch-gated helper over explicit per-environment `party_ping_restriction: u8`. See [party ping contract](../../specs/party-ping-restrictions.md) for signatures, inferred strict/security policies, corrected compiled seven-fixture RED and [saved batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01): seven ping PASS plus 22 controls, startup exit0 `[]` at `77ab2785f`. Independent report remains pending. No ping delivery, permission, event or native `AllowedWhenUntainted` acceptance model is added.
+`c_api::c_party_info` wires an epoch-gated helper over explicit per-environment `party_ping_restriction: u8`. See [party ping contract](../../specs/party-ping-restrictions.md) for signatures, inferred strict/security policies, corrected compiled seven-fixture RED and [saved batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01): seven ping PASS plus 22 controls, startup exit0 `[]` at `77ab2785f`. Independent report accepts bounded saved proof and fresh default fmt/check exit0 with unchanged relevant source hashes despite warning-fixture/docs HEAD advancement; no warning-runtime credit. No ping delivery, permission, event or native `AllowedWhenUntainted` acceptance model is added.
 
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 

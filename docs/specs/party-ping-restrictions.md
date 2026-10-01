@@ -1,6 +1,6 @@
 # Party ping restrictions
 
-Bounded Retail 12.0.5 `C_PartyInfo.GetRestrictPings` / `SetRestrictPings` contract. The provider registers both methods through existing `src/c_api/c_party_info.rs`, with epoch-gated implementation in `c_party_info/ping_restrictions.rs` over the explicit per-environment numeric enum input. Seven ping fixtures now have saved parent GREEN; independent acceptance remains pending; no Lua workaround or new backing abstraction is added. See [Lua API state architecture](../lua-api.md).
+Bounded Retail 12.0.5 `C_PartyInfo.GetRestrictPings` / `SetRestrictPings` contract. The provider registers both methods through existing `src/c_api/c_party_info.rs`, with epoch-gated implementation in `c_party_info/ping_restrictions.rs` over the explicit per-environment numeric enum input. Seven ping fixtures now have saved parent GREEN; independent bounded acceptance is recorded below; no Lua workaround or new backing abstraction is added. See [Lua API state architecture](../lua-api.md).
 
 ## Evidence
 
@@ -22,7 +22,7 @@ Current cached `Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameMan
 - [x] **STRICT SIMULATOR VALIDATION POLICY:** missing/nil, fractional, unknown numeric, string, boolean, table and function enum arguments reject atomically, without coercion. This is not native malformed-input characterization.
 - [x] **CONSERVATIVE SIMULATOR SECURITY POLICY:** reject actual secret enum arguments in both untainted and tainted callers without unwrapping, mutation, declassification or clearing/replacing caller taint. Cached `AllowedWhenUntainted` semantics are **not modeled** by this stricter policy; untainted-secret acceptance remains a known gap.
 
-Input, provider and fixtures are gated by `retail-12-0-5`; no native filtering, permissions, event or native-state producer claim follows. Checked requirements mean bounded saved parent fixture proof only, not independent acceptance or native parity.
+Input, provider and fixtures are gated by `retail-12-0-5`; no native filtering, permissions, event or native-state producer claim follows. Checked requirements mean independently accepted bounded saved fixture proof, not native parity.
 
 ## How it works
 
@@ -50,15 +50,15 @@ Parent filter: `cargo test --test integration party_ping_restrictions::`.
 
 Producer `77ab2785f5544ebed9958fc937c34900b82f2cea` has saved parent compile exit **0** in **213.82s** (`/tmp/patch-12.0.5-batch32-green-build-result.json`, build log/JSONL). Integration executable SHA256 `a3fc155dd66e3c967246e6e2226a58dcceab8dfae1d42b2ece8592e815352e1c` identifies all four runs in `/tmp/patch-12.0.5-batch32-green-runs.json`: **7 ping + 6 ready-check + 5 predicate + 11 group = 29 selected PASS**, each exit0, with actual summaries in `-run-0.log` through `-run-3.log`. Seven ping fixtures establish only the checked bounded policies above; controls do not expand ping coverage.
 
-Parent startup at the same producer is exit **0**, JSON **[]** (`/tmp/patch-12.0.5-batch32-green-startup-run.json`, `-startup.json`, `-startup.log`), executable SHA256 `caec6acd9c8129ae3d5baa9d88370242d578ae7bc1e814ad57722f43f80cdcec`. These are inspected saved parent artifacts, not fresh runs or independent proof. `/tmp/patch-12.0.5-ping-restrictions-independent-proof.md` is pending; no independent acceptance or gate result is credited without its actual report.
+Parent startup at the same producer is exit **0**, JSON **[]** (`/tmp/patch-12.0.5-batch32-green-startup-run.json`, `-startup.json`, `-startup.log`), executable SHA256 `caec6acd9c8129ae3d5baa9d88370242d578ae7bc1e814ad57722f43f80cdcec`. These are inspected saved parent artifacts, not fresh runs. Full `/tmp/patch-12.0.5-ping-restrictions-independent-proof.md` accepts bounded **29/29 PASS** and startup **0 []**, with source/wiring/security/readability review. Fresh default `cargo fmt --check` exit **0** (24.236441s, `77ab2785f` → `303de9af7`) and `cargo check` exit **0** (63.061756s, `303de9af7` → `ee9984ec6`) retain identical relevant ping/guard/wiring/build and control-fixture hashes matching producer blobs. Concurrent warning fixtures and docs advanced HEAD; this is not immutable whole-tree proof or warning-runtime credit. Checks ledger: `/tmp/patch-12.0.5-ping-independent-checks.json`; scope identities: `-before.json`, `-after.json`, `-final.json`.
 
-Final March31 `prose-2026-03-31-169` remains **audit-pending**: bounded ping parent proof supplements the separately accepted ready-check subset; countdown and loot remain open. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/source SHA and historical superseded March25 prose. Strict enum validation, blocked error convention, None default and conservative secret rejection are inferred simulator policies, not native `AllowedWhenUntainted` parity, actual ping delivery, role permissions or ping events. No whole-source/page credit.
+Final March31 `prose-2026-03-31-169` remains **audit-pending**: bounded independently accepted ping proof supplements the separately accepted ready-check subset; countdown and loot remain open. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/source SHA and historical superseded March25 prose. Strict enum validation, blocked error convention, None default and conservative secret rejection are inferred simulator policies, not native `AllowedWhenUntainted` parity, actual ping delivery, role permissions or ping events. No whole-source/page credit.
 
 ## Known gaps (current cycle)
 
 - [x] Compile and execute the seven fixtures as RED before producer implementation (saved parent evidence above).
 - [x] Prove the implemented bounded provider with saved parent compilation and seven-fixture GREEN.
-- [ ] Independent bounded acceptance after the actual verifier report.
+- [x] Independent bounded acceptance from the actual verifier report; saved runtime proof plus fresh source-identical fmt/check.
 - [ ] Native `AllowedWhenUntainted` secret acceptance and native malformed/blocked error conventions remain unverified.
 
 ## Out of scope
