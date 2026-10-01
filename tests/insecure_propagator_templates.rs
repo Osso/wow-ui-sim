@@ -4,9 +4,10 @@
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 
-use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::loader::load_addon_from_toc;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
+use wow_ui_sim::toc::TocFile;
 
 fn load_insecure_propagator_templates() -> WowLuaEnv {
     // New environments clear the thread-local template registry before loading.
@@ -15,14 +16,12 @@ fn load_insecure_propagator_templates() -> WowLuaEnv {
         .expect("active-profile Blizzard UI cache must be synced")
         .join("Blizzard_FrameXML/SecureTemplatesBase.xml");
     assert!(xml.is_file(), "missing cached fixture: {}", xml.display());
-    let addon = tempfile::tempdir().expect("create fixture TOC directory");
-    let toc = addon.path().join("InsecurePropagatorProbe.toc");
-    std::fs::write(
-        &toc,
-        format!("## Title: Insecure propagator probe\n{}\n", xml.display()),
-    )
-    .expect("write TOC referencing exact cached XML");
-    let loaded = load_addon(&env.loader_env(), &toc).expect("load cached SecureTemplatesBase.xml");
+    let toc = TocFile::parse(
+        xml.parent().expect("cached XML has an addon directory"),
+        "## Title: Insecure propagator probe\nSecureTemplatesBase.xml\n",
+    );
+    let loaded =
+        load_addon_from_toc(&env.loader_env(), &toc).expect("load cached SecureTemplatesBase.xml");
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
     env
 }
