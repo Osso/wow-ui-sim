@@ -4,7 +4,7 @@
 //! against the fixture BUFF/DEBUFF slots.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::game_data::{AuraInfo, PartyMember};
+use wow_ui_sim::lua_api::state::{AuraInfo, PartyMember};
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
