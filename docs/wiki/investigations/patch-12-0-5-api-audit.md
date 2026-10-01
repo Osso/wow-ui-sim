@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Private warning placement — parent bounded proof; independent pending
+
+[Batch33 proof](../../specs/private-warning-text-anchor.md#saved-batch33-parent-green--2026-10-01) owns exact saved artifacts and binary hashes. Producer `dae082322`: saved parent compile exit0 (335.99s), 12 warning + 18 anchor PASS; private controls 4 PASS / 1 FAIL at specialization unit-filter assertion. Normal startup exit0 `[]` is separate from cached lifecycle PASS with persistent `PingSystemTutorial` string.find closure errors. Independent281 pending; no row promotion, native parity or broad GREEN. Inferred parenting/order/nil/snapshot/secret policies retained; 362 IDs/source hash and **264 pending / 84 bounded / 14 partial** unchanged. Exact warning rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending; no whole-row/page or all-profile acceptance.
+
 ### Party ping restrictions — bounded independent PASS
 
 [Batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) owns corrected compiled RED `12e4a1a28` **0 PASS / 7 FAIL**; initial missing-trait compilation failure excluded. Producer `77ab2785f` compile exit0, saved **7 ping + 6 ready-check + 5 predicate + 11 group = 29 selected PASS**, parent startup exit0 `[]`; exact metadata/hashes in linked ledger. Full independent report accepts bounded saved runtime/startup proof and fresh default fmt/check exit0; relevant ping/guard/wiring/build and control-fixture hashes match producer despite warning-fixture/docs HEAD advancement. Linked spec owns exact gate provenance; no warning-runtime credit. Strict public enum validation, secret rejection, blocked error and None default are inferred simulator policies; no native `AllowedWhenUntainted`, actual ping delivery, role permissions or ping events proof.

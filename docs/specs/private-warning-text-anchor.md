@@ -72,16 +72,35 @@ Parent filter: `cargo test --test integration private_warning_text_anchor:: -- -
 - `placement_preserves_native_hierarchy_visibility_and_bypasses_method_overrides` and `tainted_access_to_secured_binding_is_rejected_before_placement_or_retention`: additional authored controls, **not compiled or run**. Cached fixture gains diagnostic assertion messages only; unrelated closure errors remain logged.
 - Parent owns producer compilation/GREEN. No producer build, test, check, readability, broad-suite or startup acceptance performed in this implementation slice; earlier RED does not prove changed producer passes.
 
+### Saved batch33 parent GREEN — 2026-10-01
+
+Producer `dae082322085ed3c28dbef9302d0cc7996c79989`; independent281 **pending**, no independent acceptance or row promotion. Saved parent artifacts inspected only; no reruns.
+
+| Saved parent scope | Result | Evidence |
+|---|---|---|
+| Default integration compilation | Exit 0, 335.99s | `/tmp/patch-12.0.5-batch33-green-build-result.json` |
+| `private_warning_text_anchor::` | 12 PASS, exit 0 | `batch33-green-runs.json`, `batch33-green-run-0.log` |
+| `private_aura_anchors::` | 18 PASS, exit 0 | Same run manifest, `batch33-green-run-1.log` |
+| `unit_auras_private::` | 4 PASS / 1 FAIL, exit 101 | Same run manifest, `batch33-green-run-2.log` |
+| Normal no-addons/no-saved-vars startup | Exit 0, stdout `[]`, 5.51s | `/tmp/patch-12.0.5-batch33-green-startup-run.json`, `batch33-green-startup.json` |
+
+Run/log basenames above resolve under `/tmp/patch-12.0.5-`. Integration SHA-256 `c4fa7b32aaa1e28240ea14a8a62cc94093bd4b14a119acded3a8c787a2abdea7`; startup binary SHA-256 `f03b5d116732798cc3ac5eb12924b43879d1a19dddf8dc781f0b05d0f6cba09f`. The twelve warning fixtures include the ten historical authored fixtures above plus hierarchy/override and secured-table controls; their historical pre-compilation labels are superseded by this parent proof, not independent acceptance.
+
+The failed control is `native_unit_event_dispatch_respects_unit_filter`: specialization-cast payload/unit-filter assertion fails. Cause and pre-existing status are unproven; no broad GREEN claim. Cached warning lifecycle assertions PASS **while** separate `PingSystemTutorial` string.find closure-load errors remain logged. Normal startup `[]` does not establish error-free cached closure loading or resolve those errors.
+
+Parenting, ordering, replacement, nil, snapshot and callback-error policies remain inferred simulator behavior; conservative secret rejection is not native `AllowedWhenUntainted` parity. Exact rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending. All 362 source IDs/hash and **264 pending / 84 bounded / 14 partial** totals unchanged.
+
 ### Availability and implementation limits
 
 Both replaced providers were unconditional. Cached Mists and Forever consumers also reference warning placement; preserve that existing availability without a new retail epoch gate. No all-profile behavior proof. Public parents must be SimpleFrames; private registration accepts actual frames and preserves exact Lua identity. Invalid private values are rejected rather than retained as fake layout targets. No chat/combat/untainted-caller guard is introduced. Table-access and forbidden-aspect inheritance checks remain active; secret rejection is conservative, not `AllowedWhenUntainted` parity.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile changed producer and establish GREEN; original compiled RED is saved above. Formatting only in this implementation slice.
+- [x] Parent compiled producer and saved 12 warning PASS; original compiled RED retained above.
+- [ ] Independent281 acceptance pending; parent evidence is not final acceptance. Separate private specialization-filter control remains failing.
 - [ ] Characterize native parenting, precise registration/replacement timing, nil behavior and input-table snapshot policy. These defaults are best-supported inferences, not native observations.
 - [ ] Characterize native `AllowedWhenUntainted` acceptance/security. Conservative rejection is only simulator policy.
-- [ ] Cached lifecycle GREEN pending. RED logs separate `PingSystemTutorial` closure-load errors; do not mask them or claim error-free whole-addon loading.
+- [ ] Resolve separate cached `PingSystemTutorial` closure-load errors; cached placement assertions now PASS, not error-free whole-addon loading.
 
 ## Out of scope
 

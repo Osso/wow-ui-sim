@@ -1,6 +1,6 @@
-## [2026-10-01] implementation | Private warning placement producer
+## [2026-10-01] evidence | Private warning placement — parent bounded proof
 
-[Warning contract/ledger](../specs/private-warning-text-anchor.md#batch33-proof-ledger--2026-10-01) records sole C API providers replacing temporary public/private owners, native hierarchy/visibility primitives and strict parser reuse. Saved original compiled RED, parent GREEN pending; new callback/override and secured-table controls uncompiled. Unrelated cached closure errors preserved; no native parity or audit promotion.
+[Warning contract/proof](../specs/private-warning-text-anchor.md#saved-batch33-parent-green--2026-10-01): Producer `dae082322`: saved parent compile exit0 (335.99s), 12 warning + 18 anchor PASS; private controls 4 PASS / 1 FAIL at specialization unit-filter assertion. Normal startup exit0 `[]` is separate from cached lifecycle PASS with persistent `PingSystemTutorial` string.find closure errors. Independent281 pending; no row promotion, native parity or broad GREEN. Inferred parenting/order/nil/snapshot/secret policies retained; 362 IDs/source hash and **264 pending / 84 bounded / 14 partial** unchanged.
 
 ## [2026-10-01] evidence | Accept bounded independent ping proof
 

@@ -1,6 +1,6 @@
-## [2026-10-01] implementation | Private warning placement producer
+## [2026-10-01] evidence | Private warning placement — parent bounded proof
 
-[Warning placement contract](../specs/private-warning-text-anchor.md#batch33-proof-ledger--2026-10-01) owns saved ten-fixture RED and C API-owned typed request/private registration implementation. Native parenting, anchor dependency/dirty state and visibility callbacks retained without Lua override dispatch; `_state.warningTextFrame` identity preserved. Two additional behavioral controls authored, not run. Parent GREEN pending; separate PingSystemTutorial closure errors untouched. Nil/snapshot/replacement inferred; no native/security/all-profile/audit acceptance.
+[Warning placement contract](../specs/private-warning-text-anchor.md#saved-batch33-parent-green--2026-10-01): Producer `dae082322`: saved parent compile exit0 (335.99s), 12 warning + 18 anchor PASS; private controls 4 PASS / 1 FAIL at specialization unit-filter assertion. Normal startup exit0 `[]` is separate from cached lifecycle PASS with persistent `PingSystemTutorial` string.find closure errors. Independent281 pending; no row promotion, native parity or broad GREEN. Inferred parenting/order/nil/snapshot/secret policies retained; 362 IDs/source hash and **264 pending / 84 bounded / 14 partial** unchanged.
 
 ## [2026-10-01] evidence | Accept bounded independent ping proof
 
