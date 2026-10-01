@@ -2,7 +2,7 @@
 
 use super::env;
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
+use wow_ui_sim::lua_api::state::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
 
 fn assert_outputs(env: &WowLuaEnv, query: &str, expected: &[f64]) {
     let values = expected

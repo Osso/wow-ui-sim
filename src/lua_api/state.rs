@@ -441,6 +441,8 @@ pub use super::state_types::{
     SecondaryPowerState, SocialFriend, SummonRequestState, TokenAuctionInfo, WorldState,
     WowTokenState,
 };
+#[cfg(feature = "client-retail")]
+pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
 pub use super::tracked_recipes::TrackedRecipes;
 
 // Per-frame side-table state (quest blobs, UnitPositionFrame, etc.)
