@@ -124,6 +124,16 @@ fn register_spell_book_item_visual_queries(
         "GetSpellBookItemChargeDuration",
         c_spell_book_get_spell_book_item_charge_duration,
     )?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetSpellBookItemCharges",
+        c_spell_book_get_spell_book_item_charges,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -381,11 +391,16 @@ fn c_spell_book_get_spell_book_item_type(state: &mut LuaState) -> LuaResult<u32>
 fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
     use crate::lua_bridge::stack_val;
 
+    resolve_player_spellbook_entry(stack_val(state, 1), stack_val(state, 2))
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn resolve_player_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
     const PLAYER_SPELL_BANK: f64 = 0.0;
-    if !matches!(stack_val(state, 2), Val::Num(bank) if bank == PLAYER_SPELL_BANK) {
+    if !matches!(bank, Val::Num(bank) if bank == PLAYER_SPELL_BANK) {
         return None;
     }
-    let Val::Num(slot) = stack_val(state, 1) else {
+    let Val::Num(slot) = slot else {
         return None;
     };
     let valid_slot = (1.0..=i32::MAX as f64).contains(&slot) && slot.fract() == 0.0;
@@ -393,6 +408,21 @@ fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
         return None;
     }
     spellbook_data::get_spell_at_slot(slot as i32).map(|(_, entry, _)| entry.spell_id)
+}
+
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+fn c_spell_book_get_spell_book_item_charges(state: &mut LuaState) -> LuaResult<u32> {
+    // Authenticate both selectors before identity resolution, even for invalid slots.
+    let slot = super::charge_state::read_charge_selector_number(state, 1)?;
+    let bank = super::charge_state::read_charge_selector_number(state, 2)?;
+    let spell_id = resolve_player_spellbook_entry(
+        slot.map_or(Val::Nil, Val::Num),
+        bank.map_or(Val::Nil, Val::Num),
+    );
+    super::charge_state::push_charge_info(state, spell_id)
 }
 
 #[cfg(feature = "retail-12-0-5")]

@@ -22,26 +22,62 @@ fn read_charge_input(sim: &SimState, spell_id: Option<u32>) -> Option<SpellCharg
         .copied()
 }
 
+pub(crate) fn cooldowns_are_restricted(sim: &SimState) -> bool {
+    cfg!(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )) && sim.cooldowns_restricted
+}
+
+/// Charge action/book selectors use AllowedWhenUntainted, not output policy.
+/// Public values remain accessible to tainted callers; secret values use the VM guard.
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub(crate) fn read_charge_selector_number(state: &LuaState, index: i32) -> LuaResult<Option<f64>> {
+    let value =
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, index))?;
+    Ok(match value {
+        Val::Num(number) => Some(number),
+        _ => None,
+    })
+}
+
 pub(crate) fn push_charge_info(state: &mut LuaState, spell_id: Option<u32>) -> LuaResult<u32> {
-    let charge = {
+    let (charge, restricted) = {
         let sim = borrow_state(state)?;
-        read_charge_input(&sim, spell_id)
+        (
+            read_charge_input(&sim, spell_id),
+            cooldowns_are_restricted(&sim),
+        )
     };
     let Some(charge) = charge else {
         state.push(Val::Nil);
         return Ok(1);
     };
     let info = create_table_with_capacity(state, 5);
-    for (name, value) in [
+    // Keep the result reachable while host-secret wrappers allocate.
+    state.push(info);
+    table_set_static(
+        state,
+        info,
+        "maxCharges",
+        Val::Num(charge.max_charges as f64),
+    );
+    for (name, number) in [
         ("currentCharges", charge.current_charges as f64),
-        ("maxCharges", charge.max_charges as f64),
         ("cooldownStartTime", charge.recharge_start),
         ("cooldownDuration", charge.recharge_duration),
         ("chargeModRate", charge.charge_mod_rate),
     ] {
-        table_set_static(state, info, name, Val::Num(value));
+        let value = if restricted {
+            rilua::table_security::wrap_host_secret_number(state, number)
+        } else {
+            Val::Num(number)
+        };
+        table_set_static(state, info, name, value);
     }
-    state.push(info);
     Ok(1)
 }
 

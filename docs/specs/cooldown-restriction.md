@@ -1,16 +1,18 @@
 # Cooldown restriction input and charge-table secrecy
 
-An explicit `SimState.cooldowns_restricted` input controls the zero-argument `C_Secrets.ShouldCooldownsBeSecret()` predicate and numeric secrecy on three charge tables: `C_Spell.GetSpellCharges`, `C_ActionBar.GetActionCharges`, and `C_SpellBook.GetSpellBookItemCharges`. This slice adds input scaffolding and unexecuted tests only; predicate registration, secret-output production, and the absent book-table producer remain parent-owned after actual RED. Existing five-field charge input stays unchanged. See [charge model](../wiki/systems/spell-charge-state.md).
+An explicit `SimState.cooldowns_restricted` input controls the zero-argument `C_Secrets.ShouldCooldownsBeSecret()` predicate and numeric secrecy on three charge tables: `C_Spell.GetSpellCharges`, `C_ActionBar.GetActionCharges`, and `C_SpellBook.GetSpellBookItemCharges`. Policy and new book-table registration require both `retail-12-0-5` and mainline (`profile-retail` or `client-ptr`). Older queries/profile defaults remain unchanged. Existing five-field charge input stays unchanged. See [charge model](../wiki/systems/spell-charge-state.md).
 
 ## What it must do
 
-- [ ] Default `cooldowns_restricted` to false. Read changes live, independently of combat and `unit_stats_restricted`; the predicate returns exactly one ordinary boolean.
-- [ ] Resolve existing public spell/action/player-book selectors to the same explicit `SpellChargeState`. Fixture spell 19750, action 17, player book slot 5/bank 0 supplies current 1, max 3, recharge start 12, base duration 40, rate 2.
-- [ ] With restriction false, all five numeric fields are ordinary and match input. With restriction true, `currentCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate` are opaque native secret numbers with unchanged payloads; `maxCharges` remains public.
-- [ ] Subsequent table queries follow false → true → false changes without modifying charge input. No spell/action/book charge record is fabricated for missing input or unresolved identity, under either policy.
-- [ ] Tainted callers using public selectors receive opaque restricted fields, cannot unwrap or perform arithmetic on them, and retain their original taint. A secure host may inspect known payloads only through the existing guarded VM helper.
-- [ ] Secret action/book selectors resolve for untainted callers and reject tainted callers. Exercise action, book slot, book bank, and both book selectors separately from output restriction. These tests specify the documented argument policy; native acceptance/error details remain unverified.
-- [ ] Charge duration objects and timing remain nonsecret with restriction true or false, including calls from tainted public-selector consumers. Existing rate semantics preserve start 12, total 20 (base 40), rate 2, end 32. This is bounded exclusion policy from absent return-secret annotations, not native parity.
+Implemented below; post-change execution remains parent-owned.
+
+- [x] Default `cooldowns_restricted` to false. Read changes live, independently of combat and `unit_stats_restricted`; the predicate returns exactly one ordinary boolean.
+- [x] Resolve existing public spell/action/player-book selectors to the same explicit `SpellChargeState`. Fixture spell 19750, action 17, player book slot 5/bank 0 supplies current 1, max 3, recharge start 12, base duration 40, rate 2.
+- [x] With restriction false, all five numeric fields are ordinary and match input. With restriction true, wrap only concrete Rust `currentCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate` numbers with `wrap_host_secret_number`; preserve payloads. `maxCharges` and the table itself remain public. Root the table before wrapper allocations. Do not add `isActive`.
+- [x] Subsequent table queries follow false → true → false changes without modifying charge input. Retain nil for missing input, unresolved identity, or zero maximum charges; fabricate no records.
+- [x] Accept tainted callers using public selectors without clearing caller taint. Restricted fields remain opaque; guarded VM inspection is available only to untainted callers.
+- [x] Authenticate secret action/book selectors using VM `unwrap_secret`, even for secure callers, before exact numeric identity resolution. Tainted public selectors are accepted; tainted secret selectors are rejected. Authenticate both book selectors before resolving identity, including invalid slot/bank combinations.
+- [x] Leave charge duration objects and timing unchanged and nonsecret under either restriction input, including tainted public-selector consumers. Existing rate semantics preserve start 12, total 20 (base 40), rate 2, end 32. This bounded exclusion follows absent return-secret annotations, not native parity.
 
 ### Source grounding
 
@@ -29,6 +31,12 @@ Exact local source directory: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/A
 - `SpellSharedDocumentation.lua:6–15`: numeric charge fields; `maxCharges` and the newer `isActive` are `NeverSecret`. `isActive` is deliberately not added to this existing five-field model.
 - `SpellDocumentation.lua:250–254`, `ActionBarFrameDocumentation.lua:138–142`, `SpellBookDocumentation.lua:196–200`: all three queries have restricted output; spell secret arguments are `AllowedWhenTainted`, action/book are `AllowedWhenUntainted`.
 
+### Inferences and native-probe boundary
+
+Wrapping all four unannotated numbers whenever the explicit restriction input is true is a bounded inference; native per-spell exceptions are not modeled. Player-bank-only lookup, nil for invalid/unmodeled identity, exact integer slot validation, and VM rejection details are simulator behavior, not native-verified acceptance/error semantics. Future native probes should compare each field under restricted/unrestricted contexts and secure/tainted action, slot, and bank selectors. No native probe is claimed.
+
+`C_Spell.GetSpellCharges` secret spell identifiers remain a separate unresolved opaque-selector operation. `AllowedWhenTainted` does not authorize generic host decoding, declassification, or caller-taint clearing. This implementation deliberately does not change spell identifier handling or claim the full argument matrix.
+
 ## How it works
 
 - [Shared charge model](../wiki/systems/spell-charge-state.md)
@@ -37,25 +45,26 @@ Exact local source directory: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/A
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs`: public explicit boolean input.
-- `src/lua_api/state.rs`: false default, no derived policy.
-- `src/c_api/charge_state.rs`: existing public five-field row and plain table producer; unchanged by this slice.
-- `tests/cooldown_restriction.rs`: grouped actual-query fixtures; no replaced API providers.
+- `src/lua_api/state/sim_state.rs` and `state.rs`: pre-existing false-default explicit input; unchanged in this producer slice.
+- `src/c_api/c_secrets.rs`: mainline 12.0.5 predicate registration reading only the input.
+- `src/c_api/charge_state.rs`: shared rooted five-field producer, bounded output policy, narrowly scoped guarded action/book numeric selector reader; duration producer unchanged.
+- `src/c_api/c_spell_book.rs`: new table query reusing the existing player slot/bank-to-spell resolution and shared charge input. Duration identity handling retains its previous public-selector semantics.
+- `src/lua_api/globals/action_bar_api.rs`: only the charge-table query gains guarded exact selectors under the mainline 12.0.5 gate; older query behavior and duration handling remain unchanged. No explicit obsolete book-table provider was found to remove; generic namespace fallback is untouched.
 
 ## Tests asserting this spec
 
-`tests/cooldown_restriction.rs`: eight cases, filter `cooldown_restriction::`, automatically included in the existing `integration` harness; no Cargo target added. Gate: cumulative `retail-12-0-5` and mainline (`profile-retail` or `client-ptr`). Public model/environment exports and existing VM helpers are used directly.
+`tests/cooldown_restriction.rs`: eight cases, filter `cooldown_restriction::`, included in the existing `integration` harness; no Cargo target added. Gate: cumulative `retail-12-0-5` and mainline (`profile-retail` or `client-ptr`). Tests use actual registered queries, public model/environment exports, and existing VM helpers; no replaced providers or weakened assertions.
 
-No build, test, check, or actual RED executed in this input-only slice. Expected failure boundaries are missing predicate, ordinary spell/action restricted fields, absent configured book charge table, and currently unsupported secret action/book selector handling. Duration/no-data controls may already pass; no pass count is claimed. Parent must observe actual RED before producer changes. Earlier charge-model 10/10 GREEN does not establish this secrecy contract.
+Actual pre-implementation RED at `84f48be77b910f5daabc2e6318c54357961d10ee`: 2 PASS / 6 FAIL, recorded in `/tmp/patch-12.0.5-batch10-run-1.log` and `/tmp/patch-12.0.5-batch10-runs.json`. Duration and no-data controls pass. Failures identify missing predicate, ordinary restricted fields, absent configured book-table result, and failed secure secret-selector resolution. Parent reports the batch compiled successfully. Earlier charge-model 10/10 GREEN does not establish this secrecy contract.
+
+No builds, tests, checks, readability audit, or broad gates run in this producer slice. Changed Rust files are formatted with direct `rustfmt`; parent owns the next build/GREEN and final gates.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned actual RED for these eight cases, followed by scoped predicate/table/book producer implementation and GREEN.
-- [ ] Secret spell identifier `AllowedWhenTainted` remains unresolved and untested here. It may require a separate opaque identifier operation; guarded generic unwrap does not solve it. No broad unsafe unwrap, caller-taint clearing, or invented bypass is authorized.
-- [ ] Final compilation, format/check and independent verification remain parent-owned; this commit promises input/test scaffolding, not working secrecy.
+- [ ] Parent-owned post-change compilation and GREEN for `cooldown_restriction::` (8 cases), plus existing charge/duration controls.
+- [ ] Secret spell identifier `AllowedWhenTainted` remains unresolved and untested here; guarded generic unwrap does not solve it.
+- [ ] Parent-owned final checks and independent verification; implementation is committed, not verified GREEN.
 
 ## Out of scope
 
-- Other cooldown/cast-count/aura APIs, new `isActive` output, per-spell exceptions, automatic native restriction hooks, spending/replenishment, and pet/macro mappings: separate evidence/model scope.
-- Full secret-argument matrix and native probes: native provenance/acceptance is unknown; do not claim this slice solves spell opaque identifiers.
-- Vendor/XML changes, provider replacement in tests, production API-handler edits, push, deployment, and native-client parity.
+Other cooldown/cast-count/aura APIs, new `isActive` output, per-spell exceptions, automatic restriction hooks, spending/replenishment, pet/macro mappings, full secret-argument matrix, and native-client parity. No SimState, Cargo, XML, gamepad, or vendor edits in this producer slice; no push or deployment.

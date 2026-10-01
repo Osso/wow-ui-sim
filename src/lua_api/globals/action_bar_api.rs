@@ -429,6 +429,20 @@ fn is_current_action(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_action_charges(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    let spell_id = {
+        let slot = crate::c_api::charge_state::read_charge_selector_number(state, 1)?
+            .filter(|slot| (0.0..=u32::MAX as f64).contains(slot) && slot.fract() == 0.0);
+        let sim = borrow_state(state)?;
+        slot.and_then(|slot| sim.action_bars.get(&(slot as u32)).copied())
+    };
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
     let spell_id = read_action_charge_spell(state)?;
     crate::c_api::charge_state::push_charge_info(state, spell_id)
 }

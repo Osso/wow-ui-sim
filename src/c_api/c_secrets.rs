@@ -1,4 +1,4 @@
-//! Spell aura classification and explicit unit-stat output policy.
+//! Spell aura classification and explicit stat/cooldown output policies.
 
 #[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use super::ensure_namespace;
@@ -39,7 +39,27 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "ShouldUnitStatsBeSecret",
         should_unit_stats_be_secret,
     )?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "ShouldCooldownsBeSecret",
+        should_cooldowns_be_secret,
+    )?;
     Ok(())
+}
+
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+fn should_cooldowns_be_secret(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = borrow_state(state)?.cooldowns_restricted;
+    state.push(Val::Bool(restricted));
+    Ok(1)
 }
 
 /// Push only a concrete Rust-computed stat result, never an arbitrary Lua value.
