@@ -512,16 +512,6 @@ local function __wow_housing_variant_id(entry_id, variant_id)
   }
 end
 
-local function __wow_housing_copy_entry_info(entry_id)
-  local entry = __wow_housing_seeded_entries[entry_id]
-  if not entry then
-    return nil
-  end
-  local info = __wow_housing_clone_table(entry)
-  info.entryID = __wow_housing_variant_id(entry_id, 0)
-  return info
-end
-
 local function __wow_housing_copy_featured_small_products()
   local infos = {}
   for index, item in ipairs(__wow_housing_seeded_featured_small_products) do
@@ -983,16 +973,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
       return { ID = categoryID, orderIndex = 2, name = "Decor", icon = nil, subcategoryIDs = { 1001, 1002 }, anyStoredEntries = true }
     end
     return nil
-  end,
-  GetCatalogEntryInfoByItem = function(itemInfo)
-    local item_id = type(itemInfo) == "table" and (itemInfo.itemID or itemInfo.id) or itemInfo
-    return __wow_housing_copy_entry_info(item_id)
-  end,
-  GetCatalogEntryInfoByRecordID = function(entryType, recordID)
-    if entryType ~= __wow_housing_entry_type then
-      return nil
-    end
-    return __wow_housing_copy_entry_info(recordID)
   end,
   GetCatalogEntryRefundTimeStampByRecordID = function() return nil end,
   GetCatalogSubcategoryInfo = function(subcategoryID)

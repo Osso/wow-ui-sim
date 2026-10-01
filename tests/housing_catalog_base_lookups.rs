@@ -1,4 +1,4 @@
-//! Tests/spec-only 12.0.5 expectations; parent owns compilation and behavioral RED.
+//! Bounded base selector behavior; parent owns compilation and acceptance gates.
 #![cfg(feature = "retail-12-0-5")]
 
 use rilua::LuaApiMut;
@@ -106,6 +106,51 @@ fn item_links_read_explicit_base() {
             '|cff00ff00|Hitem:6948:::::::::|h[Not the catalog name]|h|r'}) do
             assertChair(C_HousingCatalog.GetCatalogEntryInfoByItem(item))
         end
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn item_names_do_not_use_catalog_display_names() {
+    let env = fixture_env();
+    env.exec(
+        r#"
+        assert(C_HousingCatalog.GetCatalogEntryInfoByItem('Catalog chair, not an item name') == nil)
+        assert(C_HousingCatalog.GetCatalogEntryInfoByItem('Hearthstone') == nil,
+            'item-name resolution is not modeled')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn ambiguous_explicit_item_ids_reject_inferred_policy() {
+    let env = chair_env();
+    let room: i32 = env
+        .eval("return Enum.HousingCatalogEntryType.Room")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .housing
+        .catalog
+        .entries
+        .get_mut(&HousingCatalogEntryID {
+            record_id: 81001,
+            entry_type: room,
+        })
+        .unwrap()
+        .item_id = Some(6948);
+    // Inferred simulator policy, not evidence of a native duplicate-ID winner.
+    env.exec(
+        r#"
+        for _, item in ipairs({6948, 'item:6948'}) do
+            local ok, err = pcall(C_HousingCatalog.GetCatalogEntryInfoByItem, item)
+            assert(not ok and string.find(tostring(err), 'ambiguous explicit housing catalog item ID', 1, true))
+        end
+        assertChair(C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Decor, 81001))
+        local room = C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Room, 81001)
+        assert(room.itemID == 6948 and room.name == 'Catalog room')
     "#,
     )
     .unwrap();

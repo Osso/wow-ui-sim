@@ -1,10 +1,12 @@
 //! Plain public selectors preserve caller taint; secret fields are not unwrapped.
 
-use super::input::{read_entry_id, read_selector, read_variant_id};
+use super::HousingCatalogEntryID;
+use super::input::{read_entry_id, read_public_integer, read_selector, read_variant_id};
 use super::snapshot;
 use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::item_spell::parse_item_id_from_val;
 use crate::lua_api::methods::{borrow_state, table_set_static};
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaApiMut;
 use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
@@ -14,6 +16,8 @@ pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<(
     let namespace = ensure_namespace(state, "C_HousingCatalog")?;
     let functions: &[(&str, rilua::RustFn)] = &[
         ("GetCatalogEntryInfo", entry_info),
+        ("GetCatalogEntryInfoByItem", entry_info_by_item),
+        ("GetCatalogEntryInfoByRecordID", entry_info_by_record_id),
         ("GetCatalogEntryVariantInfo", variant_info),
         ("GetDestroyableInstanceCount", destroyable_instance_count),
         ("DestroyEntry", super::storage::destroy_entry),
@@ -52,9 +56,66 @@ fn destroyable_instance_count(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn entry_info_by_item(state: &mut LuaState) -> LuaResult<u32> {
+    let selector = Val::from_stack(state, 1)?;
+    // Inspect only public scalars. The shared parser never receives a secret value.
+    if !matches!(selector, Val::Num(_) | Val::Str(_)) {
+        return Err(rilua::runtime_error(
+            "housing catalog item selector must be a public number or string; secret access is not modeled",
+        ));
+    }
+    let Some(item_id) =
+        parse_item_id_from_val(state, selector).and_then(|item_id| i32::try_from(item_id).ok())
+    else {
+        // Item names have no resolver; catalog display names are not item names.
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let id = {
+        let sim = borrow_state(state)?;
+        let mut matches = sim
+            .housing
+            .catalog
+            .entries
+            .iter()
+            .filter(|(_, record)| record.item_id == Some(item_id));
+        let id = matches.next().map(|(id, _)| *id);
+        // No native winner is known: reject ambiguous input, not a hash-order winner.
+        if matches.next().is_some() {
+            return Err(rilua::runtime_error(
+                "ambiguous explicit housing catalog item ID",
+            ));
+        }
+        id
+    };
+    match id {
+        Some(id) => push_entry_info(state, id),
+        None => {
+            state.push(Val::Nil);
+            Ok(1)
+        }
+    }
+}
+
+fn entry_info_by_record_id(state: &mut LuaState) -> LuaResult<u32> {
+    let entry_type = read_public_integer(Val::from_stack(state, 1)?, "entryType")?;
+    let record_id = read_public_integer(Val::from_stack(state, 2)?, "recordID")?;
+    push_entry_info(
+        state,
+        HousingCatalogEntryID {
+            record_id,
+            entry_type,
+        },
+    )
+}
+
 fn entry_info(state: &mut LuaState) -> LuaResult<u32> {
     let selector = read_selector(state)?;
     let id = read_entry_id(state, selector)?;
+    push_entry_info(state, id)
+}
+
+fn push_entry_info(state: &mut LuaState, id: HousingCatalogEntryID) -> LuaResult<u32> {
     let record = borrow_state(state)?
         .housing
         .catalog
