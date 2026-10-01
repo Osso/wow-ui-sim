@@ -44,6 +44,9 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
+    /// Explicit chat restriction input; false default is simulator policy, not a native producer.
+    #[cfg(feature = "retail-12-0-5")]
+    pub chat_messaging_lockdown: bool,
     pub quest_portrait_state: Option<QuestPortraitState>,
     pub cvars: CVarStorage,
     pub tooltips: HashMap<u64, TooltipData>,
