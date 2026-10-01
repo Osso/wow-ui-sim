@@ -1,7 +1,12 @@
-//! Explicit catalog inputs, not a query provider or a production catalog.
+//! Explicit empty-backed catalog entries, variants and filter-free search snapshots.
 //! Entry metadata and variant stacks have distinct identifiers and records.
 
 use std::collections::HashMap;
+
+mod queries;
+mod snapshot;
+
+pub(super) use queries::register;
 
 /// Base catalog identity; never synthesize a variant identifier for this key.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]

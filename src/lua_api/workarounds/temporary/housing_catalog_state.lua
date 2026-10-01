@@ -512,26 +512,6 @@ local function __wow_housing_variant_id(entry_id, variant_id)
   }
 end
 
-local function __wow_housing_list_contains(list, needle)
-  for _, value in ipairs(list or {}) do
-    if value == needle then
-      return true
-    end
-  end
-  return false
-end
-
-local function __wow_housing_copy_variant_info(entry_id, variant_id)
-  local variant_info = __wow_housing_seeded_variants[entry_id] and __wow_housing_seeded_variants[entry_id][variant_id]
-  if not variant_info then
-    return nil
-  end
-  local info = __wow_housing_clone_table(variant_info)
-  info.entryVariantID = __wow_housing_variant_id(entry_id, variant_id)
-  info.variantID = variant_id
-  return info
-end
-
 local function __wow_housing_copy_entry_info(entry_id)
   local entry = __wow_housing_seeded_entries[entry_id]
   if not entry then
@@ -637,121 +617,6 @@ local function __wow_housing_copy_product_display_info(product_id)
     quantity = product.decorQuantity,
     houseTextureAtlas = product.houseTextureAtlas,
   }
-end
-
-local function __wow_housing_catalog_search_results(searcher_state)
-  local results = {}
-  local search_text = (searcher_state.searchText or ""):lower()
-  local filtered_category = searcher_state.filteredCategoryID
-  local filtered_subcategory = searcher_state.filteredSubcategoryID
-  local base_variant_only = searcher_state.baseVariantOnly
-
-  for entry_id, entry in pairs(__wow_housing_seeded_entries) do
-    local entry_matches_category = (not filtered_category) or filtered_category == __wow_housing_all_category_id or __wow_housing_list_contains(entry.categoryIDs, filtered_category)
-    local entry_matches_subcategory = (not filtered_subcategory) or __wow_housing_list_contains(entry.subcategoryIDs, filtered_subcategory)
-    local entry_matches_search = search_text == "" or entry.name:lower():find(search_text, 1, true) ~= nil
-    if entry_matches_category and entry_matches_subcategory and entry_matches_search then
-      local variants = __wow_housing_seeded_variants[entry_id] or {}
-      for variant_id, variant in pairs(variants) do
-        if (not base_variant_only) or variant_id == 1 then
-          local variant_id_table = __wow_housing_variant_id(entry_id, variant_id)
-          results[#results + 1] = variant_id_table
-        end
-      end
-    end
-  end
-
-  table.sort(results, function(lhs, rhs)
-    if lhs.recordID ~= rhs.recordID then
-      return lhs.recordID < rhs.recordID
-    end
-    return (lhs.variantIdentifier or 0) < (rhs.variantIdentifier or 0)
-  end)
-  return results
-end
-
-local function __wow_housing_make_catalog_searcher()
-  local state = {
-    searchText = nil,
-    filteredCategoryID = __wow_housing_all_category_id,
-    filteredSubcategoryID = nil,
-    sortType = Enum.HousingCatalogSortType and Enum.HousingCatalogSortType.Alphabetical or 0,
-    customizableOnly = false,
-    allowedIndoors = true,
-    allowedOutdoors = true,
-    collected = true,
-    uncollected = true,
-    firstAcquisitionBonusOnly = false,
-    storedOnly = false,
-    baseVariantOnly = false,
-    editorModeContext = nil,
-    searchResults = {},
-    callback = nil,
-    inProgress = false,
-    tagStatus = {},
-  }
-
-  local function refresh()
-    state.searchResults = __wow_housing_catalog_search_results(state)
-    state.inProgress = false
-    if state.callback then
-      state.callback()
-    end
-  end
-
-  local searcher = {}
-  function searcher:SetResultsUpdatedCallback(callback)
-    state.callback = callback
-  end
-  function searcher:SetAutoUpdateOnParamChanges(_enabled) end
-  function searcher:SetStoredOnly(enabled) state.storedOnly = not not enabled end
-  function searcher:IsStoredOnlyActive() return state.storedOnly end
-  function searcher:SetBaseVariantOnly(enabled) state.baseVariantOnly = not not enabled end
-  function searcher:IsBaseVariantOnlyActive() return state.baseVariantOnly end
-  function searcher:SetEditorModeContext(mode) state.editorModeContext = mode end
-  function searcher:GetEditorModeContext() return state.editorModeContext end
-  function searcher:SetAllowedIndoors(enabled) state.allowedIndoors = not not enabled end
-  function searcher:IsAllowedIndoorsActive() return state.allowedIndoors end
-  function searcher:SetAllowedOutdoors(enabled) state.allowedOutdoors = not not enabled end
-  function searcher:IsAllowedOutdoorsActive() return state.allowedOutdoors end
-  function searcher:SetCollected(enabled) state.collected = not not enabled end
-  function searcher:IsCollectedActive() return state.collected end
-  function searcher:SetUncollected(enabled) state.uncollected = not not enabled end
-  function searcher:IsUncollectedActive() return state.uncollected end
-  function searcher:SetCustomizableOnly(enabled) state.customizableOnly = not not enabled end
-  function searcher:IsCustomizableOnlyActive() return state.customizableOnly end
-  function searcher:SetFirstAcquisitionBonusOnly(enabled) state.firstAcquisitionBonusOnly = not not enabled end
-  function searcher:IsFirstAcquisitionBonusOnlyActive() return state.firstAcquisitionBonusOnly end
-  function searcher:SetSortType(sortType) state.sortType = sortType end
-  function searcher:GetSortType() return state.sortType end
-  function searcher:SetFilteredCategoryID(categoryID) state.filteredCategoryID = categoryID or __wow_housing_all_category_id end
-  function searcher:GetFilteredCategoryID() return state.filteredCategoryID end
-  function searcher:SetFilteredSubcategoryID(subcategoryID) state.filteredSubcategoryID = subcategoryID end
-  function searcher:GetFilteredSubcategoryID() return state.filteredSubcategoryID end
-  function searcher:SetSearchText(searchText) state.searchText = searchText end
-  function searcher:GetSearchText() return state.searchText end
-  function searcher:SetFilterTagStatus(groupID, tagID, enabled)
-    state.tagStatus[groupID] = state.tagStatus[groupID] or {}
-    state.tagStatus[groupID][tagID] = not not enabled
-  end
-  function searcher:GetFilterTagStatus(groupID, tagID)
-    return state.tagStatus[groupID] and state.tagStatus[groupID][tagID] or false
-  end
-  function searcher:SetAllInFilterTagGroup(groupID, enabled)
-    state.tagStatus[groupID] = state.tagStatus[groupID] or {}
-    state.tagStatus[groupID].__all = not not enabled
-  end
-  function searcher:IsSearchInProgress() return state.inProgress end
-  function searcher:GetSearchCount() return #state.searchResults end
-  function searcher:GetNumSearchItems() return #state.searchResults end
-  function searcher:GetAllSearchItems() return state.searchResults end
-  function searcher:GetCatalogSearchResults() return state.searchResults end
-  function searcher:RunSearch()
-    refresh()
-  end
-
-  refresh()
-  return searcher
 end
 
 C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
@@ -1105,27 +970,9 @@ C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
   SetHouseExteriorType = __wow_noop,
 })
 C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
-  CreateCatalogSearcher = function()
-    return __wow_housing_make_catalog_searcher()
-  end,
   DeletePreviewCartDecor = __wow_noop,
   DestroyEntry = __wow_noop,
   GetAllFilterTagGroups = function() return {} end,
-  GetAllVariantInfosForEntry = function(entryID)
-    local entry_id = type(entryID) == "table" and entryID.recordID or entryID
-    local variants = __wow_housing_seeded_variants[entry_id]
-    if not variants then
-      return {}
-    end
-    local results = {}
-    for variantID, _variant in pairs(variants) do
-      results[#results + 1] = __wow_housing_copy_variant_info(entry_id, variantID)
-    end
-    table.sort(results, function(lhs, rhs)
-      return (lhs.variantID or 0) < (rhs.variantID or 0)
-    end)
-    return results
-  end,
   GetBundleInfo = function(bundleCatalogShopProductID)
     return __wow_housing_copy_bundle_info(bundleCatalogShopProductID)
   end,
@@ -1140,10 +987,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
     end
     return nil
   end,
-  GetCatalogEntryInfo = function(entryVariantID)
-    local entry_id = type(entryVariantID) == "table" and entryVariantID.recordID or entryVariantID
-    return __wow_housing_copy_entry_info(entry_id)
-  end,
   GetCatalogEntryInfoByItem = function(itemInfo)
     local item_id = type(itemInfo) == "table" and (itemInfo.itemID or itemInfo.id) or itemInfo
     return __wow_housing_copy_entry_info(item_id)
@@ -1155,11 +998,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
     return __wow_housing_copy_entry_info(recordID)
   end,
   GetCatalogEntryRefundTimeStampByRecordID = function() return nil end,
-  GetCatalogEntryVariantInfo = function(entryID, variantID)
-    local entry_id = type(entryID) == "table" and entryID.recordID or entryID
-    local variant_id = type(entryID) == "table" and entryID.variantIdentifier or variantID or 1
-    return __wow_housing_copy_variant_info(entry_id, variant_id)
-  end,
   GetCatalogSubcategoryInfo = function(subcategoryID)
     if subcategoryID == 1001 then
       return { ID = 1001, orderIndex = 1, parentCategoryID = 102, name = "Seating", icon = nil, anyStoredEntries = true }

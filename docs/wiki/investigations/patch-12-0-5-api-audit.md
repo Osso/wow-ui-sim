@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Housing catalog variant producer — pending GREEN
+
+[Variant contract](../../specs/housing-catalog-variants.md) owns actual parent RED **0/11** at input `05ca7dff0`, build/run artifacts, bounded capabilities, security limits and current unrun controls. New C API-owned queries serialize only explicit entry/variant inputs; source/results preserve full IDs in separate containers. Registration remains unconditional, matching the replaced temporary surface. Native publication is bound into the retained Lua lifecycle under `src/c_api/c_housing/catalog/`; callback and parameter methods remain, but no filter/sort/async/count policy is implemented.
+
+Root cause: temporary queries/searches read hardcoded seeds instead of `HousingState.catalog`, collapsed selector type checks and published obsolete variant fields. Exact three query keys, searcher factory and replaced seeded publishers are removed from the temporary owner. Shared legacy ByItem/ByRecordID, count, storefront/cart/exterior/customize providers remain excluded and unchanged; none supplies fallback data to the new queries. Public addon selectors preserve taint; nested secrets reject without unwrapping, secured-table restrictions are checked. Conservative rejection is not native AllowedWhenUntainted parity.
+
+Fourteen grouped variant cases plus unconditional surface/lifecycle control await parent compilation/GREEN/startup. Original seed assertions were reconciled through explicit fixtures, not deleted. No builds/checks/delegation/push in this implementation cycle; no source-row credit or native/all-profile acceptance. The following input section records the historical pre-producer checkpoint.
+
 ### Housing catalog variant inputs — pending RED
 
 [Variant contract](../../specs/housing-catalog-variants.md) owns exact source/filter accounting, cached retail `12.1.0.69933` declaration hashes, eleven unrun grouped fixtures and replacement-test mapping. Empty-default C API-owned typed inputs are referenced by `HousingState.catalog`; all output providers remain unchanged. No build/check/delegation, actual fixture RED, query implementation or row credit. Actual compiled behavioral RED is required before any producer edit.

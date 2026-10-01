@@ -6,6 +6,10 @@
 
 [[patch-12-0-5-api-audit#Quest accept confirmation — bounded independent PASS]] links the [contract proof](../specs/quest-accept-confirmation.md#tests-asserting-this-spec): producer `e5ab15302`, RED 1 PASS/4 missing-method FAIL, GREEN build 510.99s, saved 5 quest + 6 prompt and fresh 13 lifecycle controls PASS; snapshot fmt/check exit 0. Security/rooting source-only; separate parent hash-bound normal startup exit 0 `[]`, zero errors, 12.70s, not verifier-run. Exact event row 558 gains bounded coverage; 362 IDs/source hash retained. Historical unrelated bin-test failure remains; no broad-suite/native/popup/all-profile/full-page GREEN. Audit **IN PROGRESS**.
 
+## [2026-10-01] implementation | Publish empty-backed housing variants
+
+[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [variant contract](../specs/housing-catalog-variants.md): parent input `05ca7dff0` RED 0/11, exact-key base/variant queries and independent filter-free source/results snapshots. Unconditional registration and existing searcher lifecycle retained; overlapping seeded Lua outputs removed, excluded owners preserved. Host-secret, access-guard and snapshot controls added but unrun. Parent owns compilation/GREEN/startup; no native/filter/count/event/placement or source-row completion claim.
+
 ## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
 
 [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links the [structure contract/proof](../specs/damage-meter-combat-source.md): predecessor parent RED 0/6, C API-owned explicit queries/reset and fresh aggregate/detail snapshots; seeded Lua producer removed. Default and historical 12.0.0 nine-fixture PASS recorded in the linked contract. [Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) preserves unconditional registration and fixtures across profiles; other-profile execution remains unrun. Combat publication explicitly blocked, secret selectors rejected without unwrapping; no native secrecy, earlier-profile or row-completion claim.

@@ -1,6 +1,6 @@
-# Housing catalog variant inputs
+# Housing catalog variants
 
-Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. This cycle adds inputs and grouped tests only; the temporary seeded Lua output provider remains unchanged. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant inputs — pending RED) record integration boundaries.
+Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. Empty-backed producers now replace overlapping temporary catalog/search outputs after actual parent RED 0/11 at input `05ca7dff0`. Compilation, GREEN and startup remain parent-owned and pending. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — pending GREEN) record integration boundaries.
 
 ## What it must do
 
@@ -8,8 +8,8 @@ Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patc
 
 - [ ] `HousingState.catalog` starts empty in each environment. Production catalog records must not be invented; only explicit supplied inputs populate it.
 - [ ] Base entries use `(recordID, entryType)`; variant stacks use the full `(recordID, entryType, variantIdentifier)` key. A base entry is not variant zero.
-- [ ] Filter-free `GetAllSearchItems` exposes all source variant IDs. After explicit `RunSearch`, `GetCatalogSearchResults` exposes matching variant IDs. Two variants of one record remain distinct in both getters; no order or table-aliasing requirement.
-- [ ] Fresh independently created searchers work without loaded Blizzard addons, callback registration, global fixture state or release helpers. Only create → run → read is exercised; callback/automatic update/snapshot timing remain unverified.
+- [ ] Filter-free `GetAllSearchItems` exposes all source variant IDs. After explicit `RunSearch`, `GetCatalogSearchResults` exposes matching variant IDs. Two variants of one record remain distinct in both getters; source and results remain distinct containers with independently published IDs even when their contents coincide. No order requirement.
+- [ ] Fresh independently created searchers work without loaded Blizzard addons, callback registration, global fixture state or release helpers. Preserve the existing callback, parameter setter/getter and progress method surface. Callback compatibility controls are added; automatic update and native snapshot timing remain unverified.
 - [ ] `GetCatalogEntryVariantInfo(entryVariantID)` reads explicitly different `numStored` and `dyeSlots` for each compound key; no invented product/name/legacy `variantID` fields. `numStored` is storage input, never a destroyability policy.
 - [ ] `GetAllVariantInfosForEntry(entryID)` lists the fixture's distinct variant stacks; fixture replacement coverage, not an additional 12.0.5 signature-change claim.
 - [ ] `GetCatalogEntryInfo(entryID)` remains base info: explicit record/type/item/name/trophy fields, no synthesized `entryID`, `entryVariantID`, `variantIdentifier` or variant `numStored`. This is a bounded field subset, not a complete entry DTO.
@@ -18,27 +18,26 @@ Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patc
 ### Security
 
 - [ ] Ordinary selectors remain callable from tainted addon code without clearing caller taint, consistent with cached `SecretArguments = "AllowedWhenUntainted"` on the three info/list queries.
-- [ ] Secret selector enforcement remains unverified: the annotation allows secret arguments only while untainted, but nested compound-field handling, propagation and secure-versus-tainted behavior need actual tests before claiming security parity. No unwrap/bypass or permissive secret policy is authorized here.
+- [ ] Nested secret selector fields reject safely in both secure and tainted callers until access is modeled. Do not unwrap secrets, clear taint or bypass secured-table access. Host-secret and table-security controls are added but unrun. This conservative simulator limit is stricter than `AllowedWhenUntainted`, not native security parity. Selectors currently require ordinary tables with raw integer fields; native coercion, metatable lookup and numeric ranges remain unverified.
 
 The two no-argument search getters have no `SecretArguments` annotation in the inspected cache. This is not proof that returned identities are always public in native WoW.
 
 ## How it works
 
-- [Housing ownership and pending proof](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant inputs — pending RED).
+- [Housing ownership and pending proof](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — pending GREEN).
 - [Independent existing free-place contract](housing-free-place-state.md).
 
 ## Implementation inventory
 
-- `src/c_api/c_housing/catalog.rs`: plain typed entry/variant/dye inputs and empty-default maps; no producer, serializer, lookup implementation or registration.
-- `src/c_api/c_housing.rs`: exports the input module; existing housing registrations unchanged.
+- `src/c_api/c_housing/catalog.rs` and `catalog/queries.rs`: empty typed inputs and exact compound-key queries; registration remains unconditional like the replaced Lua surface, with no new profile gate.
+- `catalog/snapshot.rs` and `catalog/searcher.lua`: stack-rooted native serializers and retained Lua searcher lifecycle, owned by `c_api`. Each refresh publishes separate source/results snapshots from explicit variant keys. Filter setters store parameters only; the old seeded filter matcher is removed. Sorting, async and automatic updates are not implemented. Existing row-length count methods remain compatibility placeholders, not accepted owned-instance semantics.
 - `src/lua_api/state/support_types.rs`: `HousingState.catalog` references the C API-owned input model. Existing house reset replaces `HousingState` with its derived default; catalog reset behavior is untested.
-- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: unchanged temporary catalog/searcher and unrelated storefront/cart/exterior/selection providers.
-- `tests/housing_catalog_variants.rs`: eleven self-contained cases in the existing generated `integration` target, not a new Cargo target.
-- `tests/housing_catalog.rs`: preserves featured/bundle/market/cart coverage; variant and base-info seed assertions moved to explicit fixtures.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: removes exactly the replaced three info/list keys, CreateCatalogSearcher, seeded search publisher and variant-copy/list-match helpers. Shared seeds still serve excluded legacy ByItem/ByRecordID and destroyable-count providers; storefront/cart/exterior/customize owners remain untouched. These seeds are never read by the new catalog queries or search publisher.
+- `tests/housing_catalog_variants.rs`: fourteen grouped fixtures; `tests/housing_catalog.rs` retains storefront/cart coverage and adds an unconditional empty-surface/lifecycle control. No new Cargo target.
 
 ## Tests asserting this spec
 
-All eleven `housing_variant_*` cases in `tests/housing_catalog_variants.rs` are **unrun**. No build/check/delegation authorized for this input-only cycle. No GREEN or actual fixture RED claim.
+Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Producer code and expanded fourteen-fixture suite are **uncompiled/unrun** in this cycle. No build/check/delegation/push authorized; parent owns GREEN and startup. Contract checkboxes remain acceptance-pending, not implementation absence.
 
 | Contract | Cases |
 |---|---|
@@ -46,7 +45,10 @@ All eleven `housing_variant_*` cases in `tests/housing_catalog_variants.rs` are 
 | Full IDs with independent searchers | `search_source_preserves_compound_ids`, `search_results_preserve_compound_ids` |
 | Explicit storage/dye data and base separation | `query_preserves_distinct_stack_fields`, `list_uses_explicit_fixture_records`, `entry_info_remains_base_info` |
 | Missing selectors and environment isolation | `default_queries_have_no_seed_records`, `missing_selectors_do_not_use_legacy_seeds`, `inputs_do_not_seed_another_environment` |
-| Ordinary addon selector security | `public_selectors_allow_tainted_callers` |
+| Ordinary addon selector security | `public_selectors_allow_tainted_callers` (now all three queries) |
+| Independent nested snapshots/source and result containers | `snapshots_do_not_alias_model_or_search_containers` |
+| Conservative secret/access rejection | `nested_secrets_reject_without_unwrapping`, `secured_selector_preserves_access_guard` |
+| Unconditional empty surface and retained callback/parameter controls | `housing_catalog_empty_surface_remains_registered` in `housing_catalog.rs` |
 
 Replacement mapping: old `housing_catalog_market_and_variant_methods_use_seeded_state` checked variant 2 and a two-element list using temporary `variantID`/`productID`/`name` extensions. The new query/list fixtures assert the declared `entryVariantID`, stored and dye fields instead. Old itemID=1001 and isUniqueTrophy=false assertions are preserved under explicit base-info inputs. Featured products, bundle preview/viewed state, all market/cart operations and the two standalone cart tests remain unchanged in `housing_catalog.rs`. No source-only substring/shape tests substitute for behavioral fixtures.
 
@@ -56,17 +58,19 @@ Replacement mapping: old `housing_catalog_market_and_variant_methods_use_seeded_
 |---|---|---|
 | Baseline `git status --short`, `git rev-parse HEAD` | Clean `5b0644b3373244574ee4a7b1a1958fc82f5529b5` | Later edits not covered |
 | `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog.rs src/c_api/c_housing.rs src/lua_api/state/support_types.rs tests/housing_catalog.rs tests/housing_catalog_variants.rs` | Exit 0 on input/tests-only working scope; formatting only | Later Rust changes invalidate formatting scope |
-| Future compiled `integration` filter `housing_catalog_variants::` | **Not run; actual RED pending** | Must cover committed inputs/tests against unchanged output provider |
+| Parent `cargo test --test integration --no-run --message-format=json` at `05ca7dff0866fb2572b92717c5d3203a26615e68` | Exit 0, 252.50s; `/tmp/patch-12.0.5-batch18-red-build*` | Input fixtures only, not current producers |
+| Parent `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c housing_catalog_variants:: --nocapture --test-threads=1` | Exit 101, **0/11**; `/tmp/patch-12.0.5-batch18-red-run.log` and `.json`; binary SHA-256 `4d6e4297ca7a680f192c5c3c133126a184bb87ead83dd8482f76a6f586725957` | Same input revision; not current producers/new controls |
+| Current `rustfmt --edition 2024 --config skip_children=true` on `c_housing.rs`, `catalog.rs`, `catalog/{queries,snapshot}.rs`, `tests/housing_catalog{,_variants}.rs` | Exit 0; formatting only, no compilation or behavioral proof | Later Rust edits invalidate this formatting scope |
 
-**No output-producer edits before actual RED.** A compile failure, absent API, stale binary or predicted seeded mismatch is not behavior-level RED. A later authorized runner must compile these fixtures, execute them against the unchanged provider and preserve exact assertions/output/revision before replacing outputs. This cycle does not run an old binary and represent it as testing newly added typed state.
+Actual compiled behavioral RED precedes this producer replacement. New snapshot/security/lifecycle controls remain unrun; no current GREEN, native or startup claim.
 
 ## Known gaps (current cycle)
 
-- [ ] Actual compiled fixture RED; no query implementation or acceptance credit yet.
-- [ ] Search-item source versus search-result collection must stay distinct even though they coincide in the filter-free fixtures. Real filtering, async updates and count semantics are not covered.
-- [ ] Complete base-entry metadata/aggregate publication and secret-field enforcement are missing. Typed integer inputs cover fixtures, not verified native numeric ranges.
-- [ ] Remaining historical seed consumers must be reconciled at producer replacement, not silently removed. Deprecated catalog tests exercise an old three-argument ByRecordID wrapper and seeded legacy fields; current retail cache no longer ships that addon. Existing customize selection remains a separate temporary fixture. Neither is replaced here.
-- [ ] ByItem/ByRecordID and category-name providers remain outside this slice. Migration must remove only replaced Lua keys/helpers and preserve unrelated namespaces. No alternate fallback is a requirement.
+- [ ] Current producer compilation, grouped GREEN, startup and independent acceptance remain parent-owned; actual prerequisite RED is recorded above.
+- [ ] Distinct source/results are implemented; real filtering, sorting, async updates and owned-instance count semantics remain unmodeled. Existing filter method names do not establish matching behavior.
+- [ ] Complete base metadata/aggregates and secure access to secret selectors are missing. Strict public raw integer selectors and conservative secret rejection are simulator limits, not native range/coercion/access claims.
+- [ ] Overlapping variant/base seed assertions were replaced by explicit fixtures at `05ca7dff0`; coverage is retained, not deleted. Historical deprecated tests target the excluded ByRecordID wrapper; current retail cache no longer ships that addon. No other test references the replaced seeded query outputs. Customize selection remains a separate temporary fixture.
+- [ ] ByItem/ByRecordID and category-name providers remain outside this slice. Retained seed providers do not supply fallback data to new queries/searchers.
 
 ## Out of scope
 
@@ -81,9 +85,9 @@ Retained source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba
 
 | Exact accounting IDs | This slice |
 |---|---|
-| `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524`, `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528` | Unrun full-ID fixtures for output name/inner-type changes; not filter proof |
-| `structures-HousingCatalogEntryInfo-648`, `structures-HousingCatalogEntryInfo-649`, `structures-HousingCatalogEntryInfo-652` | Unrun bounded record/type/removed entryID assertions; no full entry-info claim |
-| `structures-HousingDecorDyeSlot-663` | Explicit fixture `dyeColorName`; publication unrun |
+| `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524`, `scriptobjects-HousingCatalogSearcher-GetAllSearchItems-525`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-527`, `scriptobjects-HousingCatalogSearcher-GetCatalogSearchResults-528` | Producer implemented after RED; full-ID GREEN pending, not filter proof |
+| `structures-HousingCatalogEntryInfo-648`, `structures-HousingCatalogEntryInfo-649`, `structures-HousingCatalogEntryInfo-652` | Bounded producer implemented after RED; GREEN pending, no full entry-info claim |
+| `structures-HousingDecorDyeSlot-663` | Explicit `dyeColorName` publication implemented; GREEN pending |
 | `structures-HousingCatalogEntryID-645`, `structures-HousingCatalogEntryID-646` | Base input omits legacy subtype fields; no runtime legacy-field absence test/credit |
 | `structures-HousingCatalogCategoryInfo-643`, `structures-HousingCatalogSubcategoryInfo-659`, `structures-HousingCategorySearchInfo-661` | **Exact filter/ownership accounting IDs excluded**; renamed predicates/search input remain unresolved |
 | `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284`, `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` | Removed arguments outside scope |
@@ -101,4 +105,4 @@ Read-only runtime cache `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/
 | `HousingCatalogSearcherAPIDocumentation.lua:10–34,255–267` — source/results and RunSearch | `0eeba7dfe9f68b547331538e8a54ccd6b4cb5da9be0a251c45e2c9e386e41ea3` |
 | `HousingDecorSharedDocumentation.lua:23–36` — dye-slot fields | `13f88228e34e658d6a18a69bb846b1c527d35593cab48f955b3d22689dc32f7c` |
 
-Cached wording: GetAllSearchItems is the "source collection of what's being searched"; GetCatalogSearchResults returns "the most recent search result entries". GetSearchCount counts owned instances, not result rows. Existing Lua aliases both getters to `state.searchResults` and returns its length for both count methods; neither aliasing nor count behavior is adopted as a requirement.
+Cached wording: GetAllSearchItems is the "source collection of what's being searched"; GetCatalogSearchResults returns "the most recent search result entries". GetSearchCount counts owned instances, not result rows. The replaced Lua provider aliased both getters to `state.searchResults`. Current source/results use distinct containers. Row-length count methods are retained unchanged as compatibility placeholders; owned-instance semantics are not implemented or adopted as a requirement.

@@ -1,6 +1,8 @@
 //! Empty-backed catalog fixtures; no Blizzard addons or production seed data.
 #![cfg(feature = "retail-12-0-5")]
 
+use rilua::LuaApiMut;
+use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::c_api::c_housing::catalog::{
     HousingCatalogEntryID, HousingCatalogEntryRecord, HousingCatalogEntryVariantID,
     HousingCatalogState, HousingCatalogVariantRecord, HousingDecorDyeSlot,
@@ -206,6 +208,9 @@ fn housing_variant_public_selectors_allow_tainted_callers() {
                 recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 2,
             })
             assert(info and info.numStored == 5)
+            local id = {recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor}
+            assert(C_HousingCatalog.GetCatalogEntryInfo(id).name == 'Fixture chair')
+            assert(#C_HousingCatalog.GetAllVariantInfosForEntry(id) == 2)
             assert(not issecure(), 'query must preserve caller taint')
         end
         debug.setobjecttaint(addon, 'HousingCatalogFixture')
@@ -229,6 +234,10 @@ fn housing_variant_missing_selectors_do_not_use_legacy_seeds() {
         }) do
             assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id) == nil,
                 'missing full key must not resolve to a different variant')
+            if id.recordID ~= 1001 or id.entryType ~= decor then
+                assert(C_HousingCatalog.GetCatalogEntryInfo(id) == nil)
+                assert(#C_HousingCatalog.GetAllVariantInfosForEntry(id) == 0)
+            end
         end
         "#,
     )
@@ -251,4 +260,113 @@ fn housing_variant_inputs_do_not_seed_another_environment() {
              entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 1}) == nil)",
         )
         .unwrap();
+}
+
+#[test]
+fn housing_variant_snapshots_do_not_alias_model_or_search_containers() {
+    let env = fixture_env();
+    env.exec(ASSERT_VARIANT_IDS).unwrap();
+    env.exec(r#"
+        local id = {recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 1}
+        local info = C_HousingCatalog.GetCatalogEntryVariantInfo(id)
+        info.entryVariantID.variantIdentifier = 99
+        info.dyeSlots[1].dyeColorName = 'changed'
+        info.numStored = 99
+        local again = C_HousingCatalog.GetCatalogEntryVariantInfo(id)
+        assert(again.numStored == 3 and again.entryVariantID.variantIdentifier == 1)
+        assert(again.dyeSlots[1].dyeColorName == 'Fixture amber')
+        local list = C_HousingCatalog.GetAllVariantInfosForEntry(id)
+        list[1].dyeSlots[1].ID = 99
+        for _, row in ipairs(C_HousingCatalog.GetAllVariantInfosForEntry(id)) do
+            assert(row.dyeSlots[1].ID == 11)
+        end
+        C_HousingCatalog.GetCatalogEntryInfo(id).name = 'changed'
+        assert(C_HousingCatalog.GetCatalogEntryInfo(id).name == 'Fixture chair')
+
+        local first = C_HousingCatalog.CreateCatalogSearcher()
+        local second = C_HousingCatalog.CreateCatalogSearcher()
+        first:RunSearch(); second:RunSearch()
+        local source, results = first:GetAllSearchItems(), first:GetCatalogSearchResults()
+        assert(source ~= results, 'source and results are distinct containers')
+        source[1].variantIdentifier = 99
+        source[2] = nil
+        assertFixtureIDs(results)
+        assertFixtureIDs(second:GetAllSearchItems())
+        assertFixtureIDs(second:GetCatalogSearchResults())
+        results[1].recordID = 99
+        collectgarbage('collect')
+        first:RunSearch()
+        assertFixtureIDs(first:GetAllSearchItems())
+        assertFixtureIDs(first:GetCatalogSearchResults())
+    "#).unwrap();
+}
+
+#[test]
+fn housing_variant_nested_secrets_reject_without_unwrapping() {
+    let env = fixture_env();
+    let entry_type: i32 = env
+        .eval("return Enum.HousingCatalogEntryType.Decor")
+        .unwrap();
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    for (name, value) in [
+        ("SecretRecord", 1001.0),
+        ("SecretType", f64::from(entry_type)),
+        ("SecretVariant", 1.0),
+    ] {
+        let secret = wrap_host_secret_number(lua.state_mut(), value);
+        lua.state_mut().push(secret);
+        let inserted = lua.set_global_val(name, secret);
+        lua.state_mut().pop();
+        inserted.unwrap();
+    }
+    drop(lua);
+    // Conservative simulator rejection, not native AllowedWhenUntainted parity.
+    env.exec(
+        r#"
+        collectgarbage('collect')
+        local decor = Enum.HousingCatalogEntryType.Decor
+        local function queries()
+            for _, id in ipairs({
+                {recordID = SecretRecord, entryType = decor, variantIdentifier = 1},
+                {recordID = 1001, entryType = SecretType, variantIdentifier = 1},
+            }) do
+                for _, query in ipairs({C_HousingCatalog.GetCatalogEntryInfo,
+                    C_HousingCatalog.GetAllVariantInfosForEntry,
+                    C_HousingCatalog.GetCatalogEntryVariantInfo}) do
+                    assert(not pcall(query, id), 'secret selector must not resolve')
+                end
+            end
+            assert(not pcall(C_HousingCatalog.GetCatalogEntryVariantInfo,
+                {recordID = 1001, entryType = decor, variantIdentifier = SecretVariant}))
+        end
+        queries()
+        local function addon()
+            queries()
+            assert(not issecure(), 'rejection must not clear taint')
+        end
+        debug.setobjecttaint(addon, 'HousingCatalogFixture')
+        addon()
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn housing_variant_secured_selector_preserves_access_guard() {
+    let env = fixture_env();
+    env.exec(r#"
+        local id = {recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 1}
+        settablesecurity(id, 0) -- VM DisallowTaintedAccess policy, not a catalog inference.
+        local function addon()
+            for _, query in ipairs({C_HousingCatalog.GetCatalogEntryInfo,
+                C_HousingCatalog.GetAllVariantInfosForEntry, C_HousingCatalog.GetCatalogEntryVariantInfo}) do
+                assert(not pcall(query, id), 'catalog must preserve table access guard')
+            end
+            assert(not issecure())
+        end
+        debug.setobjecttaint(addon, 'HousingCatalogFixture')
+        addon()
+        assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id).numStored == 3)
+    "#).unwrap();
 }

@@ -119,6 +119,38 @@ const HOUSING_CATALOG_SCRIPT: &str = r#"
     return "ok"
 "#;
 
+// This surface was unconditional before native ownership; no profile removal.
+#[test]
+fn housing_catalog_empty_surface_remains_registered() {
+    let env = env();
+    env.exec(
+        r#"
+        local id = {recordID = 1001, entryType = 1, variantIdentifier = 1}
+        assert(C_HousingCatalog.GetCatalogEntryInfo(id) == nil)
+        assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id) == nil)
+        assert(#C_HousingCatalog.GetAllVariantInfosForEntry(id) == 0)
+        local searcher = C_HousingCatalog.CreateCatalogSearcher()
+        searcher:SetStoredOnly(true)
+        assert(searcher:IsStoredOnlyActive())
+        searcher:SetSearchText('retained parameter')
+        assert(searcher:GetSearchText() == 'retained parameter')
+        searcher:SetAutoUpdateOnParamChanges(false)
+        local callbacks = 0
+        searcher:SetResultsUpdatedCallback(function()
+            callbacks = callbacks + 1
+            assert(not searcher:IsSearchInProgress())
+            assert(#searcher:GetAllSearchItems() == 0)
+            assert(#searcher:GetCatalogSearchResults() == 0)
+        end)
+        searcher:RunSearch()
+        assert(callbacks == 1)
+        assert(#searcher:GetAllSearchItems() == 0)
+        assert(#searcher:GetCatalogSearchResults() == 0)
+    "#,
+    )
+    .unwrap();
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }

@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Replace overlapping housing catalog seeds
+
+[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [contract](../specs/housing-catalog-variants.md): actual parent RED 0/11 precedes empty-backed base/variant queries and distinct source/results publication. C API owns retained Lua lifecycle; registration remains unconditional, excluded temporary providers untouched. Secret selectors conservatively rejected without unwrapping or taint clearing; guard/snapshot controls unrun. No builds/checks/delegation/push; parent GREEN/startup and acceptance pending, all accounting IDs unchanged.
+
 ## [2026-10-01] evidence | Reconcile bounded DamageMeter acceptance
 
 [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links [reconciled proof](../specs/damage-meter-combat-source.md#reconciled-bounded-proof--2026-10-01): default and historical 12.0.0 each nine PASS; seventeen prior controls reused narrowly; snapshot fmt/check exit 0. Shapes, empty input, selectors, reset/snapshots and explicit secret/combat errors covered. Producer `1a9fcd1ec`, scope `e38d98a89`, import `c1dce16c3`, host fixture `5b0644b33`. Parent startup 0 `[]` saved, not independent. Exact source row remains PARTIAL for sensitive value/secrecy/native gaps; 362 IDs/hash preserved. No combat/native/all-profile/full-addon UI closure.

@@ -40,6 +40,8 @@ const BLUEPRINT_TYPE_HOUSE: i32 = 1;
 const BLUEPRINT_TYPE_ROOM: i32 = 2;
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
+    // Replaces an unconditional temporary surface, including non-retail profiles.
+    catalog::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     basic_mode::register(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;
