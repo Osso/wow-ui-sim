@@ -1,6 +1,6 @@
 # Aura spell-identifier lookup
 
-Bounded Retail 12.0.5 contract for `C_UnitAuras.GetPlayerAuraBySpellID` and `C_UnitAuras.GetUnitAuraBySpellID`, using existing numeric `AuraInfo` records and explicitly seeded `SimState.spell_id_aliases`. Existing aura publication lives in `src/lua_api/globals/auras.rs`; the C API surface belongs in `src/c_api/`. See [Lua API architecture](../lua-api.md). This commit supplies tests/spec only, not a producer or passing proof.
+Bounded Retail 12.0.5 contract for `C_UnitAuras.GetPlayerAuraBySpellID` and `C_UnitAuras.GetUnitAuraBySpellID`, using existing numeric `AuraInfo` records and explicitly seeded `SimState.spell_id_aliases`. Existing aura publication lives in `src/lua_api/globals/auras.rs`; the C API surface belongs in `src/c_api/`. See [Lua API architecture](../lua-api.md). Epoch `retail-12-0-5` now supplies C API-owned producers; targeted GREEN and acceptance remain parent-owned. Checkboxes below remain pending verification.
 
 ## What it must do
 
@@ -47,9 +47,10 @@ Current local evidence: `src/c_api/c_spell.rs::alias_key_from_input/read_spell_i
 ## Implementation inventory
 
 - `src/lua_api/game_data.rs`, `src/lua_api/state/sim_state.rs` — existing AuraInfo records, party stores and explicit spell alias map; no changes in this slice.
-- `src/lua_api/globals/auras.rs` — current numeric player/legacy provider, supported collector, target fixtures and DTO builder; no changes in this slice.
-- `src/c_api/c_spell.rs` — existing identifier-resolution semantics; no changes in this slice.
-- `src/c_api/c_unit_auras.rs` — existing C API namespace owner; unit spell lookup producer pending.
+- `src/lua_api/globals/auras.rs` — unchanged legacy numeric provider; narrow `push_aura_by_spell_id` reuses unblocked collector and DTO builder. Earlier epochs retain the numeric C player provider.
+- `src/c_api/c_spell.rs` — narrow `read_spell_identifier_at` shares the existing alias-first resolver; C_Spell arg1 behavior is unchanged.
+- `src/c_api/c_unit_aura_spell_queries.rs` — `retail-12-0-5` C providers validate public identifiers before resolution or absent-unit results. Unit nil returns nil; non-string/secret unit tokens error. Neither caller taint nor secret identity is modified.
+- `src/lua_api/globals/register.rs` — installs authoritative C spell queries after legacy aura registration, which no longer installs the C player entry at this epoch. Separate from the `aura-instance-enumeration`-gated `c_unit_auras` module; enumeration registrations do not overwrite these queries.
 - `tests/aura_spell_identifier.rs` — twelve retail-12-0-5-gated cases automatically included in the existing grouped integration target; no additional Cargo target.
 
 ## Tests asserting this spec
@@ -75,8 +76,9 @@ Rust eval outputs use supported `i32`, not `u8`/`usize`. Secret fixture uses `wr
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and record targeted RED; this slice runs no build/test/check/delegation. No compile, RED, GREEN or acceptance claim yet.
-- [ ] C producer implementation and subsequent bounded verification remain parent-owned. Existing numeric compatibility cases may pass before implementation; unit/alias/validation behavior remains unproved.
+- Saved parent RED at `28393b01ba6bafc3d233cbc700c7b02303de1064`: `/tmp/patch-12.0.5-batch37-red-build-result.json` records build exit0 / 130.04s; corresponding `-run.json` and `-run.log` record exit101, three existing numeric/legacy controls PASS and nine FAIL. This evidence covers the pre-producer revision only.
+- [ ] Parent owns targeted GREEN, C_Spell/legacy controls, startup registration proof, checks/readability and acceptance. Producer work runs formatting only: no build/test/check/delegation. Numeric/seeded-label/numeric-alias, ordering, GC snapshots and actual-secret/taint tests exist but have no post-producer passing proof.
+- No source accounting or audit-row credit changes. Native visibility, name/link parsing, secret annotations and all-profile acceptance remain unproved.
 
 ## Out of scope
 

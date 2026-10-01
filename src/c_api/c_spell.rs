@@ -613,7 +613,12 @@ fn get_spell_id_for_spell_identifier(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn read_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
-    let raw = stack_val(state, 1);
+    read_spell_identifier_at(state, 1)
+}
+
+/// Shared alias-first resolution; callers own argument and secret validation.
+pub(crate) fn read_spell_identifier_at(state: &LuaState, arg_index: i32) -> LuaResult<Option<u32>> {
+    let raw = stack_val(state, arg_index);
     let Some(key) = alias_key_from_input(state, raw) else {
         return Ok(None);
     };

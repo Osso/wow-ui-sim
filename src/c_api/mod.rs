@@ -104,6 +104,8 @@ pub mod c_transmog_outfit_info;
 #[cfg(feature = "retail-12-0-0")]
 mod c_transmog_sets;
 pub mod c_ui_file_asset;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;
 pub(crate) mod c_weather;

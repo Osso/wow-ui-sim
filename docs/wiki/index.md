@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura spell query producers
+
+[[lua-api#Retail 12.0.5 aura spell queries]] links [aura spell contract](../specs/aura-spell-identifier.md): C API ownership at `retail-12-0-5`, shared C_Spell resolver and existing unblocked collector/DTO helper; legacy unchanged. Parent saved pre-producer RED 3 PASS / 9 FAIL at `28393b01b`; GREEN/acceptance pending. Helpful-then-harmful order and strict/secret policies inferred; target fixtures only, no refresh/native visibility/audit credit.
+
 ## [2026-10-01] evidence | Accept exact bounded cooldown slices
 
 [Independent cooldown acceptance](../specs/cooldown-abbreviation-threshold.md#independent-bounded-acceptance--2026-10-01): saved source/binary-bound **40 PASS**, fresh fmt/check **0**, no reruns. Exact numeric-unit/consumer slices536/538/540 only become bounded: **261 pending / 87 bounded / 14 partial =362**. IDs/register/source plaintext SHA/unrelated rows retained; aliases are annotations, not classes/behavior. Native/secret/error parity unproven; range/ceil/equality inferred. One naming suggestion deferred. PLAN remains ignored local accounting, never staged.

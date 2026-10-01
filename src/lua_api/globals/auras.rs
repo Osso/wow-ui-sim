@@ -92,11 +92,17 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
             ("GetBuffDataByIndex", get_buff_data_by_index),
             ("GetDebuffDataByIndex", get_debuff_data_by_index),
             ("GetAuraDispelTypeColor", get_aura_dispel_type_color),
-            ("GetPlayerAuraBySpellID", get_player_aura_by_spell_id),
             ("AddBlockedAura", add_blocked_aura),
             ("SwitchAuraDataProvider", switch_aura_data_provider),
             ("ResetAuraDataProvider", reset_aura_data_provider),
         ],
+    );
+    #[cfg(not(feature = "retail-12-0-5"))]
+    install(
+        state,
+        ns,
+        "GetPlayerAuraBySpellID",
+        get_player_aura_by_spell_id,
     );
     #[cfg(feature = "retail-12-1-0")]
     install(
@@ -487,6 +493,32 @@ fn get_player_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // ── Aura lookup helpers ──────────────────────────────────────────────────────
+
+/// Unblocked lookup over existing stores/fixtures, returning the established DTO.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn push_aura_by_spell_id(
+    state: &mut LuaState,
+    unit: &str,
+    spell_id: u32,
+    include_harmful: bool,
+) {
+    let matches_spell = |aura: &AuraInfo| i64::from(aura.spell_id) == i64::from(spell_id);
+    let mut found = collect_unit_auras(state, unit, AuraFilter::Helpful)
+        .into_iter()
+        .find(matches_spell);
+    if found.is_none() && include_harmful {
+        found = collect_unit_auras(state, unit, AuraFilter::Harmful)
+            .into_iter()
+            .find(matches_spell);
+    }
+    match found {
+        Some(aura) => {
+            let table = build_aura_table(state, &aura, unit);
+            state.push(table);
+        }
+        None => state.push(Val::Nil),
+    }
+}
 
 fn push_aura_by_instance_id(state: &mut LuaState, unit: &str, aura_instance_id: i32) {
     let found = find_aura_by_instance_id(state, unit, aura_instance_id);
