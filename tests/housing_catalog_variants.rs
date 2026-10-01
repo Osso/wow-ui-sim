@@ -355,18 +355,55 @@ fn housing_variant_nested_secrets_reject_without_unwrapping() {
 #[test]
 fn housing_variant_secured_selector_preserves_access_guard() {
     let env = fixture_env();
+    // Retail settablesecurity is a compatibility no-op. Install the pinned VM
+    // policy explicitly for this host-owned fixture, not the runtime surface.
+    {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        rilua::table_security::register_table_security(&mut lua).unwrap();
+    }
     env.exec(r#"
+        assert(issecure(), 'selector fixture must be created by a secure caller')
         local id = {recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 1}
         settablesecurity(id, 0) -- VM DisallowTaintedAccess policy, not a catalog inference.
+        assert(id.recordID == 1001, 'secure source indexing must remain allowed')
+        assert(rawget(id, 'recordID') == 1001, 'secure source rawget must remain allowed')
+        local queries = {
+            {'GetCatalogEntryInfo', C_HousingCatalog.GetCatalogEntryInfo},
+            {'GetAllVariantInfosForEntry', C_HousingCatalog.GetAllVariantInfosForEntry},
+            {'GetCatalogEntryVariantInfo', C_HousingCatalog.GetCatalogEntryVariantInfo},
+        }
+        local function assert_secure_queries()
+            assert(C_HousingCatalog.GetCatalogEntryInfo(id).name == 'Fixture chair',
+                'secure base query must resolve guarded selector')
+            assert(#C_HousingCatalog.GetAllVariantInfosForEntry(id) == 2,
+                'secure list query must resolve guarded selector')
+            assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id).numStored == 3,
+                'secure variant query must resolve guarded selector')
+        end
+        assert_secure_queries()
         local function addon()
-            for _, query in ipairs({C_HousingCatalog.GetCatalogEntryInfo,
-                C_HousingCatalog.GetAllVariantInfosForEntry, C_HousingCatalog.GetCatalogEntryVariantInfo}) do
-                assert(not pcall(query, id), 'catalog must preserve table access guard')
+            assert(not issecure(), 'guard probe must run as a tainted caller')
+            local source_ok, source_error = pcall(function() return id.recordID end)
+            assert(not source_ok, 'tainted source indexing must reject guarded selector')
+            assert(string.find(source_error, 'tainted access to secured table', 1, true),
+                'source indexing must fail at table access guard')
+            local raw_ok, raw_error = pcall(rawget, id, 'recordID')
+            assert(not raw_ok, 'tainted source rawget must reject guarded selector')
+            assert(string.find(raw_error, 'tainted access to secured table', 1, true),
+                'source rawget must fail at table access guard')
+            for _, query in ipairs(queries) do
+                local ok, message = pcall(query[2], id)
+                assert(not ok, query[1] .. ' must preserve table access guard')
+                assert(string.find(message, 'tainted access to secured table', 1, true),
+                    query[1] .. ' must fail at table access guard')
+                assert(not issecure(), query[1] .. ' rejection must not clear caller taint')
             end
-            assert(not issecure())
         end
         debug.setobjecttaint(addon, 'HousingCatalogFixture')
         addon()
-        assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id).numStored == 3)
+        assert(issecure(), 'secure fixture caller must remain untainted after addon returns')
+        assert(id.recordID == 1001, 'rejected accesses must leave source unchanged')
+        assert_secure_queries()
     "#).unwrap();
 }

@@ -8,7 +8,7 @@
 
 ## [2026-10-01] implementation | Publish empty-backed housing variants
 
-[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [variant contract](../specs/housing-catalog-variants.md): parent input `05ca7dff0` RED 0/11, exact-key base/variant queries and independent filter-free source/results snapshots. Unconditional registration and existing searcher lifecycle retained; overlapping seeded Lua outputs removed, excluded owners preserved. Host-secret, access-guard and snapshot controls added but unrun. Parent owns compilation/GREEN/startup; no native/filter/count/event/placement or source-row completion claim.
+[[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [variant contract](../specs/housing-catalog-variants.md): parent input `05ca7dff0` RED 0/11, exact-key base/variant queries and independent filter-free source/results snapshots. Unconditional registration and existing searcher lifecycle retained; overlapping seeded Lua outputs removed, excluded owners preserved. Parent compile passed; 13/14 variants and four cart controls passed. Linked contract diagnoses the unguarded retail fixture and records host-installed VM guard repair; revised execution remains pending. Parent owns repaired GREEN/startup; no native/filter/count/event/placement or source-row completion claim.
 
 ## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
 

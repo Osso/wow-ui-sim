@@ -1,3 +1,7 @@
+## [2026-10-01] fix | Install real VM policy in housing guard fixture
+
+[Guard diagnosis](../specs/housing-catalog-variants.md#guarded-selector-fixture-root-cause) records parent compile PASS, variants 13/14 and cart 4 PASS. Retail's no-op `settablesecurity` left the fixture unguarded; test-local pinned VM registration restores its premise without production changes. Named secure/tainted source and query assertions retain rejection/taint requirements. Revised proof remains parent-owned; zero-match filters and native behavior are not evidence. See [[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]].
+
 ## [2026-10-01] implementation | Replace overlapping housing catalog seeds
 
 [[patch-12-0-5-api-audit#Housing catalog variant producer — pending GREEN]] links the [contract](../specs/housing-catalog-variants.md): actual parent RED 0/11 precedes empty-backed base/variant queries and distinct source/results publication. C API owns retained Lua lifecycle; registration remains unconditional, excluded temporary providers untouched. Secret selectors conservatively rejected without unwrapping or taint clearing; guard/snapshot controls unrun. No builds/checks/delegation/push; parent GREEN/startup and acceptance pending, all accounting IDs unchanged.

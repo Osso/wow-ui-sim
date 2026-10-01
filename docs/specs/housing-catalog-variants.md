@@ -18,7 +18,7 @@ Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patc
 ### Security
 
 - [ ] Ordinary selectors remain callable from tainted addon code without clearing caller taint, consistent with cached `SecretArguments = "AllowedWhenUntainted"` on the three info/list queries.
-- [ ] Nested secret selector fields reject safely in both secure and tainted callers until access is modeled. Do not unwrap secrets, clear taint or bypass secured-table access. Host-secret and table-security controls are added but unrun. This conservative simulator limit is stricter than `AllowedWhenUntainted`, not native security parity. Selectors currently require ordinary tables with raw integer fields; native coercion, metatable lookup and numeric ranges remain unverified.
+- [ ] Nested secret selector fields reject safely in both secure and tainted callers until access is modeled. Do not unwrap secrets, clear taint or bypass secured-table access. Parent host-secret control passed; guarded-table fixture repair remains unrun. This conservative simulator limit is stricter than `AllowedWhenUntainted`, not native security parity. Selectors currently require ordinary tables with raw integer fields; native coercion, metatable lookup and numeric ranges remain unverified.
 
 The two no-argument search getters have no `SecretArguments` annotation in the inspected cache. This is not proof that returned identities are always public in native WoW.
 
@@ -37,7 +37,7 @@ The two no-argument search getters have no `SecretArguments` annotation in the i
 
 ## Tests asserting this spec
 
-Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Producer code and expanded fourteen-fixture suite are **uncompiled/unrun** in this cycle. No build/check/delegation/push authorized; parent owns GREEN and startup. Contract checkboxes remain acceptance-pending, not implementation absence.
+Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Parent compiled producer `76f2ac88a` plus visibility fix `45f0d8b21` successfully, then observed **13 passed, 1 failed** across fourteen variant fixtures. The failure was the guarded-selector fixture described below. Four cart controls passed; zero-match free-place/deprecated filters provide no evidence. No build/check/delegation/push authorized here; parent owns repaired GREEN and startup. Contract checkboxes remain acceptance-pending, not implementation absence.
 
 | Contract | Cases |
 |---|---|
@@ -63,11 +63,19 @@ Replacement mapping: old `housing_catalog_market_and_variant_methods_use_seeded_
 | Producer `76f2ac88a`: `rustfmt --edition 2024 --config skip_children=true` on `c_housing.rs`, `catalog.rs`, `catalog/{queries,snapshot}.rs`, `tests/housing_catalog{,_variants}.rs` | Exit 0; formatting only, no compilation or behavioral proof | Registration visibility follow-up invalidates only `queries.rs` scope |
 | Follow-up `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog/queries.rs` | Exit 0 on registration visibility fix; formatting only | Later edits to that file invalidate scope |
 
-Actual compiled behavioral RED precedes this producer replacement. New snapshot/security/lifecycle controls remain unrun; no current GREEN, native or startup claim.
+Actual compiled behavioral RED precedes this producer replacement. Parent `/tmp/patch-12.0.5-batch18-green-run-0.log` records 13/14 variant PASS at `45f0d8b21`; this is partial proof, not suite GREEN or native/startup acceptance.
+
+### Guarded-selector fixture root cause
+
+Retail `src/ptr/compat_bootstrap.lua` defines `settablesecurity` as a no-op. `src/lua_api/env_init/mod.rs` installs real rilua table-security globals only under `client-wowforever`. The failing fixture created its selector securely and stamped the reader closure `HousingCatalogFixture`, but calling the retail placeholder never set the table's restriction. Its expectation that the source was guarded was false; catalog access rejection was not disproven.
+
+Pinned rilua `6044544b960cd68b4b0c58bb3373412757c2caee` sets option 0's table flag only through real `set_table_security`; `check_table_access` rejects flagged tables whenever any live call frame is tainted, without a table-owner exception. Catalog `read_selector` already invokes that check before its raw integer-field reads. Neither production code nor the guard is changed.
+
+The repaired test explicitly registers pinned VM table security in its own environment. Named assertions require secure source indexing/rawget and all three catalog queries to succeed, tainted source indexing/rawget and each query to reject with the table-access error, caller taint to persist after rejection, and secure access/source data to remain intact after the addon returns. Lua `rawget` itself invokes the VM guard; no bypass reads are added. This proves only host-installed guarded selectors, not retail registration, native policy or Forever parity. Revised fixture compilation/execution remains parent-owned and pending. Repair formatting: `rustfmt --edition 2024 --config skip_children=true tests/housing_catalog_variants.rs` exited 0; only this changed Rust file is covered. No builds, checks or tests ran during repair.
 
 ## Known gaps (current cycle)
 
-- [ ] Current producer compilation, grouped GREEN, startup and independent acceptance remain parent-owned; actual prerequisite RED is recorded above.
+- [ ] Producer compilation passed; repaired grouped GREEN, startup and independent acceptance remain parent-owned. Actual prerequisite RED and partial 13/14 producer proof are recorded above.
 - [ ] Distinct source/results are implemented; real filtering, sorting, async updates and owned-instance count semantics remain unmodeled. Existing filter method names do not establish matching behavior.
 - [ ] Complete base metadata/aggregates and secure access to secret selectors are missing. Strict public raw integer selectors and conservative secret rejection are simulator limits, not native range/coercion/access claims.
 - [ ] Overlapping variant/base seed assertions were replaced by explicit fixtures at `05ca7dff0`; coverage is retained, not deleted. Historical deprecated tests target the excluded ByRecordID wrapper; current retail cache no longer ships that addon. No other test references the replaced seeded query outputs. Customize selection remains a separate temporary fixture.
