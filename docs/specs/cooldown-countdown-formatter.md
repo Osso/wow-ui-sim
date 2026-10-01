@@ -33,6 +33,7 @@
 ## Tests asserting this spec
 
 - `tests/cooldown_countdown_formatter.rs` — eight public configuration cases, RED at `e0a46d691` in `/tmp/patch-12.0.5-batch5-cooldown-formatter-red.log`.
+- `src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs` — seven real engine tick → library countdown text cases; renderer RED execution pending. These assert text selection, not GPU glyph rasterization.
 
 ## Known gaps (current cycle)
 

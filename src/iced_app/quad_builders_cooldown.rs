@@ -1,5 +1,8 @@
 //! Cooldown widget quad emitters.
 
+#[cfg(all(test, feature = "retail-12-0-5"))]
+mod countdown_formatter_tests;
+
 use iced::Rectangle;
 
 use crate::render::shader::FLAG_CIRCLE_CLIP;
