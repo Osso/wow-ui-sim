@@ -31,7 +31,7 @@ pub mod c_catalog_shop;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
-mod c_chat_info;
+pub(crate) mod c_chat_info;
 pub mod c_chromie_time;
 pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-0")]

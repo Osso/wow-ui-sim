@@ -1,6 +1,6 @@
 # Chat lockdown ready checks
 
-Bounded Retail 12.0.5 ready-check restriction contract for the explicit input in [chat messaging lockdown](chat-messaging-lockdown.md). Existing public producers live in `src/c_api/c_party_info.rs` and `src/lua_api/globals/group_verbs.rs`; this slice adds tests/spec only, not guards. See [event system](../event-system.md) for dispatch architecture.
+Bounded Retail 12.0.5 ready-check restriction contract for the explicit input in [chat messaging lockdown](chat-messaging-lockdown.md). Existing public producers live in `src/c_api/c_party_info.rs` and `src/lua_api/globals/group_verbs.rs`; the shared producers now reject explicit lockdown before mutations or dispatch. See [event system](../event-system.md) for dispatch architecture.
 
 Retained source [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-register.json), source line 169, states: “The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.” This establishes the restriction axis; it does not establish native error behavior or exact ready-check event payloads.
 
@@ -24,7 +24,9 @@ The test module is gated by both `profile-retail` and `retail-12-0-5` (12.0.5+ e
 
 - `tests/chat_lockdown_ready_checks.rs` — six grouped autodiscovered fixtures in the existing integration target; no Cargo target added.
 - `src/c_api/c_party_info.rs` — existing namespaced start/confirm producers; unchanged here.
-- `src/lua_api/globals/group_verbs.rs` — existing shared start/confirm producers, legacy `ReadyCheck()`, and status/time-left queries; unchanged here.
+- `src/lua_api/globals/group_verbs.rs` — shared start/confirm producers call the guard first under `retail-12-0-5`; existing legacy `ReadyCheck()` funnels through start. Unlocked mutations, synchronous events and payloads remain unchanged; older profiles retain existing behavior.
+- `src/c_api/c_chat_info.rs` — C API-owned shared guard reads only `SimState.chat_messaging_lockdown` and returns a contextual runtime error when true. Rejection/error wording is inferred simulator policy, not native characterization.
+- `src/c_api/mod.rs` — exposes the existing epoch-gated module within the crate for shared producer calls; module gate unchanged.
 - `src/lua_api/state/support_types.rs` — existing `ReadyCheckState` with `active` and `response`; unchanged here.
 - Input `f777027be` and predicate `18b09cbf9` are prerequisites owned by the linked predicate contract.
 
@@ -45,11 +47,11 @@ Inspection finds `ReadyCheck()` registered and calling shared `start_ready_check
 
 Parent filter: `cargo test --test integration chat_lockdown_ready_checks::`. Predicate control filter: `cargo test --test integration chat_messaging_lockdown::`. Existing legacy control: `cargo test --test integration group_verbs::ready_check_fires_event`.
 
-**Proof ledger:** tests/spec formatted and committed only; no compilation or runtime tests executed in this slice. Actual compiled RED, minimal producer guards, bounded GREEN and independent verification remain parent-owned. All requirements remain unchecked; no source-row or whole-audit acceptance credit.
+**Proof ledger:** parent artifacts `/tmp/patch-12.0.5-batch31-red-build-result.json` and `-red-run.log` bind compiled RED to tests/spec `8649fe072`: compile exit 0 in 162.49s; six selected tests, one unlocked lifecycle PASS and five FAIL at actual locked-state mutations. This producer slice adds guards and formatting only; no builds/checks/tests run here. Bounded GREEN and independent verification remain parent-owned. All requirements remain unchecked pending acceptance; no source-row or whole-audit acceptance credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Actual compiled RED for these six fixtures, followed by minimal ready-check producer guards and bounded GREEN.
+- [ ] Bounded GREEN for the six ready-check fixtures, predicate and existing group controls after the guarded producer change.
 - [ ] Independent acceptance of state preservation, real event silence/payloads, unlock recovery and both combat axes.
 
 ## Out of scope
