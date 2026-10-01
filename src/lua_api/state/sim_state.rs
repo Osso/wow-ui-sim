@@ -119,6 +119,15 @@ pub struct SimState {
         HashMap<(i64, i32), Vec<crate::c_api::c_major_factions::RenownRewardInfo>>,
     pub account_wide_reputation_factions: HashSet<i64>,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
+    /// Explicit active-brawl input only; no native default record is assumed.
+    #[cfg(feature = "retail-12-0-5")]
+    pub active_brawl: Option<PvpBrawlInfo>,
+    /// Explicit itemModifiedAppearanceID-keyed inputs only.
+    #[cfg(feature = "retail-12-0-5")]
+    pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
+    /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
+    #[cfg(feature = "retail-12-0-5")]
+    pub viewed_outfit_slots: HashMap<(i32, i32, i32), ViewedOutfitSlotInfo>,
     pub transmog_outfit_locks: HashSet<i64>,
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog,

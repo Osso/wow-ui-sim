@@ -133,6 +133,12 @@ macro_rules! build_empty_sim_state {
             major_faction_renown_rewards: HashMap::new(),
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            active_brawl: None,
+            #[cfg(feature = "retail-12-0-5")]
+            transmog_appearance_sources: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            viewed_outfit_slots: HashMap::new(),
             transmog_outfit_locks: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
@@ -405,6 +411,13 @@ macro_rules! build_empty_sim_state {
         }
     };
 }
+
+#[cfg(feature = "retail-12-0-5")]
+pub use crate::c_api::c_pvp::PvpBrawlInfo;
+#[cfg(feature = "retail-12-0-5")]
+pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
+#[cfg(feature = "retail-12-0-5")]
+pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
 
 // Re-export game data types so existing `crate::lua_api::state::X` imports keep working.
 pub use super::game_data::AuraInfo;

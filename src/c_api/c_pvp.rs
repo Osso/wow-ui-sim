@@ -1,3 +1,8 @@
+#[cfg(feature = "retail-12-0-5")]
+mod brawl_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use brawl_info::PvpBrawlInfo;
+
 use crate::c_api::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::table_set_rust_fn_static;

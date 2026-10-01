@@ -5,6 +5,11 @@ mod catalog;
 #[cfg(feature = "retail-12-0-5")]
 pub use catalog::{OutfitCatalog, OutfitEntry};
 
+#[cfg(feature = "retail-12-0-5")]
+mod viewed_slot_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use viewed_slot_info::ViewedOutfitSlotInfo;
+
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};

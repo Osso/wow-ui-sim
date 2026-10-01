@@ -1,5 +1,10 @@
 //! Owned custom-set storage; native validation and persistence are not modeled.
 
+#[cfg(feature = "retail-12-0-5")]
+mod appearance_source_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use appearance_source_info::AppearanceSourceInfo;
+
 use std::collections::BTreeMap;
 
 use crate::lua_api::methods::{
