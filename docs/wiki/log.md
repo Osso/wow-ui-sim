@@ -5553,3 +5553,7 @@ Updated index and [[spell-charge-state]] to link current proof SSOT rather than 
 ## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
 
 [[patch-12-0-5-api-audit#Current-Retail enums — bounded independent PASS]] links the [durable contract/proof](../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01): exact 30 pending rows accepted from unchanged-source saved batch7 20/20 PASS. External publication/removal/rename/member metadata only; no downstream domain requirement. 362 IDs/source hash and concurrent housing accounting preserved; current totals 278 pending / 70 bounded / 14 partial. Historical numbering, PTR/native/all-profile/current-binary execution unproved. No rerun or page closure.
+
+## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
+
+Updated [altered-form proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), [[lua-api]] and index from saved parent artifacts. Proof table owns RED exit limitations, GREEN provenance and bounded coverage; supersedes the earlier pending-GREEN checkpoint only. Broader controls/startup/independent checks/acceptance remain pending. Docs only; no runtime commands or accounting changes.

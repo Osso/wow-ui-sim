@@ -57,13 +57,34 @@ Implemented requirements map to the existing ten fixtures above: explicit defaul
 
 No explicit same-function default was found in source; the namespace's generic missing-method metatable supplies the old synthesized function. The real namespace slot supersedes it; generic defaults and unrelated methods remain unchanged.
 
-Parent's saved RED at `732d1c5e65fa5dc23116ed55326bc5a5e7a6c393`: `/tmp/patch-12.0.5-batch39-red-build-result.json` records Cargo `build-finished success: true`, 1060 seconds, but no retained wrapper exit code. `/tmp/patch-12.0.5-batch39-red-run.log` records **10 selected: 1 PASS / 9 FAIL**; default-input PASS is not producer proof. GREEN, startup and final acceptance remain parent-owned and pending. Native defaults, unit misses, error text and security edge parity remain unknown; no source-accounting credit.
+## Reconciled batch39 parent proof — 2026-10-01
+
+Saved evidence only; this docs audit runs no builds, tests or gates. Inputs/spec/ten tests are from `732d1c5e65fa5dc23116ed55326bc5a5e7a6c393`; producer is `795e2042e7cdbec0426e563272cf6b8f4d44ae15`. The test file is unchanged between those revisions.
+
+| Evidence | Revision | Recorded result |
+| --- | --- | --- |
+| `/tmp/patch-12.0.5-batch39-red-build-result.json` | Inputs | Cargo compiler success, 1060s (17m40s); wrapper failed after build when calling `.run()` on returned CommandResult. OS exit not retained. |
+| `/tmp/patch-12.0.5-batch39-red-run.json`, `/tmp/patch-12.0.5-batch39-red-run.log` | Inputs | 10 selected: **1 PASS / 9 FAIL**, 8.878s observed; OS exit not retained. Default-input PASS is not producer proof. |
+| `/tmp/patch-12.0.5-batch39-green-build-result.json` | Producer | Integration build exit **0**, 816.140s. |
+| `/tmp/patch-12.0.5-batch39-green-altered-form.json`, `/tmp/patch-12.0.5-batch39-green-altered-form.log` | Producer | **10/10 PASS**, exit **0**, 16.099s wall time (15.86s test summary); 9424 tests filtered out. |
+
+Integration binary `target/debug/deps/integration-a11e89d240f9bd0c` SHA256: RED `4dd33f290f64317f9f0880a9e0ef4ac9b765b59ddcbb856615633542a6f4f2f3`; GREEN `ebde3a19745cab8140e280c2ec4867766695cdb1462a3cd2ff7cf7551d03efd4`. Saved run-log SHA256: RED `ed6fc0b94d366cfaf505896bbf9b6aca921f562f410c87bde0524bf32ca2bb44`; GREEN `ecedc60e2f7e5165e89b6f97e364f33a814d539178ec3c00220ca1342ea6aa81`. RED compilation success does not establish exit 0; RED test failure does not establish exit 101.
+
+| Bounded capability | Proof level |
+| --- | --- |
+| Explicit false/true/false input, one public boolean, defaults, GUID target/focus aliases and identity misses | Parent GREEN fixtures |
+| Race/stance/legacy-field independence and strict required-string rejection/recovery | Parent GREEN fixtures; policy remains inferred |
+| Actual host-secret string accepted securely, denied in tainted closures without clearing taint; public/secure recovery and rooted full-GC preservation | Parent GREEN VM boundary fixtures; not native security characterization |
+| Complete unchanged cached `UnitUtil.lua`, real Human/Worgen/Dracthyr data and `PlayerUtil.ShouldUseNativeFormInModelScene()` | Parent GREEN consumer fixture; no SharedXML/addon/3D closure |
+| Broader controls, normal startup, independent checks/readability and final acceptance | **Pending**, not established by these ten tests or fixture initialization logs |
+
+Native defaults, misses, representation errors and security edge parity remain unknown. No source-accounting credit or whole-row completion follows from this bounded parent GREEN.
 
 ## Known gaps (current cycle)
 
-- [ ] Producer implemented; parent GREEN/controls and acceptance pending. Requirement-to-test mapping above is implementation coverage, not passing proof; all unverified requirement boxes remain open. No builds, tests, checks, lint or readability gates run in the producer slice; no row promotion.
+- [ ] Parent GREEN covers the ten fixtures in the proof table; broader controls, normal startup, independent checks/readability and final acceptance remain pending. Requirement boxes remain open for final acceptance; no row promotion.
 - [ ] Native source/default/non-player/error/security semantics remain unproven. False default/misses and strict representation errors are explicit simulator inferences.
-- [ ] Consumer test requires populated active-profile cache with `Blizzard_SharedXML/UnitUtil.lua`; missing cache/source fails explicitly, never skips or substitutes code. The inspected retail file consists of function definitions and can be supplied unchanged to existing `WowLuaEnv::exec`; actual load/runtime remains parent verification. This is not full SharedXML/addon/model-scene closure.
+- [ ] Consumer test requires populated active-profile cache with `Blizzard_SharedXML/UnitUtil.lua`; missing cache/source fails explicitly, never skips or substitutes code. The inspected retail file consists of function definitions and can be supplied unchanged to existing `WowLuaEnv::exec`; actual load/runtime passed in the bounded parent consumer fixture. This is not full SharedXML/addon/model-scene closure.
 - [ ] GC fixture asserts retained reference equality via secure `rawequal`, secrecy and authenticated behavior, not raw VM pointer identity. Race/stance/legacy-field nonmutation is asserted; barber independence and absence of events are requirements without dedicated effect-monitoring tests in this slice.
 
 ## Out of scope

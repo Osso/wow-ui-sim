@@ -1,6 +1,6 @@
-## [2026-10-01] implementation | Add bounded altered-form query producer
+## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
 
-[[lua-api#Retail 12.0.5 altered-form query]] links [altered-form contract](../specs/unit-aura-altered-form.md): epoch-gated shared namespace, explicit player bool, existing GUID identity and VM-authenticated unit-string access; immutable query returns one public boolean. Saved parent RED **1 PASS / 9 FAIL**; producer formatted only, parent GREEN/acceptance pending. Defaults/misses/errors inferred; native/security parity unknown. Tests, vendor, source accounting and PLAN unchanged.
+[[lua-api#Retail 12.0.5 altered-form query]] links [batch39 proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), the SSOT for revisions, artifacts/hashes and capability coverage. Ten unchanged fixtures pass, including cached consumer and VM secret/GC boundaries. Broader controls/startup/independent checks/acceptance pending; native policy/security unknown. No accounting or PLAN changes.
 
 ## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
 
