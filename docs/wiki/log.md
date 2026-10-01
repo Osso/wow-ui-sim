@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile batch43 display-count parent GREEN
+
+[[lua-api#Retail 12.0.5 aura application display count]] links [saved batch43 proof](../specs/aura-application-display-count.md#reconciled-batch43-parent-green--2026-10-01): compile0/336.675s, 14 display + 80 controls = 94 unique PASS/all exit0, startup0 `[]`/17.512s. Contract owns exact producer/fixture/binary hashes and full artifacts. Evidence covers committed producer PLUS preserved unowned dirty aura-duration diff, not clean-revision proof. Security and unchanged blocked-inclusive typed-state query covered; native access/valid-instance/restricted output secrecy excluded, representation/decimal/missing policies inferred. Independent gates/parent acceptance pending; rows367–369 uncredited, accounting/PLAN unchanged.
+
 ## [2026-10-01] implementation | Add bounded aura application display count producer
 
 Updated [[lua-api#Retail 12.0.5 aura application display count]], index and [contract](../specs/aura-application-display-count.md). Sole `retail-12-0-5` count producer authenticates unit/ID through pinned VM and rejects actual secret thresholds independently of caller security; validates supplied positions before unchanged blocked-inclusive typed lookup. Saved parent RED14FAIL/0PASS; formatting only here, parent GREEN/controls/startup/independent gates pending. Fixtures/model/DTO/provider state and unowned dirty aura_duration.rs preserved. No row/accounting/native credit.

@@ -1,6 +1,6 @@
 # Aura application display count
 
-Bounded Retail 12.0.5 contract for `C_UnitAuras.GetAuraApplicationDisplayCount`, rows 367–369 only. Batch43 adds the sole epoch-gated C API producer after parent compiled RED. Producer GREEN and independent acceptance remain pending. Existing model mechanics: [Lua API system](../wiki/systems/lua-api.md).
+Bounded Retail 12.0.5 contract for `C_UnitAuras.GetAuraApplicationDisplayCount`, rows 367–369 only. Batch43 adds the sole epoch-gated C API producer after parent compiled RED. Saved parent GREEN is established for the committed producer plus preserved unowned dirty source; independent gates and parent acceptance remain pending. Existing model mechanics: [Lua API system](../wiki/systems/lua-api.md).
 
 ## What it must do
 
@@ -43,19 +43,40 @@ Bounded Retail 12.0.5 contract for `C_UnitAuras.GetAuraApplicationDisplayCount`,
 
 | Capability | Fixture tests | Proof level |
 | --- | ---: | --- |
-| Counts 0/1/2/5/6, optional defaults, exact public string arity, player/party polarity | 2 | Compiled RED; producer GREEN pending |
-| Equality, fractions/negative/large thresholds, min-first ordering, unknown/missing IDs | 3 | Compiled RED; inferred policies; GREEN pending |
-| Required inputs, strict i32 ID and finite thresholds before miss | 3 | Compiled RED; inferred policies; GREEN pending |
-| Secure each/mixed host secrets, NeverSecret thresholds, tainted denial/recovery, rooted GC identity | 4 | Compiled RED; actual VM secrets; GREEN pending |
-| DTO/store/block/provider immutability and per-environment isolation | 2 | Compiled RED; producer GREEN pending |
+| Counts 0/1/2/5/6, optional defaults, exact public string arity, player/party polarity | 2 | Saved parent GREEN; independent acceptance pending |
+| Equality, fractions/negative/large thresholds, min-first ordering, unknown/missing IDs | 3 | Saved parent GREEN; inferred policies; independent acceptance pending |
+| Required inputs, strict i32 ID and finite thresholds before miss | 3 | Saved parent GREEN; inferred policies; independent acceptance pending |
+| Secure each/mixed host secrets, NeverSecret thresholds, tainted denial/recovery, rooted GC identity | 4 | Saved parent GREEN; actual VM secrets; independent acceptance pending |
+| DTO/store/block/provider immutability and per-environment isolation | 2 | Saved parent GREEN; independent acceptance pending |
 
-Parent owns GREEN compile/run, controls/startup and independent acceptance. No tests, builds, checks, lint, readability or broad gates ran in this producer slice. All checklist items remain unverified; fourteen RED failures are not producer acceptance.
+Saved parent GREEN covers the fourteen fixtures and controls/startup below. Independent Rust/security/readability gates and parent acceptance remain pending; checklist items remain unchecked, not accounting credit. This docs-only reconciliation ran no tests, builds, checks or independent gates.
 
 ### Saved parent batch43 RED — 2026-10-01
 
 Unchanged fixture/spec input `f2743342d2f33a722ef1c068dab4c92c4f81fb27`; compiled revision `ad83ca7d0e4fa401234c2185c28a438ee53d4648`. Parent build exit0 in 464.307s; selected run exit101 in 3.614s, **14 genuine FAIL / 0 PASS**. Evidence: `/tmp/patch-12.0.5-batch43-red-build-result.json`, `-run.json`, `-run.stdout`, `-run.stderr` and full build stdout/stderr. Binary `integration-a11e89d240f9bd0c` SHA256 `23406119db24b56c5cbd54371235458189a6d5ae9fce484aca2ea3a983e94f58`.
 
 Compilation included preserved unowned `src/c_api/aura_duration.rs` changes adding unrelated `DoesAuraHaveExpirationTime`; source diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`, saved `/tmp/patch-12.0.5-batch43-red-build-source-diff.txt`. That file is not producer-owned and is excluded from formatting/staging/commit. No native or exact-row accounting credit follows RED.
+
+### Reconciled batch43 parent GREEN — 2026-10-01
+
+Producer `04cf872ce98af702758e0e704b540d9228e1700a`; unchanged fixture input `f2743342d2f33a722ef1c068dab4c92c4f81fb27`. **Proof covers committed producer PLUS preserved UNOWNED dirty `src/c_api/aura_duration.rs` adding `DoesAuraHaveExpirationTime`, not a clean revision.** Exact saved diff `/tmp/patch-12.0.5-batch43-green-build-source-diff.txt` SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`. That file remains excluded from touch/format/stage.
+
+Saved `cargo test --test integration --no-run --message-format=json`: **exit0 / 336.675s**. Integration binary `integration-a11e89d240f9bd0c` SHA256 `27897cba2e7f173000609f6edb759b70f1bd62b833e105ef623905a975366362`. Six saved serial filtered runs, each under `timeout 90`, each exit0:
+
+| Filter | Unique PASS | Elapsed seconds |
+| --- | ---: | ---: |
+| `aura_application_display_count::` | 14 | 12.963 |
+| `next125aura::` | 12 | 10.440 |
+| `unit_aura_filter_query::` | 14 | 11.265 |
+| `aura_table_shape::` | 7 | 4.395 |
+| `aura_api::` | 29 | 15.801 |
+| `admin_buff_api::` | 18 | 8.330 |
+
+**14 display + 80 controls = 94 unique PASS, zero failures.** Saved startup `timeout 90 target/debug/wow-sim --no-addons --no-saved-vars lua-errors`: **exit0 / 17.512s / stdout `[]`**; wow-sim SHA256 `835aa59e8da15620bb2badf122a5c26c25c6db60ba3780c9fd591c919224642e`.
+
+Artifacts share `/tmp/patch-12.0.5-batch43-green-`: `build-result.json`, `build.jsonl` (full build stdout), `build.log` (build stderr), `runs.json`, `run-0.stdout`/`.stderr` through `run-5.stdout`/`.stderr` (full selected outputs), `startup-run.json`, `startup.stdout`, `startup.stderr`, and `build-source-diff.txt`. Metadata and saved selected stdout were reconciled without rerunning commands.
+
+Security fixtures cover authentic host-secret unit/ID independently and mixed, NeverSecret thresholds, tainted denial before misses, recovery and rooted GC identity. Typed-state fixtures cover player/party counts, unchanged DTO/store/block/provider state, blocked-inclusive lookup and environment isolation. Strict representations, decimal/public output, missing-record and min-first policies remain inferred. Native access/valid-instance enforcement and restricted output secrecy remain excluded. Independent gates and parent acceptance remain pending; exact rows367–369 stay uncredited and accounting/PLAN unchanged.
 
 ### Sources and exact row boundary
 
@@ -71,7 +92,7 @@ All three coverage rows remain `audit-pending`; source IDs, source/register/cove
 
 ## Known gaps (current cycle)
 
-- [ ] Producer GREEN, controls/startup and independent acceptance pending; saved parent RED establishes the pre-producer failure boundary only.
+- [ ] Independent Rust/security/readability gates and parent acceptance pending. Saved parent GREEN below is dirty-source-bound simulator evidence, not clean-revision or native proof.
 - [ ] Strict representation, missing-record response, min-first ordering, decimal/public-output and error policies are informed guesses, not native-verified semantics.
 
 ## Out of scope

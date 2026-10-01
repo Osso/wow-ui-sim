@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile batch43 display-count parent GREEN
+
+[[lua-api#Retail 12.0.5 aura application display count]] links [saved batch43 proof](../specs/aura-application-display-count.md#reconciled-batch43-parent-green--2026-10-01): compile0/336.675s, 14 display + 80 controls = 94 unique PASS/all exit0, startup0 `[]`/17.512s. Contract owns exact producer/fixture/binary hashes and full artifacts. Evidence covers committed producer PLUS preserved unowned dirty aura-duration diff, not clean-revision proof. Security and unchanged blocked-inclusive typed-state query covered; native access/valid-instance/restricted output secrecy excluded, representation/decimal/missing policies inferred. Independent gates/parent acceptance pending; rows367–369 uncredited, accounting/PLAN unchanged.
+
 ## [2026-10-01] evidence | Accept exact indexed aura argument rows
 
 [Independent bounded acceptance](../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) owns80 uniquePASS/startup0[], scopedfmt0, actual pinned-VM/security/readability evidence and globalfmt1 on unowned unrelated work. Dirty combined check0 is not clean-revision proof. Only373/374/384/385/389/390 promote:245pending103bounded14partial362. Native permission/output/consumer/profile limits and two deferred readability suggestions retained. Earlier pending checkpoints below are historical.
@@ -8,7 +12,7 @@
 
 ## [2026-10-01] implementation | Add bounded aura application display count producer
 
-[[lua-api#Retail 12.0.5 aura application display count]] links [display-count contract](../specs/aura-application-display-count.md): sole epoch-gated C API producer, authenticated unit/ID and independently NeverSecret thresholds, unchanged blocked-inclusive typed count lookup. Saved parent RED14FAIL/0PASS; producer GREEN/controls/startup/independent acceptance pending. Exact367–369 remain uncredited; native permission/output secrecy and accounting excluded.
+[[lua-api#Retail 12.0.5 aura application display count]] links [display-count contract](../specs/aura-application-display-count.md): sole epoch-gated C API producer, authenticated unit/ID and independently NeverSecret thresholds, unchanged blocked-inclusive typed count lookup. Saved parent RED14FAIL/0PASS; [reconciled GREEN](../specs/aura-application-display-count.md#reconciled-batch43-parent-green--2026-10-01) covers 94 unique PASS and startup0 `[]`, committed producer plus preserved unowned dirty diff. Independent gates/parent acceptance pending. Exact367–369 remain uncredited; native permission/output secrecy and accounting excluded.
 
 ## [2026-10-01] implementation | Add bounded indexed aura argument producers
 
