@@ -57,11 +57,19 @@ fn diff_enums_missing_matches_live_runtime_gaps() {
 #[test]
 fn representative_missing_enums_are_available_with_expected_values() {
     let env = WowLuaEnv::new().unwrap();
+    let breakpoint = if cfg!(feature = "client-retail") {
+        1
+    } else {
+        0
+    };
+    env.exec(&format!(
+        "assert(Enum.AbbreviationDataError.InvalidBreakpoint == {breakpoint})"
+    ))
+    .unwrap();
     let result: String = env
         .eval(
             r#"
             local checks = {
-                { "AbbreviationDataError", "InvalidBreakpoint", 0 },
                 { "AccountData", "Config", 0 },
                 { "AccountStoreItemStatus", "Owned", 3 },
                 { "ClientDebugAISpellReadyStatus", "Ready", 0 },

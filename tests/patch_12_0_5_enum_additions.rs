@@ -193,8 +193,8 @@ fn edit_mode_unit_frame_settings_publish_big_defensive_icon_size() {
     // EditModeManagerConstantsDocumentation.lua:684-714; source delta:582.
     assert_current_publication(
         "EditModeUnitFrameSetting",
-        "{ BigDefensiveIconSize=21 }",
-        "{}",
+        "{ DebuffIconSize=19, BigDefensiveIconSize=21, BuffIconSize=22 }",
+        "{ 'IconSize' }",
     );
 }
 
@@ -276,7 +276,21 @@ fn loot_method_styles_publish_mainline_without_personal_only_alias() {
 #[cfg(feature = "client-retail")]
 fn photo_sharing_upload_statuses_publish_disabled() {
     // ImageSharingConstantsDocumentation.lua:50-87; source delta:603.
-    assert_current_publication("PhotoSharingUploadStatus", "{ Disabled=0 }", "{}");
+    // Disabled insertion shifts all earlier statuses; retain their documented values.
+    assert_current_publication(
+        "PhotoSharingUploadStatus",
+        "{ Disabled=0, Failed=1, Success=2, Locked=3, ListPagesApiCallFailed=4,
+        ListPagesBadRequest=5, ListPagesUnauthorized=6, ListPagesForbidden=7,
+        ListPagesNotFound=8, ListPagesTooManyRequests=9, ListPagesGenericFailure=10,
+        ListPagesEmptyBoardID=11, ListPagesInvalidBookmark=12, CreatePageApiCallFailed=13,
+        CreatePageBadRequest=14, CreatePageUnauthorized=15, CreatePageForbidden=16,
+        CreatePageNotFound=17, CreatePageTooManyRequests=18, CreatePageGenericFailure=19,
+        CreatePageNoBoardIDFound=20, CreatePostApiCallFailed=21, CreatePostBadRequest=22,
+        CreatePostUnauthorized=23, CreatePostForbidden=24, CreatePostNotFound=25,
+        CreatePostTooManyRequests=26, CreatePostGenericFailure=27, CreatePostNoIDFound=28,
+        CreatePostThrottled=29 }",
+        "{}",
+    );
 }
 
 #[test]

@@ -15,11 +15,21 @@ fn test_patch_12_0_0_edit_mode_unit_frame_setting_enum_values() {
                     return "EditModeUnitFrameSetting: expected table"
                 end
 
+                local current = CURRENT_RETAIL
                 local expected = {
                     AuraOrganizationType = 18,
-                    IconSize = 19,
                     Opacity = 20,
                 }
+                if current then
+                    expected.DebuffIconSize = 19
+                    expected.BigDefensiveIconSize = 21
+                    expected.BuffIconSize = 22
+                    if setting.IconSize ~= nil then
+                        return "IconSize: obsolete current-retail alias"
+                    end
+                else
+                    expected.IconSize = 19
+                end
                 for name, expected_value in pairs(expected) do
                     local value = setting[name]
                     if type(value) ~= "number" or value ~= expected_value then
@@ -27,7 +37,7 @@ fn test_patch_12_0_0_edit_mode_unit_frame_setting_enum_values() {
                             .. ", got " .. tostring(value)
                     end
                 end
-                if setting.BigDefensiveIconSize ~= nil then
+                if not current and setting.BigDefensiveIconSize ~= nil then
                     return "BigDefensiveIconSize: expected nil, got "
                         .. tostring(setting.BigDefensiveIconSize)
                 end
@@ -36,11 +46,22 @@ fn test_patch_12_0_0_edit_mode_unit_frame_setting_enum_values() {
                 if type(meta) ~= "table" then
                     return "EditModeUnitFrameSettingMeta: expected table"
                 end
-                if meta.MinValue ~= 0 or meta.MaxValue ~= 20 or meta.NumValues ~= 21 then
+                local max = current and 22 or 20
+                local count = current and 23 or 21
+                if meta.MinValue ~= 0 or meta.MaxValue ~= max or meta.NumValues ~= count then
                     return "metadata mismatch"
                 end
                 return "ok"
-            "#,
+            "#
+            .replace(
+                "CURRENT_RETAIL",
+                if cfg!(feature = "client-retail") {
+                    "true"
+                } else {
+                    "false"
+                },
+            )
+            .as_str(),
         )
         .unwrap();
     assert_eq!(

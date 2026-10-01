@@ -35,7 +35,7 @@ const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua")
 
 pub fn init(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA)?;
-    crate::c_api::patch_12_0_5_enums::refresh_house_finder_metadata(lua.state_mut());
+    crate::c_api::patch_12_0_5_enums::refresh_metadata(lua.state_mut());
     crate::c_api::on_update_modes::register(lua.state_mut());
     Ok(())
 }
@@ -44,7 +44,7 @@ pub fn apply_post_load(env: &crate::lua_api::WowLuaEnv) {
     if let Err(err) = env.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA) {
         eprintln!("patch 12.1 compat bootstrap failed after load: {err}");
     }
-    crate::c_api::patch_12_0_5_enums::refresh_house_finder_metadata(env.rilua_mut().state_mut());
+    crate::c_api::patch_12_0_5_enums::refresh_metadata(env.rilua_mut().state_mut());
     crate::c_api::on_update_modes::register(env.rilua_mut().state_mut());
 }
 
