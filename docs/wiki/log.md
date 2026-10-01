@@ -1,8 +1,12 @@
+## [2026-10-01] evidence | Reconcile bounded cooldown parent GREEN
+
+[Batch36 cooldown proof](../specs/cooldown-abbreviation-threshold.md#reconciled-batch36-parent-proof--2026-10-01): corrected RED20=10PASS10FAIL, storage1PASS; wrong-filter0tests excluded. Parent GREEN `053d7ed4d` includes `69c454146`, compile0/447.06s; **40PASS = 20 formatter + 8 renderer + 12 widget**. **Independent299 pending**, no startup rerun (registration unchanged). Cached below-threshold `m:ss` explicit; range/ceil/boundaries inferred. Rows536/538/540 pending; **264/84/14=362**, IDs/source hash retained. PLAN tracking corrected053d7ed4d; local ignored only.
+
 ## [2026-10-01] implementation | Add bounded party countdown producer
 
 ## [2026-10-01] evidence | Accept bounded countdown; retain row169 pending
 
-[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Parent retains row169 pending: restriction setter does not prove ping actions/delivery. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown d656bf037 compile active, not acceptance. Docs only; no reruns/delegation.
+[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Parent retains row169 pending: restriction setter does not prove ping actions/delivery. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending. Docs only; no reruns/delegation.
 
 
 ## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN

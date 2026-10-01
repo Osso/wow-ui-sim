@@ -40,8 +40,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Parent owns GREEN compilation/runtime and final verification. Saved compiled RED at input `d656bf037`: build exit 0 in 692.14 seconds (`/tmp/patch-12.0.5-batch36-red-build-result.json`); corrected runtime filter selected 20 tests, 10 PASS / 10 FAIL (`/tmp/patch-12.0.5-batch36-red-correct-filter.{json,log}`). Original filename-based filter selected zero tests and is not proof. Storage separately PASS in original runs (parent report).
-- [ ] Producer changes only the renderer abbreviation branch: configured inclusive 60–3600 seconds and strictly lower remaining time select ceil-rounded `m:ss`. Existing renderer unit control migrates the obsolete `9s` expectation to decimal `8.2` for invalid threshold 5, then checks valid abbreviation, aura precedence and custom-over-aura precedence. No build/test/check/readability/delegation performed by producer; GREEN remains pending.
+- [ ] Parent saved bounded GREEN compilation/runtime; independent299 and final verification remain pending. Saved compiled RED at input `d656bf037`: build exit 0 in 692.14 seconds (`/tmp/patch-12.0.5-batch36-red-build-result.json`); corrected runtime filter selected 20 tests, 10 PASS / 10 FAIL (`/tmp/patch-12.0.5-batch36-red-correct-filter.{json,log}`). Original filename-based filter selected zero tests and is not proof. Storage separately PASS in original runs (parent report).
+- [ ] Producer changes only the renderer abbreviation branch: configured inclusive 60–3600 seconds and strictly lower remaining time select ceil-rounded `m:ss`. Existing renderer unit control migrates the obsolete `9s` expectation to decimal `8.2` for invalid threshold 5, then checks valid abbreviation, aura precedence and custom-over-aura precedence. No build/test/check/readability/delegation performed by producer; parent GREEN is recorded below, independent299 remains pending.
 - [ ] Cached retail `Blizzard_APIDocumentationGenerated/FrameAPICooldownDocumentation.lua`, inspected at lines 338–350, documents below-threshold abbreviation (example `1:31`). Exact assumption: 'If above one hour or below one minute no abbreviation' grammatical refers to configured threshold. Inclusive endpoints, strict below selection, ceil rounding and minimum equality are bounded simulator policy; no native probes establish boundaries.
 - [ ] Register rows `widgets-Cooldown-GetMinimumCountdownDuration-536`, `widgets-Cooldown-SetCountdownAbbrevThreshold-538`, `widgets-Cooldown-SetMinimumCountdownDuration-540` change primitive type annotations only. These fixtures confer no behavioral-delta or whole-row completion credit from aliases alone.
 
@@ -62,6 +62,16 @@ cooldown_widget::cooldown_threshold_storage_preserves_fractional_units_and_indep
 ```
 
 Run the existing full `iced_app::quad_builders::cooldown::countdown_formatter_tests::` module as the formatter/gate control filter when integrating, not as an additional Cargo target. Also run `iced_app::quad_builders::cooldown::tests::` for the migrated renderer control. Paths match `/tmp/patch-12.0.5-batch36-lib-test-list.txt`.
+
+## Reconciled batch36 parent proof — 2026-10-01
+
+Saved parent RED `d656bf037`: compile exit0/692.14s; corrected runtime-red-correct-filter selects **20 = 10 PASS / 10 FAIL**, exit101; separate storage **1 PASS**. Wrong filename-derived filter selected **0 tests**, not proof. Artifacts: `/tmp/patch-12.0.5-batch36-red-{build-result,runs}.json` and `/tmp/patch-12.0.5-batch36-red-correct-filter.{json,log}`.
+
+Parent GREEN compilation `053d7ed4d` includes producer `69c454146`: exit0/**447.06s**. `/tmp/patch-12.0.5-batch36-green-build-result.json` binds executable hashes; `/tmp/patch-12.0.5-batch36-green-runs.json` binds revision, hashes, exact argv and three logs. **40 PASS: 20 formatter + 8 renderer + 12 widget**, all exit0. Covers renderer text, threshold/minimum/ticking/precedence controls and fractional storage, not GPU/native parity.
+
+**Independent299 pending.** No startup rerun: registration unchanged; historical startup is not current-binary proof. No fresh fmt/check/readability or final acceptance claimed. Cached below-threshold `m:ss` example `1:31` is explicit; configured range interpretation, inclusive endpoints, strict boundaries, ceil rounding and minimum equality remain inferred. Exact rows536/538/540 stay pending; primitive aliases alone confer no behavioral-delta credit. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged until independent review.
+
+Earlier accidental PLAN tracking corrected by `053d7ed4d`; `PLAN.md` remains ignored local accounting, never staged or force-added.
 
 ## Out of scope
 

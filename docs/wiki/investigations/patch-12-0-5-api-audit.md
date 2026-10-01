@@ -1,5 +1,10 @@
 # Patch 12.0.5 API Audit
 
+### Cooldown abbreviation — bounded parent GREEN
+
+[Batch36 cooldown proof](../../specs/cooldown-abbreviation-threshold.md#reconciled-batch36-parent-proof--2026-10-01): corrected RED20=10PASS10FAIL, storage1PASS; wrong-filter0tests excluded. Parent GREEN `053d7ed4d` includes `69c454146`, compile0/447.06s; **40PASS = 20 formatter + 8 renderer + 12 widget**. **Independent299 pending**, no startup rerun (registration unchanged). Cached below-threshold `m:ss` explicit; range/ceil/boundaries inferred. Rows536/538/540 pending; **264/84/14=362**, IDs/source hash retained. PLAN tracking corrected053d7ed4d; local ignored only.
+
+
 ### Party loot method — bounded independent PASS
 
 [Batch34 loot proof](../../specs/party-loot-method.md#reconciled-batch34-parent-proof--2026-10-01) owns saved artifacts, binary hashes, exact coverage and inferred policies. Inputs `42e15e675` compile101/110.49s (unsupported u8) is not RED; corrected `1c7af9c03` compile0/175.01s yields **12 FAIL**. Producer `f2e85fcb6` first GREEN attempt aborts in build.rs after3.40s against a concurrent incomplete countdown fixture, not runtime. Stable fixture `676e4c25a` compiles0/151.54s: loot12 + availability1 + broad legacy filter18 = **19 unique PASS / 31 executions** (12 duplicate loot hits). Saved startup exits0, `[]`, CLEAN0. Same binary run3 yields **10 countdown FAIL**, next-slice behavioral RED, not loot regression.
@@ -12,7 +17,7 @@
 
 Final **`prose-2026-03-31-169` stays pending** by parent decision after bounded countdown acceptance. **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash unchanged. Future row decision must specify the bounded explicit-input predicate: chat lockdown blocks these four actions/setters; combat alone does not. No native lockdown production, network delivery, permission enforcement, full-page or all-profile credit.
 
-[Independent countdown ledger](../../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): saved10+25controls35PASS, freshfmt/check0, startup0[]. Inferred lifecycle/security; one magic3600 readability finding deferred. Parent retains row169 pending: ping-family prose exceeds restriction-setter proof. Row168 separate; 362IDs/hash/counts unchanged. Cooldown d656bf037 compile active, not acceptance.
+[Independent countdown ledger](../../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): saved10+25controls35PASS, freshfmt/check0, startup0[]. Inferred lifecycle/security; one magic3600 readability finding deferred. Parent retains row169 pending: ping-family prose exceeds restriction-setter proof. Row168 separate; 362IDs/hash/counts unchanged. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending.
 
 ### Private warning placement — bounded independent PASS
 
