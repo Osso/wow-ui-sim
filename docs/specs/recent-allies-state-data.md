@@ -9,7 +9,7 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 - [x] Publish complete `RecentAllyData` rows with `stateData`, `characterData`, and `interactionData`, including explicit interaction sequences and context tables.
 - [x] Publish distinct true/false `friendRequestSentThisSession` values with no `hasFriendRequestPending` alias. Preserve all other required values and optional nils.
 - [x] Return independent nested snapshots; Lua mutations must not alter input or subsequent results.
-- [ ] Limit this modeled surface and fixtures to `retail-12-0-5` plus mainline `profile-retail`/`client-ptr`.
+- [x] Limit this modeled surface and fixtures to `retail-12-0-5` plus mainline `profile-retail`/`client-ptr`.
 
 ### Declared nested fields
 
@@ -47,7 +47,9 @@ Proof ledger: input/fixtures committed in `d0495e796`; parent build at `ee3e2717
 
 Producer `3666902bf` passes all four actual-query fixtures: `/tmp/patch-12.0.5-batch12-green-runs.json` and `/tmp/patch-12.0.5-batch12-green-run-0.log` record exit 0, 4/4 at full revision `3666902bfc0838d394a7a1ab6ca324d13395a1d9`. Run-1 records six passing source/TOC controls, not addon runtime integration. Saved `/tmp/patch-12.0.5-batch12-green-startup-run.json`, `-startup.json` and `-startup.log` record the same revision's `--no-addons --no-saved-vars lua-errors` run: exit 0, `[]`, zero Lua errors.
 
-Bounded behavior above is development-GREEN, not native or full-system acceptance. Independent Rust gates remain pending: `/tmp/patch-12.0.5-recent-allies-independent-proof.md` was absent when this evidence was recorded; no formatting/check/readability completion is claimed. Profile gating remains source-accounted, not an all-profile execution proof.
+Independent bounded PASS: `/tmp/patch-12.0.5-recent-allies-independent-proof.md` confirms reused actual RED 0/4, GREEN 4/4, six source/TOC controls and saved startup `[]`; wiring, nested rooting and scoped readability audits pass. Default `cargo fmt --check` and `cargo check` each exit 0 without warnings over `f442b0913` → `a956dfdd3`: before/after manifests cover 3,194 tracked source/test/crate/build/Cargo configuration files with zero changed hashes. Gate artifacts: `/tmp/patch-12.0.5-recent-allies-independent-gates.json`, `-fmt.log`, `-check.log`; source manifests: `-before.json`, `-after.json`.
+
+This is bounded producer acceptance, not current full-source verification: newer cast input `c14076510` is not covered. Default profile compiled/executed only; mainline/epoch gates remain source-accounted, not an all-profile execution proof. Rooting is audited, not forced-GC stress-tested. No populated Blizzard-addon integration, native parity, full-system or whole-page acceptance.
 
 Old-provider trace: no explicit `C_RecentAllies`/`GetRecentAllies` registration existed in `src`. `init_lua_state` runs Rust globals registration before `init_runtime_surface_bootstrap`; that bootstrap's `_G.__index` creates missing `C_*` namespaces, then `__wow_namespace_mt.__index` installs `function() return nil end` for missing methods. New registration supplies the concrete method before bootstrap. No targeted obsolete provider exists to remove; generic other-namespace fallback remains untouched.
 
@@ -55,7 +57,7 @@ Rooting: each newly allocated output/nested table is pushed immediately, stays r
 
 ## Known gaps (current cycle)
 
-- [ ] Independent Rust gates: record explicit supporting proof in `/tmp/patch-12.0.5-recent-allies-independent-proof.md`; saved development GREEN and startup do not establish these gates.
+- [x] Independent bounded Rust gates and scoped readability: recorded in [proof ledger](#tests-asserting-this-spec), limited to the unchanged-source interval stated there.
 - [ ] Future native probe: query disabled/enabled empty/populated states; record return counts, nested nils, renamed true/false flags, ordering and mutations across repeated queries. Native eligibility and default state remain unknown.
 
 ## Out of scope

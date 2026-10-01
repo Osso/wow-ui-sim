@@ -8,7 +8,7 @@
 
 ## [2026-10-01] implementation | Add bounded Recent Allies snapshots
 
-[[patch-12-0-5-api-audit#Recent Allies snapshot producer — bounded GREEN]] links the [contract](../specs/recent-allies-state-data.md#tests-asserting-this-spec): actual RED 0/4, producer `3666902bf` GREEN 4/4, six source/TOC controls (not addon runtime integration), saved startup exit 0 with `[]`. Exact source row has bounded development coverage; all 362 IDs retained. Independent Rust gates pending; no native, full-system or whole-page credit.
+[[patch-12-0-5-api-audit#Recent Allies snapshot producer — bounded GREEN]] links the [contract](../specs/recent-allies-state-data.md#tests-asserting-this-spec): actual RED 0/4, producer `3666902bf` GREEN 4/4, six source/TOC controls (not addon runtime integration), saved startup exit 0 with `[]`. Exact source row has bounded development coverage; all 362 IDs retained. Linked contract owns independent bounded PASS and unchanged-source default Rust gates `f442b0913` → `a956dfdd3`; newer `c14076510` not covered. No current full-source, native, full-system or whole-page credit.
 
 ## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
 
