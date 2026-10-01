@@ -1,9 +1,5 @@
 //! Common documented NumericFormatter consumption; simulator policy, not native parity.
-#![cfg(all(
-    feature = "retail-12-0-5",
-    feature = "numeric-rule-formatters",
-    feature = "native-duration-formatting"
-))]
+#![cfg(all(feature = "retail-12-0-5", feature = "numeric-rule-formatters"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const SETUP: &str = r#"
@@ -24,6 +20,12 @@ const SETUP: &str = r#"
 fn execute(code: &str) {
     let env = WowLuaEnv::new().unwrap();
     env.exec(SETUP).expect("real formatter setup");
+    env.exec(if cfg!(feature = "native-duration-formatting") {
+        "nativeSeconds = true"
+    } else {
+        "nativeSeconds = false"
+    })
+    .unwrap();
     env.exec(code).expect("common duration formatter behavior");
 }
 
@@ -35,6 +37,10 @@ fn all_three_formatters_render_real_elapsed_remaining_and_base_modifiers() {
             {'20m 34s', '5m', '15m 34s'}}
         local base = {{'2.4k', '600', '1.8k'}, {'2468 ticks', '600 ticks', '1868 ticks'},
             {'41m 8s', '10m', '31m 8s'}}
+        if not nativeSeconds then
+            real[3] = {'1234', '300', '934'}
+            base[3] = {'2468', '600', '1868'}
+        end
         for index, formatter in ipairs(formatters) do
             for column, name in ipairs(methods) do
                 local output = d[name](d, formatter)
@@ -46,7 +52,7 @@ fn all_three_formatters_render_real_elapsed_remaining_and_base_modifiers() {
             end
         end
         clock:SetTime(1500)
-        assert(d:FormatRemainingDuration(seconds) == '0s')
+        assert(d:FormatRemainingDuration(seconds) == (nativeSeconds and '0s' or '0'))
         assert(d:FormatElapsedDuration(numeric) == '1234 ticks')
     "#,
     );
@@ -73,12 +79,12 @@ fn invalid_receivers_modifiers_and_formatter_errors_leave_state_unchanged() {
         assert(not pcall(d.FormatTotalDuration, d, numeric))
         assert(#numeric:GetBreakpoints() == 0)
         seconds:SetDesiredUnitCount(0)
-        assert(not pcall(d.FormatTotalDuration, d, seconds))
+        if nativeSeconds then assert(not pcall(d.FormatTotalDuration, d, seconds)) end
         assert(seconds.desiredUnitCount == 0)
         seconds:SetDesiredUnitCount(2)
         assert(d:GetTotalDuration() == 1234 and d:GetElapsedDuration() == 300)
         assert(d:FormatTotalDuration(abbreviated) == '1.2k')
-        assert(d:FormatTotalDuration(seconds) == '20m 34s')
+        assert(d:FormatTotalDuration(seconds) == (nativeSeconds and '20m 34s' or '1234'))
     "#,
     );
 }
@@ -92,6 +98,7 @@ fn opaque_duration_modifier_and_formatter_inputs_preserve_secrecy_and_caller_gua
         local secretModifier = secretwrap(1)
         local expected = {{'1.2k','300','934'}, {'1234 ticks','300 ticks','934 ticks'},
             {'20m 34s','5m','15m 34s'}}
+        if not nativeSeconds then expected[3] = {'1234', '300', '934'} end
         local wrapped = {}
         for index, formatter in ipairs(formatters) do
             wrapped[index] = secretwrap(formatter)
@@ -124,6 +131,7 @@ fn opaque_duration_modifier_and_formatter_inputs_preserve_secrecy_and_caller_gua
     );
 }
 
+#[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_curve_receives_opaque_time_and_retains_closure_taint() {
     execute(
