@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Housing DestroyEntry — bounded independent PASS
+
+[Destruction contract](../../specs/housing-destroy-entry.md#reconciled-bounded-proof--2026-10-01) owns independent acceptance at `67b44f2c3`: saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, snapshot default fmt/check **0**. Exact rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage; pending statuses retained. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event policies are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup **0 []** is saved, not independent. All 362 IDs/source hash and unrelated rows/counts retained: **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page completion.
+
 ### Housing storage event — bounded independent PASS
 
 [Storage event contract](../../specs/housing-storage-entry-updated.md#reconciled-bounded-proof--2026-10-01) owns bounded independent acceptance at `5afd73d49`: saved **11 storage + 24 catalog + 5 quest + 28 party = 68 PASS**, snapshot default fmt/check **0**. Exact event rows 555/556 gain bounded first-argument rename/full variant-type coverage via explicit admin state producer. Synchronous timing/edge-only emission are simulator inferences; cached `UniqueEvent` is not native synchronous evidence. Parent batch20 startup **0 []** is saved, not independent. All 362 IDs/hash and unrelated accounting retained; **308 pending / 40 bounded / 14 partial**. No DestroyEntry-triggered/native/all-profile or whole-row/page claim; concurrent DestroyEntry work excluded.

@@ -1,6 +1,6 @@
 # Housing catalog destruction
 
-Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariantID, destroyAll)`, using the existing [catalog records](housing-catalog-variants.md) and independent [destroyable count](housing-destroyable-count.md). Retained [source register](../../data/patch-api/sources/12.0.5-register.json) IDs `global api-C_HousingCatalog-DestroyEntry-281` / `-282` rename the selector and change its type to `HousingCatalogEntryVariantID`. These parameter rows do not establish eligibility, mutation or native event timing. Parent reported actual compiled RED for input/tests `f94063616`: 15 cases, 2 PASS / 13 FAIL against the Lua no-op (`batch21-red-build/run*`). Producer implemented after that prerequisite; GREEN remains parent-owned.
+Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariantID, destroyAll)`, using the existing [catalog records](housing-catalog-variants.md) and independent [destroyable count](housing-destroyable-count.md). Retained [source register](../../data/patch-api/sources/12.0.5-register.json) IDs `global api-C_HousingCatalog-DestroyEntry-281` / `-282` rename the selector and change its type to `HousingCatalogEntryVariantID`. These parameter rows do not establish eligibility, mutation or native event timing. Parent reported actual compiled RED for input/tests `f94063616`: 15 cases, 2 PASS / 13 FAIL against the Lua no-op (`batch21-red-build/run*`). Producer implemented after that prerequisite; bounded independent acceptance at `67b44f2c3` is recorded below.
 
 ## What it must do
 
@@ -65,14 +65,28 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 - Baseline clean revision `5afd73d498340952f0e2a2c59ae1a718f92d5b6a`; model/query/event producer and cached consumer inspection only.
 - Parent-reported actual RED at input/tests `f94063616`: 15 cases, 2 PASS / 13 FAIL from the existing Lua no-op; build compiled successfully. Artifacts `batch21-red-build/run*` were not independently inspected by this implementer. Parent filter: `housing_destroy_entry::` in existing target `integration`.
 - `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog/storage.rs src/c_api/c_housing/catalog/queries.rs`: exit 0 on producer files; formatting only. Subsequent module-doc wording change does not affect formatting.
-- Producer added with no local build/check/test execution. Parent must establish GREEN on the committed producer. Requirements checkboxes remain pending proof; no source-row credit or acceptance claim.
+- Historical producer checkpoint: added with no local build/check/test execution. Superseded by bounded independent acceptance below; requirement checkboxes do not imply native parity.
 - `rustfmt --edition 2024 --config skip_children=true tests/housing_destroy_entry.rs`: exit 0 on the new test file; formatting only, not compilation or behavioral proof. Later test edits invalidate formatting scope.
 - Producer slice authorizes formatting and commit only; no builds, checks, delegation or push. Existing tests, source accounting, other specs and vendor/cache definitions unchanged.
+
+### Reconciled bounded proof — 2026-10-01
+
+[Independent report](/tmp/patch-12.0.5-housing-destruction-independent-proof.md) accepts producer `67b44f2c36c12c86cc1e10c334d010041239e7c9` and tests `f94063616c0490bae295e2eeb3936910a535138d`: saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, independently inspected, not rerun. Fresh default `cargo fmt --check` and `cargo check` both exit **0** at the unchanged producer snapshot. These gates cover default cumulative retail features, not historical 12.0.5-only or all-profile execution. Actual RED was **2 PASS / 13 FAIL**, not thirteen independently reached downstream boundaries.
+
+| Capability | Bounded proof / remaining limit |
+|---|---|
+| Full variant selector and required boolean | Behavioral PASS: exact record/type/variant isolation, zero returns, atomic malformed/public/model rejection |
+| Eligible one/all mutation and missing/zero no-op | Behavioral PASS: mixed 5/3 stack to 4/2 or 2/0, exempt instances and metadata retained; subset/no-op/consistency policies inferred, not native all-stack proof |
+| Mutation before synchronous callback and nested deletion | Behavioral PASS: one full-ID event per change, reentrant reads/deletions, no queued duplicate or outer overwrite; native timing/coalescing unknown |
+| Taint, secret inputs and secured tables | Behavioral PASS for ordinary addon taint and real host guards; conservative secure/tainted secret rejection leaves native `AllowedWhenUntainted` secure-access parity open |
+| Publisher rooting and error cleanup | Source inspection only; no forced-GC or dispatch-error behavioral proof |
+
+Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.2461s; saved parent evidence, **not independent startup proof**. Exact [coverage](../../data/patch-api/sources/12.0.5-page-coverage.json) rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage. Their audit-pending classification is retained; all **362 IDs**, source hash and unrelated rows/counts remain **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page closure.
 
 ## Known gaps (current cycle)
 
 - [x] Parent reports actual compiled RED before producer implementation.
-- [ ] Parent-owned bounded GREEN/security/event acceptance remain pending.
+- [x] Independent bounded GREEN/security/event acceptance recorded for the simulator contract above.
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
 
 ## Out of scope

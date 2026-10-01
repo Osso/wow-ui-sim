@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile bounded batch21 DestroyEntry
+
+[[patch-12-0-5-api-audit#Housing DestroyEntry — bounded independent PASS]] links the [destruction contract](../specs/housing-destroy-entry.md#reconciled-bounded-proof--2026-10-01): independent saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, snapshot fmt/check **0** at `67b44f2c3`. Exact rows 281/282 link full variant-argument coverage without status promotion; **362 IDs/hash**, **308 pending / 40 bounded / 14 partial** preserved. Mixed eligible subset/no-op/consistency/synchronous policies inferred, not native all-stack proof; secure-secret parity open. Parent batch21 startup **0 []** not independent; no whole-row/page or all-profile closure.
+
 ## [2026-10-01] evidence | Reconcile bounded batch20 storage event
 
 [Storage event contract](../specs/housing-storage-entry-updated.md#reconciled-bounded-proof--2026-10-01) owns bounded independent acceptance at `5afd73d49`: saved **11 storage + 24 catalog + 5 quest + 28 party = 68 PASS**, snapshot default fmt/check **0**. Exact event rows 555/556 gain bounded first-argument rename/full variant-type coverage via explicit admin state producer. Synchronous timing/edge-only emission are simulator inferences; cached `UniqueEvent` is not native synchronous evidence. Parent batch20 startup **0 []** is saved, not independent. All 362 IDs/hash and unrelated accounting retained; **308 pending / 40 bounded / 14 partial**. No DestroyEntry-triggered/native/all-profile or whole-row/page claim; concurrent DestroyEntry work excluded.

@@ -486,6 +486,23 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-storage-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch20-green-startup-run.json",
       "gate_scope": "Saved runtime inspected independently, not re-executed; fresh default fmt/check 0 at hash-bound producer snapshot before concurrent untracked DestroyEntry tests. Rooting/dispatch-error cleanup source-only; storage-specific guarded/true secret-table and forced-GC dispatch fixtures absent. Parent startup only."
+    },
+    {
+      "id": "housing-destroy-entry",
+      "symbols": [
+        "C_HousingCatalog.DestroyEntry"
+      ],
+      "scope": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion.",
+      "spec": "docs/specs/housing-destroy-entry.md",
+      "tests": [
+        "tests/housing_destroy_entry.rs"
+      ],
+      "implementation": "67b44f2c36c12c86cc1e10c334d010041239e7c9",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch21-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-destruction-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch21-green-startup-run.json",
+      "gate_scope": "Saved runtime independently inspected, not rerun; fresh fmt/check 0 at unchanged producer snapshot. Rooting and dispatch-error cleanup source-only, no forced-GC or dispatch-error behavioral proof; default cumulative retail features, not historical 12.0.5-only/all-profile execution."
     }
   ],
   "source_rows": [
@@ -1414,15 +1431,19 @@
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-281",
-      "capabilities": [],
+      "capabilities": [
+        "housing-destroy-entry"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion."
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-282",
-      "capabilities": [],
+      "capabilities": [
+        "housing-destroy-entry"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284",
