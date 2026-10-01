@@ -31,6 +31,13 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 - [ ] Preserve previous unconditional private namespace availability. Recommend unconditional public publication in the existing namespace, consistent with that owner: no new retail-only cfg walls absent actual profile-contract evidence. Retail-only publication is not an established requirement; historical/all-profile native parity remains unverified.
 
+### Cached retail 12.1 consumer regression
+
+- [ ] Under `retail-12-1-0` only, accept exact `UNIT_AURA_BLOCK_LIST_CLEARED` registration through `RegisterEvent` and `RegisterUnitEvent`; continue rejecting an unknown near-match. `RegisterAllEvents` must observe explicitly dispatched instances.
+- [ ] Explicit `env.fire_event_with_args` delivery carries exactly one unit payload, reaches all-event receivers for player and target, and reaches a player-filtered receiver only for player. Assert counts immediately after each dispatch; this proves simulator dispatch, not a native producer.
+- [ ] Load the actual cached `Blizzard_PrivateAurasUI` dependency closure and root TOC, including its final `PrivateAuraInit.lua`. Preserve its actual added/removed callbacks and vendor functions. Public container Add/Remove, same-parent player re-add, and player→target transition must produce no new Lua errors, retain public anchor metadata/original parent identity, and install/release the real container settings handler. Exercise that handler through `update-settings` without replacing it.
+- [ ] Record closure-load errors separately before public lifecycle operations; assert each operation's new callback/handler errors before state assertions, preserving the observed unknown-event failure boundary.
+
 ## How it works
 
 - [Lua API architecture](../lua-api.md)
@@ -85,6 +92,24 @@ Parent `run-1.log` separately records seven `aura_table_shape::` controls PASS a
 | `secured_outer_and_nested_tables_respect_vm_access_guards` | Actual denied reads, nested guarded parse rejection, clean access | Written; unrun |
 | `ordinary_public_add_and_remove_preserve_addon_taint` | No caller-taint laundering on ordinary lifecycle | Written; unrun |
 
+### Cached-consumer regression checkpoint — 2026-10-01
+
+Input revision: `61cd50cd817f9b9f31333a5011227fd6236e5828`. Parent reports **13 private-anchor + 1 retained + 7 shape PASS**, but startup exits **1** with **21 unique errors** in `/tmp/patch-12.0.5-batch29-green-startup.json`. Existing startup reproduction remains valid; this fixture-only slice does not rerun it. The artifact includes unknown `UNIT_AURA_BLOCK_LIST_CLEARED` registration and `Container frame already has an OnAttributeChanged script`; passing producer fixtures do not close real callback integration.
+
+Cached **12.1.0.69933**, not native 12.0.5, `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:612–619` declares `UNIT_AURA_BLOCK_LIST_CLEARED`, `SynchronousEvent = true`, and one `unitTarget: UnitTokenVariant` payload. `src/event/valid_events.rs::PATCH_12_1_REGISTERABLE_EVENTS` already contains `UNIT_AURA_BLOCKED`; this slice leaves that registry unchanged. No 12.0.5 exception-explorer claim is made.
+
+`tests/private_aura_anchors.rs::cached_consumer_regression` remains in the existing grouped integration target, gated only by `retail-12-1-0`. Exact parent-run filters:
+
+| Filter | Contract | Proof |
+| --- | --- | --- |
+| `private_aura_anchors::cached_consumer_regression::block_list_cleared_registration_accepts_exact_event_and_rejects_unknown` | Exact event accepted by both registration methods; unknown near-match rejected with contextual name | Written; unrun |
+| `private_aura_anchors::cached_consumer_regression::block_list_cleared_explicit_dispatch_has_one_unit_payload_and_player_filter` | RegisterAllEvents player/target delivery; player filter; exactly one payload; immediate dispatch counts | Written; unrun |
+| `private_aura_anchors::cached_consumer_regression::cached_private_auras_container_callbacks_remove_readd_and_transition_unit` | Actual TOC/callback container lifecycle, public state/parent identity, settings-handler ownership and no new errors per phase | Written; unrun |
+
+Combined filter: `private_aura_anchors::cached_consumer_regression::`. Closure-load errors are retained and printed separately; lifecycle assertions examine only appended errors, without clearing/reclassifying the baseline. Setup supplies a real frame and concrete container attributes read by the cached consumer; no prerequisite globals, callback replacements, vendor overrides, or custom TOC are installed. Actual callback completion is nonvacuously asserted through settings-handler installation, `update-settings`, and teardown before re-add. Named phases distinguish initial Add, Remove, same-parent re-add, unit transition, and final cleanup.
+
+Parent owns compiled RED, then an event-only production change and subsequent proof. Unknown-event and handler failures are distinct: this checkpoint does not claim that an event-only fix resolves both. No build/test/check/delegation/push occurred in this slice; formatting and a fixture/spec commit only. Neither new fixture RED/GREEN nor startup repair is claimed.
+
 ### Retained assertion migration before helper removal
 
 Both old assertion owners now call public producers with actual frame parents and required aura indices. Notification, ID, filter and snapshot assertions remain; helper boolean success becomes public zero-results plus state/notification proof. Migrated tests are unrun here. Public function absence was an incorrect initial source inference: the lazy namespace publisher exists.
@@ -126,6 +151,6 @@ Local profile cache evidence, **12.1, not native 12.0.5**:
 
 ## Out of scope
 
-- Full Blizzard widget/secure-environment execution: minimal prerequisites are not established. Fixtures prove dispatch payload/state, not `PrivateAuraUnitWatcher` or complete UI integration.
+- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and no new errors; it is unrun. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup acceptance remain excluded.
 - Aura content, spell data, sounds, warning/update models, container layout/settings, and other aura structure changes: independent owners, not required for public anchor registration.
 - Shared wiki/index/log, coverage registers, PLAN, source/register status edits, builds/checks/tests/readability/startup, push/deploy and delegation: excluded from this producer slice.

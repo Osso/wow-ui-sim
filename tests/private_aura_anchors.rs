@@ -1,4 +1,4 @@
-//! Public producer fixtures; old private-helper tests remain intact until migration.
+//! Public producer and cached-consumer fixtures.
 //! Inferred policies and native-security exclusions: docs/specs/private-aura-anchors.md.
 
 use rilua::LuaApiMut;
@@ -6,6 +6,207 @@ use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[cfg(feature = "retail-12-1-0")]
+mod cached_consumer_regression {
+    use super::WowLuaEnv;
+
+    const CLEARED_EVENT: &str = "UNIT_AURA_BLOCK_LIST_CLEARED";
+
+    #[test]
+    fn block_list_cleared_registration_accepts_exact_event_and_rejects_unknown() {
+        let env = WowLuaEnv::new().expect("create block-list-cleared registration environment");
+        env.exec(
+            r#"
+            local frame = CreateFrame('Frame')
+            assert(pcall(frame.RegisterEvent, frame, 'UNIT_AURA_BLOCK_LIST_CLEARED'),
+                'RegisterEvent must accept exact cached 12.1 event')
+            assert(frame:IsEventRegistered('UNIT_AURA_BLOCK_LIST_CLEARED'),
+                'RegisterEvent must retain exact event registration')
+            frame:UnregisterAllEvents()
+            assert(pcall(frame.RegisterUnitEvent, frame, 'UNIT_AURA_BLOCK_LIST_CLEARED', 'player'),
+                'RegisterUnitEvent must accept exact cached 12.1 event')
+            assert(frame:IsEventRegistered('UNIT_AURA_BLOCK_LIST_CLEARED'),
+                'RegisterUnitEvent must retain exact event registration')
+            for _, method in ipairs({'RegisterEvent', 'RegisterUnitEvent'}) do
+                local ok, message = pcall(frame[method], frame,
+                    'UNIT_AURA_BLOCK_LIST_CLEARED_UNKNOWN', 'player')
+                assert(not ok, method .. ' must still reject unknown events')
+                assert(type(message) == 'string' and
+                    string.find(message, 'UNIT_AURA_BLOCK_LIST_CLEARED_UNKNOWN', 1, true),
+                    method .. ' unknown-event rejection must identify rejected name')
+            end
+            "#,
+        )
+        .expect("exact cleared-event registration versus unknown-event rejection");
+    }
+
+    #[test]
+    fn block_list_cleared_explicit_dispatch_has_one_unit_payload_and_player_filter() {
+        let env = WowLuaEnv::new().expect("create explicit cleared-event dispatch environment");
+        env.exec(
+            r#"
+            clearedAll, clearedPlayer = {}, {}
+            local function record(events)
+                return function(_, event, ...)
+                    assert(event == 'UNIT_AURA_BLOCK_LIST_CLEARED', 'exact event delivery')
+                    assert(select('#', ...) == 1, 'cleared event must deliver exactly one unit payload')
+                    events[#events + 1] = ...
+                end
+            end
+            local all = CreateFrame('Frame')
+            all:RegisterAllEvents()
+            all:SetScript('OnEvent', record(clearedAll))
+            local player = CreateFrame('Frame')
+            player:RegisterUnitEvent('UNIT_AURA_BLOCK_LIST_CLEARED', 'player')
+            player:SetScript('OnEvent', record(clearedPlayer))
+            "#,
+        )
+        .expect("RegisterAllEvents and player-filtered cleared-event receiver setup");
+        for (unit, expected_all) in [("player", 1), ("target", 2)] {
+            env.fire_event_with_args(CLEARED_EVENT, &[env.lua_string(unit)])
+                .expect("explicit one-unit cleared-event delivery, not native production");
+            let counts: (usize, usize) = env
+                .eval("return #clearedAll, #clearedPlayer")
+                .expect("read synchronous receiver counts after explicit delivery");
+            assert_eq!(counts, (expected_all, 1), "delivery counts after {unit}");
+        }
+        env.exec(
+            r#"
+            assert(clearedAll[1] == 'player' and clearedAll[2] == 'target',
+                'RegisterAllEvents must receive both exact unit tokens in order')
+            assert(clearedPlayer[1] == 'player', 'player filter must exclude target payload')
+            "#,
+        )
+        .expect("exact one-unit payload order and player-versus-target filtering");
+        assert!(
+            env.state().borrow().lua_errors.is_empty(),
+            "explicit dispatch handler errors: {:?}",
+            env.state().borrow().lua_errors
+        );
+    }
+
+    fn assert_no_lifecycle_errors(env: &WowLuaEnv, prior_errors: &[String], phase: &str) {
+        let state = env.state().borrow();
+        let new_errors = &state.lua_errors[prior_errors.len()..];
+        assert!(
+            new_errors.is_empty(),
+            "{phase} callback/handler errors: {new_errors:?}; separate closure-load errors: {prior_errors:?}"
+        );
+    }
+
+    fn add_container_anchor(env: &WowLuaEnv, unit: &str, prior_errors: &[String], phase: &str) {
+        let id: i64 = env
+            .eval(&format!(
+                "return C_UnitAuras.AddPrivateAuraAnchor({{unitToken = '{unit}', \
+                 auraIndex = 1, parent = RegressionContainer, isContainer = true}})"
+            ))
+            .unwrap_or_else(|error| panic!("{phase} public Add failed: {error}"));
+        assert!(id > 0, "{phase} must return a positive public anchor ID");
+        assert_no_lifecycle_errors(env, prior_errors, phase);
+        env.exec(&format!(
+            r#"
+            RegressionAnchorID = {id}
+            local anchors = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+            assert(#anchors == 1, '{phase}: one live public anchor record')
+            local anchor = anchors[1]
+            assert(anchor.anchorID == RegressionAnchorID and anchor.unitToken == '{unit}',
+                '{phase}: exact public ID and transitioned unit')
+            assert(anchor.isContainer and rawequal(anchor.parent, RegressionContainer),
+                '{phase}: container flag and original parent identity')
+            assert(anchor.parent.fixtureMarker == 'same-parent', '{phase}: original parent fields')
+            assert(RegressionContainer:GetScript('OnAttributeChanged') ~= nil,
+                '{phase}: actual added callback must install container settings handler')
+            RegressionContainer:SetAttribute('update-settings', true)
+            "#
+        ))
+        .unwrap_or_else(|error| panic!("{phase} public state/settings assertions: {error}"));
+        assert_no_lifecycle_errors(env, prior_errors, phase);
+    }
+
+    fn remove_container_anchor(env: &WowLuaEnv, prior_errors: &[String], phase: &str) {
+        env.exec("C_UnitAuras.RemovePrivateAuraAnchor(RegressionAnchorID)")
+            .unwrap_or_else(|error| panic!("{phase} public Remove failed: {error}"));
+        assert_no_lifecycle_errors(env, prior_errors, phase);
+        env.exec(
+            r#"
+            assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0,
+                'public Remove must leave zero anchor records')
+            assert(RegressionContainer:GetScript('OnAttributeChanged') == nil,
+                'actual removed callback must release settings handler before same-parent re-add')
+            assert(RegressionContainer.fixtureMarker == 'same-parent',
+                'removal must preserve original parent identity/state')
+            "#,
+        )
+        .unwrap_or_else(|error| {
+            panic!("{phase} public state/handler teardown assertions: {error}")
+        });
+    }
+
+    #[test]
+    fn cached_private_auras_container_callbacks_remove_readd_and_transition_unit() {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_PrivateAurasUI"],
+            &[],
+            |env, loaded| {
+                assert!(
+                    loaded
+                        .iter()
+                        .any(|addon| addon == "Blizzard_PrivateAurasUI"),
+                    "actual cached PrivateAurasUI root must load through its TOC closure"
+                );
+                let prior_errors = env.state().borrow().lua_errors.clone();
+                if !prior_errors.is_empty() {
+                    eprintln!("separate PrivateAurasUI closure-load errors: {prior_errors:?}");
+                }
+                env.exec(
+                    r#"
+                    assert(#C_UnitAurasPrivate.GetPrivateAuraAnchors() == 0,
+                        'closure fixture starts without preexisting anchors')
+                    RegressionContainer = CreateFrame('Frame', nil, UIParent)
+                    RegressionContainer.fixtureMarker = 'same-parent'
+                    RegressionContainer:SetSize(120, 60)
+                    local attributes = {
+                        ['max-buffs'] = 1, ['max-debuffs'] = 1, ['max-dispel-debuffs'] = 0,
+                        ['aura-organization-type'] = Enum.RaidAuraOrganizationType.Legacy,
+                        ['always-hide-duration'] = true, ['set-aura-size-to-icon-size'] = true,
+                        ['display-larger-role-specific-debuffs'] = false,
+                        ['dispel-indicator-overlay-type'] = Enum.RaidDispelOverlayType.UseDebuffColor,
+                        ['dispel-indicator-overlay-animation'] = false,
+                        ['show-big-defensive'] = false, ['big-defensive-size'] = 30,
+                        ['power-bar-used-height'] = 0, ['group-type'] = 0,
+                        ['display-only-dispellable-debuffs'] = false,
+                        ['ignore-buffs'] = false, ['ignore-debuffs'] = false,
+                        ['ignore-dispel-debuffs'] = true,
+                        ['dispel-indicator-option'] = Enum.RaidDispelDisplayType.Disabled,
+                        ['debuff-size'] = 20, ['buff-size'] = 20,
+                        ['debuff-border-scale'] = 1, ['buff-border-scale'] = 1,
+                    }
+                    for name, value in pairs(attributes) do
+                        RegressionContainer:SetAttribute(name, value)
+                    end
+                    RegressionContainer:Show()
+                    assert(RegressionContainer:GetScript('OnAttributeChanged') == nil,
+                        'new real container must not own a settings handler before public Add')
+                    "#,
+                )
+                .expect("real CreateFrame container and cached-consumer input attributes, no prerequisite stubs");
+                assert_no_lifecycle_errors(env, &prior_errors, "container input setup");
+                add_container_anchor(env, "player", &prior_errors, "initial player Add");
+                remove_container_anchor(env, &prior_errors, "initial player Remove");
+                add_container_anchor(env, "player", &prior_errors, "same-parent player re-add");
+                remove_container_anchor(env, &prior_errors, "player Remove before unit transition");
+                add_container_anchor(
+                    env,
+                    "target",
+                    &prior_errors,
+                    "same-parent target transition",
+                );
+                remove_container_anchor(env, &prior_errors, "final target Remove");
+            },
+        );
+    }
+}
 
 fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create private-anchor environment");
