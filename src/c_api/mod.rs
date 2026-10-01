@@ -30,6 +30,8 @@ pub mod c_battle_net;
 pub mod c_catalog_shop;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
+#[cfg(feature = "retail-12-0-5")]
+mod c_chat_info;
 pub mod c_chromie_time;
 pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-0")]
@@ -163,6 +165,8 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    c_chat_info::register(state)?;
     c_weather::register(state)?;
     c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-5")]
