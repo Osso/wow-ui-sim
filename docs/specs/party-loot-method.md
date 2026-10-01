@@ -1,6 +1,6 @@
 # Party loot method
 
-Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Epoch-gated producer implemented; compiled GREEN and acceptance belong to parent. See [Lua API state architecture](../lua-api.md).
+Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Epoch-gated producer has saved bounded parent GREEN; independent verifier288 acceptance remains pending. See [Lua API state architecture](../lua-api.md).
 
 ## What it must do
 
@@ -23,7 +23,7 @@ Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract ove
 - [ ] Reuse shared [chat messaging lockdown guard](chat-messaging-lockdown.md) before effects. Explicit lockdown true rejects setter with a nonempty runtime error; false allows ordinary requests regardless of combat. Both getters remain readable in all four combat/lockdown combinations. Do not change either restriction input.
 - [ ] **Conservative inferred security policy:** reject actual VM secret enum or secret master string before effects in both untainted and tainted callers, including secret optional string on a non-master request. Preserve secret values, shared state, event queue and caller taint. Do not unwrap or declassify. This is stricter than cached `AllowedWhenUntainted`; no annotation parity claim.
 
-All boxes remain unchecked until compiled behavioral proof. Fixture existence is not GREEN.
+Boxes describe the contract, not native acceptance. Saved bounded compiled proof is recorded below; independent verifier288 remains pending.
 
 ## How it works
 
@@ -51,7 +51,15 @@ All boxes remain unchecked until compiled behavioral proof. Fixture existence is
 
 Parent intended filter: `cargo test --test integration party_loot_method::`; availability/legacy controls additionally needed. No new Cargo target or manifest changes.
 
-**Proof ledger — 2026-10-01:** parent saved compiled RED at `1c7af9c0372d5a81234ef055c6becbfedf31de0b`: `/tmp/patch-12.0.5-batch34-red-fixed-build-result.json` records build exit 0; corresponding `run.json`/`run.log` record exit 101, **0 PASS / 12 FAIL**. Initial `42e15` compile failure from unsupported u8 result conversions is not behavioral RED; parent corrected fixtures separately. Producer implemented after RED; no GREEN credit yet. This production slice runs formatting only, no test/build/check/readability/delegation. Parent owns GREEN/controls and acceptance; saved RED does not prove the new producer. No native probe, permission claim, audit promotion or whole-source acceptance.
+## Reconciled batch34 parent proof — 2026-10-01
+
+- Initial inputs `42e15e675` failed compilation (exit101, 110.49s): three unsupported u8 result conversions, not behavioral RED. Corrected fixtures `1c7af9c03` compiled exit0 in175.01s; saved selected execution exit101, **0 PASS / 12 FAIL**. Evidence: `/tmp/patch-12.0.5-batch34-red{,-fixed}-build-result.json`, corrected `red-fixed-run.json` / `run.log`.
+- Producer `f2e85fcb6` first GREEN build attempt exited101 after3.40s in `build.rs` against a concurrently incomplete countdown fixture. No runtime execution or loot regression established by that failure. Stable fixture revision `676e4c25a` compiled exit0 in151.54s, as saved in `/tmp/patch-12.0.5-batch34-green{,-fixed}-build-result.json` and corresponding logs/JSONL.
+- `/tmp/patch-12.0.5-batch34-green-fixed-runs.json` binds runs0–2 to integration SHA256 `7fd860d9023a6b3a3643a6e3a90caad5442042e98fb401d834fc6d5fd0c5aac6`: loot12 + availability1 + broad legacy filter18 PASS. The last filter includes the same12 loot tests plus six legacy controls: **19 unique PASS / 31 passing executions**, not31 distinct cases. Saved logs establish bounded shared defaults/arity, six tokens, nullable indices, setters, threshold preservation, concrete identity resolution, atomic invalid/unresolved/secret/lockdown handling, isolation and change-only coherent listener state; availability and legacy controls remain intact.
+- Same binary run3 (`party_countdown::`) exits101, **0 PASS / 10 FAIL**: behavioral RED for the next slice, not loot acceptance or a compilation failure. Countdown remains open; its spec/wiki ownership is excluded here.
+- Saved startup at `676e4c25a` exits0 with `[]` and CLEAN0 unique/occurrences; `/tmp/patch-12.0.5-batch34-green-fixed-startup-run.json` binds wow-sim SHA256 `770a9a5522645f8cba951e30070406dbb8c14c1888ee9bff7284dd2527e42ba7`. This is parent snapshot proof, not a fresh rerun or broader compatibility gate.
+
+**Verifier288 pending.** No fresh fmt/check/readability, native security/permissions, all-profile or full-row acceptance inferred. Final `prose-2026-03-31-169` remains pending for broader limits/countdown; **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash and unrelated statuses unchanged. Docs/accounting inspection only; no code/tests/builds/delegation.
 
 ## Exact evidence and inference boundary
 
@@ -64,7 +72,8 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must prove bounded GREEN and legacy/availability controls after producer; compiled RED is saved above.
+- [x] Parent saved bounded GREEN and legacy/availability controls: 19 unique PASS, provenance and duplicate accounting above.
+- [ ] Independent verifier288 acceptance and broader gates remain pending.
 - [ ] Cached `AllowedWhenUntainted` acceptance is not implemented by conservative rejection; native taint/security parity remains unknown.
 - [ ] General raid member resolution is unclaimed: existing raid `UnitName`/existence indexing differs from `GetRaidRosterInfo`'s player-first roster. Only explicit player roster index 1 is selected here; do not fabricate a general mapping.
 - [ ] Solo/party-player master encoding, native missing/ambiguous/realm-name policies, native permissions and native event repetition/timing remain unknown. Existing zero-index state cannot distinguish an assigned party player from no assignment without a separate contract.
@@ -73,4 +82,4 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 - Availability redesign, eligibility/leadership/native permissions, loot distribution and threshold mutation; existing availability set is deliberately unchanged.
 - Native lockdown activation/reset, countdown/other named party actions, all-profile/native parity and closure of final prose row169.
-- Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns GREEN.
+- Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns runtime proof; independent acceptance remains pending.
