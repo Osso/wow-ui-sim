@@ -42,6 +42,8 @@ pub(crate) mod c_console;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_damage_meter;
 pub mod c_death_recap;
 pub mod c_discord;
 #[cfg(feature = "client-wowforever")]

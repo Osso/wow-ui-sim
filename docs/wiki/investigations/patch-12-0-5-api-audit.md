@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### DamageMeter input only — pending RED
+
+[Structure contract](../../specs/damage-meter-combat-source.md) owns exact `structures-DamageMeterCombatSource-639`: empty-default C API input structs separate session-list rows, session/meter aggregates and per-source details. Six grouped fixtures replace listed seed-dependent tests; query bootstrap remains unchanged. Compilation/actual RED are parent-owned and unrun; no producer, disclosure enforcement, native parity or row-completion credit. Plain Rust input is not a security representation; combat publication remains blocked on applicable enforcement evidence. Historical 12.0.0 seed proof does not establish this corrected contract.
+
 ### Spell confirmation prompts — bounded independent PASS
 
 [Prompt contract](../../specs/spell-confirmation-prompts.md#tests-asserting-this-spec) owns producer `b07fc61f6`, compiled/docs `329eabfbb`, independent six prompt + twelve control PASS and snapshot-scoped default fmt/check exit 0. Validation/security/rooting remain source-only; no native/all-profile or whole-row/page acceptance. Exact event source rows 560/561/562 now have bounded coverage; all 362 IDs and source hash retained. Separate parent startup exits 0 with `[]`, zero Lua errors, 46.39s; not independently verified. Normal binary and integration emitted by batch16 combined build, which still exits **101** from unrelated wow-sim test `AddonMetadata.addon_dir` missing at `enable_state.rs:225`. Audit remains **IN PROGRESS**.
