@@ -28,6 +28,160 @@ fn rendered_text(env: &WowLuaEnv, name: &str) -> Option<String> {
     cooldown_countdown_text(cooldown, remaining)
 }
 
+// Exact boundary assertions use a supplied clock, not wall-clock setup latency.
+fn rendered_text_at(env: &WowLuaEnv, elapsed_seconds: f64) -> Option<String> {
+    let sim = env.state().borrow();
+    let id = sim
+        .widgets
+        .get_id_by_name("FormatterRenderCooldown")
+        .unwrap();
+    let cooldown = sim.widgets.get(id).unwrap();
+    let remaining = cooldown_remaining_seconds(cooldown, elapsed_seconds)?;
+    cooldown_countdown_text(cooldown, remaining)
+}
+
+#[test]
+fn countdown_abbreviation_strictly_below_threshold_uses_minutes_seconds() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(92)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("1:31"));
+}
+
+#[test]
+fn countdown_abbreviation_at_threshold_retains_default_whole_seconds() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(91)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("91"));
+}
+
+#[test]
+fn countdown_abbreviation_above_threshold_retains_default_whole_seconds() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(90)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("91"));
+}
+
+#[test]
+fn countdown_abbreviation_threshold_below_one_minute_disables_abbreviation() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(59)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("91"));
+}
+
+#[test]
+fn countdown_abbreviation_threshold_above_one_hour_disables_abbreviation() {
+    let env = setup("cooldown:SetCountdownAbbrevThreshold(3601); cooldown:SetCooldown(0, 91)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("91"));
+    env.exec("cooldown:SetCooldown(0, 4000)").unwrap();
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("4000"));
+}
+
+#[test]
+fn countdown_abbreviation_threshold_endpoints_enable_subminute_remaining() {
+    let env = setup("cooldown:SetCooldown(0, 59); cooldown:SetCountdownAbbrevThreshold(60)");
+    // The documented range applies to configuration, not remaining time.
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("0:59"));
+    env.exec("cooldown:SetCooldown(0, 3599); cooldown:SetCountdownAbbrevThreshold(3600)")
+        .unwrap();
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("59:59"));
+}
+
+#[test]
+fn countdown_abbreviation_uses_existing_ceil_rounding_policy() {
+    let env = setup("cooldown:SetCooldown(0, 90.25); cooldown:SetCountdownAbbrevThreshold(100)");
+    // Inference: retain ceil, including carry into the next minute.
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("1:31"));
+    env.exec("cooldown:SetCooldown(0, 59.25)").unwrap();
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("1:00"));
+}
+
+#[test]
+fn countdown_abbreviation_observes_live_threshold_changes() {
+    let env = setup("cooldown:SetCooldown(0, 91)");
+    for (threshold, expected) in [
+        (92, "1:31"),
+        (91, "91"),
+        (90, "91"),
+        (59, "91"),
+        (92, "1:31"),
+        (3601, "91"),
+        (0, "91"),
+    ] {
+        env.exec(&format!(
+            "cooldown:SetCountdownAbbrevThreshold({threshold})"
+        ))
+        .unwrap();
+        assert_eq!(
+            rendered_text_at(&env, 0.0).as_deref(),
+            Some(expected),
+            "threshold {threshold}"
+        );
+    }
+}
+
+#[test]
+fn countdown_threshold_controls_preserve_default_outputs() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownMillisecondsThreshold(3)");
+    assert_eq!(rendered_text_at(&env, 0.0).as_deref(), Some("91"));
+    assert_eq!(rendered_text_at(&env, 88.6).as_deref(), Some("2.4"));
+}
+
+#[test]
+fn countdown_abbreviation_custom_formatter_takes_precedence_until_clear() {
+    let env = setup(
+        r#"
+        formatter = C_StringUtil.CreateAbbreviatedNumberFormatter()
+        formatter:SetBreakpoints({{
+            breakpoint = 1000, abbreviation = ' charges', abbreviationIsGlobal = false,
+            significandDivisor = 100, fractionDivisor = 10,
+        }})
+        cooldown:SetCountdownFormatter(formatter)
+        cooldown:SetCountdownAbbrevThreshold(2000)
+        cooldown:SetCooldown(0, 1234.5)
+        "#,
+    );
+    assert_eq!(tick_at(&env, 0.25).as_deref(), Some("1.2 charges"));
+    env.exec("cooldown:SetCountdownAbbrevThreshold(60)")
+        .unwrap();
+    assert_eq!(tick_at(&env, 0.25).as_deref(), Some("1.2 charges"));
+    env.exec("cooldown:SetCountdownAbbrevThreshold(2000); cooldown:SetCountdownFormatter(nil)")
+        .unwrap();
+    assert_eq!(rendered_text_at(&env, 0.25).as_deref(), Some("20:35"));
+}
+
+#[test]
+fn countdown_minimum_duration_fractional_boundary_uses_total_milliseconds() {
+    let env = setup("cooldown:SetCooldown(0, 91)");
+    // Inference: equality remains eligible under the current >= policy.
+    for (minimum_ms, expected) in [
+        (90999.5, Some("91")),
+        (91000.0, Some("91")),
+        (91000.5, None),
+    ] {
+        env.exec(&format!(
+            "cooldown:SetMinimumCountdownDuration({minimum_ms})"
+        ))
+        .unwrap();
+        assert_eq!(
+            rendered_text_at(&env, 0.0).as_deref(),
+            expected,
+            "minimum {minimum_ms} ms"
+        );
+    }
+}
+
+#[test]
+fn countdown_minimum_duration_eligibility_survives_remaining_time_ticks() {
+    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetMinimumCountdownDuration(91000)");
+    assert_eq!(tick_at(&env, 0.25).as_deref(), Some("91"));
+    assert_eq!(tick_at(&env, 60.25).as_deref(), Some("31"));
+    assert_eq!(tick_at(&env, 90.25).as_deref(), Some("1"));
+    env.exec("cooldown:SetMinimumCountdownDuration(91000.5)")
+        .unwrap();
+    assert_eq!(tick_at(&env, 0.25), None);
+    assert_eq!(tick_at(&env, 60.25), None);
+    env.exec("cooldown:SetMinimumCountdownDuration(90999.5)")
+        .unwrap();
+    assert_eq!(tick_at(&env, 60.25).as_deref(), Some("31"));
+    assert_eq!(tick_at(&env, 92.0), None);
+}
+
 #[test]
 fn configured_renderer_curve_replaces_another_attachment_during_collection() {
     let env = setup(
@@ -154,7 +308,8 @@ fn configured_renderer_clear_restores_existing_default_thresholds() {
     );
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
     env.exec("cooldown:SetCountdownFormatter(nil)").unwrap();
-    assert_eq!(tick_at(&env, 1.25).as_deref(), Some("9s"));
+    // A configured threshold below 60 seconds disables abbreviation.
+    assert_eq!(tick_at(&env, 1.25).as_deref(), Some("9"));
     assert_eq!(tick_at(&env, 7.6).as_deref(), Some("2.4"));
     env.exec("cooldown:SetCountdownFormatter(formatter)")
         .unwrap();

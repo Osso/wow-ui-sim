@@ -310,6 +310,38 @@ fn cooldown_set_tex_coord_range_persists_vector_bounds() {
 }
 
 #[test]
+fn cooldown_threshold_storage_preserves_fractional_units_and_independence() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local cd = CreateFrame('Cooldown')
+        assert(cd:GetMinimumCountdownDuration() == 0)
+        assert(cd:GetCountdownAbbrevThreshold() == 0)
+        cd:SetCountdownMillisecondsThreshold(3.25)
+        cd:SetMinimumCountdownDuration(91000.5)
+        cd:SetCountdownAbbrevThreshold(91.25)
+        assert(cd:GetMinimumCountdownDuration() == 91000.5)
+        assert(cd:GetCountdownAbbrevThreshold() == 91.25)
+        assert(cd:GetCountdownMillisecondsThreshold() == 3.25)
+        cd:SetMinimumCountdownDuration(90999.5)
+        assert(cd:GetMinimumCountdownDuration() == 90999.5)
+        assert(cd:GetCountdownAbbrevThreshold() == 91.25)
+        cd:SetCountdownAbbrevThreshold(3601)
+        assert(cd:GetCountdownAbbrevThreshold() == 3601)
+        assert(cd:GetMinimumCountdownDuration() == 90999.5)
+        cd:SetCountdownAbbrevThreshold(59)
+        assert(cd:GetCountdownAbbrevThreshold() == 59)
+        cd:SetMinimumCountdownDuration(0)
+        cd:SetCountdownAbbrevThreshold(0)
+        assert(cd:GetMinimumCountdownDuration() == 0)
+        assert(cd:GetCountdownAbbrevThreshold() == 0)
+        assert(cd:GetCountdownMillisecondsThreshold() == 3.25)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn cooldown_widget_methods_persist_runtime_state() {
     let env = WowLuaEnv::new().unwrap();
 
