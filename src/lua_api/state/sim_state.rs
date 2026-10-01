@@ -120,6 +120,12 @@ pub struct SimState {
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
     pub major_faction_renown_rewards:
         HashMap<(i64, i32), Vec<crate::c_api::c_major_factions::RenownRewardInfo>>,
+    /// Explicit Recent Allies input; disabled and empty by inferred default policy.
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    pub recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput,
     pub account_wide_reputation_factions: HashSet<i64>,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
     /// Explicit active-brawl input only; no native default record is assumed.

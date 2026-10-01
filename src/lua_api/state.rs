@@ -133,6 +133,11 @@ macro_rules! build_empty_sim_state {
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
+            #[cfg(all(
+                feature = "retail-12-0-5",
+                any(feature = "profile-retail", feature = "client-ptr")
+            ))]
+            recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput::default(),
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]

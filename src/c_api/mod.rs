@@ -74,6 +74,11 @@ pub mod c_player_choice;
 pub mod c_player_interaction_manager;
 pub mod c_pvp;
 pub mod c_quest_hub;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
 pub mod c_scenario_info;
