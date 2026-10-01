@@ -271,9 +271,93 @@ fn unit_is_dnd(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn comparison_unit_token(state: &LuaState, index: i32) -> LuaResult<Option<String>> {
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        let input = crate::lua_bridge::stack_val(state, index);
+        if rilua::table_security::is_secret_value(state, input) {
+            // VM-owned wrappers only; unwrap_secret enforces an untainted caller.
+            let payload = rilua::table_security::unwrap_secret(state, input)?;
+            let Val::Str(reference) = payload else {
+                return Err(rilua::runtime_error(
+                    "UnitIsUnit requires a secret string token",
+                ));
+            };
+            let bytes = state.gc.string_arena.get(reference).ok_or_else(|| {
+                rilua::runtime_error(format!("string at argument {index} has been collected"))
+            })?;
+            let token = std::str::from_utf8(bytes.data()).map_err(|_| {
+                rilua::runtime_error(format!("string at argument {index} is not valid UTF-8"))
+            })?;
+            return Ok(Some(token.to_owned()));
+        }
+    }
+    Option::<String>::from_stack(state, index)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn is_base_comparison_token(unit: &str) -> bool {
+    matches!(
+        unit,
+        "player"
+            | "pet"
+            | "vehicle"
+            | "mouseover"
+            | "target"
+            | "softenemy"
+            | "softfriend"
+            | "softinteract"
+            | "focus"
+            | "none"
+            | "npc"
+            | "questnpc"
+    )
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn is_group_comparison_token(unit: &str) -> bool {
+    const GROUP_TOKEN_LIMITS: [(&str, u8); 4] =
+        [("party", 4), ("partypet", 4), ("raid", 40), ("raidpet", 40)];
+    GROUP_TOKEN_LIMITS.iter().any(|(prefix, limit)| {
+        let Some(suffix) = unit.strip_prefix(prefix) else {
+            return false;
+        };
+        let Ok(index) = suffix.parse::<u8>() else {
+            return false;
+        };
+        let canonical = suffix == index.to_string();
+        canonical && (1..=*limit).contains(&index)
+    })
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn is_restricted_comparison_counterpart(unit: &str) -> bool {
+    unit.starts_with("nameplate") || unit.ends_with("target")
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn unit_comparison_permitted(lhs: Option<&str>, rhs: Option<&str>) -> bool {
+    let (Some(lhs), Some(rhs)) = (lhs, rhs) else {
+        // Inferred compatibility policy: missing tokens retain false, not denial.
+        return true;
+    };
+    if is_base_comparison_token(lhs) || is_base_comparison_token(rhs) {
+        return true;
+    }
+    let lhs_allows = is_group_comparison_token(lhs) && !is_restricted_comparison_counterpart(rhs);
+    let rhs_allows = is_group_comparison_token(rhs) && !is_restricted_comparison_counterpart(lhs);
+    lhs_allows || rhs_allows
+}
+
 fn unit_is_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let lhs = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let rhs = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
+    let lhs = comparison_unit_token(state, 1)?;
+    let rhs = comparison_unit_token(state, 2)?;
+    #[cfg(feature = "retail-12-0-5")]
+    if !unit_comparison_permitted(lhs.as_deref(), rhs.as_deref()) {
+        return Ok(0);
+    }
+    let lhs = lhs.unwrap_or_default();
+    let rhs = rhs.unwrap_or_default();
     let same_unit = {
         let sim = borrow_state(state)?;
         match (

@@ -165,6 +165,12 @@ fn comparison_permissions_typed_secrets_require_untainted_callers() {
         assert(UnitIsUnit('player', secretPlayer) == true)
         assert(UnitIsUnit(secretPlate, 'boss1') == nil)
         assert(UnitIsUnit(secretPlayer, secretPlate) == false)
+        assert(select('#', UnitIsUnit(secretPlate, 'boss1')) == 0)
+        for _, value in ipairs({secretwrap(1), secretwrap(true), secretwrap({})}) do
+            assert(not pcall(UnitIsUnit, value, 'player'))
+        end
+        assert(not pcall(UnitIsUnit, secretwrap(nil), 'player'))
+        assert(not pcall(UnitIsUnit, CreateFrame('Frame'), 'player'))
         local function tainted()
             assert(not issecure())
             assert(not pcall(UnitIsUnit, secretPlayer, 'player'))
