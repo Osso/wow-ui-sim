@@ -28,12 +28,18 @@ pub struct HousingCatalogEntryVariantID {
 }
 
 /// Only explicitly supplied base fields needed by this bounded fixture slice.
-/// Other entry metadata, aggregate counts and their policies remain unmodeled.
+/// Other entry metadata remains unmodeled; aggregates are explicit, never variant sums.
 #[derive(Clone, Debug)]
 pub struct HousingCatalogEntryRecord {
     pub item_id: Option<i32>,
     pub name: String,
     pub is_unique_trophy: bool,
+    /// Nonnegative explicit total across variants, excluding unredeemed instances.
+    /// None marks a simulator data gap, not a native nil/default contract.
+    pub total_num_stored: Option<u32>,
+    /// Nonnegative explicit total across houses, plots and variants; not pending placement.
+    /// None marks a simulator data gap, not a native nil/default contract.
+    pub total_num_placed: Option<u32>,
 }
 
 /// Stored instances are not a destroyability decision.

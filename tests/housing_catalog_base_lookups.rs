@@ -31,6 +31,8 @@ fn fixture_env() -> WowLuaEnv {
                 item_id,
                 name: name.into(),
                 is_unique_trophy: trophy,
+                total_num_stored: None,
+                total_num_placed: None,
             },
         );
     }
@@ -43,6 +45,8 @@ fn fixture_env() -> WowLuaEnv {
             item_id: None,
             name: "Record without item".into(),
             is_unique_trophy: true,
+            total_num_stored: None,
+            total_num_placed: None,
         },
     );
     for variant_identifier in [0, 1, 2] {

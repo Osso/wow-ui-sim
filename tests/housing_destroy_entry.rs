@@ -39,6 +39,8 @@ fn inject_catalog(env: &WowLuaEnv) {
                 item_id: Some(record_id),
                 name: format!("Fixture entry {record_id}"),
                 is_unique_trophy: false,
+                total_num_stored: None,
+                total_num_placed: None,
             },
         );
     }

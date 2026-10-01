@@ -39,6 +39,8 @@ fn inject_variants(env: &WowLuaEnv) {
                 item_id: Some(1001),
                 name: "Fixture entry".into(),
                 is_unique_trophy: false,
+                total_num_stored: None,
+                total_num_placed: None,
             },
         );
     }
