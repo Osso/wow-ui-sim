@@ -1,6 +1,6 @@
 # Public private-aura anchors
 
-Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Saved parent runs establish bounded lifecycle and cached-consumer GREEN; independent acceptance remains pending. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
+Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Independent inspection accepts bounded saved lifecycle and cached-consumer PASS; native/security/profile completion remains unproven. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -108,7 +108,11 @@ Fixture `053f6c860` loads the actual cached `Blizzard_BuffFrame` root to supply 
 
 Metadata binds `2b24386c59e908f154b8b8c64efbc1afd6f5ebe3` integration binary SHA256 `b84c5a3ef8dc2ff839a5b3faffa2c79f0b68d0f50b891a9798ee94450b9f7cf9` and startup binary `eda8a709b6576882d80197597a7344ef6dae623a2dedf21179942695d2a849b7`. Fixture run binds `053f6c860ec553f83b0c959d9adafc881753a87d`, binary `91b46b705ffbe70cc38444a72f83b7120c7b26a344ee4f06f3853dbe789a4f8f`. Saved commands use `timeout 90`, grouped integration filters with `--nocapture --test-threads=1`; startup uses `wow-sim --no-addons --no-saved-vars lua-errors`.
 
-Verifier 251 acceptance remains pending: `/tmp/patch-12.0.5-private-anchor-independent-proof.md` was absent at audit. No fresh builds/tests/checks or delegation in this docs audit. Requirement checkboxes and retained source statuses stay unpromoted. Candidate field deltas 626/675/676 do not gain credit before actual independent acceptance; restriction rows359/401 remain unresolved, not evidence of secret acceptance.
+Independent report `/tmp/patch-12.0.5-private-anchor-independent-proof.md` now gives **bounded PASS** after inspecting saved runtime artifacts, not rerunning behavior. Fresh default `cargo fmt --check` / `cargo check` each exit 0 at clean `053f6c860`; check has zero warnings/errors. Original sixteen distinct anchor cases have fifteen saved passes at `2b24386c5` plus one at `053f6c860`, not a single sixteen-test run. One migrated integration case and seven shape controls are separately reusable; embedded control execution remains unclaimed.
+
+Callback-error tests authored at `f69497fc6` were actually compiled/run at **`91e8450213ebcad0515a6e876febd9912ed590d8`**: `callback_error_retains` **2 PASS**, exit 0, integration SHA256 `f373efb8bcfbe9990b72a53220902c9cefa5783af999b33b7efa8a228aaf3537`. Entire anchor-test file hashes match at both revisions. Added failure retains insertion/consumed ID without returning a success ID; removed failure retains deletion without duplicate retry notification; replacement callbacks and subsequent dispatch recover. This characterizes inferred simulator policy, **not native error/rollback semantics**, with no standalone RED. Separate pinned-file `rustfmt --check --edition 2024` exits 0; it does not extend whole-repo fmt to later revisions. Production/check/startup scope is unchanged. Incoming chat inputs **`f777027be` are explicitly excluded** from all these gates.
+
+Only literal structure rows **626/675/676** gain bounded coverage: false/default and explicit true input/output `isContainer`, and canonical usable output `parent` in added callback/list snapshots, including GC identity. Exact assertions are `added_payload_and_listing_preserve_parent_identity_and_default_flags`, `nonempty_optional_bindings_publish_flattened_icon_dimensions`, and `parent_identity_and_custom_fields_survive_gc_without_input_roots`; cached container lifecycle is a further bounded control. Restriction rows359/401 remain unresolved. Accounting: **265 audit-pending / 83 bounded-coverage / 14 partial-development-green = 362**. IDs, retained text SHA256 and unrelated rows unchanged; audit **IN PROGRESS**, broad suite **NOT GREEN**. No fresh builds/tests/checks or delegation in this docs reconciliation.
 
 ### Retained assertion migration before helper removal
 
@@ -125,15 +129,17 @@ Old helper input extras `isBuff`, `maxAuras`, and `point` do not have retained v
 
 ### Exact retained source evidence
 
-[`12.0.5-register.json`](../../data/patch-api/sources/12.0.5-register.json) confirms these exact IDs and source-line references; none is edited or promoted:
+[`12.0.5-register.json`](../../data/patch-api/sources/12.0.5-register.json) confirms these exact IDs and source-line references; source inventory is unchanged. Only the three structure rows gain bounded status in page coverage:
 
 | Exact source ID | Source line | Literal delta |
 | --- | --- | --- |
 | `global api-C_UnitAuras-AddPrivateAuraAnchor-359` | 359 | `- HasRestrictions` |
 | `global api-C_UnitAuras-RemovePrivateAuraAnchor-401` | 401 | `- HasRestrictions` |
 | `structures-AddPrivateAuraAnchorArgs-626` | 626 | `+ isContainer` |
+| `structures-UnitPrivateAuraAnchorInfo-675` | 675 | `+ isContainer` |
+| `structures-UnitPrivateAuraAnchorInfo-676` | 676 | `+ parent` |
 
-The [retained source text](../../data/patch-api/sources/12.0.5-api-changes.txt) places method/structure names on preceding lines 358/400/625; register IDs refer to the delta lines, not the subject lines. Introductory retained text also describes restriction removal. This does not establish complete native 12.0.5 lifecycle/security semantics.
+The [retained source text](../../data/patch-api/sources/12.0.5-api-changes.txt) places method/structure names on preceding lines 358/400/625/674; register IDs refer to the delta lines, not the subject lines. Introductory retained text also describes restriction removal. This does not establish complete native 12.0.5 lifecycle/security semantics.
 
 Local profile cache evidence, **12.1, not native 12.0.5**:
 
@@ -144,13 +150,13 @@ Local profile cache evidence, **12.1, not native 12.0.5**:
 
 ## Known gaps (current cycle)
 
-- [ ] Independent acceptance remains pending; saved parent GREEN/startup is not independent acceptance. Embedded controls and all-profile execution remain unestablished.
-- [ ] Strengthened reentry counts and nested-output exclusions have saved GREEN but no standalone RED. Callback-error rollback and frame destruction remain unproven.
+- [ ] Bounded independent PASS inspects saved parent behavior/startup, not independent runtime execution. Embedded controls and all-profile execution remain unestablished.
+- [ ] Strengthened reentry counts and nested-output exclusions have saved GREEN but no standalone RED. Callback errors have bounded simulator characterization only; native rollback policy and frame destruction remain unproven.
 - [ ] Rendering/anchor application remains absent despite retained parsed binding data. Full frame/ScriptRegion and all-profile native parity remain unverified.
 - [ ] Native `AllowedWhenUntainted` secret acceptance, private secure-only behavior and cross-profile parity remain unmodeled/unverified. Conservative rejection and existing private availability must not be reported as native security parity. No combat lockout is introduced: retained source removes restrictions; that is not full native security proof.
 
 ## Out of scope
 
-- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and saved targeted PASS, not independent acceptance. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup/native acceptance remain excluded; bounded saved startup is recorded above.
+- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and independently inspected saved targeted PASS, not full-page acceptance. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup/native acceptance remain excluded; bounded saved startup is recorded above.
 - Aura content, spell data, sounds, warning/update models, container layout/settings, and other aura structure changes: independent owners, not required for public anchor registration.
-- Coverage-register/source-status promotion, PLAN, code/tests edits, fresh builds/checks/tests/startup, push/deploy and delegation: excluded from this docs audit.
+- Only structure field rows626/675/676 may gain bounded coverage. Other source-status promotion, PLAN, chat files, code/tests edits, fresh builds/checks/tests/startup, push/deploy and delegation are excluded from this docs followup.

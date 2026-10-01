@@ -595,6 +595,22 @@
       "proof": "bounded-independent-pass",
       "independent_ledger": "/tmp/patch-12.0.5-housing-category-search-independent-proof.md",
       "gate_scope": "Batch27 appendix: saved13aggregatePASS, fresh fmt0; prior batch26 production check valid. Separate from batch26 saved78PASS/startup0[]."
+    },
+    {
+      "id": "private-aura-anchor-fields",
+      "symbols": [
+        "C_UnitAuras.AddPrivateAuraAnchor",
+        "UnitPrivateAuraAnchorInfo.isContainer",
+        "UnitPrivateAuraAnchorInfo.parent"
+      ],
+      "scope": "Only retained structure additions626/675/676: default false/explicit true isContainer input and added/list DTO output; canonical usable original parent identity including GC. Bounded simulator lifecycle/consumer proof, not native security/restrictions, aura content producer, rendering or full-page/profile parity. Callback errors characterize inferred simulator policy only. Chat inputs f777027be excluded.",
+      "spec": "docs/specs/private-aura-anchors.md",
+      "tests": [
+        "tests/private_aura_anchors.rs"
+      ],
+      "implementation": "61cd50cd8 + 2b24386c5; fixture 053f6c860; callback tests f69497fc6 compiled 91e845021",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-private-anchor-independent-proof.md"
     }
   ],
   "source_rows": [
@@ -2715,9 +2731,11 @@
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-626",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-anchor-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch29 independent bounded PASS: exact structure field addition only; default false/explicit true isContainer and canonical usable parent in added callback/list DTOs including GC identity. Linked private-anchor spec owns saved 15+1 original anchor PASS, separate callback-error2 PASS actually compiled91e845021 (tests f69497fc6), fmt/check053f6c860 and exclusions. No native AllowedWhenUntainted/restrictions359/401, native producer, rendering, full-page/all-profile or chat f777027be claim."
     },
     {
       "source_id": "structures-AreaPOIInfo-628",
@@ -2949,15 +2967,19 @@
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-675",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-anchor-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch29 independent bounded PASS: exact structure field addition only; default false/explicit true isContainer and canonical usable parent in added callback/list DTOs including GC identity. Linked private-anchor spec owns saved 15+1 original anchor PASS, separate callback-error2 PASS actually compiled91e845021 (tests f69497fc6), fmt/check053f6c860 and exclusions. No native AllowedWhenUntainted/restrictions359/401, native producer, rendering, full-page/all-profile or chat f777027be claim."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-676",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-anchor-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch29 independent bounded PASS: exact structure field addition only; default false/explicit true isContainer and canonical usable parent in added callback/list DTOs including GC identity. Linked private-anchor spec owns saved 15+1 original anchor PASS, separate callback-error2 PASS actually compiled91e845021 (tests f69497fc6), fmt/check053f6c860 and exclusions. No native AllowedWhenUntainted/restrictions359/401, native producer, rendering, full-page/all-profile or chat f777027be claim."
     },
     {
       "source_id": "structures-ViewedTransmogOutfitSlotInfo-678",

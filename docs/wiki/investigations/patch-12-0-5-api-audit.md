@@ -1,10 +1,12 @@
 # Patch 12.0.5 API Audit
 
-### Private anchors — parent GREEN, independent pending
+### Private anchors — bounded independent PASS
 
 [Batch29 bounded proof](../../specs/private-aura-anchors.md#reconciled-batch29-bounded-proof--2026-10-01) owns saved producer, event correction and actual BuffFrame fixture evidence. Startup's 21 earlier messages all disappear after exact retail-12.1 event correction; do not treat distinct messages as independent root causes. Container fixture now passes actual cached Add/Remove/re-add/unit transition after supplying inherited Symbol through the real root. Explicit simulator dispatch is not native event production or historical 12.0.5 availability.
 
-Independent report pending; no acceptance or source-status promotion. Candidate literal field deltas 626/675/676 stay pending; restriction rows359/401 unresolved. Native AllowedWhenUntainted, callback-error rollback, frame destruction and rendering unproven. Preserve **362 IDs/source hash and 268 pending / 80 bounded / 14 partial**; audit **IN PROGRESS**.
+Full independent report `/tmp/patch-12.0.5-private-anchor-independent-proof.md` accepts bounded saved behavior, not runtime reruns: fifteen original anchor PASS at `2b24386c5` plus one at `053f6c860`, one migrated integration and seven shape controls separately reusable. Callback-error **2 PASS** actually compiled/run at `91e845021` (test commit `f69497fc6`, identical file hash); inferred simulator no-rollback/error recovery characterization, not native policy. Fresh default fmt/check **0**, no compiler warnings, at clean `053f6c860`; callback file has separate targeted format proof. Chat inputs `f777027be` excluded.
+
+Only literal structure rows **626** (`AddPrivateAuraAnchorArgs + isContainer`), **675** (`UnitPrivateAuraAnchorInfo + isContainer`), **676** (`+ parent`) gain bounded coverage for false/default and explicit true input/output flags and original usable callback/list parent identity including GC. Restriction rows359/401 remain pending. **265 pending / 83 bounded / 14 partial = 362**; source IDs/text SHA256 and unrelated rows unchanged. Native AllowedWhenUntainted, restrictions, native producer, destruction/rendering/full-page/all-profile parity remain unproven; audit **IN PROGRESS**, broad suite **NOT GREEN**. No builds/tests/delegation/push in this docs followup.
 
 
 ### Housing category search and removed raw fields — bounded independent PASS
