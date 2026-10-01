@@ -741,6 +741,22 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-outfit-index-independent-proof.md",
       "gate_scope": "Current pinned VM selected5/5PASS with integration SHA256398ef0d1f5a49f8e9415021f833e37de99cba63a2a2b05819898db7b61bbb5e9; applicable independent310 default fmt/check0 reused; no readability issues. No new code/build/test expansion."
+    },
+    {
+      "id": "aura-refresh-duration",
+      "symbols": [
+        "C_UnitAuras.GetRefreshExtendedDuration",
+        "C_UnitAuras.GetAuraBaseDuration"
+      ],
+      "scope": "Parent accepts independent bounded optional identifier coverage, consumer GetAuraBaseDuration prerequisite and explicit unknown metadata: 18 duration + 73 controls = 91 distinct PASS, saved startup0 [], fresh fmt/check0. Formula/cap/permanence/nil/strict secret and seeded alias policies inferred, not native. Production metadata empty; queries return nil until explicit metadata. No Blizzard visual, native, whole-page or all-profile claim. Two nonblocking readability suggestions deferred; no behavior issue or adjacent restructure authorized.",
+      "spec": "docs/specs/aura-refresh-duration.md",
+      "tests": [
+        "tests/aura_refresh_duration.rs"
+      ],
+      "implementation": "0acd750afae92f3c6448baeae9ded210abd01bb5",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-refresh-duration-independent-proof.md",
+      "gate_scope": "Exact optional numeric/seeded alias, omitted/nil aura-derived identifier, nullable output and explicit base prerequisite. LENGTH read_public_arguments: 36 body lines; COMPLEX_COND is_valid: four validity checks. Both nonblocking, deferred, not zero issues."
     }
   ],
   "source_rows": [
@@ -2082,9 +2098,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetRefreshExtendedDuration-394",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-refresh-duration"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent bounded optional identifier coverage, consumer GetAuraBaseDuration prerequisite and explicit unknown metadata: 18 duration + 73 controls = 91 distinct PASS, saved startup0 [], fresh fmt/check0. Formula/cap/permanence/nil/strict secret and seeded alias policies inferred, not native. Production metadata empty; queries return nil until explicit metadata. No Blizzard visual, native, whole-page or all-profile claim. Two nonblocking readability suggestions deferred; no behavior issue or adjacent restructure authorized."
     },
     {
       "source_id": "global api-C_UnitAuras-GetUnitAuraBySpellID-396",

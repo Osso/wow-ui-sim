@@ -1,28 +1,28 @@
 # Aura refresh duration
 
-Retail 12.0.5 row394, `C_UnitAuras.GetRefreshExtendedDuration`, and its consumer prerequisite `C_UnitAuras.GetAuraBaseDuration` query explicit per-environment recast metadata independently of current aura duration. Input types live in `src/c_api/aura_duration.rs`; architecture references are under [How it works](#how-it-works). The producer registers both immutable Lua getters at `retail-12-0-5`; parent GREEN and bounded acceptance remain pending.
+Retail 12.0.5 row394, `C_UnitAuras.GetRefreshExtendedDuration`, and its consumer prerequisite `C_UnitAuras.GetAuraBaseDuration` query explicit per-environment recast metadata independently of current aura duration. Input types live in `src/c_api/aura_duration.rs`; architecture references are under [How it works](#how-it-works). The producer registers both immutable Lua getters at `retail-12-0-5`; parent GREEN and independent bounded acceptance are recorded below.
 
 ## What it must do
 
 ### Input and nullable output
 
-- [ ] Both getters accept `(unit, auraInstanceID, optionalSpellIdentifier)` and return exactly one nullable number. Omitted/nil identifier uses the matched aura's `spell_id` directly. Explicit numeric/string identifiers use the existing C_Spell resolver, including seeded case-normalized aliases and numeric alias precedence. Resolver reuse is **INFERRED**; labels in tests are fixtures, not native spell names/links.
-- [ ] Inputs are an environment-local `HashMap<u32, SpellAuraDuration>` with explicit `base_duration_seconds` and `max_carryover_seconds`. Default map is empty. Never seed invented production durations or infer base from `AuraInfo.duration`, remaining time, spell icons/names, or another environment.
-- [ ] **INFERRED unknown policy:** unknown alias, missing metadata, unit or instance yields nil. Explicit unknown overrides never fall back to the aura's own spell. Metadata alone cannot create an aura or cross unit/instance identity.
-- [ ] Resolve only existing public, unblocked helpful/harmful collector records, including modeled party stores. Blocking is scoped to exact unit and instance; a blocked instance remains inaccessible with an explicit known override. No new generic target store or native visibility enforcement.
+- [x] Both getters accept `(unit, auraInstanceID, optionalSpellIdentifier)` and return exactly one nullable number. Omitted/nil identifier uses the matched aura's `spell_id` directly. Explicit numeric/string identifiers use the existing C_Spell resolver, including seeded case-normalized aliases and numeric alias precedence. Resolver reuse is **INFERRED**; labels in tests are fixtures, not native spell names/links.
+- [x] Inputs are an environment-local `HashMap<u32, SpellAuraDuration>` with explicit `base_duration_seconds` and `max_carryover_seconds`. Default map is empty. Never seed invented production durations or infer base from `AuraInfo.duration`, remaining time, spell icons/names, or another environment.
+- [x] **INFERRED unknown policy:** unknown alias, missing metadata, unit or instance yields nil. Explicit unknown overrides never fall back to the aura's own spell. Metadata alone cannot create an aura or cross unit/instance identity.
+- [x] Resolve only existing public, unblocked helpful/harmful collector records, including modeled party stores. Blocking is scoped to exact unit and instance; a blocked instance remains inaccessible with an explicit known override. No new generic target store or native visibility enforcement.
 
 ### Duration policy — explicitly INFERRED, not native-verified
 
-- [ ] Base getter returns configured base duration, not current duration. Refresh returns `base + min(max(expiration - now, 0), max_carryover_seconds)`, with `now` from the environment's existing `start_time.elapsed()` clock. The cap is explicit metadata, not an invented fixed percentage.
-- [ ] Saturated and expired timed cases return exact cap/base results. Unsaturated tests bound elapsed time around the call with tolerance; do not introduce a time override framework.
-- [ ] Permanent active aura (`duration == 0` or `expiration_time == 0`) yields nil for refresh, even with known recast metadata. Base getter still returns known metadata. This eligibility rule is an **informed guess**, not documented native behavior.
-- [ ] Nonfinite or negative metadata in either field yields nil from both getters. Zero metadata remains valid for a timed active aura. Nonfinite refresh sums yield nil, never public infinity. Both metadata fields are validated before either getter's public output.
+- [x] Base getter returns configured base duration, not current duration. Refresh returns `base + min(max(expiration - now, 0), max_carryover_seconds)`, with `now` from the environment's existing `start_time.elapsed()` clock. The cap is explicit metadata, not an invented fixed percentage.
+- [x] Saturated and expired timed cases return exact cap/base results. Unsaturated tests bound elapsed time around the call with tolerance; do not introduce a time override framework.
+- [x] Permanent active aura (`duration == 0` or `expiration_time == 0`) yields nil for refresh, even with known recast metadata. Base getter still returns known metadata. This eligibility rule is an **informed guess**, not documented native behavior.
+- [x] Nonfinite or negative metadata in either field yields nil from both getters. Zero metadata remains valid for a timed active aura. Nonfinite refresh sums yield nil, never public infinity. Both metadata fields are validated before either getter's public output.
 
 ### Validation and query immutability — explicitly INFERRED
 
-- [ ] Unit accepts a public string or nil (nil means unknown); required instance accepts a public finite number. Missing instance, wrong types and nonfinite numeric arguments error with nonempty diagnostics, including absent-unit queries. Optional spell accepts nil or a public finite number/string; no new spell parser or additional numeric range policy.
-- [ ] Conservative rejection of real secret unit/instance/spell arguments precedes absent-unit results, in secure and addon-tainted callers. Full GC preserves secret identity; rejection neither declassifies inputs nor changes caller taint. Later public queries still work. This is **not** `SecretArguments = "AllowedWhenTainted"` or native secret-output parity.
-- [ ] Both getters leave aura identity/current duration/expiration, metadata, aliases and event queue unchanged. Metadata and alias mutations remain environment-local.
+- [x] Unit accepts a public string or nil (nil means unknown); required instance accepts a public finite number. Missing instance, wrong types and nonfinite numeric arguments error with nonempty diagnostics, including absent-unit queries. Optional spell accepts nil or a public finite number/string; no new spell parser or additional numeric range policy.
+- [x] Conservative rejection of real secret unit/instance/spell arguments precedes absent-unit results, in secure and addon-tainted callers. Full GC preserves secret identity; rejection neither declassifies inputs nor changes caller taint. Later public queries still work. This is **not** `SecretArguments = "AllowedWhenTainted"` or native secret-output parity.
+- [x] Both getters leave aura identity/current duration/expiration, metadata, aliases and event queue unchanged. Metadata and alias mutations remain environment-local.
 
 ### Evidence boundary
 
@@ -53,7 +53,7 @@ No native probes establish formula, caps, permanence, unknown/error handling or 
 
 ## Tests asserting this spec
 
-Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent saved compilation and GREEN execution below. Requirement checkboxes remain unchecked pending independent320 and parent acceptance; tests are unchanged.
+Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent saved compilation and GREEN execution below. Requirement checkboxes record bounded simulator acceptance only; tests are unchanged.
 
 | Test | Contract |
 |---|---|
@@ -78,9 +78,8 @@ Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent s
 
 ## Known gaps (current cycle)
 
-- [ ] Independent320 and parent bounded acceptance remain pending. Parent GREEN is saved below; this docs-only reconciliation runs no build/test/check/lint/readability/delegation.
 - [ ] Native formula, eligibility, unknown/error/security parity remain unproven.
-- [ ] Row394/page/accounting remain pending and unchanged; no status promotion authorized here.
+- [ ] Production metadata and Blizzard visual/all-profile parity remain unverified.
 
 ## Saved pre-producer RED — 2026-10-01
 
@@ -106,11 +105,19 @@ Inputs `dac4314c6`; producer `0acd750afae92f3c6448baeae9ded210abd01bb5`. Saved G
 
 This proves bounded simulator getter behavior and named controls only. Formula/cap, permanence eligibility, nil/unknown and strict secret policies remain **INFERRED**, not native-verified. Metadata defaults remain empty; fixtures are explicit inputs, not invented production metadata. Duration reads filter blocked records; earlier unblocked spell-query compatibility is preserved, not silently replaced by duration access rules.
 
-**Independent320 pending; no source-row promotion until parent accepts.** Preserve **257 pending / 91 bounded / 14 partial = 362**, row394 pending, source IDs/register/plaintext hashes unchanged. No fresh fmt/check/readability, native parity, whole-page or all-profile acceptance claimed. Saved evidence remains scoped to its recorded revisions/binary hashes; docs changes do not broaden it. `/tmp/patch-12.0.5-proof-ledger.md` and ignored local `PLAN.md` record this checkpoint; PLAN is never staged.
+## Independent bounded acceptance — 2026-10-01
+
+Parent accepts `/tmp/patch-12.0.5-aura-refresh-duration-independent-proof.md` after source/contracts/diagnostics review: **18 duration + 73 controls = 91 distinct PASS**, saved startup exit0 `[]`, fresh fmt/check exit0 with unchanged relevant Rust hashes. Proof remains bound to the recorded revisions/binaries; this docs-only change invalidates no Rust proof and runs no checks/build/tests.
+
+Only `global api-C_UnitAuras-GetRefreshExtendedDuration-394` promotes to bounded coverage, capability `aura-refresh-duration`, including consumer `GetAuraBaseDuration` prerequisite and explicit unknown metadata: **257/91/14 → 256 pending / 92 bounded / 14 partial = 362**. Before/after artifact: `/tmp/patch-12.0.5-aura-refresh-duration-accounting-before-after.json`. IDs/register/source SHA and all unrelated rows preserved.
+
+**Two nonblocking readability suggestions, not zero issues:** LENGTH `read_public_arguments` (36 body lines); COMPLEX_COND `SpellAuraDuration::is_valid` (four validity checks). Deferred: no observed behavior issue; adjacent restructuring not authorized.
+
+Formula/cap/permanence, strict secret rejection, nil/unknown and seeded aliases remain informed policies, not native semantics. Production metadata stays empty: duration queries return nil until explicit metadata. No Blizzard visual/native/whole-page/all-profile acceptance.
 
 ## Out of scope
 
 - Native formula/data, visibility, secret taint/output and error parity: unavailable evidence, no native-client probes required.
 - Production duration records, inferred base from current aura state, alternate providers or fallback compatibility: explicitly excluded.
 - Aura refresh mutation/history, cast/cooldown/charge simulation, new clock framework, legacy or existing spell-ID query changes: not needed for these immutable getters.
-- Whole-page/row acceptance and audit accounting, unrelated docs311/verifier310 work: parent/concurrent ownership preserved.
+- Whole-page acceptance, unrelated source rows and adjacent restructuring remain excluded.

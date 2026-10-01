@@ -1,6 +1,6 @@
 ## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
 
-[[lua-api#Retail 12.0.5 aura refresh duration]] links [exact batch38 proof](../specs/aura-refresh-duration.md#reconciled-batch38-parent-proof--2026-10-01): inputs `dac4314c6`, producer `0acd750af`; RED compile0/1168.921s, 18 selected **1 PASS / 17 FAIL**; GREEN compile0/799.340s, **18 duration + 12 query + 29 aura + 18 admin + 14 C_Spell = 91 distinct PASS**, startup0 `[]`/27.721s. No zero-selection/overlap credit. **Independent320 pending**, no promotion until parent accepts; **257/91/14 = 362**, row394 pending, IDs/register/plaintext hashes unchanged. Formula/permanence/nil/strict secret policies inferred; empty metadata, no production invention. Blocked-filtered duration reads preserve earlier unblocked spell-query compatibility. Docs-only; ignored PLAN never staged.
+[Independent bounded acceptance](../specs/aura-refresh-duration.md#independent-bounded-acceptance--2026-10-01): row394 only, **18 duration + 73 controls = 91 PASS**, startup0 `[]`, fresh fmt/check0; **257/91/14 → 256/92/14 = 362**. Consumer base prerequisite and unknown metadata included; two nonblocking LENGTH/COMPLEX_COND suggestions deferred, not zero issues. Informed policies remain nonnative; production empty returns nil until metadata. IDs/register/source SHA/unrelated rows preserved; no Blizzard visual/native/all-profile claim.
 
 ## [2026-10-01] implementation | Add bounded aura refresh duration producers
 
