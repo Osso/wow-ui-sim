@@ -10,7 +10,7 @@ use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
+pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_HousingCatalog")?;
     let functions: &[(&str, rilua::RustFn)] = &[
         ("GetCatalogEntryInfo", entry_info),

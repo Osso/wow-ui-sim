@@ -1,6 +1,6 @@
 # Housing catalog variants
 
-Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. Empty-backed producers now replace overlapping temporary catalog/search outputs after actual parent RED 0/11 at input `05ca7dff0`. Compilation, GREEN and startup remain parent-owned and pending. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — pending GREEN) record integration boundaries.
+Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt) and cached HousingCatalog/Searcher declarations. Empty-backed producers now replace overlapping temporary catalog/search outputs after actual parent RED 0/11 at input `05ca7dff0`. Producer `76f2ac88a`; follow-up restricts registration visibility to its owning `c_housing` module so the re-export is legal. Compilation, GREEN and startup remain parent-owned and pending. [Ownership findings](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — pending GREEN) record integration boundaries.
 
 ## What it must do
 
@@ -60,7 +60,8 @@ Replacement mapping: old `housing_catalog_market_and_variant_methods_use_seeded_
 | `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog.rs src/c_api/c_housing.rs src/lua_api/state/support_types.rs tests/housing_catalog.rs tests/housing_catalog_variants.rs` | Exit 0 on input/tests-only working scope; formatting only | Later Rust changes invalidate formatting scope |
 | Parent `cargo test --test integration --no-run --message-format=json` at `05ca7dff0866fb2572b92717c5d3203a26615e68` | Exit 0, 252.50s; `/tmp/patch-12.0.5-batch18-red-build*` | Input fixtures only, not current producers |
 | Parent `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c housing_catalog_variants:: --nocapture --test-threads=1` | Exit 101, **0/11**; `/tmp/patch-12.0.5-batch18-red-run.log` and `.json`; binary SHA-256 `4d6e4297ca7a680f192c5c3c133126a184bb87ead83dd8482f76a6f586725957` | Same input revision; not current producers/new controls |
-| Current `rustfmt --edition 2024 --config skip_children=true` on `c_housing.rs`, `catalog.rs`, `catalog/{queries,snapshot}.rs`, `tests/housing_catalog{,_variants}.rs` | Exit 0; formatting only, no compilation or behavioral proof | Later Rust edits invalidate this formatting scope |
+| Producer `76f2ac88a`: `rustfmt --edition 2024 --config skip_children=true` on `c_housing.rs`, `catalog.rs`, `catalog/{queries,snapshot}.rs`, `tests/housing_catalog{,_variants}.rs` | Exit 0; formatting only, no compilation or behavioral proof | Registration visibility follow-up invalidates only `queries.rs` scope |
+| Follow-up `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog/queries.rs` | Exit 0 on registration visibility fix; formatting only | Later edits to that file invalidate scope |
 
 Actual compiled behavioral RED precedes this producer replacement. New snapshot/security/lifecycle controls remain unrun; no current GREEN, native or startup claim.
 
