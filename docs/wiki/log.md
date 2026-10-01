@@ -1,3 +1,7 @@
+## [2026-09-30] investigation | Record cached Forever RestrictedExecution proof
+
+Updated [[forever-addon-comparison#Cached RestrictedExecution state and rejection coverage]] and index from tests-only `6e2f65346` and `/home/osso/.local/state/wow-ui-sim-proof/forever-restricted-execution-2026-09-30/{ledger.json,stdout,stderr}`. Source proof passes 1/1: normal cached-addon harness/public SecureHandler execution preserves separate header state `10 → 11 → 12` and `20`, rejects direct table literals through public `CallRestrictedClosure`, and resumes after rejection without collected Lua errors. Independent audit `20328` remains pending. Historical DisenchantHelper nil-loadstring failure does not reproduce in this bounded consumer; unavailable archived addon prevents exact replay or matrix reclassification. Datamine stays blocked while the broader goal continues. No new spec, source/test edits, Cargo/runtime execution, downloads, delegation, or operational changes.
+
 ## [2026-09-30] audit | Record bounded abbreviated formatter implementation
 
 Updated [[duration-core]] and index from `786e731a1`, `663de5528`, and [abbreviated formatter spec](../specs/abbreviated-number-formatter.md). Public FormatNumber is grounded in the common NumericFormatter documentation; suffix lookup is grounded in localization declarations and existing global strings. Four grouped RED cases fail on missing surface; GREEN is pending shared compilation. Native policies and existing multi-formatter duration dispatch remain explicitly unclaimed.
