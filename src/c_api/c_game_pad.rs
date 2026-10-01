@@ -1,6 +1,7 @@
-//! The two queries observed in Forever InputAxisBinding.lua, not a native mapped DTO.
+//! Bounded Forever mapped-stick queries and free-look-hover policy.
 
-use crate::lua_api::methods::{borrow_state, create_table, table_set_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set_static};
+use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -34,7 +35,49 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "StickIndexToConfigName",
         stick_index_to_config_name,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetAllowHoverEventsWithFreeLook",
+        get_allow_hover_events_with_free_look,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetAllowHoverEventsWithFreeLook",
+        set_allow_hover_events_with_free_look,
     )
+}
+
+fn get_allow_hover_events_with_free_look(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.gamepad_allow_hover_events_with_free_look;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn set_allow_hover_events_with_free_look(state: &mut LuaState) -> LuaResult<u32> {
+    // AllowedWhenUntainted: use VM access checks without clearing caller taint.
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let Val::Bool(enabled) = value else {
+        return Err(runtime_error(
+            "C_GamePad.SetAllowHoverEventsWithFreeLook requires a boolean",
+        ));
+    };
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if sim.gamepad_allow_hover_events_with_free_look == enabled {
+            return Ok(0);
+        }
+        sim.gamepad_allow_hover_events_with_free_look = enabled;
+    }
+    // Change-only publication and state-before-callback are simulator guesses.
+    fire_named_event_state(
+        state,
+        "GAME_PAD_ALLOW_HOVER_EVENTS_WITH_FREE_LOOK_CHANGED",
+        &[Val::Bool(enabled)],
+    );
+    Ok(0)
 }
 
 fn get_device_mapped_state(state: &mut LuaState) -> LuaResult<u32> {

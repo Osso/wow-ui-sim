@@ -8,6 +8,9 @@ pub struct SimState {
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(feature = "client-wowforever")]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
+    /// Independent free-look-hover policy; false default is a simulator guess.
+    #[cfg(feature = "client-wowforever")]
+    pub(crate) gamepad_allow_hover_events_with_free_look: bool,
     pub widgets: WidgetRegistry,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
