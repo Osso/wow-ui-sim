@@ -1,6 +1,8 @@
 //! Shared explicit DamageMeter snapshots; parent owns profile compilation/runtime proof.
 
 use super::*;
+use rilua::LuaApiMut;
+use rilua::table_security::{wrap_host_secret_number, wrap_host_secret_string};
 use wow_ui_sim::c_api::c_damage_meter::*;
 
 const SESSION_ID: i64 = 47;
@@ -368,26 +370,59 @@ fn damage_meter_ambiguous_partial_selectors_return_empty_details() {
     );
 }
 
+fn inject_host_secret_selectors(env: &WowLuaEnv) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    // Historical profiles do not register native Lua secretwrap. Host fixtures
+    // exercise the same secret rejection contract without depending on it.
+    for (name, payload) in [
+        ("SecretSessionID", SESSION_ID as f64),
+        ("SecretSessionType", f64::from(CURRENT)),
+        ("SecretMeterType", f64::from(DAMAGE_DONE)),
+        ("SecretCreatureID", 901.0),
+    ] {
+        let secret = wrap_host_secret_number(lua.state_mut(), payload);
+        // Root before global-name allocation or another GC safe point.
+        lua.state_mut().push(secret);
+        let inserted = lua.set_global_val(name, secret);
+        lua.state_mut().pop();
+        inserted.unwrap_or_else(|error| panic!("inject {name} host secret: {error}"));
+    }
+    let secret = wrap_host_secret_string(lua.state_mut(), "Creature-0-1-2-3-901-0000000047");
+    lua.state_mut().push(secret);
+    let inserted = lua.set_global_val("SecretSourceGUID", secret);
+    lua.state_mut().pop();
+    inserted.expect("inject SecretSourceGUID host secret");
+}
+
 #[test]
 fn damage_meter_secret_selectors_reject_without_unwrapping() {
     let env = fixture_env();
+    inject_host_secret_selectors(&env);
     // Rejection is bounded simulator policy, not AllowedWhenUntainted parity.
     assert_query(
         &env,
         r#"
-        local id = secretwrap(47)
-        local kind = secretwrap(Enum.DamageMeterSessionType.Current)
-        local meter = secretwrap(Enum.DamageMeterType.DamageDone)
-        local guid = secretwrap("Creature-0-1-2-3-901-0000000047")
-        local creature = secretwrap(901)
-        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, id, Enum.DamageMeterType.DamageDone))
-        assert(not pcall(C_DamageMeter.GetCombatSessionFromType, kind, Enum.DamageMeterType.DamageDone))
-        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, 47, meter))
-        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromID, 47, Enum.DamageMeterType.DamageDone, guid, nil))
-        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromType, Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone, nil, creature))
-        assert(not pcall(C_DamageMeter.GetSessionDurationSeconds, kind))
-        assert(#C_DamageMeter.GetAvailableCombatSessions() == 1)
-        assert(#C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone).combatSources == 1)
+        collectgarbage("collect")
+        collectgarbage("collect")
+        local id = SecretSessionID
+        local kind = SecretSessionType
+        local meter = SecretMeterType
+        local guid = SecretSourceGUID
+        local creature = SecretCreatureID
+        assert(issecretvalue(id), "session ID fixture must remain secret after GC")
+        assert(issecretvalue(kind), "session type fixture must remain secret after GC")
+        assert(issecretvalue(meter), "meter type fixture must remain secret after GC")
+        assert(issecretvalue(guid), "source GUID fixture must remain secret after GC")
+        assert(issecretvalue(creature), "creature ID fixture must remain secret after GC")
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, id, Enum.DamageMeterType.DamageDone), "GetCombatSessionFromID must reject secret session ID")
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromType, kind, Enum.DamageMeterType.DamageDone), "GetCombatSessionFromType must reject secret session type")
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, 47, meter), "GetCombatSessionFromID must reject secret meter type")
+        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromID, 47, Enum.DamageMeterType.DamageDone, guid, nil), "GetCombatSessionSourceFromID must reject secret source GUID")
+        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromType, Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone, nil, creature), "GetCombatSessionSourceFromType must reject secret creature ID")
+        assert(not pcall(C_DamageMeter.GetSessionDurationSeconds, kind), "GetSessionDurationSeconds must reject secret session type")
+        assert(#C_DamageMeter.GetAvailableCombatSessions() == 1, "secret rejection must preserve available sessions")
+        assert(#C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone).combatSources == 1, "secret rejection must preserve public source queries")
     "#,
     );
 }
