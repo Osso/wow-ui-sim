@@ -131,7 +131,7 @@ fn formatter_mut(state: &mut LuaState) -> LuaResult<&mut NumericRuleFormatter> {
 }
 
 fn format_number(state: &mut LuaState) -> LuaResult<u32> {
-    let input = model::finite(read_format_input(state)?)?;
+    let input = read_format_input(state)?;
     let result = format_value(state, stack_val(state, 1), input)?;
     state.push(result);
     Ok(1)
