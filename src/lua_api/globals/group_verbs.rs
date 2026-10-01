@@ -49,6 +49,7 @@ fn required_string(state: &mut LuaState, index: i32) -> Option<String> {
 fn synthesize_party_member(name: String) -> PartyMember {
     PartyMember {
         name,
+        connected: true,
         class_index: 1,
         level: 80,
         health: DEFAULT_INVITE_HEALTH,

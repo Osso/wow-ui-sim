@@ -315,8 +315,8 @@ pub(super) fn unit_is_ghost(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `UnitIsConnected(unit)` — true for currently known local, target, focus,
-/// and group unit tokens. The sim does not model offline party members yet.
+/// `UnitIsConnected(unit)` — party tokens read modeled connection state;
+/// other known unit tokens retain their existing presence-based behavior.
 pub(super) fn unit_is_connected(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let connected = {
@@ -325,6 +325,9 @@ pub(super) fn unit_is_connected(state: &mut LuaState) -> LuaResult<u32> {
             "player" | "pet" | "vehicle" => true,
             "target" => st.current_target.is_some(),
             "focus" => st.current_focus.is_some(),
+            other if crate::lua_api::globals::unit_api::parse_party_index(other).is_some() => {
+                visible_party_member(&st, other).is_some_and(|member| member.connected)
+            }
             other => visible_party_member(&st, other).is_some(),
         }
     };

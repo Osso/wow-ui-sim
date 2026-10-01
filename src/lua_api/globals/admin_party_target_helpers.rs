@@ -59,6 +59,7 @@ pub(super) fn make_target_info(
 pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
         name: "Unknown".to_string(),
+        connected: true,
         class_index: 1,
         level: 80,
         health: 100_000,
@@ -256,6 +257,38 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
     if changed {
         dispatch_event_now(state, "GROUP_ROSTER_UPDATE", &[])?;
     }
+    Ok(0)
+}
+
+pub(super) fn set_party_member_connected(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
+    use crate::lua_api::methods::create_string;
+    use rilua::Val;
+
+    let index = i32::from_stack(state, 1)?;
+    let connected = bool::from_stack(state, 2)?;
+    if index <= 0 {
+        return Ok(0);
+    }
+    {
+        let mut st = borrow_state_mut(state)?;
+        if !st.party_group_active {
+            return Ok(0);
+        }
+        let Some(member) = st.party_members.get_mut((index - 1) as usize) else {
+            return Ok(0);
+        };
+        if member.connected == connected {
+            return Ok(0);
+        }
+        member.connected = connected;
+    }
+    let unit_target = create_string(state, &format!("party{index}"));
+    dispatch_event_now(
+        state,
+        "UNIT_CONNECTION",
+        &[unit_target, Val::Bool(connected)],
+    )?;
     Ok(0)
 }
 

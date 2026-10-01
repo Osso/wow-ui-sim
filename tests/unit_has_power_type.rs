@@ -94,6 +94,7 @@ mod retail {
             sim.party_group_active = true;
             sim.party_members = vec![PartyMember {
                 name: "Empty Focus Member".into(),
+                connected: true,
                 class_index: 3,
                 level: 60,
                 health: 100,

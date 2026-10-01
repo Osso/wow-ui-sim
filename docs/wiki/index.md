@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded shared party connectivity
+
+[[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures await parent GREEN/final gates; no build, native, profile-runtime or source-accounting completion claim.
+
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 
 [[patch-12-0-5-api-audit#UnitSpellTargetName snapshot — partial GREEN]] links the [contract proof](../specs/unit-spell-target-name.md#tests-asserting-this-spec): inputs `c14076510` RED 0/10, producer `5beaf7545` compiled at `024afed64`, target GREEN 10/10 plus flyout 14/14 and vehicle 22/22 controls; saved startup exit 0 with `[]`. Exact dated PTR row `prose-2026-03-12-041` has partial development coverage; all 362 IDs and unrelated statuses retained. Player caster and explicit snapshot only; actual targeting, nonplayer caster and native semantics unclaimed. Linked contract records independent bounded behavior/security PASS and default fmt/check snapshot `4c5aeb2d8`, excluding later party tests `03ebe6972`. Ten RED cases hit missing query surface, not ten independent behavioral failures; readability length finding is advisory.

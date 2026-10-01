@@ -50,6 +50,7 @@ pub struct TargetInfo {
 #[derive(Clone)]
 pub struct PartyMember {
     pub name: String,
+    pub connected: bool,
     /// 1-based class index into CLASS_DATA.
     pub class_index: i32,
     pub level: i32,
@@ -476,6 +477,7 @@ pub fn default_party() -> Vec<PartyMember> {
                 let (buffs, debuffs) = default_party_auras(i);
                 PartyMember {
                     name: name.to_string(),
+                    connected: true,
                     class_index,
                     level: 80,
                     health: health_max,

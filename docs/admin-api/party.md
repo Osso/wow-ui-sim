@@ -33,6 +33,17 @@ A_Admin.SetPartyMember(2, "Kazzara", 1, 80)     -- Warrior
 print(UnitName("party1"))   -- "Thrynn"
 ```
 
+### A_Admin.SetPartyMemberConnected(index, connected)
+
+Changes an existing active party member's connection state.
+
+- **index** `number` -- 1-based party index; absent or nonpositive indices do nothing.
+- **connected** `boolean` -- Connection state; new members start connected.
+- **Affects:** `UnitIsConnected("partyN")`, `GroupHasOfflineMember()`.
+- **Fires:** Synchronous `UNIT_CONNECTION("partyN", connected)` only on a changed value. Callback queries see the new state.
+- **Lifecycle:** Removed members lose connection state; regrowth starts connected. Inactive retained members are not changed.
+- **Evidence:** [Party connection contract and pending runtime proof](../specs/party-connection.md).
+
 ### A_Admin.SetPartyMemberHealth(index, current, max)
 
 Sets a party member's health values.

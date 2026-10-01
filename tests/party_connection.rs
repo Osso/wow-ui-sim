@@ -163,6 +163,46 @@ fn removing_party_discards_offline_state_before_regrowth() {
 }
 
 #[test]
+fn inactive_retained_members_are_not_connection_inputs() {
+    let env = listen_for_party_connection();
+    env.state().borrow_mut().party_group_active = false;
+    env.eval::<()>(
+        r#"
+        A_Admin.SetPartyMemberConnected(1, false)
+        assert(#connectionEvents == 0)
+        assert(UnitIsConnected("party1") == false)
+        assert(GroupHasOfflineMember() == false)
+        AcceptGroup()
+        assert(UnitIsConnected("party1") == true)
+        assert(GroupHasOfflineMember() == false)
+        "#,
+    )
+    .expect("inactive retained members remain connected without dispatch");
+}
+
+#[test]
+fn party_disconnect_preserves_non_party_connection_queries() {
+    let env = listen_for_party_connection();
+    env.eval::<()>(
+        r#"
+        A_Admin.SetTarget("Target", 80, 1, true)
+        A_Admin.SetFocus("Focus", 80, 1, false)
+        A_Admin.SetPartyMemberConnected(1, false)
+        assert(UnitIsConnected("party1") == false)
+        for _, unit in ipairs({"player", "pet", "vehicle", "target", "focus", "raid1"}) do
+            assert(UnitIsConnected(unit) == true, unit)
+        end
+        assert(UnitIsConnected("unknown") == false)
+        A_Admin.ClearTarget()
+        A_Admin.ClearFocus()
+        assert(UnitIsConnected("target") == false)
+        assert(UnitIsConnected("focus") == false)
+        "#,
+    )
+    .expect("party connectivity leaves existing other-token semantics unchanged");
+}
+
+#[test]
 fn connection_state_and_dispatch_are_isolated_per_environment() {
     let first = listen_for_party_connection();
     let second = listen_for_party_connection();

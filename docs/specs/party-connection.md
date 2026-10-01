@@ -22,24 +22,24 @@ Bounded retained 12.0.5 prose row 182 motivates party connect/disconnect handlin
 
 ## Implementation inventory
 
-- `src/lua_api/game_data.rs`: existing `PartyMember` has no connection field; intended shared model location.
+- `src/lua_api/game_data.rs`: shared `PartyMember.connected` bool; every constructor initializes it to true.
 - `src/lua_api/state/sim_state.rs`: existing per-environment party roster.
-- `src/lua_api/globals/admin.rs` and `src/lua_api/globals/admin_api/units.rs`: existing party admin registration/setters; new connection input remains unimplemented.
-- `src/lua_api/globals/group_queries.rs` and `src/lua_api/globals/group_queries_relationships.rs`: existing aggregate and unit connection queries currently assume connected members.
-- `tests/party_connection.rs`: six grouped fixtures discovered by the existing generated `integration` harness; no separate Cargo target or input scaffolding.
+- `src/lua_api/globals/admin.rs`: active shared registration of `SetPartyMemberConnected`; `admin_party_target_helpers.rs` mutates only active existing members, releases the state borrow, then synchronously dispatches changed edges. Integer/bool decoding uses the same `FromStack` boundary as existing admin inputs; nonpositive indices no-op. Obsolete `admin_api/units.rs` receives only its constructor field, not duplicate registration or behavior.
+- `src/lua_api/globals/group_queries.rs` and `src/lua_api/globals/group_queries_relationships.rs`: aggregate offline query reads active members; party-token connectivity reads the same field. Other unit tokens, including existing raid aliases, retain their previous behavior.
+- `tests/party_connection.rs`: eight grouped fixtures discovered by the existing generated `integration` harness; no separate Cargo target or input scaffolding.
 
 ## Tests asserting this spec
 
-`tests/party_connection.rs` covers both synchronous edges with exact two-field payload and callback query snapshots; repeated inputs; absent valid index; two offline members and partial reconnect; shrink/regrowth; full removal/regrowth; and two-environment isolation. Every fixture first requires the new setter to be callable. Calls must succeed directly, without `pcall` rejection checks that could mistake a missing method for valid rejection. Callback observations are asserted outside the callback, so swallowed handler errors cannot stand in for proof.
+`tests/party_connection.rs` covers both synchronous edges with exact two-field payload and callback query snapshots; repeated inputs; absent valid index; two offline members and partial reconnect; shrink/regrowth; full removal/regrowth; and two-environment isolation. Two additional unrun controls cover inactive retained members and unchanged non-party queries, including the shared lookup's raid aliases. Every fixture first requires the new setter to be callable. Calls must succeed directly, without `pcall` rejection checks that could mistake a missing method for valid rejection. Callback observations are asserted outside the callback, so swallowed handler errors cannot stand in for proof.
 
 `tests/admin_party_api.rs::test_group_has_offline_member_defaults_false` remains unchanged: connected default members correctly yield false.
 
-Proof ledger, 2026-10-01: tests/spec only; no test, build, or check execution in this change. Actual RED is pending parent execution, followed by production implementation and GREEN. Suggested bounded parent invocation: `cargo test --test integration party_connection::`. No native, cross-profile execution, full-row, or whole-page completion credit.
+Proof ledger, 2026-10-01: tests/spec revision `03ebe69723ad7e01e54b05b261c75b6e19df77d7`; parent default compile (`cargo test --test integration --no-run --message-format=json`) exits 0 in 97.987s. Actual grouped runtime RED is 0/6, each failing the callable-setter assertion. Saved artifacts: `/tmp/patch-12.0.5-batch14-red-{build.json,build.log,build-result.json,run.json,run.log}`. Production implementation and two additional boundary controls are unbuilt/unrun in this change; parent owns GREEN and final gates. Suggested bounded parent invocation: `cargo test --test integration party_connection::`. No native, cross-profile execution, full-row, or whole-page completion credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent records actual RED; implements shared connection input/model/query transitions; records GREEN and required final gates.
+- [ ] Parent records GREEN for implemented shared connection input/model/query transitions and all eight fixtures, plus required final gates. Source inspection and historical RED are not current build/runtime proof.
 
 ## Out of scope
 
-Party-category expansion, networking, raid connection behavior, player/target/focus connection semantics, new storage by profile, native probes, and production edits in this tests/spec-only change. Roster-size events retain their existing contract; these fixtures do not prescribe additional connection events for roster removal.
+Party-category expansion, networking, raid connection behavior, changes to player/target/focus connection semantics, new storage by profile, and native probes. Roster-size events retain their existing contract; these fixtures do not prescribe additional connection events for roster removal.

@@ -53,7 +53,7 @@ fn register_group_status(state: &mut LuaState) {
     set_global(state, "IsGroupLeader", is_group_leader);
     set_global(state, "IsEveryoneAssistant", is_everyone_assistant);
     set_global(state, "IsPartyWorldPVP", always_false);
-    set_global(state, "GroupHasOfflineMember", always_false);
+    set_global(state, "GroupHasOfflineMember", group_has_offline_member);
     set_global(state, "GetPartyAssignment", get_party_assignment);
 }
 
@@ -292,9 +292,19 @@ fn raid_roster_member(state: &LuaState, index: usize) -> LuaResult<Option<PartyM
     Ok(member)
 }
 
+fn group_has_offline_member(state: &mut LuaState) -> LuaResult<u32> {
+    let offline = {
+        let st = borrow_state(state)?;
+        st.party_group_active && st.party_members.iter().any(|member| !member.connected)
+    };
+    state.push(Val::Bool(offline));
+    Ok(1)
+}
+
 fn player_as_raid_member(st: &crate::lua_api::state::SimState) -> PartyMember {
     PartyMember {
         name: st.player.name.clone(),
+        connected: true,
         class_index: st.player.class_index,
         level: st.player.level,
         health: st.player.health,

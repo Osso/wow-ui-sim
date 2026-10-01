@@ -31,6 +31,7 @@ fn set_group(env: &WowLuaEnv, members: usize) {
     sim.party_members = (0..members)
         .map(|index| PartyMember {
             name: format!("MessageMember{index}"),
+            connected: true,
             class_index: 2,
             level: 60,
             health: 100,
