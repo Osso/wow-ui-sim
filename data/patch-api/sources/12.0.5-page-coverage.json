@@ -532,7 +532,7 @@
         "HousingCatalogEntryInfo.totalNumStored",
         "HousingCatalogEntryInfo.totalNumPlaced"
       ],
-      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "scope": "Explicit optional base inputs through three selectors only; None→nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
       "spec": "docs/specs/housing-catalog-aggregates.md",
       "tests": [
         "tests/housing_catalog_aggregates.rs"
@@ -550,7 +550,7 @@
         "HousingCatalogCategoryInfo.anyStoredEntries",
         "HousingCatalogSubcategoryInfo.anyStoredEntries"
       ],
-      "scope": "Explicit empty-backed category/subcategory DTO rename only; exact keys, nullable fields and fresh nested snapshots. Missing-ID/snapshot policies inferred. Seeded search/getter mismatch open; no row661/search/filter, ownership derivation, native AllowedWhenUntainted, full catalog/UI or all-profile acceptance. Later search inputs/editor contexts excluded.",
+      "scope": "Explicit empty-backed category/subcategory DTO rename only; exact keys, nullable fields and fresh nested snapshots. Missing-ID/snapshot policies inferred. Former seeded search/getter mismatch addressed separately by docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; no row661/search/filter, ownership derivation, native AllowedWhenUntainted, full catalog/UI or all-profile acceptance. Later search inputs/editor contexts excluded.",
       "spec": "docs/specs/housing-catalog-categories.md",
       "tests": [
         "tests/housing_catalog_categories.rs"
@@ -559,6 +559,42 @@
       "proof": "bounded-independent-pass",
       "independent_ledger": "/tmp/patch-12.0.5-housing-categories-independent-proof.md",
       "gate_scope": "Input63b53dfe5 actual RED2/12; saved66GREEN/startup0[] independently inspected, not rerun. Fresh default fmt/check0 at clean producer; later dirty source excluded."
+    },
+    {
+      "id": "housing-category-search",
+      "symbols": [
+        "C_HousingCatalog.SearchCatalogCategories",
+        "C_HousingCatalog.SearchCatalogSubcategories",
+        "HousingCategorySearchInfo.withStoredEntriesOnly"
+      ],
+      "scope": "Batch26 bounded new filter name, explicit maps/predicates, fresh arrays and actual cached old-key bridge only. Featured-parent/order/strict parser/explicit mode policies inferred; native AllowedWhenUntainted, full DTO, ordinary-searcher filtering, UI and all-profile parity unclaimed.",
+      "spec": "docs/specs/housing-category-search.md",
+      "tests": [
+        "tests/housing_category_search.rs"
+      ],
+      "implementation": "a608db343",
+      "proof": "bounded-independent-pass",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-category-search-independent-proof.md",
+      "gate_scope": "Saved78PASS/startup0[] inspected, not rerun; fresh independent default fmt/check0 at producer. Batch27 separate tests-only13PASS/fmt0; production check unchanged."
+    },
+    {
+      "id": "housing-catalog-raw-removed-fields",
+      "symbols": [
+        "HousingCatalogEntryInfo.showQuantity",
+        "HousingCatalogEntryInfo.quantity",
+        "HousingCatalogEntryInfo.numPlaced",
+        "HousingCatalogEntryInfo.customizations",
+        "HousingCatalogEntryInfo.dyeIDs"
+      ],
+      "scope": "Populated raw snapshots from all three base getters omit five removed fields; legacy injection remains local and fresh queries preserve concrete current DTO fields. Cached deprecated wrapper intentionally adds aliases; no wrapper/full DTO/native/all-profile/input645/646 claim. Existing absence: no invented RED.",
+      "spec": "docs/specs/housing-catalog-aggregates.md",
+      "tests": [
+        "tests/housing_catalog_aggregates.rs"
+      ],
+      "implementation": "9cdb13a59 (tests only; production unchanged)",
+      "proof": "bounded-independent-pass",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-category-search-independent-proof.md",
+      "gate_scope": "Batch27 appendix: saved13aggregatePASS, fresh fmt0; prior batch26 production check valid. Separate from batch26 saved78PASS/startup0[]."
     }
   ],
   "source_rows": [
@@ -605,7 +641,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -2755,7 +2791,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; seeded search/getter mismatch and later search inputs excluded."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -2791,7 +2827,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -2799,7 +2835,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -2811,33 +2847,43 @@
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-653",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-raw-removed-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch27 tests-only9cdb13a59: literal rawget nil for this removed output field in populated snapshots from all three raw base getters; legacy injection local, fresh results alias-free. Saved13PASS/fresh fmt0; prior production check valid. No invented RED, cached-wrapper absence, full DTO/native/all-profile or input645/646 claim; linked aggregate spec/appendix owns proof."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-654",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-raw-removed-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch27 tests-only9cdb13a59: literal rawget nil for this removed output field in populated snapshots from all three raw base getters; legacy injection local, fresh results alias-free. Saved13PASS/fresh fmt0; prior production check valid. No invented RED, cached-wrapper absence, full DTO/native/all-profile or input645/646 claim; linked aggregate spec/appendix owns proof."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-655",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-raw-removed-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch27 tests-only9cdb13a59: literal rawget nil for this removed output field in populated snapshots from all three raw base getters; legacy injection local, fresh results alias-free. Saved13PASS/fresh fmt0; prior production check valid. No invented RED, cached-wrapper absence, full DTO/native/all-profile or input645/646 claim; linked aggregate spec/appendix owns proof."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-656",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-raw-removed-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch27 tests-only9cdb13a59: literal rawget nil for this removed output field in populated snapshots from all three raw base getters; legacy injection local, fresh results alias-free. Saved13PASS/fresh fmt0; prior production check valid. No invented RED, cached-wrapper absence, full DTO/native/all-profile or input645/646 claim; linked aggregate spec/appendix owns proof."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-657",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-raw-removed-fields"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch27 tests-only9cdb13a59: literal rawget nil for this removed output field in populated snapshots from all three raw base getters; legacy injection local, fresh results alias-free. Saved13PASS/fresh fmt0; prior production check valid. No invented RED, cached-wrapper absence, full DTO/native/all-profile or input645/646 claim; linked aggregate spec/appendix owns proof."
     },
     {
       "source_id": "structures-HousingCatalogSubcategoryInfo-659",
@@ -2845,13 +2891,15 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; seeded search/getter mismatch and later search inputs excluded."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-category-search"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch26 bounded withStoredEntriesOnly rename/raw old-key exclusion and actual cached consumer bridge; linked search spec owns saved78PASS/startup0[] and independent fmt/check0. Native AllowedWhenUntainted, inferred featured-parent/order/mode policies, full DTO and ordinary-searcher filtering remain unclaimed."
     },
     {
       "source_id": "structures-HousingDecorDyeSlot-663",

@@ -1,10 +1,18 @@
 # Patch 12.0.5 API Audit
 
+### Housing category search and removed raw fields — bounded independent PASS
+
+[Batch26 search contract/proof](../../specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01) owns producer `a608db343`, actual search RED **0/12**, saved **78 PASS/startup 0 []**, fresh independent default fmt/check **0**. Exact row **661** gains bounded new-filter-name/raw old-key exclusion and actual cached consumer bridge coverage. Featured-parent/order/explicit mode policies remain inferred; native AllowedWhenUntainted, full DTO and ordinary-searcher filtering unclaimed.
+
+[Batch27 raw DTO proof](../../specs/housing-catalog-aggregates.md#reconciled-batch27-raw-output-proof--2026-10-01) owns tests-only `9cdb13a59`: separate saved **13 aggregate PASS**, fresh fmt **0**, prior production check valid. Literal assertions support exact rows **653–657** only: removed output fields absent in populated snapshots from all three raw getters, with local legacy injection and fresh current DTO preservation. Row652 remains a control; input645/646 unchanged. No invented RED for existing absence or absence claim on the cached wrapper, which intentionally adds aliases.
+
+Current **268 pending / 80 bounded / 14 partial = 362**; all source IDs and text SHA256 retained. Saved behavior/startup independently inspected, not rerun; separate executions are not a combined 91-test run. Whole rows/native/all-profile/full catalog acceptance remains open; audit **IN PROGRESS**.
+
 ### Housing category DTO rename — bounded independent PASS
 
 [Batch25 contract/proof](../../specs/housing-catalog-categories.md#reconciled-batch25-bounded-proof--2026-10-01) owns inputs `63b53dfe5`, producer `bbbacf8f0`, actual RED **2 PASS / 10 FAIL**, saved **66 GREEN PASS**, parent startup **0 []** and fresh independent default fmt/check **0** at clean producer. Explicit empty maps replace two seeded getter publishers; exact distinct keys, required/nullable fields, independent boolean and fresh nested snapshots have bounded proof. Saved runtime/startup inspected, not independently rerun; rooting/registration source-reviewed. Missing-ID nil and snapshot policies inferred.
 
-Rows **643/659** receive **bounded-coverage** for `anyOwnedEntries`→`anyStoredEntries` only. **274 pending / 74 bounded / 14 partial = 362**, all IDs/text hash retained; **IN PROGRESS**. Row **661** remains audit-pending. Seeded searches still return IDs absent from empty getter maps until next batch; housing panel safety is unproven. Native AllowedWhenUntainted acceptance, ownership derivation, full catalog and all-profile claims excluded; later search/editor-context inputs not covered.
+Rows **643/659** receive **bounded-coverage** for `anyOwnedEntries`→`anyStoredEntries` only. **274 pending / 74 bounded / 14 partial = 362**, all IDs/text hash retained; **IN PROGRESS**. Batch25 does not cover row661; former seeded search/getter mismatch is addressed by [bounded batch26 search proof](../../specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01); housing panel safety is unproven. Native AllowedWhenUntainted acceptance, ownership derivation, full catalog and all-profile claims excluded; later search/editor-context inputs not covered.
 
 ### Housing explicit aggregates — bounded independent PASS
 
