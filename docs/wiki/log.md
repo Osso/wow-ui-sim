@@ -1,3 +1,7 @@
+## [2026-10-01] scaffolding | Record cooldown restriction input-only slice
+
+Updated [[spell-charge-state]] and index with the [restriction contract](../specs/cooldown-restriction.md). Independent false-default boolean and eight grouped real-query fixtures; no predicate/output/book producer changes. Exact retained IDs and cached annotations grounded the boundary. Actual RED/GREEN and final gates remain parent-owned; opaque spell identifiers unresolved.
+
 ## [2026-10-01] implementation | Record bounded mapped-stick input
 
 Added [[gamepad-mapped-state]] and index for `f774ce454`, linking the [contract](../specs/gamepad-mapped-state.md). Two Forever queries use optional C API input independent of UI style; six grouped tests include actual cached initialization with preinstalled fixtures. Targeted rustfmt completed before commit. No Cargo/GREEN/check/readability/delegation/deployment run; parent owns verification. Prior corrected AutoRoll artifact establishes only the pre-addon namespace gap. Native fields/signatures/hardware semantics remain unknown; exact Reveal limitation retained without changes.
