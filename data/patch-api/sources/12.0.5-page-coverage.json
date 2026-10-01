@@ -343,7 +343,8 @@
       "proof": "partial-development-green",
       "ledger": "/tmp/patch-12.0.5-batch13-green-runs.json",
       "startup_ledger": "/tmp/patch-12.0.5-batch13-green-startup-run.json",
-      "gate_scope": "Actual RED 0/10, target GREEN 10/10, flyout 14/14 and vehicle 22/22; saved startup exit 0 with []. Independent verifier 141 final current gates pending; independent proof artifact absent at accounting time. No native, full-system, all-profile or whole-page acceptance."
+      "independent_ledger": "/tmp/patch-12.0.5-cast-target-independent-proof.md",
+      "gate_scope": "Independent bounded behavior/security PASS: RED 0/10 at missing query surface, not ten independent behavioral failures; target GREEN 10/10, flyout 14/14 and vehicle 22/22 reused at 024afed64. Separate saved startup exit 0 with []. Default fmt/check exit 0, zero warnings/errors at 4c5aeb2d8 with 3,220 unchanged tracked Rust/config hashes; later party tests 03ebe6972 excluded. Readability length finding advisory, not required refactor. Partial limits unchanged: no native, actual user targeting, nonplayer caster, full-system, all-profile or whole-page acceptance."
     }
   ],
   "source_rows": [
