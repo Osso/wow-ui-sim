@@ -46,8 +46,11 @@ fn load_local_addon_and_fire_loaded(env: &WowLuaEnv, addons: &Path, name: &str) 
     let toc = addons.join(name).join(format!("{name}.toc"));
     let result = load_addon(&env.loader_env(), &toc)
         .unwrap_or_else(|error| panic!("real local {name} TOC must load: {error}"));
-    assert!(result.lua_files > 0, "{name} did not load any Lua files");
     assert!(result.warnings.is_empty(), "{name}: {:?}", result.warnings);
+    assert!(
+        result.lua_files > 0,
+        "{name} did not load any Lua files: {result:?}"
+    );
     assert!(
         result.missing_requirements.is_empty(),
         "{name}: {:?}",
