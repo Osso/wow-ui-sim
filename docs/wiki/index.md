@@ -12,7 +12,7 @@
 
 ## [2026-09-30] implementation | Add bounded Forever outbound messaging
 
-[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass): thirteen behavior assertions fail after callable namespace sender checks pass, not missing-method failures. Separate BugSack `MissingRequirements` workflow evidence remains valid; main GREEN is observed at `255adcbde` (36/36); independent final checks remain pending and no addon-inventory credit follows. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
+[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass): thirteen behavior assertions fail after callable namespace sender checks pass, not missing-method failures. Separate BugSack `MissingRequirements` workflow evidence remains valid; main GREEN is observed at `255adcbde` (36/36); `verify-green.json` confirms bounded final/default fmt/check-offline acceptance; no addon-inventory credit follows. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
 
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 
@@ -32,7 +32,7 @@ Test commit `267f1fea4` closes the prior source-only branches for `3e67e7b6e`: r
 
 ## [2026-09-30] investigation | Record BugCapture selected-TOC correction
 
-`dd77368b7` removes existence-based repo-relative overlay substitution and honors the selected TOC root/module guard. Actual trace rejects both !BugGrabber Lua files outside that absolute root; the first workflow test fails loading, not an already-loaded state. Earlier combined updated-rilua proof was one RestrictedExecution baseline pass and one loading failure. Subsequent main `255adcbde` proof passes the bounded current-local capture/store/counter/broker/minimap-texture workflow; independent final checks remain pending. Current-local 29-file identity is not an archive release, and no archival matrix credit follows. See [[forever-addon-comparison#BugCapture selected-TOC source boundary]].
+`dd77368b7` removes existence-based repo-relative overlay substitution and honors the selected TOC root/module guard. Actual trace rejects both !BugGrabber Lua files outside that absolute root; the first workflow test fails loading, not an already-loaded state. Earlier combined updated-rilua proof was one RestrictedExecution baseline pass and one loading failure. Subsequent main `255adcbde` proof passes the bounded current-local capture/store/counter/broker/minimap-texture workflow; `verify-green.json` confirms bounded final/default fmt/check-offline acceptance. Current-local 29-file identity is not an archive release, and no archival matrix credit follows. See [[forever-addon-comparison#BugCapture selected-TOC source boundary]].
 
 ## [2026-09-30] investigation | Record bounded Forever RestrictedExecution coverage
 

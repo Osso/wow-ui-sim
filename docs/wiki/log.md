@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Finalize bounded messaging/BugCapture checks
+
+Reconciled [outbound contract](../specs/addon-messages.md), [[lua-api]], [[forever-addon-comparison]], index, runtime coverage and ignored PLAN with full `verify-green.json`: independent 36/36 and single default fmt/check-offline passes, exit 0, zero warnings at `255adcbde`; docs-only `54c6bfaf2` preserves 3252 inputs. Rechecked recorded inputs, 29 local vendor files, host CVar and artifact hashes without mismatches; manifest/lock/pin unchanged. Fifteen messaging cases include one legacy contract plus seven additional legacy controls. Expected module/capture diagnostics remain; zero unexpected BugSack errors. Two readability findings are nonblocking. No archive/inventory/native/pixel/full-cache credit; AutoRoll remains separate.
+
 ## [2026-09-30] evidence | Reconcile observed messaging GREEN
 
 Updated outbound spec, [[lua-api]], [[forever-addon-comparison]], index and runtime coverage from actual main build/run ledgers and full stdout/stderr: 36/36 at unchanged `255adcbde`. Current-local 29-file capture proof only; no archive credit. Corrected MissingRequirements provenance; independent final/default fmt/check remain pending. PLAN records bounded observation, not goal closure.

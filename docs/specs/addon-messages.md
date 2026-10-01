@@ -6,7 +6,7 @@ Forever exposes three state-backed namespace senders in `src/c_api/addon_message
 
 ### Documented surface and security
 
-Checked items mean implemented behavior with bounded observed main GREEN, not independent final acceptance or exhaustive branch/profile proof. Other-profile absence and numeric ID shape guards remain source-only where noted below.
+Checked items mean implemented behavior with independent bounded acceptance, not exhaustive branch/profile proof. Other-profile absence and numeric ID shape guards remain source-only where noted below.
 
 Pinned `wowforever/AddOns/Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua:516/535` declares required `cstring` prefix/message, optional chatType (default PARTY) and target, and `SecretArguments = NotAllowed`. Normal result is non-nil; logged result is nilable. `BattleNetDocumentation.lua:279` declares numeric gameAccountID, required `stringView` prefix/data, non-nil enum result and `AllowedWhenUntainted`. These are source contracts, not native-client probes.
 
@@ -41,12 +41,12 @@ Every limit, validation/result mapping, channel rule and local acceptance rule b
 - `tests/addon_messages.rs` — 15 cases: enums, accepted records, rejections, byte bounds, group/guild state, typed errors, secret/taint preservation, BattleNet online transitions, isolation and legacy contract.
 - `tests/message_verbs.rs` — seven unchanged legacy controls.
 - Tests-only `79bedc49e`: retained RED artifacts in `/home/osso/.local/state/wow-ui-sim-proof/addon-messages-2026-10-01/` show 22 cases, nine passes and thirteen assertion failures of unmodeled behavior, not missing methods. The minimal environment already exposed callable namespace senders: `require_senders` passed its function-type checks before the behavior assertions failed (`red.stderr:165–166` and other failure traces). Earlier actual BugSack `MissingRequirements` came from nil-symbol-access diagnostics, not `RequiresAPI` TOC metadata. The runtime fallback synthesizes nil-returning callables, explaining why function-type checks passed before RED behavior failures.
-- Main artifacts at source `255adcbde` (unchanged during build) show build exit 0 and **36/36 GREEN**, exit 0: 15 sender/model/security/state cases, seven legacy controls, twelve module cases, one cached RestrictedExecution case and one real current-local BugGrabber/BugSack workflow. `green-build-ledger.json`, `green-ledger.json`, full `green.stdout` and `green.stderr` are retained beside RED. The intentional module-failure diagnostic and twice-dispatched capture marker are expected, not a zero-diagnostics claim. `verify-artifacts.json` is the earlier source audit; its pending-GREEN wording predates these main artifacts. Independent final checks remain parent-owned and pending; no addon-inventory credit follows.
+- Main artifacts at source `255adcbde` (unchanged during build) show build exit 0 and **36/36 GREEN**, exit 0: 15 messaging cases including one legacy-global contract, seven additional legacy controls, twelve module cases, one cached RestrictedExecution case and one real current-local BugGrabber/BugSack workflow. `green-build-ledger.json`, `green-ledger.json`, full `green.stdout` and `green.stderr` are retained beside RED. The intentional module-failure diagnostic and twice-dispatched capture marker are expected, not a zero-diagnostics claim. `verify-artifacts.json` is the earlier source audit; its pending-GREEN wording predates these main artifacts. `verify-green.json` independently confirms 36/36 exit 0 and one default `cargo fmt --check` and one default `cargo check --offline`, each exit 0 with zero warnings at `255adcbde`; docs-only `54c6bfaf2` preserves all 3252 build inputs. No addon-inventory credit follows.
 
 ## Known gaps (current cycle)
 
 - [x] Observe parent targeted GREEN: 36/36, exit 0, unchanged build inputs at `255adcbde`.
-- [ ] Independent final acceptance and default `cargo fmt --check` / `cargo check`, pending parent ledger.
+- [x] Independent bounded final acceptance and default `cargo fmt --check` / `cargo check --offline`: `verify-green.json`, each invoked once, exit 0, zero warnings. Two source-audit readability findings are nonblocking, not correctness failures.
 - [ ] Other-profile sender absence and every finite/fractional/NaN/infinite/overflow ID branch are source-reviewed, not individually runtime-proven.
 - [ ] Rust `MessageLogEntry` string fields cannot represent arbitrary non-UTF-8 `stringView` payload bytes. Current boundary rejects them explicitly rather than coercing or claiming binary support; fixtures cover UTF-8/ASCII only.
 
