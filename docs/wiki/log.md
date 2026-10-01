@@ -1,5 +1,10 @@
 ## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
 
+## [2026-10-01] evidence | Accept exact outfit stored-index DTO row
+
+[Independent315 acceptance](../specs/outfit-catalog-lookups.md#independent-stored-indexdto-acceptance--2026-10-01): current-VM **5/5 PASS**, applicable fmt/check0 reused, no readability issues. Only673 promoted: **258/90/14 → 257/91/14 = 362**; IDs/register/plaintext SHA/unrelated rows preserved. Stored7/42 differ from IDs91/305; complete first-record DTO assertions, partial second-record per-path assertions explicitly retained. No native/catalog lifecycle/all-profile parity. Separate from aura392/396 commit; supersedes prior unaccepted315 checkpoint. Before/after artifact linked in spec; ignored PLAN never staged.
+
+
 ## [2026-10-01] evidence | Accept exact bounded aura spell identifiers
 
 [[aura-spell-identifier-proof]] links [independent acceptance](../specs/aura-spell-identifier.md#independent-bounded-acceptance--2026-10-01): parent accepts full95-line independent310 report, saved **73 selected PASS**, startup0 `[]`, fresh default fmt/check0, no new readability violations. Only rows392/396 gain bounded simulator credit: **260/88/14 → 258/90/14 = 362**; IDs/register/plaintext SHA and unrelated rows preserved in explicit before/after artifact. Seeded aliases/order/target fixture and conservative security remain inferred; no native name/link, generic visibility, all-profile or consumer closure parity. Row394/new duration314 separate; future315 outfit verdict unaccepted, row673 pending. PLAN ignored, never staged.

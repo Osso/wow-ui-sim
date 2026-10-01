@@ -725,6 +725,22 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-aura-spell-identifier-independent-proof.md",
       "gate_scope": "73 selected PASS = 12 query + 29 aura + 18 admin + 14 C_Spell; saved startup0 []; fresh default fmt/check0 at6755f0e6c, relevant source unchanged; no new readability violations. No runtime reruns for accounting."
+    },
+    {
+      "id": "outfit-stored-index-dto",
+      "symbols": [
+        "TransmogOutfitEntryInfo.playerFacingOutfitIndex",
+        "C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex"
+      ],
+      "scope": "Host-seeded ID91/index7 and ID305/index42 stored indices independent of IDs/positions; seven-field fresh DTOs across ID/name/index/enumeration with complete first-record assertions. Second record index42 fields partly asserted, ID305 publishes42, name/enumeration second rows assert ID only; shared builder source inspection is not exhaustive per-path runtime proof. No native semantics, catalog population/lifecycle/persistence/events/UI closure or all-profile parity.",
+      "spec": "docs/specs/outfit-catalog-lookups.md",
+      "tests": [
+        "tests/patch_12_0_5_outfit_catalog.rs"
+      ],
+      "implementation": "9d89c7021",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-outfit-index-independent-proof.md",
+      "gate_scope": "Current pinned VM selected5/5PASS with integration SHA256398ef0d1f5a49f8e9415021f833e37de99cba63a2a2b05819898db7b61bbb5e9; applicable independent310 default fmt/check0 reused; no readability issues. No new code/build/test expansion."
     }
   ],
   "source_rows": [
@@ -3092,9 +3108,11 @@
     },
     {
       "source_id": "structures-TransmogOutfitEntryInfo-673",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "outfit-stored-index-dto"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent315 stored-index/DTO bounded simulator proof, current-VM5/5PASS and applicable reusedfmt/check0; no readability issues. Host-seeded ID91/index7 and ID305/index42 stored indices independent of IDs/positions; seven-field fresh DTOs across ID/name/index/enumeration with complete first-record assertions. Second record index42 fields partly asserted, ID305 publishes42, name/enumeration second rows assert ID only; shared builder source inspection is not exhaustive per-path runtime proof. No native semantics, catalog population/lifecycle/persistence/events/UI closure or all-profile parity."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-675",
