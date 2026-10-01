@@ -26,6 +26,12 @@ Core getters come from the native methods registry, not replaceable fields on th
 
 The [duration contract](../../specs/duration-core.md#common-numeric-formatting) owns modifier/secrecy guesses and profile bounds. Native Seconds rendering remains capability-scoped; other profiles retain checked primitive numeric text, not localized units. Existing Seconds Format and duration-text-binding behavior are unchanged. The [abbreviated formatter spec](../../specs/abbreviated-number-formatter.md) owns locale/breakpoint guesses. No native parity, general debug/upvalue confidentiality, vendor change, or caller-taint bypass is claimed.
 
+## Cooldown duration selection
+
+Action and spell duration producers now use a shared duration-only selector. Retail 12.0.5 true `ignoreGCD` selects the active individual cooldown; omitted/false reuses the unchanged GCD-aware later-end selector. Earlier epochs ignore the new argument. The new retail 12.0.0+ spellbook producer resolves integral player-bank-0 slots through existing entries and uses the same duration factory; absent entries and unsupported banks return nil, without pet or macro mappings.
+
+These are inferred simulator selection/input policies, not native semantics. The retained 12.0.5 source only names the added arguments. Grouped ordinary-value RED at `9a50d8a5c` fails 6/6; parent-owned GREEN and earlier-profile proof remain pending. Contracts: [spell duration](../../specs/spell-cooldown-duration.md#1205-ignoregcd-contract-green-pending), [action duration](../../specs/action-cooldown-duration.md#1205-ignoregcd-contract-green-pending), [spellbook duration](../../specs/spellbook-cooldown-duration.md). No secrecy or consumer-parity claim.
+
 ## Player cast duration queries
 
 `180d08b69` reuses the core factory for `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` under the narrow `player-cast-durations` capability shared by Retail 12.1+ and Forever. The queries snapshot simulator-owned player cast/channel timestamps; idle and unmodeled units return no result. Empower defaults to hold-at-max inclusion, while explicit `false` uses the base empowered end. The latter boundary is an inference from the pinned Forever CastingBar consumer, which separately adds hold to `UnitChannelInfo` endpoints.

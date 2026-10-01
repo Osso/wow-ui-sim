@@ -1,6 +1,6 @@
 //! State-backed action cooldown and texture queries.
 
-use crate::lua_api::globals::action_bar_api::spell_cooldown_times;
+use super::cooldown_duration::{read_ignore_gcd, select_cooldown_duration_times};
 use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
 use crate::lua_api::methods::{borrow_state, create_table_with_capacity, table_set};
 use crate::lua_bridge::stack_val;
@@ -47,6 +47,10 @@ pub(crate) fn get_action_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn read_action_cooldown(state: &LuaState) -> LuaResult<(f64, f64)> {
+    read_action_cooldown_with_gcd(state, false)
+}
+
+fn read_action_cooldown_with_gcd(state: &LuaState, ignore_gcd: bool) -> LuaResult<(f64, f64)> {
     let slot = match stack_val(state, 1) {
         Val::Num(number) if number >= 0.0 => Some(number as u32),
         _ => None,
@@ -55,11 +59,12 @@ pub(crate) fn read_action_cooldown(state: &LuaState) -> LuaResult<(f64, f64)> {
     let now = sim.start_time.elapsed().as_secs_f64();
     Ok(slot
         .and_then(|slot| sim.action_bars.get(&slot).copied())
-        .map(|spell_id| spell_cooldown_times(&sim, spell_id, now))
+        .map(|spell_id| select_cooldown_duration_times(&sim, spell_id, now, ignore_gcd))
         .unwrap_or((0.0, 0.0)))
 }
 
 pub(crate) fn get_action_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let (start, seconds) = read_action_cooldown(state)?;
+    let ignore_gcd = read_ignore_gcd(state, 2);
+    let (start, seconds) = read_action_cooldown_with_gcd(state, ignore_gcd)?;
     push_timed_duration_object(state, start, seconds)
 }

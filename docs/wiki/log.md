@@ -1,3 +1,7 @@
+## [2026-09-30] implementation | Record bounded cooldown ignoreGCD selection
+
+Updated [[duration-core]] and index with duration-only shared selection and the retail-gated [spellbook duration contract](../specs/spellbook-cooldown-duration.md). Existing player bank 0 resolves real slots; unsupported banks/slots return nil. True individual-only and omitted/false later-end selection are simulator inferences from the source-named argument, not native evidence. Actual grouped RED at `9a50d8a5c` is 0/6 in `/tmp/patch-12.0.5-batch4-ignore-gcd-red.log`; parent owns GREEN and older-profile checks. No Cargo, delegation, vendor changes, secrecy bypass, fabricated pet/macro mappings, push or deploy.
+
 ## [2026-09-30] investigation | Audit BugCapture selected-TOC source correction
 
 Updated [[forever-addon-comparison#BugCapture selected-TOC source boundary]] and index from `dd77368b7` and persistent `forever-bug-capture-2026-10-01` artifacts. Both !BugGrabber Lua files were rejected as relative paths outside the absolute TOC root; the unobserved already-loaded assertion is rejected. Source removes implicit alternate selection without relaxing the guard or editing vendors. Combined updated-rilua proof is 1 baseline pass / 1 loading failure, not BugSack acceptance. Post-fix GREEN and docs requirements stay pending/unchecked; current-local 29-file identity is not an archive release, and matrix statuses remain unchanged. Docs-only audit; no tests, Cargo, runtime, delegation, downloads, or operations.

@@ -431,10 +431,11 @@ fn get_spell_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
+    let ignore_gcd = super::cooldown_duration::read_ignore_gcd(state, 2);
     let (start, seconds) = {
         let sim = borrow_state(state)?;
         let now = sim.start_time.elapsed().as_secs_f64();
-        spell_cooldown_times(&sim, spell_id, now)
+        super::cooldown_duration::select_cooldown_duration_times(&sim, spell_id, now, ignore_gcd)
     };
     crate::lua_api::globals::lua_duration_object::push_timed_duration_object(state, start, seconds)
 }

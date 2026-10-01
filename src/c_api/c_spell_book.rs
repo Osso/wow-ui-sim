@@ -110,6 +110,13 @@ fn register_spell_book_item_visual_queries(
         "GetSpellBookItemCooldown",
         c_spell_book_get_spell_book_item_cooldown,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetSpellBookItemCooldownDuration",
+        c_spell_book_get_spell_book_item_cooldown_duration,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -361,6 +368,39 @@ fn c_spell_book_get_spell_book_item_type(state: &mut LuaState) -> LuaResult<u32>
     state.push(Val::Num(entry.spell_id as f64));
     state.push(Val::Num(entry.spell_id as f64));
     Ok(3)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
+    use crate::lua_bridge::stack_val;
+
+    const PLAYER_SPELL_BANK: f64 = 0.0;
+    if !matches!(stack_val(state, 2), Val::Num(bank) if bank == PLAYER_SPELL_BANK) {
+        return None;
+    }
+    let Val::Num(slot) = stack_val(state, 1) else {
+        return None;
+    };
+    let valid_slot = (1.0..=i32::MAX as f64).contains(&slot) && slot.fract() == 0.0;
+    if !valid_slot {
+        return None;
+    }
+    spellbook_data::get_spell_at_slot(slot as i32).map(|(_, entry, _)| entry.spell_id)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(spell_id) = read_duration_spellbook_entry(state) else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let ignore_gcd = super::cooldown_duration::read_ignore_gcd(state, 3);
+    let (start, seconds) = {
+        let sim = borrow_state(state)?;
+        let now = sim.start_time.elapsed().as_secs_f64();
+        super::cooldown_duration::select_cooldown_duration_times(&sim, spell_id, now, ignore_gcd)
+    };
+    crate::lua_api::globals::lua_duration_object::push_timed_duration_object(state, start, seconds)
 }
 
 fn c_spell_book_get_spell_book_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {

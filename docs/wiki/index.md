@@ -1,3 +1,7 @@
+## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
+
+[[duration-core#Cooldown duration selection]] links the shared duration-only policy and modeled [spellbook producer](../specs/spellbook-cooldown-duration.md). Retained 12.0.5 source names arg2/arg3; individual-only true selection and invalid slot/bank behavior are explicit inferences. Existing default GCD selection, zero-span objects, runtime clock and snapshots remain. Grouped RED at `9a50d8a5c` is 0/6; parent-owned GREEN remains pending. No pet/macro mappings, native/secrecy proof, or vendor edits.
+
 ## [2026-09-30] audit | Extend common duration NumericFormatter consumption
 
 [[duration-core]] now links the [three-formatter duration contract](../specs/duration-core.md#common-numeric-formatting): typed abbreviated/numeric-rule dispatch and captured Seconds identity/FormatNumber, with opaque secret handoff and native core getters. Four default RED cases reproduce missing type support and decoded-modifier disclosure; GREEN is pending. Localized Seconds rendering remains capability-scoped; native parity and general debug confidentiality are unclaimed.

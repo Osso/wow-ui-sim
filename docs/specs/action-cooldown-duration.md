@@ -1,6 +1,6 @@
 # Action cooldown duration
 
-`C_ActionBar.GetActionCooldownDuration(actionID)` exposes existing simulator action-slot cooldown state as a duration object. Its pinned 12.0.0 declaration promises a duration object; the mappings below are simulator policies, not native-client evidence.
+`C_ActionBar.GetActionCooldownDuration(actionID [, ignoreGCD])` exposes existing simulator action-slot cooldown state as a duration object. Its pinned 12.0.0 declaration promises a duration object; the mappings below are simulator policies, not native-client evidence.
 
 ## What it must do
 
@@ -9,6 +9,16 @@
 - [x] Return zero timing for empty valid slots or assigned slots without an active cooldown/GCD.
 - [x] Snapshot timing at query time: later slot/cooldown changes affect a new query, not the earlier object's configured interval.
 - [ ] On Forever and Retail-family 12.1+ builds, `C_ActionBar.GetActionCooldown` includes non-nil `isActive`, true when the selected cooldown is enabled and both start and duration are nonzero. Clear/expired intervals return false. Earlier profiles retain their existing four-field payload; no whole Retail epoch is enabled for Forever. Implementation committed with targeted GREEN pending integration.
+
+## 12.0.5 ignoreGCD contract (GREEN pending)
+
+Retained `data/patch-api/sources/12.0.5-api-changes.txt:234–235` adds arg2 `ignoreGCD`.
+
+- [ ] On retail 12.0.5+, true selects the assigned spell's active individual cooldown without GCD; no active individual cooldown returns a zero-span object. This selection is an explicit simulator inference.
+- [ ] Omitted/false retains later-ending spell/GCD selection; earlier profiles ignore the new argument. Numeric `GetActionCooldown` remains GCD-aware.
+- [ ] Empty slots remain zero-span; existing spell assignments, runtime clock, rate one, and snapshots remain unchanged. Do not fabricate macro-to-spell resolution.
+
+Grouped `tests/cooldown_probes/ignore_gcd.rs` RED at `9a50d8a5c` records 0/6 pass in `/tmp/patch-12.0.5-batch4-ignore-gcd-red.log`. Parent owns post-change GREEN. Shared selection contract: [spell cooldown duration](spell-cooldown-duration.md#1205-ignoregcd-contract-green-pending).
 
 ## How it works
 
@@ -19,6 +29,7 @@
 
 - `src/c_api/c_action_bar.rs`: shared action cooldown lookup, cooldown-info table, and duration-object producer.
 - `src/lua_api/globals/action_bar_api.rs`: existing namespace registration owner and spell/GCD interval selection.
+- `src/c_api/cooldown_duration.rs`: shared duration-only selection and 12.0.5 argument gate.
 - `src/lua_api/globals/lua_duration_object.rs`: shared timed-duration construction and registered setters/queries.
 
 ## Tests asserting this spec
@@ -38,4 +49,4 @@ Pinned Forever `ActionBarFrameDocumentation.lua:164–180` and current Retail/PT
 
 ## Out of scope
 
-- Later `ignoreGCD` option, secrets/security, item/charge/loss-of-control producers, non-default rates, and cooldown-engine redesign.
+- Secrets/security, item/charge/loss-of-control producers, non-default rates, and cooldown-engine redesign.
