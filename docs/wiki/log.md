@@ -1,6 +1,14 @@
+## [2026-10-01] evidence | Reconcile bounded DamageMeter acceptance
+
+[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links [reconciled proof](../specs/damage-meter-combat-source.md#reconciled-bounded-proof--2026-10-01): default and historical 12.0.0 each nine PASS; seventeen prior controls reused narrowly; snapshot fmt/check exit 0. Shapes, empty input, selectors, reset/snapshots and explicit secret/combat errors covered. Producer `1a9fcd1ec`, scope `e38d98a89`, import `c1dce16c3`, host fixture `5b0644b33`. Parent startup 0 `[]` saved, not independent. Exact source row remains PARTIAL for sensitive value/secrecy/native gaps; 362 IDs/hash preserved. No combat/native/all-profile/full-addon UI closure.
+
+## [2026-10-01] input/spec | Prepare housing variant fixtures
+
+[Variant contract](../specs/housing-catalog-variants.md) owns eleven unrun grouped cases, empty C API-owned inputs, exact source/filter IDs and equivalent fixture replacement coverage. [[patch-12-0-5-api-audit#Housing catalog variant inputs — pending RED]] records corrected registration order and retained unrelated providers. No output edits/build/check/delegation or actual RED/row credit.
+
 ## [2026-10-01] fix | Preserve DamageMeter registration scope
 
-[Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) records original unconditional bootstrap evidence and removal of replacement/state/fixture epoch gates. Same empty-backed C API across profiles, including historical 12.0.0 and WowForever; no seed/fallback or combat-policy change. Scoped formatting/commit only; alternate-profile proof belongs to parent. See [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]].
+[Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) records original unconditional bootstrap evidence and removal of replacement/state/fixture epoch gates. Same empty-backed C API across profiles, including historical 12.0.0 and WowForever; no seed/fallback or combat-policy change. Scoped formatting/commit only; default/historical bounded execution is now reconciled; other profiles remain unrun. See [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]].
 
 ## [2026-10-01] evidence | Reconcile bounded quest confirmation acceptance
 

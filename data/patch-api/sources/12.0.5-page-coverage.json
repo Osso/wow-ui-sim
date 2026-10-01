@@ -411,6 +411,23 @@
       "independent_ledger": "/tmp/patch-12.0.5-quest-confirmation-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch16-green-startup-run.json",
       "gate_scope": "Saved 5 quest + 6 prompt PASS; fresh 13 lifecycle controls PASS; default fmt/check exit 0 at 36a7fb573 snapshot. Security/rooting source-only. Separate parent hash-bound normal wow-sim startup exit 0 [] zero errors 12.70s, not verifier-run. RED 1 PASS/4 missing-method FAIL; GREEN build exit 0 510.99s; unrelated historical bin-test failure retained; no broad green."
+    },
+    {
+      "id": "damage-meter-combat-source",
+      "symbols": [
+        "C_DamageMeter"
+      ],
+      "scope": "Explicit empty-backed list/aggregate/detail snapshots, selectors and reset. Secret rejection and combat errors defer secrecy; sensitive value/native gaps remain.",
+      "spec": "docs/specs/damage-meter-combat-source.md",
+      "tests": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "implementation": "1a9fcd1ec",
+      "compiled_revision": "5b0644b33",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-proof-ledger.md",
+      "independent_ledger": "/tmp/patch-12.0.5-damage-meter-followup-proof.md",
+      "gate_scope": "Default and historical Retail 12.0.0 each 9 PASS; prior 17 controls original narrow proof only. Snapshot default fmt/check 0. Parent startup 0 [] saved, not independent. No combat/native/all-profile/full-addon UI acceptance."
     }
   ],
   "source_rows": [
@@ -2505,9 +2522,11 @@
     },
     {
       "source_id": "structures-DamageMeterCombatSource-639",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "damage-meter-combat-source"
+      ],
+      "status": "partial-development-green",
+      "note": "PARTIAL: bounded independent default/historical 9/9 shapes, snapshots, empty input, selectors/reset and explicit errors. Sensitive value/secrecy/native gaps remain; no full-row closure. See linked spec for proof and limits."
     },
     {
       "source_id": "structures-HousingBundleInfo-641",
