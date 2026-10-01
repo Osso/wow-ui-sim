@@ -1,6 +1,7 @@
 //! Cooldown widget quad emitters.
 
 #[cfg(all(test, feature = "retail-12-0-5"))]
+#[path = "quad_builders_cooldown/countdown_formatter_tests.rs"]
 mod countdown_formatter_tests;
 
 use iced::Rectangle;
