@@ -1,6 +1,6 @@
-## [2026-09-30] implementation | Stage explicit charge model and zero-span fixtures
+## [2026-10-01] implementation | Wire explicit charge model and shared zero semantics
 
-Added [[spell-charge-state]] and [charge contract](../specs/spell-charge-state.md), recording public map/clock/mapping paths and the lazy nil spell-duration provider. `75434f23d` stages concrete active/max and shared zero-span tests; existing duration-core expectations are epoch-aware. Initial `e0a46d691` RED is 1/4 pass. Parent owns concrete RED/GREEN; producers are not yet changed. No Cargo or native semantics claim.
+Updated [[spell-charge-state]] and [charge contract](../specs/spell-charge-state.md) with public map/clock/mapping paths and the lazy nil spell-duration provider. Actual concrete `eac08bda3` RED is 1/10 pass; `13af6a6b2` then installs shared table/duration producers, removes exact fabricated providers, and interprets 12.0.5 fully elapsed zero spans as expired plus elapsed fraction one. Existing zero/reset/default tests are epoch-aware; no charge-only override, fabricated transitions, pet/macros, secret bypass, Cargo, push, deploy, or native parity claim. Parent GREEN/final gates remain pending.
 
 ## [2026-09-30] implementation | Record bounded cooldown ignoreGCD selection
 

@@ -32,6 +32,10 @@ Action and spell duration producers now use a shared duration-only selector. Ret
 
 These are inferred simulator selection/input policies, not native semantics. The retained 12.0.5 source only names the added arguments. Grouped ordinary-value RED at `9a50d8a5c` fails 6/6; batch5 `e0a46d691` passes the six default cases; earlier-profile and independent final proof remain pending. Contracts: [spell duration](../../specs/spell-cooldown-duration.md#1205-ignoregcd-contract-green-pending), [action duration](../../specs/action-cooldown-duration.md#1205-ignoregcd-contract-green-pending), [spellbook duration](../../specs/spellbook-cooldown-duration.md). No secrecy or consumer-parity claim.
 
+## Charge duration producers
+
+[[spell-charge-state]] records the explicit five-field spell map and shared action/spell/book producers committed at `13af6a6b2` after concrete 1/10 RED at `eac08bda3`. Configured active recharge uses the validated rate-aware duration constructor; max charges return query-time zero spans under Retail 12.0.5+. That capability also makes all core zero spans expired with elapsed fraction one, interpreting the source's fully-elapsed rule; Started/Active remain unchanged. Existing reset/default and percentage fixtures now distinguish earlier epochs. Parent-batched GREEN remains pending; [charge contract](../../specs/spell-charge-state.md) owns native/progression/identity limits.
+
 ## Player cast duration queries
 
 `180d08b69` reuses the core factory for `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` under the narrow `player-cast-durations` capability shared by Retail 12.1+ and Forever. The queries snapshot simulator-owned player cast/channel timestamps; idle and unmodeled units return no result. Empower defaults to hold-at-max inclusion, while explicit `false` uses the base empowered end. The latter boundary is an inference from the pinned Forever CastingBar consumer, which separately adds hold to `UnitChannelInfo` endpoints.

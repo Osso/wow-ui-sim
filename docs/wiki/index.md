@@ -1,6 +1,6 @@
-## [2026-09-30] implementation | Stage explicit spell charge input and fixtures
+## [2026-10-01] implementation | Add explicit spell charge producers
 
-[[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. Actual initial RED is 1/4 pass; the spell-duration no-data control uses a lazy namespace nil closure, not a modeled producer. Concrete active/max/varied/snapshot/clock and shared-zero fixtures are committed at `75434f23d`; parent-batched RED and producers remain pending. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; no native charge progression or GREEN claim.
+[[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. The no-data spell-duration control used a lazy namespace nil closure, not a modeled producer. Actual concrete RED at `eac08bda3` is 1/10 pass, including shared zero-span failure; `13af6a6b2` then wires all three duration producers and both table queries, removes exact obsolete providers, and gates fully elapsed zero semantics to 12.0.5+. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; parent GREEN/final gates and native parity remain unclaimed.
 
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 
