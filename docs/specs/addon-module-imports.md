@@ -12,6 +12,7 @@ World of Warcraft: Forever 1.60.1 Beta exposes `require(moduleName)` as an impor
 
 ### Module paths and addon boundaries
 
+- [ ] Load TOC files from the selected addon directory without an implicit repository-local replacement; physical source paths must remain consistent with the root used for module provenance.
 - [x] Resolve absolute logical paths as `Addon.Module` components without filesystem lookup; preserve requested addon and module spelling in the resolved identity.
 - [x] Resolve a leading-dot path from the caller file directory; each additional leading dot ascends one directory.
 - [x] Reject a relative path that has no caller-file origin or would escape its caller addon with `Invalid import: Relative imports may only be used within the same addon`.
@@ -44,6 +45,7 @@ Path/dependency requirements have sixteen pure resolver tests; registry/value/pr
 - `src/lua_api/env.rs` — per-VM module metadata; module values and source closures are rooted in the Lua registry.
 - `src/loader/mod.rs` — declares the profile/test-gated resolver and runtime modules.
 - `src/loader/lua_file.rs` — registers compiled-file provenance and publishes the existing execution helper's first return only after success.
+- `src/loader/addon.rs` — loads files from the selected TOC source rather than substituting a same-named repository-local file.
 - `src/lua_api/env_init/mod.rs` — installs Forever imports before secure-environment copying and preserves other profiles' sandbox behavior.
 - `src/client_profile.rs` — selects the distinct Forever profile and interface version.
 
@@ -53,6 +55,7 @@ Path/dependency requirements have sixteen pure resolver tests; registry/value/pr
 - `src/loader/addon_modules.rs` — fourteen actual-rilua tests for completed values/GC identity and stack restoration, load boundaries, delayed/escaped closures, direct dependencies, spoofed dynamic sources, nearest dynamic origins, failed loads/replacement, non-reexecution and VM isolation.
 
 - `tests/addon_require.rs` — ten Forever loader-boundary tests, including TOC dependencies, XML files, values, failed/self/forward imports and caller provenance.
+- `tests/forever_bug_capture.rs` — absolute local TOC loading followed by real error-capture consumers; requires the local BugGrabber/BugSack sources.
 - `tests/sandbox_dangerous_globals.rs` — profile-specific global/secure-environment exposure and absence of host package loading.
 - `tests/wowforever_profile.rs` — distinct profile identity, client paths, TOC routing and build information.
 

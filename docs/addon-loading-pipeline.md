@@ -95,8 +95,8 @@ pub struct AddonContext<'a> {
 2. Create addon private Lua table
 3. Iterate through TOC file list in order
 4. For each file:
-   - Check local overlay first (`./Interface/AddOns/{addon}/{file}`)
-   - Fall back to addon root
+   - Resolve files from the selected TOC's addon directory
+   - Do not substitute same-named files from a repository-local addon directory
    - Load `.lua` via `load_lua_file()`
    - Load `.xml` via `load_xml_file()`
    - Apply C++ mixin stubs after each `.lua` file

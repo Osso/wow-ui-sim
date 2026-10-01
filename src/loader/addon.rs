@@ -469,7 +469,7 @@ fn resolve_addon_index(env: &LoaderEnv<'_>, folder_name: &str) -> u16 {
     idx as u16
 }
 
-/// Load all Lua/XML files listed in the TOC, applying local overlay paths.
+/// Load Lua/XML files from the directory selected by the TOC.
 fn load_addon_files(
     env: &LoaderEnv<'_>,
     toc: &TocFile,
@@ -478,7 +478,6 @@ fn load_addon_files(
     pass: EnvironmentPass,
     result: &mut LoadResult,
 ) {
-    let overlay_dir = Path::new("Interface/AddOns").join(folder_name);
     let bootstrap_loaded = bootstrap_has_loaded(env, folder_name);
 
     for (index, (file_rel, file)) in toc.files.iter().zip(toc.file_paths()).enumerate() {
@@ -494,7 +493,6 @@ fn load_addon_files(
         if !toc.file_allows_environment(index, pass.use_secure_env(ctx)) {
             continue;
         }
-        let resolved_file = resolve_addon_file_path(&overlay_dir, file_rel, file);
         let file_ctx = AddonContext {
             name: ctx.name,
             table: ctx.table,
@@ -507,7 +505,7 @@ fn load_addon_files(
         if std::env::var("WOW_SIM_VERBOSE").is_ok() {
             println!("  loading file {}", file_rel.display());
         }
-        load_addon_file(env, &file_ctx, result, &resolved_file, pass);
+        load_addon_file(env, &file_ctx, result, &file, pass);
     }
 }
 
@@ -576,18 +574,6 @@ fn is_mists_collections_wardrobe_file(toc: &TocFile, file_rel: &Path) -> bool {
         .to_string_lossy()
         .replace('\\', "/")
         .contains("Wardrobe")
-}
-
-fn resolve_addon_file_path(
-    overlay_dir: &Path,
-    file_rel: &Path,
-    default_file: std::path::PathBuf,
-) -> std::path::PathBuf {
-    let overlay_file = overlay_dir.join(file_rel);
-    if overlay_file.exists() {
-        return overlay_file;
-    }
-    default_file
 }
 
 fn load_addon_file(
