@@ -36,6 +36,8 @@ pub struct HousingCatalogEntryRecord {
 #[derive(Clone, Debug)]
 pub struct HousingCatalogVariantRecord {
     pub num_stored: i32,
+    /// Explicit storage-limit-counting destroyable instances; independent of num_stored.
+    pub destroyable_instance_count: i32,
     pub dye_slots: Vec<HousingDecorDyeSlot>,
 }
 

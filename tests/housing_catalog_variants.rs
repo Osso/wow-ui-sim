@@ -26,30 +26,40 @@ fn inject_catalog(env: &WowLuaEnv) {
         },
     )]
     .into();
-    let variants = [(1, 3, 701, "Fixture amber"), (2, 5, 702, "Fixture blue")]
-        .into_iter()
-        .map(
-            |(variant_identifier, num_stored, dye_color_id, dye_color_name)| {
-                let id = HousingCatalogEntryVariantID {
-                    record_id: 1001,
-                    entry_type,
-                    variant_identifier,
-                };
-                let variant = HousingCatalogVariantRecord {
-                    num_stored,
-                    dye_slots: vec![HousingDecorDyeSlot {
-                        id: 11,
-                        dye_color_category_id: 12,
-                        order_index: 1,
-                        channel: 0,
-                        dye_color_id: Some(dye_color_id),
-                        dye_color_name: Some(dye_color_name.into()),
-                    }],
-                };
-                (id, variant)
-            },
-        )
-        .collect();
+    let variants = [
+        (1, 3, 1, 701, "Fixture amber"),
+        (2, 5, 4, 702, "Fixture blue"),
+    ]
+    .into_iter()
+    .map(
+        |(
+            variant_identifier,
+            num_stored,
+            destroyable_instance_count,
+            dye_color_id,
+            dye_color_name,
+        )| {
+            let id = HousingCatalogEntryVariantID {
+                record_id: 1001,
+                entry_type,
+                variant_identifier,
+            };
+            let variant = HousingCatalogVariantRecord {
+                num_stored,
+                destroyable_instance_count,
+                dye_slots: vec![HousingDecorDyeSlot {
+                    id: 11,
+                    dye_color_category_id: 12,
+                    order_index: 1,
+                    channel: 0,
+                    dye_color_id: Some(dye_color_id),
+                    dye_color_name: Some(dye_color_name.into()),
+                }],
+            };
+            (id, variant)
+        },
+    )
+    .collect();
     env.state().borrow_mut().housing.catalog = HousingCatalogState { entries, variants };
 }
 
@@ -406,4 +416,223 @@ fn housing_variant_secured_selector_preserves_access_guard() {
         assert(id.recordID == 1001, 'rejected accesses must leave source unchanged')
         assert_secure_queries()
     "#).unwrap();
+}
+
+/// Input-only expectations; the parent must observe RED before replacing the provider.
+mod destroyable_count {
+    use super::*;
+
+    const SELECTOR: &str = r#"
+        local id = {recordID = 1001, entryType = Enum.HousingCatalogEntryType.Decor, variantIdentifier = 1}
+    "#;
+
+    fn install_selector(env: &WowLuaEnv) {
+        env.exec(&format!("{SELECTOR} DestroyableSelector = id"))
+            .unwrap();
+    }
+
+    #[test]
+    fn default_returns_zero() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(&format!(
+            "{SELECTOR} assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 0, \
+             'empty default must not read seeded storage')"
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn missing_record_returns_zero() {
+        let env = fixture_env();
+        env.exec(&format!(
+            "{SELECTOR} id.recordID = 998877; \
+             assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 0)"
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn variants_have_distinct_explicit_counts() {
+        let env = fixture_env();
+        env.exec(&format!(
+            "{SELECTOR} assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 1); \
+             id.variantIdentifier = 2; \
+             assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 4)"
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn wrong_type_or_variant_does_not_alias() {
+        let env = fixture_env();
+        env.exec(
+            r#"
+            local decor = Enum.HousingCatalogEntryType.Decor
+            for _, id in ipairs({
+                {recordID = 1001, entryType = -91, variantIdentifier = 1},
+                {recordID = 1001, entryType = decor, variantIdentifier = 0},
+                {recordID = 1001, entryType = decor, variantIdentifier = 99},
+            }) do
+                assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 0,
+                    'absent compound key must not alias a populated variant')
+            end
+            "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn changing_storage_does_not_change_destroyable_count() {
+        let env = fixture_env();
+        install_selector(&env);
+        env.exec("assert(C_HousingCatalog.GetDestroyableInstanceCount(DestroyableSelector) == 1)")
+            .unwrap();
+        let entry_type: i32 = env.eval("return DestroyableSelector.entryType").unwrap();
+        let id = HousingCatalogEntryVariantID {
+            record_id: 1001,
+            entry_type,
+            variant_identifier: 1,
+        };
+        env.state()
+            .borrow_mut()
+            .housing
+            .catalog
+            .variants
+            .get_mut(&id)
+            .unwrap()
+            .num_stored = 17;
+        env.exec(
+            "assert(C_HousingCatalog.GetCatalogEntryVariantInfo(DestroyableSelector).numStored == 17); \
+             assert(C_HousingCatalog.GetDestroyableInstanceCount(DestroyableSelector) == 1, \
+             'destroyability must not derive from storage')",
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn fresh_environments_are_isolated() {
+        let populated = fixture_env();
+        let empty = WowLuaEnv::new().unwrap();
+        populated
+            .exec(&format!(
+                "{SELECTOR} assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 1)"
+            ))
+            .unwrap();
+        empty
+            .exec(&format!(
+                "{SELECTOR} assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 0, \
+                 'explicit counts must not leak between environments')"
+            ))
+            .unwrap();
+    }
+
+    #[test]
+    fn returns_one_ordinary_number() {
+        let env = fixture_env();
+        env.exec(&format!(
+            "{SELECTOR} local count = C_HousingCatalog.GetDestroyableInstanceCount(id); \
+             assert(type(count) == 'number'); assert(count + 2 == 3); \
+             assert(select('#', C_HousingCatalog.GetDestroyableInstanceCount(id)) == 1)"
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn public_selector_preserves_addon_taint() {
+        let env = fixture_env();
+        env.exec(&format!(
+            r#"
+            {SELECTOR}
+            local function addon()
+                assert(not issecure(), 'fixture must run tainted')
+                assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 1)
+                assert(not issecure(), 'count query must not clear caller taint')
+            end
+            debug.setobjecttaint(addon, 'HousingDestroyableFixture')
+            addon()
+            "#
+        ))
+        .unwrap();
+    }
+
+    #[test]
+    fn nested_secrets_reject_without_declassification() {
+        let env = fixture_env();
+        let entry_type: i32 = env
+            .eval("return Enum.HousingCatalogEntryType.Decor")
+            .unwrap();
+        {
+            let loader = env.loader_env();
+            let mut lua = loader.rilua_mut();
+            for (name, value) in [
+                ("SecretRecord", 1001.0),
+                ("SecretType", f64::from(entry_type)),
+                ("SecretVariant", 1.0),
+            ] {
+                let secret = wrap_host_secret_number(lua.state_mut(), value);
+                lua.state_mut().push(secret);
+                let inserted = lua.set_global_val(name, secret);
+                lua.state_mut().pop();
+                inserted.unwrap();
+            }
+        }
+        env.exec(
+            r#"
+            collectgarbage('collect')
+            local decor = Enum.HousingCatalogEntryType.Decor
+            local function queries()
+                for _, id in ipairs({
+                    {recordID = SecretRecord, entryType = decor, variantIdentifier = 1},
+                    {recordID = 1001, entryType = SecretType, variantIdentifier = 1},
+                    {recordID = 1001, entryType = decor, variantIdentifier = SecretVariant},
+                }) do
+                    assert(not pcall(C_HousingCatalog.GetDestroyableInstanceCount, id),
+                        'nested secret must reject, not unwrap or resolve a variant')
+                end
+            end
+            assert(issecure(), 'first probe must run securely')
+            queries()
+            local function addon()
+                queries()
+                assert(not issecure(), 'rejection must preserve caller taint')
+            end
+            debug.setobjecttaint(addon, 'HousingDestroyableFixture')
+            addon()
+            assert(issecure(), 'secure caller must remain untainted')
+        "#,
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn guarded_selector_preserves_vm_access_policy() {
+        let env = fixture_env();
+        // Host-installed VM guard: retail's compatibility global is a no-op.
+        {
+            let loader = env.loader_env();
+            let mut lua = loader.rilua_mut();
+            rilua::table_security::register_table_security(&mut lua).unwrap();
+        }
+        env.exec(&format!(
+            r#"
+            {SELECTOR}
+            settablesecurity(id, 0)
+            assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 1)
+            local function addon()
+                local source_ok, source_error = pcall(rawget, id, 'recordID')
+                assert(not source_ok and string.find(source_error,
+                    'tainted access to secured table', 1, true), 'source must be guarded')
+                local ok, message = pcall(C_HousingCatalog.GetDestroyableInstanceCount, id)
+                assert(not ok and string.find(message, 'tainted access to secured table', 1, true),
+                    'count query must preserve secured table access rejection')
+                assert(not issecure(), 'rejection must preserve caller taint')
+            end
+            debug.setobjecttaint(addon, 'HousingDestroyableFixture')
+            addon()
+            assert(issecure() and id.recordID == 1001)
+            assert(C_HousingCatalog.GetDestroyableInstanceCount(id) == 1)
+        "#
+        ))
+        .unwrap();
+    }
 }
