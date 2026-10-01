@@ -36,14 +36,14 @@ Bounded contract for `structures-DamageMeterCombatSource-639` (12.0.5). Cached R
 
 ## Implementation inventory
 
-- `src/c_api/c_damage_meter.rs`: input structs, explicit type/ID/meter/source lookup, availability/list/duration, reset and combat-publication block. Registrations use the normal C API utility bootstrap under `retail-12-0-5`.
+- `src/c_api/c_damage_meter.rs`: input structs, explicit type/ID/meter/source lookup, availability/list/duration, reset and combat-publication block. Registrations use the normal C API utility bootstrap unconditionally, preserving the removed bootstrap's all-profile scope.
 - `src/c_api/c_damage_meter/snapshot.rs`: fresh nested tables rooted on the VM stack during serialization; aggregate/source-detail fields stay separate, optional fields omitted.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment empty-default input field/constructor.
-- Seeded `src/lua_api/workarounds/temporary/damage_meter_state.rs` and its module/bootstrap registrations are removed. No fallback or synthetic rows remain. Undocumented seed-only `GetDamageMeterEntries` is not retained; compatibility Current-ID helper is retained as specified. Earlier profiles receive no replacement seed; their runtime acceptance is unverified.
+- Seeded `src/lua_api/workarounds/temporary/damage_meter_state.rs` and its module/bootstrap registrations are removed. No fallback or synthetic rows remain. Undocumented seed-only `GetDamageMeterEntries` is not retained; compatibility Current-ID helper is retained as specified. All profiles receive the same empty-backed model, including historical Retail 12.0.0 and WowForever; no seed is restored. This preserves registration scope, not native cross-profile semantics or runtime acceptance.
 
 ## Tests asserting this spec
 
-All nine tests live in existing `tests/startup_targeted_regressions/damage_meter.rs`, under `retail-12-0-5`, no new Cargo target:
+All nine tests live in existing `tests/startup_targeted_regressions/damage_meter.rs`, available without an epoch/profile gate in the grouped integration target; no new Cargo target:
 
 - `damage_meter_empty_input_has_no_fabricated_records`: empty input vs empty query snapshots/availability.
 - `damage_meter_explicit_aggregate_and_detail_shapes_are_distinct`: concrete list/session/source/spell/detail fixture; both ID/type APIs and NeverSecret values.
@@ -56,6 +56,10 @@ Replacement coverage: old workaround `patch_12_0_0_damage_meter_fields_and_reset
 
 Proof ledger: parent default-retail compile at `97f7edd2d` reported exit 0 (434s); `/tmp/patch-12.0.5-batch17-red-run.log` observes six failures, zero passes, finite test body 5.77s. JSON records process exit 101, 8.246s including overhead, exact revision and binary hash. Failures reach seed-vs-empty, missing explicit session and wrong-shape boundaries; later assertions were not all reached. This implementation runs only scoped rustfmt and commits; no builds, checks, test execution, delegation or push. Nine fixtures await parent GREEN compilation/execution. No audit row closure or native parity credit.
 
+### Registration-scope regression after `1a9fcd1ec`
+
+Source inspection confirms predecessor `src/lua_api/workarounds/temporary/mod.rs` declared the seed module without a cfg and `src/lua_api/workarounds/mod.rs:195` invoked it unconditionally. The replacement module, state field/default and registration incorrectly required `retail-12-0-5`. Historical `--no-default-features --features profile-retail,retail-12-0-0` and `--no-default-features --features client-wowforever` do not enable that epoch. Those gates and the fixture gate are removed, without changing Cargo features, query policies or restoring synthetic data/fallbacks. Parent can select `startup_targeted_regressions::damage_meter::damage_meter_` in `--test integration` for either feature set; nine tests are source-visible, not execution-proven. Only scoped rustfmt and commit performed for this repair; parent owns alternate-profile compilation/runtime proof. Combat publication, conditional disclosure and AllowedWhenUntainted access remain unresolved exactly as above.
+
 ## Known gaps (current cycle)
 
 - [ ] Parent compilation/GREEN of the current producer and nine fixtures is pending; only predecessor six-case RED is observed.
@@ -64,4 +68,4 @@ Proof ledger: parent default-retail compile at `97f7edd2d` reported exit 0 (434s
 
 ## Out of scope
 
-Combat ingestion/full simulation, sorting/ranking, derived totals/rates, event dispatch, persistence, UI/render acceptance, non-12.0.5 profile verification, invalid argument policy, native-client probing and whole DamageMeter API completion.
+Combat ingestion/full simulation, sorting/ranking, derived totals/rates, event dispatch, persistence, UI/render acceptance, native cross-profile parity, invalid argument policy, native-client probing and whole DamageMeter API completion.

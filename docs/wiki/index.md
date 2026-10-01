@@ -4,7 +4,7 @@
 
 ## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
 
-[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links the [structure contract/proof](../specs/damage-meter-combat-source.md): predecessor parent RED 0/6, C API-owned explicit queries/reset and fresh aggregate/detail snapshots; seeded Lua producer removed. Nine grouped fixtures await parent GREEN. Combat publication explicitly blocked, secret selectors rejected without unwrapping; no native secrecy, earlier-profile or row-completion claim.
+[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links the [structure contract/proof](../specs/damage-meter-combat-source.md): predecessor parent RED 0/6, C API-owned explicit queries/reset and fresh aggregate/detail snapshots; seeded Lua producer removed. Nine grouped fixtures await parent GREEN. [Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) preserves unconditional registration and fixtures across profiles; alternate-profile proof remains unrun. Combat publication explicitly blocked, secret selectors rejected without unwrapping; no native secrecy, earlier-profile or row-completion claim.
 
 ## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
 

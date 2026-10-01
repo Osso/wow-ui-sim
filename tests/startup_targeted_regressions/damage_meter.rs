@@ -1,5 +1,4 @@
-//! Explicit 12.0.5 snapshots; parent owns compilation and runtime proof.
-#![cfg(feature = "retail-12-0-5")]
+//! Shared explicit DamageMeter snapshots; parent owns profile compilation/runtime proof.
 
 use super::*;
 use wow_ui_sim::c_api::c_damage_meter::*;

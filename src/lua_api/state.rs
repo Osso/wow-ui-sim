@@ -137,7 +137,6 @@ macro_rules! build_empty_sim_state {
             azerite_essence: AzeriteEssenceState::default(),
             azerite_empowered: AzeriteEmpoweredItemState::default(),
             barber_shop: BarberShopState::default(),
-            #[cfg(feature = "retail-12-0-5")]
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
             major_factions: HashMap::new(),
             major_faction_renown_levels: HashMap::new(),

@@ -1,3 +1,7 @@
+## [2026-10-01] fix | Preserve DamageMeter registration scope
+
+[Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) records original unconditional bootstrap evidence and removal of replacement/state/fixture epoch gates. Same empty-backed C API across profiles, including historical 12.0.0 and WowForever; no seed/fallback or combat-policy change. Scoped formatting/commit only; alternate-profile proof belongs to parent. See [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]].
+
 ## [2026-10-01] evidence | Reconcile bounded quest confirmation acceptance
 
 [[patch-12-0-5-api-audit#Quest accept confirmation — bounded independent PASS]] links the [contract proof](../specs/quest-accept-confirmation.md#tests-asserting-this-spec): producer `e5ab15302`, RED 1 PASS/4 missing-method FAIL, GREEN build 510.99s, saved 5 quest + 6 prompt and fresh 13 lifecycle controls PASS; snapshot fmt/check exit 0. Security/rooting source-only; separate parent hash-bound normal startup exit 0 `[]`, zero errors, 12.70s, not verifier-run. Exact event row 558 gains bounded coverage; 362 IDs/source hash retained. Historical unrelated bin-test failure remains; no broad-suite/native/popup/all-profile/full-page GREEN. Audit **IN PROGRESS**.

@@ -42,7 +42,6 @@ pub(crate) mod c_console;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
-#[cfg(feature = "retail-12-0-5")]
 pub mod c_damage_meter;
 pub mod c_death_recap;
 pub mod c_discord;
@@ -164,7 +163,6 @@ use rilua::vm::state::LuaState;
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
     c_weather::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
     c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-5")]
     c_encounter_timeline::register(state)?;
