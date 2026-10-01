@@ -100,6 +100,61 @@ fn charge_query_tables_do_not_fabricate_counts_without_charge_input() {
     .expect("spell and action charge tables agree on absent explicit charge input");
 }
 
+#[test]
+fn charge_zero_span_core_is_fully_elapsed_even_before_start_and_after_reset() {
+    let env = env();
+    env.exec(
+        r#"
+        local clock = C_DurationUtil.CreateManualClock(20)
+        local d = C_DurationUtil.CreateDuration()
+        local function zero()
+            assert(d:IsZero() and d:HasExpired(), 'zero span is fully elapsed')
+            assert(not d:HasStarted() and not d:IsActive())
+            assert(d:GetElapsedPercent() == 1 and d:GetRemainingPercent() == 0)
+            assert(d:GetElapsedPercent(1) == 1 and d:GetRemainingPercent(1) == 0)
+            assert(d:GetElapsedDuration() == 0 and d:GetRemainingDuration() == 0)
+        end
+        zero()
+        d:SetClock(clock)
+        d:SetTimeFromStart(100, 0, 2)
+        zero()
+        clock:SetTime(200)
+        zero()
+        d:SetTimeFromStart(190, 40, 2)
+        assert(not d:HasExpired() and d:GetElapsedPercent() == 0.5)
+        d:Reset()
+        zero()
+        d:SetToDefaults()
+        zero()
+        "#,
+    )
+    .expect(
+        "fully elapsed includes expired and elapsed fraction one, an explicit simulator inference",
+    );
+}
+
+#[test]
+fn charge_zero_max_input_is_not_a_configured_charge_spell() {
+    let env = env();
+    seed_charge(&env, 0);
+    env.state()
+        .borrow_mut()
+        .spell_charges
+        .get_mut(&19750)
+        .expect("fixture charge row")
+        .max_charges = 0;
+    env.exec(
+        r#"
+        assert(C_Spell.GetSpellCharges(19750) == nil)
+        assert(C_ActionBar.GetActionCharges(17) == nil)
+        assert(C_Spell.GetSpellChargeDuration(19750) == nil)
+        assert(C_ActionBar.GetActionChargeDuration(17) == nil)
+        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 0) == nil)
+        "#,
+    )
+    .expect("zero maximum does not represent a configured charge spell");
+}
+
 fn seed_charge(env: &WowLuaEnv, current_charges: u32) {
     seed_noncharge_spell_with_cooldown(env);
     env.state().borrow_mut().spell_charges.insert(

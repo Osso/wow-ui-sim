@@ -231,6 +231,15 @@ fn duration_core_secret_invalid_arguments_leave_all_slots_unchanged() {
     .expect("invalid secret duration inputs preserve timing and secrecy atomically");
 }
 
+fn seed_zero_span_epoch_expectations(env: &WowLuaEnv) {
+    let fully_elapsed = cfg!(feature = "retail-12-0-5");
+    env.exec(&format!(
+        "zeroFullyElapsed = {fully_elapsed}; zeroElapsedPercent = {}",
+        u8::from(fully_elapsed)
+    ))
+    .expect("configure epoch-specific zero-span assertions");
+}
+
 // Fraction, zero-span, and validation expectations are simulator policies, not native proof.
 #[test]
 fn duration_percent_tracks_clock_boundaries_and_rewind() {
@@ -278,16 +287,17 @@ fn duration_percent_tracks_clock_boundaries_and_rewind() {
 }
 
 #[test]
-fn duration_percent_zero_spans_remain_zero() {
+fn duration_percent_zero_spans_follow_epoch_elapsed_policy() {
     let env = WowLuaEnv::new().unwrap();
+    seed_zero_span_epoch_expectations(&env);
     env.exec(r#"
         local d = C_DurationUtil.CreateDuration()
         local clock = C_DurationUtil.CreateManualClock(15)
         local function zero()
-            assert(d:GetElapsedPercent() == 0 and d:GetRemainingPercent() == 0)
-            assert(d:GetElapsedPercent(nil) == 0 and d:GetRemainingPercent(nil) == 0)
+            assert(d:GetElapsedPercent() == zeroElapsedPercent and d:GetRemainingPercent() == 0)
+            assert(d:GetElapsedPercent(nil) == zeroElapsedPercent and d:GetRemainingPercent(nil) == 0)
             for _, modifier in ipairs({Enum.DurationTimeModifier.RealTime, Enum.DurationTimeModifier.BaseTime}) do
-                assert(d:GetElapsedPercent(modifier) == 0)
+                assert(d:GetElapsedPercent(modifier) == zeroElapsedPercent)
                 assert(d:GetRemainingPercent(modifier) == 0)
             end
             assert(d:IsZero() and d:GetTotalDuration() == 0)
@@ -304,7 +314,7 @@ fn duration_percent_zero_spans_remain_zero() {
         zero()
         assert(d:GetClock() == clock and d:GetModRate() == 2)
         assert(d:GetStartTime() == 10 and d:GetEndTime() == 10)
-    "#).expect("new, reset, and configured zero spans have zero fractions");
+    "#).expect("zero spans follow epoch elapsed policy with zero remaining fraction");
 }
 
 #[test]
@@ -395,6 +405,7 @@ fn duration_core_manual_progress_rate_and_rewind() {
 #[test]
 fn duration_core_end_span_reset_and_validation() {
     let env = WowLuaEnv::new().unwrap();
+    seed_zero_span_epoch_expectations(&env);
     env.exec(
         r#"
         local d = C_DurationUtil.CreateDuration()
@@ -420,7 +431,7 @@ fn duration_core_end_span_reset_and_validation() {
         assert(d:IsZero() and d:GetTotalDuration() == 0 and d:GetModRate() == 1)
         assert(d:GetStartTime() == 0 and d:GetEndTime() == 0)
         assert(d:GetClock() == c and d:GetClockTime() == 12)
-        assert(not d:HasStarted() and not d:HasExpired() and not d:IsActive())
+        assert(not d:HasStarted() and d:HasExpired() == zeroFullyElapsed and not d:IsActive())
         d:SetTimeFromStart(10, 0)
         assert(d:IsZero() and d:GetRemainingDuration() == 0 and not d:IsActive())
         d:SetToDefaults()
@@ -433,6 +444,7 @@ fn duration_core_end_span_reset_and_validation() {
 #[test]
 fn duration_core_set_to_defaults_clears_configured_timing_and_clock() {
     let env = WowLuaEnv::new().unwrap();
+    seed_zero_span_epoch_expectations(&env);
     env.exec(
         r#"
         local clock = C_DurationUtil.CreateManualClock(15)
@@ -448,8 +460,8 @@ fn duration_core_set_to_defaults_clears_configured_timing_and_clock() {
         assert(d:GetStartTime() == 0 and d:GetEndTime() == 0)
         assert(d:GetTotalDuration() == 0 and d:GetModRate() == 1)
         assert(d:GetClock() == nil and d:IsZero())
-        assert(not d:HasStarted() and not d:HasExpired() and not d:IsActive())
-        assert(d:GetElapsedPercent() == 0 and d:GetRemainingPercent() == 0)
+        assert(not d:HasStarted() and d:HasExpired() == zeroFullyElapsed and not d:IsActive())
+        assert(d:GetElapsedPercent() == zeroElapsedPercent and d:GetRemainingPercent() == 0)
     "#,
     )
     .expect("SetToDefaults clears configured timing, rate, and clock binding");
