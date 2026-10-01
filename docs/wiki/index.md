@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura refresh duration producers
+
+[[lua-api#Retail 12.0.5 aura refresh duration]] links [duration contract](../specs/aura-refresh-duration.md): public blocked-filtered instances, explicit metadata/seeded-alias reuse, elapsed-clock capped formula and pre-conversion secret guards. Saved parent RED at `ea7d67237`: **1 PASS / 17 FAIL**, empty-default PASS not producer proof. Tests unchanged; formatting only, parent GREEN/acceptance pending. Formula/eligibility/security inferred; row394/accounting unchanged.
+
 ## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
 
 ## [2026-10-01] evidence | Accept exact outfit stored-index DTO row

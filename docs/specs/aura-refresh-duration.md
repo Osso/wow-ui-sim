@@ -1,6 +1,6 @@
 # Aura refresh duration
 
-Retail 12.0.5 row394, `C_UnitAuras.GetRefreshExtendedDuration`, and its consumer prerequisite `C_UnitAuras.GetAuraBaseDuration` query explicit per-environment recast metadata independently of current aura duration. Input types live in `src/c_api/aura_duration.rs`; architecture references are under [How it works](#how-it-works). This commit supplies tests, spec and empty inputs only, not Lua producers or registrations.
+Retail 12.0.5 row394, `C_UnitAuras.GetRefreshExtendedDuration`, and its consumer prerequisite `C_UnitAuras.GetAuraBaseDuration` query explicit per-environment recast metadata independently of current aura duration. Input types live in `src/c_api/aura_duration.rs`; architecture references are under [How it works](#how-it-works). The producer registers both immutable Lua getters at `retail-12-0-5`; parent GREEN and bounded acceptance remain pending.
 
 ## What it must do
 
@@ -16,7 +16,7 @@ Retail 12.0.5 row394, `C_UnitAuras.GetRefreshExtendedDuration`, and its consumer
 - [ ] Base getter returns configured base duration, not current duration. Refresh returns `base + min(max(expiration - now, 0), max_carryover_seconds)`, with `now` from the environment's existing `start_time.elapsed()` clock. The cap is explicit metadata, not an invented fixed percentage.
 - [ ] Saturated and expired timed cases return exact cap/base results. Unsaturated tests bound elapsed time around the call with tolerance; do not introduce a time override framework.
 - [ ] Permanent active aura (`duration == 0` or `expiration_time == 0`) yields nil for refresh, even with known recast metadata. Base getter still returns known metadata. This eligibility rule is an **informed guess**, not documented native behavior.
-- [ ] Nonfinite or negative metadata in either field yields nil from both getters. Zero metadata remains valid for a timed active aura. Nonfinite refresh sums yield nil, never public infinity. Validation is required before public output; this input-only slice does not implement it.
+- [ ] Nonfinite or negative metadata in either field yields nil from both getters. Zero metadata remains valid for a timed active aura. Nonfinite refresh sums yield nil, never public infinity. Both metadata fields are validated before either getter's public output.
 
 ### Validation and query immutability — explicitly INFERRED
 
@@ -44,15 +44,16 @@ No native probes establish formula, caps, permanence, unknown/error handling or 
 
 ## Implementation inventory
 
-- `src/c_api/aura_duration.rs` — public `SpellAuraDuration` input fields only; no producer, formula or validation method.
-- `src/c_api/mod.rs` — exports input module at `retail-12-0-5`; no getter registration.
+- `src/c_api/aura_duration.rs` — `SpellAuraDuration`, immutable getter producers, shared argument/secret validation, public blocked-filtered helpful/harmful instance lookup, metadata validation and inferred capped formula.
+- `src/c_api/mod.rs` — exports the module at `retail-12-0-5`.
+- `src/lua_api/globals/register.rs` — authoritative registration after existing stubs/aura surface. Inspected static namespace stubs and `runtime_surface_bootstrap.lua`: neither contains a literal duration provider; the latter's generic namespace `__index` synthesizes one-nil functions. No alternate literal provider is retained.
 - `src/lua_api/state/sim_state.rs` — environment-local explicit metadata map at the same epoch.
 - `src/lua_api/state.rs` — initializes map empty.
 - `tests/aura_refresh_duration.rs` — 18 focused contract cases auto-discovered by `build.rs` into the existing `integration` target; no additional Cargo target or harness edit.
 
 ## Tests asserting this spec
 
-Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent owns compilation and RED/GREEN execution after this commit. No test result is claimed here; all requirement checkboxes remain unverified.
+Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent owns compilation and GREEN execution. Requirement checkboxes remain unverified until post-producer proof; tests are unchanged.
 
 | Test | Contract |
 |---|---|
@@ -77,9 +78,15 @@ Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent o
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile fixtures and observe pre-producer RED; no compilation or execution performed by this input/test slice.
-- [ ] Lua duration producers, public input validation, capped calculation and registration remain unimplemented in this slice.
-- [ ] Parent GREEN and independent bounded acceptance remain pending. No row394/page/accounting status changes authorized here.
+- [ ] Parent GREEN and independent bounded acceptance remain pending. Producer formatting only; no build/test/check/lint/readability/delegation performed in this slice.
+- [ ] Native formula, eligibility, unknown/error/security parity remain unproven.
+- [ ] Row394/page/accounting remain pending and unchanged; no status promotion authorized here.
+
+## Saved pre-producer RED — 2026-10-01
+
+Input commit `dac4314c6` is included in parent revision `ea7d67237882cac6c43cfb8f3c5b8f6235e8160a`. Parent compiled the grouped integration target with exit **0**, **1168.921s**; bounded `aura_refresh_duration::` runtime exit **101**, **26.570s**, **18 selected: 1 PASS / 17 FAIL**. Full diagnostics were read before implementation. The sole empty-metadata PASS exercises nullable defaults, not a meaningful getter producer. The other seventeen failures assert outputs, validation/security and immutable-query contracts; the elapsed-clock case reports numeric result expected, got nil.
+
+Proof artifacts: `/tmp/patch-12.0.5-batch38-red-build-result.json`, `/tmp/patch-12.0.5-batch38-red-run.json`, `/tmp/patch-12.0.5-batch38-red-run.log`. This RED scope does not prove the new producer. Parent owns subsequent costly compilation/runtime and acceptance; no new runtime result or native parity is claimed.
 
 ## Out of scope
 

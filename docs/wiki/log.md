@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura refresh duration producers
+
+Updated [[lua-api#Retail 12.0.5 aura refresh duration]], index and [duration contract](../specs/aura-refresh-duration.md). Epoch-gated authoritative getters reuse public blocked-filtered helpful/harmful records, explicit environment metadata and seeded alias resolver. Full saved parent RED read: **1 PASS / 17 FAIL** at `ea7d67237`; empty-default PASS not producer proof. Tests unchanged; formatted producer committed before parent-owned GREEN/acceptance. Formula/eligibility/security inferred; no native or row394/accounting credit.
+
 ## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
 
 ## [2026-10-01] evidence | Accept exact outfit stored-index DTO row
