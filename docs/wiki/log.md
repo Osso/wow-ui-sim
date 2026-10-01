@@ -1,6 +1,6 @@
 ## [2026-10-01] implementation | Add bounded aura instance filter producer
 
-Updated [[lua-api#Retail 12.0.5 aura instance filter query]], index and [contract](../specs/unit-aura-filter-query.md). Removed old globals provider; new C API module authenticates all required arguments before unchanged unfiltered lookup/filter matching. Tests/store/DTO unchanged. Corrected parent RED provenance and pending GREEN/acceptance remain in spec; formatting only, no execution gates or accounting edits.
+Updated [[lua-api#Retail 12.0.5 aura instance filter query]], index and [contract](../specs/unit-aura-filter-query.md). Removed old globals provider; new C API module authenticates all required arguments before unchanged unfiltered lookup/filter matching. Tests/store/DTO unchanged. Corrected parent RED provenance retained. Subsequent parent GREEN at `a881d04`: 14 filter + 47 controls = 61 unique PASS; startup exit0 `[]`. Independent335 verification and rows398/399 acceptance pending; no accounting promotion.
 
 ## [2026-10-01] evidence | Accept private-aura restriction-removal rows401/405
 
