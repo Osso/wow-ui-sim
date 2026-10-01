@@ -41,16 +41,24 @@ fn load_checked_toc(env: &WowLuaEnv, toc: &Path, is_cached_dependency: bool) {
         result.name,
         result.warnings
     );
+    let mut unexpected_requirements = Vec::new();
     for requirement in &result.missing_requirements {
-        assert!(
-            is_cached_dependency
-                && result.name == "Blizzard_SharedXML"
-                && is_known_sharedxml_reveal_setup(requirement),
-            "{}: unexpected dependency/local requirement: {requirement:?}",
-            result.name
-        );
-        eprintln!("retained known debug-setup limitation (not native absence): {requirement:?}");
+        if is_cached_dependency
+            && result.name == "Blizzard_SharedXML"
+            && is_known_sharedxml_reveal_setup(requirement)
+        {
+            eprintln!(
+                "retained known debug-setup limitation (not native absence): {requirement:?}"
+            );
+        } else {
+            unexpected_requirements.push(requirement);
+        }
     }
+    assert!(
+        unexpected_requirements.is_empty(),
+        "{}: unexpected dependency/local requirements: {unexpected_requirements:?}",
+        result.name
+    );
     assert!(
         result.lua_files + result.xml_files > 0,
         "empty TOC load: {result:?}"

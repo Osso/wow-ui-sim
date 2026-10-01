@@ -44,16 +44,21 @@ fn cached_initializer(mapped: Option<MappedStickSnapshot>) -> WowLuaEnv {
         let result = load_addon(&env.loader_env(), &toc).expect("unchanged cached TOC must load");
         assert!(result.warnings.is_empty(), "{result:?}");
         assert!(result.lua_files + result.xml_files > 0, "{result:?}");
+        let mut unexpected_requirements = Vec::new();
         for requirement in &result.missing_requirements {
             // Existing truthy Reveal stub changes debug-event setup. Retain only
             // this known limitation; it is not an innocent nil probe or parity.
-            assert!(
-                result.name == "Blizzard_SharedXML" && known_reveal_setup(requirement),
-                "{}: unexpected requirement: {requirement:?}",
-                result.name
-            );
-            eprintln!("retained existing Reveal debug-setup limitation: {requirement:?}");
+            if result.name == "Blizzard_SharedXML" && known_reveal_setup(requirement) {
+                eprintln!("retained existing Reveal debug-setup limitation: {requirement:?}");
+            } else {
+                unexpected_requirements.push(requirement);
+            }
         }
+        assert!(
+            unexpected_requirements.is_empty(),
+            "{}: unexpected requirements: {unexpected_requirements:?}",
+            result.name
+        );
     }
     assert!(
         env.state().borrow().lua_errors.is_empty(),
