@@ -96,6 +96,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = register_world(builder)?;
     let builder = register_collections_pvp(builder)?;
     let builder = register_inventory_misc(builder)?;
+    let builder = builder.set_function(
+        "SetHousingCatalogVariantStoredCount",
+        crate::c_api::c_housing::catalog::set_variant_stored_count,
+    )?;
     let admin_val = builder.build();
 
     LuaApiMut::set_global_val(lua, "A_Admin", admin_val)?;

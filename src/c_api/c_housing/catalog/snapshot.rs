@@ -64,7 +64,7 @@ pub(super) fn push_entry(
     row
 }
 
-fn push_id(state: &mut LuaState, id: &HousingCatalogEntryVariantID) -> Val {
+pub(super) fn push_id(state: &mut LuaState, id: &HousingCatalogEntryVariantID) -> Val {
     let row = push_table(state);
     set_number(state, row, "recordID", id.record_id);
     set_number(state, row, "entryType", id.entry_type);

@@ -3,10 +3,13 @@
 
 use std::collections::HashMap;
 
+mod input;
 mod queries;
 mod snapshot;
+mod storage;
 
 pub(super) use queries::register;
+pub(crate) use storage::set_variant_stored_count;
 
 /// Base catalog identity; never synthesize a variant identifier for this key.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
