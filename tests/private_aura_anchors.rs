@@ -66,7 +66,7 @@ mod cached_consumer_regression {
         for (unit, expected_all) in [("player", 1), ("target", 2)] {
             env.fire_event_with_args(CLEARED_EVENT, &[env.lua_string(unit)])
                 .expect("explicit one-unit cleared-event delivery, not native production");
-            let counts: (usize, usize) = env
+            let counts: (i64, i64) = env
                 .eval("return #clearedAll, #clearedPlayer")
                 .expect("read synchronous receiver counts after explicit delivery");
             assert_eq!(counts, (expected_all, 1), "delivery counts after {unit}");
