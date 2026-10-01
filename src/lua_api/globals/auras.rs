@@ -104,13 +104,6 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         "GetPlayerAuraBySpellID",
         get_player_aura_by_spell_id,
     );
-    #[cfg(feature = "retail-12-1-0")]
-    install(
-        state,
-        ns,
-        "IsAuraFilteredOutByInstanceID",
-        is_aura_filtered_out_by_instance_id,
-    );
 }
 
 fn install_legacy_aura_globals(state: &mut LuaState) {
@@ -226,7 +219,7 @@ fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
 }
 
 #[cfg(feature = "aura-instance-enumeration")]
-fn aura_matches_filter_string(aura: &AuraInfo, filter: &str) -> bool {
+pub(crate) fn aura_matches_filter_string(aura: &AuraInfo, filter: &str) -> bool {
     let matches_polarity = aura_matches_filter(aura, filter_from_str(filter));
     let requires_player_source = filter
         .split('|')
@@ -419,18 +412,6 @@ fn get_aura_data_by_aura_instance_id(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let aura_id = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
     push_aura_by_instance_id(state, &unit, aura_id);
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn is_aura_filtered_out_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
-    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let aura_instance_id = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    let filter = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
-    let is_filtered = find_aura_by_instance_id(state, &unit, aura_instance_id)
-        .map(|aura| !aura_matches_filter_string(&aura, &filter))
-        .unwrap_or(true);
-    state.push(Val::Bool(is_filtered));
     Ok(1)
 }
 

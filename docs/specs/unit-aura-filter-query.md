@@ -1,6 +1,6 @@
 # Unit aura instance filter query
 
-Bounded Retail 12.0.5 contract for `C_UnitAuras.IsAuraFilteredOutByInstanceID`. Source facts: committed `data/patch-api/sources/12.0.5-api-changes.txt:397–399` and profile-cached `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:472–487`. Existing aura model/filter mechanics are described in [Lua API](../wiki/systems/lua-api.md). Fixtures/spec only at this checkpoint; parent owns producer after compiled RED.
+Bounded Retail 12.0.5 contract for `C_UnitAuras.IsAuraFilteredOutByInstanceID`. Source facts: committed `data/patch-api/sources/12.0.5-api-changes.txt:397–399` and profile-cached `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:472–487`. Existing aura model/filter mechanics are described in [Lua API](../wiki/systems/lua-api.md). Bounded producer implemented after parent-owned corrected compiled RED; parent owns GREEN and integration acceptance.
 
 ## What it must do
 
@@ -35,30 +35,33 @@ Bounded Retail 12.0.5 contract for `C_UnitAuras.IsAuraFilteredOutByInstanceID`. 
 ## Implementation inventory
 
 - `tests/unit_aura_filter_query.rs`: retail-12-0-5-gated fixtures using actual host state and VM secrets; auto-discovered by the existing grouped integration harness. No Cargo/target changes.
-- `src/lua_api/globals/auras.rs`: current predicate, unfiltered lookup, shared filter helpers and public blocked enumeration; unchanged by this inputs-only slice.
-- `src/c_api/c_unit_auras.rs`: existing C aura surface; parent owns eventual producer/registration, not this slice.
+- `src/c_api/c_unit_aura_filter_query.rs`: sole bounded producer; VM `unwrap_secret` authenticates each required argument, strict UTF-8 strings and finite integral signed-i32 ID validate before unfiltered lookup, then one public boolean is pushed.
+- `src/c_api/mod.rs` and `src/lua_api/globals/register.rs`: module and registration gated by `retail-12-0-5`. Cargo's existing cumulative epoch makes `aura-instance-enumeration` helpers available; no profile/feature definitions changed.
+- `src/lua_api/globals/auras.rs`: exposes the existing `aura_matches_filter_string` predicate without semantic changes; reuses already exposed `find_aura_by_instance_id`. Old `retail-12-1-0` registration and producer removed, leaving no alternate provider. Store/filter/DTO and blocked enumeration behavior unchanged.
+- `src/c_api/c_unit_auras.rs`: existing enumeration surface unchanged.
 
 ## Tests asserting this spec
 
 `tests/unit_aura_filter_query.rs` contains fourteen tests:
 
-| Coverage | Tests | Proof at input checkpoint |
+| Coverage | Tests | Corrected parent RED |
 | --- | ---: | --- |
-| Exact public boolean, player/party polarity and PLAYER source; recognized case/order; MAW/EXTERNAL_DEFENSIVE | 5 | Written, not compiled/run |
-| Unknown units/IDs including negative i32; blocked stored instances | 2 | Written, not compiled/run |
-| Required strings and finite integral i32; validation before unknown lookup | 2 | Written, not compiled/run |
-| Secure host-secret access; tainted denial/public recovery; GC-root retention | 3 | Written, not compiled/run |
-| Read-only state/provider/block-list behavior; environment isolation | 2 | Written, not compiled/run |
+| Exact public boolean, player/party polarity and PLAYER source; recognized case/order; MAW/EXTERNAL_DEFENSIVE | 5 | PASS |
+| Unknown units/IDs including negative i32; blocked stored instances | 2 | PASS |
+| Required strings and finite integral i32; validation before unknown lookup | 2 | FAIL |
+| Secure host-secret access; tainted denial/public recovery; GC-root retention | 3 | FAIL |
+| Read-only state/provider/block-list behavior; environment isolation | 2 | Immutability FAIL (fraction rejection); isolation PASS |
 
-No RED/GREEN, check, lint, readability, startup or acceptance claim. Parent must compile and inspect actual RED before implementing the producer. All requirement checkboxes remain unverified.
+Parent-reported corrected RED at `1e912a88b88e633dc5ca3bebca671260ae5c20e6`: `/tmp/patch-12.0.5-batch41-red-fixed-build-result.json` exit0 (206.149s), saved run JSON/log **14 selected, 8 PASS / 6 FAIL**, exit101 (3.362s). Original 7/7 RED included an invalid player DTO `sourceUnit == pet` assertion; parent corrected the fixture to actual host pet state plus `isFromPlayerOrPlayerPet`. Producer leaves unrelated DTO serialization unchanged; tests untouched in this implementation. No producer GREEN, check, lint, readability, startup or acceptance claim. All requirement checkboxes remain unverified pending parent proof.
 
 ## Known gaps (current cycle)
 
-- [ ] Compiled RED and parent producer/registration, followed by parent-owned GREEN/controls and verification. Current input baseline is `79f2be1f9`; no source-accounting, PLAN or current330-verification edits.
+- [ ] Parent-owned producer GREEN/controls, integration verification and exact rows398/399 acceptance. Corrected compiled RED established above; implementation formatted and committed before GREEN. No source-accounting, PLAN or concurrent acceptance-doc edits.
+- [ ] `RequiresUnitAuraAccess` remains an unmodeled permission boundary; accepting untainted authentic secrets is not a native authorization/bypass claim.
 - [ ] Native invalid-input/error wording, missing-instance, output secrecy, visibility and restriction semantics remain inferred/unproved.
 - [ ] Complete native filter vocabulary/syntax remains unproved. Existing helper defaults empty/unknown filter strings to HELPFUL; this is retained implementation behavior, **not a supported API contract or general parity claim**. No empty/unknown filter fixture or whitelist/parser redesign.
 - [ ] Actual cached consumer closure remains unproved: `Blizzard_AuraContainerUtil.lua:3–9` calls this query for non-private records, but this file also constructs comparator tables from real AuraUtil functions/container enums and exports secure delegates through its addon table. `Blizzard_AuraContainerShared.lua` additionally initializes formatters/curves; AuraUtil itself requires CVar/Enum/Event registry support. Complete unchanged loading with real support was not established in this no-execution slice. No extracted/fake callback, query override, invented support table, or private consumer claim.
 
 ## Out of scope
 
-Producer/module/registration changes, shared filter changes, new backing state/maps, namespace/default changes for other APIs, vendor edits, other profiles, native probes, permission enforcement without a grounded model, complete AuraContainer/nameplate closure, audit-row promotion, PLAN/source-accounting changes, builds/tests/checks/lint/readability/gates/delegation/push/deployment. Only this test file and spec are changed; formatting and coherent commit precede parent RED.
+Shared filter semantics, store/DTO changes, new backing state/maps, namespace/default changes for other APIs, vendor edits, other profiles, native probes, permission enforcement without a grounded model, complete AuraContainer/nameplate closure, audit-row promotion, PLAN/source-accounting/concurrent-doc changes, builds/tests/checks/lint/readability/gates/delegation/push/deployment. Implementation changes only the bounded producer, registration/provider retirement, helper visibility and this spec/relevant wiki; formatting and coherent commit precede parent GREEN.

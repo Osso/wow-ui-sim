@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura instance filter producer
+
+Updated [[lua-api#Retail 12.0.5 aura instance filter query]], index and [contract](../specs/unit-aura-filter-query.md). Removed old globals provider; new C API module authenticates all required arguments before unchanged unfiltered lookup/filter matching. Tests/store/DTO unchanged. Corrected parent RED provenance and pending GREEN/acceptance remain in spec; formatting only, no execution gates or accounting edits.
+
 ## [2026-10-01] evidence | Accept private-aura restriction-removal rows401/405
 
 [[patch-12-0-5-api-audit#Private-aura restriction removals — bounded independent acceptance]] records literal source-axis accounting and independent330 current runtime proof. Namespace intersections justified existing-filter refresh; no redundant build/gates. Native secret acceptance, cached closure errors and broader historical failure remain open.
