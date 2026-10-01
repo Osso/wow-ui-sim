@@ -1,6 +1,7 @@
 //! Public producer fixtures; old private-helper tests remain intact until migration.
 //! Inferred policies and native-security exclusions: docs/specs/private-aura-anchors.md.
 
+use rilua::LuaApiMut;
 use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string,
 };
