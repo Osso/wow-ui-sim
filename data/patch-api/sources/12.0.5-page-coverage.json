@@ -532,7 +532,7 @@
         "HousingCatalogEntryInfo.totalNumStored",
         "HousingCatalogEntryInfo.totalNumPlaced"
       ],
-      "scope": "Explicit optional base inputs through three selectors only; None→nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
       "spec": "docs/specs/housing-catalog-aggregates.md",
       "tests": [
         "tests/housing_catalog_aggregates.rs"
@@ -709,6 +709,22 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-loot-method-independent-proof.md",
       "gate_scope": "19 unique PASS / 31 executions at676e4c25a; fresh check0 with stable hashes; fmt0 direct-output proof, precise fmt snapshot lost to documented artifact collision; inspected saved evidence only, no reruns. Linked spec owns inferred policies and provenance limits."
+    },
+    {
+      "id": "aura-spell-identifiers",
+      "symbols": [
+        "C_UnitAuras.GetPlayerAuraBySpellID",
+        "C_UnitAuras.GetUnitAuraBySpellID"
+      ],
+      "scope": "Public finite numeric and explicitly seeded string identifiers resolve shared aliases into existing helpful/unblocked player AuraData or modeled player/party polarities and the tested target113746/instance1 fixture; unmatched public identifiers return nil; snapshots/GC/live removal and legacy numeric global preserved. Seeded-label resolver reuse/numeric alias precedence, helpful-then-harmful order, missing-unit policy and strict/conservative secret rejection are inferred. No native name/subtext/link/localization/override, visibility/access/secret-acceptance, generic target store, cached consumer closure or all-profile parity; row394 excluded.",
+      "spec": "docs/specs/aura-spell-identifier.md",
+      "tests": [
+        "tests/aura_spell_identifier.rs"
+      ],
+      "implementation": "4b98920f0769b59b68c0dabbd9e8d9d47414fc00",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-spell-identifier-independent-proof.md",
+      "gate_scope": "73 selected PASS = 12 query + 29 aura + 18 admin + 14 C_Spell; saved startup0 []; fresh default fmt/check0 at6755f0e6c, relevant source unchanged; no new readability violations. No runtime reruns for accounting."
     }
   ],
   "source_rows": [
@@ -755,7 +771,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -2042,9 +2058,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetPlayerAuraBySpellID-392",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-spell-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts exact bounded independent batch37 proof: public numeric/explicit seeded identifiers over existing aura records; player helpful-only/unblocked, unit player/party and concrete target fixture, snapshots and unchanged legacy global. Seeded-label resolver reuse/numeric alias precedence, helpful-then-harmful order, missing-unit policy and strict/conservative secret rejection are inferred. No native name/subtext/link/localization/override, visibility/access/secret-acceptance, generic target store, cached consumer closure or all-profile parity; row394 excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-GetRefreshExtendedDuration-394",
@@ -2054,9 +2072,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetUnitAuraBySpellID-396",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-spell-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts exact bounded independent batch37 proof: public numeric/explicit seeded identifiers over existing aura records; player helpful-only/unblocked, unit player/party and concrete target fixture, snapshots and unchanged legacy global. Seeded-label resolver reuse/numeric alias precedence, helpful-then-harmful order, missing-unit policy and strict/conservative secret rejection are inferred. No native name/subtext/link/localization/override, visibility/access/secret-acceptance, generic target store, cached consumer closure or all-profile parity; row394 excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-398",
@@ -2920,7 +2940,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -2956,7 +2976,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -2964,7 +2984,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -3020,7 +3040,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",

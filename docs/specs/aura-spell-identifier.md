@@ -77,8 +77,8 @@ Rust eval outputs use supported `i32`, not `u8`/`usize`. Secret fixture uses `wr
 ## Known gaps (current cycle)
 
 - Saved parent RED at `28393b01ba6bafc3d233cbc700c7b02303de1064`: `/tmp/patch-12.0.5-batch37-red-build-result.json` records build exit0 / 130.04s; corresponding `-run.json` and `-run.log` record exit101, three existing numeric/legacy controls PASS and nine FAIL. This evidence covers the pre-producer revision only.
-- [ ] Independent310 owns checks/readability and bounded acceptance; pending. Saved parent GREEN below is not independent acceptance. Producer work itself ran formatting only; this reconciliation runs no code/tests/build/delegation.
-- No source accounting or audit-row credit changes. Native visibility, name/link parsing, secret annotations and all-profile acceptance remain unproved.
+- [x] Parent accepts independent310 bounded proof; exact acceptance and exclusions below. Saved parent GREEN alone was not independent acceptance. Producer work itself ran formatting only; this reconciliation runs no code/tests/build/delegation.
+- Only rows392/396 gain bounded simulator credit below. Native visibility, name/link parsing, secret annotations and all-profile acceptance remain unproved.
 
 ## Reconciled batch37 parent proof — 2026-10-01
 
@@ -91,13 +91,28 @@ Saved `/tmp/patch-12.0.5-batch37-{red,green}-*` artifacts bind RED to input `283
 | `aura_spell_identifier::` | Exit0, 12 PASS | Numeric/seeded aliases, modeled player/party and target fixture, order, snapshots/GC, strict validation and actual-secret/taint recovery |
 | `aura_api::` / `admin_buff_api::` / `c_spell_flyout_probes::` | Exit0 each; 29 / 18 / 14 PASS | Selected legacy/aura/admin/shared C_Spell controls, not generic spell-catalog coverage |
 | Normal no-addon/no-SavedVariables startup | Exit0, 11.32s; `[]` | Saved producer registration/startup only; no cached consumer closure claim |
-| Independent310 | Pending | No independent acceptance, fresh checks or readability result recorded here |
+| Independent310 | Accepted bounded proof | 73 selected PASS, saved startup0 `[]`, fresh default fmt/check0 at `6755f0e6c`; no new readability violations; exact limits below |
 
 GREEN totals **73 PASS = 12 query + 29 aura + 18 admin + 14 C_Spell**. Build-result and run manifests share integration SHA256 `398ef0d1f5a49f8e9415021f833e37de99cba63a2a2b05819898db7b61bbb5e9`; startup manifest matches the build's wow-sim SHA256 `c11cc875d5e8b2d8b8cc995788db6a497ca77c82fb3c878f5d5b8f5752bdeaf6`. RED integration SHA256 is `58a8eba2483c6ef3f2d9d1fc6e85a17d4d8e19c63ee29f1e6624bff3855a0784`. Exact commands, timings and logs live in `-red-build-result.json`, `-red-run.json`, `-green-build-result.json`, `-green-runs.json` and `-green-startup-run.json`; startup output is `-green-startup.json`.
 
 Existing numeric AuraInfo/party stores and explicitly seeded alias map are the bounded model, not a generic spell catalog. Shared resolver reuse/alias precedence, helpful-then-harmful traversal, missing-unit and strict/secret policies remain **INFERRED simulator requirements**, even with passing fixtures. Legacy numeric/global helpful-only/unblocked behavior is preserved. No native name/link/visibility/access/secret parity or refresh-duration coverage follows from these results.
 
-Accounting unchanged: **260 pending / 88 bounded / 14 partial = 362**. All retained IDs, register/source plaintext hash and unrelated rows are preserved; rows392/396 receive no promotion here, and row394 `GetRefreshExtendedDuration` remains pending. Local PLAN is ignored accounting only, never staged.
+Historical parent-only checkpoint: **260 pending / 88 bounded / 14 partial = 362**, rows392/396 unpromoted. Superseded by exact independent acceptance below; row394 remains pending.
+
+## Independent bounded acceptance — 2026-10-01
+
+Parent read and accepts all 95 lines of `/tmp/patch-12.0.5-aura-spell-identifier-independent-proof.md`. Source-identical producer `4b98920f0769b59b68c0dabbd9e8d9d47414fc00` has **73 selected PASS = 12 query + 29 aura + 18 admin + 14 C_Spell**, saved ordinary startup exit0 `[]`; independent fresh default fmt/check exit0 at `6755f0e6c`, no new-code readability violations. Unchanged `register_frame_context_globals` whole-file complexity warning is outside producer scope. Saved binaries/hashes above remain binding; no runtime reruns for this accounting decision.
+
+| Exact retained row | Accepted bounded simulator capability | Not established |
+|---|---|---|
+| `global api-C_UnitAuras-GetPlayerAuraBySpellID-392` | Public finite numeric and explicitly seeded string alias resolution into existing helpful/unblocked player AuraData; unmatched public identifier nil; unchanged legacy global | Native name/link parsing, alias production, visibility/access/secret acceptance |
+| `global api-C_UnitAuras-GetUnitAuraBySpellID-396` | Same bounded identifiers over existing player/party polarities and target spell113746/instance1 fixture; stable first match, live removal and independent DTO/GC snapshots | Generic target storage/ownership, source-player linked-aura consumer closure, arbitrary-unit/native visibility |
+
+Seeded-label resolver reuse, numeric alias precedence, helpful-then-harmful order, missing-unit policy and strict/conservative secret rejection remain **INFERRED**. Real secret wrapper/GC/secure-and-tainted rejection and caller-taint recovery are tested, not native `AllowedWhenTainted` acceptance or enforcement. No native name/subtext/link/localization/override, generic visibility/security parity, all-profile acceptance or whole-source/page completion credit.
+
+Existing accounting schema gains only capability `aura-spell-identifiers` and exact rows392/396 **audit-pending → bounded-coverage**: **260/88/14 → 258 pending / 90 bounded / 14 partial = 362**. Row394 remains pending; new duration inputs314 are separate. Outfit row673 remains pending: future315 verdict is not accepted.
+
+Before/after artifact `/tmp/patch-12.0.5-aura-spell-identifier-accounting-before-after.json` records exact changed rows, totals and unchanged ID/unrelated-row/capability comparisons. Register SHA256 and retained `source_sha256`: `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`; plaintext SHA256: `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`. Local proof ledger and ignored PLAN updated; PLAN never staged.
 
 ## Out of scope
 

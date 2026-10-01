@@ -1,5 +1,10 @@
 ## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
 
+## [2026-10-01] evidence | Accept exact bounded aura spell identifiers
+
+[[aura-spell-identifier-proof]] links [independent acceptance](../specs/aura-spell-identifier.md#independent-bounded-acceptance--2026-10-01): parent accepts full95-line independent310 report, saved **73 selected PASS**, startup0 `[]`, fresh default fmt/check0, no new readability violations. Only rows392/396 gain bounded simulator credit: **260/88/14 → 258/90/14 = 362**; IDs/register/plaintext SHA and unrelated rows preserved in explicit before/after artifact. Seeded aliases/order/target fixture and conservative security remain inferred; no native name/link, generic visibility, all-profile or consumer closure parity. Row394/new duration314 separate; future315 outfit verdict unaccepted, row673 pending. PLAN ignored, never staged.
+
+
 [[aura-spell-identifier-proof]] links [exact parent proof](../specs/aura-spell-identifier.md#reconciled-batch37-parent-proof--2026-10-01): input `28393b01b` RED compile0/130.04s, 3 PASS / 9 FAIL; producer `4b98920f0` GREEN compile0/378.90s, **12 query + 29 aura + 18 admin + 14 C_Spell = 73 PASS**, saved startup0 `[]`. **Independent310 pending**. Existing model/seeded-alias reuse, alias precedence, order and strict/secret policies remain inferred; legacy preserved. No native/generic spell catalog/refresh coverage or row promotion. **260/88/14 = 362**, IDs/register/plaintext hash unchanged, row394 pending; ignored PLAN never staged.
 
 ## [2026-10-01] correction | Accept row169 bounded predicate coverage

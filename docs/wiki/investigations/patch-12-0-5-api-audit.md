@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Aura spell identifiers — current bounded acceptance
+
+[Exact independent acceptance](../../specs/aura-spell-identifier.md#independent-bounded-acceptance--2026-10-01) owns proof and source identity: only rows392/396 promote to bounded simulator capability, **260/88/14 → 258 pending / 90 bounded / 14 partial = 362**. Independent73PASS, saved startup0[], freshfmt/check0, no new readability violations. Seeded aliases/order/target fixture and conservative security inferred; no native name/link, generic visibility, all-profile or consumer closure parity. Row394/new duration314 separate; future315 unaccepted, row673 pending. IDs/register/plaintext SHA/unrelated rows preserved; explicit before/after artifact linked in contract. Earlier counts below are historical checkpoints.
+
 ### Row169 — current bounded predicate acceptance
 
 [Chronological decision and four-family matrix](../../specs/party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) supersedes the earlier pending rationale below. March25 source line74 names `SetRestrictPings`; March31 line169 changes the restriction condition. Ping action/delivery was an assistant-invented prerequisite, not a source requirement. Parent accepts only explicit chat-lockdown-versus-combat predicate coverage across countdown, ready checks, ping restriction-setting and loot setting, backed by all four independent proofs.
