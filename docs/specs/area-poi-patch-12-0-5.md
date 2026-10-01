@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [x] Implement exact boolean `isSuppressible` and `isLocked` publication on mainline Retail/PTR with `retail-12-0-5` or a cumulative later epoch. Behavioral GREEN remains pending.
+- [x] Implement exact boolean `isSuppressible` and `isLocked` publication on mainline Retail/PTR with `retail-12-0-5` or a cumulative later epoch. Bounded batch9 GREEN is recorded below.
 - [x] Preserve existing populated Stormwind Portal Room (POI 7000, map 84) ID, map, name, description, atlas, position and event/glow fields. Both new inputs initialize false; suppression false is inferred simulator policy, not native-verified behavior.
 - [x] Preserve map-mismatch/unknown-POI zero-return behavior, nil-map lookup, map enumeration and seconds-left operations without changing their bodies.
 - [x] Gate new publication away from earlier retail epochs and non-mainline profiles; legacy behavioral proof remains pending.
@@ -33,7 +33,8 @@ The record and its owning provider live in `src/c_api/c_area_poi_info.rs`. Exist
 
 ## Known gaps (current cycle)
 
-- [ ] Parent batch9: freshly compile/discover and run `area_poi_patch_12_0_5::` (2 mainline tests), plus existing `c_area_poi_probes::` (8 controls). No GREEN claim yet.
+- [x] Batch9 `4f9e1607c`: `area_poi_patch_12_0_5::` 2/2 PASS and `c_area_poi_probes::` 8/8 PASS. Saved build/run attribution: `/tmp/patch-12.0.5-batch9-build-result.json`, `/tmp/patch-12.0.5-batch9-runs.json`; logs `integration-0.log` and `integration-1.log` under `/tmp/patch-12.0.5-batch9-`. Queries exercise the moved C API provider, contrasting inputs, populated serialization and existing controls, not an unexecuted legacy provider.
+- [ ] Independent producer audit 119: `/tmp/patch-12.0.5-batch9-independent-proof.md` pending. Final current-default fmt/check and startup after new query producers remain pending.
 - [ ] Legacy proof: same patch filter selects 1 control on an earlier retail epoch or non-mainline profile. Mainline GREEN alone does not prove field absence there.
 - [ ] Parent-owned applicable compilation/check/acceptance gates remain pending; formatting is not compilation proof.
 - [ ] Future native probes: observe suppression/locking transitions and populated eligibility cases, including combinations of flags, map/nil-map queries and field defaults. No native transition semantics inferred from field declarations.

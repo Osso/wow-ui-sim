@@ -23,7 +23,8 @@ Retained [12.0.5 prose](../../data/patch-api/sources/12.0.5-api-changes.txt), li
 
 ## Known gaps (current cycle)
 
-- [ ] Compilation and behavior pending parent batch9 registration/execution; batch8 compiles an older registry. Tests may already be GREEN. No registry or manifest changes here.
+- [x] Batch9 `4f9e1607c`: successful compilation and `unit_name_secret_tokens::` 3/3 PASS, exit 0. `/tmp/patch-12.0.5-batch9-build-result.json` and `/tmp/patch-12.0.5-batch9-runs.json` bind revision/artifact; `/tmp/patch-12.0.5-batch9-integration-4.log` records public fixture names/current one-return provider arity and secret-token rejection from secure and tainted callers with public controls. This observes existing conversion behavior; no new producer or native rejection policy is established.
+- [ ] Independent audit 119 report `/tmp/patch-12.0.5-batch9-independent-proof.md`, final current-default fmt/check and startup after new query producers remain pending.
 - [ ] Future native restricted-unit-token probe must distinguish secure versus tainted callers, public-token controls, actual restricted `UnitToken` values versus simulator wrappers, and return arity.
 
 ## Out of scope

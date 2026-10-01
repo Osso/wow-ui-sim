@@ -215,6 +215,73 @@
         "simulator_proof": "Batch7 c5ba89ae3 with rilua 6044544b: 6/6 simulator cases PASS; independent batch7 audit/final acceptance pending."
       },
       "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd"
+    },
+    {
+      "id": "area-poi-publication",
+      "symbols": [
+        "C_AreaPoiInfo.GetAreaPOIInfo"
+      ],
+      "scope": "Explicit suppression/locking inputs via moved C API provider; 2 new + 8 controls PASS. Legacy execution unproven.",
+      "spec": "docs/specs/area-poi-patch-12-0-5.md",
+      "tests": [
+        "tests/area_poi_patch_12_0_5.rs"
+      ],
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
+    },
+    {
+      "id": "renown-rewards",
+      "symbols": [
+        "C_MajorFactions.GetRenownRewardsForLevel"
+      ],
+      "scope": "Empty-default pair-keyed snapshots; optional isCollected; 9 PASS. Earlier-profile/native reward eligibility unproven.",
+      "spec": "docs/specs/major-faction-renown-rewards.md",
+      "tests": [
+        "tests/major_faction_renown_rewards.rs"
+      ],
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
+    },
+    {
+      "id": "structure-inputs",
+      "symbols": [
+        "C_PvP.GetActiveBrawlInfo",
+        "C_TransmogCollection.GetAppearanceSourceInfo",
+        "C_TransmogOutfitInfo.GetViewedOutfitSlotInfo"
+      ],
+      "scope": "Three explicit-state snapshot producers; 9 PASS. Return/selector/security policies inferred; native and required-input probes pending.",
+      "spec": "docs/specs/patch-12-0-5-structure-inputs.md",
+      "tests": [
+        "tests/patch_12_0_5_structure_inputs.rs"
+      ],
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
+    },
+    {
+      "id": "unit-name-secret-tokens",
+      "symbols": [
+        "UnitName"
+      ],
+      "scope": "Existing provider public names/arity and secure/tainted secret-wrapper rejection; 3 PASS. Native UnitToken behavior unproven.",
+      "spec": "docs/specs/unit-name-secret-tokens.md",
+      "tests": [
+        "tests/unit_name_secret_tokens.rs"
+      ],
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
+    },
+    {
+      "id": "insecure-propagators",
+      "symbols": [
+        "Insecure propagator templates"
+      ],
+      "scope": "Cached mouse masks 1 PASS; keyboard and hyperlink 2 FAIL; diagnosis open. Partial only.",
+      "spec": "docs/specs/insecure-propagator-templates.md",
+      "tests": [
+        "tests/insecure_propagator_templates.rs"
+      ],
+      "proof": "partial-development-green",
+      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
     }
   ],
   "source_rows": [
@@ -701,9 +768,11 @@
     },
     {
       "source_id": "prose-2026-03-31-154",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-name-secret-tokens"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "prose-2026-03-31-157",
@@ -775,9 +844,11 @@
     },
     {
       "source_id": "prose-2026-03-31-173",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "insecure-propagators"
+      ],
+      "status": "partial-development-green",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "prose-2026-03-31-174",
@@ -2235,15 +2306,19 @@
     },
     {
       "source_id": "structures-AreaPOIInfo-628",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "area-poi-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-AreaPOIInfo-629",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "area-poi-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-631",
@@ -2391,15 +2466,19 @@
     },
     {
       "source_id": "structures-MajorFactionRenownRewardInfo-665",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "renown-rewards"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-PvpBrawlInfo-667",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "structure-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-RecentAllyStateData-669",
@@ -2409,9 +2488,11 @@
     },
     {
       "source_id": "structures-TransmogAppearanceSourceInfoData-671",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "structure-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-TransmogOutfitEntryInfo-673",
@@ -2433,9 +2514,11 @@
     },
     {
       "source_id": "structures-ViewedTransmogOutfitSlotInfo-678",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "structure-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
     }
   ]
 }

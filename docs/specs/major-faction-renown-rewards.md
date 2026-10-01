@@ -45,11 +45,12 @@ Actual batch8 RED at `693883c77003589b24b9a555141ea51a3e71e1e9`, following input
 - `/tmp/patch-12.0.5-batch8-new-model-runs.json` binds the successful build artifact to that revision, SHA256 `33fb7f19a888209821fa80417201d1b5bc6a6f2899377813335df62b3e671924`, count 5, exit 101.
 - `/tmp/patch-12.0.5-batch8-new-model-red-1.log`: **2/5 PASS, 3/5 FAIL**. Empty default and missing registered pair pass. Failures are `expected three modeled renown rewards`, `pair-specific reward counts`, and `initial modeled reward count`; compilation/missing-function errors are not the failure boundary.
 
-`tests/major_faction_renown_rewards.rs` now has **nine** grouped cases under its unchanged mainline 12.0.5+ fixture gate. Four cases were added before handler changes: public selectors from tainted callers, secret selectors individually/both from secure versus tainted callers, required numeric inputs/non-truncation, and independent snapshot mutations. Existing five fixtures were not weakened. Added cases have no executed RED/GREEN evidence; parent owns the next build/proof. Original RED remains historical evidence, not proof for changed producer code.
+`tests/major_faction_renown_rewards.rs` now has **nine** grouped cases under its unchanged mainline 12.0.5+ fixture gate. Four cases were added before handler changes: public selectors from tainted callers, secret selectors individually/both from secure versus tainted callers, required numeric inputs/non-truncation, and independent snapshot mutations. Existing five fixtures were not weakened. Added cases had no executed RED at that snapshot; all nine subsequently pass batch9. Original RED remains historical evidence, not proof for changed producer code.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned compilation and GREEN for filter `major_faction_renown_rewards::` (nine cases).
+- [x] Batch9 `4f9e1607c`: successful compilation and `major_faction_renown_rewards::` 9/9 PASS, exit 0. `/tmp/patch-12.0.5-batch9-build-result.json` and `/tmp/patch-12.0.5-batch9-runs.json` bind revision/artifact; `/tmp/patch-12.0.5-batch9-integration-2.log` records empty defaults, populated optional fields, pair isolation, updates/removal, independent snapshots, numeric selectors and secure/tainted secret controls.
+- [ ] Independent producer audit 119 report `/tmp/patch-12.0.5-batch9-independent-proof.md`, final current-default fmt/check and startup after new query producers remain pending.
 - [ ] Parent-owned earlier/nonmainline regression proof for empty defaults and `isCollected` absence; current fixtures run only mainline 12.0.5+.
 - [ ] Future native probe: populated/absent/unknown pairs, optional omissions/false, snapshot behavior, ordering, numeric limits, and secret policy.
 
