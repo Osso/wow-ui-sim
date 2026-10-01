@@ -158,8 +158,24 @@ Tests-only `6e2f65346` exercises the cached Forever `Blizzard_RestrictedAddOnEnv
 
 Source proof is **1/1 passed**, exit `0`, with unchanged before/after hashes for the test and Cargo manifests: `/home/osso/.local/state/wow-ui-sim-proof/forever-restricted-execution-2026-09-30/{ledger.json,stdout,stderr}`. Independent audit `20328` remains pending. This bounded available-consumer test does not reproduce the historical DisenchantHelper nil-`loadstring_untainted` failure, but the archived addon is unavailable: no exact-addon replay, matrix status change, native security parity, or full restricted-execution claim follows. Datamine remains blocked at its separately documented startup/workflow boundaries; that blocked case does not close or pause the broader inventory goal.
 
+## BugCapture selected-TOC source boundary
+
+The first current-local BugCapture test failed before its workflow: `!BugGrabber did not load any Lua files`. Persistent `trace.stderr` rejects both `BugGrabber.lua` and `locales.lua`: relative `Interface/AddOns/!BugGrabber/...` module paths are outside the absolute selected TOC root. The trace's `loaded !BugGrabber` bookkeeping marker does not prove Lua execution. An earlier explorer assertion that it was already loaded lacked observation and is rejected by these warnings.
+
+Pre-fix `resolve_addon_file_path` chose a repo-relative overlay whenever that file existed, overriding the selected TOC source. `dd77368b7` removes that implicit alternate-source choice and passes `toc.file_paths()` directly to loading; the selected-root module guard remains intact. This honors the user's NoFallbacks constraint without vendor edits. Post-fix GREEN is pending; docs test requirements remain unchecked.
+
+| Boundary | Observed proof | Remaining limit |
+| --- | --- | --- |
+| Cached RestrictedExecution, updated rilua pin | Build ledger revision `3e40b526b`; combined test ledger: 2 tests, 1 baseline pass / 1 loading failure, exit `101` | Improves bounded producer proof only; independent/full security acceptance unclaimed |
+| Current-local BugGrabber/BugSack | 29-file before/after identity unchanged; first test fails loading, diagnostic trace confirms root mismatch | Not an archive-release identity; no store/counter/display workflow pass |
+| Selected-TOC correction `dd77368b7` | Source diff removes existence-based substitution | Post-fix regression/workflow GREEN pending |
+
+No archival matrix status changes follow. Historical DisenchantHelper remains unavailable; Datamine's separate blockers remain open. Evidence directory: `/home/osso/.local/state/wow-ui-sim-proof/forever-bug-capture-2026-10-01/` (`build-ledger.json`, `test-ledger.json`, `tests.stdout`, `trace.stderr`, and local addon before/after hashes).
+
 ## Sources
 
+- [Selected-TOC loader](../../../src/loader/addon.rs) — `dd77368b7` removes implicit local overlays, preserves module-root guard
+- `/home/osso/.local/state/wow-ui-sim-proof/forever-bug-capture-2026-10-01/test-ledger.json` and sibling build/trace/identity artifacts — pre-fix baseline pass and BugCapture loading failure, not post-fix acceptance
 - [RestrictedExecution regression](../../../tests/forever_restricted_execution.rs) — tests-only `6e2f65346`, cached consumer state and public rejection boundary
 - `/home/osso/.local/state/wow-ui-sim-proof/forever-restricted-execution-2026-09-30/ledger.json` and sibling `stdout`/`stderr` — bounded 1/1 source proof; independent audit pending
 - [Forever runtime coverage](../../forever-addon-runtime-coverage.md) — historical DisenchantHelper classification remains unchanged without its archive

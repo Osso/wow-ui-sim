@@ -1,3 +1,7 @@
+## [2026-09-30] investigation | Audit BugCapture selected-TOC source correction
+
+Updated [[forever-addon-comparison#BugCapture selected-TOC source boundary]] and index from `dd77368b7` and persistent `forever-bug-capture-2026-10-01` artifacts. Both !BugGrabber Lua files were rejected as relative paths outside the absolute TOC root; the unobserved already-loaded assertion is rejected. Source removes implicit alternate selection without relaxing the guard or editing vendors. Combined updated-rilua proof is 1 baseline pass / 1 loading failure, not BugSack acceptance. Post-fix GREEN and docs requirements stay pending/unchecked; current-local 29-file identity is not an archive release, and matrix statuses remain unchanged. Docs-only audit; no tests, Cargo, runtime, delegation, downloads, or operations.
+
 ## [2026-10-01] implementation | Record bounded FontString smooth scaling
 
 Updated [[rendering-pipeline]] and index with [FontString smooth scaling](../specs/fontstring-smooth-scaling.md). `0624da720` implements independent boolean state, checked secret inputs, fractional shared height, cache identity and verified `smoothScaling` XML spelling; `3c8b48012` adds wrapped render/cache assertions. Valid RED fails six API and one renderer cases on missing methods, not later height/cache assertions; targeted GREEN remains parent-owned and pending. Public default and exact metrics are inferred; false legacy behavior, animation-mode independence and earlier XML epoch gap are explicit. Future native recorder is tracked, not run.
