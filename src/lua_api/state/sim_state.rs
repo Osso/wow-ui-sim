@@ -5,6 +5,9 @@ pub struct SimState {
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     #[cfg(feature = "client-wowforever")]
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
+    #[cfg(feature = "client-wowforever")]
+    pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
     pub widgets: WidgetRegistry,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,

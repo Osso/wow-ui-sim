@@ -26,6 +26,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(feature = "client-wowforever")]
+            gamepad_mapped_sticks: None,
             #[cfg(feature = "retail-12-1-5")]
             weather: crate::c_api::c_weather::WeatherState::default(),
             #[cfg(feature = "retail-12-1-5")]

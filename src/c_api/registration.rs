@@ -15,6 +15,8 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     #[cfg(feature = "client-wowforever")]
     super::c_gamepad_ui::register(state)?;
     #[cfg(feature = "client-wowforever")]
+    super::c_game_pad::register(state)?;
+    #[cfg(feature = "client-wowforever")]
     super::c_edit_mode::register(state)?;
     #[cfg(feature = "client-wowforever")]
     super::gamepad_action_bar_constants::register(state);
