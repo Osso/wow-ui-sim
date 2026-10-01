@@ -64,16 +64,12 @@ fn debuff_slot_table_reports_harmful() {
 #[test]
 fn aura_table_exposes_boolean_flag_shape() {
     let env = env();
-    // Default buffs select from player and party sources; slot 1 is not always player-cast.
-    let expected = env
-        .state()
-        .borrow()
-        .player
-        .buffs
-        .iter()
-        .find(|aura| aura.aura_instance_id == 1)
-        .expect("default player aura at slot 1")
-        .clone();
+    let expected = AuraInfo {
+        aura_instance_id: 1,
+        is_nameplate_only: false,
+        ..helpful_non_raid_fixture()
+    };
+    env.state().borrow_mut().player.buffs = vec![expected.clone()];
     let (
         name,
         source,
