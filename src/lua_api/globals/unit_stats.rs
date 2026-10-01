@@ -170,6 +170,25 @@ fn lookup_unit_stats(sim: &SimState, unit: &str) -> UnitStats {
     }
 }
 
+#[cfg(feature = "client-retail")]
+fn unit_weapon_attack_power(state: &mut LuaState) -> LuaResult<u32> {
+    // Decode only this documented AllowedWhenUntainted selector; preserve caller taint.
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let unit = val_to_string(state, value).ok_or_else(|| {
+        rilua::runtime_error("UnitWeaponAttackPower requires a UTF-8 UnitToken string")
+    })?;
+    let power = {
+        let sim = borrow_state(state)?;
+        super::unit_misc::existing_guid_for_unit(&sim, &unit)
+            .and_then(|guid| sim.weapon_attack_power.get(&guid).copied())
+            .unwrap_or_default()
+    };
+    for value in [power.main_hand, power.off_hand, power.ranged] {
+        push_stat_number(state, value)?;
+    }
+    Ok(3)
+}
+
 fn unit_token_at(state: &LuaState, index: i32) -> String {
     val_to_string(state, stack_val(state, index)).unwrap_or_else(|| "player".to_string())
 }
@@ -609,6 +628,8 @@ const UNIT_STAT_GLOBALS: &[(&str, RustFn)] = &[
 ];
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(feature = "client-retail")]
+    LuaApiMut::register_function(lua, "UnitWeaponAttackPower", unit_weapon_attack_power)?;
     for &(name, function) in UNIT_STAT_GLOBALS {
         LuaApiMut::register_function(lua, name, function)?;
     }

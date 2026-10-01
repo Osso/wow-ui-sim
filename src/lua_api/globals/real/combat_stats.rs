@@ -1,5 +1,8 @@
 //! State-backed character combat-rating globals backed by `PlayerState.stats`.
 
+#[cfg(feature = "client-retail")]
+mod retail_inputs;
+
 use crate::c_api::c_secrets::push_stat_number;
 #[cfg(feature = "client-wowforever")]
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
@@ -390,6 +393,8 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
 ];
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(feature = "client-retail")]
+    retail_inputs::register_all(lua)?;
     for &(name, function) in COMBAT_STAT_GLOBALS {
         LuaApiMut::register_function(lua, name, function)?;
     }

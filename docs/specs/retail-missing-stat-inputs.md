@@ -9,7 +9,7 @@ Ten previously absent retail globals from the [12.0.5 source](../../data/patch-a
 - [ ] `GetPetMeleeHaste` reads an optional independent pet percentage. **Guess:** absent input yields one zero; setting input does not create a unit or inherit player haste.
 - [ ] Regen queries return distinct `{base, casting}` per-second inputs selected by active/requested power type. **Guess:** missing pools yield two zeros; no intellect/mana alias or invented non-mana regeneration formula.
 - [ ] Optional effective AP returns main-hand, off-hand, ranged, base melee, base ranged in that order. **Guess:** absent input returns no values. Weapon AP returns three independent contributions keyed by existing unit GUID; same-GUID aliases share values. **Guess:** absent entity or unconfigured row yields three zeros; configured rows never create entities.
-- [ ] Every numeric result uses existing stat secrecy publication, preserving values, all arities, restriction toggles and tainted caller context. Secret power/unit selectors are accepted only when untainted through existing argument conversion; no generic declassification.
+- [ ] Every numeric result uses existing stat secrecy publication, preserving values, all arities, restriction toggles and tainted caller context. Secret power/unit selectors are accepted only when untainted through VM-authenticated, API-local selector reads; no generic declassification. **Guess:** power type requires an exact i32; unit token requires UTF-8 text.
 - [ ] Registrations and newly added state are retail-only; existing Forever functions retain behavior.
 
 ## How it works
@@ -22,7 +22,7 @@ Ten previously absent retail globals from the [12.0.5 source](../../data/patch-a
 - `src/lua_api/state_types/character_world.rs` — explicit scalar, regen, effective AP and weapon AP input types.
 - `src/lua_api/sim_substates/mod.rs` — independent optional pet haste.
 - `src/lua_api/{state.rs,state/sim_state.rs}` — GUID-indexed weapon contributions and empty initial map.
-- `src/lua_api/globals/{real/combat_stats.rs,real/pet_stats.rs,unit_stats.rs}` — bounded stat producers and registrations.
+- `src/lua_api/globals/{real/combat_stats.rs,real/combat_stats/retail_inputs.rs,real/pet_stats.rs,unit_stats.rs}` — bounded stat producers and registrations.
 
 ## Tests asserting this spec
 
@@ -30,7 +30,7 @@ Ten previously absent retail globals from the [12.0.5 source](../../data/patch-a
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned concrete fixture RED/GREEN and final verification pending. Original RED at `e0a46d691`: all ten fail on missing-global invocation (`/tmp/patch-12.0.5-batch5-missing-stats-red.log`).
+- [ ] Parent-owned GREEN and final verification pending. Original RED at `e0a46d691`: ten missing-global invocation failures. Concrete fixture RED at `eac08bda3`: 0/13 pass, all fail on missing globals (`/tmp/patch-12.0.5-batch6-stats-fixture-red.log`); parent default integration compile succeeded after public input export correction. Bodies follow that RED.
 - [ ] Future native probes: mastery across classes/specs/levels; conversion units and absent conversion; penetration/sturdiness scales and equipment effects; pet presence/inheritance; regen by power and casting state; effective AP absence and all five positions; weapon contributions for aliases and missing entities; secrecy of each position and secret selectors under tainted callers.
 
 ## Out of scope

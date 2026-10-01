@@ -42,9 +42,9 @@ All rows below are implemented; targeted post-change GREEN is pending. Counts de
 ## Known gaps (current cycle)
 
 - [ ] Targeted post-change GREEN and parent-owned final gate pending. Predicate pre-change RED: `/tmp/patch-12.0.5-stats-predicate-red.log` (1 failed, missing predicate); corrected shared build revision `a3ba2a23a`. Output RED at `9a50d8a5c`: `/tmp/patch-12.0.5-batch4-stats-output-red.log`, predicate passes / three output cases fail, including `GetAttackPowerForStat secrecy 1`. Fresh evidence verified 2026-10-01; earlier retained provenance dates remain unchanged.
-- [ ] Separately implement 10 unsupported default-retail base models: `GetMastery`, `GetOverrideAPBySpellPower`, `GetOverrideSpellPowerByAP`, `GetPetMeleeHaste`, `GetPowerRegen`, `GetPowerRegenForPowerType`, `GetSpellPenetration`, `GetSturdiness`, `PlayerEffectiveAttackPower`, `UnitWeaponAttackPower`. No new no-op stubs here.
+- [ ] Parent-owned GREEN for the ten separately implemented [retail stat input models](retail-missing-stat-inputs.md); concrete input, order, update and security fixtures are RED at `eac08bda3`. No new no-op stubs here.
 - [ ] Future native probes: predicate transition across combat/encounter/aura contexts, absent-unit nil/zero behavior, all result positions and caller taint. Existing stat formulas/placeholders are not claimed native parity.
 
 ## Out of scope
 
-- Automatic restriction producers and the 10 missing base models require separate implementation; the Forever-only aura flag is not this input.
+- Automatic restriction producers remain outside this contract; the ten additional base models have their [own contract](retail-missing-stat-inputs.md). The Forever-only aura flag is not this input.
