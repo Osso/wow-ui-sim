@@ -99,6 +99,8 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 ## Global Functions
 
+**Pending spell confirmations** — `globals/real/spell_confirmation_prompts.rs` copies validated host fields into an empty-default `SimState` map before synchronous dispatch, then returns fresh stack-rooted query snapshots. Accept/decline delete only the numeric spell identity. Mainline 12.0.5+ registration excludes the separately cfg-selected historical/nonmainline inert query. [Contract](../../specs/spell-confirmation-prompts.md) owns mapping, inferred policies and saved missing-surface RED; producer `b07fc61f6` is uncompiled/unexecuted, with parent GREEN and final gates pending. No native or source-accounting completion.
+
 **Party connection input** — Active `admin.rs` registration exposes the shared setter; `PartyMember.connected` feeds party-token and aggregate queries. Mutation precedes synchronous edge dispatch with no state borrow held. Non-party token behavior remains unchanged. [Contract](../../specs/party-connection.md) owns cached payload evidence, inferred semantics, actual six-case RED, eight-case GREEN plus 47 controls, independent bounded acceptance and snapshot-scoped default Rust gates; parent startup is saved evidence, not independently verified, and concurrent unrelated test edits are excluded; no native or source-accounting completion credit.
 
 **Core overrides** — `print` appends to `SimState.console_output`; `ipairs` iterates frame children; `getmetatable` returns a fake metatable exposing all frame methods; `string.format` maps `%F` → `%f` for LuaJIT compatibility.
@@ -174,6 +176,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [spell-confirmation-prompts.md](../../specs/spell-confirmation-prompts.md) — explicit pending model, event mapping and proof boundary
 
 - [lua-api.md](../../lua-api.md) — WowLuaEnv, FrameHandle, method categories, globals, C_* namespaces, timers
 - [unit_misc.rs](../../../src/lua_api/globals/unit_misc.rs) — UnitGUID and UnitIsUnit registration through the existing-identity resolver

@@ -6,6 +6,10 @@
 
 [[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures now have bounded development GREEN; linked contract owns 55 PASS and saved zero-error startup. Independent bounded acceptance and snapshot-scoped default Rust gates recorded; parent startup remains saved, not independently verified; no native, all-profile execution or whole-row completion claim.
 
+## [2026-10-01] implementation | Add bounded pending spell confirmations
+
+[[lua-api#Global Functions]] links the [pending contract](../specs/spell-confirmation-prompts.md): producer `b07fc61f6` adds explicit per-environment records, synchronous ten-field publication, independent snapshots and matching-ID removal. Mainline 12.0.5+ only; earlier/nonmainline inert query is cfg-separated. Saved prerequisite RED 0/6 precedes production; compilation, GREEN and final gates remain parent-owned. No native or source-accounting completion.
+
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 
 [[patch-12-0-5-api-audit#UnitSpellTargetName snapshot — partial GREEN]] links the [contract proof](../specs/unit-spell-target-name.md#tests-asserting-this-spec): inputs `c14076510` RED 0/10, producer `5beaf7545` compiled at `024afed64`, target GREEN 10/10 plus flyout 14/14 and vehicle 22/22 controls; saved startup exit 0 with `[]`. Exact dated PTR row `prose-2026-03-12-041` has partial development coverage; all 362 IDs and unrelated statuses retained. Player caster and explicit snapshot only; actual targeting, nonplayer caster and native semantics unclaimed. Linked contract records independent bounded behavior/security PASS and default fmt/check snapshot `4c5aeb2d8`, excluding later party tests `03ebe6972`. Ten RED cases hit missing query surface, not ten independent behavioral failures; readability length finding is advisory.
