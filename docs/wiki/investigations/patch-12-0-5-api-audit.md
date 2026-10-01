@@ -4,6 +4,10 @@ The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention
 
 ## Content
 
+### UNIT_CONNECTION party transitions — bounded GREEN
+
+[Party connection contract](../../specs/party-connection.md#tests-asserting-this-spec) owns exact retained `prose-2026-03-31-182`: tests `03ebe6972` actual RED 0/6 at missing setter; implementation `527cb2f57` GREEN 8 party + 28 admin-party + 19 admin-event = 55 PASS, saved startup exit 0 with `[]` and zero Lua errors. Shared explicit input/state/query transitions dispatch actual synchronous two-argument disconnect/reconnect listeners with post-mutation query observations. Cached `UnitDocumentation.lua:4057-4065` explicitly declares synchronous `(unitTarget, isConnected)`; defaults, change-only emission and lifecycle policies remain simulator inferences. [Coverage register](../../../data/patch-api/sources/12.0.5-page-coverage.json) retains all 362 IDs and unrelated rows. Independent verifier 147 report absent/pending; no current Rust gate, native, networking, all-profile execution, full-row or whole-page claim. Audit remains **IN PROGRESS**.
+
 ### UnitSpellTargetName snapshot — partial GREEN
 
 [Cast-target contract](../../specs/unit-spell-target-name.md#tests-asserting-this-spec) owns exact retained `prose-2026-03-12-041` accounting, a dated PTR proposal rather than a consolidated shipped-API claim. Inputs `c14076510` yield actual missing-query RED 0/10; producer `5beaf7545`, compiled at `024afed64`, yields target GREEN 10/10, flyout 14/14 and vehicle/possession 22/22. Saved startup exits 0 with `[]`. [Coverage register](../../../data/patch-api/sources/12.0.5-page-coverage.json) remains partial: player caster only, explicit actual-cast snapshot input, no actual targeting producer, nonplayer caster model or native claim. Linked contract records independent bounded behavior/security PASS and default fmt/check snapshot `4c5aeb2d8`, excluding later party tests `03ebe6972`. Ten RED cases hit missing query surface, not ten independent behavioral failures; readability length finding is advisory. All 362 source IDs and unrelated statuses retained; no whole-page completion.

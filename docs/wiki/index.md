@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
+
+[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent verifier 147 absent/pending, current Rust gates unclaimed. No native/network/all-profile/full-row/full-page acceptance.
+
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
 [[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures await parent GREEN/final gates; no build, native, profile-runtime or source-accounting completion claim.

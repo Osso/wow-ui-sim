@@ -8,11 +8,11 @@ Bounded retained 12.0.5 prose row 182 motivates party connect/disconnect handlin
 
 ## What it must do
 
-- [ ] Expose shared `A_Admin.SetPartyMemberConnected(index, bool)` for existing one-based party members. An absent valid index must succeed without creating a member, changing existing members, or emitting `UNIT_CONNECTION`.
-- [ ] New party members start connected. `UnitIsConnected("partyN")` reads the current member's connection state; `GroupHasOfflineMember()` is true exactly when at least one current party member is disconnected, and false for an empty party.
-- [ ] Both disconnect and reconnect dispatch an actual `UNIT_CONNECTION` listener before the setter returns, with exactly `(unitTarget, isConnected)`. Queries inside that callback observe post-transition state. Repeating the current value emits no event.
-- [ ] Reconnecting one member leaves the aggregate offline while another member remains disconnected. Shrinking/removing the roster discards removed connection state; regrowth starts connected.
-- [ ] Connection state and listener dispatch stay isolated per `WowLuaEnv`, without profile-specific party storage.
+- [x] Expose shared `A_Admin.SetPartyMemberConnected(index, bool)` for existing one-based party members. An absent valid index must succeed without creating a member, changing existing members, or emitting `UNIT_CONNECTION`.
+- [x] New party members start connected. `UnitIsConnected("partyN")` reads the current member's connection state; `GroupHasOfflineMember()` is true exactly when at least one current party member is disconnected, and false for an empty party.
+- [x] Both disconnect and reconnect dispatch an actual `UNIT_CONNECTION` listener before the setter returns, with exactly `(unitTarget, isConnected)`. Queries inside that callback observe post-transition state. Repeating the current value emits no event.
+- [x] Reconnecting one member leaves the aggregate offline while another member remains disconnected. Shrinking/removing the roster discards removed connection state; regrowth starts connected.
+- [x] Connection state and listener dispatch stay isolated per `WowLuaEnv`, without profile-specific party storage.
 
 ## How it works
 
@@ -30,15 +30,15 @@ Bounded retained 12.0.5 prose row 182 motivates party connect/disconnect handlin
 
 ## Tests asserting this spec
 
-`tests/party_connection.rs` covers both synchronous edges with exact two-field payload and callback query snapshots; repeated inputs; absent valid index; two offline members and partial reconnect; shrink/regrowth; full removal/regrowth; and two-environment isolation. Two additional unrun controls cover inactive retained members and unchanged non-party queries, including the shared lookup's raid aliases. Every fixture first requires the new setter to be callable. Calls must succeed directly, without `pcall` rejection checks that could mistake a missing method for valid rejection. Callback observations are asserted outside the callback, so swallowed handler errors cannot stand in for proof.
+`tests/party_connection.rs` covers both synchronous edges with exact two-field payload and callback query snapshots; repeated inputs; absent valid index; two offline members and partial reconnect; shrink/regrowth; full removal/regrowth; and two-environment isolation. Two additional GREEN controls cover inactive retained members and unchanged non-party queries, including the shared lookup's raid aliases. Every fixture first requires the new setter to be callable. Calls must succeed directly, without `pcall` rejection checks that could mistake a missing method for valid rejection. Callback observations are asserted outside the callback, so swallowed handler errors cannot stand in for proof.
 
 `tests/admin_party_api.rs::test_group_has_offline_member_defaults_false` remains unchanged: connected default members correctly yield false.
 
-Proof ledger, 2026-10-01: tests/spec revision `03ebe69723ad7e01e54b05b261c75b6e19df77d7`; parent default compile (`cargo test --test integration --no-run --message-format=json`) exits 0 in 97.987s. Actual grouped runtime RED is 0/6, each failing the callable-setter assertion. Saved artifacts: `/tmp/patch-12.0.5-batch14-red-{build.json,build.log,build-result.json,run.json,run.log}`. Production implementation and two additional boundary controls are unbuilt/unrun in this change; parent owns GREEN and final gates. Suggested bounded parent invocation: `cargo test --test integration party_connection::`. No native, cross-profile execution, full-row, or whole-page completion credit.
+Proof ledger, 2026-10-01: tests/spec revision `03ebe69723ad7e01e54b05b261c75b6e19df77d7`; parent default compile (`cargo test --test integration --no-run --message-format=json`) exits 0 in 97.987s. Actual grouped runtime RED is 0/6, each failing the callable-setter assertion. Saved artifacts: `/tmp/patch-12.0.5-batch14-red-{build.json,build.log,build-result.json,run.json,run.log}`. Superseding bounded development GREEN at implementation `527cb2f57e992777ca5b4b75392fa0c9a8758da0`: `/tmp/patch-12.0.5-batch14-green-runs.json` records eight party connection fixtures, 28 admin-party controls and 19 admin-event controls, all passing (55 total); referenced `green-run-{0,1,2}.log` files contain the matching results. Integration binary SHA-256: `b30c011863771cea9c0376c364e3028e45642cb359bce2b4f4cc6722799dab16`. These prove bounded state/input/query/synchronous event behavior, not native transition semantics. Saved same-revision startup `/tmp/patch-12.0.5-batch14-green-startup-run.json` records exit 0; `green-startup.json` contains `[]`, with `green-startup.log` retained: zero startup Lua errors. Independent verifier 147 remains pending: `/tmp/patch-12.0.5-party-connection-independent-proof.md` was absent during this update. No current Rust gate, native, networking, all-profile execution, full-row, or whole-page completion claim.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent records GREEN for implemented shared connection input/model/query transitions and all eight fixtures, plus required final gates. Source inspection and historical RED are not current build/runtime proof.
+- [ ] Independent bounded acceptance and required current Rust gates remain pending. Saved development GREEN covers implementation `527cb2f57`, not subsequent source changes.
 
 ## Out of scope
 

@@ -345,6 +345,27 @@
       "startup_ledger": "/tmp/patch-12.0.5-batch13-green-startup-run.json",
       "independent_ledger": "/tmp/patch-12.0.5-cast-target-independent-proof.md",
       "gate_scope": "Independent bounded behavior/security PASS: RED 0/10 at missing query surface, not ten independent behavioral failures; target GREEN 10/10, flyout 14/14 and vehicle 22/22 reused at 024afed64. Separate saved startup exit 0 with []. Default fmt/check exit 0, zero warnings/errors at 4c5aeb2d8 with 3,220 unchanged tracked Rust/config hashes; later party tests 03ebe6972 excluded. Readability length finding advisory, not required refactor. Partial limits unchanged: no native, actual user targeting, nonplayer caster, full-system, all-profile or whole-page acceptance."
+    },
+    {
+      "id": "party-connection",
+      "symbols": [
+        "A_Admin.SetPartyMemberConnected",
+        "UnitIsConnected",
+        "GroupHasOfflineMember",
+        "UNIT_CONNECTION"
+      ],
+      "scope": "Shared party connection bool and explicit simulator input; mainline development proof for synchronous disconnect/reconnect exact two-argument callbacks with post-mutation queries, unchanged edges, absent/inactive members, aggregate offline state, roster regrowth, environment isolation and preserved non-party queries. Defaults/edge/lifecycle policies inferred; cached event contract is documented, not native execution. No network, all-profile execution, full-row or whole-page claim.",
+      "spec": "docs/specs/party-connection.md",
+      "tests": [
+        "tests/party_connection.rs"
+      ],
+      "inputs": "03ebe6972",
+      "implementation": "527cb2f57",
+      "compiled_revision": "527cb2f57e992777ca5b4b75392fa0c9a8758da0",
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch14-green-runs.json",
+      "startup_ledger": "/tmp/patch-12.0.5-batch14-green-startup-run.json",
+      "gate_scope": "Actual RED 0/6 at missing setter; GREEN 8 party + 28 admin-party + 19 admin-event = 55 PASS; saved startup exit 0, [] zero errors. Independent verifier 147 pending (report absent); no current Rust gate claim. Linked spec owns proof and inference limits."
     }
   ],
   "source_rows": [
@@ -953,9 +974,11 @@
     },
     {
       "source_id": "prose-2026-03-31-182",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-connection"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retained UNIT_CONNECTION party disconnect/connect prose: bounded shared explicit input/state/query/event development proof only. Cached UnitDocumentation.lua:4057-4065 documents synchronous (unitTarget, isConnected); transition policies inferred. Spec owns RED 0/6, GREEN 55 PASS and saved zero-error startup. Independent acceptance/current Rust gates pending; no native/network/all-profile/full-row/whole-page credit."
     },
     {
       "source_id": "prose-2026-04-10-185",
