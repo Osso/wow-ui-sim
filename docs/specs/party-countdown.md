@@ -42,7 +42,7 @@ Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-regi
 
 - `tests/party_countdown.rs` — ten epoch-gated fixtures, real Lua frame observers, public request effects and actual host-secret fixtures; automatically included by the existing grouped integration harness.
 - `src/c_api/c_party_info.rs` — epoch-gated namespace registration owner.
-- `src/c_api/c_party_info/countdown.rs` — C API-owned `CountdownRequest` stores requested seconds and modeled initiator snapshot. Validation precedes mutation; positive replacement commits the new record, cancellation clears it, and idle cancellation does neither. Both event strings are stack-rooted during existing synchronous dispatch; state is committed and the mutable borrow released before callbacks. Nested requests therefore observe the committed lifecycle.
+- `src/c_api/c_party_info/countdown.rs` — C API-owned `CountdownRequest` stores requested seconds and modeled initiator snapshot. Validation precedes mutation; positive replacement commits the new record, cancellation clears it, and idle cancellation does neither. GUID/name payloads are stack-rooted during existing synchronous dispatch; state is committed and the mutable borrow released before callbacks. Source ordering permits nested requests to observe committed state; dedicated reentrancy behavior is untested.
 - `src/c_api/c_chat_info.rs` — existing shared lockdown error guard; unchanged.
 - `src/lua_api/state/sim_state.rs` and `state.rs` — `party_countdown_request: Option<CountdownRequest>`, initialized to `None`, independently owned by each environment. Start/replacement snapshots current modeled player identity; cancel snapshots the current requester, not stale initiator metadata. No new identity constants or clock origin are introduced.
 
@@ -58,15 +58,15 @@ Parent filter: `cargo test --test integration party_countdown::`.
 
 Saved `/tmp/patch-12.0.5-batch35-green-{build-result,runs,startup-run}.json` and build/run-{0,1,2,3}/startup logs establish producer `27a840b348f8391e2fd7794d2b4f96c4aec19460`: integration no-run build exit0 in **251.83s**; **10 countdown + 12 loot + 6 ready-check + 7 ping = 35 PASS**, four exit0 selected runs. Integration SHA256 `5e22d2e2f5f6d9531e5ea3651f0dac3aeb6ff1d26a9c574031526e9cc80371d0`. Countdown proof covers the ten fixtures above; controls are selected, not a broad suite.
 
-Saved normal startup exits0 in10.03s, stdout `[]`, CLEAN0 unique/occurrences; wow-sim SHA256 `721c2b00b2220ff21362e0ea11af372cb437c84be91b84f722860988dda4e00e`. Saved artifacts inspected only, not rerun. **Independent292 pending**; earlier [loot fmt/check](party-loot-method.md#independent-bounded-acceptance--2026-10-01) predates countdown producer and is not a countdown gate.
+Saved normal startup exits0 in10.03s, stdout `[]`, CLEAN0 unique/occurrences; wow-sim SHA256 `721c2b00b2220ff21362e0ea11af372cb437c84be91b84f722860988dda4e00e`. Saved artifacts inspected only, not rerun. **Independent292 bounded PASS**, reconciled below; earlier [loot fmt/check](party-loot-method.md#independent-bounded-acceptance--2026-10-01) predates countdown producer and is not a countdown gate.
 
-Row `prose-2026-03-31-169` remains pending before countdown independent acceptance. Preserve **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash. Future row decisions must specify the exact bounded explicit-input predicate across countdown, ready check, ping and loot: lockdown blocks requests; combat alone does not. No native lockdown activation/secrecy, network or permission-enforcement credit. Lifecycle/security/error policies above remain inferred.
+Row `prose-2026-03-31-169` remains pending by parent decision after bounded countdown acceptance. Preserve **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash. Future row decisions must specify the exact bounded explicit-input predicate across countdown, ready check, ping and loot: lockdown blocks requests; combat alone does not. No native lockdown activation/secrecy, network or permission-enforcement credit. Lifecycle/security/error policies above remain inferred.
 
 ## Known gaps (current cycle)
 
 - [x] Parent established compiled behavioral RED before producer work: ten FAIL at `676e4c25a`, not compile errors.
 - [x] Parent saved bounded producer GREEN: countdown10 and selected controls25 PASS, startup0 `[]`.
-- [ ] Independent292 acceptance remains pending; no countdown fresh fmt/check claimed.
+- [x] Independent292 bounded acceptance: saved35PASS, fresh producer fmt/check0; native/full-row unproved.
 - [ ] Native zero-as-cancel/replacement, duration validation, blocked failure convention, initiator/chat policy and `AllowedWhenUntainted` behavior remain unverified. These are explicitly inferred simulator policies.
 
 ## Out of scope
@@ -76,3 +76,30 @@ Row `prose-2026-03-31-169` remains pending before countdown independent acceptan
 - Native callback-error policy is not characterized here; no countdown-specific failure/rollback rule is invented.
 - Native group permissions, remote countdowns, chat delivery, native lockdown activation/secrecy enforcement, legacy aliases, all-profile parity and whole-source acceptance are unproved.
 - Loot code/tests/spec and audit accounting belong to other producers; this slice changes none. Wiki architecture links document this producer without audit promotion.
+
+## Independent bounded acceptance — 2026-10-01
+
+Full `/tmp/patch-12.0.5-countdown-independent-proof.md` accepts producer `27a840b348f8391e2fd7794d2b4f96c4aec19460`: saved compiled RED ten behavioral FAIL at `676e4c25a`; saved **10 countdown + 12 loot + 6 ready + 7 ping = 35 selected PASS**, startup exit0 `[]`. Fresh independent default fmt/check exit0 at clean producer, 24.34s/49.34s, no warnings; unchanged before/after hashes. Ledger/log prefix `/tmp/patch-12.0.5-independent-countdown-e56e57a9c5f6`, results/before/after JSON and fmt/check logs. No commands rerun for reconciliation.
+
+Countdown source SHA256 `7287aca4399c7b155f89b6125bfa58155e7083b75171a405d492e75cbdd6e79c`; fixture SHA256 `914fce81bb420959ddb34ac6ec392b51b07b7eab07867f3e238325409b50047f`. Five scope hashes remain producer-identical at final `d656bf0377a871d37dcc5a5429b8306bb705ef24`; later cooldown fixture commit is **compile active, not acceptance**. Saved binary hashes agree with independent inspection. Historical RED executable was overwritten; RED remains saved evidence.
+
+Lifecycle/replacement/zero cancellation, strict finite validation/fractions, success/error conventions, requester/chat payload and conservative security remain **inferred simulator policies**. Secret rejection is stricter than `AllowedWhenUntainted`. Native event secrecy/lockdown production, group permissions/network, profiles and visual expiry remain unproved. Callback reentrancy and forced-GC dispatch have source-order/rooting observations only, not dedicated behavioral probes. GUID/name payloads are rooted; no countdown-specific event-name rooting claim.
+
+One nonblocking readability finding deferred: `countdown.rs:46`, inline `3600.0` should name the documented maximum. No zero-findings claim. New production max cognitive4/cyclomatic6; publish body27 lines. Existing owner-file issues excluded.
+
+### Exact row169 decision — parent retains pending
+
+Row `prose-2026-03-31-169`: “The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.”
+
+| Family | Bounded modeled predicate coverage | Proof / exclusions |
+|---|---|---|
+| Countdown | `C_PartyInfo.DoCountdown`, explicit lockdown/combat 2×2, atomic rejection/recovery | Ten PASS; lifecycle/security inferred |
+| Ready check | Public start/confirm and legacy ReadyCheck guard before effects; recovery without combat transition | [Ready ledger](chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01), six fixtures/22 selected PASS |
+| Ping | `SetRestrictPings` blocks mutation iff explicit lockdown; combat independent, getter readable | [Ping ledger](party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01), seven fixtures/29 selected PASS; **not ping actions/delivery** |
+| Loot method | `SetLootMethod` lockdown/combat 2×2, state/event preservation, getters readable | [Loot ledger](party-loot-method.md#independent-bounded-acceptance--2026-10-01), 19 unique PASS/31 executions; bounded roster |
+
+Proposal sent before edits: retain pending because “ping ... APIs” is broader than restriction-setting proof. Parent explicitly approved pending retention: restriction-setting coverage does not establish ping action/delivery coverage. Four bounded slices do not earn whole-row/native producer/security/network parity credit. No source status promotion.
+
+Related exact row168 removes recent restrictions on `AddPrivateAuraAnchor`, `RemovePrivateAuraAnchor`, `SetPrivateWarningTextAnchor`, `RemovePrivateAuraAppliedSound`; `AddPrivateAuraAppliedSound` remains restricted during encounters/M+/PvP. Countdown predicate does not cover these removals or encounter enforcement. [Warning proof](private-warning-text-anchor.md#independent-bounded-acceptance--2026-10-01) remains bounded; rows168/405 pending.
+
+**264 pending / 84 bounded / 14 partial = 362** retained, all IDs/text SHA unchanged. Register file SHA256 `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`. Documentation/accounting only; no tests/build/delegation/source changes.

@@ -1,5 +1,10 @@
 ## [2026-10-01] implementation | Add bounded party countdown producer
 
+## [2026-10-01] evidence | Accept bounded countdown; retain row169 pending
+
+[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Parent retains row169 pending: restriction setter does not prove ping actions/delivery. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown d656bf037 compile active, not acceptance. Docs only; no reruns/delegation.
+
+
 ## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN
 
 [Independent loot acceptance](../specs/party-loot-method.md#independent-bounded-acceptance--2026-10-01): **19 unique PASS / 31 executions**, saved startup0 `[]`, fresh fmt/check0. Fmt revision artifact collision explicitly limits provenance; original check snapshots at `676e4c25a` valid, later countdown edits excluded. Two nonblocking readability findings deferred. [Countdown parent proof](../specs/party-countdown.md#reconciled-batch35-parent-proof--2026-10-01): `27a840b34`, build0/251.83s, countdown10+loot12+ready6+ping7=**35 PASS**, startup0 `[]`; **independent292 pending**. Row169 stays pending; **264/84/14 = 362**, IDs/source hash retained. Future decision limited to explicit chat-lockdown-vs-combat predicate, not native/network/permission enforcement.
