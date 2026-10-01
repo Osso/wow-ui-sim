@@ -74,7 +74,7 @@ Parent filter: `cargo test --test integration private_warning_text_anchor:: -- -
 
 ### Saved batch33 parent GREEN — 2026-10-01
 
-Producer `dae082322085ed3c28dbef9302d0cc7996c79989`; independent281 **pending**, no independent acceptance or row promotion. Saved parent artifacts inspected only; no reruns.
+Producer `dae082322085ed3c28dbef9302d0cc7996c79989`; bounded independent acceptance recorded below, no row promotion. Saved parent artifacts inspected only; no reruns.
 
 | Saved parent scope | Result | Evidence |
 |---|---|---|
@@ -84,11 +84,17 @@ Producer `dae082322085ed3c28dbef9302d0cc7996c79989`; independent281 **pending**,
 | `unit_auras_private::` | 4 PASS / 1 FAIL, exit 101 | Same run manifest, `batch33-green-run-2.log` |
 | Normal no-addons/no-saved-vars startup | Exit 0, stdout `[]`, 5.51s | `/tmp/patch-12.0.5-batch33-green-startup-run.json`, `batch33-green-startup.json` |
 
-Run/log basenames above resolve under `/tmp/patch-12.0.5-`. Integration SHA-256 `c4fa7b32aaa1e28240ea14a8a62cc94093bd4b14a119acded3a8c787a2abdea7`; startup binary SHA-256 `f03b5d116732798cc3ac5eb12924b43879d1a19dddf8dc781f0b05d0f6cba09f`. The twelve warning fixtures include the ten historical authored fixtures above plus hierarchy/override and secured-table controls; their historical pre-compilation labels are superseded by this parent proof, not independent acceptance.
+Run/log basenames above resolve under `/tmp/patch-12.0.5-`. Integration SHA-256 `c4fa7b32aaa1e28240ea14a8a62cc94093bd4b14a119acded3a8c787a2abdea7`; startup binary SHA-256 `f03b5d116732798cc3ac5eb12924b43879d1a19dddf8dc781f0b05d0f6cba09f`. The twelve warning fixtures include the ten historical authored fixtures above plus hierarchy/override and secured-table controls; their historical pre-compilation labels are superseded by this parent proof, with bounded independent acceptance below.
 
-The failed control is `native_unit_event_dispatch_respects_unit_filter`: specialization-cast payload/unit-filter assertion fails. Cause and pre-existing status are unproven; no broad GREEN claim. Cached warning lifecycle assertions PASS **while** separate `PingSystemTutorial` string.find closure-load errors remain logged. Normal startup `[]` does not establish error-free cached closure loading or resolve those errors.
+The failed control is `native_unit_event_dispatch_respects_unit_filter`: specialization-cast payload/unit-filter assertion fails. Retained ancestor `bff26b9c1` build/run manifests and log establish the same failure predates warning producer (4 PASS / 1 FAIL, unchanged failing fixture); root cause and clean immediate-parent reproduction remain unresolved. No broad GREEN claim. Cached warning lifecycle assertions PASS **while** separate `PingSystemTutorial` string.find closure-load errors remain logged. Normal startup `[]` does not establish error-free cached closure loading or resolve those errors.
 
 Parenting, ordering, replacement, nil, snapshot and callback-error policies remain inferred simulator behavior; conservative secret rejection is not native `AllowedWhenUntainted` parity. Exact rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending. All 362 source IDs/hash and **264 pending / 84 bounded / 14 partial** totals unchanged.
+
+### Independent bounded acceptance — 2026-10-01
+
+Independent report `/tmp/patch-12.0.5-warning-placement-independent-proof.md` accepts bounded saved producer `dae082322` proof: **12 warning + 18 anchor + 4 private-unit PASS / 1 historically established specialization FAIL** (34 PASS / 1 FAIL). Fresh default fmt/check exit **0** at producer; normal saved startup exit **0**, `[]`. Cached `PingSystemTutorial` string.find closure errors persist; broad controls and clean cached closure remain **NOT GREEN**. Two function-length suggestions (`validate_placement`, `apply_placement`) deferred as nonbehavioral blockers, not zero readability findings. Parenting/order/nil/snapshot/security policies remain inferred or unknown; no native, full-row/page or all-profile acceptance. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged.
+
+Gate manifests `/tmp/patch-12.0.5-warning-placement-independent-{fmt,check}.json` record start=end `dae082322`, fmt 19.476s/check 32.385s. Artifact/source hash audits in the same prefix corroborate saved manifest provenance, not hermetically archived environment inputs. Later docs and unrelated loot fixtures receive no runtime credit. No commands rerun for this reconciliation. Exact warning rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending.
 
 ### Availability and implementation limits
 
@@ -97,7 +103,8 @@ Both replaced providers were unconditional. Cached Mists and Forever consumers a
 ## Known gaps (current cycle)
 
 - [x] Parent compiled producer and saved 12 warning PASS; original compiled RED retained above.
-- [ ] Independent281 acceptance pending; parent evidence is not final acceptance. Separate private specialization-filter control remains failing.
+- [x] Independent bounded placement acceptance; saved 34 PASS / 1 historically established specialization FAIL retained, not broad GREEN.
+- [ ] Deferred function-length suggestions for `validate_placement` and `apply_placement`; no demonstrated behavioral blocker.
 - [ ] Characterize native parenting, precise registration/replacement timing, nil behavior and input-table snapshot policy. These defaults are best-supported inferences, not native observations.
 - [ ] Characterize native `AllowedWhenUntainted` acceptance/security. Conservative rejection is only simulator policy.
 - [ ] Resolve separate cached `PingSystemTutorial` closure-load errors; cached placement assertions now PASS, not error-free whole-addon loading.

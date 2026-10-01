@@ -1,8 +1,8 @@
 # Patch 12.0.5 API Audit
 
-### Private warning placement — parent bounded proof; independent pending
+### Private warning placement — bounded independent PASS
 
-[Batch33 proof](../../specs/private-warning-text-anchor.md#saved-batch33-parent-green--2026-10-01) owns exact saved artifacts and binary hashes. Producer `dae082322`: saved parent compile exit0 (335.99s), 12 warning + 18 anchor PASS; private controls 4 PASS / 1 FAIL at specialization unit-filter assertion. Normal startup exit0 `[]` is separate from cached lifecycle PASS with persistent `PingSystemTutorial` string.find closure errors. Independent281 pending; no row promotion, native parity or broad GREEN. Inferred parenting/order/nil/snapshot/secret policies retained; 362 IDs/source hash and **264 pending / 84 bounded / 14 partial** unchanged. Exact warning rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending; no whole-row/page or all-profile acceptance.
+[Batch33 acceptance](../../specs/private-warning-text-anchor.md#independent-bounded-acceptance--2026-10-01) owns exact evidence and limits. Independent report `/tmp/patch-12.0.5-warning-placement-independent-proof.md` accepts bounded saved producer `dae082322` proof: **12 warning + 18 anchor + 4 private-unit PASS / 1 historically established specialization FAIL** (34 PASS / 1 FAIL). Fresh default fmt/check exit **0** at producer; normal saved startup exit **0**, `[]`. Cached `PingSystemTutorial` string.find closure errors persist; broad controls and clean cached closure remain **NOT GREEN**. Two function-length suggestions (`validate_placement`, `apply_placement`) deferred as nonbehavioral blockers, not zero readability findings. Parenting/order/nil/snapshot/security policies remain inferred or unknown; no native, full-row/page or all-profile acceptance. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged. Exact warning rows `prose-2026-03-31-168` and `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` remain pending.
 
 ### Party ping restrictions — bounded independent PASS
 
