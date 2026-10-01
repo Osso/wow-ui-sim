@@ -3,7 +3,7 @@ Probe-subfinding register for the retained 12.0.5 live-client audit. Machine sta
 
 ## Content
 
-**Coverage boundary:** these 38 native-probe subfindings are not full patch-page coverage. The retained page and expanded source audit (**IN PROGRESS**, no completed behavior claim) are documented in [[patch-12-0-5-api-audit]]; its inventory counts 244 consolidated delta rows / 186 subjects plus 118 chronological prose rows, including narrative, and 0 CVar entries. Best-supported implementation guesses must remain labeled and paired with concrete future probes, not native-verification claims. The broader audit's six linked capability/future-probe slices are docs/source inference, not code proof or new register credit; independent final gate remains pending.
+**Coverage boundary:** these 38 native-probe subfindings are not full patch-page coverage. The retained page and expanded source audit (**IN PROGRESS**, no completed behavior claim) are documented in [[patch-12-0-5-api-audit]]; its inventory counts 244 consolidated delta rows / 186 subjects plus 118 chronological prose rows, including narrative, and 0 CVar entries. Best-supported implementation guesses must remain labeled and paired with concrete future probes, not native-verification claims. The broader audit's original six capability/future-probe slices and newer bounded batch4 development GREEN are tracked in [[patch-12-0-5-api-audit#Batch4 bounded development proof]]. Font/common-duration and scenario host-result runs add no register credit; independent final/native proof remains pending.
 - **Source:** `data/patch-api/sources/12.0.5-probes.json`
 - **Source SHA-256:** `2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca`
 - **Target:** retail build `12.0.5`

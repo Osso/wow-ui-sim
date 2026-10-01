@@ -55,15 +55,15 @@
       "symbols": [
         "C_ScenarioInfo.GetUnitCriteriaProgressValues"
       ],
-      "scope": "Supplied per-unit credit/percent/display and identity classification. Host-secret output correction is RED/pending adopted runtime pin. No automatic M+ credit or global identity policy.",
+      "scope": "Supplied per-unit credit/percent/display and explicit identity classification. Tainted plain-token restricted output passes bounded host-secret development regression after adoption 6eace49d5; secret-input guards remain. No automatic M+ credit or global identity policy.",
       "spec": "docs/specs/scenario-unit-criteria.md",
       "tests": [
         "tests/scenario_unit_criteria.rs",
         "tests/c_scenario_info_probes.rs"
       ],
-      "implementation": "f372687b6",
-      "proof": "host-result-correction-pending",
-      "ledger": "/tmp/patch-12.0.5-scenario-ledger.md"
+      "implementation": "f372687b6 + 6eace49d5",
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-scenario-host-secret-green.log"
     },
     {
       "id": "cooldown-decimals",
@@ -100,7 +100,7 @@
       "symbols": [
         "C_StringUtil.CreateAbbreviatedNumberFormatter"
       ],
-      "scope": "Typed breakpoints/format/copy/reset plus abbreviated duration formatting. Common NumericRule/Seconds duration dispatch remains missing; locale/native validation limits explicit. Entire three-formatter source statement is NOT satisfied.",
+      "scope": "Typed breakpoints/format/copy/reset plus abbreviated duration formatting. Common duration dispatch now has separate bounded development proof; locale/native validation limits remain. Neither link satisfies the entire three-formatter source statement.",
       "spec": "docs/specs/abbreviated-number-formatter.md",
       "tests": [
         "tests/abbreviated_number_formatter.rs"
@@ -123,6 +123,39 @@
       "implementation": "a758cc0d1",
       "proof": "development-green",
       "ledger": "/tmp/nameplate-insets-proof-ledger.md"
+    },
+    {
+      "id": "fontstring-smooth-scaling",
+      "symbols": [
+        "FontString.GetSmoothScaling",
+        "FontString.SetSmoothScaling"
+      ],
+      "scope": "Independent boolean state, checked secret inputs, fractional/auto height and wrapping, ordinary/runtime XML: six API development cases pass. Renderer cases, GPU/native metrics, native defaults/validation and earlier XML profiles are not proven by this batch.",
+      "spec": "docs/specs/fontstring-smooth-scaling.md",
+      "tests": [
+        "tests/fontstring_smooth_scaling.rs"
+      ],
+      "implementation": "0624da720",
+      "proof": "development-green",
+      "compiled_revision": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
+      "ledger": "/tmp/patch-12.0.5-batch4-font-api-green.log"
+    },
+    {
+      "id": "duration-common-formatters",
+      "symbols": [
+        "DurationObject.FormatElapsedDuration",
+        "DurationObject.FormatRemainingDuration",
+        "DurationObject.FormatTotalDuration"
+      ],
+      "scope": "Real abbreviated/numeric-rule/Seconds formatter instances, elapsed/remaining/total and RealTime/BaseTime modifiers, invalid-input atomicity, opaque secret provenance and caller guards: four development cases pass. Controls abbreviated 4/4 and numeric-rule 7/7; not API coverage counts. Native localized Seconds duration-unit behavior remains RED; no native/final/all-profile proof.",
+      "spec": "docs/specs/duration-core.md",
+      "tests": [
+        "tests/duration_numeric_formatters.rs"
+      ],
+      "implementation": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
+      "proof": "partial-development-green",
+      "compiled_revision": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
+      "ledger": "/tmp/patch-12.0.5-proof-ledger.md"
     }
   ],
   "source_rows": [
@@ -153,10 +186,11 @@
     {
       "source_id": "prose-2026-03-12-019",
       "capabilities": [
-        "abbreviated-formatter"
+        "abbreviated-formatter",
+        "duration-common-formatters"
       ],
       "status": "bounded-coverage",
-      "note": "Linked capability has explicit limits; not full source-statement/native parity."
+      "note": "Bounded formatter and common-duration development coverage only; source statement includes multiple types and secret semantics. Native Seconds duration-unit regression remains RED; not whole-statement/native parity."
     },
     {
       "source_id": "prose-2026-03-12-020",
@@ -368,9 +402,11 @@
     },
     {
       "source_id": "prose-2026-03-25-091",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "fontstring-smooth-scaling"
+      ],
+      "status": "bounded-coverage",
+      "note": "Get/SetSmoothScaling API development proof only. Historical prose chronology preserved; source also mentions earlier XML support, which this 12.0.5+ implementation does not prove."
     },
     {
       "source_id": "prose-2026-03-25-092",

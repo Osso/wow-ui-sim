@@ -5257,3 +5257,7 @@ Audited `70e681266` against the pinned 12.1.5 event/query register and current s
 ## [2026-09-30] ingest | Expand 12.0.5 source-audit boundary
 
 Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], and index links after source-retention commit `7ff275fd3`. Expanded audit is IN PROGRESS: retained plaintext page/provenance and working inventory distinguish 244 consolidated delta rows / 186 subjects from 118 chronological prose rows (including narrative), with 0 CVar entries. The historical 38 native-probe subfindings do not establish full-page coverage. User-requested best-supported guesses remain explicitly guessed and track concrete future probes; no completed behavior or native-verification claim.
+
+## [2026-09-30] audit | Record bounded 12.0.5 batch4 development proof
+
+[[patch-12-0-5-api-audit#Batch4 bounded development proof]] records compiled revision `9a50d8a5cc20d0adf0b7c529d237fc043ef57532` and actual binary runs: FontString six, common duration four, abbreviated four and numeric-rule seven PASS. Scenario host-result adoption `6eace49d5` has prior four-case development GREEN. Corrected stale page-coverage scenario/common claims and linked only exact smooth-scaling/common-formatter prose rows. Native Seconds duration-unit RED, renderer/native limits and independent final gate remain explicit; whole page IN PROGRESS. [[patch-12-0-5-probe-inventory]] remains 38 subfindings with unchanged classifications. Owned specs and PLAN gates untouched.
