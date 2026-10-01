@@ -191,7 +191,7 @@ Persistent `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-0
 | Direct mapped-stick model | 3/3 pass: replacement/counts/names/table independence; environment/input-style isolation; taint/opaque selectors | [Granular contract](../../specs/gamepad-mapped-state.md); native DTO/hardware parity unclaimed |
 | Cached initializer | 3/3 pass: absent snapshot centers both; Movement/Camera lengths and reordered names select sides | Unchanged cached GamepadSharedUtility closure; no full DTO/hardware credit |
 | Hover policy | 5/5 pass: synchronous bool transitions, isolation, invalid arguments, untainted opaque acceptance, tainted opaque rejection | Inferred default/change semantics; other-profile absence remains source-only |
-| Current-local AutoRoll | 0/4 pass | Before local lifecycle decisions: `Blizzard_StaticPopup_Game` requires `C_Club.GetInvitationCandidates` and `C_GameRules.IsHardcoreActive`; classification complete; fixture cleanliness scope remains user-owned |
+| Current-local AutoRoll | 0/4 pass | Before local lifecycle decisions: `Blizzard_StaticPopup_Game` requires `C_Club.GetInvitationCandidates` and `C_GameRules.IsHardcoreActive`; historical gate failure; [approved consumed-path fixture](../../specs/forever-auto-roll-fixture.md) is unexecuted |
 | Prior messaging/module/restricted/BugCapture | 36/36 pass on current pin | Bounded local workflows, not archive identity |
 | Loot/instance producer controls | 24/24 pass | Producer controls do not prove AutoRoll consumption |
 

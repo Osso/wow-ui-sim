@@ -2,6 +2,10 @@
 
 [[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent verifier 147 absent/pending, current Rust gates unclaimed. No native/network/all-profile/full-row/full-page acceptance.
 
+## [2026-10-01] contract | Bound AutoRoll fixture to consumed paths
+
+[AutoRoll fixture contract](../specs/forever-auto-roll-fixture.md) owns user-approved consumed-path scope, exact retained setup diagnostics, full-history guards and unexecuted calibrated VM observation. Complete cached/local loading and real lifecycle/loot assertions remain. Historical 71/75 RED is unchanged; no AutoRoll acceptance or production changes.
+
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
 [[lua-api#Global Functions]] links the [contract](../specs/party-connection.md), which owns actual RED artifacts and superseding bounded development GREEN. Added shared party bool, active admin edge transition and query consumption; updated all constructors. Two additional controls now pass for inactive retained members and preserved non-party aliases. Linked contract owns 55 PASS and saved startup; independent acceptance/current Rust gates remain pending. Exact source accounting is bounded, not whole-row completion.
