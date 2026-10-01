@@ -468,6 +468,24 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-destroyable-count-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch19-green-startup-run.json",
       "gate_scope": "Independent inspection of saved 10 count + 14 variant PASS; default fmt/check exit 0 at producer snapshot. Relevant source hashes unchanged on reconciliation; later storage-event files excluded. Parent startup only. No native secure-secret parity or all-profile execution."
+    },
+    {
+      "id": "housing-storage-entry-updated",
+      "symbols": [
+        "HOUSING_STORAGE_ENTRY_UPDATED",
+        "A_Admin.SetHousingCatalogVariantStoredCount"
+      ],
+      "scope": "Batch20 bounded independent PASS at 5afd73d49: explicit admin state producer publishes one full entryVariantID argument (first-argument rename and HousingCatalogEntryVariantID type), exact variant/type storage-only mutation and reentrant reads. Saved 11 storage + 24 catalog + 5 quest + 28 party = 68 PASS; snapshot default fmt/check 0. Synchronous timing and edge-only emission are simulator inferences; cached UniqueEvent does not establish native synchronous behavior. Parent startup 0 [] not independently executed. No DestroyEntry-triggered, native, all-profile or whole-row/page completion claim.",
+      "spec": "docs/specs/housing-storage-entry-updated.md",
+      "tests": [
+        "tests/housing_storage_entry_updated.rs"
+      ],
+      "implementation": "5afd73d498340952f0e2a2c59ae1a718f92d5b6a",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch20-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-storage-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch20-green-startup-run.json",
+      "gate_scope": "Saved runtime inspected independently, not re-executed; fresh default fmt/check 0 at hash-bound producer snapshot before concurrent untracked DestroyEntry tests. Rooting/dispatch-error cleanup source-only; storage-specific guarded/true secret-table and forced-GC dispatch fixtures absent. Parent startup only."
     }
   ],
   "source_rows": [
@@ -2268,15 +2286,19 @@
     },
     {
       "source_id": "events-HOUSING_STORAGE_ENTRY_UPDATED-555",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-storage-entry-updated"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch20 bounded independent PASS at 5afd73d49: explicit admin state producer publishes one full entryVariantID argument (first-argument rename and HousingCatalogEntryVariantID type), exact variant/type storage-only mutation and reentrant reads. Saved 11 storage + 24 catalog + 5 quest + 28 party = 68 PASS; snapshot default fmt/check 0. Synchronous timing and edge-only emission are simulator inferences; cached UniqueEvent does not establish native synchronous behavior. Parent startup 0 [] not independently executed. No DestroyEntry-triggered, native, all-profile or whole-row/page completion claim."
     },
     {
       "source_id": "events-HOUSING_STORAGE_ENTRY_UPDATED-556",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-storage-entry-updated"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch20 bounded independent PASS at 5afd73d49: explicit admin state producer publishes one full entryVariantID argument (first-argument rename and HousingCatalogEntryVariantID type), exact variant/type storage-only mutation and reentrant reads. Saved 11 storage + 24 catalog + 5 quest + 28 party = 68 PASS; snapshot default fmt/check 0. Synchronous timing and edge-only emission are simulator inferences; cached UniqueEvent does not establish native synchronous behavior. Parent startup 0 [] not independently executed. No DestroyEntry-triggered, native, all-profile or whole-row/page completion claim."
     },
     {
       "source_id": "events-QUEST_ACCEPT_CONFIRM-558",

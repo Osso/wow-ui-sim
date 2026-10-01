@@ -1,16 +1,16 @@
 # Housing storage entry updated input
 
-Bounded 12.0.5 event slice: explicit simulator input `A_Admin.SetHousingCatalogVariantStoredCount(entryVariantID, numStored)` updates an existing [catalog variant](housing-catalog-variants.md). This is not a native API or a `DestroyEntry` implementation. [Event dispatch](../event-system.md) supplies the existing synchronous admin pattern. Producer follows parent-observed compiled prerequisite RED; GREEN remains parent-owned.
+Bounded 12.0.5 event slice: explicit simulator input `A_Admin.SetHousingCatalogVariantStoredCount(entryVariantID, numStored)` updates an existing [catalog variant](housing-catalog-variants.md). This is not a native API or a `DestroyEntry` implementation. [Event dispatch](../event-system.md) supplies the existing synchronous admin pattern. Producer follows parent-observed compiled prerequisite RED; bounded independent acceptance is recorded below.
 
 ## What it must do
 
-- [ ] Select an existing variant by the complete `(recordID, entryType, variantIdentifier)` key. Change only `num_stored`; preserve independent `destroyable_instance_count`, every dye field, base entries and other variants, including another entry type with the same record/variant identifiers. Use existing Rust catalog records; no fake records, new model types or production seeds.
-- [ ] Changed storage, including an explicit transition to zero, dispatches a real `HOUSING_STORAGE_ENTRY_UPDATED` frame listener before input returns. Emit exactly one argument, a full `entryVariantID` table containing the three identity fields. Listener queries observe changed storage and untouched destroyable/dye data. Do not queue a duplicate storage event.
-- [ ] Release model borrows before synchronous callbacks. Reentrant reads and second input calls on both the same and another variant finish inside the listener; nested events observe their own changed state. Outer completion must not overwrite nested changes.
-- [ ] **Inferred edge-only simulator policy:** repeating current count succeeds without mutation/event. Changed and unchanged successful calls return zero Lua values.
-- [ ] **Explicit simulator error policy, not native validation parity:** unknown full keys and malformed selectors/counts fail with a nonempty error, without mutation, insertion or event. Selector must be an accessible public table with three nonnegative integer identity fields representable by `i32`. Count must be an ordinary, finite, nonnegative integer representable by the existing `i32` storage field. No string coercion, truncation, fake-record creation or alternate-key lookup.
-- [ ] Ordinary public inputs work from tainted addon callers without clearing caller taint. Secret whole selectors, nested identity fields and counts reject safely in secure and tainted callers, without unwrapping/declassification, mutation or event. This conservative simulator boundary is not native secret-access parity.
-- [ ] State changes and listeners remain local to their `WowLuaEnv`.
+- [x] Select an existing variant by the complete `(recordID, entryType, variantIdentifier)` key. Change only `num_stored`; preserve independent `destroyable_instance_count`, every dye field, base entries and other variants, including another entry type with the same record/variant identifiers. Use existing Rust catalog records; no fake records, new model types or production seeds.
+- [x] Changed storage, including an explicit transition to zero, dispatches a real `HOUSING_STORAGE_ENTRY_UPDATED` frame listener before input returns. Emit exactly one argument, a full `entryVariantID` table containing the three identity fields. Listener queries observe changed storage and untouched destroyable/dye data. Do not queue a duplicate storage event.
+- [x] Release model borrows before synchronous callbacks. Reentrant reads and second input calls on both the same and another variant finish inside the listener; nested events observe their own changed state. Outer completion must not overwrite nested changes.
+- [x] **Inferred edge-only simulator policy:** repeating current count succeeds without mutation/event. Changed and unchanged successful calls return zero Lua values.
+- [x] **Explicit simulator error policy, not native validation parity:** unknown full keys and malformed selectors/counts fail with a nonempty error, without mutation, insertion or event. Selector must be an accessible public table with three nonnegative integer identity fields representable by `i32`. Count must be an ordinary, finite, nonnegative integer representable by the existing `i32` storage field. No string coercion, truncation, fake-record creation or alternate-key lookup.
+- [x] Ordinary public inputs work from tainted addon callers without clearing caller taint. Secret whole selectors, nested identity fields and counts reject safely in secure and tainted callers, without unwrapping/declassification, mutation or event. This conservative simulator boundary is not native secret-access parity.
+- [x] State changes and listeners remain local to their `WowLuaEnv`.
 
 ### Cached grounding and inference boundary
 
@@ -63,13 +63,27 @@ All eleven cases first require the setter to be callable. Invalid-input `pcall` 
 - `rustfmt --edition 2024 --config skip_children=true tests/housing_storage_entry_updated.rs`: exit 0 on the new test file; formatting only, not compilation or behavioral proof. Later test edits invalidate that formatting scope.
 - Parent RED at tests `19dfb2674f5763815a6780fb273107b956cc63e6`: `cargo test --test integration --no-run --message-format=json`, exit 0 in 62.74s (`/tmp/patch-12.0.5-batch20-red-build-result.json`, companion build log/json). Saved bounded binary command with `housing_storage_entry_updated:: --nocapture --test-threads=1` exits 101, 0/11 PASS; every failure reaches the explicit missing-setter prerequisite, not eleven independently exercised behavior boundaries (`/tmp/patch-12.0.5-batch20-red-run.log` / `.json`). Inspected before producer implementation; not rerun.
 - `rustfmt --edition 2024 --config skip_children=true` on the six changed Rust producer/guard/registration files: exit 0; formatting only, not compilation or behavioral proof.
-- Producer source implements the contract above; no builds, checks or behavioral execution in this producer task. Format/commit only. Parent owns targeted GREEN and acceptance; no assertion marked passing.
+- Producer task was format/commit only; subsequent bounded acceptance supersedes its pending-GREEN checkpoint.
+
+### Reconciled bounded proof — 2026-10-01
+
+[Independent report](/tmp/patch-12.0.5-housing-storage-independent-proof.md) accepts producer `5afd73d498340952f0e2a2c59ae1a718f92d5b6a`: independently inspected saved **11 storage + 24 catalog (10 count + 14 variant) + 5 quest + 28 party = 68 PASS**, not independently re-executed. GREEN integration build exit 0, 93.79s; integration SHA256 `0c01926ecb1b50d04e099647c4fd993c5f32e7043322ff179d3f7002e32dc24b`. Fresh default fmt/check each exit **0** for the hash-bound producer snapshot; later concurrent untracked `tests/housing_destroy_entry.rs` is excluded, not a current whole-worktree gate claim.
+
+Parent `/tmp/patch-12.0.5-batch20-green-startup-run.json` records startup exit **0**, **[]**, zero errors, 4.01s; saved evidence only, not independently executed. [Canonical coverage](../../data/patch-api/sources/12.0.5-page-coverage.json) credits only `events-HOUSING_STORAGE_ENTRY_UPDATED-555`/`-556` for first-argument rename/full variant type via explicit admin state producer. All 362 IDs/source hash and unrelated rows remain unchanged; totals **308 pending / 40 bounded / 14 partial**. No whole-row/page completion.
+
+| Capability | Proof level |
+|---|---|
+| Exact variant/type storage-only mutation, full one-argument payload, zero transition, no queued duplicate | Saved behavioral PASS |
+| Reentrant same/other-key reads and mutations; zero returns; environment isolation | Saved behavioral PASS; synchronous/edge-only policy inferred |
+| Invalid/unknown inputs atomic; public addon taint retained; tested host-secret boundaries rejected | Saved behavioral PASS; not native security parity |
+| Rooted payload and restored stack on dispatch result/error | Source-only; no forced-GC/error-path runtime fixture |
+| Storage-specific guarded or true secret-wrapped table selectors | Not independently exercised; catalog guard controls are narrower |
 
 ## Known gaps (current cycle)
 
-- [ ] Parent targeted GREEN and acceptance remain pending after producer registration; saved prerequisite RED is established, not behavioral proof of the implemented producer.
-- [ ] Native emission conditions, coalescing/uniqueness, timing, invalid-input and secret-access behavior remain unknown. No native, all-profile, source-row or whole-page completion credit.
+- [ ] Forced-GC dispatch, dispatch-error stack cleanup and storage-specific secured/true secret-table selectors lack dedicated runtime proof.
+- [ ] Native emission conditions, coalescing/uniqueness, timing, invalid-input and secret-access behavior remain unknown. No native, all-profile or whole-row/page completion credit; exact payload rows have bounded coverage only.
 
 ## Out of scope
 
-`DestroyEntry`, automatic destruction/native emission conditions, placement, dyes mutation, destroyable-count/variant-accounting changes, filters/search refresh and all other housing producers. No edits to current count/variant fixtures or accounting owned by 184. Producer task changes only catalog guard sharing, exact-variant storage input/registration, serializer visibility and this spec: no builds, checks, delegation, push or wiki/accounting updates. Event declaration availability alone does not establish implementation on earlier profiles; test gating follows the existing 12.0.5 catalog fixtures, without adding a production feature gate.
+`DestroyEntry`, automatic destruction/native emission conditions, placement, dyes mutation, destroyable-count/variant-accounting changes, filters/search refresh and all other housing producers. Count/variant fixtures and their existing accounting remain unchanged. Docs reconciliation performs no builds, checks, delegation or push; in-progress DestroyEntry tests/spec and PLAN remain excluded. Event declaration availability alone does not establish implementation on earlier profiles; test gating follows the existing 12.0.5 catalog fixtures, without adding a production feature gate.
