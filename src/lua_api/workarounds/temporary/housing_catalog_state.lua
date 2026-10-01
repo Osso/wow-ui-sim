@@ -964,25 +964,7 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
     return __wow_housing_copy_bundle_info(bundleCatalogShopProductID)
   end,
   GetCartSizeLimit = function() return 20 end,
-  GetCatalogCategoryInfo = function(categoryID)
-    if categoryID == __wow_housing_all_category_id then
-      return { ID = categoryID, orderIndex = 0, name = "All", icon = nil, subcategoryIDs = { 1001, 1002 }, anyStoredEntries = true }
-    elseif categoryID == 101 then
-      return { ID = categoryID, orderIndex = 1, name = "Featured", icon = nil, subcategoryIDs = { 1001 }, anyStoredEntries = true }
-    elseif categoryID == 102 then
-      return { ID = categoryID, orderIndex = 2, name = "Decor", icon = nil, subcategoryIDs = { 1001, 1002 }, anyStoredEntries = true }
-    end
-    return nil
-  end,
   GetCatalogEntryRefundTimeStampByRecordID = function() return nil end,
-  GetCatalogSubcategoryInfo = function(subcategoryID)
-    if subcategoryID == 1001 then
-      return { ID = 1001, orderIndex = 1, parentCategoryID = 102, name = "Seating", icon = nil, anyStoredEntries = true }
-    elseif subcategoryID == 1002 then
-      return { ID = 1002, orderIndex = 2, parentCategoryID = 102, name = "Lighting", icon = nil, anyStoredEntries = true }
-    end
-    return nil
-  end,
   GetDecorMaxOwnedCount = function() return 99 end,
   GetDecorTotalOwnedCount = function() return 2, 0 end,
   GetFeaturedBundles = function()

@@ -3,6 +3,7 @@
 
 use std::collections::HashMap;
 
+mod categories;
 mod input;
 mod queries;
 mod snapshot;

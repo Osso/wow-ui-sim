@@ -15,6 +15,11 @@ use rilua::{LuaResult, Val};
 pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_HousingCatalog")?;
     let functions: &[(&str, rilua::RustFn)] = &[
+        ("GetCatalogCategoryInfo", super::categories::category_info),
+        (
+            "GetCatalogSubcategoryInfo",
+            super::categories::subcategory_info,
+        ),
         ("GetCatalogEntryInfo", entry_info),
         ("GetCatalogEntryInfoByItem", entry_info_by_item),
         ("GetCatalogEntryInfoByRecordID", entry_info_by_record_id),

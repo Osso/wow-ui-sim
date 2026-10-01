@@ -1,6 +1,6 @@
 # Housing catalog category snapshots
 
-Bounded category/subcategory DTO contract for the 12.0.5 rename, backed by explicit inputs in `src/c_api/c_housing/catalog.rs`. Runtime getter replacement is pending. See [C API architecture](../wiki/systems/lua-api.md) for subsystem context.
+Bounded category/subcategory DTO contract for the 12.0.5 rename, backed by explicit inputs in `src/c_api/c_housing/catalog.rs`. Runtime getters now read these maps; compiled GREEN and independent acceptance remain pending. See [C API architecture](../wiki/systems/lua-api.md) for subsystem context.
 
 ## What it must do
 
@@ -32,9 +32,12 @@ Existing `src/c_api/c_housing/catalog/input.rs::read_public_integer` rejects any
 ## Implementation inventory
 
 - `src/c_api/c_housing/catalog.rs`: empty-default category/subcategory maps; IDs are map keys. Records contain explicit order, optional name/icon, category child IDs or subcategory parent ID, and independent stored predicate.
-- `tests/housing_catalog_categories.rs`: twelve unrun getter fixtures in the existing generated `integration` target; feature gated to `retail-12-0-5`.
+- `src/c_api/c_housing/catalog/categories.rs`: public integer guards and exact distinct-map lookups; absent records return nil without fallback.
+- `src/c_api/c_housing/catalog/snapshot.rs`: fresh stack-rooted category/subcategory DTOs and nested numeric lists; optional name/icon omitted and stored predicates copied explicitly.
+- `src/c_api/c_housing/catalog/queries.rs`: both getters registered unconditionally alongside existing catalog methods.
+- `tests/housing_catalog_categories.rs`: twelve getter fixtures in the existing generated `integration` target; feature gated to `retail-12-0-5`.
 - `tests/housing_catalog_variants.rs`: existing whole-state constructor now uses `..HousingCatalogState::default()` so new maps stay empty; entry/variant fixture inputs unchanged.
-- `src/lua_api/workarounds/temporary/housing_catalog_state.lua:967–985`: existing seeded `GetCatalogCategoryInfo`/`GetCatalogSubcategoryInfo` producers remain untouched. `GetCategoryInfo` is not the target getter.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: only seeded `GetCatalogCategoryInfo`/`GetCatalogSubcategoryInfo` publishers removed. Seeded category/subcategory search and unrelated storefront/cart behavior remain pending separate work. `GetCategoryInfo` is not the target getter.
 
 ## Tests asserting this spec
 
@@ -48,16 +51,22 @@ Parent filter: `housing_catalog_categories::` in the existing `integration` targ
 | `returned_tables_and_nested_lists_are_fresh_snapshots`, `record_mutation_changes_new_snapshots_only`, `records_are_isolated_between_environments` | Snapshot/list isolation, mutation lifetime, environment isolation | Written, unrun |
 | `public_numeric_selectors_preserve_caller_taint`, `secret_numeric_selectors_reject_without_unwrapping_or_taint_changes` | Public tainted access and conservative secure/tainted secret rejection | Written, unrun |
 
-Proof ledger: no build, check, test, verification, push, or deployment run for this input-only checkpoint. Formatting is not behavior proof. Parent must establish actual RED before a fresh producer replaces seeded getters; no source-row coverage credit claimed.
+### Producer checkpoint — 2026-10-01
+
+Input commit `63b53dfe5`; parent reports actual compiled `batch25-red-*`: twelve selected, two PASS / ten FAIL, covering seeded leakage, missing explicit records and silently accepted secrets. The fixture table above describes the historical input-only checkpoint, not current GREEN evidence.
+
+Producer implemented exact empty-map lookups, explicit DTO snapshots and unconditional registration; removed only the two matching temporary publishers. No taint clearing or secret unwrapping. Conservative rejection remains **partial native coverage** for `AllowedWhenUntainted`.
+
+Proof ledger: producer formatting only; no delegation, build, check, tests, readability, startup, verification, push or deployment. Parent owns compiled GREEN and verifier. Requirements remain unchecked until acceptance; no source-row coverage credit or runtime success claimed.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent actual RED, fresh producer implementation, and subsequent runtime acceptance remain pending.
+- [ ] Parent compiled GREEN and independent runtime acceptance remain pending; parent-reported RED and producer checkpoint recorded above.
 - [ ] Native secure-secret selector acceptance remains unmodeled; current rejection deliberately differs from the declared allowance.
 - [ ] `SearchCatalogCategories`/`SearchCatalogSubcategories` filtering and `HousingCategorySearchInfo` row 661 remain separately unresolved. No search calls or filter assertions exist in this slice.
 
 ## Out of scope
 
-- Search/filter implementation, ownership derivation, seed removal, serializers and registration: separate producer work.
+- Search/filter implementation, ownership derivation, other seed removal and unrelated storefront/cart behavior: separate work.
 - Shared variant/aggregate specs, wiki, coverage, PLAN and source-row status changes: excluded from this checkpoint.
 - Native execution, full catalog domain and all-profile acceptance: no evidence supplied by these fixtures.

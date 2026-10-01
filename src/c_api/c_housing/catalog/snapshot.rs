@@ -1,8 +1,9 @@
 //! Each serializer leaves one stack root; nested rows never alias model state.
 
 use super::{
-    HousingCatalogEntryID, HousingCatalogEntryRecord, HousingCatalogEntryVariantID,
-    HousingCatalogVariantRecord, HousingDecorDyeSlot,
+    HousingCatalogCategoryRecord, HousingCatalogEntryID, HousingCatalogEntryRecord,
+    HousingCatalogEntryVariantID, HousingCatalogSubcategoryRecord, HousingCatalogVariantRecord,
+    HousingDecorDyeSlot,
 };
 use crate::c_api::helpers::set_table_array;
 use crate::lua_api::methods::{create_string, create_table, table_set_static};
@@ -41,6 +42,63 @@ fn push_sequence<T>(
         state.top -= 1;
     }
     sequence
+}
+
+pub(super) fn push_category(
+    state: &mut LuaState,
+    id: i32,
+    record: &HousingCatalogCategoryRecord,
+) -> Val {
+    let row = push_table(state);
+    set_number(state, row, "ID", id);
+    set_number(state, row, "orderIndex", record.order_index);
+    if let Some(name) = &record.name {
+        set_text(state, row, "name", name);
+    }
+    if let Some(icon) = &record.icon {
+        set_text(state, row, "icon", icon);
+    }
+    table_set_static(
+        state,
+        row,
+        "anyStoredEntries",
+        Val::Bool(record.any_stored_entries),
+    );
+    let children = push_table(state);
+    for (index, id) in record.subcategory_ids.iter().enumerate() {
+        set_table_array(
+            state,
+            children,
+            (index + 1) as i64,
+            Val::Num(f64::from(*id)),
+        );
+    }
+    attach_child(state, row, "subcategoryIDs", children);
+    row
+}
+
+pub(super) fn push_subcategory(
+    state: &mut LuaState,
+    id: i32,
+    record: &HousingCatalogSubcategoryRecord,
+) -> Val {
+    let row = push_table(state);
+    set_number(state, row, "ID", id);
+    set_number(state, row, "orderIndex", record.order_index);
+    set_number(state, row, "parentCategoryID", record.parent_category_id);
+    if let Some(name) = &record.name {
+        set_text(state, row, "name", name);
+    }
+    if let Some(icon) = &record.icon {
+        set_text(state, row, "icon", icon);
+    }
+    table_set_static(
+        state,
+        row,
+        "anyStoredEntries",
+        Val::Bool(record.any_stored_entries),
+    );
+    row
 }
 
 pub(super) fn push_entry(
