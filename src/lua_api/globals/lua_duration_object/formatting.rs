@@ -18,14 +18,14 @@ pub(super) const METHOD_NAMES: &[&str] = &[
 ];
 
 #[derive(Clone, Copy)]
-enum FormatterKind {
+pub(crate) enum FormatterKind {
     Abbreviated,
     #[cfg(feature = "numeric-rule-formatters")]
     NumericRule,
     Seconds,
 }
 
-fn identify_formatter(state: &mut LuaState, object: Val) -> LuaResult<FormatterKind> {
+pub(crate) fn identify_formatter(state: &mut LuaState, object: Val) -> LuaResult<FormatterKind> {
     if abbreviated_number_formatter::is_formatter(state, object) {
         return Ok(FormatterKind::Abbreviated);
     }
@@ -73,7 +73,7 @@ fn native_text(state: &mut LuaState, text: &str, secret: bool) -> Val {
     }
 }
 
-fn format_number(
+pub(crate) fn format_number(
     state: &mut LuaState,
     kind: FormatterKind,
     object: Val,

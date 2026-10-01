@@ -502,6 +502,8 @@ pub struct Frame {
     pub cooldown_tex_coord_range: Option<(f32, f32, f32, f32)>,
     /// Countdown font string child used by GetCountdownFontString.
     pub cooldown_countdown_font_string_id: Option<u64>,
+    /// Whether private Lua registry storage holds a live countdown formatter.
+    pub cooldown_has_countdown_formatter: bool,
     /// Whether cooldown is paused.
     pub cooldown_paused: bool,
 

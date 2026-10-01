@@ -260,6 +260,7 @@ macro_rules! frame_defaults {
             cooldown_edge_color: Color::rgb(1.0, 1.0, 1.0),
             cooldown_tex_coord_range: None,
             cooldown_countdown_font_string_id: None,
+            cooldown_has_countdown_formatter: false,
             cooldown_paused: false,
 
             // Line

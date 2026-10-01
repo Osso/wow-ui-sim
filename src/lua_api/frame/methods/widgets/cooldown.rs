@@ -13,6 +13,43 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "retail-12-0-5")]
+const FORMATTER_ROOTS: &str = "__cooldown_countdown_formatter_roots";
+
+#[cfg(feature = "retail-12-0-5")]
+fn set_countdown_formatter(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::globals::lua_duration_object::formatting::identify_formatter;
+    use crate::lua_api::methods::{create_table, registry_get, registry_set, table_set};
+
+    let id = frame_id_from_stack(state, 1)?;
+    // AllowedWhenUntainted: authenticated secret unwrap enforces caller security.
+    let formatter = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
+    if formatter != Val::Nil {
+        identify_formatter(state, formatter)?;
+    }
+    // Validate before touching either attachment or its GC root. Private roots
+    // cannot be replaced through addon frame fields or formatter method overrides.
+    let mut roots = registry_get(state, FORMATTER_ROOTS);
+    if roots == Val::Nil {
+        roots = create_table(state);
+        registry_set(state, FORMATTER_ROOTS, roots);
+    }
+    table_set(state, roots, &id.to_string(), formatter);
+    if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut_visual(id) {
+        frame.cooldown_has_countdown_formatter = formatter != Val::Nil;
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn get_countdown_formatter(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let roots = crate::lua_api::methods::registry_get(state, FORMATTER_ROOTS);
+    let formatter = table_get(state, roots, &id.to_string());
+    state.push(formatter);
+    Ok(1)
+}
+
 fn normalize_mod_rate(r: f64) -> f64 {
     if r <= 0.0 { 1.0 } else { r }
 }
@@ -695,6 +732,10 @@ const COOLDOWN_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("SetReverse", set_reverse),
     ("GetReverse", get_reverse),
     // Countdown number formatting
+    #[cfg(feature = "retail-12-0-5")]
+    ("SetCountdownFormatter", set_countdown_formatter),
+    #[cfg(feature = "retail-12-0-5")]
+    ("GetCountdownFormatter", get_countdown_formatter),
     ("SetHideCountdownNumbers", set_hide_countdown_numbers),
     ("GetHideCountdownNumbers", get_hide_countdown_numbers),
     (

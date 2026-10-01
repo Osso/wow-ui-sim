@@ -17,7 +17,7 @@
 
 mod core;
 #[cfg(feature = "retail-12-0-5")]
-mod formatting;
+pub(crate) mod formatting;
 
 use crate::lua_api::methods::{
     call_function_state, create_table, registry_get, registry_set, table_get, table_set,
