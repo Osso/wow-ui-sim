@@ -35,6 +35,9 @@ pub struct SimState {
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]
     pub auras_secret_in_context: bool,
+    /// Explicit stat-output policy input; no combat or aura activation inference.
+    #[cfg(feature = "retail-12-0-5")]
+    pub unit_stats_restricted: bool,
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     pub fog_of_war_frames: HashMap<u64, FogOfWarFrameState>,
     pub unit_position_frames: HashMap<u64, UnitPositionFrameState>,

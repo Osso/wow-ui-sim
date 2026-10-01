@@ -74,7 +74,6 @@ pub mod c_quest_hub;
 pub mod c_report_system;
 pub mod c_reputation;
 pub mod c_scenario_info;
-#[cfg(feature = "aura-containers")]
 pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
@@ -156,7 +155,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
     c_aura_container_util::register(state)?;
-    #[cfg(feature = "aura-containers")]
+    #[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;

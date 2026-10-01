@@ -53,6 +53,8 @@ macro_rules! build_empty_sim_state {
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
+            #[cfg(feature = "retail-12-0-5")]
+            unit_stats_restricted: false,
             quest_blobs: $collections.quest_blobs,
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,

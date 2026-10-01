@@ -1,27 +1,57 @@
-//! Base spell aura secrecy from native SpellMisc attributes, not combat policy.
+//! Spell aura classification and explicit unit-stat output policy.
 
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use super::ensure_namespace;
+#[cfg(feature = "retail-12-0-5")]
+use crate::lua_api::methods::borrow_state;
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(feature = "aura-containers")]
+use rilua::runtime_error;
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
+use rilua::{LuaResult, Val};
 
+#[cfg(feature = "aura-containers")]
 #[path = "../../data/spell_aura_secrecy.rs"]
 mod attributes;
 
+#[cfg(feature = "aura-containers")]
 const NEVER_SECRET: i32 = 0;
+#[cfg(feature = "aura-containers")]
 const ALWAYS_SECRET: i32 = 1;
+#[cfg(feature = "aura-containers")]
 const CONTEXTUALLY_SECRET: i32 = 2;
 
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Secrets")?;
+    #[cfg(feature = "aura-containers")]
     table_set_rust_fn_static(
         state,
         namespace,
         "GetSpellAuraSecrecy",
         get_spell_aura_secrecy,
-    )
+    )?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "ShouldUnitStatsBeSecret",
+        should_unit_stats_be_secret,
+    )?;
+    Ok(())
 }
 
+#[cfg(feature = "retail-12-0-5")]
+fn should_unit_stats_be_secret(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = borrow_state(state)?.unit_stats_restricted;
+    state.push(Val::Bool(restricted));
+    Ok(1)
+}
+
+#[cfg(feature = "aura-containers")]
 fn get_spell_aura_secrecy(state: &mut LuaState) -> LuaResult<u32> {
     let Some(spell_id) = super::c_spell::numeric_spell_id(state, 1) else {
         state.push(Val::Nil);
@@ -32,6 +62,7 @@ fn get_spell_aura_secrecy(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "aura-containers")]
 fn classify_aura_secrecy(spell_id: u32) -> LuaResult<i32> {
     match attributes::aura_flags(spell_id) {
         0 => Ok(CONTEXTUALLY_SECRET),

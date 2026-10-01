@@ -15,4 +15,10 @@ fn stat_restriction_predicate_defaults_plain() {
         "#,
     )
     .unwrap();
+    env.state().borrow_mut().unit_stats_restricted = true;
+    env.exec("assert(C_Secrets.ShouldUnitStatsBeSecret()); assert(not issecretvalue(C_Secrets.ShouldUnitStatsBeSecret()))")
+        .unwrap();
+    env.state().borrow_mut().unit_stats_restricted = false;
+    env.exec("assert(not C_Secrets.ShouldUnitStatsBeSecret())")
+        .unwrap();
 }
