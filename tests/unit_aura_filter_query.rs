@@ -165,9 +165,10 @@ fn player_helpful_and_harmful_queries_return_exactly_one_public_boolean() {
 #[test]
 fn player_source_filter_uses_existing_from_player_or_pet_field() {
     let env = fixture_env();
+    assert_eq!(env.state().borrow().player.buffs[0].source_unit, "pet");
     env.exec(
         r#"
-        assert(AuraUtil.GetAuraDataByAuraInstanceID('player', 101).sourceUnit == 'pet')
+        assert(AuraUtil.GetAuraDataByAuraInstanceID('player', 101).isFromPlayerOrPlayerPet)
         AssertAuraFiltered('player', 101, 'HELPFUL|PLAYER', false)
         AssertAuraFiltered('player', 102, 'HELPFUL|PLAYER', true)
         AssertAuraFiltered('player', 103, 'HARMFUL|PLAYER', false)
@@ -427,7 +428,7 @@ fn queries_leave_aura_records_block_list_and_provider_selection_unchanged() {
         local aura = AuraUtil.GetAuraDataByAuraInstanceID('player', 101)
         assert(aura.auraInstanceID == 101 and aura.name == 'Filter fixture 101')
         assert(aura.duration == 30 and aura.expirationTime == 45 and aura.applications == 3)
-        assert(aura.sourceUnit == 'pet' and aura.isHelpful and not aura.isHarmful)
+        assert(aura.isFromPlayerOrPlayerPet and aura.isHelpful and not aura.isHarmful)
         "#,
     )
     .expect("queries do not mutate provider or blocked enumeration behavior");
