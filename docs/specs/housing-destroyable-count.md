@@ -1,14 +1,14 @@
 # Housing catalog destroyable count
 
-Bounded query slice for `C_HousingCatalog.GetDestroyableInstanceCount(entryVariantID)`, extending the [compound catalog model](housing-catalog-variants.md). Retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt): `global api-C_HousingCatalog-GetDestroyableInstanceCount-288` renames `entryID` to `entryVariantID`; `global api-C_HousingCatalog-GetDestroyableInstanceCount-289` changes its type to `HousingCatalogEntryVariantID`. Neither row establishes count policy. No source-row completion credit.
+Bounded query slice for `C_HousingCatalog.GetDestroyableInstanceCount(entryVariantID)`, extending the [compound catalog model](housing-catalog-variants.md). Retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt): `global api-C_HousingCatalog-GetDestroyableInstanceCount-288` renames `entryID` to `entryVariantID`; `global api-C_HousingCatalog-GetDestroyableInstanceCount-289` changes its type to `HousingCatalogEntryVariantID`. Neither row establishes count policy. Only these two exact parameter rows receive bounded coverage; no whole-row/page completion.
 
 ## What it must do
 
-- [ ] Each explicitly supplied variant record carries an independent `destroyable_instance_count`. The full `(recordID, entryType, variantIdentifier)` selects it; two variants of one record can have distinct counts. It is not computed from `num_stored`.
-- [ ] **Simulator inference:** empty/default environments and missing full keys return zero, without fake records, legacy seeds, numeric selectors or alternate variant lookup. Wrong entry type or variant identifier must not alias a populated key.
-- [ ] Changing only stored count leaves the explicit destroyable count unchanged. Inputs belong to one environment and cannot populate another.
-- [ ] The query returns exactly one ordinary Lua number. Explicit fixture counts are 1 and 4, independently supplied alongside stored counts 3 and 5; these are test inputs, not production defaults.
-- [ ] Ordinary public selectors work from secure and tainted addon callers without clearing taint. Nested secret fields reject in both contexts without unwrapping/declassification, consistent with the prior catalog producer's conservative simulator limit. Host-installed secured tables retain VM access checks; secure lookup succeeds, tainted lookup rejects, caller taint and source data remain intact. Native secure-secret access, coercion and invalid-input behavior remain unverified.
+- [x] Each explicitly supplied variant record carries an independent `destroyable_instance_count`. The full `(recordID, entryType, variantIdentifier)` selects it; two variants of one record can have distinct counts. It is not computed from `num_stored`.
+- [x] **Simulator inference:** empty/default environments and missing full keys return zero, without fake records, legacy seeds, numeric selectors or alternate variant lookup. Wrong entry type or variant identifier must not alias a populated key.
+- [x] Changing only stored count leaves the explicit destroyable count unchanged. Inputs belong to one environment and cannot populate another.
+- [x] The query returns exactly one ordinary Lua number. Explicit fixture counts are 1 and 4, independently supplied alongside stored counts 3 and 5; these are test inputs, not production defaults.
+- [x] Ordinary public selectors work from secure and tainted addon callers without clearing taint. Nested secret fields reject in both contexts without unwrapping/declassification, consistent with the prior catalog producer's conservative simulator limit. Host-installed secured tables retain VM access checks; secure lookup succeeds, tainted lookup rejects, caller taint and source data remain intact. Native secure-secret access, coercion and invalid-input behavior remain unverified.
 
 ### Cached grounding
 
@@ -19,7 +19,7 @@ The [variant spec's cached provenance](housing-catalog-variants.md#cached-declar
 ## How it works
 
 - [Catalog identity/security model](housing-catalog-variants.md).
-- [Housing audit ownership](../wiki/investigations/patch-12-0-5-api-audit.md#Housing catalog variant producer — pending GREEN).
+- [Housing audit ownership](../wiki/investigations/patch-12-0-5-api-audit.md#housing-destroyable-count--bounded-independent-pass).
 
 ## Implementation inventory
 
@@ -30,7 +30,7 @@ The [variant spec's cached provenance](housing-catalog-variants.md#cached-declar
 
 ## Tests asserting this spec
 
-Parent observed actual RED at input revision `6cd5e3812a922d4112bbfeffd0fe57e1e8ed834e`: ten cases, five PASS and five FAIL, before this producer replacement. Failures: default zero, fresh-environment isolation, distinct explicit counts, wrong-type/variant aliasing and nested-secret rejection. The five legacy-provider passes do not establish the new producer's behavior. Exact filter: `housing_catalog_variants::destroyable_count::`; existing target: `integration`. No new Cargo target. Producer implemented; parent GREEN remains pending.
+Parent observed actual RED at input revision `6cd5e3812a922d4112bbfeffd0fe57e1e8ed834e`: ten cases, five PASS and five FAIL, before this producer replacement. Failures: default zero, fresh-environment isolation, distinct explicit counts, wrong-type/variant aliasing and nested-secret rejection. The five legacy-provider passes do not establish the new producer's behavior. Exact filter: `housing_catalog_variants::destroyable_count::`; existing target: `integration`. No new Cargo target. Producer GREEN and bounded independent acceptance recorded below.
 
 | Case in `destroyable_count` | Observable contract |
 |---|---|
@@ -52,11 +52,26 @@ Parent observed actual RED at input revision `6cd5e3812a922d4112bbfeffd0fe57e1e8
 
 ## Known gaps (current cycle)
 
-- [ ] Actual parent RED recorded and producer replaced; parent GREEN, compilation, startup and acceptance for the new producer remain pending. No native, all-profile, source-row or whole-page completion claim.
+- [ ] Native count policy, native secure-secret parity and all-profile execution remain unverified; bounded acceptance does not close the whole source row/page.
 - [ ] Secure secret access and native count policy remain unknown; no declassification or native-parity claim.
 
 ## Out of scope
 
 - Destroy mutation, storage events and placement selection are separate slices, not prerequisites for this read query. Their future implementation may use documented simulator inferences; native probes are not a permanent implementation gate, including for Forever.
 - Aggregate/search counts, filters, catalog metadata, storefront/cart and legacy wrapper migration remain unrelated owners.
-- Builds, checks, delegation, push, source/accounting updates and concurrent docs/verifier outputs are excluded from this producer task. The variants spec is untouched; this separate contract owns the count requirements and proof boundary.
+- Builds, checks, delegation, push and concurrent storage-event changes are excluded from this docs reconciliation. The variants spec is untouched; this separate contract owns the count requirements and proof boundary.
+
+## Reconciled bounded proof — 2026-10-01
+
+Independent report: `/tmp/patch-12.0.5-housing-destroyable-count-independent-proof.md`; hash ledger: `/tmp/patch-12.0.5-housing-destroyable-count-independent-hashes.json`. Producer `3068e48d27fa104e071397be58688b0e4f7f34e3`: saved **10 count + 14 variant controls PASS**, exit 0; independent default fmt/check **exit 0**, no warnings/errors. Relevant hashes rechecked unchanged during reconciliation; later storage-event work excluded. No builds or test reruns here.
+
+Parent `batch19-green-startup-run.json`: exit 0, `[]`, zero errors, 4.192s; not independent startup proof. Secure nested secrets conservatively reject even for secure callers: native AllowedWhenUntainted parity remains missing. Default zero and native count policy remain inference/unverified; no native or all-profile acceptance.
+
+| File | SHA-256 |
+|---|---|
+| `src/c_api/c_housing/catalog.rs` | `4edb0088aca19484fc513c4dd6dee1b3844245203d1e6f2757d8fbd781c0484f` |
+| `src/c_api/c_housing/catalog/queries.rs` | `cccabbd099b8111aaa35dbde7a86b4cfa3195b82768db5ac56a108244816d4f2` |
+| `tests/housing_catalog_variants.rs` | `99a61a04d24ea19dbe543c9689384ce88ccba776e79cf4d3e16f9a70a9f6d2ad` |
+| `src/lua_api/workarounds/temporary/housing_catalog_state.lua` | `39269d2df10880f761f5482c75a080e7ccd2dca1eb36bb487331bc57c8b42cd2` |
+
+GREEN integration binary SHA-256 `6fa01bfe3c95c9c51a7b05fb9fea2ec13835df9a886d60c9535b220715b36170`. Historical RED binary hash remains in ledger above.

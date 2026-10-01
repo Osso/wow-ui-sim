@@ -451,6 +451,23 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-variants-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch18-guard-fixture-startup-run.json",
       "gate_scope": "Saved 14 variants + 11 controls PASS; independent default fmt/check exit 0 for nine hash-bound files at 157d15cef, not later checkout. Parent startup exit 0 [] in 4.86s, not verifier-run. Host-installed guard test only; no retail security registration/native parity or exhaustive GC proof."
+    },
+    {
+      "id": "housing-destroyable-count",
+      "symbols": [
+        "C_HousingCatalog.GetDestroyableInstanceCount"
+      ],
+      "scope": "Batch19 bounded independent PASS at 3068e48d2: exact entryVariantID name/HousingCatalogEntryVariantID type and full (recordID, entryType, variantIdentifier) lookup; 10 count + 14 variant controls PASS, snapshot default fmt/check 0. Explicit destroyable count independent of stored count; default/missing zero inferred. Parent startup 0 [] not independently executed. Native secure-secret parity, count policy and all-profile execution unverified; no whole-row/page completion.",
+      "spec": "docs/specs/housing-destroyable-count.md",
+      "tests": [
+        "tests/housing_catalog_variants.rs"
+      ],
+      "implementation": "3068e48d27fa104e071397be58688b0e4f7f34e3",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch19-green-run.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-destroyable-count-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch19-green-startup-run.json",
+      "gate_scope": "Independent inspection of saved 10 count + 14 variant PASS; default fmt/check exit 0 at producer snapshot. Relevant source hashes unchanged on reconciliation; later storage-event files excluded. Parent startup only. No native secure-secret parity or all-profile execution."
     }
   ],
   "source_rows": [
@@ -1403,15 +1420,19 @@
     },
     {
       "source_id": "global api-C_HousingCatalog-GetDestroyableInstanceCount-288",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-destroyable-count"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch19 bounded independent PASS at 3068e48d2: exact entryVariantID name/HousingCatalogEntryVariantID type and full (recordID, entryType, variantIdentifier) lookup; 10 count + 14 variant controls PASS, snapshot default fmt/check 0. Explicit destroyable count independent of stored count; default/missing zero inferred. Parent startup 0 [] not independently executed. Native secure-secret parity, count policy and all-profile execution unverified; no whole-row/page completion."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetDestroyableInstanceCount-289",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-destroyable-count"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch19 bounded independent PASS at 3068e48d2: exact entryVariantID name/HousingCatalogEntryVariantID type and full (recordID, entryType, variantIdentifier) lookup; 10 count + 14 variant controls PASS, snapshot default fmt/check 0. Explicit destroyable count independent of stored count; default/missing zero inferred. Parent startup 0 [] not independently executed. Native secure-secret parity, count policy and all-profile execution unverified; no whole-row/page completion."
     },
     {
       "source_id": "global api-C_MountJournal-GetMountFromSpell-291",
