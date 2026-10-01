@@ -390,6 +390,27 @@
       "independent_ledger": "/tmp/patch-12.0.5-spell-prompts-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch15-green-startup-run.json",
       "gate_scope": "Six prompt + twelve controls PASS; default fmt/check exit 0 at unchanged scoped 81421d057 snapshot. Validation/security/rooting source-only, no forced-GC/reentrant/invalid/secret/secured runtime cases. Separate parent startup exit 0 [] zero errors 46.39s, not independently verified; normal binary emitted by batch16-red-build.json whose combined command exits 101 from unrelated wow-sim test AddonMetadata.addon_dir missing at enable_state.rs:225; integration also emitted. No all-profile/native acceptance."
+    },
+    {
+      "id": "quest-accept-confirmation",
+      "symbols": [
+        "A_Admin.RequestQuestAcceptConfirmation",
+        "QUEST_ACCEPT_CONFIRM",
+        "ConfirmAcceptQuest",
+        "CloseQuestFrame"
+      ],
+      "scope": "Retail 12.0.5+ explicit simulator input tied to pending offer; exact synchronous three-field payload and existing acceptance/close transitions. Absent-offer policy inferred; no native/popup integration/all-profile/full-row/page acceptance.",
+      "spec": "docs/specs/quest-accept-confirmation.md",
+      "tests": [
+        "tests/quest_accept_confirmation.rs"
+      ],
+      "implementation": "e5ab15302",
+      "compiled_revision": "3f6d9d89e985165f51b34a2ee15df873d9d16105",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch16-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-quest-confirmation-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch16-green-startup-run.json",
+      "gate_scope": "Saved 5 quest + 6 prompt PASS; fresh 13 lifecycle controls PASS; default fmt/check exit 0 at 36a7fb573 snapshot. Security/rooting source-only. Separate parent hash-bound normal wow-sim startup exit 0 [] zero errors 12.70s, not verifier-run. RED 1 PASS/4 missing-method FAIL; GREEN build exit 0 510.99s; unrelated historical bin-test failure retained; no broad green."
     }
   ],
   "source_rows": [
@@ -2190,9 +2211,11 @@
     },
     {
       "source_id": "events-QUEST_ACCEPT_CONFIRM-558",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "quest-accept-confirmation"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded independent explicit simulator-input three-field synchronous payload PASS, including pending quest ID; existing offer/accept/close lifecycle controls pass. Security/rooting source-only; native/popup integration/all-profile/full-row/page acceptance unclaimed. Linked spec owns proof and parent startup limits."
     },
     {
       "source_id": "events-SPELL_CONFIRMATION_PROMPT-560",
