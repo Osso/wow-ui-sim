@@ -281,7 +281,10 @@ fn test_c_unit_auras_get_unit_auras_returns_iterable_table() {
 
     assert!(result.0, "GetUnitAuras should return a table");
     assert!(result.1, "HELPFUL table should contain aura data");
-    assert!(result.2, "empty filters should return an empty table, not nil");
+    assert!(
+        result.2,
+        "empty filters should return an empty table, not nil"
+    );
 }
 
 #[cfg(feature = "retail-12-1-0")]
@@ -298,6 +301,8 @@ fn test_c_unit_auras_filters_aura_instances_by_polarity_and_player_source() {
             applications: 1,
             source_unit: "player".into(),
             is_helpful: true,
+            is_raid: true,
+            is_nameplate_only: false,
             is_stealable: false,
             can_apply_aura: true,
             is_from_player_or_player_pet: true,
@@ -313,6 +318,8 @@ fn test_c_unit_auras_filters_aura_instances_by_polarity_and_player_source() {
             applications: 1,
             source_unit: "party1".into(),
             is_helpful: true,
+            is_raid: true,
+            is_nameplate_only: false,
             is_stealable: false,
             can_apply_aura: true,
             is_from_player_or_player_pet: false,

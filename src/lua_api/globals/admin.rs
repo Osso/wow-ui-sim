@@ -657,6 +657,8 @@ pub(super) fn build_admin_aura(
         applications: stacks,
         source_unit: "player".to_string(),
         is_helpful,
+        is_raid: is_helpful,
+        is_nameplate_only: false,
         is_stealable: false,
         can_apply_aura: is_helpful,
         is_from_player_or_player_pet: is_helpful,

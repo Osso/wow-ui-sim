@@ -10,6 +10,8 @@ pub(super) fn flash_of_light_aura() -> crate::lua_api::game_data::AuraInfo {
         applications: 0,
         source_unit: "player".to_string(),
         is_helpful: true,
+        is_raid: true,
+        is_nameplate_only: false,
         is_stealable: false,
         can_apply_aura: true,
         is_from_player_or_player_pet: true,
