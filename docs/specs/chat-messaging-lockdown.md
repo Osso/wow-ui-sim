@@ -30,11 +30,17 @@ Cached contract: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocu
 
 `tests/chat_messaging_lockdown.rs`: fresh exact-one false; explicit transitions; four combat/lockdown combinations; environment isolation; ordinary caller taint.
 
-Parent filter: `cargo test --test integration chat_messaging_lockdown::` with Retail 12.0.5+ enabled. Saved parent RED at input commit `f777027be4721bb46728a32553cf15a5cf44fbcd`: compilation exit 0 (303.63s), then five failures at non-boolean query results, exit 101. Evidence: `/tmp/patch-12.0.5-batch30-red-build-result.json`, `/tmp/patch-12.0.5-batch30-red-run.log`, `/tmp/patch-12.0.5-batch30-red-run.json`. Producer compilation, bounded GREEN and independent gate remain parent-owned and pending; checklist items are not promoted by source implementation.
+Parent filter: `cargo test --test integration chat_messaging_lockdown::` with Retail 12.0.5+ enabled. Saved parent RED at input commit `f777027be4721bb46728a32553cf15a5cf44fbcd`: compilation exit 0 (303.63s), then five failures at non-boolean query results, exit 101. Evidence: `/tmp/patch-12.0.5-batch30-red-build-result.json`, `/tmp/patch-12.0.5-batch30-red-run.log`, `/tmp/patch-12.0.5-batch30-red-run.json`. Saved parent GREEN metadata binds actual compiled/run revision `18b09cbf9787ed781399173be022b0866218384f`, not a later interleaved docs commit: compilation exit 0 (411.42s); five predicate PASS and two separate `c_chat_info_probes::` control PASS, both exit 0. Evidence: `/tmp/patch-12.0.5-batch30-green-build-result.json`, `/tmp/patch-12.0.5-batch30-green-runs.json`, and `green-run-0.log` / `green-run-1.log` under the same prefix. Both runs identify integration binary SHA-256 `455c53f291d206453255bca5bb452ec15d683394977b335808a44f801c842c5f`. Parent startup metadata at that revision records exit 0; saved summary is CLEAN, zero unique/occurrence errors (`/tmp/patch-12.0.5-batch30-green-startup-run.json`, `green-startup.log`). Startup is parent evidence, not independent execution.
+
+## Reconciled batch30 parent proof — 2026-10-01
+
+Literal row `global api-C_ChatInfo-InChatMessagingLockdown-251` removes only `ret2 = lockdownReason`. Fixtures assert `select('#', C_ChatInfo.InChatMessagingLockdown()) == 1`; `reason == nil` alone would not prove absence of a second nil return. Saved RED reaches non-boolean assertions after compilation; it is not a demonstrated two-return RED. Saved GREEN supports explicit simulator input, exact arity, combat independence, environment isolation and ordinary caller taint only.
+
+Independent report `/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md` was absent when this reconciliation was written. **Independent acceptance pending**; no independent PASS claimed, checklist items remain open and exact row remains audit-pending. Retained 362 source IDs/text hash and **265 pending / 83 bounded / 14 partial** accounting are unchanged. No native producer, enforcement, message/channel, macro, all-profile or whole-audit credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent bounded GREEN and independent gate for the implemented predicate.
+- [ ] Independent gate for the implemented predicate; saved parent bounded GREEN above is available.
 - [ ] Native restriction producer, activation/reset/ordering policy, and broader security semantics remain open.
 
 ## Out of scope

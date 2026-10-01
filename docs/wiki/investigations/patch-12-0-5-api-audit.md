@@ -1,5 +1,12 @@
 # Patch 12.0.5 API Audit
 
+### Chat lockdown predicate — parent GREEN, independent pending
+
+[Batch30 predicate proof](../../specs/chat-messaging-lockdown.md#reconciled-batch30-parent-proof--2026-10-01) binds saved RED to inputs `f777027be` (compile exit 0, 303.63s; five non-boolean failures) and GREEN to actual metadata revision `18b09cbf9` (compile exit 0, 411.42s; five predicate PASS plus two separately run C_ChatInfo controls). Parent startup exit 0, CLEAN zero errors is saved evidence, not independent execution. Exact `global api-C_ChatInfo-InChatMessagingLockdown-251` removes `ret2 = lockdownReason`; fixtures assert `select` arity one, not merely nil reason. RED does not establish a second-return failure.
+
+Independent report `/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md` was absent at reconciliation. Row remains **audit-pending**, checklist unpromoted; **265 pending / 83 bounded / 14 partial = 362**, source IDs/text SHA256 and unrelated accounting retained. Native producer/security, enforcement, messaging/channel restrictions, macros and all-profile acceptance unclaimed; audit **IN PROGRESS**. No builds/tests/checks/delegation/push/deploy.
+
+
 ### Private anchors — bounded independent PASS
 
 [Batch29 bounded proof](../../specs/private-aura-anchors.md#reconciled-batch29-bounded-proof--2026-10-01) owns saved producer, event correction and actual BuffFrame fixture evidence. Startup's 21 earlier messages all disappear after exact retail-12.1 event correction; do not treat distinct messages as independent root causes. Container fixture now passes actual cached Add/Remove/re-add/unit transition after supplying inherited Symbol through the real root. Explicit simulator dispatch is not native event production or historical 12.0.5 availability.
