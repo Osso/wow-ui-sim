@@ -5321,3 +5321,8 @@ Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage a
 ## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
 
 [[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links independent cooldown proof and observed query/UnitName evidence, exact retained source links, partial propagator failures and pending producer/final/startup gates. Specs own behavior and native-inference limits; all 362 source IDs remain, with no whole-page completion.
+
+
+## [2026-10-01] audit | Reconcile bounded batch9/10 source proof
+
+[[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links the propagator contract SSOT and separately records charge-policy failures; completed source-scoped batch9 audit replaces stale pending text. Coverage retains 362 IDs; only prose 173 moves from partial-development-green to bounded-coverage, not completed. Independent propagator acceptance/current runtime fmt/check remain pending. Empty-data/type-input rule, unrelated statuses, charge spec and production files unchanged.

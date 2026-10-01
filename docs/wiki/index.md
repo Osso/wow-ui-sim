@@ -1,6 +1,6 @@
 ## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
 
-[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links independent cooldown proof and observed query/UnitName evidence, exact retained source links, partial propagator failures and pending producer/final/startup gates. Specs own behavior and native-inference limits; all 362 source IDs remain, with no whole-page completion.
+[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links completed source-scoped batch9 audit and saved startup. [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links propagator SSOT, observed GREEN/pending independent acceptance and charge-policy failures. Current runtime fmt/check remain pending; all 362 source IDs remain, with no whole-page completion.
 
 ## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
 

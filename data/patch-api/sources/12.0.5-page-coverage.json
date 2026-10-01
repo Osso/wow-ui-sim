@@ -275,13 +275,15 @@
       "symbols": [
         "Insecure propagator templates"
       ],
-      "scope": "Cached mouse masks 1 PASS; keyboard and hyperlink 2 FAIL; diagnosis open. Partial only.",
+      "scope": "See linked spec Evidence and pending proof: all four cached templates getter flags and ordinary/runtime chained false overrides; no input delivery/protected privilege/native claim.",
       "spec": "docs/specs/insecure-propagator-templates.md",
       "tests": [
         "tests/insecure_propagator_templates.rs"
       ],
-      "proof": "partial-development-green",
-      "ledger": "/tmp/patch-12.0.5-batch9-runs.json"
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch10-runs.json",
+      "implementation": "3fa833aba",
+      "compiled_revision": "84f48be77b910f5daabc2e6318c54357961d10ee"
     }
   ],
   "source_rows": [
@@ -772,7 +774,7 @@
         "unit-name-secret-tokens"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "prose-2026-03-31-157",
@@ -847,8 +849,8 @@
       "capabilities": [
         "insecure-propagators"
       ],
-      "status": "partial-development-green",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "status": "bounded-coverage",
+      "note": "Linked propagator spec owns batch10 observed proof and pending independent verifier 124. Current runtime fmt/check pending; not whole-statement/native completion."
     },
     {
       "source_id": "prose-2026-03-31-174",
@@ -2310,7 +2312,7 @@
         "area-poi-publication"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-AreaPOIInfo-629",
@@ -2318,7 +2320,7 @@
         "area-poi-publication"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-631",
@@ -2470,7 +2472,7 @@
         "renown-rewards"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-PvpBrawlInfo-667",
@@ -2478,7 +2480,7 @@
         "structure-inputs"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-RecentAllyStateData-669",
@@ -2492,7 +2494,7 @@
         "structure-inputs"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     },
     {
       "source_id": "structures-TransmogOutfitEntryInfo-673",
@@ -2518,7 +2520,7 @@
         "structure-inputs"
       ],
       "status": "bounded-coverage",
-      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent producer audit 119, final current-default fmt/check and new startup pending; not whole-statement/native completion."
+      "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
     }
   ]
 }

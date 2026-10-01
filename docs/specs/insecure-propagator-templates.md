@@ -1,6 +1,6 @@
 # Insecure propagator templates
 
-Retained 12.0.5 source [`12.0.5-api-changes.txt`](../../data/patch-api/sources/12.0.5-api-changes.txt), line 173 (`prose-2026-03-12-173`), says “Add the following insecure templates for addon usage” and names the four templates below. Exact definitions were read from `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SecureTemplatesBase.xml`; tests load that relative file from the cached active-profile path, unchanged, through the normal TOC/XML loader.
+Retained 12.0.5 source [`12.0.5-api-changes.txt`](../../data/patch-api/sources/12.0.5-api-changes.txt), line 173 (`prose-2026-03-31-173`), says “Add the following insecure templates for addon usage” and names the four templates below. Exact definitions were read from `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SecureTemplatesBase.xml`; tests load that relative file from the cached active-profile path, unchanged, through the normal TOC/XML loader.
 
 ## What it must do
 
@@ -9,7 +9,7 @@ Retained 12.0.5 source [`12.0.5-api-changes.txt`](../../data/patch-api/sources/1
 - [ ] Ordinary XML instances and runtime `CreateFrame` inheritance apply both boolean attributes independently. Omitted fields preserve inherited values; explicit false overrides true. Chains use existing base-to-derived ordering and multiple templates use existing registry ordering/deduplication; instance declarations win last.
 - [ ] No-template Frame controls retain false before and after template instances are created.
 
-Checkboxes remain pending fresh parent-owned integration proof, not implementation inventory.
+Checkboxes remain pending independent acceptance; observed development GREEN below does not establish physical input or native parity.
 
 ## How it works
 
@@ -36,7 +36,9 @@ The inline fixtures use the normal TOC/XML loader, not model/source-shape assert
 
 Actual batch9 at `4f9e1607c` compiled successfully. Saved `/tmp/patch-12.0.5-batch9-integration-5.log` records **1 PASS / 2 FAIL**: mouse passes; keyboard and hyperlink fail at Lua behavioral assertions. Root cause: `FrameXml` omitted both attributes, and ordinary/runtime declarative application had no corresponding flag application; getters already read real Frame booleans defaulting false.
 
-Implementation is committed for a fresh parent build; **GREEN pending**. Existing cached RED covers this root cause; new inline/chain fixtures have not been separately executed RED or GREEN. Filter `insecure_propagator_templates::` now contains five cases. No Cargo, tests, checks, readability or broad gates ran in this bounded implementation slice.
+XML fix `3fa833aba` adds actual parsing and ordinary/runtime inheritance application for both attributes. Corrected parent build at `84f48be77` succeeds: `/tmp/patch-12.0.5-batch10-corrected-build-result.json` records exit 0 after missing `LuaApi`/`LuaApiMut` imports were fixed; compiler failures are not behavioral RED. `/tmp/patch-12.0.5-batch10-runs.json` and `run-0.log` record **5 PASS / 0 FAIL** for `insecure_propagator_templates::`: all four unchanged cached templates' getter flags, ordinary instances, runtime chains, independent omissions and explicit false overrides. Existing cached RED covers the missing attributes; new inline/chain fixtures have no separately executed RED.
+
+Independent verifier 124 is running; `/tmp/patch-12.0.5-propagators-independent-proof.md` was unavailable at this update. Current runtime fmt/check and final acceptance remain pending. This is source-scoped development proof, not actual input delivery, protected privileges or native behavior.
 
 ## Out of scope
 
