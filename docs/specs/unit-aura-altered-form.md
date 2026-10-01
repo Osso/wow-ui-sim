@@ -6,23 +6,23 @@
 
 ### State and query
 
-- [ ] **INFERRED:** `PlayerState.wants_altered_form` is one independent boolean, false in empty/default and seeded player state. No PartyMember field or unit-state map.
-- [ ] Return exactly one public boolean for a required unit string; changing the explicit input false/true/false changes the modeled player's result without query-induced state changes or events.
-- [ ] Use actual `existing_guid_for_unit` identity resolution: tokens resolving to the modeled player's GUID read the player input. Existing `TargetUnit('player'); FocusUnit('target')` aliases must follow that identity; retargeting and clearing must stop reading it when identity no longer matches.
-- [ ] **INFERRED:** other, unknown and unmodeled identities return false. Do not invent `self` or `raidplayer` aliases or assume `raid1` is player.
-- [ ] Never derive this input from race, stance/shapeshift state, barber data, `is_alternate_form` or `alternate_form_is_default`. Query must preserve those independent fields.
-- [ ] **INFERRED:** missing/nil or nonstring units error (including numbers; no coercion); error text is not native-characterized. Valid public calls still work after rejection.
+- [x] **INFERRED:** `PlayerState.wants_altered_form` is one independent boolean, false in empty/default and seeded player state. No PartyMember field or unit-state map.
+- [x] Return exactly one public boolean for a required unit string; changing the explicit input false/true/false changes the modeled player's result without query-induced state changes or events.
+- [x] Use actual `existing_guid_for_unit` identity resolution: tokens resolving to the modeled player's GUID read the player input. Existing `TargetUnit('player'); FocusUnit('target')` aliases must follow that identity; retargeting and clearing must stop reading it when identity no longer matches.
+- [x] **INFERRED:** other, unknown and unmodeled identities return false. Do not invent `self` or `raidplayer` aliases or assume `raid1` is player.
+- [x] Never derive this input from race, stance/shapeshift state, barber data, `is_alternate_form` or `alternate_form_is_default`. Query must preserve those independent fields.
+- [x] **INFERRED:** missing/nil or nonstring units error (including numbers; no coercion); error text is not native-characterized. Valid public calls still work after rejection.
 
 ### Secret unit argument
 
-- [ ] Authenticate only the documented unit argument through the VM's exact `rilua::table_security::unwrap_secret` boundary. This is AllowedWhenUntainted access, not generic declassification or caller-taint clearing.
-- [ ] Accept a real host-secret **string** containing `player` from an untainted caller and return the same one public boolean as the public token. Preserve caller taint and input secrecy.
-- [ ] Reject that string from a tainted closure; preserve the original stack-taint label. Public-string recovery must work inside the same tainted closure; secure secret-string recovery must work afterward.
-- [ ] Rooted host-secret string remains secret and retained across full GC, with secure acceptance, tainted rejection and public recovery unchanged.
+- [x] Authenticate only the documented unit argument through the VM's exact `rilua::table_security::unwrap_secret` boundary. This is AllowedWhenUntainted access, not generic declassification or caller-taint clearing.
+- [x] Accept a real host-secret **string** containing `player` from an untainted caller and return the same one public boolean as the public token. Preserve caller taint and input secrecy.
+- [x] Reject that string from a tainted closure; preserve the original stack-taint label. Public-string recovery must work inside the same tainted closure; secure secret-string recovery must work afterward.
+- [x] Rooted host-secret string remains secret and retained across full GC, with secure acceptance, tainted rejection and public recovery unchanged.
 
 ### Cached consumer
 
-- [ ] Load complete, unmodified cached `Blizzard_SharedXML/UnitUtil.lua`. Assert real `PlayerUtil.ShouldUseNativeFormInModelScene()` returns true for Human, and the explicit boolean for Worgen/Dracthyr, using actual existing race data and query. No vendor patch, query override, fake race data or 3D rendering.
+- [x] Load complete, unmodified cached `Blizzard_SharedXML/UnitUtil.lua`. Assert real `PlayerUtil.ShouldUseNativeFormInModelScene()` returns true for Human, and the explicit boolean for Worgen/Dracthyr, using actual existing race data and query. No vendor patch, query override, fake race data or 3D rendering.
 
 ## How it works
 
@@ -76,13 +76,22 @@ Integration binary `target/debug/deps/integration-a11e89d240f9bd0c` SHA256: RED 
 | Race/stance/legacy-field independence and strict required-string rejection/recovery | Parent GREEN fixtures; policy remains inferred |
 | Actual host-secret string accepted securely, denied in tainted closures without clearing taint; public/secure recovery and rooted full-GC preservation | Parent GREEN VM boundary fixtures; not native security characterization |
 | Complete unchanged cached `UnitUtil.lua`, real Human/Worgen/Dracthyr data and `PlayerUtil.ShouldUseNativeFormInModelScene()` | Parent GREEN consumer fixture; no SharedXML/addon/3D closure |
-| Broader controls, normal startup, independent checks/readability and final acceptance | **Pending**, not established by these ten tests or fixture initialization logs |
+| Broader controls and normal startup | 43 controls PASS, startup exit0 `[]`; saved parent manifests below |
+| Independent checks/readability and bounded acceptance | Independent328 report accepted; fmt/check exit0, no blocking findings; exact row407 only |
 
-Native defaults, misses, representation errors and security edge parity remain unknown. No source-accounting credit or whole-row completion follows from this bounded parent GREEN.
+Native defaults, misses, representation errors and security edge parity remain unknown. Parent GREEN alone does not authorize source credit; subsequent independent bounded acceptance below promotes exact row407, not native or whole-page completion.
+
+## Independent bounded acceptance — 2026-10-01
+
+Parent read the full `/tmp/patch-12.0.5-altered-form-independent-proof.md` and accepts bounded producer/security/consumer coverage. Independent328 validated the saved ten-test GREEN and current binary hash, wiring and immutable state access. Fresh `cargo fmt --check` exit0 (98.321s), `cargo check` exit0 (398.201s), no warnings or changed-line readability findings. Exact outputs/revisions live under `/tmp/patch-12.0.5-batch39-rust-gates.20261001T160324-7e1e2241`; docs-only `8ee917770` did not invalidate producer proof.
+
+`/tmp/patch-12.0.5-batch39-green-controls.json` records 12 identifier + 18 duration + 6 UnitIsUnit + 6 GUID + 1 race = **43 controls PASS**, exit0 each, same integration hash. Together with ten altered-form tests: **53 unique PASS**. `/tmp/patch-12.0.5-batch39-green-startup-run.json` records normal startup exit0, `[]`, 49.383s; wow-sim SHA256 `7cae84f5a62cd5b978109d45e64647348f896dc2b6282600d43c1e50821c7793`. Runtime partition total from manifests: 96.509s. No runtime/build reruns for independent acceptance.
+
+Only `global api-C_UnitAuras-WantsAlteredForm-407` gains bounded credit: **256 pending / 92 bounded / 14 partial → 255 / 93 / 14 = 362**. Before snapshot `/tmp/patch-12.0.5-batch39-accounting-before.json`; validation `/tmp/patch-12.0.5-batch39-accounting-validation.json`. Ordered IDs, source/register hashes, pre-existing capabilities and all unrelated rows remain unchanged. Inferences and excluded proof below remain open, not implementation blockers.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent GREEN covers the ten fixtures in the proof table; broader controls, normal startup, independent checks/readability and final acceptance remain pending. Requirement boxes remain open for final acceptance; no row promotion.
+- [x] Bounded independent acceptance covers the ten fixtures, 43 controls, normal startup and applicable Rust gates. Exact row407 promoted; requirement boxes above describe the contract, not native-parity claims.
 - [ ] Native source/default/non-player/error/security semantics remain unproven. False default/misses and strict representation errors are explicit simulator inferences.
 - [ ] Consumer test requires populated active-profile cache with `Blizzard_SharedXML/UnitUtil.lua`; missing cache/source fails explicitly, never skips or substitutes code. The inspected retail file consists of function definitions and can be supplied unchanged to existing `WowLuaEnv::exec`; actual load/runtime passed in the bounded parent consumer fixture. This is not full SharedXML/addon/model-scene closure.
 - [ ] GC fixture asserts retained reference equality via secure `rawequal`, secrecy and authenticated behavior, not raw VM pointer identity. Race/stance/legacy-field nonmutation is asserted; barber independence and absence of events are requirements without dedicated effect-monitoring tests in this slice.

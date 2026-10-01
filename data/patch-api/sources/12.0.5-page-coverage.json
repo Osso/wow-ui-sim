@@ -757,6 +757,21 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-aura-refresh-duration-independent-proof.md",
       "gate_scope": "Exact optional numeric/seeded alias, omitted/nil aura-derived identifier, nullable output and explicit base prerequisite. LENGTH read_public_arguments: 36 body lines; COMPLEX_COND is_valid: four validity checks. Both nonblocking, deferred, not zero issues."
+    },
+    {
+      "id": "unit-aura-altered-form",
+      "symbols": [
+        "C_UnitAuras.WantsAlteredForm"
+      ],
+      "scope": "Explicit player boolean and existing GUID aliases; one public boolean. VM-authenticated AllowedWhenUntainted unit access: actual host-secret string secure acceptance, tainted rejection with taint retained, public/secure recovery and full GC preservation. Ten fixtures plus 43 controls PASS; normal startup0 [], independent fmt/check0 and readability accepted. False defaults/misses and strict string errors inferred. No production cosmetic input, native security/default parity, full model-scene closure or all-profile credit.",
+      "spec": "docs/specs/unit-aura-altered-form.md",
+      "tests": [
+        "tests/unit_aura_altered_form.rs"
+      ],
+      "implementation": "795e2042e7cdbec0426e563272cf6b8f4d44ae15",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-altered-form-independent-proof.md",
+      "gate_scope": "Exact row407 secret-argument annotation axis and bounded unchanged cached UnitUtil consumer. Read-only implementation inspected; barber/event monitors and raw GC pointer identity not independently exercised. No blocking readability findings."
     }
   ],
   "source_rows": [
@@ -2144,9 +2159,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-WantsAlteredForm-407",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-altered-form"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent bounded row407 annotation proof: actual host-secret unit string accepted only untainted; tainted denial preserves caller label and secrecy, public/secure recovery and rooted full-GC behavior. Explicit player boolean, existing GUID aliases and unchanged cached UnitUtil consumer; 10 fixtures + 43 controls PASS, startup0 [], fresh fmt/check0. Default/miss/string-error policies inferred; no native security/default parity, production cosmetic source, all-profile or full model-scene closure. Barber/event monitors and raw pointer identity remain untested. Other source rows unchanged."
     },
     {
       "source_id": "global api-C_VoiceChat-SpeakText-409",

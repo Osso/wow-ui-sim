@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept bounded altered-form row407
+
+[Independent bounded acceptance](../specs/unit-aura-altered-form.md#independent-bounded-acceptance--2026-10-01) reconciles 53 unique PASS, normal startup0 `[]`, fresh fmt/check0 and no blocking readability findings. Exact row407 only gains bounded credit; source-accounting validation and retained native/model limitations live in the spec. Ignored PLAN untouched.
+
 ## [2026-10-01] implementation | Add bounded altered-form query producer
 
 Updated [[lua-api#Retail 12.0.5 altered-form query]], index and [contract](../specs/unit-aura-altered-form.md). C API producer authenticates only the unit argument, resolves player GUID identity and reads the independent bool without mutation; epoch-gated registration supersedes generic missing-method synthesis, with no explicit same-function default to remove. Saved parent RED at `732d1c5e6`: **1 PASS / 9 FAIL**, Cargo build-finished success true (wrapper exit unretained). Tests unchanged; formatting only, parent GREEN/acceptance pending. Defaults/misses/errors inferred; no native, source-accounting or 3D credit.

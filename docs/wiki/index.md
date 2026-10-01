@@ -1,6 +1,6 @@
 ## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
 
-[[lua-api#Retail 12.0.5 altered-form query]] links [batch39 proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), the SSOT for revisions, artifacts/hashes and capability coverage. Ten unchanged fixtures pass, including cached consumer and VM secret/GC boundaries. Broader controls/startup/independent checks/acceptance pending; native policy/security unknown. No accounting or PLAN changes.
+[[lua-api#Retail 12.0.5 altered-form query]] links [batch39 proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), the SSOT for revisions, artifacts/hashes and capability coverage. [Independent bounded acceptance](../specs/unit-aura-altered-form.md#independent-bounded-acceptance--2026-10-01) records ten fixtures plus 43 controls PASS, startup0 `[]`, fresh fmt/check0 and exact row407 promotion. Native policy/security and production cosmetic input remain unknown. Ignored PLAN unchanged.
 
 ## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
 
