@@ -543,6 +543,22 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-aggregates-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch24-green-startup-run.json",
       "gate_scope": "Saved 76 PASS inspected, not rerun; parent startup 0 [] saved, not independent. Fresh default fmt/check 0 at docs2973774c5 with identical relevant producer code/config. RED2PASS10FAIL all stop at stored assertion, not individually placed failure."
+    },
+    {
+      "id": "housing-catalog-categories",
+      "symbols": [
+        "HousingCatalogCategoryInfo.anyStoredEntries",
+        "HousingCatalogSubcategoryInfo.anyStoredEntries"
+      ],
+      "scope": "Explicit empty-backed category/subcategory DTO rename only; exact keys, nullable fields and fresh nested snapshots. Missing-ID/snapshot policies inferred. Seeded search/getter mismatch open; no row661/search/filter, ownership derivation, native AllowedWhenUntainted, full catalog/UI or all-profile acceptance. Later search inputs/editor contexts excluded.",
+      "spec": "docs/specs/housing-catalog-categories.md",
+      "tests": [
+        "tests/housing_catalog_categories.rs"
+      ],
+      "implementation": "bbbacf8f0",
+      "proof": "bounded-independent-pass",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-categories-independent-proof.md",
+      "gate_scope": "Input63b53dfe5 actual RED2/12; saved66GREEN/startup0[] independently inspected, not rerun. Fresh default fmt/check0 at clean producer; later dirty source excluded."
     }
   ],
   "source_rows": [
@@ -2735,9 +2751,11 @@
     },
     {
       "source_id": "structures-HousingCatalogCategoryInfo-643",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-categories"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; seeded search/getter mismatch and later search inputs excluded."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -2823,9 +2841,11 @@
     },
     {
       "source_id": "structures-HousingCatalogSubcategoryInfo-659",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-catalog-categories"
+      ],
+      "status": "bounded-coverage",
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; seeded search/getter mismatch and later search inputs excluded."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",

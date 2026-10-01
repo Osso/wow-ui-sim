@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Housing category DTO rename — bounded independent PASS
+
+[Batch25 contract/proof](../../specs/housing-catalog-categories.md#reconciled-batch25-bounded-proof--2026-10-01) owns inputs `63b53dfe5`, producer `bbbacf8f0`, actual RED **2 PASS / 10 FAIL**, saved **66 GREEN PASS**, parent startup **0 []** and fresh independent default fmt/check **0** at clean producer. Explicit empty maps replace two seeded getter publishers; exact distinct keys, required/nullable fields, independent boolean and fresh nested snapshots have bounded proof. Saved runtime/startup inspected, not independently rerun; rooting/registration source-reviewed. Missing-ID nil and snapshot policies inferred.
+
+Rows **643/659** receive **bounded-coverage** for `anyOwnedEntries`→`anyStoredEntries` only. **274 pending / 74 bounded / 14 partial = 362**, all IDs/text hash retained; **IN PROGRESS**. Row **661** remains audit-pending. Seeded searches still return IDs absent from empty getter maps until next batch; housing panel safety is unproven. Native AllowedWhenUntainted acceptance, ownership derivation, full catalog and all-profile claims excluded; later search/editor-context inputs not covered.
+
 ### Housing explicit aggregates — bounded independent PASS
 
 [Batch24 contract/proof](../../specs/housing-catalog-aggregates.md#reconciled-batch24-bounded-proof--2026-10-01) owns inputs `fe874979b`, producer `72795fbfa`, compiled RED **2 PASS / 10 FAIL** (all ten stop at stored-field assertion, not isolated placed failures), saved **12 aggregate + 14 base + 24 variants/count + 11 storage + 15 destruction = 76 PASS** and parent startup **0 []**, zero errors, not independent execution. Fresh independent default fmt/check **0** at docs `2973774c5` covers identical relevant code/config. Explicit fields through three selectors, zero/nil distinction, unsigned range, independent snapshots and no mutation coupling are bounded simulator proof. `None`→nil is missing-data gap against cached required native numbers, not native default.
