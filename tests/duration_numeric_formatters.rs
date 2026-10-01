@@ -58,6 +58,11 @@ fn all_three_formatters_render_real_elapsed_remaining_and_base_modifiers() {
         string.format = function() error('arbitrary replacement printf') end
         assert(d:FormatTotalDuration(numeric) == '1234 ticks')
         string.format = original
+        local metatable = debug.getmetatable(numeric)
+        local originalMethod = metatable.FormatNumber
+        metatable.FormatNumber = function() error('arbitrary replacement formatter') end
+        assert(d:FormatTotalDuration(numeric) == '1234 ticks')
+        metatable.FormatNumber = originalMethod
     "#,
     );
 }
@@ -70,7 +75,7 @@ fn invalid_receivers_modifiers_and_formatter_errors_leave_state_unchanged() {
         local fake = setmetatable({FormatNumber=function() calls=calls+1; return 'fake' end},
             {__index=function() calls=calls+1; error('untrusted lookup') end})
         for _, name in ipairs(methods) do
-            for _, bad in ipairs({fake, newproxy(), false, 42, 'formatter'}) do
+            for _, bad in ipairs({fake, newproxy(), newproxy(seconds), false, 42, 'formatter'}) do
                 assert(not pcall(d[name], d, bad))
             end
             for _, formatter in ipairs(formatters) do
