@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Spell confirmation prompts — bounded independent PASS
+
+[Prompt contract](../../specs/spell-confirmation-prompts.md#tests-asserting-this-spec) owns producer `b07fc61f6`, compiled/docs `329eabfbb`, independent six prompt + twelve control PASS and snapshot-scoped default fmt/check exit 0. Validation/security/rooting remain source-only; no native/all-profile or whole-row/page acceptance. Exact event source rows 560/561/562 now have bounded coverage; all 362 IDs and source hash retained. Separate parent startup exits 0 with `[]`, zero Lua errors, 46.39s; not independently verified. Normal binary and integration emitted by batch16 combined build, which still exits **101** from unrelated wow-sim test `AddonMetadata.addon_dir` missing at `enable_state.rs:225`. Audit remains **IN PROGRESS**.
+
 The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention commit `7ff275fd3`; full-page behavior coverage is not established. Earlier work was probe-driven rather than a full API-change-page audit. Retail `12.0.5.67823` live probes pinned core frame, event, attribute, identity, scale-event, and XML frame-level behavior; the simulator already models the safe findings with regression coverage. No dedicated `patch_12_0_5_inert_defaults` module exists.
 
 ## Content

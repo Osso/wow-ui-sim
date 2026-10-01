@@ -367,6 +367,29 @@
       "startup_ledger": "/tmp/patch-12.0.5-batch14-green-startup-run.json",
       "gate_scope": "Independent bounded behavior/wiring/readability PASS; actual missing-setter RED 0/6, GREEN 8 party + 28 admin-party + 19 admin-event = 55 PASS reused. Default fmt/check exit 0 at captured 527cb2f57 source/config snapshot; concurrent unrelated tests/forever_auto_roll.rs edit and subsequent unrelated tests excluded, no current whole-worktree fmt or all-test compile claim. Separate parent startup exit 0, [] zero errors, 7.85s; not independently verified by report. Linked spec owns artifacts/inference limits; no native/network/all-profile/full-row/whole-page claim.",
       "independent_ledger": "/tmp/patch-12.0.5-party-connection-independent-proof.md"
+    },
+    {
+      "id": "spell-confirmation-prompts",
+      "symbols": [
+        "A_Admin.QueueSpellConfirmationPrompt",
+        "GetSpellConfirmationPromptsInfo",
+        "AcceptSpellConfirmationPrompt",
+        "DeclineSpellConfirmationPrompt",
+        "SPELL_CONFIRMATION_PROMPT"
+      ],
+      "scope": "Mainline 12.0.5+ explicit pending records, exact ten synchronous fields, independent snapshots and matching-ID actions. Lifecycle policies inferred; no native/all-profile/full-row/page acceptance.",
+      "spec": "docs/specs/spell-confirmation-prompts.md",
+      "tests": [
+        "tests/spell_confirmation_prompts.rs"
+      ],
+      "inputs": "6f7427fef",
+      "implementation": "b07fc61f6",
+      "compiled_revision": "329eabfbb",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch15-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-spell-prompts-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch15-green-startup-run.json",
+      "gate_scope": "Six prompt + twelve controls PASS; default fmt/check exit 0 at unchanged scoped 81421d057 snapshot. Validation/security/rooting source-only, no forced-GC/reentrant/invalid/secret/secured runtime cases. Separate parent startup exit 0 [] zero errors 46.39s, not independently verified; normal binary emitted by batch16-red-build.json whose combined command exits 101 from unrelated wow-sim test AddonMetadata.addon_dir missing at enable_state.rs:225; integration also emitted. No all-profile/native acceptance."
     }
   ],
   "source_rows": [
@@ -2173,21 +2196,27 @@
     },
     {
       "source_id": "events-SPELL_CONFIRMATION_PROMPT-560",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-confirmation-prompts"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded independent explicit-input ten-field event/query PASS; appended positions 8/9/10 observed. Native triggers, validation/security/rooting runtime and full lifecycle unclaimed; linked spec owns exact limits and separate parent startup/build failure."
     },
     {
       "source_id": "events-SPELL_CONFIRMATION_PROMPT-561",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-confirmation-prompts"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded independent explicit-input ten-field event/query PASS; appended positions 8/9/10 observed. Native triggers, validation/security/rooting runtime and full lifecycle unclaimed; linked spec owns exact limits and separate parent startup/build failure."
     },
     {
       "source_id": "events-SPELL_CONFIRMATION_PROMPT-562",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-confirmation-prompts"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded independent explicit-input ten-field event/query PASS; appended positions 8/9/10 observed. Native triggers, validation/security/rooting runtime and full lifecycle unclaimed; linked spec owns exact limits and separate parent startup/build failure."
     },
     {
       "source_id": "enums-Enum-AbbreviationDataError-570",

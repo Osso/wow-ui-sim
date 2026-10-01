@@ -4,12 +4,12 @@ Bounded Mainline retail 12.0.5+ pending-prompt input, query and actions (`retail
 
 ## What it must do
 
-- [ ] Begin with no pending prompts; `GetSpellConfirmationPromptsInfo()` returns exactly one empty table. Empty state is simulator policy, not a native-default claim.
-- [ ] Accept a complete caller-supplied record through `A_Admin.QueueSpellConfirmationPrompt(record)`. All ten fields below are explicit and nonnil; do not fabricate spell, item, currency, difficulty or timing values.
-- [ ] Retain the record before synchronously dispatching exactly ten `SPELL_CONFIRMATION_PROMPT` arguments. A real frame listener querying pending state during dispatch must see the new record before the admin call returns.
-- [ ] Retain two different spell IDs independently, with all supplied values preserved. No native query ordering is asserted.
-- [ ] Infer pending lifecycle only: accept/decline remove only the matching spell ID; absent IDs do nothing; repeated queue input for one spell ID replaces its entire record without adding a duplicate.
-- [ ] Return independent record/sequence snapshots and copy caller input; mutations cannot change retained data, earlier snapshots, subsequent queries or another environment's state.
+- [x] Begin with no pending prompts; `GetSpellConfirmationPromptsInfo()` returns exactly one empty table. Empty state is simulator policy, not a native-default claim.
+- [x] Accept a complete caller-supplied record through `A_Admin.QueueSpellConfirmationPrompt(record)`. All ten fields below are explicit and nonnil; do not fabricate spell, item, currency, difficulty or timing values.
+- [x] Retain the record before synchronously dispatching exactly ten `SPELL_CONFIRMATION_PROMPT` arguments. A real frame listener querying pending state during dispatch must see the new record before the admin call returns.
+- [x] Retain two different spell IDs independently, with all supplied values preserved. No native query ordering is asserted.
+- [x] Infer pending lifecycle only: accept/decline remove only the matching spell ID; absent IDs do nothing; repeated queue input for one spell ID replaces its entire record without adding a duplicate.
+- [x] Return independent record/sequence snapshots and copy caller input; mutations cannot change retained data, earlier snapshots, subsequent queries or another environment's state.
 
 ### Source-grounded event/query mapping
 
@@ -44,7 +44,7 @@ Cached sources ground event names, positions, nilability, synchronous designatio
 
 ## Implementation inventory
 
-- `tests/spell_confirmation_prompts.rs`: six pending behavioral fixtures, gated to `profile-retail` + `retail-12-0-5`; discovered by the existing generated integration harness, no new Cargo target.
+- `tests/spell_confirmation_prompts.rs`: six independently audited passing behavioral fixtures, gated to `profile-retail` + `retail-12-0-5`; discovered by the existing generated integration harness, no new Cargo target.
 - `src/lua_api/globals/real/spell_confirmation_prompts.rs`: host-owned complete records, admin parsing/publication, snapshot query and matching-ID actions. Numeric `spellID` keys preserve finite values without integer truncation; signed zero shares one identity.
 - `src/lua_api/state/sim_state.rs` and `state.rs`: per-environment pending map, empty by default, under the same Mainline epoch/profile gate.
 - `src/lua_api/globals/{real/mod.rs,register.rs,admin.rs}`: gated public globals and admin input wiring.
@@ -66,12 +66,14 @@ Parsing requires every numeric field to be a finite public number and text to be
 | `repeated_spell_id_replaces_one_record_without_duplicate` | Full replacement with distinct values, unrelated record retained |
 | `input_and_query_mutations_do_not_cross_snapshots_or_environments` | Caller/query mutation isolation, retained snapshots and separate environments |
 
-Proof ledger (2026-10-01): tests/spec `6f7427fef41267f39abc24a032e56e63bf41ad8f` compiled in the parent's saved 127.27s build (`/tmp/patch-12.0.5-batch15-red-build.json`, `.log`, and result artifact). Actual selected RED: 0/6, exit 101, 1.44s; `/tmp/patch-12.0.5-batch15-red-run.json` and `.log` identify that revision and binary hash. Failures stop at missing modeled surface prerequisites, not six independent reached behavior failures. Production implementation follows that RED; parent owns compilation, targeted GREEN and final gates. No build/test/check execution in the production slice. Formatting is not behavioral proof; requirement checkboxes remain unverified.
+Proof ledger (2026-10-01): tests/spec `6f7427fef41267f39abc24a032e56e63bf41ad8f` compiled in the parent's saved 127.27s build (`/tmp/patch-12.0.5-batch15-red-build.json`, `.log`, and result artifact). Actual selected RED: 0/6, exit 101, 1.44s; `/tmp/patch-12.0.5-batch15-red-run.json` and `.log` identify that revision and binary hash. Failures stop at missing modeled surface prerequisites, not six independent reached behavior failures. Production `b07fc61f6`, docs/compiled snapshot `329eabfbb`: independent [saved proof](/tmp/patch-12.0.5-spell-prompts-independent-proof.md) confirms six prompt cases plus eight party and four Recent Allies controls PASS. GREEN compile exits 0; default fmt/check exit 0 at `81421d057`, with twelve scoped hashes unchanged and later quest fixtures excluded from the GREEN binary. Security, validation and rooting are source-inspected only; no invalid/secret/secured-input, forced-GC, reentrant-action or all-profile execution proof.
+
+Separate parent startup `/tmp/patch-12.0.5-batch15-green-startup-run.json`, `-startup.json` and `-startup.log`: exit 0, `[]`, zero Lua errors, 46.39s; normal wow-sim SHA256 `bd2be508b9061dd7ca1267c404942e5aa52bb352ca405c52c7e2f296977accd3`. Artifact was emitted by `/tmp/patch-12.0.5-batch16-red-build.json`. That combined command exits **101**: unrelated bin wow-sim test compilation fails at `enable_state.rs:225` because `AddonMetadata.addon_dir` is missing. Normal binary and integration executable were emitted successfully; startup does not erase that failure. Startup is parent evidence, not an independent-verifier claim.
 
 ## Known gaps (current cycle)
 
 - [x] Parent records actual targeted RED and its revision before production implementation.
-- [ ] Obtain actual GREEN and required independent gates for the implemented bounded input/state/query/actions and replaced empty-query provider.
+- [x] Obtain actual GREEN and required independent gates for the implemented bounded input/state/query/actions and replaced empty-query provider.
 - [ ] Native semantics remain unknown as listed above; do not upgrade inferred lifecycle choices to native parity.
 
 ## Out of scope

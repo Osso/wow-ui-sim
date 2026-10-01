@@ -1,6 +1,10 @@
+## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
+
+[Prompt contract](../specs/spell-confirmation-prompts.md#tests-asserting-this-spec) owns producer `b07fc61f6`, compiled/docs `329eabfbb`, independent six prompt + twelve control PASS and snapshot-scoped default fmt/check exit 0. Validation/security/rooting remain source-only; no native/all-profile or whole-row/page acceptance. Exact event source rows 560/561/562 now have bounded coverage; all 362 IDs and source hash retained. Separate parent startup exits 0 with `[]`, zero Lua errors, 46.39s; not independently verified. Normal binary and integration emitted by batch16 combined build, which still exits **101** from unrelated wow-sim test `AddonMetadata.addon_dir` missing at `enable_state.rs:225`. Audit remains **IN PROGRESS**. See [[patch-12-0-5-api-audit#Spell confirmation prompts — bounded independent PASS]].
+
 ## [2026-10-01] implementation | Record pending spell confirmation producer
 
-[[lua-api#Global Functions]] links the [contract](../specs/spell-confirmation-prompts.md), which owns exact mapping, inferred lifecycle and saved prerequisite RED. Producer `b07fc61f6` is formatted/committed only; parent compilation/GREEN/final gates pending. No native/source-accounting credit.
+[[lua-api#Global Functions]] links the [contract](../specs/spell-confirmation-prompts.md), which owns exact mapping, inferred lifecycle and saved prerequisite RED. Historical implementation-time status: producer `b07fc61f6` formatted/committed, gates then pending; superseded by bounded acceptance above. No native/source-accounting credit.
 
 ## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
 

@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
+
+[Prompt contract](../specs/spell-confirmation-prompts.md#tests-asserting-this-spec) owns producer `b07fc61f6`, compiled/docs `329eabfbb`, independent six prompt + twelve control PASS and snapshot-scoped default fmt/check exit 0. Validation/security/rooting remain source-only; no native/all-profile or whole-row/page acceptance. Exact event source rows 560/561/562 now have bounded coverage; all 362 IDs and source hash retained. Separate parent startup exits 0 with `[]`, zero Lua errors, 46.39s; not independently verified. Normal binary and integration emitted by batch16 combined build, which still exits **101** from unrelated wow-sim test `AddonMetadata.addon_dir` missing at `enable_state.rs:225`. Audit remains **IN PROGRESS**. See [[patch-12-0-5-api-audit#Spell confirmation prompts — bounded independent PASS]].
+
 ## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
 
 [[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent bounded PASS and snapshot-scoped default fmt/check recorded in the linked contract; concurrent unrelated tests/`tests/forever_auto_roll.rs` edits excluded, no current whole-worktree formatting claim. No native/network/all-profile/full-row/full-page acceptance.
@@ -8,7 +12,7 @@
 
 ## [2026-10-01] implementation | Add bounded pending spell confirmations
 
-[[lua-api#Global Functions]] links the [pending contract](../specs/spell-confirmation-prompts.md): producer `b07fc61f6` adds explicit per-environment records, synchronous ten-field publication, independent snapshots and matching-ID removal. Mainline 12.0.5+ only; earlier/nonmainline inert query is cfg-separated. Saved prerequisite RED 0/6 precedes production; compilation, GREEN and final gates remain parent-owned. No native or source-accounting completion.
+[[lua-api#Global Functions]] links the [pending contract](../specs/spell-confirmation-prompts.md): producer `b07fc61f6` adds explicit per-environment records, synchronous ten-field publication, independent snapshots and matching-ID removal. Mainline 12.0.5+ only; earlier/nonmainline inert query is cfg-separated. Saved prerequisite RED 0/6 precedes production; bounded independent acceptance now recorded in the linked contract. No native or whole-page completion.
 
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 
