@@ -971,7 +971,6 @@ C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
 })
 C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   DeletePreviewCartDecor = __wow_noop,
-  DestroyEntry = __wow_noop,
   GetAllFilterTagGroups = function() return {} end,
   GetBundleInfo = function(bundleCatalogShopProductID)
     return __wow_housing_copy_bundle_info(bundleCatalogShopProductID)

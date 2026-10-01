@@ -16,6 +16,7 @@ pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<(
         ("GetCatalogEntryInfo", entry_info),
         ("GetCatalogEntryVariantInfo", variant_info),
         ("GetDestroyableInstanceCount", destroyable_instance_count),
+        ("DestroyEntry", super::storage::destroy_entry),
         ("GetAllVariantInfosForEntry", variant_infos),
     ];
     for &(name, function) in functions {

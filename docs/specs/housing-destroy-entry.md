@@ -1,6 +1,6 @@
 # Housing catalog destruction
 
-Bounded test/spec-only 12.0.5 slice for `C_HousingCatalog.DestroyEntry(entryVariantID, destroyAll)`, using the existing [catalog records](housing-catalog-variants.md) and independent [destroyable count](housing-destroyable-count.md). Retained [source register](../../data/patch-api/sources/12.0.5-register.json) IDs `global api-C_HousingCatalog-DestroyEntry-281` / `-282` rename the selector and change its type to `HousingCatalogEntryVariantID`. These parameter rows do not establish eligibility, mutation or native event timing. Producer implementation requires actual parent-observed compiled RED first.
+Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariantID, destroyAll)`, using the existing [catalog records](housing-catalog-variants.md) and independent [destroyable count](housing-destroyable-count.md). Retained [source register](../../data/patch-api/sources/12.0.5-register.json) IDs `global api-C_HousingCatalog-DestroyEntry-281` / `-282` rename the selector and change its type to `HousingCatalogEntryVariantID`. These parameter rows do not establish eligibility, mutation or native event timing. Parent reported actual compiled RED for input/tests `f94063616`: 15 cases, 2 PASS / 13 FAIL against the Lua no-op (`batch21-red-build/run*`). Producer implemented after that prerequisite; GREEN remains parent-owned.
 
 ## What it must do
 
@@ -43,9 +43,10 @@ Actual consumer `Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua:728â
 
 - `tests/housing_destroy_entry.rs`: new grouped behavioral module, automatically discovered by existing `integration` harness; no new Cargo target.
 - `src/c_api/c_housing/catalog.rs`: unchanged existing record inputs; sufficient for this slice.
-- `src/c_api/c_housing/catalog/{queries,input,snapshot}.rs`: unchanged full-ID queries, security boundaries and serializers.
-- `src/c_api/c_housing/catalog/storage.rs`: unchanged distinct admin producer, not a deletion producer.
-- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: existing `DestroyEntry` no-op remains unchanged pending actual parent RED.
+- `src/c_api/c_housing/catalog/queries.rs`: unconditional Rust `DestroyEntry` registration alongside existing full-ID queries.
+- `src/c_api/c_housing/catalog/{input,snapshot}.rs`: unchanged shared selector/VM access guards and rooted serializers.
+- `src/c_api/c_housing/catalog/storage.rs`: validates public arguments and consistent counts, decrements only the exact variant's stored/eligible counts, then uses the existing admin event publisher after releasing the model borrow. Both producers retain the payload root across nested callbacks; destruction performs no post-dispatch write and never clears taint.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: exact `DestroyEntry` no-op removed; unrelated seeded policies unchanged. No fallback.
 
 ## Tests asserting this spec
 
@@ -62,16 +63,18 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 ### Proof ledger and producer gate
 
 - Baseline clean revision `5afd73d498340952f0e2a2c59ae1a718f92d5b6a`; model/query/event producer and cached consumer inspection only.
-- Fifteen test cases prepared, not compiled or executed. No RED/GREEN, source-row credit or acceptance claim. Parent filter: `housing_destroy_entry::` in existing target `integration`.
+- Parent-reported actual RED at input/tests `f94063616`: 15 cases, 2 PASS / 13 FAIL from the existing Lua no-op; build compiled successfully. Artifacts `batch21-red-build/run*` were not independently inspected by this implementer. Parent filter: `housing_destroy_entry::` in existing target `integration`.
+- `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog/storage.rs src/c_api/c_housing/catalog/queries.rs`: exit 0 on producer files; formatting only. Subsequent module-doc wording change does not affect formatting.
+- Producer added with no local build/check/test execution. Parent must establish GREEN on the committed producer. Requirements checkboxes remain pending proof; no source-row credit or acceptance claim.
 - `rustfmt --edition 2024 --config skip_children=true tests/housing_destroy_entry.rs`: exit 0 on the new test file; formatting only, not compilation or behavioral proof. Later test edits invalidate formatting scope.
-- No builds, checks, delegation or push authorized in this slice. No producer, accounting, existing tests or other spec changes.
+- Producer slice authorizes formatting and commit only; no builds, checks, delegation or push. Existing tests, source accounting, other specs and vendor/cache definitions unchanged.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and observe actual RED before any deletion producer is implemented.
-- [ ] Parent-owned producer and bounded GREEN/security/event acceptance remain pending.
+- [x] Parent reports actual compiled RED before producer implementation.
+- [ ] Parent-owned bounded GREEN/security/event acceptance remain pending.
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
 
 ## Out of scope
 
-Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence; this slice changes only destruction tests and this contract.
+Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence; this slice changes only the destruction producer, its exact no-op replacement and this contract.
