@@ -49,3 +49,9 @@
 ## Out of scope
 
 Native-client parity, arbitrary Lua formatter callback compatibility, Blizzard/vendor changes, general secret confidentiality, and final integration verification are not claimed. Identity retention, ordinary getter output after secret assignment, and clock/render policy are informed guesses, not native probes.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+Public configuration PASS 8/8 (`integration-4.log`). Library configured countdown 6 PASS / 2 FAIL (`lib-0.log`); unchanged countdown controls 8 PASS (`lib-1.log`), static defaults 2 PASS (`lib-2.log`). GC correction `99102f631` and post-tick security fixture `97a0e1270` were committed after this snapshot; their GREEN is pending. No rendered-current-fix acceptance.

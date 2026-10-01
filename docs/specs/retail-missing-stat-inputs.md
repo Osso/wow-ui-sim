@@ -30,9 +30,15 @@ Ten previously absent retail globals from the [12.0.5 source](../../data/patch-a
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned GREEN and final verification pending. Original RED at `e0a46d691`: ten missing-global invocation failures. Concrete fixture RED at `eac08bda3`: 0/13 pass, all fail on missing globals (`/tmp/patch-12.0.5-batch6-stats-fixture-red.log`); parent default integration compile succeeded after public input export correction. Bodies follow that RED.
+- [ ] Observed batch7 explicit-input fixtures PASS 13/13; independent final verification pending. Original RED at `e0a46d691`: ten missing-global invocation failures. Concrete fixture RED at `eac08bda3`: 0/13 pass, all fail on missing globals (`/tmp/patch-12.0.5-batch6-stats-fixture-red.log`); parent default integration compile succeeded after public input export correction. Bodies follow that RED.
 - [ ] Future native probes: mastery across classes/specs/levels; conversion units and absent conversion; penetration/sturdiness scales and equipment effects; pet presence/inheritance; regen by power and casting state; effective AP absence and all five positions; weapon contributions for aliases and missing entities; secrecy of each position and secret selectors under tainted callers.
 
 ## Out of scope
 
 Native numeric parity, automatic equipment/spell-derived input producers, automatic restriction activation, other-profile expansion, vendor changes, and generic secret-value unwrapping.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+`character_stats::missing_apis::` PASS 13/13 (`integration-0.log`): explicit scalar/pet/regen/AP inputs and bounded selector/secrecy fixtures. No automatic producers or native formulas.

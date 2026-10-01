@@ -5305,3 +5305,7 @@ Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], and index 
 ## [2026-10-01] ingest | Bounded secret-string formatting runtime proof
 
 Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage and runtime revision metadata; updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index. Runtime `6044544` independent 6+2 PASS and fmt/check with pre-existing strlen warning; simulator pin `c5ba89ae3`, old-pin RED 1/5, new-pin batch7 compilation pending. Tainted opaque permission inferred; SetFormattedText/other domains and native parity unproven. All source IDs/classifications retained; full page IN PROGRESS and 38-row probe register unchanged.
+
+## [2026-10-01] audit | Record bounded batch7 observed proof
+
+[[patch-12-0-5-api-audit#Batch7 observed proof — 2026-10-01]] records snapshot `c5ba89ae3` with rilua `6044544b`: twelve integration filters 111 PASS, configured countdown library 6 PASS / 2 FAIL; post-snapshot GC/fixture GREEN and independent audit pending. Coverage preserves 362 source IDs and unrelated classifications; linked rows are not completion. [[spell-charge-state]] and [[duration-core]] retain native/earlier-profile limits.

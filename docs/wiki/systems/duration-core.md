@@ -42,7 +42,7 @@ These are inferred simulator selection/input policies, not native semantics. The
 
 ## Charge duration producers
 
-[[spell-charge-state]] records the explicit five-field spell map and shared action/spell/book producers committed at `13af6a6b2` after concrete 1/10 RED at `eac08bda3`. Configured active recharge uses the validated rate-aware duration constructor; max charges return query-time zero spans under Retail 12.0.5+. That capability also makes all core zero spans expired with elapsed fraction one, interpreting the source's fully-elapsed rule; Started/Active remain unchanged. Existing reset/default and percentage fixtures now distinguish earlier epochs. Parent-batched GREEN remains pending; [charge contract](../../specs/spell-charge-state.md) owns native/progression/identity limits.
+[[spell-charge-state]] records the explicit five-field spell map and shared action/spell/book producers committed at `13af6a6b2` after concrete 1/10 RED at `eac08bda3`. Configured active recharge uses the validated rate-aware duration constructor; max charges return query-time zero spans under Retail 12.0.5+. That capability also makes all core zero spans expired with elapsed fraction one, interpreting the source's fully-elapsed rule; Started/Active remain unchanged. Existing reset/default and percentage fixtures now distinguish earlier epochs. Batch7 core/charge GREEN is observed; independent final acceptance remains pending; [charge contract](../../specs/spell-charge-state.md) owns native/progression/identity limits.
 
 ## Player cast duration queries
 
@@ -72,3 +72,9 @@ This is bounded simulator evidence only. Final scheduler proof at `71d73ed81` re
 
 - [[patch-12-1-5-api-audit]] — exact changed API occurrences and evidence boundary.
 - [Duration text binding](../../specs/duration-text-binding.md) — separate consumer path, bounded automatic-update proof, and pending final scheduler verification.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+Core PASS 27/27, common PASS 5/5, Seconds controls PASS 7/7/3; charge PASS 10/10. Configured countdown library remains 6 PASS / 2 FAIL; post-snapshot GC/fixture corrections await GREEN. API configuration PASS 8/8 does not close rendering.

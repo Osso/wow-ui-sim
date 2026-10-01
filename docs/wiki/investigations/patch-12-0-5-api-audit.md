@@ -147,7 +147,7 @@ The expanded source audit remains **IN PROGRESS**, with no completed full-page b
 
 [Secret-string formatting spec](../../specs/secret-string-formatting.md) covers only retained line 40, `prose-2026-03-12-040`: secret `%s` ignores width/precision and preserves full payload; public formatting is unchanged. Allowed tainted opaque formatting is **inferred**, not native-verified permission; input/result unwrap guards and stack taint remain intact, with no arbitrary callback capability. `SetFormattedText`, display provenance and other formatting domains remain unproven.
 
-MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb3373412757c2caee` after explicit user approval and remote verification; simulator pin commit `c5ba89ae3` changes only Cargo/lock pin. Independent runtime report `/tmp/rilua-secret-format-independent-proof.md` records 6 formatter PASS, 2 host-guard PASS, fmt/check PASS with pre-existing `strlen` warning—not warning-free. Actual simulator old-pin RED at `eac08bda3` is 1 public PASS / 5 secret FAIL (`/tmp/patch-12.0.5-batch6-secret-format-red.log`). New-pin batch7 is pending compilation: **no simulator integration GREEN or native proof**. Concrete future probe and remaining guard/display boundaries live in the spec. Full page remains IN PROGRESS; 38-row probe classifications are unchanged.
+MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb3373412757c2caee` after explicit user approval and remote verification; simulator pin commit `c5ba89ae3` changes only Cargo/lock pin. Independent runtime report `/tmp/rilua-secret-format-independent-proof.md` records 6 formatter PASS, 2 host-guard PASS, fmt/check PASS with pre-existing `strlen` warning—not warning-free. Actual simulator old-pin RED at `eac08bda3` is 1 public PASS / 5 secret FAIL (`/tmp/patch-12.0.5-batch6-secret-format-red.log`). New-pin batch7 compiled successfully and simulator secret-formatting integration PASS 6/6; independent final acceptance and native proof remain unclaimed. Concrete future probe and remaining guard/display boundaries live in the spec. Full page remains IN PROGRESS; 38-row probe classifications are unchanged.
 
 ## Sources
 
@@ -177,3 +177,9 @@ MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb337341
 - [[retail-core-behavior-probes]] — retained 12.0.5 core probe evidence.
 - [[event-system]] — event registration/dispatch behavior.
 - [[xml-template-system]] — XML template and frame-level handling.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+Twelve integration filters PASS 111 cases: stats 13, restriction 4, charges 10, duration 27, countdown API 8, enums 20 + representative control 1, secret printf 6, common 5, Seconds 7/7/3. Library configured countdown 6 PASS / 2 FAIL; existing countdown/static/current EditMode controls PASS 8/2/1. Historical 12.0.0 filter zero is NOT proof. Post-snapshot `99102f631` GC and `97a0e1270` fixture GREEN pending. Renown `766` scaffold/docs `8b2` pending with no actual RED yet; no coverage credit. Structure input work remains agent-owned and uncredited.

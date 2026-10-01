@@ -30,7 +30,7 @@ The 12.0.5 [GlobalAPI source](../../data/patch-api/sources/12.0.5-api-changes.tx
 
 ### Exact default-retail secrecy coverage
 
-All rows below are implemented; targeted post-change GREEN is pending. Counts describe APIs, not independent native models.
+All 40 existing APIs below are implemented; batch7 restriction fixtures PASS 4/4. Ten additional models separately PASS 13/13; this is not native stat parity. Counts describe APIs, not independent native models.
 
 | Source APIs | Count |
 |---|---:|
@@ -48,3 +48,9 @@ All rows below are implemented; targeted post-change GREEN is pending. Counts de
 ## Out of scope
 
 - Automatic restriction producers remain outside this contract; the ten additional base models have their [own contract](retail-missing-stat-inputs.md). The Forever-only aura flag is not this input.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+`character_stats::stat_restriction::` PASS 4/4 (`integration-1.log`) retains the 40-API matrix; separate ten-model fixtures PASS 13/13. No native activation/formula claim.

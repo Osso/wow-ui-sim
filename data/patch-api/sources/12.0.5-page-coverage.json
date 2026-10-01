@@ -86,14 +86,15 @@
         "Enum.TransmogIllusionFlags.AllowedRangedShieldsHoldables",
         "Enum.HouseFinderSuggestionReason.HomeOwner"
       ],
-      "scope": "Three documented numerical additions and coherent metadata after existing compatibility mutation. No downstream domain semantics or correction of later unrelated enum values.",
+      "scope": "Current-retail cached publication/removal and actual-member metadata: 20 grouped cases PASS plus representative enum control 1 PASS; 33 source deltas across 20 subjects. Historical numbering, native and downstream domain semantics unproven.",
       "spec": "docs/specs/patch-12-0-5-enum-additions.md",
       "tests": [
         "tests/patch_12_0_5_enum_additions.rs"
       ],
       "implementation": "857146cda+d9c3f408b",
-      "proof": "development-green",
-      "ledger": "/tmp/patch-12.0.5-enums-ledger.md"
+      "proof": "partial-development-green",
+      "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json",
+      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd"
     },
     {
       "id": "abbreviated-formatter",
@@ -147,27 +148,27 @@
         "DurationObject.FormatRemainingDuration",
         "DurationObject.FormatTotalDuration"
       ],
-      "scope": "Five common cases PASS including curve/closure taint; Seconds format 7/7 including cached garden consumer, configuration 7/7, native-method controls 3/3. Native-enabled simulator output only, not native-client parity, independent final acceptance or all-profile proof.",
+      "scope": "Common 5 PASS including curve/closure taint; Seconds format/configuration/native-method controls 7/7/3 PASS. Native-enabled simulator only, not native-client parity or whole-statement completion.",
       "spec": "docs/specs/duration-core.md",
       "tests": [
         "tests/duration_numeric_formatters.rs"
       ],
       "implementation": "9a50d8a5cc20d0adf0b7c529d237fc043ef57532",
       "proof": "partial-development-green",
-      "compiled_revision": "e0a46d691",
-      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd",
+      "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json"
     },
     {
       "id": "unit-stat-output-secrecy",
       "symbols": [],
-      "scope": "Four cases PASS covering outputs of 40 supported APIs. Explicit supplied restriction state; ten missing base APIs remain RED 0/10, pending agents 73/74/75. No automatic aura policy/native stat parity.",
+      "scope": "Existing 40-API restriction matrix 4 PASS; ten additional explicit stat input APIs 13 PASS in separate fixtures. Values/arity/updates/selectors and bounded security only; no automatic aura activation or native numeric parity.",
       "spec": "docs/specs/unit-stat-output-restriction.md",
       "tests": [
         "tests/character_stats/stat_restriction.rs"
       ],
       "proof": "partial-development-green",
-      "compiled_revision": "e0a46d691",
-      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd",
+      "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json"
     },
     {
       "id": "unit-comparison-permissions",
@@ -198,21 +199,22 @@
       "symbols": [
         "string.format"
       ],
-      "scope": "Bounded secret %s ignores width/alignment/precision and preserves full secret result; public formatting unchanged. Tainted opaque permission inferred; guards preserved, no arbitrary callbacks. SetFormattedText/other format domains and native behavior unproven.",
+      "scope": "Six simulator integration cases PASS for secret %s/public controls, positional formatting, caller guards and GC. Opaque tainted permission inferred; SetFormattedText, display and other format domains unproven.",
       "spec": "docs/specs/secret-string-formatting.md",
       "tests": [
         "tests/secret_string_formatting.rs"
       ],
       "implementation": "c5ba89ae3",
-      "proof": "runtime-development-green-simulator-integration-pending",
-      "ledger": "/tmp/rilua-secret-format-independent-proof.md",
+      "proof": "partial-development-green",
+      "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json",
       "runtime": {
         "repository": "Osso/rilua",
         "branch": "host-secret-bool",
         "revision": "6044544b960cd68b4b0c58bb3373412757c2caee",
         "independent_proof": "6 formatter PASS; 2 host-guard PASS; fmt/check PASS with pre-existing strlen warning",
-        "simulator_proof": "Old-pin eac08bda3: 1 public PASS / 5 secret FAIL. New-pin batch7 compilation pending; no integration GREEN."
-      }
+        "simulator_proof": "Batch7 c5ba89ae3 with rilua 6044544b: 6/6 simulator cases PASS; independent batch7 audit/final acceptance pending."
+      },
+      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd"
     }
   ],
   "source_rows": [
@@ -247,7 +249,7 @@
         "duration-common-formatters"
       ],
       "status": "bounded-coverage",
-      "note": "Batch5 common 5/5, Seconds format/config/native controls 7/7, 7/7, 3/3 development GREEN; not whole-statement completion or native parity."
+      "note": "Batch7 observed bounded proof: Common 5 PASS including curve/closure taint; Seconds format/configuration/native-method controls 7/7/3 PASS. Native-enabled simulator only, not native-client parity or whole-statement completion. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "prose-2026-03-12-020",
@@ -259,7 +261,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -305,7 +307,7 @@
         "secret-string-formatting"
       ],
       "status": "bounded-coverage",
-      "note": "Exact line 40 secret-string width/precision prose only. Independent runtime GREEN at 6044544; simulator batch7 integration pending. Opaque tainted permission inferred; display/other domains, native parity and whole-statement completion unproven."
+      "note": "Batch7 observed bounded proof: Six simulator integration cases PASS for secret %s/public controls, positional formatting, caller guards and GC. Opaque tainted permission inferred; SetFormattedText, display and other format domains unproven. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "prose-2026-03-12-041",
@@ -683,7 +685,7 @@
         "unit-stat-output-secrecy"
       ],
       "status": "partial-development-green",
-      "note": "Four cases PASS covering outputs of 40 supported APIs. Explicit supplied restriction state; ten missing base APIs remain RED 0/10, pending agents 73/74/75. No automatic aura policy/native stat parity."
+      "note": "Batch7 observed bounded proof: Existing 40-API restriction matrix 4 PASS; ten additional explicit stat input APIs 13 PASS in separate fixtures. Values/arity/updates/selectors and bounded security only; no automatic aura activation or native numeric parity. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "prose-2026-03-31-150",
@@ -2039,7 +2041,7 @@
         "enum-publication"
       ],
       "status": "bounded-coverage",
-      "note": "Linked capability has explicit limits; not full source-statement/native parity."
+      "note": "Batch7 observed bounded proof: Current-retail cached publication/removal and actual-member metadata: 20 grouped cases PASS plus representative enum control 1 PASS; 33 source deltas across 20 subjects. Historical numbering, native and downstream domain semantics unproven. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "enums-Enum-EditModeAccountSetting-576",
@@ -2095,7 +2097,7 @@
         "enum-publication"
       ],
       "status": "bounded-coverage",
-      "note": "Linked capability has explicit limits; not full source-statement/native parity."
+      "note": "Batch7 observed bounded proof: Current-retail cached publication/removal and actual-member metadata: 20 grouped cases PASS plus representative enum control 1 PASS; 33 source deltas across 20 subjects. Historical numbering, native and downstream domain semantics unproven. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "enums-Enum-HousingDecorPlacementRestriction-593",
@@ -2151,7 +2153,7 @@
         "enum-publication"
       ],
       "status": "bounded-coverage",
-      "note": "Linked capability has explicit limits; not full source-statement/native parity."
+      "note": "Batch7 observed bounded proof: Current-retail cached publication/removal and actual-member metadata: 20 grouped cases PASS plus representative enum control 1 PASS; 33 source deltas across 20 subjects. Historical numbering, native and downstream domain semantics unproven. Independent batch7 audit/final acceptance pending."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-609",

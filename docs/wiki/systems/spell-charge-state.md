@@ -14,7 +14,7 @@ Actual no-data RED at `e0a46d691` passes the spell-duration nil control and fail
 
 `d1f2474e5` adds type/input and concrete fixtures, `91a0bfb55` strengthens nonnil checks, and `75434f23d` adds direct zero-span/zero-maximum cases plus epoch-aware duration-core controls. Actual concrete RED at `eac08bda3` is 1/10 pass, 9 expected failures, including the shared zero-span failure (`/tmp/patch-12.0.5-batch6-charge-red.log`). `13af6a6b2` then wires all three producers to the same explicit map and existing identity paths. Table queries and the already-published action duration query are globally modeled; new spell/book duration registrations and max-charge zero-span behavior require cumulative `retail-12-0-5`. Earlier maximum-charge action duration has no active interval (inference), not an empty fallback.
 
-Rows with zero maximum are not configured charge spells. Below maximum, the shared selector snapshots configured start/base duration/rate; at maximum on 12.0.5+, it uses query time and zero base duration. The rate-aware constructor calls existing `SetTimeFromStart` validation. No charge transitions are synthesized. Shared core zero-span `HasExpired` and elapsed fraction change under 12.0.5 only; Started/Active remain unchanged. Parent-batched GREEN and final gates are pending; no Cargo ran in the implementation child.
+Rows with zero maximum are not configured charge spells. Below maximum, the shared selector snapshots configured start/base duration/rate; at maximum on 12.0.5+, it uses query time and zero base duration. The rate-aware constructor calls existing `SetTimeFromStart` validation. No charge transitions are synthesized. Shared core zero-span `HasExpired` and elapsed fraction change under 12.0.5 only; Started/Active remain unchanged. Batch7 charge 10/10 and core 27/27 GREEN are observed; independent final gates remain pending; no Cargo ran in the implementation child.
 
 ## Sources
 
@@ -25,3 +25,9 @@ Rows with zero maximum are not configured charge spells. Below maximum, the shar
 
 - [[duration-core]] — shared duration snapshot semantics.
 - [[patch-12-0-0-api-audit]] — historical placeholder audit, not current producer proof.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+Charge fixtures PASS 10/10 and core PASS 27/27. Explicit spell map and snapshot policy only; native/automatic progression and earlier-profile gates remain open.

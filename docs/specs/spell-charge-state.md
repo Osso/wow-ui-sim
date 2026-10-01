@@ -31,7 +31,7 @@ Explicit spell-keyed charge input backs `C_Spell.GetSpellCharges`, `C_ActionBar.
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes/charge_duration.rs` remains in the existing grouped integration binary. Initial actual RED at `e0a46d691`: 4 cases, 1 passing no-data spell control and 3 failures (`/tmp/patch-12.0.5-batch5-charge-red.log`). Type/input and concrete fixtures committed at `d1f2474e5`, strengthened nonnil assertions at `91a0bfb55`; concrete fixture RED at `eac08bda3` records 10 cases, 1 pass and 9 expected failures (`/tmp/patch-12.0.5-batch6-charge-red.log`; exact argv in `/tmp/patch-12.0.5-batch6-runs.json`). This includes direct shared zero-span failure before core changes. Producers and core correction follow that RED; post-change GREEN remains parent-owned. Existing `tests/duration_core.rs` zero/reset/default expectations are epoch-aware; direct zero-span and zero-maximum input cases join the grouped charge fixtures.
+`tests/cooldown_probes/charge_duration.rs` remains in the existing grouped integration binary. Initial actual RED at `e0a46d691`: 4 cases, 1 passing no-data spell control and 3 failures (`/tmp/patch-12.0.5-batch5-charge-red.log`). Type/input and concrete fixtures committed at `d1f2474e5`, strengthened nonnil assertions at `91a0bfb55`; concrete fixture RED at `eac08bda3` records 10 cases, 1 pass and 9 expected failures (`/tmp/patch-12.0.5-batch6-charge-red.log`; exact argv in `/tmp/patch-12.0.5-batch6-runs.json`). This includes direct shared zero-span failure before core changes. Producers and core correction follow that RED; batch7 post-change charge fixtures PASS 10/10; independent final gates remain parent-owned. Existing `tests/duration_core.rs` zero/reset/default expectations are epoch-aware; direct zero-span and zero-maximum input cases join the grouped charge fixtures.
 
 The passing no-data spell control did not prove a modeled provider: `runtime_surface_bootstrap.lua:65–76` lazily installs a nil-returning closure for an unresolved namespace key. The authoritative explicit registration replaces that key, not the unrelated namespace policy.
 
@@ -44,3 +44,9 @@ The passing no-data spell control did not prove a modeled provider: `runtime_sur
 
 - Automatic spending/replenishment, recharge ordering, spell metadata inference, pet-bank and macro association: no explicit model/evidence authorized.
 - Secret behavior, vendor edits, deployment and native Forever probes: no security bypass or native parity claim.
+
+## Batch7 observed proof — 2026-10-01
+
+Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
+
+`cooldown_probes::charge_duration::` PASS 10/10 (`integration-2.log`); `duration_core::` PASS 27/27 (`integration-3.log`). Earlier-profile controls and automatic progression remain unproven.
