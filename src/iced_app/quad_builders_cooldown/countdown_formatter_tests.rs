@@ -129,7 +129,7 @@ fn configured_renderer_preserves_hide_minimum_and_expiry_gates() {
     assert_eq!(tick_at(&env, 1.25).as_deref(), Some("8s"));
     env.exec("cooldown:SetHideCountdownNumbers(true)").unwrap();
     assert_eq!(tick_at(&env, 1.25), None);
-    env.exec("cooldown:SetHideCountdownNumbers(false); cooldown:SetMinimumCountdownDuration(11)")
+    env.exec("cooldown:SetHideCountdownNumbers(false); cooldown:SetMinimumCountdownDuration(11000)")
         .unwrap();
     assert_eq!(tick_at(&env, 1.25), None);
     env.exec("cooldown:SetMinimumCountdownDuration(0)").unwrap();
