@@ -35,7 +35,7 @@ Four existing `forever_auto_roll_*` cases in `tests/forever_auto_roll.rs`; no ad
 
 Existing RED: `/home/osso/.local/state/wow-ui-sim-proof/forever-auto-roll-2026-10-01/hover-green-ledger.json`, `hover-green.stdout`, `hover-green.stderr`, source-scoped `a956dfdd3`, rilua `6044544b`: 71/75 pass, four AutoRoll cases fail at the pre-local-addon StaticPopup requirement gate; all eleven mapped/hover and sixty prior controls pass. This does not prove AutoRoll outcomes. Baseline not rerun.
 
-Revised fixture and observer calibration are **unexecuted**. User requested formatting/commit only: no build, test, check, readability, delegation, push or deploy. All criteria remain unchecked pending GREEN. Historical default gates do not cover this revision.
+Revised fixture and observer calibration are **unexecuted**. Implementation phase formatted and committed; parent-owned GREEN and independent verification follow. All criteria remain unchecked pending GREEN. Historical default gates do not cover the changed fixture.
 
 ## Known gaps (current cycle)
 
