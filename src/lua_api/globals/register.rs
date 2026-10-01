@@ -70,6 +70,8 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     // stub_nil registrations for C_UnitAuras.GetAuraSlots & friends.
     super::auras::register_all(lua.state_mut());
     #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_unit_aura_index_queries::register(lua.state_mut())?;
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;

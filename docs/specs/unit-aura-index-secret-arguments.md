@@ -1,6 +1,6 @@
 # Unit aura indexed getter secret arguments
 
-Bounded Retail 12.0.5 fixture contract for `C_UnitAuras.GetAuraDataByIndex`, `GetBuffDataByIndex` and `GetDebuffDataByIndex`. Only six argument-delta rows are selected. Source facts come from [the committed delta ledger](../../data/patch-api/sources/12.0.5-api-changes.txt) and the complete retail cache declaration at `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua`. Existing model context: [Lua API system](../wiki/systems/lua-api.md). Fixtures/spec only; parent owns compiled RED, producer, GREEN and acceptance. No execution proof claimed.
+Bounded Retail 12.0.5 fixture contract for `C_UnitAuras.GetAuraDataByIndex`, `GetBuffDataByIndex` and `GetDebuffDataByIndex`. Only six argument-delta rows are selected. Source facts come from [the committed delta ledger](../../data/patch-api/sources/12.0.5-api-changes.txt) and the complete retail cache declaration at `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua`. Existing model context: [Lua API system](../wiki/systems/lua-api.md). Bounded argument-boundary producer implemented after genuine parent RED; parent owns GREEN, regression, startup, independent acceptance and six-row accounting. No post-producer execution proof claimed.
 
 ## What it must do
 
@@ -42,30 +42,39 @@ Source IDs are `global api-C_UnitAuras-GetAuraDataByIndex-373` / `-374`, `global
 ## Implementation inventory
 
 - `tests/next125aura.rs`: independent retail-12-0-5-gated behavioral fixtures; discovered automatically by existing `build.rs` grouped integration mechanism. No Cargo targets or harness edits.
-- `src/lua_api/globals/auras.rs`: existing three indexed providers, blocked/polarity selection and DTO builder; read-only in this slice. Parent owns argument-boundary producer work.
-- `docs/specs/unit-aura-index-secret-arguments.md`: bounded source facts, inferred representation contract and exclusions.
+- `src/c_api/c_unit_aura_index_queries.rs`: sole three indexed argument-boundary providers under `retail-12-0-5`; VM authentication and strict representations precede existing lookup.
+- `src/c_api/mod.rs`: epoch-gated module declaration.
+- `src/lua_api/globals/register.rs`: C API registrar follows existing aura namespace/state initialization.
+- `src/lua_api/globals/auras.rs`: former providers/registration remain only before `retail-12-0-5`; existing `AuraFilter`, parser and indexed push helper exposed crate-wide without selection, DTO or store changes.
+- `docs/specs/unit-aura-index-secret-arguments.md`: source facts, inferred contract and proof limits; [Lua API system](../wiki/systems/lua-api.md#retail-1205-indexed-aura-arguments) documents implementation.
 
 ## Tests asserting this spec
 
-`tests/next125aura.rs`: **12 unexecuted fixtures**. Grouped integration filter: `next125aura::`; requires `retail-12-0-5` enabled. No builds, tests, lint, checks, readability or acceptance gates run in this slice. Formatting is not compiled proof.
+`tests/next125aura.rs`: **12 fixtures, unchanged by producer**. Grouped integration filter: `next125aura::`; requires `retail-12-0-5` enabled. Saved parent RED compiled and ran before producer; this slice runs formatting only. Parent GREEN/gates pending; formatting is not compiled proof.
 
-| Coverage | Fixture count | Proof level |
+| Coverage | Fixture count | Saved parent RED / post-producer proof |
 | --- | ---: | --- |
-| Player/party full DTO, polarity and source flags; optional filter defaults; retained filter selection | 4 | Written only |
-| Blocked compaction; valid index/unknown misses and exact nullable arity | 2 | Written only |
-| Strict unit/filter/index representations before unknown lookup | 2 | Written only; policy inferred |
-| Each/combined authentic secrets, tainted denial/recovery, GC-rooted roundtrip | 3 | Written only |
-| Store/block/provider immutability and independent DTO mutation | 1 | Written only |
+| Player/party full DTO, polarity and source flags; optional filter defaults; retained filter selection | 4 | 4 PASS retained controls / GREEN pending |
+| Blocked compaction; valid index/unknown misses and exact nullable arity | 2 | 2 PASS retained controls / GREEN pending |
+| Strict unit/filter/index representations before unknown lookup | 2 | 2 FAIL genuine boundary failures / GREEN pending; policy inferred |
+| Each/combined authentic secrets, tainted denial/recovery, GC-rooted roundtrip | 3 | 3 FAIL genuine secret failures / GREEN pending |
+| Store/block/provider immutability and independent DTO mutation | 1 | 1 FAIL at authentic secret input / GREEN pending |
 
 The secure/tainted matrices cover all three getters; general getter covers both polarity filters. VM secrets are host-created, rooted before global insertion and observed using real security helpers. No simulated secret marker or overridden query/vendor implementation.
 
+### Corrected batch42 parent RED — 2026-10-01
+
+Saved at `414f87346c2c836a849dee2eaaff9ff0bdb62ad2`: `cargo test --test integration --no-run --message-format=json` exit **0**, **322.047s**; selected binary filter `next125aura::` exit **101**, **7.871s**, **12 selected = 6 PASS / 6 FAIL**. Integration executable SHA256 `a837b7f6877a43b811a79416509b3cfe0b4f8d24b57ee6d498645f02cc4560dd`. Artifacts: `/tmp/patch-12.0.5-batch42-red-build-result.json`, `/tmp/patch-12.0.5-batch42-red-run.json`, and corresponding `.stdout`/`.stderr` files.
+
+Strict unit/filter/index fixtures fail on existing coercion/defaults. Secure, GC and immutability fixtures fail with `expected string, got userdata at argument 1` on authentic host-secret STRING. Tainted fixture fails at `GetBuffDataByIndex` because the old wrapper ignores supplied secret filter. These are callable-provider behavior failures, not missing registration or compile failures. Six passing fixtures establish retained modeled behavior only; they do not prove secret authentication. This supersedes the earlier written-only status.
+
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned compiled RED → argument-boundary producer → GREEN/controls and final gates. A fixture that passes existing behavior is a retained-selection control, not evidence of implemented secret authentication.
+- [ ] Producer implemented; parent-owned GREEN/controls, startup, independent acceptance and final Rust/security/readability gates pending. Prior RED is invalid as post-producer proof. Six source rows373/374/384/385/389/390 remain uncredited here; accounting/PLAN unchanged.
 - [ ] `RequiresUnitAuraAccess` and `SecretWhenUnitAuraRestricted` lack grounded aura permission/restriction state in this scope. No fixture proves native authorization, conditional secret outputs, restricted DTO fields or arbitrary declassification.
 - [ ] Strict signed-i32 index policy and invalid-input/missing-result/error behavior are inferred simulator contracts, not native-client-verified semantics.
 - [ ] Native filter semantics and cached consumer closure remain unproved. Tests deliberately retain current indexed selection instead of promoting the instance-query PLAYER predicate into it.
 
 ## Out of scope
 
-Production/helper/store/DTO changes in this fixture slice; instance-ID getter additions or changed lookup; full filter vocabulary/parser redesign; fabricated restriction/access state, toggles or output-declassification; native probes, vendor edits, all-profile parity; accounting, PLAN, wiki or other concurrent documentation updates; builds/tests/gates, delegation, operational changes, push or deployment. Only exact test/spec paths are staged; parent owns integration and source-row accounting.
+Instance-ID getter additions or changed lookup; store/DTO/predicate changes or PLAYER-index enhancement; full filter vocabulary/parser redesign; fabricated restriction/access state, toggles or output-declassification; native probes, vendor edits, all-profile parity; accounting, PLAN or unrelated documentation changes; producer-side builds/tests/gates, delegation, operational changes, push or deployment. Producer scope is three argument boundaries, narrow epoch ownership/registration, existing helper visibility and exact spec/relevant wiki. Parent owns integration and six-row accounting.

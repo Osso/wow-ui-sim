@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded indexed aura argument producers
+
+Updated [[lua-api#Retail 12.0.5 indexed aura arguments]], index and [contract](../specs/unit-aura-index-secret-arguments.md). Added epoch-gated C API providers; original indexed providers remain only before 12.0.5. Existing helper/polarity/DTO/store behavior retained; all documented positions VM-authenticated and strictly validated before lookup. Saved parent batch42 RED provenance corrected in contract. Formatting only in producer slice; parent GREEN/regression/startup/independent gates and exact six-row accounting pending. No native permission/restricted-output or source-row completion claim.
+
 ## [2026-10-01] implementation | Add bounded aura instance filter producer
 
 Updated [[lua-api#Retail 12.0.5 aura instance filter query]], index and [contract](../specs/unit-aura-filter-query.md). Removed old globals provider; new C API module authenticates all required arguments before unchanged unfiltered lookup/filter matching. Tests/store/DTO unchanged. Corrected parent RED provenance retained. Subsequent parent GREEN at `a881d04`: 14 filter + 47 controls = 61 unique PASS; startup exit0 `[]`. [Independent bounded acceptance](../specs/unit-aura-filter-query.md#independent-bounded-acceptance--2026-10-01) records independent335 fresh fmt/check and security/readability audit. Only rows398/399 promoted:251 pending/97 bounded/14 partial; native/permission/filter/consumer gaps remain.

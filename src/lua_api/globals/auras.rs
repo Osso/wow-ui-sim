@@ -82,15 +82,12 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         &[
             ("GetAuraSlots", get_aura_slots),
             ("GetAuraDataBySlot", get_aura_data_by_slot),
-            ("GetAuraDataByIndex", get_aura_data_by_index),
             (
                 "GetAuraDataByAuraInstanceID",
                 get_aura_data_by_aura_instance_id,
             ),
             ("GetAuraDataBySpellName", get_aura_data_by_spell_name),
             ("GetUnitAuras", get_unit_auras),
-            ("GetBuffDataByIndex", get_buff_data_by_index),
-            ("GetDebuffDataByIndex", get_debuff_data_by_index),
             ("GetAuraDispelTypeColor", get_aura_dispel_type_color),
             ("AddBlockedAura", add_blocked_aura),
             ("SwitchAuraDataProvider", switch_aura_data_provider),
@@ -98,11 +95,15 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         ],
     );
     #[cfg(not(feature = "retail-12-0-5"))]
-    install(
+    install_methods(
         state,
         ns,
-        "GetPlayerAuraBySpellID",
-        get_player_aura_by_spell_id,
+        &[
+            ("GetAuraDataByIndex", get_aura_data_by_index),
+            ("GetBuffDataByIndex", get_buff_data_by_index),
+            ("GetDebuffDataByIndex", get_debuff_data_by_index),
+            ("GetPlayerAuraBySpellID", get_player_aura_by_spell_id),
+        ],
     );
 }
 
@@ -186,7 +187,7 @@ fn ensure_runtime_aura_state(state: &mut LuaState, ns: Val) {
 // ── Filter handling ──────────────────────────────────────────────────────────
 
 #[derive(Clone, Copy)]
-enum AuraFilter {
+pub(crate) enum AuraFilter {
     Helpful,
     Harmful,
     ExternalDefensive,
@@ -196,7 +197,7 @@ enum AuraFilter {
     Maw,
 }
 
-fn filter_from_str(filter: &str) -> AuraFilter {
+pub(crate) fn filter_from_str(filter: &str) -> AuraFilter {
     let upper = filter.to_uppercase();
     if upper.contains("MAW") {
         AuraFilter::Maw
@@ -381,6 +382,7 @@ fn get_aura_data_by_slot(state: &mut LuaState) -> LuaResult<u32> {
 //
 // `(unit, index, filter)` — filter decides whether the index addresses a buff
 // or a debuff list. 1-based index into the filtered list.
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_aura_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
@@ -432,6 +434,7 @@ fn get_aura_data_by_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_buff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
@@ -439,6 +442,7 @@ fn get_buff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_debuff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
@@ -523,7 +527,12 @@ pub(crate) fn find_aura_by_instance_id(
         .find(|a| a.aura_instance_id == aura_instance_id)
 }
 
-fn push_aura_at_filtered_index(state: &mut LuaState, unit: &str, filter: AuraFilter, index: i32) {
+pub(crate) fn push_aura_at_filtered_index(
+    state: &mut LuaState,
+    unit: &str,
+    filter: AuraFilter,
+    index: i32,
+) {
     if index < 1 {
         state.push(Val::Nil);
         return;
