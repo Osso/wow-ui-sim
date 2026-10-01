@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Housing pending decor — bounded independent PASS
+
+[Pending request contract](../../specs/housing-pending-decor.md#reconciled-bounded-proof--2026-10-01) owns independent acceptance at `f59c03402`: RED `659f79a3c` **1 PASS / 13 FAIL**, saved GREEN **45/45**, snapshot default fmt/check **0**. Explicit full-variant pending request only; eligibility/cancel/validation are simulator inferences. Parent startup **0 []** is saved, not independent compilation provenance. Exact StartPlacingNewDecor rows 278/279 gain proof links but **remain audit-pending**, like DestroyEntry: inferred partial behavior does not cover the literal delta across real placement. **278 pending / 70 bounded / 14 partial**, all 362 IDs/source hash preserved. No finish/instance/3D/stock mutation/event production/native/all-profile or entire-domain claim. Audit **IN PROGRESS**.
+
 ### Housing DestroyEntry — bounded independent PASS
 
 [Destruction contract](../../specs/housing-destroy-entry.md#reconciled-bounded-proof--2026-10-01) owns independent acceptance at `67b44f2c3`: saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, snapshot default fmt/check **0**. Exact rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage; pending statuses retained. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event policies are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup **0 []** is saved, not independent. All 362 IDs/source hash and unrelated rows/counts retained: **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page completion.

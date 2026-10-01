@@ -506,6 +506,25 @@
       "independent_ledger": "/tmp/patch-12.0.5-housing-destruction-independent-proof.md",
       "startup_ledger": "/tmp/patch-12.0.5-batch21-green-startup-run.json",
       "gate_scope": "Saved runtime independently inspected, not rerun; fresh fmt/check 0 at unchanged producer snapshot. Rooting and dispatch-error cleanup source-only, no forced-GC or dispatch-error behavioral proof; default cumulative retail features, not historical 12.0.5-only/all-profile execution."
+    },
+    {
+      "id": "housing-pending-decor",
+      "symbols": [
+        "C_HousingBasicMode.StartPlacingNewDecor",
+        "C_HousingBasicMode.IsPlacingNewDecor",
+        "C_HousingBasicMode.CancelActiveEditing"
+      ],
+      "scope": "Batch22 bounded independent PASS at f59c03402: full catalogEntryVariantID selector for explicit pending request only; RED659f79a3c 1 PASS/13 FAIL, saved GREEN45/45, snapshot default fmt/check0. Inferred pending eligibility/cancel/validation does not establish literal placement delta; status retained audit-pending like DestroyEntry. Parent startup0[] saved, not independent compilation provenance. No finish/instance/3D/stock mutation/event production/native/all-profile or whole-domain acceptance.",
+      "spec": "docs/specs/housing-pending-decor.md",
+      "tests": [
+        "tests/housing_pending_decor.rs"
+      ],
+      "implementation": "f59c03402c1a6a547cc0d45f3a888d20bd23d133",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-batch22-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-housing-pending-decor-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch22-green-startup-run.json",
+      "gate_scope": "Saved runtime independently inspected, not rerun; fresh default fmt/check0 at producer snapshot. Parent startup is not independent compilation provenance; nondefault registration source-only."
     }
   ],
   "source_rows": [
@@ -1422,15 +1441,19 @@
     },
     {
       "source_id": "global api-C_HousingBasicMode-StartPlacingNewDecor-278",
-      "capabilities": [],
+      "capabilities": [
+        "housing-pending-decor"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch22 bounded independent PASS at f59c03402: full catalogEntryVariantID selector for explicit pending request only; RED659f79a3c 1 PASS/13 FAIL, saved GREEN45/45, snapshot default fmt/check0. Inferred pending eligibility/cancel/validation does not establish literal placement delta; status retained audit-pending like DestroyEntry. Parent startup0[] saved, not independent compilation provenance. No finish/instance/3D/stock mutation/event production/native/all-profile or whole-domain acceptance."
     },
     {
       "source_id": "global api-C_HousingBasicMode-StartPlacingNewDecor-279",
-      "capabilities": [],
+      "capabilities": [
+        "housing-pending-decor"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Batch22 bounded independent PASS at f59c03402: full catalogEntryVariantID selector for explicit pending request only; RED659f79a3c 1 PASS/13 FAIL, saved GREEN45/45, snapshot default fmt/check0. Inferred pending eligibility/cancel/validation does not establish literal placement delta; status retained audit-pending like DestroyEntry. Parent startup0[] saved, not independent compilation provenance. No finish/instance/3D/stock mutation/event production/native/all-profile or whole-domain acceptance."
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-281",

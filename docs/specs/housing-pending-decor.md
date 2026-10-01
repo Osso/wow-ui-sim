@@ -1,10 +1,10 @@
 # Housing basic-mode pending decor request
 
-Bounded pending-request model for 12.0.5 `C_HousingBasicMode.StartPlacingNewDecor`. Reuses the [catalog full variant identity](housing-catalog-variants.md), not a decor instance. Retained [change source](../../data/patch-api/sources/12.0.5-api-changes.txt) rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` and `-279` rename argument 1 to `catalogEntryVariantID` and change its type to `HousingCatalogEntryVariantID`. These rows do not establish placement or validation semantics. No audit credit or full-placement claim; parent behavioral GREEN remains pending.
+Bounded pending-request model for 12.0.5 `C_HousingBasicMode.StartPlacingNewDecor`. Reuses the [catalog full variant identity](housing-catalog-variants.md), not a decor instance. Retained [change source](../../data/patch-api/sources/12.0.5-api-changes.txt) rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` and `-279` rename argument 1 to `catalogEntryVariantID` and change its type to `HousingCatalogEntryVariantID`. These rows do not establish placement or validation semantics. Bounded independent pending-request acceptance is recorded below; both source rows remain audit-pending. No full-placement claim.
 
 ## What it must do
 
-All lifecycle and validation policies below are **bounded simulator inferences**, not native-verified behavior. Checkboxes remain unchecked until compiled behavioral proof against the implemented producer.
+All lifecycle and validation policies below are **bounded simulator inferences**, not native-verified behavior. Checkboxes describe requirements, not native or complete-placement acceptance. Bounded compiled proof is recorded below; inferred policies remain qualified.
 
 - [ ] A fresh `HousingState` has no pending request. Its `pending_new_decor` is an `Option<HousingCatalogEntryVariantID>` using the existing C API-owned full `(recordID, entryType, variantIdentifier)` type. It carries no GUID, instance, transform, stock reservation or selection data.
 - [ ] `StartPlacingNewDecor(catalogEntryVariantID)` validates the entire public integer selector before mutation. An existing exact variant with positive explicitly supplied `num_stored` sets pending to that full identity. No base entry, seeded catalog or alternate selector lookup is required. Identical valid requests are repeatable; valid replacement requests replace record, type and variant identity. Changing the caller's table afterward does not change pending.
@@ -42,7 +42,7 @@ Cache root: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. This is c
 
 ## Tests asserting this spec
 
-Filter: `housing_pending_decor::` in existing target `integration`. Parent reports compiled RED at input commit `659f79a3c`: **1 PASS / 13 FAIL**, including empty pending and missing-selector acceptance failures (`batch22-red-build/run*`). This implementation session runs no builds/checks/tests; parent owns GREEN. No GREEN claim.
+Filter: `housing_pending_decor::` in existing target `integration`. Parent reports compiled RED at input commit `659f79a3c`: **1 PASS / 13 FAIL**, including empty pending and missing-selector acceptance failures (`batch22-red-build/run*`). Historical implementation checkpoint deferred GREEN to parent; the reconciled independent proof below supersedes that pending status.
 
 | Cases | Observable boundary |
 |---|---|
@@ -68,10 +68,28 @@ Actual RED log: `/tmp/housing-pending-source-plain-red.log`. Executable SHA-256 
 ## Known gaps (current cycle)
 
 - [x] Parent reports grouped compiled RED at `659f79a3c`: 1 PASS / 13 FAIL; separate from the earlier plain-provider probe.
-- [ ] Parent must observe targeted GREEN for implemented C API start/query/cancel; source inspection and formatting are not behavioral acceptance.
+- [x] Independent inspection accepts saved targeted GREEN for bounded C API start/query/cancel at `f59c03402`; no independent test reexecution.
 - [ ] Finish/commit/placement lifecycle unresolved: existing finish no-op must remain visible as a gap.
 - [ ] Native validation/no-op/cancel semantics, secure secret access and all-profile execution unverified.
 
 ## Out of scope
 
-Full placement/3D transforms/collision, GUID or instance allocation, stock reservation/consumption, dye/destruction mutation, preview placement, selected-instance synthesis, UI success/selection publication and full addon UI readiness. No native/full-row/all-profile completion claim. Wiki/audit accounting unchanged; source implementation is not audit acceptance.
+Full placement/3D transforms/collision, GUID or instance allocation, stock reservation/consumption, dye/destruction mutation, preview placement, selected-instance synthesis, UI success/selection publication and full addon UI readiness. No native/full-row/all-profile completion claim. Exact source rows retain audit-pending status; bounded proof links do not establish full delta/domain acceptance.
+
+## Reconciled bounded proof — 2026-10-01
+
+[Independent report](/tmp/patch-12.0.5-housing-pending-decor-independent-proof.md) accepts only the explicit simulator pending-request contract at producer `f59c03402`. Compiled RED at `659f79a3c` is **1 PASS / 13 FAIL**: default/cancel passes; missing/malformed selector acceptance and missing pending prerequisites dominate failures, not thirteen independently exercised downstream boundaries.
+
+Saved GREEN is **45/45 PASS**: 14 pending-request, 4 free-place, 2 decor, 1 customize and 24 catalog controls. Independent source/artifact inspection, not test reexecution. Fresh verifier default `cargo fmt --check` and `cargo check` exit **0** at the producer snapshot. Cumulative default retail features are not isolated historical 12.0.5 or all-profile execution. Parent batch22 startup exits **0**, stdout **[]**; saved matching binary/startup metadata is corroboration, **not independent compilation provenance** or verifier-run startup.
+
+| Capability | Accepted proof / limit |
+|---|---|
+| Full pending variant identity, ordinary boolean/arity, repeat/replacement/cancel and environment isolation | Saved bounded GREEN and source inspection |
+| Exact-key positive explicit stock eligibility; no stock/dye/count consumption; atomic malformed/secret/table-access rejection and caller taint | Saved GREEN; simulator policy inference, not native AllowedWhenUntainted parity |
+| Existing instance/selection/preview snapshots and event queues unchanged | Saved GREEN and source; no fabricated instance, GUID, 3D transform, stock reservation or success/storage/selection event |
+| Unconditional replaced registration | Source-only outside default profile |
+| Finish/commit and real placement | Existing finish no-op; pending survives finish. Unmodeled, not accepted |
+
+Rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` (argument rename) and `-279` (variant argument type) link this bounded full-selector evidence but **remain audit-pending**, like DestroyEntry. Partial inferred pending behavior does not establish the literal delta across the real placement boundary; no whole-domain promotion. Counts remain **278 audit-pending / 70 bounded-coverage / 14 partial-development-green**, all **362** IDs and source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329` retained. Audit **IN PROGRESS**.
+
+Native validation/cancel/eligibility, secure-secret parity, full UI readiness and all-profile execution remain unverified. Advisory helper length finding is not a reason for an unrelated refactor. No finish, instance allocation, 3D, stock mutation or event-production coverage claimed.

@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile bounded batch22 pending decor
+
+[[patch-12-0-5-api-audit#Housing pending decor — bounded independent PASS]] links the [pending contract](../specs/housing-pending-decor.md#reconciled-bounded-proof--2026-10-01): independent saved **45/45 PASS** at `f59c03402`, RED `659f79a3c` **1 PASS / 13 FAIL**, snapshot default fmt/check **0**. Parent startup **0 []** is saved, not independent compilation provenance. Explicit pending request only; inferred policy does not close real placement delta. Exact rows 278/279 remain **audit-pending** with proof links; **278 pending / 70 bounded / 14 partial**, 362 IDs/source hash retained. Finish/instance/3D/stock mutation/event production/native/all-profile/full-domain acceptance excluded; audit **IN PROGRESS**.
+
 ## [2026-10-01] evidence | Reconcile bounded batch21 DestroyEntry
 
 [[patch-12-0-5-api-audit#Housing DestroyEntry — bounded independent PASS]] links the [destruction contract](../specs/housing-destroy-entry.md#reconciled-bounded-proof--2026-10-01): independent saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, snapshot fmt/check **0** at `67b44f2c3`. Exact rows 281/282 link full variant-argument coverage without status promotion; **362 IDs/hash**, **308 pending / 40 bounded / 14 partial** preserved. Mixed eligible subset/no-op/consistency/synchronous policies inferred, not native all-stack proof; secure-secret parity open. Parent batch21 startup **0 []** not independent; no whole-row/page or all-profile closure.
