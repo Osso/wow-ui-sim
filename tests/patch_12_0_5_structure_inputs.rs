@@ -1,4 +1,7 @@
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{AppearanceSourceInfo, PvpBrawlInfo, ViewedOutfitSlotInfo};

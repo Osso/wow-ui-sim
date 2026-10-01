@@ -25,7 +25,7 @@ Three empty C API backing inputs support future publication of added structure f
 
 ## Tests asserting this spec
 
-`tests/patch_12_0_5_structure_inputs.rs`: one grouped integration file, three focused tests per domain (nine total). Calls actual registered queries, requires populated tables before checking fields, exercises both boolean values/two sheathe values, identity, optional fields, snapshots, keys and removal. No new Cargo target declaration.
+`tests/patch_12_0_5_structure_inputs.rs`: one grouped integration file, three focused tests per domain (nine total). Calls actual registered queries, requires populated tables before checking fields, exercises both boolean values/two sheathe values, identity, optional fields, snapshots, keys and removal. Fixtures are gated to `all(retail-12-0-5, any(profile-retail, client-ptr))`, allowing historical mainline builds without requiring current `client-retail`. Empty input storage may be shared; this does not claim cross-profile publication. No new Cargo target declaration.
 
 ## Known gaps (current cycle)
 
