@@ -38,7 +38,7 @@ Every limit, validation/result mapping, channel rule and local acceptance rule b
 
 - `tests/addon_messages.rs` — 15 cases: enums, accepted records, rejections, byte bounds, group/guild state, typed errors, secret/taint preservation, BattleNet online transitions, isolation and legacy contract.
 - `tests/message_verbs.rs` — seven unchanged legacy controls.
-- Tests-only `79bedc49e`: retained RED artifacts in `/home/osso/.local/state/wow-ui-sim-proof/addon-messages-2026-10-01/` show 22 cases, nine passes and thirteen missing-method failures. Implementation GREEN is parent-owned and pending; requirements remain unchecked.
+- Tests-only `79bedc49e`: retained RED artifacts in `/home/osso/.local/state/wow-ui-sim-proof/addon-messages-2026-10-01/` show 22 cases, nine passes and thirteen assertion failures of unmodeled behavior, not missing methods. The minimal environment already exposed callable namespace senders: `require_senders` passed its function-type checks before the behavior assertions failed (`red.stderr:165–166` and other failure traces). This does not invalidate the earlier actual BugSack workflow's literal `MissingRequirements` metadata failure; that is separate workflow evidence. Implementation GREEN is parent-owned and pending; requirements remain unchecked, with no addon-inventory credit.
 
 ## Known gaps (current cycle)
 

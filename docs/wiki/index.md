@@ -8,7 +8,7 @@
 
 ## [2026-09-30] implementation | Add bounded Forever outbound messaging
 
-[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass); parent GREEN remains pending. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
+[[lua-api#Forever outbound addon messages]] links the [outbound contract](../specs/addon-messages.md). Three namespace senders use actual local message records and online/group/guild state; legacy sends remain unchanged. Security follows VM secret access without taint clearing. Tests-only `79bedc49e` is valid RED (9/22 pass): thirteen behavior assertions fail after callable namespace sender checks pass, not missing-method failures. Separate BugSack `MissingRequirements` workflow evidence remains valid; parent GREEN remains pending and no addon-inventory credit follows. Limits/routing/results are explicit inferences; binary stringView, delivery and native throttling are unclaimed.
 
 ## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
 

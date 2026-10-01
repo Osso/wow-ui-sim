@@ -1,6 +1,6 @@
 ## [2026-09-30] implementation | Record bounded Forever outbound messaging
 
-Updated [[lua-api]], index and [outbound contract](../specs/addon-messages.md) for three Forever-only C_* senders. Actual message-log records replace no legacy behavior; VM-authenticated secret access preserves taint. Valid RED `79bedc49e` is 9/22 pass, thirteen missing-method failures. No Cargo or GREEN claimed; parent owns integration. Binary stringView limitation and inferred local policies are explicit.
+Updated [[lua-api]], index and [outbound contract](../specs/addon-messages.md) for three Forever-only C_* senders. Actual message-log records replace no legacy behavior; VM-authenticated secret access preserves taint. Valid RED `79bedc49e` is 9/22 pass, thirteen assertion failures of unmodeled behavior after callable namespace sender checks passed; these are not missing-method failures. The separate actual BugSack workflow's literal `MissingRequirements` metadata failure remains valid. No addon-inventory credit follows. No Cargo or GREEN claimed; parent owns integration. Binary stringView limitation and inferred local policies are explicit.
 
 ## [2026-09-30] implementation | Record live Cooldown formatter handoff
 
