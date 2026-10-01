@@ -3,6 +3,10 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(feature = "retail-12-0-5")]
+#[path = "character_stats/missing_apis.rs"]
+mod missing_apis;
+
+#[cfg(feature = "retail-12-0-5")]
 #[path = "character_stats/stat_restriction.rs"]
 mod stat_restriction;
 
