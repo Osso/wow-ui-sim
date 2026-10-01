@@ -7,6 +7,15 @@ fn env() -> WowLuaEnv {
 #[test]
 fn party_info_loot_method_availability_matches_seeded_methods() {
     let env = env();
+    let expected_method = if cfg!(feature = "retail-12-0-5") {
+        "Personal"
+    } else {
+        "Group"
+    };
+    env.exec(&format!(
+        "ExpectedDefaultLootMethod = Enum.LootMethod.{expected_method}"
+    ))
+    .unwrap();
     let result: String = env
         .eval(
             r#"
@@ -50,11 +59,11 @@ fn party_info_loot_method_availability_matches_seeded_methods() {
             end
 
             local method, masterLootPartyID, masterLooterRaidID = C_PartyInfo.GetLootMethod()
-            if method ~= Enum.LootMethod.Group then
-                return "expected_seeded_group_loot_method"
+            if method ~= ExpectedDefaultLootMethod then
+                return "expected_epoch_specific_default_loot_method"
             end
             if masterLootPartyID ~= nil or masterLooterRaidID ~= nil then
-                return "default_group_loot_should_not_have_master_looter_ids"
+                return "default_loot_should_not_have_master_looter_ids"
             end
 
             return "ok"
