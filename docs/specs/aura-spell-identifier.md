@@ -1,6 +1,6 @@
 # Aura spell-identifier lookup
 
-Bounded Retail 12.0.5 contract for `C_UnitAuras.GetPlayerAuraBySpellID` and `C_UnitAuras.GetUnitAuraBySpellID`, using existing numeric `AuraInfo` records and explicitly seeded `SimState.spell_id_aliases`. Existing aura publication lives in `src/lua_api/globals/auras.rs`; the C API surface belongs in `src/c_api/`. See [Lua API architecture](../lua-api.md). Epoch `retail-12-0-5` now supplies C API-owned producers; targeted GREEN and acceptance remain parent-owned. Checkboxes below remain pending verification.
+Bounded Retail 12.0.5 contract for `C_UnitAuras.GetPlayerAuraBySpellID` and `C_UnitAuras.GetUnitAuraBySpellID`, using existing numeric `AuraInfo` records and explicitly seeded `SimState.spell_id_aliases`. Existing aura publication lives in `src/lua_api/globals/auras.rs`; the C API surface belongs in `src/c_api/`. See [Lua API architecture](../lua-api.md). Epoch `retail-12-0-5` supplies C API-owned producers. Saved parent GREEN covers the twelve query fixtures and selected controls; independent310 acceptance remains pending. Checkboxes below remain pending independent verification.
 
 ## What it must do
 
@@ -77,8 +77,27 @@ Rust eval outputs use supported `i32`, not `u8`/`usize`. Secret fixture uses `wr
 ## Known gaps (current cycle)
 
 - Saved parent RED at `28393b01ba6bafc3d233cbc700c7b02303de1064`: `/tmp/patch-12.0.5-batch37-red-build-result.json` records build exit0 / 130.04s; corresponding `-run.json` and `-run.log` record exit101, three existing numeric/legacy controls PASS and nine FAIL. This evidence covers the pre-producer revision only.
-- [ ] Parent owns targeted GREEN, C_Spell/legacy controls, startup registration proof, checks/readability and acceptance. Producer work runs formatting only: no build/test/check/delegation. Numeric/seeded-label/numeric-alias, ordering, GC snapshots and actual-secret/taint tests exist but have no post-producer passing proof.
+- [ ] Independent310 owns checks/readability and bounded acceptance; pending. Saved parent GREEN below is not independent acceptance. Producer work itself ran formatting only; this reconciliation runs no code/tests/build/delegation.
 - No source accounting or audit-row credit changes. Native visibility, name/link parsing, secret annotations and all-profile acceptance remain unproved.
+
+## Reconciled batch37 parent proof — 2026-10-01
+
+Saved `/tmp/patch-12.0.5-batch37-{red,green}-*` artifacts bind RED to input `28393b01ba6bafc3d233cbc700c7b02303de1064` and GREEN to producer `4b98920f0769b59b68c0dabbd9e8d9d47414fc00`; no reruns.
+
+| Proof scope | Saved result | Limit |
+|---|---|---|
+| RED integration compile/query filter | Compile exit0, 130.04s; run exit101, 3 PASS / 9 FAIL | Pre-producer numeric/legacy controls pass; nine new cases fail |
+| GREEN integration compile | Exit0, 378.90s | Producer revision only |
+| `aura_spell_identifier::` | Exit0, 12 PASS | Numeric/seeded aliases, modeled player/party and target fixture, order, snapshots/GC, strict validation and actual-secret/taint recovery |
+| `aura_api::` / `admin_buff_api::` / `c_spell_flyout_probes::` | Exit0 each; 29 / 18 / 14 PASS | Selected legacy/aura/admin/shared C_Spell controls, not generic spell-catalog coverage |
+| Normal no-addon/no-SavedVariables startup | Exit0, 11.32s; `[]` | Saved producer registration/startup only; no cached consumer closure claim |
+| Independent310 | Pending | No independent acceptance, fresh checks or readability result recorded here |
+
+GREEN totals **73 PASS = 12 query + 29 aura + 18 admin + 14 C_Spell**. Build-result and run manifests share integration SHA256 `398ef0d1f5a49f8e9415021f833e37de99cba63a2a2b05819898db7b61bbb5e9`; startup manifest matches the build's wow-sim SHA256 `c11cc875d5e8b2d8b8cc995788db6a497ca77c82fb3c878f5d5b8f5752bdeaf6`. RED integration SHA256 is `58a8eba2483c6ef3f2d9d1fc6e85a17d4d8e19c63ee29f1e6624bff3855a0784`. Exact commands, timings and logs live in `-red-build-result.json`, `-red-run.json`, `-green-build-result.json`, `-green-runs.json` and `-green-startup-run.json`; startup output is `-green-startup.json`.
+
+Existing numeric AuraInfo/party stores and explicitly seeded alias map are the bounded model, not a generic spell catalog. Shared resolver reuse/alias precedence, helpful-then-harmful traversal, missing-unit and strict/secret policies remain **INFERRED simulator requirements**, even with passing fixtures. Legacy numeric/global helpful-only/unblocked behavior is preserved. No native name/link/visibility/access/secret parity or refresh-duration coverage follows from these results.
+
+Accounting unchanged: **260 pending / 88 bounded / 14 partial = 362**. All retained IDs, register/source plaintext hash and unrelated rows are preserved; rows392/396 receive no promotion here, and row394 `GetRefreshExtendedDuration` remains pending. Local PLAN is ignored accounting only, never staged.
 
 ## Out of scope
 

@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
+
+[[aura-spell-identifier-proof]] links [exact parent proof](../specs/aura-spell-identifier.md#reconciled-batch37-parent-proof--2026-10-01): input `28393b01b` RED compile0/130.04s, 3 PASS / 9 FAIL; producer `4b98920f0` GREEN compile0/378.90s, **12 query + 29 aura + 18 admin + 14 C_Spell = 73 PASS**, saved startup0 `[]`. **Independent310 pending**. Existing model/seeded-alias reuse, alias precedence, order and strict/secret policies remain inferred; legacy preserved. No native/generic spell catalog/refresh coverage or row promotion. **260/88/14 = 362**, IDs/register/plaintext hash unchanged, row394 pending; ignored PLAN never staged.
+
 ## [2026-10-01] correction | Accept row169 bounded predicate coverage
 
 [Chronological decision/four-family proof](../specs/party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) supersedes prior pending rationale: ping delivery prerequisite was assistant-invented. Only row169 promoted using countdown10/35selected, ready6/22selected, ping7/29selected and loot19unique/31executions independent proof; no new runtime runs. **261/87/14 → 260/88/14 = 362**; row168/IDs/register/plaintextSHA/unrelated rows unchanged. Native producer/security/error/permissions/exhaustiveAPI/allprofile unknown; no `C_Ping` action claim. Earlier pending milestones/counts remain historical, not current status.
