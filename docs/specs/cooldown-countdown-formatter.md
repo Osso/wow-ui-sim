@@ -18,6 +18,7 @@
 - [ ] Use the renderer's monotonic simulator clock and existing modRate calculation; ticks and formatter configuration changes update displayed text.
 - [ ] Clearing selects the existing default countdown policy. Hide, minimum-duration, and expiry gates still suppress countdown output.
 - [ ] Keep formatter handles rooted across collection. Invoke only shared trusted typed dispatch, never addon overrides with decoded secret timing; retain secret authorization and caller taint.
+- [ ] When a configured curve replaces a peer Cooldown's attachment and explicitly collects garbage, the peer consumes the replacement on that tick without stale-handle errors. This reentrant live-state policy is a simulator inference.
 
 ## How it works
 
@@ -42,6 +43,7 @@
 
 - [ ] Parent's current-revision GREEN and final integration gates remain pending. Public configuration development GREEN is 8/8 at `eac08bda3`: `/tmp/patch-12.0.5-batch6-cooldown-api-green.log`.
 - [ ] Library renderer GREEN remains pending after the actual seven-case RED. The secret-curve strengthening has no separate pre-consumer RED execution.
+- [ ] The eighth library regression, `configured_renderer_curve_replaces_another_attachment_during_collection`, is staged at `be4da7354`. Parent must run it before any reentrant-consumer correction; no failure or fix is yet claimed.
 - [ ] Child FontString `GetText` consistency is not modeled: configured secret-derived strings remain trusted Rust renderer data, not plaintext Lua-readable child text.
 
 ## Out of scope
