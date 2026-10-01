@@ -1,9 +1,8 @@
 # Patch 12.0.5 API Audit
 
-### Cooldown abbreviation — bounded parent GREEN
+### Cooldown abbreviation — bounded independent PASS
 
-[Batch36 cooldown proof](../../specs/cooldown-abbreviation-threshold.md#reconciled-batch36-parent-proof--2026-10-01): corrected RED20=10PASS10FAIL, storage1PASS; wrong-filter0tests excluded. Parent GREEN `053d7ed4d` includes `69c454146`, compile0/447.06s; **40PASS = 20 formatter + 8 renderer + 12 widget**. **Independent299 pending**, no startup rerun (registration unchanged). Cached below-threshold `m:ss` explicit; range/ceil/boundaries inferred. Rows536/538/540 pending; **264/84/14=362**, IDs/source hash retained. PLAN tracking corrected053d7ed4d; local ignored only.
-
+[Independent cooldown acceptance](../../specs/cooldown-abbreviation-threshold.md#independent-bounded-acceptance--2026-10-01): saved source/binary-bound **40 PASS**, fresh fmt/check **0**, no reruns. Exact numeric-unit/consumer slices536/538/540 only become bounded: **261 pending / 87 bounded / 14 partial =362**. IDs/register/source plaintext SHA/unrelated rows retained; aliases are annotations, not classes/behavior. Native/secret/error parity unproven; range/ceil/equality inferred. One naming suggestion deferred. PLAN remains ignored local accounting, never staged.
 
 ### Party loot method — bounded independent PASS
 

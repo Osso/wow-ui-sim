@@ -38,7 +38,7 @@
 - Same module: `configured_renderer_clear_restores_existing_default_thresholds` now expects plain `9` after clearing with invalid threshold 5; attached formatter output remains `8s`.
 - `tests/cooldown_widget.rs` — `cooldown_threshold_storage_preserves_fractional_units_and_independence`, inside the existing grouped `integration` target. No new Cargo targets.
 
-## Known gaps (current cycle)
+## Historical pre-independent status (superseded by acceptance below)
 
 - [ ] Parent saved bounded GREEN compilation/runtime; independent299 and final verification remain pending. Saved compiled RED at input `d656bf037`: build exit 0 in 692.14 seconds (`/tmp/patch-12.0.5-batch36-red-build-result.json`); corrected runtime filter selected 20 tests, 10 PASS / 10 FAIL (`/tmp/patch-12.0.5-batch36-red-correct-filter.{json,log}`). Original filename-based filter selected zero tests and is not proof. Storage separately PASS in original runs (parent report).
 - [ ] Producer changes only the renderer abbreviation branch: configured inclusive 60–3600 seconds and strictly lower remaining time select ceil-rounded `m:ss`. Existing renderer unit control migrates the obsolete `9s` expectation to decimal `8.2` for invalid threshold 5, then checks valid abbreviation, aura precedence and custom-over-aura precedence. No build/test/check/readability/delegation performed by producer; parent GREEN is recorded below, independent299 remains pending.
@@ -69,10 +69,18 @@ Saved parent RED `d656bf037`: compile exit0/692.14s; corrected runtime-red-corre
 
 Parent GREEN compilation `053d7ed4d` includes producer `69c454146`: exit0/**447.06s**. `/tmp/patch-12.0.5-batch36-green-build-result.json` binds executable hashes; `/tmp/patch-12.0.5-batch36-green-runs.json` binds revision, hashes, exact argv and three logs. **40 PASS: 20 formatter + 8 renderer + 12 widget**, all exit0. Covers renderer text, threshold/minimum/ticking/precedence controls and fractional storage, not GPU/native parity.
 
-**Independent299 pending.** No startup rerun: registration unchanged; historical startup is not current-binary proof. No fresh fmt/check/readability or final acceptance claimed. Cached below-threshold `m:ss` example `1:31` is explicit; configured range interpretation, inclusive endpoints, strict boundaries, ceil rounding and minimum equality remain inferred. Exact rows536/538/540 stay pending; primitive aliases alone confer no behavioral-delta credit. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged until independent review.
+**Historical pre-independent report: Independent299 pending (superseded below).** No startup rerun: registration unchanged; historical startup is not current-binary proof. No fresh fmt/check/readability or final acceptance claimed. Cached below-threshold `m:ss` example `1:31` is explicit; configured range interpretation, inclusive endpoints, strict boundaries, ceil rounding and minimum equality remain inferred. Exact rows536/538/540 stay pending; primitive aliases alone confer no behavioral-delta credit. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged until independent review.
 
 Earlier accidental PLAN tracking corrected by `053d7ed4d`; `PLAN.md` remains ignored local accounting, never staged or force-added.
 
+## Independent bounded acceptance — 2026-10-01
+
+Full report: `/tmp/patch-12.0.5-cooldown-abbreviation-independent-proof.md`; unique artifacts `/tmp/patch-12.0.5-cooldown-abbreviation-independent-06a481b4cf*`. Saved GREEN at `053d7ed4d`: **40 PASS = 20 formatter + 8 renderer + 12 widget**. Corrected RED 10 PASS/10 FAIL; zero-selected filter excluded. Source/binary identity confirmed; fresh fmt/check **exit0** at clean `053d7ed4d`, source unchanged through docs-only `b685cdf178`. No reruns here.
+
+Parent accepts only exact numeric-unit/consumer slices for `widgets-Cooldown-GetMinimumCountdownDuration-536`, `widgets-Cooldown-SetCountdownAbbrevThreshold-538`, `widgets-Cooldown-SetMinimumCountdownDuration-540`: fractional milliseconds getter/default/reset, fractional seconds storage/live abbreviation, fractional milliseconds total-duration gate/live updates respectively. Only these three statuses become bounded-coverage: **261 pending / 87 bounded / 14 partial = 362**. IDs, register, source plaintext SHA and unrelated rows unchanged. Primitive aliases change type annotations only, not classes or behavior; renderer discrepancy fixed separately. Minimum/storage/security fixtures preserve existing behavior.
+
+No whole-method/native parity: range interpretation/inclusive endpoints, ceil rounding, strict threshold/minimum equality and precedence remain inferred. Near-threshold fractional carry lacks dedicated fixture. Native comparison, exhaustive secret/AllowedWhenUntainted/error/NaN/infinity/negative-input policy, GPU visuals and all-profile acceptance remain unproven. One nonblocking naming suggestion for range/minute constants deferred; no code change authorized.
+
 ## Out of scope
 
-Vendor edits, new state/targets, native parity, GPU glyph rasterization, taint/security changes, audit status promotion, unrelated API behavior and final acceptance. Renderer-only production fix; source documentation supports a renderer discrepancy, not a storage type migration. Total-minimum/hide/expiry gates and aura/custom formatter selection stay unchanged.
+Vendor edits, new state/targets, native parity, GPU glyph rasterization, taint/security changes, whole-method audit promotion, unrelated API behavior and broader acceptance. Renderer-only production fix; source documentation supports a renderer discrepancy, not a storage type migration. Total-minimum/hide/expiry gates and aura/custom formatter selection stay unchanged.

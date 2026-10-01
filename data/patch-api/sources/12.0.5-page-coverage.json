@@ -626,6 +626,26 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-chat-lockdown-predicate-independent-proof.md",
       "gate_scope": "Saved five predicate + two controls PASS, ancillary parent startup0[]; fresh fmt/check once exit0 at0d247625c, original scope matches producer. Excludes8649fe072 and concurrent ready-check code; RED nonbool nil, not two returns."
+    },
+    {
+      "id": "cooldown-numeric-unit-consumer",
+      "symbols": [
+        "Cooldown.GetMinimumCountdownDuration",
+        "Cooldown.SetCountdownAbbrevThreshold",
+        "Cooldown.SetMinimumCountdownDuration"
+      ],
+      "scope": "Exact numeric-unit/consumer slices only. Aliases are annotations, not new classes/behavior. Range/ceil/equality inferred; native/secret/error, GPU and whole-method parity excluded.",
+      "spec": "docs/specs/cooldown-abbreviation-threshold.md",
+      "tests": [
+        "src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs",
+        "src/iced_app/quad_builders_cooldown.rs",
+        "tests/cooldown_widget.rs"
+      ],
+      "implementation": "69c454146",
+      "compiled_revision": "053d7ed4d",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-cooldown-abbreviation-independent-proof.md",
+      "gate_scope": "Saved source/binary-bound 20 formatter + 8 renderer + 12 widget =40 PASS; fresh fmt/check0 at053d7ed4d, relevant source unchanged through b685cdf178. Minimum/storage/security preservation controls only. One naming suggestion deferred."
     }
   ],
   "source_rows": [
@@ -2382,21 +2402,27 @@
     },
     {
       "source_id": "widgets-Cooldown-GetMinimumCountdownDuration-536",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-numeric-unit-consumer"
+      ],
+      "status": "bounded-coverage",
+      "note": "Fractional millisecond getter default0, 91000.5/90999.5, reset0; existing behavior preservation. Alias only type annotation, not new class/behavior. Range/ceil/equality/precedence inferred; native/secret/error and whole-method parity unproven. Linked independent proof bounds credit."
     },
     {
       "source_id": "widgets-Cooldown-SetCountdownAbbrevThreshold-538",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-numeric-unit-consumer"
+      ],
+      "status": "bounded-coverage",
+      "note": "Fractional seconds storage/independence and live below-threshold suffix-free m:ss; renderer discrepancy fixed separately from annotation. Alias only type annotation, not new class/behavior. Range/ceil/equality/precedence inferred; native/secret/error and whole-method parity unproven. Linked independent proof bounds credit."
     },
     {
       "source_id": "widgets-Cooldown-SetMinimumCountdownDuration-540",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-numeric-unit-consumer"
+      ],
+      "status": "bounded-coverage",
+      "note": "Fractional millisecond storage, existing total-duration gate, live minimum updates, independence/reset; no new minimum implementation. Alias only type annotation, not new class/behavior. Range/ceil/equality/precedence inferred; native/secret/error and whole-method parity unproven. Linked independent proof bounds credit."
     },
     {
       "source_id": "widgets-ModelSceneActorBase-SetModelByUnit-542",
