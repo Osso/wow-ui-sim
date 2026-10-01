@@ -100,6 +100,7 @@ pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
+pub mod charge_state;
 pub(crate) mod container_inventory;
 pub(crate) mod cooldown_duration;
 pub(crate) mod duration_text_binding;

@@ -1,12 +1,11 @@
 //! Bounded 12.0.5 charge queries: no-data policy is simulator inference.
 //! The patch's max-charge zero-span rule is firm, but needs explicit charge input.
-//! Proposed next fixtures: spell 19750, action 17, player book slot 5;
-//! clock 20, (current, max, start, duration, rate) = (2, 2, 12, 40, 2)
-//! for max charges, and (1, 2, 12, 40, 2) for active recharge.
+//! Concrete fixtures use spell 19750, action 17, player book slot 5.
 //! No charge state is inferred from the ordinary cooldown seeded below.
 
 use super::{SpellCooldownState, WowLuaEnv, env};
 use std::time::{Duration, Instant};
+use wow_ui_sim::c_api::charge_state::SpellChargeState;
 
 fn seed_noncharge_spell_with_cooldown(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
@@ -99,4 +98,165 @@ fn charge_query_tables_do_not_fabricate_counts_without_charge_input() {
         "#,
     )
     .expect("spell and action charge tables agree on absent explicit charge input");
+}
+
+fn seed_charge(env: &WowLuaEnv, current_charges: u32) {
+    seed_noncharge_spell_with_cooldown(env);
+    env.state().borrow_mut().spell_charges.insert(
+        19750,
+        SpellChargeState {
+            current_charges,
+            max_charges: 2,
+            recharge_start: 12.0,
+            recharge_duration: 40.0,
+            charge_mod_rate: 2.0,
+        },
+    );
+}
+
+#[test]
+fn charge_duration_active_recharge_uses_shared_interval_rate_and_runtime_clock() {
+    let env = env();
+    seed_charge(&env, 1);
+    env.exec(
+        r#"
+        local producers = {
+            function() return C_Spell.GetSpellChargeDuration('FIXTURE HEAL') end,
+            function() return C_ActionBar.GetActionChargeDuration(17) end,
+            function() return C_SpellBook.GetSpellBookItemChargeDuration(5, 0) end,
+        }
+        for _, produce in ipairs(producers) do
+            local d = produce()
+            assert(d ~= nil, 'configured recharge must have a duration')
+            assert(d:GetStartTime() == 12)
+            assert(d:GetModRate() == 2)
+            assert(d:GetTotalDuration() == 20)
+            assert(d:GetTotalDuration(1) == 40)
+            assert(d:GetEndTime() == 32)
+            assert(not d:IsZero() and not d:HasExpired())
+            local before = GetTime()
+            local elapsed, remaining = d:GetElapsedDuration(), d:GetRemainingDuration()
+            local after = GetTime()
+            assert(elapsed >= before - 12 - 1e-6 and elapsed <= after - 12 + 1e-6)
+            assert(remaining >= 32 - after - 1e-6 and remaining <= 32 - before + 1e-6)
+        end
+        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 1) == nil)
+        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 99) == nil)
+        assert(C_ActionBar.GetActionChargeDuration(99) == nil)
+        "#,
+    )
+    .expect("all producers use explicit charge interval and existing duration rate semantics");
+}
+
+#[test]
+fn charge_duration_at_max_is_zero_span_fully_elapsed_at_query_time() {
+    let env = env();
+    seed_charge(&env, 2);
+    env.exec(
+        r#"
+        local producers = {
+            function() return C_Spell.GetSpellChargeDuration(19750) end,
+            function() return C_ActionBar.GetActionChargeDuration(17) end,
+            function() return C_SpellBook.GetSpellBookItemChargeDuration(5, 0) end,
+        }
+        for _, produce in ipairs(producers) do
+            local before = GetTime()
+            local d = produce()
+            local after = GetTime()
+            assert(d ~= nil, 'configured maximum charges must return a duration')
+            assert(d:GetStartTime() >= before and d:GetStartTime() <= after)
+            assert(d:GetStartTime() == d:GetEndTime())
+            assert(d:GetTotalDuration() == 0 and d:GetModRate() == 2)
+            assert(d:IsZero() and d:HasExpired() and not d:IsActive())
+            assert(d:GetElapsedDuration() == 0 and d:GetRemainingDuration() == 0)
+        end
+        "#,
+    )
+    .expect("maximum charge rule returns a fully elapsed zero-span snapshot");
+}
+
+#[test]
+fn charge_queries_derive_all_five_fields_from_same_explicit_state() {
+    let env = env();
+    seed_charge(&env, 1);
+    env.exec(
+        r#"
+        for _, info in ipairs({C_Spell.GetSpellCharges('fixture heal'), C_ActionBar.GetActionCharges(17)}) do
+            assert(info.currentCharges == 1 and info.maxCharges == 2)
+            assert(info.cooldownStartTime == 12 and info.cooldownDuration == 40)
+            assert(info.chargeModRate == 2)
+        end
+        "#,
+    )
+    .expect("charge table fields are explicit input, not cooldown or display counts");
+    seed_charge(&env, 2);
+    env.exec(
+        r#"
+        for _, info in ipairs({C_Spell.GetSpellCharges(19750), C_ActionBar.GetActionCharges(17)}) do
+            assert(info.currentCharges == 2 and info.maxCharges == 2)
+            assert(info.cooldownStartTime == 12 and info.cooldownDuration == 40)
+            assert(info.chargeModRate == 2)
+        end
+        "#,
+    )
+    .expect("maximum charges preserve table inputs despite duration's zero span");
+}
+
+#[test]
+fn charge_duration_snapshots_survive_changed_state_alias_mapping_and_clock() {
+    let env = env();
+    seed_charge(&env, 1);
+    env.exec(
+        r#"
+        oldSpellCharge = C_Spell.GetSpellChargeDuration('fixture heal')
+        oldActionCharge = C_ActionBar.GetActionChargeDuration(17)
+        oldBookCharge = C_SpellBook.GetSpellBookItemChargeDuration(5, 0)
+        oldChargeInfo = C_Spell.GetSpellCharges(19750)
+        assert(oldSpellCharge ~= nil and oldBookCharge ~= nil)
+        "#,
+    )
+    .expect("explicit charge snapshots exist before fixture mutation");
+    {
+        let mut state = env.state().borrow_mut();
+        state.start_time = Instant::now() - Duration::from_secs(50);
+        state.spell_charges.insert(
+            54321,
+            SpellChargeState {
+                current_charges: 3,
+                max_charges: 4,
+                recharge_start: 45.0,
+                recharge_duration: 30.0,
+                charge_mod_rate: 3.0,
+            },
+        );
+        state.spell_id_aliases.insert("fixture heal".into(), 54321);
+        state.action_bars.insert(17, 54321);
+        state.spell_charges.remove(&19750);
+    }
+    env.exec(
+        r#"
+        for _, old in ipairs({oldSpellCharge, oldActionCharge, oldBookCharge}) do
+            assert(old:GetStartTime() == 12 and old:GetEndTime() == 32)
+            assert(old:GetModRate() == 2 and old:GetTotalDuration() == 20)
+            assert(old:HasExpired() and old:GetElapsedDuration() == 20)
+            assert(old:GetRemainingDuration() == 0)
+        end
+        assert(oldChargeInfo.currentCharges == 1 and oldChargeInfo.chargeModRate == 2)
+        for _, d in ipairs({C_Spell.GetSpellChargeDuration('FIXTURE HEAL'), C_ActionBar.GetActionChargeDuration(17)}) do
+            assert(d:GetStartTime() == 45 and d:GetEndTime() == 55)
+            assert(d:GetModRate() == 3 and d:GetTotalDuration() == 10)
+            assert(not d:HasExpired())
+            local before = GetTime()
+            local elapsed = d:GetElapsedDuration()
+            local after = GetTime()
+            assert(elapsed >= before - 45 - 1e-6 and elapsed <= after - 45 + 1e-6)
+        end
+        local info = C_Spell.GetSpellCharges('fixture heal')
+        assert(info.currentCharges == 3 and info.maxCharges == 4)
+        assert(info.cooldownStartTime == 45 and info.cooldownDuration == 30 and info.chargeModRate == 3)
+        assert(C_Spell.GetSpellChargeDuration(19750) == nil)
+        assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 0) == nil)
+        "#,
+    )
+    .expect("new identity/input and clock affect new queries, not existing snapshots");
 }

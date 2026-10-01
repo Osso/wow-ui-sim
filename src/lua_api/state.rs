@@ -55,6 +55,8 @@ macro_rules! build_empty_sim_state {
             auras_secret_in_context: false,
             #[cfg(feature = "retail-12-0-5")]
             unit_stats_restricted: false,
+            #[cfg(feature = "client-retail")]
+            weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,
@@ -187,6 +189,7 @@ macro_rules! build_empty_sim_state {
             next_cast_id: $runtime.next_cast_id,
             gcd: $runtime.gcd,
             spell_cooldowns: $collections.spell_cooldowns,
+            spell_charges: ::std::collections::HashMap::new(),
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             action_ui_buttons: $collections.action_ui_buttons,
             cursor_item: $runtime.cursor_item,

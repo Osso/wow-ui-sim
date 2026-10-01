@@ -38,6 +38,9 @@ pub struct SimState {
     /// Explicit stat-output policy input; no combat or aura activation inference.
     #[cfg(feature = "retail-12-0-5")]
     pub unit_stats_restricted: bool,
+    /// Explicit weapon contributions keyed by existing unit GUID; rows do not create units.
+    #[cfg(feature = "client-retail")]
+    pub weapon_attack_power: HashMap<String, crate::lua_api::state_types::WeaponAttackPower>,
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     pub fog_of_war_frames: HashMap<u64, FogOfWarFrameState>,
     pub unit_position_frames: HashMap<u64, UnitPositionFrameState>,
@@ -179,6 +182,7 @@ pub struct SimState {
     pub next_cast_id: u32,
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
+    pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,
     pub action_ui_buttons: Vec<(u64, u32)>,
     pub cursor_item: Option<CursorInfo>,
