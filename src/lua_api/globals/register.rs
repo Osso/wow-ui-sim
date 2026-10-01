@@ -132,6 +132,11 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::combo_points::register_all(lua)?;
     super::real::unit_interaction::register_all(lua)?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    super::real::unit_spell_target_name::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::unit_speed::register_all(lua)?;
     super::real::preferred_interact::register_all(lua)?;

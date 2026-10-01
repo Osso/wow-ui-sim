@@ -1,6 +1,6 @@
 # UnitSpellTargetName cast-target snapshot
 
-Bounded Mainline 12.0.5+ contract for `UnitSpellTargetName`, using an explicit optional resolved target on `CastingState` in `src/lua_api/game_data.rs`. This slice supplies inputs and grouped actual-query fixtures only; it does not register or implement the query. See [Lua API architecture](../wiki/systems/lua-api.md).
+Bounded Mainline 12.0.5+ contract for `UnitSpellTargetName`, using an explicit optional resolved target on `CastingState` in `src/lua_api/game_data.rs`. This slice registers a modeled query backed by that snapshot, with grouped actual-query fixtures. Implementation follows actual RED; production compilation and GREEN remain pending. See [Lua API architecture](../wiki/systems/lua-api.md).
 
 ## What it must do
 
@@ -20,6 +20,8 @@ Bounded Mainline 12.0.5+ contract for `UnitSpellTargetName`, using an explicit o
 
 ## Implementation inventory
 
+- `src/lua_api/globals/real/unit_spell_target_name.rs`: strict UTF-8 string token validation after existing `unwrap_secret` AllowedWhenUntainted validation; exact `player` caster reads only `casting.target`, filters player recipients, and immediately roots the host secret string result. Other valid tokens return one nil; no generic coercion or taint clearing.
+- `src/lua_api/globals/{real/mod.rs,register.rs}`: publication requires `retail-12-0-5` and Mainline (`profile-retail` or `client-ptr`); no pre-12.0.5 or Forever publication.
 - `src/lua_api/game_data.rs`: `CastTargetSnapshot` and optional `CastingState.target` input.
 - `src/lua_api/state.rs`: public type re-export for external grouped fixtures.
 - `src/lua_api/globals/{combat_verbs.rs,admin.rs,missing_surface/profession_crafting.rs}`: existing actual-cast constructors use `target: None`.
@@ -32,11 +34,11 @@ Bounded Mainline 12.0.5+ contract for `UnitSpellTargetName`, using an explicit o
 
 `tests/unit_spell_target_name.rs` covers idle/untargeted/NPC nil values and arity, exact secret player name, selection independence, cast replacement/removal, channel-only absence, public-token tainted output, and both caller classes for secret unit tokens. Secret globals are rooted before allocation/GC; trusted payload inspection runs only after tainted frames return and asserts secure state first.
 
-**Proof ledger:** no builds, tests, or checks executed for this slice, by explicit request. Actual RED belongs to the parent before query production changes. Fixtures are unexecuted assertions, not RED/GREEN or native compatibility proof.
+**Proof ledger:** input/tests revision `c140765105c3986b240fd4ac4827df2c441d6630` compiled successfully with `cargo test --test integration --no-run --message-format=json` (exit 0; `/tmp/patch-12.0.5-batch13-red-build.json`, `.log`, and `-result.json`). Actual selected runtime command `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c unit_spell_target_name:: --nocapture --test-threads=1` failed 0/10 (exit 101; `/tmp/patch-12.0.5-batch13-red-run.log` and `.json`), all at missing query boundaries. The secret-input rejection fixture explicitly requires callable query registration before its rejection assertions. Production implementation follows this RED; it has not been compiled or run here. Parent owns production compilation, GREEN and final checks. Requirement checkboxes remain pending that proof; no native compatibility or audit-completion credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned actual RED, query registration/implementation, GREEN and final verification.
+- [ ] Parent-owned production compilation, GREEN and final verification. Actual RED is recorded; modeled query is implemented but unverified.
 - [ ] Native probes for nil arity, caller/output security, channel behavior, and targeted-cast transitions; none executed here.
 
 ## Out of scope

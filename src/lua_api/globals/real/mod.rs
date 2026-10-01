@@ -62,6 +62,11 @@ pub mod unit_interaction;
 pub mod unit_relationships;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod unit_speed;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub mod unit_spell_target_name;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
 pub mod xp_honor_rest;
