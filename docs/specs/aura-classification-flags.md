@@ -40,9 +40,9 @@ New complete constructor sites: `tests/aura_table_shape.rs::{helpful_non_raid_fi
 
 ## Tests asserting this spec
 
-Existing five `aura_table_shape` tests retain their expectations. The target debuff assertion now describes its explicit fixture classification rather than asserting a general helpfulness/raid coupling.
+Existing five `aura_table_shape` tests retain boolean-field coverage. The target debuff assertion describes its explicit fixture classification rather than asserting a general helpfulness/raid coupling. The old player shape test now compares from-player publication with the explicit host record at queried slot 1, also asserting the returned name and source identity.
 
-Grouped regression filters (producer GREEN not run):
+Grouped regression filters:
 
 - `aura_table_shape::explicit_classification_flags_are_public_independent_and_query_consistent` — host-populated player and party helpful/non-raid and harmful/raid fixtures, independently varied nameplate/from-player flags, all five boolean/secrecy assertions, slot/index/instance-ID consistency, and exact addon-taint preservation. Fixed target aura instance 1 is a legacy query control, not a host-populated target input.
 - `aura_table_shape::classification_query_snapshots_do_not_mutate_host_or_other_results` — independent slot/instance-ID/index results for player, party, and the fixed target control; mutate all five returned flags, retain other snapshots and host inputs, and preserve addon taint.
@@ -56,13 +56,21 @@ cargo test --test integration aura_table_shape::classification_query_snapshots_d
 
 Parent-reported compiled RED after public import fix `cdd1d729e`: `/tmp/patch-12.0.5-batch28-red-fixed-*`, grouped `aura_table_shape::` result **6 PASS / 1 FAIL**, failing on the player `isRaid` value mismatch. Initial RED build failed on the private `game_data` import; it did not compile successfully. Inputs: `f7166567e`, `663b9ad7c`, `4243827e2`, plus import fix `cdd1d729e`. Producer has not rerun these commands.
 
-Existing-control filter: `cargo test --test integration aura_table_shape::`. Constructor-compilation controls also include `c_unit_auras_admin::`, `aura_api::`, and the PTR `patch_12_1_audit` target; no producer GREEN or cross-profile proof is claimed here.
+### Compiled producer result and old-test correction — 2026-10-01
+
+Inspected parent artifacts `/tmp/patch-12.0.5-batch28-green-revision.txt`, `-green-build-result.json`, `-green-run-0.log`, and `-green-runs.json`: revision `bff26b9c112885736ff227d39e0e32380a53bfdd`, build exit **0**, focused `aura_table_shape::` execution exit **101**, **6 PASS / 1 FAIL**. Both new explicit-classification and snapshot tests passed. The sole focused failure was `aura_table_exposes_boolean_flag_shape`, old line **87**, `assert!(from_player)`. These are saved parent results, not a fresh execution by this correction slice; the artifact's GREEN label does not mean the focused group passed.
+
+The prior expectation was invalid: `SimState::seed_default_game_state` uses `default_player_buffs`, which selects a clock-dependent subset from `BUFF_POOL`. `build_auras_from_indices` assigns instance IDs starting at 1 and explicit from-player flags from the selected source. Party-sourced Arcane Intellect (`party2`), Mark of the Wild (`party3`), and Battle Shout (`party1`) precede other player-source entries in the pool and can occupy slot 1 with an explicit false flag. The old writer forced true for player-unit queries, masking this input distinction. The failure log does not identify which party aura was selected.
+
+Correction reads the unchanged host aura with instance ID 1, checks returned name/source identity, and compares `isFromPlayerOrPlayerPet` with that record's explicit input. All seven typed boolean outputs and remaining exact boolean assertions are retained; new regression tests, producer, and seeds are unchanged. Focused rerun is parent-owned and pending after this test correction. Separate broad `aura` filter failures in `on_update_modes` and `unit_auras_private` (nativeSpecialization event) are excluded, not treated as shape proof or fixed here.
+
+Existing-control filter: `cargo test --test integration aura_table_shape::`. Constructor-compilation controls also include `c_unit_auras_admin::`, `aura_api::`, and the PTR `patch_12_1_audit` target; no passing focused group after this correction or cross-profile proof is claimed here.
 
 ## Known gaps (current cycle)
 
 - [x] Parent observed compiled behavioral RED after fixing the private import: player `isRaid` mismatch, 6 PASS / 1 FAIL.
 - [x] Producer changed the shared classification writer to use `is_raid`, `is_nameplate_only`, and `is_from_player_or_player_pet` directly; existing constructors and fixed target inputs remain unchanged.
-- [ ] Parent GREEN and verifier acceptance remain pending. Requirement checkboxes above remain open until that proof; producer slice performs formatting and commit only, without builds, tests, checks, readability, startup, or delegation.
+- [ ] Parent focused rerun after old-test correction and verifier acceptance remain pending. Saved producer build passed, but focused group remained 6 PASS / 1 FAIL. Requirement checkboxes above remain open; correction slice performs formatting and commit only, without builds, tests, checks, startup, or delegation.
 - [ ] Target queries currently read fixed Rust fixtures, with no host-populated target aura store. Tests preserve that pathway rather than adding or pretending to exercise target inputs.
 
 ## Out of scope

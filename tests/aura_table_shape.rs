@@ -64,7 +64,19 @@ fn debuff_slot_table_reports_harmful() {
 #[test]
 fn aura_table_exposes_boolean_flag_shape() {
     let env = env();
+    // Default buffs select from player and party sources; slot 1 is not always player-cast.
+    let expected = env
+        .state()
+        .borrow()
+        .player
+        .buffs
+        .iter()
+        .find(|aura| aura.aura_instance_id == 1)
+        .expect("default player aura at slot 1")
+        .clone();
     let (
+        name,
+        source,
         can_apply,
         boss,
         from_player,
@@ -72,19 +84,22 @@ fn aura_table_exposes_boolean_flag_shape() {
         nameplate_personal,
         nameplate_only,
         stealable,
-    ): (bool, bool, bool, bool, bool, bool, bool) = env
+    ): (String, String, bool, bool, bool, bool, bool, bool, bool) = env
         .eval(
             r#"
             local aura = C_UnitAuras.GetAuraDataBySlot("player", 1)
-            return aura.canApplyAura, aura.isBossAura, aura.isFromPlayerOrPlayerPet,
+            return aura.name, aura.sourceUnit, aura.canApplyAura,
+                   aura.isBossAura, aura.isFromPlayerOrPlayerPet,
                    aura.nameplateShowAll, aura.nameplateShowPersonal,
                    aura.isNameplateOnly, aura.isStealable
             "#,
         )
         .unwrap();
+    assert_eq!(name, expected.name);
+    assert_eq!(source, expected.source_unit);
     assert!(can_apply, "canApplyAura default is true");
     assert!(!boss);
-    assert!(from_player);
+    assert_eq!(from_player, expected.is_from_player_or_player_pet);
     assert!(!nameplate_all);
     assert!(!nameplate_personal);
     assert!(!nameplate_only);
