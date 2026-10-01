@@ -24,7 +24,9 @@ Documented values: cached official `CurrencyConstantsDocumentation.lua:95–113`
 
 ## Tests asserting this spec
 
-- `tests/patch_12_0_5_enum_additions.rs`: public values, retained members, and metadata coherence in the grouped integration target, including shared housing post-load restoration. Focused default-retail execution passes all three tests; historical/PTR branches are not claimed as executed.
+- `tests/patch_12_0_5_enum_additions.rs`: 20 grouped public-value/removal/metadata tests, including 17 current-retail initialization/post-load tests and three original publication controls. Original default-retail proof predates this implementation; historical/PTR branches are not claimed as executed.
+- `tests/enum_diff_coverage.rs`: representative abbreviation value uses current-retail flags while preserving the old expectation elsewhere.
+- `src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_unit_frame_settings_enums.rs`: current-retail unit-frame values and metadata; historical expectations retained.
 - `src/loader/tests/wow_api_globals/patch_12_1_5_transmog_illusion_flags.rs`: existing default-retail publication/post-load control passes. Numerical publication is not native-client/domain parity.
 
 Revision-scoped commands, artifact hashes, and provenance limitations are recorded in `/tmp/patch-12.0.5-enums-ledger.md`.
@@ -46,10 +48,9 @@ Actual parent RED at `eac08bda3`: 20 tests, 7 PASS / 13 FAIL; `/tmp/patch-12.0.5
 
 No numeric guesses were needed for the 33 current-cache rows. Historical numeric values and native/domain semantics remain unclaimed. The earlier `Relinquished=65` publication is preserved, not corrected to cached `128`.
 
-
 ## Retained-source / proof matrix
 
-Paths resolve under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`. Each test filter below is prefixed `patch_12_0_5_enum_additions::`; it asserts initialization and post-load publication plus actual-member metadata. RED status is the pre-fix run, not post-change proof.
+Paths resolve under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`. Each test filter below is prefixed `patch_12_0_5_enum_additions::`. The 17 new tests assert initialization and post-load publication plus actual-member metadata; the original three retain their existing control scopes. RED status is per grouped test (a failed test can stop before later assertions), not proof of every individual row or post-change behavior.
 
 | Source line | Enum subject | Delta | Expected public value | Exact official cached doc/member line | Test in `tests/patch_12_0_5_enum_additions.rs` | Proof level |
 |---|---|---|---|---|---|---|
