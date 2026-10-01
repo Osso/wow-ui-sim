@@ -19,9 +19,39 @@ const COMPLETED_REWARD_TEXTURE: &str = "Interface\\Icons\\INV_Box_01";
 const QUEST_GREETING_TEXT: &str = "How can I help you, adventurer?";
 
 pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-0-5"))]
+    let b = b.set_function(
+        "RequestQuestAcceptConfirmation",
+        request_quest_accept_confirmation,
+    )?;
     b.set_function("OpenQuestNpc", open_quest_npc)?
         .set_function("OpenMultiQuestNpc", open_multi_quest_npc)?
         .set_function("CloseQuestNpc", close_quest_npc)
+}
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-0-5"))]
+fn request_quest_accept_confirmation(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let quest_title = String::from_stack(state, 2)?;
+    let pending_offer = crate::lua_api::methods::borrow_state(state)?.pending_quest_offer;
+    let Some(quest_id) = pending_offer else {
+        return Ok(0);
+    };
+
+    // Root both strings across allocations and every synchronous listener.
+    let saved_top = state.top;
+    let name = crate::lua_api::methods::create_string(state, &name);
+    state.push(name);
+    let quest_title = crate::lua_api::methods::create_string(state, &quest_title);
+    state.push(quest_title);
+    let result = dispatch_event_now(
+        state,
+        "QUEST_ACCEPT_CONFIRM",
+        &[name, quest_title, rilua::Val::Num(quest_id as f64)],
+    );
+    state.top = saved_top;
+    result?;
+    Ok(0)
 }
 
 pub(super) fn open_quest_npc(state: &mut LuaState) -> LuaResult<u32> {

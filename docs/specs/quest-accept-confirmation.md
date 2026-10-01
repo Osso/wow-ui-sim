@@ -1,6 +1,6 @@
 # Quest accept confirmation
 
-Bounded Retail 12.0.5 `QUEST_ACCEPT_CONFIRM` input tied to the existing pending quest offer. Planned producer belongs beside `A_Admin.OpenQuestNpc` in `src/lua_api/globals/admin_quests.rs`; no production implementation is included in this tests-first change. See [event dispatch](../event-system.md) and [Lua API](../wiki/systems/lua-api.md).
+Bounded Retail 12.0.5 `QUEST_ACCEPT_CONFIRM` input tied to the existing pending quest offer. Producer lives beside `A_Admin.OpenQuestNpc` in `src/lua_api/globals/admin_quests.rs`; targeted GREEN remains pending. See [event dispatch](../event-system.md) and [Lua API](../wiki/systems/lua-api.md).
 
 ## What it must do
 
@@ -29,20 +29,21 @@ The new admin name/signature and absent-offer policy are explicit simulator desi
 ## Implementation inventory
 
 - `tests/quest_accept_confirmation.rs`: five grouped fixtures, gated by Retail profile and 12.0.5 epoch; no separate Cargo target.
-- `src/lua_api/globals/admin_quests.rs`: existing gossip seeding and planned explicit confirmation input location; unchanged.
+- `src/lua_api/globals/admin_quests.rs`: gated explicit confirmation input; decodes two strings through `FromStack`, reads only the pending offer ID, releases the state borrow, and roots event strings across synchronous listeners. No offer is a no-op; no new storage or transition.
 - `src/lua_api/globals/missing_surface/gossip_info.rs`: existing available-quest selection producer; unchanged.
 - `src/lua_api/globals/quest_verbs.rs`: existing acceptance/close transitions; unchanged.
 
 ## Tests asserting this spec
 
-`tests/quest_accept_confirmation.rs` exercises actual `A_Admin.OpenQuestNpc` → `C_GossipInfo.SelectAvailableQuest` ordering, then the planned admin input. Listeners assert exactly three arguments, concrete values/types and selected-quest visibility. Explicit confirmation title differs from seeded gossip title. Rust observes actual `pending_quest_offer`, `quest_log` and queued lifecycle events; no query globals, handlers or event dispatchers are replaced. Acceptance inside the prompt callback checks pending-state availability at the real dispatch boundary.
+`tests/quest_accept_confirmation.rs` exercises actual `A_Admin.OpenQuestNpc` → `C_GossipInfo.SelectAvailableQuest` ordering, then the explicit admin input. Listeners assert exactly three arguments, concrete values/types and selected-quest visibility. Explicit confirmation title differs from seeded gossip title. Rust observes actual `pending_quest_offer`, `quest_log` and queued lifecycle events; no query globals, handlers or event dispatchers are replaced. Acceptance inside the prompt callback checks pending-state availability at the real dispatch boundary.
 
-**Proof ledger:** fixtures authored 2026-10-01; changed-file `rustfmt` only. No build, compilation, RED/GREEN execution, broad gates, delegation or push authorized here. Parent must compile/run actual RED before production edits. All requirement boxes remain unverified. Existing generated integration harness should discover the file; discovery/compilation has not been executed.
+**Proof ledger:** actual parent RED at `81421d0574b6af3c3fc289216a6e910e4ee3806e` on 2026-10-01: 1 PASS (selection control), 4 FAIL at missing `A_Admin.RequestQuestAcceptConfirmation`; saved `/tmp/patch-12.0.5-batch16-red-run.log` and `.json` identify the integration binary and hash. Producer follows this RED; scoped `rustfmt` only, no new build/check/test, delegation or push. Parent owns targeted GREEN and final gates; requirement boxes remain unverified. Unrelated bin-test compilation failure at `enable_state.rs:225` (missing `AddonMetadata.addon_dir`) is outside this scope.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compile and actual targeted RED, including existing selection/acceptance/close controls.
-- [ ] Implement bounded producer only after valid RED; execute GREEN and required final gates.
+- [x] Parent compiled integration artifact and ran actual targeted RED: selection passed; four confirmation fixtures stopped at missing producer.
+- [x] Implement bounded producer after valid RED.
+- [ ] Parent execute targeted GREEN and required final gates.
 
 ## Out of scope
 
