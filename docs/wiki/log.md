@@ -1,3 +1,7 @@
+## [2026-09-30] implementation | Record live Cooldown formatter handoff
+
+Updated [[duration-core#Cooldown countdown formatter]] and index from committed attachment/consumer stages. [Cooldown formatter contract](../specs/cooldown-countdown-formatter.md) separates API development GREEN from actual library renderer RED and pending consumer GREEN; no final integration or native/glyph claim.
+
 ## [2026-10-01] implementation | Wire explicit charge model and shared zero semantics
 
 Updated [[spell-charge-state]] and [charge contract](../specs/spell-charge-state.md) with public map/clock/mapping paths and the lazy nil spell-duration provider. Actual concrete `eac08bda3` RED is 1/10 pass; `13af6a6b2` then installs shared table/duration producers, removes exact fabricated providers, and interprets 12.0.5 fully elapsed zero spans as expired plus elapsed fraction one. Existing zero/reset/default tests are epoch-aware; no charge-only override, fabricated transitions, pet/macros, secret bypass, Cargo, push, deploy, or native parity claim. Parent GREEN/final gates remain pending.

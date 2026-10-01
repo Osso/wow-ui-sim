@@ -1,3 +1,7 @@
+## [2026-09-30] implementation | Attach and consume typed Cooldown formatters
+
+[[duration-core#Cooldown countdown formatter]] records private typed attachment roots, engine-ticked renderer-only text, and separate API/render evidence. [Contract](../specs/cooldown-countdown-formatter.md) owns inferred behavior and pending gates; API GREEN does not establish render coverage.
+
 ## [2026-10-01] implementation | Add explicit spell charge producers
 
 [[spell-charge-state]] records the empty spell-keyed five-field input and exact old provider trace. The no-data spell-duration control used a lazy namespace nil closure, not a modeled producer. Actual concrete RED at `eac08bda3` is 1/10 pass, including shared zero-span failure; `13af6a6b2` then wires all three duration producers and both table queries, removes exact obsolete providers, and gates fully elapsed zero semantics to 12.0.5+. [Charge contract](../specs/spell-charge-state.md) owns publication gates and inference limits; parent GREEN/final gates and native parity remain unclaimed.
