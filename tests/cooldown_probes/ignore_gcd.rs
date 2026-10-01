@@ -56,7 +56,7 @@ fn ignore_gcd_overlap_selects_individual_interval_on_all_three_surfaces() {
     let env = env();
     seed_intervals(&env, true, true);
     // Player slot 5 is Flash of Light (19750), not spell ID 5.
-    let spell_id: u32 = env
+    let spell_id: i64 = env
         .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
         .unwrap();
     assert_eq!(spell_id, 19750);
