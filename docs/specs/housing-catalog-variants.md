@@ -15,6 +15,20 @@ Bounded 12.0.5 catalog identity contract from [retained changes](../../data/patc
 - [ ] `GetCatalogEntryInfo(entryID)` remains base info: explicit record/type/item/name/trophy fields, no synthesized `entryID`, `entryVariantID`, `variantIdentifier` or variant `numStored`. This is a bounded field subset, not a complete entry DTO.
 - [ ] **Inferred simulator lookup policy:** absent full variant keys return nil; absent base entries return nil and variant lists are empty. Wrong type must not resolve solely by record ID; no seed/numeric/variant-one fallback. Native invalid-enum, malformed-input, coercion and error behavior remain unknown.
 
+### ByItem / ByRecordID — next bounded 12.0.5 slice (2026-10-01)
+
+Tests/spec-only input at baseline `f59c03402`; production providers remain unchanged. Exact retained rows `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284` and `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` remove `tryGetOwnedInfo`. No accounting status changes or native/whole-row claim.
+
+Directly inspected cached `HousingCatalogUIDocumentation.lua:140–168`: ByItem takes nonnil `ItemInfo`, documented as **“ItemID, name, or link”**; ByRecordID takes **entryType, recordID**, in that order. Both return nullable `HousingCatalogEntryInfo` and declare `SecretArguments = "AllowedWhenUntainted"`. The old temporary provider's `{itemID=...}` / `{id=...}` acceptance is not a documented selector contract.
+
+- [ ] **Inferred bounded lookup policy:** resolve numeric item IDs and existing modeled bare/full item links to explicitly supplied base records by `item_id`, not `record_id`. ByRecordID resolves the complete `(recordID, entryType)` identity, including type collisions. Missing base records return nil even for legacy seed 1001 or populated variant zero/one/two; variants never supply base metadata.
+- [ ] Both getters publish fresh independent snapshots of only `recordID`, `entryType`, optional `itemID`, `name` and `isUniqueTrophy`. No synthesized variant identity/storage/dye fields. Output mutation cannot change another snapshot/model; later explicit host mutation changes new results but not saved snapshots. This is not full DTO parity or an aggregate policy.
+- [ ] Removed trailing bool arguments do not change base selection. Execute the actual cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua` for a missing-result wrapper control. Its bridge forwards only retained selectors; nil results remain nil. Nonempty wrapper parity is deferred: its helper performs arithmetic on unmodeled `remainingRedeemable`, and fixtures must not invent that field merely to load the wrapper.
+- [ ] Ordinary public IDs/links remain callable from tainted code without clearing caller taint. Host-secret numeric item/record/type selectors reject in secure and tainted callers, stay secret, and leave public data/caller taint unchanged. Conservative simulator rejection is stricter than cached `AllowedWhenUntainted`, not native security parity; no secret unwrap support is authorized.
+- [ ] Undocumented item tables must not resolve (nil or explicit error accepted; exact invalid-input error policy unresolved). Native coercions, numeric-string IDs, fractional/range/enum validation and metatable forms are not asserted.
+
+**Material unresolved contracts:** item-name resolution and duplicate item-ID winners. Existing `src/c_api/item_spell/c_item.rs:20–40,586–592` parses numeric IDs, numeric strings and bare/full links but has no item-name lookup. Catalog display `name` is not item name: fixtures deliberately pair item 6948 with `Catalog chair, not an item name`. Name support remains a documented missing case, not a guessed catalog-name match or unsupported-coercion requirement. Duplicate `item_id` values across base records have no established winner; no insertion/hash order, type preference, rejection or nil policy is invented. Fixtures use distinct item IDs, even across record/type collisions. Native secret-name/link and complete DTO/wrapper behavior remain unresolved.
+
 ### Security
 
 - [ ] Ordinary selectors remain callable from tainted addon code without clearing caller taint, consistent with cached `SecretArguments = "AllowedWhenUntainted"` on the three info/list queries.
@@ -36,6 +50,22 @@ The two no-argument search getters have no `SecretArguments` annotation in the i
 - `tests/housing_catalog_variants.rs`: fourteen grouped fixtures; `tests/housing_catalog.rs` retains storefront/cart coverage and adds an unconditional empty-surface/lifecycle control. No new Cargo target.
 
 ## Tests asserting this spec
+
+### Pending base-lookup fixtures (tests/spec-only)
+
+`tests/housing_catalog_base_lookups.rs` is discovered by the existing generated `integration` harness (`autotests = false`); no new Cargo target or producer. Exact parent filter: `housing_catalog_base_lookups::` (12 tests, gated by `retail-12-0-5`). No compilation, RED/GREEN, checks, readability gate, delegation or verification ran during this task. Parent must compile and observe actual behavior; predictions below are not evidence.
+
+| Cases (under exact module filter) | Expected unchanged-provider behavior / boundary |
+|---|---|
+| `empty_item_lookup_ignores_legacy_seed`, `empty_record_lookup_ignores_legacy_seed`, `missing_base_never_falls_back_to_variants_or_seeds` | Expected failure: seed 1001 resolves despite empty/missing C API base input; variant-only fixture is an independent missing-base control |
+| `item_scalar_reads_explicit_base_not_record_id`, `item_links_read_explicit_base`, `record_lookup_preserves_type_collision_and_optional_item` | Expected failure: Lua provider does not read explicit base rows; item ID differs from record ID, links/type collision/optional item cannot be satisfied by fabricated seeds |
+| `legacy_item_tables_do_not_resolve`, `ordinary_public_selectors_preserve_addon_taint`, `secret_scalar_selectors_reject_without_unwrapping_or_taint_changes` | Legacy table-seed 1001 acceptance should fail; ordinary addon query should fail at missing explicit output; secret rejection may already pass VM guards and is a conservative control, not guaranteed RED |
+| `snapshots_are_independent_across_queries_and_model_mutation`, `removed_trailing_arguments_do_not_change_base_selection` | Expected failure at missing explicit output; later snapshot/mutation/trailing-arg assertions require producer GREEN before supplying evidence |
+| `cached_deprecated_wrapper_ignores_removed_args_for_missing_results` | Executes whole actual cache file; expected failure because legacy seed returns nonnil (possibly helper arithmetic error for missing `remainingRedeemable`). A missing/stale cache is a fixture prerequisite failure, not behavioral RED. Nonempty wrapper DTO compatibility excluded |
+
+Proof ledger: baseline clean HEAD `f59c03402c1a6a547cc0d45f3a888d20bd23d133`; source declarations/wrapper inspected directly. Changed Rust file is formatted with `rustfmt --edition 2024 --config skip_children=true tests/housing_catalog_base_lookups.rs` before commit; formatting supplies no compile/behavior proof. Parent owns all subsequent proof. Unrelated seed owners, shared wiki/coverage/registers and PLAN remain untouched.
+
+### Existing variant proof
 
 Parent compiled input `05ca7dff0` and ran all original eleven `housing_variant_*` fixtures against the unchanged Lua provider: **0 passed, 11 failed**. Failures include seeded default records, wrong variant counts and incompatible output fields. Parent compiled producer `76f2ac88a` plus visibility fix `45f0d8b21` successfully, initially observing **13 passed, 1 failed** across fourteen variant fixtures. The failure was the guarded-selector fixture described below, corrected without production changes at `157d15cef`. Parent repaired run passes **14/14 variants**, with **4 cart + 4 free-place + 1 customize + 2 decor controls PASS**; saved startup exits **0**, output **[]**. Earlier zero-match filters provide no evidence; the later actual controls do. Independent bounded acceptance is recorded below. No new build/check/delegation/push in this docs audit. Checkboxes retain unresolved native/full-contract requirements, not implementation absence.
 
@@ -89,7 +119,7 @@ Host-installed guard success/rejection is bounded simulator proof, not retail se
 - [ ] Distinct source/results are implemented; real filtering, sorting, async updates and owned-instance count semantics remain unmodeled. Existing filter method names do not establish matching behavior.
 - [ ] Complete base metadata/aggregates and secure access to secret selectors are missing. Strict public raw integer selectors and conservative secret rejection are simulator limits, not native range/coercion/access claims.
 - [ ] Overlapping variant/base seed assertions were replaced by explicit fixtures at `05ca7dff0`; coverage is retained, not deleted. Historical deprecated tests target the excluded ByRecordID wrapper; current retail cache no longer ships that addon. No other test references the replaced seeded query outputs. Customize selection remains a separate temporary fixture.
-- [ ] ByItem/ByRecordID and category-name providers remain outside this slice. Retained seed providers do not supply fallback data to new queries/searchers.
+- [ ] ByItem/ByRecordID have pending tests/spec-only coverage in the next bounded slice above; their production providers remain seeded. Category-name providers remain excluded. Retained seeds do not supply fallback data to implemented variant/base-info queries/searchers.
 
 ## Out of scope
 
@@ -109,7 +139,7 @@ Retained source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba
 | `structures-HousingDecorDyeSlot-663` | Bounded independent explicit `dyeColorName` publication |
 | `structures-HousingCatalogEntryID-645`, `structures-HousingCatalogEntryID-646` | Base input omits legacy subtype fields; no runtime legacy-field absence test/credit |
 | `structures-HousingCatalogCategoryInfo-643`, `structures-HousingCatalogSubcategoryInfo-659`, `structures-HousingCategorySearchInfo-661` | **Exact filter/ownership accounting IDs excluded**; renamed predicates/search input remain unresolved |
-| `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284`, `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` | Removed arguments outside scope |
+| `global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284`, `global api-C_HousingCatalog-GetCatalogEntryInfoByRecordID-286` | Next bounded tests/spec-only slice above; removed-argument/base-lookup fixtures uncompiled and unrun; no row credit |
 | `global api-C_HousingBasicMode-StartPlacingNewDecor-278`, `global api-C_HousingBasicMode-StartPlacingNewDecor-279`, `global api-C_HousingCatalog-DestroyEntry-281`, `global api-C_HousingCatalog-DestroyEntry-282`, `global api-C_HousingCatalog-GetDestroyableInstanceCount-288`, `global api-C_HousingCatalog-GetDestroyableInstanceCount-289`, `events-HOUSING_STORAGE_ENTRY_UPDATED-555`, `events-HOUSING_STORAGE_ENTRY_UPDATED-556` | Entirely deferred; no policy inferred |
 | `structures-HousingCatalogEntryInfo-650`, `structures-HousingCatalogEntryInfo-651`, `structures-HousingCatalogEntryInfo-653`, `structures-HousingCatalogEntryInfo-654`, `structures-HousingCatalogEntryInfo-655`, `structures-HousingCatalogEntryInfo-656`, `structures-HousingCatalogEntryInfo-657` | Aggregate/other removed fields untested; not completed by bounded base input |
 
