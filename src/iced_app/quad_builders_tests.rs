@@ -353,24 +353,22 @@ fn smooth_scaling_render_measure_and_cache_flips() {
     let mut tops = Vec::new();
     for smooth in [false, true, false, true] {
         env.exec(&format!("fs:SetSmoothScaling({smooth})")).unwrap();
-        let frame = {
-            let state = env.state().borrow();
+        let batch = {
+            let mut state = env.state().borrow_mut();
             let id = state.widgets.get_id_by_name("SmoothRender").unwrap();
-            let mut frame = state.widgets.get(id).unwrap().clone();
+            let frame = state.widgets.get_mut(id).unwrap();
             frame.effective_scale = 1.1;
-            frame
+            render_fontstring_spacing_with(frame, "H\nH", 200.0, &mut font_sys, &mut atlas)
         };
-        let batch =
-            render_fontstring_spacing_with(&frame, "H\nH", 200.0, &mut font_sys, &mut atlas);
         let positions = glyph_quad_tops(&batch);
         assert_eq!(positions.len(), 2);
         let separation = positions[1] - positions[0];
-        assert!((separation - if smooth { 15.84 } else { 16.0 }).abs() < .01);
+        assert!((separation - if smooth { 15.84 } else { 16.0 }).abs() < 0.01);
         if smooth {
             let height: f64 = env
                 .eval("fs:SetText('H'); return fs:GetStringHeight()")
                 .unwrap();
-            assert!((height as f32 * 1.1 - separation).abs() < .01);
+            assert!((height as f32 * 1.1 - separation).abs() < 0.01);
             env.exec("fs:SetText('H\\nH')").unwrap();
         }
         tops.push(positions);
