@@ -1,5 +1,18 @@
 # Patch 12.0.5 API Audit
 
+### Private-aura restriction removals — bounded independent acceptance
+
+Exact source deltas401/405 remove `HasRestrictions`; they do not require new aura/warning content producers. Parent accepts the full `/tmp/patch-12.0.5-private-aura-annotation-independent-proof.md`: actual tainted public calls preserve caller taint and cause existing modeled side effects. [Anchor contract](../../specs/private-aura-anchors.md) and [warning contract](../../specs/private-warning-text-anchor.md) retain distinct lifecycle, secret and placement limits.
+
+| Exact row | Bounded behavior | Proof limits |
+| --- | --- | --- |
+| `global api-C_UnitAuras-RemovePrivateAuraAnchor-401` | `ordinary_public_add_and_remove_preserve_addon_taint`: actual tainted closure deletes existing anchor, preserves insecurity inside and secure outer stack | Exact tainted fixture does not assert zero arity, callback delivery or combat combination. Ordinary controls do; no combined credit. |
+| `global api-C_UnitAuras-SetPrivateWarningTextAnchor-405` | `public_binding_after_private_registration_accepts_tainted_caller_in_combat`: actual combat/tainted closure, zero arity, exact private parent/point geometry, preserved taint | Stored geometry, not rendered/native proof. Conservative secret rejection is not native AllowedWhenUntainted acceptance. |
+
+Namespace/initialization changes `4b98920f0`, `0acd750af`, `795e2042e` intersected older batch33 integration proof; verifier330 refreshed only the two existing filters on hash-verified batch39 binary (no build): **18 anchors + 12 warnings = 30 PASS**, exit0 both, 105.990s. Artifact `/tmp/patch-12.0.5-batch40-annotation-20261001T162629-1739b432-runs.json` binds current source and compiled `795e2042e`, binary SHA256 `ebde3a19745cab8140e280c2ec4867766695cdb1462a3cd2ff7cf7551d03efd4`. Full source intersections and output hashes share that prefix; no VM/Cargo change invented. Applicable independent328 fmt/check0 reused on identical Rust scope. Original nonblocking readability findings retained.
+
+Only401/405 gain bounded credit: **255 pending / 93 bounded / 14 partial → 253 / 95 / 14 = 362**. Before snapshot `/tmp/patch-12.0.5-batch40-accounting-before.json`; post-commit validation `/tmp/patch-12.0.5-batch40-accounting-validation.json` preserves ordered IDs, source/register hashes, previous capabilities and all unrelated rows. Prose168 unchanged. Cached warning `PingSystemTutorial`/`string.find` errors and historical broader specialization failure remain unresolved; no clean closure, native secret acceptance, all-profile or whole-page completion. Older pending row notes below are historical checkpoints.
+
 ### Outfit stored-index DTO — current bounded acceptance
 
 [Independent315 exact acceptance](../../specs/outfit-catalog-lookups.md#independent-stored-indexdto-acceptance--2026-10-01) owns evidence/limits: current-VM5/5PASS, applicable fmt/check0 reused, no readability issues. Only `structures-TransmogOutfitEntryInfo-673` promotes, **258/90/14 → 257 pending / 91 bounded / 14 partial = 362**. Stored index/DTO fixtures accepted; incomplete second-record per-path assertions explicitly retained, not exhaustive schema runtime proof. No native/catalog lifecycle/all-profile parity. IDs/register/plaintext SHA/unrelated rows preserved in linked artifact; prior unaccepted315 checkpoints superseded. Aura rows392/396 unchanged; duration314 excluded.

@@ -772,6 +772,23 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-altered-form-independent-proof.md",
       "gate_scope": "Exact row407 secret-argument annotation axis and bounded unchanged cached UnitUtil consumer. Read-only implementation inspected; barber/event monitors and raw GC pointer identity not independently exercised. No blocking readability findings."
+    },
+    {
+      "id": "private-aura-restriction-removal",
+      "symbols": [
+        "C_UnitAuras.RemovePrivateAuraAnchor",
+        "C_UnitAuras.SetPrivateWarningTextAnchor"
+      ],
+      "scope": "Exact HasRestrictions-removal axis: valid plain arguments from actual tainted addon closures remove stored anchor or place registered warning frame while preserving caller taint. Warning fixture also runs in combat, checks zero return arity and exact parent/point geometry. Current 18 anchor + 12 warning PASS; applicable independent328 Rust gates reused. No native secret acceptance or all-profile/whole-page credit. Cached warning closure errors and historical broader specialization failure remain.",
+      "spec": "docs/specs/private-aura-anchors.md",
+      "tests": [
+        "tests/private_aura_anchors.rs",
+        "tests/private_warning_text_anchor.rs"
+      ],
+      "implementation": "dae082322085ed3c28dbef9302d0cc7996c79989",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-private-aura-annotation-independent-proof.md",
+      "gate_scope": "Exact rows401/405 only. Shared namespace registration changes justified one existing-filter refresh on batch39 compiled795e2042e. Remove tainted fixture does not assert zero arity, callback delivery or combat combination; no such combined proof claimed. Conservative secret rejection and original nonblocking readability findings retained."
     }
   ],
   "source_rows": [
@@ -2141,9 +2158,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-RemovePrivateAuraAnchor-401",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-restriction-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent330 literal HasRestrictions-removal proof: valid public Remove from actual tainted addon closure deletes existing anchor and preserves caller taint. Current18 anchor PASS on hash-verified batch39 executable; applicable fmt/check0 reused. Exact tainted fixture does not assert zero arity/callback delivery/combat; ordinary controls are separate proof. Native secret acceptance, broader security and profiles unproven; no additional aura/warning producer prerequisite invented."
     },
     {
       "source_id": "global api-C_UnitAuras-RemovePrivateAuraAppliedSound-403",
@@ -2153,9 +2172,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-SetPrivateWarningTextAnchor-405",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-restriction-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent330 literal HasRestrictions-removal proof: actual tainted addon closure with ordinary parent/binding succeeds in actual combat, returns zero values, preserves caller taint and applies exact private parent/point geometry. Current12 warning PASS on hash-verified batch39 executable; applicable fmt/check0 reused. Cached PingSystemTutorial/string.find errors remain; no clean closure/native secret acceptance/rendered pixels/all-profile credit. Prose168 remains separate and unchanged."
     },
     {
       "source_id": "global api-C_UnitAuras-WantsAlteredForm-407",

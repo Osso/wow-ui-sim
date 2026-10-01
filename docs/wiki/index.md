@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept exact private-aura restriction-removal rows
+
+[[patch-12-0-5-api-audit#Private-aura restriction removals — bounded independent acceptance]] owns exact401/405 behavioral matrix, refreshed proof and remaining gaps; literal HasRestrictions-removal axis only. No new content-producer prerequisite or native secret-acceptance claim.
+
 ## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
 
 [[lua-api#Retail 12.0.5 altered-form query]] links [batch39 proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), the SSOT for revisions, artifacts/hashes and capability coverage. [Independent bounded acceptance](../specs/unit-aura-altered-form.md#independent-bounded-acceptance--2026-10-01) records ten fixtures plus 43 controls PASS, startup0 `[]`, fresh fmt/check0 and exact row407 promotion. Native policy/security and production cosmetic input remain unknown. Ignored PLAN unchanged.

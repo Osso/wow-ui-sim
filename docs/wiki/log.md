@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept private-aura restriction-removal rows401/405
+
+[[patch-12-0-5-api-audit#Private-aura restriction removals — bounded independent acceptance]] records literal source-axis accounting and independent330 current runtime proof. Namespace intersections justified existing-filter refresh; no redundant build/gates. Native secret acceptance, cached closure errors and broader historical failure remain open.
+
 ## [2026-10-01] evidence | Accept bounded altered-form row407
 
 [Independent bounded acceptance](../specs/unit-aura-altered-form.md#independent-bounded-acceptance--2026-10-01) reconciles 53 unique PASS, normal startup0 `[]`, fresh fmt/check0 and no blocking readability findings. Exact row407 only gains bounded credit; source-accounting validation and retained native/model limitations live in the spec. Ignored PLAN untouched.

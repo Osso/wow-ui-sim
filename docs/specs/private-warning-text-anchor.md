@@ -1,5 +1,9 @@
 # Private warning-text anchor
 
+## Exact row405 restriction-removal acceptance — 2026-10-01
+
+[Source-axis proof and limits](../wiki/investigations/patch-12-0-5-api-audit.md#private-aura-restriction-removals--bounded-independent-acceptance) owns independent330 acceptance of actual tainted, in-combat public placement with zero arity, retained taint and exact stored geometry. This does not close native secret acceptance, rendering, cached closure errors or separate prose168.
+
 `C_UnitAuras.SetPrivateWarningTextAnchor(parent, optionalAnchorBinding)` configures the separately registered private warning text frame, not the public parent frame. This bounded implementation replaces the public no-op and temporary private registration owner. Parenting, timing, replacement and nil policies remain inferred, not native-verified. Source: retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt), profile-scoped cached Blizzard API documentation and actual RaidWarning/PrivateAurasUI consumers. [Widget system](../widget-system.md) describes frame parenting and geometry.
 
 ## What it must do

@@ -1,5 +1,9 @@
 # Public private-aura anchors
 
+## Exact row401 restriction-removal acceptance — 2026-10-01
+
+[Source-axis proof and limits](../wiki/investigations/patch-12-0-5-api-audit.md#private-aura-restriction-removals--bounded-independent-acceptance) owns independent330 acceptance of actual tainted public Remove deleting state without clearing taint, current bounded filter refresh and exact accounting. This is not native secret acceptance or combined tainted arity/callback/combat proof; lifecycle requirements below remain separately scoped.
+
 Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produce the anchor lifecycle consumed by `C_UnitAurasPrivate`, without manufacturing aura content. Registration now lives in [`private_aura_anchors.rs`](../../src/c_api/private_aura_anchors.rs). The former private helper owner is removed; unrelated temporary private aura data/update/warning/dispel state remains. Independent inspection accepts bounded saved lifecycle and cached-consumer PASS; native/security/profile completion remains unproven. See [C API boundary](../../AGENTS.md#c-api-boundary) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
