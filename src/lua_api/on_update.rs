@@ -1,7 +1,6 @@
 //! rilua-backed OnUpdate bridge.
 
 use super::state::SimState;
-#[cfg(any(feature = "player-cast-durations", feature = "retail-12-0-5"))]
 use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
