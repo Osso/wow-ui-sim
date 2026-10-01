@@ -4,7 +4,7 @@
 
 ## [2026-10-01] contract | Bound AutoRoll fixture to consumed paths
 
-[AutoRoll fixture contract](../specs/forever-auto-roll-fixture.md) owns user-approved consumed-path scope, exact retained setup diagnostics, full-history guards and unexecuted calibrated VM observation. Complete cached/local loading and real lifecycle/loot assertions remain. Historical 71/75 RED is unchanged; no AutoRoll acceptance or production changes.
+[AutoRoll fixture contract](../specs/forever-auto-roll-fixture.md) owns user-approved consumed-path scope, exact retained setup diagnostics, full-history guards and unexecuted calibrated VM observation. Complete cached/local loading and real lifecycle/loot assertions remain. Historical 71/75 RED is unchanged; no AutoRoll acceptance or production changes. Read-only code/contract audit of `184132263` + `71770807b` confirms exact diagnostic matching, original-function observation, full C history/Reveal guards and four lifecycle/loot fixtures by inspection only. Corrected stale model-wiki scope attribution; revised execution remains unproven, including calibration. `71770807b` attributes formatting/commit-only workflow to the implementation phase, not a user request.
 
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
