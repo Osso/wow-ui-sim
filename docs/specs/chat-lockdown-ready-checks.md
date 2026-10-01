@@ -60,7 +60,9 @@ Saved metadata, not intervening docs HEAD, binds RED to `8649fe0729940ab46607508
 
 **Independent bounded acceptance PASS:** full verifier266 report `/tmp/patch-12.0.5-ready-check-lockdown-independent-proof.md` arrived after the parent-proof checkpoint. It accepts saved 22 PASS, state-preserving rejection/event silence, existing alias, unlock recovery, both combat axes and exact existing simulator event observations. Fresh default fmt/check exit 0 at clean `6f264ce3e` (22.02s/43.68s), zero reported warnings/errors; `/tmp/patch-12.0.5-ready-check-default-gates.json` and `-gate-scope.json` bind scope/hashes. Relevant producer/tests unchanged from `f62420536`; later concurrent ping inputs excluded. Source/wiring/readability audit PASS; other-profile preservation source-only. No builds/tests/checks rerun by this docs reconciliation.
 
-Exact final `prose-2026-03-31-169` remains **audit-pending** with only a bounded ready-check subset link. Countdown, ping and loot restrictions remain undone; superseded March 25 prose is not the final contract. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/text SHA256 and unrelated classifications. Explicit-input policy, blocked-call error reporting and existing legacy-alias handling are inferred simulator behavior, not native restriction parity.
+Current row169 status: **bounded PREDICATE coverage**, accepted using all four independent family proofs. [Chronological decision and coverage matrix](party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) owns scope, current **260 pending / 88 bounded / 14 partial = 362** accounting and unknown native producer/security/error/permissions/exhaustive API/all-profile limits. Ping evidence is `SetRestrictPings` restriction-setting, not a `C_Ping` action or delivery claim. Earlier pending/count milestones were historical; pending because ping delivery was missing was an assistant-added condition, now withdrawn. This slice alone never established the aggregate decision.
+
+Historical batch31 checkpoint: row169 was audit-pending with only ready-check proof; countdown, ping and loot were not proved by that slice. Accounting then was **264 pending / 84 bounded / 14 partial = 362**; IDs/source SHA unchanged. That snapshot does not describe current aggregate coverage.
 
 ## Known gaps (current cycle)
 
@@ -69,7 +71,7 @@ Exact final `prose-2026-03-31-169` remains **audit-pending** with only a bounded
 
 ## Out of scope
 
-- **Countdown, ping, loot:** countdown API restrictions, ping API restrictions and loot-method API restrictions in the same retained prose row remain unenforced/unproved by this slice; ready-check coverage cannot close that whole row.
+- **Countdown, ping, loot:** separate independent proofs now supply aggregate bounded predicate acceptance linked above. Ready-check proof alone does not establish those operations or native parity.
 - **Messages/channels:** chat/addon message sending and channel join/leave/mutation restrictions remain open; these fixtures make no claims about them.
 - **Native producer:** lockdown activation, reset, ordering, encounter/M+/PvP inputs and native blocked-error convention remain unknown/unverified; explicit Rust bool input is not a native producer.
 - **Macros:** macro evaluation/execution restrictions remain open; no macro path is exercised.

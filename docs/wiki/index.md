@@ -1,3 +1,7 @@
+## [2026-10-01] correction | Accept row169 bounded predicate coverage
+
+[Chronological decision/four-family proof](../specs/party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) supersedes prior pending rationale: ping delivery prerequisite was assistant-invented. Only row169 promoted using countdown10/35selected, ready6/22selected, ping7/29selected and loot19unique/31executions independent proof; no new runtime runs. **261/87/14 → 260/88/14 = 362**; row168/IDs/register/plaintextSHA/unrelated rows unchanged. Native producer/security/error/permissions/exhaustiveAPI/allprofile unknown; no `C_Ping` action claim. Earlier pending milestones/counts remain historical, not current status.
+
 ## [2026-10-01] implementation | Add bounded aura spell query producers
 
 [[lua-api#Retail 12.0.5 aura spell queries]] links [aura spell contract](../specs/aura-spell-identifier.md): C API ownership at `retail-12-0-5`, shared C_Spell resolver and existing unblocked collector/DTO helper; legacy unchanged. Parent saved pre-producer RED 3 PASS / 9 FAIL at `28393b01b`; GREEN/acceptance pending. Helpful-then-harmful order and strict/secret policies inferred; target fixtures only, no refresh/native visibility/audit credit.
@@ -14,7 +18,7 @@
 
 ## [2026-10-01] evidence | Accept bounded countdown; retain row169 pending
 
-[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Parent retains row169 pending: restriction setter does not prove ping actions/delivery. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending. Docs only; no reruns/delegation.
+[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Historical pending rationale required ping actions/delivery; chronological correction above withdraws that assistant-added condition. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending. Docs only; no reruns/delegation.
 
 
 ## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN

@@ -1,6 +1,6 @@
 # Party loot method
 
-Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Epoch-gated producer has saved bounded parent GREEN; independent verifier288 acceptance remains pending. See [Lua API state architecture](../lua-api.md).
+Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Epoch-gated producer has saved bounded parent GREEN; independent verifier288 bounded acceptance is recorded below. See [Lua API state architecture](../lua-api.md).
 
 ## What it must do
 
@@ -59,7 +59,7 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 - Same binary run3 (`party_countdown::`) exits101, **0 PASS / 10 FAIL**: behavioral RED for the next slice, not loot acceptance or a compilation failure. Countdown remains open; its spec/wiki ownership is excluded here.
 - Saved startup at `676e4c25a` exits0 with `[]` and CLEAN0 unique/occurrences; `/tmp/patch-12.0.5-batch34-green-fixed-startup-run.json` binds wow-sim SHA256 `770a9a5522645f8cba951e30070406dbb8c14c1888ee9bff7284dd2527e42ba7`. This is parent snapshot proof, not a fresh rerun or broader compatibility gate.
 
-**Verifier288 bounded PASS**, detailed below. Native security/permissions, all-profile and full-row acceptance remain unproved. Final `prose-2026-03-31-169` remains pending for broader limits/countdown; **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash and unrelated statuses unchanged. Docs/accounting inspection only; no code/tests/builds/delegation.
+**Verifier288 bounded PASS**, detailed below. Native security/permissions, all-profile and full-row acceptance remain unproved. Historical batch34 checkpoint: final `prose-2026-03-31-169` remained pending before countdown proof and the chronological correction; **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash and unrelated statuses unchanged. Docs/accounting inspection only; no code/tests/builds/delegation.
 
 ## Independent bounded acceptance — 2026-10-01
 
@@ -69,7 +69,7 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 Two nonblocking readability findings deferred: `apply_selection` hides queued event publication in its name; `resolve_indices` uses bare master-enum `2` and modeled raid-cutoff `6`. No observed bounded correctness defect; no code changes authorized here. Native `AllowedWhenUntainted`, permissions, general raid/party-player resolution and event policy remain unproved.
 
-Countdown now has [separate parent GREEN](party-countdown.md#reconciled-batch35-parent-proof--2026-10-01), independent292 pending. Row169 remains pending; accounting **264/84/14 = 362**, retained IDs/source hash unchanged. Any future row decision must name the exact bounded predicate: explicit chat-lockdown input blocks the four named setters/actions, while combat alone does not. It cannot imply native lockdown production, network delivery or permission enforcement.
+Current row169 status: **bounded PREDICATE coverage**, accepted using all four independent family proofs. [Chronological decision and coverage matrix](party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) owns scope, current **260 pending / 88 bounded / 14 partial = 362** accounting and unknown native producer/security/error/permissions/exhaustive API/all-profile limits. Ping evidence is `SetRestrictPings` restriction-setting, not a `C_Ping` action or delivery claim. Earlier pending/count milestones were historical; pending because ping delivery was missing was an assistant-added condition, now withdrawn. This slice alone never established the aggregate decision.
 
 ## Exact evidence and inference boundary
 
@@ -84,7 +84,7 @@ Countdown now has [separate parent GREEN](party-countdown.md#reconciled-batch35-
 
 - [x] Parent saved bounded GREEN and legacy/availability controls: 19 unique PASS, provenance and duplicate accounting above.
 - [x] Independent verifier288 bounded acceptance: saved 19 unique PASS / 31 executions; fresh fmt/check exit0 with fmt artifact limitation below.
-- [ ] Broader/native gates remain open; countdown independent292 pending.
+- [ ] Broader/native gates remain open; countdown now has separate independent bounded acceptance linked above.
 - [ ] Cached `AllowedWhenUntainted` acceptance is not implemented by conservative rejection; native taint/security parity remains unknown.
 - [ ] General raid member resolution is unclaimed: existing raid `UnitName`/existence indexing differs from `GetRaidRosterInfo`'s player-first roster. Only explicit player roster index 1 is selected here; do not fabricate a general mapping.
 - [ ] Solo/party-player master encoding, native missing/ambiguous/realm-name policies, native permissions and native event repetition/timing remain unknown. Existing zero-index state cannot distinguish an assigned party player from no assignment without a separate contract.
@@ -92,5 +92,5 @@ Countdown now has [separate parent GREEN](party-countdown.md#reconciled-batch35-
 ## Out of scope
 
 - Availability redesign, eligibility/leadership/native permissions, loot distribution and threshold mutation; existing availability set is deliberately unchanged.
-- Native lockdown activation/reset, countdown/other named party actions, all-profile/native parity and closure of final prose row169.
+- Native lockdown activation/reset, countdown/other named party actions, all-profile/native parity and exhaustive native coverage of final prose row169.
 - Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns runtime proof; independent acceptance is bounded as recorded above.

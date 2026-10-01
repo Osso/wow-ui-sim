@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Row169 — current bounded predicate acceptance
+
+[Chronological decision and four-family matrix](../../specs/party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) supersedes the earlier pending rationale below. March25 source line74 names `SetRestrictPings`; March31 line169 changes the restriction condition. Ping action/delivery was an assistant-invented prerequisite, not a source requirement. Parent accepts only explicit chat-lockdown-versus-combat predicate coverage across countdown, ready checks, ping restriction-setting and loot setting, backed by all four independent proofs.
+
+Only `prose-2026-03-31-169` changes **audit-pending → bounded-coverage**: **261/87/14 → 260 pending / 88 bounded / 14 partial = 362**. Row168, source IDs/register/plaintext SHA and unrelated rows unchanged. Native producer/security/error/permissions, exhaustive API inventory and all-profile parity remain unknown; no `C_Ping` action/delivery or whole-page completion claim. Earlier counts/statuses below are historical checkpoints, not current accounting.
+
 ### Cooldown abbreviation — bounded independent PASS
 
 [Independent cooldown acceptance](../../specs/cooldown-abbreviation-threshold.md#independent-bounded-acceptance--2026-10-01): saved source/binary-bound **40 PASS**, fresh fmt/check **0**, no reruns. Exact numeric-unit/consumer slices536/538/540 only become bounded: **261 pending / 87 bounded / 14 partial =362**. IDs/register/source plaintext SHA/unrelated rows retained; aliases are annotations, not classes/behavior. Native/secret/error parity unproven; range/ceil/equality inferred. One naming suggestion deferred. PLAN remains ignored local accounting, never staged.
@@ -14,9 +20,9 @@
 
 [Batch35 parent proof](../../specs/party-countdown.md#reconciled-batch35-parent-proof--2026-10-01) owns producer `27a840b34`, build0/**251.83s**, hash-bound **10 countdown + 12 loot + 6 ready + 7 ping = 35 PASS**, saved startup0 `[]`/CLEAN0. Supersedes countdown RED only; independent292 bounded PASS. No earlier loot check credit for countdown.
 
-Final **`prose-2026-03-31-169` stays pending** by parent decision after bounded countdown acceptance. **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash unchanged. Future row decision must specify the bounded explicit-input predicate: chat lockdown blocks these four actions/setters; combat alone does not. No native lockdown production, network delivery, permission enforcement, full-page or all-profile credit.
+Historical countdown checkpoint: **`prose-2026-03-31-169` stayed pending** before the chronological correction above. **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash unchanged. Future row decision must specify the bounded explicit-input predicate: chat lockdown blocks these four actions/setters; combat alone does not. No native lockdown production, network delivery, permission enforcement, full-page or all-profile credit.
 
-[Independent countdown ledger](../../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): saved10+25controls35PASS, freshfmt/check0, startup0[]. Inferred lifecycle/security; one magic3600 readability finding deferred. Parent retains row169 pending: ping-family prose exceeds restriction-setter proof. Row168 separate; 362IDs/hash/counts unchanged. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending.
+[Independent countdown ledger](../../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): saved10+25controls35PASS, freshfmt/check0, startup0[]. Inferred lifecycle/security; one magic3600 readability finding deferred. Earlier pending-because-ping-action rationale withdrawn by the chronological correction above. Row168 separate; 362IDs/hash/counts unchanged. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending.
 
 ### Private warning placement — bounded independent PASS
 
@@ -26,13 +32,13 @@ Final **`prose-2026-03-31-169` stays pending** by parent decision after bounded 
 
 [Batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) owns corrected compiled RED `12e4a1a28` **0 PASS / 7 FAIL**; initial missing-trait compilation failure excluded. Producer `77ab2785f` compile exit0, saved **7 ping + 6 ready-check + 5 predicate + 11 group = 29 selected PASS**, parent startup exit0 `[]`; exact metadata/hashes in linked ledger. Full independent report accepts bounded saved runtime/startup proof and fresh default fmt/check exit0; relevant ping/guard/wiring/build and control-fixture hashes match producer despite warning-fixture/docs HEAD advancement. Linked spec owns exact gate provenance; no warning-runtime credit. Strict public enum validation, secret rejection, blocked error and None default are inferred simulator policies; no native `AllowedWhenUntainted`, actual ping delivery, role permissions or ping events proof.
 
-Final March31 **`prose-2026-03-31-169` stays audit-pending** with independently accepted ready-check and ping subset links only. Countdown has parent GREEN above, independent292 bounded PASS; loot has bounded independent acceptance. Historical March25 superseded prose retained. **264 pending / 84 bounded / 14 partial = 362**, IDs/source SHA and unrelated statuses unchanged; **IN PROGRESS**, no whole-source/page or all-profile credit.
+Historical ping checkpoint: March31 **`prose-2026-03-31-169` stayed audit-pending** with independently accepted ready-check and ping subset links only. Countdown has parent GREEN above, independent292 bounded PASS; loot has bounded independent acceptance. Historical March25 superseded prose retained. **264 pending / 84 bounded / 14 partial = 362**, IDs/source SHA and unrelated statuses unchanged; **IN PROGRESS**, no whole-source/page or all-profile credit.
 
 ### Chat lockdown ready checks — bounded independent PASS
 
 [Ready-check proof](../../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01) owns actual compiled RED `8649fe072` (**1 PASS / 5 FAIL**, compile 0/162.49s) and producer GREEN `f62420536` (**6 ready + 5 predicate + 11 group = 22 PASS**, compile 0/296.24s), plus saved startup exit0 `[]`. Intervening docs `6f264ce3e` is not compilation provenance. Full verifier266 report now accepts bounded saved behavior and wiring/readability; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later concurrent ping inputs excluded; linked spec owns exact gate artifacts. Error reporting, legacy alias and explicit-input policy are simulator inferences, not native restriction parity.
 
-Exact final **`prose-2026-03-31-169` remains audit-pending** with bounded independently accepted ready-check subset; [Later ping proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) now has separate bounded independent acceptance. Countdown has parent GREEN above, independent292 bounded PASS; loot has bounded independent acceptance. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
+Historical ready-check checkpoint: **`prose-2026-03-31-169` remained audit-pending** with bounded independently accepted ready-check subset; [Later ping proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) now has separate bounded independent acceptance. Countdown has parent GREEN above, independent292 bounded PASS; loot has bounded independent acceptance. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
 
 ### Chat lockdown predicate — bounded independent PASS
 

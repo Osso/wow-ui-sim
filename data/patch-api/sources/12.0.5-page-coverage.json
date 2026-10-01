@@ -646,6 +646,69 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-cooldown-abbreviation-independent-proof.md",
       "gate_scope": "Saved source/binary-bound 20 formatter + 8 renderer + 12 widget =40 PASS; fresh fmt/check0 at053d7ed4d, relevant source unchanged through b685cdf178. Minimum/storage/security preservation controls only. One naming suggestion deferred."
+    },
+    {
+      "id": "party-countdown-lockdown",
+      "symbols": [
+        "C_PartyInfo.DoCountdown"
+      ],
+      "scope": "Explicit chat-lockdown versus combat-only predicate; atomic rejection and unlock recovery in bounded simulator operations. Native producer/security/error/permissions, exhaustive API inventory and all-profile parity unknown; no C_Ping action or ping delivery claim.",
+      "spec": "docs/specs/party-countdown.md",
+      "tests": [
+        "tests/party_countdown.rs"
+      ],
+      "implementation": "27a840b34",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-countdown-independent-proof.md",
+      "gate_scope": "10 countdown + 25 controls = 35 selected PASS; fresh producer fmt/check0; inspected saved evidence only, no reruns. Linked spec owns inferred policies and provenance limits."
+    },
+    {
+      "id": "ready-check-lockdown",
+      "symbols": [
+        "C_PartyInfo.DoReadyCheck",
+        "C_PartyInfo.ConfirmReadyCheck",
+        "ReadyCheck"
+      ],
+      "scope": "Explicit chat-lockdown versus combat-only predicate; atomic rejection and unlock recovery in bounded simulator operations. Native producer/security/error/permissions, exhaustive API inventory and all-profile parity unknown; no C_Ping action or ping delivery claim.",
+      "spec": "docs/specs/chat-lockdown-ready-checks.md",
+      "tests": [
+        "tests/chat_lockdown_ready_checks.rs"
+      ],
+      "implementation": "f62420536",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-ready-check-lockdown-independent-proof.md",
+      "gate_scope": "6 ready-check + 16 controls = 22 selected PASS; fresh source-identical fmt/check0 at6f264ce3e; inspected saved evidence only, no reruns. Linked spec owns inferred policies and provenance limits."
+    },
+    {
+      "id": "ping-restriction-setting-lockdown",
+      "symbols": [
+        "C_PartyInfo.SetRestrictPings",
+        "C_PartyInfo.GetRestrictPings"
+      ],
+      "scope": "Explicit chat-lockdown versus combat-only predicate; atomic rejection and unlock recovery in bounded simulator operations. Native producer/security/error/permissions, exhaustive API inventory and all-profile parity unknown; no C_Ping action or ping delivery claim.",
+      "spec": "docs/specs/party-ping-restrictions.md",
+      "tests": [
+        "tests/party_ping_restrictions.rs"
+      ],
+      "implementation": "77ab2785f",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-ping-restrictions-independent-proof.md",
+      "gate_scope": "7 ping + 22 controls = 29 selected PASS; fresh source-identical fmt/check0 with concurrent unrelated changes excluded; inspected saved evidence only, no reruns. Linked spec owns inferred policies and provenance limits."
+    },
+    {
+      "id": "loot-method-lockdown",
+      "symbols": [
+        "C_PartyInfo.SetLootMethod"
+      ],
+      "scope": "Explicit chat-lockdown versus combat-only predicate; atomic rejection and unlock recovery in bounded simulator operations. Native producer/security/error/permissions, exhaustive API inventory and all-profile parity unknown; no C_Ping action or ping delivery claim.",
+      "spec": "docs/specs/party-loot-method.md",
+      "tests": [
+        "tests/party_loot_method.rs"
+      ],
+      "implementation": "f2e85fcb6",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-loot-method-independent-proof.md",
+      "gate_scope": "19 unique PASS / 31 executions at676e4c25a; fresh check0 with stable hashes; fmt0 direct-output proof, precise fmt snapshot lost to documented artifact collision; inspected saved evidence only, no reruns. Linked spec owns inferred policies and provenance limits."
     }
   ],
   "source_rows": [
@@ -1184,9 +1247,14 @@
     },
     {
       "source_id": "prose-2026-03-31-169",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Final March 31 contract retained; bounded independently accepted ready-check subset: docs/specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01. Bounded ping parent proof only: docs/specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01 (77ab2785f, seven ping plus 22 controls PASS, startup0[]); independent report pending. Countdown and loot restrictions undone. Strict enum/secret/error/default policies inferred; no native AllowedWhenUntainted, ping delivery/roles/events, restriction parity or whole-row credit."
+      "capabilities": [
+        "party-countdown-lockdown",
+        "ready-check-lockdown",
+        "ping-restriction-setting-lockdown",
+        "loot-method-lockdown"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded PREDICATE coverage only, accepted across all four linked independent capability proofs: explicit chat messaging lockdown blocks countdown, ready checks, SetRestrictPings restriction-setting and loot-method setting; combat alone does not. March25 line74 explicitly named SetRestrictPings; March31 line169 changes the restriction condition, not a ping delivery prerequisite. Prior pending-because-ping-delivery condition was assistant-invented. Native lockdown producer/security/error/permissions, exhaustive API inventory and all-profile parity unknown. No C_Ping action, sending/receiving/delivery or full native/page completion claim; row168 unchanged."
     },
     {
       "source_id": "prose-2026-03-31-170",

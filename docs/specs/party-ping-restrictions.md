@@ -52,7 +52,9 @@ Producer `77ab2785f5544ebed9958fc937c34900b82f2cea` has saved parent compile exi
 
 Parent startup at the same producer is exit **0**, JSON **[]** (`/tmp/patch-12.0.5-batch32-green-startup-run.json`, `-startup.json`, `-startup.log`), executable SHA256 `caec6acd9c8129ae3d5baa9d88370242d578ae7bc1e814ad57722f43f80cdcec`. These are inspected saved parent artifacts, not fresh runs. Full `/tmp/patch-12.0.5-ping-restrictions-independent-proof.md` accepts bounded **29/29 PASS** and startup **0 []**, with source/wiring/security/readability review. Fresh default `cargo fmt --check` exit **0** (24.236441s, `77ab2785f` → `303de9af7`) and `cargo check` exit **0** (63.061756s, `303de9af7` → `ee9984ec6`) retain identical relevant ping/guard/wiring/build and control-fixture hashes matching producer blobs. Concurrent warning fixtures and docs advanced HEAD; this is not immutable whole-tree proof or warning-runtime credit. Checks ledger: `/tmp/patch-12.0.5-ping-independent-checks.json`; scope identities: `-before.json`, `-after.json`, `-final.json`.
 
-Final March31 `prose-2026-03-31-169` remains **audit-pending**: bounded independently accepted ping proof supplements the separately accepted ready-check subset; countdown and loot remain open. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/source SHA and historical superseded March25 prose. Strict enum validation, blocked error convention, None default and conservative secret rejection are inferred simulator policies, not native `AllowedWhenUntainted` parity, actual ping delivery, role permissions or ping events. No whole-source/page credit.
+Current row169 status: **bounded PREDICATE coverage**, accepted using all four independent family proofs. [Chronological decision and coverage matrix](party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) owns scope, current **260 pending / 88 bounded / 14 partial = 362** accounting and unknown native producer/security/error/permissions/exhaustive API/all-profile limits. Ping evidence is `SetRestrictPings` restriction-setting, not a `C_Ping` action or delivery claim. Earlier pending/count milestones were historical; pending because ping delivery was missing was an assistant-added condition, now withdrawn. This slice alone never established the aggregate decision.
+
+Historical batch32 checkpoint: row169 was audit-pending with ready-check and ping subset proofs; countdown and loot were still open. Accounting then was **264 pending / 84 bounded / 14 partial = 362**; IDs/source SHA unchanged. That snapshot does not describe current aggregate coverage.
 
 ## Known gaps (current cycle)
 
@@ -64,7 +66,7 @@ Final March31 `prose-2026-03-31-169` remains **audit-pending**: bounded independ
 ## Out of scope
 
 - **Ping behavior:** actual ping filtering/content, group-role permissions, event production and native ping-system state/reset are not implemented or claimed.
-- **Remaining named party actions:** countdown and loot-method restrictions remain open; separate [ready-check work](chat-lockdown-ready-checks.md) is not changed or credited here. This slice cannot close the whole final prose row.
+- **Other named families:** separate countdown, loot-method and [ready-check proofs](chat-lockdown-ready-checks.md) supply aggregate bounded predicate acceptance linked above. Ping proof alone does not establish their behavior or native parity.
 - **Native lockdown producer:** activation/reset, encounter/M+/PvP inputs and ordering remain open; explicit test input is not a native producer.
 - **Channels/macros:** channel join/leave/mutation, messaging and macro execution restrictions remain open.
 - **Other-owned work:** ready-check/predicate code, their specs and audit accounting remain unchanged by this slice; no whole-audit or all-profile acceptance.

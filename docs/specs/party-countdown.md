@@ -1,6 +1,6 @@
 # Party countdown
 
-Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. The provider is registered by `src/c_api/c_party_info.rs` and implemented in its C API-owned `countdown` module. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Parent reports compiled RED at `676e4c25a` (ten FAIL); parent GREEN is recorded below; independent292 acceptance remains pending.
+Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. The provider is registered by `src/c_api/c_party_info.rs` and implemented in its C API-owned `countdown` module. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Parent reports compiled RED at `676e4c25a` (ten FAIL); parent GREEN and independent292 bounded acceptance are recorded below.
 
 Cached generated `Blizzard_APIDocumentationGenerated/PartyInfoDocumentation.lua:156–170` declares required numeric `seconds`, one required `success:boolean`, `HasRestrictions=true`, and `SecretArguments="AllowedWhenUntainted"`. Cached `WorldStateInfoDocumentation.lua:10–39` declares synchronous events:
 
@@ -30,7 +30,7 @@ Both events declare `SecretInChatMessagingLockdown=true`. Generated declarations
 - [ ] Reuse the [shared chat messaging lockdown guard](chat-messaging-lockdown.md) before validation or effects. **INFERRED explicit-error policy:** locked start, replacement, active cancellation and idle cancellation report the shared nonempty lockdown error. Invalid locked calls report lockdown rather than argument validation; exact native wording/convention is unknown.
 - [ ] Cover all four combinations of explicit lockdown and combat. Combat alone does not block requests; rejected replacement/cancel leaves the existing request cancellable after unlock. No countdown events occur while blocked.
 
-Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-register.json), source line 169, says restrictions were “loosened to only apply when in chat messaging lockdown rather than in all combat.” This supports the restriction axis, not the inferred request/security/error policies. Countdown tests do not close the whole row or change audit accounting.
+Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-register.json), source line 169, says restrictions were “loosened to only apply when in chat messaging lockdown rather than in all combat.” This supports the restriction axis, not the inferred request/security/error policies. Countdown tests alone do not establish the aggregate row decision below; they do not prove native parity.
 
 ## How it works
 
@@ -52,7 +52,7 @@ Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-regi
 
 Parent filter: `cargo test --test integration party_countdown::`.
 
-**Proof ledger, 2026-10-01:** parent-established compiled RED at `676e4c25a`, same successful build recorded by `/tmp/patch-12.0.5-batch34-green-fixed-build-result.json`; parent reports run3 logs/manifests show ten FAIL because no producer existed. Producer slice runs formatting only, no builds/tests/checks/readability gate or native probes. Parent owns GREEN compilation/run and independent acceptance. Existing grouped harness discovery requires no other test/Cargo edits. Requirement checkboxes stay open pending independent acceptance; parent behavioral GREEN is recorded below.
+**Proof ledger, 2026-10-01:** parent-established compiled RED at `676e4c25a`, same successful build recorded by `/tmp/patch-12.0.5-batch34-green-fixed-build-result.json`; parent reports run3 logs/manifests show ten FAIL because no producer existed. Producer slice runs formatting only, no builds/tests/checks/readability gate or native probes. Parent owns GREEN compilation/run and independent acceptance. Existing grouped harness discovery requires no other test/Cargo edits. Requirement checkboxes reflect the original production milestone; parent GREEN and independent bounded acceptance are recorded below.
 
 ## Reconciled batch35 parent proof — 2026-10-01
 
@@ -60,7 +60,7 @@ Saved `/tmp/patch-12.0.5-batch35-green-{build-result,runs,startup-run}.json` and
 
 Saved normal startup exits0 in10.03s, stdout `[]`, CLEAN0 unique/occurrences; wow-sim SHA256 `721c2b00b2220ff21362e0ea11af372cb437c84be91b84f722860988dda4e00e`. Saved artifacts inspected only, not rerun. **Independent292 bounded PASS**, reconciled below; earlier [loot fmt/check](party-loot-method.md#independent-bounded-acceptance--2026-10-01) predates countdown producer and is not a countdown gate.
 
-Row `prose-2026-03-31-169` remains pending by parent decision after bounded countdown acceptance. Preserve **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash. Future row decisions must specify the exact bounded explicit-input predicate across countdown, ready check, ping and loot: lockdown blocks requests; combat alone does not. No native lockdown activation/secrecy, network or permission-enforcement credit. Lifecycle/security/error policies above remain inferred.
+Historical batch35 checkpoint: row `prose-2026-03-31-169` remained pending before the chronological correction below. Preserve **264 pending / 84 bounded / 14 partial = 362**, retained IDs/source hash. Future row decisions must specify the exact bounded explicit-input predicate across countdown, ready check, ping and loot: lockdown blocks requests; combat alone does not. No native lockdown activation/secrecy, network or permission-enforcement credit. Lifecycle/security/error policies above remain inferred.
 
 ## Known gaps (current cycle)
 
@@ -87,7 +87,7 @@ Lifecycle/replacement/zero cancellation, strict finite validation/fractions, suc
 
 One nonblocking readability finding deferred: `countdown.rs:46`, inline `3600.0` should name the documented maximum. No zero-findings claim. New production max cognitive4/cyclomatic6; publish body27 lines. Existing owner-file issues excluded.
 
-### Exact row169 decision — parent retains pending
+### Exact row169 decision — bounded predicate acceptance
 
 Row `prose-2026-03-31-169`: “The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.”
 
@@ -98,8 +98,12 @@ Row `prose-2026-03-31-169`: “The recent restrictions to countdown, ready check
 | Ping | `SetRestrictPings` blocks mutation iff explicit lockdown; combat independent, getter readable | [Ping ledger](party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01), seven fixtures/29 selected PASS; **not ping actions/delivery** |
 | Loot method | `SetLootMethod` lockdown/combat 2×2, state/event preservation, getters readable | [Loot ledger](party-loot-method.md#independent-bounded-acceptance--2026-10-01), 19 unique PASS/31 executions; bounded roster |
 
-Proposal sent before edits: retain pending because “ping ... APIs” is broader than restriction-setting proof. Parent explicitly approved pending retention: restriction-setting coverage does not establish ping action/delivery coverage. Four bounded slices do not earn whole-row/native producer/security/network parity credit. No source status promotion.
+Historical decision: row169 was retained pending at the earlier countdown milestone. Its ping action/delivery prerequisite was assistant-invented, not established by the chronological source. That rationale is withdrawn; prior counts remain historical snapshots. Current parent acceptance promotes only row169 to **bounded PREDICATE coverage**, using all four independent proofs above. This is not native or exhaustive API-family completion.
+
+March 25, 2026 source line74 explicitly names `C_PartyInfo.SetRestrictPings` alongside countdown, ready checks and loot setting in the combat restriction list. March 31 source line169 changes the condition to chat messaging lockdown. Ping restriction-setting therefore supplies bounded evidence for the changed predicate; actual ping action/delivery is not a prerequisite. `HasRestrictions` annotations alone do not establish the historical API inventory or require additional `C_Ping` operations.
+
+**Unknown/unproved:** native lockdown producer/activation/reset, security/taint and `AllowedWhenUntainted` parity, native blocked-error convention, permissions/network behavior, exhaustive API inventory and all-profile parity. No `C_Ping` action, sending, receiving or delivery coverage is claimed.
 
 Related exact row168 removes recent restrictions on `AddPrivateAuraAnchor`, `RemovePrivateAuraAnchor`, `SetPrivateWarningTextAnchor`, `RemovePrivateAuraAppliedSound`; `AddPrivateAuraAppliedSound` remains restricted during encounters/M+/PvP. Countdown predicate does not cover these removals or encounter enforcement. [Warning proof](private-warning-text-anchor.md#independent-bounded-acceptance--2026-10-01) remains bounded; rows168/405 pending.
 
-**264 pending / 84 bounded / 14 partial = 362** retained, all IDs/text SHA unchanged. Register file SHA256 `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`. Documentation/accounting only; no tests/build/delegation/source changes.
+Current accounting after `91b7d7bb6`: **261 pending / 87 bounded / 14 partial** → **260 pending / 88 bounded / 14 partial = 362**. Only row169 changes status; all IDs, unrelated rows and source text SHA remain unchanged. Register file SHA256 `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`. Documentation/accounting only; no tests/build/delegation/source changes.
