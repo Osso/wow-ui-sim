@@ -1,6 +1,6 @@
 # Housing catalog destroyable count
 
-Input/tests-first slice for `C_HousingCatalog.GetDestroyableInstanceCount(entryVariantID)`, extending the [compound catalog model](housing-catalog-variants.md). Retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt): `global api-C_HousingCatalog-GetDestroyableInstanceCount-288` renames `entryID` to `entryVariantID`; `global api-C_HousingCatalog-GetDestroyableInstanceCount-289` changes its type to `HousingCatalogEntryVariantID`. Neither row establishes count policy. No source-row completion credit.
+Bounded query slice for `C_HousingCatalog.GetDestroyableInstanceCount(entryVariantID)`, extending the [compound catalog model](housing-catalog-variants.md). Retained [12.0.5 changes](../../data/patch-api/sources/12.0.5-api-changes.txt): `global api-C_HousingCatalog-GetDestroyableInstanceCount-288` renames `entryID` to `entryVariantID`; `global api-C_HousingCatalog-GetDestroyableInstanceCount-289` changes its type to `HousingCatalogEntryVariantID`. Neither row establishes count policy. No source-row completion credit.
 
 ## What it must do
 
@@ -25,11 +25,12 @@ The [variant spec's cached provenance](housing-catalog-variants.md#cached-declar
 
 - `src/c_api/c_housing/catalog.rs`: adds explicit count input on `HousingCatalogVariantRecord`; default catalog remains empty.
 - `tests/housing_catalog_variants.rs`: existing fixture explicitly supplies counts; nested `destroyable_count` module contains ten expectations in the existing grouped integration target.
-- `src/c_api/c_housing/catalog/queries.rs` and `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: deliberately unchanged. The existing query still reads legacy seeded `numStored` and ignores `entryType`; the new input is not consumed yet.
+- `src/c_api/c_housing/catalog/queries.rs`: unconditional query registration consumes the explicit count through the exact full variant key. Shared selector/table-access and integer parsers reject secret fields without unwrapping or clearing caller taint; missing keys publish one ordinary zero (simulator inference).
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: only the overlapping `GetDestroyableInstanceCount` seeded producer is removed. Other seeds and mutation/placement/event/cart/filter providers are unchanged.
 
 ## Tests asserting this spec
 
-All ten cases are **unrun**, neither RED nor GREEN claimed. Parent must compile/run these against the unchanged provider and observe actual behavioral RED before production query/seed edits. Exact filter: `housing_catalog_variants::destroyable_count::`; existing target: `integration`. No new Cargo target.
+Parent observed actual RED at input revision `6cd5e3812a922d4112bbfeffd0fe57e1e8ed834e`: ten cases, five PASS and five FAIL, before this producer replacement. Failures: default zero, fresh-environment isolation, distinct explicit counts, wrong-type/variant aliasing and nested-secret rejection. The five legacy-provider passes do not establish the new producer's behavior. Exact filter: `housing_catalog_variants::destroyable_count::`; existing target: `integration`. No new Cargo target. Producer implemented; parent GREEN remains pending.
 
 | Case in `destroyable_count` | Observable contract |
 |---|---|
@@ -45,15 +46,17 @@ All ten cases are **unrun**, neither RED nor GREEN claimed. Parent must compile/
 |---|---|---|
 | Initial `git status --short` / `git rev-parse HEAD` | Base `157d15cef796ccd11b3e6c04f80b57d0700728cb`; existing variants spec and audit wiki dirty, excluded from this slice | Concurrent revisions not behavioral proof |
 | `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog.rs tests/housing_catalog_variants.rs` | Formatting only; exit recorded by task report | Later changes to either file invalidate formatting scope |
-| Filter `housing_catalog_variants::destroyable_count::` in `integration` | Not run; parent RED pending | No build/test proof exists for these inputs |
+| Parent `cargo test --test integration --no-run --message-format=json` at `6cd5e3812` | Exit 0, 135.19s; `/tmp/patch-12.0.5-batch19-red-build-result.json` | Pre-producer compile only |
+| Parent `timeout 90 <integration binary> housing_catalog_variants::destroyable_count:: --nocapture --test-threads=1` at `6cd5e3812` | Exit 101, 5 PASS / 5 FAIL, 1.49s; `/tmp/patch-12.0.5-batch19-red-run.log` and `.json`; binary SHA-256 `2c06f961f453f12aae334f8c27d9c17cf615c1efbed3662fe663e674a80a7f42` | Actual prerequisite RED, not producer GREEN |
+| Producer formatting: `rustfmt --edition 2024 --config skip_children=true src/c_api/c_housing/catalog/queries.rs` | Formatting only; result recorded in task report | Later query edits invalidate formatting scope |
 
 ## Known gaps (current cycle)
 
-- [ ] Parent actual RED, subsequent producer replacement, GREEN and acceptance remain pending. Existing providers are not evidence for this contract.
+- [ ] Actual parent RED recorded and producer replaced; parent GREEN, compilation, startup and acceptance for the new producer remain pending. No native, all-profile, source-row or whole-page completion claim.
 - [ ] Secure secret access and native count policy remain unknown; no declassification or native-parity claim.
 
 ## Out of scope
 
 - Destroy mutation, storage events and placement selection are separate slices, not prerequisites for this read query. Their future implementation may use documented simulator inferences; native probes are not a permanent implementation gate, including for Forever.
 - Aggregate/search counts, filters, catalog metadata, storefront/cart and legacy wrapper migration remain unrelated owners.
-- Builds, checks, delegation, push, source/accounting updates and concurrent docs/verifier outputs are excluded from this input-only task. The concurrently edited variants spec is untouched; this separate contract owns the new count requirements.
+- Builds, checks, delegation, push, source/accounting updates and concurrent docs/verifier outputs are excluded from this producer task. The variants spec is untouched; this separate contract owns the count requirements and proof boundary.

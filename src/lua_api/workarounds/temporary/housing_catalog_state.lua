@@ -1008,12 +1008,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   end,
   GetDecorMaxOwnedCount = function() return 99 end,
   GetDecorTotalOwnedCount = function() return 2, 0 end,
-  GetDestroyableInstanceCount = function(entryVariantID)
-    local entry_id = type(entryVariantID) == "table" and entryVariantID.recordID or entryVariantID
-    local variant_id = type(entryVariantID) == "table" and entryVariantID.variantIdentifier or 1
-    local variant = __wow_housing_seeded_variants[entry_id] and __wow_housing_seeded_variants[entry_id][variant_id]
-    return variant and variant.numStored or 0
-  end,
   GetFeaturedBundles = function()
     local featured = { __wow_housing_copy_bundle_info(5001) }
     return featured

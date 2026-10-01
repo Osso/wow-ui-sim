@@ -15,6 +15,7 @@ pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<(
     let functions: &[(&str, rilua::RustFn)] = &[
         ("GetCatalogEntryInfo", entry_info),
         ("GetCatalogEntryVariantInfo", variant_info),
+        ("GetDestroyableInstanceCount", destroyable_instance_count),
         ("GetAllVariantInfosForEntry", variant_infos),
     ];
     for &(name, function) in functions {
@@ -71,6 +72,28 @@ fn read_entry_id(state: &mut LuaState, selector: Val) -> LuaResult<HousingCatalo
     })
 }
 
+fn read_variant_id(state: &mut LuaState, selector: Val) -> LuaResult<HousingCatalogEntryVariantID> {
+    let entry = read_entry_id(state, selector)?;
+    Ok(HousingCatalogEntryVariantID {
+        record_id: entry.record_id,
+        entry_type: entry.entry_type,
+        variant_identifier: read_integer_field(state, selector, "variantIdentifier")?,
+    })
+}
+
+fn destroyable_instance_count(state: &mut LuaState) -> LuaResult<u32> {
+    let selector = read_selector(state)?;
+    let id = read_variant_id(state, selector)?;
+    let count = borrow_state(state)?
+        .housing
+        .catalog
+        .variants
+        .get(&id)
+        .map_or(0, |record| record.destroyable_instance_count);
+    state.push(Val::Num(f64::from(count)));
+    Ok(1)
+}
+
 fn entry_info(state: &mut LuaState) -> LuaResult<u32> {
     let selector = read_selector(state)?;
     let id = read_entry_id(state, selector)?;
@@ -91,12 +114,7 @@ fn entry_info(state: &mut LuaState) -> LuaResult<u32> {
 
 fn variant_info(state: &mut LuaState) -> LuaResult<u32> {
     let selector = read_selector(state)?;
-    let entry = read_entry_id(state, selector)?;
-    let id = HousingCatalogEntryVariantID {
-        record_id: entry.record_id,
-        entry_type: entry.entry_type,
-        variant_identifier: read_integer_field(state, selector, "variantIdentifier")?,
-    };
+    let id = read_variant_id(state, selector)?;
     let record = borrow_state(state)?
         .housing
         .catalog
