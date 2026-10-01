@@ -4,12 +4,12 @@ Retained 12.0.5 source [`12.0.5-api-changes.txt`](../../data/patch-api/sources/1
 
 ## What it must do
 
-- [ ] `InsecureMouseMotionPropagatorTemplate` reports motion true and clicks false (`propagateMouseInput="Motion"`); `InsecureMouseClicksPropagatorTemplate` reports clicks true and motion false (`propagateMouseInput="Clicks"`).
-- [ ] `InsecureKeyboardInputPropagatorTemplate` reports keyboard propagation true (`propagateKeyboardInput="true"`); `InsecureHyperlinkPropagatorTemplate` reports parent hyperlink propagation true (`propagateHyperlinksToParent="true"`).
-- [ ] Ordinary XML instances and runtime `CreateFrame` inheritance apply both boolean attributes independently. Omitted fields preserve inherited values; explicit false overrides true. Chains use existing base-to-derived ordering and multiple templates use existing registry ordering/deduplication; instance declarations win last.
-- [ ] No-template Frame controls retain false before and after template instances are created.
+- [x] `InsecureMouseMotionPropagatorTemplate` reports motion true and clicks false (`propagateMouseInput="Motion"`); `InsecureMouseClicksPropagatorTemplate` reports clicks true and motion false (`propagateMouseInput="Clicks"`).
+- [x] `InsecureKeyboardInputPropagatorTemplate` reports keyboard propagation true (`propagateKeyboardInput="true"`); `InsecureHyperlinkPropagatorTemplate` reports parent hyperlink propagation true (`propagateHyperlinksToParent="true"`).
+- [x] Ordinary XML instances and runtime `CreateFrame` inheritance apply both boolean attributes independently. Omitted fields preserve inherited values; explicit false overrides true. Chains use existing base-to-derived ordering and multiple templates use existing registry ordering/deduplication; instance declarations win last.
+- [x] No-template Frame controls retain false before and after template instances are created.
 
-Checkboxes remain pending independent acceptance; observed development GREEN below does not establish physical input or native parity.
+Checkboxes describe bounded declarative/getter acceptance, not physical input or native parity. Independent evidence below confirms that bounded scope; nested runtime children and shared-ancestor deduplication remain source-inspected only.
 
 ## How it works
 
@@ -38,7 +38,7 @@ Actual batch9 at `4f9e1607c` compiled successfully. Saved `/tmp/patch-12.0.5-bat
 
 XML fix `3fa833aba` adds actual parsing and ordinary/runtime inheritance application for both attributes. Corrected parent build at `84f48be77` succeeds: `/tmp/patch-12.0.5-batch10-corrected-build-result.json` records exit 0 after missing `LuaApi`/`LuaApiMut` imports were fixed; compiler failures are not behavioral RED. `/tmp/patch-12.0.5-batch10-runs.json` and `run-0.log` record **5 PASS / 0 FAIL** for `insecure_propagator_templates::`: all four unchanged cached templates' getter flags, ordinary instances, runtime chains, independent omissions and explicit false overrides. Existing cached RED covers the missing attributes; new inline/chain fixtures have no separately executed RED.
 
-Independent verifier 124 is running; `/tmp/patch-12.0.5-propagators-independent-proof.md` was unavailable at this update. Current runtime fmt/check and final acceptance remain pending. This is source-scoped development proof, not actual input delivery, protected privileges or native behavior.
+Independent verifier 124 completed `/tmp/patch-12.0.5-propagators-independent-proof.md`: bounded PASS, five saved GREEN cases independently inspected against corrected revision `84f48be77`, actual cached declarations, artifact binding and changed-source readability. No tests were rerun. Runtime child wiring and shared-ancestor deduplication are source-inspected, not independently exercised. Current runtime fmt/check and broader final acceptance remain pending; input delivery, protected privileges and native behavior are unclaimed.
 
 ## Out of scope
 

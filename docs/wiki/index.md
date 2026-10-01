@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Bounded charge policy and XML acceptance
+
+[[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] links three exact charge-table source IDs and [restriction contract](../specs/cooldown-restriction.md): policy 8 + charge 10 + ignoreGCD 6 PASS at `d8a93bec3`, startup `[]`; verifier 126 current fmt/check/audit pending. [[spell-charge-state]] records producers; secret spell identifiers/native hooks/other cooldown policies remain open. XML verifier 124 confirms five bounded declarative/getter cases; no whole-row/page completion.
+
 ## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
 
 [[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links completed source-scoped batch9 audit and saved startup. [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links propagator SSOT, observed GREEN/pending independent acceptance and charge-policy failures. Current runtime fmt/check remain pending; all 362 source IDs remain, with no whole-page completion.

@@ -5326,3 +5326,7 @@ Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage a
 ## [2026-10-01] audit | Reconcile bounded batch9/10 source proof
 
 [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links the propagator contract SSOT and separately records charge-policy failures; completed source-scoped batch9 audit replaces stale pending text. Coverage retains 362 IDs; only prose 173 moves from partial-development-green to bounded-coverage, not completed. Independent propagator acceptance/current runtime fmt/check remain pending. Empty-data/type-input rule, unrelated statuses, charge spec and production files unchanged.
+
+## [2026-10-01] evidence | Record batch11 charge policy and independent XML proof
+
+[[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] and [[spell-charge-state]] link bounded policy/controls 24 PASS and startup `[]` at `d8a93bec3`. Three charge-table source IDs gain partial capability links; all 362 IDs and unrelated statuses preserved. XML verifier 124 confirms five declarative/getter cases. Verifier 126 fmt/check/charge audit artifacts absent; no final gate, secret spell identifier, older-profile execution or whole-page completion claim.

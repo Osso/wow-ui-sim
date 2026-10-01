@@ -280,10 +280,29 @@
       "tests": [
         "tests/insecure_propagator_templates.rs"
       ],
-      "proof": "development-green",
+      "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-batch10-runs.json",
       "implementation": "3fa833aba",
-      "compiled_revision": "84f48be77b910f5daabc2e6318c54357961d10ee"
+      "compiled_revision": "84f48be77b910f5daabc2e6318c54357961d10ee",
+      "independent_ledger": "/tmp/patch-12.0.5-propagators-independent-proof.md"
+    },
+    {
+      "id": "cooldown-charge-restriction",
+      "symbols": [
+        "C_Secrets.ShouldCooldownsBeSecret",
+        "C_Spell.GetSpellCharges",
+        "C_ActionBar.GetActionCharges",
+        "C_SpellBook.GetSpellBookItemCharges"
+      ],
+      "scope": "Explicit false-default restriction predicate; three five-field charge tables with four restricted numeric fields and public max/table; guarded action/book selectors. Secret spell identifiers AllowedWhenTainted unresolved; no automatic hooks, per-spell exceptions, other cooldown output policies, older-profile execution or native parity.",
+      "spec": "docs/specs/cooldown-restriction.md",
+      "tests": [
+        "tests/cooldown_restriction.rs"
+      ],
+      "implementation": "d8a93bec3",
+      "compiled_revision": "d8a93bec37dc09980e41dd37b63d0dd26be88668",
+      "proof": "partial-development-green",
+      "ledger": "/tmp/patch-12.0.5-batch11-runs.json"
     }
   ],
   "source_rows": [
@@ -850,7 +869,7 @@
         "insecure-propagators"
       ],
       "status": "bounded-coverage",
-      "note": "Linked propagator spec owns batch10 observed proof and pending independent verifier 124. Current runtime fmt/check pending; not whole-statement/native completion."
+      "note": "Linked spec owns five-case batch10 GREEN independently inspected by verifier 124; declarative/getter scope only. Current runtime fmt/check pending; not input/security/native or whole-statement completion."
     },
     {
       "source_id": "prose-2026-03-31-174",
@@ -1042,9 +1061,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCharges-231",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-charge-restriction"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded three-table per-field restriction: batch11 policy 8 PASS, controls 16 PASS. Secret spell identifier policy unresolved; native hooks/exceptions and independent current gates pending. No aggregate normalized predicate coverage."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCooldown-233",
@@ -1278,9 +1299,11 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCharges-303",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-charge-restriction"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded three-table per-field restriction: batch11 policy 8 PASS, controls 16 PASS. Secret spell identifier policy unresolved; native hooks/exceptions and independent current gates pending. No aggregate normalized predicate coverage."
     },
     {
       "source_id": "global api-C_Spell-GetSpellCooldown-305",
@@ -1334,9 +1357,11 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCharges-320",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-charge-restriction"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded three-table per-field restriction: batch11 policy 8 PASS, controls 16 PASS. Secret spell identifier policy unresolved; native hooks/exceptions and independent current gates pending. No aggregate normalized predicate coverage."
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCooldown-322",

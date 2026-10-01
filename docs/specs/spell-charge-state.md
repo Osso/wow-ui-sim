@@ -43,10 +43,14 @@ The passing no-data spell control did not prove a modeled provider: `runtime_sur
 ## Out of scope
 
 - Automatic spending/replenishment, recharge ordering, spell metadata inference, pet-bank and macro association: no explicit model/evidence authorized.
-- Secret behavior, vendor edits, deployment and native Forever probes: no security bypass or native parity claim.
+- Charge-table restriction is covered separately by [cooldown restriction](cooldown-restriction.md); secret spell identifiers remain unresolved. Vendor edits, deployment and native Forever probes are excluded; no security bypass or native parity claim.
 
 ## Batch7 observed proof — 2026-10-01
 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
 `cooldown_probes::charge_duration::` PASS 10/10 (`/tmp/patch-12.0.5-batch7-integration-2.log`); `duration_core::` PASS 27/27 (`/tmp/patch-12.0.5-batch7-integration-3.log`). Earlier-profile controls and automatic progression remain unproven.
+
+## Batch11 bounded controls — 2026-10-01
+
+Batch11 at `d8a93bec37dc09980e41dd37b63d0dd26be88668` records **24 PASS / 0 FAIL**: policy 8, charge controls 10, ignoreGCD controls 6. `/tmp/patch-12.0.5-batch11-runs.json` binds all three logs (`run-0.log` through `run-2.log`) to integration artifact SHA-256 `a4d6874b74ceb453fe834a4e155d7ba58315f1e76c647b659631c3d478ded72f`; each exits 0. Startup metadata `/tmp/patch-12.0.5-batch11-startup-run.json` binds the same revision to `lua-errors`, exit 0, stdout `[]`. This is bounded development execution, not native parity or whole-page completion. See [restriction contract](cooldown-restriction.md) for the three table producers, per-field policy, guarded action/book selectors and unresolved secret spell identifiers. Earlier-profile controls and independent current fmt/check/audit remain pending.

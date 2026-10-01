@@ -16,9 +16,9 @@ Actual no-data RED at `e0a46d691` passes the spell-duration nil control and fail
 
 Rows with zero maximum are not configured charge spells. Below maximum, the shared selector snapshots configured start/base duration/rate; at maximum on 12.0.5+, it uses query time and zero base duration. The rate-aware constructor calls existing `SetTimeFromStart` validation. No charge transitions are synthesized. Shared core zero-span `HasExpired` and elapsed fraction change under 12.0.5 only; Started/Active remain unchanged. Batch7 charge 10/10 and core 27/27 GREEN are observed; independent final gates remain pending; no Cargo ran in the implementation child.
 
-## Cooldown restriction input-only boundary
+## Cooldown restriction bounded producer
 
-`SimState.cooldowns_restricted` is a public boolean defaulting false, independent of combat and unit-stat policy. [Cooldown restriction contract](../../specs/cooldown-restriction.md) owns exact retained source IDs and unresolved argument scope. Eight grouped `cooldown_restriction::` fixtures query actual spell 19750/action 17/book 5 bank 0: ordinary/restricted payloads, live predicate/input changes, tainted public selectors, no-data, duration exclusion and separate secret action/book selectors. No predicate/table/book producer changes or executed RED/GREEN occur in this slice. Secret spell identifiers remain unresolved; existing guarded unwrap is not an `AllowedWhenTainted` implementation.
+`SimState.cooldowns_restricted` is a public boolean defaulting false, independent of combat and unit-stat policy. [Cooldown restriction contract](../../specs/cooldown-restriction.md) owns exact retained source IDs and unresolved argument scope. Eight grouped `cooldown_restriction::` fixtures query actual spell 19750/action 17/book 5 bank 0: ordinary/restricted payloads, live predicate/input changes, tainted public selectors, no-data, duration exclusion and separate secret action/book selectors. `d8a93bec3` registers the gated predicate and book table, shared four-field secrecy and guarded action/book selectors. Batch11 policy 8/8 plus charge 10/10 and ignoreGCD 6/6 PASS; the linked contract owns artifact/startup evidence and pending verifier 126 gates. Secret spell identifiers remain unresolved; existing guarded unwrap is not an `AllowedWhenTainted` implementation.
 
 ## Sources
 

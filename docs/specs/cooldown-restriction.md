@@ -4,7 +4,7 @@ An explicit `SimState.cooldowns_restricted` input controls the zero-argument `C_
 
 ## What it must do
 
-Implemented below; post-change execution remains parent-owned.
+Implemented below; bounded batch11 execution is recorded below. Independent final gates remain pending.
 
 - [x] Default `cooldowns_restricted` to false. Read changes live, independently of combat and `unit_stats_restricted`; the predicate returns exactly one ordinary boolean.
 - [x] Resolve existing public spell/action/player-book selectors to the same explicit `SpellChargeState`. Fixture spell 19750, action 17, player book slot 5/bank 0 supplies current 1, max 3, recharge start 12, base duration 40, rate 2.
@@ -57,13 +57,15 @@ Wrapping all four unannotated numbers whenever the explicit restriction input is
 
 Actual pre-implementation RED at `84f48be77b910f5daabc2e6318c54357961d10ee`: 2 PASS / 6 FAIL, recorded in `/tmp/patch-12.0.5-batch10-run-1.log` and `/tmp/patch-12.0.5-batch10-runs.json`. Duration and no-data controls pass. Failures identify missing predicate, ordinary restricted fields, absent configured book-table result, and failed secure secret-selector resolution. Parent reports the batch compiled successfully. Earlier charge-model 10/10 GREEN does not establish this secrecy contract.
 
-No builds, tests, checks, readability audit, or broad gates run in this producer slice. Changed Rust files are formatted with direct `rustfmt`; parent owns the next build/GREEN and final gates.
+Batch11 at `d8a93bec37dc09980e41dd37b63d0dd26be88668` records **24 PASS / 0 FAIL**: policy 8, charge controls 10, ignoreGCD controls 6. `/tmp/patch-12.0.5-batch11-runs.json` binds all three logs (`run-0.log` through `run-2.log`) to integration artifact SHA-256 `a4d6874b74ceb453fe834a4e155d7ba58315f1e76c647b659631c3d478ded72f`; each exits 0. Startup metadata `/tmp/patch-12.0.5-batch11-startup-run.json` binds the same revision to `lua-errors`, exit 0, stdout `[]`. This is bounded development execution, not native parity or whole-page completion.
+
+At this docs update, `/tmp/patch-12.0.5-charge-policy-independent-proof.md` and `/tmp/patch-12.0.5-batch11-rust-gates.json` are absent. Verifier 126 owns current fmt/check and independent audit; no pending gate is claimed passed.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned post-change compilation and GREEN for `cooldown_restriction::` (8 cases), plus existing charge/duration controls.
+- [x] Bounded batch11 policy 8/8 and charge/ignoreGCD controls 16/16, with successful artifact binding and startup `[]`; not independent final acceptance.
 - [ ] Secret spell identifier `AllowedWhenTainted` remains unresolved and untested here; guarded generic unwrap does not solve it.
-- [ ] Parent-owned final checks and independent verification; implementation is committed, not verified GREEN.
+- [ ] Parent-owned final checks and independent verification; development GREEN is observed, not independent final acceptance.
 
 ## Out of scope
 
