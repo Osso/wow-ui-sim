@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded party countdown producer
+
+[[lua-api#Retail 12.0.5 party countdown]] links [countdown contract](../specs/party-countdown.md): C API-owned per-environment request snapshots, lockdown-first public finite-duration validation and synchronous exact START/CANCEL payloads commit before callbacks. Parent reports ten compiled RED failures at `676e4c25a`; producer formatting only, GREEN/acceptance pending. Cancellation/replacement/security/no-chat policies inferred; no scheduler, native permissions/network parity or audit promotion. Loot code/tests untouched.
+
 ## [2026-10-01] implementation | Add bounded party loot producer
 
 [[lua-api#Retail 12.0.5 party loot method]] links [party loot contract](../specs/party-loot-method.md): epoch-gated numeric getter/setter share existing legacy state, preserve threshold and earlier getter, reject lockdown/secrets/malformed inputs before effects and emit change-only events. Party-member names and raid player position 1 only; no invented roster. Parent saved compiled RED `1c7af9c03` 0/12; GREEN/controls and acceptance pending. No native or audit-row completion credit.

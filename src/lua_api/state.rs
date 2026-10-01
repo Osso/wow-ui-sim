@@ -62,6 +62,8 @@ macro_rules! build_empty_sim_state {
             chat_messaging_lockdown: false,
             #[cfg(feature = "retail-12-0-5")]
             party_ping_restriction: 0,
+            #[cfg(feature = "retail-12-0-5")]
+            party_countdown_request: None,
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,

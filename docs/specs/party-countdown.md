@@ -1,6 +1,6 @@
 # Party countdown
 
-Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. Tests/spec only: the provider belongs to `src/c_api/c_party_info.rs`; this slice adds no production implementation. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Requirements below remain unverified until parent-owned compiled RED and producer GREEN.
+Bounded Retail 12.0.5 `C_PartyInfo.DoCountdown` observable request lifecycle contract. The provider is registered by `src/c_api/c_party_info.rs` and implemented in its C API-owned `countdown` module. See [Lua API environment/state architecture](../lua-api.md) and [event dispatch](../event-system.md). Parent reports compiled RED at `676e4c25a` (ten FAIL); producer GREEN and independent acceptance remain pending.
 
 Cached generated `Blizzard_APIDocumentationGenerated/PartyInfoDocumentation.lua:156–170` declares required numeric `seconds`, one required `success:boolean`, `HasRestrictions=true`, and `SecretArguments="AllowedWhenUntainted"`. Cached `WorldStateInfoDocumentation.lua:10–39` declares synchronous events:
 
@@ -41,9 +41,10 @@ Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-regi
 ## Implementation inventory
 
 - `tests/party_countdown.rs` — ten epoch-gated fixtures, real Lua frame observers, public request effects and actual host-secret fixtures; automatically included by the existing grouped integration harness.
-- `src/c_api/c_party_info.rs` — existing namespace registration owner; production changes are parent-owned and absent from this slice.
+- `src/c_api/c_party_info.rs` — epoch-gated namespace registration owner.
+- `src/c_api/c_party_info/countdown.rs` — C API-owned `CountdownRequest` stores requested seconds and modeled initiator snapshot. Validation precedes mutation; positive replacement commits the new record, cancellation clears it, and idle cancellation does neither. Both event strings are stack-rooted during existing synchronous dispatch; state is committed and the mutable borrow released before callbacks. Nested requests therefore observe the committed lifecycle.
 - `src/c_api/c_chat_info.rs` — existing shared lockdown error guard; unchanged.
-- `src/lua_api/state/sim_state.rs` — existing per-environment lockdown/combat inputs; no new countdown field is assumed by tests.
+- `src/lua_api/state/sim_state.rs` and `state.rs` — `party_countdown_request: Option<CountdownRequest>`, initialized to `None`, independently owned by each environment. Start/replacement snapshots current modeled player identity; cancel snapshots the current requester, not stale initiator metadata. No new identity constants or clock origin are introduced.
 
 ## Tests asserting this spec
 
@@ -51,12 +52,12 @@ Final retained [`prose-2026-03-31-169`](../../data/patch-api/sources/12.0.5-regi
 
 Parent filter: `cargo test --test integration party_countdown::`.
 
-**Proof ledger, 2026-10-01:** ten fixtures authored; no build, test, check, native probe or behavioral RED executed in this slice. Formatting only. Parent owns compiled RED after commit; producer implementation and GREEN remain separate work. Existing grouped harness discovery requires no other test/Cargo edits.
+**Proof ledger, 2026-10-01:** parent-established compiled RED at `676e4c25a`, same successful build recorded by `/tmp/patch-12.0.5-batch34-green-fixed-build-result.json`; parent reports run3 logs/manifests show ten FAIL because no producer existed. Producer slice runs formatting only, no builds/tests/checks/readability gate or native probes. Parent owns GREEN compilation/run and independent acceptance. Existing grouped harness discovery requires no other test/Cargo edits. Requirement checkboxes stay open pending behavioral proof.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compiles and executes these ten fixtures as behavioral RED before producer work; compile errors alone are not RED.
-- [ ] Parent implements and proves the bounded producer GREEN, then obtains independent acceptance.
+- [x] Parent established compiled behavioral RED before producer work: ten FAIL at `676e4c25a`, not compile errors.
+- [ ] Parent proves the implemented bounded producer GREEN, then obtains independent acceptance.
 - [ ] Native zero-as-cancel/replacement, duration validation, blocked failure convention, initiator/chat policy and `AllowedWhenUntainted` behavior remain unverified. These are explicitly inferred simulator policies.
 
 ## Out of scope
@@ -65,4 +66,4 @@ Parent filter: `cargo test --test integration party_countdown::`.
 - Optional cached Timer.lua integration is omitted: the inspected consumer allocates `StartTimerBar` and depends on animation/sound/UI helpers, beyond a minimal observer fixture. No fabricated callback overrides replace it.
 - Native callback-error policy is not characterized here; no countdown-specific failure/rollback rule is invented.
 - Native group permissions, remote countdowns, chat delivery, native lockdown activation/secrecy enforcement, legacy aliases, all-profile parity and whole-source acceptance are unproved.
-- Loot code/tests/spec and wiki/audit updates belong to other producers; this slice changes none.
+- Loot code/tests/spec and audit accounting belong to other producers; this slice changes none. Wiki architecture links document this producer without audit promotion.

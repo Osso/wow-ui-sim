@@ -50,6 +50,10 @@ pub struct SimState {
     /// C_PartyInfo restriction enum input; None (0) is an inferred simulator default.
     #[cfg(feature = "retail-12-0-5")]
     pub party_ping_restriction: u8,
+    /// Local countdown request; visual expiry does not mutate request state.
+    #[cfg(feature = "retail-12-0-5")]
+    pub(crate) party_countdown_request:
+        Option<crate::c_api::c_party_info::countdown::CountdownRequest>,
     pub quest_portrait_state: Option<QuestPortraitState>,
     pub cvars: CVarStorage,
     pub tooltips: HashMap<u64, TooltipData>,

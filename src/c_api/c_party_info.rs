@@ -19,6 +19,8 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod countdown;
+#[cfg(feature = "retail-12-0-5")]
 mod loot_method;
 #[cfg(feature = "retail-12-0-5")]
 mod ping_restrictions;
@@ -30,7 +32,10 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     register_group_membership_probes(state, table_ref)?;
     register_loot_method_probes(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
-    ping_restrictions::register(state, table_ref)?;
+    {
+        ping_restrictions::register(state, table_ref)?;
+        countdown::register(state, table_ref)?;
+    }
     Ok(())
 }
 
