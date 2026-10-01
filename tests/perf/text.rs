@@ -62,6 +62,7 @@ pub fn measure_glyph_text_shaping_for_representative_strings() -> Duration {
             case.word_wrap,
             0,
             0.0,
+            false,
             None,
         );
     }
