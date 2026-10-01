@@ -15,6 +15,21 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
+#[test]
+fn charge_duration_earlier_profiles_preserve_existing_results() {
+    env()
+        .exec(
+            r#"
+            assert(C_Spell.GetSpellChargeDuration(19750) == nil)
+            assert(C_SpellBook.GetSpellBookItemChargeDuration(5, 0) == nil)
+            local action = C_ActionBar.GetActionChargeDuration(99)
+            assert(action ~= nil and action:IsZero())
+            "#,
+        )
+        .expect("earlier profiles retain nil spell/book and empty action duration behavior");
+}
+
 fn assert_close(actual: f64, expected: f64) {
     assert!(
         (actual - expected).abs() < 1e-9,
