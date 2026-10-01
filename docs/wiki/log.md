@@ -1,3 +1,7 @@
+## [2026-10-01] audit | Record renown input-only boundary
+
+Updated [[patch-12-0-5-api-audit]] and index from `766272cdc`, the remaining-structures renown row and [renown contract](../specs/major-faction-renown-rewards.md). Empty-default C API row/map inputs and five fixture tests only; exact source `structures-MajorFactionRenownRewardInfo-665`. Producer/fallback unchanged; compilation and actual RED not run. No behavior/native/completed-row credit; source IDs, unrelated classifications and secret-printf documentation preserved.
+
 ## [2026-10-01] evidence | Finalize bounded messaging/BugCapture checks
 
 Reconciled [outbound contract](../specs/addon-messages.md), [[lua-api]], [[forever-addon-comparison]], index, runtime coverage and ignored PLAN with full `verify-green.json`: independent 36/36 and single default fmt/check-offline passes, exit 0, zero warnings at `255adcbde`; docs-only `54c6bfaf2` preserves 3252 inputs. Rechecked recorded inputs, 29 local vendor files, host CVar and artifact hashes without mismatches; manifest/lock/pin unchanged. Fifteen messaging cases include one legacy contract plus seven additional legacy controls. Expected module/capture diagnostics remain; zero unexpected BugSack errors. Two readability findings are nonblocking. No archive/inventory/native/pixel/full-cache credit; AutoRoll remains separate.

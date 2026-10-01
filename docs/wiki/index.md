@@ -1,3 +1,7 @@
+## [2026-10-01] audit | Record pending renown reward input
+
+[[patch-12-0-5-api-audit#Renown reward input only — proof pending]] links the [renown contract](../specs/major-faction-renown-rewards.md): `766272cdc` adds empty-default C API inputs and five unrun fixture tests for exactly `structures-MajorFactionRenownRewardInfo-665`. Query producer/fallback unchanged; compilation, actual RED, publication and native parity remain pending. No completed row or classification credit.
+
 ## [2026-09-30] evidence | Reconcile main GREEN without inventory credit
 
 [[forever-addon-comparison#Current-local messaging and error capture — observed GREEN]] records 36/36 at unchanged `255adcbde`, including exact 29-local-file BugCapture proof. [Outbound contract](../specs/addon-messages.md) behavior checks reflect observed main GREEN; source-only guards/profile absence remain qualified. Independent final/default fmt/check await parent ledger. No archive identity or inventory-counter changes.
