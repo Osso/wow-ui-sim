@@ -1,3 +1,11 @@
+## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
+
+[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links independent cooldown proof and observed query/UnitName evidence, exact retained source links, partial propagator failures and pending producer/final/startup gates. Specs own behavior and native-inference limits; all 362 source IDs remain, with no whole-page completion.
+
+## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
+
+[[gamepad-mapped-state]] records `f774ce454`: optional environment input, two C API queries and six grouped tests, including unchanged cached TOC initialization. [Contract](../specs/gamepad-mapped-state.md) distinguishes source-observed calls/fields from inferred policy. Existing RED is the pre-addon namespace gap, not AutoRoll decisions; parent GREEN/final gates remain pending. No hardware, full DTO, Reveal, Retail or addon-integration credit.
+
 ## [2026-10-01] audit | Record pending renown reward input
 
 [[patch-12-0-5-api-audit#Renown reward input only — proof pending]] links the [renown contract](../specs/major-faction-renown-rewards.md): `766272cdc` adds empty-default C API inputs and five unrun fixture tests for exactly `structures-MajorFactionRenownRewardInfo-665`. Query producer/fallback unchanged; compilation, actual RED, publication and native parity remain pending. No completed row or classification credit.

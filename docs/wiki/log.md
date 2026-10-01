@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Record bounded mapped-stick input
+
+Added [[gamepad-mapped-state]] and index for `f774ce454`, linking the [contract](../specs/gamepad-mapped-state.md). Two Forever queries use optional C API input independent of UI style; six grouped tests include actual cached initialization with preinstalled fixtures. Targeted rustfmt completed before commit. No Cargo/GREEN/check/readability/delegation/deployment run; parent owns verification. Prior corrected AutoRoll artifact establishes only the pre-addon namespace gap. Native fields/signatures/hardware semantics remain unknown; exact Reveal limitation retained without changes.
+
 ## [2026-10-01] audit | Record renown input-only boundary
 
 Updated [[patch-12-0-5-api-audit]] and index from `766272cdc`, the remaining-structures renown row and [renown contract](../specs/major-faction-renown-rewards.md). Empty-default C API row/map inputs and five fixture tests only; exact source `structures-MajorFactionRenownRewardInfo-665`. Producer/fallback unchanged; compilation and actual RED not run. No behavior/native/completed-row credit; source IDs, unrelated classifications and secret-printf documentation preserved.
@@ -5309,3 +5313,8 @@ Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage a
 ## [2026-10-01] audit | Record bounded batch7 observed proof
 
 [[patch-12-0-5-api-audit#Batch7 observed proof — 2026-10-01]] records snapshot `c5ba89ae3` with rilua `6044544b`: twelve integration filters 111 PASS, configured countdown library 6 PASS / 2 FAIL; post-snapshot GC/fixture GREEN and independent audit pending. Coverage preserves 362 source IDs and unrelated classifications; linked rows are not completion. [[spell-charge-state]] and [[duration-core]] retain native/earlier-profile limits.
+
+## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
+
+[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links independent cooldown proof and observed query/UnitName evidence, exact retained source links, partial propagator failures and pending producer/final/startup gates. Specs own behavior and native-inference limits; all 362 source IDs remain, with no whole-page completion.
+
