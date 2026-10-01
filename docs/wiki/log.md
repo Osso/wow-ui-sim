@@ -5438,3 +5438,7 @@ Updated index and [[spell-charge-state]] to link current proof SSOT rather than 
 ## [2026-10-01] implementation | Replace seeded DamageMeter producer
 
 [Structure contract/proof](../specs/damage-meter-combat-source.md#tests-asserting-this-spec) owns predecessor parent RED 0/6, current C API registration/lookup/reset and stack-rooted snapshots. [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] retains source accounting; old heading is historical. Seeded Lua producer removed without fallback; nine grouped fixtures await parent compilation/GREEN. Applicable combat annotation enforcement absent in inspected surfaces: all four combat getters explicitly blocked, secret selectors rejected without unwrapping. No native, earlier-profile, broad security or source-row completion credit.
+
+## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
+
+[[patch-12-0-5-api-audit#Current-Retail enums — bounded independent PASS]] links the [durable contract/proof](../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01): exact 30 pending rows accepted from unchanged-source saved batch7 20/20 PASS. External publication/removal/rename/member metadata only; no downstream domain requirement. 362 IDs/source hash and concurrent housing accounting preserved; current totals 280 pending / 68 bounded / 14 partial. Historical numbering, PTR/native/all-profile/current-binary execution unproved. No rerun or page closure.

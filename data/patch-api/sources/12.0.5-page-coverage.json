@@ -86,15 +86,18 @@
         "Enum.TransmogIllusionFlags.AllowedRangedShieldsHoldables",
         "Enum.HouseFinderSuggestionReason.HomeOwner"
       ],
-      "scope": "Current-retail cached publication/removal and actual-member metadata: 20 grouped cases PASS plus representative enum control 1 PASS; 33 source deltas across 20 subjects. Historical numbering, native and downstream domain semantics unproven.",
+      "scope": "Current-Retail external enum data contract: exact 30 newly reconciled source rows across 17 subjects, publication/removal/rename and actual-member NumValues/MinValue/MaxValue after initialization and post-load. Three previously accounted additions remain controls with their existing narrower scopes. Historical 12.0.5 numbering, PTR/all-profile/native runtime, current binary execution and downstream domain behavior unproved; downstream behavior is not required for value publication.",
       "spec": "docs/specs/patch-12-0-5-enum-additions.md",
       "tests": [
         "tests/patch_12_0_5_enum_additions.rs"
       ],
       "implementation": "857146cda+d9c3f408b",
-      "proof": "partial-development-green",
+      "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json",
-      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd"
+      "compiled_revision": "c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd",
+      "independent_proof": "/tmp/patch-12.0.5-enum-accounting-independent-proof.md",
+      "accounting_refresh": "/tmp/patch-12.0.5-enum-accounting-refresh.md",
+      "proof_binding": "Unchanged scoped source hashes; reused independently hash-bound batch7 20/20 PASS at c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd, binary SHA256 159bc2f24ff76ddd9f1a29664c17b8a6972b8c09cfa8b7fe4b420f68d0143d02. Not execution of today's replaced binary or current-HEAD build/check/fmt."
     },
     {
       "id": "abbreviated-formatter",
@@ -2355,15 +2358,19 @@
     },
     {
       "source_id": "enums-Enum-AbbreviationDataError-570",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-AddOnRestrictionType-572",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-CurrencyFlagsB-574",
@@ -2375,51 +2382,67 @@
     },
     {
       "source_id": "enums-Enum-EditModeAccountSetting-576",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-EditModeStatusTrackingBarSetting-578",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-EditModeSystem-580",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-EditModeUnitFrameSetting-582",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-FragmentID-584",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-FragmentID-585",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-FrameTutorialAccount-587",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-HouseExteriorWMODataFlags-589",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-HouseFinderSuggestionReason-591",
@@ -2431,51 +2454,67 @@
     },
     {
       "source_id": "enums-Enum-HousingDecorPlacementRestriction-593",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-HousingItemToastType-595",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-HousingResult-597",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-HousingResult-598",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-LootMethodStyles-600",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-LootMethodStyles-601",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-PhotoSharingUploadStatus-603",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-SurveyDeliveryMoment-605",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogIllusionFlags-607",
@@ -2487,75 +2526,99 @@
     },
     {
       "source_id": "enums-Enum-TransmogSituation-609",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-610",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-611",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-612",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-613",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-614",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-615",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-616",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-617",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituation-618",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituationTrigger-620",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "enums-Enum-TransmogSituationTrigger-621",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "enum-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-Retail external enum publication/removal/rename and actual-member metadata after initialization and post-load; independently accepted unchanged-source batch7 proof. Historical numbering/PTR/native runtime/downstream domains unproved and not required for value publication. See enum-publication capability and spec exact source/proof matrix."
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-626",

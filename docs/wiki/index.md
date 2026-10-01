@@ -1895,3 +1895,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-01] audit | Record bounded batch7 observed proof
 
 [[patch-12-0-5-api-audit#Batch7 observed proof — 2026-10-01]] records snapshot `c5ba89ae3` with rilua `6044544b`: twelve integration filters 111 PASS, configured countdown library 6 PASS / 2 FAIL; post-snapshot GC/fixture GREEN and independent audit pending. Coverage preserves 362 source IDs and unrelated classifications; linked rows are not completion. [[spell-charge-state]] and [[duration-core]] retain native/earlier-profile limits.
+
+## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
+
+[[patch-12-0-5-api-audit#Current-Retail enums — bounded independent PASS]] links the [durable contract/proof](../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01): exact 30 pending rows accepted from unchanged-source saved batch7 20/20 PASS. External publication/removal/rename/member metadata only; no downstream domain requirement. 362 IDs/source hash and concurrent housing accounting preserved; current totals 280 pending / 68 bounded / 14 partial. Historical numbering, PTR/native/all-profile/current-binary execution unproved. No rerun or page closure.
