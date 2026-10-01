@@ -117,6 +117,13 @@ fn register_spell_book_item_visual_queries(
         "GetSpellBookItemCooldownDuration",
         c_spell_book_get_spell_book_item_cooldown_duration,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetSpellBookItemChargeDuration",
+        c_spell_book_get_spell_book_item_charge_duration,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -386,6 +393,12 @@ fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
         return None;
     }
     spellbook_data::get_spell_at_slot(slot as i32).map(|(_, entry, _)| entry.spell_id)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn c_spell_book_get_spell_book_item_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_duration_spellbook_entry(state);
+    super::charge_state::push_charge_duration(state, spell_id)
 }
 
 #[cfg(feature = "retail-12-0-0")]

@@ -1,5 +1,11 @@
 //! Explicit spell-keyed charge input; no automatic charge progression.
 
+use crate::lua_api::SimState;
+use crate::lua_api::globals::lua_duration_object::push_timed_duration_object_with_rate;
+use crate::lua_api::methods::{borrow_state, create_table_with_capacity, table_set_static};
+use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct SpellChargeState {
     pub current_charges: u32,
@@ -7,4 +13,59 @@ pub struct SpellChargeState {
     pub recharge_start: f64,
     pub recharge_duration: f64,
     pub charge_mod_rate: f64,
+}
+
+fn read_charge_input(sim: &SimState, spell_id: Option<u32>) -> Option<SpellChargeState> {
+    sim.spell_charges
+        .get(&spell_id?)
+        .filter(|charge| charge.max_charges > 0)
+        .copied()
+}
+
+pub(crate) fn push_charge_info(state: &mut LuaState, spell_id: Option<u32>) -> LuaResult<u32> {
+    let charge = {
+        let sim = borrow_state(state)?;
+        read_charge_input(&sim, spell_id)
+    };
+    let Some(charge) = charge else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let info = create_table_with_capacity(state, 5);
+    for (name, value) in [
+        ("currentCharges", charge.current_charges as f64),
+        ("maxCharges", charge.max_charges as f64),
+        ("cooldownStartTime", charge.recharge_start),
+        ("cooldownDuration", charge.recharge_duration),
+        ("chargeModRate", charge.charge_mod_rate),
+    ] {
+        table_set_static(state, info, name, Val::Num(value));
+    }
+    state.push(info);
+    Ok(1)
+}
+
+fn select_recharge_times(charge: SpellChargeState, now: f64) -> Option<(f64, f64, f64)> {
+    if charge.current_charges < charge.max_charges {
+        return Some((
+            charge.recharge_start,
+            charge.recharge_duration,
+            charge.charge_mod_rate,
+        ));
+    }
+    // 12.0.5 specifies zero-span at max; earlier active-only behavior is inferred.
+    cfg!(feature = "retail-12-0-5").then_some((now, 0.0, charge.charge_mod_rate))
+}
+
+pub(crate) fn push_charge_duration(state: &mut LuaState, spell_id: Option<u32>) -> LuaResult<u32> {
+    let timing = {
+        let sim = borrow_state(state)?;
+        let now = sim.start_time.elapsed().as_secs_f64();
+        read_charge_input(&sim, spell_id).and_then(|charge| select_recharge_times(charge, now))
+    };
+    let Some((start, seconds, rate)) = timing else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    push_timed_duration_object_with_rate(state, start, seconds, rate)
 }

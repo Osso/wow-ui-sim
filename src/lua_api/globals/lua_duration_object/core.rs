@@ -300,7 +300,15 @@ fn duration_value(
         span - elapsed
     };
     if matches!(query, Query::ElapsedPercent | Query::RemainingPercent) {
-        return Ok(if span > 0.0 { duration / span } else { 0.0 });
+        let zero_elapsed =
+            cfg!(feature = "retail-12-0-5") && matches!(query, Query::ElapsedPercent);
+        return Ok(if span > 0.0 {
+            duration / span
+        } else if zero_elapsed {
+            1.0
+        } else {
+            0.0
+        });
     }
     Ok(duration * scale)
 }
@@ -318,7 +326,12 @@ fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
             Val::Bool(timing.base > 0.0 && clock_time(state, object)? >= timing.start)
         }
         Query::Expired => {
-            Val::Bool(timing.base > 0.0 && clock_time(state, object)? >= timing.end())
+            let expired = if timing.base == 0.0 {
+                cfg!(feature = "retail-12-0-5")
+            } else {
+                clock_time(state, object)? >= timing.end()
+            };
+            Val::Bool(expired)
         }
         Query::Active => {
             let now = clock_time(state, object)?;

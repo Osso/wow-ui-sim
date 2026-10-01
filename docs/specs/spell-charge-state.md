@@ -31,13 +31,13 @@ Explicit spell-keyed charge input backs `C_Spell.GetSpellCharges`, `C_ActionBar.
 
 ## Tests asserting this spec
 
-`tests/cooldown_probes/charge_duration.rs` remains in the existing grouped integration binary. Initial actual RED at `e0a46d691`: 4 cases, 1 passing no-data spell control and 3 failures (`/tmp/patch-12.0.5-batch5-charge-red.log`). Type/input and concrete fixtures committed at `d1f2474e5`, strengthened nonnil assertions at `91a0bfb55`; fixture RED and post-change GREEN remain parent-owned. Existing `tests/duration_core.rs` zero/reset/default expectations are epoch-aware; direct zero-span and zero-maximum input cases join the grouped charge fixtures.
+`tests/cooldown_probes/charge_duration.rs` remains in the existing grouped integration binary. Initial actual RED at `e0a46d691`: 4 cases, 1 passing no-data spell control and 3 failures (`/tmp/patch-12.0.5-batch5-charge-red.log`). Type/input and concrete fixtures committed at `d1f2474e5`, strengthened nonnil assertions at `91a0bfb55`; concrete fixture RED at `eac08bda3` records 10 cases, 1 pass and 9 expected failures (`/tmp/patch-12.0.5-batch6-charge-red.log`; exact argv in `/tmp/patch-12.0.5-batch6-runs.json`). This includes direct shared zero-span failure before core changes. Producers and core correction follow that RED; post-change GREEN remains parent-owned. Existing `tests/duration_core.rs` zero/reset/default expectations are epoch-aware; direct zero-span and zero-maximum input cases join the grouped charge fixtures.
 
 The passing no-data spell control did not prove a modeled provider: `runtime_surface_bootstrap.lua:65–76` lazily installs a nil-returning closure for an unresolved namespace key. The authoritative explicit registration replaces that key, not the unrelated namespace policy.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-batched concrete fixture RED, GREEN, earlier-profile controls, format/check/startup and readability proof.
+- [ ] Parent-batched GREEN, earlier-profile controls, format/check/startup and readability proof.
 - [ ] Native rate interpretation, return arity, malformed input/error behavior, snapshots and charge transitions remain unprobed. Future native fixture: one configured charged spell at max and during recharge, compare all five table fields plus duration timing/rate before and after one charge use.
 
 ## Out of scope

@@ -1,24 +1,12 @@
 //! Temporary `C_Spell` static/default fallbacks.
 //!
 //! The Rust `C_Spell` surface owns state-backed spell metadata, links, costs,
-//! cooldowns, and flyout data. These defaults cover unmodeled charge,
+//! cooldowns, charges, and flyout data. These defaults cover unmodeled
 //! override, visibility, and Maw power-border state until those domains are
 //! modeled.
 
 const SPELL_STATIC_DEFAULTS_LUA: &str = r#"
 C_Spell = C_Spell or __wow_namespace()
-
-if rawget(C_Spell, "GetSpellCharges") == nil then
-    function C_Spell.GetSpellCharges(_spellID)
-        return {
-            currentCharges = 0,
-            maxCharges = 0,
-            cooldownStartTime = 0,
-            cooldownDuration = 0,
-            chargeModRate = 1,
-        }
-    end
-end
 
 if rawget(C_Spell, "GetOverrideSpell") == nil then
     function C_Spell.GetOverrideSpell(spellID)
@@ -52,36 +40,20 @@ mod tests {
     fn installs_spell_static_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let (override_id, maw_atlas_is_nil, current, max, start, duration, mod_rate): (
-            i64,
-            bool,
-            i64,
-            i64,
-            i64,
-            i64,
-            f64,
-        ) = env
+        let (override_id, maw_atlas_is_nil, charge_is_nil): (i64, bool, bool) = env
             .eval(
                 r#"
                 local charges = C_Spell.GetSpellCharges(116)
                 return C_Spell.GetOverrideSpell(116),
                        C_Spell.GetMawPowerBorderAtlasBySpellID(116) == nil,
-                       charges.currentCharges,
-                       charges.maxCharges,
-                       charges.cooldownStartTime,
-                       charges.cooldownDuration,
-                       charges.chargeModRate
+                       charges == nil
                 "#,
             )
             .expect("spell static defaults should be callable");
 
         assert_eq!(override_id, 116);
         assert!(maw_atlas_is_nil);
-        assert_eq!(current, 0);
-        assert_eq!(max, 0);
-        assert_eq!(start, 0);
-        assert_eq!(duration, 0);
-        assert!((mod_rate - 1.0).abs() < 0.001);
+        assert!(charge_is_nil);
     }
 
     #[test]

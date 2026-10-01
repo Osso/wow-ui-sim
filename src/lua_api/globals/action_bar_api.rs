@@ -23,7 +23,6 @@ use std::rc::Rc;
 
 const C_ACTION_BAR: &str = "C_ActionBar";
 const NUM_ACTIONBAR_PAGES: i32 = 6;
-const ACTION_CHARGES_HASH_FIELDS: usize = 5;
 const ACTION_LOC_COOLDOWN_HASH_FIELDS: usize = 5;
 
 fn stack_slot(state: &LuaState) -> Option<u32> {
@@ -296,11 +295,15 @@ fn get_action_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u
     Ok(1)
 }
 
+fn read_action_charge_spell(state: &LuaState) -> LuaResult<Option<u32>> {
+    let slot = stack_slot(state);
+    let sim = borrow_state(state)?;
+    Ok(slot.and_then(|slot| sim.action_bars.get(&slot).copied()))
+}
+
 fn get_action_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = stack_val(state, 1);
-    let duration = new_duration_object_value(state);
-    state.push(duration);
-    Ok(1)
+    let spell_id = read_action_charge_spell(state)?;
+    crate::c_api::charge_state::push_charge_duration(state, spell_id)
 }
 
 fn get_action_loss_of_control_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
@@ -426,15 +429,8 @@ fn is_current_action(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_action_charges(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = stack_val(state, 1);
-    let info = create_table_with_capacity(state, ACTION_CHARGES_HASH_FIELDS);
-    table_set(state, info, "currentCharges", Val::Num(0.0));
-    table_set(state, info, "maxCharges", Val::Num(0.0));
-    table_set(state, info, "cooldownStartTime", Val::Num(0.0));
-    table_set(state, info, "cooldownDuration", Val::Num(0.0));
-    table_set(state, info, "chargeModRate", Val::Num(1.0));
-    state.push(info);
-    Ok(1)
+    let spell_id = read_action_charge_spell(state)?;
+    crate::c_api::charge_state::push_charge_info(state, spell_id)
 }
 
 /// `C_ActionBar.PutActionInSlot(slot, targetSlot)` → `bool`.

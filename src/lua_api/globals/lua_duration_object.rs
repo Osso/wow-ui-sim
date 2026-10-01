@@ -134,6 +134,15 @@ pub(crate) fn push_timed_duration_object(
     start: f64,
     seconds: f64,
 ) -> LuaResult<u32> {
+    push_timed_duration_object_with_rate(state, start, seconds, 1.0)
+}
+
+pub(crate) fn push_timed_duration_object_with_rate(
+    state: &mut LuaState,
+    start: f64,
+    seconds: f64,
+    rate: f64,
+) -> LuaResult<u32> {
     let duration = new_duration_object_value(state);
     state.push(duration);
     let key = state.gc.intern_string(b"SetTimeFromStart");
@@ -141,7 +150,7 @@ pub(crate) fn push_timed_duration_object(
     call_function_state(
         state,
         set_time,
-        &[duration, Val::Num(start), Val::Num(seconds), Val::Num(1.0)],
+        &[duration, Val::Num(start), Val::Num(seconds), Val::Num(rate)],
     )?;
     Ok(1)
 }

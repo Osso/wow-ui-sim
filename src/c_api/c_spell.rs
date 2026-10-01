@@ -75,6 +75,9 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellLink", get_spell_link),
     ("GetSpellName", get_spell_name),
     ("GetSpellCooldown", get_spell_cooldown),
+    ("GetSpellCharges", get_spell_charges),
+    #[cfg(feature = "retail-12-0-5")]
+    ("GetSpellChargeDuration", get_spell_charge_duration),
     #[cfg(feature = "retail-12-0-0")]
     ("GetSpellCooldownDuration", get_spell_cooldown_duration),
     ("GetMountFromSpell", get_mount_from_spell),
@@ -423,6 +426,17 @@ fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     table_set_static(state, info, "modRate", Val::Num(1.0));
     state.push(info);
     Ok(1)
+}
+
+fn get_spell_charges(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_spell_identifier(state)?;
+    super::charge_state::push_charge_info(state, spell_id)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn get_spell_charge_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_spell_identifier(state)?;
+    super::charge_state::push_charge_duration(state, spell_id)
 }
 
 #[cfg(feature = "retail-12-0-0")]
