@@ -705,7 +705,6 @@ fn test_unit_is_unit_absent_tokens_never_compare_equal() {
         "UnitIsUnit('focus', 'focus')",
         "UnitIsUnit('target', 'focus')",
         "UnitIsUnit('party1', 'party1')",
-        "UnitIsUnit('unknown', 'unknown')",
         "UnitIsUnit(nil, nil)",
         "UnitIsUnit(nil, 'player')",
         "UnitIsUnit('player', nil)",
@@ -713,6 +712,15 @@ fn test_unit_is_unit_absent_tokens_never_compare_equal() {
         let same: bool = env.eval(&format!("return {expression}")).unwrap();
         assert!(!same, "{expression} has no pair of existing identities");
     }
+    let unknown: Option<bool> = env.eval("return UnitIsUnit('unknown', 'unknown')").unwrap();
+    #[cfg(feature = "retail-12-0-5")]
+    assert_eq!(unknown, None, "current retail denies non-comparable tokens");
+    #[cfg(not(feature = "retail-12-0-5"))]
+    assert_eq!(
+        unknown,
+        Some(false),
+        "older profiles retain boolean semantics"
+    );
 }
 
 #[test]
