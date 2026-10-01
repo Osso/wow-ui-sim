@@ -360,6 +360,7 @@ fn apply_xml_properties_direct(
     direct::apply_xml_enable_mouse(state, frame_id, frame, inherits);
     direct::apply_xml_enable_keyboard(state, frame_id, frame, inherits);
     direct::apply_xml_propagate_mouse_input(state, frame_id, frame, inherits);
+    direct::apply_xml_propagation_flags(state, frame_id, frame, inherits);
     direct::apply_xml_clips_children(state, frame_id, frame, inherits);
     direct::apply_xml_hit_rect_insets(state, frame_id, frame);
     direct::apply_xml_text_insets(state, frame_id, frame);

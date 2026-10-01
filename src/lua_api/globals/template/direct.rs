@@ -509,6 +509,33 @@ pub fn apply_xml_enable_keyboard(
     }
 }
 
+/// Apply keyboard and hyperlink propagation, base-to-derived then instance XML.
+/// Omitted attributes retain inherited values; explicit false overrides true.
+pub fn apply_xml_propagation_flags(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let mut keyboard = None;
+    let mut hyperlinks = None;
+    for entry in &*crate::xml::get_template_chain(inherits) {
+        keyboard = entry.frame.propagate_keyboard_input.or(keyboard);
+        hyperlinks = entry.frame.propagate_hyperlinks_to_parent.or(hyperlinks);
+    }
+    keyboard = frame.propagate_keyboard_input.or(keyboard);
+    hyperlinks = frame.propagate_hyperlinks_to_parent.or(hyperlinks);
+
+    if let Some(widget) = state.borrow_mut().widgets.get_mut(frame_id) {
+        if let Some(enabled) = keyboard {
+            widget.propagate_keyboard_input = enabled;
+        }
+        if let Some(enabled) = hyperlinks {
+            widget.propagate_hyperlinks_to_parent = enabled;
+        }
+    }
+}
+
 /// Resolve and apply propagateMouseInput / propagateMouseInputMask from XML.
 pub fn apply_xml_propagate_mouse_input(
     state: &Rc<RefCell<SimState>>,

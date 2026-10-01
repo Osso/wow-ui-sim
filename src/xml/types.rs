@@ -166,6 +166,10 @@ pub struct FrameXml {
     pub propagate_mouse_input: Option<String>,
     #[serde(rename = "@propagateMouseInputMask")]
     pub propagate_mouse_input_mask: Option<String>,
+    #[serde(rename = "@propagateKeyboardInput")]
+    pub propagate_keyboard_input: Option<bool>,
+    #[serde(rename = "@propagateHyperlinksToParent")]
+    pub propagate_hyperlinks_to_parent: Option<bool>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
     #[serde(rename = "@clipChildren")]
