@@ -53,7 +53,7 @@ No native probes establish formula, caps, permanence, unknown/error handling or 
 
 ## Tests asserting this spec
 
-Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent owns compilation and GREEN execution. Requirement checkboxes remain unverified until post-producer proof; tests are unchanged.
+Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent saved compilation and GREEN execution below. Requirement checkboxes remain unchecked pending independent320 and parent acceptance; tests are unchanged.
 
 | Test | Contract |
 |---|---|
@@ -78,7 +78,7 @@ Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent o
 
 ## Known gaps (current cycle)
 
-- [ ] Parent GREEN and independent bounded acceptance remain pending. Producer formatting only; no build/test/check/lint/readability/delegation performed in this slice.
+- [ ] Independent320 and parent bounded acceptance remain pending. Parent GREEN is saved below; this docs-only reconciliation runs no build/test/check/lint/readability/delegation.
 - [ ] Native formula, eligibility, unknown/error/security parity remain unproven.
 - [ ] Row394/page/accounting remain pending and unchanged; no status promotion authorized here.
 
@@ -87,6 +87,26 @@ Grouped filter: `aura_refresh_duration::` with `retail-12-0-5` enabled. Parent o
 Input commit `dac4314c6` is included in parent revision `ea7d67237882cac6c43cfb8f3c5b8f6235e8160a`. Parent compiled the grouped integration target with exit **0**, **1168.921s**; bounded `aura_refresh_duration::` runtime exit **101**, **26.570s**, **18 selected: 1 PASS / 17 FAIL**. Full diagnostics were read before implementation. The sole empty-metadata PASS exercises nullable defaults, not a meaningful getter producer. The other seventeen failures assert outputs, validation/security and immutable-query contracts; the elapsed-clock case reports numeric result expected, got nil.
 
 Proof artifacts: `/tmp/patch-12.0.5-batch38-red-build-result.json`, `/tmp/patch-12.0.5-batch38-red-run.json`, `/tmp/patch-12.0.5-batch38-red-run.log`. This RED scope does not prove the new producer. Parent owns subsequent costly compilation/runtime and acceptance; no new runtime result or native parity is claimed.
+
+## Reconciled batch38 parent proof — 2026-10-01
+
+Inputs `dac4314c6`; producer `0acd750afae92f3c6448baeae9ded210abd01bb5`. Saved GREEN compile exit **0**, **799.340s**, using `cargo test --test integration --no-run --message-format=json`. Build manifest `/tmp/patch-12.0.5-batch38-green-build-result.json` binds integration SHA256 `27764c8e2e96cb91512e438c074aa9c57919a7934647f7525f87971fa73ee9a6` and wow-sim SHA256 `319c5408e94a61a2f43868904d9cdf5f98218e05d777b970ff4bad560c7dc8ff`.
+
+`/tmp/patch-12.0.5-batch38-green-runs.json` records exact revision, binary hash, argv and logs. Each invocation uses `timeout 90`, its named filter, `--nocapture --test-threads=1`; all exit **0**:
+
+| Filter | Selected PASS | Saved log |
+|---|---:|---|
+| `aura_refresh_duration::` | 18 | `/tmp/patch-12.0.5-batch38-green-run-0.log` |
+| `aura_spell_identifier::` | 12 | `/tmp/patch-12.0.5-batch38-green-run-1.log` |
+| `aura_api::` | 29 | `/tmp/patch-12.0.5-batch38-green-run-2.log` |
+| `admin_buff_api::` | 18 | `/tmp/patch-12.0.5-batch38-green-run-3.log` |
+| `c_spell_flyout_probes::` | 14 | `/tmp/patch-12.0.5-batch38-green-run-4.log` |
+
+**91 distinct selected PASS**, no zero-selection or overlapping test credit. Startup manifest `/tmp/patch-12.0.5-batch38-green-startup-run.json` binds the saved wow-sim hash and `timeout 90 … --no-addons --no-saved-vars lua-errors`: exit **0**, **27.721s**, stdout `[]` in `green-startup.json`, diagnostics in `green-startup.log` under the same batch38 prefix.
+
+This proves bounded simulator getter behavior and named controls only. Formula/cap, permanence eligibility, nil/unknown and strict secret policies remain **INFERRED**, not native-verified. Metadata defaults remain empty; fixtures are explicit inputs, not invented production metadata. Duration reads filter blocked records; earlier unblocked spell-query compatibility is preserved, not silently replaced by duration access rules.
+
+**Independent320 pending; no source-row promotion until parent accepts.** Preserve **257 pending / 91 bounded / 14 partial = 362**, row394 pending, source IDs/register/plaintext hashes unchanged. No fresh fmt/check/readability, native parity, whole-page or all-profile acceptance claimed. Saved evidence remains scoped to its recorded revisions/binary hashes; docs changes do not broaden it. `/tmp/patch-12.0.5-proof-ledger.md` and ignored local `PLAN.md` record this checkpoint; PLAN is never staged.
 
 ## Out of scope
 

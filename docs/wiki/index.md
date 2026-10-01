@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
+
+[[lua-api#Retail 12.0.5 aura refresh duration]] links [exact batch38 proof](../specs/aura-refresh-duration.md#reconciled-batch38-parent-proof--2026-10-01): inputs `dac4314c6`, producer `0acd750af`; RED compile0/1168.921s, 18 selected **1 PASS / 17 FAIL**; GREEN compile0/799.340s, **18 duration + 12 query + 29 aura + 18 admin + 14 C_Spell = 91 distinct PASS**, startup0 `[]`/27.721s. No zero-selection/overlap credit. **Independent320 pending**, no promotion until parent accepts; **257/91/14 = 362**, row394 pending, IDs/register/plaintext hashes unchanged. Formula/permanence/nil/strict secret policies inferred; empty metadata, no production invention. Blocked-filtered duration reads preserve earlier unblocked spell-query compatibility. Docs-only; ignored PLAN never staged.
+
 ## [2026-10-01] implementation | Add bounded aura refresh duration producers
 
 [[lua-api#Retail 12.0.5 aura refresh duration]] links [duration contract](../specs/aura-refresh-duration.md): public blocked-filtered instances, explicit metadata/seeded-alias reuse, elapsed-clock capped formula and pre-conversion secret guards. Saved parent RED at `ea7d67237`: **1 PASS / 17 FAIL**, empty-default PASS not producer proof. Tests unchanged; formatting only, parent GREEN/acceptance pending. Formula/eligibility/security inferred; row394/accounting unchanged.
