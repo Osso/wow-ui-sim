@@ -5,7 +5,7 @@
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 
-use rilua::Val;
+use rilua::{LuaApi, LuaApiMut, Val};
 use std::time::{Duration, Instant};
 use wow_ui_sim::c_api::charge_state::SpellChargeState;
 use wow_ui_sim::lua_api::WowLuaEnv;
