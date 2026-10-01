@@ -174,6 +174,7 @@ fn seconds_formatter_format_uses_documented_abbreviation_enum_after_bootstrap() 
         "#,
         )
         .unwrap();
+        #[cfg(feature = "retail-12-1-0")]
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
 }
