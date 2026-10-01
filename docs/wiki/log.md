@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Record bounded FontString smooth scaling
+
+Updated [[rendering-pipeline]] and index with [FontString smooth scaling](../specs/fontstring-smooth-scaling.md). `0624da720` implements independent boolean state, checked secret inputs, fractional shared height, cache identity and verified `smoothScaling` XML spelling; `3c8b48012` adds wrapped render/cache assertions. Valid RED fails six API and one renderer cases on missing methods, not later height/cache assertions; targeted GREEN remains parent-owned and pending. Public default and exact metrics are inferred; false legacy behavior, animation-mode independence and earlier XML epoch gap are explicit. Future native recorder is tracked, not run.
+
 ## [2026-09-30] audit | Extend common duration NumericFormatter consumption
 
 Updated [[duration-core]] and index with [common duration formatting](../specs/duration-core.md#common-numeric-formatting). Parent build `a3ba2a23a` records 0/4 focused default RED: three incompatible abbreviated receiver failures and one decoded modifier exposed to an overridden Lua getter. Common dispatch validates known instances, uses native core getters/printf, and retains private Seconds closures with opaque timing; its configuration table is not exported. Typed host producers retain taint and existing read guards. GREEN is pending; appended number-`__tostring` coverage was not in that RED binary. Seconds localized units remain capability-scoped, primitive text persists elsewhere, and native/general-debug parity is unclaimed.

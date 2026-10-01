@@ -76,6 +76,10 @@ Follow-ups `4e344ab4f` and `1ecc0c98c` cache cumulative offsets only for one ren
 
 `frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. ScrollFrame presentation transforms and ancestor clips are shared with rendering, so cache-backed hit targets move and clip with presented content. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
 
+## FontString smooth scaling
+
+`0624da720` adds independent `Frame.font_string_smooth_scaling`, shared fractional line-height shaping, mode-keyed caches, and ordinary/runtime/inherited XML handling under retail 12.0.5+. `3c8b48012` adds wrapped render/cache measurement assertions. Contract, inferred-policy boundaries, RED provenance, current GREEN status, earlier XML epoch gap, and future native recorder live in [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md). No native/GPU visual proof is claimed.
+
 ## Performance
 
 - Quad batch rebuilt only when `quads_dirty` flag is set or screen resized
@@ -90,6 +94,8 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 `render_to_image()` creates a fresh context for one batch. Related before/after images should use `render_batches_to_images(&[&QuadBatch], ...)`, which preloads the union of primary, mask, and glyph textures and renders all batches through one device, pipeline, target, and GPU atlas. That matches the live renderer's persistent atlas; separate calls can repack slots and create bilinear/UV edge differences unrelated to the changed geometry.
 
 ## Sources
+
+- [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md) — inferred height policy, tests, scope and future native probe
 
 - [rendering-pipeline.md](../../rendering-pipeline.md) — QuadBatch, shaders, atlas, hit testing, alpha, text
 - [state_render.rs](../../../src/lua_api/state_render.rs) — per-strata buckets, active top-level show order, nearest-owner grouping, and visibility invalidation
