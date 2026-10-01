@@ -24,7 +24,7 @@ static NAMESPACE_NIL_STUBS: &[NsStub] = &[
     // missing_surface/achievement_info.rs, not stubs.
     // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are
     // SimState-backed (via `area_pois` map) in
-    // missing_surface/area_poi.rs, not stubs.
+    // c_api/c_area_poi_info.rs, not stubs.
     // C_AuctionHouse GetAuctionItemSubClasses / GetReplicateItemInfo
     // are SimState-backed in missing_surface/auction_house.rs, not
     // stubs.

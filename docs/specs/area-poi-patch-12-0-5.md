@@ -4,33 +4,40 @@
 
 ## What it must do
 
-- [ ] On mainline Retail/PTR with `retail-12-0-5` or a cumulative later epoch, populated POI results publish exact boolean `isSuppressible` and `isLocked` values.
-- [ ] Existing populated Stormwind Portal Room (POI 7000, map 84) retains ID, map, name, description, atlas, position and event/glow fields. Both new fields are false; suppression false is an inferred simulator initialization policy, not native-verified behavior.
-- [ ] Map mismatch and unknown POI keep returning no values. Nil map lookup still selects the populated record.
-- [ ] Earlier retail epochs and non-mainline profiles retain absence of both new keys and existing lookup/content behavior.
-- [ ] Explicit test-local input values, not POI identity or metadata, determine each new output boolean.
+- [x] Implement exact boolean `isSuppressible` and `isLocked` publication on mainline Retail/PTR with `retail-12-0-5` or a cumulative later epoch. Behavioral GREEN remains pending.
+- [x] Preserve existing populated Stormwind Portal Room (POI 7000, map 84) ID, map, name, description, atlas, position and event/glow fields. Both new inputs initialize false; suppression false is inferred simulator policy, not native-verified behavior.
+- [x] Preserve map-mismatch/unknown-POI zero-return behavior, nil-map lookup, map enumeration and seconds-left operations without changing their bodies.
+- [x] Gate new publication away from earlier retail epochs and non-mainline profiles; legacy behavioral proof remains pending.
+- [x] Read each new output from explicit input values, never POI identity or metadata. Contrasting true/false inputs exist only in tests.
 
 ## How it works
 
-- [Lua API architecture](../lua-api.md).
+The record and its owning provider live in `src/c_api/c_area_poi_info.rs`. Existing public state-type paths reexport `AreaPoiInfo`; namespace registration retains its original load position. The obsolete Lua miscellaneous provider is removed, not wrapped.
 
 ## Implementation inventory
 
-- `src/lua_api/state_types/collections.rs`: existing `AreaPoiInfo` record; new input fields are not implemented in this tests-only slice.
-- `src/lua_api/state/defaults/area_pois.rs`: existing populated POIs; no edits or invented locked game records.
-- `src/lua_api/globals/missing_surface/area_poi.rs`: registered state-backed producer; currently omits both new fields.
+- `src/c_api/c_area_poi_info.rs`: `AreaPoiInfo` with explicit `is_suppressible: bool` / `is_locked: bool`, and the three existing registered operations. Only table serialization adds behavior, under `all(retail-12-0-5, any(profile-retail, client-ptr))`.
+- `src/lua_api/state_types/collections.rs`: public record reexport, preserving `lua_api::state::AreaPoiInfo`.
+- `src/lua_api/state/defaults/area_pois.rs`: all five existing seeded rows initialize both inputs false; no invented locked or suppressible production records.
+- `tests/c_area_poi_probes.rs`: existing constructor supplies false inputs; unrelated behavior unchanged.
 
 ## Tests asserting this spec
 
-- `tests/area_poi_patch_12_0_5.rs`: independent default-publication assertions and legacy absence control, each querying real populated runtime state with identity/lookup checks. Grouped automatically into `integration`.
+`tests/area_poi_patch_12_0_5.rs` stays grouped into `integration`: two mainline tests, or one legacy control under the inverse publication gate. Before the serializer edit, existing tests were extended with test-local rows 91237/map 88007 (`true`, `false`) and 91409/map 88007 (`false`, `true`). Real matching-map and nil-map queries assert exact IDs, names, positions, return arity and booleans; mismatched maps return nothing. Map enumeration asserts both distinct IDs. No provider replacement.
+
+## Proof ledger
+
+- Actual batch8 RED at `693883c77003589b24b9a555141ea51a3e71e1e9`: 0/2 pass, exit 101; `isLocked must be a boolean` and `isSuppressible must be a boolean`. Log: `/tmp/patch-12.0.5-batch8-new-model-red-0.log`; exact command/revision/binary attribution: `/tmp/patch-12.0.5-batch8-new-model-runs.json`.
+- RED command: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c area_poi_patch_12_0_5:: --nocapture --test-threads=1`. This predates the contrasting fixture extension and implementation; it proves the existing populated serialization failure boundary, not those new fixtures.
+- Model and publisher implemented; changed Rust paths formatted directly with rustfmt. No Cargo, test/check/readability, broad acceptance, push or deployment in this implementation slice.
 
 ## Known gaps (current cycle)
 
-- [ ] Run actual RED in parent's next freshly generated integration batch. No Cargo command or behavioral proof in this slice; the pending build may predate test-file discovery.
-- [ ] Proposed input stage: add explicit `is_suppressible: bool` and `is_locked: bool` to `AreaPoiInfo`; preserve existing seeded content with false initialization. Publish only at the mainline 12.0.5+ gate.
-- [ ] After input stage, extend this same grouped file with test-local populated rows 91237/map 88007 (`is_suppressible=true`, `is_locked=false`) and 91409/map 88007 (`false`, `true`). Assert exact booleans and distinct IDs/names/positions via registered matching-map and nil-map queries. Never replace the query provider or alter production records to fabricate true values.
+- [ ] Parent batch9: freshly compile/discover and run `area_poi_patch_12_0_5::` (2 mainline tests), plus existing `c_area_poi_probes::` (8 controls). No GREEN claim yet.
+- [ ] Legacy proof: same patch filter selects 1 control on an earlier retail epoch or non-mainline profile. Mainline GREEN alone does not prove field absence there.
+- [ ] Parent-owned applicable compilation/check/acceptance gates remain pending; formatting is not compilation proof.
+- [ ] Future native probes: observe suppression/locking transitions and populated eligibility cases, including combinations of flags, map/nil-map queries and field defaults. No native transition semantics inferred from field declarations.
 
 ## Out of scope
 
-- POI suppression/locking transitions, native parity and actual game eligibility rules: source fields alone establish no such behavior.
-- Other structure deltas, production edits, build/test execution and test-runner rewiring: this slice supplies pending tests and the bounded input proposal only.
+POI suppression/locking transitions, native parity, actual game eligibility rules, other namespaces/structure deltas, vendor edits, new production content, runner rewiring, push and deployment.

@@ -26,6 +26,46 @@ fn query_populated_poi_env() -> WowLuaEnv {
         "#,
     )
     .unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        for (id, name, position, is_suppressible, is_locked) in [
+            (91237, "Suppressible test POI", (0.17, 0.29), true, false),
+            (91409, "Locked test POI", (0.63, 0.81), false, true),
+        ] {
+            let mut poi = state.area_pois.get(&7000).unwrap().clone();
+            poi.area_poi_id = id;
+            poi.name = name.into();
+            poi.ui_map_id = Some(88007);
+            poi.position = position;
+            poi.is_suppressible = is_suppressible;
+            poi.is_locked = is_locked;
+            state.area_pois.insert(id, poi);
+        }
+    }
+    env.exec(
+        r#"
+        local api = C_AreaPoiInfo
+        for _, expected in ipairs({
+            {91237, "Suppressible test POI", 0.17, 0.29},
+            {91409, "Locked test POI", 0.63, 0.81},
+        }) do
+            local mapped = api.GetAreaPOIInfo(88007, expected[1])
+            local unbound = api.GetAreaPOIInfo(nil, expected[1])
+            assert(select('#', api.GetAreaPOIInfo(88007, expected[1])) == 1)
+            assert(select('#', api.GetAreaPOIInfo(nil, expected[1])) == 1)
+            for _, poi in ipairs({mapped, unbound}) do
+                assert(poi.areaPoiID == expected[1] and poi.name == expected[2])
+                assert(poi.uiMapID == 88007)
+                local x, y = poi.position:GetXY()
+                assert(x == expected[3] and y == expected[4])
+            end
+            assert(select('#', api.GetAreaPOIInfo(84, expected[1])) == 0)
+        end
+        local ids = api.GetAreaPOIForMap(88007)
+        assert(#ids == 2 and ids[1] == 91237 and ids[2] == 91409)
+        "#,
+    )
+    .unwrap();
     env
 }
 
@@ -44,6 +84,14 @@ mod patch_publication {
             local poi = C_AreaPoiInfo.GetAreaPOIInfo(84, 7000)
             assert(type(poi.isSuppressible) == "boolean", "isSuppressible must be a boolean")
             assert(poi.isSuppressible == false, "existing POI uses inferred false suppression default")
+            for _, id in ipairs({91237, 91409}) do
+                local mapped = C_AreaPoiInfo.GetAreaPOIInfo(88007, id)
+                local unbound = C_AreaPoiInfo.GetAreaPOIInfo(nil, id)
+                for _, row in ipairs({mapped, unbound}) do
+                    assert(type(row.isSuppressible) == "boolean")
+                    assert(row.isSuppressible == (id == 91237))
+                end
+            end
             "#,
         )
         .unwrap();
@@ -57,6 +105,14 @@ mod patch_publication {
             local poi = C_AreaPoiInfo.GetAreaPOIInfo(84, 7000)
             assert(type(poi.isLocked) == "boolean", "isLocked must be a boolean")
             assert(poi.isLocked == false, "existing POI uses documented false locking default")
+            for _, id in ipairs({91237, 91409}) do
+                local mapped = C_AreaPoiInfo.GetAreaPOIInfo(88007, id)
+                local unbound = C_AreaPoiInfo.GetAreaPOIInfo(nil, id)
+                for _, row in ipairs({mapped, unbound}) do
+                    assert(type(row.isLocked) == "boolean")
+                    assert(row.isLocked == (id == 91409))
+                end
+            end
             "#,
         )
         .unwrap();
@@ -75,6 +131,13 @@ fn legacy_populated_poi_does_not_publish_patch_fields() {
         local poi = C_AreaPoiInfo.GetAreaPOIInfo(84, 7000)
         assert(poi.isSuppressible == nil, "preserve legacy suppression field absence")
         assert(poi.isLocked == nil, "preserve legacy locking field absence")
+        for _, id in ipairs({91237, 91409}) do
+            local mapped = C_AreaPoiInfo.GetAreaPOIInfo(88007, id)
+            local unbound = C_AreaPoiInfo.GetAreaPOIInfo(nil, id)
+            for _, row in ipairs({mapped, unbound}) do
+                assert(row.isSuppressible == nil and row.isLocked == nil)
+            end
+        end
         "#,
     )
     .unwrap();

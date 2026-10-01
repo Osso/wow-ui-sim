@@ -15,6 +15,7 @@ pub mod c_addon_profiler;
 pub mod c_addons;
 pub mod c_allied_races;
 pub mod c_ardenweald_gardening;
+pub mod c_area_poi_info;
 pub mod c_arrow_callout_manager;
 pub mod c_artifact_relic_forge_ui;
 pub mod c_artifact_ui;

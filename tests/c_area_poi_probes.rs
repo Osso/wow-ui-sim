@@ -124,6 +124,8 @@ fn area_poi_table_reflects_sim_state_mutation() {
                 linked_ui_map_id: None,
                 is_current_event: false,
                 should_glow: true,
+                is_suppressible: false,
+                is_locked: false,
                 seconds_left: Some(90),
             },
         );

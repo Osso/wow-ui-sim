@@ -10,17 +10,47 @@
 //!   remaining seconds for a time-limited POI, or nothing for
 //!   permanent POIs / unknown ids.
 
-use super::ensure_namespace;
+use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_get, table_set, table_set_num,
     table_set_static,
 };
-use crate::lua_api::state::AreaPoiInfo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-pub(super) fn register_area_poi_surface(state: &mut LuaState) -> LuaResult<()> {
+/// Minimal area-POI metadata keyed by area poi id in
+/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and
+/// `GetAreaPOISecondsLeft`. Only the subset of retail fields used by
+/// Blizzard UI is carried; everything else is returned as nil /
+/// default.
+#[derive(Debug, Clone)]
+pub struct AreaPoiInfo {
+    pub area_poi_id: i32,
+    pub name: String,
+    /// UI-map id the POI is bound to. `None` when the POI is only
+    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is
+    /// nilable too, so both sides can be unbound).
+    pub ui_map_id: Option<i32>,
+    /// Normalized 0..=1 screen position on the map.
+    pub position: (f64, f64),
+    pub atlas_name: Option<String>,
+    pub description: Option<String>,
+    pub faction_id: Option<i32>,
+    pub icon_widget_set: Option<i32>,
+    pub linked_ui_map_id: Option<i32>,
+    pub is_current_event: bool,
+    pub should_glow: bool,
+    /// Explicit suppression input; existing rows use inferred false initialization.
+    pub is_suppressible: bool,
+    /// Explicit locking input; the API documents a false default.
+    pub is_locked: bool,
+    /// Seconds remaining until the POI expires. Drives
+    /// `GetAreaPOISecondsLeft`. `None` for permanent POIs.
+    pub seconds_left: Option<i32>,
+}
+
+pub(crate) fn register_area_poi_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_AreaPoiInfo")?;
     table_set_rust_fn_static(
         state,
@@ -127,6 +157,14 @@ fn push_area_poi_info_table(state: &mut LuaState, poi: &AreaPoiInfo) -> Val {
     table_set_static(state, t, "position", Val::Table(position_ref));
     table_set_static(state, t, "isCurrentEvent", Val::Bool(poi.is_current_event));
     table_set_static(state, t, "shouldGlow", Val::Bool(poi.should_glow));
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    {
+        table_set_static(state, t, "isSuppressible", Val::Bool(poi.is_suppressible));
+        table_set_static(state, t, "isLocked", Val::Bool(poi.is_locked));
+    }
     table_set_static(state, t, "highlightVignettesOnHover", Val::Bool(false));
     table_set_static(state, t, "highlightWorldQuestsOnHover", Val::Bool(false));
     table_set_static(state, t, "isAlwaysOnFlightmap", Val::Bool(false));

@@ -3,7 +3,6 @@
 mod account_store;
 mod achievement_info;
 mod anima_diversion;
-mod area_poi;
 mod auction_house;
 mod character_select;
 mod club_finder;
@@ -231,7 +230,7 @@ fn register_world_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
 fn register_map_and_encounter_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::register_map_prefix_tables(state)?;
     achievement_info::register_achievement_info_surface(state)?;
-    area_poi::register_area_poi_surface(state)?;
+    c_api::c_area_poi_info::register_area_poi_surface(state)?;
     auction_house::register_auction_house_surface(state)?;
     encounter_events::register_encounter_events_surface(state)?;
     encounter_warnings::register_encounter_warnings_surface(state)?;

@@ -218,32 +218,7 @@ impl Default for LfgRoleSelection {
     }
 }
 
-/// Minimal area-POI metadata keyed by area poi id in
-/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and
-/// `GetAreaPOISecondsLeft`. Only the subset of retail fields used by
-/// Blizzard UI is carried; everything else is returned as nil /
-/// default.
-#[derive(Debug, Clone)]
-pub struct AreaPoiInfo {
-    pub area_poi_id: i32,
-    pub name: String,
-    /// UI-map id the POI is bound to. `None` when the POI is only
-    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is
-    /// nilable too, so both sides can be unbound).
-    pub ui_map_id: Option<i32>,
-    /// Normalized 0..=1 screen position on the map.
-    pub position: (f64, f64),
-    pub atlas_name: Option<String>,
-    pub description: Option<String>,
-    pub faction_id: Option<i32>,
-    pub icon_widget_set: Option<i32>,
-    pub linked_ui_map_id: Option<i32>,
-    pub is_current_event: bool,
-    pub should_glow: bool,
-    /// Seconds remaining until the POI expires. Drives
-    /// `GetAreaPOISecondsLeft`. `None` for permanent POIs.
-    pub seconds_left: Option<i32>,
-}
+pub use crate::c_api::c_area_poi_info::AreaPoiInfo;
 
 /// Seeded achievement metadata keyed by achievement id in
 /// `SimState.achievements`. Drives

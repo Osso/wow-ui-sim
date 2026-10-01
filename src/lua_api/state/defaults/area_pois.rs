@@ -26,6 +26,8 @@ fn stormwind_portal_room_poi() -> AreaPoiInfo {
         linked_ui_map_id: None,
         is_current_event: false,
         should_glow: false,
+        is_suppressible: false,
+        is_locked: false,
         seconds_left: None,
     }
 }
@@ -43,6 +45,8 @@ fn legion_invasion_poi() -> AreaPoiInfo {
         linked_ui_map_id: None,
         is_current_event: true,
         should_glow: true,
+        is_suppressible: false,
+        is_locked: false,
         seconds_left: Some(3600),
     }
 }
@@ -50,6 +54,8 @@ fn legion_invasion_poi() -> AreaPoiInfo {
 fn warsong_gulch_poi() -> AreaPoiInfo {
     AreaPoiInfo {
         area_poi_id: 1001,
+        is_suppressible: false,
+        is_locked: false,
         name: "Warsong Gulch".into(),
         ui_map_id: Some(8685),
         position: (0.452, 0.641),
@@ -67,6 +73,8 @@ fn warsong_gulch_poi() -> AreaPoiInfo {
 fn cinderbrew_meadery_poi() -> AreaPoiInfo {
     AreaPoiInfo {
         area_poi_id: 1002,
+        is_suppressible: false,
+        is_locked: false,
         name: "The Cinderbrew Meadery".into(),
         ui_map_id: Some(1980),
         position: (0.518, 0.274),
@@ -84,6 +92,8 @@ fn cinderbrew_meadery_poi() -> AreaPoiInfo {
 fn darkmoon_island_poi() -> AreaPoiInfo {
     AreaPoiInfo {
         area_poi_id: 1004,
+        is_suppressible: false,
+        is_locked: false,
         name: "Darkmoon Island".into(),
         ui_map_id: Some(5861),
         position: (0.281, 0.734),
