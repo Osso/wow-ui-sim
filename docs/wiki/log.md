@@ -4,7 +4,7 @@ Audited `f442b0913`; updated [[gamepad-mapped-state]], [contract](../specs/gamep
 
 ## [2026-10-01] implementation | Record bounded Recent Allies producer
 
-Updated [[patch-12-0-5-api-audit]] and index, linking the [contract](../specs/recent-allies-state-data.md). Query implemented after actual 0/4 RED; generic lazy nil provider traced, no targeted obsolete provider found. Nested stack-rooting and independent explicit-input snapshots documented. Compilation, GREEN and final gates remain parent-owned; no completed-row/native credit.
+Updated [[patch-12-0-5-api-audit]] and index, linking the [contract](../specs/recent-allies-state-data.md). Query implemented after actual 0/4 RED; generic lazy nil provider traced, no targeted obsolete provider found. Nested stack-rooting and independent explicit-input snapshots documented. Saved producer `3666902bf` evidence now supersedes pending GREEN: actual 4/4, six source/TOC controls (not addon runtime integration), startup exit 0 with `[]`. Exact source row records bounded development coverage; all 362 source IDs retained. Independent Rust proof absent at recording; gates pending, no native/full-system/page credit.
 
 ## [2026-10-01] evidence | Reconcile mapped-stick current-pin boundary
 

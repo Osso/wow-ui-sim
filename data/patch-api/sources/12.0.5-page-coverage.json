@@ -306,6 +306,25 @@
       "independent_ledger": "/tmp/patch-12.0.5-charge-policy-independent-proof.md",
       "gate_ledger": "/tmp/patch-12.0.5-batch11-rust-gates.json",
       "gate_scope": "Independent saved 24 PASS confirmed at d8a93bec37dc09980e41dd37b63d0dd26be88668. Default cargo fmt --check and cargo check exit 0 without warnings at 5e15752e2d466b028cb87d8cde27b710546a14bc through docs-only 74e6c8845f446967060f4ff49c1cbef301fafe3a; zero changed Rust/config hashes. Historical startup [] is bound to saved d8 executable hash, not the later overwritten target path. No status reclassification, all-profile/native or whole-page acceptance."
+    },
+    {
+      "id": "recent-allies-state-data",
+      "symbols": [
+        "C_RecentAllies.GetRecentAllies",
+        "RecentAllyStateData.friendRequestSentThisSession"
+      ],
+      "scope": "Mainline 12.0.5 explicit disabled/empty/populated inputs, complete nested rows, opposite renamed boolean flags without old alias, optional nils and independent snapshots: actual RED 0/4 then GREEN 4/4. Six source/TOC controls are not addon runtime integration. Eligibility/default/order/ownership policies inferred; no native, full-system, all-profile or whole-page claim.",
+      "spec": "docs/specs/recent-allies-state-data.md",
+      "tests": [
+        "tests/recent_allies_state_data.rs"
+      ],
+      "inputs": "d0495e796",
+      "implementation": "3666902bf",
+      "compiled_revision": "3666902bfc0838d394a7a1ab6ca324d13395a1d9",
+      "proof": "development-green",
+      "ledger": "/tmp/patch-12.0.5-batch12-green-runs.json",
+      "startup_ledger": "/tmp/patch-12.0.5-batch12-green-startup-run.json",
+      "gate_scope": "Saved startup exit 0 and [] (zero Lua errors); independent Rust gates pending. /tmp/patch-12.0.5-recent-allies-independent-proof.md absent at recording; no gate completion claimed."
     }
   ],
   "source_rows": [
@@ -2512,9 +2531,11 @@
     },
     {
       "source_id": "structures-RecentAllyStateData-669",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "recent-allies-state-data"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact renamed state field covered by explicit-input actual-query fixtures at 3666902bf: RED 0/4, GREEN 4/4; linked spec owns nested data and inference limits. Six source/TOC controls are not addon runtime integration; saved same-revision startup exit 0, [], zero Lua errors. Independent Rust gates pending; no native/full-system/whole-page completion."
     },
     {
       "source_id": "structures-TransmogAppearanceSourceInfoData-671",

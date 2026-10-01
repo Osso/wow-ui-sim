@@ -4,9 +4,9 @@ The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention
 
 ## Content
 
-### Recent Allies snapshot producer — GREEN pending
+### Recent Allies snapshot producer — bounded GREEN
 
-[Recent Allies contract](../../specs/recent-allies-state-data.md) owns the bounded `structures-RecentAllyStateData-669` implementation and proof: four actual-query fixtures were RED at `ee3e27172`; the gated producer now publishes only explicitly supplied records. All nested tables stay stack-rooted until parent attachment. Previous query was a generic lazy namespace nil closure, not an explicit targeted provider. Compilation, GREEN and final gates remain parent-owned; no completed-row or native-parity credit.
+[Recent Allies contract](../../specs/recent-allies-state-data.md#tests-asserting-this-spec) owns exact `structures-RecentAllyStateData-669` accounting: inputs `d0495e796`, actual RED 0/4 at `ee3e27172`, producer `3666902bf` actual GREEN 4/4. Explicit-input nested snapshots publish opposite renamed flags, optional nils and independent results. Six run-1 source/TOC controls pass, not addon runtime integration; saved same-revision startup exits 0 with `[]` and zero Lua errors. [Coverage register](../../../data/patch-api/sources/12.0.5-page-coverage.json) records bounded development coverage only and retains all 362 source IDs. Independent Rust gates remain pending without an explicit supporting `/tmp/patch-12.0.5-recent-allies-independent-proof.md`; no native, full-system or whole-page claim. Previous query was a generic lazy namespace nil closure, not an explicit targeted provider; nested stack-rooting is documented in the contract.
 
 ### Source scope
 

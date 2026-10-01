@@ -4,11 +4,11 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 
 ## What it must do
 
-- [ ] Own an explicit C API input, initially disabled with no rows; never synthesize production allies.
-- [ ] Query only `C_RecentAllies.GetRecentAllies()` with zero arguments. Disabled input returns zero values; enabled empty input returns exactly one empty table.
-- [ ] Publish complete `RecentAllyData` rows with `stateData`, `characterData`, and `interactionData`, including explicit interaction sequences and context tables.
-- [ ] Publish distinct true/false `friendRequestSentThisSession` values with no `hasFriendRequestPending` alias. Preserve all other required values and optional nils.
-- [ ] Return independent nested snapshots; Lua mutations must not alter input or subsequent results.
+- [x] Own an explicit C API input, initially disabled with no rows; never synthesize production allies.
+- [x] Query only `C_RecentAllies.GetRecentAllies()` with zero arguments. Disabled input returns zero values; enabled empty input returns exactly one empty table.
+- [x] Publish complete `RecentAllyData` rows with `stateData`, `characterData`, and `interactionData`, including explicit interaction sequences and context tables.
+- [x] Publish distinct true/false `friendRequestSentThisSession` values with no `hasFriendRequestPending` alias. Preserve all other required values and optional nils.
+- [x] Return independent nested snapshots; Lua mutations must not alter input or subsequent results.
 - [ ] Limit this modeled surface and fixtures to `retail-12-0-5` plus mainline `profile-retail`/`client-ptr`.
 
 ### Declared nested fields
@@ -32,7 +32,7 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 
 ## Implementation inventory
 
-- `src/c_api/c_recent_allies.rs`: explicit input, all nested rows, and bounded `GetRecentAllies` snapshot producer; implemented, GREEN pending.
+- `src/c_api/c_recent_allies.rs`: explicit input, all nested rows, and bounded `GetRecentAllies` snapshot producer; implemented; four bounded actual-query fixtures GREEN at `3666902bf`.
 - `src/c_api/mod.rs`: gated public input module.
 - `src/c_api/registration.rs`: query registration under `retail-12-0-5` and mainline retail/PTR gates; other profiles unchanged.
 - `src/lua_api/state/sim_state.rs`: per-environment input storage.
@@ -45,7 +45,9 @@ Bounded 12.0.5 audit slice `structures-RecentAllyStateData-669`: replace `hasFri
 
 Proof ledger: input/fixtures committed in `d0495e796`; parent build at `ee3e2717213972f9c99d3ee26c3220ac57cfa983` succeeded (`/tmp/patch-12.0.5-batch12-red-build.json` and `.log`). Actual RED (`/tmp/patch-12.0.5-batch12-red-run.log` and `.json`) is 0/4: callable query returned one nil, failing disabled return count, enabled empty-table type, populated length, and independent snapshot identity. Fixtures call the actual registered query without test-time replacement.
 
-Producer implemented after this RED; compilation, GREEN and final checks remain parent-owned and pending. All behavioral checkboxes remain unverified; formatting is not behavioral proof.
+Producer `3666902bf` passes all four actual-query fixtures: `/tmp/patch-12.0.5-batch12-green-runs.json` and `/tmp/patch-12.0.5-batch12-green-run-0.log` record exit 0, 4/4 at full revision `3666902bfc0838d394a7a1ab6ca324d13395a1d9`. Run-1 records six passing source/TOC controls, not addon runtime integration. Saved `/tmp/patch-12.0.5-batch12-green-startup-run.json`, `-startup.json` and `-startup.log` record the same revision's `--no-addons --no-saved-vars lua-errors` run: exit 0, `[]`, zero Lua errors.
+
+Bounded behavior above is development-GREEN, not native or full-system acceptance. Independent Rust gates remain pending: `/tmp/patch-12.0.5-recent-allies-independent-proof.md` was absent when this evidence was recorded; no formatting/check/readability completion is claimed. Profile gating remains source-accounted, not an all-profile execution proof.
 
 Old-provider trace: no explicit `C_RecentAllies`/`GetRecentAllies` registration existed in `src`. `init_lua_state` runs Rust globals registration before `init_runtime_surface_bootstrap`; that bootstrap's `_G.__index` creates missing `C_*` namespaces, then `__wow_namespace_mt.__index` installs `function() return nil end` for missing methods. New registration supplies the concrete method before bootstrap. No targeted obsolete provider exists to remove; generic other-namespace fallback remains untouched.
 
@@ -53,9 +55,9 @@ Rooting: each newly allocated output/nested table is pushed immediately, stays r
 
 ## Known gaps (current cycle)
 
-- [ ] Parent: compile the implemented producer, establish GREEN for all four grouped fixtures, and run final gates; successful pre-producer build and actual RED are recorded above.
+- [ ] Independent Rust gates: record explicit supporting proof in `/tmp/patch-12.0.5-recent-allies-independent-proof.md`; saved development GREEN and startup do not establish these gates.
 - [ ] Future native probe: query disabled/enabled empty/populated states; record return counts, nested nils, renamed true/false flags, ordering and mutations across repeated queries. Native eligibility and default state remain unknown.
 
 ## Out of scope
 
-Lookup, search, mutation, readiness/support queries, events, location preference, production records, earlier/nonmainline behavior, vendor/cache edits, Cargo targets, delegation, push, and worker-run builds/checks/runtime tests. No full-audit completion or native parity credit.
+Lookup, search, mutation, readiness/support queries, events, location preference, production records, and earlier/nonmainline behavior. No full-system, full-page audit completion or native parity credit.
