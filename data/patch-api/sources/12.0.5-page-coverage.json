@@ -653,7 +653,7 @@
       "source_id": "prose-2026-03-12-029",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Bounded partial proof only: docs/specs/aura-classification-flags.md#reconciled-batch28-bounded-partial-proof--2026-10-01. Producer bff26b9c1 publishes explicit raid/nameplate/from-player plain booleans; deterministic fixture e652d9610 has saved seven PASS in shared build 7926dfdfe, independently accepted by final followup. Fresh fmt passed; source-identical prior check reused. Historical unique controls 121/123 PASS, two unresolved failures, preexisting UNPROVEN; BROAD NOT GREEN. Saved startup 0 []. Whole native five-boolean secrecy delta, native combat/secret policies, generic declassification, all profiles and public target-input model unproved. Row remains pending; no whole-row/page credit."
     },
     {
       "source_id": "prose-2026-03-12-032",

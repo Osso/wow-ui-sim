@@ -40,7 +40,7 @@ New complete constructor sites: `tests/aura_table_shape.rs::{helpful_non_raid_fi
 
 ## Tests asserting this spec
 
-Existing five `aura_table_shape` tests retain boolean-field coverage. The target debuff assertion describes its explicit fixture classification rather than asserting a general helpfulness/raid coupling. The old player shape test now compares from-player publication with the explicit host record at queried slot 1, also asserting the returned name and source identity.
+Existing five `aura_table_shape` tests retain boolean-field coverage. The target debuff assertion describes its explicit fixture classification rather than asserting a general helpfulness/raid coupling. The old player shape test now installs a deterministic helpful/non-raid host record with source `player` and explicit from-player false, then asserts returned name/source identity and explicit flag equality.
 
 Grouped regression filters:
 
@@ -62,19 +62,37 @@ Inspected parent artifacts `/tmp/patch-12.0.5-batch28-green-revision.txt`, `-gre
 
 The prior expectation was invalid: `SimState::seed_default_game_state` uses `default_player_buffs`, which selects a clock-dependent subset from `BUFF_POOL`. `build_auras_from_indices` assigns instance IDs starting at 1 and explicit from-player flags from the selected source. Party-sourced Arcane Intellect (`party2`), Mark of the Wild (`party3`), and Battle Shout (`party1`) precede other player-source entries in the pool and can occupy slot 1 with an explicit false flag. The old writer forced true for player-unit queries, masking this input distinction. The failure log does not identify which party aura was selected.
 
-Correction reads the unchanged host aura with instance ID 1, checks returned name/source identity, and compares `isFromPlayerOrPlayerPet` with that record's explicit input. All seven typed boolean outputs and remaining exact boolean assertions are retained; new regression tests, producer, and seeds are unchanged. Focused rerun is parent-owned and pending after this test correction. Separate broad `aura` filter failures in `on_update_modes` and `unit_auras_private` (nativeSpecialization event) are excluded, not treated as shape proof or fixed here.
+Intermediate correction `16e2945a3` compared the clock-selected host record and recorded saved 7/7 PASS, but independent source review found its source identity assertion incomplete: player queries force sourceUnit `player`, whereas the selected host record can be party-sourced. Final fixture fix `e652d9610` replaces clock selection with a deterministic explicit record; assertions and production identity remain unchanged.
 
-Existing-control filter: `cargo test --test integration aura_table_shape::`. Constructor-compilation controls also include `c_unit_auras_admin::`, `aura_api::`, and the PTR `patch_12_1_audit` target; no passing focused group after this correction or cross-profile proof is claimed here.
+### Reconciled batch28 bounded partial proof — 2026-10-01
+
+Evidence: `/tmp/patch-12.0.5-aura-classification-independent-proof.md` and `/tmp/patch-12.0.5-aura-classification-followup-proof.md`, read in full. Final followup resolves only fixture reliability and accepts bounded explicit-input publication/snapshot behavior.
+
+| Scope | Result | Proof level |
+|---|---|---|
+| Initial private-import compile failure; corrected behavioral RED | Compile failure has no RED credit; corrected 6 PASS / 1 FAIL at player isRaid mismatch | Saved parent artifacts |
+| Producer `bff26b9c1` | New explicit/snapshot cases PASS; focused 6/7 with old forced-from-player assertion failure | Saved parent runtime |
+| Deterministic fixture `e652d9610`, shared build `7926dfdfe` | Seven shape/classification/snapshot cases PASS | Saved batch29 red-fixed build/run entry 1; final independent followup PASS, not rerun |
+| Default formatting/production compilation | Fresh followup fmt exit 0; prior check exit 0 reused across 1,488 identical source/Cargo/build/config hashes | Snapshot-scoped independent gates; not current whole-worktree proof |
+| Broader controls | Unique 121 PASS / 2 FAIL out of 123; overlapping private filter adds zero unique tests | Historical saved runtime, BROAD NOT GREEN |
+| Startup | Exit 0, `[]` | Saved producer startup; no fresh startup |
+
+Unresolved controls: `on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases` (managed dirty phase) and `unit_auras_private::native_unit_event_dispatch_respects_unit_filter` (nativeSpecialization payload/unit dispatch). Exact failed Lua assertions are unidentified. **PREEXISTING UNPROVEN**: no pre-producer baseline establishes their origin; focused followup neither fixes nor supersedes them.
+
+Shared build revision `7926dfdfe19b2ee236f14f8084153b604dc1c4d5` binds the saved seven PASS to integration SHA-256 `c96aa74ceffe25c1461c5a97b73a35e322ad8babecc1d2a0175c0e6300b240c8`. Its private-anchor run is excluded. Followup source hashes: `auras.rs` `0d010b9d645f4875e9daa0b674f1d163ac969a51e08e5dd0194ece30327c86bd`, `game_data.rs` `931e22d3519ab6057ba2e58b817db9a471a32c83b04856fa3baa417fdc7ea68b`; fixture hash `4a160c4c8a42e1556ad778416f8e5718e78660a6445a2037343696c429559271`. Later concurrent bytes are not covered.
+
+Exact retained row `prose-2026-03-12-029` receives bounded partial proof only and remains audit-pending: ordinary explicit host inputs do not establish the whole native five-boolean secrecy delta. Accounting remains **268 pending / 80 bounded / 14 partial = 362**, source SHA unchanged. Native combat/secret policies remain untested; no generic declassification, native parity, all-profile execution, public target-input model, or whole-row/page credit. Overall goal **INPROGRESS**.
 
 ## Known gaps (current cycle)
 
 - [x] Parent observed compiled behavioral RED after fixing the private import: player `isRaid` mismatch, 6 PASS / 1 FAIL.
 - [x] Producer changed the shared classification writer to use `is_raid`, `is_nameplate_only`, and `is_from_player_or_player_pet` directly; existing constructors and fixed target inputs remain unchanged.
-- [ ] Parent focused rerun after old-test correction and verifier acceptance remain pending. Saved producer build passed, but focused group remained 6 PASS / 1 FAIL. Requirement checkboxes above remain open; correction slice performs formatting and commit only, without builds, tests, checks, startup, or delegation.
+- [x] Deterministic fixture followup independently accepted bounded saved seven PASS; initial source finding resolved without weakening assertions.
+- [ ] Whole native five-boolean secrecy delta, combat/secret policies and broader acceptance remain open; requirement checkboxes above do not imply native verification.
 - [ ] Target queries currently read fixed Rust fixtures, with no host-populated target aura store. Tests preserve that pathway rather than adding or pretending to exercise target inputs.
 
 ## Out of scope
 
 - Secret quantitative aura fields, native classification/default inference, private-aura modeling, or native-client parity: the retained row does not establish those contracts.
 - New filtering semantics (including RAID/nameplate filters), acquisition, private auras, events, lifecycle, admin setters, storage relocation, or unrelated refactors: producer slice changes only the required shared classification read path and dedicated spec.
-- Shared wiki, coverage, PLAN, audit accounting, unrelated changes, delegation, build/check/test execution, push, and deployment: expressly excluded.
+- This docs reconciliation changes only this spec, wiki index/log and the exact retained row's bounded proof note. Private-anchor specs/code/tests, PLAN, other shared docs, delegation, builds/tests, push and deployment remain excluded.
