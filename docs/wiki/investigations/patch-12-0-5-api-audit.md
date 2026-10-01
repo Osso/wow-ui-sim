@@ -1,10 +1,16 @@
 # Patch 12.0.5 API Audit
 
+### Party ping restrictions — bounded parent PASS, independent pending
+
+[Batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) owns corrected compiled RED `12e4a1a28` **0 PASS / 7 FAIL**; initial missing-trait compilation failure excluded. Producer `77ab2785f` compile exit0, saved **7 ping + 6 ready-check + 5 predicate + 11 group = 29 selected PASS**, parent startup exit0 `[]`; exact metadata/hashes in linked ledger. Independent verifier273 report is pending, not credited. Strict public enum validation, secret rejection, blocked error and None default are inferred simulator policies; no native `AllowedWhenUntainted`, actual ping delivery, role permissions or ping events proof.
+
+Final March31 **`prose-2026-03-31-169` stays audit-pending** with ready-check independent and ping parent subset links only. Countdown/loot remain open; historical March25 superseded prose retained. **264 pending / 84 bounded / 14 partial = 362**, IDs/source SHA and unrelated statuses unchanged; **IN PROGRESS**, no whole-source/page or all-profile credit.
+
 ### Chat lockdown ready checks — bounded independent PASS
 
 [Ready-check proof](../../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01) owns actual compiled RED `8649fe072` (**1 PASS / 5 FAIL**, compile 0/162.49s) and producer GREEN `f62420536` (**6 ready + 5 predicate + 11 group = 22 PASS**, compile 0/296.24s), plus saved startup exit0 `[]`. Intervening docs `6f264ce3e` is not compilation provenance. Full verifier266 report now accepts bounded saved behavior and wiring/readability; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later concurrent ping inputs excluded; linked spec owns exact gate artifacts. Error reporting, legacy alias and explicit-input policy are simulator inferences, not native restriction parity.
 
-Exact final **`prose-2026-03-31-169` remains audit-pending** with bounded ready-check subset link only; countdown/ping/loot undone. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
+Exact final **`prose-2026-03-31-169` remains audit-pending** with bounded independently accepted ready-check subset; [later ping parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) is not independent acceptance. Countdown/loot remain undone. Superseded March25 prose is not the final contract. **264 pending / 84 bounded / 14 partial = 362**, IDs/text SHA256 and unrelated statuses retained; **IN PROGRESS**, no whole-row/page/native/all-profile acceptance.
 
 ### Chat lockdown predicate — bounded independent PASS
 

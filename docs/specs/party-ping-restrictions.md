@@ -1,6 +1,6 @@
 # Party ping restrictions
 
-Bounded Retail 12.0.5 `C_PartyInfo.GetRestrictPings` / `SetRestrictPings` contract. The provider registers both methods through existing `src/c_api/c_party_info.rs`, with epoch-gated implementation in `c_party_info/ping_restrictions.rs` over the explicit per-environment numeric enum input. Seven fixtures await parent GREEN; no Lua workaround or new backing abstraction is added. See [Lua API state architecture](../lua-api.md).
+Bounded Retail 12.0.5 `C_PartyInfo.GetRestrictPings` / `SetRestrictPings` contract. The provider registers both methods through existing `src/c_api/c_party_info.rs`, with epoch-gated implementation in `c_party_info/ping_restrictions.rs` over the explicit per-environment numeric enum input. Seven ping fixtures now have saved parent GREEN; independent acceptance remains pending; no Lua workaround or new backing abstraction is added. See [Lua API state architecture](../lua-api.md).
 
 ## Evidence
 
@@ -15,14 +15,14 @@ Current cached `Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameMan
 
 ## What it must do
 
-- [ ] Return exactly one required numeric enum from this environment's explicit `party_ping_restriction` input. **INFERRED SIMULATOR DEFAULT:** a fresh environment starts at None=0; native initial/reset policy is unknown.
-- [ ] Public setter accepts all four enum values, stores the selection, and returns zero values. Repeating a setter selection preserves it; an explicit None argument resets it. Public changes in one environment cannot affect another.
-- [ ] With explicit [chat messaging lockdown](chat-messaging-lockdown.md) true, reject the setter before mutation; getter remains readable. With lockdown false, setter succeeds. Cover all four combinations of combat and lockdown; combat itself neither blocks nor activates the restriction.
-- [ ] **SIMULATOR POLICY:** blocked calls fail fast with an explicit nonempty runtime error detectable by `pcall`; exact native error convention/text is unknown. Future producer reuses existing `reject_chat_messaging_lockdown` rather than inferring lockdown from combat.
-- [ ] **STRICT SIMULATOR VALIDATION POLICY:** missing/nil, fractional, unknown numeric, string, boolean, table and function enum arguments reject atomically, without coercion. This is not native malformed-input characterization.
-- [ ] **CONSERVATIVE SIMULATOR SECURITY POLICY:** reject actual secret enum arguments in both untainted and tainted callers without unwrapping, mutation, declassification or clearing/replacing caller taint. Cached `AllowedWhenUntainted` semantics are **not modeled** by this stricter policy; untainted-secret acceptance remains a known gap.
+- [x] Return exactly one required numeric enum from this environment's explicit `party_ping_restriction` input. **INFERRED SIMULATOR DEFAULT:** a fresh environment starts at None=0; native initial/reset policy is unknown.
+- [x] Public setter accepts all four enum values, stores the selection, and returns zero values. Repeating a setter selection preserves it; an explicit None argument resets it. Public changes in one environment cannot affect another.
+- [x] With explicit [chat messaging lockdown](chat-messaging-lockdown.md) true, reject the setter before mutation; getter remains readable. With lockdown false, setter succeeds. Cover all four combinations of combat and lockdown; combat itself neither blocks nor activates the restriction.
+- [x] **SIMULATOR POLICY:** blocked calls fail fast with an explicit nonempty runtime error detectable by `pcall`; exact native error convention/text is unknown. Provider reuses existing `reject_chat_messaging_lockdown` rather than inferring lockdown from combat.
+- [x] **STRICT SIMULATOR VALIDATION POLICY:** missing/nil, fractional, unknown numeric, string, boolean, table and function enum arguments reject atomically, without coercion. This is not native malformed-input characterization.
+- [x] **CONSERVATIVE SIMULATOR SECURITY POLICY:** reject actual secret enum arguments in both untainted and tainted callers without unwrapping, mutation, declassification or clearing/replacing caller taint. Cached `AllowedWhenUntainted` semantics are **not modeled** by this stricter policy; untainted-secret acceptance remains a known gap.
 
-Input, provider and fixtures are gated by `retail-12-0-5`; no native filtering, permissions, event or native-state producer claim follows. Requirements remain unchecked pending parent GREEN; implementation has not been compiled or executed.
+Input, provider and fixtures are gated by `retail-12-0-5`; no native filtering, permissions, event or native-state producer claim follows. Checked requirements mean bounded saved parent fixture proof only, not independent acceptance or native parity.
 
 ## How it works
 
@@ -44,12 +44,21 @@ Input, provider and fixtures are gated by `retail-12-0-5`; no native filtering, 
 
 Parent filter: `cargo test --test integration party_ping_restrictions::`.
 
-**Proof ledger, 2026-10-01:** parent compiled RED at `12e4a1a28` (inputs/tests `f71d4d832`, import repair `12e4a1a28`): `/tmp/patch-12.0.5-batch32-red-fixed-build-result.json` exit 0; `-run.log` reports seven selected FAIL, numeric getter assertions and accepted malformed/secret setters. Fixtures establish callable slots: lazy stubs are not absent methods. No concrete previous ping owner was found in simulator source. Producer formatted only; parent owns compilation and GREEN. No build, test, check or native probe run in this implementation slice.
+**Proof ledger, 2026-10-01:** parent compiled RED at `12e4a1a28` (inputs/tests `f71d4d832`, import repair `12e4a1a28`): `/tmp/patch-12.0.5-batch32-red-fixed-build-result.json` exit 0; `-run.log` reports seven selected FAIL, numeric getter assertions and accepted malformed/secret setters. Fixtures establish callable slots: lazy stubs are not absent methods. No concrete previous ping owner was found in simulator source. Initial missing-trait compilation failure is excluded from behavioral RED. No build, test, check or native probe ran in this docs reconciliation.
+
+## Reconciled batch32 parent proof — 2026-10-01
+
+Producer `77ab2785f5544ebed9958fc937c34900b82f2cea` has saved parent compile exit **0** in **213.82s** (`/tmp/patch-12.0.5-batch32-green-build-result.json`, build log/JSONL). Integration executable SHA256 `a3fc155dd66e3c967246e6e2226a58dcceab8dfae1d42b2ece8592e815352e1c` identifies all four runs in `/tmp/patch-12.0.5-batch32-green-runs.json`: **7 ping + 6 ready-check + 5 predicate + 11 group = 29 selected PASS**, each exit0, with actual summaries in `-run-0.log` through `-run-3.log`. Seven ping fixtures establish only the checked bounded policies above; controls do not expand ping coverage.
+
+Parent startup at the same producer is exit **0**, JSON **[]** (`/tmp/patch-12.0.5-batch32-green-startup-run.json`, `-startup.json`, `-startup.log`), executable SHA256 `caec6acd9c8129ae3d5baa9d88370242d578ae7bc1e814ad57722f43f80cdcec`. These are inspected saved parent artifacts, not fresh runs or independent proof. `/tmp/patch-12.0.5-ping-restrictions-independent-proof.md` is pending; no independent acceptance or gate result is credited without its actual report.
+
+Final March31 `prose-2026-03-31-169` remains **audit-pending**: bounded ping parent proof supplements the separately accepted ready-check subset; countdown and loot remain open. Preserve **264 pending / 84 bounded / 14 partial = 362**, all source IDs/source SHA and historical superseded March25 prose. Strict enum validation, blocked error convention, None default and conservative secret rejection are inferred simulator policies, not native `AllowedWhenUntainted` parity, actual ping delivery, role permissions or ping events. No whole-source/page credit.
 
 ## Known gaps (current cycle)
 
 - [x] Compile and execute the seven fixtures as RED before producer implementation (saved parent evidence above).
-- [ ] Prove the implemented bounded provider with parent compilation and seven-fixture GREEN.
+- [x] Prove the implemented bounded provider with saved parent compilation and seven-fixture GREEN.
+- [ ] Independent bounded acceptance after the actual verifier report.
 - [ ] Native `AllowedWhenUntainted` secret acceptance and native malformed/blocked error conventions remain unverified.
 
 ## Out of scope
