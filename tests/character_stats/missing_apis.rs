@@ -10,10 +10,10 @@ fn assert_numeric_returns(env: &WowLuaEnv, query: &str, count: usize, may_return
         local function check(...)
             local count = select('#', ...)
             assert(count == {count} or ({may_return_nothing} and count == 0),
-                '{query}: unexpected return count ' .. count)
+                {query:?} .. ': unexpected return count ' .. count)
             for index = 1, count do
                 assert(type(select(index, ...)) == 'number',
-                    '{query}: nonnumeric return ' .. index)
+                    {query:?} .. ': nonnumeric return ' .. index)
             end
         end
         check({query})
