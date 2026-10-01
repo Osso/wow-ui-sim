@@ -2,9 +2,9 @@
 
 [[patch-12-0-5-api-audit#Quest accept confirmation — bounded independent PASS]] links the [contract proof](../specs/quest-accept-confirmation.md#tests-asserting-this-spec): producer `e5ab15302`, RED 1 PASS/4 missing-method FAIL, GREEN build 510.99s, saved 5 quest + 6 prompt and fresh 13 lifecycle controls PASS; snapshot fmt/check exit 0. Security/rooting source-only; separate parent hash-bound normal startup exit 0 `[]`, zero errors, 12.70s, not verifier-run. Exact event row 558 gains bounded coverage; 362 IDs/source hash retained. Historical unrelated bin-test failure remains; no broad-suite/native/popup/all-profile/full-page GREEN. Audit **IN PROGRESS**.
 
-## [2026-10-01] input/spec | Separate DamageMeter aggregates and details
+## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
 
-[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links the [structure contract](../specs/damage-meter-combat-source.md): six unrun grouped fixtures and empty-default input structs only; existing seeded producer unchanged. Parent compilation/actual RED pending; no security enforcement or row-completion claim.
+[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links the [structure contract/proof](../specs/damage-meter-combat-source.md): predecessor parent RED 0/6, C API-owned explicit queries/reset and fresh aggregate/detail snapshots; seeded Lua producer removed. Nine grouped fixtures await parent GREEN. Combat publication explicitly blocked, secret selectors rejected without unwrapping; no native secrecy, earlier-profile or row-completion claim.
 
 ## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
 

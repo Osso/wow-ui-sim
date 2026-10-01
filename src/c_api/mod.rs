@@ -164,6 +164,8 @@ use rilua::vm::state::LuaState;
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
     c_weather::register(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-5")]
     c_encounter_timeline::register(state)?;
     c_intl::register(state)?;

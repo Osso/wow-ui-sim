@@ -49,7 +49,6 @@ pub(crate) mod contribution_collector_defaults;
 pub(crate) mod cooldown_viewer_defaults;
 pub(crate) mod cpp_mixin_stubs;
 pub(crate) mod damage_meter_scrollbox;
-pub(crate) mod damage_meter_state;
 pub(crate) mod date_and_time_defaults;
 pub(crate) mod debug_environment_defaults;
 pub(crate) mod details_saved_variables;

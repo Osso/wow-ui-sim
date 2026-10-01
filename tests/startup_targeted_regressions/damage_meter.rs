@@ -1,4 +1,4 @@
-//! Input/spec-first 12.0.5 fixtures. Parent must run actual RED before publication.
+//! Explicit 12.0.5 snapshots; parent owns compilation and runtime proof.
 #![cfg(feature = "retail-12-0-5")]
 
 use super::*;
@@ -331,5 +331,98 @@ fn damage_meter_queries_return_independent_nested_snapshots() {
     assert_query(
         &other,
         "assert(#C_DamageMeter.GetAvailableCombatSessions() == 0)",
+    );
+}
+
+#[test]
+fn damage_meter_ambiguous_partial_selectors_return_empty_details() {
+    let env = fixture_env();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        let input = &mut state.damage_meter;
+        let details = input.source_details[&(SESSION_ID, DAMAGE_DONE, source_key())].clone();
+        let same_creature = DamageMeterSourceKey {
+            source_guid: Some("Creature-other".into()),
+            source_creature_id: Some(901),
+        };
+        let same_guid = DamageMeterSourceKey {
+            source_guid: source_key().source_guid,
+            source_creature_id: Some(902),
+        };
+        input
+            .source_details
+            .insert((SESSION_ID, DAMAGE_DONE, same_creature), details.clone());
+        input
+            .source_details
+            .insert((SESSION_ID, DAMAGE_DONE, same_guid), details);
+    }
+    assert_query(
+        &env,
+        r#"
+        assertEmptyDetails(C_DamageMeter.GetCombatSessionSourceFromID(47, Enum.DamageMeterType.DamageDone, nil, 901))
+        assertEmptyDetails(C_DamageMeter.GetCombatSessionSourceFromType(Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone, "Creature-0-1-2-3-901-0000000047", nil))
+        local exact = C_DamageMeter.GetCombatSessionSourceFromID(47, Enum.DamageMeterType.DamageDone, "Creature-0-1-2-3-901-0000000047", 901)
+        assert(#exact.combatSpells == 1)
+        assert(#C_DamageMeter.GetAvailableCombatSessions() == 1)
+    "#,
+    );
+}
+
+#[test]
+fn damage_meter_secret_selectors_reject_without_unwrapping() {
+    let env = fixture_env();
+    // Rejection is bounded simulator policy, not AllowedWhenUntainted parity.
+    assert_query(
+        &env,
+        r#"
+        local id = secretwrap(47)
+        local kind = secretwrap(Enum.DamageMeterSessionType.Current)
+        local meter = secretwrap(Enum.DamageMeterType.DamageDone)
+        local guid = secretwrap("Creature-0-1-2-3-901-0000000047")
+        local creature = secretwrap(901)
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, id, Enum.DamageMeterType.DamageDone))
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromType, kind, Enum.DamageMeterType.DamageDone))
+        assert(not pcall(C_DamageMeter.GetCombatSessionFromID, 47, meter))
+        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromID, 47, Enum.DamageMeterType.DamageDone, guid, nil))
+        assert(not pcall(C_DamageMeter.GetCombatSessionSourceFromType, Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone, nil, creature))
+        assert(not pcall(C_DamageMeter.GetSessionDurationSeconds, kind))
+        assert(#C_DamageMeter.GetAvailableCombatSessions() == 1)
+        assert(#C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone).combatSources == 1)
+    "#,
+    );
+}
+
+#[test]
+fn damage_meter_combat_publication_is_explicitly_blocked() {
+    let env = fixture_env();
+    env.state().borrow_mut().player.in_combat = true;
+    assert_query(
+        &env,
+        r#"
+        local queries = {
+            function() return C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone) end,
+            function() return C_DamageMeter.GetCombatSessionFromType(Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone) end,
+            function() return C_DamageMeter.GetCombatSessionSourceFromID(47, Enum.DamageMeterType.DamageDone, nil, 901) end,
+            function() return C_DamageMeter.GetCombatSessionSourceFromType(Enum.DamageMeterSessionType.Current, Enum.DamageMeterType.DamageDone, nil, 901) end,
+        }
+        for _, query in ipairs(queries) do
+            local ok, message = pcall(query)
+            assert(not ok and string.find(message, "field secrecy is not modeled", 1, true))
+        end
+        assert(#C_DamageMeter.GetAvailableCombatSessions() == 1)
+        C_DamageMeter.ResetAllCombatSessions()
+        assert(not pcall(queries[1])) -- empty input cannot bypass the combat block
+    "#,
+    );
+    env.state().borrow_mut().player.in_combat = false;
+    assert_query(
+        &env,
+        "assertEmptySession(C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone))",
+    );
+    install_fixture(&env);
+    assert_query(
+        &env,
+        "assert(#C_DamageMeter.GetCombatSessionFromID(47, Enum.DamageMeterType.DamageDone).combatSources == 1)",
     );
 }

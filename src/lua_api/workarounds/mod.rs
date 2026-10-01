@@ -192,7 +192,6 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::frame_helper_defaults::apply_bootstrap(lua)?;
     temporary::event_scheduler_state::apply_bootstrap(lua)?;
     temporary::combat_log_state::apply_bootstrap(lua)?;
-    temporary::damage_meter_state::apply_bootstrap(lua)?;
     temporary::encounter_state::apply_bootstrap(lua)?;
     temporary::housing_catalog_state::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;

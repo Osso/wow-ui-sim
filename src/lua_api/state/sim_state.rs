@@ -127,7 +127,7 @@ pub struct SimState {
     pub azerite_essence: AzeriteEssenceState,
     pub azerite_empowered: AzeriteEmpoweredItemState,
     pub barber_shop: BarberShopState,
-    /// Input only; DamageMeter query publication is pending actual RED.
+    /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     #[cfg(feature = "retail-12-0-5")]
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
     pub major_factions: HashMap<i64, MajorFactionData>,

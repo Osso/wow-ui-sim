@@ -5394,3 +5394,7 @@ Updated index and [[spell-charge-state]] to link current proof SSOT rather than 
 ## [2026-10-01] evidence | Reconcile independent party acceptance
 
 [Party contract](../specs/party-connection.md#tests-asserting-this-spec) owns independent 55/55 reuse, wiring/readability PASS and snapshot-scoped default fmt/check. Exact `prose-2026-03-31-182`/`party-connection` accounting retains 362 IDs and unrelated statuses. Parent startup exit 0, `[]`, 7.85s remains separately attributed; no current whole-worktree, native/network/profile or whole-page claim.
+
+## [2026-10-01] implementation | Replace seeded DamageMeter producer
+
+[Structure contract/proof](../specs/damage-meter-combat-source.md#tests-asserting-this-spec) owns predecessor parent RED 0/6, current C API registration/lookup/reset and stack-rooted snapshots. [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] retains source accounting; old heading is historical. Seeded Lua producer removed without fallback; nine grouped fixtures await parent compilation/GREEN. Applicable combat annotation enforcement absent in inspected surfaces: all four combat getters explicitly blocked, secret selectors rejected without unwrapping. No native, earlier-profile, broad security or source-row completion credit.

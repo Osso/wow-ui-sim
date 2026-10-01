@@ -2,7 +2,7 @@
 
 ### DamageMeter input only — pending RED
 
-[Structure contract](../../specs/damage-meter-combat-source.md) owns exact `structures-DamageMeterCombatSource-639`: empty-default C API input structs separate session-list rows, session/meter aggregates and per-source details. Six grouped fixtures replace listed seed-dependent tests; query bootstrap remains unchanged. Compilation/actual RED are parent-owned and unrun; no producer, disclosure enforcement, native parity or row-completion credit. Plain Rust input is not a security representation; combat publication remains blocked on applicable enforcement evidence. Historical 12.0.0 seed proof does not establish this corrected contract.
+[Structure contract](../../specs/damage-meter-combat-source.md#tests-asserting-this-spec) owns exact `structures-DamageMeterCombatSource-639` and current proof ledger. Historical input-only heading retained for existing links: parent now observed six-case RED at `97f7edd2d`; C API queries/reset and stack-rooted snapshots replace the seeded Lua producer with no fallback. Nine grouped fixtures await parent compilation/GREEN. Combat getters explicitly error because applicable field/annotation enforcement was not found; typed selectors reject secrets without unwrapping. Only source implementation/scoped formatting, not disclosure parity, broad security acceptance, earlier-profile execution or row-completion credit. Historical 12.0.0 seed proof does not establish this corrected contract.
 
 ### Spell confirmation prompts — bounded independent PASS
 
