@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
+
+[[patch-12-0-5-api-audit#UnitSpellTargetName snapshot — partial GREEN]] links the [contract proof](../specs/unit-spell-target-name.md#tests-asserting-this-spec): inputs `c14076510` RED 0/10, producer `5beaf7545` compiled at `024afed64`, target GREEN 10/10 plus flyout 14/14 and vehicle 22/22 controls; saved startup exit 0 with `[]`. Exact dated PTR row `prose-2026-03-12-041` has partial development coverage; all 362 IDs and unrelated statuses retained. Player caster and explicit snapshot only; actual targeting, nonplayer caster and native semantics unclaimed. Independent verifier 141 final current gates pending; proof artifact absent at accounting time.
+
 ## [2026-10-01] evidence | Bounded charge policy and XML acceptance
 
 [[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] links three exact charge-table source IDs and [restriction contract](../specs/cooldown-restriction.md): independent policy/charge/ignoreGCD confirmation and recorded default fmt/check PASS; the linked contract owns proof artifacts and revision scope. Startup `[]` is historical, not proof of the current binary. [[spell-charge-state]] records producers; secret spell identifiers/native hooks/other cooldown policies remain open. XML verifier 124 confirms five bounded declarative/getter cases; no whole-row/page completion.

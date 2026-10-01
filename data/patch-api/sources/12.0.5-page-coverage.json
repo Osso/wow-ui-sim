@@ -326,6 +326,24 @@
       "startup_ledger": "/tmp/patch-12.0.5-batch12-green-startup-run.json",
       "independent_ledger": "/tmp/patch-12.0.5-recent-allies-independent-proof.md",
       "gate_scope": "Independent bounded producer PASS; default fmt/check exit 0 and scoped readability pass over f442b0913 -> a956dfdd3 with unchanged source/config hashes. Linked spec owns proof and limits; newer cast input c14076510 is not covered, not current full-source verification. No populated addon integration, forced-GC stress, all-profile/native/full-system or whole-page acceptance."
+    },
+    {
+      "id": "unit-spell-target-name",
+      "symbols": [
+        "UnitSpellTargetName"
+      ],
+      "scope": "Mainline 12.0.5+ player caster only, explicit actual-cast snapshot; player recipient secret name, absent/NPC/channel-only nil, selection independence and guarded secret inputs. No actual targeting producer, nonplayer caster model or native parity; nil arity and channel policy inferred.",
+      "spec": "docs/specs/unit-spell-target-name.md",
+      "tests": [
+        "tests/unit_spell_target_name.rs"
+      ],
+      "inputs": "c14076510",
+      "implementation": "5beaf7545",
+      "compiled_revision": "024afed646e3acf6d514b2eb6d29bb8951c70e9a",
+      "proof": "partial-development-green",
+      "ledger": "/tmp/patch-12.0.5-batch13-green-runs.json",
+      "startup_ledger": "/tmp/patch-12.0.5-batch13-green-startup-run.json",
+      "gate_scope": "Actual RED 0/10, target GREEN 10/10, flyout 14/14 and vehicle 22/22; saved startup exit 0 with []. Independent verifier 141 final current gates pending; independent proof artifact absent at accounting time. No native, full-system, all-profile or whole-page acceptance."
     }
   ],
   "source_rows": [
@@ -422,9 +440,11 @@
     },
     {
       "source_id": "prose-2026-03-12-041",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-spell-target-name"
+      ],
+      "status": "partial-development-green",
+      "note": "Retained dated PTR proposal: player-recipient-only names covered for player caster with explicit cast snapshot input. Target GREEN 10/10 at 024afed64; no actual targeting producer, nonplayer caster or native claim. Independent final gates pending; not whole-source completion."
     },
     {
       "source_id": "prose-2026-03-12-043",

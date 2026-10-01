@@ -4,6 +4,10 @@ The expanded Patch 12.0.5 source audit is **IN PROGRESS** after source-retention
 
 ## Content
 
+### UnitSpellTargetName snapshot — partial GREEN
+
+[Cast-target contract](../../specs/unit-spell-target-name.md#tests-asserting-this-spec) owns exact retained `prose-2026-03-12-041` accounting, a dated PTR proposal rather than a consolidated shipped-API claim. Inputs `c14076510` yield actual missing-query RED 0/10; producer `5beaf7545`, compiled at `024afed64`, yields target GREEN 10/10, flyout 14/14 and vehicle/possession 22/22. Saved startup exits 0 with `[]`. [Coverage register](../../../data/patch-api/sources/12.0.5-page-coverage.json) remains partial: player caster only, explicit actual-cast snapshot input, no actual targeting producer, nonplayer caster model or native claim. Independent verifier 141 final current gates remain pending; its proof artifact was absent at accounting time. All 362 source IDs and unrelated statuses retained; no whole-page completion.
+
 ### Recent Allies snapshot producer — bounded GREEN
 
 [Recent Allies contract](../../specs/recent-allies-state-data.md#tests-asserting-this-spec) owns exact `structures-RecentAllyStateData-669` accounting: inputs `d0495e796`, actual RED 0/4 at `ee3e27172`, producer `3666902bf` actual GREEN 4/4. Explicit-input nested snapshots publish opposite renamed flags, optional nils and independent results. Six run-1 source/TOC controls pass, not addon runtime integration; saved same-revision startup exits 0 with `[]` and zero Lua errors. [Coverage register](../../../data/patch-api/sources/12.0.5-page-coverage.json) records bounded development coverage only and retains all 362 source IDs. The linked contract now owns completed independent bounded PASS, scoped readability and default fmt/check gates over unchanged source `f442b0913` → `a956dfdd3`. Newer cast input `c14076510` is not covered; no current full-source, native, full-system or whole-page claim. Previous query was a generic lazy namespace nil closure, not an explicit targeted provider; nested stack-rooting is documented in the contract.

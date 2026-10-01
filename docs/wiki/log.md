@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
+
+[[patch-12-0-5-api-audit#UnitSpellTargetName snapshot — partial GREEN]] links the [contract proof](../specs/unit-spell-target-name.md#tests-asserting-this-spec): inputs `c14076510` RED 0/10, producer `5beaf7545` compiled at `024afed64`, target GREEN 10/10 plus flyout 14/14 and vehicle 22/22 controls; saved startup exit 0 with `[]`. Exact dated PTR row `prose-2026-03-12-041` has partial development coverage; all 362 IDs and unrelated statuses retained. Player caster and explicit snapshot only; actual targeting, nonplayer caster and native semantics unclaimed. Independent verifier 141 final current gates pending; proof artifact absent at accounting time.
+
 ## [2026-10-01] evidence | Finalize bounded hover independent audit
 
 [Contract proof SSOT](../specs/gamepad-mapped-state.md#final-independent-proof-and-limits) records completed independent report/command ledger, overall FAIL 71/75, immutable runtime inputs, preserved failed-fmt/restart evidence, corrected fmt PASS and zero-warning default check with classified drift and no reruns. Existing system/comparison/coverage/index pending claims reconciled. Mainline eager capture versus callback invocation and base eager hardcore call are classified; whole-dependency versus consumed-path fixture cleanliness remains user-owned. Production edits stopped after three dependency iterations; newer casting representation lacks runtime blanket coverage. Docs-only; no code/data/tests/builds/checks/delegation/operations or overall completion.
