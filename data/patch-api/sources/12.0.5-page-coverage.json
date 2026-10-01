@@ -7,6 +7,23 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "unit-aura-index-secret-arguments",
+      "symbols": [
+        "C_UnitAuras.GetAuraDataByIndex",
+        "C_UnitAuras.GetBuffDataByIndex",
+        "C_UnitAuras.GetDebuffDataByIndex"
+      ],
+      "scope": "Exact unit NeverSecret removals and AllowedWhenUntainted argument deltas: VM-authenticated unit/index/filter secure acceptance, tainted denial/recovery and GC-rooted identity/secrecy. Strict required strings, finite integral signed-i32 index and nilable filter inferred; existing indexed polarity, blocked compaction, DTO/store/provider retained. 12 indexed + 68 controls PASS; committed-producer startup exit0 []. Native permissions and conditional output secrecy excluded.",
+      "spec": "docs/specs/unit-aura-index-secret-arguments.md",
+      "tests": [
+        "tests/next125aura.rs"
+      ],
+      "implementation": "8e04eaa335b4df36b213c92842ef4242d81d2025",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-index-arguments-independent-proof.md",
+      "gate_scope": "Exact373/374/384/385/389/390 only. Independent340 accepts saved80 unique PASS, startup [], pinned-VM/security/wiring/readability and scoped rustfmt0. Fresh cargo check0 covers captured dirty combined state, not clean revision. Global cargo fmt1 solely on unowned unrelated aura_duration.rs; retained blocker, not global formatting success. Earlier-profile preservation source-only; two nonblocking readability suggestions deferred. No native/all-profile/filter-vocabulary/consumer closure parity."
+    },
+    {
       "id": "unit-aura-instance-filter-query",
       "symbols": [
         "C_UnitAuras.IsAuraFilteredOutByInstanceID"
@@ -2071,15 +2088,19 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDataByIndex-373",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Literal - arg1 NeverSecret removes the unit marker; authentic secret STRING unit succeeds untainted and denies tainted with rooted GC identity/secrecy and public recovery. Independent340 bounded80PASS; native access/output policy excluded; see spec acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDataByIndex-374",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "AllowedWhenUntainted applied to unit/index/filter before lookup; secure each/combined success, tainted denial/public recovery preserve caller taint/input secrecy. Existing selection/DTO/stores retained. Independent340; scoped fmt0, dirty combined check0, unrelated global fmt1 explicit."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDataBySlot-376",
@@ -2107,15 +2128,19 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetBuffDataByIndex-384",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Unit NeverSecret removal covered by authentic host-secret STRING secure success and tainted denial/recovery/GC matrix on player/party stores. Forced helpful indexed selection unchanged. Independent340 bounded proof; native permission/output policy excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-GetBuffDataByIndex-385",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Untainted-only secret acceptance authenticates optional filter even though forced helpful polarity ignores it for selection. Each/combined denial precedes missing lookup; input secrecy/caller taint preserved. Independent340 bounded80PASS; global dirty fmt failure explicit."
     },
     {
       "source_id": "global api-C_UnitAuras-GetCooldownAuraBySpellID-387",
@@ -2125,15 +2150,19 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetDebuffDataByIndex-389",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Unit NeverSecret removal covered by authentic host-secret STRING secure success and tainted denial/recovery/GC matrix on player/party stores. Forced harmful indexed selection unchanged. Independent340 bounded proof; native permission/output policy excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-GetDebuffDataByIndex-390",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-index-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Untainted-only secret acceptance authenticates optional filter even though forced harmful polarity ignores it for selection. Each/combined denial precedes missing lookup; input secrecy/caller taint preserved. Independent340 bounded80PASS; global dirty fmt failure explicit."
     },
     {
       "source_id": "global api-C_UnitAuras-GetPlayerAuraBySpellID-392",

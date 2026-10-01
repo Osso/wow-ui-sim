@@ -1,3 +1,7 @@
+## [2026-10-01] evidence | Accept exact indexed aura argument rows
+
+[Independent bounded acceptance](../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) owns80 uniquePASS/startup0[], scopedfmt0, actual pinned-VM/security/readability evidence and globalfmt1 on unowned unrelated work. Dirty combined check0 is not clean-revision proof. Only373/374/384/385/389/390 promote:245pending103bounded14partial362. Native permission/output/consumer/profile limits and two deferred readability suggestions retained. Earlier pending checkpoints below are historical.
+
 ## [2026-10-01] evidence | Reconcile batch42 indexed aura parent GREEN
 
 [Indexed argument proof](../specs/unit-aura-index-secret-arguments.md#reconciled-batch42-parent-green--2026-10-01) records producer `8e04eaa335b4df36b213c92842ef4242d81d2025`, unchanged fixtures `414f87346`, compile0/238.27s, **12 indexed + 14 filter + 7 shape + 29 aura + 18 corrected admin = 80 unique PASS**, startup0 `[]`, exact artifacts/hashes. Zero-test `admin_buff::` excluded. Independent Rust/security/readability gates and parent acceptance pending; exact373/374/384/385/389/390 uncredited, accounting/PLAN unchanged. Native access/conditional output secrecy excluded; strict representations inferred, selection/DTO/store and earlier profiles retained.

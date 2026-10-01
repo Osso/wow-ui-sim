@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Indexed aura arguments — bounded independent acceptance
+
+[Exact six-row contract/proof](../../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) owns accepted80 uniquePASS, committed-producer startup0[], pinned-VM/security/readability and scoped formatting proof. Globalfmt1 on unowned unrelated `aura_duration.rs` retained; dirty combined check0 is not clean-revision proof. No native permission/output policy, full vocabulary, consumer closure or all-profile credit.
+
+Only373/374/384/385/389/390 promote: **251 pending /97 bounded /14 partial →245 /103 /14 =362**. Source IDs/register/plaintext SHA, prior capabilities and356 unrelated rows preserved. Original indexed selection/DTO/stores unchanged; two nonblocking readability suggestions deferred. Older pending checkpoints are historical.
+
 ### Private-aura restriction removals — bounded independent acceptance
 
 Exact source deltas401/405 remove `HasRestrictions`; they do not require new aura/warning content producers. Parent accepts the full `/tmp/patch-12.0.5-private-aura-annotation-independent-proof.md`: actual tainted public calls preserve caller taint and cause existing modeled side effects. [Anchor contract](../../specs/private-aura-anchors.md) and [warning contract](../../specs/private-warning-text-anchor.md) retain distinct lifecycle, secret and placement limits.
