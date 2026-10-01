@@ -90,6 +90,7 @@ fn input_cast(
         start_time,
         end_time: end_time(start_time, duration, hold)?,
         cast_id: 0,
+        target: None,
         empower,
         delay_time: 0.0,
     })

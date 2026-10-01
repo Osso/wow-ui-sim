@@ -302,6 +302,7 @@ fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaRe
         start_time: now,
         end_time: now + SPEC_ACTIVATION_CAST_SECONDS,
         cast_id,
+        target: None,
         empower: None,
         delay_time: 0.0,
     });

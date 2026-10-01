@@ -92,6 +92,14 @@ pub struct AuraInfo {
     pub aura_instance_id: i32,
 }
 
+/// Explicit resolved cast recipient; never reinterpreted through a selected unit token.
+#[derive(Debug, Clone)]
+pub struct CastTargetSnapshot {
+    pub guid: String,
+    pub name: String,
+    pub is_player: bool,
+}
+
 /// Active spell cast state (for cast bar display).
 pub struct CastingState {
     pub spell_id: u32,
@@ -102,6 +110,8 @@ pub struct CastingState {
     /// GetTime() at cast end (seconds).
     pub end_time: f64,
     pub cast_id: u32,
+    /// Fixture input only: existing cast/channel producers leave this absent.
+    pub target: Option<CastTargetSnapshot>,
     pub empower: Option<EmpowerTiming>,
     /// Cumulative simulator delay input, in seconds.
     pub delay_time: f64,

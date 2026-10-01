@@ -115,6 +115,7 @@ fn is_current_spell_matches_casting_state() {
     env.state().borrow_mut().casting = Some(CastingState {
         spell_id: 133,
         spell_name: "Fireball".into(),
+        target: None,
         icon_path: String::new(),
         start_time: 0.0,
         end_time: 1.0,
@@ -136,6 +137,7 @@ fn flyout_update_state_branches_on_current_spell() {
     env.state().borrow_mut().casting = Some(CastingState {
         spell_id: 42,
         spell_name: "Fire Blast".into(),
+        target: None,
         icon_path: String::new(),
         start_time: 0.0,
         end_time: 1.0,

@@ -92,6 +92,7 @@ fn start_cast(
         start_time: now,
         end_time: now + duration,
         cast_id,
+        target: None,
         empower: None,
         delay_time: 0.0,
     });
