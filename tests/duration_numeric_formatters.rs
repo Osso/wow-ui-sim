@@ -140,6 +140,29 @@ fn opaque_duration_modifier_and_formatter_inputs_preserve_secrecy_and_caller_gua
     );
 }
 
+#[test]
+fn duration_getter_overrides_cannot_receive_decoded_secret_modifiers() {
+    execute(
+        r#"
+        local modifier = secretwrap(1)
+        local calls = 0
+        rawset(d, 'GetTotalDuration', function(_, input)
+            calls = calls + 1
+            assert(issecretvalue(input), 'decoded modifier disclosed to Lua getter')
+            error('untrusted getter invoked')
+        end)
+        local expected = {'2.4k', '2468 ticks', nativeSeconds and '41m 8s' or '2468'}
+        for index, formatter in ipairs(formatters) do
+            local result = d:FormatTotalDuration(formatter, modifier)
+            assert(issecretvalue(result) and secretunwrap(result) == expected[index])
+        end
+        assert(calls == 0, 'duration Format must use trusted core queries')
+        rawset(d, 'GetTotalDuration', nil)
+        assert(d:GetTotalDuration() == 1234)
+    "#,
+    );
+}
+
 #[cfg(feature = "native-duration-formatting")]
 #[test]
 fn seconds_curve_receives_opaque_time_and_retains_closure_taint() {
