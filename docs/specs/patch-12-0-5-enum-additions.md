@@ -31,7 +31,16 @@ Revision-scoped commands, artifact hashes, and provenance limitations are record
 
 ## Known gaps (current cycle)
 
-No remaining default-retail numerical-publication failure. Historical/PTR execution and full-build provenance reconciliation remain outside the bounded behavioral proof.
+The original three additions retain their bounded default-retail proof. Historical/PTR execution and full-build provenance reconciliation remain outside that proof.
+
+### Remaining retained-source enum deltas
+
+- [ ] Current `client-retail` publishes the other 30 retained-source deltas at numeric values from the official retail cache, with `InvalidAbbreviation`, `House`, and `PersonalOnly` absent from their respective enums. The grouped file now includes 17 additional tests; parent-owned RED is pending before any production correction.
+- [ ] Each newly covered enum has coherent `NumValues`, `MinValue`, and `MaxValue` derived from actual Lua-visible numeric members, both after environment initialization and after compatibility post-load restoration. Later cumulative members are permitted; no historical exact count is asserted.
+
+The retained section at lines 569–621 contains **33 delta rows across 20 enum subjects**, including the three already tested additions. The earlier audit's 36/24 totals are unsupported by this source; no extra rows are invented. Test comments identify exact cached documentation paths (relative to `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`) and line ranges. All 33 rows, member values or obsolete-name absence, exact member lines, cache hashes, and test filters are enumerated in `/tmp/patch-12.0.5-enum-delta-coverage.md`; machine-readable cache extracts are `/tmp/patch-12.0.5-enum-doc-contracts.json`.
+
+Current cached numbers are cumulative retail contracts, not evidence of historical 12.0.5 numbering. The new tests deliberately use `client-retail`, not historical `profile-retail` or PTR gates. Publication/metadata proof does not establish downstream restriction, housing, loot, or transmog behavior. No new runtime result is claimed.
 
 ## Out of scope
 
