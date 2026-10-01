@@ -7,6 +7,21 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "unit-aura-instance-filter-query",
+      "symbols": [
+        "C_UnitAuras.IsAuraFilteredOutByInstanceID"
+      ],
+      "scope": "Exact unit NeverSecret removal and AllowedWhenUntainted argument deltas: authentic secret unit/filter/ID accepted securely, denied under taint with public recovery and rooted GC identity/secrecy preserved. Strict required strings/finite integral signed-i32 and existing blocked-inclusive predicate produce one public boolean. 14 filter + 47 aura controls PASS; startup exit0 []; fresh fmt/check exit0 and independent security/readability audit. Native permissions, restricted output, filter vocabulary and cached consumer closure remain unproved.",
+      "spec": "docs/specs/unit-aura-filter-query.md",
+      "tests": [
+        "tests/unit_aura_filter_query.rs"
+      ],
+      "implementation": "a881d04bb596ae087aad12e75cc7d277d6dcde95",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-filter-query-independent-proof.md",
+      "gate_scope": "Exact rows398/399 only; corrected RED14 selected8PASS6FAIL, GREEN14PASS and47 controls. Default retail Rust gates plus static feature audit, not all-profile runtime proof. Existing empty/unknown-filter HELPFUL default is retained implementation behavior, not a supported vocabulary contract. RequiresUnitAuraAccess and native output/error/missing-instance policy unresolved."
+    },
+    {
       "id": "unit-power-type",
       "symbols": [
         "UnitHasPowerType"
@@ -2146,15 +2161,19 @@
     },
     {
       "source_id": "global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-398",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-instance-filter-query"
+      ],
+      "status": "bounded-coverage",
+      "note": "Literal - arg1 NeverSecret removes the unit marker. Secure authentic secret-unit lookup and tainted denial/recovery/GC rooting pass bounded fixtures at a881d04; native permissions, conditional outputs, vocabulary and cached consumer closure remain unproved. See independent bounded acceptance in spec."
     },
     {
       "source_id": "global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-399",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-instance-filter-query"
+      ],
+      "status": "bounded-coverage",
+      "note": "AllowedWhenTainted to AllowedWhenUntainted: VM-authenticated secret unit/ID/filter secure success and tainted denial, public recovery, input secrecy and caller taint preservation pass bounded fixtures. 14+47 PASS, startup [], fresh fmt/check and independent335 audit; no native or all-profile parity."
     },
     {
       "source_id": "global api-C_UnitAuras-RemovePrivateAuraAnchor-401",

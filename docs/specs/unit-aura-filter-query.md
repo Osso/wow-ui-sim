@@ -6,25 +6,25 @@ Bounded Retail 12.0.5 contract for `C_UnitAuras.IsAuraFilteredOutByInstanceID`. 
 
 ### Source contract
 
-- [ ] Accept required `(unit: string, auraInstanceID: number, filter: string)` and return exactly one nonnil public boolean in this bounded simulator contract. Cached declaration specifies one boolean; public output is an inferred simulator policy, not native output-secrecy proof.
-- [ ] Honor `SecretArguments = AllowedWhenUntainted` for all three documented arguments through VM-authenticated access. Row398 literally `- arg1 NeverSecret` **removes** the unit marker; row399 changes `AllowedWhenTainted` to `AllowedWhenUntainted`. This declaration has no remaining argument `NeverSecret` marker; do not copy one from `GetUnitAuras`.
+- [x] Accept required `(unit: string, auraInstanceID: number, filter: string)` and return exactly one nonnil public boolean in this bounded simulator contract. Cached declaration specifies one boolean; public output is an inferred simulator policy, not native output-secrecy proof.
+- [x] Honor `SecretArguments = AllowedWhenUntainted` for all three documented arguments through VM-authenticated access. Row398 literally `- arg1 NeverSecret` **removes** the unit marker; row399 changes `AllowedWhenTainted` to `AllowedWhenUntainted`. This declaration has no remaining argument `NeverSecret` marker; do not copy one from `GetUnitAuras`.
 - [ ] Retain `RequiresUnitAuraAccess = true` as a source limitation: absent a grounded permission model, these fixtures cannot prove native authorization or a valid bypass.
 
 ### Inferred representation and existing model policies
 
-- [ ] Validate/authenticate every required argument before lookup, even for an unknown unit. Require actual strings for unit/filter and a finite integral signed-i32 number for instance ID. Reject missing/nil/wrong representations, numeric strings, fractions, nonfinite values and out-of-range numbers; avoid current lossy casts. Error text is not native-verified.
-- [ ] Unknown unit or instance returns `true` under existing simulator policy. Negative integers within i32 remain valid representations and return `true` when absent; no invented positive-ID validation.
-- [ ] Resolve stored instances without public enumeration's blocked-ID exclusion. Blocked instances remain retrievable and obey the same polarity/source predicate as unblocked records.
-- [ ] Preserve existing modeled HELPFUL/HARMFUL polarity and PLAYER combinations, case-insensitivity and recognized token order. PLAYER uses the existing `is_from_player_or_player_pet` field, including concretely seeded pet sources, not merely the literal `sourceUnit` token.
-- [ ] Preserve existing MAW/EXTERNAL_DEFENSIVE match-none behavior for modeled records. Do not expand native vocabulary, negation or RAID rules in this slice.
-- [ ] Read concrete helpful/harmful records from player and existing seeded party stores without fabricating production data, adding state fields/maps or changing shared helpers.
-- [ ] Leave aura fields/order, block list and provider selection unchanged on successful/missing/error queries. Separate environments retain independent records.
+- [x] Validate/authenticate every required argument before lookup, even for an unknown unit. Require actual strings for unit/filter and a finite integral signed-i32 number for instance ID. Reject missing/nil/wrong representations, numeric strings, fractions, nonfinite values and out-of-range numbers; avoid current lossy casts. Error text is not native-verified.
+- [x] Unknown unit or instance returns `true` under existing simulator policy. Negative integers within i32 remain valid representations and return `true` when absent; no invented positive-ID validation.
+- [x] Resolve stored instances without public enumeration's blocked-ID exclusion. Blocked instances remain retrievable and obey the same polarity/source predicate as unblocked records.
+- [x] Preserve existing modeled HELPFUL/HARMFUL polarity and PLAYER combinations, case-insensitivity and recognized token order. PLAYER uses the existing `is_from_player_or_player_pet` field, including concretely seeded pet sources, not merely the literal `sourceUnit` token.
+- [x] Preserve existing MAW/EXTERNAL_DEFENSIVE match-none behavior for modeled records. Do not expand native vocabulary, negation or RAID rules in this slice.
+- [x] Read concrete helpful/harmful records from player and existing seeded party stores without fabricating production data, adding state fields/maps or changing shared helpers.
+- [x] Leave aura fields/order, block list and provider selection unchanged on successful/missing/error queries. Separate environments retain independent records.
 
 ### Secret inputs
 
-- [ ] An untainted caller accepts authentic host-secret string unit, string filter and number ID independently and together, yielding one public boolean without declassifying the original inputs or clearing taint.
-- [ ] A tainted caller is denied each secret argument, including secret ID/filter with public unknown unit and secret unknown-unit string. Error recovery with public arguments succeeds while caller taint and original secrecy remain intact.
-- [ ] Rooted secret unit/filter strings retain identity and secrecy across GC, remain securely usable, deny tainted access and permit public recovery. Number ID secrecy is also retained in the fixture.
+- [x] An untainted caller accepts authentic host-secret string unit, string filter and number ID independently and together, yielding one public boolean without declassifying the original inputs or clearing taint.
+- [x] A tainted caller is denied each secret argument, including secret ID/filter with public unknown unit and secret unknown-unit string. Error recovery with public arguments succeeds while caller taint and original secrecy remain intact.
+- [x] Rooted secret unit/filter strings retain identity and secrecy across GC, remain securely usable, deny tainted access and permit public recovery. Number ID secrecy is also retained in the fixture.
 
 ## How it works
 
@@ -52,11 +52,22 @@ Bounded Retail 12.0.5 contract for `C_UnitAuras.IsAuraFilteredOutByInstanceID`. 
 | Secure host-secret access; tainted denial/public recovery; GC-root retention | 3 | FAIL |
 | Read-only state/provider/block-list behavior; environment isolation | 2 | Immutability FAIL (fraction rejection); isolation PASS |
 
-Parent-reported corrected RED at `1e912a88b88e633dc5ca3bebca671260ae5c20e6`: `/tmp/patch-12.0.5-batch41-red-fixed-build-result.json` exit0 (206.149s), saved run JSON/log **14 selected, 8 PASS / 6 FAIL**, exit101 (3.362s). Original 7/7 RED included an invalid player DTO `sourceUnit == pet` assertion; parent corrected the fixture to actual host pet state plus `isFromPlayerOrPlayerPet`. Producer leaves unrelated DTO serialization unchanged; tests untouched in this implementation. Implementation-time handoff had no producer GREEN or gates. Parent subsequently built `a881d04bb596ae087aad12e75cc7d277d6dcde95` once: exit0, 360.590s. Selected GREEN: fourteen filter tests plus ten altered-form, twelve identifier, eighteen duration and seven aura-shape controls = **61 unique PASS**, all exit0; startup exit0 `[]`. Evidence: `/tmp/patch-12.0.5-batch41-green-build-result.json`, `-green-runs.json` and `-green-startup.json`. Independent335 Rust/security/readability verification and rows398/399 acceptance remain pending; requirement checkboxes await that gate.
+Parent-reported corrected RED at `1e912a88b88e633dc5ca3bebca671260ae5c20e6`: `/tmp/patch-12.0.5-batch41-red-fixed-build-result.json` exit0 (206.149s), saved run JSON/log **14 selected, 8 PASS / 6 FAIL**, exit101 (3.362s). Original 7/7 RED included an invalid player DTO `sourceUnit == pet` assertion; parent corrected the fixture to actual host pet state plus `isFromPlayerOrPlayerPet`. Producer leaves unrelated DTO serialization unchanged; tests untouched in this implementation. Implementation-time handoff had no producer GREEN or gates. Parent subsequently built `a881d04bb596ae087aad12e75cc7d277d6dcde95` once: exit0, 360.590s. Selected GREEN: fourteen filter tests plus ten altered-form, twelve identifier, eighteen duration and seven aura-shape controls = **61 unique PASS**, all exit0; startup exit0 `[]`. Evidence: `/tmp/patch-12.0.5-batch41-green-build-result.json`, `-green-runs.json` and `-green-startup.json`. Independent335 subsequently accepted the bounded producer: fresh fmt/check exit0, security/wiring/readability audit without blocking issues, and saved parent runtime evidence inspected without reruns. Independent bounded acceptance below closes only rows398/399; native limitations remain open.
+
+## Independent bounded acceptance — 2026-10-01
+
+[Independent335 report](/tmp/patch-12.0.5-aura-filter-query-independent-proof.md) validates actual Cargo-pinned rilua `6044544b960cd68b4b0c58bb3373412757c2caee` caller authentication, sole 12.0.5 provider, unchanged predicate/store and readability. Fresh `cargo fmt --check` exit0/46.193s and `cargo check` exit0/24.466s at producer `a881d04`; no warnings or errors. Gates saved in `/tmp/aura-filter-independent/gates.json`. Subsequent proof-doc edits do not invalidate producer-scoped evidence.
+
+| Capability | Proof | Limit |
+| --- | --- | --- |
+| Required arguments and existing instance filtering | 9 public/model fixtures PASS | Representation, missing-instance and public-output policies inferred |
+| Authentic secret inputs, tainted denial/recovery and GC identity | 3 security fixtures PASS plus actual pinned VM audit | No native UnitAuraAccess or restricted-output proof |
+| Immutability and isolation | 2 fixtures PASS | Existing modeled stores only |
+| Relevant aura regressions and startup | 47 controls PASS; startup exit0 `[]` | No full cached AuraContainer or all-profile closure |
+
+Only source IDs `global api-C_UnitAuras-IsAuraFilteredOutByInstanceID-398` and `...-399` receive bounded coverage: **253 pending / 95 bounded / 14 partial → 251 / 97 / 14 = 362**. Original ordered IDs, unrelated rows, prior capabilities and source hashes must remain preserved. Runtime evidence stays pinned to `a881d04`; acceptance is not native parity or whole-page completion.
 
 ## Known gaps (current cycle)
-
-- [ ] Independent335 integration verification and exact rows398/399 acceptance. Parent GREEN/controls/startup established above; implementation formatted and committed before GREEN. No source-accounting promotion yet.
 - [ ] `RequiresUnitAuraAccess` remains an unmodeled permission boundary; accepting untainted authentic secrets is not a native authorization/bypass claim.
 - [ ] Native invalid-input/error wording, missing-instance, output secrecy, visibility and restriction semantics remain inferred/unproved.
 - [ ] Complete native filter vocabulary/syntax remains unproved. Existing helper defaults empty/unknown filter strings to HELPFUL; this is retained implementation behavior, **not a supported API contract or general parity claim**. No empty/unknown filter fixture or whitelist/parser redesign.

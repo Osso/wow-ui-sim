@@ -1,6 +1,6 @@
 ## [2026-10-01] implementation | Add bounded aura instance filter producer
 
-[[lua-api#Retail 12.0.5 aura instance filter query]] links [filter query contract](../specs/unit-aura-filter-query.md): sole C API-owned 12.0.5 producer, authenticated required inputs and unchanged unfiltered lookup/predicate. Corrected parent RED and subsequent GREEN established: 14 filter + 47 controls = 61 unique PASS, startup exit0 `[]` at `a881d04`. Independent335 verification and exact rows398/399 acceptance pending. Permission/filter/native/consumer gaps retained; no accounting changes.
+[[lua-api#Retail 12.0.5 aura instance filter query]] links [filter query contract](../specs/unit-aura-filter-query.md): sole C API-owned 12.0.5 producer, authenticated required inputs and unchanged unfiltered lookup/predicate. Corrected parent RED and subsequent GREEN established: 14 filter + 47 controls = 61 unique PASS, startup exit0 `[]` at `a881d04`. [Independent bounded acceptance](../specs/unit-aura-filter-query.md#independent-bounded-acceptance--2026-10-01) records independent335 fresh fmt/check and security/readability audit; only rows398/399 credited, totals251/97/14. Permission/filter/native/consumer gaps retained.
 
 ## [2026-10-01] evidence | Accept exact private-aura restriction-removal rows
 
