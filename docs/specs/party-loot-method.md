@@ -1,6 +1,6 @@
 # Party loot method
 
-Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Inputs/tests/spec only; producer and compiled RED belong to parent. See [Lua API state architecture](../lua-api.md).
+Bounded Retail 12.0.5 `C_PartyInfo.GetLootMethod` / `SetLootMethod` contract over existing `SimState.loot_method`, preserving legacy `GetLootMethod()` and `GetMasterLooterThreshold()`. Epoch-gated producer implemented; compiled GREEN and acceptance belong to parent. See [Lua API state architecture](../lua-api.md).
 
 ## What it must do
 
@@ -36,7 +36,8 @@ All boxes remain unchecked until compiled behavioral proof. Fixture existence is
 - `src/lua_api/state/sim_state.rs` — existing `loot_method`, player/group identity and chat-lockdown input owner.
 - `src/lua_api/globals/real/loot_method.rs:20–60` — unchanged legacy state-backed getters and refresh event.
 - `src/lua_api/globals/enum_data/missing_enums.lua:9190–9198` — verified public numeric mapping.
-- `src/c_api/c_party_info.rs` — existing C getter/availability namespace; producer joining shared state is pending in this slice.
+- `src/c_api/c_party_info.rs` — namespace registration preserves earlier static C getter and existing availability.
+- `src/c_api/c_party_info/loot_method.rs` — epoch-gated shared getter/setter, strict public argument parsing, bounded identity resolution and change-only event publication. Unknown shared tokens error explicitly rather than inventing a numeric method.
 - `src/c_api/c_chat_info.rs:20–29` — existing restriction guard to reuse; unchanged here.
 - `src/lua_api/globals/group_queries.rs:253–315,469–496` — existing group/raid classification, player-at-roster-1 and modeled party identity evidence.
 - `tests/party_loot_method.rs` — twelve epoch-gated fixtures, autodiscovered by existing grouped integration harness.
@@ -50,7 +51,7 @@ All boxes remain unchecked until compiled behavioral proof. Fixture existence is
 
 Parent intended filter: `cargo test --test integration party_loot_method::`; availability/legacy controls additionally needed. No new Cargo target or manifest changes.
 
-**Proof ledger — 2026-10-01:** fixtures authored, not compiled or executed. Parent owns compiled RED, producer, GREEN and acceptance. Only formatting runs in this slice; no test/build/check/delegation. No native probe, permission claim, audit promotion or whole-source acceptance.
+**Proof ledger — 2026-10-01:** parent saved compiled RED at `1c7af9c0372d5a81234ef055c6becbfedf31de0b`: `/tmp/patch-12.0.5-batch34-red-fixed-build-result.json` records build exit 0; corresponding `run.json`/`run.log` record exit 101, **0 PASS / 12 FAIL**. Initial `42e15` compile failure from unsupported u8 result conversions is not behavioral RED; parent corrected fixtures separately. Producer implemented after RED; no GREEN credit yet. This production slice runs formatting only, no test/build/check/readability/delegation. Parent owns GREEN/controls and acceptance; saved RED does not prove the new producer. No native probe, permission claim, audit promotion or whole-source acceptance.
 
 ## Exact evidence and inference boundary
 
@@ -63,7 +64,7 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile fixtures as behavioral RED before producer, then prove bounded GREEN and controls.
+- [ ] Parent must prove bounded GREEN and legacy/availability controls after producer; compiled RED is saved above.
 - [ ] Cached `AllowedWhenUntainted` acceptance is not implemented by conservative rejection; native taint/security parity remains unknown.
 - [ ] General raid member resolution is unclaimed: existing raid `UnitName`/existence indexing differs from `GetRaidRosterInfo`'s player-first roster. Only explicit player roster index 1 is selected here; do not fabricate a general mapping.
 - [ ] Solo/party-player master encoding, native missing/ambiguous/realm-name policies, native permissions and native event repetition/timing remain unknown. Existing zero-index state cannot distinguish an assigned party player from no assignment without a separate contract.
@@ -72,4 +73,4 @@ Parent intended filter: `cargo test --test integration party_loot_method::`; ava
 
 - Availability redesign, eligibility/leadership/native permissions, loot distribution and threshold mutation; existing availability set is deliberately unchanged.
 - Native lockdown activation/reset, countdown/other named party actions, all-profile/native parity and closure of final prose row169.
-- Producer code, Lua/vendor patches, new Cargo targets, wiki/index/log/PLAN, compiled verification and delegation in this inputs slice.
+- Lua/vendor patches, new Cargo targets, PLAN/audit promotion, compiled verification and delegation in this production slice; parent owns GREEN.

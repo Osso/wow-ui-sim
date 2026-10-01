@@ -38,6 +38,10 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 `c_api::c_party_info` wires an epoch-gated helper over explicit per-environment `party_ping_restriction: u8`. See [party ping contract](../../specs/party-ping-restrictions.md) for signatures, inferred strict/security policies, corrected compiled seven-fixture RED and [saved batch32 parent proof](../../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01): seven ping PASS plus 22 controls, startup exit0 `[]` at `77ab2785f`. Independent report accepts bounded saved proof and fresh default fmt/check exit0 with unchanged relevant source hashes despite warning-fixture/docs HEAD advancement; no warning-runtime credit. No ping delivery, permission, event or native `AllowedWhenUntainted` acceptance model is added.
 
+### Retail 12.0.5 party loot method
+
+`c_api::c_party_info::loot_method` translates numeric C enums over existing `SimState.loot_method`; legacy string/raw-index getters and threshold remain unchanged. Earlier epochs retain the static C Group getter. The setter checks shared chat lockdown and public argument types/secrets before resolving modeled party names or the raid player at roster position 1, then commits state and queues a change-only event. See [party loot contract](../../specs/party-loot-method.md) for inferred policies, excluded general raid mapping and saved compiled RED at `1c7af9c03` (0/12). Parent GREEN and acceptance pending; no availability redesign, native security/permissions or audit-row closure.
+
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 
 ```rust

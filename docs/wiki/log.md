@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded party loot producer
+
+[[lua-api#Retail 12.0.5 party loot method]] links [party loot contract](../specs/party-loot-method.md): shared-state numeric getter/setter and inferred validation/identity/change-event policies implemented after parent compiled RED `1c7af9c03` (0 PASS / 12 FAIL). Earlier epochs, legacy getters, threshold and availability unchanged. Formatting only; parent owns GREEN/controls and acceptance. No native security, general raid mapping or audit promotion.
+
 ## [2026-10-01] evidence | Accept bounded independent warning placement proof
 
 [Warning contract/proof](../specs/private-warning-text-anchor.md#independent-bounded-acceptance--2026-10-01): Independent report `/tmp/patch-12.0.5-warning-placement-independent-proof.md` accepts bounded saved producer `dae082322` proof: **12 warning + 18 anchor + 4 private-unit PASS / 1 historically established specialization FAIL** (34 PASS / 1 FAIL). Fresh default fmt/check exit **0** at producer; normal saved startup exit **0**, `[]`. Cached `PingSystemTutorial` string.find closure errors persist; broad controls and clean cached closure remain **NOT GREEN**. Two function-length suggestions (`validate_placement`, `apply_placement`) deferred as nonbehavioral blockers, not zero readability findings. Parenting/order/nil/snapshot/security policies remain inferred or unknown; no native, full-row/page or all-profile acceptance. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged. Exact warning rows168/405 remain pending.

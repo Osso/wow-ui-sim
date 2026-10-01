@@ -3,9 +3,9 @@
 //! `GetActiveCategories`, `GetActiveGroupType`, `IsPartyFull`, and
 //! `IsGUIDInGroup` read the existing party roster model. `LeaveParty` and
 //! `UninviteUnit` mutate the same roster paths as their legacy globals. Static
-//! loot-method defaults remain here because
-//! they are coherent seeded `C_PartyInfo` values, while unrelated instance
-//! abandon defaults stay in temporary workarounds.
+//! loot availability remains seeded, while Retail 12.0.5 loot getter/setter
+//! share the legacy model. Unrelated instance abandon defaults stay in
+//! temporary workarounds.
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;
@@ -18,6 +18,8 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "retail-12-0-5")]
+mod loot_method;
 #[cfg(feature = "retail-12-0-5")]
 mod ping_restrictions;
 
@@ -109,12 +111,15 @@ fn register_loot_method_probes(state: &mut LuaState, table_ref: GcRef<Table>) ->
         "IsLootMethodAvailable",
         c_party_info_is_loot_method_available,
     )?;
+    #[cfg(not(feature = "retail-12-0-5"))]
     table_set_rust_fn_static(
         state,
         table_ref,
         "GetLootMethod",
         c_party_info_get_loot_method,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
+    loot_method::register(state, table_ref)?;
     Ok(())
 }
 
@@ -265,6 +270,7 @@ fn c_party_info_is_loot_method_available(state: &mut LuaState) -> LuaResult<u32>
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn c_party_info_get_loot_method(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(3.0));
     state.push(Val::Nil);
