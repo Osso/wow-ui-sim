@@ -4,7 +4,7 @@
 
 ## [2026-10-01] implementation | Add bounded shared party connectivity
 
-[[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures await parent GREEN/final gates; no build, native, profile-runtime or source-accounting completion claim.
+[[lua-api#Global Functions]] links the [party connection contract](../specs/party-connection.md): active admin input and shared bool/query model implemented after actual RED 0/6. Eight grouped fixtures now have bounded development GREEN; linked contract owns 55 PASS and saved zero-error startup. Independent acceptance/current Rust gates remain pending; no native, all-profile execution or whole-row completion claim.
 
 ## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
 
