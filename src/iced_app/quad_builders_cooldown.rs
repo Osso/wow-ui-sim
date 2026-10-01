@@ -183,8 +183,9 @@ pub(super) fn cooldown_countdown_text(f: &crate::widget::Frame, remaining: f64) 
     if f.cooldown_use_aura_display_time {
         return Some(format!("{}", remaining.ceil() as i64));
     }
-    if threshold > 0.0 && remaining >= threshold {
-        return Some(format!("{}s", remaining.ceil() as i64));
+    if (60.0..=3600.0).contains(&threshold) && remaining < threshold {
+        let seconds = remaining.ceil() as i64;
+        return Some(format!("{}:{:02}", seconds / 60, seconds % 60));
     }
     let decimal_threshold = f.cooldown_countdown_milliseconds_threshold_seconds;
     if remaining < decimal_threshold {
@@ -424,17 +425,30 @@ mod tests {
 
         assert_eq!(
             cooldown_countdown_text(&cooldown, 8.2).as_deref(),
-            Some("9s")
+            Some("8.2")
         );
         assert_eq!(
             cooldown_countdown_text(&cooldown, 2.4).as_deref(),
             Some("2.4")
         );
 
+        cooldown.cooldown_countdown_abbrev_threshold_seconds = 60.0;
+        assert_eq!(
+            cooldown_countdown_text(&cooldown, 8.2).as_deref(),
+            Some("0:09")
+        );
+
         cooldown.cooldown_use_aura_display_time = true;
         assert_eq!(
             cooldown_countdown_text(&cooldown, 8.2).as_deref(),
             Some("9")
+        );
+
+        cooldown.cooldown_has_countdown_formatter = true;
+        cooldown.cooldown_formatted_countdown_text = Some("custom".to_string());
+        assert_eq!(
+            cooldown_countdown_text(&cooldown, 8.2).as_deref(),
+            Some("custom")
         );
     }
 }

@@ -40,7 +40,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Parent owns compiled RED and subsequent producer/verification. No builds, tests, checks or delegation executed for this tests/spec input commit. Minimum/storage/default controls may already PASS; abbreviation assertions are intended RED against the current opposite-inequality/suffix renderer. No observed failure or pass counts claimed.
+- [ ] Parent owns GREEN compilation/runtime and final verification. Saved compiled RED at input `d656bf037`: build exit 0 in 692.14 seconds (`/tmp/patch-12.0.5-batch36-red-build-result.json`); corrected runtime filter selected 20 tests, 10 PASS / 10 FAIL (`/tmp/patch-12.0.5-batch36-red-correct-filter.{json,log}`). Original filename-based filter selected zero tests and is not proof. Storage separately PASS in original runs (parent report).
+- [ ] Producer changes only the renderer abbreviation branch: configured inclusive 60–3600 seconds and strictly lower remaining time select ceil-rounded `m:ss`. Existing renderer unit control migrates the obsolete `9s` expectation to decimal `8.2` for invalid threshold 5, then checks valid abbreviation, aura precedence and custom-over-aura precedence. No build/test/check/readability/delegation performed by producer; GREEN remains pending.
 - [ ] Cached retail `Blizzard_APIDocumentationGenerated/FrameAPICooldownDocumentation.lua`, inspected at lines 338–350, documents below-threshold abbreviation (example `1:31`). Exact assumption: 'If above one hour or below one minute no abbreviation' grammatical refers to configured threshold. Inclusive endpoints, strict below selection, ceil rounding and minimum equality are bounded simulator policy; no native probes establish boundaries.
 - [ ] Register rows `widgets-Cooldown-GetMinimumCountdownDuration-536`, `widgets-Cooldown-SetCountdownAbbrevThreshold-538`, `widgets-Cooldown-SetMinimumCountdownDuration-540` change primitive type annotations only. These fixtures confer no behavioral-delta or whole-row completion credit from aliases alone.
 
@@ -53,15 +54,15 @@ cargo test --lib --test integration --no-run
 Exact runtime filters on the respective emitted test binaries, with a bounded timeout:
 
 ```text
-iced_app::quad_builders_cooldown::countdown_formatter_tests::countdown_abbreviation_
-iced_app::quad_builders_cooldown::countdown_formatter_tests::countdown_threshold_controls_
-iced_app::quad_builders_cooldown::countdown_formatter_tests::countdown_minimum_duration_
-iced_app::quad_builders_cooldown::countdown_formatter_tests::configured_renderer_clear_restores_existing_default_thresholds --exact
+iced_app::quad_builders::cooldown::countdown_formatter_tests::countdown_abbreviation_
+iced_app::quad_builders::cooldown::countdown_formatter_tests::countdown_threshold_controls_
+iced_app::quad_builders::cooldown::countdown_formatter_tests::countdown_minimum_duration_
+iced_app::quad_builders::cooldown::countdown_formatter_tests::configured_renderer_clear_restores_existing_default_thresholds --exact
 cooldown_widget::cooldown_threshold_storage_preserves_fractional_units_and_independence --exact
 ```
 
-Run the existing full `iced_app::quad_builders_cooldown::countdown_formatter_tests::` module as the formatter/gate control filter when integrating, not as an additional Cargo target.
+Run the existing full `iced_app::quad_builders::cooldown::countdown_formatter_tests::` module as the formatter/gate control filter when integrating, not as an additional Cargo target. Also run `iced_app::quad_builders::cooldown::tests::` for the migrated renderer control. Paths match `/tmp/patch-12.0.5-batch36-lib-test-list.txt`.
 
 ## Out of scope
 
-Production/vendor edits, native parity, GPU glyph rasterization, taint/security changes, audit status promotion, unrelated API behavior and final acceptance. This commit supplies tests/spec only; source documentation supports a renderer discrepancy, not a storage type migration.
+Vendor edits, new state/targets, native parity, GPU glyph rasterization, taint/security changes, audit status promotion, unrelated API behavior and final acceptance. Renderer-only production fix; source documentation supports a renderer discrepancy, not a storage type migration. Total-minimum/hide/expiry gates and aura/custom formatter selection stay unchanged.
