@@ -4,6 +4,7 @@
 use std::collections::HashMap;
 
 mod categories;
+mod category_search;
 mod input;
 mod queries;
 mod snapshot;

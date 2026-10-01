@@ -1,6 +1,6 @@
 # Housing category search
 
-`C_HousingCatalog.SearchCatalogCategories` and `SearchCatalogSubcategories` must query explicit category/subcategory inputs in `src/c_api/c_housing/catalog.rs`. This batch26 tests+inputs contract targets exact 12.0.5 audit row `structures-HousingCategorySearchInfo-661`: `withOwnedEntriesOnly` → `withStoredEntriesOnly`. Category snapshot getters from producer `bbbacf8f0` are unchanged. See [API architecture](../wiki/systems/lua-api.md) for subsystem context.
+`C_HousingCatalog.SearchCatalogCategories` and `SearchCatalogSubcategories` must query explicit category/subcategory inputs in `src/c_api/c_housing/catalog.rs`. This bounded batch26 contract targets exact 12.0.5 audit row `structures-HousingCategorySearchInfo-661`: `withOwnedEntriesOnly` → `withStoredEntriesOnly`. Category snapshot getters from producer `bbbacf8f0` are unchanged. See [API architecture](../wiki/systems/lua-api.md) for subsystem context.
 
 ## What it must do
 
@@ -36,14 +36,16 @@
 
 - `src/c_api/c_housing/catalog.rs` — explicit category/subcategory maps and new editor-mode association vectors only.
 - `tests/housing_catalog_categories.rs` — existing four literals gain empty association vectors; getter assertions remain unchanged.
-- `tests/housing_category_search.rs` — grouped integration expectations for future replacement of the seeded category search methods.
+- `src/c_api/c_housing/catalog/category_search.rs` — public parser/access guard, runtime featured constant lookup, explicit-map predicates, ordered fresh ID arrays.
+- `src/c_api/c_housing/catalog/queries.rs` — unconditional registration of both category searches; getters and ordinary searcher unchanged.
+- `tests/housing_category_search.rs` — twelve grouped integration expectations; parent owns GREEN and verifier acceptance.
 - `build.rs` / `tests/integration.rs` — existing discovery includes the new file in the single integration target; no new Cargo target.
-- `src/lua_api/workarounds/temporary/housing_catalog_state.lua` — current seeded search producer, untouched in batch26.
+- `src/lua_api/workarounds/temporary/housing_catalog_state.lua` — only the two seeded category search publishers removed; remaining publishers unchanged.
 - Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua` — actual deprecated wrapper loaded in one fixture; not copied, rewritten, or monkey-patched.
 
 ## Tests asserting this spec
 
-All twelve fixtures are **unrun** at this input checkpoint. No RED/GREEN, build, check, native, or acceptance claim.
+Parent's saved compiled RED at inputs `94a8f966b799b27bb13b4a3cf66fc92b0864b5f4`: **0 PASS / 12 FAIL**, build exit **0** in **129.005s**, test exit **101** in **1.524s**. Artifacts: `/tmp/patch-12.0.5-batch26-red-build-result.json`, `-red-build.json`, `-red-revision.txt`, `-red-run.json`, `-red-run.log`. Producer read these artifacts; did not rerun commands. GREEN and acceptance remain pending.
 
 | Fixture in `tests/housing_category_search.rs` | Contract |
 |---|---|
@@ -66,16 +68,20 @@ Parent's exact RED filter before fresh producer work:
 cargo test --test integration housing_category_search:: -- --nocapture
 ```
 
-Default features include `retail-12-0-5`; the file uses that feature gate. This command is recorded, not executed by batch26. Proof ledger: inputs/tests/spec only; formatter execution does not prove compilation or runtime behavior. No exact-row coverage promotion.
+Default features include `retail-12-0-5`; the file uses that feature gate. Saved parent execution used the compiled integration binary with `housing_category_search:: --nocapture --test-threads=1` under `timeout 90`. Producer performs formatting only; no producer build, test, check, readability, startup, native, or acceptance claim. No exact-row coverage promotion.
+
+## Producer checkpoint — 2026-10-01
+
+Both APIs now parse a required public table through the existing VM access guard, strictly parse public boolean/integer fields, read the modeled runtime featured constant, filter explicit stored/mode inputs, sort `(order_index, numeric ID)`, and publish fresh ID arrays. No secret unwrap, taint clear, removed-key fallback, parent join, guessed associations, or synthesized IDs. Only the two old search publishers were removed; registration remains unconditional. Source implementation is committed before parent GREEN/verifier gates. Requirement checkboxes remain unchecked pending those gates.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must observe actual behavioral RED on these inputs before replacing seeded `SearchCatalogCategories`/`SearchCatalogSubcategories`, then establish targeted GREEN.
+- [ ] Parent must establish targeted GREEN and verifier acceptance on this producer revision; saved input RED is recorded above.
 - [ ] Native ordering, featured-subcategory behavior, mode associations, and exact parser behavior remain unknown; policies above are explicit simulator inferences.
 - [ ] Native `AllowedWhenUntainted` secret acceptance remains incomplete. Secure secret rejection here intentionally does not claim parity with that declaration.
 
 ## Out of scope
 
-- Query/parser implementation, serializers, registration, seed changes, or getter changes: separate producer work after actual RED.
+- Getter changes, other serializers, other seed publishers, or registration feature-gating.
 - Ordinary `HousingCatalogSearcher` filtering: these two category queries establish no ordinary-searcher filtering claim.
 - Shared wiki, coverage manifests, PLAN, existing category spec, native probes, builds/checks/tests, delegation, push, deployment: excluded by batch26 authorization.

@@ -20,6 +20,14 @@ pub(in crate::c_api::c_housing) fn register(state: &mut LuaState) -> LuaResult<(
             "GetCatalogSubcategoryInfo",
             super::categories::subcategory_info,
         ),
+        (
+            "SearchCatalogCategories",
+            super::category_search::search_categories,
+        ),
+        (
+            "SearchCatalogSubcategories",
+            super::category_search::search_subcategories,
+        ),
         ("GetCatalogEntryInfo", entry_info),
         ("GetCatalogEntryInfoByItem", entry_info_by_item),
         ("GetCatalogEntryInfoByRecordID", entry_info_by_record_id),

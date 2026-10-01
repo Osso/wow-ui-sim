@@ -1024,12 +1024,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   end,
   RequestHousingMarketInfoRefresh = __wow_noop,
   RequestHousingMarketRefundInfo = __wow_noop,
-  SearchCatalogCategories = function(_searchParams)
-    return { __wow_housing_all_category_id, 101, 102 }
-  end,
-  SearchCatalogSubcategories = function(_searchParams)
-    return { 1001, 1002 }
-  end,
   SetPreviewCartItemShown = function(decorGUID, shown)
     __wow_housing_preview_cart_state[decorGUID] = not not shown
   end,
