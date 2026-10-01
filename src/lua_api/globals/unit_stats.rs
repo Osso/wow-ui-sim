@@ -22,6 +22,7 @@
 //! Units the sim doesn't model return zero-valued stats (the retail
 //! convention when `UnitExists(unit)` is false).
 
+use crate::c_api::c_secrets::push_stat_number;
 use crate::lua_api::game_data::{PartyMember, TargetInfo};
 use crate::lua_api::globals::unit_api::parse_party_index;
 use crate::lua_api::methods::{borrow_state, val_to_string};
@@ -275,20 +276,20 @@ pub(crate) fn secondary_power_max(power_type: i32) -> i32 {
 /// with zero buffs.
 fn unit_armor(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(stats.armor as f64));
-    state.push(Val::Num(stats.armor as f64));
-    state.push(Val::Num(stats.armor as f64));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    push_stat_number(state, stats.armor as f64)?;
+    push_stat_number(state, stats.armor as f64)?;
+    push_stat_number(state, stats.armor as f64)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
     Ok(5)
 }
 
 /// `UnitAttackPower(unit)` — retail: `(base, posBuff, negBuff)`.
 fn unit_attack_power(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(stats.attack_power as f64));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    push_stat_number(state, stats.attack_power as f64)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
     Ok(3)
 }
 
@@ -314,7 +315,7 @@ fn unit_ranged_critical_strike(state: &mut LuaState) -> LuaResult<u32> {
 /// the player's haste rating.
 fn unit_spell_haste(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(rating_to_percent(stats.haste_rating)));
+    push_stat_number(state, rating_to_percent(stats.haste_rating))?;
     Ok(1)
 }
 
@@ -323,32 +324,32 @@ fn unit_spell_haste(state: &mut LuaState) -> LuaResult<u32> {
 /// are zero in this sim.
 fn unit_damage(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(stats.damage_min));
-    state.push(Val::Num(stats.damage_max));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(1.0)); // percent (multiplier)
+    push_stat_number(state, stats.damage_min)?;
+    push_stat_number(state, stats.damage_max)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 1.0)?; // percent (multiplier)
     Ok(7)
 }
 
 /// `UnitRangedDamage(unit)` — same shape as `UnitDamage`.
 fn unit_ranged_damage(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(2.0)); // ranged attack speed
-    state.push(Val::Num(stats.damage_min));
-    state.push(Val::Num(stats.damage_max));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(1.0));
+    push_stat_number(state, 2.0)?; // ranged attack speed
+    push_stat_number(state, stats.damage_min)?;
+    push_stat_number(state, stats.damage_max)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 1.0)?;
     Ok(6)
 }
 
 /// `UnitAttackSpeed(unit)` — `(mainHandSpeed, offHandSpeed)`.
 fn unit_attack_speed(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(2.0));
-    state.push(Val::Num(2.0));
+    push_stat_number(state, 2.0)?;
+    push_stat_number(state, 2.0)?;
     Ok(2)
 }
 
@@ -434,10 +435,10 @@ fn unit_stat(state: &mut LuaState) -> LuaResult<u32> {
         5 if unit_token(state) == "player" => borrow_state(state)?.player.stats.spirit,
         _ => 0.0,
     };
-    state.push(Val::Num(value));
-    state.push(Val::Num(value));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    push_stat_number(state, value)?;
+    push_stat_number(state, value)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
     Ok(4)
 }
 
@@ -459,44 +460,44 @@ fn get_attack_power_for_stat(state: &mut LuaState) -> LuaResult<u32> {
     let stat_index = stack_i32(state, 1);
     let stat_value = stack_f64(state, 2);
     let attack_power = attack_power_for_stat_value(state, stat_index, stat_value);
-    state.push(Val::Num(attack_power));
+    push_stat_number(state, attack_power)?;
     Ok(1)
 }
 
 /// `GetDodgeChanceFromAttribute()` — attribute-only dodge contribution.
 fn get_dodge_chance_from_attribute(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num((stats.agility / 100.0).max(0.0)));
+    push_stat_number(state, (stats.agility / 100.0).max(0.0))?;
     Ok(1)
 }
 
 /// `GetParryChanceFromAttribute()` — attribute-only parry contribution.
 fn get_parry_chance_from_attribute(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num((stats.strength / 100.0).max(0.0)));
+    push_stat_number(state, (stats.strength / 100.0).max(0.0))?;
     Ok(1)
 }
 
 fn get_dodge_chance(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(base_avoidance_percent(stats.agility)));
+    push_stat_number(state, base_avoidance_percent(stats.agility))?;
     Ok(1)
 }
 
 fn get_parry_chance(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(base_avoidance_percent(stats.strength)));
+    push_stat_number(state, base_avoidance_percent(stats.strength))?;
     Ok(1)
 }
 
 fn get_block_chance(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 
 fn get_shield_block(state: &mut LuaState) -> LuaResult<u32> {
     let stats = stats_for(state);
-    state.push(Val::Num(stats.armor as f64));
+    push_stat_number(state, stats.armor as f64)?;
     Ok(1)
 }
 

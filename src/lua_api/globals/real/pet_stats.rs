@@ -16,6 +16,7 @@
 //! `PetState::default()` matches that — tests can seed the struct to
 //! exercise classic code paths.
 
+use crate::c_api::c_secrets::push_stat_number;
 use crate::lua_api::methods::{borrow_state, create_string};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -53,7 +54,7 @@ fn get_pet_time_in_combat(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_pet_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 

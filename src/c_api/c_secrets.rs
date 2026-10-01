@@ -8,9 +8,7 @@ use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 #[cfg(feature = "aura-containers")]
 use rilua::runtime_error;
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use rilua::vm::state::LuaState;
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use rilua::{LuaResult, Val};
 
 #[cfg(feature = "aura-containers")]
@@ -41,6 +39,23 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "ShouldUnitStatsBeSecret",
         should_unit_stats_be_secret,
     )?;
+    Ok(())
+}
+
+/// Push only a concrete Rust-computed stat result, never an arbitrary Lua value.
+/// Host production preserves caller taint; profiles without this policy stay plain.
+pub(crate) fn push_stat_number(state: &mut LuaState, number: f64) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
+    let restricted = borrow_state(state)?.unit_stats_restricted;
+    #[cfg(feature = "retail-12-0-5")]
+    let value = if restricted {
+        rilua::table_security::wrap_host_secret_number(state, number)
+    } else {
+        Val::Num(number)
+    };
+    #[cfg(not(feature = "retail-12-0-5"))]
+    let value = Val::Num(number);
+    state.push(value);
     Ok(())
 }
 

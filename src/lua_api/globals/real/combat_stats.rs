@@ -1,5 +1,6 @@
 //! State-backed character combat-rating globals backed by `PlayerState.stats`.
 
+use crate::c_api::c_secrets::push_stat_number;
 #[cfg(feature = "client-wowforever")]
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::methods::borrow_state;
@@ -53,7 +54,7 @@ fn rating_bonus_for_value(rating_index: i32, rating_value: f64) -> f64 {
 fn get_combat_rating(state: &mut LuaState) -> LuaResult<u32> {
     let rating_index = i32::from_stack(state, 1)?;
     let rating = combat_rating_for(state, rating_index);
-    state.push(Val::Num(rating as f64));
+    push_stat_number(state, rating as f64)?;
     Ok(1)
 }
 
@@ -73,7 +74,7 @@ fn get_combat_rating_bonus(state: &mut LuaState) -> LuaResult<u32> {
             _ => 0.0,
         }
     };
-    state.push(Val::Num(bonus));
+    push_stat_number(state, bonus)?;
     Ok(1)
 }
 
@@ -86,7 +87,7 @@ fn get_combat_rating_bonus_for_value(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_crit_chance(state: &mut LuaState) -> LuaResult<u32> {
     let crit = borrow_state(state)?.player.stats.crit_pct() + 5.0;
-    state.push(Val::Num(crit));
+    push_stat_number(state, crit)?;
     Ok(1)
 }
 
@@ -120,7 +121,7 @@ fn get_crit_chance_provides_parry_effect(state: &mut LuaState) -> LuaResult<u32>
 
 fn get_haste(state: &mut LuaState) -> LuaResult<u32> {
     let haste = borrow_state(state)?.player.stats.haste_pct();
-    state.push(Val::Num(haste));
+    push_stat_number(state, haste)?;
     Ok(1)
 }
 
@@ -233,19 +234,19 @@ fn unit_has_relic_slot(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 
 fn get_spell_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 
 fn get_expertise(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
+    push_stat_number(state, 0.0)?;
     Ok(3)
 }
 
@@ -255,14 +256,19 @@ fn get_expertise_percent(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_mastery_effect(state: &mut LuaState) -> LuaResult<u32> {
     let mastery = borrow_state(state)?.player.stats.mastery_pct();
-    state.push(Val::Num(8.0 + mastery));
-    state.push(Val::Num(mastery));
+    push_stat_number(state, 8.0 + mastery)?;
+    push_stat_number(state, mastery)?;
     Ok(2)
 }
 
 fn get_versatility_bonus(state: &mut LuaState) -> LuaResult<u32> {
     let vers = borrow_state(state)?.player.stats.versatility_pct();
-    state.push(Val::Num(vers));
+    push_stat_number(state, vers)?;
+    Ok(1)
+}
+
+fn get_restricted_zero_percent(state: &mut LuaState) -> LuaResult<u32> {
+    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 
@@ -273,25 +279,25 @@ fn get_zero_percent(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_speed(state: &mut LuaState) -> LuaResult<u32> {
     let rating = combat_rating_for(state, SPEED_RATING_INDEX) as f64;
-    state.push(Val::Num(rating_bonus_for_value(SPEED_RATING_INDEX, rating)));
+    push_stat_number(state, rating_bonus_for_value(SPEED_RATING_INDEX, rating))?;
     Ok(1)
 }
 
 fn get_lifesteal(state: &mut LuaState) -> LuaResult<u32> {
     let rating = combat_rating_for(state, LIFESTEAL_RATING_INDEX) as f64;
-    state.push(Val::Num(rating_bonus_for_value(
-        LIFESTEAL_RATING_INDEX,
-        rating,
-    )));
+    push_stat_number(
+        state,
+        rating_bonus_for_value(LIFESTEAL_RATING_INDEX, rating),
+    )?;
     Ok(1)
 }
 
 fn get_avoidance(state: &mut LuaState) -> LuaResult<u32> {
     let rating = combat_rating_for(state, AVOIDANCE_RATING_INDEX) as f64;
-    state.push(Val::Num(rating_bonus_for_value(
-        AVOIDANCE_RATING_INDEX,
-        rating,
-    )));
+    push_stat_number(
+        state,
+        rating_bonus_for_value(AVOIDANCE_RATING_INDEX, rating),
+    )?;
     Ok(1)
 }
 
@@ -307,8 +313,8 @@ fn get_mana_regen(state: &mut LuaState) -> LuaResult<u32> {
     #[cfg(not(feature = "client-wowforever"))]
     let total = base;
     drop(sim);
-    state.push(Val::Num(total));
-    state.push(Val::Num(base * 0.5));
+    push_stat_number(state, total)?;
+    push_stat_number(state, base * 0.5)?;
     Ok(2)
 }
 
@@ -362,9 +368,12 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("GetExpertisePercent", get_expertise_percent),
     ("GetMasteryEffect", get_mastery_effect),
     ("GetVersatilityBonus", get_versatility_bonus),
-    ("GetModResilienceDamageReduction", get_zero_percent),
-    ("GetPvpPowerDamage", get_zero_percent),
-    ("GetPvpPowerHealing", get_zero_percent),
+    (
+        "GetModResilienceDamageReduction",
+        get_restricted_zero_percent,
+    ),
+    ("GetPvpPowerDamage", get_restricted_zero_percent),
+    ("GetPvpPowerHealing", get_restricted_zero_percent),
     ("GetMeleeMissChance", get_zero_percent),
     ("GetRangedMissChance", get_zero_percent),
     ("GetSpellMissChance", get_zero_percent),

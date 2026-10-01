@@ -19,6 +19,7 @@
 //!   autocast isn't modelled.
 //! - `GetSpellLevelLearned(spellID)`       → 1 for known spells, else 0.
 
+use crate::c_api::c_secrets::push_stat_number;
 use crate::lua_api::globals::action_bar_api::spell_cooldown_times;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
@@ -107,7 +108,7 @@ fn spell_power(state: &mut LuaState) -> f64 {
 /// bucket, so the school arg is informational.
 fn get_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
     let sp = spell_power(state);
-    state.push(Val::Num(sp));
+    push_stat_number(state, sp)?;
     Ok(1)
 }
 
@@ -115,7 +116,7 @@ fn get_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
 /// Same single-bucket approximation as `GetSpellBonusDamage`.
 fn get_spell_bonus_healing(state: &mut LuaState) -> LuaResult<u32> {
     let sp = spell_power(state);
-    state.push(Val::Num(sp));
+    push_stat_number(state, sp)?;
     Ok(1)
 }
 
