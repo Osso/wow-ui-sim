@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch55 saved parent GREEN
+
+[Batch55 tertiary proof SSOT](../specs/tertiary-stat-inputs.md#reconciled-batch55-saved-parent-green--2026-10-02) records saved observations and limits; fresh independent acceptance, unchecked requirements and source420/442/480 accounting remain pending.
+
 ## [2026-10-02] evidence | Accept exact formatter and eight stat annotations
 
 [Combined53/54 acceptance SSOT](../specs/break-up-large-numbers.md#independent-bounded-acceptance--2026-10-02) and [exact-eight stat scope](../specs/unit-stat-output-restriction.md#exact-eight-annotation-acceptance--2026-10-02) record parent-accepted443 plus446 owned-format supplement. Only411/426/428/444/448/450/494/506/510 promote;353 unrelated rows and60 prior capabilities retained. Globalfmt remains failed on unowned source; dirty-combined/inferred/native/profile/model limits explicit. Parent owns postcommit validation; broader goal open.
