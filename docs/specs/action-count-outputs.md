@@ -58,6 +58,16 @@ Both blocks declare `RequiresValidActionSlot=true`, `SecretWhenCooldownsRestrict
 
 `tests/action_count_outputs.rs`: 28 substantive cases, grouped integration autodiscovery; no new Cargo target. Real namespace/model fixtures, authentic VM inputs and outputs, scoped Retail125/PTR gate. Embedded conditions are split to avoid dense expression chains. Real `register_table_security` fixture helper is permitted; no API callbacks or security queries are replaced.
 
+## Saved parent GREEN and initial independent gate — 2026-10-01
+
+Default integration compiled `f081fedb9af52e8642abf3fcd810513ee6f87a4a` successfully in234.80088983406313s with zero diagnostics. `/tmp/patch-12.0.5-batch66-green-build-result.json` and full compiler streams bind integration SHA256 `3c33bc66c4e58aaf3ca1a6b59076ed0cb6081c19b727a184306245d21f6a41e5`. Seven finite runs record145 distinct Retail PASS:28 focused plus117 controls,42.36772962694522s; startup returns `[]`, exit0,7.412627534009516s. This is bounded development below60s, not padded whole-goal acceptance.
+
+Independent521 confirms source/model/security/wiring and frozen145 PASS, fresh scoped fmt/default check exit0, plus36 separate existing Forever controls and successful GUI-enabled compile. `/tmp/patch-12.0.5-action-count-independent-proof.md` and `/tmp/batch66-independent-gates.json` retain full hashes/costs/provenance. Three dense embedded-Lua literals were accepted after source inspection and rewritten multiline; assertions/order/values remain identical. Refreshed28-test runtime and independent readability/equivalence proof remain pending.
+
+Concurrent Batch67 added only a Retail125-gated spell-count map/default to two shared state files. Initial default check/format remain pre67 evidence, not current-whole-tree proof. Forever’s feature projection excludes that field; prior Forever compile/36 controls remain source-valid, without claiming unchanged whole-file hashes. Main will refresh current-default compilation/check with the next source snapshot rather than replay valid controls blindly. Typed-secret payload/native nominal-type and all inference/process/global-format/dirty limits remain.
+
+Header uses applicable instructional date; observed host Git/build/gate timestamps are separately retained in artifacts and may differ. No provenance redating.
+
 ## Known gaps (current cycle)
 
 - [ ] **Proof ledger:** saved parent-reported compiled RED at `d0c7969641adf566502d840d9651ed54c8fedca5` precedes this producer. Build exit0,608.5359100290807s; auto-background job completed and full log was recovered, with no rerun and zero diagnostics. Integration artifact hash `aec74c6d04bfef08bb9ec35c0538f080bda1a90a69989b8f15f3d4164e5e84ba`; 28 tests,0PASS/28FAIL, exit101,7.2183314569992945s. Exact parent command/log path was not supplied here; no replacement execution or provenance claim is invented. Historical build/host timestamps may be2026-10-02 and are not rewritten.

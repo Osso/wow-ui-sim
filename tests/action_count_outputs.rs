@@ -204,7 +204,18 @@ fn secret_fixture() -> WowLuaEnv {
         lua.state_mut().pop();
     }
     drop(lua);
-    env.exec("ACSecrets = {ACSlot,ACMax,ACReplacement,ACNil,ACBool,ACString,ACSecretTable,ACSecretFrame,ACUnknown}; for _,v in ipairs(ACSecrets) do assert(issecretvalue(v)) end").unwrap();
+    env.exec(
+        r#"
+        ACSecrets = {
+            ACSlot, ACMax, ACReplacement, ACNil, ACBool,
+            ACString, ACSecretTable, ACSecretFrame, ACUnknown,
+        }
+        for _, value in ipairs(ACSecrets) do
+            assert(issecretvalue(value))
+        end
+        "#,
+    )
+    .unwrap();
     env
 }
 
@@ -407,7 +418,19 @@ fn reads_aliases_and_result_replacement_preserve_maps_and_environment_isolation(
             state.spell_charges.clone(),
         )
     };
-    env.exec("local d=C_ActionBar.GetActionDisplayCount; local u=C_ActionBar.GetActionUseCount; for i=1,8 do assert(d(17)=='3'); assert(u(17)==7) end; ACResult='changed'; assert(d(17)=='3')").unwrap();
+    env.exec(
+        r#"
+        local display = C_ActionBar.GetActionDisplayCount
+        local use = C_ActionBar.GetActionUseCount
+        for index = 1, 8 do
+            assert(display(17) == '3')
+            assert(use(17) == 7)
+        end
+        ACResult = 'changed'
+        assert(display(17) == '3')
+        "#,
+    )
+    .unwrap();
     let state = env.state().borrow();
     assert_eq!(state.action_bars, bars);
     assert_eq!(state.action_use_counts, counts);
@@ -462,7 +485,16 @@ fn finite_threshold_and_cstring_representability_validate_even_without_source() 
 fn public_tainted_calls_preserve_exact_scalars_and_trust() {
     let env = fixture(false);
     positive(&env);
-    env.exec("ACTainted(function() assert(C_ActionBar.GetActionUseCount(17)==7); assert(C_ActionBar.GetActionDisplayCount(17,6,'é雪')=='é雪'); assert(C_ActionBar.GetActionDisplayCount(19)=='2') end)").unwrap();
+    env.exec(
+        r#"
+        ACTainted(function()
+            assert(C_ActionBar.GetActionUseCount(17) == 7)
+            assert(C_ActionBar.GetActionDisplayCount(17, 6, 'é雪') == 'é雪')
+            assert(C_ActionBar.GetActionDisplayCount(19) == '2')
+        end)
+        "#,
+    )
+    .unwrap();
 }
 
 #[test]
