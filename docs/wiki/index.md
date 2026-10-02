@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact base-spell specialization boundary
+
+[Exact295 acceptance SSOT](../specs/base-spell-specialization-security.md#independent-bounded-acceptance--2026-10-02) records502+505+509:81 distinct Retail PASS, three separate existing Forever PASS, scopedfmt/check/startup and equivalent test-readability fix. Only295 promotes;361 unrelated rows/69 prior capabilities preserved. Meaningful empty-default specialization model and raw arg2 NeverSecret only; arg1/native/dataset/profile/UI limits, dirty/globalfmt and initial protected-search process breach remain explicit. Broader goal open.
+
 ## [2026-10-02] implementation | Bound exact233 action cooldown outputs
 
 [[lua-api#Retail 12.0.5 action cooldown output restriction]] links [exact233 spec SSOT](../specs/action-cooldown-output-restriction.md) after `fad6e780f`: unchanged state-backed spell/GCD intervals, explicit `cooldowns_restricted` helper gate Retail125/PTR, ordinary rooted table with typed secret NUMs only for startTime/duration/modRate; existing public BOOLs/fieldset unchanged. Numeric-field/zero/table policies inferred. Saved pre-producer RED4PASS/14FAIL reaches first secret/wrapper observations; downstream GC unproved, no GREEN/acceptance/source credit. Input guards/duration objects/Forever/new fields/charge partial231/native exceptions/UI parity excluded.197 pending/150 bounded/14 partial/1 metadata,362 IDs/69 capabilities unchanged;233 pending,295 artifacts pending acceptance,239 tests-only.

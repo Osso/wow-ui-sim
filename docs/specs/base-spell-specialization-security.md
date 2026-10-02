@@ -1,24 +1,24 @@
 # Retail base-spell specialization security
 
-Exact source row295 (`global api-C_Spell-GetBaseSpell-295`) adds **arg2 NeverSecret** to `C_Spell.GetBaseSpell`. Batch63 now publishes the existing meaningful `BaseSpellRelationships` provider for Retail 12.0.5+ and adds the specialization boundary after main's actual compiled RED. No stub or fabricated catalog. Producer GREEN and acceptance remain pending. See [historical Forever contract](spell-base.md) and [Lua API architecture](../lua-api.md).
+Exact source row295 (`global api-C_Spell-GetBaseSpell-295`) adds **arg2 NeverSecret** to `C_Spell.GetBaseSpell`. Batch63 now publishes the existing meaningful `BaseSpellRelationships` provider for Retail 12.0.5+ and adds the specialization boundary after main's actual compiled RED. No stub or fabricated catalog. Independent bounded acceptance is recorded below; broader/native coverage remains unproved. See [historical Forever contract](spell-base.md) and [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
 ### Retail publication and existing model behavior
 
-- [ ] Publish the actual `C_Spell.GetBaseSpell` in the rooted Retail 12.0.5+ namespace using the existing relationship model; keep Forever publication and existing Forever-specific helpers/tests unchanged.
-- [ ] Resolve numeric `19750`, known `Flash of Light`, case-insensitive names and numeric strings through the existing resolver. Do not change arg1 policy or introduce new alias semantics.
-- [ ] With test-owned `(66,19750)->642`, `(70,19750)->853` and Paladin active index2, omitted/nil/zero public specialization selects current66; explicit70 selects853. Explicit66 selects642.
-- [ ] Return supplied positive spell ID when no relationship exists, including unknown `4294967295`. This is the existing model's identity contract, **not fallback compatibility**. Positive finite integral u32 specialization IDs are accepted; malformed public types/ranges retain meaningful validation. These selection/validation policies are inferred, not native-verified.
-- [ ] Observe live active-specialization and relationship-input updates; isolate environments. Queries must not mutate relationships, aliases, player selection, public tables or frames, or infer relationships by reversing aliases.
-- [ ] Preserve addon stack taint on ordinary public calls and restore the outer secure caller after returning. No blanket security declassification.
+- [x] Publish the actual `C_Spell.GetBaseSpell` in the rooted Retail 12.0.5+ namespace using the existing relationship model; keep Forever publication and existing Forever-specific helpers/tests unchanged.
+- [x] Resolve numeric `19750`, known `Flash of Light`, case-insensitive names and numeric strings through the existing resolver. Do not change arg1 policy or introduce new alias semantics.
+- [x] With test-owned `(66,19750)->642`, `(70,19750)->853` and Paladin active index2, omitted/nil/zero public specialization selects current66; explicit70 selects853. Explicit66 selects642.
+- [x] Return supplied positive spell ID when no relationship exists, including unknown `4294967295`. This is the existing model's identity contract, **not fallback compatibility**. Positive finite integral u32 specialization IDs are accepted; malformed public types/ranges retain meaningful validation. These selection/validation policies are inferred, not native-verified.
+- [x] Observe live active-specialization and relationship-input updates; isolate environments. Queries must not mutate relationships, aliases, player selection, public tables or frames, or infer relationships by reversing aliases.
+- [x] Preserve addon stack taint on ordinary public calls and restore the outer secure caller after returning. No blanket security declassification.
 
 ### Exact row295 boundary
 
-- [ ] Authenticate arg2 with actual VM secret metadata before arg1 validation/resolution, specialization validation/default selection or relationship lookup.
-- [ ] Reject authentic secret NUM/NIL/BOOL/STRING/table/real-frame arg2 in secure and tainted callers. Secret NIL is not public nil; secret BOOL must not be compared in tainted Lua.
-- [ ] Deny secret arg2 for valid numeric/known-name spell inputs and unknown-relationship inputs, and independently for invalid public arg1 `false`, `nil`, `'unknown'`. Errors must identify this API and second-argument context without disclosing private payloads; no exact native error wording is specified.
-- [ ] Leave omitted/nil/zero public arg2 and existing positive-ID validation unchanged. Preserve wrapper secrecy, rooted host identity/allocation metadata and public recovery after rejection and forced GC.
+- [x] Authenticate arg2 with actual VM secret metadata before arg1 validation/resolution, specialization validation/default selection or relationship lookup.
+- [x] Reject authentic secret NUM/NIL/BOOL/STRING/table/real-frame arg2 in secure and tainted callers. Secret NIL is not public nil; secret BOOL must not be compared in tainted Lua.
+- [x] Deny secret arg2 for valid numeric/known-name spell inputs and unknown-relationship inputs, and independently for invalid public arg1 `false`, `nil`, `'unknown'`. Errors must identify this API and second-argument context without disclosing private payloads; no exact native error wording is specified.
+- [x] Leave omitted/nil/zero public arg2 and existing positive-ID validation unchanged. Preserve wrapper secrecy, rooted host identity/allocation metadata and public recovery after rejection and forced GC.
 
 ## How it works
 
@@ -35,9 +35,9 @@ Exact source row295 (`global api-C_Spell-GetBaseSpell-295`) adds **arg2 NeverSec
 - `src/c_api/spell_base.rs` — unchanged explicit model, identifier resolver and public validation. A `retail-12-0-5`-only early guard calls `rilua::table_security::is_secret_value(state, stack_val(state, 2))` before reading arg1 or consulting simulator state. It rejects even secure callers with `C_Spell.GetBaseSpell argument 2 is NeverSecret`; no payload interpolation, unwrap, callback clearing or fabricated metadata.
 - `src/c_api/c_spell.rs` — existing `SPELL_QUERY_METHODS` entry now uses `base-spell-relationships`, publishing the real handler through the existing rooted namespace registration. No namespace replacement, new fallback or stub.
 
-Forever retains existing public behavior and ordered validation/secret-argument errors: its default features do not select `retail-12-0-5`, so the early guard is absent. Other profiles and earlier Retail epochs remain default-unpublished by the inverse feature gate. This is static wiring evidence, not executed profile proof; manually enabling the shared capability is not default-profile certification.
+Forever retains existing public behavior and ordered validation/secret-argument errors: its default features do not select `retail-12-0-5`, so the early guard is absent. Other profiles and earlier Retail epochs remain default-unpublished by the inverse feature gate. Three existing Forever tests independently pass in the corrected GUI-enabled profile. Other-profile absence remains static wiring evidence; manually enabling the shared capability is not default-profile certification.
 
-Actual RED compilation reported five `dead_code` warnings: `public_argument`, `valid_id`, `read_spell_id`, `read_requested_spec`, `get_base_spell`. Root cause: compiled shared model without Retail registration. The real query entry now consumes the handler/helper chain; no suppression, visibility widening or aliases. Warning-free compilation remains unchecked.
+Actual RED compilation reported five `dead_code` warnings: `public_argument`, `valid_id`, `read_spell_id`, `read_requested_spec`, `get_base_spell`. Root cause: compiled shared model without Retail registration. The real query entry now consumes the handler/helper chain; no suppression, visibility widening or aliases. Saved Retail and corrected Forever compilation each report zero diagnostics; initial scaffold warnings remain historical.
 
 ## Tests asserting this spec
 
@@ -79,12 +79,22 @@ The requested Forever integration compile without default features and with only
 
 Verifier recorded a process breach: a recursive source search included protected `aura_duration.rs` in search scope; no match/content/hash/edit was returned. Follow-up searches must use explicit allowed paths, not broad `src` scopes. This does not claim protected-file safety from exclusion that did not occur.
 
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepts independent502 source/security/wiring/default check/production formatting, independent505 corrected Forever preservation plus full current-test equivalence/readability/format, and509 final artifact audit. `/tmp/patch-12.0.5-base-spell-final-artifact-proof.md` and `.json` reconcile20 refreshed Retail PASS at9ac29940, integration SHA256 `f1e13ffcdbe8dd4dd37fc7b0c3ba0dea45a08775a21532e1386a272ab77fe0d9`, runtime4.100578706013039s. Test SHA256 `eaaf5bfc8c168e1c62f93fde0c699d942e77f21bbfc5edfaa770eb373a9817b4` is inherited from502/505 source-equivalence audit, not embedded by runtime manifests. Shared batch64 compilation126.86125784402248s is not a second producer implementation.
+
+Twenty refreshed tests plus61 source-valid historical controls =**81 distinct Retail PASS**, not101 or fresh81. Corrected GUI-enabled Forever compilation exits0/zero diagnostics in582.12366474804s; exact `spell_base::` three existing tests PASS in0.8370072860270739s, separate profile evidence. Original no-GUI E0432 environment failure remains recorded. Initial default check exits0 in20.45595521305222s, owned formatting passes, source-valid historical startup returns `[]`; later cooldown/LoC changes are outside that source-scoped gate.
+
+Known globalfmt1 and dirty-combined evidence remain. Initial502 broad protected-path search is an explicit **process compliance failure**; no content returned, but functional acceptance does not erase the breach. Follow-ups use exact allowlisted files. No native arg1 AllowedWhenTainted permissions, relationship acquisition/dataset, other-profile runtime, UI/addon or whole-page certification.
+
+Only exact295 promotes: **197 pending /150 bounded /14 partial /1 metadata →196 /151 /14 /1**,362 ordered unique IDs,70 capabilities. Prior69 capabilities,361 unrelated rows and retained register/plaintext hashes stay unchanged. `/tmp/patch-12.0.5-batch63-accounting-before.json` and postcommit `batch63-accounting-validation.json` preserve reconciliation; parent owns validation. Rows233/239 remain separate pending work.
+
 ## Known gaps (current cycle)
 
 - [x] Main-owned actual compiled RED classified and warning root cause recorded; bounded producer implemented afterward.
 - [x] Parent observed focused Retail GREEN, controls/startup and warning-free default compilation as recorded above.
-- [ ] Main-owned startup, check, Forever/profile regression proof, readability and independent verification.
-- [ ] Requirement acceptance and exact source295 accounting; requirements above remain unchecked pending proof.
+- [x] Scoped Retail startup/check, three existing Forever tests, readability and independent functional verification.
+- [x] Exact source295 bounded acceptance; initial process-compliance failure remains explicit.
 - [ ] Native Retail publication/profile permissions, explicit specialization interpretation, result secrecy and live relationship acquisition remain unknown. No retained-surface/native availability certification.
 - [ ] Arg1 `AllowedWhenTainted` semantics remain unmodeled: existing conservative secret-arg1 rejection is acknowledged, unchanged and earns no annotation credit.
 - [ ] No real-world relationship dataset is populated; no fabricated production data, alias traversal or substitute catalog.

@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch63 — exact base-spell specialization boundary accepted
+
+[Exact295 contract/proof SSOT](../../specs/base-spell-specialization-security.md#independent-bounded-acceptance--2026-10-02) records parent acceptance502+505+509:81 distinct Retail PASS plus three separate existing Forever PASS, scopedfmt/check/startup/security/wiring/readability and equivalent assertion split. Only295 promotes: **196 pending/151 bounded/14 partial/1 metadata =362;70 capabilities**. Ordered IDs,361 unrelated rows,69 prior capabilities/source hashes preserved. Existing empty-default specialization model supplies meaningful Retail publication; raw arg2 NeverSecret precedes arg1/model. Conservative arg1 policy/native acquisition/other profiles/UI unknown. Initial wrong no-GUI gate and protected-search process breach remain failures, not erased; globalfmt/dirty limits and broader goal remain open.
+
 ### Batch62 — exact item-context additions accepted
 
 [Exact330/331 contract/proof SSOT](../../specs/tooltip-item-context.md#independent-bounded-acceptance--2026-10-02) records497+499 acceptance:24 refreshed focused PASS plus153 reusable controls/startup0 `[]`, producer-scoped fmt/check/security/wiring/readability and four equivalent assertion fixes. Only330/331 promote: **197 pending/150 bounded/14 partial/1 metadata =362;69 capabilities**. Ordered IDs,360 unrelated rows,68 prior capabilities/source hashes preserved. Explicit host level variants change same catalog item and derived budget estimates; no fabricated production data, ignored-argument credit or native acquisition/full variants/quality parity. Eleven pre-existing partial-fixture diagnostics match61; separate startup clean. Dirty/globalfmt/native/profile/UI limits and broader goal remain open.

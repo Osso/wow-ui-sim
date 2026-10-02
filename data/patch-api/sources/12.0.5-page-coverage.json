@@ -7,6 +7,23 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "base-spell-specialization-security",
+      "symbols": [
+        "C_Spell.GetBaseSpell"
+      ],
+      "scope": "Exact295 arg2 NeverSecret only plus meaningful missing Retail publication using existing empty-default specialization relationships. Raw authentic secret spec rejected even secure before arg1/model, unchanged public default/current/explicit spec and known-name/numeric-string/identity behavior. Six wrapper kinds/taint/GC/recovery/root metadata/read-only/live/isolation. Shared capability preserves Forever; no new alias/traversal/dataset. Conservative arg1 secret rejection remains unmodeled AllowedWhenTainted; native permissions/acquisition/profile/UI/addon parity excluded.",
+      "spec": "docs/specs/base-spell-specialization-security.md",
+      "tests": [
+        "tests/spell_base_retail_security.rs",
+        "tests/spell_base.rs"
+      ],
+      "implementation": "815456e844fbb8e4cbfa5eb39e1d199733616101",
+      "compiled_revision": "9ac29940debec17ce7ffe9bde6dbeb4839309122",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-base-spell-final-artifact-proof.md",
+      "gate_scope": "Accepted502/505/509:20 refreshed+61 inherited=81distinctRetailPASS, separate3ForeverPASS with correctedGUI compile0/582.123665s/0diagnostics. One equivalent test assertion split/readability/fmt; source-defaultcheck0 and startup0[] reused. Initial noGUIFF E0432 environment failure retained, not API bug; original5unusedhelper warnings fixed realpublication, no suppressions. Dirty-combined/globalfmt1 retained. Initial502 broad-search protected-scope breach processFAIL retained despite no returned content; functional acceptance does not erase it. Runtime/source/hash/cost links in proof; no whole-tree/native/finalpage claim."
+    },
+    {
       "id": "tooltip-item-context",
       "symbols": [
         "C_TooltipInfo.GetItemByID"
@@ -2154,9 +2171,11 @@
     },
     {
       "source_id": "global api-C_Spell-GetBaseSpell-295",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "base-spell-specialization-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact295 accepted502+505+509: actual Retail relationship-backed publication, authentic NeverSecret arg2 denial before arg1;81distinctRetailPASS/3separateForeverPASS/source-valid startup/check/fmt/readability. Empty explicit model and documented identity, no fabricated relationships. No arg1 AllowedWhenTainted or native acquisition/permissions/parity credit. InitialFFnoGUI failure/globalfmt/dirty/protected-search process breach retained."
     },
     {
       "source_id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-297",
