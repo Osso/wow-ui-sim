@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch44 aura slot parent GREEN
+
+[[lua-api#Retail 12.0.5 aura slot arguments]] links [saved batch44 proof](../specs/unit-aura-slot-secret-arguments.md#reconciled-batch44-parent-green--2026-10-02): compile0/270.583s, 12 slot +94 controls =106 unique PASS/all exit0, startup0 `[]`/13.061s. Contract owns concrete capability matrix, exact commands/revisions/fixture/binary hashes and artifact references; corrects actual RED/compiled-command date to October 2, 2026. Proof is producer plus preserved unowned dirty duration diff, not clean revision. Independent verifier active; gates/parent acceptance pending. Native access/output secrecy and inferred validation/miss limits retained. Row376 pending; totals242 pending/106 bounded/14 partial unchanged. No PLAN/data/source changes or new execution proof.
+
 ## [2026-10-01] implementation | Add bounded aura slot argument producer
 
 Updated [[lua-api#Retail 12.0.5 aura slot arguments]] and [slot contract](../specs/unit-aura-slot-secret-arguments.md) in `054525aff`; index/log links follow after shared-path release. Sole `retail-12-0-5` boundary uses VM NeverSecret unit rejection and authenticated slot decoding before unchanged lookup/DTO. Saved parent RED5PASS/7FAIL, unchanged fixtures; owned `rustfmt --config skip_children=true` exit0. No builds/tests/gates here; parent GREEN/acceptance pending. Inferred representation/no-positive-cap retained; no native permission/output/accounting credit. Disputed duration file not read/edited/formatted/staged.

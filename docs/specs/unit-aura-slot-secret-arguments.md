@@ -1,6 +1,6 @@
 # Unit aura slot secret arguments
 
-Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores. The bounded C API producer implements the argument boundary; lookup/DTO/store behavior is unchanged. [Lua API system](../wiki/systems/lua-api.md#retail-1205-aura-slot-arguments) describes ownership. Parent compiled RED precedes this producer; parent owns GREEN, independent gates and accounting. No producer passing/native parity claim. Contract checkboxes below remain pending executed GREEN/acceptance.
+Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores. The bounded C API producer implements the argument boundary; lookup/DTO/store behavior is unchanged. [Lua API system](../wiki/systems/lua-api.md#retail-1205-aura-slot-arguments) describes ownership. Parent compiled RED precedes this producer; [saved parent GREEN](#reconciled-batch44-parent-green--2026-10-02) establishes bounded executed coverage. Independent gates, parent acceptance and row376 accounting remain pending; checkboxes track acceptance, not missing GREEN. No native parity claim.
 
 ## What it must do
 
@@ -46,7 +46,7 @@ Producer inventory over unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24
 
 ## Tests asserting this spec
 
-`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. Producer slice runs only owned-file formatting; compiled GREEN and all acceptance gates belong to parent.
+`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. Producer slice ran only owned-file formatting; saved parent compiled GREEN is reconciled below, while independent acceptance remains pending.
 
 | Fixture(s) | Exact coverage | Proof level |
 | --- | --- | --- |
@@ -56,19 +56,45 @@ Producer inventory over unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24
 | `secure_authentic_secret_slot_numbers_use_actual_stored_ids`, `never_secret_unit_rejects_authentic_secret_strings_even_when_secure`, `tainted_secret_denials_precede_lookup_and_public_recovery_preserves_taint`, `gc_rooted_secret_identity_survives_secure_tainted_public_secure_roundtrip` | Authentic secret IDs101/103/201/203/99999, secure populated/missing lookup, NeverSecret unit secure+tainted rejection, same-closure public recovery, input/taint preservation, rooted GC identity | Saved parent RED FAIL; authentic NUMBER slots rejected by old conversion |
 | `query_paths_preserve_records_dto_block_provider_and_environment_isolation` | All stored fields/order, independent DTO/points mutation, block identity/content, provider state, per-env isolation across public/error/secret/tainted paths | Saved parent RED FAIL at old secret-slot conversion; state acceptance pending |
 
-## Saved batch44 RED — 2026-10-01
+## Saved batch44 RED — 2026-10-02
+
+Date correction: actual RED and compilation commands occurred October 2, 2026; the prior October 1 heading was incorrect.
 
 At unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24804aa97af4`, parent reports compilation exit0 in258.470s. Saved run `/tmp/patch-12.0.5-batch44-red-run.{json,stdout,stderr}` records actual12 selected, **5 PASS / 7 FAIL**, exit101, 1.908s. Enumeration/fullDTO, provider, blocked retrieval and signed miss controls PASS. Required-unit/slot cases fail with `slot argument rejection`; secure authentic NUMBER slot and dependent security/lifetime/state cases fail with `expected number, got userdata at argument 2`. No demonstrably invalid fixture identified; tests unchanged.
 
 Run command: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c unit_aura_slot_secret_arguments:: --test-threads=1`. Executable SHA256 `84f1226fc85c07909aefbe8751292913ca4115495f6df4821c5632dfede22ef9`. Parent manifest binds fixture revision plus preserved unowned dirty duration scope (diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`), not clean-revision proof. That artifact is parent evidence only; disputed duration source was not read or changed by this slice.
 
+## Reconciled batch44 parent GREEN — 2026-10-02
+
+Saved parent commands occurred October 2, 2026. Producer `054525aff9736be762f69fe7479b16e8383d48e1`, wiki follow-up/tested revision `a92d0a71702faa5b8e7823c373aa11c35ed97e7c`, unchanged fixture `fc84ffc0203741b1db9961cbc53b24804aa97af4`. Compilation and execution bind that revision **plus preserved unowned dirty source**, diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`; not clean-revision proof. Unowned duration source and its diff artifact were not read, edited, formatted or staged by this reconciliation.
+
+Saved compile command: `cargo test --test integration --no-run --message-format=json`; exit0, **270.583s**. Manifest `/tmp/patch-12.0.5-batch44-green-build-result.json`; Cargo output `/tmp/patch-12.0.5-batch44-green-build.jsonl` and `.log`; parent source provenance `/tmp/patch-12.0.5-batch44-green-build-source-diff.txt` (reference only). Integration executable `/syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c`, SHA256 `3e416f486a13ff23ceb3f15c16351ba08434666867bb6f0b1cafa1679d0d7af9`.
+
+Each saved serial command is `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c <filter> --test-threads=1`. Exact argv/provenance/results: `/tmp/patch-12.0.5-batch44-green-runs.json`; full stdout/stderr: `/tmp/patch-12.0.5-batch44-green-run-<n>.stdout` and `.stderr`, with n matching this table. **106 unique PASS; all seven exit0**, no ignored tests.
+
+| n / filter | PASS | Seconds | Concrete capability / proof boundary |
+| --- | ---: | ---: | --- |
+| 0 / `unit_aura_slot_secret_arguments::` | 12 | 4.866 | All twelve named fixtures above GREEN: strict required unit/slot before unknown lookup; secure authentic NUMBER slot IDs and misses; NeverSecret unit secure/tainted denial; tainted public recovery; rooted GC identity/taint/secrecy; record/DTO/points/block/provider/environment isolation. Retained player/party enumeration/full DTO, blocked-inclusive lookup and signed misses also PASS. |
+| 1 / `aura_application_display_count::` | 14 | 5.612 | Display-count regression controls; no transfer of display-count accounting/acceptance to row376. |
+| 2 / `next125aura::` | 12 | 4.084 | Indexed aura argument regression controls. |
+| 3 / `unit_aura_filter_query::` | 14 | 4.268 | Instance filter-query regression controls. |
+| 4 / `aura_table_shape::` | 7 | 2.518 | Existing aura DTO shape controls. |
+| 5 / `aura_api::` | 29 | 8.856 | Existing aura API controls. |
+| 6 / `admin_buff_api::` | 18 | 3.232 | Existing admin buff controls. |
+
+The earlier fixture matrix records historical RED; every listed fixture now has saved parent GREEN, not independent acceptance. Argument caller-policy/NeverSecret declarations are source-grounded and authentic VM-secret behavior is simulator-executed. Strict representations, signed/no-positive-cap miss policy, validation ordering and traversal/DTO policies remain inferred or retained modeled behavior, not native-verified semantics. Current one-batch enumeration does not prove pagination.
+
+Saved startup command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/wow-sim --no-addons --no-saved-vars lua-errors`; exit0, stdout `[]`, **13.061s**. Executable SHA256 `08427777550109036c6066cf0d60a8a1cec8cd3996d037b3351b96a5cc9f79d2`. Manifest `/tmp/patch-12.0.5-batch44-green-startup-run.json`; full outputs `/tmp/patch-12.0.5-batch44-green-startup.stdout` and `.stderr`. Startup establishes this selected no-addon/no-saved-vars loading path only.
+
+Independent verifier remains active; security/readability/Rust gates and parent acceptance are **pending**, not supplied by these saved runtime runs. Native access permission, restricted output secrecy, exact errors/validation order and earlier/all-profile execution remain unproved. **Row376 pending; totals unchanged: 242 pending / 106 bounded / 14 partial = 362.** No accounting, PLAN or data modification. No new build/test/check/delegation run for this docs-only reconciliation.
+
 ## Known gaps (current cycle)
 
-- [ ] Producer compiled GREEN, independent security/readability/acceptance gates and exact-row accounting remain pending. No batch43 proof transfers to these fixtures.
+- [ ] Independent security/readability/Rust/acceptance gates and exact-row accounting remain pending despite saved producer GREEN. No batch43 proof transfers to these fixtures.
 - [ ] Native validation ordering, exact errors, access permission and conditional output secrecy remain unproved. Earlier-profile providers are preserved in source only, not newly executed.
 
 ## Out of scope
 
 - Native `RequiresUnitAuraAccess` permission and `SecretWhenUnitAuraRestricted` conditional output policy: backing restriction/access state unmodeled. Public modeled DTO checks do not prove permission enforcement or restricted-output secrecy.
 - Indexed/display/duration producers, shared lookup/DTO/store behavior changes, Cargo/build changes, batching redesign, invented visibility predicates, native error/parity and all-profile coverage.
-- Batch43 source/spec/wiki/accounting, PLAN, unowned `src/c_api/aura_duration.rs` changes, push/deploy/operations. This producer slice changes only its C API module, declaration/registrar, narrow helper visibility and earlier-provider gate, owned spec and Lua API wiki implementation links. Fixtures remain unchanged; parent owns remaining proof and credit. Shared wiki index/log/audit paths are temporarily other-owned and not edited.
+- Batch43 source/spec/wiki/accounting, PLAN, unowned `src/c_api/aura_duration.rs` changes, push/deploy/operations. This producer slice changes only its C API module, declaration/registrar, narrow helper visibility and earlier-provider gate, owned spec and Lua API wiki implementation links. Fixtures remain unchanged; parent owns remaining proof and credit. This docs-only reconciliation owns the slot spec and Lua API system/index/log links only; audit paths remain excluded.
