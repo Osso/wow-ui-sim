@@ -73,6 +73,12 @@ fn read_requested_spec(state: &LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn get_base_spell(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-5")]
+    if rilua::table_security::is_secret_value(state, stack_val(state, 2)) {
+        return Err(runtime_error(
+            "C_Spell.GetBaseSpell argument 2 is NeverSecret",
+        ));
+    }
     let spell_id = read_spell_id(state)?;
     let requested_spec = read_requested_spec(state)?;
     let base = {

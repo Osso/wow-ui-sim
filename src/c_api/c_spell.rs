@@ -63,7 +63,7 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
 }
 
 const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(feature = "base-spell-relationships")]
     ("GetBaseSpell", super::spell_base::get_base_spell),
     ("GetSpellDescription", get_spell_description),
     ("GetSpellQueueWindow", get_spell_queue_window),

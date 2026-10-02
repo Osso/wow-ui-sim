@@ -1,6 +1,6 @@
 # Public base-spell lookup
 
-Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit specialization-specific base relationships in `src/c_api/spell_base.rs`. The `base-spell-relationships` input capability now enables that existing model for Retail 12.0.5+ and Forever; runtime publication remains Forever-only pending compiled RED and the [Retail specialization security contract](base-spell-specialization-security.md). The observed ActionBarAuras failure passed a nil base result into a table key. This bounded model is not native-conformance certification. See [Lua API architecture](../lua-api.md).
+Forever and Retail 12.0.5+ `C_Spell.GetBaseSpell` resolve public identifiers against the same explicit specialization-specific base relationships in `src/c_api/spell_base.rs`. The shared `base-spell-relationships` capability gates both model inputs and actual query publication. Batch63 publishes Retail after actual compiled RED; its early arg2 NeverSecret boundary and pending acceptance belong to the [exact row295 specialization security contract](base-spell-specialization-security.md). Historical checked requirements below describe Forever proof, not current Retail acceptance. The observed ActionBarAuras failure passed a nil base result into a table key. This bounded model is not native-conformance certification. See [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -9,7 +9,7 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 - [x] Resolve an explicitly configured relationship for the requested specialization. Omitted/zero specialization uses the player's current class specialization. Treating explicit specialization numbers as specialization IDs is a simulator policy, not native-probed behavior.
 - [x] Keep specialization relationships separate from identifier aliases; never infer a base by reversing arbitrary aliases.
 - [x] Reject invalid identifiers, malformed specialization arguments, and secret arguments explicitly without unwrapping secrets. Invalid-input errors are bounded simulator policy.
-- [x] Leave non-Forever profile registrations unchanged.
+- [x] Original Forever slice left non-Forever profile registrations unchanged. Batch63 deliberately extends publication to Retail 12.0.5+; [exact row295 requirements and proof](base-spell-specialization-security.md) remain pending acceptance.
 
 ## How it works
 
@@ -17,14 +17,15 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 
 ## Implementation inventory
 
-- `src/c_api/spell_base.rs` — relationship state, public argument validation and lookup.
-- `src/c_api/c_spell.rs` — unchanged Forever-only namespace registration; no Retail publication yet.
+- `src/c_api/spell_base.rs` — unchanged relationship state, public argument validation and lookup; Retail 12.0.5-only arg2 VM authentication precedes arg1 handling. Forever keeps its prior validation order and secret errors.
+- `src/c_api/c_spell.rs` — existing query entry publishes the provider under `base-spell-relationships` for Forever and Retail 12.0.5+; other profiles/earlier Retail remain default-unpublished (static feature evidence only).
 - `Cargo.toml`, `src/c_api/mod.rs` — shared `base-spell-relationships` model capability enabled by Retail 12.0.5+ and Forever, not an optional extensibility layer.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs` — capability-gated per-environment relationship storage, initially empty.
 
 ## Tests asserting this spec
 
 - `tests/spell_base.rs` — grouped into the existing generated integration target; twelve default action IDs, public names, configured relationships, explicit/current specialization, alias independence, malformed inputs and secret rejection.
+- `tests/spell_base_retail_security.rs` — unchanged twenty-test Retail contract; actual compiled RED and producer proof limits in [exact row295 ledger](base-spell-specialization-security.md#proof-ledger--handoff). No current Forever execution or Retail GREEN claimed here.
 - Existing RED: `/tmp/forever-addon-audit/base-spell-red.lua`; `/tmp/forever-addon-runtime/actionbarauras-base-spell-15bkm7sb/stdout` observes nil for all twelve action spells and the unchanged addon failure.
 - Focused Forever proof at revision `9e20a29d`: `spell_base::` 3/3. The subsequent `b8f0982be` profile ledger preserves that focused proof, compiles the Forever library with `CARGO_INCREMENTAL=0` after an ENOSPC remediation, and passes default `cargo check`; it does not turn the policy into native conformance. The `b8f0982be` producer replay starts unchanged ActionBarAuras cleanly. Evidence: `/tmp/forever-addon-audit/verify-b8-{focused,profile}-ledger.json`; `/tmp/forever-addon-runtime/producer-b8-startup-ledger.json`.
 
