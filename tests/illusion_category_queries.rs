@@ -71,8 +71,8 @@ fn empty_env() -> WowLuaEnv {
                 assert(#result == #expected, 'exact supplied row count')
                 local count = 0
                 for key, row in pairs(result) do
-                    assert(type(key) == 'number' and key % 1 == 0 and key >= 1 and key <= #expected,
-                        'dense array with no metadata')
+                    assert(type(key) == 'number' and key % 1 == 0, 'integer array index')
+                    assert(key >= 1 and key <= #expected, 'dense array with no metadata')
                     assert(type(row) == 'table' and not issecretvalue(row), 'public row')
                     local wanted, fields = ICExpected[expected[key]], 0
                     for name, value in pairs(row) do
@@ -91,7 +91,8 @@ fn empty_env() -> WowLuaEnv {
         end
         function ICReject(value)
             local ok, err = pcall(C_TransmogCollection.GetIllusions, value)
-            assert(not ok and type(err) == 'string' and #err > 0, 'invalid or denied selector')
+            assert(not ok, 'invalid or denied selector')
+            assert(type(err) == 'string' and #err > 0, 'nonempty public error')
             assert(not string.find(err, 'PRIVATE-IllusionCategory', 1, true), 'no private payload in error')
             return err
         end
