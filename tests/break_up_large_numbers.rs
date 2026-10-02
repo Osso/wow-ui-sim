@@ -2,10 +2,11 @@
 //! Locale providers are explicit fixture inputs; the API under test is never replaced.
 #![cfg(feature = "retail-12-0-5")]
 
-use rilua::LuaApiMut;
 use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string, wrap_secret,
 };
+use rilua::vm::value::Val;
+use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn fixture_env() -> WowLuaEnv {
@@ -149,17 +150,107 @@ fn secret_env() -> WowLuaEnv {
             assert(issecretvalue(_G[name]))
             BUSecretValues[i] = _G[name]
         end
+        function BUSecretBoolEquality(left, right)
+            local before = debug.getstacktaint()
+            assert(issecretvalue(left) and issecretvalue(right))
+            if issecure() then
+                assert(rawequal(left, right), 'secure boolean payload equality')
+            else
+                local ok, err = pcall(rawequal, left, right)
+                assert(not ok and err == 'table security operation requires an untainted caller',
+                    'tainted secret BOOL equality denied')
+            end
+            assert(debug.getstacktaint() == before, 'equality preserves caller taint')
+            assert(issecretvalue(left) and issecretvalue(right), 'wrappers remain secret')
+        end
         function BUSecretRoots()
             assert(#BUSecretValues == 6)
             for i, name in ipairs(BUSecretNames) do
                 assert(issecretvalue(_G[name]) and issecretvalue(BUSecretValues[i]))
-                assert(rawequal(_G[name], BUSecretValues[i]), 'wrapper identity preserved')
+                if i <= 2 then
+                    BUSecretBoolEquality(_G[name], BUSecretValues[i])
+                else
+                    assert(rawequal(_G[name], BUSecretValues[i]), 'wrapper identity preserved')
+                end
             end
         end
         "#,
     )
     .expect("retain authentic global/list roots without private payload inspection");
     env
+}
+
+fn snapshot_secret_roots(env: &WowLuaEnv) -> Vec<(&'static str, Val, u64)> {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let mut roots = Vec::new();
+    for name in [
+        "BUSecretFalse",
+        "BUSecretTrue",
+        "BUSecretNumber",
+        "BUSecretString",
+        "BUSecretFrame",
+        "BUSecretTable",
+        "BUSecretLocale",
+    ] {
+        let value = lua.get_global_val(name);
+        if name == "BUSecretLocale" && value.is_nil() {
+            continue;
+        }
+        let Val::Userdata(reference) = value else {
+            panic!("published host secret wrapper missing: {name}");
+        };
+        let sequence = lua
+            .state_mut()
+            .gc
+            .userdata
+            .get(reference)
+            .expect("published wrapper is live")
+            .alloc_seq();
+        roots.push((name, value, sequence));
+    }
+    roots
+}
+
+fn exec_with_secret_identity(env: &WowLuaEnv, script: &str, stack_exports: &[(&str, &str)]) {
+    // Metadata only: snapshots neither read payloads nor add VM roots during GC.
+    let before = snapshot_secret_roots(env);
+    env.exec(script)
+        .expect("secret queries, recovery, secrecy and caller context");
+    assert_eq!(
+        before,
+        snapshot_secret_roots(env),
+        "host wrapper identities and liveness"
+    );
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let Val::Table(list) = lua.get_global_val("BUSecretValues") else {
+        panic!("secret list root missing");
+    };
+    for (index, (_, value, _)) in before.iter().take(6).enumerate() {
+        let actual = lua
+            .state_mut()
+            .gc
+            .tables
+            .get(list)
+            .expect("secret list remains live")
+            .get_int((index + 1) as i64);
+        assert_eq!(
+            actual, *value,
+            "host list wrapper identity at index {index}"
+        );
+    }
+    for (export, original) in stack_exports {
+        let (_, value, _) = before
+            .iter()
+            .find(|(name, _, _)| name == original)
+            .expect("stack export identifies a snapshotted wrapper");
+        assert_eq!(
+            lua.get_global_val(export),
+            *value,
+            "host stack-held wrapper identity: {export}"
+        );
+    }
 }
 
 #[test]
@@ -301,50 +392,54 @@ fn optional_public_natural_rejects_nonbool_values_then_recovers() {
 
 #[test]
 fn authentic_secret_false_natural_rejects_even_in_secure_context() {
-    secret_env()
-        .exec("assert(issecure()); BURejectSecretNatural(BUSecretFalse); BUSecretRoots()")
-        .expect("NeverSecret does not permit decoding false payload");
+    exec_with_secret_identity(
+        &secret_env(),
+        "assert(issecure()); BURejectSecretNatural(BUSecretFalse); BUSecretRoots()",
+        &[],
+    );
 }
 
 #[test]
 fn authentic_secret_true_natural_rejects_even_in_secure_context() {
-    secret_env()
-        .exec("assert(issecure()); BURejectSecretNatural(BUSecretTrue); BUSecretRoots()")
-        .expect("NeverSecret does not permit decoding true payload");
+    exec_with_secret_identity(
+        &secret_env(),
+        "assert(issecure()); BURejectSecretNatural(BUSecretTrue); BUSecretRoots()",
+        &[],
+    );
 }
 
 #[test]
 fn secret_number_and_string_natural_reject_before_formatting() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         BURejectSecretNatural(BUSecretNumber)
         BURejectSecretNatural(BUSecretString)
         BUSecretRoots()
     "#,
-        )
-        .expect("wrong secret payload types remain opaque");
+        &[],
+    );
 }
 
 #[test]
 fn wrapped_actual_frame_and_table_natural_reject_without_representation_assumptions() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         assert(BUFrame:GetObjectType() == 'Frame')
         BURejectSecretNatural(BUSecretFrame)
         BURejectSecretNatural(BUSecretTable)
         BUSecretRoots()
     "#,
-        )
-        .expect("actual objects, not presumed userdata or Lua secret markers");
+        &[],
+    );
 }
 
 #[test]
 fn gc_keeps_global_list_and_stack_secret_roots_identical_and_secret() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         local held = BUSecretTrue
         local frame, inputs = BUFrame, BUInputs
         collectgarbage('collect')
@@ -355,20 +450,21 @@ fn gc_keeps_global_list_and_stack_secret_roots_identical_and_secret() {
             assert(issecretvalue(value))
         end
         collectgarbage('collect')
-        assert(issecretvalue(held) and rawequal(held, BUSecretTrue))
+        BUSecretBoolEquality(held, BUSecretTrue)
         assert(rawequal(frame, BUFrame) and rawequal(inputs, BUInputs))
         BUSecretRoots()
         BURecovery()
+        BUHeldSecretTrue = held
     "#,
-        )
-        .expect("forced GC preserves roots, identity, state and fresh public recovery");
+        &[("BUHeldSecretTrue", "BUSecretTrue")],
+    );
 }
 
 #[test]
 fn secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         BUContexts(function()
             local before = debug.getstacktaint()
             for _, value in ipairs(BUSecretValues) do BURejectSecretNatural(value) end
@@ -377,10 +473,14 @@ fn secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery() {
             BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
             assert(debug.getstacktaint() == before)
             BUSecretRoots()
+            for _, value in ipairs(BUSecretValues) do BURejectSecretNatural(value) end
+            BURecovery()
+            BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+            assert(debug.getstacktaint() == before)
         end)
     "#,
-        )
-        .expect("public formatting and all secret natural rejections preserve caller context");
+        &[],
+    );
 }
 
 #[test]
@@ -429,7 +529,8 @@ fn authentic_secret_locale_result_rejects_under_local_public_input_policy() {
     lua.state_mut().pop();
     inserted.expect("root authentic secret locale during publication");
     drop(lua);
-    env.exec(
+    exec_with_secret_identity(
+        &env,
         r#"
         local held = BUSecretLocale
         assert(issecretvalue(held), 'authentic VM secret locale')
@@ -439,45 +540,51 @@ fn authentic_secret_locale_result_rejects_under_local_public_input_policy() {
         BUSecretRoots()
         BURecovery()
     "#,
-    )
-    .expect("valid locale payload remains secret and rejected by explicit local input policy");
+        &[],
+    );
 }
 
 #[test]
 fn locale_provider_collects_before_returning_public_locale_with_live_roots() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         local held = BUSecretTrue
         BUProviderContexts(function()
             local locale = table.concat({'de', 'DE'})
             collectgarbage('collect')
             assert(not issecretvalue(locale))
-            assert(issecretvalue(held) and rawequal(held, BUSecretTrue))
+            BUReject(1234.5, held)
+            BUSecretBoolEquality(held, BUSecretTrue)
             BUSecretRoots()
+            BUReject(1234.5, held)
             return locale
         end, '1.234,5')
         collectgarbage('collect')
-        assert(issecretvalue(held) and rawequal(held, BUSecretTrue))
+        BUSecretBoolEquality(held, BUSecretTrue)
         BUSecretRoots()
         BURecovery()
+        BUHeldSecretTrue = held
     "#,
-        )
-        .expect("GC inside actual locale callback preserves live locale, objects and secret roots");
+        &[("BUHeldSecretTrue", "BUSecretTrue")],
+    );
 }
 
 #[test]
 fn secret_arg1_rejection_is_conservative_local_policy_not_row411_permission() {
-    secret_env()
-        .exec(
-            r#"
+    exec_with_secret_identity(
+        &secret_env(),
+        r#"
         BUContexts(function()
             BUReject(BUSecretNumber, false)
             assert(issecretvalue(BUSecretNumber))
+            BURecovery()
             BUSecretRoots()
+            BUReject(BUSecretNumber, false)
+            assert(issecretvalue(BUSecretNumber))
             BURecovery()
         end)
     "#,
-        )
-        .expect("local conservative arg1 policy; native permission/result secrecy unknown");
+        &[],
+    );
 }
