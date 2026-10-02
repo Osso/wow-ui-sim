@@ -3,6 +3,8 @@
 #[cfg(feature = "retail-12-0-5")]
 mod illusion_info;
 #[cfg(feature = "retail-12-0-5")]
+mod illusions;
+#[cfg(feature = "retail-12-0-5")]
 pub use illusion_info::IllusionInfo;
 
 #[cfg(feature = "retail-12-0-5")]
@@ -46,6 +48,8 @@ struct ItemTransmogInfo {
 }
 
 pub(crate) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
+    illusions::register(state, table)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")

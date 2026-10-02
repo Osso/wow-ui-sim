@@ -157,6 +157,7 @@ fn register_transmog_collection_outfits(
     state: &mut LuaState,
     table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
+    #[cfg(not(feature = "retail-12-0-5"))]
     table_set_rust_fn_static(state, table_ref, "GetIllusions", get_illusions)?;
     table_set_rust_fn_static(
         state,
@@ -515,6 +516,7 @@ fn get_show_missing_source_in_item_tooltips(state: &mut LuaState) -> LuaResult<u
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_illusions(state: &mut LuaState) -> LuaResult<u32> {
     let array = empty_array(state);
     state.push(array);

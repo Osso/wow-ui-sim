@@ -1,6 +1,6 @@
 # Illusion category queries
 
-Exact patch12.0.5 source occurrences352/353 govern `C_TransmogCollection.GetIllusions(category)` and its `AllowedWhenUntainted` argument gate. This slice adds only explicit host inputs under `src/c_api/c_transmog_collection/illusion_info.rs` and behavioral tests; the existing empty query remains untouched. See [Lua API architecture](../wiki/lua-api.md).
+Exact patch12.0.5 source occurrences352/353 govern `C_TransmogCollection.GetIllusions(category)` and its `AllowedWhenUntainted` argument gate. The epoch125 query consumes explicit host inputs under `src/c_api/c_transmog_collection/illusion_info.rs`; prior epochs retain their legacy empty query. Producer GREEN and acceptance remain parent-owned. See [Lua API architecture](../wiki/lua-api.md).
 
 ## What it must do
 
@@ -32,11 +32,12 @@ Existing enum assertions use `Enum.TransmogCollectionType.OneHAxe == 13` and `On
 
 ## Implementation inventory
 
-- `src/c_api/c_transmog_collection/illusion_info.rs`: public host-input row with category plus six documented fields; no query producer.
-- `src/c_api/c_transmog_collection.rs`: epoch125 module/type export only.
+- `src/c_api/c_transmog_collection/illusion_info.rs`: public host-input row with category plus six documented fields.
+- `src/c_api/c_transmog_collection/illusions.rs`: epoch125 authenticated selector and ordered fresh six-field query producer; selected-input snapshot released before VM allocation, stack-rooted array owns rows before key allocations.
+- `src/c_api/c_transmog_collection.rs`: epoch125 module/type export and producer registration into the already-rooted namespace.
 - `src/lua_api/state/sim_state.rs`: epoch125 explicit ordered input field.
 - `src/lua_api/state.rs`: epoch125 empty vector initialization.
-- `src/lua_api/globals/missing_surface/transmog_collection.rs`: unchanged legacy query/registration; still empty.
+- `src/lua_api/globals/missing_surface/transmog_collection.rs`: legacy empty query/registration only under inverse epoch125; no duplicate active publication or fallback.
 
 ## Tests asserting this spec
 
@@ -44,15 +45,14 @@ Existing enum assertions use `Enum.TransmogCollectionType.OneHAxe == 13` and `On
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and observe actual behavioral RED before any producer/registration edits. No compilation, test, check, readability or acceptance commands ran in this inputs-only slice.
-- [ ] Expected RED: unchanged stub ignores seeded inputs and returns empty, and accepts invalid/tainted secret selectors. The empty-default control is expected to pass; no fabricated RED for already-correct empty behavior. These are predictions, not observed results.
-- [ ] Parent owns producer, fresh checks and acceptance. Added state field invalidates older compiled proof for the new combined source; row311 verifier463 active runtime and `c_spell` are untouched.
+- Parent-reported corrected compiled RED at `f83e073f93a8a55b9eba365afa7daea0dc4ac518`: 16 selected, 2 PASS, 14 genuine behavioral FAIL, exit101, execution3.596897289s; compilation exit0,171.680163353s. Initial E0603 was not behavioral RED; the corrected revision publicly exported `IllusionInfo`. Inputs originate at `b22604af0`. No commands were rerun for this producer slice.
+- [ ] Parent owns producer GREEN, fresh checks and acceptance. Producer edits invalidate prior RED as proof of current behavior; requirements remain unchecked. No compilation, tests, check, readability, coverage or acceptance commands run in this slice. `c_spell`, protected aura-duration work, inputs and all16 tests remain untouched.
 - [ ] Native category partition, nil/unknown behavior, ordering, filtering, error details, acquisition, result secrecy and full taint parity remain unknown.
 
-Accounting remains210 pending/138 bounded/14 partial,64 capabilities; rows352/353 remain uncredited. No final-goal or native-parity claim.
+Parent-supplied current accounting remains208 pending/139 bounded/14 partial/1 metadata,362 IDs,65 capabilities; rows352/353 remain uncredited. No final-goal or native-parity claim.
 
 ## Out of scope
 
 - Row357 pending transmog cost; row355 outfit metadata naming is separate.
-- Query producers, registrations, catalogs, discovery/acquisition and native-client probes.
+- Catalogs, discovery/acquisition and native-client probes; only the bounded query producer and registration are included.
 - Existing aura-duration work, spell/glyph runtime changes, operational/deployment work, push and broad gates.
