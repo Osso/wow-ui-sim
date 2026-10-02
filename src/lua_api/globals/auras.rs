@@ -81,7 +81,6 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         ns,
         &[
             ("GetAuraSlots", get_aura_slots),
-            ("GetAuraDataBySlot", get_aura_data_by_slot),
             (
                 "GetAuraDataByAuraInstanceID",
                 get_aura_data_by_aura_instance_id,
@@ -99,6 +98,7 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         state,
         ns,
         &[
+            ("GetAuraDataBySlot", get_aura_data_by_slot),
             ("GetAuraDataByIndex", get_aura_data_by_index),
             ("GetBuffDataByIndex", get_buff_data_by_index),
             ("GetDebuffDataByIndex", get_debuff_data_by_index),
@@ -371,6 +371,7 @@ fn get_aura_slots(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // ── GetAuraDataBySlot ────────────────────────────────────────────────────────
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_aura_data_by_slot(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let slot = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
@@ -505,7 +506,7 @@ pub(crate) fn push_aura_by_spell_id(
     }
 }
 
-fn push_aura_by_instance_id(state: &mut LuaState, unit: &str, aura_instance_id: i32) {
+pub(crate) fn push_aura_by_instance_id(state: &mut LuaState, unit: &str, aura_instance_id: i32) {
     let found = find_aura_by_instance_id(state, unit, aura_instance_id);
     match found {
         Some(aura) => {

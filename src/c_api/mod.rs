@@ -115,6 +115,8 @@ pub(crate) mod c_unit_aura_filter_query;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_index_queries;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_unit_aura_slot_query;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;

@@ -1,6 +1,6 @@
 # Unit aura slot secret arguments
 
-Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores; no producer changes. [Lua API system](../wiki/systems/lua-api.md) describes the runtime. Written-only batch44: parent owns compiled RED before producer, GREEN, independent gates and accounting; no passing/native parity claim.
+Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores. The bounded C API producer implements the argument boundary; lookup/DTO/store behavior is unchanged. [Lua API system](../wiki/systems/lua-api.md#retail-1205-aura-slot-arguments) describes ownership. Parent compiled RED precedes this producer; parent owns GREEN, independent gates and accounting. No producer passing/native parity claim. Contract checkboxes below remain pending executed GREEN/acceptance.
 
 ## What it must do
 
@@ -36,32 +36,39 @@ Actual retail cache: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_API
 
 ## Implementation inventory
 
-Unchanged inventory at fixture base `04cf872ce`:
+Producer inventory over unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24804aa97af4`:
 
-- `src/lua_api/globals/register.rs`: existing aura namespace registrar.
-- `src/lua_api/globals/auras.rs`: `get_aura_data_by_slot` currently defaults/coerces unit/slot then calls `push_aura_by_instance_id` → `find_aura_by_instance_id`; blocked-inclusive helpful-then-harmful collection and `build_aura_table` serialization remain unchanged. `GetAuraSlots` uses visible collection; AuraUtil alone checks provider switch.
+- [`src/c_api/c_unit_aura_slot_query.rs`](../../src/c_api/c_unit_aura_slot_query.rs): sole `retail-12-0-5` slot boundary; VM `is_secret_value` rejects NeverSecret unit before strict UTF-8 string decoding; VM `unwrap_secret` authenticates slot before strict finite integral signed-i32 validation. Both arguments validate before lookup, with no taint/input mutation.
+- `src/c_api/mod.rs` and `src/lua_api/globals/register.rs`: epoch-gated declaration and registration after aura namespace/state initialization, alongside indexed query registration.
+- `src/lua_api/globals/auras.rs`: original slot provider/registration now earlier-epoch-only, not a fallback. `push_aura_by_instance_id` gains only crate visibility; blocked-inclusive `find_aura_by_instance_id`, helpful-then-harmful collection and `build_aura_table` remain unchanged. `GetAuraSlots` uses visible collection; AuraUtil alone checks provider switch.
 - `tests/unit_aura_slot_secret_arguments.rs`: new epoch-gated fixtures, automatically discovered by existing grouped integration harness; no Cargo/build/registration edits.
 - `docs/specs/unit-aura-slot-secret-arguments.md`: row identity, contract, inference labels and proof boundary.
 
 ## Tests asserting this spec
 
-`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. No builds/tests/gates run in this fixture-only slice.
+`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. Producer slice runs only owned-file formatting; compiled GREEN and all acceptance gates belong to parent.
 
 | Fixture(s) | Exact coverage | Proof level |
 | --- | --- | --- |
-| `player_enumerated_instance_slots_keep_full_dto_and_single_batch`, `party_enumerated_helpful_harmful_slots_keep_full_dto` | Actual enumerated IDs101/102/103/104 and201/202/203/204, both polarities, nonordinal/cross-unit misses, full DTO incl. dispel nilability, nil continuation/current one batch | Written only; retained controls |
-| `blocked_records_disappear_from_enumeration_but_remain_slot_retrievable`, `switched_aura_util_provider_does_not_disable_c_slot_lookup`, `valid_signed_i32_misses_return_exactly_one_nil_without_positive_cap` | Blocked101/104/201/204, visible later slots, switched AuraUtil control, signed extremes/zero/unknown exact nullable arity | Written only; retained lookup plus inferred miss domain |
-| `required_unit_is_actual_string_without_default_or_numeric_coercion`, `required_slot_is_finite_integral_signed_i32_before_unknown_lookup` | Required/missing/nil/types/coercion, fractions/nonfinite/range, validation before unknown-unit result | Written only; representation inferred |
-| `secure_authentic_secret_slot_numbers_use_actual_stored_ids`, `never_secret_unit_rejects_authentic_secret_strings_even_when_secure`, `tainted_secret_denials_precede_lookup_and_public_recovery_preserves_taint`, `gc_rooted_secret_identity_survives_secure_tainted_public_secure_roundtrip` | Authentic secret IDs101/103/201/203/99999, secure populated/missing lookup, NeverSecret unit secure+tainted rejection, same-closure public recovery, input/taint preservation, rooted GC identity | Written only; source-grounded argument policy |
-| `query_paths_preserve_records_dto_block_provider_and_environment_isolation` | All stored fields/order, independent DTO/points mutation, block identity/content, provider state, per-env isolation across public/error/secret/tainted paths | Written only; retained-state assertions |
+| `player_enumerated_instance_slots_keep_full_dto_and_single_batch`, `party_enumerated_helpful_harmful_slots_keep_full_dto` | Actual enumerated IDs101/102/103/104 and201/202/203/204, both polarities, nonordinal/cross-unit misses, full DTO incl. dispel nilability, nil continuation/current one batch | Saved parent RED PASS; retained controls |
+| `blocked_records_disappear_from_enumeration_but_remain_slot_retrievable`, `switched_aura_util_provider_does_not_disable_c_slot_lookup`, `valid_signed_i32_misses_return_exactly_one_nil_without_positive_cap` | Blocked101/104/201/204, visible later slots, switched AuraUtil control, signed extremes/zero/unknown exact nullable arity | Saved parent RED PASS; retained lookup plus inferred miss domain |
+| `required_unit_is_actual_string_without_default_or_numeric_coercion`, `required_slot_is_finite_integral_signed_i32_before_unknown_lookup` | Required/missing/nil/types/coercion, fractions/nonfinite/range, validation before unknown-unit result | Saved parent RED FAIL; representation inferred |
+| `secure_authentic_secret_slot_numbers_use_actual_stored_ids`, `never_secret_unit_rejects_authentic_secret_strings_even_when_secure`, `tainted_secret_denials_precede_lookup_and_public_recovery_preserves_taint`, `gc_rooted_secret_identity_survives_secure_tainted_public_secure_roundtrip` | Authentic secret IDs101/103/201/203/99999, secure populated/missing lookup, NeverSecret unit secure+tainted rejection, same-closure public recovery, input/taint preservation, rooted GC identity | Saved parent RED FAIL; authentic NUMBER slots rejected by old conversion |
+| `query_paths_preserve_records_dto_block_provider_and_environment_isolation` | All stored fields/order, independent DTO/points mutation, block identity/content, provider state, per-env isolation across public/error/secret/tainted paths | Saved parent RED FAIL at old secret-slot conversion; state acceptance pending |
+
+## Saved batch44 RED — 2026-10-01
+
+At unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24804aa97af4`, parent reports compilation exit0 in258.470s. Saved run `/tmp/patch-12.0.5-batch44-red-run.{json,stdout,stderr}` records actual12 selected, **5 PASS / 7 FAIL**, exit101, 1.908s. Enumeration/fullDTO, provider, blocked retrieval and signed miss controls PASS. Required-unit/slot cases fail with `slot argument rejection`; secure authentic NUMBER slot and dependent security/lifetime/state cases fail with `expected number, got userdata at argument 2`. No demonstrably invalid fixture identified; tests unchanged.
+
+Run command: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c unit_aura_slot_secret_arguments:: --test-threads=1`. Executable SHA256 `84f1226fc85c07909aefbe8751292913ca4115495f6df4821c5632dfede22ef9`. Parent manifest binds fixture revision plus preserved unowned dirty duration scope (diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`), not clean-revision proof. That artifact is parent evidence only; disputed duration source was not read or changed by this slice.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compiled RED before producer; fixture correctness and genuine boundary failures are not established yet.
-- [ ] Parent producer/GREEN, independent security/readability/acceptance gates and exact-row accounting remain pending. No existing batch43 proof transfers to these fixtures.
+- [ ] Producer compiled GREEN, independent security/readability/acceptance gates and exact-row accounting remain pending. No batch43 proof transfers to these fixtures.
+- [ ] Native validation ordering, exact errors, access permission and conditional output secrecy remain unproved. Earlier-profile providers are preserved in source only, not newly executed.
 
 ## Out of scope
 
 - Native `RequiresUnitAuraAccess` permission and `SecretWhenUnitAuraRestricted` conditional output policy: backing restriction/access state unmodeled. Public modeled DTO checks do not prove permission enforcement or restricted-output secrecy.
-- Indexed/display/duration producers, shared lookup/DTO/store changes, registration/Cargo/build changes, batching redesign, invented visibility predicates, native error/parity and all-profile coverage.
-- Batch43 source/spec/wiki/accounting, PLAN, unowned `src/c_api/aura_duration.rs` changes, push/deploy/operations. This slice changes only the two new fixture/spec files; parent owns remaining proof and credit.
+- Indexed/display/duration producers, shared lookup/DTO/store behavior changes, Cargo/build changes, batching redesign, invented visibility predicates, native error/parity and all-profile coverage.
+- Batch43 source/spec/wiki/accounting, PLAN, unowned `src/c_api/aura_duration.rs` changes, push/deploy/operations. This producer slice changes only its C API module, declaration/registrar, narrow helper visibility and earlier-provider gate, owned spec and Lua API wiki implementation links. Fixtures remain unchanged; parent owns remaining proof and credit. Shared wiki index/log/audit paths are temporarily other-owned and not edited.
