@@ -8,6 +8,8 @@ use crate::c_api::c_action_bar::{
     action_texture_path, get_action_cooldown, get_action_cooldown_duration,
 };
 #[cfg(feature = "retail-12-0-5")]
+use crate::c_api::c_action_bar_counts::{get_action_display_count, get_action_use_count};
+#[cfg(feature = "retail-12-0-5")]
 use crate::c_api::c_action_bar_loss_of_control::get_action_loss_of_control_cooldown_info;
 use crate::lua_api::SimState;
 use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
@@ -215,12 +217,14 @@ fn get_action_count(state: &mut LuaState) -> LuaResult<u32> {
     push_i32(state, 0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_action_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     let _ = stack_val(state, 2);
     push_nil(state)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_action_use_count(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     push_i32(state, 0)

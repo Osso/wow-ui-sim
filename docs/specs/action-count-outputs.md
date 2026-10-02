@@ -46,13 +46,13 @@ Both blocks declare `RequiresValidActionSlot=true`, `SecretWhenCooldownsRestrict
 ## Implementation inventory
 
 - `src/c_api/action_count_info.rs`: explicit two-field public host snapshot only.
-- `src/c_api/mod.rs`: epoch125 module and C API root export; no registration changes.
+- `src/c_api/mod.rs`: epoch125 input module/root export and crate-visible getter module; no parallel registration.
 - `src/lua_api/state/sim_state.rs`: public epoch125 slot-keyed map.
 - `src/lua_api/state.rs`: empty epoch125 initializer.
-- `src/lua_api/globals/action_bar_api.rs`: unchanged current local display-nil/use0 stubs; no provider implemented.
+- `src/lua_api/globals/action_bar_api.rs`: epoch125 imports replace the two existing callback names; local display-nil/use0 callbacks are inverse-gated for earlier epochs/Forever. Other methods remain unchanged.
 - `src/lua_api/globals/action_bar_api/registration.rs`: unchanged existing callback entries.
-- `src/c_api/charge_state.rs`: existing typed charge model/restriction predicate; unchanged.
-- Planned `src/c_api/c_action_bar_counts.rs`: not created in this scaffold; getter work waits for compiled RED.
+- `src/c_api/charge_state.rs`: existing typed charge model/restriction predicate; only `read_charge_input` visibility becomes crate-visible. Its body and semantics are unchanged.
+- `src/c_api/c_action_bar_counts.rs`: first-class getters authenticate original VM inputs, validate strict domains, snapshot matching slot use counts/current spell charges/restriction under one immutable borrow, format concrete u32 quantities and immediately root typed host-secret or public scalar results. No new state, acquisition, consumption, pruning, classification catalog or alternate publication.
 
 ## Tests asserting this spec
 
@@ -60,11 +60,12 @@ Both blocks declare `RequiresValidActionSlot=true`, `SecretWhenCooldownsRestrict
 
 ## Known gaps (current cycle)
 
-- [ ] **Proof ledger:** no build, test, check, lint, readability gate or operations executed for batch66. Owned Rust formatting only. All requirements remain unchecked; no RED/GREEN/acceptance claim. Current nil/0 stubs are expected to fail meaningful data/format assertions, but expectation is not executed evidence; downstream security/GC proof remains absent.
-- [ ] Main must compile grouped tests and establish behavioral RED before getter work. Compilation errors are not RED. Later implementation/verification is outside this input-only change.
+- [ ] **Proof ledger:** saved parent-reported compiled RED at `d0c7969641adf566502d840d9651ed54c8fedca5` precedes this producer. Build exit0,608.5359100290807s; auto-background job completed and full log was recovered, with no rerun and zero diagnostics. Integration artifact hash `aec74c6d04bfef08bb9ec35c0538f080bda1a90a69989b8f15f3d4164e5e84ba`; 28 tests,0PASS/28FAIL, exit101,7.2183314569992945s. Exact parent command/log path was not supplied here; no replacement execution or provenance claim is invented. Historical build/host timestamps may be2026-10-02 and are not rewritten.
+- [ ] Earliest failures are positive use0 versus7/u32MAX and display-nil versus the scalar contract. Many secret/GC cases stop at positive baseline assertions; this is not28 independent authentication/GC failures. Fixtures use real namespace declarations and valid modeled inputs; no fixture changes are justified.
+- [ ] Producer follows that saved RED; only owned Rust formatting and the coherent producer/spec commit are authorized here. GREEN, startup, build/check/lint/readability/acceptance gates and source237/241 credit remain pending. All requirements remain unchecked. Prior RED proves the old producer failure, not this producer's behavior.
 - [ ] Native probes deferred, not a gate: actual use-count versus charge action kinds; concrete9999/10000 default-boundary quantities; secure and tainted scalar opacity/type; missing data, coercion and error behavior. None captured here.
 - [ ] Parent-reported checkpoint:194 pending/153 bounded/14 partial/1 metadata,362 IDs/72 capabilities after combined233/239 acceptance `5523335834f0b3ed26d1c1168f2551b82419111a`;237/241 remain pending. That acceptance supplies no credit here. No other capability data, wiki, PLAN or specs changed.
 
 ## Out of scope
 
-Native UI/consumer parity, primitive nominal secret types, native datasets/source acquisition, full action-type classification, all-profile or global privacy parity. Legacy `GetActionCount`, Consumable/Stackable predicates and other property parsing/methods remain untouched. No native charge acquisition or automatic consumption. No protected aura implementation access or modification. No publication/provider/charge-helper logic until main's compiled RED.
+Native UI/consumer parity, primitive nominal secret types, native datasets/source acquisition, full action-type classification, all-profile or global privacy parity. Legacy `GetActionCount`, Consumable/Stackable predicates and other property parsing/methods remain untouched. No native charge acquisition or automatic consumption. No protected aura implementation access or modification. No tests, new state or Cargo changes in this producer. No unrelated data, wiki or PLAN changes. Saved compiled RED authorizes only the exact237/241 getters and minimal charge-reader visibility change.

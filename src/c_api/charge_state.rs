@@ -15,7 +15,7 @@ pub struct SpellChargeState {
     pub charge_mod_rate: f64,
 }
 
-fn read_charge_input(sim: &SimState, spell_id: Option<u32>) -> Option<SpellChargeState> {
+pub(crate) fn read_charge_input(sim: &SimState, spell_id: Option<u32>) -> Option<SpellChargeState> {
     sim.spell_charges
         .get(&spell_id?)
         .filter(|charge| charge.max_charges > 0)
