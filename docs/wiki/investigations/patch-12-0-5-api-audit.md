@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Aura application display count — bounded independent acceptance
+
+[Exact three-row acceptance](../../specs/aura-application-display-count.md#independent-bounded-acceptance--2026-10-02) owns independent345 parent acceptance,94 unique PASS/startup0[], full commands/hashes and native gaps. Only367/368 NeverSecret thresholds and369 AllowedWhenUntainted unit/ID promote: **245 pending /103 bounded /14 partial →242 /106 /14 =362**. Ordered362 IDs,359 unrelated rows, prior49 capability bytes and source provenance preserved. Dirty combined proof remains explicit, never clean revision; globalfmt1 unowned aura_duration.rs, scopedfmt0/dirtycheck0. Three nonblocking readability suggestions deferred; no reproduced issue or authorized adjacent refactor. Native permissions/restricted output/full-page parity excluded. Prior pending checkpoints are historical; parent owns postcommit validation and ignored PLAN.
+
 ### Indexed aura arguments — bounded independent acceptance
 
 [Exact six-row contract/proof](../../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) owns accepted80 uniquePASS, committed-producer startup0[], pinned-VM/security/readability and scoped formatting proof. Globalfmt1 on unowned unrelated `aura_duration.rs` retained; dirty combined check0 is not clean-revision proof. No native permission/output policy, full vocabulary, consumer closure or all-profile credit.
