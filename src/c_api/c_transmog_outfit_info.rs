@@ -6,6 +6,8 @@ mod catalog;
 pub use catalog::{OutfitCatalog, OutfitEntry};
 
 #[cfg(feature = "retail-12-0-5")]
+mod pending_cost;
+#[cfg(feature = "retail-12-0-5")]
 mod pending_cost_info;
 #[cfg(feature = "retail-12-0-5")]
 pub use pending_cost_info::PendingTransmogCost;
@@ -28,6 +30,8 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
+    #[cfg(feature = "retail-12-0-5")]
+    pending_cost::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
     #[cfg(all(

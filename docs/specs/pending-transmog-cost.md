@@ -4,7 +4,7 @@
 
 ## What it must do
 
-All requirements remain unverified; this cycle supplies inputs and tests only.
+All requirements remain unverified. The producer is implemented after compiled RED; GREEN and acceptance remain main-owned.
 
 - [ ] Under `retail-12-0-5`, accept an explicit optional host snapshot with `cost: u64` and `modifier_flags: u32`; default to `None`, without fabricated production values.
 - [ ] **Guessed absence policy:** a no-argument query returns zero values for `None`. `Some` returns exactly two ordinary public Lua numbers, including `(0, 0)`, zero cost with nonzero flags, and positive cost with zero flags.
@@ -21,7 +21,8 @@ All requirements remain unverified; this cycle supplies inputs and tests only.
 ## Implementation inventory
 
 - `src/c_api/c_transmog_outfit_info/pending_cost_info.rs`: public scalar snapshot type only; no getter or calculation.
-- `src/c_api/c_transmog_outfit_info.rs`: epoch125 type/module export through the existing public outfit module; registration unchanged.
+- `src/c_api/c_transmog_outfit_info/pending_cost.rs`: direct snapshot handler/registration, pure cost validation against named `MAX_EXACT_LUA_INTEGER`, and primitive public-number pushes. Copies the snapshot and releases the state borrow before validation/push; errors occur before either push and retain host state.
+- `src/c_api/c_transmog_outfit_info.rs`: epoch125 type/module export and getter registration immediately after `ensure_namespace`. The existing later direct C API registration populates this exact key after generic bootstrap, replacing its fallback lookup without changing the metatable or earlier-profile wiring.
 - `src/lua_api/state/sim_state.rs`: epoch125 optional host input field.
 - `src/lua_api/state.rs`: epoch125 absent default.
 
@@ -40,12 +41,20 @@ All requirements remain unverified; this cycle supplies inputs and tests only.
 - `pending_transmog_cost_out_of_domain_errors_without_rounding_and_recovers`
 - `pending_transmog_cost_secure_and_tainted_public_reads_preserve_context`
 
-Tests call the real namespace function, without fake registrations or replaced callbacks. Fixtures are test data only. No tests executed in this inputs-only cycle. Expected genuine RED is a compiled test failure at a real call to the absent getter; compilation failure alone does not qualify. The out-of-domain test must also reach its valid recovery assertion, so an absent getter cannot satisfy the test through error assertions alone. Producer changes require actual compiled RED first.
+Tests call the real namespace function, without fake registrations or replaced callbacks. Fixtures are test data only. All ten tests remain unchanged for this producer cycle. Compiled RED at the real callable placeholder established wrong arity/payload, not an absent callable; compilation failure alone would not qualify. The out-of-domain test includes valid recovery assertions.
+
+### Actual compiled RED — 2026-10-02
+
+At `b584e84f657f5a6b2481f39fc5c24be1674e22bc`, saved `/tmp/patch-12.0.5-batch60-red-build-result.json` records `cargo test --test integration --no-run --message-format=json`: exit0, 332.1104654330993s compilation including unmeasured shared-lock time. `/tmp/patch-12.0.5-batch60-red-run.json` and full `.stdout`/`.stderr` record the selected `pending_transmog_cost::` execution: ten selected, zero PASS, ten genuine FAIL, exit101, 2.2938987109810114s execution. Build/run share integration executable SHA256 `6c08ecd2ee9549d2007535ceb8b9363f437c414984a1de116656519322da7594`. Provenance is dirty-combined; recorded dirty diff hash was supplied, not recomputed.
+
+The final-publication trace correctly identifies `runtime_surface_bootstrap.lua:64–78`, `__wow_namespace_mt.__index`, but its arity explanation is wrong: literal `function() return nil end` returns **exactly one nil**, not zero values. This cached generic callable explains default zero-arity and positive two-arity failures. No old named getter or modeled provider existed. Direct registration now supplies the modeled key; no compatibility fallback is retained for this getter when epoch125 is enabled.
+
+No compiler, tests, startup, checks, readability, or acceptance gates executed in this producer cycle. Main owns those gates.
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and observe genuine RED; subsequently implement the getter/registration in a separately authorized producer cycle.
-- [ ] GREEN, checks, independent acceptance, and native parity remain unproved. Row357 receives no coverage/accounting credit here.
+- [x] Observe saved genuine compiled RED and implement the separately authorized snapshot getter/registration.
+- [ ] GREEN, startup, checks, readability, independent acceptance, and native parity remain unproved. Row357 receives no coverage/accounting credit here. Inventory remains 206 pending / 141 bounded / 14 partial / 1 metadata, 362 IDs and 66 capabilities.
 
 ### Version evidence and correction
 
@@ -53,10 +62,11 @@ Retained `data/patch-api/sources/12.0.0-register.json` declares `cost:number` wi
 
 The supplied `/tmp/patch-12.0.5-pending-cost-modifier-boundary.md` incorrectly identifies a vendor/mists path as the later documentation authority. Current cached retail `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TransmogOutfitInfoDocumentation.lua:377–386` declares `MayReturnNothing`, `cost:BigUInteger`, and `modifierFlags:number`. This is current-cache evidence, not proof of 12.0.5 width or native enum chronology.
 
-Current cached retail `AddOns/Blizzard_Transmog/Blizzard_Transmog.lua:278+` consumes numeric costs with `cost == 0` and numeric comparisons, and uses `FlagsUtil.IsSet` for masks 8, 4, and 2. That consumer supports meaningful small scalar fixtures; it does not establish native charges, discount eligibility, or selected-patch enum history.
+Current cached retail `AddOns/Blizzard_Transmog/Blizzard_Transmog.lua:278+` consumes numeric costs with `cost == 0` and numeric comparisons, and uses `FlagsUtil.IsSet` for masks 8, 4, and 2. That consumer supports bounded scalar context and meaningful small fixtures; it does not establish native charges, discount eligibility, selected-patch enum history, or working UI.
 
 ## Out of scope
 
 - Transaction creation/editing/commit/revert, catalog-derived cost, price calculations, discounts, events, persistence, affordability, currencies, and automatic slot/sheathe/viewed-outfit synthesis: no backing model authorized.
 - Large BigUInteger compatibility, native cost-width limits, native output secrecy, and exact 12.0.5 enum chronology: evidence unavailable; later documentation cannot establish earlier semantics.
-- Getter/registration and any other producer edits before actual compiled RED; broader audit accounting, batch59 acceptance, shared specs/data/wiki, operations, push, delegation, and gates: excluded from this cycle.
+- Argument parsing, new secret/extra-argument contracts, generic declassification/security bypasses, and allocation/root machinery beyond primitive pushes: excluded.
+- Tests/types/state changes, `c_api/mod.rs`, other collections, protected `aura_duration`, generic metatable, WowlessData/vendor edits, broader audit accounting, batch59 acceptance, shared specs/data/wiki, operations, push, delegation, and gates: excluded from this producer cycle.
