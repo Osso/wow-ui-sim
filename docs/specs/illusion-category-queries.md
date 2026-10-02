@@ -1,6 +1,6 @@
 # Illusion category queries
 
-Exact patch12.0.5 source occurrences352/353 govern `C_TransmogCollection.GetIllusions(category)` and its `AllowedWhenUntainted` argument gate. The epoch125 query consumes explicit host inputs under `src/c_api/c_transmog_collection/illusion_info.rs`; prior epochs retain their legacy empty query. Producer GREEN and acceptance remain parent-owned. See [Lua API architecture](../wiki/lua-api.md).
+Exact patch12.0.5 source occurrences352/353 govern `C_TransmogCollection.GetIllusions(category)` and its `AllowedWhenUntainted` argument gate. The epoch125 query consumes explicit host inputs under `src/c_api/c_transmog_collection/illusion_info.rs`; prior epochs retain their legacy empty query. Saved parent GREEN observed, independent acceptance pending. No fabricated production catalog or native parity claim. See [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -27,7 +27,7 @@ Existing enum assertions use `Enum.TransmogCollectionType.OneHAxe == 13` and `On
 
 ## How it works
 
-- [Lua API architecture](../wiki/lua-api.md)
+- [Lua API architecture](../lua-api.md)
 - [Frame/model data flow](../frame-data-flow.md)
 
 ## Implementation inventory
@@ -46,7 +46,9 @@ Existing enum assertions use `Enum.TransmogCollectionType.OneHAxe == 13` and `On
 ## Known gaps (current cycle)
 
 - Parent-reported corrected compiled RED at `f83e073f93a8a55b9eba365afa7daea0dc4ac518`: 16 selected, 2 PASS, 14 genuine behavioral FAIL, exit101, execution3.596897289s; compilation exit0,171.680163353s. Initial E0603 was not behavioral RED; the corrected revision publicly exported `IllusionInfo`. Inputs originate at `b22604af0`. No commands were rerun for this producer slice.
-- [ ] Parent owns producer GREEN, fresh checks and acceptance. Producer edits invalidate prior RED as proof of current behavior; requirements remain unchecked. No compilation, tests, check, readability, coverage or acceptance commands run in this slice. `c_spell`, protected aura-duration work, inputs and all16 tests remain untouched.
+- [ ] Saved parent GREEN atcd6eb9a2f148ffab413d0861ed1fac3392c07045: compile0/135.07231526903342s;16 focused+67 transmog/heirloom+5 outfit catalog =88 distinctPASS,three exits0; runtime12.8127168919891119s. Startup0 `[]`/5.0203285770257935s. `/tmp/patch-12.0.5-batch59-green-{build-result,runs,startup-run}.json` and full outputs bind revision and executable hashes. Independent470 fresh source/security/readability/ownedfmt/defaultcheck pending; requirement/source accounting unchanged. Inputs and all16 tests unchanged by producer; initial compiler error and corrected genuine RED retained separately.
+
+All evidence is dirty-combined with preserved supplied unowned diffSHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`, not clean-revision proof. Runtime+startup17.8330454690149054s is bounded development evidence below final partition target; no padding/rerun, full-profile/native/full-page/goal acceptance claim. Prior known globalfmt failure on protected source remains.
 - [ ] Native category partition, nil/unknown behavior, ordering, filtering, error details, acquisition, result secrecy and full taint parity remain unknown.
 
 Parent-supplied current accounting remains208 pending/139 bounded/14 partial/1 metadata,362 IDs,65 capabilities; rows352/353 remain uncredited. No final-goal or native-parity claim.
