@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept six aura-instance tooltip input deltas
+
+[Batch61 acceptance SSOT](../specs/tooltip-aura-instance-security.md#independent-bounded-acceptance--2026-10-02) records independent486:209 distinctPASS/startup0 `[]`, scopedfmt/check/security/wiring/readability. Only339/340/344/345/349/350 promote;356 unrelated rows/67 prior capabilities preserved. Meaningful helpful/harmful player payloads and authentic VM input policy only; inferred polarity/misses, dirty/globalfmt/restricted-output/filter/native/profile limits remain. Broader goal open.
+
 ## [2026-10-02] implementation | Bound tooltip aura-instance argument security
 
 [[lua-api#Retail 12.0.5 tooltip aura-instance argument security]] links [contract and RED SSOT](../specs/tooltip-aura-instance-security.md): `6edbe3533` registers the three literal epoch125 namespace functions, authenticating positions1–3 through the VM before type/model access. Existing player-only instance lookup gains inferred polarity selection; ignored filter and unchanged hardcoded `1 hr` builder remain limited. Inverse old-entry gates preserve earlier epochs without execution proof. Saved pre-producer RED3PASS/21FAIL does not prove downstream authentication/recovery/GC past earliest failures. No producer GREEN, acceptance, native/profile claim or six-row credit; batch60 acceptance `448689a26` and accounting remain untouched.

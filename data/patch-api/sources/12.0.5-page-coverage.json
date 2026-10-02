@@ -7,6 +7,24 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "tooltip-aura-instance-security",
+      "symbols": [
+        "C_TooltipInfo.GetUnitAuraByAuraInstanceID",
+        "C_TooltipInfo.GetUnitBuffByAuraInstanceID",
+        "C_TooltipInfo.GetUnitDebuffByAuraInstanceID"
+      ],
+      "scope": "Exact339/340/344/345/349/350 only: arg1 NeverSecret removal and AllowedWhenUntainted policy through authentic VM unwrap_secret at all three documented positions before type/model. Secure secret unit/ID accepted, ordinary public tainted permitted, tainted secret denied with contextual nonleaking errors; roots/GC/recovery/caller state retained. Meaningful existing player AuraInfo helpful/harmful payloads and inferred polarity/miss selection, fresh read-only live/isolation DTOs; unchanged ignored filter and hardcoded1hr builder. Native restricted-unit/output secrecy/acquisition/filter/profile/frame parity excluded; no arg2/3 NeverSecret-removal credit.",
+      "spec": "docs/specs/tooltip-aura-instance-security.md",
+      "tests": [
+        "tests/tooltip_aura_instance_security.rs"
+      ],
+      "implementation": "6edbe3533ec7b2877a2d8d787c7c12e0122c6ac5",
+      "compiled_revision": "448689a2697d91005a50fad9a8ec3f587f74aafb",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-tooltip-instance-independent-proof.md",
+      "gate_scope": "Parent accepts independent486 full209distinctPASS24focused+185controls/startup0[]; scopedfmt0/default dirtycheck0/no warnings/readability/security/wiring. Seven runtimecommandsall0 but onlysixnonempty; wrong indexedfilter zero-match gives no proof, actualnext125aura12 match retained. RED3PASS21FAIL earliest wrapper11/baseline1/context6/provider3 limits preserved; no downstream GC/gating RED claim. Dirty-combined/globalfmt1 retained unowned, no native/profile/finalpage claim. Runtime65.390641s/startup5.819559s/compile231.476438s/check26.060007s separate; exact source/output hashes retained."
+    },
+    {
       "id": "pending-transmog-cost",
       "symbols": [
         "C_TransmogOutfitInfo.GetPendingTransmogCost"
@@ -2284,15 +2302,19 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitAuraByAuraInstanceID-339",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact arg1 NeverSecret removal accepted independent486: authentic secure secret STRING unit reaches meaningful Aura payload; tainted secret denied under separate policy, public tainted preserved. Shared209PASS/startup0[]/ownedfmt/check/security/wiring/readability. Player/polarity/miss inferred; dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained. No arg2/3 NeverSecret-removal credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitAuraByAuraInstanceID-340",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact AllowedWhenUntainted transition accepted independent486: native VM authenticates all3 positions before type/model; secure secret payload accepted, tainted denied before public invalid/miss, ordinary public tainted allowed. Meaningful Aura payload/rooted GC/recovery/context proven in shared209PASS/startup0[]/scopedfmt/check. Dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuff-342",
@@ -2302,15 +2324,19 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-344",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact arg1 NeverSecret removal accepted independent486: authentic secure secret STRING unit reaches meaningful Buff payload; tainted secret denied under separate policy, public tainted preserved. Shared209PASS/startup0[]/ownedfmt/check/security/wiring/readability. Player/polarity/miss inferred; dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained. No arg2/3 NeverSecret-removal credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-345",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact AllowedWhenUntainted transition accepted independent486: native VM authenticates all3 positions before type/model; secure secret payload accepted, tainted denied before public invalid/miss, ordinary public tainted allowed. Meaningful Buff payload/rooted GC/recovery/context proven in shared209PASS/startup0[]/scopedfmt/check. Dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuff-347",
@@ -2320,15 +2346,19 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-349",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact arg1 NeverSecret removal accepted independent486: authentic secure secret STRING unit reaches meaningful harmful Debuff payload, replacing unconditional-empty provider; tainted secret denied under separate policy, public tainted preserved. Shared209PASS/startup0[]/ownedfmt/check/security/wiring/readability. Player/polarity/miss inferred; dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained. No arg2/3 NeverSecret-removal credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-350",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-aura-instance-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact AllowedWhenUntainted transition accepted independent486: native VM authenticates all3 positions before type/model; secure secret payload accepted, tainted denied before public invalid/miss, ordinary public tainted allowed. Meaningful harmful Debuff payload/rooted GC/recovery/context proven in shared209PASS/startup0[]/scopedfmt/check. Dirty/globalfmt/native restricted-unit/output/filter/profile gaps retained."
     },
     {
       "source_id": "global api-C_TransmogCollection-GetIllusions-352",

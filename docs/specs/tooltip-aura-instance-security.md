@@ -1,6 +1,6 @@
 # Tooltip aura-instance argument security
 
-Retail12.0.5 exact source rows **339/340/344/345/349/350** cover three `C_TooltipInfo` namespace queries. This bounded producer specifies a chosen simulator input boundary and meaningful host-backed payload controls; saved pre-producer compiled RED is recorded below. Producer GREEN and acceptance remain pending. [Lua API architecture](../lua-api.md) describes the runtime boundary.
+Retail12.0.5 exact source rows **339/340/344/345/349/350** cover three `C_TooltipInfo` namespace queries. This bounded producer specifies a chosen simulator input boundary and meaningful host-backed payload controls; saved pre-producer compiled RED is recorded below. Independent bounded simulator acceptance is recorded below; native and broader coverage remain unproved. [Lua API architecture](../lua-api.md) describes the runtime boundary.
 
 ## What it must do
 
@@ -16,20 +16,20 @@ Retail12.0.5 exact source rows **339/340/344/345/349/350** cover three `C_Toolti
 
 Cached retail `AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua` documents all three positions: required `unitToken:UnitTokenRestrictedForAddOns`, required `auraInstanceID:number`, nullable `filter:AuraFilters`. Its current blocks declare `SecretArguments="AllowedWhenUntainted"`, `MayReturnNothing`, `RequiresUnitAuraAccess`, `SecretWhenUnitAuraRestricted`, and a `TooltipData` return. These declarations do not establish native lookup, invalid-input errors, miss shape, or public result semantics. Aura's documented HELPFUL/HARMFUL filter description does not receive implementation credit here.
 
-- [ ] Call each exact registered namespace function, independently, without fake registration or replacement security/query callbacks.
-- [ ] Authenticate actual VM secret payloads at positions1–3 using `unwrap_secret`'s AllowedWhenUntainted boundary **before any argument type validation or model lookup**. Preserve ordinary-public calls from tainted callers; do not implement a blanket caller-taint ban.
-- [ ] Plan production registration under epoch125 (`retail-12-0-5`); retain older handlers only for earlier profiles/epochs, not as an active fallback. Production changes and earlier-profile verification are pending, not delivered by this commit.
+- [x] Call each exact registered namespace function, independently, without fake registration or replacement security/query callbacks.
+- [x] Authenticate actual VM secret payloads at positions1–3 using `unwrap_secret`'s AllowedWhenUntainted boundary **before any argument type validation or model lookup**. Preserve ordinary-public calls from tainted callers; do not implement a blanket caller-taint ban.
+- [x] Register under epoch125 (`retail-12-0-5`); retain older handlers only for earlier profiles/epochs, not as an active fallback. Earlier-profile gates are statically inspected, not executed.
 
 Only arg1 NeverSecret removal and the three argument-policy transitions may receive these six rows' credit. Secure secret arg2/arg3 tests exercise that policy across documented positions, **not new arg2/arg3 NeverSecret-removal credit**.
 
 ### Chosen security behavior (not native-verified)
 
-- [ ] Secure authentic secret STRING `player` at arg1 returns the same meaningful public DTO as public `player`; tainted use is denied without declassification.
-- [ ] Secure authentic secret NUMBER1/2 at arg2 selects the same concrete instance/class result as public1/2, including a meaningful match for every query; tainted use is denied.
-- [ ] Secure authentic secret STRING and NIL at optional arg3 preserve the existing ignored-option payload. Tainted use is denied even though the provider would otherwise ignore it. Omitted/public nil and public filter strings remain ignored; **no filter semantics credit**.
-- [ ] Secure authentic secret BOOL/table/actual Frame payloads at unit or ID positions fail type validation with nonempty nonleaking errors. Tainted secrets hit VM access denial before invalid public arguments, unsupported units, or missing instances can short-circuit the query.
-- [ ] Errors identify the exact namespace API and do not expose private string payloads. VM denial is distinguished by the pinned rilua `requires an untainted caller` diagnostic, not claimed native wording. Public recovery succeeds after errors; caller taint stays unchanged and outer secure context is restored.
-- [ ] Root authentic host wrappers throughout secure acceptance, tainted rejection and forced GC. After fresh host entry, native secret metadata, userdata identity/allocation sequence and rooted-list identity remain unchanged. Never compare authentic secret BOOL identities from tainted Lua.
+- [x] Secure authentic secret STRING `player` at arg1 returns the same meaningful public DTO as public `player`; tainted use is denied without declassification.
+- [x] Secure authentic secret NUMBER1/2 at arg2 selects the same concrete instance/class result as public1/2, including a meaningful match for every query; tainted use is denied.
+- [x] Secure authentic secret STRING and NIL at optional arg3 preserve the existing ignored-option payload. Tainted use is denied even though the provider would otherwise ignore it. Omitted/public nil and public filter strings remain ignored; **no filter semantics credit**.
+- [x] Secure authentic secret BOOL/table/actual Frame payloads at unit or ID positions fail type validation with nonempty nonleaking errors. Tainted secrets hit VM access denial before invalid public arguments, unsupported units, or missing instances can short-circuit the query.
+- [x] Errors identify the exact namespace API and do not expose private string payloads. VM denial is distinguished by the pinned rilua `requires an untainted caller` diagnostic, not claimed native wording. Public recovery succeeds after errors; caller taint stays unchanged and outer secure context is restored.
+- [x] Root authentic host wrappers throughout secure acceptance, tainted rejection and forced GC. After fresh host entry, native secret metadata, userdata identity/allocation sequence and rooted-list member identity remain unchanged. Never compare authentic secret BOOL identities from tainted Lua.
 
 ### Inferred host lookup and preserved payload
 
@@ -43,11 +43,11 @@ The fixture uses the **existing** `SimState.player.buffs:Vec<AuraInfo>`, includi
 
 This polarity selection and wrong-class empty policy are **inferred**, not native-verified. Debuff's current unconditional empty result is insufficient as a positive security fixture; the meaningful harmful lookup is required for this bounded contract.
 
-- [ ] Preserve the existing meaningful helpful Aura/Buff content; Aura finds either polarity, Buff only helpful, Debuff only harmful using the explicit host instance IDs and `is_helpful` flag.
-- [ ] Retain exact `player`-only lookup. Unsupported `target`, `party1`, and unknown tokens, and missing instance999, return fresh line-empty UnitAura DTOs under current inferred simulator miss policy. Do not expand unit coverage.
-- [ ] Return exactly one public table with `type=Enum.TooltipDataType.UnitAura` and `lines`, without inventing ID/width fields. Matched records preserve three meaningful name/duration/description lines: SpellName title, SpellName `1 hr`, wrapped nonempty SpellDescription. Compare colors through public numeric RGBA, never color object/method identity.
-- [ ] Preserve the shared builder's **hardcoded `1 hr` limitation**. Duration3600 fixtures deliberately avoid requiring a builder change; dynamic duration/native payload parity is not asserted. No parser, identifier-width, or tooltip-width policy change is requested.
-- [ ] Queries are read-only over every fixture field. DTO/lines/line tables are fresh; mutating one result cannot affect another result or host inputs. Live host replacement/clear changes subsequent queries without changing old DTOs; separate environments remain isolated.
+- [x] Preserve the existing meaningful helpful Aura/Buff content; Aura finds either polarity, Buff only helpful, Debuff only harmful using the explicit host instance IDs and `is_helpful` flag.
+- [x] Retain exact `player`-only lookup. Unsupported `target`, `party1`, and unknown tokens, and missing instance999, return fresh line-empty UnitAura DTOs under current inferred simulator miss policy. Do not expand unit coverage.
+- [x] Return exactly one public table with `type=Enum.TooltipDataType.UnitAura` and `lines`, without inventing ID/width fields. Matched records preserve three meaningful name/duration/description lines: SpellName title, SpellName `1 hr`, wrapped nonempty SpellDescription. Compare colors through public numeric RGBA, never color object/method identity.
+- [x] Preserve the shared builder's **hardcoded `1 hr` limitation**. Duration3600 fixtures deliberately avoid requiring a builder change; dynamic duration/native payload parity is not asserted. No parser, identifier-width, or tooltip-width policy change is requested.
+- [x] Queries are read-only over every fixture field. DTO/lines/line tables are fresh; mutating one result cannot affect another result or host inputs. Live host replacement/clear changes subsequent queries without changing old DTOs; separate environments remain isolated.
 
 ## How it works
 
@@ -108,12 +108,18 @@ Producer `6edbe3533ec7b2877a2d8d787c7c12e0122c6ac5` is included in compiled revi
 
 Evidence is dirty-combined, not clean-revision/native/profile parity. Secure acceptance, tainted denial, meaningful polarity payloads, roots/GC/recovery and live state now have observed focused runtime evidence; independent security/wiring/readability/Rust acceptance remains pending. Earlier RED conclusions retain their downstream limits. Do not rerun valid build/runtime solely for docs/accounting.
 
-## Known gaps (current cycle)
+## Independent bounded acceptance — 2026-10-02
 
-- [x] Main-owned compiled RED and focused GREEN, adjacent controls and startup recorded; producer agent ran no gates.
-- [ ] Independent scoped checks/readability, security/wiring acceptance and exact source accounting remain pending.
-- [ ] Six requested rows remain uncredited. Separate batch60 acceptance changed checkpoint to **205 pending /142 bounded /14 partial /1 metadata-only;362 IDs;67 capabilities**; no batch61 accounting credit yet.
-- [ ] Native error wording/permissions, output restriction/secrecy, acquisition and full native payload semantics remain unknown. All requirements stay unchecked until main-owned evidence supports them.
+Parent accepts independent486's full `/tmp/patch-12.0.5-aura-tooltip-instance-independent-proof.md` and `batch61-independent-gates.json`:209 distinctPASS, startup0 `[]`, meaningful helpful/harmful providers, VM security/trust/root-member/GC/recovery, rooted publication and inverse legacy gates. All focused test bytes are unchanged from compiled RED through GREEN and independent source audit, SHA256 `3ecb167298f401a5f4f4dd10f7d2d2cc23758d61239556c6a010cd3271c11e71`. Rooted-list member identity is checked; root-list table allocation identity is not separately asserted.
+
+Fresh owned `rustfmt --check --edition 2024 --config skip_children=true` exits0; default `cargo check` exits0/no warnings in26.060007416061126s at `31d3f975bafb81986b8c25b47c8110ec6cfb67e9`. Full changed-line and embedded-Lua readability audit finds no violations. Known globalfmt1 is reused from independent477, protected output unread; dirty-combined evidence is not clean-revision proof. Subsequent item-context scaffolding is outside this source-scoped check, not silently included.
+
+Only exact339/340/344/345/349/350 promote: **205 pending /142 bounded /14 partial /1 metadata →199 /148 /14 /1**,362 ordered unique IDs,68 capabilities. Prior67 capabilities,356 unrelated rows and retained register/plaintext hashes stay unchanged. `/tmp/patch-12.0.5-batch61-accounting-before.json` and postcommit `batch61-accounting-validation.json` retain reconciliation; parent owns validation. Native restricted-unit/output secrecy, acquisition/filter/payload/profile/frame limits remain explicitly excluded; no arg2/arg3 NeverSecret-removal credit or full-page completion.
+
+## Known gaps
+
+- [x] Compiled RED/GREEN/startup, independent scoped security/wiring/readability/Rust proof and exact six-row accounting.
+- [ ] Native error wording/permissions, restricted-unit access/output secrecy, acquisition, filters, dynamic duration/full payload, Tooltip frame and other-profile parity remain unknown. Broader selected-history goal stays open.
 
 ## Out of scope
 

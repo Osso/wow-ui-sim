@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch61 — six aura-instance input-policy deltas accepted
+
+[Six-row contract/proof SSOT](../../specs/tooltip-aura-instance-security.md#independent-bounded-acceptance--2026-10-02) records parent acceptance of independent486:209 uniquePASS/startup0 `[]`, scopedfmt/check/security/wiring/readability. Only339/340/344/345/349/350 promote: **199 pending/148 bounded/14 partial/1 metadata =362;68 capabilities**. Ordered IDs,356 unrelated rows,67 prior capabilities and source hashes retained. Meaningful player helpful/harmful controls, actual VM secure acceptance/tainted denial and preserved public caller taint; no arg2/3 NeverSecret-removal credit. Dirty/globalfmt/restricted-unit/output/filter/native/profile gaps remain; broader goal open.
+
 ### Batch60 — exact pending-cost modifier acceptance
 
 [Exact357 contract/proof SSOT](../../specs/pending-transmog-cost.md#independent-bounded-acceptance--2026-10-02) records parent acceptance of independent477+481+483: ten refreshed focused PASS plus88 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and three equivalent assertion splits. Only357 promotes: **205 pending/142 bounded/14 partial/1 metadata =362;67 capabilities**. Ordered IDs,361 unrelated rows,66 prior capabilities and source hashes preserved. Explicit optional scalar snapshot only; absent-zero arity/local precision inferred, later BigUInteger evidence not projected backward. Dirty/globalfmt/native/profile/pricing/lifecycle/UI limits remain; broader goal open.
