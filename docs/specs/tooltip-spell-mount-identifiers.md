@@ -8,6 +8,7 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 
 - [ ] Use the existing strict public `c_spell::read_public_spell_identifier_at` contract: finite integral u32 NUMBER or UTF-8 STRING, with seeded lowercase aliases preceding numeric identity. This representation/validation policy is **inferred**, not native argument-type evidence.
 - [ ] Numeric 19750 retains the real generated Flash of Light title, modeled cast/description lines, spell type, ID and width. Numeric mount 23338 retains the first actual default `world.mounts` match, Swift Palomino, its title and existing `Summons this mount.` description.
+- [ ] DTO equivalence compares Color values through exactly four public numeric RGBA components (`GetRGBA()` or public numeric `r/g/b/a`), not per-instance method/object identity. All non-color fields retain strict recursive value/type equality with diagnostic paths.
 - [ ] Explicit numeric-string, case-normalized name and full colored-link aliases produce DTO-equivalent results to their resolved numeric IDs for both queries. A seeded numeric alias wins over numeric identity; a full-link alias wins over its embedded number. Output ID is the resolved ID.
 - [ ] Read alias changes/removal live. Queries do not mutate aliases or declared mounts; independent environments remain isolated. Mutating a returned DTO cannot change later results or another returned DTO.
 - [ ] Preserve current unknown numeric policy: exactly one identified, line-empty, Spell-typed tooltip, including valid u32 endpoints.
@@ -26,7 +27,7 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 ### Public optional compatibility and frame route
 
 - [ ] Preserve **current ignored-provider behavior**, not new flag semantics: documented nil/BOOL combinations for mount arg2 and spell args2/3/4/6, plus nil or public number17 at spell arg5, leave actual payload unchanged. No new public optional type/domain/finite validation is required for unused flags.
-- [ ] Actual `GameTooltip:SetSpellByID` and `SetMountBySpellID` pass the original identifier to the same real namespace query. Numeric/name/full-link aliases retain direct-query TooltipData and equivalent actual rendered lines. No query replacement, method-call spy, VM-shape assertion or duplicate builder counts as frame proof.
+- [ ] Actual `GameTooltip:SetSpellByID` and `SetMountBySpellID` pass the original identifier to the same real namespace query. Numeric/name/full-link aliases preserve every direct-query TooltipData field/value, including public RGBA components, and equivalent actual rendered lines. Processing may add per-line `lineIndex` only: when present it must be public numeric and equal the actual line position. Other extra fields or lines fail equivalence. No query replacement, method-call spy, VM-shape assertion or duplicate builder counts as frame proof.
 - [ ] Secret frame identifiers and mount arg2 fail without replacing prior exposed TooltipData or rendered lines; valid public frame recovery remains meaningful.
 
 ## How it works
@@ -83,11 +84,11 @@ Later producer plan, **not implemented**: first-class `src/c_api/c_tooltip_info_
 
 | Capability | Fixture cases | Proof level |
 | --- | --- | --- |
-| Real spell/mount DTO and aliases | Numeric producer guards; both alias DTO families; numeric precedence; link precedence; live changes | Written only, parent compiled RED pending. |
-| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Written only; chosen strictness/string miss inferred. |
-| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Written only; ignored flags receive no semantic credit. |
-| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Written only; optional ordering requires parent source audit, not claimed read-observation instrumentation. |
-| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Written only; GetSpell alias identity and full frame optional semantics excluded. |
+| Real spell/mount DTO and aliases | Numeric producer guards; both alias DTO families; numeric precedence; link precedence; live changes | Historical numeric controls PASS; initial alias failures observed. Corrected compiled RED pending. |
+| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Initial run mixed PASS/FAIL; corrected compiled RED pending. Chosen strictness/string miss inferred. |
+| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Initial numeric comparison invalid; corrected RGBA oracle unexecuted. Ignored flags receive no semantic credit. |
+| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Initial failures observed; corrected compiled RED pending. Optional ordering requires parent source audit, not claimed read-observation instrumentation. |
+| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Initial numeric comparison invalid; corrected query-preservation/lineIndex oracle unexecuted. Secret retention test unchanged. GetSpell alias identity and full frame optional semantics excluded. |
 
 GC identity snapshots compare actual host `Val`, userdata GcRef and live allocation sequence before/after returning to the secure host boundary, then compare globally rooted list/stack-export entries. Metadata snapshots do not create VM roots or inspect private payloads. Lua verifies secrecy and original caller/frame/table properties. Pinned rilua6044544 denies tainted secret-BOOL `rawequal`; these fixtures never require it or relax queries. Secret publication roots wrappers during insertion and roots original real tables while wrapping them.
 
@@ -97,7 +98,10 @@ Existing meaningful controls remain in `tests/tooltip_mount.rs`, `tests/tooltip_
 
 - Base inspected: `b1d8486563b85e02ec4e2d9787833020e4a95d47`; unrelated dirty source preserved without body access.
 - Owned formatter only: `rustfmt --edition 2024 --config skip_children=true tests/tooltip_spell_mount_identifiers.rs`, explicit repository cwd. Result recorded in handoff; no compiler invoked.
-- Commit precedes all compilation. Parent owns compiled RED against unchanged providers, later GREEN and acceptance. No tests/build/check/readability/coverage/gates/operations/delegation/model CLI/push performed by this slice.
+- Historical input revision `7ea54c824e3dfd4e1ccaebc0fad6399baa5de45c`: parent `cargo test --test integration --no-run --message-format=json` exited0 in104.26011972106062s; selected22 run exited101 with3PASS/19FAIL in3.852031323942356s. Artifacts: `/tmp/patch-12.0.5-batch56-red-build-result.json`, `/tmp/patch-12.0.5-batch56-red-run.json` and saved full outputs. This is mixed fixture/producer evidence, not genuine corrected RED: public-nil/repeat numeric DTO and numeric frame comparisons failed the old scalar oracle; remaining17 failures include alias input/security/strictness boundaries, not17 established root causes.
+- Read-only diagnosis `/tmp/patch-12.0.5-tooltip-dto-equivalence-diagnosis.md` inferred fresh-color identity as a likely fixture cause, not confirmed channel behavior. `builders::color_table` invokes `CreateColor`; naked-environment `color_defaults.rs` creates per-instance methods, while cached `Blizzard_SharedXMLBase/Color.lua` uses `ColorMixin`. Both `GetRGBA()` contracts return `r/g/b/a`; comparator now extracts only these four public numeric components without comparing method identity. No executed corrected fixture proof yet.
+- Parent's separate full-UI diagnostic `/tmp/patch-12.0.5-tooltip-dto-diagnostic.lua` and `.stdout/.stderr` reportedly exited0 in5.204861s. Saved output has no repeated numeric spell/mount differences and reports spell-frame additions `lines.1..4.lineIndex`; this does not prove naked-environment color equivalence. Frame oracle now preserves original query fields and validates only correctly positioned lineIndex enrichment; existing rendered-line and secret failure-retention assertions remain.
+- Correction commit precedes recompilation. Parent must recompile these22 tests and observe genuine RED before producer work; all four source IDs remain pending. Historical build/run evidence is invalidated for the corrected comparator. No compiler/tests/check/readability/coverage/gates/operations/delegation/model CLI/push in this correction slice.
 
 ## Known gaps (current cycle)
 

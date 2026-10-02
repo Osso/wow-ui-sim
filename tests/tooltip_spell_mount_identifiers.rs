@@ -49,11 +49,82 @@ fn fixture_env() -> WowLuaEnv {
                 end
             end
         end
-        function TMEqual(left, right)
-            assert(type(left) == type(right), 'DTO value types')
-            if type(left) ~= 'table' then assert(left == right, 'DTO scalar'); return end
-            for key, value in pairs(left) do TMEqual(value, right[key]) end
-            for key, value in pairs(right) do TMEqual(left[key], value) end
+        function TMColorComponents(value, path)
+            if type(value) ~= 'table' and type(value) ~= 'userdata' then return nil end
+            local function components(...)
+                assert(select('#', ...) == 4, path .. ': exactly four RGBA components')
+                local rgba = {...}
+                for index, channel in ipairs({'r', 'g', 'b', 'a'}) do
+                    assert(not issecretvalue(rgba[index]) and type(rgba[index]) == 'number',
+                        path .. '.' .. channel .. ': public numeric color component')
+                end
+                return rgba
+            end
+            if type(value.GetRGBA) == 'function' then
+                return components(value:GetRGBA())
+            end
+            if type(value.r) == 'number' and type(value.g) == 'number'
+                and type(value.b) == 'number' and type(value.a) == 'number' then
+                return components(value.r, value.g, value.b, value.a)
+            end
+            return nil
+        end
+        function TMEqual(left, right, path, linePosition)
+            path = path or 'TooltipData'
+            local leftColor = TMColorComponents(left, path .. '.query')
+            local rightColor = TMColorComponents(right, path .. '.actual')
+            if leftColor or rightColor then
+                assert(leftColor and rightColor, path .. ': color/value mismatch ('
+                    .. type(left) .. '/' .. type(right) .. ')')
+                for index, channel in ipairs({'r', 'g', 'b', 'a'}) do
+                    assert(leftColor[index] == rightColor[index], path .. '.' .. channel
+                        .. ': RGBA mismatch ' .. tostring(leftColor[index])
+                        .. '/' .. tostring(rightColor[index]))
+                end
+                return
+            end
+            local diagnostic = path .. ': ' .. type(left) .. '/' .. type(right)
+            assert(type(left) == type(right), diagnostic .. ' DTO value types')
+            if type(left) ~= 'table' then
+                assert(left == right, diagnostic .. ' DTO scalar '
+                    .. tostring(left) .. '/' .. tostring(right))
+                return
+            end
+            for key, value in pairs(left) do
+                TMEqual(value, right[key], path .. '.' .. tostring(key))
+            end
+            for key, value in pairs(right) do
+                local childPath = path .. '.' .. tostring(key)
+                if linePosition and key == 'lineIndex' then
+                    assert(not issecretvalue(value) and type(value) == 'number'
+                        and value == linePosition, childPath .. ': actual line position')
+                elseif left[key] == nil then
+                    TMEqual(nil, value, childPath)
+                end
+            end
+        end
+        function TMFrameDataEqual(queryData, processed)
+            assert(type(processed) == 'table' and type(processed.lines) == 'table',
+                'processingInfo.tooltipData: actual TooltipData and lines')
+            TMPublic(processed)
+            for key, value in pairs(queryData) do
+                if key == 'lines' then
+                    for position, line in pairs(value) do
+                        TMEqual(line, processed.lines[position],
+                            'TooltipData.lines.' .. tostring(position), position)
+                    end
+                    for position, line in pairs(processed.lines) do
+                        if value[position] == nil then
+                            TMEqual(nil, line, 'TooltipData.lines.' .. tostring(position))
+                        end
+                    end
+                else TMEqual(value, processed[key], 'TooltipData.' .. tostring(key)) end
+            end
+            for key, value in pairs(processed) do
+                if queryData[key] == nil then
+                    TMEqual(nil, value, 'TooltipData.' .. tostring(key))
+                end
+            end
         end
         function TMData(...)
             assert(select('#', ...) == 1, 'exactly one tooltip result')
@@ -115,7 +186,7 @@ fn fixture_env() -> WowLuaEnv {
         function TMFrameCheck(method, query, identifier)
             local data = TMData(query(identifier))
             GameTooltip[method](GameTooltip, identifier)
-            TMEqual(GameTooltip.processingInfo.tooltipData, data)
+            TMFrameDataEqual(data, GameTooltip.processingInfo.tooltipData)
             assert(GameTooltip:NumLines() > 0, 'actual rendered lines populated')
         end
     "#).expect("assertions and real frame only; queries never replaced");
