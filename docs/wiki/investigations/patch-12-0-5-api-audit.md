@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Aura slot arguments — bounded independent acceptance
+
+[Independent353 acceptance](../../specs/unit-aura-slot-secret-arguments.md#independent-bounded-acceptance--2026-10-02) owns150 unique PASS (12 slot +138 controls), startup0[], full hashes/commands and limits. Only376 promotes; unit retains NeverSecret. **242/106/14 →241 pending/107 bounded/14 partial =362**; ordered IDs,361 unrelated rows, prior50 capabilities and provenance preserved. Dirty-combined check0/scopedfmt0, globalfmt1 preserved unowned; later batch45 control bytes excluded. Two old plain CreateColor successes are invalid curve-contract inputs, not378 evidence. Partition55.283s misses60 target, retained without padding; bounded development acceptance, not final whole-goal acceptance. Four readability suggestions deferred; native access/output/profile gaps excluded. Historical pending checkpoints superseded; parent owns postcommit validation.
+
+
+
 ### Aura application display count — bounded independent acceptance
 
 [Exact three-row acceptance](../../specs/aura-application-display-count.md#independent-bounded-acceptance--2026-10-02) owns independent345 parent acceptance,94 unique PASS/startup0[], full commands/hashes and native gaps. Only367/368 NeverSecret thresholds and369 AllowedWhenUntainted unit/ID promote: **245 pending /103 bounded /14 partial →242 /106 /14 =362**. Ordered362 IDs,359 unrelated rows, prior49 capability bytes and source provenance preserved. Dirty combined proof remains explicit, never clean revision; globalfmt1 unowned aura_duration.rs, scopedfmt0/dirtycheck0. Three nonblocking readability suggestions deferred; no reproduced issue or authorized adjacent refactor. Native permissions/restricted output/full-page parity excluded. Prior pending checkpoints are historical; parent owns postcommit validation and ignored PLAN.

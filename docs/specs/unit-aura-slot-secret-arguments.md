@@ -1,6 +1,6 @@
 # Unit aura slot secret arguments
 
-Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores. The bounded C API producer implements the argument boundary; lookup/DTO/store behavior is unchanged. [Lua API system](../wiki/systems/lua-api.md#retail-1205-aura-slot-arguments) describes ownership. Parent compiled RED precedes this producer; [saved parent GREEN](#reconciled-batch44-parent-green--2026-10-02) establishes bounded executed coverage. Independent gates, parent acceptance and row376 accounting remain pending; checkboxes track acceptance, not missing GREEN. No native parity claim.
+Bounded Retail 12.0.5 contract for **row376 only**, `global api-C_UnitAuras-GetAuraDataBySlot-376`: `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Fixtures target `C_UnitAuras.GetAuraDataBySlot` over existing player/party stores. The bounded C API producer implements the argument boundary; lookup/DTO/store behavior is unchanged. [Lua API system](../wiki/systems/lua-api.md#retail-1205-aura-slot-arguments) describes ownership. Parent compiled RED precedes this producer; [saved parent GREEN](#reconciled-batch44-parent-green--2026-10-02) establishes bounded executed coverage. Parent accepts independent353 for exact row376; chosen behavior checkboxes below are proven bounded simulator behavior, not native parity. No native parity claim.
 
 ## What it must do
 
@@ -10,23 +10,23 @@ Retained [source extract](../../data/patch-api/sources/12.0.5-api-changes.txt), 
 
 Actual retail cache: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua`, lines207–222; cached file SHA256 `39405809f92e74a945034529d2a2962ebebe9a70fe581b2f411586fc2b72d5d5`. Complete declaration: required `unit: UnitTokenRestrictedForAddOns`, **`NeverSecret = true`**; required `slot: number`; one nullable `AuraData` return; `SecretArguments = "AllowedWhenUntainted"`, `RequiresUnitAuraAccess = true`, `SecretWhenUnitAuraRestricted = true`.
 
-- [ ] Reject authentic secret STRING unit even for secure callers: this declaration retains NeverSecret. Indexed-row unit-marker removals do not apply here. Recognize actual VM secrets; do not treat arbitrary userdata as a secret marker.
-- [ ] Authenticate authentic secret NUMBER slot for untainted callers and use its actual stored ID value; tainted callers must reject secret slot before lookup, including unknown units/IDs. Do not declassify the original input or reset caller taint.
-- [ ] Reject secret unit independently of slot security, including combined secret arguments and secret unknown-unit strings. Public populated/missing-result recovery must succeed inside the same tainted closure.
+- [x] Reject authentic secret STRING unit even for secure callers: this declaration retains NeverSecret. Indexed-row unit-marker removals do not apply here. Recognize actual VM secrets; do not treat arbitrary userdata as a secret marker.
+- [x] Authenticate authentic secret NUMBER slot for untainted callers and use its actual stored ID value; tainted callers must reject secret slot before lookup, including unknown units/IDs. Do not declassify the original input or reset caller taint.
+- [x] Reject secret unit independently of slot security, including combined secret arguments and secret unknown-unit strings. Public populated/missing-result recovery must succeed inside the same tainted closure.
 
 ### Inferred representations; retained modeled lookup
 
-- [ ] **Inferred:** require an actual string unit and finite integral signed-i32 number slot. Reject missing/nil required arguments, wrong types, numeric coercion, numeric-string slot, fractions, nonfinite and out-of-range values before lookup, including unknown unit. Native validation ordering and exact error messages are unproved; fixtures require a nonempty error, not particular wording.
-- [ ] **Inferred representation/miss policy:** negative/zero/past-unknown signed-i32 slots and unknown units return exactly one nil. No invented positive-only restriction or cap. Current slots are 1:1 `AuraInfo.aura_instance_id`, not list ordinals.
-- [ ] Preserve actual `GetAuraSlots` roundtrip for player/party helpful and harmful records. Current enumeration returns all visible slots in one batch with nil continuation even when requested batch size is one; this is a retained control, not new pagination/API coverage.
-- [ ] Preserve blocked-inclusive slot lookup: enumeration omits blocked records but slot retrieval still finds them. Preserve existing helpful-then-harmful traversal across player buffs and seeded party buff/debuff stores, without changing shared helpers.
-- [ ] Switching the AuraUtil provider suppresses its instance-ID query, not C slot retrieval; query paths must leave provider state unchanged.
-- [ ] Preserve complete existing DTO fields: identity, count aliases, timing, source, polarity/player-source flags, remaining boolean flags, nilable dispel name and independent empty points table. Player DTO source remains normalized to `player` despite stored pet/party1 source; party DTO source remains stored pet/party1. DTO mutations must not affect later reads or records.
+- [x] **Inferred:** require an actual string unit and finite integral signed-i32 number slot. Reject missing/nil required arguments, wrong types, numeric coercion, numeric-string slot, fractions, nonfinite and out-of-range values before lookup, including unknown unit. Native validation ordering and exact error messages are unproved; fixtures require a nonempty error, not particular wording.
+- [x] **Inferred representation/miss policy:** negative/zero/past-unknown signed-i32 slots and unknown units return exactly one nil. No invented positive-only restriction or cap. Current slots are 1:1 `AuraInfo.aura_instance_id`, not list ordinals.
+- [x] Preserve actual `GetAuraSlots` roundtrip for player/party helpful and harmful records. Current enumeration returns all visible slots in one batch with nil continuation even when requested batch size is one; this is a retained control, not new pagination/API coverage.
+- [x] Preserve blocked-inclusive slot lookup: enumeration omits blocked records but slot retrieval still finds them. Preserve existing helpful-then-harmful traversal across player buffs and seeded party buff/debuff stores, without changing shared helpers.
+- [x] Switching the AuraUtil provider suppresses its instance-ID query, not C slot retrieval; query paths must leave provider state unchanged.
+- [x] Preserve complete existing DTO fields: identity, count aliases, timing, source, polarity/player-source flags, remaining boolean flags, nilable dispel name and independent empty points table. Player DTO source remains normalized to `player` despite stored pet/party1 source; party DTO source remains stored pet/party1. DTO mutations must not affect later reads or records.
 
 ### Security lifetime and isolation
 
-- [ ] Host-created STRING/NUMBER secrets are rooted before global insertion and survive forced GC with identical references/security. Secure → tainted denial/public recovery → secure queries preserve original input secrecy and caller taint; tainted `secretunwrap` remains denied.
-- [ ] Across successes, misses, malformed inputs, secure secret slots and tainted denials, all stored aura fields/order and block-table identity/content remain unchanged. Block/provider/global secret roots remain isolated per environment.
+- [x] Host-created STRING/NUMBER secrets are rooted before global insertion and survive forced GC with identical references/security. Secure → tainted denial/public recovery → secure queries preserve original input secrecy and caller taint; tainted `secretunwrap` remains denied.
+- [x] Across successes, misses, malformed inputs, secure secret slots and tainted denials, all stored aura fields/order and block-table identity/content remain unchanged. Block/provider/global secret roots remain isolated per environment.
 
 ## How it works
 
@@ -46,7 +46,7 @@ Producer inventory over unchanged fixture commit `fc84ffc0203741b1db9961cbc53b24
 
 ## Tests asserting this spec
 
-`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. Producer slice ran only owned-file formatting; saved parent compiled GREEN is reconciled below, while independent acceptance remains pending.
+`tests/unit_aura_slot_secret_arguments.rs`: **12 concrete fixtures**, existing `integration` target, filter `unit_aura_slot_secret_arguments::`, requires `retail-12-0-5`. Producer slice ran only owned-file formatting; saved parent compiled GREEN is reconciled below, with independent353 now parent-accepted below.
 
 | Fixture(s) | Exact coverage | Proof level |
 | --- | --- | --- |
@@ -82,15 +82,31 @@ Each saved serial command is `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim
 | 5 / `aura_api::` | 29 | 8.856 | Existing aura API controls. |
 | 6 / `admin_buff_api::` | 18 | 3.232 | Existing admin buff controls. |
 
-The earlier fixture matrix records historical RED; every listed fixture now has saved parent GREEN, not independent acceptance. Argument caller-policy/NeverSecret declarations are source-grounded and authentic VM-secret behavior is simulator-executed. Strict representations, signed/no-positive-cap miss policy, validation ordering and traversal/DTO policies remain inferred or retained modeled behavior, not native-verified semantics. Current one-batch enumeration does not prove pagination.
+The earlier fixture matrix records historical RED; every listed fixture now has saved parent GREEN, now accepted under independent353 below. Argument caller-policy/NeverSecret declarations are source-grounded and authentic VM-secret behavior is simulator-executed. Strict representations, signed/no-positive-cap miss policy, validation ordering and traversal/DTO policies remain inferred or retained modeled behavior, not native-verified semantics. Current one-batch enumeration does not prove pagination.
 
 Saved startup command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/wow-sim --no-addons --no-saved-vars lua-errors`; exit0, stdout `[]`, **13.061s**. Executable SHA256 `08427777550109036c6066cf0d60a8a1cec8cd3996d037b3351b96a5cc9f79d2`. Manifest `/tmp/patch-12.0.5-batch44-green-startup-run.json`; full outputs `/tmp/patch-12.0.5-batch44-green-startup.stdout` and `.stderr`. Startup establishes this selected no-addon/no-saved-vars loading path only.
 
 Independent verifier remains active; security/readability/Rust gates and parent acceptance are **pending**, not supplied by these saved runtime runs. Native access permission, restricted output secrecy, exact errors/validation order and earlier/all-profile execution remain unproved. **Row376 pending; totals unchanged: 242 pending / 106 bounded / 14 partial = 362.** No accounting, PLAN or data modification. No new build/test/check/delegation run for this docs-only reconciliation.
 
+## Independent bounded acceptance — 2026-10-02
+
+Parent fully reviewed and accepts independent353, `/tmp/patch-12.0.5-aura-slot-independent-proof.md`, for **exact row376 only**. This supersedes historical pending checkpoints above. Source plaintext SHA256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`; register SHA256 `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`; cached declaration SHA256 `39405809f92e74a945034529d2a2962ebebe9a70fe581b2f411586fc2b72d5d5`. Unit retains NeverSecret; only slot AllowedWhenUntainted delta is credited.
+
+Full ten saved runs: **150 unique PASS =12 slot +138 controls**, all exits0. Runs0–6 above supply106; supplemental7 `aura_refresh_duration::`18/3.7817744370549917s,8 `aura_spell_identifier::`12/2.4825490301009268s,9 `c_unit_auras_admin::`14/2.5201916430378333s. Same exact bound executable/argv and artifact pattern above; no duplicates or zero-selection runs. Runtime42.221559187048115s +startup13.061459569027647s =**55.28301875607576s**, below60–300s target. Retain missed target: no padding, reruns or invented minimum-duration pass. Bounded development acceptance **is not final whole-goal acceptance**.
+
+Producer `054525aff9736be762f69fe7479b16e8383d48e1`, compiled `a92d0a71702faa5b8e7823c373aa11c35ed97e7c`, fixtures `fc84ffc0203741b1db9961cbc53b24804aa97af4`; binary/startup hashes above unchanged. Dirty source diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`: dirty-combined proof, never clean revision. Later batch45 `tests/c_unit_auras_admin.rs` edits are NOT covered by earlier binary controls; later combined diff `b0ba04f53034bc0f279fb983419713c785f05aa0142a7e2636cf1c634636c70b` is not execution/check proof. Two historical plain CreateColor successes violate curve-input contract: old public DTO/color observations only, **not row378 evidence**.
+
+Fresh gates recorded by353: scoped `rustfmt --check --edition 2024 --config skip_children=true`0/0.03640089696273208s; dirty-combined `cargo check`0/22.98355918098241s; global `cargo fmt --check`1/19.20256610191427s on preserved unowned source. No global-format pass. Check stderr SHA256 `61fcf5ae4997c49f88bfa9354b4112f84349cebeefa3fadb6b85342f0109fa00`; global-fmt stdout SHA256 `6ffbeac5e67d2dc2d7a6d37c4cbe48c6e478491a62f1ac5860fc549598f437b5`. Full commands/output hashes and82/82 artifact checks: `/tmp/patch-12.0.5-aura-slot-independent/{gates,artifact-audit,binding-conclusions}.json`; source bindings before/after/final and compiled fixture copies retained there. Actual pinned VM `6044544b960cd68b4b0c58bb3373412757c2caee`; security/wiring/static audit accepted, not native-client verification.
+
+Owned file SHA256: slot producer `a756fb0589ccfb537767547f1104d1fade10f5d893d11c640307d34bf12f2102`; c_api/mod `dc07f07449b9ebac5b7a3a6169978a6983ce8d356f44a8a0684f673e323d8d59`; globals/auras `f9248253898305f1efcc9add7ad3610fa1dbd01510b6ad861863403e24c93047`; globals/register `7edb3342a25b8c4206f3082007d1c5c6ad5e302a34712503325b81ea3091281e`; slot fixture `9758ad91f80912c9c9278de3303edf24611394db944a277d51ed54ad6f48a8c6`.
+
+Four readability suggestions deferred: numeric guard extraction, fixture seeding/assertion split, record field-group assertions, registrar grouping. No behavior counterexample; adjacent refactor unauthorized. Native access/output secrecy/errors/validation order, broader consumers and earlier/all-profile execution remain excluded; strict representation and miss policies remain inferred.
+
+Exact accounting: add `unit-aura-slot-secret-arguments`; promote only `global api-C_UnitAuras-GetAuraDataBySlot-376`. **242 pending/106 bounded/14 partial →241 pending/107 bounded/14 partial =362**. Before `/tmp/patch-12.0.5-batch44-accounting-before.json`; preserve ordered362 IDs,361 unrelated rows, prior50 capabilities and top-level source/register hashes. Parent owns postcommit validation. No PLAN/code/build/tests/checks/operations here.
+
 ## Known gaps (current cycle)
 
-- [ ] Independent security/readability/Rust/acceptance gates and exact-row accounting remain pending despite saved producer GREEN. No batch43 proof transfers to these fixtures.
+- [x] Independent security/readability/Rust/acceptance gates and exact-row accounting remain pending despite saved producer GREEN. No batch43 proof transfers to these fixtures.
 - [ ] Native validation ordering, exact errors, access permission and conditional output secrecy remain unproved. Earlier-profile providers are preserved in source only, not newly executed.
 
 ## Out of scope

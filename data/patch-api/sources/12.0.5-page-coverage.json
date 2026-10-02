@@ -7,6 +7,22 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "unit-aura-slot-secret-arguments",
+      "symbols": [
+        "C_UnitAuras.GetAuraDataBySlot"
+      ],
+      "scope": "Exact row376 AllowedWhenUntainted slot delta only; unit retains NeverSecret. VM-authenticated secret slot secure acceptance, tainted denial/public recovery, rooted GC identity/secrecy, inferred strict representations/misses, unchanged blocked-inclusive lookup/DTO/store/provider isolation. 12 slot +138 controls =150 unique PASS; startup0 []. Native access/output/profile gaps excluded.",
+      "spec": "docs/specs/unit-aura-slot-secret-arguments.md",
+      "tests": [
+        "tests/unit_aura_slot_secret_arguments.rs"
+      ],
+      "implementation": "054525aff9736be762f69fe7479b16e8383d48e1",
+      "compiled_revision": "a92d0a71702faa5b8e7823c373aa11c35ed97e7c",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-slot-independent-proof.md",
+      "gate_scope": "Parent accepted independent353 exact376. Scopedfmt0/dirtycheck0; globalfmt1 preserved unowned. Dirty-combined not clean revision; later batch45 control edits excluded. Two old plain CreateColor successes invalid curve contract, not row378 proof. Partition55.283s below60 target retained, not final whole-goal acceptance. Four readability suggestions deferred; no behavior counterexample/authorized adjacent refactor."
+    },
+    {
       "id": "unit-aura-index-secret-arguments",
       "symbols": [
         "C_UnitAuras.GetAuraDataByIndex",
@@ -2125,9 +2141,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDataBySlot-376",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-slot-secret-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepts independent353 exact376 only; unit retains NeverSecret. Linked spec owns full evidence and limits; bounded development acceptance, not native parity or final whole-goal acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDispelTypeColor-378",
