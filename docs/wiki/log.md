@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded row382 aura enumeration boundary
+
+Updated [[lua-api#Retail 12.0.5 aura slot enumeration arguments]] and [row382 contract](../specs/unit-aura-slot-enumeration-arguments.md): sole epoch-owned producer authenticates four stack-rooted arguments before inferred strings/finite-f64 validation; earlier provider cfg-separated, collector/output unchanged. Saved parent RED4PASS/8FAIL; formatting only here, parent combined GREEN/acceptance pending. Native access/output/pagination and accounting excluded; tests and batch45 work untouched.
+
 ## [2026-10-02] evidence | Accept exact batch44 aura slot row
 
 [Independent353 acceptance](../specs/unit-aura-slot-secret-arguments.md#independent-bounded-acceptance--2026-10-02) owns150 unique PASS (12 slot +138 controls), startup0[], full hashes/commands and limits. Only376 promotes; unit retains NeverSecret. **242/106/14 →241 pending/107 bounded/14 partial =362**; ordered IDs,361 unrelated rows, prior50 capabilities and provenance preserved. Dirty-combined check0/scopedfmt0, globalfmt1 preserved unowned; later batch45 control bytes excluded. Two old plain CreateColor successes are invalid curve-contract inputs, not378 evidence. Partition55.283s misses60 target, retained without padding; bounded development acceptance, not final whole-goal acceptance. Four readability suggestions deferred; native access/output/profile gaps excluded. Historical pending checkpoints superseded; parent owns postcommit validation.

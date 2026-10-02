@@ -35,33 +35,42 @@ Actual Retail runtime cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizz
 
 ## Implementation inventory
 
-- `src/lua_api/globals/auras.rs` — inspected existing GetAuraSlots registration, visible-store collector, filter parsing, provider controls and DTO helpers; unchanged by this fixture slice.
+- `src/c_api/c_unit_aura_slot_enumeration.rs` — sole `retail-12-0-5` GetAuraSlots boundary: VM-authenticate all four arguments first, then strict strings/nullable finite f64 validation and retained one-batch output.
+- `src/c_api/mod.rs`, `src/lua_api/globals/register.rs` — epoch-gated module/registration after existing aura namespace/state initialization.
+- `src/lua_api/globals/auras.rs` — original body/registration earlier-epoch-only, without runtime fallback; only collector visibility becomes `pub(crate)`. Collector, predicates, DTOs, stores and provider behavior unchanged.
+- Original wrappers stay rooted on the VM argument stack. `unwrap_secret(&LuaState, Val)` reads actual payloads through the VM caller guard without allocating, replacing wrappers or changing caller taint; strings are copied before mutable collector/output work.
 - `build.rs` — existing top-level test discovery groups this fixture into the integration harness; no new target or Cargo change.
 - `tests/unit_aura_slot_enumeration_arguments.rs` — retail-12-0-5-only concrete fixtures.
 - Cached `Blizzard_FrameXMLUtil/AuraUtil.lua:85–125` — inspected provider-dispatched GetAuraSlots/GetAuraDataBySlot continuation handshake; no vendor edit.
 
 ## Tests asserting this spec
 
-All 12 fixtures live in `tests/unit_aura_slot_enumeration_arguments.rs`; none executed in this slice.
+All 12 unchanged fixtures live in `tests/unit_aura_slot_enumeration_arguments.rs`. Saved parent pre-producer RED below covers this matrix; this implementation slice runs formatting only. GREEN/independent acceptance remain parent-owned.
 
 | Fixture | Exact capability | Proof level |
 |---|---|---|
-| `player_batches_keep_nonordinal_duplicate_named_ids_and_dto_roundtrip` | Player IDs307/811 helpful,419/907 harmful, exact arity/defaults/DTO/source | Written, unexecuted |
-| `seeded_party_batches_retain_filter_substrings_without_player_or_raid_redesign` | Party IDs1207/1801 helpful,1409/1907 harmful; actual substring selection/empty domains | Written, unexecuted |
-| `blocked_ids_compact_visible_tuple_but_c_slot_getter_remains_blocked_inclusive` | Block compaction, empty batch, getter contrast | Written, unexecuted |
-| `provider_switch_only_changes_aura_util_provider_not_c_enumeration` | Real provider switch/reset vs C enumeration/getter | Written, unexecuted |
-| `inferred_required_utf8_unit_and_optional_actual_string_filter_validate_before_absence` | Required strict unit/filter, UTF-8, unknown/empty one-nil tuple | Written, unexecuted; policy inferred |
-| `inferred_optional_finite_f64_controls_retain_unused_max_and_any_token_termination` | Finite actual numeric controls, negatives/fractions/large, ignored max, zero-return token | Written, unexecuted; representation inferred |
-| `secure_authentic_secret_units_enumerate_actual_store_and_unknown_before_absence` | Literal row382 unit secret acceptance | Written, unexecuted |
-| `secure_optional_secret_filter_max_token_and_mixed_arguments_keep_payloads` | All optional secret inputs, mixed units, secure invalid numeric payload | Written, unexecuted |
-| `tainted_each_argument_and_mixed_secrets_deny_with_public_recovery_in_same_closure` | Each argument caller guard, unknown/NaN/token, same-closure recovery | Written, unexecuted |
-| `all_four_authenticate_before_wrong_public_representation_or_token_short_circuit` | Malformed public earlier argument + later secret guard precedence | Written, unexecuted |
-| `rooted_secret_identity_and_caller_taint_survive_forced_gc_roundtrips` | Rooted host secrets, rawequal, secure/tainted/secure GC lifecycle | Written, unexecuted |
-| `enumeration_preserves_records_tuple_dto_block_provider_and_two_environment_isolation` | Record/block/provider/tuple/DTO immutability, two-env isolation | Written, unexecuted |
+| `player_batches_keep_nonordinal_duplicate_named_ids_and_dto_roundtrip` | Player IDs307/811 helpful,419/907 harmful, exact arity/defaults/DTO/source | Saved RED PASS (control) |
+| `seeded_party_batches_retain_filter_substrings_without_player_or_raid_redesign` | Party IDs1207/1801 helpful,1409/1907 harmful; actual substring selection/empty domains | Saved RED PASS (control) |
+| `blocked_ids_compact_visible_tuple_but_c_slot_getter_remains_blocked_inclusive` | Block compaction, empty batch, getter contrast | Saved RED PASS (control) |
+| `provider_switch_only_changes_aura_util_provider_not_c_enumeration` | Real provider switch/reset vs C enumeration/getter | Saved RED PASS (control) |
+| `inferred_required_utf8_unit_and_optional_actual_string_filter_validate_before_absence` | Required strict unit/filter, UTF-8, unknown/empty one-nil tuple | Saved RED FAIL; policy inferred |
+| `inferred_optional_finite_f64_controls_retain_unused_max_and_any_token_termination` | Finite actual numeric controls, negatives/fractions/large, ignored max, zero-return token | Saved RED FAIL; representation inferred |
+| `secure_authentic_secret_units_enumerate_actual_store_and_unknown_before_absence` | Literal row382 unit secret acceptance | Saved RED FAIL |
+| `secure_optional_secret_filter_max_token_and_mixed_arguments_keep_payloads` | All optional secret inputs, mixed units, secure invalid numeric payload | Saved RED FAIL |
+| `tainted_each_argument_and_mixed_secrets_deny_with_public_recovery_in_same_closure` | Each argument caller guard, unknown/NaN/token, same-closure recovery | Saved RED FAIL |
+| `all_four_authenticate_before_wrong_public_representation_or_token_short_circuit` | Malformed public earlier argument + later secret guard precedence | Saved RED FAIL |
+| `rooted_secret_identity_and_caller_taint_survive_forced_gc_roundtrips` | Rooted host secrets, rawequal, secure/tainted/secure GC lifecycle | Saved RED FAIL |
+| `enumeration_preserves_records_tuple_dto_block_provider_and_two_environment_isolation` | Record/block/provider/tuple/DTO immutability, two-env isolation | Saved RED FAIL |
+
+## Saved parent RED — pre-producer
+
+Actual fixture commit (resolved by `git rev-parse 5fb039e8f^{commit}`) and saved artifact revision: `5fb039e8f0dc5cd9e688553fb94b1cd939f0537b`. `/tmp/patch-12.0.5-batch46-red-run.json`, `.stdout`, `.stderr` record **4 PASS / 8 FAIL**, exit101/2.847786s. Four retained controls pass; strict representation, actual secret payloads, guard-before-malformed/token and GC/state fixtures genuinely fail under the old producer.
+
+Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c unit_aura_slot_enumeration_arguments:: --test-threads=1`. Binary SHA256 `02889f968c43086c0ba2dbc0fa6764769c71a42e16bc9a3368fd95663b705f96`; same compilation as `/tmp/patch-12.0.5-batch45-green-build-result.json`: `cargo test --test integration --no-run --message-format=json`, exit0/233.146580s. Saved proof includes preserved unowned dirty source (diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`), not clean-revision proof. No rerun or credit inferred from that control build.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent owns targeted RED before producer and subsequent GREEN/acceptance; no tests, builds, checks, readability gates, operations or delegation performed here. All contract checkboxes remain unverified.
+- [ ] Parent owns combined batch45 corrected GREEN + batch46 GREEN and one independent acceptance gate. No tests, builds, checks, readability gates, operations or delegation performed in this implementation slice. All contract checkboxes remain unverified by GREEN.
 - [ ] Exact row382 accounting remains unchanged; fixture existence is not behavioral completion or clean-revision proof.
 
 ## Out of scope
@@ -69,4 +78,4 @@ All 12 fixtures live in `tests/unit_aura_slot_enumeration_arguments.rs`; none ex
 - Native permission enforcement (`RequiresUnitAuraAccess`), restricted output secrecy, exact native validation/errors and native secret acceptance parity: annotations alone do not prove those behaviors.
 - Native pagination/max-slot fidelity: retained one-batch/any-token termination is expressly simulator behavior, not a claim about native pages.
 - Native cached AuraUtil consumer closure: inspected Lua forwards four arguments through a data provider and retrieves DTOs by slots; current Rust AuraUtil.ForEachAura directly visits the store and does not establish that handshake. No consumer closure claim or optional consumer fixture.
-- Other source rows, indexed/display/duration APIs, production/Cargo/new targets, audit accounting/wiki/other documentation, dispel-color and independently owned slot-acceptance work: excluded from this two-file slice.
+- Other source rows, indexed/display/duration APIs, Cargo/new targets, audit accounting/PLAN, dispel-color producer/spec/corrected tests and independently owned slot-acceptance work. Only this contract, minimal Lua API wiki inventory/index/log and enumeration producer wiring change.

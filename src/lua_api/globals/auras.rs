@@ -81,7 +81,6 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         state,
         ns,
         &[
-            ("GetAuraSlots", get_aura_slots),
             (
                 "GetAuraDataByAuraInstanceID",
                 get_aura_data_by_aura_instance_id,
@@ -98,6 +97,7 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         state,
         ns,
         &[
+            ("GetAuraSlots", get_aura_slots),
             ("GetAuraDispelTypeColor", get_aura_dispel_type_color),
             ("GetAuraDataBySlot", get_aura_data_by_slot),
             ("GetAuraDataByIndex", get_aura_data_by_index),
@@ -316,7 +316,7 @@ fn is_blocked_aura(state: &mut LuaState, unit: &str, aura_instance_id: i32) -> b
     )
 }
 
-fn collect_visible_unit_auras(
+pub(crate) fn collect_visible_unit_auras(
     state: &mut LuaState,
     unit: &str,
     filter: AuraFilter,
@@ -351,6 +351,7 @@ fn provider_switched(state: &mut LuaState) -> bool {
 //
 // Slot IDs map 1:1 to `aura_instance_id` so `GetAuraDataBySlot(slot)`
 // is equivalent to `GetAuraDataByAuraInstanceID(slot)`.
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_aura_slots(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let filter_str: String = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
