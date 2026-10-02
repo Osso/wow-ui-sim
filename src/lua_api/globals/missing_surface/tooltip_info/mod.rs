@@ -51,6 +51,8 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     register_spell_aura_unit_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
     Ok(())
 }
 
@@ -66,6 +68,23 @@ pub(crate) fn tooltip_for_spell_identifier(
         Some(id) => spell::tooltip_for_spell_id(state, id),
         None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_SPELL),
     }
+}
+
+/// Narrow player-only lookup; clone before the unchanged builder allocates in the VM.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn tooltip_for_aura_instance(
+    state: &mut LuaState,
+    unit: &str,
+    instance_id: i32,
+    helpful: Option<bool>,
+) -> rilua::Val {
+    let aura = if unit == "player" {
+        spell::lookup_player_aura_by_instance_id(state, instance_id)
+            .filter(|aura| helpful.is_none_or(|helpful| aura.is_helpful == helpful))
+    } else {
+        None
+    };
+    spell::tooltip_for_unit_aura(state, aura)
 }
 
 type TooltipScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
@@ -194,16 +213,19 @@ fn register_spell_aura_unit_methods(
             #[cfg(not(feature = "retail-12-0-5"))]
             ("GetSpellByID", c_tooltip_get_spell_by_id),
             ("GetUnitBuff", c_tooltip_get_unit_buff),
+            #[cfg(not(feature = "retail-12-0-5"))]
             (
                 "GetUnitBuffByAuraInstanceID",
                 c_tooltip_get_unit_buff_by_aura_instance_id,
             ),
             ("GetUnitDebuff", c_tooltip_get_unit_debuff),
+            #[cfg(not(feature = "retail-12-0-5"))]
             (
                 "GetUnitDebuffByAuraInstanceID",
                 c_tooltip_get_unit_debuff_by_aura_instance_id,
             ),
             ("GetUnitAura", c_tooltip_get_unit_aura),
+            #[cfg(not(feature = "retail-12-0-5"))]
             (
                 "GetUnitAuraByAuraInstanceID",
                 c_tooltip_get_unit_aura_by_aura_instance_id,

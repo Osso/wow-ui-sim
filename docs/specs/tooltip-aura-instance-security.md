@@ -1,6 +1,6 @@
 # Tooltip aura-instance argument security
 
-Retail12.0.5 exact source rows **339/340/344/345/349/350** cover three `C_TooltipInfo` namespace queries. This tests-only slice specifies a chosen simulator input boundary and meaningful host-backed payload controls; production implementation and compiled evidence remain pending. [Lua API architecture](../lua-api.md) describes the runtime boundary.
+Retail12.0.5 exact source rows **339/340/344/345/349/350** cover three `C_TooltipInfo` namespace queries. This bounded producer specifies a chosen simulator input boundary and meaningful host-backed payload controls; saved pre-producer compiled RED is recorded below. Producer GREEN and acceptance remain pending. [Lua API architecture](../lua-api.md) describes the runtime boundary.
 
 ## What it must do
 
@@ -58,11 +58,13 @@ This polarity selection and wrong-class empty policy are **inferred**, not nativ
 
 ## Implementation inventory
 
-- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: existing registration of the three namespace functions; epoch125 replacement routing planned, not changed here.
-- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: existing player-only Aura/Buff providers and unconditional-empty Debuff provider; authentication/polarity implementation pending.
+- `src/c_api/c_tooltip_info_aura_instance.rs`: epoch125 first-class registration of the three queries into the existing rooted namespace. All documented arguments authenticate through pinned rilua `unwrap_secret` before parsing/model access. Errors identify API/position and retain the VM diagnostic without payloads. UTF-8 unit parsing uses `val_to_string`; IDs require finite exact integral i32 values. Arg3 remains ignored after authentication. Public tainted calls remain permitted; no NeverSecret guard or generic declassification.
+- `src/c_api/mod.rs`: epoch125 module gate.
+- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: one registration into existing `ensure_namespace`; minimal crate-visible bridge uses existing player-only instance lookup, inferred polarity selection and unchanged builder. Lookup clones/relinquishes the model borrow before VM allocation; returned Val is pushed immediately. Old three registration entries are inverse-gated.
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: old three callbacks and lookup import inverse-gated for earlier epochs/profiles; no active fallback.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs`: existing instance lookup and shared aura payload builder with hardcoded `1 hr`; preserve payload limitations.
 - `src/lua_api/game_data.rs`: existing `AuraInfo` fields; accessible through `lua_api::state::AuraInfo` for grouped integration fixtures.
-- `tests/tooltip_aura_instance_security.rs`: new grouped tests through existing integration autodiscovery; no Cargo target or production changes.
+- `tests/tooltip_aura_instance_security.rs`: unchanged grouped tests through existing integration autodiscovery; no fixture/test edits or new Cargo target.
 
 Research inputs: `/tmp/patch-12.0.5-aura-tooltip-security-provider-map.md` and `/tmp/patch-12.0.5-aura-tooltip-input-payload-boundary.md`. They are read-only local source maps, not execution/native evidence. Protected unowned `src/c_api/aura_duration.rs` is excluded from inspection, edits, formatting, staging and reverts.
 
@@ -72,21 +74,36 @@ Research inputs: `/tmp/patch-12.0.5-aura-tooltip-security-provider-map.md` and `
 
 | Test in each module | Behavioral scope | Proof level |
 |---|---|---|
-| `public_payload_classification_misses_and_ignored_filter` | Both concrete IDs/class selection; public secure/tainted calls; unsupported units/misses; ignored public option; fresh misses | Written; uncompiled |
-| `secure_authentic_unit_string_returns_meaningful_payload` | Actual secret `player` against both helpful/harmful IDs, including each query's meaningful match | Written; uncompiled |
-| `secure_authentic_numeric_instance_ids_select_concrete_rows` | Actual secret NUMBER1/2 and concrete public controls | Written; uncompiled |
-| `secure_authentic_optional_string_and_nil_remain_ignored` | Actual secret optional STRING/NIL, plus combined secure secrets | Written; uncompiled |
-| `tainted_secret_gate_precedes_lookup_and_public_type_errors` | Each documented position; actual VM denial before miss/public invalid inputs; wrong-type secret denial | Written; uncompiled |
-| `secure_wrong_type_bool_table_frame_reject_with_context_and_recovery` | Actual secret BOOL/table/Frame type errors and ordinary public invalid controls; contextual errors/recovery | Written; uncompiled |
-| `fresh_dtos_read_only_live_replacement_clear_and_environment_isolation` | DTO mutation, replacement/clear, old results and two-environment isolation | Written; uncompiled |
-| `rooted_secret_gc_failure_recovery_retains_payload_and_trust` | Authentic roots across GC, repeated failure/public recovery, secure meaningful payload after tainted failures | Written; uncompiled |
+| `public_payload_classification_misses_and_ignored_filter` | Both concrete IDs/class selection; public secure/tainted calls; unsupported units/misses; ignored public option; fresh misses | Pre-producer RED: Aura PASS; Buff/Debuff FAIL |
+| `secure_authentic_unit_string_returns_meaningful_payload` | Actual secret `player` against both helpful/harmful IDs, including each query's meaningful match | Pre-producer RED: three wrapper-conversion FAIL |
+| `secure_authentic_numeric_instance_ids_select_concrete_rows` | Actual secret NUMBER1/2 and concrete public controls | Pre-producer RED: three wrapper-conversion FAIL |
+| `secure_authentic_optional_string_and_nil_remain_ignored` | Actual secret optional STRING/NIL, plus combined secure secrets | Pre-producer RED: Aura/Buff combined-unit conversion FAIL; Debuff baseline payload FAIL |
+| `tainted_secret_gate_precedes_lookup_and_public_type_errors` | Each documented position; actual VM denial before miss/public invalid inputs; wrong-type secret denial | Pre-producer RED: three missing-context FAIL; downstream pending |
+| `secure_wrong_type_bool_table_frame_reject_with_context_and_recovery` | Actual secret BOOL/table/Frame type errors and ordinary public invalid controls; contextual errors/recovery | Pre-producer RED: three missing-context FAIL; downstream pending |
+| `fresh_dtos_read_only_live_replacement_clear_and_environment_isolation` | DTO mutation, replacement/clear, old results and two-environment isolation | Pre-producer RED: Aura/Buff PASS; Debuff missing-payload FAIL |
+| `rooted_secret_gc_failure_recovery_retains_payload_and_trust` | Authentic roots across GC, repeated failure/public recovery, secure meaningful payload after tainted failures | Pre-producer RED: three combined-unit conversion FAIL; downstream GC pending |
 
 Fixture helpers register only pinned rilua's real table-security helpers and construct secrets using `wrap_host_secret_string`, `wrap_host_secret_number`, `wrap_host_secret_bool`, and `wrap_secret`. Frame wrapping verifies real host backing. Each query gets its own environment/test outcome; an Aura failure cannot hide Buff/Debuff results. Host assertions compare all aura fields and native wrapper metadata, not source structure.
 
+## Saved pre-producer compiled RED — 2026-10-02
+
+Main-owned artifacts cover revision `6864b23eeed557b29b27c69fc14e2b1371c40999`, dirty-combined provenance, not clean-revision proof. Compile: `cargo test --test integration --no-run --message-format=json`, exit0, **114.38749977899715s**; `/tmp/patch-12.0.5-batch61-red-build-result.json`, `/tmp/patch-12.0.5-batch61-red-build.stderr` and `/tmp/patch-12.0.5-batch61-red-build.stdout.jsonl`. Integration binary `target/debug/deps/integration-a11e89d240f9bd0c` SHA256 `7834eb8ebc9a8ab06499ed03dfc38a1454c7829e2af195c772ae17dc528afa5a`.
+
+Run: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c tooltip_aura_instance_security:: --nocapture --test-threads=1`, exit101, **5.795002096099779s** external elapsed (harness5.27s). Artifacts: `/tmp/patch-12.0.5-batch61-red-run.json`, `/tmp/patch-12.0.5-batch61-red-run.stdout`, `/tmp/patch-12.0.5-batch61-red-run.stderr`. **24 tests:3PASS/21FAIL**. Read-only482 classification reconciled against saved stdout/stderr:
+
+| Group | Actual earliest failure / proof limit |
+|---|---|
+| Twelve secure-acceptance/optional/GC tests | Eleven stop at wrapper conversion (`expected string/number, got userdata`); Debuff optional stops at missing baseline payload. Combined-unit failures hide later optional/GC assertions. Not twelve independently proven authentication or GC failures. |
+| Six contextual-error tests | Missing exact namespace API context; not yet proof of VM gate behavior or downstream recovery. |
+| Three provider tests | Buff public classification fails wrong-class empty expectation; Debuff public and live-state tests fail missing meaningful payload. |
+| Three passes | Aura public classification, Aura live-state/freshness and Buff live-state/freshness controls only. |
+
+Producer source is later than this RED evidence. No GREEN/check/startup/independent/native/profile/full-page proof, checked requirement, output-policy credit or source-accounting change follows. Batch60 acceptance remains independent and untouched.
+
 ## Known gaps (current cycle)
 
-- [ ] Main must compile/run RED separately and classify actual assertion failures. **No build/check/test command executed for this slice; zero claimed genuine RED failures.** Compilation errors are not behavioral RED.
-- [ ] Epoch125 production gate, authenticated provider, harmful Debuff payload and wrong-class selection implementation remain planned. GREEN, scoped checks/readability, startup regression and independent acceptance remain pending.
+- [ ] Main-owned compiled RED is recorded below; no build/check/test command executed by this producer slice. No producer GREEN evidence yet.
+- [ ] Epoch125 production gate, authenticated provider and inferred polarity selection are implemented but unverified. GREEN, scoped checks/readability, startup regression and independent acceptance remain pending.
 - [ ] Source-row/capability accounting remains pending and untouched: user-supplied checkpoint **206 pending /141 bounded /14 partial /1 metadata-only;362 IDs;66 capabilities**. Six requested rows remain pending; no other accounting change or acceptance claim.
 - [ ] Native error wording/permissions, output restriction/secrecy, acquisition and full native payload semantics remain unknown. All requirements stay unchecked until main-owned evidence supports them.
 
@@ -94,4 +111,4 @@ Fixture helpers register only pinned rilua's real table-security helpers and con
 
 - `RequiresUnitAuraAccess` enforcement and `SecretWhenUnitAuraRestricted` result secrecy/output restriction; neither receives credit from this input-policy slice.
 - Native parity, all-profile coverage, Tooltip frame forwarding, aura acquisition/catalog completeness, real filter behavior and unit expansion.
-- Production edits, additional Cargo targets, protected unowned aura-duration work, accounting/wiki updates, build/check/test commands, delegation, push, deployment or operations.
+- Production edits outside the bounded three-query producer/minimal bridge, additional Cargo targets, protected unowned aura-duration work, accounting/wiki updates, build/check/test commands by this producer slice, delegation, push, deployment or operations.

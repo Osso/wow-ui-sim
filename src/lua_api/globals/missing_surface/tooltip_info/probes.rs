@@ -10,9 +10,11 @@ use super::sources::{
     send_mail_attachment_item_id, tooltip_for_bag_item, tooltip_for_currency,
     tooltip_for_inventory_slot, tooltip_for_item_source, trade_skill_item_id, trade_slot_item_id,
 };
+#[cfg(not(feature = "retail-12-0-5"))]
+use super::spell::lookup_player_aura_by_instance_id;
 use super::spell::{
-    append_action_binding_line, lookup_player_aura, lookup_player_aura_by_instance_id,
-    spell_id_for_talent_id, tooltip_for_spell_id, tooltip_for_toy_item_id, tooltip_for_unit_aura,
+    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_id,
+    tooltip_for_toy_item_id, tooltip_for_unit_aura,
 };
 use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
@@ -374,6 +376,7 @@ pub(super) fn c_tooltip_get_unit_buff(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_unit_buff_by_aura_instance_id(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let aura_instance_id = i32::from_stack(state, 2)?;
@@ -395,6 +398,7 @@ pub(super) fn c_tooltip_get_unit_debuff(state: &mut LuaState) -> LuaResult<u32> 
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_unit_debuff_by_aura_instance_id(
     state: &mut LuaState,
 ) -> LuaResult<u32> {
@@ -419,6 +423,7 @@ pub(super) fn c_tooltip_get_unit_aura(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_unit_aura_by_aura_instance_id(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let aura_instance_id = i32::from_stack(state, 2)?;
