@@ -6,6 +6,11 @@ mod catalog;
 pub use catalog::{OutfitCatalog, OutfitEntry};
 
 #[cfg(feature = "retail-12-0-5")]
+mod pending_cost_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use pending_cost_info::PendingTransmogCost;
+
+#[cfg(feature = "retail-12-0-5")]
 mod viewed_slot_info;
 #[cfg(all(
     feature = "retail-12-0-5",

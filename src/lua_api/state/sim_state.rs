@@ -165,6 +165,9 @@ pub struct SimState {
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
     #[cfg(feature = "retail-12-0-5")]
     pub viewed_outfit_slots: HashMap<(i32, i32, i32), ViewedOutfitSlotInfo>,
+    /// Explicit host snapshot only; absence does not fabricate a price.
+    #[cfg(feature = "retail-12-0-5")]
+    pub pending_transmog_cost: Option<crate::c_api::c_transmog_outfit_info::PendingTransmogCost>,
     pub transmog_outfit_locks: HashSet<i64>,
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog,

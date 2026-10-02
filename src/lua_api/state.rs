@@ -163,6 +163,8 @@ macro_rules! build_empty_sim_state {
             transmog_illusions: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             viewed_outfit_slots: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            pending_transmog_cost: None,
             transmog_outfit_locks: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
