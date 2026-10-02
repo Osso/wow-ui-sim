@@ -3,6 +3,14 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 illusion category queries
+
+Implementation `cd6eb9a2f` adds the epoch125 (`retail-12-0-5`) `C_TransmogCollection.GetIllusions(category)` producer. Its literal backing input is an environment-local, empty-default explicit `Vec<IllusionInfo>`: each host row carries `category` plus `visualID`, `sourceID`, `icon`, `isCollected`, `isUsable`, and `isHideVisual`. No production catalog, appearance-derived records or hidden-flag filtering is introduced.
+
+Arg1 passes the existing VM `unwrap_secret` **AllowedWhenUntainted** gate before strict nil/u32 selector validation or model access. Secure callers can authenticate secret payloads; tainted callers hit VM denial before payload validation. Public selectors remain usable while tainted; no caller-taint clearing or security-callback replacement. Nil/all, unknown/empty, source-order selection and strict selector-domain policies are **inferred, not native-verified**. Each query returns one fresh dense public array of fresh six-field rows, excluding the host category. The selected-input snapshot is released before VM allocation; the stack-rooted array owns rows before key allocations. One producer publishes into the already-rooted namespace; the old empty stub is inverse-epoch125-gated, not a duplicate publication or fallback.
+
+[Rows352/353 contract and proof SSOT](../../specs/illusion-category-queries.md) preserves initial **E0603**, which was not behavioral RED, and root export correction `f83e073f9`: corrected compiled RED **2 PASS / 14 genuine FAIL** among16 selected, compilation171.680163353s, execution3.596897289s, exit101. This is pre-producer evidence, not current passing proof. No producer GREEN or acceptance claim. Native category partition, filtering, ordering, errors, acquisition, result secrecy and full taint parity remain unknown. Current accounting stays **208 pending / 139 bounded / 14 partial / 1 metadata; 362 IDs; 65 capabilities**; rows352/353 remain pending.
+
 ## Retail 12.0.5 spell-link glyph argument security
 
 Commit `da2ec8cb8` adds only an epoch125 (`retail-12-0-5`) authentic VM-secret check on `C_Spell.GetSpellLink` arg2, before unchanged `numeric_spell_id` and catalog-backed link dispatch. It rejects even for secure callers, without unwrapping payloads or changing taint. Existing public glyph arguments remain ignored; earlier epochs and arg1 policy are unchanged. This is a conservative simulator interpretation of arg2 `NeverSecret`, not native permission proof or glyph-catalog support.
@@ -255,6 +263,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Illusion category queries](../../specs/illusion-category-queries.md) — exact352/353 explicit-input implementation, inferred policies, corrected RED and pending proof
 
 - [Spell-link glyph argument security](../../specs/spell-link-glyph-security.md) — row311 arg2-only contract, saved RED and pending proof
 

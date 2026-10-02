@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Bound batch59 illusion category queries
+
+[[lua-api#Retail 12.0.5 illusion category queries]] links [exact352/353 contract and proof SSOT](../specs/illusion-category-queries.md): `cd6eb9a2f` adds epoch125 explicit empty-default ordered illusion inputs, VM AllowedWhenUntainted authentication before strict nil/u32 selection, fresh six-field rows and one rooted-namespace publication with inverse-gated legacy stub. Nil/all, unknown/empty, ordering and strict-domain policies remain inferred, not native; no catalog, appearance-derived records or hidden-flag filter. Initial E0603 is not RED; root export `f83e073f9` enabled genuine corrected2PASS/14FAIL. No producer GREEN or acceptance;208 pending/139 bounded/14 partial/1 metadata,362 IDs/65 capabilities unchanged;352/353 pending.
+
 ## [2026-10-02] evidence | Accept glyph boundary and classify return-label metadata
 
 [Exact311 acceptance](../specs/spell-link-glyph-security.md#independent-bounded-acceptance--2026-10-02) retains69PASS/1 unrelated charge-controlFAIL/startup0 `[]`; [exact355 classification](../specs/outfit-catalog-lookups.md#exact355-metadata-only-classification--2026-10-02) is source-only, empty capabilities/no runtime credit. Independent463 scoped gates/readability/security pass; dirty/globalfmt/native/profile limits remain.360 unrelated rows/64 prior capabilities preserved; broader goal open.
