@@ -67,9 +67,18 @@ Authoritative `PARENTFALSIFICATION` correction at the bottom of `/tmp/patch-12.0
 | Domain/wrapper/API boundary | Context rejection absent; secure secret ID gets userdata error; denial lacks API namespace | Not full downstream authentication proof |
 | Freshness/recovery/GC | Tests stop at earlier variant/wrapper boundaries | Unreached assertions cannot be claimed |
 
+## Saved parent GREEN — 2026-10-02
+
+Producer `23efb40c84837dfa9564a7d21bc6297842ee4df3` compiled successfully with default integration in231.14114932902157s, including any unmeasured lock cost. `/tmp/patch-12.0.5-batch62-green-build.stdout.jsonl`, `.stderr` and `-result.json` retain full compiler output and executable hashes. Integration SHA256 `e5a498552708b25f6e8eef7776fd3a475798ebf95be71c88e93ca197f32d31db` binds four finite runs in `batch62-green-runs.json`.
+
+**177 distinct PASS**:24 focused,123 tooltip controls,24 aura-instance controls and6 item-source controls; four exits0, no duplicate names. Execution47.36223625706043s is separate from compilation, below60s partition target and not a padded final whole-goal run. Startup separately returned `[]`, exit0; `green-startup-run.json` binds exact time/hash and full stdout/stderr. Proof remains dirty-combined, protected hash supplied rather than recomputed; no clean-revision/native/profile/full-page claim.
+
+Independent security/wiring/readability/scoped formatting/default check and exact330/331 acceptance remain pending. Saved24 focused tests reach distinct context/treasure payloads and downstream authentication/GC/recovery assertions; initial RED still cannot claim those downstream outcomes. Do not rerun applicable build/runtime solely for docs/accounting.
+
 ## Known gaps (current cycle)
 
-- [ ] Main owns producer GREEN, compilation/check/startup, security, readability and independent acceptance. This implementation performs no builds, tests, checks, lint, readability gates or delegation. All requirements remain unchecked pending proof.
+- [x] Main-owned compiled RED, producer, focused GREEN, adjacent controls and startup recorded; producer agent ran no gates.
+- [ ] Independent scoped security/wiring/readability/Rust gates and exact source acceptance remain pending. Requirements stay unchecked until independent acceptance.
 - [ ] Independent meaningful-provider proof and authenticated boundary proof must precede any credit for the two exact source additions. Native Requires/output-policy credit is excluded.
 - [ ] Current user-supplied accounting remains199 pending/148 bounded/14 partial/1 metadata-only,362 IDs and68 capabilities. Only330/331 are potential candidates after independent meaningful-provider proof, never merely annotation guards. No accounting/catalog/coverage promotion accompanies producer creation; batch61 remains untouched.
 - [ ] Native lookup, miss, numeric-domain, override, permission, error and secrecy semantics remain unknown. A trustworthy native production mapping is **not a prerequisite or blocker** for the authorized meaningful inferred model: production map stays empty; tests supply explicit fixture data. The contrary prerequisite in `/tmp/patch-12.0.5-item-context-provider-boundary.md` is rejected as a goal constraint, while its observed missing provider/catalog facts remain useful.
