@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile combined batch51/52 saved parent GREEN
+
+[Combined batch51/52 saved proof SSOT](../specs/action-spell-slot-identifiers.md#reconciled-combined-batch5152-parent-green--2026-10-02) owns artifact/revision/hash/timing evidence and inferred capability limits; [exact-five annotation scope](../specs/unit-stat-output-restriction.md#batch52-saved-parent-observed-proof--2026-10-02) preserves prior40-stat history. Genuine action RED and failed producer compilation retained; unchanged stat provider has no invented RED. Dirty-combined bounded observation, not clean revision/native/final acceptance. Verifier414 and independent acceptance/accounting/unchecked requirements pending; no coverage or PLAN changes.
+
 ## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
 
 ## [2026-10-02] evidence | Accept exact sound-removal and space-limit rows

@@ -80,3 +80,11 @@ This supplement does not narrow or replace the prior40-API matrix, batch7 observ
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
 `character_stats::stat_restriction::` PASS 4/4 (`/tmp/patch-12.0.5-batch7-integration-1.log`) retains the 40-API matrix; separate ten-model fixtures PASS 13/13. No native activation/formula claim.
+
+## Batch52 saved parent observed proof — 2026-10-02
+
+[Combined batch51/52 proof SSOT](action-spell-slot-identifiers.md#reconciled-combined-batch5152-parent-green--2026-10-02) owns artifacts, revisions, hashes, commands and timings. Annotation audit `3d357dd10` changed docs only; existing provider and fixtures unchanged, no fabricated RED. Saved corrected combined dirty-source execution observes the four existing restriction tests PASS, not independent acceptance or clean-revision proof.
+
+Scope remains exactly **514 UnitStat, 500 UnitArmor, 424 GetCombatRating, 438 GetHaste, 498 GetUnitSpeed**. Concrete player fixtures above prove meaningful explicit inputs and the existing numeric wrapper: ordered values/arity plain → restricted → plain, tainted opaque outputs and retained caller taint. Repeated components, zero placeholders, nonplayer snapshots, other indexes, inferred formulas and native activation/access/secrecy remain unknown; no native model parity follows.
+
+Prior40-API matrix, batch7 history and separate ten-model proof remain intact. Historical current-execution-pending wording above is superseded only by this saved parent observation. Verifier414, independent acceptance/accounting and every unchecked requirement remain pending; no row/page/capability credit or whole-goal closure.
