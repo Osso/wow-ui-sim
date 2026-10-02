@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch47 saved parent GREEN
+
+[Cooldown association proof SSOT](../specs/cooldown-aura-spell-identifiers.md#reconciled-batch47-parent-green--2026-10-02) records14 new +196 controls =210 uniquePASS/all14 exits0, startup0 `[]`, exact commands/timings/hashes and dirty provenance, not clean-revision proof. Warm runtime46.811717730015516s below60 target: bounded development, not final whole-page/goal/native acceptance. Original invalid-FrameShape RED and corrected11 genuineFAIL retained; inferred association/alias/strict-boundary/conservative rejection and native permissions/access/secrecy/acquisition gaps retained. Independent verifier pending; row387/source accounting/unchecked requirements unchanged.
+
 ## [2026-10-02] implementation | Add bounded row387 cooldown association getter
 
 Updated [[lua-api#Retail 12.0.5 cooldown aura spell identifiers]], [row387 contract](../specs/cooldown-aura-spell-identifiers.md) and [[frame-surrogate-identity-slot]]: sole epoch-gated getter over unchanged empty per-environment associations, strict public inputs and conservative VM-secret rejection before shared resolution. Corrected parent RED retained; owned formatting only, GREEN/acceptance parent-owned. Fixtures, model defaults, native limits and accounting unchanged.

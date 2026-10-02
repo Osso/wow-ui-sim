@@ -4,7 +4,7 @@ Exact row387 changes `C_UnitAuras.GetCooldownAuraBySpellID` argument 1 from `num
 
 ## What it must do
 
-All chosen behavior below is **inferred simulator policy**, not native-client parity. The producer is implemented after corrected parent compiled RED; GREEN and independent acceptance remain parent-owned and pending. Unchecked requirements below are not passing claims.
+All chosen behavior below is **inferred simulator policy**, not native-client parity. The producer is implemented after corrected parent compiled RED; saved parent GREEN is reconciled below, while independent acceptance remains pending. Unchecked requirements below are not passing claims.
 
 ### Explicit input and result
 
@@ -63,9 +63,48 @@ Inputs/model `14ee1504b`; fixture correction `22c84baf99a173fe81a4e6d431b6b29513
 
 The getter uses the existing shared alias resolver only after validation and reads only the declared map value. No changes to model shape/default, fixtures, generic aura records, cooldown state/history or catalogs. Ordinary public calls have no secure-caller gate or taint mutation. Native secret permissions, output secrecy, acquisition and direction remain explicit gaps.
 
+## Reconciled batch47 parent GREEN — 2026-10-02
+
+Saved parent evidence binds producer `c6fe6093b4a77335d5f2bbcdfe9e7a62b30aeff5`, inputs/model `14ee1504b`, and fixture correction `22c84baf99a173fe81a4e6d431b6b295136f89eb`, **plus preserved unowned dirty source**, not a clean revision. Dirty diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`; its contents were not inspected or modified here. Original RED3PASS/11FAIL (including invalid FrameShape setup) and corrected RED3PASS/11 genuine FAIL above remain historical evidence.
+
+`/tmp/patch-12.0.5-batch47-green-build-result.json` records `cargo test --test integration --no-run --message-format=json`: exit0, **259.7876708320109s**. Full build output: `/tmp/patch-12.0.5-batch47-green-build.{jsonl,log}`. Integration executable `/syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c`, SHA256 `3a433f3fdac41b264281080d3d919cb99679e30b97c714c1a28c8b2126aa4875`.
+
+`/tmp/patch-12.0.5-batch47-green-runs.json` records each command as `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c <filter> --test-threads=1`. Full corresponding outputs: `/tmp/patch-12.0.5-batch47-green-run-{0..13}.{stdout,stderr}`, in table order; all14 exits0. Full saved test names establish **14 new +196 controls =210 unique PASS**, not duplicated filter counts.
+
+| Exact filter | PASS | Saved seconds |
+|---|---:|---:|
+| `cooldown_aura_spell_identifiers::` | 14 | 2.2547551459865645 |
+| `aura_dispel_color_arguments::` | 16 | 6.496058761025779 |
+| `unit_aura_slot_enumeration_arguments::` | 12 | 2.263698844006285 |
+| `c_unit_auras_admin::` | 14 | 2.710818149964325 |
+| `userdata_proxy::color_curve_` | 18 | 3.356312908930704 |
+| `unit_aura_slot_secret_arguments::` | 12 | 2.5015637930482626 |
+| `aura_application_display_count::` | 14 | 3.873023972962983 |
+| `next125aura::` | 12 | 2.8686415660195053 |
+| `unit_aura_filter_query::` | 14 | 3.1403976880246773 |
+| `aura_table_shape::` | 7 | 1.5626325160264969 |
+| `aura_api::` | 29 | 5.521967396955006 |
+| `admin_buff_api::` | 18 | 3.6171123179374263 |
+| `aura_refresh_duration::` | 18 | 3.778685806086287 |
+| `aura_spell_identifier::` | 12 | 2.8660488630412146 |
+
+Actual warm test runtime sums to **46.811717730015516s**, below the60s partition target. Retained without padding or rerun as **bounded development evidence**, not final whole-page, whole-goal or native acceptance.
+
+`/tmp/patch-12.0.5-batch47-green-startup-run.json` records `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/wow-sim --no-addons --no-saved-vars lua-errors`: exit0, **6.032388805993833s**, stdout `[]`. Full output `/tmp/patch-12.0.5-batch47-green-startup.{stdout,stderr}`; simulator SHA256 `7c51db5659e2d230f9d6d6deaee60a14d4c30e3e64d833d22c23d63c38229d8f`.
+
+| Capability | Saved parent GREEN | Proof limit |
+|---|---|---|
+| Empty default, misses, generic-buff independence | PASS in new14 | Inferred empty association model; no acquisition/catalog proof |
+| Numeric/name/link hits, explicit aliases/overrides, association replacement/removal, nonrecursive output | PASS in new14 | Host-declared direction and alias policy, not native identifier acceptance |
+| Numeric endpoints and invalid public representations | PASS in new14 | Inferred strict public UTF-8 STRING / integral u32 boundary |
+| Environment isolation, read-only inputs, secure/tainted public calls | PASS in new14 | Simulator public result and caller-taint behavior only |
+| Actual VM secret inputs/wrapped wrong frame, rooted GC identity and recovery | PASS in new14 after FrameShape correction | Conservative rejection, not native AllowedWhenTainted/access/result-secrecy permission |
+
+Independent verifier remains pending. No acceptance, source accounting or all-pass checkbox claim: **row387 remains pending**, requirements stay unchecked. Native `AllowedWhenTainted`, access, result secrecy, acquisition, association direction and identifier parity remain unknown. No checks/tests/builds were run for this documentation reconciliation; saved parent artifacts are the sole execution proof.
+
 ## Known gaps (current cycle)
 
-- [ ] Parent compiled GREEN and independent acceptance of the implemented sole getter/registration remain pending. Corrected compiled RED is recorded above; producer work runs owned formatting only, no new execution proof.
+- [ ] Independent acceptance of the implemented sole getter/registration remains pending. Saved parent compiled GREEN is recorded above; it is dirty-source-bound bounded development proof, not final acceptance.
 - [ ] Native secret permissions, result secrecy, identifier acceptance, and acquisition/direction remain unverified; no row387 acceptance/accounting claim.
 
 ## Out of scope
