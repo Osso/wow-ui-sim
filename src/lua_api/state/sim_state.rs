@@ -255,6 +255,9 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
     pub spell_charges: HashMap<u32, crate::c_api::charge_state::SpellChargeState>,
+    /// Explicit spell-keyed C_Spell count input; no inventory or casting derivation.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_cast_counts: HashMap<u32, u32>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,

@@ -235,6 +235,8 @@ macro_rules! build_empty_sim_state {
             gcd: $runtime.gcd,
             spell_cooldowns: $collections.spell_cooldowns,
             spell_charges: ::std::collections::HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            spell_cast_counts: ::std::collections::HashMap::new(),
             cooldowns_restricted: false,
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             action_ui_buttons: $collections.action_ui_buttons,
