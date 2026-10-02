@@ -50,7 +50,7 @@ Future real-global registration dispatcher remains parent-owned. No producer/run
 | Authentic secret natural and GC | `authentic_secret_false_natural_rejects_even_in_secure_context`, `authentic_secret_true_natural_rejects_even_in_secure_context`, `secret_number_and_string_natural_reject_before_formatting`, `wrapped_actual_frame_and_table_natural_reject_without_representation_assumptions`, `gc_keeps_global_list_and_stack_secret_roots_identical_and_secret` | Written; uncompiled |
 | Taint and conservative arg1 | `secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery`, `secret_arg1_rejection_is_conservative_local_policy_not_row411_permission` | Written; uncompiled |
 
-Source fixture maps: `/tmp/patch-12.0.5-break-up-large-numbers-model-map.md`, `/tmp/patch-12.0.5-break-up-intl-locale-map.md`, `/tmp/patch-12.0.5-break-up-producer-fixture-boundary.md`. Requested `large-numbers-model.md` was absent; existing model-map used. User-selected true semantics supersede the map's previously unresolved true branch, without upgrading evidence to native verification.
+Source fixture maps: `/tmp/patch-12.0.5-break-up-large-numbers-model-map.md`, `/tmp/patch-12.0.5-break-up-intl-locale-map.md`, `/tmp/patch-12.0.5-break-up-producer-fixture-boundary.md`. Requested `large-numbers-model.md` was absent; existing model-map used. The chosen inferred true behavior fills the map's previously unresolved branch; it is an assistant-selected guess under the permitted inference policy, not a user-selected native contract.
 
 ## Known gaps (current cycle)
 
