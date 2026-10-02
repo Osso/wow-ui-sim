@@ -336,7 +336,7 @@ fn tainted_table_copy_preserves_actual_wrapper_identity() {
             for key, value in pairs(ACInfo) do ACCopy[key] = value end
             assert(not issecretvalue(ACCopy))
             for _, field in ipairs({'startTime', 'duration', 'modRate'}) do
-                assert(type(ACCopy[field]) == 'number' and issecretvalue(ACCopy[field]))
+                assert(issecretvalue(ACCopy[field]))
                 assert(not canaccessvalue(ACCopy[field]))
             end
             assert(not issecretvalue(ACCopy.isEnabled) and ACCopy.isEnabled == true)

@@ -64,7 +64,7 @@ Saved `batch64-green-focused-run` is **not GREEN**:4PASS/14FAIL, exit101,3.03240
 
 Pinned rilua604 `wrap_host_secret_number` allocates `Userdata::secret(Val::Num(value))`; builtin `type` classifies the Val tag without secret unwrapping. Requiring opaque fields to report Lua `number` was an unsupported fixture assumption, not part of source233's predicate rename. Corrected tests retain unrestricted numeric types, authentic `issecretvalue`, trusted-host exact `Val::Num` payloads, caller denial/copy/root/GC checks and public booleans. They make no secret nominal-type parity claim. No VM type override or declassification is added. Record native `type(secretField)` separately in a future probe; actual native primitive parity remains unresolved.
 
-Corrected focused execution and independent acceptance remain pending. Producer unchanged; initial RED proves missing secretion, not the later type expectation. Full source trace/corrections live in `/tmp/patch-12.0.5-action-cooldown-publication-failure.md`.
+First corrected focused execution is still not fully GREEN:17PASS/1FAIL at `add2d0a84`, exit101,3.3528383200755343s. The remaining copy fixture repeated the same unsupported private `type == number` check. That assertion is now corrected too; a full pattern scan of both cooldown fixture files leaves nominal numeric-type checks only for unrestricted values. Copy metadata/identity and denial checks remain intact. Final corrected execution and independent acceptance remain pending. Producer unchanged; initial RED proves missing secrecy, not the later type expectation. Full source trace/corrections live in `/tmp/patch-12.0.5-action-cooldown-publication-failure.md`.
 
 ## Known gaps (current cycle)
 
