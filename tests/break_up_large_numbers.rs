@@ -2,11 +2,11 @@
 //! Locale providers are explicit fixture inputs; the API under test is never replaced.
 #![cfg(feature = "retail-12-0-5")]
 
+use rilua::LuaApiMut;
 use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string, wrap_secret,
 };
 use rilua::vm::value::Val;
-use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn fixture_env() -> WowLuaEnv {
