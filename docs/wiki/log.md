@@ -5633,3 +5633,8 @@ Updated index and [[spell-charge-state]] to link current proof SSOT rather than 
 ## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
 
 Updated [altered-form proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), [[lua-api]] and index from saved parent artifacts. Proof table owns RED exit limitations, GREEN provenance and bounded coverage; supersedes the earlier pending-GREEN checkpoint only. Broader controls/startup/independent checks/acceptance remain pending. Docs only; no runtime commands or accounting changes.
+
+## [2026-10-02] evidence | Reconcile batch48 saved parent GREEN
+
+[Classification proof SSOT](../specs/aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) records16 new +210 controls +18 private anchors =244 unique PASS/all16 exits0, startup0 `[]`, exact runtime71.3813190951477735s and dirty-source-bound provenance. Historical RED retained; shared cooldown14 refreshed. Policies remain inferred; native permissions/result secrecy/catalog/acquisition unknown. Independent381 and source361/363/359 pending; no checked requirements, coverage/accounting or private-anchor acceptance.
+

@@ -4,7 +4,7 @@ Batch48 exact rows361/363 change argument1 of `C_UnitAuras.AuraIsBigDefensive` a
 
 ## What it must do
 
-All model, representation, miss and security policies below are **INFERRED simulator choices**, not native-verified semantics. The bounded producer follows saved parent compiled RED. Both getters and their registration are implemented; parent owns GREEN and independent verification. Every contract remains unchecked.
+All model, representation, miss and security policies below are **INFERRED simulator choices**, not native-verified semantics. The bounded producer follows saved parent compiled RED. Both getters and their registration are implemented; saved parent GREEN is reconciled below. Independent381 gate remains pending. Every contract remains unchecked.
 
 ### Explicit classification input
 
@@ -47,7 +47,7 @@ All model, representation, miss and security policies below are **INFERRED simul
 
 ## Tests asserting this spec
 
-`tests/aura_spell_classification_identifiers.rs`: 16 grouped feature-gated integration fixtures under existing autodiscovery, no new Cargo target. Covers empty defaults, independent numeric flags, miss controls, uppercase names, full colored alias, no link parsing, immediate alias mutation, numeric override/string alias, replacement/removal, numeric endpoints, strict invalid representations, generic buff/cooldown independence, private-instance independence, read-only/environment isolation, public tainted calls and GC-rooted actual-secret rejection/recovery in both contexts. Fixtures remain unchanged from inputs `baf81dfec6704b80d5d17e6d42b2adac3c856bea`; saved parent compiled RED is recorded below. No GREEN or acceptance claim.
+`tests/aura_spell_classification_identifiers.rs`: 16 grouped feature-gated integration fixtures under existing autodiscovery, no new Cargo target. Covers empty defaults, independent numeric flags, miss controls, uppercase names, full colored alias, no link parsing, immediate alias mutation, numeric override/string alias, replacement/removal, numeric endpoints, strict invalid representations, generic buff/cooldown independence, private-instance independence, read-only/environment isolation, public tainted calls and GC-rooted actual-secret rejection/recovery in both contexts. Fixtures remain unchanged from inputs `baf81dfec6704b80d5d17e6d42b2adac3c856bea`; saved parent compiled RED is recorded below. Saved parent GREEN below is development evidence, not independent acceptance.
 
 ## Saved parent compiled RED and producer boundary — 2026-10-02
 
@@ -62,9 +62,51 @@ Input revision `baf81dfec6704b80d5d17e6d42b2adac3c856bea`. `/tmp/patch-12.0.5-ba
 
 The narrow shared validator is extracted from the existing cooldown getter because these three callbacks require the identical boundary. Other alias-resolver callers remain unchanged. No input record/map/default, parser, catalog, acquisition or state changes. Native `AllowedWhenTainted`, secret acquisition and result secrecy remain unknown; public results and conservative rejection are inferred simulator policies.
 
+## Reconciled batch48 parent GREEN — 2026-10-02
+
+Saved evidence binds unchanged 16 fixtures at input `baf81dfec6704b80d5d17e6d42b2adac3c856bea` and producer `11eca0c6d78fc148ad3f679ab43ea3df3145a17f`, **plus preserved unowned dirty source**, not clean-revision proof. Saved dirty diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`; source/diff contents were not inspected or modified here. Historical compiled RED exit0/273.2447727450635s and runtime exit101/2.6088224769337103s, 0PASS/16 genuineFAIL above are retained.
+
+`/tmp/patch-12.0.5-batch48-green-build-result.json` records `cargo test --test integration --no-run --message-format=json`: exit0/**289.3887384700356s**. Full outputs `/tmp/patch-12.0.5-batch48-green-build.{jsonl,log}` record successful compilation. Integration executable `/syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c`, SHA256 `02e3962f21df0ba3ece48cdef109cec525420203e64215e4bbc70ba27d4d6c14`.
+
+`/tmp/patch-12.0.5-batch48-green-runs.json` records all16 commands as `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c <filter> --test-threads=1`. Corresponding full outputs `/tmp/patch-12.0.5-batch48-green-run-{0..15}.{stdout,stderr}` follow table order; all exits0, all stderr empty. Saved full test names establish **16 new +210 controls +18 private anchors =244 unique PASS** with no duplicated names. Private-anchor results are controls only, not row359 or private-anchor documentation acceptance.
+
+| Exact filter | PASS | Saved seconds |
+|---|---:|---:|
+| `aura_spell_classification_identifiers::` | 16 | 3.9198297100374475 |
+| `cooldown_aura_spell_identifiers::` | 14 | 3.5792808020487428 |
+| `aura_dispel_color_arguments::` | 16 | 8.03681391198188 |
+| `unit_aura_slot_enumeration_arguments::` | 12 | 3.3598275440745056 |
+| `c_unit_auras_admin::` | 14 | 3.1972014729399234 |
+| `userdata_proxy::color_curve_` | 18 | 3.9796690000221133 |
+| `unit_aura_slot_secret_arguments::` | 12 | 3.1126869439613074 |
+| `aura_application_display_count::` | 14 | 3.2329896120354533 |
+| `next125aura::` | 12 | 2.900904139969498 |
+| `unit_aura_filter_query::` | 14 | 3.9504475500434637 |
+| `aura_table_shape::` | 7 | 1.9443296330282465 |
+| `aura_api::` | 29 | 7.60804703400936 |
+| `admin_buff_api::` | 18 | 4.789165845955722 |
+| `aura_refresh_duration::` | 18 | 5.274159140069969 |
+| `aura_spell_identifier::` | 12 | 3.225799681036733 |
+| `private_aura_anchors::` | 18 | 9.270167073933408 |
+
+Exact decimal sum of saved runtime records: **71.3813190951477735s** (binary-float sum `71.38131909514777s`), without padding or repeated executions. Startup adds9.945783533039503s for **81.3271026281872765s** total runtime, excluding compilation. This is bounded development proof, not final whole-page/goal/native acceptance.
+
+`/tmp/patch-12.0.5-batch48-green-startup-run.json` records `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/wow-sim --no-addons --no-saved-vars lua-errors`: exit0/9.945783533039503s, stdout `[]`. Full `/tmp/patch-12.0.5-batch48-green-startup.{stdout,stderr}` reports zero unique/occurrence Lua errors. Simulator SHA256 `a74414bd5953a51d2e2e0747801eb30f2794fc4710f53ca9cc87cd3852b5d220`.
+
+| Capability (all policies INFERRED) | Current saved proof | Limit |
+|---|---|---|
+| Independent defensive/private flags; explicit empty map; false misses | Numeric independent records, empty-default and unknown controls PASS | No production catalog or acquisition evidence |
+| Strict identifiers, inclusive u32 endpoints, explicit name/numeric/full-link aliases | Invalid-before-alias, endpoints, uppercase, numeric override/string seed, link override/no parsing PASS | Representation/resolution policy, not native parity |
+| Immediate alias/map mutation; read-only queries; environment isolation | Mutation/removal and read-only/isolation PASS | Explicit host inputs only |
+| Public secure/tainted queries; public results | Public-query and secret recovery fixtures PASS | Native `AllowedWhenTainted` and result secrecy unknown |
+| Authentic secret/wrong Frame wrapper rejection; GC-rooted identity, secrecy, taint and recovery | Actual-secret fixture PASS in both contexts | Conservative denial, not native secret permissions |
+| Generic buff, cooldown and private-instance noninterference | Both independence fixtures PASS; refreshed cooldown14 and private-anchor18 controls PASS | No inference from instance state; no new acceptance for controls |
+
+Independent381 verification remains pending; source361/363 and359 remain pending. No requirements checked, coverage promoted, audit accounting changed, or private-anchor docs accepted. Parent owns separate accounting and independent gate. Earlier GREEN-pending entries are historical checkpoints, not current status.
+
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned GREEN and independent verification; no audit accounting or acceptance changes here.
+- [ ] Independent381 gate and parent acceptance remain pending; source rows361/363 and359 remain pending. No audit accounting, coverage or acceptance changes here.
 - [ ] Native `AllowedWhenTainted` secret permissions, result secrecy, classification catalog and acquisition remain unknown. Chosen conservative rejection and public results are informed models, not native evidence.
 
 ## Out of scope

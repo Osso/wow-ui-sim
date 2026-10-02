@@ -212,3 +212,7 @@ Compiler JSONL 738 records read/decoded; 0 compiler diagnostics. Derived exhaust
 - `/tmp/patch-12.0.5-batch47-green-startup-run.json` (651 bytes): `82a28d05fd9177066f02d87651d0457dfff5872a5dddc5ff08575c1b36b44f32`.
 - `/tmp/patch-12.0.5-batch47-green-startup.stderr` (14785 bytes): `d0b5d914bce9925319109fa020b109d385c5e36ef1df7024c32dde445f10edf6`.
 - `/tmp/patch-12.0.5-batch47-green-startup.stdout` (3 bytes): `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`.
+
+## Shared validation refresh — batch48 parent GREEN, 2026-10-02
+
+After extraction of the strict public validator shared with both classification getters, all14 cooldown fixtures PASS again. [Current classification proof SSOT](aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) owns exact commands, revisions, hashes, dirty-source provenance, timings and244 unique PASS/startup0 `[]`. Public number/nil results, API-specific errors, aliases and conservative VM-secret rejection remain the existing inferred contract. This refresh does not expand prior row387 bounded acceptance or accept classification rows361/363, row359 or private anchors; independent381 remains pending.

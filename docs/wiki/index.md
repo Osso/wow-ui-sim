@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch48 saved parent GREEN
+
+[Classification proof SSOT](../specs/aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) records16 new +210 controls +18 private anchors =244 unique PASS/all16 exits0, startup0 `[]`, exact runtime71.3813190951477735s and dirty-source-bound provenance. Historical RED retained; shared cooldown14 refreshed. Policies remain inferred; native permissions/result secrecy/catalog/acquisition unknown. Independent381 and source361/363/359 pending; no checked requirements, coverage/accounting or private-anchor acceptance.
+
 ## [2026-10-02] implementation | Add bounded batch48 spell classification getters
 
 [[lua-api#Retail 12.0.5 aura spell classifications]] links [rows361/363 contract](../specs/aura-spell-classification-identifiers.md): two independent public booleans over unchanged explicit inputs, shared strict public identifier validation with the cooldown getter, conservative VM-secret rejection. Saved parent RED0PASS/16genuineFAIL; fixtures unchanged, GREEN/independent gates parent-owned. Native permissions/acquisition/result secrecy and accounting unchanged.
