@@ -480,7 +480,9 @@ fn secret_curve_result_retains_wrapper_secrecy_and_rooted_gc_identity() {
         assert(rawequal(secretunwrap(wrapper), native) and rawequal(original, output))
         AssertDispelRGBA(secretunwrap(output), DispelExpected(1))
         -- A returned color is an independent curve evaluation snapshot.
-        secretunwrap(output):SetRGBA(0, 0, 0, 0)
+        local revealed = secretunwrap(output)
+        revealed.r, revealed.g, revealed.b, revealed.a = 0, 0, 0, 0
+        AssertDispelRGBA(revealed, {0, 0, 0, 0})
         local again = PackDispel(RootedDispelCall('player', 101, wrapper))
         assert(again[1] and again.n == 2 and issecretvalue(again[2]))
         AssertDispelRGBA(secretunwrap(again[2]), DispelExpected(1))
@@ -588,8 +590,11 @@ fn evaluation_preserves_curves_points_results_records_blocks_and_provider_state(
         AssertDispelRGBA(fresh[2].y, {0.7, 0.6, 0.5, 0.4})
         AssertDispelRGBA(input, {0.7, 0.6, 0.5, 0.4})
         AssertDispelRGBA(result, {0.7, 0.6, 0.5, 0.4})
-        result:SetRGBA(0, 0, 0, 0)
-        points[2].y:SetRGBA(1, 1, 1, 1)
+        result.r, result.g, result.b, result.a = 0, 0, 0, 0
+        AssertDispelRGBA(result, {0, 0, 0, 0})
+        local pointColor = points[2].y
+        pointColor.r, pointColor.g, pointColor.b, pointColor.a = 1, 1, 1, 1
+        AssertDispelRGBA(pointColor, {1, 1, 1, 1})
         CheckDispel({0.7, 0.6, 0.5, 0.4}, 'player', 101, curve)
         AssertDispelRGBA(input, {0.7, 0.6, 0.5, 0.4})
         "#,

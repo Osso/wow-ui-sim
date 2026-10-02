@@ -74,6 +74,10 @@ Fixture revision `9a2f15ac878a5b2c804d63867d7ddd92f7d6313a`: `/tmp/patch-12.0.5-
 
 The producer inspects original curve-wrapper identity and runs actual VM `unwrap_secret` on all three positions before any representation/identity/miss validation. Thus wrong public unit plus secret ID, or missing ID plus secret curve, reaches the actual untainted-caller guard first. Authenticated unit/ID/curve values are pushed as explicit stack roots before registry/key allocations and helper calls. The evaluated ColorMixin table is rooted before actual `wrap_secret` allocates a wrapper; the wrapper is immediately rooted too. Temporary stack top restores on success/error, with no GC safe point between restoration and pushing the successful result. Existing VM userdata marking traverses generic secret payloads; no new traversal or declassification is needed. Only an authentic secret curve wrapper propagates output secrecy under the inferred policy; secret unit/ID alone do not.
 
+## Corrected mutation fixtures — 2026-10-02
+
+First producer run at `5fb039e8f`: compile0/233.147s, **14 PASS / 2 FAIL**, exit101/10.141s; startup0 `[]`. Saved `/tmp/patch-12.0.5-batch45-green-{build-result,runs,startup-run}.json` and full outputs. Two failures reached incidental `SetRGBA` calls after successful curve/secret-output checks. Simulator color tables expose mutable `r/g/b/a` and getter methods, not that setter; existing curve snapshot fixtures use field mutation. Corrected only those three mutation sites, asserting changed RGBA before unchanged subsequent evaluations. No production or native setter behavior changed; ColorMixin method completeness remains unproved. Original sixteen-failure RED and first producer run remain historical; corrected fixture GREEN/acceptance pending.
+
 ## Known gaps (current cycle)
 
 - [x] Saved parent compiled RED for exact fixtures, with shared custom-curve failure boundary and dirty-source provenance recorded above.
