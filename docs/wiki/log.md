@@ -5638,3 +5638,6 @@ Updated [altered-form proof](../specs/unit-aura-altered-form.md#reconciled-batch
 
 [Classification proof SSOT](../specs/aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) records16 new +210 controls +18 private anchors =244 unique PASS/all16 exits0, startup0 `[]`, exact runtime71.3813190951477735s and dirty-source-bound provenance. Historical RED retained; shared cooldown14 refreshed. Policies remain inferred; native permissions/result secrecy/catalog/acquisition unknown. Independent381 and source361/363/359 pending; no checked requirements, coverage/accounting or private-anchor acceptance.
 
+## [2026-10-02] evidence | Accept exact batch48 classification and Add restriction rows
+
+[Classification acceptance SSOT](../specs/aura-spell-classification-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact Add359 SSOT](../specs/private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) record parent-accepted independent381. Only359/361/363 promote;387 regression unchanged. Inferred classification/identifier/security policies and ordinary-public tainted live Add only; native gaps stay open. Parent owns postcommit validation; earlier pending checkpoints historical.

@@ -1,5 +1,10 @@
 # Patch 12.0.5 API Audit
 
+### Batch48 — exact bounded independent acceptance
+
+[Classification acceptance SSOT](../../specs/aura-spell-classification-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact Add359 SSOT](../../specs/private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) own parent-accepted independent381 scopes, proof and limits. Only359/361/363 promote: **235 pending/113 bounded/14 partial =362;56 capabilities**. Prior54 capabilities/provenance and359 unrelated ordered rows retained;387 regression only. Native gaps remain unchecked; dirty combined proof is not clean revision. Parent owns postcommit validation; prior pending milestones historical.
+
+
 ### Combined aura color/enumeration — bounded independent acceptance
 
 [Combined acceptance SSOT](../../specs/aura-dispel-color-arguments.md#independent-bounded-acceptance--2026-10-02) and [enumeration scope](../../specs/unit-aura-slot-enumeration-arguments.md#independent-bounded-acceptance--2026-10-02) record parent-accepted independent365 plus367 supplement. Only378/382 promote: **241/107/14 →239 pending/109 bounded/14 partial =362**; ordered IDs,360 unrelated rows, prior51 capabilities and provenance preserved. Reused196 uniquePASS/startup0[]/dirtycheck0/VM-security-wiring-readability; fresh eight-filefmt0 after admin formatting-only c436649ad. Original365 overallFAIL/globalfmt1 unowned duration historical, not fixed; dirty combined not clean revision. Runtime31.527s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Inferred policies/native permissions/secret POINTS/secrecy/pagination/consumer/profile/full setters gaps retained; advisories deferred. Parent owns postcommit validation; earlier pending checkpoints historical.

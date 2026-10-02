@@ -595,7 +595,7 @@
         "HousingCatalogEntryInfo.totalNumStored",
         "HousingCatalogEntryInfo.totalNumPlaced"
       ],
-      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "scope": "Explicit optional base inputs through three selectors only; None→nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
       "spec": "docs/specs/housing-catalog-aggregates.md",
       "tests": [
         "tests/housing_catalog_aggregates.rs"
@@ -901,6 +901,39 @@
       "ledger": "/tmp/patch-12.0.5-aura-color-enumeration-independent-proof.md",
       "format_supplement": "/tmp/patch-12.0.5-aura-color-enumeration-format-followup.md",
       "gate_scope": "Parent accepts independent365 plus367 formatting supplement for exact378/382 only. Reused196 unique PASS/startup0[]/dirty cargo check0 and actual VM/security/wiring/readability; original365 overallFAIL historical. Fresh eight-file scopedfmt0 at c436649ad; seven other files unchanged, admin formatting-only. Globalfmt1 unowned duration NOT fixed. Dirty combined, not clean revision or fresh c436649ad build. Runtime31.527934460435063s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Readability advisories deferred: no functional counterexample, adjacent refactors unauthorized."
+    },
+    {
+      "implementation": "11eca0c6d78fc148ad3f679ab43ea3df3145a17f",
+      "compiled_revision": "11eca0c6d78fc148ad3f679ab43ea3df3145a17f",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-classification-identifiers-independent-proof.md",
+      "gate_scope": "Parent accepted independent381. Saved244 unique PASS (16 classification +210 prior controls +18 anchors), all16 filters exit0; startup0 []. Compile289.3887384700356s/runtime71.38131909514777s. Scopedfmt0/0.174029s; dirty combined check0/67.2118186s, no warnings; globalfmt1/44.0046s unowned unchanged, not fixed. Dirty-combined not clean revision; bounded development, not final page/goal/native acceptance. Numeric guard, helper length and historical test comment advisories deferred without behavior counterexample. Source387 regression only; no403/365/380/371 credit.",
+      "id": "aura-spell-classification-identifiers",
+      "symbols": [
+        "C_UnitAuras.AuraIsBigDefensive",
+        "C_UnitAuras.AuraIsPrivate"
+      ],
+      "scope": "Exact361/363 inferred explicit empty host classification map, independent flags, strict public identifiers and aliases, one public boolean, immediate mutation/read-only/environment isolation, no generic aura/private-instance/cooldown inference, public caller-taint preservation and GC-rooted conservative actual-secret rejection/recovery. Native permissions, catalog/acquisition, identifier parity and result secrecy unknown.",
+      "spec": "docs/specs/aura-spell-classification-identifiers.md",
+      "tests": [
+        "tests/aura_spell_classification_identifiers.rs"
+      ]
+    },
+    {
+      "implementation": "11eca0c6d78fc148ad3f679ab43ea3df3145a17f",
+      "compiled_revision": "11eca0c6d78fc148ad3f679ab43ea3df3145a17f",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-classification-identifiers-independent-proof.md",
+      "gate_scope": "Parent accepted independent381. Saved244 unique PASS (16 classification +210 prior controls +18 anchors), all16 filters exit0; startup0 []. Compile289.3887384700356s/runtime71.38131909514777s. Scopedfmt0/0.174029s; dirty combined check0/67.2118186s, no warnings; globalfmt1/44.0046s unowned unchanged, not fixed. Dirty-combined not clean revision; bounded development, not final page/goal/native acceptance. Numeric guard, helper length and historical test comment advisories deferred without behavior counterexample. Source387 regression only; no403/365/380/371 credit.",
+      "id": "private-aura-add-restriction-removal",
+      "symbols": [
+        "C_UnitAuras.AddPrivateAuraAnchor"
+      ],
+      "scope": "Exact359 HasRestrictions removal only: ordinary valid public Add under actual addon taint returns usable ID and produces a live anchor before Remove, retains caller insecurity, and recovers outer secure context. Not generic lifecycle, combat combination or native secret permissions. Distinct from existing401 removal and structure-field capability.",
+      "spec": "docs/specs/private-aura-anchors.md",
+      "tests": [
+        "tests/private_aura_anchors.rs"
+      ]
     }
   ],
   "source_rows": [
@@ -947,7 +980,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -2120,21 +2153,27 @@
     },
     {
       "source_id": "global api-C_UnitAuras-AddPrivateAuraAnchor-359",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-add-restriction-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact359 HasRestrictions removal only: ordinary valid public Add under actual addon taint returns usable ID and produces a live anchor before Remove, retains caller insecurity, and recovers outer secure context. Not generic lifecycle, combat combination or native secret permissions. Distinct from existing401 removal and structure-field capability. Parent accepted independent381; exact bounded acceptance in docs/specs/private-aura-anchors.md. Saved244 unique PASS/startup0 []; dirty-combined not clean revision, not final page/goal/native acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-AuraIsBigDefensive-361",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-spell-classification-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact361/363 inferred explicit empty host classification map, independent flags, strict public identifiers and aliases, one public boolean, immediate mutation/read-only/environment isolation, no generic aura/private-instance/cooldown inference, public caller-taint preservation and GC-rooted conservative actual-secret rejection/recovery. Native permissions, catalog/acquisition, identifier parity and result secrecy unknown. Parent accepted independent381; exact bounded acceptance in docs/specs/aura-spell-classification-identifiers.md. Saved244 unique PASS/startup0 []; dirty-combined not clean revision, not final page/goal/native acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-AuraIsPrivate-363",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-spell-classification-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact361/363 inferred explicit empty host classification map, independent flags, strict public identifiers and aliases, one public boolean, immediate mutation/read-only/environment isolation, no generic aura/private-instance/cooldown inference, public caller-taint preservation and GC-rooted conservative actual-secret rejection/recovery. Native permissions, catalog/acquisition, identifier parity and result secrecy unknown. Parent accepted independent381; exact bounded acceptance in docs/specs/aura-spell-classification-identifiers.md. Saved244 unique PASS/startup0 []; dirty-combined not clean revision, not final page/goal/native acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-DoesAuraHaveExpirationTime-365",
@@ -3154,7 +3193,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -3190,7 +3229,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -3198,7 +3237,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -3254,7 +3293,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",

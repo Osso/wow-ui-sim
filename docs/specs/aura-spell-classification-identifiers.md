@@ -4,28 +4,28 @@ Batch48 exact rows361/363 change argument1 of `C_UnitAuras.AuraIsBigDefensive` a
 
 ## What it must do
 
-All model, representation, miss and security policies below are **INFERRED simulator choices**, not native-verified semantics. The bounded producer follows saved parent compiled RED. Both getters and their registration are implemented; saved parent GREEN is reconciled below. Independent381 gate remains pending. Every contract remains unchecked.
+All model, representation, miss and security policies below are **INFERRED simulator choices**, not native-verified semantics. The bounded producer follows saved parent compiled RED. Both getters and their registration are implemented; saved parent GREEN is reconciled below. Parent accepted independent381 for exact rows361/363; tested inferred requirements below are checked. Native gaps remain unchecked.
 
 ### Explicit classification input
 
-- [ ] Own a public `AuraSpellClassification` record with independent `is_big_defensive: bool` and `is_private: bool` fields and `Clone`, `Copy`, `Default` (both false). Own public `AuraSpellClassifications { pub spells: HashMap<u32, AuraSpellClassification> }`, empty `Default`, under `retail-12-0-5` with a public per-environment `SimState.aura_spell_classifications` field.
-- [ ] Use only explicitly declared resolved spell-ID records. Fixture101=(true,false),202=(false,true),303=(true,true),404=(false,false) covers both flags independently. No manufactured production catalog.
-- [ ] Each API returns exactly one **public boolean**, corresponding to its independent flag; missing resolved records and unseeded public strings return false.
-- [ ] Host replacement/removal and alias mutation take effect immediately. Queries leave records, aliases and caller input unchanged; environments isolate their inputs.
-- [ ] Generic `AuraInfo` buffs, private aura instance state and cooldown associations neither supply nor change spell classification. Private-instance presence does not imply `is_private`.
+- [x] Own a public `AuraSpellClassification` record with independent `is_big_defensive: bool` and `is_private: bool` fields and `Clone`, `Copy`, `Default` (both false). Own public `AuraSpellClassifications { pub spells: HashMap<u32, AuraSpellClassification> }`, empty `Default`, under `retail-12-0-5` with a public per-environment `SimState.aura_spell_classifications` field.
+- [x] Use only explicitly declared resolved spell-ID records. Fixture101=(true,false),202=(false,true),303=(true,true),404=(false,false) covers both flags independently. No manufactured production catalog.
+- [x] Each API returns exactly one **public boolean**, corresponding to its independent flag; missing resolved records and unseeded public strings return false.
+- [x] Host replacement/removal and alias mutation take effect immediately. Queries leave records, aliases and caller input unchanged; environments isolate their inputs.
+- [x] Generic `AuraInfo` buffs, private aura instance state and cooldown associations neither supply nor change spell classification. Private-instance presence does not imply `is_private`.
 
 ### Identifier boundary
 
-- [ ] Accept only actual public UTF-8 STRING or finite integral u32 NUMBER, including0/u32MAX. Reject missing/nil, bool, table, actual backing Frame table, function, thread, nonfinite/fractional/negative/out-of-range numbers and invalid UTF-8 **before alias lookup**, including values that could otherwise coerce to seeded aliases.
-- [ ] Share existing `c_spell::read_spell_identifier_at` resolution semantics after validation: explicit aliases first, numeric identity otherwise; uppercase names normalize to lowercase. Strings, including numeric strings and full colored links, require seeded aliases.
-- [ ] Numeric alias overrides and seeded numeric strings resolve the same key. Full colored fixture link containing101 explicitly resolves202; no automatic link parsing or implicit string catalog.
-- [ ] Unknown controls remain false alongside true records; no classification inferred from generic aura, private-instance or cooldown state.
+- [x] Accept only actual public UTF-8 STRING or finite integral u32 NUMBER, including0/u32MAX. Reject missing/nil, bool, table, actual backing Frame table, function, thread, nonfinite/fractional/negative/out-of-range numbers and invalid UTF-8 **before alias lookup**, including values that could otherwise coerce to seeded aliases.
+- [x] Share existing `c_spell::read_spell_identifier_at` resolution semantics after validation: explicit aliases first, numeric identity otherwise; uppercase names normalize to lowercase. Strings, including numeric strings and full colored links, require seeded aliases.
+- [x] Numeric alias overrides and seeded numeric strings resolve the same key. Full colored fixture link containing101 explicitly resolves202; no automatic link parsing or implicit string catalog.
+- [x] Unknown controls remain false alongside true records; no classification inferred from generic aura, private-instance or cooldown state.
 
 ### Caller context and conservative security
 
-- [ ] Public numeric/name/full-link calls work in secure and tainted contexts, preserve caller taint and produce public results.
-- [ ] **INFERRED conservative policy:** reject actual VM secret STRING/NUMBER, including hits and misses, and actual host-secret wrapped wrong Frame values even in secure context. This does not implement native secret `AllowedWhenTainted` permissions.
-- [ ] Root real host-secret values and original Frame across allocation/GC; preserve identity, secrecy and caller taint through rejection. Subsequent public calls recover in both secure and tainted contexts. No Lua marker secrets or API replacement.
+- [x] Public numeric/name/full-link calls work in secure and tainted contexts, preserve caller taint and produce public results.
+- [x] **INFERRED conservative policy:** reject actual VM secret STRING/NUMBER, including hits and misses, and actual host-secret wrapped wrong Frame values even in secure context. This does not implement native secret `AllowedWhenTainted` permissions.
+- [x] Root real host-secret values and original Frame across allocation/GC; preserve identity, secrecy and caller taint through rejection. Subsequent public calls recover in both secure and tainted contexts. No Lua marker secrets or API replacement.
 
 ## How it works
 
@@ -102,11 +102,21 @@ Exact decimal sum of saved runtime records: **71.3813190951477735s** (binary-flo
 | Authentic secret/wrong Frame wrapper rejection; GC-rooted identity, secrecy, taint and recovery | Actual-secret fixture PASS in both contexts | Conservative denial, not native secret permissions |
 | Generic buff, cooldown and private-instance noninterference | Both independence fixtures PASS; refreshed cooldown14 and private-anchor18 controls PASS | No inference from instance state; no new acceptance for controls |
 
-Independent381 verification remains pending; source361/363 and359 remain pending. No requirements checked, coverage promoted, audit accounting changed, or private-anchor docs accepted. Parent owns separate accounting and independent gate. Earlier GREEN-pending entries are historical checkpoints, not current status.
+This saved GREEN checkpoint preceded independent acceptance below. Earlier pending entries remain historical; exact Add359 acceptance is owned separately by [the anchor contract](private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02).
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted independent381 [report](/tmp/patch-12.0.5-aura-classification-identifiers-independent-proof.md), exact361/363 only. This section owns classification acceptance; [saved parent GREEN](#reconciled-batch48-parent-green--2026-10-02) owns execution commands, artifact hashes and timings. Input `baf81dfec6704b80d5d17e6d42b2adac3c856bea`, compiled producer `11eca0c6d78fc148ad3f679ab43ea3df3145a17f`, docs GREEN `e6bbe2fabbc977b7f2218eaf90cdc89137a287c5`. Independent report confirms unchanged implementation at that docs checkpoint; later sound-owned changes are not new execution proof.
+
+Tested requirements above are accepted only as **INFERRED**: empty explicit host map, independent flags/default false, strict public identifiers/seeded aliases, exactly one public boolean, immediate mutation/read-only/environment isolation, no generic inference, public taint preservation, and GC-rooted conservative authentic-secret rejection/recovery. Native permissions, result secrecy, identifier parity and classification catalog/acquisition remain unknown. Source387 is separate regression only; no403/native counterexamples or365/380/371 credit.
+
+Saved **244 unique PASS =16 classification +210 prior controls +18 anchors**, all16 filters exit0, startup0 `[]`; compile289.3887384700356s and runtime71.38131909514777s. Scopedfmt0/0.17402922292239964s, dirty combined check0/67.21181862591766s without warnings; globalfmt1/44.00460445508361s on unchanged unowned source remains NOT fixed. Combined dirty proof, **not clean revision**. Numeric-guard extraction, secret-helper length and historical test-comment advisories deferred; no behavior counterexample. Bounded development acceptance, not final page/goal/native proof; parent owns full postcommit validation.
+
+Accounting snapshot `/tmp/patch-12.0.5-batch48-accounting-before.json`: only359/361/363 promoted, **238 pending/110 bounded/14 partial →235 pending/113 bounded/14 partial =362**, capabilities54→56. Ordered unique IDs,359 unrelated rows,54 prior capabilities and source/register/plaintext provenance preserved. The second new capability is [exact Add359](private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02), not existing401 removal or structure-field credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent381 gate and parent acceptance remain pending; source rows361/363 and359 remain pending. No audit accounting, coverage or acceptance changes here.
+- [x] Parent accepted independent381 for exact361/363 inferred classification/identifier behavior; [exact Add359](private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) is separate. No whole-page/goal/native acceptance.
 - [ ] Native `AllowedWhenTainted` secret permissions, result secrecy, classification catalog and acquisition remain unknown. Chosen conservative rejection and public results are informed models, not native evidence.
 
 ## Out of scope
