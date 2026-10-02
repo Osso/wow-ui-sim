@@ -176,6 +176,9 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    #[cfg(feature = "retail-12-0-5")]
+    pub cooldown_aura_associations:
+        crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
     #[cfg(feature = "retail-12-0-5")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,

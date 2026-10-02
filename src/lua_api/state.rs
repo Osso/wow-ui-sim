@@ -175,6 +175,8 @@ macro_rules! build_empty_sim_state {
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
+            cooldown_aura_associations: Default::default(),
+            #[cfg(feature = "retail-12-0-5")]
             spell_aura_durations: HashMap::new(),
             #[cfg(feature = "client-wowforever")]
             base_spell_relationships: Default::default(),
