@@ -100,11 +100,19 @@ Run: `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c tooltip_aura_ins
 
 Producer source is later than this RED evidence. No GREEN/check/startup/independent/native/profile/full-page proof, checked requirement, output-policy credit or source-accounting change follows. Batch60 acceptance remains independent and untouched.
 
+## Saved parent GREEN — 2026-10-02
+
+Producer `6edbe3533ec7b2877a2d8d787c7c12e0122c6ac5` is included in compiled revision `448689a2697d91005a50fad9a8ec3f587f74aafb`. Default integration compilation exited0 in231.47643793397583s, including any unmeasured shared-lock cost. Full compiler JSON/stderr and hashes: `/tmp/patch-12.0.5-batch61-green-build.stdout.jsonl`, `.stderr`, `-result.json`. Integration SHA256 `c3eacf323ecb7258220e3fe265300cbffbb65f1bf14d54eb13df92724cf03e2c` binds saved runs.
+
+`/tmp/patch-12.0.5-batch61-green-runs.json` records **209 distinct PASS**:24 focused,123 tooltip controls,22 spell/mount identifier controls,14 aura-display controls,14 admin-aura controls and12 indexed-aura controls. Seven finite commands exit0; one incorrect `unit_aura_index_secret_arguments::` filter matched zero tests and gives **no proof**. The actual12 indexed tests ran under `next125aura::`; no duplicate names. Execution65.39064117113594s is separate from compilation. Startup separately returned `[]`, exit0; `green-startup-run.json` records exact elapsed time, binary hash and full output paths.
+
+Evidence is dirty-combined, not clean-revision/native/profile parity. Secure acceptance, tainted denial, meaningful polarity payloads, roots/GC/recovery and live state now have observed focused runtime evidence; independent security/wiring/readability/Rust acceptance remains pending. Earlier RED conclusions retain their downstream limits. Do not rerun valid build/runtime solely for docs/accounting.
+
 ## Known gaps (current cycle)
 
-- [ ] Main-owned compiled RED is recorded below; no build/check/test command executed by this producer slice. No producer GREEN evidence yet.
-- [ ] Epoch125 production gate, authenticated provider and inferred polarity selection are implemented but unverified. GREEN, scoped checks/readability, startup regression and independent acceptance remain pending.
-- [ ] Source-row/capability accounting remains pending and untouched: user-supplied checkpoint **206 pending /141 bounded /14 partial /1 metadata-only;362 IDs;66 capabilities**. Six requested rows remain pending; no other accounting change or acceptance claim.
+- [x] Main-owned compiled RED and focused GREEN, adjacent controls and startup recorded; producer agent ran no gates.
+- [ ] Independent scoped checks/readability, security/wiring acceptance and exact source accounting remain pending.
+- [ ] Six requested rows remain uncredited. Separate batch60 acceptance changed checkpoint to **205 pending /142 bounded /14 partial /1 metadata-only;362 IDs;67 capabilities**; no batch61 accounting credit yet.
 - [ ] Native error wording/permissions, output restriction/secrecy, acquisition and full native payload semantics remain unknown. All requirements stay unchecked until main-owned evidence supports them.
 
 ## Out of scope
