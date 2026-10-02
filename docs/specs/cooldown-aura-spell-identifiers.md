@@ -4,7 +4,7 @@ Exact row387 changes `C_UnitAuras.GetCooldownAuraBySpellID` argument 1 from `num
 
 ## What it must do
 
-All chosen behavior below is **inferred simulator policy**, not native-client parity. Fixtures exist but have not been compiled or executed at this inputs-only stage.
+All chosen behavior below is **inferred simulator policy**, not native-client parity. The producer is implemented after corrected parent compiled RED; GREEN and independent acceptance remain parent-owned and pending. Unchecked requirements below are not passing claims.
 
 ### Explicit input and result
 
@@ -29,11 +29,14 @@ All chosen behavior below is **inferred simulator policy**, not native-client pa
 ## How it works
 
 - [Lua API architecture](../lua-api.md)
-- [C API audit context](../wiki/systems/patch-12-0-5-api-audit.md)
+- [Lua API cooldown association boundary](../wiki/systems/lua-api.md#retail-1205-cooldown-aura-spell-identifiers)
+- [Frame representation and fixture boundary](../wiki/investigations/frame-surrogate-identity-slot.md)
+- [C API audit context](../wiki/investigations/patch-12-0-5-api-audit.md)
 
 ## Implementation inventory
 
-- `src/c_api/c_unit_aura_cooldown_spells.rs`: public empty-default explicit association input; no getter or registration yet.
+- `src/c_api/c_unit_aura_cooldown_spells.rs`: unchanged public empty-default input plus sole getter, strict public validation, actual VM secret rejection and direct nullable numeric lookup.
+- `src/lua_api/globals/register.rs`: `retail-12-0-5` registration after existing aura namespace/state initialization.
 - `src/c_api/mod.rs`: public `retail-12-0-5`-gated module declaration.
 - `src/lua_api/state/sim_state.rs`: public feature-gated environment input field.
 - `src/lua_api/state.rs`: empty `Default::default()` initializer next to `spell_id_aliases`.
@@ -45,16 +48,28 @@ All chosen behavior below is **inferred simulator policy**, not native-client pa
 
 ## First compiled RED and fixture correction — 2026-10-02
 
-At input `14ee1504b`, compilation exit0/462.835s; 14 selected, **3 PASS / 11 FAIL**, exit101/7.791s. `/tmp/patch-12.0.5-batch47-red-{build-result,run}.json` and full outputs bind the preserved unowned duration diff, not a clean revision. Empty/miss/generic-buff controls pass the existing generic nil provider; numeric/name/link/metadata/public-taint cases show genuine missing-producer failures. One secret case failed earlier at an incidental `Val::Userdata` frame-shape assertion, not the query boundary. Current simulator frames are backed Lua tables; corrected setup checks `GetObjectType() == 'Frame'` and retained global rooting, then wraps the actual value without requiring its VM variant. No runtime/framework change or native frame-representation claim. Corrected compiled RED remains pending.
+At input `14ee1504b`, compilation exit0/462.835s; 14 selected, **3 PASS / 11 FAIL**, exit101/7.791s. `/tmp/patch-12.0.5-batch47-red-{build-result,run}.json` and full outputs bind the preserved unowned duration diff, not a clean revision. Empty/miss/generic-buff controls pass the existing generic nil provider; numeric/name/link/metadata/public-taint cases show genuine missing-producer failures. One secret case failed earlier at an incidental `Val::Userdata` frame-shape assertion, not the query boundary. Current simulator frames are backed Lua tables; corrected setup checks `GetObjectType() == 'Frame'` and retained global rooting, then wraps the actual value without requiring its VM variant. No runtime/framework change or native frame-representation claim. This original secret setup failure is historical, not genuine producer RED.
+
+## Corrected compiled RED and producer boundary — 2026-10-02
+
+Inputs/model `14ee1504b`; fixture correction `22c84baf99a173fe81a4e6d431b6b295136f89eb`. Saved `/tmp/patch-12.0.5-batch47-red-fixed-build-result.json` records `cargo test --test integration --no-run --message-format=json`, exit0/296.8498461409472s. Saved `/tmp/patch-12.0.5-batch47-red-fixed-run.json` records `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c cooldown_aura_spell_identifiers:: --test-threads=1`, **14 selected / 3 PASS / 11 genuine FAIL**, exit101/4.286526938085444s. Full outputs are `/tmp/patch-12.0.5-batch47-red-fixed-build.{jsonl,log}` and `/tmp/patch-12.0.5-batch47-red-fixed-run.{stdout,stderr}`. Binary SHA256 `69ea9a86c11ef1051b4f080557f3d4cdd5e88a62b7db890f6f52a858e607445b`; saved dirty-source diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`. Evidence includes preserved unowned duration changes; not clean-revision proof.
+
+| Capability | Corrected pre-producer evidence | Current proof limit |
+|---|---|---|
+| Empty map, misses, generic-buff independence | Three controls PASS through generic nil provider | Not producer proof |
+| Numeric/name/link hits, alias/association changes, endpoints, environment/read-only and public-taint queries | Missing numeric responses FAIL | Implemented; parent GREEN pending |
+| Invalid public representations | API argument rejection FAIL | Implemented strict boundary; parent GREEN pending |
+| Actual secret inputs/wrapped wrong frame, GC/rooting/recovery | Frame `GetObjectType()` and root setup succeed; API argument rejection FAIL | Conservative rejection implemented; parent GREEN pending |
+
+The getter uses the existing shared alias resolver only after validation and reads only the declared map value. No changes to model shape/default, fixtures, generic aura records, cooldown state/history or catalogs. Ordinary public calls have no secure-caller gate or taint mutation. Native secret permissions, output secrecy, acquisition and direction remain explicit gaps.
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and observe behavioral RED against the missing API; inputs avoid a missing-type compiler failure. Parent owns compiled RED, producer and subsequent gates.
-- [ ] Add the sole feature-gated C API getter and registration after RED. This commit intentionally contains neither.
+- [ ] Parent compiled GREEN and independent acceptance of the implemented sole getter/registration remain pending. Corrected compiled RED is recorded above; producer work runs owned formatting only, no new execution proof.
 - [ ] Native secret permissions, result secrecy, identifier acceptance, and acquisition/direction remain unverified; no row387 acceptance/accounting claim.
 
 ## Out of scope
 
 - Native Forever probes: unavailable; informed guesses are authorized and explicitly labeled rather than a blocking prerequisite.
 - Native metadata acquisition, production catalogs, generic aura-derived associations, cooldown/history derivation and listeners: no evidence or authorization; map models only host-declared pairs.
-- General declassification, native secret `AllowedWhenTainted` implementation, other rows/profiles, audit totals and wiki/index/log/PLAN changes: parent-owned or separate scope.
+- General declassification, native secret `AllowedWhenTainted` implementation, other rows/profiles, audit totals and PLAN changes: parent-owned or separate scope.

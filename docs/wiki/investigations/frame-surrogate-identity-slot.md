@@ -6,6 +6,8 @@ Frame method dispatch now models WoW's frame identity slot so Restricted Environ
 
 wow-ui-sim frames are rilua tables with VM-level backing metadata that points to the Rust `widget::Frame` in `WidgetRegistry.widgets`. Frame methods are shared through one frame metatable, and receiver resolution uses the table backing to recover the frame id.
 
+`methods::frame_ref` returns cached `Val::Table` backing or creates/caches that table; `create_frame_table` stores separate `FrameIdentity` userdata at numeric slot0. A fixture requiring the frame itself to be `Val::Userdata` fails before reaching its intended API boundary. [Row387 corrected RED](../../specs/cooldown-aura-spell-identifiers.md#corrected-compiled-red-and-producer-boundary--2026-10-02) instead checks `Frame:GetObjectType()`, keeps the actual frame globally rooted, and wraps that value; these are simulator representation facts, not a new native-client claim.
+
 Blizzard's Restricted Environment creates frame-handle surrogates with the real frame's identity token in slot `0` and the original frame in slot `1`. The simulator previously left `frame[0]` nil and let universal dispatch recover surrogate identity from `self[1]`. That made Restricted Environment probes work, but it hardcoded one Blizzard surrogate layout into every frame method call.
 
 The simulator now seeds each frame table's numeric slot `0` with a `FrameIdentity` userdata token. Method receiver resolution reads `self[0]` before the table's direct backing, so a surrogate shaped like `{ [0] = frame[0] }` can call shared frame methods such as `GetName()` and `IsProtected()` without carrying the original frame in slot `1`. A `[1]`-only surrogate no longer dispatches; code that wants frame identity must copy the identity token.

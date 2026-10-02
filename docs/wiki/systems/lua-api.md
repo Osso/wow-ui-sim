@@ -38,6 +38,10 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 `c_api::c_unit_aura_spell_queries` owns epoch-gated player/unit spell lookups, independently of aura-instance enumeration. `c_spell::read_spell_identifier_at` shares existing alias-first semantics; aura code exposes only a resolved-ID lookup/DTO helper. Legacy numeric global remains unchanged on every profile, and earlier epochs retain the numeric C player provider. Unit lookup visits existing helpful then harmful records (inferred), with built-in target fixtures only. Public strict validation and conservative secret rejection occur before absent-unit results, without taint mutation/declassification. [Aura spell contract](../../specs/aura-spell-identifier.md) owns exact twelve fixtures, saved pre-producer RED (3 PASS / 9 FAIL), inferred limits and pending parent GREEN/acceptance. No refresh, native visibility or audit credit.
 
+### Retail 12.0.5 cooldown aura spell identifiers
+
+`c_api::c_unit_aura_cooldown_spells` owns the sole `GetCooldownAuraBySpellID` getter under `retail-12-0-5`, registered after aura namespace/state initialization. Actual VM `is_secret_value` rejects all real wrappers even for secure callers; no unwrap, private-payload read or taint mutation occurs. Required actual UTF-8 STRING or finite integral u32 NUMBER (inclusive0/MAX) validation precedes shared `c_spell::read_spell_identifier_at` alias-first resolution. The resolved query key reads only `cooldown_aura_associations.cooldown_spell_ids.get(key).copied()`; output is exactly one public number or nil without recursive resolution. Existing per-environment empty default, aliases and generic records remain unchanged; names/full colored links require explicit lowercase aliases, not a native catalog. Association direction, representations and conservative security are **INFERRED** host-input policy. [Cooldown association contract](../../specs/cooldown-aura-spell-identifiers.md#corrected-compiled-red-and-producer-boundary--2026-10-02) owns corrected saved parent RED3PASS/11genuineFAIL and proof limits; three nil controls are not producer proof. GREEN/independent acceptance remain parent-owned. Native acquisition/direction/secret permissions/result secrecy and Forever probes remain unavailable or unverified; no row/accounting credit.
+
 ### Retail 12.0.5 aura dispel color arguments
 
 `c_api::c_unit_aura_dispel_color` owns the sole `GetAuraDispelTypeColor` producer under `retail-12-0-5`; registration follows existing aura namespace initialization. Earlier epochs retain only the cfg-separated original getter, not a fallback. Actual VM `unwrap_secret` authenticates all three documented positions before type/identity validation or lookup, including mixed wrong public types/missing IDs with secret inputs. Actual UTF-8 STRING unit, finite integral signed-i32 NUMBER ID and private-registry `LuaColorCurveObject` identity precede unchanged blocked-inclusive `find_aura_by_instance_id`. Typed `Option<String>` maps None0/Magic1/Curse2/Disease3/Poison4/Enrage9; missing records and unknown strings error. The existing `c_curve_util::evaluate_curve_value` evaluates numeric x and returns real ColorMixin output, propagating helper errors without palette substitution. Authenticated values are explicit stack roots through helper allocations/calls; evaluated color is rooted through actual VM `wrap_secret`, and wrapper rooted immediately. Temporary roots restore on success/error without an intervening GC safe point before returning the result. Existing VM marking traverses generic secret payloads. Only an authentic secret curve wrapper triggers secret-wrapped output; secret unit/ID alone do not. Mapping, representations, miss/errors and wrapper-output policy are **INFERRED**. Curve/DTO/store/block/provider behavior is unchanged; no taint clearing or generic declassification. [Dispel-color contract](../../specs/aura-dispel-color-arguments.md) owns exact row378, sixteen corrected mutation fixtures and historical saved parent compiled RED0PASS/16FAIL at `9a2f15ac878a5b2c804d63867d7ddd92f7d6313a`: all fail shared custom-curve/recovery RGBA, not sixteen independent security boundaries. [Combined saved GREEN](../../specs/aura-dispel-color-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-01): all16 corrected color +12 enumeration +168 controls =196 unique PASS/all13 exits0, startup0 `[]`. Direct RGBA-field correction preserves mutation assertions; original RED and14PASS/2FAIL incidental SetRGBA attempt are historical. Dirty-source-bound proof, not clean revision; independent Rust/security/readability/acceptance pending. Rows378/382 uncredited;241/107/14 unchanged. Native aura access/valid-instance/restricted-output and secret-POINTS propagation remain unmodeled; no full native `SecretWhenCurveSecret`, profile-wide or accounting credit.
@@ -82,13 +86,9 @@ Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from
 
 `c_api::c_party_info::loot_method` translates numeric C enums over existing `SimState.loot_method`; legacy string/raw-index getters and threshold remain unchanged. Earlier epochs retain the static C Group getter. The setter checks shared chat lockdown and public argument types/secrets before resolving modeled party names or the raid player at roster position 1, then commits state and queues a change-only event. See [party loot contract](../../specs/party-loot-method.md) for inferred policies, excluded general raid mapping and saved compiled RED at `1c7af9c03` (0/12). Parent GREEN and acceptance pending; no availability redesign, native security/permissions or audit-row closure.
 
-## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
+## FrameRef representation
 
-```rust
-pub struct FrameHandle { pub id: u64, pub state: Rc<RefCell<SimState>> }
-```
-
-Links Lua userdata to the Rust `Frame` via `id`. `__newindex` syncs `parent.Child = frame` assignments into `parent_frame.children_keys`. `__index` resolves methods in priority order: mlua method table → children_keys → `__frame_fields[id]` → fallback stubs.
+Current rilua frame representation and identity-slot behavior live in [[frame-surrogate-identity-slot]]. Fixtures should assert frame behavior, not assume mlua-era userdata representation.
 
 ## Method Categories (14+ submodules)
 
@@ -224,6 +224,9 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [c_unit_aura_cooldown_spells.rs](../../../src/c_api/c_unit_aura_cooldown_spells.rs) — explicit association input and sole bounded getter
+- [Cooldown aura spell identifiers](../../specs/cooldown-aura-spell-identifiers.md) — row387 contract, corrected RED and native limits
 
 - [c_unit_aura_slot_enumeration.rs](../../../src/c_api/c_unit_aura_slot_enumeration.rs) — authenticated enumeration boundary, unchanged collector/output
 - [Unit aura slot enumeration arguments](../../specs/unit-aura-slot-enumeration-arguments.md) — row382 contract, saved RED and proof limits
