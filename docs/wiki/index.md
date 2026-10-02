@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact tooltip spell/mount boundaries
+
+[Batch56 acceptance SSOT](../specs/tooltip-spell-mount-identifiers.md#independent-bounded-acceptance--2026-10-02) records independent457:155 distinctPASS/startup0 `[]`, scopedfmt/check/security/readability pass; globalfmt fails on preserved unowned source. Only333/334/336/337 promote;358 unrelated rows/63 prior capabilities retained. Inferred misses/security, dirty-combined/native/profile/frame/flags limits remain; broader goal open.
+
 ## [2026-10-02] evidence | Reconcile batch56 saved parent GREEN
 
 [Tooltip identifier proof SSOT](../specs/tooltip-spell-mount-identifiers.md#reconciled-batch56-saved-parent-green--2026-10-02) preserves mixed initial RED and corrected3PASS/19genuineFAIL; actual155 uniquePASS/all5 exits0/startup0 `[]`, exact39.89666002884041434s execution separately from139.876873968984s compile. RGBA/lineIndex fixture correction only; dirty-combined provenance, inferred miss/security policies and frame/native gaps retained. Fresh independent acceptance, requirements/accounting/PLAN pending;214/134/14 unchanged.

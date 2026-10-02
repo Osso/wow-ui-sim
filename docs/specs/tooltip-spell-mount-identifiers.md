@@ -1,34 +1,34 @@
 # Tooltip spell and mount identifiers
 
-Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. Bounded batch56 implementation and saved parent GREEN are observed; independent acceptance remains pending. No native-verified capability is claimed. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
+Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. Batch56 independently accepted within the chosen bounded contract; global formatting remains failed on preserved unowned source. No native-verified capability is claimed. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
 
 ## What it must do
 
 ### Identifiers and meaningful payloads
 
-- [ ] Use the existing strict public `c_spell::read_public_spell_identifier_at` contract: finite integral u32 NUMBER or UTF-8 STRING, with seeded lowercase aliases preceding numeric identity. This representation/validation policy is **inferred**, not native argument-type evidence.
-- [ ] Numeric 19750 retains the real generated Flash of Light title, modeled cast/description lines, spell type, ID and width. Numeric mount 23338 retains the first actual default `world.mounts` match, Swift Palomino, its title and existing `Summons this mount.` description.
-- [ ] DTO equivalence compares Color values through exactly four public numeric RGBA components (`GetRGBA()` or public numeric `r/g/b/a`), not per-instance method/object identity. All non-color fields retain strict recursive value/type equality with diagnostic paths.
-- [ ] Explicit numeric-string, case-normalized name and full colored-link aliases produce DTO-equivalent results to their resolved numeric IDs for both queries. A seeded numeric alias wins over numeric identity; a full-link alias wins over its embedded number. Output ID is the resolved ID.
-- [ ] Read alias changes/removal live. Queries do not mutate aliases or declared mounts; independent environments remain isolated. Mutating a returned DTO cannot change later results or another returned DTO.
-- [ ] Preserve current unknown numeric policy: exactly one identified, line-empty, Spell-typed tooltip, including valid u32 endpoints.
-- [ ] **INFERRED new unresolved-public-STRING miss policy:** exactly one fresh, unidentified, empty Spell-typed TooltipData with a fresh lines table. Never invent an ID. Unseeded numeric strings, catalog names, short links and full colored links remain misses; no general parsing/catalog-name lookup/acquisition/override graph.
-- [ ] Results and nested DTO fields remain public under the chosen simulator contract. Native output secrecy remains unknown.
+- [x] Use the existing strict public `c_spell::read_public_spell_identifier_at` contract: finite integral u32 NUMBER or UTF-8 STRING, with seeded lowercase aliases preceding numeric identity. This representation/validation policy is **inferred**, not native argument-type evidence.
+- [x] Numeric 19750 retains the real generated Flash of Light title, modeled cast/description lines, spell type, ID and width. Numeric mount 23338 retains the first actual default `world.mounts` match, Swift Palomino, its title and existing `Summons this mount.` description.
+- [x] DTO equivalence compares Color values through exactly four public numeric RGBA components (`GetRGBA()` or public numeric `r/g/b/a`), not per-instance method/object identity. All non-color fields retain strict recursive value/type equality with diagnostic paths.
+- [x] Explicit numeric-string, case-normalized name and full colored-link aliases produce DTO-equivalent results to their resolved numeric IDs for both queries. A seeded numeric alias wins over numeric identity; a full-link alias wins over its embedded number. Output ID is the resolved ID.
+- [x] Read alias changes/removal live. Queries do not mutate aliases or declared mounts; independent environments remain isolated. Mutating a returned DTO cannot change later results or another returned DTO.
+- [x] Preserve current unknown numeric policy: exactly one identified, line-empty, Spell-typed tooltip, including valid u32 endpoints.
+- [x] **INFERRED new unresolved-public-STRING miss policy:** exactly one fresh, unidentified, empty Spell-typed TooltipData with a fresh lines table. Never invent an ID. Unseeded numeric strings, catalog names, short links and full colored links remain misses; no general parsing/catalog-name lookup/acquisition/override graph.
+- [x] Results and nested DTO fields remain public under the chosen simulator contract. Native output secrecy remains unknown.
 
 ### Secret boundary and caller context
 
-- [ ] Reject authentic VM-secret optional arguments in all documented positions, whether caller is secure or ordinarily tainted, before alias/catalog/payload acquisition. Mount arg2 `checkIndoors`; spell args2–6 `isPet`, `showSubtext`, `dontOverride`, `difficultyID`, `isLink`.
-- [ ] **INFERRED conservative arg1 policy:** reject secret identifiers through the same public identifier helper without unwrapping or inspecting payloads. Native `AllowedWhenTainted` permissions are unknown; rejection does not establish them.
-- [ ] Reject actual host-secret BOOL true and false, NUMBER, STRING, wrapped real Frame table and ordinary table across every optional position and both arg1 boundaries. Known numeric/name inputs and numeric/string misses cannot bypass NeverSecret checks.
-- [ ] Failed queries preserve authentic wrapper secrecy, global/list/stack roots, live wrapper allocation identity, ordinary caller properties and owned state maps; valid public recovery still works after forced GC and failures.
-- [ ] Preserve stack taint for rejection and ordinary public calls. Restore secure context after returning from an explicitly tainted closure.
-- [ ] **INFERRED error policy:** provide nonempty public API context, without private string payload disclosure. Exact native errors and precedence are unknown; tests do not assert source text or a native error message.
+- [x] Reject authentic VM-secret optional arguments in all documented positions, whether caller is secure or ordinarily tainted, before alias/catalog/payload acquisition. Mount arg2 `checkIndoors`; spell args2–6 `isPet`, `showSubtext`, `dontOverride`, `difficultyID`, `isLink`.
+- [x] **INFERRED conservative arg1 policy:** reject secret identifiers through the same public identifier helper without unwrapping or inspecting payloads. Native `AllowedWhenTainted` permissions are unknown; rejection does not establish them.
+- [x] Reject actual host-secret BOOL true and false, NUMBER, STRING, wrapped real Frame table and ordinary table across every optional position and both arg1 boundaries. Known numeric/name inputs and numeric/string misses cannot bypass NeverSecret checks.
+- [x] Failed queries preserve authentic wrapper secrecy, global/list/stack roots, live wrapper allocation identity, ordinary caller properties and owned state maps; valid public recovery still works after forced GC and failures.
+- [x] Preserve stack taint for rejection and ordinary public calls. Restore secure context after returning from an explicitly tainted closure.
+- [x] **INFERRED error policy:** provide nonempty public API context, without private string payload disclosure. Exact native errors and precedence are unknown; tests do not assert source text or a native error message.
 
 ### Public optional compatibility and frame route
 
-- [ ] Preserve **current ignored-provider behavior**, not new flag semantics: documented nil/BOOL combinations for mount arg2 and spell args2/3/4/6, plus nil or public number17 at spell arg5, leave actual payload unchanged. No new public optional type/domain/finite validation is required for unused flags.
-- [ ] Actual `GameTooltip:SetSpellByID` and `SetMountBySpellID` pass the original identifier to the same real namespace query. Numeric/name/full-link aliases preserve every direct-query TooltipData field/value, including public RGBA components, and equivalent actual rendered lines. Processing may add per-line `lineIndex` only: when present it must be public numeric and equal the actual line position. Other extra fields or lines fail equivalence. No query replacement, method-call spy, VM-shape assertion or duplicate builder counts as frame proof.
-- [ ] Secret frame identifiers and mount arg2 fail without replacing prior exposed TooltipData or rendered lines; valid public frame recovery remains meaningful.
+- [x] Preserve **current ignored-provider behavior**, not new flag semantics: documented nil/BOOL combinations for mount arg2 and spell args2/3/4/6, plus nil or public number17 at spell arg5, leave actual payload unchanged. No new public optional type/domain/finite validation is required for unused flags.
+- [x] Actual `GameTooltip:SetSpellByID` and `SetMountBySpellID` pass the original identifier to the same real namespace query. Numeric/name/full-link aliases preserve every direct-query TooltipData field/value, including public RGBA components, and equivalent actual rendered lines. Processing may add per-line `lineIndex` only: when present it must be public numeric and equal the actual line position. Other extra fields or lines fail equivalence. No query replacement, method-call spy, VM-shape assertion or duplicate builder counts as frame proof.
+- [x] Secret frame identifiers and mount arg2 fail without replacing prior exposed TooltipData or rendered lines; valid public frame recovery remains meaningful.
 
 ## How it works
 
@@ -109,7 +109,7 @@ Existing meaningful controls remain in `tests/tooltip_mount.rs`, `tests/tooltip_
 ## Known gaps (current cycle)
 
 Corrected parent compiled RED is recorded above; the two focused C API boundaries are implemented. Fixture preconditions remain explicit and unchanged; no monkey-patching or weakened query assertions.
-- [ ] Fresh independent source-audit/acceptance; saved parent GREEN reconciled below, four source rows remain uncredited until accepted proof.
+- [x] Independent457 source/security/readability audit accepted; only four exact source rows credited below.
 - [ ] Ordinary optional flags are currently ignored: indoor eligibility, pet/subtext/override selection, difficulty and link meanings remain **gaps**, not semantic support.
 - [ ] Native alias vocabulary, arg types, permissions for secret arg1, error precedence, miss behavior and result secrecy remain unknown. Native probes are unavailable and not a completion gate for this chosen simulator policy.
 
@@ -121,6 +121,12 @@ Corrected parent compiled RED is recorded above; the two focused C API boundarie
 - New semantics or unrequested public optional type/domain/finite validation; old-profile contract changes.
 - GetSpell alias-ID bookkeeping changes, missing frame optional forwarding, sparse mount-line layout redesign and output/native parity claims.
 - Vendor patches, accounting promotion, broad gates, builds, test execution, push and native probes in this slice.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted [independent457 proof](/tmp/patch-12.0.5-tooltip-spell-mount-independent-proof.md): saved155 distinct PASS (22 focused,133 controls), five exits0 and startup0 `[]`; fresh six-file scopedfmt0, default dirty-combined cargo check0, readability/security/wiring audit without scoped blocker. Globalfmt remains FAILED on preserved unowned source. Naming advisory deferred: one-line handler names pose no observed behavioral risk; adjacent renaming excluded.
+
+Only333/334/336/337 promote: **210 pending /138 bounded /14 partial**,362 ordered unique IDs,64 capabilities.358 unrelated rows and63 prior capabilities retained. Source/register/plaintext provenance unchanged; parent postcommit validation owns accounting proof. Item330/331 remain pending. Historical mixed RED and corrected3PASS/19genuineFAIL retained. No native/full-profile/full-page/whole-goal claim; inferred policies and frame/flag gaps above remain open. Docs-only acceptance does not invalidate saved production-scoped proof.
 
 ## Reconciled batch56 saved parent GREEN — 2026-10-02
 
