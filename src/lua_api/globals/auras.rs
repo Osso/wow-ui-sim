@@ -23,6 +23,7 @@
 //! docs/wiki/investigations/partyframe-tree.md).
 
 use crate::lua_api::game_data::AuraInfo;
+#[cfg(not(feature = "retail-12-0-5"))]
 use crate::lua_api::globals::font_strings_collection::colors::{
     debuff_type_color, make_rilua_color_table,
 };
@@ -87,7 +88,6 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
             ),
             ("GetAuraDataBySpellName", get_aura_data_by_spell_name),
             ("GetUnitAuras", get_unit_auras),
-            ("GetAuraDispelTypeColor", get_aura_dispel_type_color),
             ("AddBlockedAura", add_blocked_aura),
             ("SwitchAuraDataProvider", switch_aura_data_provider),
             ("ResetAuraDataProvider", reset_aura_data_provider),
@@ -98,6 +98,7 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
         state,
         ns,
         &[
+            ("GetAuraDispelTypeColor", get_aura_dispel_type_color),
             ("GetAuraDataBySlot", get_aura_data_by_slot),
             ("GetAuraDataByIndex", get_aura_data_by_index),
             ("GetBuffDataByIndex", get_buff_data_by_index),
@@ -451,6 +452,7 @@ fn get_debuff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn get_aura_dispel_type_color(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let aura_id = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;

@@ -109,6 +109,8 @@ pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_altered_form;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_unit_aura_dispel_color;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_display_count;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_filter_query;

@@ -74,6 +74,8 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_slot_query::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_unit_aura_dispel_color::register(lua.state_mut())?;
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_display_count::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;

@@ -1,6 +1,6 @@
 # Aura dispel color arguments
 
-Batch45 fixture/spec contract for **exact Retail 12.0.5 source/register row378**: `C_UnitAuras.GetAuraDispelTypeColor`, `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. No producer, registration, Cargo target or accounting change belongs to this slice.
+Batch45 bounded producer contract for **exact Retail 12.0.5 source/register row378**: `C_UnitAuras.GetAuraDispelTypeColor`, `SecretArguments AllowedWhenTainted -> AllowedWhenUntainted`. Scope: sole epoch-owned C API producer and registration, preserving existing lookup/state/curves and fixtures. No Cargo target or accounting change. Requirements below remain unchecked pending parent GREEN and independent acceptance; implemented code alone is not execution proof.
 
 ## Grounding and evidence limits
 
@@ -46,7 +46,9 @@ Observed old backing contract: `src/lua_api/globals/auras.rs:454–464` ignores 
 
 ## Implementation inventory
 
-- `src/lua_api/globals/auras.rs`: existing blocked-inclusive typed lookup and old fixed-palette getter; unchanged.
+- `src/c_api/c_unit_aura_dispel_color.rs`: sole `retail-12-0-5` producer; upfront authentication of all three arguments, strict validation, typed mapping, real curve evaluation and authentic wrapped-color output.
+- `src/c_api/mod.rs`, `src/lua_api/globals/register.rs`: epoch-gated module/registration after existing aura namespace initialization.
+- `src/lua_api/globals/auras.rs`: unchanged blocked-inclusive typed lookup; old getter/import/registration now earlier-epoch-only, not a runtime fallback.
 - `src/c_api/c_curve_util.rs`: existing native-identity color-curve factory, registry validation and evaluation helper; unchanged.
 - `tests/aura_dispel_color_arguments.rs`: sixteen fixtures for the chosen row378 contract.
 - `tests/c_unit_auras_admin.rs`: two existing fixtures corrected to use required real color curves.
@@ -57,21 +59,27 @@ Observed old backing contract: `src/lua_api/globals/auras.rs:454–464` ignores 
 
 | Capability | Fixtures | Proof level |
 | --- | ---: | --- |
-| Step mapping, numeric linear x, custom nondispel/Magic colors, player/party lookup, signed endpoints | 5 | Authored; mapping/representations INFERRED; parent compiled RED pending |
-| Required unit/ID, malformed UTF-8/numeric bounds, native curve identity, missing/unknown stored data | 5 | Authored; error/representation policies INFERRED; parent compiled RED pending |
-| Secure each/mixed secrets, authenticated payload validation, tainted guard before miss, secret output/GC/recovery | 4 | Authored against actual VM wrapping/guard contract; output policy INFERRED; parent compiled RED pending |
-| Curve/point/result/DTO/record/block/provider immutability and two-environment isolation | 2 | Authored against existing typed lookup/curve model; parent compiled RED pending |
+| Step mapping, numeric linear x, custom nondispel/Magic colors, player/party lookup, signed endpoints | 5 | Implemented; saved RED; parent GREEN pending; mapping/representations INFERRED |
+| Required unit/ID, malformed UTF-8/numeric bounds, native curve identity, missing/unknown stored data | 5 | Implemented; saved RED; parent GREEN pending; error/representation policies INFERRED |
+| Secure each/mixed secrets, authenticated payload validation, tainted guard before miss, secret output/GC/recovery | 4 | Implemented using actual VM authentication/wrapping; saved RED; parent GREEN pending; output policy INFERRED |
+| Curve/point/result/DTO/record/block/provider immutability and two-environment isolation | 2 | Existing models preserved by producer; saved RED; parent GREEN pending |
 
 `tests/c_unit_auras_admin.rs`: two existing tests now supply required real step curves with x0 transparent white and x1 Magic `(0.2, 0.6, 1, 1)`. Existing alpha/type/icon/RGBA assertions are retained, not weakened. Their historical fixed-palette successes did not demonstrate curve evaluation.
 
-Fixture slice runs **no tests, builds, checks, readability gates, delegation or operations**. Only the two owned Rust files are formatted with `rustfmt --edition 2024 --config skip_children=true`. Parent owns compiled RED and subsequent producer/acceptance proof; no pass, native permission/output, profile-wide, consumer or row-accounting credit follows authored fixtures. No disputed aura-duration, batch44 spec, wiki/index/log, data or PLAN edits.
+Producer slice runs **no tests, builds, checks, readability gates, delegation or operations**. Only the four producer-owned Rust files are formatted with `rustfmt --edition 2024 --config skip_children=true`; unchanged fixtures are not reformatted. Coherent producer/spec/system-doc changes commit before parent GREEN. Parent owns subsequent GREEN and independent acceptance; no pass, native permission/output, profile-wide, consumer or row-accounting credit follows implementation. No disputed aura-duration, batch44 spec, wiki/index/log, data or PLAN edits.
+
+## Saved parent RED and producer rooting
+
+Fixture revision `9a2f15ac878a5b2c804d63867d7ddd92f7d6313a`: `/tmp/patch-12.0.5-batch45-red-build-result.json` records `cargo test --test integration --no-run --message-format=json`, exit0/99.040s. `/tmp/patch-12.0.5-batch45-red-run.json` records the compiled `aura_dispel_color_arguments::` selection, exit101/2.556s, **0 PASS / 16 FAIL**. Integration binary SHA256 `376ea4d00dacdca8c3ead28dbfd058e2d7e85dc5a6db002778809231231dc174`; full `.stdout`/`.stderr` artifacts share the run prefix. Evidence includes preserved unowned dirty source, not clean-revision proof. Every failure reaches custom-curve/recovery RGBA mismatch because the old getter ignores argument3; these are **not sixteen independent security RED claims**.
+
+The producer inspects original curve-wrapper identity and runs actual VM `unwrap_secret` on all three positions before any representation/identity/miss validation. Thus wrong public unit plus secret ID, or missing ID plus secret curve, reaches the actual untainted-caller guard first. Authenticated unit/ID/curve values are pushed as explicit stack roots before registry/key allocations and helper calls. The evaluated ColorMixin table is rooted before actual `wrap_secret` allocates a wrapper; the wrapper is immediately rooted too. Temporary stack top restores on success/error, with no GC safe point between restoration and pushing the successful result. Existing VM userdata marking traverses generic secret payloads; no new traversal or declassification is needed. Only an authentic secret curve wrapper propagates output secrecy under the inferred policy; secret unit/ID alone do not.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compiled RED for these exact fixtures; no execution proof recorded here.
-- [ ] Curve-evaluating producer and argument authentication, owned by parent after RED.
+- [x] Saved parent compiled RED for exact fixtures, with shared custom-curve failure boundary and dirty-source provenance recorded above.
+- [x] Curve-evaluating producer and upfront VM authentication implemented; owned formatting only, no producer execution claim.
 - [ ] Parent GREEN and independent acceptance before any bounded row378 credit.
 
 ## Out of scope
 
-Native access/valid-instance enforcement, restricted-unit output secrecy, native secrecy from secret curve points, exact native mapping/error/output parity, user-field curve overrides, producer/registration changes and all other source rows. [Native recorder](aura-dispel-curve-probe.md) remains observation preparation, not evidence establishing these unknowns.
+Native access/valid-instance enforcement, restricted-unit output secrecy, native secrecy from secret curve points, exact native mapping/error/output parity, user-field curve overrides and all other source rows. [Native recorder](aura-dispel-curve-probe.md) remains observation preparation, not evidence establishing these unknowns.
