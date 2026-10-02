@@ -32,17 +32,31 @@ pub(crate) fn action_texture_path(sim: &crate::lua_api::SimState, slot: u32) -> 
 
 pub(crate) fn get_action_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let (start, duration) = read_action_cooldown(state)?;
+    let restricted = {
+        let sim = borrow_state(state)?;
+        super::charge_state::cooldowns_are_restricted(&sim)
+    };
     let is_enabled = true;
     let info = create_table_with_capacity(state, ACTION_COOLDOWN_HASH_FIELDS);
-    table_set(state, info, "startTime", Val::Num(start));
-    table_set(state, info, "duration", Val::Num(duration));
+    // Root the public result before wrappers or field keys allocate.
+    state.push(info);
+    for (name, number) in [
+        ("startTime", start),
+        ("duration", duration),
+        ("modRate", 1.0),
+    ] {
+        let value = if restricted {
+            rilua::table_security::wrap_host_secret_number(state, number)
+        } else {
+            Val::Num(number)
+        };
+        table_set(state, info, name, value);
+    }
     table_set(state, info, "isEnabled", Val::Bool(is_enabled));
-    table_set(state, info, "modRate", Val::Num(1.0));
     if HAS_ACTIVE_FIELD {
         let is_active = is_enabled && start != 0.0 && duration != 0.0;
         table_set(state, info, "isActive", Val::Bool(is_active));
     }
-    state.push(info);
     Ok(1)
 }
 

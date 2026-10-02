@@ -1,10 +1,10 @@
 # Action cooldown output restriction — exact Retail 12.0.5 row 233
 
-`C_ActionBar.GetActionCooldown` must apply the bounded output restriction policy below to its existing cooldown DTO. Exact source: `data/patch-api/sources/12.0.5-api-changes.txt:233`, `SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted`. This slice adds tests/spec only; producer changes, compiled RED, GREEN and acceptance remain pending. [Lua API architecture](../wiki/systems/lua-api.md) provides subsystem context.
+`C_ActionBar.GetActionCooldown` must apply the bounded output restriction policy below to its existing cooldown DTO. Exact source: `data/patch-api/sources/12.0.5-api-changes.txt:233`, `SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted`. Batch64 implements only this output annotation after genuine compiled RED at `9ac29940debec17ce7ffe9bde6dbeb4839309122`; GREEN and acceptance remain main-owned and pending. [Lua API architecture](../wiki/systems/lua-api.md) provides subsystem context.
 
 ## What it must do
 
-All requirements remain unchecked until compiled behavioral evidence exists.
+All requirements remain unchecked until producer GREEN and independent acceptance; pre-producer RED does not satisfy them.
 
 ### Output policy (explicit simulator inference)
 
@@ -32,7 +32,7 @@ All requirements remain unchecked until compiled behavioral evidence exists.
 ## Implementation inventory
 
 - `tests/action_cooldown_output_restriction.rs`: 18 grouped behavioral tests, discovered by existing `build.rs` into `tests/integration.rs`; no new Cargo target or harness changes.
-- `src/c_api/c_action_bar.rs`: existing `get_action_cooldown` producer and permissive `read_action_cooldown`; read-only in this slice. Currently publishes ordinary numbers, `isEnabled`, and the profile-gated `isActive`.
+- `src/c_api/c_action_bar.rs::get_action_cooldown`: after unchanged interval lookup, snapshots `super::charge_state::cooldowns_are_restricted` through an immutable borrow and releases it before VM allocation. Roots the ordinary result table immediately after creation, then loops over `startTime`, `duration`, `modRate` (1.0), using actual typed `wrap_host_secret_number` under restriction or unchanged public `Val::Num` otherwise. Zero intervals use the same inferred policy. Existing `table_set` roots each value during key allocation. Returns the already-rooted table once; `isEnabled` and profile-gated `isActive` remain public booleans computed from the raw interval. Permissive arguments, selector/defaults, field count, profile gates and wiring remain unchanged; helper false retains earlier-profile/Forever ordinary payloads without new execution proof.
 - `src/lua_api/globals/action_bar_api.rs`: existing `spell_cooldown_times` latest-ending-active-interval selection; unchanged.
 - `src/c_api/charge_state.rs`: existing `cooldowns_are_restricted` gates the explicit flag to `retail-12-0-5` plus Retail/PTR; unchanged. Charge output is precedent for inferred field wrapping, not proof of native ActionBar policy.
 - `src/c_api/c_secrets.rs`: existing query sanity control; unchanged.
@@ -43,19 +43,27 @@ All requirements remain unchecked until compiled behavioral evidence exists.
 
 | Cases | Test names | Proof |
 |---|---|---|
-| Public numeric intervals | `unrestricted_spell_interval_is_public_and_exact`, `unrestricted_gcd_only_interval_is_public_and_exact`, `unrestricted_overlap_keeps_latest_ending_gcd_selection`, `unrestricted_empty_and_unassigned_positive_slots_keep_zero_payloads` | Authored only |
-| Authentic restricted numeric intervals | `restricted_spell_interval_wraps_all_three_actual_numbers`, `restricted_gcd_only_interval_wraps_all_three_actual_numbers`, `restricted_overlap_keeps_latest_ending_gcd_selection`, `restricted_assigned_spell_without_cooldown_wraps_zero_interval`, `restricted_unassigned_positive_slot_keeps_secret_zero_payload` | Authored only |
-| Shape, current flag, callers | `booleans_and_fieldset_remain_public_for_active_and_empty_results`, `live_restriction_toggle_keeps_old_secrets_and_returns_fresh_public_numbers`, `explicit_flag_not_combat_or_stat_policy_controls_output`, `secure_and_tainted_public_callers_preserve_context_and_field_observation` | Authored only |
-| Denial, copy, isolation, lifetime | `tainted_arithmetic_denial_keeps_roots_context_and_secure_recovery`, `tainted_table_copy_preserves_actual_wrapper_identity`, `result_mutation_and_replacement_do_not_change_model_or_other_dtos`, `live_interval_changes_expiry_and_independent_envs_use_current_state`, `forced_gc_keeps_original_wrappers_roots_and_fresh_result_payloads` | Authored only |
+| Public numeric intervals | `unrestricted_spell_interval_is_public_and_exact`, `unrestricted_gcd_only_interval_is_public_and_exact`, `unrestricted_overlap_keeps_latest_ending_gcd_selection`, `unrestricted_empty_and_unassigned_positive_slots_keep_zero_payloads` | Saved compiled RED: 4 PASS |
+| Authentic restricted numeric intervals | `restricted_spell_interval_wraps_all_three_actual_numbers`, `restricted_gcd_only_interval_wraps_all_three_actual_numbers`, `restricted_overlap_keeps_latest_ending_gcd_selection`, `restricted_assigned_spell_without_cooldown_wraps_zero_interval`, `restricted_unassigned_positive_slot_keeps_secret_zero_payload` | Saved compiled RED: 5 first-secret-observation FAIL |
+| Shape, current flag, callers | `booleans_and_fieldset_remain_public_for_active_and_empty_results`, `live_restriction_toggle_keeps_old_secrets_and_returns_fresh_public_numbers`, `explicit_flag_not_combat_or_stat_policy_controls_output`, `secure_and_tainted_public_callers_preserve_context_and_field_observation` | Saved compiled RED: 4 first-secret-observation FAIL |
+| Denial, copy, isolation, lifetime | `tainted_arithmetic_denial_keeps_roots_context_and_secure_recovery`, `tainted_table_copy_preserves_actual_wrapper_identity`, `result_mutation_and_replacement_do_not_change_model_or_other_dtos`, `live_interval_changes_expiry_and_independent_envs_use_current_state`, `forced_gc_keeps_original_wrappers_roots_and_fresh_result_payloads` | Saved compiled RED: 5 first-secret-observation FAIL; downstream behavior unproved |
 
 Fixtures assign positive slot 17 to actual spell ID 19750, with clock anchored at 335 seconds, spell `(312,237)` ending at 549 and GCD `(330,300)` ending at 630. Thus overlap selects GCD, consistent with the existing latest-ending selector. Slot 18 is explicitly unassigned. Expiry moves only the existing clock anchor to 900; no sleeps, new input model or fabricated charge data. These intervals have ample active margins for bounded GC tests, not an unlimited wall-clock guarantee.
 
+## Saved pre-producer RED — 2026-10-02
+
+Proof ledger: `/tmp/patch-12.0.5-batch64-red-build-result.json` records `cargo test --test integration --no-run --message-format=json` at `9ac29940debec17ce7ffe9bde6dbeb4839309122`, dirty-combined provenance, exit 0, **126.86125784402248 seconds**, zero compiler diagnostics. Build stderr is `/tmp/patch-12.0.5-batch64-red-build.stderr`. Integration binary `target/debug/deps/integration-d36739a1204f0133` has saved SHA256 `f1e13ffcdbe8dd4dd37fc7b0c3ba0dea45a08775a21532e1386a272ab77fe0d9`; protected source is neither inspected nor rehashed here.
+
+`/tmp/patch-12.0.5-batch64-red-run.json` records `timeout 90 <integration-binary> action_cooldown_output_restriction:: --nocapture --test-threads=1`: exit **101**, **4.229881642968394 seconds** wall time (harness reports 3.55 seconds). Saved stdout/stderr `/tmp/patch-12.0.5-batch64-red-run.stdout` and `.stderr` contain **18 tests: 4 unrestricted PASS, 14 genuine FAIL**. The four controls establish existing numeric types/payloads, fieldset and meaningful spell/GCD/empty selection setup. Nine failures reach the initial numeric secrecy assertion, three reach actual wrapper metadata inspection, one reaches a preserved DTO's field-secrecy observation after mutation/replacement, and one reaches the tainted caller's first field-secrecy observation. Those first failures are missing output secrecy, not compile/setup defects. Later denial/copy/GC assertions are not RED proof until GREEN reaches them.
+
+This proof covers only the pre-producer snapshot; the new producer invalidates its applicability as current passing evidence. Compile and execution costs are separate, no rerun or fresh proof is claimed, and the short run is bounded development evidence rather than whole-goal acceptance.
+
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned compiled RED on the new grouped tests; compilation errors do not count as RED. No build, test, check, lint, readability or acceptance execution occurs in this slice.
-- [ ] Producer implementation, targeted GREEN and independent gates remain pending. Expected secret-output failures are hypotheses until compiled RED; downstream denial/copy/GC assertions are not proven by an earlier failure.
+- [ ] Main-owned targeted producer GREEN, startup, check, security/wiring, readability, independent acceptance and exact233 accounting remain pending. No delegation, build, test, check, lint, readability gate, operations or push occurs in this implementation slice; only the owned changed Rust file is formatted with child traversal disabled.
+- [ ] Saved RED proves missing secret outputs, not downstream arithmetic denial, secure recovery, copying, isolation or GC. Producer implementation is committed before gates, not claimed passing. No fixture correction is justified or made.
 - [ ] Accounting stays unchanged: user-provided current checkpoint is 197 pending, 150 bounded, 14 partial, 1 metadata = 362 IDs, 69 capabilities. Row 233 remains pending; existing 40-stat/charge partial capability is not upgraded. No accounting artifact edits or capability credit.
-- [ ] Main's separate row295 producer/independent502 work and active batch63 files remain untouched; their execution/proof is not evidence for this slice.
+- [ ] Main's row295 independent505 Forever 3-PASS artifact and 20-test Retail refresh remain pending main acceptance; row239's 65 tests at `ed682bf3d` are only the next RED. Their source/tests/specs, accounting, wiki and PLAN remain untouched; neither slice proves row233.
 - [ ] Future optional native probe: record slot 0 behavior separately, public unrestricted/restricted results for valid assigned slots, active spell versus active GCD selection, empty intervals, tainted public-slot queries, ordinary table field copies, numeric Lua types and `isEnabled`/`isActive`/optional `isOnGCD` truth and secrecy exceptions. Probe work is not a completion gate here.
 
 ## Source grounding and inference limits
@@ -68,4 +76,4 @@ The temporary recommendation `/tmp/patch-12.0.5-next-actionbar-security-boundary
 
 ## Out of scope
 
-Input guards, `AllowedWhenUntainted` implementation/credit, NeverSecret argument credit, slot ranges or parser changes; duration objects and consumers; production edits or input scaffolding; Forever policy and earlier-profile execution; rows231/237/239/241 or other annotation rows; new DTO fields; callback replacement/security relaxation; protected `aura_duration` inspection; native parity and probes; Cargo changes/delegation/operations/push. Existing profile payload and selector controls do not claim these excluded capabilities.
+Input guards, `AllowedWhenUntainted` implementation/credit, NeverSecret argument credit, slot ranges or parser changes; duration objects and consumers; production edits outside `get_action_cooldown` or input scaffolding; Forever policy and earlier-profile execution; rows231/237/239/241 or other annotation rows; new DTO fields; callback replacement/security relaxation; protected `aura_duration` inspection; native parity and probes; Cargo changes/delegation/operations/push. Existing profile payload and selector controls do not claim these excluded capabilities.
