@@ -69,6 +69,14 @@ The31-test spell-control group is30PASS/1FAIL and the two shim-unit tests are1PA
 
 Refreshed focused/control/unit execution and independent verification remain pending. These are fixture/state and outdated-contract corrections, not production fallback changes. Native known-name acquisition, cast secret-input permission and nominal-type limits remain explicit.
 
+## Saved corrected parent GREEN — 2026-10-01
+
+At `9615c668a5a53fbe6c3e920364411cc788e22155`, existing lib plus grouped integration compilation exits0 with zero diagnostics in268.4409900170285s. `/tmp/patch-12.0.5-batch67-green-fixed-build-result.json` and full compiler JSON/stderr retain executable provenance: integration SHA256 `4104988f850d6c138f6ea00b90aea116106f965215fa57bace876332818f5d03`, lib-test SHA256 `682363c3a625e5e55192a2f9bb190abc8a15b7befaba10e43da7f80f08ff8984`.
+
+Six finite executions record **127 distinct PASS**:30 focused,31 spell controls,2 shim units,28 Action counts,14 spell/flyout and22 tooltip identifier controls; all exits0. Runtime81.26639102597255s separately from compilation. Startup returns `[]`, exit0,7.463416979997419s. Exact commands/hashes/full output paths: `batch67-green-fixed-runs.json` and `green-startup-run.json`.
+
+Canonical lowercase fixture keys and Retail125 STRING-domain assertions now pass; no new catalog/name fallback, callback replacement or input-permission bypass. Cast secret identifiers remain conservatively rejected and do **not** satisfy native AllowedWhenTainted; only output-predicate simulator coverage is proposed. Display’s actual VM guards and numeric/string payload privacy execute. Independent528 source/security/wiring/readability/scoped Rust checks and earlier/Forever preservation remain pending;301/309 uncredited. Dirty/globalfmt/process/type/acquisition/native/global-privacy/UI limits retained. No valid runtime/build replay solely for docs/accounting. Applicable header date and observed host provenance timestamps are distinct.
+
 ## Known gaps (current cycle)
 
 - [ ] Independently demonstrate producer GREEN after the main-owned compiled RED below. Earliest RED failures prevented downstream privacy/GC assertions from executing; authored coverage is not completed proof.
