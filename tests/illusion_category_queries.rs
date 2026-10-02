@@ -8,7 +8,7 @@ use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string, wrap_secret,
 };
 use rilua::{LuaApiMut, Val};
-use wow_ui_sim::c_api::c_transmog_collection::IllusionInfo;
+use wow_ui_sim::c_api::IllusionInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const SECRET_NAMES: [&str; 6] = [
