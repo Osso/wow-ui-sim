@@ -3,6 +3,16 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 spell cast and display-count outputs
+
+Producer `c939971f8` covers only **EXACT301/309**, `C_Spell.GetSpellCastCount` / `GetSpellDisplayCount`; [contract, inventory and proof SSOT](../../specs/spell-count-outputs.md) owns requirements. Literal input is empty-default, spell-keyed `SimState.spell_cast_counts: HashMap<u32,u32>`. Cast reads only explicit resolved spell counts, never action-slot counts or charges. Display alone prioritizes valid charge quantity (`max_charges > 0`), then explicit counts. Reads copy a snapshot without changing maps; alias-first identity is preserved through extracted Value-based resolution. The shared pure formatter body is unchanged: default9999, replacement `"*"`, strict > threshold, equality retaining digits. Missing cast0/display empty, explicit zero `"0"`, priority, finite threshold/strict UTF8 CString domains and local u32 width are simulator inferences, not native findings.
+
+Native documentation declares cast argument1 AllowedWhenTainted and display AllowedWhenUntainted, with both outputs SecretWhenCooldownsRestricted. **Cast secret-input permission remains UNMODELED**: the existing conservative public parser rejects authentic secret argument1 even for secure callers before aliases/model, reporting the public API and unmodeled access without payload. This earns neither AllowedWhenTainted support nor NeverSecret metadata credit. Display authenticates all three original VM arguments in order before types/model; secure authenticated identifiers resolve through Value extraction, not stack-mutating declassification. Public tainted calls remain allowed; tainted authentic secrets deny before invalid/unresolved/missing inputs, with public position-only errors.
+
+The existing explicit live cooldown-restriction flag under Retail125/PTR controls scalar host-secret NUM cast / STR display, including zero/empty/replacement results; unrestricted reads return ordinary scalars. Immediate roots, exact trusted-host typed payloads, Lua opacity, read-only snapshots, caller trust, copies/allocation identity through GC and flag-off new-public/old-private lifetimes are required behavior, not completed proof. Real C_Spell entries use the sole existing registration; inverse count-shim retirement preserves earlier epochs/Forever numeric0 defaults. No new acquisition, reagent inventory, consumption, action sources or datasets; native quantity conditions, exceptions, nominal opaque type, UI/profile/global privacy and coercion/priority remain unknown. Unchanged action formatter reuse earns no neighboring action/base/Maw credit.
+
+Actual pre-producer RED at `23ac1c89d`: **30 tests, 0 PASS / 30 FAIL**, exit101, primarily old cast numeric0 versus explicit7 and old display NUM0 versus STR. Many authentication/GC assertions were not reached. Rust compilation exited0 in **420.460077s, zero diagnostics**. No producer GREEN, independent acceptance, current-profile or counter proof. Requester checkpoint after separate batch66 acceptance `3cd7` is **192 pending / 155 bounded / 14 partial / 1 metadata; 362 IDs; 73 capabilities**;301/309 remain uncredited. Spec authored2026-10-01; this local documentation date2026-10-02 and observed producer Git author/committer timestamp2026-10-02T17:53:38-05:00 remain separate provenance.
+
 ## Retail 12.0.5 action display and use-count outputs
 
 Producer `b1cb0ee9f` covers **EXACT237/241**: `C_ActionBar.GetActionDisplayCount` and `C_ActionBar.GetActionUseCount`. [Contract, inventory and saved RED SSOT](../../specs/action-count-outputs.md) owns requirements and evidence. Literal host input is empty-default, slot-keyed `SimState.action_use_counts: HashMap<u32, ActionUseCountInfo>`, with `ActionUseCountInfo { spell_id, count }`; a record supplies a count only when its spell matches the slot's current binding. No fake catalog, consumption, inventory link or native acquisition is introduced.
@@ -315,6 +325,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Spell cast and display-count outputs](../../specs/spell-count-outputs.md) — EXACT301/309 SSOT; spell-keyed input, display-only charge priority, shared formatter, unmodeled cast permission, authentic scalar requirements and actual compiled RED; no GREEN/acceptance/credit
 
 - [Action display and use-count outputs](../../specs/action-count-outputs.md) — EXACT237/241 SSOT; explicit matching slot counts, independent display selection, authentic scalar privacy and saved RED limits; no GREEN/acceptance/credit
 
