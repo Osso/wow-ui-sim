@@ -15,7 +15,7 @@ Cached later Retail documentation at `~/.cache/wow-ui-sim/blizzard-ui/retail/Add
 ### INFERRED simulator policies, not native-verified semantics
 
 - [ ] Reject actual host-VM secret NUMBER limits with known payloads0/1/2/1e100 on ordinary valid public text, under secure and stamped-tainted callers. The large public counterpart succeeds unchanged, so rejection is not invalid numeric-range evidence.
-- [ ] Authenticate arg2 even when public text is empty or contains no ASCII spaces; all four secret NUMBER limits still reject in both caller contexts.
+- [ ] Validate/reject arg2 even when public text is empty or contains no ASCII spaces; all four secret NUMBER limits still reject in both caller contexts.
 - [ ] Reject actual host-secret STRING with numeric-like payload `1`, and actual secret wrappers around a globally rooted Frame and Table. Establish Frame identity through `GetObjectType() == 'Frame'`, not an assumed userdata representation.
 - [ ] Preserve globally/list-rooted wrapper identity and secrecy across forced GC and rejection; preserve original object identity, sentinel inputs, frame alpha/marker, table fields and caller stack taint. Every rejection permits meaningful public ASCII-text recovery in the same caller context.
 - [ ] Retain existing strict required actual-NUMBER, finite, nonnegative, integral limit validation; public numeric string, boolean, Table, Frame, negative, fractional, NaN and infinities reject in both contexts. No new validation policy or exact-error-text contract.
@@ -49,10 +49,10 @@ Existing `tests/c_api_surface.rs` owns broader algorithm fixtures; these tests c
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned compilation and execution pending. Existing provider may already pass all new fixtures; that is valid existing-behavior coverage, not fabricated RED evidence. No production decision follows from unexecuted fixtures.
+- [ ] Independent389 verification and parent-owned acceptance remain pending. [Combined batch49/50 saved proof SSOT](private-aura-sound-removal.md#reconciled-combined-batch4950-parent-green--2026-10-02) records all eight fixtures GREEN on the unchanged provider, exact commands/revisions/hashes, controls and startup. Existing raw-NUMBER validation rejects opaque secret limits without payload access: validates/rejects, not authenticates. No fabricated RED or unnecessary production rewrite.
 - [ ] Parent-owned acceptance and exact row328 accounting remain pending; no capability, coverage, PLAN or wiki promotion in this slice.
 - [ ] Native runtime rejection/coercion/range/error and precise byte-edge parity remain unverified. Concrete controls preserve the existing simulator policy only.
 
 ## Out of scope
 
-Secret arg1 acceptance, secret-result propagation, and native `AllowedWhenTainted` permissions are UNKNOWN and deliberately not asserted. No producer/algorithm, registration, module, Cargo, simulator-state implementation, vendor, coverage, wiki, PLAN or ledger changes. No native probe, build, test execution, checks, lint, readability/coverage gates, operations, deployment or delegation in this tests/spec-only slice.
+Secret arg1 acceptance, secret-result propagation, and native `AllowedWhenTainted` permissions are UNKNOWN and deliberately not asserted. No producer/algorithm, registration, module, Cargo, simulator-state implementation, vendor, coverage or PLAN changes. Combined proof lives only in the linked sound spec; wiki links do not promote accounting. No native probe, build, test execution, checks, lint, readability/coverage gates, operations, deployment or delegation in this docs reconciliation.

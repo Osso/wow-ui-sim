@@ -6,6 +6,10 @@
 
 [Classification proof SSOT](../specs/aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) records16 new +210 controls +18 private anchors =244 unique PASS/all16 exits0, startup0 `[]`, exact runtime71.3813190951477735s and dirty-source-bound provenance. Historical RED retained; shared cooldown14 refreshed. Policies remain inferred; native permissions/result secrecy/catalog/acquisition unknown. Independent381 and source361/363/359 pending; no checked requirements, coverage/accounting or private-anchor acceptance.
 
+## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
+
+[Combined proof SSOT](../specs/private-aura-sound-removal.md#reconciled-combined-batch4950-parent-green--2026-10-02) owns exact artifacts/revisions/hashes and capability limits; [space-limit row328](../specs/string-util-space-limit-security.md) links there. Genuine sound RED retained; unchanged space provider already GREEN. Dirty-source-bound bounded development evidence, not clean revision, native or final whole-page/goal acceptance. Independent389 pending; requirements/accounting unchanged.
+
 ## [2026-10-02] implementation | Add bounded batch49 sound removal callback
 
 [[lua-api#Retail 12.0.5 private aura sound removal]] links [row403 contract](../specs/private-aura-sound-removal.md): one strict public-u32 zero-result remover, shared legacy/modern callback for actual cached alias durability, conservative VM-secret rejection before type/key access. Saved parent RED0PASS/13FAIL; inputs/fixtures unchanged, GREEN/acceptance parent-owned. Native permissions/acquisition/result/error/context parity unknown; no accounting claims.

@@ -1,6 +1,6 @@
 # Private aura sound removal
 
-Batch49 covers only exact row `global api-C_UnitAuras-RemovePrivateAuraAppliedSound-403` (`- HasRestrictions`) in the [12.0.5 source register](../../data/patch-api/sources/12.0.5-register.json). C API-owned host inputs live in `src/c_api/private_aura_sounds.rs`; fixtures describe a bounded removal transition. The bounded producer registers one removal callback under legacy and epoch-gated modern names; passing behavior remains parent-verification pending. Architecture reference: [C API boundary](../wiki/systems/lua-api.md).
+Batch49 covers only exact row `global api-C_UnitAuras-RemovePrivateAuraAppliedSound-403` (`- HasRestrictions`) in the [12.0.5 source register](../../data/patch-api/sources/12.0.5-register.json). C API-owned host inputs live in `src/c_api/private_aura_sounds.rs`; fixtures describe a bounded removal transition. The bounded producer registers one removal callback under legacy and epoch-gated modern names; saved combined parent GREEN is recorded below; independent389 verification and acceptance remain pending. Architecture reference: [C API boundary](../wiki/systems/lua-api.md).
 
 ## Evidence and inference
 
@@ -67,9 +67,30 @@ Producer implementation follows this genuine RED. Both names use the same canoni
 
 No producer GREEN, build/tests/check/lint/readability/coverage/deployment/acceptance was run by this implementation slice. Parent owns subsequent proof. All requirements remain unchecked; no row/accounting acceptance follows.
 
+### Reconciled combined batch49/50 parent GREEN — 2026-10-02
+
+This is the combined proof SSOT; [space-limit scope](string-util-space-limit-security.md) links here rather than duplicating hashes or test names. Sound inputs `c25a90793aded2f1400c4d59b046212d696de335`, producer `100b4d5bb6b5d30cfa5f6ea1dca15ad15c10f387`, and batch50 fixtures/proof revision `5ee8e7327b7ebf4f6827cb9e4e7f0b9b3e04b58c` identify the bounded work. Existing `c_string_util` is unchanged: eight fixtures were already GREEN, not fabricated RED or grounds for a production rewrite. The earlier no-GREEN producer checkpoint is historical; genuine sound RED remains above.
+
+Saved artifacts (read in full, not rerun): `/tmp/patch-12.0.5-batch49-50-green-build-result.json`, `-green-runs.json`, and `-green-startup-run.json` under the same prefix own exact argv, revisions, timing and binary hash records. Full compilation output is `/tmp/patch-12.0.5-batch49-50-green-build.jsonl` and `-green-build.log`; exact test outputs are `-green-run-0.stdout`/`.stderr` through `-green-run-18.stdout`/`.stderr`, in JSON filter order. Startup output is `-green-startup.stdout`/`.stderr`. Full artifact references retain all individual names and hashes without duplicating them here.
+
+- Compile `cargo test --test integration --no-run --message-format=json`: exit0, `196.38996677508112s`.
+- Each saved test command is `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/deps/integration-a11e89d240f9bd0c <filter> --test-threads=1`; all19 exits0, **13 sound +8 space-limit +248 controls =269 unique PASS**, no repeated names. Ordered exact filters and summaries live in `-green-runs.json`; stdout confirms the individual results.
+- Integration binary SHA256 `404cab9e893e84829b7b0609ae56e00d231ce28e59ef5d37aba7f06e5df9c8ce`. Startup command `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/wow-sim --no-addons --no-saved-vars lua-errors`: exit0, exact stdout `[]\n`, `4.87017765303608s`; binary SHA256 `6b2040fc74259e399510c58ad7f575a94e2fb254df775039efa1550eabd61f68`.
+- Saved dirty-source diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a` binds preserved unowned changes: **not clean-revision proof**. Source diff contents were not accessed by this docs update. Actual test runtime `40.32936095423065s`, below60 target; no padding or reruns. Startup and compilation are separately timed.
+
+| Boundary | Saved proof | Limit |
+|---|---|---|
+| Sound host-state removal, inclusive-u32 endpoints, unknown/repeat, isolation/replacement, invalid recovery | 13 sound PASS collectively | Map/domain/no-op policy INFERRED; no acquired-ID lifecycle |
+| Real public tainted modeled-combat removal and rooted secure/tainted secret rejection, taint preservation | Sound fixtures PASS | Conservative rejection INFERRED; no native permissions/error parity |
+| Actual complete cached Deprecated file, prerequisites/default CVar, durable legacy/modern canonical callback | Publication fixtures PASS after genuine RED post-alias arity failure | Later cached evidence; modern1210 only for alias durability, no Add/playback scope |
+| Exact row328 arg2 NeverSecret, opaque secret rejection, GC/state/recovery, byte-preserving ASCII matrix | 8 existing-provider PASS | Raw-NUMBER validation/rejection, not payload authentication or native arg1/result/AllowedWhenTainted permission proof |
+| Adjacent controls/startup | 248 unique control PASS; startup0 `[]` | Bounded development partition only |
+
+Independent389 remains pending. No checked requirements, row acceptance, source coverage/accounting, final whole-page/goal or native acceptance follows. No new executions or temporary ledger were produced.
+
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned GREEN and independent verification of the minimal producer; saved preproducer RED above does not establish passing behavior or row acceptance.
+- [ ] Independent389 verification and parent-owned acceptance of the minimal producer and existing space-limit behavior; saved GREEN is bounded development evidence only.
 - [ ] Add acquisition remains unmodeled; host-seeded removal does not establish Add-to-Remove lifecycle.
 
 ## Out of scope

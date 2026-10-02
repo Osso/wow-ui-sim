@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
+
+Updated [sound proof SSOT](../specs/private-aura-sound-removal.md#reconciled-combined-batch4950-parent-green--2026-10-02), [space-limit scope](../specs/string-util-space-limit-security.md) and [[lua-api#Retail 12.0.5 private aura sound removal]] links from full saved artifacts. Genuine sound RED and inferred/native gaps retained; unchanged space provider validates/rejects opaque secret limits, not authenticates payloads. Independent389 pending; no acceptance, checked requirements or accounting promotion. Docs-only, no source access or new execution proof.
+
 ## [2026-10-02] implementation | Add bounded batch49 sound removal callback
 
 Updated [[lua-api#Retail 12.0.5 private aura sound removal]] and [row403 contract](../specs/private-aura-sound-removal.md) with shared epoch-gated legacy/modern registration, strict public-u32 validation, conservative actual-VM secret rejection and current live-ID removal with zero outputs. Saved genuine parent RED0PASS/13FAIL retained; fixtures/inputs/defaults untouched. No GREEN, gates, checked requirements or accounting credit; parent owns verification. Native acquisition/permissions/result/error/context parity remain unknown.
