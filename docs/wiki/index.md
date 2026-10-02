@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Bound exact233 action cooldown outputs
+
+[[lua-api#Retail 12.0.5 action cooldown output restriction]] links [exact233 spec SSOT](../specs/action-cooldown-output-restriction.md) after `fad6e780f`: unchanged state-backed spell/GCD intervals, explicit `cooldowns_restricted` helper gate Retail125/PTR, ordinary rooted table with typed secret NUMs only for startTime/duration/modRate; existing public BOOLs/fieldset unchanged. Numeric-field/zero/table policies inferred. Saved pre-producer RED4PASS/14FAIL reaches first secret/wrapper observations; downstream GC unproved, no GREEN/acceptance/source credit. Input guards/duration objects/Forever/new fields/charge partial231/native exceptions/UI parity excluded.197 pending/150 bounded/14 partial/1 metadata,362 IDs/69 capabilities unchanged;233 pending,295 artifacts pending acceptance,239 tests-only.
+
 ## [2026-10-02] evidence | Accept two item-context additions
 
 [Exact330/331 acceptance SSOT](../specs/tooltip-item-context.md#independent-bounded-acceptance--2026-10-02) records independent497+499:24 refreshed focused PASS plus153 reusable controls/startup0 `[]`, producer-scoped fmt/check/security/wiring and four equivalent assertion fixes. Only330/331 promote;360 unrelated rows/68 prior capabilities preserved. Explicit empty-default variants over finite catalog only; inferred policies, eleven historical fixture diagnostics, dirty/globalfmt/native/profile/quality/fullvariants limits remain. Broader goal open.

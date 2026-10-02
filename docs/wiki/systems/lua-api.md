@@ -3,6 +3,14 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 action cooldown output restriction
+
+Producer `fad6e780f` implements only exact233 output annotation on `C_ActionBar.GetActionCooldown`; [contract, inventory and saved RED SSOT](../../specs/action-cooldown-output-restriction.md) owns requirements and evidence. Existing state-backed spell/GCD intervals and latest-ending selection remain unchanged. The existing `cooldowns_are_restricted` helper reads explicit live `cooldowns_restricted`, gated to Retail125/PTR (`retail-12-0-5` plus Retail/PTR), not combat or unit-stat restriction.
+
+The ordinary public result table is rooted immediately; only `startTime`, `duration` and `modRate` use typed `wrap_host_secret_number` under restriction, retaining actual numeric payloads and numeric Lua types. Unrestricted values remain public numbers; `modRate` remains 1. Existing public BOOLs and fieldset remain unchanged: `isEnabled` true, `isActive` only under `retail-12-1-0`, with no new fields. Numeric-field, zero-interval and ordinary-table policies are simulator inferences, not native findings.
+
+Saved pre-producer RED is **4 unrestricted PASS / 14 genuine FAIL**: all failures reach first secret-field or wrapper observations, not downstream denial/recovery/copy/isolation/GC proof. No producer GREEN, acceptance or source-row credit. Input guards, duration objects, Forever policy, new fields, charge partial231, native exceptions and UI parity are excluded. Current accounting remains **197 pending / 150 bounded / 14 partial / 1 metadata; 362 IDs; 69 capabilities**;233 pending. Row295 artifacts remain pending main acceptance; row239 is tests-only, neither proves233.
+
 ## Retail 12.0.5 item tooltip contexts
 
 Producer `23efb40c8` implements `C_TooltipInfo.GetItemByID` exact330/331 through the [contract, inventory and proof SSOT](../../specs/tooltip-item-context.md). Literal host input is environment-local `SimState.item_tooltip_levels: HashMap<ItemTooltipContext, u16>`, empty by default; the key contains `item_id: u32`, `item_context: Option<u32>` and `treasure_context_level: Option<u32>`. Known catalog `ItemInfo` is cloned ephemerally, changing **only `item_level`**; base and selected clones reuse the shared line builder and existing estimated-stat heuristic. No catalog item or production mapping is fabricated.
@@ -285,6 +293,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Action cooldown output restriction](../../specs/action-cooldown-output-restriction.md) — exact233 SSOT; bounded producer inventory, inferred policies and pre-producer RED, no GREEN or acceptance credit
 
 - [Item tooltip contexts](../../specs/tooltip-item-context.md) — exact330/331 contract/proof SSOT: empty host map, level-only catalog clone, all-four VM boundary, exact misses and corrected pre-producer RED limits
 
