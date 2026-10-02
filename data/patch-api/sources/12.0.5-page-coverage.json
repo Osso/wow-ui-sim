@@ -7,6 +7,22 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "illusion-category-queries",
+      "symbols": [
+        "C_TransmogCollection.GetIllusions"
+      ],
+      "scope": "Exact352/353 only: empty-default explicit environment-local Vec<IllusionInfo> category plus six primitive fields. Nil/all, strict finite integral u32 exact matching, unknown/empty and source order inferred. Fresh dense public six-field rows preserve flags without catalog fabrication or appearance derivation. Actual VM AllowedWhenUntainted authentication before type/model; secret NUM/NIL secure allowed, tainted denied; invalid payload/caller/GC/root metadata/read-only/live replacement/isolation. Native filtering/catalog/acquisition/width/secrecy/error/profile execution excluded.",
+      "spec": "docs/specs/illusion-category-queries.md",
+      "tests": [
+        "tests/illusion_category_queries.rs"
+      ],
+      "implementation": "cd6eb9a2f148ffab413d0861ed1fac3392c07045",
+      "compiled_revision": "bf9d6e74bf86d88456be985afb5dfda356ab3f0b",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-illusion-category-independent-proof.md",
+      "gate_scope": "Parent accepted independent470 behavior/security/wiring/ownedfmt and471 follow-up source equivalence/readability/freshfmt/check after bf9d6e74b resolves three findings. Fixed16PASS +72 source-valid historical controls =88distinctPASS; historical startup0[] reused, not rerun. GenuineRED2PASS14FAIL; initialE0603 not behavior proof. Dirty-combined/globalfmt1 preserved unowned; no native/profile/final page claim. Follow-up compile230.898763s focused4.612546s; check152.372544s incl lock separate. Costs and source snapshots retained; subsequent cost scaffolding outside proof."
+    },
+    {
       "id": "spell-link-glyph-security",
       "symbols": [
         "C_Spell.GetSpellLink"
@@ -2300,15 +2316,19 @@
     },
     {
       "source_id": "global api-C_TransmogCollection-GetIllusions-352",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "illusion-category-queries"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact352/353 accepted independent470+471:16freshPASS plus72 reusable controls/startup0[]; scopedfmt/check and three readability fixes independently proved. Explicit empty-default input/strict category/VM secure-tainted boundary only; nil/order/domain inferred, dirty-combined/globalfmt1/native/profile/catalog gaps retained. No full illusion ecosystem/lifecycle claim."
     },
     {
       "source_id": "global api-C_TransmogCollection-GetIllusions-353",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "illusion-category-queries"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact352/353 accepted independent470+471:16freshPASS plus72 reusable controls/startup0[]; scopedfmt/check and three readability fixes independently proved. Explicit empty-default input/strict category/VM secure-tainted boundary only; nil/order/domain inferred, dirty-combined/globalfmt1/native/profile/catalog gaps retained. No full illusion ecosystem/lifecycle claim."
     },
     {
       "source_id": "global api-C_TransmogOutfitInfo-GetOutfitInfo-355",

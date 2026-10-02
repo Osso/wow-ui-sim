@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact illusion category queries
+
+[Batch59 acceptance SSOT](../specs/illusion-category-queries.md#independent-bounded-acceptance--2026-10-02) records independent470+471:16 refreshedPASS plus72 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and three readability fixes. Only352/353 promote;360 unrelated rows/65 prior capabilities preserved. Dirty/globalfmt/native/profile/catalog/inferred-policy limits remain; broader goal open.
+
 ## [2026-10-02] implementation | Document bounded batch59 illusion query producer
 
 Updated [[lua-api#Retail 12.0.5 illusion category queries]], Sources and index crosslink to [exact352/353 SSOT](../specs/illusion-category-queries.md) for `cd6eb9a2f`. Literal empty-default `Vec<IllusionInfo>` carries category plus six output fields; epoch125 VM AllowedWhenUntainted authentication precedes strict nil/u32 validation, with fresh rows in input order and one rooted-namespace publication/legacy inverse gate. Nil/all, unknown/empty, order and strict-domain policies remain inferred; no production catalog, appearance-derived records or hidden-flag filter. Initial E0603 and export correction `f83e073f9` retained separately from genuine corrected RED2PASS/14FAIL. No new execution, GREEN or acceptance claim;208 pending/139 bounded/14 partial/1 metadata,362 IDs/65 capabilities unchanged;352/353 pending. Docs-only; spec/source/tests/data/PLAN untouched; no builds/tests/checks/gates/push/ops/delegation or protected source inspection.
