@@ -41,7 +41,10 @@ fn find_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
         "C_ActionBar.FindSpellActionButtons",
     )?;
     let mut slots = match spell_id {
-        Some(id) => effective_spell_slots(&borrow_state(state)?, id).collect::<Vec<_>>(),
+        Some(id) => {
+            let sim = borrow_state(state)?;
+            effective_spell_slots(&sim, id).collect::<Vec<_>>()
+        }
         None => Vec::new(),
     };
     // Deterministic ascending order and one empty table on miss are inferred policies.
@@ -61,9 +64,11 @@ fn has_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
         "C_ActionBar.HasSpellActionButtons",
     )?;
     let has_slots = match spell_id {
-        Some(id) => effective_spell_slots(&borrow_state(state)?, id)
-            .next()
-            .is_some(),
+        Some(id) => {
+            let sim = borrow_state(state)?;
+            let has_slots = effective_spell_slots(&sim, id).next().is_some();
+            has_slots
+        }
         None => false,
     };
     state.push(Val::Bool(has_slots));
