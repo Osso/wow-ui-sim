@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Add bounded batch48 spell classification getters
+
+[[lua-api#Retail 12.0.5 aura spell classifications]] links [rows361/363 contract](../specs/aura-spell-classification-identifiers.md): two independent public booleans over unchanged explicit inputs, shared strict public identifier validation with the cooldown getter, conservative VM-secret rejection. Saved parent RED0PASS/16genuineFAIL; fixtures unchanged, GREEN/independent gates parent-owned. Native permissions/acquisition/result secrecy and accounting unchanged.
+
 ## [2026-10-02] evidence | Accept exact batch47 cooldown association row
 
 [Independent373 bounded acceptance](../specs/cooldown-aura-spell-identifiers.md#independent-bounded-acceptance--2026-10-02) owns210 uniquePASS/startup0[], commands/hashes and dirty provenance. Only387 promotes: **238 pending/110 bounded/14 partial =362;54 capabilities**. Ordered IDs,361 unrelated rows,53 prior capabilities and source provenance retained. Scopedfmt0/dirtycheck0; globalfmt1 unowned retained. Four advisories deferred; inferred map/aliases/public result/taint/conservative rejection only, native permissions/access/secrecy/catalog/acquisition/direction unknown. Bounded development, not final page/goal/native acceptance; parent owns postcommit validation.

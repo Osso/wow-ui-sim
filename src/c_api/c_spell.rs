@@ -616,6 +616,38 @@ fn read_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     read_spell_identifier_at(state, 1)
 }
 
+/// Strict public boundary shared by cooldown associations and spell classifications.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn read_public_spell_identifier_at(
+    state: &LuaState,
+    arg_index: i32,
+    api_name: &str,
+) -> LuaResult<Option<u32>> {
+    let value = stack_val(state, arg_index);
+    // INFERRED conservative rejection, not native AllowedWhenTainted permissions.
+    // Never unwrap secrets, inspect private payloads, or change caller taint.
+    if rilua::table_security::is_secret_value(state, value) {
+        return Err(rilua::runtime_error(format!(
+            "{api_name}: secret spell identifier access is not modeled"
+        )));
+    }
+    // INFERRED strict public representations; validate before alias resolution.
+    match value {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && number >= 0.0
+                && number <= u32::MAX as f64 => {}
+        Val::Str(_) if val_to_string(state, value).is_some() => {}
+        _ => {
+            return Err(rilua::runtime_error(format!(
+                "{api_name}: argument {arg_index} must be a public UTF-8 string or finite integral u32 number"
+            )));
+        }
+    }
+    read_spell_identifier_at(state, arg_index)
+}
+
 /// Shared alias-first resolution; callers own argument and secret validation.
 pub(crate) fn read_spell_identifier_at(state: &LuaState, arg_index: i32) -> LuaResult<Option<u32>> {
     let raw = stack_val(state, arg_index);

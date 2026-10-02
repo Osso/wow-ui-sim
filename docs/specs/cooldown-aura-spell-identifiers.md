@@ -35,12 +35,12 @@ All chosen behavior below is **inferred simulator policy**, not native-client pa
 
 ## Implementation inventory
 
-- `src/c_api/c_unit_aura_cooldown_spells.rs`: unchanged public empty-default input plus sole getter, strict public validation, actual VM secret rejection and direct nullable numeric lookup.
+- `src/c_api/c_unit_aura_cooldown_spells.rs`: unchanged public empty-default input plus sole getter, shared public identifier validation and direct nullable numeric lookup; number/nil results and API-specific errors preserved.
 - `src/lua_api/globals/register.rs`: `retail-12-0-5` registration after existing aura namespace/state initialization.
 - `src/c_api/mod.rs`: public `retail-12-0-5`-gated module declaration.
 - `src/lua_api/state/sim_state.rs`: public feature-gated environment input field.
 - `src/lua_api/state.rs`: empty `Default::default()` initializer next to `spell_id_aliases`.
-- `src/c_api/c_spell.rs`: existing shared identifier resolver; unchanged.
+- `src/c_api/c_spell.rs`: unchanged alias-first `read_spell_identifier_at` resolver; `read_public_spell_identifier_at` now owns the existing strict public validation/conservative VM-secret rejection shared by this getter and both classification getters. Extraction adds no native permission or acceptance proof.
 
 ## Tests asserting this spec
 

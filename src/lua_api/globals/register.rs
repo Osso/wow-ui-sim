@@ -84,6 +84,8 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_cooldown_spells::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_unit_aura_classification::register(lua.state_mut())?;
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_filter_query::register(lua.state_mut())?;
