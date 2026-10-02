@@ -67,6 +67,14 @@ Pinned VM typed-secret numbers are opaque userdata with authenticated `Val::Num`
 
 Extracted the existing immutable slot → spell → LoC/default and restriction read into `read_snapshot`; callback parsing, rooting order, three numeric fields, two booleans and single return remain unchanged by source inspection. Only owned Rust is formatted with children skipped; compiled/executed equivalence proof remains pending with main. No new behavior or policy.
 
+## Saved combined parent GREEN — 2026-10-02
+
+Default integration compiled `cec856187c1c5bb2fc278d2aa0e268e6a20eb755` successfully in186.0260727679124s with zero diagnostics; source-equivalent snapshot extraction precedes this compilation. `/tmp/patch-12.0.5-batch64-65-final-green-build-result.json` and full compiler JSON/stderr bind integration SHA256 `7315587398811b5976e50819f5961983276070f4908b274685d7dc16c9e2668d`.
+
+Combined `green-runs.json` records117 distinct PASS:22 row239 focused,18 row233 focused and77 controls across four groups; six exits0/no duplicate names. Execution24.42142666503787s separately from compilation is bounded development below60s target, not padded whole-goal proof. Startup returns `[]`, exit0,9.541190293966793s; exact hash/full output references in combined `green-startup-run.json`. Authenticated slots, both meaningful typed snapshots, default misses, private numeric payloads, public flags, live/read-only/caller/copy/GC assertions now execute; RED never proved those downstream paths.
+
+Native nominal-type/miss/domain/activation/acquisition/profile/UI limits remain, with opaque VM values and no type override. Independent515 security/wiring/readability/scoped Rust checks and combined Forever preservation are pending; exact239 accounting uncredited. Dirty-combined/globalfmt limits explicit. Do not rerun valid build/runtime solely for docs/accounting.
+
 ## Known gaps (current cycle)
 
 - [ ] Producer GREEN and startup/check/security/readability/independent acceptance remain main-owned and pending. No build/test/check/lint/readability gates/ops/push or delegation performed here. Only owned Rust is formatted with children skipped; formatting is not execution proof.

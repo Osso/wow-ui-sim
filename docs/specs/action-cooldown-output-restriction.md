@@ -66,6 +66,14 @@ Pinned rilua604 `wrap_host_secret_number` allocates `Userdata::secret(Val::Num(v
 
 First corrected focused execution is still not fully GREEN:17PASS/1FAIL at `add2d0a84`, exit101,3.3528383200755343s. The remaining copy fixture repeated the same unsupported private `type == number` check. That assertion is now corrected too; a full pattern scan of both cooldown fixture files leaves nominal numeric-type checks only for unrestricted values. Copy metadata/identity and denial checks remain intact. Final corrected execution and independent acceptance remain pending. Producer unchanged; initial RED proves missing secrecy, not the later type expectation. Full source trace/corrections live in `/tmp/patch-12.0.5-action-cooldown-publication-failure.md`.
 
+## Saved combined parent GREEN — 2026-10-02
+
+At `cec856187c1c5bb2fc278d2aa0e268e6a20eb755`, default integration compilation exits0/zero diagnostics in186.0260727679124s. Full compiler output/hash manifest: `/tmp/patch-12.0.5-batch64-65-final-green-build.stdout.jsonl`, `.stderr`, `-result.json`. Integration SHA256 `7315587398811b5976e50819f5961983276070f4908b274685d7dc16c9e2668d` binds all runs.
+
+`batch64-65-green-runs.json` records **117 distinct PASS**:18 row233 focused,22 row239 focused,42 cooldown controls,11 state globals,10 slot mutation and14 spell/flyout controls; six exits0, no overlap. Execution24.42142666503787s is separate from compilation, below60s bounded-development target, not padded full-goal acceptance. Startup separately returns `[]`, exit0,9.541190293966793s; full output/hash paths in `green-startup-run.json`.
+
+All row233 opacity/copy/GC/root/caller checks now execute successfully without requiring opaque numeric fields to report Lua `number`. Producer remains fad6e780f; only unfounded fixture assumptions were corrected. Native nominal primitive parity remains a gap. Independent515 security/wiring/readability/scoped Rust checks and combined Forever preservation are pending; row233 receives no credit yet. Dirty-combined/globalfmt limits remain; no valid runtime/build replay solely for docs/accounting.
+
 ## Known gaps (current cycle)
 
 - [ ] Main-owned targeted producer GREEN, startup, check, security/wiring, readability, independent acceptance and exact233 accounting remain pending. No delegation, build, test, check, lint, readability gate, operations or push occurs in this implementation slice; only the owned changed Rust file is formatted with child traversal disabled.
