@@ -240,7 +240,13 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 ## C_* Namespaces
 
-**Base spell lookup** — `f1c0a19a8` adds Forever-only `C_Spell.GetBaseSpell`. Public numeric IDs, numeric strings, and existing known-name resolution return identity when no explicit specialization relationship exists, matching the local documentation's no-override rule. Relationships are per-environment test/model inputs; no live override dataset is seeded and aliases are not reversed. Secret inputs are rejected rather than unwrapped, despite native documentation allowing tainted arguments. Focused GREEN and real ActionBarAuras replay remain pending. See [base-spell contract](../../specs/spell-base.md).
+### Retail 12.0.5 base-spell specialization security
+
+`815456e84` promotes the existing `C_Spell.GetBaseSpell` publication to the common C_Spell query registration under the literal shared Cargo capability `base-spell-relationships`, enabled by `retail-12-0-5` and `client-wowforever`. Existing `BaseSpellRelationships` is an empty-default per-environment host map: omitted/nil/zero specialization selects current specialization, explicit specialization selects its exact relationship, and an absent relationship returns the supplied spell ID under the documented identity contract. Public numeric/name resolution remains unchanged. Shared model/publication does not add a catalog, traversal or alias data; earlier profiles remain default-unpublished (static wiring, not execution proof).
+
+Retail 12.0.5 alone authenticates raw arg2 through actual VM secret metadata and rejects NeverSecret violations before arg1 validation/resolution or model access. Forever retains its old public behavior, conservative arg1 rejection and secret-validation order. Arg1 AllowedWhenTainted parity remains unmodeled; no declassification or annotation credit. [Exact295 spec SSOT](../../specs/base-spell-specialization-security.md) owns requirements and current proof; [existing Forever base SSOT](../../specs/spell-base.md) owns historical focused proof/replay and native-policy limits, not current Forever execution.
+
+Compiled pre-producer RED at `a920153ef` is **0 PASS / 20 FAIL**: fallback returns one nil; public-result cases reach `public numeric base`, security cases reach `secret spec denied`. Downstream relationship/taint/recovery/GC assertions are not RED-proven. Five unused-helper warnings came from the input scaffold's missing registration; producer wiring is expected to consume that chain, but warning clearance is unverified. No producer GREEN, current Forever execution or acceptance claim. Current supplied accounting remains **199 pending / 148 bounded / 14 partial / 1 metadata = 362 IDs; 68 capabilities**; row295 pending. Batch62 exact330/331 final artifact passed, pending main acceptance; no accounting promotion here.
 
 **Base spell aura secrecy** — `C_Secrets.GetSpellAuraSecrecy` uses generated native aura attributes and the existing spell-identifier resolver, not a combat-policy guess. Dual-flag data is retained and rejected explicitly when queried. `UnitIsPlayerControlledOrGroupMember` implements only the documented player/pet/vehicle and bounded party/raid token families used by current aura filtering. Four secrecy and three token-classification focused cases passed; conditional aura secrecy enforcement remains unmodeled. See [secrecy](../../specs/spell-aura-secrecy.md) and [controlled-player tokens](../../specs/unit-player-controlled-or-group-member.md).
 
@@ -306,7 +312,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - `/home/osso/Repos/wowless/data/impl/UnitGUID.lua` — modeled nil-on-missing-identity reference
 - `Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua` in cached retail and Mists UI — GUID-truthiness consumer and remote-update boundary
 - [spell_base.rs](../../../src/c_api/spell_base.rs) — explicit specialization relationship model and public/secret boundary
-- [Public base-spell lookup](../../specs/spell-base.md) — documented identity contract and unverified native gaps
+- [Base-spell specialization security](../../specs/base-spell-specialization-security.md) — exact295 requirements/proof SSOT, shared capability/publication, Retail-only raw arg2 boundary and unverified producer warning clearance
+- [Public base-spell lookup](../../specs/spell-base.md) — existing Forever identity/model SSOT, historical focused proof/replay and unverified native gaps
 - `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua` in the pinned Forever cache — `GetBaseSpell` signature and no-override identity
 - [spell_description_resolver.rs](../../../src/spell_description_resolver.rs) — shared spell-description token resolver
 - [container_portrait_texture.rs](../../../src/lua_api/workarounds/temporary/container_portrait_texture.rs) — retail texture fileDataID proof
