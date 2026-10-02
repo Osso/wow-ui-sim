@@ -97,7 +97,11 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
         assert(data.lines[4].type == 20 and data.lines[4].leftText == ITEM_BIND_ON_PICKUP)
         local name = ITRGBA(data.lines[1].leftColor)
-        assert(name and name[1] == 0.64 and name[2] == 0.21 and name[3] == 0.93 and name[4] == 1)
+        assert(name)
+        assert(name[1] == 0.64)
+        assert(name[2] == 0.21)
+        assert(name[3] == 0.93)
+        assert(name[4] == 1)
         local specs = {
             {5259,1.2,ITEM_MOD_STRENGTH_SHORT}, {7889,1.8,ITEM_MOD_STAMINA_SHORT},
             {4799,0.75,ITEM_MOD_MASTERY_RATING_SHORT}, {2201,0.75,ITEM_MOD_VERSATILITY},
@@ -141,7 +145,9 @@ const ASSERTIONS: &str = r#"
     function ITReject(denial, ...)
         local before = debug.getstacktaint()
         local ok,err = pcall(C_TooltipInfo.GetItemByID, ...)
-        assert(not ok and type(err) == 'string' and #err > 0, 'argument rejection')
+        assert(not ok, 'argument rejection')
+        assert(type(err) == 'string', 'public error string')
+        assert(#err > 0, 'nonempty rejection')
         assert(string.find(err, ITAPI, 1, true), 'exact API namespace')
         assert(not string.find(err, 'PRIVATE-ItemContext', 1, true), 'no private leak')
         local gate = string.find(err, 'requires an untainted caller', 1, true)

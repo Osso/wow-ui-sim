@@ -75,6 +75,10 @@ Producer `23efb40c84837dfa9564a7d21bc6297842ee4df3` compiled successfully with d
 
 Independent security/wiring/readability/scoped formatting/default check and exact330/331 acceptance remain pending. Saved24 focused tests reach distinct context/treasure payloads and downstream authentication/GC/recovery assertions; initial RED still cannot claim those downstream outcomes. Do not rerun applicable build/runtime solely for docs/accounting.
 
+## Readability follow-up — 2026-10-02
+
+Independent497 identified two concrete new-test compound conditions: the five-part RGBA expectation and failed/type/nonempty rejection assertion. Parent source inspection accepts both; ordered separate assertions preserve identical predicates and short-circuit/type-before-length boundaries. Producer and host inputs remain unchanged. Refreshed24 focused runtime and independent equivalence/readability/format proof remain pending;153 controls/startup and production security/wiring/check remain source-valid, not fresh reruns. No native parity or accounting credit follows from readability edits.
+
 ## Known gaps (current cycle)
 
 - [x] Main-owned compiled RED, producer, focused GREEN, adjacent controls and startup recorded; producer agent ran no gates.
