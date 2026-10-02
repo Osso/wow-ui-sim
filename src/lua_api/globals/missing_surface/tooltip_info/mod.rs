@@ -47,6 +47,8 @@ pub(super) fn register_pet_info_surface(state: &mut LuaState) -> LuaResult<()> {
 
 fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
     register_item_spell_aura_methods(state, table_ref)?;
     register_spell_aura_unit_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
@@ -54,6 +56,19 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
     Ok(())
+}
+
+/// Dispatch the selected catalog clone through the unchanged item line builder.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn tooltip_for_item_context(
+    state: &mut LuaState,
+    item_id: u32,
+    item: Option<&crate::items::ItemInfo>,
+) -> rilua::Val {
+    match item {
+        Some(item) => builders::tooltip_for_item_info(state, item_id, item),
+        None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
+    }
 }
 
 /// Bounded bridge to the existing payload model; no identifier parsing here.
@@ -119,6 +134,7 @@ fn register_item_container_methods(state: &mut LuaState, table_ref: GcRef<Table>
             ("GetBagItem", c_tooltip_get_bag_item),
             ("GetGuildBankItem", c_tooltip_get_guild_bank_item),
             ("GetItem", c_tooltip_get_item),
+            #[cfg(not(feature = "retail-12-0-5"))]
             ("GetItemByID", c_tooltip_get_item_by_id),
             ("GetItemByGUID", c_tooltip_get_item_by_guid),
             ("GetOwnedItemByID", c_tooltip_get_owned_item_by_id),

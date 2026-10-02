@@ -553,6 +553,14 @@ pub(super) fn tooltip_for_item_id(state: &mut LuaState, item_id: u32) -> Val {
     let Some(item) = items::get_item(item_id) else {
         return empty_tooltip(state, TOOLTIP_TYPE_ITEM);
     };
+    tooltip_for_item_info(state, item_id, item)
+}
+
+pub(super) fn tooltip_for_item_info(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     populate_item_tooltip_lines(state, tooltip, item);
     tooltip

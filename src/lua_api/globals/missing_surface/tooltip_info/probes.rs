@@ -89,6 +89,7 @@ pub(super) fn c_tooltip_get_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = u32::from_stack(state, 1)?;
     let tooltip = tooltip_for_item_id(state, item_id);
