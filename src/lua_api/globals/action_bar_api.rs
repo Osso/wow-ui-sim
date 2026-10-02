@@ -80,6 +80,7 @@ fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
     push_bool(state, false)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn find_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     push_empty_table(state)

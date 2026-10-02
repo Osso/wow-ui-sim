@@ -1,6 +1,6 @@
 # Action spell slot identifiers
 
-Batch51 covers exactly 12.0.5 source rows **229 FindSpellActionButtons** and **243 HasSpellActionButtons**, each changing argument 1 from `number` to `SpellIdentifier`. This is a tests/spec-only contract for an **INFERRED bounded simulator model**, not native parity. Planned producer: `src/c_api/c_action_bar_spell_slots.rs`, using existing assignments and the shared public identifier boundary. [Lua API architecture](../lua-api.md) describes the runtime surface.
+Batch51 covers exactly 12.0.5 source rows **229 FindSpellActionButtons** and **243 HasSpellActionButtons**, each changing argument 1 from `number` to `SpellIdentifier`. This is an **INFERRED bounded simulator model**, not native parity. Producer: [`src/c_api/c_action_bar_spell_slots.rs`](../../src/c_api/c_action_bar_spell_slots.rs), using existing assignments and the shared public identifier boundary. Implementation is committed separately from parent-owned GREEN and acceptance; requirements remain unchecked. [Lua API architecture](../lua-api.md) describes the runtime surface.
 
 ## What it must do
 
@@ -37,10 +37,11 @@ Batch51 covers exactly 12.0.5 source rows **229 FindSpellActionButtons** and **2
 
 - `src/lua_api/state/sim_state.rs`: existing bars/macros/outfits/UI tuples/aliases and known spell membership; no new state planned.
 - `src/lua_api/globals/inventory_verbs.rs`: existing `GetActionInfo` outfit → macro → spell effective-kind priority.
-- `src/lua_api/globals/action_bar_api.rs`: current Find ignores identifier and returns empty table; existing public slot move and UI registration methods.
-- `src/lua_api/globals/action_bar_api/registration.rs`: current Find publication; Has absent in this namespace surface.
+- [`src/lua_api/globals/action_bar_api.rs`](../../src/lua_api/globals/action_bar_api.rs): existing public slot move and UI registration; old empty Find provider compiled only without `retail-12-0-5`.
+- [`src/lua_api/globals/action_bar_api/registration.rs`](../../src/lua_api/globals/action_bar_api/registration.rs): creates the namespace, then publishes the pair through the C API producer after existing registrations under cumulative `retail-12-0-5`; old Find entry gated out for that epoch.
 - `src/c_api/c_spell.rs`: existing strict public identifier boundary and alias-first resolver.
-- `src/c_api/c_action_bar_spell_slots.rs` **planned, absent at this stage**: first-class C API producer over existing maps. Later remove/gate the old Find publication rather than retain duplicate or stale alternate default; preserve earlier profiles.
+- [`src/c_api/c_action_bar_spell_slots.rs`](../../src/c_api/c_action_bar_spell_slots.rs): sole epoch-owned pair producer, shared effective-slot iterator excluding zero/macro/outfit slots; strict shared identifier boundary, fresh dense ascending table (empty on miss) and boolean. Read-only, no new state/catalog.
+- [`src/c_api/mod.rs`](../../src/c_api/mod.rs): producer module compiled only under cumulative `retail-12-0-5`; earlier profiles retain their previous publication.
 
 Cached evidence (declarations/consumer, not native execution):
 
@@ -50,21 +51,21 @@ Cached evidence (declarations/consumer, not native execution):
 
 ## Tests asserting this spec
 
-`tests/action_spell_slot_identifiers.rs`: **17 focused tests**, grouped by `retail-12-0-5` feature; no new Cargo target. Source inspected and exact-file formatted only; compilation/RED belong to parent.
+`tests/action_spell_slot_identifiers.rs`: **17 focused tests**, grouped by `retail-12-0-5` feature; no new Cargo target. Fixtures unchanged. Parent compiled RED at `61e002a3811adb2b1cd3cb27e23b6883ed3910be`: build exit0/178.56892285693903s; runtime exit101/3.0491113850148395s, 0PASS/17FAIL. Proof: `/tmp/patch-12.0.5-batch51-red-build-result.json`, `/tmp/patch-12.0.5-batch51-red-run.json` and `.stdout`. Artifacts record preserved unowned dirty-source provenance, not clean-revision proof. Implementation has no local compilation/test/check/lint/readability/coverage evidence; parent GREEN pending.
 
 Fixtures clear/replace the default Protection Paladin bar before all query assertions. Seed slots 3/101 → 7001, 5 → 7002, macro-only 8 → 77, plus explicit name and full-link aliases. `GetActionInfo` verifies seeded kinds/IDs before paired calls. Shadow fixtures verify effective macro/outfit kinds before querying; real UI Frame verifies `GetObjectType() == 'Frame'` and actual registered tuple before the non-assignment query. Public move follows actual source/target order 101 → 12. Invalid/secret fixtures use real runtime values, never Lua marker secrets, API replacements or presumed userdata variants.
 
 | Capability | Fixture assertion | Proof level |
 |---|---|---|
-| Pair shapes, two/single/miss/empty matches | Exact arity, dense members, public table/bool, freshness | Tests written; parent compiled RED pending |
+| Pair shapes, two/single/miss/empty matches | Exact arity, dense members, public table/bool, freshness | Parent compiled RED 0PASS/17FAIL; producer implemented, GREEN pending |
 | Shared aliases and strict boundary | Name/link/numeric override, mutation, endpoints, invalid values before aliases | Tests written; policy INFERRED |
 | Effective live assignments | Macro/outfit shadow preconditions, UI non-assignment, public move/host changes | Tests written; model INFERRED |
 | Isolation and security | Input snapshots, caller/result mutation, taint, authentic secrets across GC | Tests written; native permissions unknown |
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compile and genuine RED for these exact fixtures; no local build/test/check/lint/readability/coverage/gate execution authorized at this stage.
-- [ ] Later producer and single-owner publication after parent compiled RED; runtime/registration/state unchanged by this batch.
+- [x] Parent compile and genuine RED for these exact fixtures, recorded above; no local build/test/check/lint/readability/coverage/gate execution authorized.
+- [x] Implement bounded producer and single-owner epoch publication after parent compiled RED; fixtures and backing state unchanged.
 - [ ] Parent-owned GREEN and acceptance before checking any contract bullet; no source-row coverage credit claimed.
 
 ## Out of scope

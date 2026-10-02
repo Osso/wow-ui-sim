@@ -9,6 +9,7 @@ type ActionBarMethod = (&'static str, RustFn);
 const GENERAL_METHODS: &[ActionBarMethod] = &[
     ("GetBonusBarIndexForSlot", get_bonus_bar_index_for_slot),
     ("IsOnBarOrSpecialBar", is_on_bar_or_special_bar),
+    #[cfg(not(feature = "retail-12-0-5"))]
     ("FindSpellActionButtons", find_spell_action_buttons),
     (
         "GetCurrentActionBarByClass",
@@ -82,6 +83,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_stateful_methods(state, table_ref)?;
     register_slot_mutation_methods(state, table_ref)?;
     crate::c_api::action_macros::register(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_action_bar_spell_slots::register(state, table_ref)?;
     Ok(())
 }
 
