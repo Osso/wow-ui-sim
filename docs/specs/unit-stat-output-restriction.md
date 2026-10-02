@@ -138,3 +138,9 @@ The all-output test calls every exact fixture plain → restricted → plain. It
 Across all eight, nonplayer cases, other indexes, changing inputs, native activation and access policy remain unproved. These are evidence limits, not speculative new modeling requirements or reasons to defer the known output-annotation mechanism behind native formula parity.
 
 The candidate map's final count paragraph is wrong: it omits accepted424/438 from the accepted stat-annotation five. Accepted514/500/424/438/498 remain unchanged; do not adopt that paragraph's accounting. Prior40 partial history remains intact. These eight receive **no source credit** until independent validation and parent accounting; parent may extend existing443 to this bounded unchanged-source evidence, with no shadow gate here. No coverage/data/wiki/PLAN, requirements checkbox, source/test or broader acceptance changes.
+
+## Exact-eight annotation acceptance — 2026-10-02
+
+Parent accepted independent443's separate exact8 verdict: **426/428/444/448/450/494/506/510**, all21 numeric result positions from the concrete player fixtures above. [Combined acceptance SSOT](break-up-large-numbers.md#independent-bounded-acceptance--2026-10-02) owns gate results,110 uniquePASS/startup0 `[]`, dirty provenance and accounting. Four unchanged restriction tests are reused, not eight new tests or duplicated executions. Existing meaningful providers remain unchanged/alreadyGREEN; no fabricated RED or unnecessary rewrite.
+
+Prior40 partial capability, accepted514/500/424/438/498 and broad unchecked requirements remain intact. Only these eight output-annotation boundaries promote; nullable/other-index/ignored-selector behavior, synthetic damage bounds, offhand/modifier placeholders, nonplayer cases, native formulas/activation/access and all-profile execution remain unproved. Earlier pending statements are historical; no complete stat-model, native or whole-page/goal acceptance follows.

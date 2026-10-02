@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact formatter and eight stat annotations
+
+[Combined53/54 acceptance SSOT](../specs/break-up-large-numbers.md#independent-bounded-acceptance--2026-10-02) and [exact-eight stat scope](../specs/unit-stat-output-restriction.md#exact-eight-annotation-acceptance--2026-10-02) record parent-accepted443 plus446 owned-format supplement. Only411/426/428/444/448/450/494/506/510 promote;353 unrelated rows and60 prior capabilities retained. Globalfmt remains failed on unowned source; dirty-combined/inferred/native/profile/model limits explicit. Parent owns postcommit validation; broader goal open.
+
 ## [2026-10-02] evidence | Reconcile batch53 saved corrected GREEN
 
 [Formatter proof SSOT](../specs/break-up-large-numbers.md#reconciled-batch53-saved-parent-green--2026-10-02) records genuine16FAIL, historical17PASS/3FAIL and fixture-only corrected20PASS +90 reusable controls =110 distinct selectedPASS/startup0 `[]`. Invalid tainted secret-BOOL equality guard corrected without security relaxation; host wrapper identity and callback failure/GC coverage retained. Dirty revision-bound proof; runtime/compile costs separate. Verifier443 and source411/accounting/unchecked requirements pending; native semantics/errors/permissions/secrecy remain unknown.

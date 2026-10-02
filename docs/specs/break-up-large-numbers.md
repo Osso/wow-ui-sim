@@ -8,20 +8,20 @@ Next53 covers only `global api-Localization BreakUpLargeNumbers-411` in the cumu
 
 ### Formatting and inputs
 
-- [ ] After `WowLuaEnv::new`, return exactly one public STRING: enUS `1234` → `1,234`, `1234.5` → `1,234.5`; omission, nil and false agree (INFERRED).
-- [ ] Natural true truncates toward zero: `1234.75` → `1,234`, `-1234.75` → `-1,234`, `0.75` → `0`, `-1.75` → `-1`; false retains fractions (EXPLICIT GUESS).
-- [ ] Format zero and group boundaries without abbreviation: `0`, `999`, `1,000`, `-1,000`, `1,000,000` (INFERRED).
-- [ ] Read the current global locale provider on each successful call; explicit fixture mutations enUS/deDE/frFR take immediate effect. `1234.5` gives `1,234.5` / `1.234,5` / `1\u202f234,5` (INFERRED; no native locale acquisition).
-- [ ] Leave provider identity, caller input tables and actual Frame identity/properties unchanged; environment fixtures remain isolated.
-- [ ] Require public finite NUMBER arg1 and optional public BOOL arg2, default false. Reject missing/nil arg1, numeric strings, booleans, tables, functions, actual Frames, NaN/infinities; reject nonbool public natural values without coercion. Fresh valid calls recover after errors (local strict policy).
+- [x] After `WowLuaEnv::new`, return exactly one public STRING: enUS `1234` → `1,234`, `1234.5` → `1,234.5`; omission, nil and false agree (INFERRED).
+- [x] Natural true truncates toward zero: `1234.75` → `1,234`, `-1234.75` → `-1,234`, `0.75` → `0`, `-1.75` → `-1`; false retains fractions (EXPLICIT GUESS).
+- [x] Format zero and group boundaries without abbreviation: `0`, `999`, `1,000`, `-1,000`, `1,000,000` (INFERRED).
+- [x] Read the current global locale provider on each successful call; explicit fixture mutations enUS/deDE/frFR take immediate effect. `1234.5` gives `1,234.5` / `1.234,5` / `1\u202f234,5` (INFERRED; no native locale acquisition).
+- [x] Leave provider identity, caller input tables and actual Frame identity/properties unchanged; environment fixtures remain isolated.
+- [x] Require public finite NUMBER arg1 and optional public BOOL arg2, default false. Reject missing/nil arg1, numeric strings, booleans, tables, functions, actual Frames, NaN/infinities; reject nonbool public natural values without coercion. Fresh valid calls recover after errors (local strict policy).
 
 ### Security and lifetime
 
-- [ ] Reject authentic host-VM secret natural BOOL false and true even in secure callers, before payload inspection, locale acquisition or formatting. Rejection must not depend on hidden payload (NeverSecret boundary).
-- [ ] Reject actual secret NUMBER, STRING, Frame and table natural inputs, preserving secrecy, wrapper identity and original object state.
-- [ ] Forced GC preserves global, list and stack roots; later rejection and public recovery remain valid. Tainted secret-BOOL raw equality must assert VM denial, not success; secure Lua equality proves only boolean payload equality. Prove wrapper identity separately at the host boundary using pre-execution `Val`/`GcRef` identity plus live userdata allocation metadata, comparing global/list roots and exported stack-held wrappers after Lua returns without reading payloads or changing taint.
-- [ ] Secure and stamped-tainted calls preserve caller taint through secret rejection, public type errors and public recovery, including the inferred true branch.
-- [ ] Conservatively reject secret NUMBER arg1 in both caller contexts without declassification (local policy, **not source411 arg1 permission evidence**).
+- [x] Reject authentic host-VM secret natural BOOL false and true even in secure callers, before payload inspection, locale acquisition or formatting. Rejection must not depend on hidden payload (NeverSecret boundary).
+- [x] Reject actual secret NUMBER, STRING, Frame and table natural inputs, preserving secrecy, wrapper identity and original object state.
+- [x] Forced GC preserves global, list and stack roots; later rejection and public recovery remain valid. Tainted secret-BOOL raw equality must assert VM denial, not success; secure Lua equality proves only boolean payload equality. Prove wrapper identity separately at the host boundary using pre-execution `Val`/`GcRef` identity plus live userdata allocation metadata, comparing global/list roots and exported stack-held wrappers after Lua returns without reading payloads or changing taint.
+- [x] Secure and stamped-tainted calls preserve caller taint through secret rejection, public type errors and public recovery, including the inferred true branch.
+- [x] Conservatively reject secret NUMBER arg1 in both caller contexts without declassification (local policy, **not source411 arg1 permission evidence**).
 
 ## How it works
 
@@ -148,3 +148,11 @@ SHA256 below binds saved records and full outputs; no new runtime proof was prod
 - Precision beyond the existing ICU Decimal defaults; broad locale/catalog acquisition or new models.
 - Earlier-profile behavior changes, Intl API changes, new state, and other producers.
 - Source411 credit, accounting changes, broad acceptance, unavailable native probes, and other agents' files.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted independent443 (`/tmp/patch-12.0.5-break-up-large-numbers-independent-proof.md`) plus446 format-only supplement (`/tmp/patch-12.0.5-break-up-format-followup.md`). Corrected20 formatter tests plus90 reusable controls =110 uniquePASS; startup0 `[]`. Current cargo check exit0/31.997453s without warnings; seven-file scoped rustfmt exit0/0.018397s after import-only `4fa4bd4b6`. Original443 scoped-format exit1 remains historical and only that result is superseded. Global cargo fmt still exit1/19.197842s on preserved unowned source; **all proof dirty-combined, not clean revision**.
+
+No repeated builds/tests/startup/checks for import ordering. Original0PASS/16 genuineRED and17PASS/3 invalid tainted-BOOL equality failures retained. Corrected host wrapper identity/liveness snapshots and intentional tainted equality denial strengthen security evidence without changing VM/producer behavior. Three readability advisories deferred: argument-handler length, locale callback/restoration length and host-snapshot loop; no observed behavioral counterexample or authorized adjacent refactor.
+
+Only411 and [exact-eight annotation rows](unit-stat-output-restriction.md#exact-eight-annotation-acceptance--2026-10-02) promote: **217 pending/131 bounded/14 partial =362 ordered IDs;62 capabilities**.353 unrelated rows and60 prior capabilities preserved; parent owns postcommit validation. Natural truncation remains an assistant-selected guess; ICU defaults, strict inputs/public locale/result policy and conservative arg1 rejection are simulator behavior, not native permission/precision/error/natural/locale-acquisition or all-profile parity. Whole-page/goal work remains open.

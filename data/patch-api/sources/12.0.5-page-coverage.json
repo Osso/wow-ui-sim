@@ -7,6 +7,45 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "break-up-large-numbers",
+      "symbols": [
+        "BreakUpLargeNumbers"
+      ],
+      "scope": "Exact411 NeverSecret arg2: real epoch-scoped legacy global over current public UTF-8 locale provider and existing ICU Decimal grouping; optional nil/false default, explicitly guessed true truncation, strict finite public number/bool, conservative arg1 rejection, authentic secret natural rejection before locale/format even secure, preserved taint/state and host wrapper identities across GC and real callback errors/recovery. Native natural/precision/errors/arg1/result permissions and locale acquisition excluded.",
+      "spec": "docs/specs/break-up-large-numbers.md",
+      "tests": [
+        "tests/break_up_large_numbers.rs"
+      ],
+      "implementation": "6ed3388133e8ec13b8d3f3d2fb9c8eba200830df",
+      "compiled_revision": "70da8fd09c1625ce81d9e9007a90288afed89285",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-break-up-large-numbers-independent-proof.md",
+      "gate_scope": "Parent accepted independent443 behavior110 distinctPASS/startup0[]/dirtycheck0 plus446 owned seven-filefmt0 after import-only4fa4bd4b6. Original443 scopedfmt1 and first17PASS3 invalidBOOL-equality fixtureFAIL retained; host identity/tainted-denial correction strengthens proof without VM/producer changes. Globalfmt1 preserved unowned, dirty-combined not clean revision. Runtime15.397914s below60 target, no final page/goal/native/all-profile claim; three readability advisories deferred."
+    },
+    {
+      "id": "unit-stat-eight-annotation-outputs",
+      "symbols": [
+        "GetCombatRatingBonus",
+        "GetCritChance",
+        "GetManaRegen",
+        "GetMasteryEffect",
+        "GetMeleeHaste",
+        "GetVersatilityBonus",
+        "UnitDamage",
+        "UnitRangedDamage"
+      ],
+      "scope": "Exact426/428/444/448/450/494/506/510 output annotations only: explicit player rating/intellect and admitted synthetic damage formulas, all21 numeric positions wrapped under explicit restriction; exact ordered values/arity/access plain-restricted-plain and tainted opacity/unwrap-arithmetic denial/caller taint. Other indices, nullable outputs, ignored versatility index, synthetic/offhand/modifier/nonplayer/native formula/activation/access semantics remain unproved. Prior40 partial and prior exact5 unchanged.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "compiled_revision": "eb52b92c034818eb1b09017230b2c8f90f0f93a8",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-break-up-large-numbers-independent-proof.md",
+      "gate_scope": "Parent accepted independent443 separate exact8/all21-position audit using four unchanged existing restriction tests among110 uniquePASS, no duplicate test count/rerun/Cargo gate/fabricated RED or provider rewrite. Fresh dirtycheck0 and ownedfmt4460 retained; globalfmt1 unowned. Seeded annotation mechanism, not complete stat models/native/all-profile/full-page parity."
+    },
+    {
       "id": "action-spell-slot-identifiers",
       "symbols": [
         "C_ActionBar.FindSpellActionButtons",
@@ -2451,9 +2490,11 @@
     },
     {
       "source_id": "global api-Localization BreakUpLargeNumbers-411",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "break-up-large-numbers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-Localization CreateAbbreviateConfig-413",
@@ -2501,15 +2542,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetCombatRatingBonus-426",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript GetCritChance-428",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript GetDodgeChance-430",
@@ -2557,9 +2602,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetManaRegen-444",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript GetMastery-446",
@@ -2569,15 +2616,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetMasteryEffect-448",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript GetMeleeHaste-450",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript GetModResilienceDamageReduction-452",
@@ -2707,9 +2758,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetVersatilityBonus-494",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-PlayerScript PlayerEffectiveAttackPower-496",
@@ -2747,9 +2800,11 @@
     },
     {
       "source_id": "global api-Unit UnitDamage-506",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-Unit UnitRangedAttackPower-508",
@@ -2759,9 +2814,11 @@
     },
     {
       "source_id": "global api-Unit UnitRangedDamage-510",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-eight-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent443 exact bounded delta plus446 owned-format correction; dirty-combined gates/globalfmt1 preserved unowned, inferred/native/profile/model gaps retained. See linked spec and separate exact-row proof; no broad40-stat or whole-page credit."
     },
     {
       "source_id": "global api-Unit UnitSpellHaste-512",
