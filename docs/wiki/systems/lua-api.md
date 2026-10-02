@@ -2,6 +2,10 @@
 
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
+## Retail 12.0.5 BreakUpLargeNumbers
+
+[Formatter proof SSOT](../../specs/break-up-large-numbers.md#reconciled-batch53-saved-parent-green--2026-10-02) owns inferred decimal/natural behavior, corrected secret-wrapper identity and callback failure/GC evidence, saved commands/hashes and dirty-scope limits. Historical failures preserved; source411 and verifier443 acceptance pending. Native errors, permissions and result secrecy unknown.
+
 ## WowLuaEnv (`src/lua_api/env.rs`)
 
 ```rust

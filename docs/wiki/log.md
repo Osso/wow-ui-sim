@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch53 saved corrected GREEN
+
+[Formatter proof SSOT](../specs/break-up-large-numbers.md#reconciled-batch53-saved-parent-green--2026-10-02) records genuine16FAIL, historical17PASS/3FAIL and fixture-only corrected20PASS +90 reusable controls =110 distinct selectedPASS/startup0 `[]`. Invalid tainted secret-BOOL equality guard corrected without security relaxation; host wrapper identity and callback failure/GC coverage retained. Dirty revision-bound proof; runtime/compile costs separate. Verifier443 and source411/accounting/unchecked requirements pending; native semantics/errors/permissions/secrecy remain unknown.
+
 ## [2026-10-02] evidence | Accept exact batch51/52 bounded rows
 
 [Combined acceptance SSOT](../specs/action-spell-slot-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact-five stat scope](../specs/unit-stat-output-restriction.md#exact-five-annotation-acceptance--2026-10-02) record parent-accepted independent414. Only229/243/514/500/424/438/498 promote;355 unrelated rows and58 prior capabilities retained. Scopedfmt/check pass; globalfmt remains failed on unowned source, dirty-combined and native/profile limits explicit. Parent owns postcommit accounting validation; broader goal open.
