@@ -179,6 +179,10 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub cooldown_aura_associations:
         crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
+    /// INFERRED explicit spell flags only; no classification catalog or acquisition.
+    #[cfg(feature = "retail-12-0-5")]
+    pub aura_spell_classifications:
+        crate::c_api::c_unit_aura_classification::AuraSpellClassifications,
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
     #[cfg(feature = "retail-12-0-5")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,

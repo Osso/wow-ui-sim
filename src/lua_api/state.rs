@@ -177,6 +177,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             cooldown_aura_associations: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
+            aura_spell_classifications: Default::default(),
+            #[cfg(feature = "retail-12-0-5")]
             spell_aura_durations: HashMap::new(),
             #[cfg(feature = "client-wowforever")]
             base_spell_relationships: Default::default(),
