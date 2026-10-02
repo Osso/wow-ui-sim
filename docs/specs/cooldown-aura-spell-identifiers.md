@@ -43,6 +43,10 @@ All chosen behavior below is **inferred simulator policy**, not native-client pa
 
 `tests/cooldown_aura_spell_identifiers.rs`: 14 feature-gated grouped integration fixtures covering default absence, two numeric hits, explicit name/link aliases, unknowns, alias mutation, numeric override/string seed, association mutation/nonrecursive output, numeric endpoints, invalid representations, generic-buff independence, environment isolation/read-only inputs, tainted public calls, and actual-secret rejection/GC/recovery.
 
+## First compiled RED and fixture correction — 2026-10-02
+
+At input `14ee1504b`, compilation exit0/462.835s; 14 selected, **3 PASS / 11 FAIL**, exit101/7.791s. `/tmp/patch-12.0.5-batch47-red-{build-result,run}.json` and full outputs bind the preserved unowned duration diff, not a clean revision. Empty/miss/generic-buff controls pass the existing generic nil provider; numeric/name/link/metadata/public-taint cases show genuine missing-producer failures. One secret case failed earlier at an incidental `Val::Userdata` frame-shape assertion, not the query boundary. Current simulator frames are backed Lua tables; corrected setup checks `GetObjectType() == 'Frame'` and retained global rooting, then wraps the actual value without requiring its VM variant. No runtime/framework change or native frame-representation claim. Corrected compiled RED remains pending.
+
 ## Known gaps (current cycle)
 
 - [ ] Compile and observe behavioral RED against the missing API; inputs avoid a missing-type compiler failure. Parent owns compiled RED, producer and subsequent gates.

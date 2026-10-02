@@ -56,8 +56,10 @@ fn seeded_env() -> WowLuaEnv {
 }
 
 fn install_host_secrets(env: &WowLuaEnv) {
-    env.exec("CooldownWrongObject = CreateFrame('Frame')")
-        .expect("real frame userdata");
+    env.exec(
+        "CooldownWrongObject = CreateFrame('Frame'); assert(CooldownWrongObject:GetObjectType() == 'Frame')",
+    )
+    .expect("real frame behavior, independent of its VM representation");
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     rilua::table_security::register_table_security(&mut lua).expect("VM security helpers");
@@ -83,7 +85,7 @@ fn install_host_secrets(env: &WowLuaEnv) {
         inserted.expect("root authentic secret NUMBER");
     }
     let native = lua.get_global_val("CooldownWrongObject");
-    assert!(matches!(native, rilua::Val::Userdata(_)));
+    assert!(!native.is_nil(), "frame fixture remains globally rooted");
     lua.state_mut().push(native);
     let wrapper = wrap_secret(lua.state_mut(), native).expect("wrap actual wrong object");
     lua.state_mut().push(wrapper);
