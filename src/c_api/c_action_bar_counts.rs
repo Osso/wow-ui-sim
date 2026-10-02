@@ -82,16 +82,13 @@ fn parse_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
     if value == Val::Nil {
         return Ok("*".to_owned());
     }
-    if matches!(value, Val::Str(_)) {
-        if let Some(text) = val_to_string(state, value) {
-            if !text.contains('\0') {
-                return Ok(text);
-            }
-        }
-    }
-    Err(runtime_error(format!(
-        "{DISPLAY_API}: argument 3 requires a UTF-8 NUL-free string or nil"
-    )))
+    val_to_string(state, value)
+        .filter(|text| !text.contains('\0'))
+        .ok_or_else(|| {
+            runtime_error(format!(
+                "{DISPLAY_API}: argument 3 requires a UTF-8 NUL-free string or nil"
+            ))
+        })
 }
 
 fn matching_use_quantity(sim: &SimState, slot: u32, spell_id: Option<u32>) -> Option<u32> {
