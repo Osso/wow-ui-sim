@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact tertiary stat inputs
+
+[Exact420/442/480 acceptance SSOT](../specs/tertiary-stat-inputs.md#independent-bounded-acceptance--2026-10-02) records parent-accepted450:119 uniquePASS/startup0 `[]`, scopedfmt/check/readability pass, globalfmt failed on preserved unowned source. Only three rows promote;359 unrelated rows/62 prior capabilities retained. Conversion remains guessed, earlier-profile proof static, dirty-combined/native/acquisition limits explicit. Parent owns postcommit validation; broader goal open.
+
 ## [2026-10-02] evidence | Reconcile batch55 saved parent GREEN
 
 [Batch55 tertiary proof SSOT](../specs/tertiary-stat-inputs.md#reconciled-batch55-saved-parent-green--2026-10-02) records saved observations and limits; fresh independent acceptance, unchecked requirements and source420/442/480 accounting remain pending.

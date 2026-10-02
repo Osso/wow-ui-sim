@@ -14,22 +14,22 @@ These concrete host inputs are chosen fixtures, not native catalog/acquisition e
 
 ### Current snapshot and shared rating lookup
 
-- [ ] Under `retail-12-0-5`, the three getters read existing `CharacterStats` fields at indices21 avoidance,17 lifesteal,13 speed. No duplicate percentage fields or input struct.
-- [ ] **INFERRED:** percentage results equal `max(current_rating / 180, 0)`. These three cases are explicit in the ratio helper rather than classified as unknown indices.
-- [ ] `GetCombatRating(21/17/13)` exposes raw ratings, including negatives; `GetCombatRatingBonus` exposes matching clamped percentages from the same snapshot. These supporting queries earn no additional row424/426 credit.
-- [ ] Live host replacement of one typed field changes only its corresponding outputs. Default/explicit zero follows a demonstrated nonzero transition; independent environments do not share fields or restriction state.
-- [ ] Queries leave the rating snapshot and restriction input unchanged. Existing crit9 and unknown999 controls retain current behavior, including the existing explicit-value helper's unknown-index180 conversion.
+- [x] Under `retail-12-0-5`, the three getters read existing `CharacterStats` fields at indices21 avoidance,17 lifesteal,13 speed. No duplicate percentage fields or input struct.
+- [x] **INFERRED:** percentage results equal `max(current_rating / 180, 0)`. These three cases are explicit in the ratio helper rather than classified as unknown indices.
+- [x] `GetCombatRating(21/17/13)` exposes raw ratings, including negatives; `GetCombatRatingBonus` exposes matching clamped percentages from the same snapshot. These supporting queries earn no additional row424/426 credit.
+- [x] Live host replacement of one typed field changes only its corresponding outputs. Default/explicit zero follows a demonstrated nonzero transition; independent environments do not share fields or restriction state.
+- [x] Queries leave the rating snapshot and restriction input unchanged. Existing crit9 and unknown999 controls retain current behavior, including the existing explicit-value helper's unknown-index180 conversion.
 
 ### Callback output and security
 
-- [ ] Public callbacks succeed with exactly one result (`pcall` yields exactly `true, value`), preserving exact values through plain → restricted → plain. Each result position is checked for secrecy/access.
-- [ ] Public stamped callers retain their stack taint and receive plain values when unrestricted. Restricted stamped callers receive authentic host getter results, cannot unwrap or perform arithmetic, and retain caller taint.
-- [ ] Actual getter-produced secret NUMBER results remain rooted with secrecy and raw identity across forced GC and tainted calls; trusted recovery reveals exact values without changing typed inputs. Tests do not fabricate markers, replace APIs, or assume secret Boolean raw equality.
+- [x] Public callbacks succeed with exactly one result (`pcall` yields exactly `true, value`), preserving exact values through plain → restricted → plain. Each result position is checked for secrecy/access.
+- [x] Public stamped callers retain their stack taint and receive plain values when unrestricted. Restricted stamped callers receive authentic host getter results, cannot unwrap or perform arithmetic, and retain caller taint.
+- [x] Actual getter-produced secret NUMBER results remain rooted with secrecy and raw identity across forced GC and tainted calls; trusted recovery reveals exact values without changing typed inputs. Tests do not fabricate markers, replace APIs, or assume secret Boolean raw equality.
 
 ### Recompute and profile boundary
 
-- [ ] Getters read the current computed snapshot, not sticky host overrides. Existing equipment recomputation may reset these unpopulated ratings to zero; subsequent host replacement is immediately visible.
-- [ ] New field lookup/bonus cases are gated to `retail-12-0-5`; profiles without that epoch retain previous zero behavior. No other stat formula, state, gear computation, or restriction producer changes.
+- [x] Getters read the current computed snapshot, not sticky host overrides. Existing equipment recomputation may reset these unpopulated ratings to zero; subsequent host replacement is immediately visible.
+- [x] New field lookup/bonus cases are gated to `retail-12-0-5`; profiles without that epoch retain previous zero behavior. No other stat formula, state, gear computation, or restriction producer changes.
 
 ## How it works
 
@@ -295,3 +295,9 @@ string_util_space_limit_security::wrapped_actual_frame_and_table_limits_reject_i
 - Duplicate percentage inputs, new structs, admin APIs, catalog/acquisition, gear synthesis or preservation of host inputs across recomputation: neither required nor grounded.
 - Changes to other formulas, state, automatic restriction producers or prior-profile ordinary values.
 - Local build/test/check/readability/coverage/gates, delegation, model CLI, push and accounting changes: parent owns verification and acceptance.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted independent450 (`/tmp/patch-12.0.5-tertiary-stat-inputs-independent-proof.md`):119 uniquePASS/startup0 `[]`, unchanged14 RED→GREEN fixtures and actual equipment-reset/host-replacement boundary. Owned rustfmt exit0/0.038445s; cargo check exit0/15.117134s without warnings; changed-Rust readability has no applicable violation or behavioral counterexample. Global cargo fmt remains exit1/17.553642s solely on preserved unowned source. All checks/execution are **dirty-combined, not clean-revision proof**; no milestone reruns.
+
+Only420/442/480 promote: **214 pending/134 bounded/14 partial =362 ordered IDs;63 capabilities**.359 unrelated rows and62 prior capabilities retained; parent owns postcommit validation. Raw/bonus13/17/21 are supporting controls, not new424/426 or generic40-stat credit. Conversion remains a guess, current-snapshot reset is not sticky persistence, and prior-profile equivalence is static only. Native acquisition/conversion-by-level/profile, activation, permissions/secrecy and whole-page/goal completion remain unproved. Earlier pending wording is historical; this section supersedes it only for these three bounded rows.

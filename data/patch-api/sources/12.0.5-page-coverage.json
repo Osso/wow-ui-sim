@@ -7,6 +7,23 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "tertiary-stat-inputs",
+      "symbols": [
+        "GetAvoidance",
+        "GetLifesteal",
+        "GetSpeed"
+      ],
+      "scope": "Exact420/442/480 only: existing CharacterStats avoidance/leech/speed rating fields feed current snapshot getters through repaired shared13/17/21 raw/bonus lookups. Explicit180-per-percent/nonnegative conversion is assistant GUESS, not native. Default/nonzero/negative/live replacement/isolation/read-only/toggle/tainted opacity/rooted real secret-result GC/trusted recovery and actual equipment snapshot-reset boundary; no new state/catalog/gearmodel. Native conversion/acquisition/activation/security/profile runtime parity excluded; no424/426 extra credit.",
+      "spec": "docs/specs/tertiary-stat-inputs.md",
+      "tests": [
+        "tests/tertiary_stat_inputs.rs"
+      ],
+      "implementation": "bd71ffddbe0521823c345e68ca4971f57e229b36",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-tertiary-stat-inputs-independent-proof.md",
+      "gate_scope": "Parent accepted independent450 saved119 uniquePASS14new+105controls/startup0[]. Scopedfmt0/dirtycheck0 with no warnings/readability violations; globalfmt1 sole preserved unowned source. Dirty-combined not clean revision; runtime83.361959s compile368.364861s separate. Earlier profiles only static branch/formula equivalence, no executed profile/native/final page/goal claim. Existing40 partial and earlier capability scopes preserved."
+    },
+    {
       "id": "break-up-large-numbers",
       "symbols": [
         "BreakUpLargeNumbers"
@@ -2522,9 +2539,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetAvoidance-420",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tertiary-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent450 exact bounded output annotation with repaired existing rating-field lookup; conversion guessed, native/acquisition/profile gaps retained. Dirty-combined gates/scopedfmt0/check0/globalfmt1 unowned, no extra424/426 or generic40-stat credit."
     },
     {
       "source_id": "global api-PlayerScript GetBlockChance-422",
@@ -2596,9 +2615,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetLifesteal-442",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tertiary-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent450 exact bounded output annotation with repaired existing rating-field lookup; conversion guessed, native/acquisition/profile gaps retained. Dirty-combined gates/scopedfmt0/check0/globalfmt1 unowned, no extra424/426 or generic40-stat credit."
     },
     {
       "source_id": "global api-PlayerScript GetManaRegen-444",
@@ -2716,9 +2737,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetSpeed-480",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tertiary-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent450 exact bounded output annotation with repaired existing rating-field lookup; conversion guessed, native/acquisition/profile gaps retained. Dirty-combined gates/scopedfmt0/check0/globalfmt1 unowned, no extra424/426 or generic40-stat credit."
     },
     {
       "source_id": "global api-PlayerScript GetSpellBonusDamage-482",
