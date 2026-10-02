@@ -7,6 +7,22 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "tooltip-item-context",
+      "symbols": [
+        "C_TooltipInfo.GetItemByID"
+      ],
+      "scope": "Exact330/331 only: explicit empty-default host ItemTooltipContext->u16 level map; same known catalog item independently changes context/treasure level and derived existing stat estimates, ephemeral clone changes only item_level. Nil/zero/exact-key/miss/domain rules inferred; no catalog fabrication/arithmetic/ID substitute. Authentic VM all4 before parse/model, secure NUM/NIL accepted, tainted secrets denied, public tainted allowed; quality authenticated then ignored. Read-only/fresh/live/GC/trust/isolation. Native acquisition/domain/miss/output/quality/fullvariants/profile/UI excluded.",
+      "spec": "docs/specs/tooltip-item-context.md",
+      "tests": [
+        "tests/tooltip_item_context.rs"
+      ],
+      "implementation": "23efb40c84837dfa9564a7d21bc6297842ee4df3",
+      "compiled_revision": "a920153ef827bab420aba1c4facad994b35691ba",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-item-tooltip-context-final-artifact-proof.md",
+      "gate_scope": "Accepted497 model/security/wiring/producerfmt/check and four equivalent assertion fixes/fulltest readability/fmt +499 refreshed24PASS. Refreshed24+153inherited=177distinct, not fresh177/201; startup0[] historical. Check0 at31cee source-scoped not later BaseCargo. RED2PASS22FAIL reaches probe not setup; false7line diagnosis rejected. Eleven pre-existing tooltip-fixture diagnostics match61 despite passing controls; separate startup clean. Dirty-combined/globalfmt1 retained. Five shared63 scaffold warnings unaccepted then, future wiring outside this acceptance. Hashes/costs/full output retained; no native/profile/finalpage claim."
+    },
+    {
       "id": "tooltip-aura-instance-security",
       "symbols": [
         "C_TooltipInfo.GetUnitAuraByAuraInstanceID",
@@ -2258,15 +2274,19 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetItemByID-330",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-item-context"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact context/treasure addition accepted497+499: meaningful same-item level/stat variants, authentic input boundary,24refreshed+153reusable controls/startup0[]. Four equivalent test readability fixes/fmt and producer-scoped check pass. Empty host map/finite catalog only; nil/domain/miss inferred. Dirty/globalfmt/native/profile/quality/fullvariants limits and eleven pre-existing partial-fixture diagnostics retained; not annotation-only credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetItemByID-331",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-item-context"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact context/treasure addition accepted497+499: meaningful same-item level/stat variants, authentic input boundary,24refreshed+153reusable controls/startup0[]. Four equivalent test readability fixes/fmt and producer-scoped check pass. Empty host map/finite catalog only; nil/domain/miss inferred. Dirty/globalfmt/native/profile/quality/fullvariants limits and eleven pre-existing partial-fixture diagnostics retained; not annotation-only credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetMountBySpellID-333",

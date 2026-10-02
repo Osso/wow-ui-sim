@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch62 — exact item-context additions accepted
+
+[Exact330/331 contract/proof SSOT](../../specs/tooltip-item-context.md#independent-bounded-acceptance--2026-10-02) records497+499 acceptance:24 refreshed focused PASS plus153 reusable controls/startup0 `[]`, producer-scoped fmt/check/security/wiring/readability and four equivalent assertion fixes. Only330/331 promote: **197 pending/150 bounded/14 partial/1 metadata =362;69 capabilities**. Ordered IDs,360 unrelated rows,68 prior capabilities/source hashes preserved. Explicit host level variants change same catalog item and derived budget estimates; no fabricated production data, ignored-argument credit or native acquisition/full variants/quality parity. Eleven pre-existing partial-fixture diagnostics match61; separate startup clean. Dirty/globalfmt/native/profile/UI limits and broader goal remain open.
+
 ### Batch61 — six aura-instance input-policy deltas accepted
 
 [Six-row contract/proof SSOT](../../specs/tooltip-aura-instance-security.md#independent-bounded-acceptance--2026-10-02) records parent acceptance of independent486:209 uniquePASS/startup0 `[]`, scopedfmt/check/security/wiring/readability. Only339/340/344/345/349/350 promote: **199 pending/148 bounded/14 partial/1 metadata =362;68 capabilities**. Ordered IDs,356 unrelated rows,67 prior capabilities and source hashes retained. Meaningful player helpful/harmful controls, actual VM secure acceptance/tainted denial and preserved public caller taint; no arg2/3 NeverSecret-removal credit. Dirty/globalfmt/restricted-unit/output/filter/native/profile gaps remain; broader goal open.
