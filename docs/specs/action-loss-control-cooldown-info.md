@@ -36,7 +36,7 @@ Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfContr
 
 - `src/lua_api/state/support_types.rs`: existing `LossOfControlInfo` fields `start_time:f64`, `duration:f64`, `mod_rate:f32`, `is_active:bool`, `should_replace_normal_cooldown:bool`; no new host type required.
 - Existing `SimState.action_bars` and `spell_loss_of_control`: assigned-slot and spell-keyed explicit inputs; no new state fields planned.
-- `src/c_api/c_action_bar_loss_of_control.rs`: epoch125 first-class callback; authenticates original rooted arg1 via VM `unwrap_secret`, parses authenticated `Val::Num` with a positive-u32 cast-round-trip predicate, then snapshots the cloned record and restriction predicate in one immutable borrow. Missing records use the inferred inactive shape. Borrow ends before result allocation; ordinary five-field table is immediately stack-rooted before wrapper/key allocations, returned once. All five fields are copied; no expiry or flag recomputation.
+- `src/c_api/c_action_bar_loss_of_control.rs`: epoch125 first-class callback; authenticates original rooted arg1 via VM `unwrap_secret`, parses authenticated `Val::Num` with a positive-u32 cast-round-trip predicate, then `read_snapshot(state, slot)` snapshots the cloned record and restriction predicate in one immutable borrow. Missing records use the inferred inactive shape. Borrow ends before result allocation; ordinary five-field table is immediately stack-rooted before wrapper/key allocations, returned once. All five fields are copied; no expiry or flag recomputation.
 - `src/c_api/mod.rs`: `retail-12-0-5` module gate.
 - `src/lua_api/globals/action_bar_api.rs`: epoch125 import supplies the new callback; inverse gate retains old constant/stub and its capacity-helper import for earlier epochs.
 - `src/lua_api/globals/action_bar_api/registration.rs`: unchanged `COOLDOWN_SLOT_METHODS` entry binds the imported callback through the existing rooted namespace once; no parallel registration or fallback.
@@ -62,6 +62,10 @@ Pinned VM typed-secret numbers are opaque userdata with authenticated `Val::Num`
 - Saved `/tmp/patch-12.0.5-batch65-red-fixed-run.json`, `.stdout`, `.stderr`: integration binary SHA256 `98dec8a9581fffee6ad2e93adc7f43a6a7339821cdc6b6388c464a7b4e7fb58a`; timeout90, one test thread; **22 tests,1PASS/21FAIL**, exit101, **3.9129977279808372s** wall time (harness3.56s). Only `unassigned_positive_slots_return_exact_inactive_default` passed.
 - Concrete assigned payloads fail against stub zeros/rate1; restricted fields fail secret metadata; secure-secret selection, strict domain and tainted-secret denial fail at their first assertions. GC/copy/recovery tests stop at earlier field/payload failures: downstream GC/lifetime behavior is not established by this RED.
 - Proof ledger: saved compile/run cover corrected tests against the old producer only. New producer is formatted, not compiled or executed; no GREEN, startup, check, security/readability gate or independent acceptance evidence is inferred.
+
+## Snapshot extraction — 2026-10-02
+
+Extracted the existing immutable slot → spell → LoC/default and restriction read into `read_snapshot`; callback parsing, rooting order, three numeric fields, two booleans and single return remain unchanged by source inspection. Only owned Rust is formatted with children skipped; compiled/executed equivalence proof remains pending with main. No new behavior or policy.
 
 ## Known gaps (current cycle)
 

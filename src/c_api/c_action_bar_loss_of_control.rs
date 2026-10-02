@@ -13,22 +13,7 @@ const API_NAME: &str = "C_ActionBar.GetActionLossOfControlCooldownInfo";
 
 pub(crate) fn get_action_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u32> {
     let slot = read_action_slot(state)?;
-    let (info, restricted) = {
-        let sim = borrow_state(state)?;
-        let info = sim
-            .action_bars
-            .get(&slot)
-            .and_then(|spell| sim.spell_loss_of_control.get(spell))
-            .cloned()
-            .unwrap_or(LossOfControlInfo {
-                start_time: 0.0,
-                duration: 0.0,
-                mod_rate: 1.0,
-                is_active: false,
-                should_replace_normal_cooldown: false,
-            });
-        (info, cooldowns_are_restricted(&sim))
-    };
+    let (info, restricted) = read_snapshot(state, slot)?;
     let table = create_table_with_capacity(state, 5);
     // Root the ordinary result before keys or host-secret wrappers allocate.
     state.push(table);
@@ -52,6 +37,23 @@ pub(crate) fn get_action_loss_of_control_cooldown_info(state: &mut LuaState) -> 
         Val::Bool(info.should_replace_normal_cooldown),
     );
     Ok(1)
+}
+
+fn read_snapshot(state: &LuaState, slot: u32) -> LuaResult<(LossOfControlInfo, bool)> {
+    let sim = borrow_state(state)?;
+    let info = sim
+        .action_bars
+        .get(&slot)
+        .and_then(|spell| sim.spell_loss_of_control.get(spell))
+        .cloned()
+        .unwrap_or(LossOfControlInfo {
+            start_time: 0.0,
+            duration: 0.0,
+            mod_rate: 1.0,
+            is_active: false,
+            should_replace_normal_cooldown: false,
+        });
+    Ok((info, cooldowns_are_restricted(&sim)))
 }
 
 fn read_action_slot(state: &LuaState) -> LuaResult<u32> {
