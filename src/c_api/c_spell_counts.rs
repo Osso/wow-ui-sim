@@ -63,19 +63,16 @@ fn authenticate_argument(state: &LuaState, position: i32) -> LuaResult<Val> {
 
 fn validate_identifier(state: &LuaState, value: Val) -> LuaResult<()> {
     match value {
-        Val::Num(number)
-            if number.is_finite()
-                && number.fract() == 0.0
-                && number >= 0.0
-                && number <= f64::from(u32::MAX) =>
-        {
-            Ok(())
-        }
+        Val::Num(number) if is_unsigned_u32(number) => Ok(()),
         Val::Str(_) if val_to_string(state, value).is_some() => Ok(()),
         _ => Err(runtime_error(format!(
             "{DISPLAY_API}: argument 1 requires a UTF-8 string or finite integral u32 number"
         ))),
     }
+}
+
+fn is_unsigned_u32(number: f64) -> bool {
+    number.is_finite() && f64::from(number as u32) == number
 }
 
 fn parse_maximum(value: Val) -> LuaResult<f64> {
