@@ -61,6 +61,14 @@ Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/B
 
 Existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` and the `spell_metadata_defaults.rs` unit tuple still expect display numeric0. Expected Retail125 control mismatch: documented display result is STRING, so the new producer returns empty STR without a source. Both tests remain untouched; main must first demonstrate actual producer GREEN/control failure before deciding corrections. Earlier/Forever numeric0 defaults remain deliberate.
 
+## First producer execution and confirmed fixture corrections — 2026-10-01
+
+Saved `batch67-green-build` at `6269e88698ff8d9b74ee4866f392877c0691d60f` compiles the existing lib and grouped integration targets successfully in321.9952879860066s with zero diagnostics. First focused run is29PASS/1FAIL, not fully GREEN: known-name fixtures stored mixed-case keys while the unchanged shared resolver normalizes input to lowercase. Fixture keys are corrected to canonical lowercase; no new name/catalog fallback or resolver semantics added.
+
+The31-test spell-control group is30PASS/1FAIL and the two shim-unit tests are1PASS/1FAIL. Both failures expect a numeric display result and error on the actual STRING result. Cached output contract requires STRING; only these observed obsolete assertions are updated under Retail125, retaining earlier/Forever numeric0 behavior. New count queries/default domains remain model-backed, not a test-only callback replacement. Full outputs/exit/time/hash references live in `/tmp/patch-12.0.5-batch67-initial-green-runs.json`.
+
+Refreshed focused/control/unit execution and independent verification remain pending. These are fixture/state and outdated-contract corrections, not production fallback changes. Native known-name acquisition, cast secret-input permission and nominal-type limits remain explicit.
+
 ## Known gaps (current cycle)
 
 - [ ] Independently demonstrate producer GREEN after the main-owned compiled RED below. Earliest RED failures prevented downstream privacy/GC assertions from executing; authored coverage is not completed proof.

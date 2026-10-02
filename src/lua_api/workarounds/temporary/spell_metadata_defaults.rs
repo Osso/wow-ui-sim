@@ -61,20 +61,33 @@ mod tests {
     fn installs_spell_metadata_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (bool, bool, bool, i32, i32, bool) = env
+        let result: (bool, bool, bool, i32, bool) = env
             .eval(
                 r#"
                 return C_Spell.IsSpellPassive(116),
                     C_Spell.IsRangedAutoAttackSpell(116),
                     C_Spell.IsPressHoldReleaseSpell(116),
                     C_Spell.GetSpellCastCount(116),
-                    C_Spell.GetSpellDisplayCount(116, 99),
                     C_Spell.IsPriorityAura(116)
                 "#,
             )
             .expect("spell metadata defaults should be callable");
 
-        assert_eq!(result, (false, false, false, 0, 0, false));
+        assert_eq!(result, (false, false, false, 0, false));
+        #[cfg(feature = "retail-12-0-5")]
+        {
+            let display: String = env
+                .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
+                .expect("modeled display counts return strings");
+            assert_eq!(display, "");
+        }
+        #[cfg(not(feature = "retail-12-0-5"))]
+        {
+            let display: i32 = env
+                .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
+                .expect("earlier count defaults retain numeric zero");
+            assert_eq!(display, 0);
+        }
     }
 
     #[test]

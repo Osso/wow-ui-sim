@@ -52,8 +52,8 @@ fn fixture(restricted: bool) -> WowLuaEnv {
         state.spell_id_aliases.clear();
         state.spell_id_aliases.extend([
             ("fixtureheal".into(), 19750),
-            ("Flash of Light".into(), 19750),
-            ("Divine Shield".into(), 642),
+            ("flash of light".into(), 19750),
+            ("divine shield".into(), 642),
             ("19750".into(), 19750),
             ("642".into(), 642),
         ]);

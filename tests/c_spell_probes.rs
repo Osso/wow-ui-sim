@@ -221,8 +221,7 @@ fn test_get_spell_description_resolves_named_dmg_variable() {
 #[test]
 fn test_get_spell_description_resolves_consecration_dmg_expression() {
     let env = env();
-    let consecration_damage =
-        formatted_player_attack_power_damage(&env, "ap * 0.05 * 12 * 1.05");
+    let consecration_damage = formatted_player_attack_power_damage(&env, "ap * 0.05 * 12 * 1.05");
     let desc: String = env
         .eval("return C_Spell.GetSpellDescription(26573)")
         .unwrap();
@@ -340,19 +339,27 @@ fn test_get_spell_cooldown_active_after_set() {
     assert!(is_active, "isActive should be true when duration > 0");
 }
 
-// ── Temporary count shims ─────────────────────────────────────────────────────
+// ── Empty count domains ──────────────────────────────────────────────────────
 
 #[test]
-fn test_spell_count_shims_return_zero() {
+fn test_spell_count_missing_data_matches_epoch_domains() {
     let env = env();
-    let (cast_count, display_count): (i64, i64) = env
-        .eval(
-            "return C_Spell.GetSpellCastCount(116),
-                    C_Spell.GetSpellDisplayCount(116, 99)",
-        )
-        .unwrap();
+    let cast_count: i64 = env.eval("return C_Spell.GetSpellCastCount(116)").unwrap();
     assert_eq!(cast_count, 0);
-    assert_eq!(display_count, 0);
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        let display_count: String = env
+            .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
+            .unwrap();
+        assert_eq!(display_count, "");
+    }
+    #[cfg(not(feature = "retail-12-0-5"))]
+    {
+        let display_count: i64 = env
+            .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
+            .unwrap();
+        assert_eq!(display_count, 0);
+    }
 }
 
 // ── GetMountFromSpell ─────────────────────────────────────────────────────────
