@@ -50,7 +50,12 @@ fn admin_buff(name: &str, spell_id: i32, aura_instance_id: i32, is_helpful: bool
     admin_aura(name, spell_id, aura_instance_id, is_helpful)
 }
 
-fn dispellable_debuff(name: &str, spell_id: i32, aura_instance_id: i32, dispel_type: &str) -> AuraInfo {
+fn dispellable_debuff(
+    name: &str,
+    spell_id: i32,
+    aura_instance_id: i32,
+    dispel_type: &str,
+) -> AuraInfo {
     AuraInfo {
         dispel_type: Some(dispel_type.to_string()),
         ..admin_aura(name, spell_id, aura_instance_id, false)
@@ -304,7 +309,10 @@ fn admin_add_debuff_without_dispel_type_has_nil_dispel_name() {
             "#,
         )
         .unwrap();
-    assert!(dispel_is_nil, "omitted dispelType must surface as nil dispelName");
+    assert!(
+        dispel_is_nil,
+        "omitted dispelType must surface as nil dispelName"
+    );
 }
 
 #[test]
@@ -323,6 +331,12 @@ fn admin_add_buff_and_debuff_accept_numeric_icon() {
             "#,
         )
         .unwrap();
-    assert_eq!(buff_icon, 135987.0, "documented numeric icon form must work for AddBuff");
-    assert_eq!(debuff_icon, 136207.0, "documented numeric icon form must work for AddDebuff");
+    assert_eq!(
+        buff_icon, 135987.0,
+        "documented numeric icon form must work for AddBuff"
+    );
+    assert_eq!(
+        debuff_icon, 136207.0,
+        "documented numeric icon form must work for AddDebuff"
+    );
 }
