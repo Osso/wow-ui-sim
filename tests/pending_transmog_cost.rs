@@ -19,7 +19,8 @@ fn assert_pair(env: &WowLuaEnv, cost: u64, modifier_flags: u32) {
             assert(select('#', ...) == 2, 'expected exactly two returns')
             local cost, flags = ...
             assert(type(cost) == 'number' and type(flags) == 'number')
-            assert(not issecretvalue(cost) and not issecretvalue(flags))
+            assert(not issecretvalue(cost))
+            assert(not issecretvalue(flags))
             assert(cost == {cost} and flags == {modifier_flags})
         end
         inspect(C_TransmogOutfitInfo.GetPendingTransmogCost())
@@ -191,7 +192,9 @@ fn pending_transmog_cost_out_of_domain_errors_without_rounding_and_recovers() {
             local ok, err = pcall(function()
                 return C_TransmogOutfitInfo.GetPendingTransmogCost()
             end)
-            assert(not ok and type(err) == 'string' and #err > 0)
+            assert(not ok)
+            assert(type(err) == 'string')
+            assert(#err > 0)
             "#,
         )
         .unwrap();
@@ -222,7 +225,8 @@ fn pending_transmog_cost_secure_and_tainted_public_reads_preserve_context() {
                 assert(select('#', ...) == 2)
                 local cost, flags = ...
                 assert(type(cost) == 'number' and type(flags) == 'number')
-                assert(not issecretvalue(cost) and not issecretvalue(flags))
+                assert(not issecretvalue(cost))
+                assert(not issecretvalue(flags))
                 assert(cost == 123450 and flags == 14)
             end
             inspect(C_TransmogOutfitInfo.GetPendingTransmogCost())

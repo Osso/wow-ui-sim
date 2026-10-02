@@ -47,7 +47,7 @@ Tests call the real namespace function, without fake registrations or replaced c
 
 At `b584e84f657f5a6b2481f39fc5c24be1674e22bc`, saved `/tmp/patch-12.0.5-batch60-red-build-result.json` records `cargo test --test integration --no-run --message-format=json`: exit0, 332.1104654330993s compilation including unmeasured shared-lock time. `/tmp/patch-12.0.5-batch60-red-run.json` and full `.stdout`/`.stderr` record the selected `pending_transmog_cost::` execution: ten selected, zero PASS, ten genuine FAIL, exit101, 2.2938987109810114s execution. Build/run share integration executable SHA256 `6c08ecd2ee9549d2007535ceb8b9363f437c414984a1de116656519322da7594`. Provenance is dirty-combined; recorded dirty diff hash was supplied, not recomputed.
 
-The final-publication trace correctly identifies `runtime_surface_bootstrap.lua:64–78`, `__wow_namespace_mt.__index`, the original arity explanation was wrong and the trace now corrects it: literal `function() return nil end` returns **exactly one nil**, not zero values. This cached generic callable explains default zero-arity and positive two-arity failures. No old named getter or modeled provider existed. Direct registration now supplies the modeled key; no compatibility fallback is retained for this getter when epoch125 is enabled.
+The final-publication trace correctly identifies `runtime_surface_bootstrap.lua:64–78`, `__wow_namespace_mt.__index`; the original arity explanation was wrong and the trace now corrects it: literal `function() return nil end` returns **exactly one nil**, not zero values. This cached generic callable explains default zero-arity and positive two-arity failures. No old named getter or modeled provider existed. Direct registration now supplies the modeled key; no compatibility fallback is retained for this getter when epoch125 is enabled.
 
 ### Saved parent GREEN — 2026-10-02
 
@@ -56,6 +56,12 @@ Producer `84088ea57dd54c247084d516cd293aa62fd8dba7` compiled the default integra
 `/tmp/patch-12.0.5-batch60-green-runs.json` binds four finite executions to integration SHA256 `274414f2cd5a5452c03134c9e2a3e293a5fdfd4781c9b3585d6ac66efafa14bb`: ten focused tests, sixteen illusion-category controls, sixty-seven transmog/heirloom controls, and five outfit-catalog controls, **98 distinct PASS**, all exits0. Execution totals 17.81266000075266s; no duplicate test names. Startup separately returned `[]`, exit0, 6.025275836000219s; `green-startup-run.json` binds binary SHA256 `578f459da46570328b371b34ba3b4ebd914c20d797e6d78579cd9e6fd34d1d3d` and full output paths.
 
 Proof is dirty-combined, not a clean-revision or native-client claim. Protected dirty hash remains supplied, not recomputed. Independent security, wiring, readability, scoped formatting and Rust checks remain pending; global formatting has the preserved unrelated unowned failure. Do not rerun applicable build/runtime solely for documentation or accounting.
+
+### Independent initial gate and readability follow-up — 2026-10-02
+
+`/tmp/patch-12.0.5-pending-cost-independent-proof.md` and `batch60-independent-gates.json` record independent477 acceptance of saved98PASS/startup0[], security/wiring, owned rustfmt exit0 and default `cargo check` exit0 in27.168454498052597s with no warnings. Global `cargo fmt --check` exits1; potential protected-source diff was discarded unread. This is scoped dirty-combined proof, not unconditional whole-tree acceptance.
+
+Three concrete test-readability findings were accepted after source inspection: split public-result secrecy checks in `assert_pair` and the caller-context probe, and split failure/type/nonempty checks in the out-of-domain test. The predicates remain identical; failure assertions retain short-circuiting through separate `assert` calls. Producer and inputs remain unchanged. Refreshed ten-test runtime and independent equivalence/format/readability follow-up remain pending; controls/startup/production check remain source-valid and must not be rerun solely for this test-only change.
 
 ## Known gaps (current cycle)
 
@@ -67,7 +73,7 @@ Proof is dirty-combined, not a clean-revision or native-client claim. Protected 
 
 Retained `data/patch-api/sources/12.0.0-register.json` declares `cost:number` with `MayReturnNothing`; the exact 12.0.5 row357 delta adds **only** `ret2 = modifierFlags`, not a cost-type change.
 
-The supplied `/tmp/patch-12.0.5-pending-cost-modifier-boundary.md` incorrectly identifies a vendor/mists path as the later documentation authority. Current cached retail `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TransmogOutfitInfoDocumentation.lua:377–386` declares `MayReturnNothing`, `cost:BigUInteger`, and `modifierFlags:number`. This is current-cache evidence, not proof of 12.0.5 width or native enum chronology.
+The original `/tmp/patch-12.0.5-pending-cost-modifier-boundary.md` identified an incorrect vendor/mists authority; the corrected historical note now names the current cached retail source. Current cached retail `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TransmogOutfitInfoDocumentation.lua:377–386` declares `MayReturnNothing`, `cost:BigUInteger`, and `modifierFlags:number`. This is current-cache evidence, not proof of 12.0.5 width or native enum chronology.
 
 Current cached retail `AddOns/Blizzard_Transmog/Blizzard_Transmog.lua:278+` consumes numeric costs with `cost == 0` and numeric comparisons, and uses `FlagsUtil.IsSet` for masks 8, 4, and 2. That consumer supports bounded scalar context and meaningful small fixtures; it does not establish native charges, discount eligibility, selected-patch enum history, or working UI.
 
