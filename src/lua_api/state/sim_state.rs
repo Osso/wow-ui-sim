@@ -183,6 +183,10 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub aura_spell_classifications:
         crate::c_api::c_unit_aura_classification::AuraSpellClassifications,
+    /// INFERRED host-declared sound IDs only; no Add acquisition or playback model.
+    #[cfg(feature = "retail-12-0-5")]
+    pub private_aura_sound_registrations:
+        crate::c_api::private_aura_sounds::PrivateAuraSoundRegistrations,
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
     #[cfg(feature = "retail-12-0-5")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,

@@ -153,6 +153,8 @@ pub(crate) mod on_update_modes;
 pub(crate) mod patch_12_0_5_enums;
 pub mod permanent_shims;
 pub mod private_aura_anchors;
+#[cfg(feature = "retail-12-0-5")]
+pub mod private_aura_sounds;
 pub(crate) mod seconds_formatter;
 #[cfg(feature = "client-wowforever")]
 pub mod spell_base;
