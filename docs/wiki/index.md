@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura slot argument producer
+
+[[lua-api#Retail 12.0.5 aura slot arguments]] links [slot contract](../specs/unit-aura-slot-secret-arguments.md): sole epoch-owned C API boundary preserves NeverSecret unit, authenticates slot through actual VM and validates strict UTF-8 STRING/finite integral signed-i32 before unchanged blocked-inclusive lookup/DTO. Earlier provider cfg-separated; store/order/provider/tests unchanged. Producer `054525aff` follows saved parent RED5PASS/7FAIL; owned formatting0 only, parent compiled GREEN/acceptance pending. Representation/miss policy inferred; native access/output secrecy, exact errors and row376 accounting excluded.
+
 ## [2026-10-02] evidence | Accept exact batch43 display-count rows
 
 [Independent bounded acceptance](../specs/aura-application-display-count.md#independent-bounded-acceptance--2026-10-02) owns parent-accepted independent345, 94 unique PASS/startup0[], full commands/hashes and limits. Only367/368 NeverSecret thresholds and369 AllowedWhenUntainted unit/ID promote: **245/103/14 →242 pending/106 bounded/14 partial =362**. Ordered IDs,359 unrelated rows, prior49 capabilities and provenance preserved. Dirty combined source proof is not clean revision; globalfmt1 on unowned aura_duration.rs retained, scopedfmt0/dirtycheck0 accepted. Three nonblocking readability suggestions deferred. Native permission/output/full-page parity excluded; older pending checkpoints below are historical. Parent owns postcommit validation/ignored PLAN.

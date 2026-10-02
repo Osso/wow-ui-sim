@@ -1,3 +1,7 @@
+## [2026-10-01] implementation | Add bounded aura slot argument producer
+
+Updated [[lua-api#Retail 12.0.5 aura slot arguments]] and [slot contract](../specs/unit-aura-slot-secret-arguments.md) in `054525aff`; index/log links follow after shared-path release. Sole `retail-12-0-5` boundary uses VM NeverSecret unit rejection and authenticated slot decoding before unchanged lookup/DTO. Saved parent RED5PASS/7FAIL, unchanged fixtures; owned `rustfmt --config skip_children=true` exit0. No builds/tests/gates here; parent GREEN/acceptance pending. Inferred representation/no-positive-cap retained; no native permission/output/accounting credit. Disputed duration file not read/edited/formatted/staged.
+
 ## [2026-10-02] evidence | Accept exact batch43 display-count rows
 
 [Independent bounded acceptance](../specs/aura-application-display-count.md#independent-bounded-acceptance--2026-10-02) owns parent-accepted independent345, 94 unique PASS/startup0[], full commands/hashes and limits. Only367/368 NeverSecret thresholds and369 AllowedWhenUntainted unit/ID promote: **245/103/14 →242 pending/106 bounded/14 partial =362**. Ordered IDs,359 unrelated rows, prior49 capabilities and provenance preserved. Dirty combined source proof is not clean revision; globalfmt1 on unowned aura_duration.rs retained, scopedfmt0/dirtycheck0 accepted. Three nonblocking readability suggestions deferred. Native permission/output/full-page parity excluded; older pending checkpoints below are historical. Parent owns postcommit validation/ignored PLAN.
