@@ -3,6 +3,18 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 action display and use-count outputs
+
+Producer `b1cb0ee9f` covers **EXACT237/241**: `C_ActionBar.GetActionDisplayCount` and `C_ActionBar.GetActionUseCount`. [Contract, inventory and saved RED SSOT](../../specs/action-count-outputs.md) owns requirements and evidence. Literal host input is empty-default, slot-keyed `SimState.action_use_counts: HashMap<u32, ActionUseCountInfo>`, with `ActionUseCountInfo { spell_id, count }`; a record supplies a count only when its spell matches the slot's current binding. No fake catalog, consumption, inventory link or native acquisition is introduced.
+
+One immutable snapshot independently selects use count and display quantity: use returns only the matching explicit count (inferred absent/stale default0); display prioritizes existing valid `SpellChargeState` quantity when `max_charges>0`, then matching use count. Existing charge-reader semantics remain unchanged. No display source yields empty string; explicit zero yields `"0"`. Concrete source quantities use decimal formatting, replacing only when quantity **> max**, not at equality; defaults are9999 and `"*"`. Threshold accepts finite fractional/negative values; replacement is exact UTF8, NUL-free CString, validated even without a source. These absence, domain, formatting and selection policies are simulator inferences, not native findings.
+
+Full original VM argument authentication precedes parsing/model access: display positions1–3 and use position1. Strict slot parsing follows authentication. Each single scalar result is rooted immediately; existing Retail125/PTR cooldown restriction produces actual host-secret STRING display or NUM use, including empty/zero/replacement outputs. Trusted-host payload and metadata assertions—not a private nominal Lua-type assertion—define secret proof; actual Lua opacity remains required. One existing publication selects epoch125 callbacks, with inverse-gated earlier-epoch/Forever stubs; no alternate namespace publication.
+
+Saved pre-producer RED at `d0c7969641adf566502d840d9651ed54c8fedca5` selected28: **0 PASS / 28 FAIL**. Compilation completed successfully in608.535910s; supported auto-background completion/log recovery required no rerun. Earliest display-nil and use0 versus meaningful scalar failures precede many authentication/GC assertions; they do not prove28 independent privacy failures. Exact parent command/log path was not supplied. Requested authored date is2026-10-01; recorded host Git/build date2026-10-02 remains a distinct observation, not rewritten provenance.
+
+No producer GREEN, acceptance, profile/global privacy, UI or data parity claim. Current checkpoint remains **194 pending / 153 bounded / 14 partial / 1 metadata; 362 IDs; 72 capabilities**. Separate233/239 acceptance `5523335834f0b3ed26d1c1168f2551b82419111a` adds no proof here;237/241 stay uncredited.
+
 ## Retail 12.0.5 action loss-of-control cooldown info
 
 Producer `831aa8553` implements **EXACT239**, `C_ActionBar.GetActionLossOfControlCooldownInfo`, not237 (`GetActionDisplayCount`). [Contract, inventory and corrected RED SSOT](../../specs/action-loss-control-cooldown-info.md) owns requirements and evidence. Read-only selection follows existing action slot → spell → typed `spell_loss_of_control` map; no new state or acquisition. A fresh five-field snapshot copies `startTime`, `duration`, `modRate`, `isActive`, and `shouldReplaceNormalCooldown`. Missing records use inferred inactive `(0,0,1,false,false)`; flags copy verbatim, without activation, GCD selection or expiry calculation.
@@ -303,6 +315,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Action display and use-count outputs](../../specs/action-count-outputs.md) — EXACT237/241 SSOT; explicit matching slot counts, independent display selection, authentic scalar privacy and saved RED limits; no GREEN/acceptance/credit
 
 - [Action loss-of-control cooldown info](../../specs/action-loss-control-cooldown-info.md) — EXACT239 SSOT, not237; read-only producer, corrected pre-producer RED and NativePrimitiveTypeGap; GREEN/acceptance/credit pending
 
