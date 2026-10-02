@@ -71,7 +71,9 @@ fn empty_env() -> WowLuaEnv {
             local before = debug.getstacktaint()
             local frame, input = BSFrame, BSInput
             local ok, err = pcall(C_Spell.GetBaseSpell, identifier, spec)
-            assert(not ok and type(err) == 'string' and #err > 0, 'secret spec denied')
+            assert(not ok, 'secret spec denied')
+            assert(type(err) == 'string', 'public error string')
+            assert(#err > 0, 'nonempty rejection')
             assert(string.find(err, 'C_Spell.GetBaseSpell', 1, true), 'API error context')
             assert(string.find(err, 'arg2', 1, true)
                 or string.find(err, 'argument 2', 1, true)

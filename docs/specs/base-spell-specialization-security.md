@@ -71,6 +71,14 @@ Producer `815456e844fbb8e4cbfa5eb39e1d199733616101` compiled default integration
 
 Evidence remains dirty-combined. Independent502 source/security/wiring/readability/scoped formatting/default check and separate Forever compile/three existing tests are pending; no current Forever runtime or exact295 credit claimed. Native arg1 permissions/relationship acquisition/other profiles/UI remain unproved. Separate batch62 acceptance now197 pending/150 bounded/14 partial/1 metadata,362 IDs/69 capabilities; row295 stays pending. Do not rerun applicable Retail build/tests/startup solely for docs/accounting.
 
+## Independent initial gate and follow-up — 2026-10-02
+
+Independent502 observed default `cargo check` exit0 in20.45595521305222s and owned scoped rustfmt exit0. Full source/security/wiring/readability and saved-runtime report remain pending. One compound new-test error assertion was accepted after parent source inspection and split into identical ordered failure/type/nonempty predicates; focused20-test refresh and independent test-equivalence/readability/format follow-up remain pending. Producer unchanged; do not rerun applicable Retail controls/startup/default check merely for this test-only change.
+
+The requested Forever integration compile without default features and with only `client-wowforever` failed E0432 at `tests/game_menu.rs:9` importing `iced`, after232.79421525495127s. No Forever test executable was produced; three historical tests were **not run**. This is a test-target feature configuration failure, not observed GetBaseSpell behavior. Corrected bounded verification must include existing `gui` feature required by this grouped test target; no source workaround or production capability expansion. Full failed compiler artifacts remain retained.
+
+Verifier recorded a process breach: a recursive source search included protected `aura_duration.rs` in search scope; no match/content/hash/edit was returned. Follow-up searches must use explicit allowed paths, not broad `src` scopes. This does not claim protected-file safety from exclusion that did not occur.
+
 ## Known gaps (current cycle)
 
 - [x] Main-owned actual compiled RED classified and warning root cause recorded; bounded producer implemented afterward.
