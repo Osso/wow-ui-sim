@@ -4,7 +4,7 @@
 
 ## What it must do
 
-All requirements remain unverified. The producer is implemented after compiled RED; GREEN and acceptance remain main-owned.
+Producer follows compiled RED. Saved GREEN and startup evidence below are parent-observed; independent acceptance remains pending.
 
 - [ ] Under `retail-12-0-5`, accept an explicit optional host snapshot with `cost: u64` and `modifier_flags: u32`; default to `None`, without fabricated production values.
 - [ ] **Guessed absence policy:** a no-argument query returns zero values for `None`. `Some` returns exactly two ordinary public Lua numbers, including `(0, 0)`, zero cost with nonzero flags, and positive cost with zero flags.
@@ -47,14 +47,21 @@ Tests call the real namespace function, without fake registrations or replaced c
 
 At `b584e84f657f5a6b2481f39fc5c24be1674e22bc`, saved `/tmp/patch-12.0.5-batch60-red-build-result.json` records `cargo test --test integration --no-run --message-format=json`: exit0, 332.1104654330993s compilation including unmeasured shared-lock time. `/tmp/patch-12.0.5-batch60-red-run.json` and full `.stdout`/`.stderr` record the selected `pending_transmog_cost::` execution: ten selected, zero PASS, ten genuine FAIL, exit101, 2.2938987109810114s execution. Build/run share integration executable SHA256 `6c08ecd2ee9549d2007535ceb8b9363f437c414984a1de116656519322da7594`. Provenance is dirty-combined; recorded dirty diff hash was supplied, not recomputed.
 
-The final-publication trace correctly identifies `runtime_surface_bootstrap.lua:64–78`, `__wow_namespace_mt.__index`, but its arity explanation is wrong: literal `function() return nil end` returns **exactly one nil**, not zero values. This cached generic callable explains default zero-arity and positive two-arity failures. No old named getter or modeled provider existed. Direct registration now supplies the modeled key; no compatibility fallback is retained for this getter when epoch125 is enabled.
+The final-publication trace correctly identifies `runtime_surface_bootstrap.lua:64–78`, `__wow_namespace_mt.__index`, the original arity explanation was wrong and the trace now corrects it: literal `function() return nil end` returns **exactly one nil**, not zero values. This cached generic callable explains default zero-arity and positive two-arity failures. No old named getter or modeled provider existed. Direct registration now supplies the modeled key; no compatibility fallback is retained for this getter when epoch125 is enabled.
 
-No compiler, tests, startup, checks, readability, or acceptance gates executed in this producer cycle. Main owns those gates.
+### Saved parent GREEN — 2026-10-02
+
+Producer `84088ea57dd54c247084d516cd293aa62fd8dba7` compiled the default integration target successfully in 152.6985794439679s, including any unmeasured shared-lock time. Full compiler output and executable hashes: `/tmp/patch-12.0.5-batch60-green-build.stdout.jsonl`, `.stderr`, and `-result.json`.
+
+`/tmp/patch-12.0.5-batch60-green-runs.json` binds four finite executions to integration SHA256 `274414f2cd5a5452c03134c9e2a3e293a5fdfd4781c9b3585d6ac66efafa14bb`: ten focused tests, sixteen illusion-category controls, sixty-seven transmog/heirloom controls, and five outfit-catalog controls, **98 distinct PASS**, all exits0. Execution totals 17.81266000075266s; no duplicate test names. Startup separately returned `[]`, exit0, 6.025275836000219s; `green-startup-run.json` binds binary SHA256 `578f459da46570328b371b34ba3b4ebd914c20d797e6d78579cd9e6fd34d1d3d` and full output paths.
+
+Proof is dirty-combined, not a clean-revision or native-client claim. Protected dirty hash remains supplied, not recomputed. Independent security, wiring, readability, scoped formatting and Rust checks remain pending; global formatting has the preserved unrelated unowned failure. Do not rerun applicable build/runtime solely for documentation or accounting.
 
 ## Known gaps (current cycle)
 
 - [x] Observe saved genuine compiled RED and implement the separately authorized snapshot getter/registration.
-- [ ] GREEN, startup, checks, readability, independent acceptance, and native parity remain unproved. Row357 receives no coverage/accounting credit here. Inventory remains 206 pending / 141 bounded / 14 partial / 1 metadata, 362 IDs and 66 capabilities.
+- [x] Parent observed focused GREEN, adjacent controls and startup as recorded above.
+- [ ] Independent checks, readability, acceptance, and native parity remain unproved. Row357 receives no coverage/accounting credit here. Inventory remains 206 pending / 141 bounded / 14 partial / 1 metadata, 362 IDs and 66 capabilities.
 
 ### Version evidence and correction
 
