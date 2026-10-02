@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Bound exact330/331 item tooltip contexts
+
+[[lua-api#Retail 12.0.5 item tooltip contexts]] links [contract/proof SSOT](../specs/tooltip-item-context.md) after producer `23efb40c8`: empty-default literal host key→u16 level map, catalog clone changing only level, shared line/stat builder, all-four VM authentication before parsing/lookup, ignored quality and exact misses without alternate catalog fallback. Sole epoch125 publication/inverse legacy gate; inferred policies and native/catalog/output/profile/UI limits retained. Compiled pre-producer RED2PASS/22FAIL: parent correction rejects agent490 shared-setup claim; eight-line base passes, probe243 fails on variant/miss/type/auth boundaries; downstream GC unproved. No GREEN/acceptance/credit;199 pending/148 bounded/14 partial/1 metadata,362 IDs/68 capabilities unchanged.
+
 ## [2026-10-02] evidence | Accept six aura-instance tooltip input deltas
 
 [Batch61 acceptance SSOT](../specs/tooltip-aura-instance-security.md#independent-bounded-acceptance--2026-10-02) records independent486:209 distinctPASS/startup0 `[]`, scopedfmt/check/security/wiring/readability. Only339/340/344/345/349/350 promote;356 unrelated rows/67 prior capabilities preserved. Meaningful helpful/harmful player payloads and authentic VM input policy only; inferred polarity/misses, dirty/globalfmt/restricted-output/filter/native/profile limits remain. Broader goal open.

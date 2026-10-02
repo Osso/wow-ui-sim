@@ -3,6 +3,14 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 item tooltip contexts
+
+Producer `23efb40c8` implements `C_TooltipInfo.GetItemByID` exact330/331 through the [contract, inventory and proof SSOT](../../specs/tooltip-item-context.md). Literal host input is environment-local `SimState.item_tooltip_levels: HashMap<ItemTooltipContext, u16>`, empty by default; the key contains `item_id: u32`, `item_context: Option<u32>` and `treasure_context_level: Option<u32>`. Known catalog `ItemInfo` is cloned ephemerally, changing **only `item_level`**; base and selected clones reuse the shared line builder and existing estimated-stat heuristic. No catalog item or production mapping is fabricated.
+
+All four positions undergo native VM `unwrap_secret` AllowedWhenUntainted authentication before any parsing or lookup. Quality is authenticated then ignored; public quality stays ignored without validation or output override. Context and treasure are inferred nil-or-finite-integral-u32 inputs, with nil distinct from zero. Both absent use base catalog unless an explicit nil/nil override exists; any present combination requires an exact map key. Explicit context misses return fresh empty Item DTOs, with **no alternate catalog fallback**; unknown catalog IDs stay empty even with a map entry. Reads preserve inputs/catalog; replacement and clear affect later reads. Single epoch125 (`retail-12-0-5`) registration publishes into the existing rooted namespace; inverse-gated legacy entry preserves earlier epochs without profile execution proof.
+
+Saved compiled **2 PASS / 22 FAIL** is pre-producer RED, not current proof. Parent correction in `/tmp/patch-12.0.5-item-context-red-diagnosis.md` rejects agent490's false shared-setup/seven-line diagnosis: base eight-line setup passes, failures reach test probe line243 on variant/miss/type/authentication boundaries. No fixture correction is justified. Downstream freshness/recovery/GC assertions remain unproved beyond earliest failures. No GREEN, acceptance or row credit. Nil/domain/miss/map policies are inferred; finite catalog/stat estimates do not establish native acquisition, quality semantics, permissions, output secrecy, full variants, profile or UI parity. Accounting unchanged: **199 pending / 148 bounded / 14 partial / 1 metadata; 362 IDs; 68 capabilities**; exact330/331 remain pending.
+
 ## Retail 12.0.5 tooltip aura-instance argument security
 
 Producer `6edbe3533` implements literal epoch125 (`retail-12-0-5`) registration of `C_TooltipInfo.GetUnitAuraByAuraInstanceID`, `C_TooltipInfo.GetUnitBuffByAuraInstanceID`, and `C_TooltipInfo.GetUnitDebuffByAuraInstanceID` into the existing rooted namespace. All three documented argument positions pass pinned rilua `unwrap_secret` AllowedWhenUntainted authentication before any type validation or model lookup. Ordinary public arguments remain usable by tainted callers; optional arg3 stays ignored after authentication. Unit parsing uses UTF-8 strings; IDs require finite exact integral i32 values. Inverse-gated old entries preserve earlier epochs, without an active fallback or an earlier-profile execution claim.
@@ -271,6 +279,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Item tooltip contexts](../../specs/tooltip-item-context.md) — exact330/331 contract/proof SSOT: empty host map, level-only catalog clone, all-four VM boundary, exact misses and corrected pre-producer RED limits
 
 - [Tooltip aura-instance argument security](../../specs/tooltip-aura-instance-security.md) — three epoch125 namespace producers, all-position VM authentication, narrow host lookup, unchanged builder and pre-producer RED limits; contract/proof SSOT
 
