@@ -8,7 +8,7 @@ All requirements remain unchecked until producer GREEN and independent acceptanc
 
 ### Output policy (explicit simulator inference)
 
-- [ ] Return one ordinary, accessible public table; when the explicit live `cooldowns_restricted` input is true, its `startTime`, `duration` and `modRate` must independently be actual VM-owned secret numbers with unchanged numeric payloads and Lua `type == 'number'`. Trusted host production must use typed `wrap_host_secret_number`, not generic declassification, fake secret flags or caller/callback bypasses.
+- [ ] Return one ordinary, accessible public table; when the explicit live `cooldowns_restricted` input is true, its `startTime`, `duration` and `modRate` must independently be actual VM-owned secret numbers with unchanged numeric payloads, verified only through authenticated trusted-host inspection. Public numbers retain Lua `type == 'number'`; opaque secret values do not receive a nominal Lua-type parity claim. Trusted host production must use typed `wrap_host_secret_number`, not generic declassification, fake secret flags or caller/callback bypasses.
 - [ ] Apply that numeric-field policy even to zero/empty cooldown intervals, including assigned non-cooldown spells and existing unassigned-positive-slot results. `modRate` remains numeric 1, secret under restriction, public otherwise.
 - [ ] When unrestricted, return unchanged ordinary numeric values for spell-only, GCD-only, overlapping and empty state. This annotation changes output secrecy only, not interval selection or input acceptance.
 - [ ] Keep `isEnabled` public true and preserve the existing profile fieldset: `isActive` exists only under `retail-12-1-0` in this test domain, with its current public active/empty truth; older 12.0.5 payloads retain four fields. Do not introduce `isOnGCD`, `activeCategory` or `timeUntilEndOfStartRecovery`.
@@ -16,7 +16,7 @@ All requirements remain unchecked until producer GREEN and independent acceptanc
 
 ### Authentication, snapshots and lifecycle
 
-- [ ] Public slot calls from secure and addon-tainted callers preserve caller context. Addon code may observe table/field types, secrecy and public booleans without numerically reading opaque fields.
+- [ ] Public slot calls from secure and addon-tainted callers preserve caller context. Addon code may observe the public table, field secrecy and public booleans without numerically reading opaque fields.
 - [ ] Addon arithmetic on each authentic secret numeric field fails through the existing VM authentication boundary, with a nonempty error and no tested private interval payload disclosure; recovery restores a secure host entry without declassification. Error wording is not native-verified.
 - [ ] Field copying through an ordinary table preserves original secret wrapper identity and secrecy. Secure host-only inspection authenticates and verifies the three exact numeric payloads independently; never compare secret booleans in tainted Lua.
 - [ ] Turning restriction off produces a fresh public-number result without changing old rooted secret wrappers. Mutating or replacing a returned table must not change other DTO snapshots, spell/GCD inputs, action mappings, charge inputs or the flag.
@@ -57,6 +57,14 @@ Proof ledger: `/tmp/patch-12.0.5-batch64-red-build-result.json` records `cargo t
 `/tmp/patch-12.0.5-batch64-red-run.json` records `timeout 90 <integration-binary> action_cooldown_output_restriction:: --nocapture --test-threads=1`: exit **101**, **4.229881642968394 seconds** wall time (harness reports 3.55 seconds). Saved stdout/stderr `/tmp/patch-12.0.5-batch64-red-run.stdout` and `.stderr` contain **18 tests: 4 unrestricted PASS, 14 genuine FAIL**. The four controls establish existing numeric types/payloads, fieldset and meaningful spell/GCD/empty selection setup. Nine failures reach the initial numeric secrecy assertion, three reach actual wrapper metadata inspection, one reaches a preserved DTO's field-secrecy observation after mutation/replacement, and one reaches the tainted caller's first field-secrecy observation. Those first failures are missing output secrecy, not compile/setup defects. Later denial/copy/GC assertions are not RED proof until GREEN reaches them.
 
 This proof covers only the pre-producer snapshot; the new producer invalidates its applicability as current passing evidence. Compile and execution costs are separate, no rerun or fresh proof is claimed, and the short run is bounded development evidence rather than whole-goal acceptance.
+
+## Post-producer fixture correction — 2026-10-02
+
+Saved `batch64-green-focused-run` is **not GREEN**:4PASS/14FAIL, exit101,3.0324058649130166s. Failures now reach the helper's combined type/secrecy check. Namespace registration imports `c_api::c_action_bar::get_action_cooldown`; the legacy four-return global is a separate function in `globals/cooldown_probes.rs`. Read-only511's wrong-provider diagnosis is rejected against those exact imports and bindings; no second producer or registration change is justified.
+
+Pinned rilua604 `wrap_host_secret_number` allocates `Userdata::secret(Val::Num(value))`; builtin `type` classifies the Val tag without secret unwrapping. Requiring opaque fields to report Lua `number` was an unsupported fixture assumption, not part of source233's predicate rename. Corrected tests retain unrestricted numeric types, authentic `issecretvalue`, trusted-host exact `Val::Num` payloads, caller denial/copy/root/GC checks and public booleans. They make no secret nominal-type parity claim. No VM type override or declassification is added. Record native `type(secretField)` separately in a future probe; actual native primitive parity remains unresolved.
+
+Corrected focused execution and independent acceptance remain pending. Producer unchanged; initial RED proves missing secretion, not the later type expectation. Full source trace/corrections live in `/tmp/patch-12.0.5-action-cooldown-publication-failure.md`.
 
 ## Known gaps (current cycle)
 

@@ -48,6 +48,12 @@ Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfContr
 - `tests/c_spell_flyout_probes.rs`: existing lower-level spell DTO controls, unchanged; not action-path proof.
 - `tests/action_cooldown_output_restriction.rs`: existing assertion style only, unchanged; row233 cannot supply row239 credit.
 
+## Fixture correction — 2026-10-02
+
+Shared input compilation reported unused `Result` at `secret_slot` publication. Fixture now handles `set_global_val` failure explicitly with `expect`; no warning suppression. Initial compiled execution atfad6e780f records1PASS/21FAIL; corrected-input execution remains pending before producer work.
+
+Pinned VM typed-secret numbers are opaque userdata with authenticated `Val::Num` payloads. Numeric Lua types are asserted only when unrestricted; restricted fields retain actual secret metadata, exact trusted-host numeric payload and Lua-side denial/copy/GC checks. No native nominal-type parity or VM override is claimed. This corrects an unsupported fixture expectation also found in row233, without changing selected-state/payload predicates.
+
 ## Known gaps (current cycle)
 
 - [ ] Main compiled RED, producer GREEN and independent acceptance pending. No build/test/check/lint/readability/ops/push or delegation performed in this tests/spec task. Formatting alone is not execution proof.

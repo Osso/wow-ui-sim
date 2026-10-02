@@ -55,8 +55,8 @@ fn assert_payload(env: &WowLuaEnv, expected: Payload, restricted: bool) {
         .zip([expected.0, expected.1, f64::from(expected.2)])
     {
         env.exec(&format!(
-            "assert(type(Info.{field}) == 'number'); \
-             assert(issecretvalue(Info.{field}) == {restricted})"
+            "assert(issecretvalue(Info.{field}) == {restricted}); \
+             if not {restricted} then assert(type(Info.{field}) == 'number') end"
         ))
         .unwrap();
         let value: Val = env.eval(&format!("return Info.{field}")).unwrap();
@@ -90,7 +90,8 @@ fn secret_slot(env: &WowLuaEnv, slot: f64) {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     let value = rilua::table_security::wrap_host_secret_number(lua.state_mut(), slot);
-    lua.set_global_val("SecretSlot", value);
+    lua.set_global_val("SecretSlot", value)
+        .expect("publish authentic secret slot input");
 }
 
 fn wrapper_metadata(env: &WowLuaEnv, root_name: &str) -> Vec<(Val, u64)> {

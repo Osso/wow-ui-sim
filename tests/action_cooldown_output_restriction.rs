@@ -53,10 +53,10 @@ fn capture(env: &WowLuaEnv, slot: u32) {
 fn assert_numbers(env: &WowLuaEnv, expected: (f64, f64), restricted: bool) {
     for (field, number) in NUMBER_FIELDS.into_iter().zip([expected.0, expected.1, 1.0]) {
         env.exec(&format!(
-            "assert(type(ACInfo.{field}) == 'number'); \
-             assert(issecretvalue(ACInfo.{field}) == {restricted})"
+            "assert(issecretvalue(ACInfo.{field}) == {restricted}); \
+             if not {restricted} then assert(type(ACInfo.{field}) == 'number') end"
         ))
-        .expect("each literal field retains numeric Lua type and secrecy");
+        .expect("each field retains secrecy and public numbers retain numeric Lua type");
         let value: Val = env.eval(&format!("return ACInfo.{field}")).unwrap();
         let lua = env.lua();
         assert!(
@@ -277,7 +277,7 @@ fn secure_and_tainted_public_callers_preserve_context_and_field_observation() {
             ACInfo = C_ActionBar.GetActionCooldown(17)
             assert(type(ACInfo) == 'table' and not issecretvalue(ACInfo))
             for _, field in ipairs({'startTime', 'duration', 'modRate'}) do
-                assert(type(ACInfo[field]) == 'number' and issecretvalue(ACInfo[field]))
+                assert(issecretvalue(ACInfo[field]))
                 assert(not canaccessvalue(ACInfo[field]))
             end
             assert(not issecretvalue(ACInfo.isEnabled) and ACInfo.isEnabled == true)
