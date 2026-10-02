@@ -25,12 +25,20 @@ const CRIT_RATING_PER_PERCENT: f64 = 180.0;
 const HASTE_RATING_PER_PERCENT: f64 = 170.0;
 const MASTERY_RATING_PER_PERCENT: f64 = 130.0;
 const VERSATILITY_RATING_PER_PERCENT: f64 = 205.0;
+// GUESS: existing common conversion, not native-verified or user-selected.
+const TERTIARY_RATING_PER_PERCENT: f64 = 180.0;
+const TERTIARY_RATING_INPUTS_ENABLED: bool = cfg!(feature = "retail-12-0-5");
 
 fn combat_rating_for(state: &mut LuaState, rating_index: i32) -> i32 {
     let Ok(sim) = borrow_state(state) else {
         return 0;
     };
     match rating_index {
+        SPEED_RATING_INDEX if TERTIARY_RATING_INPUTS_ENABLED => sim.player.stats.speed_rating,
+        LIFESTEAL_RATING_INDEX if TERTIARY_RATING_INPUTS_ENABLED => sim.player.stats.leech_rating,
+        AVOIDANCE_RATING_INDEX if TERTIARY_RATING_INPUTS_ENABLED => {
+            sim.player.stats.avoidance_rating
+        }
         CRIT_RATING_INDEX => sim.player.stats.crit_rating,
         HASTE_RATING_INDEX => sim.player.stats.haste_rating,
         MASTERY_RATING_INDEX => sim.player.stats.mastery_rating,
@@ -43,6 +51,9 @@ fn combat_rating_for(state: &mut LuaState, rating_index: i32) -> i32 {
 
 fn rating_bonus_for_value(rating_index: i32, rating_value: f64) -> f64 {
     let divisor = match rating_index {
+        SPEED_RATING_INDEX | LIFESTEAL_RATING_INDEX | AVOIDANCE_RATING_INDEX => {
+            TERTIARY_RATING_PER_PERCENT
+        }
         CRIT_RATING_INDEX => CRIT_RATING_PER_PERCENT,
         HASTE_RATING_INDEX => HASTE_RATING_PER_PERCENT,
         MASTERY_RATING_INDEX => MASTERY_RATING_PER_PERCENT,
@@ -63,7 +74,14 @@ fn get_combat_rating(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_combat_rating_bonus(state: &mut LuaState) -> LuaResult<u32> {
     let rating_index = i32::from_stack(state, 1)?;
-    let bonus = {
+    let bonus = if TERTIARY_RATING_INPUTS_ENABLED
+        && matches!(
+            rating_index,
+            SPEED_RATING_INDEX | LIFESTEAL_RATING_INDEX | AVOIDANCE_RATING_INDEX
+        ) {
+        let rating = combat_rating_for(state, rating_index);
+        rating_bonus_for_value(rating_index, rating as f64)
+    } else {
         let Ok(sim) = borrow_state(state) else {
             return Ok(0);
         };
