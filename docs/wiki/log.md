@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Reconcile batch56 saved parent GREEN
+
+[Tooltip identifier proof SSOT](../specs/tooltip-spell-mount-identifiers.md#reconciled-batch56-saved-parent-green--2026-10-02) preserves mixed initial RED and corrected3PASS/19genuineFAIL; actual155 uniquePASS/all5 exits0/startup0 `[]`, exact39.89666002884041434s execution separately from139.876873968984s compile. RGBA/lineIndex fixture correction only; dirty-combined provenance, inferred miss/security policies and frame/native gaps retained. Fresh independent acceptance, requirements/accounting/PLAN pending;214/134/14 unchanged.
+
 ## [2026-10-02] evidence | Accept exact tertiary stat inputs
 
 [Exact420/442/480 acceptance SSOT](../specs/tertiary-stat-inputs.md#independent-bounded-acceptance--2026-10-02) records parent-accepted450:119 uniquePASS/startup0 `[]`, scopedfmt/check/readability pass, globalfmt failed on preserved unowned source. Only three rows promote;359 unrelated rows/62 prior capabilities retained. Conversion remains guessed, earlier-profile proof static, dirty-combined/native/acquisition limits explicit. Parent owns postcommit validation; broader goal open.

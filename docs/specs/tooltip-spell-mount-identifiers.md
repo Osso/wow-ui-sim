@@ -1,6 +1,6 @@
 # Tooltip spell and mount identifiers
 
-Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. Bounded next56 implementation is present; parent GREEN and acceptance remain pending. No native-verified capability is claimed. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
+Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. Bounded batch56 implementation and saved parent GREEN are observed; independent acceptance remains pending. No native-verified capability is claimed. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
 
 ## What it must do
 
@@ -44,10 +44,10 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 
 | Source ID | Literal delta | Current gap |
 | --- | --- | --- |
-| `global api-C_TooltipInfo-GetMountBySpellID-333` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; GREEN pending. |
-| `global api-C_TooltipInfo-GetMountBySpellID-334` | arg2 NeverSecret | Actual VM-secret rejection before lookup implemented; GREEN pending. |
-| `global api-C_TooltipInfo-GetSpellByID-336` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; GREEN pending. |
-| `global api-C_TooltipInfo-GetSpellByID-337` | arg2–6 NeverSecret | Actual VM-secret rejection before lookup implemented; GREEN pending. |
+| `global api-C_TooltipInfo-GetMountBySpellID-333` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; Saved GREEN observed; independent acceptance pending. |
+| `global api-C_TooltipInfo-GetMountBySpellID-334` | arg2 NeverSecret | Actual VM-secret rejection before lookup implemented; Saved GREEN observed; independent acceptance pending. |
+| `global api-C_TooltipInfo-GetSpellByID-336` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; Saved GREEN observed; independent acceptance pending. |
+| `global api-C_TooltipInfo-GetSpellByID-337` | arg2–6 NeverSecret | Actual VM-secret rejection before lookup implemented; Saved GREEN observed; independent acceptance pending. |
 
 All four currently have `audit-pending` status and empty capabilities. This implementation changes no source/register/coverage/accounting. Parent's 214 pending / 134 bounded / 14 partial checkpoint receives no credit from these fixtures.
 
@@ -87,10 +87,10 @@ Namespace registration uses the constructor's `GcRef<Table>`, already globally r
 | Capability | Fixture cases | Proof level |
 | --- | --- | --- |
 | Real spell/mount DTO and aliases | Numeric producer guards; both alias DTO families; numeric precedence; link precedence; live changes | Historical numeric controls PASS; initial alias failures observed. Corrected compiled RED pending. |
-| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Corrected parent RED: controls PASS; alias/miss/read-only/isolation/strictness failures genuine. GREEN pending. Chosen strictness/string miss inferred. |
-| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Corrected public RGBA baseline passes before alias boundary failure. GREEN pending. Ignored flags receive no semantic credit. |
-| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Corrected parent compiled RED observed genuine failures; GREEN pending. Optional ordering requires parent source audit, not claimed read-observation instrumentation. |
-| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Corrected query-preservation/lineIndex oracle reaches genuine alias boundary failure; GREEN pending. Secret retention test unchanged. GetSpell alias identity and full frame optional semantics excluded. |
+| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Corrected parent RED: controls PASS; alias/miss/read-only/isolation/strictness failures genuine. Saved GREEN observed; independent acceptance pending. Chosen strictness/string miss inferred. |
+| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Corrected public RGBA baseline passes before alias boundary failure. Saved GREEN observed; independent acceptance pending. Ignored flags receive no semantic credit. |
+| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Corrected parent compiled RED observed genuine failures; Saved GREEN observed; independent acceptance pending. Optional ordering requires parent source audit, not claimed read-observation instrumentation. |
+| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Corrected query-preservation/lineIndex oracle reaches genuine alias boundary failure; Saved GREEN observed; independent acceptance pending. Secret retention test unchanged. GetSpell alias identity and full frame optional semantics excluded. |
 
 GC identity snapshots compare actual host `Val`, userdata GcRef and live allocation sequence before/after returning to the secure host boundary, then compare globally rooted list/stack-export entries. Metadata snapshots do not create VM roots or inspect private payloads. Lua verifies secrecy and original caller/frame/table properties. Pinned rilua6044544 denies tainted secret-BOOL `rawequal`; these fixtures never require it or relax queries. Secret publication roots wrappers during insertion and roots original real tables while wrapping them.
 
@@ -109,7 +109,7 @@ Existing meaningful controls remain in `tests/tooltip_mount.rs`, `tests/tooltip_
 ## Known gaps (current cycle)
 
 Corrected parent compiled RED is recorded above; the two focused C API boundaries are implemented. Fixture preconditions remain explicit and unchanged; no monkey-patching or weakened query assertions.
-- [ ] Parent GREEN/source-audit/acceptance; four source rows remain uncredited until accepted proof.
+- [ ] Fresh independent source-audit/acceptance; saved parent GREEN reconciled below, four source rows remain uncredited until accepted proof.
 - [ ] Ordinary optional flags are currently ignored: indoor eligibility, pet/subtext/override selection, difficulty and link meanings remain **gaps**, not semantic support.
 - [ ] Native alias vocabulary, arg types, permissions for secret arg1, error precedence, miss behavior and result secrecy remain unknown. Native probes are unavailable and not a completion gate for this chosen simulator policy.
 
@@ -121,3 +121,269 @@ Corrected parent compiled RED is recorded above; the two focused C API boundarie
 - New semantics or unrequested public optional type/domain/finite validation; old-profile contract changes.
 - GetSpell alias-ID bookkeeping changes, missing frame optional forwarding, sparse mount-line layout redesign and output/native parity claims.
 - Vendor patches, accounting promotion, broad gates, builds, test execution, push and native probes in this slice.
+
+## Reconciled batch56 saved parent GREEN — 2026-10-02
+
+### Observed scope, not acceptance
+
+Producer `fb9d47a5ecbd450d9b869becec90b12fb559de3d` owns only exact source333/334/336/337 boundaries: sole epoch125 C API publication, older registrations/handlers disabled there, shared meaningful payload bridge, no new catalog/model. No producer, Frame or Color semantics were changed by fixture correction `215f0bb84cc86b611dcc2f4288f87754436967b6` or this reconciliation.
+
+Historical initial RED remains3PASS/19FAIL with two DTO identity-oracle defects mixed into producer failures. Corrected RED remains3PASS/19genuineFAIL: numeric baselines now succeed, then string alias/rejection/public-context boundaries fail. The one-off full-UI `/tmp/patch-12.0.5-tooltip-dto-diagnostic.lua`, `.stdout`, `.stderr` confirms only four spell-line `lineIndex` enrichments, each matching its position. No `dataInstanceID` is inferred. Correction compares four public numeric RGBA components and preserves every other DTO field plus actual rendered-line checks; no query replacement or frame patch.
+
+| Capability | Saved observation | Limit |
+| --- | --- | --- |
+| Numeric spell19750/mount23338, seeded numeric/name/full-link aliases | Focused22 PASS; meaningful title/description/ID and alias precedence, live updates, isolation, result mutation | Finite existing catalog/mount state; no acquisition/override model or native vocabulary proof |
+| Unresolved strings and unknown numeric IDs | Fresh unidentified empty Spell DTO for strings; identified empty numeric DTO including u32 endpoints | String miss policy inferred; native MayReturnNothing unknown |
+| Secret boundaries and caller roots | Actual optional secret kinds at mount2/spell2–6 reject before lookup; arg1 conservatively rejects; GC/root/wrapper/caller preservation and recovery PASS | Ordering also supported by producer source; no native permission/error/type/secrecy parity or read instrumentation claim |
+| Public flags | Documented public combinations preserve payload and ordinary taint | Ignored compatibility inputs, not indoor/pet/subtext/override/difficulty/link semantics |
+| Real frame route | Original identifiers reach actual query; DTO/RGBA/rendered lines, lineIndex and rejected-input preservation PASS | GetSpell string-alias identity and numeric mount title unsupported; missing full frame optional forwarding explicit gaps |
+
+Fresh independent verifier and requirements/acceptance/data/pagecoverage/PLAN remain pending; no guessed verifier ID. All requirement boxes remain unchecked. Four source rows remain uncredited;214 pending/134 bounded/14 partial unchanged. Item330/331 remain pending. Native errors, permissions, types, outputs, catalogs and other-profile runtime behavior remain unknown. Bounded development evidence only, not final whole-page/goal or native acceptance.
+
+### Commands, costs and provenance
+
+All three saved compiler invocations: `cargo test --test integration --no-run --message-format=json`, repository cwd, exit0. Initial compile104.26011972106062s; corrected compile58.19581049506087s; GREEN compile**139.876873968984s**, separate from execution. Compiler JSONL was consumed completely; completion records and stderr retained.
+
+Each GREEN filter below ran `timeout 90 target/debug/deps/integration-a11e89d240f9bd0c <filter> --test-threads=1` (saved commands use absolute executable paths). All five exit0; no duplicate successful names. Startup: `timeout 90 target/debug/wow-sim --no-addons --no-saved-vars lua-errors`, exit0, stdout`[]`.
+
+| Filter | Actual distinct PASS | Runtime seconds |
+| --- | ---: | ---: |
+| `tooltip_spell_mount_identifiers::` | 22 | 3.1291435519233346 |
+| `tooltip::` | 123 | 31.119388338993303 |
+| `tooltip_mount::` | 2 | 0.34843387990258634 |
+| `tooltip_item_sources::` | 6 | 0.8382455360842869 |
+| `tooltip_talent::` | 2 | 0.3523080999730155 |
+| Startup | 0 Lua errors | 4.109140621963888 |
+
+Exact execution+startup sum: **39.89666002884041434s**, below60s target; no padding. Earlier112-tooltip prediction was wrong: actual substring filter selects123, including11 extra named action_macro/Blizzard tests below. Total22+123+2+6+2 =**155 distinct PASS**.
+
+Every run is dirty-combined proof, not a clean revision: preserved unowned dirty source diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`. That file body was not accessed. GREEN integration SHA256 `77f8f0f672d41491957b5cdc69f48f61cf69ff2334353b812a7c36dc38dde180`; wow-sim SHA256 `d9023a4a0579e72f0b9a8d5b82a4632784a84ab09e3e8cc4751d67e33c48ba03`. Saved build/run revision and executable hashes bind observation; later docs commits do not create new execution proof. Owned current source SHA256 snapshots (no clean-revision claim):
+
+- `src/c_api/c_tooltip_info_spell_mount.rs`: `9fc34fc321217f382bc8025b54cd18701dc27da1c9f654db4c0f04868f810e83`
+- `src/c_api/mod.rs`: `79ab8ac0ffb8be73f0e43cdf8f12488a0717ca23e580c49147c64337e422b7a0`
+- `src/lua_api/globals/missing_surface.rs`: `dcad809c06164b55a0b82af718530f3e890bc0099d53449c13119ca78df9512e`
+- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: `4f2443a84c9bd6fe2b14d6499ad276bb2a20099ef68f5f021c9a730ec8f40969`
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: `5595585e22eebcf6ee2654e6facb8db6ca4bfc25d82797158b27727f3093252b`
+- `tests/tooltip_spell_mount_identifiers.rs`: `24f2913ae56663dd6daa1cbe616cec98bfcce813ad51da15fcb127c6e7d815c9`
+
+### Actual successful named coverage
+
+#### `tooltip_spell_mount_identifiers::` — 22 PASS
+
+```text
+tooltip_spell_mount_identifiers::documented_public_optional_combinations_keep_current_ignored_payloads
+tooltip_spell_mount_identifiers::forced_gc_preserves_stack_global_list_roots_and_caller_properties
+tooltip_spell_mount_identifiers::frame_secret_inputs_fail_without_mutating_prior_actual_tooltip_payload
+tooltip_spell_mount_identifiers::full_link_alias_wins_over_its_embedded_spell_number
+tooltip_spell_mount_identifiers::known_mount_numeric_uses_existing_declared_host_mount
+tooltip_spell_mount_identifiers::known_spell_numeric_keeps_generated_title_and_nonempty_lines
+tooltip_spell_mount_identifiers::live_alias_changes_are_visible_without_cached_query_results
+tooltip_spell_mount_identifiers::mount_never_secret_optional_rejects_all_vm_kinds_before_known_or_missing_payload
+tooltip_spell_mount_identifiers::mount_number_name_and_colored_link_aliases_have_equivalent_dtos
+tooltip_spell_mount_identifiers::numeric_alias_precedes_identity_and_returns_resolved_payload_id
+tooltip_spell_mount_identifiers::numeric_unknowns_preserve_identified_line_empty_spell_tooltips
+tooltip_spell_mount_identifiers::ordinary_tainted_public_calls_preserve_stack_taint_and_payload
+tooltip_spell_mount_identifiers::original_frame_identifier_routes_match_direct_dto_and_actual_rendered_lines
+tooltip_spell_mount_identifiers::result_mutation_and_repeated_queries_leave_payload_sources_read_only
+tooltip_spell_mount_identifiers::secret_identifiers_conservatively_reject_all_actual_vm_representations
+tooltip_spell_mount_identifiers::separate_environments_do_not_share_alias_updates
+tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_host_number_and_string
+tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_host_true_and_false
+tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_wrapped_real_frame_and_table
+tooltip_spell_mount_identifiers::spell_number_name_and_colored_link_aliases_have_equivalent_dtos
+tooltip_spell_mount_identifiers::strict_public_identifiers_reject_invalid_representations_in_both_contexts
+tooltip_spell_mount_identifiers::unseeded_public_strings_return_one_unidentified_empty_spell_tooltip
+```
+
+#### `tooltip::` — 123 PASS
+
+```text
+action_macro_tooltip::action_macro_tooltip_query_absent_on_retail
+action_macro_tooltip::explicit_macro_icon_is_returned_by_both_action_texture_queries_after_edit
+action_macro_tooltip::macro_icon_queries_follow_move_clear_delete_and_empty_icon
+action_macro_tooltip::spell_action_texture_queries_remain_nonempty_and_equal
+blizzard_azerite_respec_ui_button_disabled_tooltip::blizzard_azerite_respec_ui_button_disabled_tooltip_depends_on_money
+blizzard_ui_blizzard_achievementui::behavior_guild_member_tooltip::check_guild_members_tooltip_no_ops_outside_guild_view_and_when_num_members_is_zero
+blizzard_ui_blizzard_achievementui::behavior_guild_member_tooltip::check_guild_members_tooltip_pairs_odd_index_left_with_even_index_right_via_add_double_line
+blizzard_ui_blizzard_actionbar::behavior_button_tooltip::action_button_on_enter_sets_tooltip_for_populated_slot
+blizzard_ui_blizzard_actionbar::behavior_paragon_tooltip::paragon_watch_bar_tooltip_uses_seeded_reward_quest_and_progress
+blizzard_ui_blizzard_actionstatus::behavior_update_parent_resets_strata_to_tooltip::update_parent_resets_frame_strata_to_tooltip
+blizzard_ui_blizzard_ardenweald_gardening::behavior_onleave_hides_tooltip::onleave_hides_tooltip_after_each_onenter_branch
+tooltip::tooltip_allow_empty::test_allow_show_with_no_lines_keeps_zero_line_tooltip_renderable
+tooltip::tooltip_basic::test_adddoubleline_and_numlines
+tooltip::tooltip_basic::test_addline_and_numlines
+tooltip::tooltip_basic::test_appendtext
+tooltip::tooltip_basic::test_clearlines_resets_count
+tooltip::tooltip_basic::test_copy_tooltip_copies_lines_and_spell_data_without_reowning
+tooltip::tooltip_basic::test_createframe_gametooltip_type
+tooltip::tooltip_basic::test_fadeout_hides_and_clears_owner
+tooltip::tooltip_basic::test_gametooltip_exists_and_has_correct_type
+tooltip::tooltip_basic::test_gametooltip_strata_is_tooltip
+tooltip::tooltip_basic::test_getanchortype_after_setowner
+tooltip::tooltip_basic::test_isobjecttype_for_other_types
+tooltip::tooltip_basic::test_isobjecttype_frame_returns_true_for_gametooltip
+tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_clearlines
+tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_setowner
+tooltip::tooltip_basic::test_other_tooltip_frames_exist
+tooltip::tooltip_basic::test_repeated_identical_tooltip_refresh_keeps_cached_strata_buckets
+tooltip::tooltip_basic::test_set_frame_stack_populates_lines_returns_frame_and_fires_script
+tooltip::tooltip_basic::test_set_shapeshift_populates_spell_tooltip
+tooltip::tooltip_basic::test_setminimumwidth_and_getminimumwidth
+tooltip::tooltip_basic::test_setowner_and_isowned_and_getowner
+tooltip::tooltip_basic::test_setpadding_and_getpadding
+tooltip::tooltip_basic::test_settext_clears_and_sets_first_line
+tooltip::tooltip_basic::tooltip_content_lifecycle_appends_remain_hidden_until_show
+tooltip::tooltip_basic::tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden
+tooltip::tooltip_basic::tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner
+tooltip::tooltip_basic::tooltip_content_lifecycle_settext_shows_owned_populated_tooltip
+tooltip::tooltip_basic::tooltip_content_lifecycle_spell_payload_still_shows_after_setowner
+tooltip::tooltip_basic::tooltip_owner_clear_lines_retains_owner
+tooltip::tooltip_basic::tooltip_owner_hide_releases_owner_without_clearing_lines
+tooltip::tooltip_basic::tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner
+tooltip::tooltip_basic::tooltip_owner_set_shown_false_releases_owner
+tooltip::tooltip_cursor_dirty::adding_visible_tooltip_line_dirties_tooltip_rect
+tooltip::tooltip_cursor_dirty::hidden_cursor_anchored_tooltip_does_not_dirty_on_mouse_move
+tooltip::tooltip_cursor_dirty::inventory_tooltip_population_dirties_tooltip_rect
+tooltip::tooltip_cursor_dirty::unchanged_cursor_tooltip_anchor_does_not_dirty_on_mouse_move
+tooltip::tooltip_item_spell::inventory::test_set_bag_item_populates_tooltip
+tooltip::tooltip_item_spell::inventory::test_set_inventory_item_empty_slot
+tooltip::tooltip_item_spell::inventory::test_set_inventory_item_shows_tooltip
+tooltip::tooltip_item_spell::inventory::test_set_inventory_item_tooltip_content
+tooltip::tooltip_item_spell::spell_lines::test_add_line_does_not_invent_processing_info_value_color_segments
+tooltip::tooltip_item_spell::spell_lines::test_add_line_preserves_explicit_processing_info_inline_color_segments
+tooltip::tooltip_item_spell::spell_lines::test_clear_lines_clears_spell_id
+tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_nil_when_no_spell
+tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_spell_data_after_set
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_full_line_inline_color_markup
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_named_inline_color_markup
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_fires_on_tooltip_set_spell
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_does_not_invent_value_color_segments
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_uses_tooltip_line_color
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_makes_tooltip_visible
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_preserves_partial_inline_color_segments
+tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_unknown_spell_is_noop
+tooltip::tooltip_item_spell::test_get_action_adds_colored_binding_line
+tooltip::tooltip_item_spell::test_get_num_lines_returns_actual_count
+tooltip::tooltip_item_spell::test_set_hyperlink_populates_lines
+tooltip::tooltip_item_spell::test_set_hyperlink_short_format
+tooltip::tooltip_item_spell::test_set_hyperlink_spell_link_populates_spell_tooltip
+tooltip::tooltip_item_spell::test_set_item_by_id_6948_contains_hearthstone_line
+tooltip::tooltip_item_spell::test_set_item_by_id_makes_tooltip_visible
+tooltip::tooltip_item_spell::test_set_item_by_id_populates_lines
+tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line
+tooltip::tooltip_item_spell::test_set_spell_by_id_colors_title_and_metadata_lines
+tooltip::tooltip_item_spell::test_set_spell_by_id_instant_cast
+tooltip::tooltip_item_spell::test_set_spell_by_id_populates_lines
+tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_armor_placeholder_for_shield_of_the_righteous
+tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_damage_placeholders_in_description
+tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_shield_placeholders_from_player_health
+tooltip::tooltip_item_spell::test_set_spell_by_id_shows_cast_time
+tooltip::tooltip_item_spell::test_set_spell_by_id_uses_wrapped_description_for_tooltip_width
+tooltip::tooltip_item_spell::test_set_unit_aura_by_aura_instance_id_populates_lines
+tooltip::tooltip_item_spell::test_set_unit_aura_colors_like_spell_tooltip
+tooltip::tooltip_item_spell::test_set_unit_aura_invalid_index_no_crash
+tooltip::tooltip_item_spell::test_set_unit_aura_populates_lines
+tooltip::tooltip_item_spell::test_set_unit_buff_by_aura_instance_id_respects_unit
+tooltip::tooltip_item_spell::test_set_unit_buff_populates_lines
+tooltip::tooltip_item_spell::test_set_unit_debuff_by_aura_instance_id_does_not_show_helpful_buffs
+tooltip::tooltip_item_spell::test_set_unit_invalid_returns_false
+tooltip::tooltip_item_spell::test_set_unit_party_member_populates_tooltip_and_fires_event
+tooltip::tooltip_item_spell::test_set_unit_player_populates_tooltip
+tooltip::tooltip_shrink_to_fit_wrapped::test_set_shrink_to_fit_wrapped_false_keeps_wrapped_line_width
+tooltip::tooltip_text::test_add_atlas_increments_numlines
+tooltip::tooltip_text::test_add_atlas_stores_atlas_name
+tooltip::tooltip_text::test_add_double_line_without_color_uses_normal_font_color_for_both_sides
+tooltip::tooltip_text::test_add_line_without_color_uses_normal_font_color
+tooltip::tooltip_text::test_add_texture_increments_numlines
+tooltip::tooltip_text::test_add_texture_stores_file_data_id
+tooltip::tooltip_text::test_add_texture_with_string_id
+tooltip::tooltip_text::test_addline_wrap_flag_stored
+tooltip::tooltip_text::test_blank_unwrapped_line_does_not_collapse_wrapped_tooltip_width
+tooltip::tooltip_text::test_clearlines_clears_texture_lines
+tooltip::tooltip_text::test_double_line_width_includes_gap
+tooltip::tooltip_text::test_get_custom_line_spacing_default_is_zero
+tooltip::tooltip_text::test_get_left_line_after_set_item_by_id
+tooltip::tooltip_text::test_get_left_line_has_correct_text
+tooltip::tooltip_text::test_get_left_line_out_of_range_returns_nil
+tooltip::tooltip_text::test_get_left_line_returns_fontstring
+tooltip::tooltip_text::test_get_right_line_has_correct_text
+tooltip::tooltip_text::test_get_right_line_no_right_text_returns_nil_text
+tooltip::tooltip_text::test_set_custom_line_spacing_and_get
+tooltip::tooltip_text::test_set_custom_line_spacing_on_custom_tooltip
+tooltip::tooltip_text::test_set_custom_line_spacing_stores_in_tooltip_data
+tooltip::tooltip_text::test_tooltip_fontstring_globals_exist
+tooltip::tooltip_text::test_tooltip_height_grows_with_lines
+tooltip::tooltip_text::test_tooltip_min_width_respected
+tooltip::tooltip_text::test_tooltip_nineslice_child_accessible
+tooltip::tooltip_text::test_tooltip_sizing_includes_padding
+tooltip::tooltip_text::test_tooltip_sizing_skipped_when_hidden
+tooltip::tooltip_text::test_wrapped_line_does_not_expand_width
+tooltip::tooltip_text::test_wrapped_line_increases_height
+tooltip::tooltip_text::test_wrapped_only_line_still_sets_tooltip_width
+tooltip::tooltip_word_wrap_min_width::test_custom_word_wrap_min_width_expands_wrapped_only_tooltip_width
+```
+
+#### `tooltip_mount::` — 2 PASS
+
+```text
+tooltip_mount::c_tooltip_info_mount_by_spell_id_uses_seeded_mount_state
+tooltip_mount::game_tooltip_set_mount_by_spell_id_populates_mount_lines
+```
+
+#### `tooltip_item_sources::` — 6 PASS
+
+```text
+tooltip_item_sources::c_tooltip_info_item_source_aliases_delegate_to_existing_paths
+tooltip_item_sources::hyperlink_unit_guid_uses_modeled_player_and_target_tooltips
+tooltip_item_sources::hyperlink_unsupported_and_malformed_links_return_nil_without_changing_item_spell
+tooltip_item_sources::missing_unit_hyperlink_returns_nil_for_att_shaped_retry
+tooltip_item_sources::tooltip_item_and_toy_payloads_retain_modeled_identity
+tooltip_item_sources::tooltip_spell_identity_survives_missing_local_metadata
+```
+
+#### `tooltip_talent::` — 2 PASS
+
+```text
+tooltip_talent::c_tooltip_info_talent_reuses_spell_tooltips
+tooltip_talent::game_tooltip_set_talent_populates_spell_lines
+```
+
+### Retained artifact ledger
+
+Saved commands/results/full compiler and test outputs are authoritative, not a reconstructed rerun. SHA256 binds each artifact read for this reconciliation:
+
+```text
+8bc3b21debdf9532328ef300b914cb646a4f09c296b72a02465a397fffccb340  /tmp/patch-12.0.5-batch56-green-build-result.json
+00bf53a5e3c782122b9992306e6439711064add87bce40c76113bc1cb532756b  /tmp/patch-12.0.5-batch56-green-build.jsonl
+e6581ece4c4b1fd9bcdb70dc3c225fcc3b64229b760334f3bb2b907751ad1fe4  /tmp/patch-12.0.5-batch56-green-build.stderr
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-green-run-0.stderr
+02c21a127f0b5880ec8ab977bd24559882245dcd2aa86d39f08440a13654923a  /tmp/patch-12.0.5-batch56-green-run-0.stdout
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-green-run-1.stderr
+e71f3d09a230d31758d27f8b49f474fc222e475d5dfc86bae3053426219b0bd5  /tmp/patch-12.0.5-batch56-green-run-1.stdout
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-green-run-2.stderr
+e6b6f638f6bdcfd936aa588450e6f70391aef8e3a8ab2018ed7d6af0de103470  /tmp/patch-12.0.5-batch56-green-run-2.stdout
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-green-run-3.stderr
+fd95bfdd09a765050a191884baf8396a022117e059b11343e92391eea076f57d  /tmp/patch-12.0.5-batch56-green-run-3.stdout
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-green-run-4.stderr
+07a999fad66bf0dc1d1291687a217259a910091e0ba633bb026fb38c16efb84e  /tmp/patch-12.0.5-batch56-green-run-4.stdout
+94f8dedfd329881a1726bd6456fca2ddd6995e54bd91c5ea39b80819ff18f08a  /tmp/patch-12.0.5-batch56-green-runs.json
+70c6f95904cf4447382fa6a48e5c7a8f510db9ded7c57eb5fce0ed7b4068ab42  /tmp/patch-12.0.5-batch56-green-startup-run.json
+7df25392021b144e979feec2f8a4b1d7a71d2f29ec9c6bfa47db8b803ca96072  /tmp/patch-12.0.5-batch56-green-startup.stderr
+37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570  /tmp/patch-12.0.5-batch56-green-startup.stdout
+034e6f39bd4a021f8424cbc0368bc7ac3c8f90b570ce3c229a861615e2458bba  /tmp/patch-12.0.5-batch56-red-build-result.json
+f75c362f1db146b20c4b890ac1cfe5fe723045d8bf349feda3c1e3fe7b831d72  /tmp/patch-12.0.5-batch56-red-build.jsonl
+44ccf9dc9f8c83a94a341df81cef47c512c63213f648fdfa8fcaac7036e402a0  /tmp/patch-12.0.5-batch56-red-build.stderr
+d583bcebaceb7edc65d6f021a21d5ddf435f26d91b30f5530e135c6218a673de  /tmp/patch-12.0.5-batch56-red-fixed-build-result.json
+4349f21c6d982ec701213d43619c538ce8429bbee39667d63108e40f9af6562f  /tmp/patch-12.0.5-batch56-red-fixed-build.jsonl
+8f249c625bc195cb911f59e4e3b4c92ffe352620e075a05a6545c4130ea5e066  /tmp/patch-12.0.5-batch56-red-fixed-build.stderr
+946606adc08f5e1d058ae3c070516def08479a737c15d38bd9c50e28a211e565  /tmp/patch-12.0.5-batch56-red-fixed-run.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-red-fixed-run.stderr
+2b380565da66d8c9e771974a05dfa4d58ea0f89484c0177f668d0190670b6b05  /tmp/patch-12.0.5-batch56-red-fixed-run.stdout
+5035ac0c2694350aab9be08c22b05e71128d6a6a89c9d4e427878916ce860205  /tmp/patch-12.0.5-batch56-red-run.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/patch-12.0.5-batch56-red-run.stderr
+4cd70568cb05a70351b7c2a59a9c3c996e186f66cf851042154181dbefb714cf  /tmp/patch-12.0.5-batch56-red-run.stdout
+4e2193e8283d13d686f3e4b845dbaa1a10d4eb833104e4fa495f60fd772e51a2  /tmp/patch-12.0.5-batch56-tooltip-test-list.stdout
+ab7a6277fae02a293ddc98185656cd1bb691ec3b831b32f70a8080d022532a6d  /tmp/patch-12.0.5-tooltip-dto-diagnostic.lua
+92b15d71b4e5166b992db2e39e70d150cec09190cbe7cfebc11d1f644289b710  /tmp/patch-12.0.5-tooltip-dto-diagnostic.stderr
+476a3bd634ea212fc8a4d980f245f73cbef4095899c48067499661e0e921ca98  /tmp/patch-12.0.5-tooltip-dto-diagnostic.stdout
+```

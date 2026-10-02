@@ -2,6 +2,11 @@
 
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
+
+## Retail 12.0.5 tooltip spell and mount identifiers
+
+[Batch56 saved proof SSOT](../../specs/tooltip-spell-mount-identifiers.md#reconciled-batch56-saved-parent-green--2026-10-02) owns22 new +133 actual substring-selected controls =155 uniquePASS, startup0 `[]`, dirty provenance and inferred policies. Sole epoch125 C API handlers reuse existing payloads; public flags ignored, GetSpell alias/mount-title gaps retained. Independent acceptance and four source rows pending; no native/profile/whole-page credit.
+
 ## Retail 12.0.5 tertiary stat inputs
 
 [Tertiary contract and proof SSOT](../../specs/tertiary-stat-inputs.md#reconciled-batch55-saved-parent-green--2026-10-02) owns shared existing-rating lookup, inferred conversion, snapshot replacement and callback security evidence. Independent acceptance/accounting and native/profile gaps remain pending.
