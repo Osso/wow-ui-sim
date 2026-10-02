@@ -188,7 +188,7 @@ macro_rules! build_empty_sim_state {
             private_aura_sound_registrations: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
             spell_aura_durations: HashMap::new(),
-            #[cfg(feature = "client-wowforever")]
+            #[cfg(feature = "base-spell-relationships")]
             base_spell_relationships: Default::default(),
             spell_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),

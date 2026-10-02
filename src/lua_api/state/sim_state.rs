@@ -199,7 +199,7 @@ pub struct SimState {
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
     #[cfg(feature = "retail-12-0-5")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(feature = "base-spell-relationships")]
     pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,
     pub spell_loss_of_control: HashMap<u32, LossOfControlInfo>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,

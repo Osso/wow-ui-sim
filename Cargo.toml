@@ -116,12 +116,14 @@ intern-stats = ["rilua/intern-stats"]
 # features select one runtime profile and point at the current API epoch for
 # that channel.
 retail-12-0-0 = ["aura-instance-enumeration"]
-retail-12-0-5 = ["retail-12-0-0", "native-duration-formatting"]
+retail-12-0-5 = ["retail-12-0-0", "native-duration-formatting", "base-spell-relationships"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
 retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects"]
 # Private ICU duration rendering; this capability does not publish C_Intl.
 native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
+# Existing specialization relationship model shared by Retail 12.0.5+ and Forever.
+base-spell-relationships = []
 # Shared keyed timer capability used by PTR and Forever.
 timed-signal-maps = []
 # Shared XML aliases and intrinsic mappings for aura frames/buttons.
@@ -150,7 +152,7 @@ client-wrath = []
 client-mists = []
 client-era = []
 client-anniversary = []
-client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting"]
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships"]
 
 [profile.release]
 lto = false

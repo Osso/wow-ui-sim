@@ -1,6 +1,6 @@
 # Public base-spell lookup
 
-Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit specialization-specific base relationships in `src/c_api/spell_base.rs`. The observed ActionBarAuras failure passed a nil base result into a table key. This bounded model is not native-conformance certification. See [Lua API architecture](../lua-api.md).
+Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit specialization-specific base relationships in `src/c_api/spell_base.rs`. The `base-spell-relationships` input capability now enables that existing model for Retail 12.0.5+ and Forever; runtime publication remains Forever-only pending compiled RED and the [Retail specialization security contract](base-spell-specialization-security.md). The observed ActionBarAuras failure passed a nil base result into a table key. This bounded model is not native-conformance certification. See [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -18,8 +18,9 @@ Forever `C_Spell.GetBaseSpell` resolves public identifiers against explicit spec
 ## Implementation inventory
 
 - `src/c_api/spell_base.rs` — relationship state, public argument validation and lookup.
-- `src/c_api/c_spell.rs`, `src/c_api/mod.rs` — Forever-only namespace registration/module.
-- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs` — per-environment relationship storage, initially empty.
+- `src/c_api/c_spell.rs` — unchanged Forever-only namespace registration; no Retail publication yet.
+- `Cargo.toml`, `src/c_api/mod.rs` — shared `base-spell-relationships` model capability enabled by Retail 12.0.5+ and Forever, not an optional extensibility layer.
+- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs` — capability-gated per-environment relationship storage, initially empty.
 
 ## Tests asserting this spec
 
