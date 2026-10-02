@@ -154,7 +154,11 @@ fn get_aura_dispel_type_color_is_transparent_for_non_dispellable_aura() {
         .eval(
             r#"
             local aura = C_UnitAuras.GetAuraDataByIndex("player", 1, "HARMFUL")
-            local color = C_UnitAuras.GetAuraDispelTypeColor("player", aura.auraInstanceID, CreateColor(1, 1, 1, 1))
+            local curve = C_CurveUtil.CreateColorCurve()
+            curve:SetType(Enum.LuaCurveType.Step)
+            curve:AddPoint(0, CreateColor(1, 1, 1, 0))
+            curve:AddPoint(1, CreateColor(0.2, 0.6, 1, 1))
+            local color = C_UnitAuras.GetAuraDispelTypeColor("player", aura.auraInstanceID, curve)
             local _, _, _, a = color:GetRGBA()
             return a
             "#,
@@ -170,13 +174,20 @@ fn get_aura_dispel_type_color_is_transparent_for_non_dispellable_aura() {
 #[test]
 fn dispellable_debuff_surfaces_type_icon_and_color() {
     let env = env();
-    clear_buffs_and_insert(&env, vec![dispellable_debuff("Arcane Shock", 88, 888, "Magic")]);
+    clear_buffs_and_insert(
+        &env,
+        vec![dispellable_debuff("Arcane Shock", 88, 888, "Magic")],
+    );
 
     let (dispel_name, icon, r, g, b, a): (String, i64, f64, f64, f64, f64) = env
         .eval(
             r#"
             local aura = C_UnitAuras.GetAuraDataByIndex("player", 1, "HARMFUL")
-            local color = C_UnitAuras.GetAuraDispelTypeColor("player", aura.auraInstanceID, CreateColor(1, 1, 1, 1))
+            local curve = C_CurveUtil.CreateColorCurve()
+            curve:SetType(Enum.LuaCurveType.Step)
+            curve:AddPoint(0, CreateColor(1, 1, 1, 0))
+            curve:AddPoint(1, CreateColor(0.2, 0.6, 1, 1))
+            local color = C_UnitAuras.GetAuraDispelTypeColor("player", aura.auraInstanceID, curve)
             local r, g, b, a = color:GetRGBA()
             return aura.dispelName, aura.icon, r, g, b, a
             "#,
