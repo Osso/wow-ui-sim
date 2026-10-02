@@ -58,6 +58,8 @@ Both blocks declare `RequiresValidActionSlot=true`, `SecretWhenCooldownsRestrict
 
 `tests/action_count_outputs.rs`: 28 substantive cases, grouped integration autodiscovery; no new Cargo target. Real namespace/model fixtures, authentic VM inputs and outputs, scoped Retail125/PTR gate. Embedded conditions are split to avoid dense expression chains. Real `register_table_security` fixture helper is permitted; no API callbacks or security queries are replaced.
 
+Bounded test-only readability follow-up extracts scalar publication, table/frame wrapping/publication and input metadata validation from `secret_fixture`; expands remaining dense Lua calls, assertions, loops and callback bodies. Same publication order, root push/pop, pinned table-security registration, caller frames, queries, model inputs, errors and metadata checks. No production/state/Cargo/Forever changes or additional tests. Formatting is test-file-only with `skip_children=true`; compilation, refreshed current28 runtime and independent readability/equivalence acceptance remain pending main67. Source237/241 and all requirement/accounting statuses remain pending/unchanged.
+
 ## Saved parent GREEN and initial independent gate — 2026-10-01
 
 Default integration compiled `f081fedb9af52e8642abf3fcd810513ee6f87a4a` successfully in234.80088983406313s with zero diagnostics. `/tmp/patch-12.0.5-batch66-green-build-result.json` and full compiler streams bind integration SHA256 `3c33bc66c4e58aaf3ca1a6b59076ed0cb6081c19b727a184306245d21f6a41e5`. Seven finite runs record145 distinct Retail PASS:28 focused plus117 controls,42.36772962694522s; startup returns `[]`, exit0,7.412627534009516s. This is bounded development below60s, not padded whole-goal acceptance.

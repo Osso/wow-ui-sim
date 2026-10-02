@@ -34,7 +34,11 @@ const ASSERTIONS: &str = r#"
         assert(string.find(err, tostring(position), 1, true))
         assert(not string.find(err, 'PRIVATE-Count', 1, true))
         local guard = string.find(err, 'requires an untainted caller', 1, true)
-        if denial then assert(guard) else assert(not guard) end
+        if denial then
+            assert(guard)
+        else
+            assert(not guard)
+        end
         assert(debug.getstacktaint() == before)
     end
     ACFrame = CreateFrame('Frame')
@@ -95,16 +99,22 @@ fn set_charge(env: &WowLuaEnv, current: u32, max: u32) {
 
 fn capture(env: &WowLuaEnv, api: &str, arguments: &str) {
     env.exec(&format!(
-        "assert(select('#', C_ActionBar.{api}({arguments})) == 1); \
-         ACResult = C_ActionBar.{api}({arguments})"
+        r#"
+        assert(select('#', C_ActionBar.{api}({arguments})) == 1)
+        ACResult = C_ActionBar.{api}({arguments})
+        "#
     ))
     .expect("one actual scalar rooted before host inspection");
 }
 
 fn assert_result(env: &WowLuaEnv, number: Option<u32>, text: &str, restricted: bool) {
     env.exec(&format!(
-        "assert(issecretvalue(ACResult) == {restricted}); \
-         if not {restricted} then assert(type(ACResult) == '{}') end",
+        r#"
+        assert(issecretvalue(ACResult) == {restricted})
+        if not {restricted} then
+            assert(type(ACResult) == '{}')
+        end
+        "#,
         if number.is_some() { "number" } else { "string" }
     ))
     .unwrap();
@@ -170,18 +180,29 @@ fn secret_fixture() -> WowLuaEnv {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     rilua::table_security::register_table_security(&mut lua).unwrap();
+    publish_secret_scalars(&mut *lua);
+    publish_secret_objects(&mut *lua);
+    drop(lua);
+    validate_secret_input_metadata(&env);
+    env
+}
+
+fn publish_secret_scalars(lua: &mut impl LuaApiMut) {
     for (name, number) in [("ACSlot", 17.0), ("ACMax", 6.5), ("ACUnknown", 18.0)] {
         let value = wrap_host_secret_number(lua.state_mut(), number);
-        publish(&mut *lua, name, value);
+        publish(lua, name, value);
     }
     for (name, text) in [("ACReplacement", "é雪"), ("ACString", "PRIVATE-Count")] {
         let value = wrap_host_secret_string(lua.state_mut(), text);
-        publish(&mut *lua, name, value);
+        publish(lua, name, value);
     }
     let value = wrap_secret(lua.state_mut(), Val::Nil).unwrap();
-    publish(&mut *lua, "ACNil", value);
+    publish(lua, "ACNil", value);
     let value = wrap_host_secret_bool(lua.state_mut(), false);
-    publish(&mut *lua, "ACBool", value);
+    publish(lua, "ACBool", value);
+}
+
+fn publish_secret_objects(lua: &mut impl LuaApiMut) {
     for (source, name) in [("ACTable", "ACSecretTable"), ("ACFrame", "ACSecretFrame")] {
         let value = lua.get_global_val(source);
         let Val::Table(reference) = value else {
@@ -200,10 +221,12 @@ fn secret_fixture() -> WowLuaEnv {
         }
         lua.state_mut().push(value);
         let wrapped = wrap_secret(lua.state_mut(), value).unwrap();
-        publish(&mut *lua, name, wrapped);
+        publish(lua, name, wrapped);
         lua.state_mut().pop();
     }
-    drop(lua);
+}
+
+fn validate_secret_input_metadata(env: &WowLuaEnv) {
     env.exec(
         r#"
         ACSecrets = {
@@ -216,7 +239,6 @@ fn secret_fixture() -> WowLuaEnv {
         "#,
     )
     .unwrap();
-    env
 }
 
 fn metadata(env: &WowLuaEnv, names: &[&str]) -> Vec<(Val, u64)> {
@@ -455,7 +477,8 @@ fn strict_slot_domain_rejects_invalid_public_inputs_in_both_caller_frames() {
                 end
             end
         end
-        probe(); ACTainted(probe)
+        probe()
+        ACTainted(probe)
     "#).unwrap();
 }
 
@@ -475,7 +498,8 @@ fn finite_threshold_and_cstring_representability_validate_even_without_source() 
                 end
             end
         end
-        probe(); ACTainted(probe)
+        probe()
+        ACTainted(probe)
     "#,
     )
     .unwrap();
@@ -540,8 +564,10 @@ fn all_six_secret_kinds_deny_tainted_slot_before_known_or_missing_lookup() {
                 ACReject('GetActionDisplayCount',1,true,v)
             end
         end)
-        assert(ACFrame:GetAlpha()==0.625); assert(ACFrame.marker==66)
-        assert(ACTable.marker=='PRIVATE-Count'); assert(ACTable.count==37)
+        assert(ACFrame:GetAlpha()==0.625)
+        assert(ACFrame.marker==66)
+        assert(ACTable.marker=='PRIVATE-Count')
+        assert(ACTable.count==37)
     "#,
     )
     .unwrap();
@@ -581,7 +607,8 @@ fn rooted_secret_inputs_retain_metadata_identity_after_denial_copy_and_gc() {
             ACInputCopy={}
             for i,v in ipairs(ACSecrets) do
                 ACInputCopy[i]=v
-                assert(issecretvalue(v)); assert(not canaccessvalue(v))
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
                 ACReject('GetActionUseCount',1,true,v)
             end
         end)
@@ -641,7 +668,8 @@ fn restricted_tainted_public_callers_observe_metadata_not_payloads() {
             ACUse=C_ActionBar.GetActionUseCount(17)
             ACDisplay=C_ActionBar.GetActionDisplayCount(17,6,'PRIVATE-Count')
             for _,v in ipairs({ACUse,ACDisplay}) do
-                assert(issecretvalue(v)); assert(not canaccessvalue(v))
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
             end
         end)
         ACResult=ACUse
@@ -663,15 +691,24 @@ fn tainted_math_concatenation_and_scalar_observation_deny_without_private_leaks(
         ACDisplay=C_ActionBar.GetActionDisplayCount(17,6,'PRIVATE-Count')
         ACTainted(function()
             local operations={
-                function() return ACUse+1 end,
-                function() return ACDisplay..'x' end,
-                function() return string.len(ACDisplay) end,
+                function()
+                    return ACUse+1
+                end,
+                function()
+                    return ACDisplay..'x'
+                end,
+                function()
+                    return string.len(ACDisplay)
+                end,
             }
             for _,operation in ipairs(operations) do
                 local ok,err=pcall(operation)
-                assert(not ok); assert(type(err)=='string'); assert(#err>0)
+                assert(not ok)
+                assert(type(err)=='string')
+                assert(#err>0)
                 assert(not string.find(err,'PRIVATE-Count',1,true))
-                assert(issecretvalue(ACUse)); assert(issecretvalue(ACDisplay))
+                assert(issecretvalue(ACUse))
+                assert(issecretvalue(ACDisplay))
                 assert(debug.getstacktaint()=='ActionCountProbe')
             end
             -- Opaque userdata observations are not native scalar-type parity.
@@ -692,17 +729,23 @@ fn output_copy_gc_and_live_flag_off_preserve_old_wrapper_privacy() {
     let env = fixture(false);
     restrict_after_positive(&env);
     env.exec(
-        "ACUse=C_ActionBar.GetActionUseCount(17); ACDisplay=C_ActionBar.GetActionDisplayCount(17)",
+        r#"
+        ACUse=C_ActionBar.GetActionUseCount(17)
+        ACDisplay=C_ActionBar.GetActionDisplayCount(17)
+        "#,
     )
     .unwrap();
     let before = metadata(&env, &["ACUse", "ACDisplay"]);
     env.exec(
         r#"
-        ACTainted(function() ACCopy={ACUse,ACDisplay} end)
+        ACTainted(function()
+            ACCopy={ACUse,ACDisplay}
+        end)
         for i=1,40 do
             ACFreshUse=C_ActionBar.GetActionUseCount(17)
             ACFreshDisplay=C_ActionBar.GetActionDisplayCount(17)
-            assert(issecretvalue(ACFreshUse)); assert(issecretvalue(ACFreshDisplay))
+            assert(issecretvalue(ACFreshUse))
+            assert(issecretvalue(ACFreshDisplay))
             collectgarbage('collect')
         end
     "#,
@@ -735,7 +778,10 @@ fn output_copy_gc_and_live_flag_off_preserve_old_wrapper_privacy() {
     env.exec(
         r#"
         ACTainted(function()
-            for _,v in ipairs(ACCopy) do assert(issecretvalue(v)); assert(not canaccessvalue(v)) end
+            for _,v in ipairs(ACCopy) do
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
+            end
             assert(C_ActionBar.GetActionUseCount(17)==7)
             assert(C_ActionBar.GetActionDisplayCount(17)=='7')
         end)
