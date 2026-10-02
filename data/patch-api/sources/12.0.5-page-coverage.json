@@ -7,6 +7,23 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "action-count-outputs",
+      "symbols": [
+        "C_ActionBar.GetActionDisplayCount",
+        "C_ActionBar.GetActionUseCount"
+      ],
+      "scope": "Exact237/241 output predicates plus meaningful count providers: empty explicit slot-keyed use snapshot matched current spell binding; valid existing charge quantity supplies display only. Independent NUM use/STRING display with decimal/>maximum replacement/default9999/* formatting. Missing/zero/priority/domain/nil/width rules inferred, no fake acquisition/consumption/inventory. VM original args authentication before parse/model, public tainted allowed, secure actual secrets accepted; restricted real host NUM/STR including zero/empty, immediate root, host payload/Lua opacity/copy/GC/trust/live/isolation. No opaque nominal-type/native/allaction/UI/global-privacy parity.",
+      "spec": "docs/specs/action-count-outputs.md",
+      "tests": [
+        "tests/action_count_outputs.rs"
+      ],
+      "implementation": "b1cb0ee9f95fa199ec2cdde195b20581529b7979",
+      "compiled_revision": "23ac1c89d4437343726a6b814515c14c8399d254",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-count-final-followup.md",
+      "gate_scope": "Accepted521+523+525:28refreshed+117inherited=145distinctRetailPASS, startup0[] historical;36Forevercontrols/projectedcfg valid. All denseLua/helperLength fixes23ac source-equivalent/fullreadability/testfmt0;523currentdefaultcheck0 includes67emptytypedstate, no redundantFF/controls. Initialdefault pre67 drift scope retained, no wholeallowliststability claim; owned hashes justifyreuse. RED0PASS28FAIL atstubbaseline not28downstreamGC/authfailures;608.535910s compileautobgcompleted withoutretry. Dirty/globalfmt1/historical502processFAIL/native and inferredlimits explicit; no whole-tree/pagegoal readiness."
+    },
+    {
       "compiled_revision": "cec856187c1c5bb2fc278d2aa0e268e6a20eb755",
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-action-cooldown-loc-independent-proof.md",
@@ -1998,9 +2015,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionDisplayCount-237",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-count-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact237 accepted521/523/525: meaningful independent use/display source before restriction,145distinctRetailPASS(28refresh+117reuse), startup0[] and36existingForevercontrols; current-default check/testfmt/equivalence/readability resolved. Host slot identity/counts plus charge-display priority/default/width/domain rules inferred; no fabricated data or acquisition. Opaque VM type/native/UI/globalprivacy gaps, dirty/globalfmt/historicalprocessFAIL retained; no neighboring-row credit."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionLossOfControlCooldownInfo-239",
@@ -2012,9 +2031,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionUseCount-241",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-count-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact241 accepted521/523/525: meaningful independent use/display source before restriction,145distinctRetailPASS(28refresh+117reuse), startup0[] and36existingForevercontrols; current-default check/testfmt/equivalence/readability resolved. Host slot identity/counts plus charge-display priority/default/width/domain rules inferred; no fabricated data or acquisition. Opaque VM type/native/UI/globalprivacy gaps, dirty/globalfmt/historicalprocessFAIL retained; no neighboring-row credit."
     },
     {
       "source_id": "global api-C_ActionBar-HasSpellActionButtons-243",
