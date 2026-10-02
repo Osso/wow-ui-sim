@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Add bounded batch49 sound removal callback
+
+Updated [[lua-api#Retail 12.0.5 private aura sound removal]] and [row403 contract](../specs/private-aura-sound-removal.md) with shared epoch-gated legacy/modern registration, strict public-u32 validation, conservative actual-VM secret rejection and current live-ID removal with zero outputs. Saved genuine parent RED0PASS/13FAIL retained; fixtures/inputs/defaults untouched. No GREEN, gates, checked requirements or accounting credit; parent owns verification. Native acquisition/permissions/result/error/context parity remain unknown.
+
 ## [2026-10-02] implementation | Add bounded batch48 spell classification getters
 
 Updated [[lua-api#Retail 12.0.5 aura spell classifications]] and [classification contract](../specs/aura-spell-classification-identifiers.md) with sole epoch-gated getters, unchanged copied/default map reads and saved parent compiled RED. Extracted identical three-callback validation into `c_spell::read_public_spell_identifier_at`; [cooldown inventory](../specs/cooldown-aura-spell-identifiers.md#implementation-inventory) records shared role only. No fixtures/state/accounting changes or GREEN/acceptance claim; parent owns subsequent verification.
