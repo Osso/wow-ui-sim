@@ -1,6 +1,11 @@
 //! Owned custom-set storage; native validation and persistence are not modeled.
 
 #[cfg(feature = "retail-12-0-5")]
+mod illusion_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use illusion_info::IllusionInfo;
+
+#[cfg(feature = "retail-12-0-5")]
 mod appearance_source_info;
 #[cfg(all(
     feature = "retail-12-0-5",
