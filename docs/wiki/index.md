@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact batch51/52 bounded rows
+
+[Combined acceptance SSOT](../specs/action-spell-slot-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact-five stat scope](../specs/unit-stat-output-restriction.md#exact-five-annotation-acceptance--2026-10-02) record parent-accepted independent414. Only229/243/514/500/424/438/498 promote;355 unrelated rows and58 prior capabilities retained. Scopedfmt/check pass; globalfmt remains failed on unowned source, dirty-combined and native/profile limits explicit. Parent owns postcommit accounting validation; broader goal open.
+
 ## [2026-10-02] evidence | Reconcile combined batch51/52 saved parent GREEN
 
 [Combined batch51/52 saved proof SSOT](../specs/action-spell-slot-identifiers.md#reconciled-combined-batch5152-parent-green--2026-10-02) owns artifact/revision/hash/timing evidence and inferred capability limits; [exact-five annotation scope](../specs/unit-stat-output-restriction.md#batch52-saved-parent-observed-proof--2026-10-02) preserves prior40-stat history. Genuine action RED and failed producer compilation retained; unchanged stat provider has no invented RED. Dirty-combined bounded observation, not clean revision/native/final acceptance. Verifier414 and independent acceptance/accounting/unchecked requirements pending; no coverage or PLAN changes.

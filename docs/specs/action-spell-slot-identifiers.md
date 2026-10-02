@@ -6,26 +6,26 @@ Batch51 covers exactly 12.0.5 source rows **229 FindSpellActionButtons** and **2
 
 ### Existing effective assignment model — INFERRED
 
-- [ ] Query only current direct spell assignments in `SimState.action_bars: HashMap<u32, u32>` (slot → spell ID), matching the exact resolved ID; require positive result slots. No new model or catalog.
-- [ ] Respect current `GetActionInfo` effective-kind priority: outfit before macro before spell. A same-slot macro/outfit hides the underlying spell mapping; macro-only slot 8 creates no spell assignment or inferred macro spell.
-- [ ] Return slot indexes, never spell IDs or registered UI frame IDs. Existing `action_ui_buttons: Vec<(u64, u32)>` stores frame/action associations; registration alone creates no assignment.
-- [ ] Observe alias changes, `PutActionInSlot(source, target)`, and host assignment clear/replace immediately. Queries remain read-only over bars, macros, outfits, UI tuples and aliases, isolated across environments.
-- [ ] Unknown spell 7003, known-but-unslotted spell 7004, unresolved strings and empty assignments miss without inventing catalog data.
+- [x] Query only current direct spell assignments in `SimState.action_bars: HashMap<u32, u32>` (slot → spell ID), matching the exact resolved ID; require positive result slots. No new model or catalog.
+- [x] Respect current `GetActionInfo` effective-kind priority: outfit before macro before spell. A same-slot macro/outfit hides the underlying spell mapping; macro-only slot 8 creates no spell assignment or inferred macro spell.
+- [x] Return slot indexes, never spell IDs or registered UI frame IDs. Existing `action_ui_buttons: Vec<(u64, u32)>` stores frame/action associations; registration alone creates no assignment.
+- [x] Observe alias changes, `PutActionInSlot(source, target)`, and host assignment clear/replace immediately. Queries remain read-only over bars, macros, outfits, UI tuples and aliases, isolated across environments.
+- [x] Unknown spell 7003, known-but-unslotted spell 7004, unresolved strings and empty assignments miss without inventing catalog data.
 
 ### Identifier boundary — INFERRED
 
-- [ ] Use existing `c_spell::read_public_spell_identifier_at`: required public UTF-8 STRING or finite integral NUMBER in inclusive `u32` bounds. Validate before consulting aliases, including potential fractional/range/lossy-UTF-8 coerced keys.
-- [ ] Preserve shared alias-first resolution: explicit case-normalized name, full colored link alias overriding embedded ID, numeric alias overriding numeric identity, seeded numeric string only. No generic name/link parsing, numeric-string coercion or recursive alias inference.
-- [ ] Reject missing/nil, booleans, tables, functions, threads, actual Frame objects, nonfinite/fractional/negative/out-of-range numbers and invalid UTF-8. Recover with a subsequent valid public call without input mutation.
-- [ ] Reject authentic host-created VM secret NUMBER (known/miss), STRING (name/link/miss) and secret-wrapped actual Frame before inspecting payloads, even in secure callers. Preserve globally/list/stack-rooted GC identity and secrecy, input snapshots and caller taint; public calls recover in secure and tainted contexts.
-- [ ] Ordinary tainted public queries work without clearing/changing stack taint. This does **not** establish native `AllowedWhenTainted` secret permissions.
+- [x] Use existing `c_spell::read_public_spell_identifier_at`: required public UTF-8 STRING or finite integral NUMBER in inclusive `u32` bounds. Validate before consulting aliases, including potential fractional/range/lossy-UTF-8 coerced keys.
+- [x] Preserve shared alias-first resolution: explicit case-normalized name, full colored link alias overriding embedded ID, numeric alias overriding numeric identity, seeded numeric string only. No generic name/link parsing, numeric-string coercion or recursive alias inference.
+- [x] Reject missing/nil, booleans, tables, functions, threads, actual Frame objects, nonfinite/fractional/negative/out-of-range numbers and invalid UTF-8. Recover with a subsequent valid public call without input mutation.
+- [x] Reject authentic host-created VM secret NUMBER (known/miss), STRING (name/link/miss) and secret-wrapped actual Frame before inspecting payloads, even in secure callers. Preserve globally/list/stack-rooted GC identity and secrecy, input snapshots and caller taint; public calls recover in secure and tainted contexts.
+- [x] Ordinary tainted public queries work without clearing/changing stack taint. This does **not** establish native `AllowedWhenTainted` secret permissions.
 
 ### Result contract — bounded policy
 
-- [ ] Find returns exactly one fresh public table per call, a dense Lua array of exact matching positive current slot indexes, without duplicates or metadata. Tests compare members, not undocumented native order; ascending internal determinism is permissible, not required.
-- [ ] A miss returns exactly one fresh empty table under the chosen existing simulator policy. Cached `MayReturnNothing=true` permits native zero-result cases whose conditions remain unknown; this contract does not claim all native misses return tables.
-- [ ] Has returns exactly one public boolean agreeing with whether the same resolved identifier has any effective matching slot.
-- [ ] Mutating returned tables or caller-owned identifier/expectation containers never changes backing inputs or other returned tables, including fresh empty results.
+- [x] Find returns exactly one fresh public table per call, a dense Lua array of exact matching positive current slot indexes, without duplicates or metadata. Tests compare members, not undocumented native order; ascending internal determinism is permissible, not required.
+- [x] A miss returns exactly one fresh empty table under the chosen existing simulator policy. Cached `MayReturnNothing=true` permits native zero-result cases whose conditions remain unknown; this contract does not claim all native misses return tables.
+- [x] Has returns exactly one public boolean agreeing with whether the same resolved identifier has any effective matching slot.
+- [x] Mutating returned tables or caller-owned identifier/expectation containers never changes backing inputs or other returned tables, including fresh empty results.
 
 ## How it works
 
@@ -134,3 +134,12 @@ All paths below are under `/tmp/`; hashes cover full artifacts, not excerpts.
 | `patch-12.0.5-batch51-52-green-fixed-runs.json` | `d9f3626b50ac4900b19f368e801cc3873ceab723281fe3ed2f8cc6458e0e0fa5` |
 | `patch-12.0.5-batch51-52-green-fixed-startup-run.json` | `0429e0ef1fe6191325b6f47a80728014c9b111a83e9a8cf8e6e2858961489ae6` |
 | `patch-12.0.5-batch51-52-green-fixed-startup.stdout` | `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` |
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted `/tmp/patch-12.0.5-action-stat-identifiers-independent-proof.md` (independent414) for exactly229/243 and the five annotation rows linked below. Saved122 uniquePASS/startup0 `[]` validated; current scoped rustfmt exit0/0.028168s, cargo check exit0/18.007859s without warnings. Global cargo fmt exit1/17.732235s remains solely the preserved unowned duration hunk. All execution/check evidence includes that dirty source; **not clean-revision proof**. Later unrelated formatter fixtures do not invalidate these unchanged providers or prove their own behavior.
+
+Source accounting promotes only229/243/514/500/424/438/498: **226 pending/122 bounded/14 partial =362 ordered IDs;60 capabilities**. All355 unrelated rows and58 previous capabilities remain unchanged; prior40-stat partial scope stays intact. Parent owns postcommit source/hash validation. [Exact-five annotation acceptance](unit-stat-output-restriction.md#exact-five-annotation-acceptance--2026-10-02) does not upgrade component placeholders or native formulas.
+
+Three readability advisories deferred: short effective-slot conjunction, Lua assertion helper length, secret-rooting helper length. No observed behavioral counterexample; adjacent refactoring is outside this slice. Inferred alias/validation/miss/order/public-result policy and conservative secret rejection are bounded simulator proof, not native catalog/override/special-bar/permissions/parity or all-profile execution. Historical pending checkpoints remain historical; whole-page/goal work remains open.
+

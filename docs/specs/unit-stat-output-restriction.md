@@ -88,3 +88,10 @@ Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd
 Scope remains exactly **514 UnitStat, 500 UnitArmor, 424 GetCombatRating, 438 GetHaste, 498 GetUnitSpeed**. Concrete player fixtures above prove meaningful explicit inputs and the existing numeric wrapper: ordered values/arity plain → restricted → plain, tainted opaque outputs and retained caller taint. Repeated components, zero placeholders, nonplayer snapshots, other indexes, inferred formulas and native activation/access/secrecy remain unknown; no native model parity follows.
 
 Prior40-API matrix, batch7 history and separate ten-model proof remain intact. Historical current-execution-pending wording above is superseded only by this saved parent observation. Verifier414, independent acceptance/accounting and every unchecked requirement remain pending; no row/page/capability credit or whole-goal closure.
+
+## Exact-five annotation acceptance — 2026-10-02
+
+Parent accepted independent414 for **514 UnitStat,500 UnitArmor,424 GetCombatRating,438 GetHaste,498 GetUnitSpeed only**. [Combined acceptance SSOT](action-spell-slot-identifiers.md#independent-bounded-acceptance--2026-10-02) owns gate results,122 uniquePASS/startup0 `[]`, dirty provenance, exact source accounting and limits. Four existing restriction tests substantively exercise all five player fixtures with ordered value/arity preservation, every-result wrapping, plain/restricted/plain transitions and tainted opacity. Existing providers unchanged/alreadyGREEN; no fabricated RED or unnecessary rewrite.
+
+Prior40-API partial capability, other unaccepted source rows and broad unchecked requirements stay unchanged. Components/modifier placeholders, other indexes/nonplayer snapshots, speed combinations, simulator formulas, native restriction activation/access and all-profile execution remain unproved. Earlier pending wording is historical; this section supersedes it for exactly these five annotation boundaries, not full models or whole-page/goal acceptance.
+

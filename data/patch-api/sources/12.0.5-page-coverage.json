@@ -7,6 +7,42 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "action-spell-slot-identifiers",
+      "symbols": [
+        "C_ActionBar.FindSpellActionButtons",
+        "C_ActionBar.HasSpellActionButtons"
+      ],
+      "scope": "Exact229/243 only: existing effective direct spell slot assignments excluding zero/macro/outfit shadows; shared strict public identifiers and seeded aliases; fresh dense slot table/one bool, immediate live mutation, read-only/isolation, public taint preservation and conservative actual VM-secret rejection with rooted GC/recovery. One empty table and ascending order inferred. Native catalog/base-override/special-bar/acquisition/miss/security/result parity excluded.",
+      "spec": "docs/specs/action-spell-slot-identifiers.md",
+      "tests": [
+        "tests/action_spell_slot_identifiers.rs"
+      ],
+      "implementation": "6c3c3192621b916a27b967d9cdd231fc875d9229",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-stat-identifiers-independent-proof.md",
+      "gate_scope": "Parent accepted independent414: 17 new plus105 controls=122 uniquePASS/startup0[]. Scopedfmt0/dirtycheck0; globalfmt1 sole preserved unowned source. Dirty-combined not clean revision; runtime19.580875s below60 target bounded development, not native/final page/goal. Three readability advisories deferred, no observed behavior counterexample."
+    },
+    {
+      "id": "unit-stat-five-annotation-outputs",
+      "symbols": [
+        "UnitStat",
+        "UnitArmor",
+        "GetCombatRating",
+        "GetHaste",
+        "GetUnitSpeed"
+      ],
+      "scope": "Exact514/500/424/438/498 SecretWhenUnitStatsRestricted annotations only: existing explicit player values and per-position numeric wrappers preserve value/order/arity through plain-restricted-plain transitions; tainted opaque results deny unwrap/arithmetic and preserve caller taint. Prior40-API partial matrix unchanged; no component/nonplayer/index/formula/native-activation parity.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "compiled_revision": "6c3c3192621b916a27b967d9cdd231fc875d9229",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-stat-identifiers-independent-proof.md",
+      "gate_scope": "Parent accepted independent414 exact five seeded player annotation boundaries via4 existing restriction tests among122 uniquePASS/startup0[]. Existing provider unchanged/alreadyGREEN, no fabricated RED or rewrites. Scopedfmt/check0, globalfmt1 preserved unowned; dirty-combined proof, no native/all-profile/whole-page credit."
+    },
+    {
       "id": "cooldown-aura-spell-identifiers",
       "symbols": [
         "C_UnitAuras.GetCooldownAuraBySpellID"
@@ -1727,9 +1763,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-FindSpellActionButtons-229",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-spell-slot-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCharges-231",
@@ -1773,9 +1811,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-HasSpellActionButtons-243",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-spell-slot-identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-C_ActionBar-IsOnBarOrSpecialBar-245",
@@ -2453,9 +2493,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetCombatRating-424",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-five-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-PlayerScript GetCombatRatingBonus-426",
@@ -2495,9 +2537,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetHaste-438",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-five-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-PlayerScript GetHitModifier-440",
@@ -2675,15 +2719,19 @@
     },
     {
       "source_id": "global api-Unit GetUnitSpeed-498",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-five-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-Unit UnitArmor-500",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-five-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-Unit UnitAttackPower-502",
@@ -2723,9 +2771,11 @@
     },
     {
       "source_id": "global api-Unit UnitStat-514",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-stat-five-annotation-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent414 exact source delta only; inferred bounded simulator behavior, native/profile gaps retained. See linked spec and independent proof; dirty-combined gates, global formatting remains failed on preserved unowned source."
     },
     {
       "source_id": "global api-Unit UnitWeaponAttackPower-516",
