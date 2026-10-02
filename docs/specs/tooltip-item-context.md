@@ -77,7 +77,7 @@ Independent security/wiring/readability/scoped formatting/default check and exac
 
 ## Readability follow-up — 2026-10-02
 
-Independent497 identified two concrete new-test compound conditions: the five-part RGBA expectation and failed/type/nonempty rejection assertion. Parent source inspection accepts both; ordered separate assertions preserve identical predicates and short-circuit/type-before-length boundaries. Producer and host inputs remain unchanged. Refreshed24 focused runtime and independent equivalence/readability/format proof remain pending;153 controls/startup and production security/wiring/check remain source-valid, not fresh reruns. No native parity or accounting credit follows from readability edits.
+Independent497 identified four concrete new-test compound conditions: the five-part RGBA expectation, failed/type/nonempty rejection assertion, and two combined DTO/lines identity assertions. Parent source inspection accepts all four; ordered separate assertions preserve identical predicates and short-circuit/type-before-length boundaries. Producer and host inputs remain unchanged. Refreshed24 focused runtime and independent equivalence/readability/format proof remain pending;153 controls/startup and production security/wiring/check remain source-valid, not fresh reruns. No native parity or accounting credit follows from readability edits.
 
 ## Known gaps (current cycle)
 

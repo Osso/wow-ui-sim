@@ -511,7 +511,8 @@ fn returned_dtos_lines_and_colors_are_fresh_and_mutations_are_isolated() {
         &seeded_env(),
         r#"
         local a,b = ITCheck(604,211995,nil,1,80),ITCheck(604,211995,nil,1,80)
-        assert(not rawequal(a,b) and not rawequal(a.lines,b.lines))
+        assert(not rawequal(a,b))
+        assert(not rawequal(a.lines,b.lines))
         for i=1,8 do
             assert(not rawequal(a.lines[i],b.lines[i]))
             assert(not rawequal(a.lines[i].leftColor,b.lines[i].leftColor))
@@ -520,7 +521,8 @@ fn returned_dtos_lines_and_colors_are_fresh_and_mutations_are_isolated() {
         a.lines[6] = nil; a.id = 99; a.extra = true
         ITEqual(b,ITCheck(604,211995,nil,1,80))
         local m,n=ITMiss(211995,nil,99),ITMiss(211995,nil,99)
-        assert(not rawequal(m,n) and not rawequal(m.lines,n.lines))
+        assert(not rawequal(m,n))
+        assert(not rawequal(m.lines,n.lines))
         m.lines[1]={leftText='invented'}; ITEqual(n,ITMiss(211995,nil,99))
     "#,
     );
