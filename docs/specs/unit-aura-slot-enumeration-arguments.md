@@ -45,22 +45,22 @@ Actual Retail runtime cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizz
 
 ## Tests asserting this spec
 
-All 12 unchanged fixtures live in `tests/unit_aura_slot_enumeration_arguments.rs`. Saved parent pre-producer RED below covers this matrix; this implementation slice runs formatting only. GREEN/independent acceptance remain parent-owned.
+All 12 unchanged fixtures live in `tests/unit_aura_slot_enumeration_arguments.rs`. Saved parent pre-producer RED below covers this matrix; this implementation slice runs formatting only. Saved combined GREEN below supersedes RED proof levels; independent acceptance remains parent-owned.
 
 | Fixture | Exact capability | Proof level |
 |---|---|---|
-| `player_batches_keep_nonordinal_duplicate_named_ids_and_dto_roundtrip` | Player IDs307/811 helpful,419/907 harmful, exact arity/defaults/DTO/source | Saved RED PASS (control) |
-| `seeded_party_batches_retain_filter_substrings_without_player_or_raid_redesign` | Party IDs1207/1801 helpful,1409/1907 harmful; actual substring selection/empty domains | Saved RED PASS (control) |
-| `blocked_ids_compact_visible_tuple_but_c_slot_getter_remains_blocked_inclusive` | Block compaction, empty batch, getter contrast | Saved RED PASS (control) |
-| `provider_switch_only_changes_aura_util_provider_not_c_enumeration` | Real provider switch/reset vs C enumeration/getter | Saved RED PASS (control) |
-| `inferred_required_utf8_unit_and_optional_actual_string_filter_validate_before_absence` | Required strict unit/filter, UTF-8, unknown/empty one-nil tuple | Saved RED FAIL; policy inferred |
-| `inferred_optional_finite_f64_controls_retain_unused_max_and_any_token_termination` | Finite actual numeric controls, negatives/fractions/large, ignored max, zero-return token | Saved RED FAIL; representation inferred |
-| `secure_authentic_secret_units_enumerate_actual_store_and_unknown_before_absence` | Literal row382 unit secret acceptance | Saved RED FAIL |
-| `secure_optional_secret_filter_max_token_and_mixed_arguments_keep_payloads` | All optional secret inputs, mixed units, secure invalid numeric payload | Saved RED FAIL |
-| `tainted_each_argument_and_mixed_secrets_deny_with_public_recovery_in_same_closure` | Each argument caller guard, unknown/NaN/token, same-closure recovery | Saved RED FAIL |
-| `all_four_authenticate_before_wrong_public_representation_or_token_short_circuit` | Malformed public earlier argument + later secret guard precedence | Saved RED FAIL |
-| `rooted_secret_identity_and_caller_taint_survive_forced_gc_roundtrips` | Rooted host secrets, rawequal, secure/tainted/secure GC lifecycle | Saved RED FAIL |
-| `enumeration_preserves_records_tuple_dto_block_provider_and_two_environment_isolation` | Record/block/provider/tuple/DTO immutability, two-env isolation | Saved RED FAIL |
+| `player_batches_keep_nonordinal_duplicate_named_ids_and_dto_roundtrip` | Player IDs307/811 helpful,419/907 harmful, exact arity/defaults/DTO/source | Saved GREEN PASS (retained RED control) |
+| `seeded_party_batches_retain_filter_substrings_without_player_or_raid_redesign` | Party IDs1207/1801 helpful,1409/1907 harmful; actual substring selection/empty domains | Saved GREEN PASS (retained RED control) |
+| `blocked_ids_compact_visible_tuple_but_c_slot_getter_remains_blocked_inclusive` | Block compaction, empty batch, getter contrast | Saved GREEN PASS (retained RED control) |
+| `provider_switch_only_changes_aura_util_provider_not_c_enumeration` | Real provider switch/reset vs C enumeration/getter | Saved GREEN PASS (retained RED control) |
+| `inferred_required_utf8_unit_and_optional_actual_string_filter_validate_before_absence` | Required strict unit/filter, UTF-8, unknown/empty one-nil tuple | Saved GREEN PASS (historical RED FAIL); policy inferred |
+| `inferred_optional_finite_f64_controls_retain_unused_max_and_any_token_termination` | Finite actual numeric controls, negatives/fractions/large, ignored max, zero-return token | Saved GREEN PASS (historical RED FAIL); representation inferred |
+| `secure_authentic_secret_units_enumerate_actual_store_and_unknown_before_absence` | Literal row382 unit secret acceptance | Saved GREEN PASS (historical RED FAIL) |
+| `secure_optional_secret_filter_max_token_and_mixed_arguments_keep_payloads` | All optional secret inputs, mixed units, secure invalid numeric payload | Saved GREEN PASS (historical RED FAIL) |
+| `tainted_each_argument_and_mixed_secrets_deny_with_public_recovery_in_same_closure` | Each argument caller guard, unknown/NaN/token, same-closure recovery | Saved GREEN PASS (historical RED FAIL) |
+| `all_four_authenticate_before_wrong_public_representation_or_token_short_circuit` | Malformed public earlier argument + later secret guard precedence | Saved GREEN PASS (historical RED FAIL) |
+| `rooted_secret_identity_and_caller_taint_survive_forced_gc_roundtrips` | Rooted host secrets, rawequal, secure/tainted/secure GC lifecycle | Saved GREEN PASS (historical RED FAIL) |
+| `enumeration_preserves_records_tuple_dto_block_provider_and_two_environment_isolation` | Record/block/provider/tuple/DTO immutability, two-env isolation | Saved GREEN PASS (historical RED FAIL) |
 
 ## Saved parent RED — pre-producer
 
@@ -70,7 +70,8 @@ Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/
 
 ## Known gaps (current cycle)
 
-- [ ] Parent owns combined batch45 corrected GREEN + batch46 GREEN and one independent acceptance gate. No tests, builds, checks, readability gates, operations or delegation performed in this implementation slice. All contract checkboxes remain unverified by GREEN.
+- [x] Saved combined GREEN: all12 enumeration fixtures PASS; see linked reconciliation.
+- [ ] Parent owns combined independent Rust/security/readability/acceptance gate; no gate execution in this docs slice.
 - [ ] Exact row382 accounting remains unchanged; fixture existence is not behavioral completion or clean-revision proof.
 
 ## Out of scope
@@ -79,3 +80,16 @@ Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/
 - Native pagination/max-slot fidelity: retained one-batch/any-token termination is expressly simulator behavior, not a claim about native pages.
 - Native cached AuraUtil consumer closure: inspected Lua forwards four arguments through a data provider and retrieves DTOs by slots; current Rust AuraUtil.ForEachAura directly visits the store and does not establish that handshake. No consumer closure claim or optional consumer fixture.
 - Other source rows, indexed/display/duration APIs, Cargo/new targets, audit accounting/PLAN, dispel-color producer/spec/corrected tests and independently owned slot-acceptance work. Only this contract, minimal Lua API wiki inventory/index/log and enumeration producer wiring change.
+
+## Reconciled combined batch45/46 parent GREEN — 2026-10-01
+
+[Combined evidence ledger](aura-dispel-color-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-01) owns exact commands, fixture/producer revisions, binary/source hashes, thirteen selections, full artifacts and actual runtime. All12 enumeration fixtures saved PASS, alongside16 corrected color fixtures and168 controls:196 unique PASS/all13 exits0, startup0 `[]`. Dirty-source-bound proof is not clean revision or independent acceptance.
+
+| Capability | Saved proof | Limit |
+| --- | --- | --- |
+| Player/party/filter/block/provider/DTO tuple behavior | Four retained controls PASS | Existing one-batch collector; no native pagination |
+| Required UTF-8 unit, optional actual STRING filter, nullable finite f64 max/token | Two representation fixtures PASS | Inferred representation/miss policy; unused max and any-token termination retained |
+| Each/mixed secret argument authentication before malformed types/token/absence | Four secure/tainted/precedence fixtures PASS | Actual VM caller guard; no native access/restriction enforcement |
+| Rooted GC identity/taint, immutable records/DTO/block/provider, two environments | Two lifecycle/isolation fixtures PASS | No restricted-output secrecy or all-profile proof |
+
+Saved RED4PASS/8FAIL used first-attempt batch45 compilation, not an extra RED build. Independent verifier active; Rust/security/readability/acceptance pending. Rows378/382 uncredited;241 pending/107 bounded/14 partial unchanged. Parent owns accounting/gates.
