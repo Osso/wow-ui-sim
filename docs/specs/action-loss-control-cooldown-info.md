@@ -1,6 +1,6 @@
 # Action loss-of-control cooldown info
 
-Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfControlCooldownInfo-239`, requires a meaningful action-slot snapshot before its output restriction can receive credit. Current action callback in `src/lua_api/globals/action_bar_api.rs` ignores its argument and fabricates an inactive five-field record. Existing typed inputs already suffice. See [audit SSOT](../wiki/investigations/patch-12-0-5-api-audit.md). This commit adds tests/spec only; no producer implementation or executed RED.
+Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfControlCooldownInfo-239`, requires a meaningful action-slot snapshot before its output restriction can receive credit. The epoch125 producer now resolves existing typed slot/spell inputs, authenticates argument1 and restricts three numeric snapshot fields. Earlier epochs retain the inactive legacy callback. See [audit SSOT](../wiki/investigations/patch-12-0-5-api-audit.md). Corrected pre-producer RED is recorded below; producer GREEN and acceptance remain main-owned and unexecuted here.
 
 ## What it must do
 
@@ -36,11 +36,13 @@ Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfContr
 
 - `src/lua_api/state/support_types.rs`: existing `LossOfControlInfo` fields `start_time:f64`, `duration:f64`, `mod_rate:f32`, `is_active:bool`, `should_replace_normal_cooldown:bool`; no new host type required.
 - Existing `SimState.action_bars` and `spell_loss_of_control`: assigned-slot and spell-keyed explicit inputs; no new state fields planned.
-- `src/lua_api/globals/action_bar_api.rs`: current fabricated inactive action callback; retained inverse legacy handler planned, not implemented here.
-- `src/lua_api/globals/action_bar_api/registration.rs`: current `COOLDOWN_SLOT_METHODS` publication; epoch125 real C API registration/inverse legacy gate planned.
+- `src/c_api/c_action_bar_loss_of_control.rs`: epoch125 first-class callback; authenticates original rooted arg1 via VM `unwrap_secret`, parses authenticated `Val::Num` with a positive-u32 cast-round-trip predicate, then snapshots the cloned record and restriction predicate in one immutable borrow. Missing records use the inferred inactive shape. Borrow ends before result allocation; ordinary five-field table is immediately stack-rooted before wrapper/key allocations, returned once. All five fields are copied; no expiry or flag recomputation.
+- `src/c_api/mod.rs`: `retail-12-0-5` module gate.
+- `src/lua_api/globals/action_bar_api.rs`: epoch125 import supplies the new callback; inverse gate retains old constant/stub and its capacity-helper import for earlier epochs.
+- `src/lua_api/globals/action_bar_api/registration.rs`: unchanged `COOLDOWN_SLOT_METHODS` entry binds the imported callback through the existing rooted namespace once; no parallel registration or fallback.
 - `src/c_api/c_spell.rs`: existing real spell-level five-field DTO and nil-on-miss behavior, unchanged.
 - `src/c_api/charge_state.rs`: existing restriction predicate and authentic VM secret-number construction; no charge entry/selection work.
-- Planned epoch125 action LoC handler belongs in `src/c_api/`; no producer file created in this task.
+- VM typed-host-secret numbers retain opaque userdata representation; producer does not override nominal Lua types, clear taint, swap callbacks, or generically declassify.
 
 ## Tests asserting this spec
 
@@ -50,16 +52,23 @@ Retail 12.0.5 exact plaintext row **239**, `api-C_ActionBar-GetActionLossOfContr
 
 ## Fixture correction — 2026-10-02
 
-Shared input compilation reported unused `Result` at `secret_slot` publication. Fixture now handles `set_global_val` failure explicitly with `expect`; no warning suppression. Initial compiled execution atfad6e780f records1PASS/21FAIL; corrected-input execution remains pending before producer work.
+Shared input compilation reported unused `Result` at `secret_slot` publication. Fixture now handles `set_global_val` failure explicitly with `expect`; no warning suppression. Initial compiled execution at `fad6e780f` recorded1PASS/21FAIL; corrected input `add2d0a84` compiled and ran before this producer. Tests remain unchanged by producer work.
 
 Pinned VM typed-secret numbers are opaque userdata with authenticated `Val::Num` payloads. Numeric Lua types are asserted only when unrestricted; restricted fields retain actual secret metadata, exact trusted-host numeric payload and Lua-side denial/copy/GC checks. No native nominal-type parity or VM override is claimed. This corrects an unsupported fixture expectation also found in row233, without changing selected-state/payload predicates.
 
+## Corrected pre-producer RED — 2026-10-02
+
+- Revision: `add2d0a84fe834c7bab8e3023bb47b12104e4bdf`. Main reports corrected compile exit0, **80.86110783007462s**, zero diagnostics. Initial unused-Result diagnostic was corrected, not suppressed.
+- Saved `/tmp/patch-12.0.5-batch65-red-fixed-run.json`, `.stdout`, `.stderr`: integration binary SHA256 `98dec8a9581fffee6ad2e93adc7f43a6a7339821cdc6b6388c464a7b4e7fb58a`; timeout90, one test thread; **22 tests,1PASS/21FAIL**, exit101, **3.9129977279808372s** wall time (harness3.56s). Only `unassigned_positive_slots_return_exact_inactive_default` passed.
+- Concrete assigned payloads fail against stub zeros/rate1; restricted fields fail secret metadata; secure-secret selection, strict domain and tainted-secret denial fail at their first assertions. GC/copy/recovery tests stop at earlier field/payload failures: downstream GC/lifetime behavior is not established by this RED.
+- Proof ledger: saved compile/run cover corrected tests against the old producer only. New producer is formatted, not compiled or executed; no GREEN, startup, check, security/readability gate or independent acceptance evidence is inferred.
+
 ## Known gaps (current cycle)
 
-- [ ] Main compiled RED, producer GREEN and independent acceptance pending. No build/test/check/lint/readability/ops/push or delegation performed in this tests/spec task. Formatting alone is not execution proof.
-- [ ] Exact239 remains pending. Accounting remains **197 pending /150 bounded /14 partial /1 metadata =362 IDs,69 capabilities**; no accounting artifact modified. Rows295 and233 remain separately pending.
+- [ ] Producer GREEN and startup/check/security/readability/independent acceptance remain main-owned and pending. No build/test/check/lint/readability gates/ops/push or delegation performed here. Only owned Rust is formatted with children skipped; formatting is not execution proof.
+- [ ] Exact239 remains pending. Accounting remains **197 pending /150 bounded /14 partial /1 metadata =362 IDs,69 capabilities**; no accounting artifact modified. Row233 and its batch64 copy-fixture correction remain separate; exact295's passed artifact awaits parent acceptance. Neither supplies row239 credit.
 - [ ] `/tmp/patch-12.0.5-action-loss-control-provider-map.md` mislabeled row237 and retained old199/148/68 counts. Correct scope is239; plaintext237 is `GetActionDisplayCount`, not this function. No row237 bundle or credit.
-- [ ] Native LoC conditions, spell/action mapping, secrecy behavior, valid-slot domain and automatic signals remain unknown. Absence, strict input domain, table/field restriction, restricted defaults and verbatim flag-copy are chosen inferences, not native exception facts.
+- [ ] Native nominal numeric type, LoC acquisition/conditions/expiry, spell/action mapping, secrecy behavior, valid-slot domain, GUI/profile behavior and automatic signals remain unknown. Absence, strict input domain, table/field restriction, restricted defaults and verbatim flag-copy are chosen inferences, not native exception facts.
 - [ ] Deferred non-gating native probe: actual LoC spell/action slot; capture three numeric/two BOOL fields across empty/inactive/active/replacement states; secure/tainted read-copy and secret observations under cooldown restriction. No native probe required for this bounded cycle.
 
 ### Source grounding
@@ -72,4 +81,4 @@ Cached profile files under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizza
 
 ## Out of scope
 
-Rows237/231/233/295; duration APIs, legacy LoC pair, `GetActionCharges`, generic cooldown/GCD/charge selection; new host state/catalog/activation/expiry/events; full-profile/UI compatibility; native parity or native gate. Protected `aura_duration.rs` body inspection and edits are forbidden in this task. No source/Cargo/model changes or spell-secrecy credit.
+Rows237/231/233/295; duration APIs, legacy LoC pair, `GetActionCharges`, generic cooldown/GCD/charge selection; new host state/catalog/activation/expiry/events; full-profile/UI compatibility; native parity or native gate. Protected `aura_duration.rs` body inspection and edits are forbidden in this task. No vendor/tests/Cargo/new model state, other-row changes, wiki/coverage/PLAN updates or spell-secrecy credit.

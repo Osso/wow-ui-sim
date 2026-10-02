@@ -14,6 +14,8 @@ pub mod bag_info;
 pub mod c_account_services;
 pub(crate) mod c_action_bar;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_action_bar_loss_of_control;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_spell_slots;
 pub mod c_addon_profiler;
 pub mod c_addons;
