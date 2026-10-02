@@ -52,7 +52,9 @@ Host metadata compares wrapper references/allocation sequences and rooted list e
 ## Known gaps (current cycle)
 
 - [x] Parent compiled inputs at15b304b4995374f55da42a96e48c3a26649ab405: exit0/149.0320317990845s; eight selected tests exit101/1.0117020549951121s,3 public controls PASS/5 genuine secret-boundary FAIL. Artifacts `/tmp/patch-12.0.5-batch57-red-{build-result,run}.json` and full compiler/runtime outputs. Dirty-combined proof includes preserved unowned source, not clean-revision evidence.
-- [ ] Producer now rejects authentic arg2 secrets under epoch125 before existing identifier/provider dispatch, without payload access or taint changes; earlier profiles and public behavior unchanged. Parent GREEN/independent acceptance pending; requirements remain unchecked.
+- [ ] Producerda2ec8cb8 now rejects authentic arg2 secrets under epoch125 before existing identifier/provider dispatch, without payload access or taint changes; earlier profiles and public behavior unchanged. Saved parent observations:8 focusedPASS,58 spell controlsPASS/1 charge controlFAIL,2 tooltip hyperlinkPASS,1 legacy linkPASS =69 distinctPASS/1FAIL; startup0 `[]`. Independent acceptance pending; requirements remain unchecked.
+
+Parent GREEN compilation: exit0/38.38908969797194s; four finite runtime commands total12.99389677005820035s, startup5.628440312924795s. `/tmp/patch-12.0.5-batch57-green-{build-result,runs,startup-run}.json` and full outputs bind producer revision and executable hashes. Dirty-combined only, not native/full-profile/full-page evidence. `spell_api::test_spell_get_spell_charges` fails its unseeded100 table assertion at `tests/spell_api.rs:363`; existing charge model returns nil without declared positive charge state. Source-applicability assessment remains independent463-owned; this observed failure is not hidden or an all-green control run.
 
 Current accounting210 pending/138 bounded/14 partial after separate batch56 acceptance. Row311 remains pending; this slice awards no arg1 credit.
 
