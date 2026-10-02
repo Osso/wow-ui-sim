@@ -106,7 +106,7 @@ Exact accounting: add `unit-aura-slot-secret-arguments`; promote only `global ap
 
 ## Known gaps (current cycle)
 
-- [x] Independent security/readability/Rust/acceptance gates and exact-row accounting remain pending despite saved producer GREEN. No batch43 proof transfers to these fixtures.
+- [x] Independent bounded row376 acceptance and exact-row accounting recorded above. Global formatting failure and dirty-source binding remain explicit; no batch43 proof transfers to these fixtures.
 - [ ] Native validation ordering, exact errors, access permission and conditional output secrecy remain unproved. Earlier-profile providers are preserved in source only, not newly executed.
 
 ## Out of scope
