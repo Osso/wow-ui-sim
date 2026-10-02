@@ -3,6 +3,16 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 action loss-of-control cooldown info
+
+Producer `831aa8553` implements **EXACT239**, `C_ActionBar.GetActionLossOfControlCooldownInfo`, not237 (`GetActionDisplayCount`). [Contract, inventory and corrected RED SSOT](../../specs/action-loss-control-cooldown-info.md) owns requirements and evidence. Read-only selection follows existing action slot → spell → typed `spell_loss_of_control` map; no new state or acquisition. A fresh five-field snapshot copies `startTime`, `duration`, `modRate`, `isActive`, and `shouldReplaceNormalCooldown`. Missing records use inferred inactive `(0,0,1,false,false)`; flags copy verbatim, without activation, GCD selection or expiry calculation.
+
+The sole VM argument is authenticated before strict positive-u32 slot parsing or lookup. The ordinary public DTO is immediately rooted; explicit cooldown restriction produces three authentic secret NUM fields, while both NeverSecret BOOLs stay public. One existing rooted-namespace binding selects the epoch125 callback; the inverse-gated old stub remains for earlier epochs/Forever. No callback rewrite, generic declassification or spell-secrecy change.
+
+Corrected pre-producer `add2d0a84` RED is **1 PASS / 21 FAIL**, including the passing miss/default baseline control. Positive payload, input authentication/domain and output secrecy fail at earliest assertions; downstream GC/copy/recovery is not RED-proven. The opaque-userdata nominal-type fixture was corrected: trusted-host authentication still asserts actual NUM payloads, and actual Lua opacity remains required. **NativePrimitiveTypeGap** remains explicit; no native numeric nominal-type parity or VM override is claimed.
+
+Producer GREEN, independent acceptance and row239 credit remain pending. Current accounting, after separate exact295 acceptance `1f5`, is **196 pending / 151 bounded / 14 partial / 1 metadata; 362 IDs; 70 capabilities**; this producer adds no credit. Default, strict-domain, table/field restriction and flag-copy policies are inferred. No Source233, native, full-profile, UI or LoC-acquisition credit.
+
 ## Retail 12.0.5 action cooldown output restriction
 
 Producer `fad6e780f` implements only exact233 output annotation on `C_ActionBar.GetActionCooldown`; [contract, inventory and saved RED SSOT](../../specs/action-cooldown-output-restriction.md) owns requirements and evidence. Existing state-backed spell/GCD intervals and latest-ending selection remain unchanged. The existing `cooldowns_are_restricted` helper reads explicit live `cooldowns_restricted`, gated to Retail125/PTR (`retail-12-0-5` plus Retail/PTR), not combat or unit-stat restriction.
@@ -293,6 +303,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Action loss-of-control cooldown info](../../specs/action-loss-control-cooldown-info.md) — EXACT239 SSOT, not237; read-only producer, corrected pre-producer RED and NativePrimitiveTypeGap; GREEN/acceptance/credit pending
 
 - [Action cooldown output restriction](../../specs/action-cooldown-output-restriction.md) — exact233 SSOT; bounded producer inventory, inferred policies and pre-producer RED, no GREEN or acceptance credit
 
