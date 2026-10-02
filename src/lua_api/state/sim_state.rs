@@ -115,6 +115,9 @@ pub struct SimState {
     pub account_store_categories: HashMap<i64, AccountStoreCategoryInfo>,
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
     pub action_bars: HashMap<u32, u32>,
+    /// Explicit slot-keyed use counts; stored spell identity must match the current binding.
+    #[cfg(feature = "retail-12-0-5")]
+    pub action_use_counts: HashMap<u32, crate::c_api::ActionUseCountInfo>,
     pub action_outfits: HashMap<u32, i64>,
     pub action_macros: HashMap<u32, u32>,
     pub equipped_gear_outfit_action_slots: HashSet<u32>,

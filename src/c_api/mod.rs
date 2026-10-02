@@ -5,6 +5,10 @@
 
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod abbreviated_number_formatter;
+#[cfg(feature = "retail-12-0-5")]
+pub mod action_count_info;
+#[cfg(feature = "retail-12-0-5")]
+pub use action_count_info::ActionUseCountInfo;
 pub mod action_macros;
 #[cfg(feature = "client-wowforever")]
 mod addon_messages;
