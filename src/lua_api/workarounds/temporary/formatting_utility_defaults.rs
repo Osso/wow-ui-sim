@@ -26,12 +26,6 @@ ERR_QUEST_SESSION_RESULT_RESYNC = ERR_QUEST_SESSION_RESULT_RESYNC or "Resync"
 CLASS_SORT_ORDER = CLASS_SORT_ORDER or { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "MONK", "DRUID", "DEMONHUNTER", "EVOKER" }
 MAX_CLASSES = MAX_CLASSES or #CLASS_SORT_ORDER
 
-if BreakUpLargeNumbers == nil then
-  function BreakUpLargeNumbers(value)
-    return tostring(value)
-  end
-end
-
 if CalculateStringEditDistance == nil then
   function CalculateStringEditDistance(firstString, secondString)
     if type(firstString) ~= "string" or type(secondString) ~= "string" then
@@ -308,6 +302,16 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "retail-12-0-5"))]
+    lua.exec(
+        r#"
+        if BreakUpLargeNumbers == nil then
+          function BreakUpLargeNumbers(value)
+            return tostring(value)
+          end
+        end
+        "#,
+    )?;
     Ok(())
 }
 
@@ -346,7 +350,6 @@ mod tests {
                 if type(ERR_QUEST_SESSION_RESULT_RESYNC) ~= "string" or ERR_QUEST_SESSION_RESULT_RESYNC == "" then return "quest_resync" end
                 if CLASS_SORT_ORDER[1] ~= "WARRIOR" or CLASS_SORT_ORDER[13] ~= "EVOKER" then return "class_sort_order" end
                 if MAX_CLASSES ~= 13 then return "max_classes" end
-                if BreakUpLargeNumbers(12345) ~= "12345" then return "breakup" end
                 if CalculateStringEditDistance("kitten", "sitting") ~= 3 then return "edit_distance" end
                 local split = strsplittable(",", "a,b")
                 if split[1] ~= "a" or split[2] ~= "b" then return "strsplittable" end
@@ -380,5 +383,14 @@ mod tests {
             .expect("formatting utility defaults probe should run");
 
         assert_eq!(result, "ok");
+        let grouped: String = env
+            .eval("return BreakUpLargeNumbers(12345)")
+            .expect("active profile formatter should run after bootstrap reapplication");
+        let expected = if cfg!(feature = "retail-12-0-5") {
+            "12,345"
+        } else {
+            "12345"
+        };
+        assert_eq!(grouped, expected);
     }
 }

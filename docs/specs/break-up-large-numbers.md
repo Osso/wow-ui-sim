@@ -33,10 +33,13 @@ Next53 covers only `global api-Localization BreakUpLargeNumbers-411` in the cumu
 
 - `tests/break_up_large_numbers.rs`: 16 focused epoch-gated behavioral tests; host-VM secrets and explicit current-global locale providers, never replacing `BreakUpLargeNumbers`.
 - `tests/integration.rs`: existing generated grouped integration entrypoint; parent owns dispatcher inclusion/compiled proof. No new Cargo target.
-- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs`: current temporary tostring fallback and startup assertion `12345 -> 12345`; unchanged in this tests/spec slice. Later mainline producer must retire that competing fallback and update the relevant startup assertion while preserving earlier-profile behavior.
-- `src/c_api/intl_native.rs`: existing ICU Decimal precision inherited by the future producer; no broader precision guarantees or Intl API change.
+- [x] `src/lua_api/globals/real/break_up_large_numbers.rs`: implemented strict public finite NUMBER + optional public BOOL; VM secret authentication for both arguments precedes type/payload/locale access. One inferred public string, no unwrap or taint mutation. GREEN pending.
+- [x] `src/lua_api/globals/register.rs::register_frame_foundation_globals`: invokes the real registrar under cumulative `retail-12-0-5`; `real/mod.rs` uses the same epoch gate. `env_init::init_lua_state` runs this before temporary bootstraps.
+- [x] `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs`: tostring provider compiled only without `retail-12-0-5`, not a competing enabled-epoch nil fallback. Startup/reapplication assertion expects `12,345` in the enabled epoch and retains `12345` earlier.
+- [x] Current global `GetLocale` is read on every successful call through the locked VM's `LuaState::call_function` stack API (no method named `call` exists there). Getter/result remain stack-rooted until locale bytes are copied; temporary stack/frame state restores on success/error. The separate enUS fallback is installed before normal invocation. Four ASCII letters normalize generically from language+region to language_region; other identifiers pass through, with no fabricated catalog or widened locale helper.
+- [x] `src/c_api/mod.rs` and `build/intl_native.rs`: existing native number backend and its shims compile from `retail-12-0-5` so the producer reuses `intl_native::format_number(..., NumberStyle::Decimal)` exactly. `C_Intl` registration/publication and Intl operations are unchanged; no new state. Existing ICU precision defaults remain the limit.
 
-Future real-global registration dispatcher remains parent-owned. No producer/runtime/registration/state changes authorized before parent compiled RED.
+Implementation precedes parent GREEN; unchecked behavioral requirements above are not acceptance claims.
 
 ## Tests asserting this spec
 
@@ -44,24 +47,22 @@ Future real-global registration dispatcher remains parent-owned. No producer/run
 
 | Capability | Exact test names | Proof level |
 |---|---|---|
-| Public result/default, natural guess, boundaries | `startup_formatter_returns_one_public_grouped_string_with_default_agreement`, `inferred_natural_truncates_both_signs_toward_zero_not_floor`, `inferred_zero_and_group_boundaries_have_decimal_not_abbreviated_output` | Written; uncompiled |
-| Locale mutation, read-only inputs, environment isolation | `current_wow_locale_provider_mutations_apply_immediately`, `formatter_keeps_provider_identity_and_caller_inputs_read_only`, `locale_and_input_fixtures_are_isolated_between_environments` | Written; uncompiled |
-| Strict bad types/nonfinite and recovery | `required_public_number_rejects_missing_nil_and_wrong_types_then_recovers`, `nonfinite_numbers_reject_in_both_natural_modes_then_recover`, `optional_public_natural_rejects_nonbool_values_then_recovers` | Written; uncompiled |
-| Authentic secret natural and GC | `authentic_secret_false_natural_rejects_even_in_secure_context`, `authentic_secret_true_natural_rejects_even_in_secure_context`, `secret_number_and_string_natural_reject_before_formatting`, `wrapped_actual_frame_and_table_natural_reject_without_representation_assumptions`, `gc_keeps_global_list_and_stack_secret_roots_identical_and_secret` | Written; uncompiled |
-| Taint and conservative arg1 | `secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery`, `secret_arg1_rejection_is_conservative_local_policy_not_row411_permission` | Written; uncompiled |
+| Public result/default, natural guess, boundaries | `startup_formatter_returns_one_public_grouped_string_with_default_agreement`, `inferred_natural_truncates_both_signs_toward_zero_not_floor`, `inferred_zero_and_group_boundaries_have_decimal_not_abbreviated_output` | Parent compiled RED; GREEN pending |
+| Locale mutation, read-only inputs, environment isolation | `current_wow_locale_provider_mutations_apply_immediately`, `formatter_keeps_provider_identity_and_caller_inputs_read_only`, `locale_and_input_fixtures_are_isolated_between_environments` | Parent compiled RED; GREEN pending |
+| Strict bad types/nonfinite and recovery | `required_public_number_rejects_missing_nil_and_wrong_types_then_recovers`, `nonfinite_numbers_reject_in_both_natural_modes_then_recover`, `optional_public_natural_rejects_nonbool_values_then_recovers` | Parent compiled RED; GREEN pending |
+| Authentic secret natural and GC | `authentic_secret_false_natural_rejects_even_in_secure_context`, `authentic_secret_true_natural_rejects_even_in_secure_context`, `secret_number_and_string_natural_reject_before_formatting`, `wrapped_actual_frame_and_table_natural_reject_without_representation_assumptions`, `gc_keeps_global_list_and_stack_secret_roots_identical_and_secret` | Parent compiled RED; GREEN pending |
+| Taint and conservative arg1 | `secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery`, `secret_arg1_rejection_is_conservative_local_policy_not_row411_permission` | Parent compiled RED; GREEN pending |
 
 Source fixture maps: `/tmp/patch-12.0.5-break-up-large-numbers-model-map.md`, `/tmp/patch-12.0.5-break-up-intl-locale-map.md`, `/tmp/patch-12.0.5-break-up-producer-fixture-boundary.md`. Requested `large-numbers-model.md` was absent; existing model-map used. The chosen inferred true behavior fills the map's previously unresolved branch; it is an assistant-selected guess under the permitted inference policy, not a user-selected native contract.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compiled RED, future producer GREEN and independent acceptance pending. No compiler/tests/checks/gates run in this slice; source411 remains uncredited.
-- [ ] Parent must integrate the fixture through the existing grouped target and establish actual current-tostring failures; written expectations alone are not RED evidence.
-- [ ] Later producer must use existing/generic locale normalization for WoW identifiers, not an invented locale catalog, while leaving Intl API unchanged.
-- [ ] Parent must replace mainline fallback ownership/startup expectation, retain earlier profiles, and verify startup with the meaningful formatter.
+- [x] Parent compiled RED at `77af6ad9a8723401298574b1a307796667312332`: build exit0 / 390.341632021009s (includes blocking Cargo lock; stderr reports finished381s); focused run exit101 / 10.068309725029394s, 0 PASS / 16 genuine FAIL. Startup and actual secret VM/Frame/GC fixture setup succeeded before strict-rejection/localized-decimal failures. Artifacts: `/tmp/patch-12.0.5-batch53-red-build-result.json`, `/tmp/patch-12.0.5-batch53-red-run.json` and their full outputs. Dirty-source-bound evidence includes preserved unowned duration diff SHA256 `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`, not clean-revision proof.
+- [ ] Parent GREEN, startup reapplication, current checks and independent acceptance pending. No builds/tests/checks/readability/coverage/gates run by this implementer; no fixture edits or new Cargo target. Source411 and accounting remain uncredited.
 
 ## Out of scope
 
 - Native parity, native exact errors, native natural semantics, arg1 secret permissions and result secrecy: unknown; explicit inferences above do not resolve them.
 - Precision beyond the existing ICU Decimal defaults; broad locale/catalog acquisition or new models.
-- Earlier-profile behavior changes, Intl API changes, producer implementation and registration/state changes in this tests/spec slice.
+- Earlier-profile behavior changes, Intl API changes, new state, and other producers.
 - Source411 credit, accounting changes, broad acceptance, unavailable native probes, and other agents' files.

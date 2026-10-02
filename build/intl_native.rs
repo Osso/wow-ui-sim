@@ -1,4 +1,4 @@
-//! Shared private ICU duration backend; the remaining Intl shims stay PTR-only.
+//! Shared private ICU duration and number backend; C_Intl publication is separate.
 use std::env;
 use std::path::PathBuf;
 
@@ -20,7 +20,7 @@ pub(super) fn build() {
     }
     let mut compiler = cc::Build::new();
     compiler.files(["native/intl/text.c", "native/intl/duration_units.c"]);
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "retail-12-0-5")]
     compiler.files([
         "native/intl/number_format.c",
         "native/intl/currency_metadata.c",

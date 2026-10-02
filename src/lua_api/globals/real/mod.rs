@@ -6,6 +6,8 @@
 
 pub mod action_bar_state;
 pub mod action_highlights;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod break_up_large_numbers;
 pub mod combat_probes;
 pub mod combat_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
