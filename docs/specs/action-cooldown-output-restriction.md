@@ -8,20 +8,20 @@ All requirements remain unchecked until producer GREEN and independent acceptanc
 
 ### Output policy (explicit simulator inference)
 
-- [ ] Return one ordinary, accessible public table; when the explicit live `cooldowns_restricted` input is true, its `startTime`, `duration` and `modRate` must independently be actual VM-owned secret numbers with unchanged numeric payloads, verified only through authenticated trusted-host inspection. Public numbers retain Lua `type == 'number'`; opaque secret values do not receive a nominal Lua-type parity claim. Trusted host production must use typed `wrap_host_secret_number`, not generic declassification, fake secret flags or caller/callback bypasses.
-- [ ] Apply that numeric-field policy even to zero/empty cooldown intervals, including assigned non-cooldown spells and existing unassigned-positive-slot results. `modRate` remains numeric 1, secret under restriction, public otherwise.
-- [ ] When unrestricted, return unchanged ordinary numeric values for spell-only, GCD-only, overlapping and empty state. This annotation changes output secrecy only, not interval selection or input acceptance.
-- [ ] Keep `isEnabled` public true and preserve the existing profile fieldset: `isActive` exists only under `retail-12-1-0` in this test domain, with its current public active/empty truth; older 12.0.5 payloads retain four fields. Do not introduce `isOnGCD`, `activeCategory` or `timeUntilEndOfStartRecovery`.
-- [ ] Read the explicit flag on each query; combat and unit-stat restriction must not substitute for it. `C_Secrets.ShouldCooldownsBeSecret` is only a state sanity control, never the expected-output oracle.
+- [x] Return one ordinary, accessible public table; when the explicit live `cooldowns_restricted` input is true, its `startTime`, `duration` and `modRate` must independently be actual VM-owned secret numbers with unchanged numeric payloads, verified only through authenticated trusted-host inspection. Public numbers retain Lua `type == 'number'`; opaque secret values do not receive a nominal Lua-type parity claim. Trusted host production must use typed `wrap_host_secret_number`, not generic declassification, fake secret flags or caller/callback bypasses.
+- [x] Apply that numeric-field policy even to zero/empty cooldown intervals, including assigned non-cooldown spells and existing unassigned-positive-slot results. `modRate` remains numeric 1, secret under restriction, public otherwise.
+- [x] When unrestricted, return unchanged ordinary numeric values for spell-only, GCD-only, overlapping and empty state. This annotation changes output secrecy only, not interval selection or input acceptance.
+- [x] Keep `isEnabled` public true and preserve the existing profile fieldset: `isActive` exists only under `retail-12-1-0` in this test domain, with its current public active/empty truth; older 12.0.5 payloads retain four fields. Do not introduce `isOnGCD`, `activeCategory` or `timeUntilEndOfStartRecovery`.
+- [x] Read the explicit flag on each query; combat and unit-stat restriction must not substitute for it. `C_Secrets.ShouldCooldownsBeSecret` is only a state sanity control, never the expected-output oracle.
 
 ### Authentication, snapshots and lifecycle
 
-- [ ] Public slot calls from secure and addon-tainted callers preserve caller context. Addon code may observe the public table, field secrecy and public booleans without numerically reading opaque fields.
-- [ ] Addon arithmetic on each authentic secret numeric field fails through the existing VM authentication boundary, with a nonempty error and no tested private interval payload disclosure; recovery restores a secure host entry without declassification. Error wording is not native-verified.
-- [ ] Field copying through an ordinary table preserves original secret wrapper identity and secrecy. Secure host-only inspection authenticates and verifies the three exact numeric payloads independently; never compare secret booleans in tainted Lua.
-- [ ] Turning restriction off produces a fresh public-number result without changing old rooted secret wrappers. Mutating or replacing a returned table must not change other DTO snapshots, spell/GCD inputs, action mappings, charge inputs or the flag.
-- [ ] Later queries reflect live interval replacement, expiry and GCD removal. Independent environments retain their own inputs and output policy.
-- [ ] Original rooted wrappers retain VM identity, allocation sequence and root-list membership across authentication denial, copying, fresh queries, allocation churn and forced GC. Fresh result fields retain correct secrecy and payloads after GC.
+- [x] Public slot calls from secure and addon-tainted callers preserve caller context. Addon code may observe the public table, field secrecy and public booleans without numerically reading opaque fields.
+- [x] Addon arithmetic on each authentic secret numeric field fails through the existing VM authentication boundary, with a nonempty error and no tested private interval payload disclosure; recovery restores a secure host entry without declassification. Error wording is not native-verified.
+- [x] Field copying through an ordinary table preserves original secret wrapper identity and secrecy. Secure host-only inspection authenticates and verifies the three exact numeric payloads independently; never compare secret booleans in tainted Lua.
+- [x] Turning restriction off produces a fresh public-number result without changing old rooted secret wrappers. Mutating or replacing a returned table must not change other DTO snapshots, spell/GCD inputs, action mappings, charge inputs or the flag.
+- [x] Later queries reflect live interval replacement, expiry and GCD removal. Independent environments retain their own inputs and output policy.
+- [x] Original rooted wrappers retain VM identity, allocation sequence and root-list membership across authentication denial, copying, fresh queries, allocation churn and forced GC. Fresh result fields retain correct secrecy and payloads after GC.
 
 ## How it works
 
@@ -72,14 +72,20 @@ At `cec856187c1c5bb2fc278d2aa0e268e6a20eb755`, default integration compilation e
 
 `batch64-65-green-runs.json` records **117 distinct PASS**:18 row233 focused,22 row239 focused,42 cooldown controls,11 state globals,10 slot mutation and14 spell/flyout controls; six exits0, no overlap. Execution24.42142666503787s is separate from compilation, below60s bounded-development target, not padded full-goal acceptance. Startup separately returns `[]`, exit0,9.541190293966793s; full output/hash paths in `green-startup-run.json`.
 
-All row233 opacity/copy/GC/root/caller checks now execute successfully without requiring opaque numeric fields to report Lua `number`. Producer remains fad6e780f; only unfounded fixture assumptions were corrected. Native nominal primitive parity remains a gap. Independent515 security/wiring/readability/scoped Rust checks and combined Forever preservation are pending; row233 receives no credit yet. Dirty-combined/globalfmt limits remain; no valid runtime/build replay solely for docs/accounting.
+All row233 opacity/copy/GC/root/caller checks now execute successfully without requiring opaque numeric fields to report Lua `number`. Producer remains fad6e780f; only unfounded fixture assumptions were corrected. Native nominal primitive parity remains a gap. Independent515 gates and row233 credit were pending at this checkpoint; subsequent bounded acceptance below supersedes that status. Dirty-combined/globalfmt limits remain; no valid runtime/build replay solely for docs/accounting.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepts independent515's full `/tmp/patch-12.0.5-action-cooldown-loc-independent-proof.md` and `batch64-65-independent-gates.json`:117 distinct Retail PASS/startup0 `[]`, actual model/security/wiring, corrected opaque-value fixtures, snapshot effect equivalence and full Rust/embedded-Lua readability. Fresh owned rustfmt exits0; default check exits0/no warnings in23.17575874098111s. Corrected GUI-enabled Forever compilation exits0/zero diagnostics in233.11142689199187s; existing controls pass36/36 (12 state,10 slot,14 spell/flyout),7.617514925077558s. These are separate profile controls, not direct native or full-Forever parity.
+
+Only exact233/239 promote: **196 pending /151 bounded /14 partial /1 metadata →194 /153 /14 /1**,362 ordered unique IDs,72 capabilities. Prior70 capabilities,360 unrelated rows and source/register hashes retained. `/tmp/patch-12.0.5-batch64-65-accounting-before.json` and postcommit `batch64-65-accounting-validation.json` retain exact reconciliation. Partial231 unchanged;237 separate.
+
+Known globalfmt1, dirty-combined provenance and historical502 protected-search process failure remain explicit; functional acceptance does not erase them. Opaque VM userdata carries authenticated numeric payloads, not native nominal Lua-type certification. Native exceptions/misses/access/coercion/LoC acquisition/activation/replacement/UI and full profiles remain gaps. Source233 credit is output-only; no new input, duration or field credit. Broader selected-history goal stays open.
 
 ## Known gaps (current cycle)
 
-- [ ] Main-owned targeted producer GREEN, startup, check, security/wiring, readability, independent acceptance and exact233 accounting remain pending. No delegation, build, test, check, lint, readability gate, operations or push occurs in this implementation slice; only the owned changed Rust file is formatted with child traversal disabled.
-- [ ] Saved RED proves missing secret outputs, not downstream arithmetic denial, secure recovery, copying, isolation or GC. Producer implementation is committed before gates, not claimed passing. No fixture correction is justified or made.
-- [ ] Accounting stays unchanged: user-provided current checkpoint is 197 pending, 150 bounded, 14 partial, 1 metadata = 362 IDs, 69 capabilities. Row 233 remains pending; existing 40-stat/charge partial capability is not upgraded. No accounting artifact edits or capability credit.
-- [ ] Main's row295 independent505 Forever 3-PASS artifact and 20-test Retail refresh remain pending main acceptance; row239's 65 tests at `ed682bf3d` are only the next RED. Their source/tests/specs, accounting, wiki and PLAN remain untouched; neither slice proves row233.
+- [x] Focused/control GREEN, startup and independent scoped security/wiring/readability/Rust proof support exact233/239 accounting above; partial231 is unchanged.
+- [ ] Native exceptions, primitive nominal types and full-profile/UI parity remain unproved; broader goal remains open.
 - [ ] Future optional native probe: record slot 0 behavior separately, public unrestricted/restricted results for valid assigned slots, active spell versus active GCD selection, empty intervals, tainted public-slot queries, ordinary table field copies, numeric Lua types and `isEnabled`/`isActive`/optional `isOnGCD` truth and secrecy exceptions. Probe work is not a completion gate here.
 
 ## Source grounding and inference limits

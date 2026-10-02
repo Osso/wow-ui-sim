@@ -7,6 +7,39 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "compiled_revision": "cec856187c1c5bb2fc278d2aa0e268e6a20eb755",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-cooldown-loc-independent-proof.md",
+      "gate_scope": "Accepted515:117distinctRetailPASS40focused+77controls/startup0[]; freshscopedfmt/defaultcheck0 and correctedGUI Forevercompile0/233.111427s/0diag with36existingcontrolPASS(12/10/14). Runtime24.421427s/compile186.026073s separate, boundeddevelopmentbelow60 notpaddedwholegoal. Opaque VMuserdata nominaltype assumption corrected; authentic payload/secrecy/Lua denial/copy/GC retained, no typeoverride/declass. Historical wrong511publicationdiagnosis rejected againstprimarybindings. Dirty-combined/globalfmt1/historical502processbreach/native profile/type/UI limits retained. Fullscope/hash/reuse/costs in proof.",
+      "id": "action-cooldown-output-restriction",
+      "symbols": [
+        "C_ActionBar.GetActionCooldown"
+      ],
+      "scope": "Exact233 output predicate only: existing spell/GCD interval selection, parser, profile fieldset and public BOOLs unchanged. Explicit restriction wraps startTime/duration/modRate as authentic typed secret NUM payloads, including zeros, in a public rooted table. Flag independent from combat/stats; read-only/live/isolation/caller/GC/root/copy preserved. Ordinary-table/zero policy inferred. No input credit, duration or charge upgrades, new fields, native primitive nominal type/exceptions/profile/UI parity.",
+      "spec": "docs/specs/action-cooldown-output-restriction.md",
+      "tests": [
+        "tests/action_cooldown_output_restriction.rs"
+      ],
+      "implementation": "fad6e780f2a5fa9042d4a0ac0c5989ab1b9d12e5"
+    },
+    {
+      "compiled_revision": "cec856187c1c5bb2fc278d2aa0e268e6a20eb755",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-cooldown-loc-independent-proof.md",
+      "gate_scope": "Accepted515:117distinctRetailPASS40focused+77controls/startup0[]; freshscopedfmt/defaultcheck0 and correctedGUI Forevercompile0/233.111427s/0diag with36existingcontrolPASS(12/10/14). Runtime24.421427s/compile186.026073s separate, boundeddevelopmentbelow60 notpaddedwholegoal. Opaque VMuserdata nominaltype assumption corrected; authentic payload/secrecy/Lua denial/copy/GC retained, no typeoverride/declass. Historical wrong511publicationdiagnosis rejected againstprimarybindings. Dirty-combined/globalfmt1/historical502processbreach/native profile/type/UI limits retained. Fullscope/hash/reuse/costs in proof.",
+      "id": "action-loss-control-cooldown-info",
+      "symbols": [
+        "C_ActionBar.GetActionLossOfControlCooldownInfo"
+      ],
+      "scope": "Exact239 output predicate plus meaningful missing action provider: existing slot->spell->typed LoC snapshot/default; three NUM payloads restricted, two NeverSecret BOOLs public, five fields copied not recomputed. VM slot authentication before strict positive-u32/model lookup, real caller/error/readonly/live/isolation/root/copy/GC proof. Single epoch125 callback/inverse legacy gate; no new state/catalog/events/GCD/expiry/replacement model. Default/domain/flag-copy/table policies inferred; native primitive type/access/acquisition/profile/UI unproved. No237/231 credit.",
+      "spec": "docs/specs/action-loss-control-cooldown-info.md",
+      "tests": [
+        "tests/action_loss_control_cooldown_info.rs"
+      ],
+      "implementation": "831aa855355b62532908fff6b1da88d090a2326f",
+      "readability_followup": "cec856187c1c5bb2fc278d2aa0e268e6a20eb755"
+    },
+    {
       "id": "base-spell-specialization-security",
       "symbols": [
         "C_Spell.GetBaseSpell"
@@ -1949,9 +1982,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCooldown-233",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-cooldown-output-restriction"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact233 accepted515: meaningful model plus authentic restricted numeric payloads/public BOOLs,117distinctRetailPASS/startup0[]/scopedfmt/check and36existingForevercontrols. Opaque nominal-type fixture correction retains payload/security/copy/GC, no VM patch. Default/domain/table policies inferred; dirty/globalfmt/historical502process failure/native type/acquisition/profile/UI limits remain. No neighboring-row or charge-partial upgrade."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionCooldownDuration-235",
@@ -1969,9 +2004,11 @@
     },
     {
       "source_id": "global api-C_ActionBar-GetActionLossOfControlCooldownInfo-239",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "action-loss-control-cooldown-info"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact239 accepted515: meaningful model plus authentic restricted numeric payloads/public BOOLs,117distinctRetailPASS/startup0[]/scopedfmt/check and36existingForevercontrols. Opaque nominal-type fixture correction retains payload/security/copy/GC, no VM patch. Default/domain/table policies inferred; dirty/globalfmt/historical502process failure/native type/acquisition/profile/UI limits remain. No neighboring-row or charge-partial upgrade."
     },
     {
       "source_id": "global api-C_ActionBar-GetActionUseCount-241",

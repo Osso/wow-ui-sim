@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Combined64/65 — exact cooldown/LoC output predicates accepted
+
+[Combined233/239 proof SSOT](../../specs/action-cooldown-output-restriction.md#independent-bounded-acceptance--2026-10-02) and [LoC model contract](../../specs/action-loss-control-cooldown-info.md#independent-bounded-acceptance--2026-10-02) record515 acceptance:117 distinct Retail PASS/startup0 `[]`, freshfmt/check/security/wiring/readability plus36 separate existing Forever controls. Only233/239 promote: **194 pending/153 bounded/14 partial/1 metadata =362;72 capabilities**. Ordered IDs,360 unrelated rows,70 prior capabilities and source hashes preserved. Existing cooldown selection and meaningful typed LoC snapshots with three private numeric payloads/two public BOOLs; no generic declassification or nominal-type override. False511 publication diagnosis rejected; opaque VM type assumptions corrected without removing opacity/copy/GC proof. Native/inferred/profile/UI/globalfmt/dirty/historical502 process limits remain. Partial231 unchanged;237 separate; broader goal open.
+
 ### Batch63 — exact base-spell specialization boundary accepted
 
 [Exact295 contract/proof SSOT](../../specs/base-spell-specialization-security.md#independent-bounded-acceptance--2026-10-02) records parent acceptance502+505+509:81 distinct Retail PASS plus three separate existing Forever PASS, scopedfmt/check/startup/security/wiring/readability and equivalent assertion split. Only295 promotes: **196 pending/151 bounded/14 partial/1 metadata =362;70 capabilities**. Ordered IDs,361 unrelated rows,69 prior capabilities/source hashes preserved. Existing empty-default specialization model supplies meaningful Retail publication; raw arg2 NeverSecret precedes arg1/model. Conservative arg1 policy/native acquisition/other profiles/UI unknown. Initial wrong no-GUI gate and protected-search process breach remain failures, not erased; globalfmt/dirty limits and broader goal remain open.
