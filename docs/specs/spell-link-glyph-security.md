@@ -27,7 +27,7 @@ Cached retail `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:408–4
 
 ## Implementation inventory
 
-- `src/c_api/c_spell.rs` — existing `GetSpellLink` registration and numeric identifier/provider dispatch; unchanged in this tests/spec slice.
+- `src/c_api/c_spell.rs` — existing `GetSpellLink` registration and numeric identifier/provider dispatch; epoch125 authentic arg2 secret check precedes unchanged dispatch.
 - `src/c_api/item_spell/c_item.rs` — existing catalog-backed spell-link producer; unchanged.
 - `tests/spell_link_glyph_security.rs` — minimal real-provider fixture and authentic host VM wrappers.
 - `build.rs` / `tests/integration.rs` — existing automatic top-level test discovery into the grouped `integration` target; no runner modification or new Cargo target required.
@@ -51,10 +51,10 @@ Host metadata compares wrapper references/allocation sequences and rooted list e
 
 ## Known gaps (current cycle)
 
-- [ ] Parent must compile and observe actual RED before any producer change. Intended failures: current ignored arg2 returns link/nil instead of rejecting authentic secrets; public controls characterize unchanged behavior. No compilation or runtime results claimed here.
-- [ ] Producer change and parent-owned GREEN/acceptance remain pending. All requirements remain unchecked until passing evidence exists.
+- [x] Parent compiled inputs at15b304b4995374f55da42a96e48c3a26649ab405: exit0/149.0320317990845s; eight selected tests exit101/1.0117020549951121s,3 public controls PASS/5 genuine secret-boundary FAIL. Artifacts `/tmp/patch-12.0.5-batch57-red-{build-result,run}.json` and full compiler/runtime outputs. Dirty-combined proof includes preserved unowned source, not clean-revision evidence.
+- [ ] Producer now rejects authentic arg2 secrets under epoch125 before existing identifier/provider dispatch, without payload access or taint changes; earlier profiles and public behavior unchanged. Parent GREEN/independent acceptance pending; requirements remain unchecked.
 
-Accounting remains214/134/14; batch56 verifier457 remains active. This input slice promotes no row and awards no arg1 credit.
+Current accounting210 pending/138 bounded/14 partial after separate batch56 acceptance. Row311 remains pending; this slice awards no arg1 credit.
 
 ## Out of scope
 

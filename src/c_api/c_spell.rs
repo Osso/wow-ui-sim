@@ -383,6 +383,13 @@ fn pickup_spell(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_spell_link(state: &mut LuaState) -> LuaResult<u32> {
+    if cfg!(feature = "retail-12-0-5")
+        && rilua::table_security::is_secret_value(state, stack_val(state, 2))
+    {
+        return Err(rilua::runtime_error(
+            "C_Spell.GetSpellLink: argument 2 rejects secret values under NeverSecret policy",
+        ));
+    }
     let Some(spell_id) = numeric_spell_id(state, 1) else {
         state.push(Val::Nil);
         return Ok(1);
